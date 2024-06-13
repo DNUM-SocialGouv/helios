@@ -1,12 +1,12 @@
 import { ReactElement, useState } from "react";
 
 import { IEnveloppe } from "../../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
+import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
   HistogrammeHorizontalRowMultiple,
   colorsAllocations,
 } from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
 import styles from "./DetailsAllocations.module.css";
-import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
 type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement; direction?: string }>;
 const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: ShowDetailsTitleProps) => {
@@ -70,12 +70,16 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
           className={styles["envContainer"]}
           dataName={`Enveloppe ${enveloppe.enveloppe}`}
           dataTitle={
-            <div className={styles["titleDetails"]}>
-              <HistogrammeHorizontalRowMultiple
-                data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
-                realPercentage={enveloppe.pourcentage}
-              />
-              <span className={styles["envTotal"]}>{enveloppe.total} €</span>
+            <div className={styles["titleContainer"]}>
+              <div className={styles["titleDetails"]}>
+                <HistogrammeHorizontalRowMultiple
+                  data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
+                  realPercentage={enveloppe.pourcentage}
+                />
+                
+                {(enveloppe.pourcentage < 75) && <span className={styles["envTotal"]}>{enveloppe.total} €</span>}
+              </div>
+              {(enveloppe.pourcentage > 75) && <span className={styles["envTotal2"]}>{enveloppe.total} €</span>}
             </div>
           }
           directionIcone="left"
@@ -105,7 +109,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {mode.montantNotifié} ({mode.pourcentage} %)
+                    {mode.modeDeDélégation} : {mode.montantNotifié} € ({mode.pourcentage}%)
                   </div>
                 ))}
         

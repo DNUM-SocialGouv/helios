@@ -174,7 +174,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       }
       return sum;
     }, 0);
-  
+
     // Grouper les montants par enveloppe et calculer les valeurs totales pour chaque enveloppe
     const groupedData = data.reduce((acc, item) => {
       if (item.enveloppe) {
@@ -187,16 +187,16 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       }
       return acc;
     }, {} as { [key: string]: AllocationValeursAvecMotif });
-  
+
     // Convertir les valeurs totales en pourcentages
     const percentageData = Object.values(groupedData).map((item) => {
       item.valeur = (item.valeur / total) * 100;
       return item;
     });
-  
+
     // Trier les données par valeur en ordre décroissant
     percentageData.sort((a, b) => b.valeur - a.valeur);
-  
+
     return percentageData;
   }
 
@@ -233,19 +233,19 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     // Préparer les résultats finaux
     const result = Object.keys(groupedData).map((enveloppe) => {
       const totalEnveloppe = groupedData[enveloppe].total;
-      const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(0);
+      const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(2); // Garde deux décimales
       const sousEnveloppes = groupedData[enveloppe].sousEnveloppes;
   
       // Trier les sous-enveloppes par pourcentage décroissant
       const sousEnveloppesResult = Object.keys(sousEnveloppes).map((sousEnveloppe) => {
         const totalSousEnveloppe = sousEnveloppes[sousEnveloppe].total;
-        const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(0);
+        const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(2); // Garde deux décimales
         const modesDeDélégation = sousEnveloppes[sousEnveloppe].modesDeDélégation;
   
         // Trier les modes de délégation par pourcentage décroissant
         const modesDeDélégationResult = Object.keys(modesDeDélégation).map((modeDeDélégation) => {
           const montantNotifié = modesDeDélégation[modeDeDélégation];
-          const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(0);
+          const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(2); // Garde deux décimales
           return { modeDeDélégation, montantNotifié, pourcentage: pourcentageModeDeDélégation };
         }).sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
   
@@ -258,30 +258,33 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return result;
   }
 
-  transformDataToTranscriptionData(data : IEnveloppe[]) {
-    const result: { key: string; value: any; }[] = [];
-  
-    data.forEach(enveloppeItem => {
+  transformDataToTranscriptionData(data: IEnveloppe[]) {
+    const result: { key: string; value: any }[] = [];
+
+    data.forEach((enveloppeItem) => {
       // Ajouter l'objet pour l'enveloppe principale
-      result.push({ key: `Enveloppe ${enveloppeItem.enveloppe}`, value: enveloppeItem.total + ' €' });
-  
+      result.push({ key: `Enveloppe ${enveloppeItem.enveloppe}`, value: enveloppeItem.total + " €" });
+
       // Traiter les sous-enveloppes
-      enveloppeItem.sousEnveloppes.forEach(sousEnveloppeItem => {
+      enveloppeItem.sousEnveloppes.forEach((sousEnveloppeItem) => {
         result.push({ key: `Sous Enveloppe ${sousEnveloppeItem.sousEnveloppe}`, value: `${sousEnveloppeItem.total} € (${sousEnveloppeItem.pourcentage}%)` });
-  
+
         // Traiter les modes de délégation
-        sousEnveloppeItem.modesDeDélégation.forEach(modeDeDélégationItem => {
-          result.push({ key: `${modeDeDélégationItem.modeDeDélégation}`, value: `${modeDeDélégationItem.montantNotifié} € (${modeDeDélégationItem.pourcentage}%)` });
+        sousEnveloppeItem.modesDeDélégation.forEach((modeDeDélégationItem) => {
+          result.push({
+            key: `${modeDeDélégationItem.modeDeDélégation}`,
+            value: `${modeDeDélégationItem.montantNotifié} € (${modeDeDélégationItem.pourcentage}%)`,
+          });
         });
       });
     });
-  
+
     return result;
   }
-  
+
   allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours: number): any {
     const dataAllocationRessources = this.allocationRessourcesEnCours(annéeEnCours);
-    console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy--2-->', dataAllocationRessources)
+    console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy--2-->", dataAllocationRessources);
     return this.allocationRessourcesGroubByEnveloppe(dataAllocationRessources.data);
   }
 
@@ -358,10 +361,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     const valeursAvecMotif = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours);
     const treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode = this.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours);
 
-     
     const transformDataToTranscriptionData = this.transformDataToTranscriptionData(treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode);
-    const transcriptionDataKeys = transformDataToTranscriptionData.map((item) => item.key)
-    const transcriptionDataValues = transformDataToTranscriptionData.map((item) => item.value)
+    const transcriptionDataKeys = transformDataToTranscriptionData.map((item) => item.key);
+    const transcriptionDataValues = transformDataToTranscriptionData.map((item) => item.value);
 
     valeursAvecMotif.forEach((item: AllocationValeursAvecMotif) => {
       couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuAllocationDeRessource(item.motif));
@@ -371,7 +373,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     const valeursDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => Math.floor(item.valeur));
     const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
 
-    
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
 
     const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map(
@@ -379,10 +380,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
- 
+
     return (
       <>
-        <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+        <div className="fr-grid-row fr-grid-row--gutters fr-mb-1w">
           <div className="fr-col-5">
             <DonutNoCenterText
               couleursDuDoughnut={couleursDuDoughnut}
@@ -395,26 +396,29 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
               valeurs={valeursDesAllocationDeRessource}
             />
           </div>
-          <div className="fr-col-5">
+          <div className="fr-col-7">
             <DetailsAllocations data={treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode} />
           </div>
         </div>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-
-        <Transcription
-          entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
-          identifiants={[this.wording.REPARTITION_DES_ENVELOPPES]}
-          libellés={motifsDesAllocationDeRessource}
-          valeurs={[ [...StringFormater.addPercentToValues(valeursDesAllocationDeRessourcePourcentage)] ]}
-        />
-
-      <Transcription
-          entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
-          identifiants={[this.wording.REPARTITION_DES_SOUS_ENVELOPPES]}
-          libellés={transcriptionDataKeys}
-          valeurs={[ [... transcriptionDataValues] ]}
-        />
-
+        <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+        <div className="fr-col-5 fr-pt-0">
+          <Transcription
+            entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+            identifiants={[this.wording.REPARTITION_DES_ENVELOPPES]}
+            libellés={motifsDesAllocationDeRessource}
+            valeurs={[[...StringFormater.addPercentToValues(valeursDesAllocationDeRessourcePourcentage)]]}
+          />
+        </div>
+        <div className="fr-col-6 fr-pt-0 fr-ml-3w">
+          <Transcription
+            entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+            identifiants={[this.wording.REPARTITION_DES_SOUS_ENVELOPPES]}
+            libellés={transcriptionDataKeys}
+            valeurs={[[...transcriptionDataValues]]}
+          />
+        </div>
+        </div>
       </>
     );
   }

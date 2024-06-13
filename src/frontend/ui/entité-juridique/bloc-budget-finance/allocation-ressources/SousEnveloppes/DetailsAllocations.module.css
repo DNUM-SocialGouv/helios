@@ -23,6 +23,15 @@
 }
 .envTotal {
   padding: 5px 0 0 5px;
+  font-size: small;
+}
+.envTotal2 {
+  font-size: small;
+}
+
+.titleContainer
+{
+  width:100%;
 }
 
 .subEnvContainer {

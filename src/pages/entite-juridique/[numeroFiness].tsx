@@ -90,7 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
               enveloppe: 'MIGAC',
               sousEnveloppe: 'AC',
               modeDeDélégation: '123',
-              montantNotifié: 6660,
+              montantNotifié: 60,
             },
             {
               enveloppe: 'MIGAC',
@@ -100,21 +100,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
             },
             {
               enveloppe: 'MIGAC',
-              sousEnveloppe: 'MIG',
+              sousEnveloppe: 'MIG3',
               modeDeDélégation: 'JPE_MERRI',
-              montantNotifié: 140,
+              montantNotifié: 2840,
             },
             {
               enveloppe: 'MIGAC',
-              sousEnveloppe: 'MIG',
+              sousEnveloppe: 'MIG2',
               modeDeDélégation: 'TestA',
-              montantNotifié: 190,
+              montantNotifié: 1890,
             },
             {
               enveloppe: 'MIGAC',
-              sousEnveloppe: 'MIG',
+              sousEnveloppe: 'MIG4',
               modeDeDélégation: 'TestB',
-              montantNotifié: 290,
+              montantNotifié: 1890,
             },
             {
               enveloppe: 'MIGAC',

@@ -28,6 +28,7 @@ export function AllocationRessources({ entitéJuridiqueBudgetFinanceViewModel }:
       dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-allocation-de-resources"
       nomDeLIndicateur={<>{wording.ALLOCATION_DE_RESSOURCES}</>}
+      prefixSelect="Compagne"
       source={wording.HAPI}
     >
       {entitéJuridiqueBudgetFinanceViewModel.allocationDeRessource(annéeEnCours)}
