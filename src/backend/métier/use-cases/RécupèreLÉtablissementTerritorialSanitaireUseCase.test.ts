@@ -39,6 +39,8 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeQualite: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
+      chargeBudgetFinance: jest.fn(),
+      chargeAllocationRessource: jest.fn()
     };
     const mockedEntitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
       chargeRattachement: mockedChargeLEntitéJuridiqueDeRattachement,
@@ -72,6 +74,8 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeQualite: jest.fn(),
       chargeIdentité: mockedChargeParNuméroFiness,
+      chargeBudgetFinance: jest.fn(),
+      chargeAllocationRessource: jest.fn()
     };
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
       établissementTerritorialLoader,
@@ -130,6 +134,8 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeQualite: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeBudgetFinance: jest.fn(),
+      chargeAllocationRessource: jest.fn()
     };
 
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
@@ -168,6 +174,8 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       chargeAutorisationsEtCapacités: mockedChargeAutorisations,
       chargeQualite: jest.fn(),
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeBudgetFinance: jest.fn(),
+      chargeAllocationRessource: jest.fn()
     };
 
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
@@ -209,6 +217,8 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       chargeAutorisationsEtCapacités: jest.fn(),
       chargeQualite: mockedDonnesQualite,
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
+      chargeBudgetFinance: jest.fn(),
+      chargeAllocationRessource: jest.fn()
     };
 
     const récupèreLÉtablissementTerritorialUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(

@@ -1,3 +1,5 @@
+import { AllocationRessource } from "../AllocationRessource";
+import { EntitéJuridiqueBudgetFinance } from "../entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialIdentité } from "../ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialQualite } from "../ÉtablissementTerritorialQualite";
 import { EntitéJuridiqueDeRattachement } from "./EntitéJuridiqueDeRattachement";
@@ -9,4 +11,7 @@ export type ÉtablissementTerritorialSanitaire = Readonly<{
   autorisationsEtCapacités: ÉtablissementTerritorialSanitaireAutorisationEtCapacité;
   qualite: ÉtablissementTerritorialQualite,
   identité: ÉtablissementTerritorialIdentité & EntitéJuridiqueDeRattachement;
+  budgetFinance: EntitéJuridiqueBudgetFinance[];
+  allocationRessource: AllocationRessource;
+  appartientAEtablissementsSantePrivesIntérêtsCollectif: boolean;
 }>;

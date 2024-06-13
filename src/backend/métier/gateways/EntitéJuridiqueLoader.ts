@@ -9,6 +9,7 @@ import { EntitéJuridiqueDeRattachement } from "../entities/établissement-terri
 export interface EntitéJuridiqueLoader {
   chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée>;
   chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement>;
+  chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean>;
 
   chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités[]>;
 

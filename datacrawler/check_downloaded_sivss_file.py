@@ -4,7 +4,7 @@ import datetime
 import pandas as pd
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_sivss_siicea
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_sirec
 from datacrawler.extract.delete_files_in_directory import delete_files_in_directory
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.equivalences_sivss_helios import (
@@ -49,11 +49,11 @@ if __name__ == "__main__":
     fichiers = os.listdir(sivss_data_path)
 
     chemin_local_du_fichier_sivss = os.path.join(
-        sivss_data_path, trouve_le_nom_du_fichier_sivss_siicea(fichiers, "sivss", logger_helios)
+        sivss_data_path, trouve_le_nom_du_fichier_sirec(fichiers, "sivss", logger_helios)
     )
 
     fichier_sivss_traite = os.path.join(
-        checked_sivss_data_path, trouve_le_nom_du_fichier_sivss_siicea(fichiers, "sivss", logger_helios)
+        checked_sivss_data_path, trouve_le_nom_du_fichier_sirec(fichiers, "sivss", logger_helios)
     )
 
     check_downloaded_sivss_file(chemin_local_du_fichier_sivss, fichier_sivss_traite)
