@@ -295,7 +295,8 @@ export interface Wording {
   readonly FIR: string;
   readonly FORFAITS: string;
   readonly MIGAC: string;
- 
+  readonly DOTATIONS_URGENCES: string;
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;

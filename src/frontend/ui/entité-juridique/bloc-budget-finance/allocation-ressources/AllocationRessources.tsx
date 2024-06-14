@@ -1,37 +1,29 @@
 import { useState } from "react";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { HistogrammesHorizontaux } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudgetFinanceViewModel";
+import { AllocationRessourcesViewModel } from "../AllocationRessourcesViewModel";
 import { ContenuAllocationRessourcesEJ } from "./ContenuAllocationRessourcesEJ";
 
 type BlocAllocationRessourcesProps = Readonly<{
-  entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
+  allocationRessourcesViewModel: AllocationRessourcesViewModel;
 }>;
 
-export function AllocationRessources({ entitéJuridiqueBudgetFinanceViewModel }: BlocAllocationRessourcesProps) {
+export function AllocationRessources({ allocationRessourcesViewModel }: BlocAllocationRessourcesProps) {
   const { wording } = useDependencies();
-  const [annéeEnCours, setAnnéeEnCours] = useState<number>(entitéJuridiqueBudgetFinanceViewModel.annéeInitiale);
-  console.log('annéeEnCours :::::', annéeEnCours)
-  const allocationRessources = entitéJuridiqueBudgetFinanceViewModel.allocationRessourcesEnCours(annéeEnCours);
-  const allocationRessourcesGroubByEnveloppe = entitéJuridiqueBudgetFinanceViewModel.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours);
-  const allocationRessourcesGroubByEnveloppeSousEnvelopeETMode = entitéJuridiqueBudgetFinanceViewModel.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours);
-
-  console.log('11144447777', allocationRessourcesGroubByEnveloppeSousEnvelopeETMode)
-  
+  const [annéeEnCours, setAnnéeEnCours] = useState<number>(allocationRessourcesViewModel.annéeInitiale);
 
   return (
     <IndicateurGraphique
-      années={{ liste: entitéJuridiqueBudgetFinanceViewModel.lesAnnéesEffectivesDuCompteDeRésultat(), setAnnéeEnCours }}
-      contenuInfoBulle={<ContenuAllocationRessourcesEJ dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.HAPI} />}
-      dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
+      années={{ liste: allocationRessourcesViewModel.lesAnnéesEffectivesDuAllocationRessources(), setAnnéeEnCours }}
+      contenuInfoBulle={<ContenuAllocationRessourcesEJ dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour} source={wording.HAPI} />}
+      dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-allocation-de-resources"
       nomDeLIndicateur={<>{wording.ALLOCATION_DE_RESSOURCES}</>}
       prefixSelect="Compagne"
       source={wording.HAPI}
     >
-      {entitéJuridiqueBudgetFinanceViewModel.allocationDeRessource(annéeEnCours)}
+      {allocationRessourcesViewModel.allocationDeRessource(annéeEnCours)}
     </IndicateurGraphique>
   );
 }

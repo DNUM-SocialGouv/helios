@@ -1,23 +1,24 @@
-
 export type DataRowEntitéJuridiqueAllocationRessources = {
-  enveloppe: string | null | '';
-  sousEnveloppe: string | null | '';
-  modeDeDélégation: string | null | '';
-  montantNotifié: number | null | '';
+  enveloppe: string | null | "";
+  sousEnveloppe: string | null | "";
+  modeDeDélégation: string | null | "";
+  montantNotifié: number | null | "";
 };
 
 export type EntitéJuridiqueAllocationRessources = {
-  dateMiseÀJourSource: string;
   année: number;
-  data: DataRowEntitéJuridiqueAllocationRessources[]
+  allocationRessoure: DataRowEntitéJuridiqueAllocationRessources[];
 };
 
-export type AllocationValeursAvecMotif = 
-{ 
-  motif: string,
-  valeur: number 
-}
+export type IAllocationRessources = {
+  dateMiseÀJourSource: string;
+  data: EntitéJuridiqueAllocationRessources[];
+};
 
+export type AllocationValeursAvecMotif = {
+  motif: string;
+  valeur: number;
+};
 
 // Définition du type pour ModeDeDélégation
 export interface IModeDeDélégation {

@@ -30,11 +30,12 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
-    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
-      wording,
-      établissementTerritorial.qualite,
-    )
-    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(établissementTerritorial.budgetFinance, établissementTerritorial.allocationRessources, wording);
+    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(wording, établissementTerritorial.qualite);
+    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
+      établissementTerritorial.budgetFinance,
+      établissementTerritorial.allocationRessource,
+      wording
+    );
   }
 
   public get titre(): string {
@@ -72,7 +73,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   public get appartientAEtablissementsSantePrivesIntérêtsCollectif(): any {
-   return this.établissementTerritorial.appartientAEtablissementsSantePrivesIntérêtsCollectif
+    return this.établissementTerritorial.appartientAEtablissementsSantePrivesIntérêtsCollectif;
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {

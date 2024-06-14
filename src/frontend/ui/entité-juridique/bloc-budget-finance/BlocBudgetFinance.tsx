@@ -27,8 +27,8 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
         : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee} /> : <></>}
       <ul className={"indicateurs " + styles["budget"]}>
         
-        {!entitéJuridiqueBudgetFinanceViewModel.allocationDeRessourcesVide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessourcesEstIlAutorisé ? 
-        <AllocationRessources entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
+        {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ? 
+        <AllocationRessources allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources} /> : <></>}
  
         {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé ?
         <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
