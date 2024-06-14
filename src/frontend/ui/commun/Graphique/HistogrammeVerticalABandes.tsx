@@ -61,12 +61,12 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
 export function HistogrammeVerticalABandes(props: {
   data: {
     datasets: (
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number | string; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number | string; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number | string; y: number | null | "" }[]; label: string }
+      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number | string; y: number | null | "" }[]; label: string }
     )[];
-    labels: number[];
+    labels: any[];
   };
   id: string;
   identifiants: string[];
@@ -75,6 +75,7 @@ export function HistogrammeVerticalABandes(props: {
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
   annéesTotales: number;
+  aRetravailler?: boolean;
 }) {
   const { wording } = useDependencies();
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
@@ -88,7 +89,7 @@ export function HistogrammeVerticalABandes(props: {
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
         </>
       ) : null}
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {listeAnnéesManquantes.length > 0 && !props.aRetravailler && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       <Transcription
         disabled={aucuneDonnee}
         entêteLibellé={wording.ANNÉE}
