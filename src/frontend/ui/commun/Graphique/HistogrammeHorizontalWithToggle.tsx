@@ -182,7 +182,7 @@ export const HistogrammeHorizontalWithToggle = ({
         {histogrammes.map((histogramme) => (
           <div className={styles["barWithToggleWidth"]} key={histogramme.nom}>
             {/*
-                            // @ts-ignore */}
+                 // @ts-ignore */}
             <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
           </div>
         ))}
