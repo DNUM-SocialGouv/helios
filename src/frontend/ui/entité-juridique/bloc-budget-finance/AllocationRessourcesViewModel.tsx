@@ -69,7 +69,7 @@ export class AllocationRessourcesViewModel {
     
         return anneesTriees[0];
       }
-      return null;
+      return 0;
   }
 
   public get dateMiseÀJour(): string {
