@@ -127,6 +127,7 @@ export const Header = () => {
                             className="fr-btn"
                             onClick={(event) => {
                               event.preventDefault();
+                              localStorage.setItem('searchItem', terme);
                               router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
                             }}
                             title="Rechercher"
