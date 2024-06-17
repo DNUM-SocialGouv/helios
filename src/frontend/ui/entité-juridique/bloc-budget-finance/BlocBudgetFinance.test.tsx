@@ -7,10 +7,15 @@ import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudget
 
 const { wording } = fakeFrontDependencies;
 
+const allocationRessourceMockData = {
+  dateMiseÀJourSource: '20/20/2020',
+  data: [],
+}
+
 describe("Bloc Budget et Finance", () => {
   it("affiche un l'indicateur vide si il n'y a pas des données", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel([], wording);
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel([], allocationRessourceMockData, wording);
 
     // WHEN
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
@@ -28,7 +33,7 @@ describe("Bloc Budget et Finance", () => {
         depensesTitreIGlobal: 100,
       } as EntitéJuridiqueBudgetFinance,
     ];
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
@@ -46,7 +51,7 @@ describe("Bloc Budget et Finance", () => {
         resultatNetComptable: 100,
       } as EntitéJuridiqueBudgetFinance,
     ];
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
@@ -64,7 +69,7 @@ describe("Bloc Budget et Finance", () => {
         ratioDependanceFinanciere: 0.5,
       } as EntitéJuridiqueBudgetFinance,
     ];
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
@@ -82,7 +87,7 @@ describe("Bloc Budget et Finance", () => {
         tauxDeCafNetSan: 0.5,
       } as EntitéJuridiqueBudgetFinance,
     ];
-    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, wording);
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
     renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);

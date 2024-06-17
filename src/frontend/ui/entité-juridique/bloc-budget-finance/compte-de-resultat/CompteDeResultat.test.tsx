@@ -11,6 +11,11 @@ import { CompteDeResultat } from "./CompteDeResultat";
 const { wording } = fakeFrontDependencies;
 let graphiqueTest: GraphiqueTest;
 
+const allocationRessourceMockData = {
+  dateMiseÀJourSource: '20/20/2020',
+  data: [],
+}
+
 describe("CompteDeResultat", () => {
   let budgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
@@ -52,6 +57,7 @@ describe("CompteDeResultat", () => {
           totalRecettesAnnexe: 940,
         } as EntitéJuridiqueBudgetFinance,
       ],
+      allocationRessourceMockData,
       wording
     );
   });
@@ -153,6 +159,7 @@ describe("CompteDeResultat", () => {
       // GIVEN
       const budgetFinanceVide = new EntitéJuridiqueBudgetFinanceViewModel(
         [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
+        allocationRessourceMockData,
         wording
       );
       // WHEN
@@ -173,6 +180,7 @@ describe("CompteDeResultat", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
         ],
+        allocationRessourceMockData,
         wording
       );
       // WHEN

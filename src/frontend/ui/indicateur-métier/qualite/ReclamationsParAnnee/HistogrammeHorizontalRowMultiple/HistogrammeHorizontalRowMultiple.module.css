@@ -18,6 +18,7 @@
   color: transparent;
   user-select: none;
   height: 23px;
+  border-left: 1px solid var(--border-default-grey);
 }
 
 .motif_number {

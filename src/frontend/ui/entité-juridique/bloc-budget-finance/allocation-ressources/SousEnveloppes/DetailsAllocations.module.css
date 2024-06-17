@@ -1,6 +1,7 @@
 .bigContainer{
   border-left: 1px solid var(--border-default-grey);
   padding-left: 30px;
+  min-height: 275px;
 }
 
 .repBigTitle{
@@ -41,12 +42,12 @@
 }
 
 .subEnvTitle {
-  font-size: medium;
+  font-size: small;
 }
 
 .modesDeDelegationContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
 }
 
