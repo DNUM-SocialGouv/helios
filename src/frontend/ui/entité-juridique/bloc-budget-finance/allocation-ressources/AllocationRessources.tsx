@@ -20,7 +20,7 @@ export function AllocationRessources({ allocationRessourcesViewModel }: BlocAllo
       dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-allocation-de-resources"
       nomDeLIndicateur={<>{wording.ALLOCATION_DE_RESSOURCES}</>}
-      prefixSelect="Compagne"
+      prefixSelect="Campagne"
       source={wording.HAPI}
     >
       {allocationRessourcesViewModel.allocationDeRessource(annéeEnCours)}

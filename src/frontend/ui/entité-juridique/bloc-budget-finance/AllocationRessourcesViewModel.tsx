@@ -42,12 +42,17 @@ export class AllocationRessourcesViewModel {
   }
 
   public get annéeInitiale() {
-    const years = this.allocationRessourcesData.data
-      .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
-      .map((allocationRessources) => allocationRessources.année);
-    const anneesTriees = years.sort((année1, année2) => année2 - année1);
 
-    return anneesTriees[0];
+    if(this.allocationRessourcesData && this.allocationRessourcesData.data)
+      {
+        const years = this.allocationRessourcesData.data
+        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
+        .map((allocationRessources) => allocationRessources.année);
+        const anneesTriees = years.sort((année1, année2) => année2 - année1);
+    
+        return anneesTriees[0];
+      }
+      return null;
   }
 
   public get dateMiseÀJour(): string {
@@ -227,9 +232,13 @@ export class AllocationRessourcesViewModel {
   }
 
   public lesAnnéesEffectivesDuAllocationRessources(): number[] {
-    return this.allocationRessourcesData.data
-      .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
-      .map((allocationRessources) => allocationRessources.année);
+    if(this.allocationRessourcesData && this.allocationRessourcesData.data)
+    {
+      return this.allocationRessourcesData.data
+        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
+        .map((allocationRessources) => allocationRessources.année);
+    }
+    return [];
   }
 
   public lesAnnéesManquantesDuAllocationRessources(): number[] {
@@ -316,7 +325,7 @@ export class AllocationRessourcesViewModel {
           </div>
         </div>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+        <div className="fr-grid-row fr-grid-row--gutters">
           <div className="fr-col-5 fr-pt-0">
             <Transcription
               entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}

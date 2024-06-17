@@ -25,17 +25,19 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel }: Bl
     <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés.length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés} />
         : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee} /> : <></>}
+
       <ul className={"indicateurs " + styles["budget"]}>
-        
-        {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ? 
-        <AllocationRessources allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources} /> : <></>}
- 
-        {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé ?
-        <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
-        {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé ? <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} /> : <></>}
-        {entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé ? <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} /> : <></>}
-        {entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé ? <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} /> : <></>}
+            {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé ? <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
+            {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé ? <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} /> : <></>}
+            {entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé ? <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} /> : <></>}
+            {entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé ? <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} /> : <></>}
       </ul>
+
+      <ul className="indicateurs">
+          {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ? 
+          <AllocationRessources allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources} /> : <></>}
+      </ul>
+
     </Bloc>
   );
 };
