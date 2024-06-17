@@ -2,10 +2,10 @@ import { ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 import { Wording } from "../../../configuration/wording/Wording";
-import { annéesManquantes } from "../../../utils/dateUtils";
+//import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
-import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+//import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import { couleurDelAbscisse } from "./couleursGraphique";
@@ -70,7 +70,7 @@ export function HistogrammeVerticalABandes(props: {
   };
   id: string;
   identifiants: string[];
-  libellés: number[];
+  libellés: (number | string)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
@@ -78,9 +78,9 @@ export function HistogrammeVerticalABandes(props: {
   aRetravailler?: boolean;
 }) {
   const { wording } = useDependencies();
-  const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
-  const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
-
+  // const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
+  // const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
+  const aucuneDonnee = false;
   return (
     <>
       {!aucuneDonnee ? (
@@ -89,7 +89,7 @@ export function HistogrammeVerticalABandes(props: {
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
         </>
       ) : null}
-      {listeAnnéesManquantes.length > 0 && !props.aRetravailler && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {/* {listeAnnéesManquantes.length > 0 && !props.aRetravailler && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>} */}
       <Transcription
         disabled={aucuneDonnee}
         entêteLibellé={wording.ANNÉE}

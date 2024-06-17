@@ -6,6 +6,7 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHAD";
 import { GraphiqueNombreDeSejourMCOMensuel } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueMCOMensuel";
 import { GraphiqueNombreDeSejourMCOMensuelV2 } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueMCOMensuelV2";
+import { GraphiqueNombreDeSejourMCOMensuelV3 } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueMCOMensuelV3";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
@@ -50,6 +51,13 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: B
         {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés &&
           entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
           <GraphiqueNombreDeSejourMCOMensuelV2 estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
+        ) : (
+          <></>
+        )}
+
+        {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés &&
+          entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
+          <GraphiqueNombreDeSejourMCOMensuelV3 estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
         ) : (
           <></>
         )}

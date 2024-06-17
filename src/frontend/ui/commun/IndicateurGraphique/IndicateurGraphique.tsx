@@ -3,6 +3,7 @@ import { ReactChild, ReactElement, useState } from "react";
 import { useDependencies } from "../contexts/useDependencies";
 import { SelectionAnnee } from "../Graphique/SelectionAnnee";
 import { SelectionMois } from "../Graphique/SelectionMois";
+import { SelectionSemester } from "../Graphique/SelectionSemester";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./IndicateurGraphique.module.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
@@ -10,6 +11,7 @@ import "@gouvfr/dsfr/dist/component/button/button.min.css";
 type IndicateurProps = Readonly<{
   années?: { liste: number[]; setAnnéeEnCours: (annee: number) => void };
   setMoisDeDébut?: (mois: string) => void;
+  setSemester?: (semestre: string) => void;
   children: ReactElement;
   contenuInfoBulle: ReactElement;
   dateDeMiseÀJour: string;
@@ -18,7 +20,7 @@ type IndicateurProps = Readonly<{
   source: ReactElement;
 }>;
 
-export const IndicateurGraphique = ({ années, setMoisDeDébut, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
+export const IndicateurGraphique = ({ années, setMoisDeDébut, setSemester, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
@@ -26,6 +28,7 @@ export const IndicateurGraphique = ({ années, setMoisDeDébut, children, conten
     <li className={styles["print-only"]}>
       <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
         {nomDeLIndicateur}
+        {setSemester ? <SelectionSemester id={identifiant} setSemester={setSemester} /> : <></>}
         {setMoisDeDébut ? <SelectionMois id={identifiant} setMoisDeDébut={setMoisDeDébut} /> : <></>}
         {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
       </h3>

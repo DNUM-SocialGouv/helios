@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -9,31 +10,14 @@ type GraphiqueNombreDeSejourMCOProps = Readonly<{
     nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
     estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombreDeSejourMCOMensuel = ({ nombreDeSejourMCOViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {
+export const GraphiqueNombreDeSejourMCOMensuelV3 = ({ nombreDeSejourMCOViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {
     const { wording } = useDependencies();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [annéeEnCours, setAnnéeEnCours] = useState<number>(2022);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [moisDeDébut, setMoisDeDébut] = useState<string>("premier semestre");
     const annees = [2021, 2020]
-    const identifiants = [
-        "année",
-        wording.HOSPITALISATION_PARTIELLE_MÉDECINE,
-        wording.HOSPITALISATION_COMPLÈTE_MÉDECINE,
-        wording.HOSPITALISATION_PARTIELLE_CHIRURGIE,
-        wording.HOSPITALISATION_COMPLÈTE_CHIRURGIE,
-        wording.HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE,
-        wording.HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE,
-    ];
 
-    const libellés = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-    const valeurs = [
-        ["2020", "2020", "2020", "2020", "2020", "2020", "2020", "2020", "2020", "2020", "2020", "2020"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-        ["20", "22", "23", "20", "22", "20", "21", "24", "25", "26", "20", "24"],
-    ];
     return (
         <IndicateurGraphique
             années={{ liste: annees, setAnnéeEnCours }}
@@ -47,18 +31,19 @@ export const GraphiqueNombreDeSejourMCOMensuel = ({ nombreDeSejourMCOViewModel, 
             dateDeMiseÀJour={nombreDeSejourMCOViewModel.dateDeMiseÀJourDuNombreDeSéjoursMédecineChirurgieObstétrique}
             identifiant="activite-0"
             nomDeLIndicateur={wording.NOMBRE_DE_SÉJOUR_MCO}
+            setSemester={setMoisDeDébut}
             source={wording.PMSI}
         >
             <HistogrammeVerticalABandes
                 aRetravailler={true}
                 annéesTotales={12}
                 créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
-                data={nombreDeSejourMCOViewModel.getHistogrammeMensuelDataSet()}
-                id="légende-graphique-sanitaire-journées-séjours-mco-mensuel"
-                idDeLaLégende="légende-graphique-sanitaire-journées-séjours-mco-mensuel"
-                identifiants={identifiants}
-                libellés={libellés}
-                valeurs={valeurs}
+                data={nombreDeSejourMCOViewModel.getHistogrammeMensuelV3DataSet(moisDeDébut)}
+                id="légende-graphique-sanitaire-journées-séjours-mco-mensuel-v3"
+                idDeLaLégende="légende-graphique-sanitaire-journées-séjours-mco-mensuel-v3"
+                identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
+                libellés={nombreDeSejourMCOViewModel.années}
+                valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
             />
         </IndicateurGraphique>
     );
