@@ -73,7 +73,7 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
   const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ;
 
   return {
-    animation: true,
+    animation: false,
     aspectRatio: 1,
     cutout: "40%",
     elements: {
