@@ -4,7 +4,7 @@ import { Chart as ChartJS } from "chart.js";
 
 
 export function construisLePluginDeLaLegendeDonut() {
-  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
+  function créeLeLibelléPourLaLégende(/*chart: ChartJS,*/ libellé: any): HTMLLIElement {
 
     const conteneur = document.createElement("li");
 
@@ -66,7 +66,7 @@ export function construisLePluginDeLaLegendeDonut() {
       const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
       libellésDeLaLégende?.forEach((libellé) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
+        const libelléDeLégende = créeLeLibelléPourLaLégende(/*chart,*/ libellé);
         légende.appendChild(libelléDeLégende);
       });
     },
