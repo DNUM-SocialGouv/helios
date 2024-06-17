@@ -6,6 +6,7 @@ import {
   HistogrammeHorizontalRowMultiple,
   colorsAllocations,
 } from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
+import { convertFloatToComma, formatNumbuerWithSpaces } from "../../AllocationRessourcesViewModel";
 import styles from "./DetailsAllocations.module.css";
 
 type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement; direction?: string }>;
@@ -60,7 +61,7 @@ type DetailsAllocationsProps = Readonly<{
 
 export function DetailsAllocations({ data }: DetailsAllocationsProps) {
   const { wording } = useDependencies();
-
+ 
   return (
     <div className={styles['bigContainer']}>
       <div className={styles['repBigTitle']}>{wording.REPARTITION_DES_SOUS_ENVELOPPES}</div>
@@ -77,9 +78,9 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   realPercentage={enveloppe.pourcentage}
                 />
                 
-                {(enveloppe.pourcentage < 75) && <span className={styles["envTotal"]}>{enveloppe.total} €</span>}
+                {(enveloppe.pourcentage < 75) && <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>}
               </div>
-              {(enveloppe.pourcentage > 75) && <span className={styles["envTotal2"]}>{enveloppe.total} €</span>}
+              {(enveloppe.pourcentage > 75) && <span className={styles["envTotal2"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>}
             </div>
           }
           directionIcone="left"
@@ -98,7 +99,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                     Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
                     <span className={styles["totalSousEnveloppe"]}>
                       {" "}
-                      {sousEnveloppe.total} € ({sousEnveloppe.pourcentage}%){" "}
+                      {formatNumbuerWithSpaces(sousEnveloppe.total)} € ({convertFloatToComma(sousEnveloppe.pourcentage)}%){" "}
                     </span>{" "}
                   </span>
                 </>

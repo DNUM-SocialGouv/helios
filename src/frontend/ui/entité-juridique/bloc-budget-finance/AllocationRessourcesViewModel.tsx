@@ -16,6 +16,23 @@ import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
 
+
+export function convertFloatToComma(number : number) {
+  // Convert the number to a string
+  const numberString = number.toString();
+  // Replace the period with a comma
+  return numberString.replace('.', ',');
+}
+
+export function formatNumbuerWithSpaces(number : number) {
+  // Convertir le nombre en une chaîne de caractères
+  const numberString = number.toString();
+  // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
+  // La regex (?=(?:\d{3})+(?!\d)) est utilisée pour placer les espaces
+  const formattedString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return formattedString;
+}
+
 export class AllocationRessourcesViewModel {
   public allocationRessourcesData: IAllocationRessources;
   private NOMBRE_ANNEES = 5;
@@ -154,21 +171,21 @@ export class AllocationRessourcesViewModel {
     const result = Object.keys(groupedData)
       .map((enveloppe) => {
         const totalEnveloppe = groupedData[enveloppe].total;
-        const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(2); // Garde deux décimales
+        const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(1); // Garde deux décimales
         const sousEnveloppes = groupedData[enveloppe].sousEnveloppes;
 
         // Trier les sous-enveloppes par pourcentage décroissant
         const sousEnveloppesResult = Object.keys(sousEnveloppes)
           .map((sousEnveloppe) => {
             const totalSousEnveloppe = sousEnveloppes[sousEnveloppe].total;
-            const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(2); // Garde deux décimales
+            const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(1); // Garde deux décimales
             const modesDeDélégation = sousEnveloppes[sousEnveloppe].modesDeDélégation;
 
             // Trier les modes de délégation par pourcentage décroissant
             const modesDeDélégationResult = Object.keys(modesDeDélégation)
               .map((modeDeDélégation) => {
                 const montantNotifié = modesDeDélégation[modeDeDélégation];
-                const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(2); // Garde deux décimales
+                const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(1); // Garde deux décimales
                 return { modeDeDélégation, montantNotifié, pourcentage: pourcentageModeDeDélégation };
               })
               .sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
@@ -193,13 +210,13 @@ export class AllocationRessourcesViewModel {
 
       // Traiter les sous-enveloppes
       enveloppeItem.sousEnveloppes.forEach((sousEnveloppeItem) => {
-        result.push({ key: `Sous Enveloppe ${sousEnveloppeItem.sousEnveloppe}`, value: `${sousEnveloppeItem.total} € (${sousEnveloppeItem.pourcentage}%)` });
+        result.push({ key: `Sous Enveloppe ${sousEnveloppeItem.sousEnveloppe}`, value: `${sousEnveloppeItem.total} € (${convertFloatToComma(sousEnveloppeItem.pourcentage)}%)` });
 
         // Traiter les modes de délégation
         sousEnveloppeItem.modesDeDélégation.forEach((modeDeDélégationItem) => {
           result.push({
             key: `${modeDeDélégationItem.modeDeDélégation}`,
-            value: `${modeDeDélégationItem.montantNotifié} € (${modeDeDélégationItem.pourcentage}%)`,
+            value: `${modeDeDélégationItem.montantNotifié} € (${convertFloatToComma(modeDeDélégationItem.pourcentage)}%)`,
           });
         });
       });
@@ -296,11 +313,10 @@ export class AllocationRessourcesViewModel {
 
     const valeursDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => Math.floor(item.valeur));
     const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
-
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
 
     const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map(
-      (item: AllocationValeursAvecMotif) => `${item.motif}  (${parseFloat(item.valeur.toFixed(1))}%)`
+      (item: AllocationValeursAvecMotif) => `${item.motif} (${convertFloatToComma(parseFloat(item.valeur.toFixed(1)))}%)`
     );
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
