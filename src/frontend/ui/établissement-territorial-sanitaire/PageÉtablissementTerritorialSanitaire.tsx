@@ -88,11 +88,19 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
           <SeparatorHorizontal></SeparatorHorizontal>
+
           {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
           <>
-          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} />
-          <SeparatorHorizontal></SeparatorHorizontal>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL" />
+            <SeparatorHorizontal></SeparatorHorizontal>
           </> }
+
+          {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
+          <>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres" />
+            <SeparatorHorizontal></SeparatorHorizontal>
+          </> }
+
           <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
           
         </div>

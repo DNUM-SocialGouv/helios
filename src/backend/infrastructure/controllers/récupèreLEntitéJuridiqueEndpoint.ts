@@ -26,7 +26,6 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
 
   const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, entitéJuridique.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
 
-
   const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(
     dependencies.établissementTerritorialRattachéLoader
   );
