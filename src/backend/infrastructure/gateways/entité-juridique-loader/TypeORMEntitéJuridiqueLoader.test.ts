@@ -53,7 +53,6 @@ describe("Entité juridique loader", () => {
 
   beforeEach(async () => {
     await clearAllTables(await orm);
-    await dateMiseÀJourFichierSourceRepository.insert(DateMiseÀJourFichierSourceModelTestBuilder.créePourTousLesFichiers());
   });
 
   afterAll(async () => {
