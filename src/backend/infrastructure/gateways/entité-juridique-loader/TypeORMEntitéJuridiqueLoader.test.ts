@@ -1,6 +1,7 @@
 import { Repository } from "typeorm";
 
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
+import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
@@ -34,6 +35,7 @@ describe("Entité juridique loader", () => {
   let autresActivitesRepository: Repository<AutreActivitéSanitaireModel>;
   let reconnaissanceContractuelleRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
   let equipementMaterielLourdRepository: Repository<ÉquipementMatérielLourdSanitaireModel>;
+  let allocationRessourceRepository: Repository<AllocationRessourceModel>;
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -46,6 +48,7 @@ describe("Entité juridique loader", () => {
     autresActivitesRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
     reconnaissanceContractuelleRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
     equipementMaterielLourdRepository = (await orm).getRepository(ÉquipementMatérielLourdSanitaireModel);
+    allocationRessourceRepository = (await orm).getRepository(AllocationRessourceModel);
   });
 
   beforeEach(async () => {
@@ -572,6 +575,46 @@ describe("Entité juridique loader", () => {
         expect(equipementMaterielLourdSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
         expect(equipementMaterielLourdSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(equipementMaterielLourdSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+      });
+    });
+
+    describe("Allocation de ressource", () => {
+
+      it("recuperer la liste des allocations de ressource", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.DIAMANT_MEN_HAPI,
+          }),
+        ]);
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await allocationRessourceRepository.insert(
+          EntitéJuridiqueModelTestBuilder.créeAllocationRessourceEntiteJuridique({
+            numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
+            année: 2020
+          })
+        );
+        await allocationRessourceRepository.insert(
+          EntitéJuridiqueModelTestBuilder.créeAllocationRessourceEntiteJuridique({
+            numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
+            année: 2021
+          })
+        );
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const allocationRessourceEj = await entiteJuridiqueLoader.chargeAllocationRessource(numéroFinessEntitéJuridique);
+
+        // THEN
+
+        expect(allocationRessourceEj.dateMiseÀJourSource).toBe("2022-05-14");
+        expect(allocationRessourceEj.data).toHaveLength(2);
+        expect(allocationRessourceEj.data[0].année).toBe(2020);
+        expect(allocationRessourceEj.data[0].allocationRessoure).toHaveLength(1);
+        expect(allocationRessourceEj.data[1].année).toBe(2021);
       });
     });
   });

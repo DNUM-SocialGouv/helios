@@ -8,8 +8,8 @@ export class AllocationRessourceETModel {
     @Column({ name: "annee", type: "int" })
     public année!: number;
 
-    @Column({ length: 9, name: "numero_finess_entite_juridique" })
-    public numero_finess_etablissement_territorial!: string;
+    @Column({ length: 9, name: "numero_finess_etablissement_territorial" })
+    public numeroFinessEtablissementTerritorial!: string;
 
     @Column({ name: "mois", type: "varchar" })
     public mois!: string;
