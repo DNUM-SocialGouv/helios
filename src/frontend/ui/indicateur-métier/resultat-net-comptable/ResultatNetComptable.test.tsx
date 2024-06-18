@@ -11,6 +11,11 @@ import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 
 const { wording } = fakeFrontDependencies;
 
+const allocationRessourceMockData = {
+  dateMiseÀJourSource: '20/20/2020',
+  data: [],
+}
+
 describe("Graphique ResultatNetComptable", () => {
   let graphiqueTest: GraphiqueTest;
   let viewModel: ResultatNetComptableViewModel;
@@ -96,6 +101,7 @@ describe("Graphique ResultatNetComptable", () => {
       // GIVEN
       const budget = new EntitéJuridiqueBudgetFinanceViewModel(
         [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
+        allocationRessourceMockData,
         wording
       );
       // WHEN
@@ -113,6 +119,7 @@ describe("Graphique ResultatNetComptable", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2, resultatNetComptable: 10 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4, resultatNetComptable: 30 }),
         ],
+        allocationRessourceMockData,
         wording
       );
       // WHEN
@@ -136,6 +143,7 @@ describe("Graphique ResultatNetComptable", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
         ],
+        allocationRessourceMockData,
         wording
       );
       // WHEN

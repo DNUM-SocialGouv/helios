@@ -1,0 +1,39 @@
+.histogramme_horizontal_row_container {
+  width: 100%;
+}
+
+.histogramme_horizontal_row_container ul {
+  margin: 3px 0 0 0;
+}
+
+.histogramme_horizontal_row_container ul li {
+  display: inline;
+}
+
+.histogramme_horizontal_row_container ul li div {
+  display: inline-block;
+}
+
+.barHistogramme {
+  color: transparent;
+  user-select: none;
+  height: 23px;
+  border-left: 1px solid var(--border-default-grey);
+}
+
+.motif_number {
+  font-weight: bold;
+}
+
+.darkBlue {
+  background-color: var(--blue-france-sun-113-625);
+}
+
+.lightBlue {
+  background-color: #6a6af4;
+}
+
+.darkBlue:hover,
+.lightBlue:hover {
+  background-color: #284dc7;
+}

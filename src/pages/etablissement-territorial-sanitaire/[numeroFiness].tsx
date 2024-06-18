@@ -55,7 +55,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         codeProfiles
       )) as ÉtablissementTerritorialSanitaire;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
-      return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
+
+      return {
+        props: {
+          établissementTerritorial,
+          rechercheResult: rechercheResult,
+        },
+      };
     } else {
       return { notFound: true };
     }

@@ -17,7 +17,11 @@ export class EntitéJuridiqueViewModel {
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
     this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
-    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(entitéJuridique.budgetFinance, wording);
+    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
+      entitéJuridique.budgetFinance,
+      entitéJuridique.allocationRessource,
+      wording
+    );
     this.entitéJuridiqueAutorisationsCapacitesViewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       entitéJuridique.autorisationsEtCapacites.capacités,
       entitéJuridique.autorisationsEtCapacites.autorisationsActivités,
@@ -57,19 +61,17 @@ export class EntitéJuridiqueViewModel {
   }
 
   public get dateOuvertureEntitéJuridique(): string {
-    if(this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.value)
-    {
+    if (this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.value) {
       return StringFormater.formatDate(this.entitéJuridique.dateOuverture.value);
     }
-    return "Non renseigné"
+    return "Non renseigné";
   }
 
   public get dateDeMiseÀJourOuvertureEntitéJuridique(): string {
-    if(this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.dateMiseÀJourSource)
-    {
+    if (this.entitéJuridique.dateOuverture && this.entitéJuridique.dateOuverture.dateMiseÀJourSource) {
       return StringFormater.formatDate(this.entitéJuridique.dateOuverture.dateMiseÀJourSource);
     }
-    return "Non renseigné"
+    return "Non renseigné";
   }
 
   public get numéroFiness(): string {

@@ -5,6 +5,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
     équivalences_diamant_quo_san_finance_buget_finance_helios,
     index_du_bloc_budget_et_finances_entite_juridique,
+    index_du_bloc_budget_et_finances_etablissement_territorial
 )
 
 NOMBRE_D_ANNEES_BUDGET_FINANCE = 5
@@ -20,6 +21,18 @@ def transform_les_donnees_budget_finance_entite_juridique(
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios))
         .drop_duplicates(subset=index_du_bloc_budget_et_finances_entite_juridique)
         .set_index(index_du_bloc_budget_et_finances_entite_juridique)
+    )
+
+def transform_les_donnees_budget_finance_etablissement_territorial(
+    données_quo_san_finance: pd.DataFrame, numéros_finess_des_etablissements_territoriaux_connus: pd.DataFrame
+) -> pd.DataFrame:
+    est_dans_finess = données_quo_san_finance["Finess ET"].isin(numéros_finess_des_etablissements_territoriaux_connus["numero_finess_etablissement_territorial"])
+    données_dernieres_5_annees = filtre_les_données_sur_les_n_dernières_années(données_quo_san_finance, NOMBRE_D_ANNEES_BUDGET_FINANCE)
+    return (
+        données_dernieres_5_annees[est_dans_finess]
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios))
+        .drop_duplicates(subset=index_du_bloc_budget_et_finances_etablissement_territorial)
+        .set_index(index_du_bloc_budget_et_finances_etablissement_territorial)
     )
 
 def extrais_les_donnees_entites_juridiques(data):

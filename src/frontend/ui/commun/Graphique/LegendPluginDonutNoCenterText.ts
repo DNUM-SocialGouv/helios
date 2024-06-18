@@ -1,10 +1,10 @@
 import { Chart as ChartJS } from "chart.js";
 
-import { StringFormater } from "../StringFormater";
+//import { StringFormater } from "../../commun/StringFormater";
 
 
 export function construisLePluginDeLaLegendeDonut() {
-  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
+  function créeLeLibelléPourLaLégende(/*chart: ChartJS,*/ libellé: any): HTMLLIElement {
 
     const conteneur = document.createElement("li");
 
@@ -19,6 +19,7 @@ export function construisLePluginDeLaLegendeDonut() {
     libelléCaseÀCocher.htmlFor = libellé.text;
 
     const handleCheckboxChange = () => {
+      /*
       chart.toggleDataVisibility(libellé.index);
       // @ts-ignore
       const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
@@ -32,7 +33,7 @@ export function construisLePluginDeLaLegendeDonut() {
       }
       // @ts-ignore
       chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
-      chart.update();
+      chart.update();*/
     }
 
     caseÀCocher.addEventListener('change', handleCheckboxChange);
@@ -46,7 +47,7 @@ export function construisLePluginDeLaLegendeDonut() {
     const texteDuLibellé = document.createTextNode(libellé.text);
     libelléCaseÀCocher.appendChild(texteDuLibellé);
 
-    conteneur.appendChild(caseÀCocher);
+   // conteneur.appendChild(caseÀCocher);
     conteneur.appendChild(libelléCaseÀCocher);
     return conteneur;
   }
@@ -65,7 +66,7 @@ export function construisLePluginDeLaLegendeDonut() {
       const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
       libellésDeLaLégende?.forEach((libellé) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
+        const libelléDeLégende = créeLeLibelléPourLaLégende(/*chart,*/ libellé);
         légende.appendChild(libelléDeLégende);
       });
     },

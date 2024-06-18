@@ -1,3 +1,4 @@
+import { IAllocationRessources } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
@@ -6,19 +7,24 @@ import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux"
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
+import { AllocationRessourcesViewModel } from "./AllocationRessourcesViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 export class EntitéJuridiqueBudgetFinanceViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
+  public allocationRessources: AllocationRessourcesViewModel;
   public resultatNetComptable: ResultatNetComptableViewModel;
   private wording: Wording;
   public NOMBRE_ANNEES = 5;
   public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
 
-  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], allocationRessources: IAllocationRessources, wording: Wording) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
+
+    this.allocationRessources = new AllocationRessourcesViewModel(allocationRessources, wording);
+
     this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
     this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance);
     this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceEntiteJuridique(budgetFinance, wording);
@@ -28,7 +34,6 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     const years = this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
     const anneesTriees = years.sort((année1, année2) => année2 - année1);
     return anneesTriees[0];
-    //return this.budgetEtFinance[this.budgetEtFinance.length - 1]?.année;
   }
 
   budgetEtFinanceEnCours(annéeEnCours: number): EntitéJuridiqueBudgetFinance {
@@ -37,9 +42,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
     return (
-      !this.budgetEtFinance ||
-      this.budgetEtFinance.length === 0 ||
+      (!this.budgetEtFinance && !this.allocationRessources) ||
+      (this.budgetEtFinance.length === 0 && this.allocationRessources.allocationRessourcesData.data.length) ||
       (this.compteDeResultatVide() &&
+        this.allocationRessources.vide() &&
         !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() &&
         !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() &&
         !this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné)
@@ -49,6 +55,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public get lesDonnéesBudgetairePasRenseignee(): string[] {
     const nonRenseignees = [];
     if (this.compteDeResultatVide()) nonRenseignees.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
+    if (this.allocationRessources.vide()) nonRenseignees.push(this.wording.ALLOCATION_DE_RESSOURCES);
     if (!this.resultatNetComptable.auMoinsUnResultatNetRenseigné()) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
     if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
     if (!this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné()) nonRenseignees.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
@@ -243,6 +250,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public get lesDonnéesBudgetairePasAutorisés(): string[] {
     const nonAutorisés = [];
     if (!this.compteDeResultatEstIlAutorisé) nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
+    if (!this.allocationRessources.autorisé) nonAutorisés.push(this.wording.ALLOCATION_DE_RESSOURCES);
     if (!this.resultatNetComptable.resultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
     if (!this.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
     if (!this.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé) nonAutorisés.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);

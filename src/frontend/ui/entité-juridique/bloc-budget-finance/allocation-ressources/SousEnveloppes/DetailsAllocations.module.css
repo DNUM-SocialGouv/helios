@@ -1,0 +1,108 @@
+.bigContainer{
+  border-left: 1px solid var(--border-default-grey);
+  padding-left: 30px;
+  min-height: 275px;
+}
+
+.repBigTitle{
+  font-weight: bold;
+  margin-bottom: 25px;
+  margin-top: 12px;
+}
+
+.envContainer {
+  margin-bottom: 5px;
+  text-transform: capitalize;
+  display: flex;
+}
+.envTitle {
+  min-width: 170px;
+  max-width: 170px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: small;
+}
+.envTotal {
+  padding: 5px 0 0 5px;
+  font-size: small;
+}
+.envTotal2 {
+  font-size: small;
+}
+
+.titleContainer
+{
+  width:100%;
+}
+
+.subEnvContainer {
+  margin-bottom: 3px;
+  padding-left: 22px;
+  text-transform: capitalize;
+}
+
+.subEnvTitle {
+  font-size: small;
+}
+
+.modesDeDelegationContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+}
+
+.modesDeDelegationItem {
+  text-transform: capitalize;
+  box-sizing: border-box;
+  
+  font-size: small;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 600px) {
+  .modesDeDelegationItem {
+    flex: 1 1 calc(50% - 10px);
+  }
+}
+
+@media (max-width: 400px) {
+  .modesDeDelegationItem {
+    flex: 1 1 100%;
+  }
+}
+
+.titleDetails {
+  display: inline-flex;
+  width: 100%;
+  cursor: pointer;
+}
+
+.titleDetails:hover {
+  background-color: white;
+}
+
+.titleDetails::before,
+.titleDetails::after {
+  margin-top: 5px;
+}
+
+.totalSousEnveloppe {
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.carreSousEnveloppe {
+  min-width: 18px;
+  min-height: 18px;
+  width: 18px;
+  height: 18px;
+  user-select: none;
+  margin-right: 5px;
+  margin-top: 2px;
+  border-radius: 30%;
+}
+
+.envContent {
+  min-width: 470px;
+  max-width: 470px;
+}
