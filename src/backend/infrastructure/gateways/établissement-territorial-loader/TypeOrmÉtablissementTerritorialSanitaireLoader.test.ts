@@ -1,6 +1,7 @@
 import { Repository } from "typeorm";
 
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
+import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
@@ -49,6 +50,7 @@ describe("Établissement territorial sanitaire loader", () => {
   let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
   let inspectionsEtControlesModelRepository: Repository<InspectionsControlesETModel>;
   let budgetEtFinancesSanitaireRepository: Repository<BudgetEtFinancesSanitaireModel>;
+  let allocationRessourceRepository: Repository<AllocationRessourceETModel>;
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -64,6 +66,7 @@ describe("Établissement territorial sanitaire loader", () => {
     evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
     inspectionsEtControlesModelRepository = (await orm).getRepository(InspectionsControlesETModel);
     budgetEtFinancesSanitaireRepository = (await orm).getRepository(BudgetEtFinancesSanitaireModel);
+    allocationRessourceRepository = (await orm).getRepository(AllocationRessourceETModel);
   });
 
   beforeEach(async () => {
@@ -897,6 +900,46 @@ describe("Établissement territorial sanitaire loader", () => {
           tauxDeCafNetSan: 0.2,
         } as EntitéJuridiqueBudgetFinance,
       ]);
+    });
+  });
+
+  describe("Allocation de ressource", () => {
+
+    it("recuperer la liste des allocations de ressource", async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorialSanitaire,
+        })
+      );
+
+      const allocationRessource = new AllocationRessourceETModel();
+      allocationRessource.numeroFinessEtablissementTerritorial = numéroFinessÉtablissementTerritorialSanitaire;
+      allocationRessource.année = 2020;
+      allocationRessource.enveloppe = "MIGAC";
+      allocationRessource.sousEnveloppe = "MIG";
+      allocationRessource.mois = "1/2022";
+      allocationRessource.modeDelegation = "BASE";
+      allocationRessource.montant = 53643;
+
+      await allocationRessourceRepository.insert(allocationRessource);
+
+
+      // WHEN
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const allocationRessourceEt = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeAllocationRessource(numéroFinessÉtablissementTerritorialSanitaire);
+
+      // THEN
+
+      expect(allocationRessourceEt.dateMiseÀJourSource).toBe("2022-02-02");
+      expect(allocationRessourceEt.data).toHaveLength(1);
+      expect(allocationRessourceEt.data[0].année).toBe(2020);
+      expect(allocationRessourceEt.data[0].allocationRessoure).toHaveLength(1);
+      expect(allocationRessourceEt.data[0].allocationRessoure[0].enveloppe).toBe("MIGAC");
+
     });
   });
 });

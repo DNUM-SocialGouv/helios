@@ -21,29 +21,31 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
 };
 
 export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): EntitéJuridique => {
-    const activités = filterActiviteEJ(result.activités, profil.activités);
-    const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
-    const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
+  const activités = filterActiviteEJ(result.activités, profil.activités);
+  const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
+  const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
+  const allocationRessoure = result.allocationRessource;
 
-    return {
-        adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
-        adresseNuméroVoie: profil.identité.adresse === 'ok' ? result.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseTypeVoie: profil.identité.adresse === 'ok' ? result.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseVoie: profil.identité.adresse === 'ok' ? result.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-        catégorisation: result.catégorisation,
-        libelléStatutJuridique: profil.identité.statut_EJ === 'ok' ? result.libelléStatutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessEntitéJuridique: result.numéroFinessEntitéJuridique,
-        raisonSociale: profil.identité.nom === 'ok' ? result.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSocialeCourte: profil.identité.nom === 'ok' ? result.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
-        siren: profil.identité.siret === 'ok' ? result.siren : { 'dateMiseÀJourSource': '', value: '' },
-        téléphone: profil.identité.télEtEmail === 'ok' ? result.téléphone : { 'dateMiseÀJourSource': '', value: '' },
-        codeRegion: result.codeRegion,
-        activités: activités,
-        autorisationsEtCapacites: autorisationsEtCapacites,
-        budgetFinance: budgetFinance,
-        // to change "télEtEmail" by "dateOuverture"
-        dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
-    };
+  return {
+    adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
+    adresseNuméroVoie: profil.identité.adresse === 'ok' ? result.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseTypeVoie: profil.identité.adresse === 'ok' ? result.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseVoie: profil.identité.adresse === 'ok' ? result.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
+    catégorisation: result.catégorisation,
+    libelléStatutJuridique: profil.identité.statut_EJ === 'ok' ? result.libelléStatutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessEntitéJuridique: result.numéroFinessEntitéJuridique,
+    raisonSociale: profil.identité.nom === 'ok' ? result.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSocialeCourte: profil.identité.nom === 'ok' ? result.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
+    siren: profil.identité.siret === 'ok' ? result.siren : { 'dateMiseÀJourSource': '', value: '' },
+    téléphone: profil.identité.télEtEmail === 'ok' ? result.téléphone : { 'dateMiseÀJourSource': '', value: '' },
+    codeRegion: result.codeRegion,
+    activités: activités,
+    autorisationsEtCapacites: autorisationsEtCapacites,
+    budgetFinance: budgetFinance,
+    allocationRessource: allocationRessoure,
+    // to change "télEtEmail" by "dateOuverture"
+    dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+  };
 }
 
 
@@ -54,44 +56,45 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
 
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-
+  const allocationRessource = result.allocationRessource;
   return {
     identité: identité,
     activités: activités,
     autorisationsEtCapacités: autorisationsEtCapacités,
     qualite: qualite,
     budgetFinance: budgetFinance,
+    allocationRessource,
     appartientAEtablissementsSantePrivesIntérêtsCollectif: result.appartientAEtablissementsSantePrivesIntérêtsCollectif,
   };
 };
 
 const filterIdentiteSanitaire = (identite: any, profil: any) => {
-    const filtredIdentite = {
-        adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
-        adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-        catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : '',
-        courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
-        dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
-        libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
-        siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
-        typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
-        statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        codeRegion: identite.codeRegion,
-        // to change "télEtEmail" by "dateOuverture"
-        dateOuverture:  profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
-    }
-    return filtredIdentite;
+  const filtredIdentite = {
+    adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
+    adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
+    catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : '',
+    courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
+    dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
+    libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
+    siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
+    typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
+    statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    codeRegion: identite.codeRegion,
+    // to change "télEtEmail" by "dateOuverture"
+    dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+  }
+  return filtredIdentite;
 }
 
 const filterActiviteSanitaire = (activites: any, profil: any) => {
@@ -138,32 +141,32 @@ const filterQualiteSanitaire = (qualite: any, profil: any) => {
 };
 
 const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
-    const filtredIdentite = {
-        adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
-        adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
-        adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-        catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-        courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
-        dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
-        libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
-        numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : '',
-        raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
-        siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
-        typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
-        raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
-        statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-        estMonoÉtablissement: profil.estMonoÉtablissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-        codeRegion: identite.codeRegion,
-        dateOuverture:  profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
-    }
-    return filtredIdentite;
+  const filtredIdentite = {
+    adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
+    adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
+    adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
+    catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : { 'dateMiseÀJourSource': '', value: '' },
+    courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
+    dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
+    libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
+    numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : '',
+    raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
+    siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
+    typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
+    raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
+    statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    estMonoÉtablissement: profil.estMonoÉtablissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
+    codeRegion: identite.codeRegion,
+    dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+  }
+  return filtredIdentite;
 }
 
 

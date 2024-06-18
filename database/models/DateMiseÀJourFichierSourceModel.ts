@@ -16,6 +16,7 @@ export enum FichierSource {
   DIAMANT_ANN_CA_EJ_ET = "ann_ca_ej_et",
   DIAMANT_ANN_ERRD_EJ = "ann_errd_ej",
   DIAMANT_QUO_SAN_FINANCE = "quo_san_finance",
+  DIAMANT_MEN_HAPI = "men_hapi",
   SIREC = "sirec",
   SIVSS = "sivss",
   SIICEA = "siicea"
