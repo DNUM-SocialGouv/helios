@@ -334,11 +334,10 @@ export class WordingFr implements Wording {
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
   readonly ALLOCATION_DE_RESSOURCES: string = "Allocation de ressources";
-  readonly DOTATIONS_URGENCES: string = "Dotations urgences";
+
   readonly POURCENTAGE: string = "Pourcentage";
   readonly REPARTITION_DES_ENVELOPPES: string = "Répartition des enveloppes";
   readonly REPARTITION_DES_SOUS_ENVELOPPES: string = "Répartition des sous-enveloppes";
-  
   readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
   readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
@@ -349,11 +348,18 @@ export class WordingFr implements Wording {
   readonly BUDGET_ANNEXE: string = "Budgets Annexes";
 
   readonly DAF: string = "DAF";
+  readonly DOTATIONS_ACTIVITÉ: string = "Dotations activités";
   readonly DOTATIONS_DE_SOINS_USLD: string = "Dotations de soins USLD";
+  readonly DOTATIONS_URGENCES: string = "Dotations urgences";
   readonly FIR: string = "FIR";
   readonly FORFAITS: string = "Forfaits";
   readonly MIGAC: string = "MIGAC";
-
+  readonly ODMCO: string = "ODMCO";
+  readonly ODSV: string = "ODSV";
+  readonly OGD_PA: string = "OGD PA";
+  readonly OGD_PH: string = "OGD PH";
+  readonly OBJECTIF_QUANTIFIÉ_NATIONAL: string = "Objectif Quantifié National";
+ 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (

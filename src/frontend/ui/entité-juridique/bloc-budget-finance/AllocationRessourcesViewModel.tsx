@@ -48,11 +48,17 @@ export class AllocationRessourcesViewModel {
 
     this.couleursDuDoughnutDesAllocationDeRessource = {
       [this.wording.DAF]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: noir },
-      [this.wording.DOTATIONS_DE_SOINS_USLD]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: noir },
-      [this.wording.FIR]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: noir },
-      [this.wording.FORFAITS]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: noir },
-      [this.wording.MIGAC]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: noir },
-      [this.wording.DOTATIONS_URGENCES]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: noir },
+      [this.wording.DOTATIONS_ACTIVITÉ]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: noir },
+      [this.wording.DOTATIONS_DE_SOINS_USLD]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: noir },
+      [this.wording.DOTATIONS_URGENCES]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: noir },
+      [this.wording.FIR]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: noir },
+      [this.wording.FORFAITS]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: noir },
+      [this.wording.MIGAC]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[6], couleurDuLibellé: noir },
+      [this.wording.ODMCO]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[7], couleurDuLibellé: noir },
+      [this.wording.ODSV]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[8], couleurDuLibellé: noir },
+      [this.wording.OGD_PA]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[9], couleurDuLibellé: noir },
+      [this.wording.OGD_PH]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[10], couleurDuLibellé: noir },
+      [this.wording.OBJECTIF_QUANTIFIÉ_NATIONAL]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[11], couleurDuLibellé: noir },
     };
 
     this.annéesAvecDesAllocationDeRessource = this.lesAnnéesEffectivesDuAllocationRessources();

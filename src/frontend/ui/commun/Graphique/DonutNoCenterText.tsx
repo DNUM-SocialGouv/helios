@@ -149,8 +149,8 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
 }
 
 export const couleurDesArcsDuDonut = {
-  opaque: ["#99B3F9", "#667DCF", "#465F9D", "#2F4077", "#273563", "#161D37"],
-  //opaque: ["#a94645", "#667DCF", "#fa794a", "#006a6f", "#273563", "#a94645"],
+  opaque: ["#99B3F9", "#667DCF", "#465F9D", "#2F4077", "#273563", "#161D37", "#a94645", "#667DCF", "#fa794a", "#006a6f", "#273563", "#a94645"],
+ 
   transparent: [
     "rgba(22, 29, 55, 0.1)",
     "rgba(22, 29, 56, 0.1)",
