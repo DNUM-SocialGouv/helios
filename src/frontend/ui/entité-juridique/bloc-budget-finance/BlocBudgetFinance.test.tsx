@@ -18,7 +18,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel([], allocationRessourceMockData, wording);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
 
     // THEN
     const titre = screen.getByText(wording.INDICATEURS_VIDES);
@@ -36,7 +36,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ"/>);
 
     // THEN
     const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT_CF);
@@ -54,7 +54,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.RÉSULTAT_NET_COMPTABLE);
@@ -72,7 +72,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.RATIO_DEPENDANCE_FINANCIERE);
@@ -90,7 +90,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.TAUX_DE_CAF);
