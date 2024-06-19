@@ -86,7 +86,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} type="EJ" />
         </div>
       </>
     </main>

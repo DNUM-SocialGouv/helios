@@ -291,11 +291,17 @@ export interface Wording {
   readonly BUDGET_ANNEXE: string;
 
   readonly DAF: string;
+  readonly DOTATIONS_ACTIVITÉ: string;
   readonly DOTATIONS_DE_SOINS_USLD: string;
+  readonly DOTATIONS_URGENCES: string;
   readonly FIR: string;
   readonly FORFAITS: string;
   readonly MIGAC: string;
-  readonly DOTATIONS_URGENCES: string;
+  readonly ODMCO: string;
+  readonly ODSV: string;
+  readonly OGD_PA: string;
+  readonly OGD_PH: string;
+  readonly OBJECTIF_QUANTIFIÉ_NATIONAL: string;
 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
