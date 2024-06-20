@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailsAllocations component matches snapshot 1`] = `
+<div>
+  <div
+    class="bigContainer"
+  >
+    <div
+      class="repBigTitle"
+    >
+      Mocked Repartition des sous enveloppes
+    </div>
+    <div
+      class="envContainer"
+      data-testid="show-details"
+    >
+      <div
+        class="envTitle"
+      >
+        Enveloppe Enveloppe 1
+      </div>
+      <div
+        class="envContent"
+      >
+        <span
+          aria-controls="Enveloppe 1"
+          aria-expanded="false"
+          class="titleDetails fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-left fr-icon-arrow-down-s-line"
+          data-fr-opened="false"
+          data-testid="show-details-title"
+          icon-direction="left"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="titleContainer"
+          >
+            <div
+              class="titleDetails"
+            >
+              <div
+                class="histogramme_horizontal_row_container"
+                style="width: 80%;"
+              >
+                <ul>
+                  <li>
+                    <div
+                      class="barHistogramme"
+                      data-testid="bar-Sous Enveloppe 1"
+                      style="width: 50%; background-color: rgb(153, 179, 249);"
+                    >
+                      i
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <span
+              class="envTotal2"
+            >
+              1 000
+               €
+            </span>
+          </div>
+        </span>
+        <ul
+          class="fr-collapse niveau3"
+          id="Enveloppe 1"
+        >
+          <div
+            class="subEnvContainer"
+            data-testid="show-details"
+          >
+            <div
+              class="envTitle"
+            />
+            <div
+              class="envContent"
+            >
+              <span
+                aria-controls="Enveloppe 1Sous Enveloppe 1"
+                aria-expanded="false"
+                class="titleDetails fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-right fr-icon-arrow-down-s-line"
+                data-fr-opened="false"
+                data-testid="show-details-title"
+                icon-direction="right"
+                role="button"
+                tabindex="0"
+              >
+                <div
+                  class="carreSousEnveloppe"
+                  style="background-color: rgb(153, 179, 249); color: rgb(153, 179, 249);"
+                >
+                  i
+                </div>
+                <span
+                  class="subEnvTitle"
+                >
+                  Sous enveloppe 
+                  Sous Enveloppe 1
+                   
+                  <span
+                    class="totalSousEnveloppe"
+                  >
+                     
+                    500
+                     € (
+                    50
+                    %)
+                     
+                  </span>
+                   
+                </span>
+              </span>
+              <ul
+                class="fr-collapse niveau3"
+                id="Enveloppe 1Sous Enveloppe 1"
+              >
+                <div
+                  class="modesDeDelegationContainer"
+                >
+                  <div
+                    class="modesDeDelegationItem"
+                  >
+                    Mode 1
+                     : 
+                    200
+                     € (
+                    20
+                    %)
+                  </div>
+                  <div
+                    class="modesDeDelegationItem"
+                  >
+                    Mode 2
+                     : 
+                    300
+                     € (
+                    30
+                    %)
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
