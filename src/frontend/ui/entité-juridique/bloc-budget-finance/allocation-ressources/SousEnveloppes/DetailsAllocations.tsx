@@ -24,13 +24,14 @@ const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: S
     (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
   }
   data-fr-opened={isOpen}
+  data-testid="show-details-title"
   icon-direction={direction}
   onClick={() => {
     setIsOpen(!isOpen);
-  }}
-  onKeyDown={() => {}} 
+  }} 
+  onKeyDown={() => {}}
   role="button"
-  tabIndex={0}
+  tabIndex={0} 
 >
   {children}
 </span>
@@ -41,8 +42,8 @@ const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: S
 type ShowDetailsProps = Readonly<{ dataTitle: ReactElement; children: any; id: string; className: string; dataName?: string; directionIcone?: string }>;
 const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIcone = "right" }: ShowDetailsProps) => {
   return (
-    <div className={className}>
-      <div className={styles["envTitle"]}>{/*<button aria-controls={id} aria-expanded="false" data-fr-js-collapse-button="true" >*/}{dataName}{/*</button>*/}</div>
+    <div className={className} data-testid="show-details">
+      <div className={styles["envTitle"]}>{dataName}</div>
       <div className={styles["envContent"]}>
         <ShowDetailsTitle direction={directionIcone} for={id}>
           {dataTitle}
