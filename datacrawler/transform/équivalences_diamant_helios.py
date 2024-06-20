@@ -236,6 +236,18 @@ index_du_bloc_budget_et_finances_etablissement_territorial: List[str] = ["numero
 colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_helios.keys())
 index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "annee"]
 
+équivalences_diamant_men_pmsi_mensumu_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess", type=str),
+    "Année": ColonneHelios(nom="annee", type=str),
+    "Mois": ColonneHelios(nom="mois", type=str),
+    "Nombre de séjours mensuels cumulés MCO": ColonneHelios(nom="mco", type=str),
+    "Nombre de séjours mensuels cumulés Médecine": ColonneHelios(nom="medecine", type=str),
+    "Nombre de séjours mensuels cumulés Chirurgie": ColonneHelios(nom="chirurgie", type=str)
+}
+
+colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())
+index__activites_mensuel: List[str] = ["numero_finess", "annee", "mois"]
+
 colonnes_a_lire_allocation_ressource_et: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_et_helios.keys())
 index_allocation_ressource_et: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
