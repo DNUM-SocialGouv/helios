@@ -1,9 +1,6 @@
-.histogramme_horizontal_row_container {
-  width: 100%;
-}
 
 .histogramme_horizontal_row_container ul {
-  margin: 3px 0 0 0;
+  margin: 3px 0 0 0; 
 }
 
 .histogramme_horizontal_row_container ul li {

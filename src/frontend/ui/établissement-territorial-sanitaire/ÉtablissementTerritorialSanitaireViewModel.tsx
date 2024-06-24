@@ -16,7 +16,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   private etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths, autorisations: any) {
     this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
       établissementTerritorial.identité,
       wording,
@@ -34,7 +34,8 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
       établissementTerritorial.budgetFinance,
       établissementTerritorial.allocationRessource,
-      wording
+      wording,
+      autorisations
     );
   }
 

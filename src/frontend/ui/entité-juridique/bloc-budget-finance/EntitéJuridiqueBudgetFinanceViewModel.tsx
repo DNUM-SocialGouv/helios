@@ -20,16 +20,18 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public NOMBRE_ANNEES = 5;
   public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
+  public autorisations : any;
 
-  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], allocationRessources: IAllocationRessources, wording: Wording) {
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], allocationRessources: IAllocationRessources, wording: Wording, autorisations: any) {
     this.wording = wording;
     this.budgetEtFinance = budgetFinance;
 
-    this.allocationRessources = new AllocationRessourcesViewModel(allocationRessources, wording);
+    this.allocationRessources = new AllocationRessourcesViewModel(allocationRessources, wording, autorisations);
 
-    this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance);
-    this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance);
-    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceEntiteJuridique(budgetFinance, wording);
+    this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance, autorisations);
+    this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance, autorisations);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceEntiteJuridique(budgetFinance, autorisations, wording);
+    this.autorisations = autorisations;
   }
 
   public get annéeInitiale() {
@@ -95,7 +97,15 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get compteDeResultatEstIlAutorisé() {
-    return this.budgetEtFinance.every(this.compteResultatAutorisé);
+    if(
+      this.autorisations && 
+      this.autorisations.budgetEtFinance && 
+      this.autorisations.budgetEtFinance.compteRésultats && 
+      this.autorisations.budgetEtFinance.compteRésultats === 'ok')
+    {
+      return true
+    }
+    return false
   }
 
   private compteResultatVide(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
@@ -118,34 +128,10 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
   }
 
-  private compteResultatAutorisé(budgetFinance: EntitéJuridiqueBudgetFinance): boolean {
-    return (
-      budgetFinance.depensesTitreIPrincipales !== "" &&
-      budgetFinance.depensesTitreIIPrincipales !== "" &&
-      budgetFinance.depensesTitreIIIPrincipales !== "" &&
-      budgetFinance.depensesTitreIVPrincipales !== "" &&
-      budgetFinance.recettesTitreIPrincipales !== "" &&
-      budgetFinance.recettesTitreIIPrincipales !== "" &&
-      budgetFinance.recettesTitreIIIPrincipales !== "" &&
-      budgetFinance.recettesTitreIGlobal !== "" &&
-      budgetFinance.recettesTitreIIGlobal !== "" &&
-      budgetFinance.recettesTitreIIIGlobal !== "" &&
-      budgetFinance.recettesTitreIVGlobal !== "" &&
-      budgetFinance.depensesTitreIGlobal !== "" &&
-      budgetFinance.depensesTitreIIGlobal !== "" &&
-      budgetFinance.depensesTitreIIIGlobal !== "" &&
-      budgetFinance.depensesTitreIVGlobal !== ""
-    );
-  }
-
   public get dateMiseÀJour(): string {
     return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
-
-  public get compteResultatEstIlAutorisé(): boolean {
-    return true;
-  }
-
+ 
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
     const depensesGlobales = [
       budget.totalDepensesGlobal,

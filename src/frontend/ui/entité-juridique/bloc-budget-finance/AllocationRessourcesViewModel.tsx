@@ -19,7 +19,12 @@ import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/Detai
 
 export function convertFloatToComma(number : number) {
   // Convert the number to a string
-  const numberString = number.toString();
+  let numberString = number.toString();
+
+  if (numberString.endsWith('.0')) {
+    numberString = numberString.slice(0, -2);
+  }
+
   // Replace the period with a comma
   return numberString.replace('.', ',');
 }
@@ -40,8 +45,9 @@ export class AllocationRessourcesViewModel {
   private readonly annéesAvecDesAllocationDeRessource: number[];
   private readonly IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES = "légende-graphique-entite-juridique-allocation-ressources";
   private wording: Wording;
+  private autorisations : any;
 
-  constructor(allocationRessources: IAllocationRessources, wording: Wording) {
+  constructor(allocationRessources: IAllocationRessources, wording: Wording, autorisations: any) {
     this.wording = wording;
 
     this.allocationRessourcesData = allocationRessources;
@@ -62,6 +68,8 @@ export class AllocationRessourcesViewModel {
     };
 
     this.annéesAvecDesAllocationDeRessource = this.lesAnnéesEffectivesDuAllocationRessources();
+
+    this.autorisations = autorisations;
   }
 
   public get annéeInitiale() {
@@ -177,21 +185,21 @@ export class AllocationRessourcesViewModel {
     const result = Object.keys(groupedData)
       .map((enveloppe) => {
         const totalEnveloppe = groupedData[enveloppe].total;
-        const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(1); // Garde deux décimales
+        const pourcentageEnveloppe = ((totalEnveloppe / totalGeneral) * 100).toFixed(1); // Garde 1 décimales
         const sousEnveloppes = groupedData[enveloppe].sousEnveloppes;
 
         // Trier les sous-enveloppes par pourcentage décroissant
         const sousEnveloppesResult = Object.keys(sousEnveloppes)
           .map((sousEnveloppe) => {
             const totalSousEnveloppe = sousEnveloppes[sousEnveloppe].total;
-            const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(1); // Garde deux décimales
+            const pourcentageSousEnveloppe = ((totalSousEnveloppe / totalEnveloppe) * 100).toFixed(1); // Garde 1 décimales
             const modesDeDélégation = sousEnveloppes[sousEnveloppe].modesDeDélégation;
 
             // Trier les modes de délégation par pourcentage décroissant
             const modesDeDélégationResult = Object.keys(modesDeDélégation)
               .map((modeDeDélégation) => {
                 const montantNotifié = modesDeDélégation[modeDeDélégation];
-                const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(1); // Garde deux décimales
+                const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(1); // Garde 1 décimales
                 return { modeDeDélégation, montantNotifié, pourcentage: pourcentageModeDeDélégation };
               })
               .sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
@@ -273,18 +281,20 @@ export class AllocationRessourcesViewModel {
   }
 
   public get estIlAutorisé() {
-    return this.allocationRessourcesData.data.every(this.autorisé);
+    if(
+      this.autorisations && 
+      this.autorisations.budgetEtFinance && 
+      this.autorisations.budgetEtFinance.allocationDeRessources && 
+      this.autorisations.budgetEtFinance.allocationDeRessources === 'ok')
+    {
+      return true
+    }
+    return false
   }
 
   public allocationRessourcesVide(allocationRessources: EntitéJuridiqueAllocationRessources): boolean {
     return allocationRessources.allocationRessoure.every(
       (row) => row.enveloppe === null && row.sousEnveloppe === null && row.modeDeDélégation === null && row.montantNotifié === null
-    );
-  }
-
-  public autorisé(allocationRessources: EntitéJuridiqueAllocationRessources): boolean {
-    return allocationRessources.allocationRessoure.every(
-      (row) => row.enveloppe !== "" && row.sousEnveloppe !== "" && row.modeDeDélégation !== "" && row.montantNotifié !== ""
     );
   }
 

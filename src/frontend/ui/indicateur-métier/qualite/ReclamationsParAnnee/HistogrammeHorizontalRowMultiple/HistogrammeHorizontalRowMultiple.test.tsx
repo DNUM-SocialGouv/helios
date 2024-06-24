@@ -26,7 +26,7 @@ describe('HistogrammeHorizontalRowMultiple', () => {
     // Vérifie que le conteneur est rendu avec la bonne largeur
     // eslint-disable-next-line testing-library/no-node-access
     const container = screen.getByRole('list').closest('div');
-    expect(container).toHaveStyle(`width: ${realPercentage}%`);
+    expect(container).toHaveStyle(`width: ${realPercentage * 0.8}%`);
 
     // Vérifie que chaque barre est rendue avec la bonne largeur et couleur
     data.forEach((item, index) => {

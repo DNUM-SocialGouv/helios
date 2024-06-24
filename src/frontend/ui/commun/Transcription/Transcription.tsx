@@ -15,6 +15,8 @@ type TableIndicateurProps = Readonly<{
 
 export const Transcription = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
+  if(identifiantUnique === "" && identifiants[0] === undefined) return null;
+
   const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
 
   return (

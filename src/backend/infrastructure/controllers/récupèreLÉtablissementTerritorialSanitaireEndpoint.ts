@@ -9,7 +9,7 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
   dependencies: Dependencies,
   numéroFinessÉtablissementTerritorialSanitaire: string,
   codeRegion: string,
-  codeProfiles: string[],
+  codeProfiles: string[]
 ): Promise<ÉtablissementTerritorialSanitaire> {
   const récupèreLÉtablissementTerritorialSanitaireUseCase = new RécupèreLÉtablissementTerritorialSanitaireUseCase(
     dependencies.établissementTerritorialSanitaireLoader,
@@ -20,12 +20,14 @@ export async function récupèreLÉtablissementTerritorialSanitaireEndpoint(
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
 
-  const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilETSanitaire)
-  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilETSanitaire)
+  const profiles = (await loginUseCase.getUserProfiles(codeProfiles)) as ProfilModel[];
+  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilETSanitaire);
+  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilETSanitaire);
 
   const profilInstitution = combineProfils(profilesInstitutionValues);
   const profilAutreReg = combineProfils(profilesAutreRegValues);
 
-  return filterEtablissementSanitaire(etablissementSanitaire, etablissementSanitaire.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
+  const autorisations = etablissementSanitaire.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg;
+
+  return { ...filterEtablissementSanitaire(etablissementSanitaire, autorisations), autorisations: autorisations };
 }
