@@ -25,9 +25,11 @@
 .envTotal {
   padding: 5px 0 0 5px;
   font-size: small;
+  font-weight: bold;
 }
 .envTotal2 {
   font-size: small;
+  font-weight: bold;
 }
 
 .titleContainer

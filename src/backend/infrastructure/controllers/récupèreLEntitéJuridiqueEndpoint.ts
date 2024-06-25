@@ -10,6 +10,7 @@ import { Dependencies } from "../dependencies";
 type EntitéJuridiqueEndpoint = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
+  autorisations: any;
 }>;
 
 export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string, codeProfiles: string[]): Promise<EntitéJuridiqueEndpoint> {
@@ -24,7 +25,8 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
   const profilInstitution = combineProfils(profilesInstitutionValues);
   const profilAutreReg = combineProfils(profilesAutreRegValues);
 
-  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, entitéJuridique.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
+  const autorisations = entitéJuridique.codeRegion === codeRegion ? profilInstitution : profilAutreReg
+  const filtredEntitéJuridique = filterEntiteJuridique(entitéJuridique, autorisations);
 
   const récupèreLesÉtablissementsTerritoriauxRattachésUseCase = new RécupèreLesÉtablissementsTerritoriauxRattachésUseCase(
     dependencies.établissementTerritorialRattachéLoader
@@ -34,5 +36,6 @@ export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependen
   return {
     entitéJuridique: filtredEntitéJuridique,
     établissementsTerritoriauxRattachés,
+    autorisations: autorisations
   };
 }

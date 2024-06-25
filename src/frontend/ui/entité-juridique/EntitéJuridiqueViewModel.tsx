@@ -14,13 +14,14 @@ export class EntitéJuridiqueViewModel {
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
   public entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
 
-  constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording) {
+  constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording, autorisations: any) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
     this.entitéJuridiqueActivitéViewModel = new EntitéJuridiqueActivitésViewModel(entitéJuridique.activités, wording);
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
       entitéJuridique.budgetFinance,
       entitéJuridique.allocationRessource,
-      wording
+      wording,
+      autorisations
     );
     this.entitéJuridiqueAutorisationsCapacitesViewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       entitéJuridique.autorisationsEtCapacites.capacités,

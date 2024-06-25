@@ -78,10 +78,10 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
                   realPercentage={enveloppe.pourcentage}
                 />
-                
-                {(enveloppe.pourcentage < 75) && <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>}
+               <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>
+          
               </div>
-              {(enveloppe.pourcentage > 75) && <span className={styles["envTotal2"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>}
+       
             </div>
           }
           directionIcone="left"
@@ -111,7 +111,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {mode.montantNotifié} € ({mode.pourcentage}%)
+                    {mode.modeDeDélégation} : {mode.montantNotifié} € ({convertFloatToComma(mode.pourcentage)}%)
                   </div>
                 ))}
         

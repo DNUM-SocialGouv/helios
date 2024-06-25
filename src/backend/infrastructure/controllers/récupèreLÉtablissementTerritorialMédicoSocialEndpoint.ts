@@ -22,12 +22,14 @@ export async function récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
 
   const loginUseCase = new LoginUseCase(dependencies.utilisateurLoader);
 
-  const profiles = await loginUseCase.getUserProfiles(codeProfiles) as ProfilModel[];
-  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilMédicoSocial)
-  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
+  const profiles = (await loginUseCase.getUserProfiles(codeProfiles)) as ProfilModel[];
+  const profilesInstitutionValues = profiles.map((profile) => profile?.value.institution.profilMédicoSocial);
+  const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial);
 
   const profilInstitution = combineProfils(profilesInstitutionValues);
   const profilAutreReg = combineProfils(profilesAutreRegValues);
 
-  return filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg);
+  const autorisations = établissementTerritorialMédicoSocial.identité.codeRegion === codeRegion ? profilInstitution : profilAutreReg;
+
+  return { ...filterEtablissementMedicoSocial(établissementTerritorialMédicoSocial, autorisations), autorisations: autorisations };
 }

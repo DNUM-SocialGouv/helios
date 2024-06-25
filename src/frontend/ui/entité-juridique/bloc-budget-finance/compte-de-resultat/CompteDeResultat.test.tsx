@@ -16,6 +16,24 @@ const allocationRessourceMockData = {
   data: [],
 }
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 describe("CompteDeResultat", () => {
   let budgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
@@ -58,7 +76,8 @@ describe("CompteDeResultat", () => {
         } as EntitéJuridiqueBudgetFinance,
       ],
       allocationRessourceMockData,
-      wording
+      wording,
+      autorisationsMockData
     );
   });
 
@@ -160,7 +179,8 @@ describe("CompteDeResultat", () => {
       const budgetFinanceVide = new EntitéJuridiqueBudgetFinanceViewModel(
         [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
         allocationRessourceMockData,
-        wording
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceVide} />);
@@ -181,7 +201,8 @@ describe("CompteDeResultat", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
         ],
         allocationRessourceMockData,
-        wording
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceAnnees} />);

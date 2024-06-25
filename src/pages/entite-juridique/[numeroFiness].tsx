@@ -18,14 +18,15 @@ type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
   rechercheResult: any;
+  autorisations: any;
 }>;
 
-export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés }: RouterProps) {
+export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés, autorisations }: RouterProps) {
   const { wording, paths } = useDependencies();
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
-  const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording);
+  const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording, autorisations);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
@@ -60,6 +61,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
           établissementsTerritoriauxRattachés: entitéJuridiqueEndpoint.établissementsTerritoriauxRattachés,
           rechercheResult: rechercheResult,
+          autorisations: entitéJuridiqueEndpoint.autorisations  
         },
       };
     } else {

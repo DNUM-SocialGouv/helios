@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { DetailsAllocations } from './DetailsAllocations'; // Adjust the import path as necessary
+import { DetailsAllocations } from './DetailsAllocations';
 
 // Mocking the useDependencies hook
 jest.mock('../../../../commun/contexts/useDependencies', () => ({
@@ -12,7 +12,6 @@ jest.mock('../../../../commun/contexts/useDependencies', () => ({
   }),
 }));
 
-// Example test data
 const testData = [
   {
     enveloppe: 'Enveloppe 1',
@@ -109,48 +108,40 @@ const testDataEdgeCases = [
 ];
 
 describe('DetailsAllocations component', () => {
-  it('renders correctly with provided data', () => {
+  it('renders correctly with provided data', async () => {
     render(<DetailsAllocations data={testData} />);
     
-    // Assert that the main title is rendered
-    expect(screen.getByText('Mocked Repartition des sous enveloppes')).toBeInTheDocument();
+    // Attendre que le titre principal soit rendu
+    await screen.findByText('Mocked Repartition des sous enveloppes');
     
-    // Assert that the envelope name is rendered
+    // Vérifier que le nom de l'enveloppe est rendu
     expect(screen.getByText('Enveloppe Enveloppe 1')).toBeInTheDocument();
     
-    // Assert that the sub-envelope name is rendered
+    // Vérifier que le nom de la sous-enveloppe est rendu
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 1')).toBeInTheDocument();
     
-    // You can add more assertions as needed to validate the rendering of specific elements/components
   });
 
-  
-
-  it('renders correctly with multiple envelopes', () => {
+  it('renders correctly with multiple envelopes', async () => {
     render(<DetailsAllocations data={testDataMultiple} />);
     
-    // Assert that both envelope titles are rendered
-    expect(screen.getByText('Enveloppe Enveloppe 1')).toBeInTheDocument();
+    // Attendre que les titres des enveloppes soient rendus
+    await screen.findByText('Enveloppe Enveloppe 1');
     expect(screen.getByText('Enveloppe Enveloppe 2')).toBeInTheDocument();
     
-    // Assert that sub-envelope titles and details are rendered for each envelope
+    // Vérifier que les titres et les détails des sous-enveloppes sont rendus pour chaque enveloppe
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 1')).toBeInTheDocument();
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 2')).toBeInTheDocument();
- 
   });
 
-  it('renders correctly with different percentage thresholds', () => {
+  it('renders correctly with different percentage thresholds', async () => {
     render(<DetailsAllocations data={testDataEdgeCases} />);
-    
-    // Assert based on the percentage thresholds
     expect(screen.getByText('Enveloppe Enveloppe 1')).toBeInTheDocument();
     expect(screen.getByText('Enveloppe Enveloppe 2')).toBeInTheDocument();
     expect(screen.getByText('Enveloppe Enveloppe 3')).toBeInTheDocument();
-    
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 1')).toBeInTheDocument();
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 2')).toBeInTheDocument();
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 3')).toBeInTheDocument();
-    
-  });
  
+  });
 });
