@@ -10,6 +10,7 @@ import { Dependencies } from "../dependencies";
 type EntitéJuridiqueEndpoint = Readonly<{
   entitéJuridique: EntitéJuridique;
   établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[];
+  autorisations: any;
 }>;
 
 export async function récupèreLEntitéJuridiqueEndpoint(dependencies: Dependencies, numéroFiness: string, codeRegion: string, codeProfiles: string[]): Promise<EntitéJuridiqueEndpoint> {

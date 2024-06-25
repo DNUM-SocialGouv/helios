@@ -2,6 +2,25 @@ import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/
 import { Wording } from "../../configuration/wording/Wording";
 import { EntitéJuridiqueViewModel } from "../../ui/entité-juridique/EntitéJuridiqueViewModel";
 
+
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 export class EntitéJuridiqueViewModelTestBuilder {
   static entitéJuridique: EntitéJuridique = {
     adresseAcheminement: {
@@ -72,7 +91,8 @@ export class EntitéJuridiqueViewModelTestBuilder {
         ...EntitéJuridiqueViewModelTestBuilder.entitéJuridique,
         ...champsSurchargés,
       },
-      wording
+      wording,
+      autorisationsMockData
     );
   }
 }

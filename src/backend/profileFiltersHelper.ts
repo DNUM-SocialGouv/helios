@@ -18,6 +18,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
     budgetEtFinances: budgetEtFinances,
     ressourcesHumaines: ressourcesHumaines,
     qualite: qualite,
+    autorisations: profil
   };
 };
 
@@ -67,6 +68,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
     budgetFinance: budgetFinance,
     allocationRessource: allocationRessource,
     appartientAEtablissementsSantePrivesIntérêtsCollectif: result.appartientAEtablissementsSantePrivesIntérêtsCollectif,
+    autorisations: profil
   };
 };
 
