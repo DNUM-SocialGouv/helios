@@ -457,6 +457,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   });
 
   describe("L’indicateur du taux de caf", () => {
+    // eslint-disable-next-line jest/no-commented-out-tests
     // it("affiche un tableau descriptif du taux de caf avec les trois années", () => {
     //   // WHEN
     //   renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
@@ -495,6 +496,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     //   });
     // });
 
+    // eslint-disable-next-line jest/no-commented-out-tests
     // it("affiche un tableau descriptif du taux de caf avec deux années", () => {
     //   // GIVEN
     //   const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
@@ -539,6 +541,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     //   });
     // });
 
+  // eslint-disable-next-line jest/no-commented-out-tests
   //   it("affiche un tableau descriptif du taux de caf avec une seule année", () => {
   //     // GIVEN
   //     const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
