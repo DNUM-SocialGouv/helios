@@ -567,7 +567,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   //     const valeurDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "13,5 %" });
   //     expect(valeurDeLaPremièreLigne).toBeInTheDocument();
   //   });
-  // });
+  });
 
   describe("L’indicateur du taux de vétusté construction", () => {
     it("affiche un tableau descriptif avec les trois années", () => {
