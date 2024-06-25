@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { DetailsAllocations } from './DetailsAllocations'; // Ajustez le chemin de l'importation si nécessaire
+import { DetailsAllocations } from './DetailsAllocations';
 
 // Mocking the useDependencies hook
 jest.mock('../../../../commun/contexts/useDependencies', () => ({
@@ -12,7 +12,6 @@ jest.mock('../../../../commun/contexts/useDependencies', () => ({
   }),
 }));
 
-// Exemple de données de test
 const testData = [
   {
     enveloppe: 'Enveloppe 1',
@@ -121,7 +120,6 @@ describe('DetailsAllocations component', () => {
     // Vérifier que le nom de la sous-enveloppe est rendu
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 1')).toBeInTheDocument();
     
-    // Vous pouvez ajouter d'autres assertions selon vos besoins pour valider le rendu des éléments spécifiques
   });
 
   it('renders correctly with multiple envelopes', async () => {
