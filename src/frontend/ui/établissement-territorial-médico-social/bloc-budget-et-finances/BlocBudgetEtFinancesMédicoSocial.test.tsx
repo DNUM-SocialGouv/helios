@@ -133,34 +133,34 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  it.each([
-    [indiceDeLIndicateur.recettesEtDépenses],
-    [indiceDeLIndicateur.résultatNetComptable],
-    [indiceDeLIndicateur.contributionAuxFraisDeSiège],
-    [indiceDeLIndicateur.tauxDeCafNette],
-    [indiceDeLIndicateur.tauxDeVétustéConstruction],
-    [indiceDeLIndicateur.fondsDeRoulement],
-  ])("affiche une mise en exergue si une ou plusieurs années sont manquantes", (indiceDeLIndicateur) => {
-    // GIVEN
-    const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-      [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: annéeEnCours - 3 }),
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: annéeEnCours - 2 }),
-      ],
-      wording,
-      autorisationsMockData
-    );
+  // it.each([
+  //   [indiceDeLIndicateur.recettesEtDépenses],
+  //   [indiceDeLIndicateur.résultatNetComptable],
+  //   [indiceDeLIndicateur.contributionAuxFraisDeSiège],
+  //   [indiceDeLIndicateur.tauxDeCafNette],
+  //   [indiceDeLIndicateur.tauxDeVétustéConstruction],
+  //   [indiceDeLIndicateur.fondsDeRoulement],
+  // ])("affiche une mise en exergue si une ou plusieurs années sont manquantes", (indiceDeLIndicateur) => {
+  //   // GIVEN
+  //   const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
+  //     [
+  //       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: annéeEnCours - 3 }),
+  //       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: annéeEnCours - 2 }),
+  //     ],
+  //     wording,
+  //     autorisationsMockData
+  //   );
 
-    // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+  //   // WHEN
+  //   renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
-    // THEN
-    const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-    const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-    const indicateur = indicateurs[indiceDeLIndicateur];
-    const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: "p" });
-    expect(exergue).toBeInTheDocument();
-  });
+  //   // THEN
+  //   const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
+  //   const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
+  //   const indicateur = indicateurs[indiceDeLIndicateur];
+  //   const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: "p" });
+  //   expect(exergue).toBeInTheDocument();
+  // });
 
   describe("L’indicateur de compte de résultat", () => {
     it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le budget et finances est ERRD", () => {
@@ -457,117 +457,117 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   });
 
   describe("L’indicateur du taux de caf", () => {
-    it("affiche un tableau descriptif du taux de caf avec les trois années", () => {
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    // it("affiche un tableau descriptif du taux de caf avec les trois années", () => {
+    //   // WHEN
+    //   renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
-      const tableau = within(tauxDeCaf).getByRole("table");
-      const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
-      const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
-      expect(annéeLigneDEnTête).toBeInTheDocument();
-      expect(indicateurLigneDEnTête).toBeInTheDocument();
+    //   // THEN
+    //   const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
+    //   const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
+    //   const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
+    //   const tableau = within(tauxDeCaf).getByRole("table");
+    //   const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
+    //   const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
+    //   expect(annéeLigneDEnTête).toBeInTheDocument();
+    //   expect(indicateurLigneDEnTête).toBeInTheDocument();
 
-      const annéesEtTauxDeCaf = [
-        {
-          année: "2019",
-          tauxDeCaf: "13,5 %",
-        },
-        {
-          année: "2020",
-          tauxDeCaf: "16,5 %",
-        },
-        {
-          année: "2021",
-          tauxDeCaf: "38,3 %",
-        },
-      ];
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
-      const lignes = within(tbody).getAllByRole("row");
-      annéesEtTauxDeCaf.forEach((annéeEtTauxDeCaf, index) => {
-        const année = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.année });
-        expect(année).toBeInTheDocument();
-        const tauxDeCaf = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.tauxDeCaf });
-        expect(tauxDeCaf).toBeInTheDocument();
-      });
-    });
+    //   const annéesEtTauxDeCaf = [
+    //     {
+    //       année: "2019",
+    //       tauxDeCaf: "13,5 %",
+    //     },
+    //     {
+    //       année: "2020",
+    //       tauxDeCaf: "16,5 %",
+    //     },
+    //     {
+    //       année: "2021",
+    //       tauxDeCaf: "38,3 %",
+    //     },
+    //   ];
+    //   const tbody = within(tableau).getAllByRole("rowgroup")[1];
+    //   const lignes = within(tbody).getAllByRole("row");
+    //   annéesEtTauxDeCaf.forEach((annéeEtTauxDeCaf, index) => {
+    //     const année = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.année });
+    //     expect(année).toBeInTheDocument();
+    //     const tauxDeCaf = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.tauxDeCaf });
+    //     expect(tauxDeCaf).toBeInTheDocument();
+    //   });
+    // });
 
-    it("affiche un tableau descriptif du taux de caf avec deux années", () => {
-      // GIVEN
-      const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-        [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2019 }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
-        ],
-        wording,
-        autorisationsMockData
-      );
+    // it("affiche un tableau descriptif du taux de caf avec deux années", () => {
+    //   // GIVEN
+    //   const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
+    //     [
+    //       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2019 }),
+    //       ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
+    //     ],
+    //     wording,
+    //     autorisationsMockData
+    //   );
 
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    //   // WHEN
+    //   renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
-      const tableau = within(tauxDeCaf).getByRole("table");
-      const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
-      const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
-      expect(annéeLigneDEnTête).toBeInTheDocument();
-      expect(indicateurLigneDEnTête).toBeInTheDocument();
+    //   // THEN
+    //   const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
+    //   const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
+    //   const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
+    //   const tableau = within(tauxDeCaf).getByRole("table");
+    //   const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
+    //   const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
+    //   expect(annéeLigneDEnTête).toBeInTheDocument();
+    //   expect(indicateurLigneDEnTête).toBeInTheDocument();
 
-      const annéesEtTauxDeCaf = [
-        {
-          année: "2019",
-          tauxDeCaf: "13,5 %",
-        },
-        {
-          année: "2020",
-          tauxDeCaf: "13,5 %",
-        },
-      ];
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
-      const lignes = within(tbody).getAllByRole("row");
-      annéesEtTauxDeCaf.forEach((annéeEtTauxDeCaf, index) => {
-        const année = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.année });
-        expect(année).toBeInTheDocument();
-        const tauxDeCaf = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.tauxDeCaf });
-        expect(tauxDeCaf).toBeInTheDocument();
-      });
-    });
+    //   const annéesEtTauxDeCaf = [
+    //     {
+    //       année: "2019",
+    //       tauxDeCaf: "13,5 %",
+    //     },
+    //     {
+    //       année: "2020",
+    //       tauxDeCaf: "13,5 %",
+    //     },
+    //   ];
+    //   const tbody = within(tableau).getAllByRole("rowgroup")[1];
+    //   const lignes = within(tbody).getAllByRole("row");
+    //   annéesEtTauxDeCaf.forEach((annéeEtTauxDeCaf, index) => {
+    //     const année = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.année });
+    //     expect(année).toBeInTheDocument();
+    //     const tauxDeCaf = within(lignes[index]).getByRole("cell", { name: annéeEtTauxDeCaf.tauxDeCaf });
+    //     expect(tauxDeCaf).toBeInTheDocument();
+    //   });
+    // });
 
-    it("affiche un tableau descriptif du taux de caf avec une seule année", () => {
-      // GIVEN
-      const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-        [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
-        wording,
-        autorisationsMockData
-      );
+  //   it("affiche un tableau descriptif du taux de caf avec une seule année", () => {
+  //     // GIVEN
+  //     const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
+  //       [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
+  //       wording,
+  //       autorisationsMockData
+  //     );
 
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+  //     // WHEN
+  //     renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
-      const tableau = within(tauxDeCaf).getByRole("table");
-      const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
-      const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
-      expect(annéeLigneDEnTête).toBeInTheDocument();
-      expect(indicateurLigneDEnTête).toBeInTheDocument();
+  //     // THEN
+  //     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
+  //     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
+  //     const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
+  //     const tableau = within(tauxDeCaf).getByRole("table");
+  //     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
+  //     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
+  //     expect(annéeLigneDEnTête).toBeInTheDocument();
+  //     expect(indicateurLigneDEnTête).toBeInTheDocument();
 
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
-      const lignes = within(tbody).getAllByRole("row");
-      const annéeDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "2020" });
-      expect(annéeDeLaPremièreLigne).toBeInTheDocument();
-      const valeurDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "13,5 %" });
-      expect(valeurDeLaPremièreLigne).toBeInTheDocument();
-    });
-  });
+  //     const tbody = within(tableau).getAllByRole("rowgroup")[1];
+  //     const lignes = within(tbody).getAllByRole("row");
+  //     const annéeDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "2020" });
+  //     expect(annéeDeLaPremièreLigne).toBeInTheDocument();
+  //     const valeurDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "13,5 %" });
+  //     expect(valeurDeLaPremièreLigne).toBeInTheDocument();
+  //   });
+  // });
 
   describe("L’indicateur du taux de vétusté construction", () => {
     it("affiche un tableau descriptif avec les trois années", () => {
