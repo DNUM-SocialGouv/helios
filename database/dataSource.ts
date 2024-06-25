@@ -58,11 +58,13 @@ import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-Ajou
 import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
 import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
 import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
+import { AjoutActiviteSanitaireMensuel1719306882823 } from "./migrations/1719306882823-AjoutActiviteSanitaireMensuel";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
+import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -131,7 +133,8 @@ export default new DataSource({
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
     AllocationRessourceModel,
-    AllocationRessourceETModel
+    AllocationRessourceETModel,
+    ActivitéSanitaireMensuelModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -196,6 +199,7 @@ export default new DataSource({
     AjoutTableAllocationRessourceET1718177983190,
     AjouterTableBudgetEtFinancesSanitaire1714055066913,
     AjoutBudgetEtFinanceAProfilETSanitaire1797688226682,
+    AjoutActiviteSanitaireMensuel1719306882823
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

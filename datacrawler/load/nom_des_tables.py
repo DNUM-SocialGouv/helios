@@ -21,11 +21,13 @@ TABLES_DES_EVENEMENTS_INDESIRABLES = "evenement_indesirable_etablissement_territ
 TABLES_DES_INSPECTIONS_ET_CONTROLES = "inspections_controles_etablissement_territorial"
 TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
 TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
+TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
     DIAMANT_MEN_PMSI_ANNUEL = "men_pmsi_annuel"
+    DIAMANT_MEN_PMSI_MENCUMU = "men_pmsi_mencumu"
     DIAMANT_ANN_RPU = "ann_rpu"
     DIAMANT_ANN_SAE = "ann_sae"
     DIAMANT_ANN_CA_EJ_ET = "ann_ca_ej_et"
