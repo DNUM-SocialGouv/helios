@@ -26,6 +26,7 @@ export class DnumSftpDownloadRawData implements DownloadRawData {
       "ANN_RPU",
       "ANN_SAE",
       "MEN_PMSI_ANNUEL",
+      "MEN_PMSI_MENCUMU",
       "QUO_SAN_FINANCE",
       "MEN_HAPI"
     ]
