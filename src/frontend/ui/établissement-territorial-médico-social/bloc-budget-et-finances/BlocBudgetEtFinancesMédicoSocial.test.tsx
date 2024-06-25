@@ -2,7 +2,7 @@ import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
+import { textMatch, fakeFrontDependencies, renderFakeComponent/*, annéeEnCours*/ } from "../../../test-helpers/testHelper";
 import { BlocBudgetEtFinancesMédicoSocial } from "./BlocBudgetEtFinancesMédicoSocial";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
@@ -133,6 +133,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
+  // eslint-disable-next-line jest/no-commented-out-tests
   // it.each([
   //   [indiceDeLIndicateur.recettesEtDépenses],
   //   [indiceDeLIndicateur.résultatNetComptable],
