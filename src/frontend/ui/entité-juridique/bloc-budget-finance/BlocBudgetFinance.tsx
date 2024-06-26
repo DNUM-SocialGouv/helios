@@ -25,14 +25,6 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel, type
     }
   }
 
-  if(type ===  'ET_Autres')
-  {
-    if (entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
-      return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
-   }
-  }
-
-
   return (
     <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
       {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type).length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type)} />
