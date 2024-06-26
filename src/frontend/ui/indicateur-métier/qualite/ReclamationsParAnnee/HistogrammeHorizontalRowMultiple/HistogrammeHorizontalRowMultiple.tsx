@@ -1,18 +1,7 @@
 import styles from "./HistogrammeHorizontalRowMultiple.module.css";
 
 export const colorsAllocations = [
-  "#99B3F9",
-  "#667DCF",
-  "#465F9D",
-  "#2F4077",
-  "#273563",
-  "#161D37",
-  "#a94645",
-  "#667DCF",
-  "#fa794a",
-  "#006a6f",
-  "#273563",
-  "#a94645",
+  "#6a6af4", "#000091", "#9898f8", "#aeaef9", "#2323ff", "#cbcbfa", "#a1a1f8", "#313178", "#5757ad", "#6c6cbb", "#4a4a7d", "#5e5e90", "#272747", "#518fff", "#273961", "#0078f3", "#b1c6ff", "#95b4ff", "#f4f6ff", "#dde5ff"
 ];
 
 type HistogrammeHorizontalRowMultipleProps = Readonly<{

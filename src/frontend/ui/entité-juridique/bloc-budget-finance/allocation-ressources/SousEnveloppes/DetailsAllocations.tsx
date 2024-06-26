@@ -111,7 +111,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {mode.montantNotifié} € ({convertFloatToComma(mode.pourcentage)}%)
+                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € ({convertFloatToComma(mode.pourcentage)}%)
                   </div>
                 ))}
         
