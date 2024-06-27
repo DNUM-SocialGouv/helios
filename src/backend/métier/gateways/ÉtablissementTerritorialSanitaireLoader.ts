@@ -1,3 +1,4 @@
+import { EntitéJuridiqueBudgetFinance } from "../entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialSanitaireActivité } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../entities/ÉtablissementTerritorialIdentité";
@@ -5,6 +6,7 @@ import { ÉtablissementTerritorialQualite } from "../entities/ÉtablissementTerr
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 
 export interface ÉtablissementTerritorialSanitaireLoader {
+  chargeBudgetFinance(numéroFinessÉtablissementTerritorialSanitaire: string): Promise<EntitéJuridiqueBudgetFinance[]>;
   chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]>;
   chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>;
   chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée>;

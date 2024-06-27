@@ -8,6 +8,7 @@ import { AutorisationSanitaireModel } from "../../database/models/AutorisationSa
 import { AutreActivitéSanitaireModel } from "../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesSanitaireModel } from "../../database/models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../../database/models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "../../database/models/CapacitéAutorisationSanitaireModel";
 import { CpomModel } from "../../database/models/CpomModel";
@@ -65,6 +66,7 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(CpomModel).execute();
   await orm.createQueryBuilder().delete().from(BudgetEtFinancesMédicoSocialModel).execute();
   await orm.createQueryBuilder().delete().from(BudgetEtFinancesEntiteJuridiqueModel).execute();
+  await orm.createQueryBuilder().delete().from(BudgetEtFinancesSanitaireModel).execute();
   await orm.createQueryBuilder().delete().from(RessourcesHumainesMédicoSocialModel).execute();
   await orm.createQueryBuilder().delete().from(CapacitesSanitaireEntiteJuridiqueModel).execute();
 };
@@ -72,3 +74,5 @@ export const clearAllTables = async (orm: DataSource) => {
 export const numéroFinessEntitéJuridique = "010018407";
 
 export const numéroFinessÉtablissementTerritorial = "010000040";
+
+export const numéroFinessÉtablissementTerritorialSanitaire = "010000000";

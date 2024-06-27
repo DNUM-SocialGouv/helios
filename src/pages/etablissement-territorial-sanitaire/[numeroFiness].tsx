@@ -23,6 +23,7 @@ export default function Router({ rechercheResult, établissementTerritorial }: R
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths);
+
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (

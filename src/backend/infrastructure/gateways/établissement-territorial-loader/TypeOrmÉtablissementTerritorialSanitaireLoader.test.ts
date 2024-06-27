@@ -3,6 +3,7 @@ import { Repository } from "typeorm";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
 import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
@@ -18,12 +19,19 @@ import { ÉtablissementTerritorialQualitéModelTestBuilder } from "../../../../.
 import { ÉtablissementTerritorialActivitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
+import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialTestBuilder } from "../../../test-builder/ÉtablissementTerritorialTestBuilder";
-import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
+import {
+  clearAllTables,
+  getOrm,
+  numéroFinessEntitéJuridique,
+  numéroFinessÉtablissementTerritorial,
+  numéroFinessÉtablissementTerritorialSanitaire,
+} from "../../../testHelper";
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./TypeOrmÉtablissementTerritorialSanitaireLoader";
 
 describe("Établissement territorial sanitaire loader", () => {
@@ -40,6 +48,7 @@ describe("Établissement territorial sanitaire loader", () => {
   let reclamtionsModelRepository: Repository<ReclamationETModel>;
   let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
   let inspectionsEtControlesModelRepository: Repository<InspectionsControlesETModel>;
+  let budgetEtFinancesSanitaireRepository: Repository<BudgetEtFinancesSanitaireModel>;
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -54,6 +63,7 @@ describe("Établissement territorial sanitaire loader", () => {
     reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
     evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
     inspectionsEtControlesModelRepository = (await orm).getRepository(InspectionsControlesETModel);
+    budgetEtFinancesSanitaireRepository = (await orm).getRepository(BudgetEtFinancesSanitaireModel);
   });
 
   beforeEach(async () => {
@@ -757,39 +767,39 @@ describe("Établissement territorial sanitaire loader", () => {
         ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({ numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial })
       );
       await reclamtionsModelRepository.insert([
-        ÉtablissementTerritorialQualitéModelTestBuilder.créeReclamations({ annee: 2023, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeReclamations({ annee: 2023, numéroFinessÉtablissementTerritorial }),
       ]);
 
       await evenementsIndesirablesModelRepository.insert([
-        ÉtablissementTerritorialQualitéModelTestBuilder.créeEvenementsIndesirables({ annee: 2023, numéroFinessÉtablissementTerritorial })
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeEvenementsIndesirables({ annee: 2023, numéroFinessÉtablissementTerritorial }),
       ]);
 
       await inspectionsEtControlesModelRepository.insert([
         ÉtablissementTerritorialQualitéModelTestBuilder.créeLesInspectionsEtControles({
           numéroFinessÉtablissementTerritorial,
-          dateVisite: '2022-12-19',
-          dateRapport: '2023-02-20',
+          dateVisite: "2022-12-19",
+          dateRapport: "2023-02-20",
           nombreEcart: 5,
           nombreRemarque: 6,
           injonction: 2,
           prescription: 8,
           saisineCng: 7,
-        })
+        }),
       ]);
 
       await inspectionsEtControlesModelRepository.insert([
         ÉtablissementTerritorialQualitéModelTestBuilder.créeLesInspectionsEtControles({
           numéroFinessÉtablissementTerritorial,
-          typeMission: 'Inspection',
-          themeRegional: 'P23 Contrôle de la sécurité et de la qualité de la prise en charge médicamenteuse des résidents en EHPAD',
-          dateVisite: '2022-12-19',
-          dateRapport: '2023-02-20',
+          typeMission: "Inspection",
+          themeRegional: "P23 Contrôle de la sécurité et de la qualité de la prise en charge médicamenteuse des résidents en EHPAD",
+          dateVisite: "2022-12-19",
+          dateRapport: "2023-02-20",
           nombreRemarque: 6,
           saisineCng: 7,
           saisineJuridiction: 3,
           saisineParquet: 3,
           saisineAutre: 3,
-        })
+        }),
       ]);
 
       const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
@@ -798,6 +808,95 @@ describe("Établissement territorial sanitaire loader", () => {
       const qualite = await typeOrmÉtablissementTerritorialLoader.chargeQualite(numéroFinessÉtablissementTerritorial);
       expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.créeUnBlocQualité());
     });
-  })
+  });
 
+  describe("charge les budget et finance d'une ET Sanitaire", () => {
+    it("charge les budget et finance par numero Finess ET Sanitaire", async () => {
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique: numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial: numéroFinessÉtablissementTerritorialSanitaire,
+        })
+      );
+
+      const budgetEtFinancesSanitaire = new BudgetEtFinancesSanitaireModel();
+      budgetEtFinancesSanitaire.numéroFinessEtablissementTerritorial = numéroFinessÉtablissementTerritorialSanitaire;
+      budgetEtFinancesSanitaire.année = 2022;
+      budgetEtFinancesSanitaire.depensesTitreIGlobal = -100;
+      budgetEtFinancesSanitaire.depensesTitreIIGlobal = -200;
+      budgetEtFinancesSanitaire.depensesTitreIIIGlobal = -300;
+      budgetEtFinancesSanitaire.depensesTitreIVGlobal = -400;
+      budgetEtFinancesSanitaire.recettesTitreIGlobal = 100;
+      budgetEtFinancesSanitaire.recettesTitreIIGlobal = 200;
+      budgetEtFinancesSanitaire.recettesTitreIIIGlobal = 300;
+      budgetEtFinancesSanitaire.recettesTitreIVGlobal = 400;
+      budgetEtFinancesSanitaire.depensesTitreIH = -10;
+      budgetEtFinancesSanitaire.depensesTitreIIH = -20;
+      budgetEtFinancesSanitaire.depensesTitreIIIH = -30;
+      budgetEtFinancesSanitaire.depensesTitreIVH = -40;
+      budgetEtFinancesSanitaire.recettesTitreIH = 10;
+      budgetEtFinancesSanitaire.recettesTitreIIH = 20;
+      budgetEtFinancesSanitaire.recettesTitreIIIH = 30;
+      budgetEtFinancesSanitaire.resultatNetComptableSan = 0.1;
+      budgetEtFinancesSanitaire.tauxDeCafNetteSan = 0.2;
+      budgetEtFinancesSanitaire.ratioDependanceFinanciere = 0.3;
+
+      await budgetEtFinancesSanitaireRepository.insert(budgetEtFinancesSanitaire);
+
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+
+      // WHEN
+      const budgetFinance = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeBudgetFinance(numéroFinessÉtablissementTerritorialSanitaire);
+
+      // THEN
+      expect(budgetFinance).toStrictEqual([
+        {
+          année: 2022,
+          dateMiseÀJourSource: "2022-02-02",
+          depensesTitreIGlobal: -100,
+          depensesTitreIIGlobal: -200,
+          depensesTitreIIIGlobal: -300,
+          depensesTitreIVGlobal: -400,
+          totalDepensesGlobal: -1000,
+
+          recettesTitreIGlobal: 100,
+          recettesTitreIIGlobal: 200,
+          recettesTitreIIIGlobal: 300,
+          recettesTitreIVGlobal: 400,
+          totalRecettesGlobal: 1000,
+
+          depensesTitreIPrincipales: -10,
+          depensesTitreIIPrincipales: -20,
+          depensesTitreIIIPrincipales: -30,
+          depensesTitreIVPrincipales: -40,
+          totalDepensesPrincipales: -100,
+
+          recettesTitreIPrincipales: 10,
+          recettesTitreIIPrincipales: 20,
+          recettesTitreIIIPrincipales: 30,
+          totalRecettesPrincipales: 60,
+
+          depensesTitreIAnnexe: -90,
+          depensesTitreIIAnnexe: -180,
+          depensesTitreIIIAnnexe: -270,
+          depensesTitreIVAnnexe: -360,
+          totalDepensesAnnexe: -900,
+
+          recettesTitreIAnnexe: 90,
+          recettesTitreIIAnnexe: 180,
+          recettesTitreIIIAnnexe: 270,
+          recettesTitreIVAnnexe: 400,
+          totalRecettesAnnexe: 940,
+
+          resultatNetComptable: 0.1,
+
+          ratioDependanceFinanciere: 0.3,
+
+          tauxDeCafNetSan: 0.2,
+        } as EntitéJuridiqueBudgetFinance,
+      ]);
+    });
+  });
 });

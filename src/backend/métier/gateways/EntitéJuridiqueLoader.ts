@@ -1,3 +1,4 @@
+import { AllocationRessource } from "../entities/AllocationRessource";
 import { EntitéJuridiqueIdentité } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacitéLoader } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -8,9 +9,12 @@ import { EntitéJuridiqueDeRattachement } from "../entities/établissement-terri
 export interface EntitéJuridiqueLoader {
   chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée>;
   chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement>;
+  chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean>;
 
   chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités[]>;
 
   chargeBudgetFinance(numéroFiness: string): Promise<EntitéJuridiqueBudgetFinance[]>;
   chargeAutorisationsEtCapacités(numéroFiness: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader>;
+
+  chargeAllocationRessource(numéroFiness: string): Promise<AllocationRessource>;
 }
