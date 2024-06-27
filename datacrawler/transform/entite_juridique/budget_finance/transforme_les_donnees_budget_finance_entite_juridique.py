@@ -45,44 +45,18 @@ def extrais_les_donnees_entites_juridiques(data):
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     df = pd.DataFrame(data)
     
-    # Vérifier si la colonne spécifiée existe dans les données
-    if "numero_finess_etablissement_territorial" not in df.columns:
-        print("La colonne 'numero_finess_etablissement_territorial' n'existe pas dans les données.")
-        return None
+   
+    df.drop(columns=["numero_finess_etablissement_territorial"], inplace=True)
     
-    # Filtrer les lignes où la colonne spécifiée est vide ou ""
-    df_filtre = df.loc[df["numero_finess_etablissement_territorial"].isna() | (df["numero_finess_etablissement_territorial"] == "")]
-    
-    # Supprimer la colonne spécifiée
-    df_filtre.drop(columns=["numero_finess_etablissement_territorial"], inplace=True)
-    
-    return df_filtre
+    return df
 
 
 def extrais_les_donnees_etablissements_territoriaux_sanitaires(data):
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     df = pd.DataFrame(data)
 
-    # Assurer que les champs d'ancien index deviennent des colonnes
-    df.reset_index(inplace=True)
-
-    # Vérifier si la colonne spécifiée existe dans les données
-    if "numero_finess_etablissement_territorial" not in df.columns:
-        print("La colonne 'numero_finess_etablissement_territorial' n'existe pas dans les données.")
-        return None
-    
-    # Vérifier si les colonnes spécifiées existent dans les données
-    if "numero_finess_etablissement_territorial" not in df.columns:
-        print("Les colonnes 'annee' ou 'numero_finess_etablissement_territorial' n'existent pas dans les données.")
-        return None
-    
-    # Filtrer les lignes où la colonne spécifiée n'est pas vide ou ""
-    df_filtre = df.loc[df["numero_finess_etablissement_territorial"].notna() & (df["numero_finess_etablissement_territorial"] != "")]
-
-    # Définir l'index sur les champs "annee" et "numero_finess_etablissement_territorial"
-    df_filtre.set_index(["annee", "numero_finess_etablissement_territorial"], inplace=True)
 
     # Supprimer la colonne spécifiée
-    df_filtre.drop(columns=["numero_finess_entite_juridique"], inplace=True)
+    df.drop(columns=["numero_finess_entite_juridique"], inplace=True)
 
-    return df_filtre
+    return df
