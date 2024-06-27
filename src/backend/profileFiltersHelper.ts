@@ -24,7 +24,6 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const activités = filterActiviteEJ(result.activités, profil.activités);
   const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-  const allocationRessoure = result.allocationRessource;
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -42,7 +41,6 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     activités: activités,
     autorisationsEtCapacites: autorisationsEtCapacites,
     budgetFinance: budgetFinance,
-    allocationRessource: allocationRessoure,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   };

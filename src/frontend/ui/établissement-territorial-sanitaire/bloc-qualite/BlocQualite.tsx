@@ -1,10 +1,6 @@
 import { memo } from "react";
 
-<<<<<<< HEAD
 // import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
-=======
-import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
->>>>>>> origin/develop
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
