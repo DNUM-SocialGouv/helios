@@ -17,8 +17,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
   private établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
   private établissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
+  public autorisations : any;
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths, autorisations: any) {
     this.établissementTerritorialIdentitéMédicoSocialViewModel = new ÉtablissementTerritorialMédicoSocialIdentitéViewModel(
       établissementTerritorial.identité,
       wording,
@@ -34,7 +35,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     );
     this.établissementTerritorialBudgetEtFinancesMédicoSocialViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
       établissementTerritorial.budgetEtFinances,
-      wording
+      wording,
+      autorisations
     );
     this.établissementTerritorialRessourcesHumainesMédicoSocialViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
       établissementTerritorial.ressourcesHumaines,

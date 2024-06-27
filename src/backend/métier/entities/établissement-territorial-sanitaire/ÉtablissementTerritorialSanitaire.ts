@@ -14,4 +14,5 @@ export type ÉtablissementTerritorialSanitaire = Readonly<{
   budgetFinance: EntitéJuridiqueBudgetFinance[];
   allocationRessource: AllocationRessource;
   appartientAEtablissementsSantePrivesIntérêtsCollectif: boolean;
+  autorisations: any;
 }>;

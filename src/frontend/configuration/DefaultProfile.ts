@@ -19,7 +19,8 @@ export const DefaultProfile = {
                 "tauxDeCafNette": "ok",
                 "compteRésultats": "ok",
                 "résultatNetComptable": "ok",
-                "ratioDépendanceFinancière": "ok"
+                "ratioDépendanceFinancière": "ok",
+                "allocationDeRessources": "ok"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
@@ -55,7 +56,8 @@ export const DefaultProfile = {
                 "tauxDeCafNette": "ok",
                 "compteRésultats": "ok",
                 "résultatNetComptable": "ok",
-                "ratioDépendanceFinancière": "ok"
+                "ratioDépendanceFinancière": "ok",
+                "allocationDeRessources": "ok"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
@@ -136,7 +138,8 @@ export const DefaultProfile = {
                 "tauxDeCafNette": "ok",
                 "compteRésultats": "ok",
                 "résultatNetComptable": "ok",
-                "ratioDépendanceFinancière": "ok"
+                "ratioDépendanceFinancière": "ok",
+                "allocationDeRessources": "ok"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
@@ -172,7 +175,8 @@ export const DefaultProfile = {
                 "tauxDeCafNette": "ok",
                 "compteRésultats": "ok",
                 "résultatNetComptable": "ok",
-                "ratioDépendanceFinancière": "ok"
+                "ratioDépendanceFinancière": "ok",
+                "allocationDeRessources": "ok"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",

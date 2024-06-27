@@ -28,26 +28,29 @@ export class TauxDeCafViewModel {
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
+  private readonly autorisations : any;
 
-  static fromBudgetFinanceMedicoSocial(budgetFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
+  static fromBudgetFinanceMedicoSocial(budgetFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], autorisations: any, wording: Wording) {
     const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       valeur: budget.tauxDeCafNette.valeur,
     }));
     const dateMiseÀJourSource = budgetFinance && budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
-    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording, 3);
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, autorisations, wording, 3);
   }
 
-  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], wording: Wording) {
+  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[],autorisations: any, wording: Wording) {
     const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       valeur: budget.tauxDeCafNetSan,
     }));
     const dateMiseÀJourSource = budgetFinance && budgetFinance.length > 0 ? budgetFinance[0].dateMiseÀJourSource : "";
-    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, wording);
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, autorisations, wording);
   }
 
-  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, private wording: Wording, private nombreDAnnéesParIndicateur = 5) { }
+  constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, autorisations: any, private wording: Wording, private nombreDAnnéesParIndicateur = 5) {
+    this.autorisations = autorisations;
+   }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();
@@ -56,10 +59,17 @@ export class TauxDeCafViewModel {
   }
 
   public get leTauxDeCafEstIlAutorisé(): boolean {
-    return this.tauxDeCafParAnnée.some(
-      (taux: TauxDeCaf) => taux.valeur !== ''
-    );
+    if(
+      this.autorisations && 
+      this.autorisations.budgetEtFinance && 
+      this.autorisations.budgetEtFinance.tauxDeCafNette && 
+      this.autorisations.budgetEtFinance.tauxDeCafNette === 'ok')
+    {
+      return true
+    }
+    return false
   }
+
 
   private construisLesAnnéesEtSesTaux(): number[][] {
     const valeurs: number[] = [];

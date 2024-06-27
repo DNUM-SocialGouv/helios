@@ -10,6 +10,24 @@ import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereV
 
 const { wording } = fakeFrontDependencies;
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 describe("RatioDependanceFinanciere", () => {
   let graphiqueTest: GraphiqueTest;
 
@@ -21,7 +39,7 @@ describe("RatioDependanceFinanciere", () => {
     // GIVEN
     const viewModel = new RatioDependanceFinanciereViewModel([
       mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 1, ratioDependanceFinanciere: 0.1, dateMiseÀJourSource: "20/20/2022" }),
-    ]);
+    ], autorisationsMockData);
 
     // WHEN
     renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
@@ -39,7 +57,7 @@ describe("RatioDependanceFinanciere", () => {
       // GIVEN
       viewModel = new RatioDependanceFinanciereViewModel([
         mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 1, ratioDependanceFinanciere: 0.1, dateMiseÀJourSource: "20/20/2022" }),
-      ]);
+      ], autorisationsMockData);
     });
 
     it("affiche le bouton de détail", () => {
@@ -85,7 +103,7 @@ describe("RatioDependanceFinanciere", () => {
 
     beforeEach(() => {
       // GIVEN
-      viewModel = new RatioDependanceFinanciereViewModel([]);
+      viewModel = new RatioDependanceFinanciereViewModel([], autorisationsMockData);
     });
 
     it("le graphique n'est pas affiché", () => {
@@ -107,7 +125,7 @@ describe("RatioDependanceFinanciere", () => {
           ratioDependanceFinanciere: 0.1,
           dateMiseÀJourSource: "2020-10-01",
         }),
-      ]);
+      ], autorisationsMockData);
     });
 
     it("affiche la date de mise à jour du fichier ANCRE", () => {

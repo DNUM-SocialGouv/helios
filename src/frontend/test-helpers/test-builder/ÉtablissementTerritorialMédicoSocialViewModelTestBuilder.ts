@@ -7,6 +7,24 @@ import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
     adresseAcheminement: {
@@ -576,9 +594,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
           ...champsSurchargés,
         },
         ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
+        autorisations: autorisationsMockData,
       },
       wording,
-      paths
+      paths,
+      autorisationsMockData
     );
   }
 

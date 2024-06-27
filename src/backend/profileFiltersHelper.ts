@@ -1,3 +1,4 @@
+import { AllocationRessource } from "./métier/entities/AllocationRessource";
 import { EntitéJuridique } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
@@ -17,6 +18,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
     budgetEtFinances: budgetEtFinances,
     ressourcesHumaines: ressourcesHumaines,
     qualite: qualite,
+    autorisations: profil
   };
 };
 
@@ -24,7 +26,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const activités = filterActiviteEJ(result.activités, profil.activités);
   const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-  const allocationRessoure = result.allocationRessource;
+  const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -42,7 +44,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     activités: activités,
     autorisationsEtCapacites: autorisationsEtCapacites,
     budgetFinance: budgetFinance,
-    allocationRessource: allocationRessoure,
+    allocationRessource: allocationRessource,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   };
@@ -53,18 +55,19 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const identité = filterIdentiteSanitaire(result.identité, profil.identité);
   const activités = filterActiviteSanitaire(result.activités, profil.activités);
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
-  const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
 
+  const qualite = filterQualiteSanitaire(result.qualite, profil.autorisationsEtCapacités);
+  const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-  const allocationRessource = result.allocationRessource;
   return {
     identité: identité,
     activités: activités,
     autorisationsEtCapacités: autorisationsEtCapacités,
     qualite: qualite,
     budgetFinance: budgetFinance,
-    allocationRessource,
+    allocationRessource: allocationRessource,
     appartientAEtablissementsSantePrivesIntérêtsCollectif: result.appartientAEtablissementsSantePrivesIntérêtsCollectif,
+    autorisations: profil
   };
 };
 
@@ -282,6 +285,7 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
 };
 
 const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
+
   for (const budget of budgetFinance) {
     budget.depensesTitreIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIGlobal : "";
     budget.depensesTitreIIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIIGlobal : "";
@@ -322,7 +326,23 @@ const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
     budget.ratioDependanceFinanciere = profil.ratioDépendanceFinancière === "ok" ? budget.ratioDependanceFinanciere : "";
     budget.tauxDeCafNetSan = profil.tauxDeCafNette === "ok" ? budget.tauxDeCafNetSan : "";
   }
+
   return budgetFinance;
+};
+
+const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: AllocationRessource, profil: any) => {
+
+  for (const alr of allocationRessource.data) {
+    for (const alrSub of alr.allocationRessoure) {
+      alrSub.enveloppe = profil.allocationDeRessources === "ok" ? alrSub.enveloppe : "";
+      alrSub.sousEnveloppe = profil.allocationDeRessources === "ok" ? alrSub.sousEnveloppe : "";
+      alrSub.modeDeDélégation = profil.allocationDeRessources === "ok" ? alrSub.modeDeDélégation : "";
+      {/*  @ts-ignore */ }
+      alrSub.montantNotifié = profil.allocationDeRessources === "ok" ? alrSub.montantNotifié : "";
+    }
+  }
+
+  return allocationRessource;
 };
 
 export const combineProfils = (userProfils: any[]) => {

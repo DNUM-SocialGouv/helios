@@ -14,9 +14,10 @@ type IndicateurProps = Readonly<{
   identifiant: string;
   nomDeLIndicateur: ReactChild;
   source: ReactElement;
+  prefixSelect?: string;
 }>;
 
-export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source }: IndicateurProps) => {
+export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
@@ -24,7 +25,7 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
     <li className={styles["print-only"]}>
       <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
         {nomDeLIndicateur}
-        {années ? <SelectionAnnee annees={années.liste} id={identifiant} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
+        {années ? <SelectionAnnee annees={années.liste} id={identifiant} prefix={prefixSelect} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
       </h3>
       <div className={styles["mise-a-jour-source"]}>
         <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>

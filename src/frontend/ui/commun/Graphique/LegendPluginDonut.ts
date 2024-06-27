@@ -1,6 +1,6 @@
 import { Chart as ChartJS } from "chart.js";
 
-import { StringFormater } from "../../commun/StringFormater";
+import { StringFormater } from "../StringFormater";
 
 
 export function construisLePluginDeLaLegendeDonut() {

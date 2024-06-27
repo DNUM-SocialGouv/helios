@@ -5,8 +5,10 @@ import { StringFormater } from "../../commun/StringFormater";
 export class ResultatNetComptableViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
   private NOMBRE_ANNEES = 5;
-  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[]) {
+  private autorisations: any;
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any) {
     this.budgetEtFinance = budgetFinance;
+    this.autorisations = autorisations;
   }
 
   public get dateMiseÀJour(): string {
@@ -53,8 +55,14 @@ export class ResultatNetComptableViewModel {
   }
 
   public get resultatNetComptableEstIlAutorisé(): boolean {
-    return this.resultatNetComptable().some(
-      (resultat: { année: number; valeur: string }) => resultat.valeur !== ''
-    );
+    if(
+      this.autorisations && 
+      this.autorisations.budgetEtFinance && 
+      this.autorisations.budgetEtFinance.résultatNetComptable && 
+      this.autorisations.budgetEtFinance.résultatNetComptable === 'ok')
+    {
+      return true
+    }
+    return false
   }
 }

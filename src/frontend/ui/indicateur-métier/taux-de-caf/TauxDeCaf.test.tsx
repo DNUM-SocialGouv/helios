@@ -9,6 +9,24 @@ import { TauxDeCafViewModel } from "./TauxDeCafViewModel";
 const { wording } = fakeFrontDependencies;
 let graphiqueTest: GraphiqueTest;
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 describe("Taux de CAF", () => {
   let tauxDeCafViewModel: TauxDeCafViewModel;
 
@@ -20,6 +38,7 @@ describe("Taux de CAF", () => {
         { année: annéeEnCours - 1, valeur: 0.5 },
       ],
       "10-22-2023",
+      autorisationsMockData,
       wording
     );
   });
@@ -113,7 +132,7 @@ describe("Taux de CAF", () => {
   describe("affiche des années", () => {
     it("doit afficher la mise en exergue pour les années manquantes sur les 3 dernières années", () => {
       // GIVEN
-      const budgetFinanceVide = new TauxDeCafViewModel([{ année: annéeEnCours - 2, valeur: 0.1 }], "22-10-2023", wording, 3);
+      const budgetFinanceVide = new TauxDeCafViewModel([{ année: annéeEnCours - 2, valeur: 0.1 }], "22-10-2023", autorisationsMockData, wording, 3);
       // WHEN
       renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={budgetFinanceVide} />);
 
@@ -131,6 +150,7 @@ describe("Taux de CAF", () => {
           { année: annéeEnCours - 3, valeur: 0.3 },
         ],
         "22-10-2022",
+        autorisationsMockData,
         wording,
         3
       );

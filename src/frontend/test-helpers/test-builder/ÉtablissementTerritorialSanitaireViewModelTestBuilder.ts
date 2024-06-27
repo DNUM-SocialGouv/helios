@@ -3,6 +3,25 @@ import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
+
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialSanitaire["identité"] = {
     adresseAcheminement: {
@@ -555,9 +574,14 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ...champsSurchargés,
         },
         budgetFinance:[],
+        allocationRessource: { 
+          dateMiseÀJourSource: '10/10/2020',
+          data: []
+        }
       } as any,
       wording,
-      paths
+      paths,
+      autorisationsMockData
     );
   }
 
@@ -576,9 +600,14 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
         budgetFinance:[],
+        allocationRessource: { 
+          dateMiseÀJourSource: '10/10/2020',
+          data: []
+        }
       } as any,
       wording,
-      paths
+      paths,
+      autorisationsMockData
     );
   }
 }

@@ -15,14 +15,15 @@ import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/�
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialSanitaire;
   rechercheResult: any;
+  autorisations: any;
 }>;
 
-export default function Router({ rechercheResult, établissementTerritorial }: RouterProps) {
+export default function Router({ rechercheResult, établissementTerritorial, autorisations }: RouterProps) {
   const { paths, wording } = useDependencies();
 
   if (!établissementTerritorial) return null;
 
-  const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths);
+  const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
@@ -55,7 +56,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         codeProfiles
       )) as ÉtablissementTerritorialSanitaire;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
-      return { props: { établissementTerritorial, rechercheResult: rechercheResult } };
+
+      return {
+        props: {
+          établissementTerritorial,
+          rechercheResult: rechercheResult,
+          autorisations: établissementTerritorial.autorisations
+        },
+      };
     } else {
       return { notFound: true };
     }

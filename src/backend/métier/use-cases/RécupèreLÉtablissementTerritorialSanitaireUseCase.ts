@@ -50,6 +50,7 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       budgetFinance,
       allocationRessource,
       appartientAEtablissementsSantePrivesIntérêtsCollectif: entitéJuridiqueDeRattachementEstPriveNonLucratif,
+      autorisations: {}
     };
   }
 }

@@ -11,18 +11,41 @@ import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 
 const { wording } = fakeFrontDependencies;
 
+const allocationRessourceMockData = {
+  dateMiseÀJourSource: '20/20/2020',
+  data: [],
+}
+
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 describe("Graphique ResultatNetComptable", () => {
   let graphiqueTest: GraphiqueTest;
   let viewModel: ResultatNetComptableViewModel;
 
   beforeAll(() => {
     graphiqueTest = new GraphiqueTest(wording);
-    viewModel = new ResultatNetComptableViewModel([mock<EntitéJuridiqueBudgetFinance>({ année: 2022, resultatNetComptable: 100 })]);
+    viewModel = new ResultatNetComptableViewModel([mock<EntitéJuridiqueBudgetFinance>({ année: 2022, resultatNetComptable: 100 })], autorisationsMockData);
   });
 
   it("n'affiche pas le graphique s'il n'y a pas de données", () => {
     // GIVEN
-    const emptyResultatNet = new ResultatNetComptableViewModel([]);
+    const emptyResultatNet = new ResultatNetComptableViewModel([], autorisationsMockData);
     // WHEN
     renderFakeComponent(<ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={emptyResultatNet} />);
 
@@ -96,7 +119,9 @@ describe("Graphique ResultatNetComptable", () => {
       // GIVEN
       const budget = new EntitéJuridiqueBudgetFinanceViewModel(
         [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
-        wording
+        allocationRessourceMockData,
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<ResultatNetComptable resultatNetComptableViewModel={budget.resultatNetComptable} />);
@@ -113,7 +138,9 @@ describe("Graphique ResultatNetComptable", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2, resultatNetComptable: 10 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4, resultatNetComptable: 30 }),
         ],
-        wording
+        allocationRessourceMockData,
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<ResultatNetComptable resultatNetComptableViewModel={budget.resultatNetComptable} />);
@@ -136,7 +163,9 @@ describe("Graphique ResultatNetComptable", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
         ],
-        wording
+        allocationRessourceMockData,
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<ResultatNetComptable resultatNetComptableViewModel={budgetFinanceAnnees.resultatNetComptable} />);
