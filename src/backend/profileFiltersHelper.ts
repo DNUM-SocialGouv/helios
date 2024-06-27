@@ -55,11 +55,10 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const identité = filterIdentiteSanitaire(result.identité, profil.identité);
   const activités = filterActiviteSanitaire(result.activités, profil.activités);
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
- 
+
   const qualite = filterQualiteSanitaire(result.qualite, profil.autorisationsEtCapacités);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
-
   return {
     identité: identité,
     activités: activités,
@@ -332,16 +331,16 @@ const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
 };
 
 const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: AllocationRessource, profil: any) => {
- 
-   for (const alr of allocationRessource.data) {
+
+  for (const alr of allocationRessource.data) {
     for (const alrSub of alr.allocationRessoure) {
       alrSub.enveloppe = profil.allocationDeRessources === "ok" ? alrSub.enveloppe : "";
       alrSub.sousEnveloppe = profil.allocationDeRessources === "ok" ? alrSub.sousEnveloppe : "";
       alrSub.modeDeDélégation = profil.allocationDeRessources === "ok" ? alrSub.modeDeDélégation : "";
-      {/*  @ts-ignore */}
+      {/*  @ts-ignore */ }
       alrSub.montantNotifié = profil.allocationDeRessources === "ok" ? alrSub.montantNotifié : "";
     }
-   }
+  }
 
   return allocationRessource;
 };
