@@ -64,11 +64,11 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     this.logger.info("[FINESS] La connexion au SFTP est ouverte.");
   }
 
-  private async downloadFichesIdentité() {
+  private async downloadFichesIdentité() {   
     const fichesIdentitéFiles = await this.clientSftp.list(this.simpleSftpPath, "*.xml.gz");
     const entitéJuridiqueFileName = "finess_cs1400101_stock_";
     const établissementTerritorialFileName = "finess_cs1400102_stock_";
-
+ 
     await this.downloadFile(fichesIdentitéFiles, `${this.localPath}/simple`, this.simpleSftpPath, entitéJuridiqueFileName);
 
     await this.downloadFile(fichesIdentitéFiles, `${this.localPath}/simple`, this.simpleSftpPath, établissementTerritorialFileName);
