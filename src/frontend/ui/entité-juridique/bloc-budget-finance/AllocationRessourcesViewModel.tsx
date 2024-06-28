@@ -30,8 +30,11 @@ export function convertFloatToComma(number : number) {
 }
 
 export function formatNumbuerWithSpaces(number : number) {
+
+  const numberV2 = parseFloat(number.toFixed(2))
+
   // Convertir le nombre en une chaîne de caractères
-  const numberString = number.toString();
+  const numberString = numberV2.toString();
   // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
   // La regex (?=(?:\d{3})+(?!\d)) est utilisée pour placer les espaces
   const formattedString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');

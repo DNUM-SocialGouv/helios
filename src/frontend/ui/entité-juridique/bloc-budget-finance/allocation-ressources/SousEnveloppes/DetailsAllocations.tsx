@@ -79,7 +79,6 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   realPercentage={enveloppe.pourcentage}
                 />
                <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>
-          
               </div>
        
             </div>
@@ -99,9 +98,8 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   <span className={styles["subEnvTitle"]}>
                     Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
                     <span className={styles["totalSousEnveloppe"]}>
-                      {" "}
-                      {formatNumbuerWithSpaces(sousEnveloppe.total)} € ({convertFloatToComma(sousEnveloppe.pourcentage)}%){" "}
-                    </span>{" "}
+                      {formatNumbuerWithSpaces(sousEnveloppe.total)} € ({convertFloatToComma(sousEnveloppe.pourcentage)}%)
+                    </span>
                   </span>
                 </>
               }

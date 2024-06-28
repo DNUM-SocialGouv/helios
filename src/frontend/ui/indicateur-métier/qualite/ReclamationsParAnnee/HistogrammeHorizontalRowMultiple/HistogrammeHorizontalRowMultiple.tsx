@@ -24,7 +24,7 @@ export const HistogrammeHorizontalRowMultiple = ({ data, realPercentage }: Histo
                 <div
                   className={styles["barHistogramme"]}
                   data-testid={`bar-${item.key}`}
-                  style={{ width: `${item.value}%`, backgroundColor: colorsAllocations[index] }}
+                  style={{ width: `${Math.floor(item.value)}%`, backgroundColor: colorsAllocations[index] }}
                 >
                   i
                 </div>
