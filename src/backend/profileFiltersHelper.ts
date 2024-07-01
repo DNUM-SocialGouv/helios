@@ -56,7 +56,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const activités = filterActiviteSanitaire(result.activités, profil.activités);
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
 
-  const qualite = filterQualiteSanitaire(result.qualite, profil.autorisationsEtCapacités);
+  const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   return {
