@@ -14,19 +14,21 @@ import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDe
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
   type : 'EJ' | 'ET_PNL' | 'ET_Autres'
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
-export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel, type }: BlocBudgetFinanceProps) => {
+export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel, type, opnedBloc, toggelBlocs  }: BlocBudgetFinanceProps) => {
   const { wording } = useDependencies();
 
   if(type === 'EJ' || type === 'ET_PNL') 
   {
     if (entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
-       return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
+       return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}/>;
     }
   }
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
       {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type).length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type)} />
         : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type).length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type)} /> : <></>}
 

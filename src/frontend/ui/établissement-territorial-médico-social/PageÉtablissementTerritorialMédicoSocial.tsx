@@ -8,6 +8,8 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
+import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéMédicoSocial } from "./bloc-activité/BlocActivitéMédicoSocial";
 import { BlocAutorisationEtCapacitéMédicoSocial } from "./bloc-autorisations/BlocAutorisationEtCapacitéMédicoSocial";
@@ -69,6 +71,9 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     if (backToSearchContext)
       backToSearchContext.setIsInfoPage(true);
   }, [backToSearchContext])
+
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
+
   return (
     <main className="fr-container">
       <Head>
@@ -81,20 +86,29 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           </Titre>
 
           <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+
+          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} /> 
+
           <BlocAutorisationEtCapacitéMédicoSocial
-            établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+            opnedBloc={statusBlocs[0]}
+            toggelBlocs={() => toggelBlocs(0)} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéMédicoSocial établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+          <BlocActivitéMédicoSocial opnedBloc={statusBlocs[0]} 
+           toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel}/>
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocRessourcesHumainesMédicoSocial
-            établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+            opnedBloc={statusBlocs[0]}
+            toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocBudgetEtFinancesMédicoSocial
-            établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
+            opnedBloc={statusBlocs[0]}
+            toggelBlocs={() => toggelBlocs(3)} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
           />
-          <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} />
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel} 
+           opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(4)}/>
         </div>
       </>
     </main>

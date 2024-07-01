@@ -12,19 +12,21 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
   établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
 export const BlocAutorisationEtCapacitéMédicoSocial = ({
-  établissementTerritorialAutorisationsMédicoSocialViewModel,
+  établissementTerritorialAutorisationsMédicoSocialViewModel, opnedBloc, toggelBlocs 
 }: BlocAutorisationEtCapacitéMédicoSocialProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
+    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc isMain={false} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
       {établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
         établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
           <></>}

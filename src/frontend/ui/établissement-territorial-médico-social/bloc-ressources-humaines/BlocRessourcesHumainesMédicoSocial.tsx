@@ -18,20 +18,22 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
 export const BlocRessourcesHumainesMédicoSocial = ({
-  établissementTerritorialMédicoSocialRessourcesHumainesViewModel,
+  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, opnedBloc, toggelBlocs 
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
 
   if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc isMain={false} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES}>
+    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
       {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
         établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} /> :
           <></>}
