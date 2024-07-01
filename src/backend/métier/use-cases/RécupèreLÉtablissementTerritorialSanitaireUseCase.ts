@@ -27,6 +27,7 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       numéroFinessÉtablissementTerritorialSanitaire
     );
 
+    const activitésMensuels = await this.établissementTerritorialSanitaireLoader.chargeActivitéMensuel(numéroFinessÉtablissementTerritorialSanitaire);
     const établissementTerritorialSanitaireAutorisations = await this.établissementTerritorialSanitaireLoader.chargeAutorisationsEtCapacités(
       numéroFinessÉtablissementTerritorialSanitaire
     );
@@ -41,6 +42,7 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
 
     return {
       activités: établissementTerritorialSanitaireActivités,
+      activitésMensuels,
       autorisationsEtCapacités: établissementTerritorialSanitaireAutorisations,
       qualite: établissementTerritorialSanitaireQualite,
       identité: {

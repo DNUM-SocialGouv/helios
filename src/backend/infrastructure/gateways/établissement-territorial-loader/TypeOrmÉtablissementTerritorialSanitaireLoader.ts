@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -16,6 +17,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { ActiviteSanitaireMensuel, EtablissementTerritorialSanitaireActiviteMensuel } from "../../../métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireActiviteMensuel";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
@@ -51,6 +53,34 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     )) as DateMiseÀJourFichierSourceModel;
 
     return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
+  }
+
+  async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<EtablissementTerritorialSanitaireActiviteMensuel> {
+    const activitéSanitaireMensuelModel = await (await this.orm).getRepository(ActivitéSanitaireMensuelModel).find({
+      order: { année: "ASC", mois: "ASC" },
+      where: { numeroFinessEtablissementTerritorial },
+    });
+
+    const dateDeMiseAJourMenPmsiMensuel = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_MEN_PMSI_MENCUMU,
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const activitesSanitaireMensuelCumulé = activitéSanitaireMensuelModel.map((activite) => {
+      return {
+        année: activite.année,
+        mois: activite.mois,
+        nombreJournéesPartiellesSsr: activite.nombreJournéesPartiellesSsr,
+        nombreJournéesCompletesSsr: activite.nombreJournéesCompletesSsr,
+        nombreSéjoursCompletsChirurgie: activite.nombreSéjoursCompletsChirurgie,
+        nombreSéjoursCompletsMédecine: activite.nombreSéjoursCompletsMédecine,
+        nombreSéjoursCompletsObstétrique: activite.nombreSéjoursCompletsObstétrique,
+        nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
+        nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
+        nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+      }
+    })
+
+    return this.construisActiviteMensuel(activitesSanitaireMensuelCumulé, dateDeMiseAJourMenPmsiMensuel);
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
@@ -477,6 +507,42 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       },
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));
+  }
+
+  private construisActiviteMensuel(
+    activitesSanitaireMensuelCumulé: ActiviteSanitaireMensuel[],
+    dateDeMiseAJourMenPmsiMensuel: DateMiseÀJourFichierSourceModel,
+  ): EtablissementTerritorialSanitaireActiviteMensuel {
+    const previousValues: { [key: string]: number } = {};
+    let previousYear: number | null = null;
+
+    const activitesSanitaireMensuel = activitesSanitaireMensuelCumulé.map((entry, index) => {
+      const newEntry: any = { année: entry.année, mois: entry.mois };
+
+      for (const [key, value] of Object.entries(entry)) {
+        if (key === 'année' || key === 'mois' || key === 'numeroFinessEtablissementTerritorial') {
+          continue;
+        }
+
+        if (index === 0 || entry.année !== previousYear) {
+          newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel];
+        } else {
+          newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel] - (previousValues[key] || 0);
+        }
+
+        previousValues[key] = value;
+      }
+
+      previousYear = entry.année;
+
+      return newEntry;
+    });
+    // eslint-disable-next-line no-console
+    console.log('activitesSanitaireMensuel', activitesSanitaireMensuel);
+    return {
+      dateDeMiseAJour: dateDeMiseAJourMenPmsiMensuel.dernièreMiseÀJour,
+      activitesSanitaireMensuelList: activitesSanitaireMensuel
+    };
   }
 
   private construisLesAutorisations(
