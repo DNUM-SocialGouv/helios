@@ -56,10 +56,14 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   }
 
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<EtablissementTerritorialSanitaireActiviteMensuel> {
-    const activitéSanitaireMensuelModel = await (await this.orm).getRepository(ActivitéSanitaireMensuelModel).find({
-      order: { année: "ASC", mois: "ASC" },
-      where: { numeroFinessEtablissementTerritorial },
-    });
+
+    const activitéSanitaireMensuelModel = await (await this.orm)
+      .getRepository(ActivitéSanitaireMensuelModel)
+      .createQueryBuilder("activite_sanitaire_mensuel")
+      .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
+      .orderBy('annee', 'ASC')
+      .addOrderBy('mois', 'ASC')
+      .getMany();
 
     const dateDeMiseAJourMenPmsiMensuel = (await this.chargeLaDateDeMiseÀJourModel(
       FichierSource.DIAMANT_MEN_PMSI_MENCUMU,
@@ -537,8 +541,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
 
       return newEntry;
     });
-    // eslint-disable-next-line no-console
-    console.log('activitesSanitaireMensuel', activitesSanitaireMensuel);
+
     return {
       dateDeMiseAJour: dateDeMiseAJourMenPmsiMensuel.dernièreMiseÀJour,
       activitesSanitaireMensuelList: activitesSanitaireMensuel
