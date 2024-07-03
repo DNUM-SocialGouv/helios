@@ -14,10 +14,10 @@ import { ReclamationETModel } from "../../../../../database/models/ReclamationET
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { ActiviteSanitaireMensuel, EtablissementTerritorialSanitaireActiviteMensuel } from "../../../métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireActiviteMensuel";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
@@ -41,6 +41,7 @@ import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/É
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
+import { construisActiviteMensuel } from "../entité-juridique-loader/ConstrutitActivitesMensuel";
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -55,7 +56,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
   }
 
-  async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<EtablissementTerritorialSanitaireActiviteMensuel> {
+  async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
       .getRepository(ActivitéSanitaireMensuelModel)
@@ -84,7 +85,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       }
     })
 
-    return this.construisActiviteMensuel(activitesSanitaireMensuelCumulé, dateDeMiseAJourMenPmsiMensuel);
+    return construisActiviteMensuel(activitesSanitaireMensuelCumulé, dateDeMiseAJourMenPmsiMensuel);
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {
@@ -511,41 +512,6 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       },
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));
-  }
-
-  private construisActiviteMensuel(
-    activitesSanitaireMensuelCumulé: ActiviteSanitaireMensuel[],
-    dateDeMiseAJourMenPmsiMensuel: DateMiseÀJourFichierSourceModel,
-  ): EtablissementTerritorialSanitaireActiviteMensuel {
-    const previousValues: { [key: string]: number } = {};
-    let previousYear: number | null = null;
-
-    const activitesSanitaireMensuel = activitesSanitaireMensuelCumulé.map((entry, index) => {
-      const newEntry: any = { année: entry.année, mois: entry.mois };
-
-      for (const [key, value] of Object.entries(entry)) {
-        if (key === 'année' || key === 'mois' || key === 'numeroFinessEtablissementTerritorial') {
-          continue;
-        }
-
-        if (index === 0 || entry.année !== previousYear) {
-          newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel];
-        } else {
-          newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel] - (previousValues[key] || 0);
-        }
-
-        previousValues[key] = value;
-      }
-
-      previousYear = entry.année;
-
-      return newEntry;
-    });
-
-    return {
-      dateDeMiseAJour: dateDeMiseAJourMenPmsiMensuel.dernièreMiseÀJour,
-      activitesSanitaireMensuelList: activitesSanitaireMensuel
-    };
   }
 
   private construisLesAutorisations(

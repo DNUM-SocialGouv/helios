@@ -1,4 +1,4 @@
-export type EtablissementTerritorialSanitaireActiviteMensuel = Readonly<{
+export type ActivitesSanitaireMensuel = Readonly<{
     dateDeMiseAJour: string;
     activitesSanitaireMensuelList: ActiviteSanitaireMensuel[];
 }>;

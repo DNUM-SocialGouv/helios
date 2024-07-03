@@ -25,6 +25,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   const allocationRessoure = result.allocationRessource;
+  const activitésMensuels = result.activitésMensuels;
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -40,6 +41,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     téléphone: profil.identité.télEtEmail === 'ok' ? result.téléphone : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: result.codeRegion,
     activités: activités,
+    activitésMensuels: activitésMensuels,
     autorisationsEtCapacites: autorisationsEtCapacites,
     budgetFinance: budgetFinance,
     allocationRessource: allocationRessoure,
@@ -60,6 +62,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   return {
     identité: identité,
     activités: activités,
+    activitésMensuels: result.activitésMensuels,
     autorisationsEtCapacités: autorisationsEtCapacités,
     qualite: qualite,
     budgetFinance: budgetFinance,
