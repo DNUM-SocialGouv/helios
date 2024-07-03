@@ -22,6 +22,7 @@ TABLES_DES_INSPECTIONS_ET_CONTROLES = "inspections_controles_etablissement_terri
 TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
 TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
+TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"

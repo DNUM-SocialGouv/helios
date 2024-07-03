@@ -28,7 +28,6 @@ def filter_activites_mensuels(donnees_activites_mencumu: pd.DataFrame) -> pd.Dat
             & ((donnees_activites_mencumu['Année'].str.fullmatch(year_regex, na=True)))
             & ((donnees_activites_mencumu['Année'].astype(int).between(année_de_départ, année_n_moins_1)))
             & ((donnees_activites_mencumu['Mois'].astype(int).between(1, 12)))
-            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés MCO'].astype(str).str.isnumeric())
             & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Médecine'].astype(str).str.isnumeric())
             & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Chirurgie'].astype(str).str.isnumeric())
             & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Obstétrique'].astype(str).str.isnumeric())

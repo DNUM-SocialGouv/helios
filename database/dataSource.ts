@@ -59,11 +59,13 @@ import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations
 import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
 import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
 import { AjoutActiviteSanitaireMensuel1719306882823 } from "./migrations/1719306882823-AjoutActiviteSanitaireMensuel";
+import { AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129 } from "./migrations/1719927727129-AjoutActiviteSanitaireMensuelEntiteJuridique";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
+import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
@@ -134,7 +136,8 @@ export default new DataSource({
     InspectionsControlesETModel,
     AllocationRessourceModel,
     AllocationRessourceETModel,
-    ActivitéSanitaireMensuelModel
+    ActivitéSanitaireMensuelModel,
+    ActivitéSanitaireMensuelEntiteJuridiqueModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -199,7 +202,8 @@ export default new DataSource({
     AjoutTableAllocationRessourceET1718177983190,
     AjouterTableBudgetEtFinancesSanitaire1714055066913,
     AjoutBudgetEtFinanceAProfilETSanitaire1797688226682,
-    AjoutActiviteSanitaireMensuel1719306882823
+    AjoutActiviteSanitaireMensuel1719306882823,
+    AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
