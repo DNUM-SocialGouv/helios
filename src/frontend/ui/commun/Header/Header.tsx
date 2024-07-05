@@ -200,15 +200,6 @@ export const Header = () => {
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
-                        <button
-                          onClick={() => {
-                            router.push("/change-mot-passe");
-                          }}
-                        >
-                          Mot de passe
-                        </button>
-                      </li>
-                      <li className={styles["menu-item"]}>
                         <button onClick={logOut}>{wording.DÉCONNEXION}</button>
                       </li>
                     </ul>

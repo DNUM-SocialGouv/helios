@@ -512,6 +512,7 @@ export class WordingFr implements Wording {
   readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
   readonly OLD_MOT_DE_PASSE_REINITIALISATION: string = "Mot de passe précédemment utilisé. Merci de renseigner un nouveau mot de passe unique.";
   readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
+  readonly MOT_DE_PASSE_: string = "Mot de passe";
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
@@ -542,7 +543,9 @@ export class WordingFr implements Wording {
   readonly PROJECT_TEAM: string = "Équipe projet";
 
   //  Profile page
-  readonly USER_PROFILE: string = "Mes informations";
+  readonly MES_INFORMATIONS: string = "Mes informations";
+  readonly PARAMETRAGE: string = "Paramétrage";
+  readonly MON_COMPTE: string = "Mon compte";
   readonly FIRSTNAME: string = "Prénom";
   readonly LASTNAME: string = "Nom";
   readonly EMAIL: string = "Email";

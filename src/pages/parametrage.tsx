@@ -3,8 +3,9 @@ import { useContext, useEffect } from "react";
 import { BackToSearchContext, BackToSearchContextValue } from "../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
-import { ProfilePage } from "../frontend/ui/profile/ProfilePage";
-
+import { ParametragePage } from "../frontend/ui/parametrage/ParametragePage";
+ 
+ 
 export default function Profile() {
     const { wording } = useDependencies();
     const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
@@ -23,5 +24,5 @@ export default function Profile() {
         }
     }, [backToSearchContext])
 
-    return <ProfilePage />;
+    return <ParametragePage />;
 }

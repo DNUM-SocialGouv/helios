@@ -32,6 +32,7 @@ export default NextAuth({
             institutionId: utilisateur.institution.id,
             codeRegion: utilisateur.institution.codeGeo,
             codeProfiles: utilisateur.profils,
+            test1: '0'
           };
         } catch (error) {
           return null;
@@ -53,6 +54,7 @@ export default NextAuth({
           institutionId: user.institutionId,
           codeRegion: user.codeRegion,
           codeProfiles: user.codeProfiles,
+        //  test2: '2'
         };
       }
       return token;
@@ -65,6 +67,7 @@ export default NextAuth({
       session.user.institutionId = token["institutionId"] as number;
       session.user.codeRegion = token["codeRegion"] as number;
       session.user.codeProfiles = token["codeProfiles"] as string[];
+     // session.user.test3 = '3';
       return session;
     },
   },

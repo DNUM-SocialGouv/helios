@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { Navigation } from "../commun/Navigation/Navigation";
 import styles from "./Profile.module.css";
 
 export const ProfilePage = () => {
@@ -9,9 +10,18 @@ export const ProfilePage = () => {
 
   return (
     <main className="fr-container">
+      <Navigation
+        current_url="profile"
+        data={[
+          { name: wording.MES_INFORMATIONS, url: "profile" },
+          { name: 'Mes préférences', url: "parametrage" },
+          { name: wording.MOT_DE_PASSE_, url: "change-mot-passe" },
+        ]}
+      />
+
       <div className="fr-grid-row fr-grid-row--center">
         <section className="fr-col-8 fr-mt-5w">
-          <h1 className={styles["title"]}>{wording.USER_PROFILE}</h1>
+          <h1 className={styles["title"]}>{wording.MES_INFORMATIONS}</h1>
           <div className="fr-mt-4w">
             <label className="fr-label">{wording.FIRSTNAME}</label>
             <input className="fr-input" readOnly type="text" value={data?.user?.firstname || ""} />

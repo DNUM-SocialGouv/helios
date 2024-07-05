@@ -63,4 +63,7 @@ export class UtilisateurModel {
 
   @Column({ name: "ut_modifie_par", nullable: true })
   public modifiePar!: number;
+
+  @Column({ name: "plier_blocs", nullable: false, default: false })
+  public plierBlocs!: boolean;
 }

@@ -11,8 +11,8 @@ export default function MotPasseOublie() {
 
   useBreadcrumb([
     {
-      label: wording.CHANGEMENT_MOT_PASSE_TITRE,
-      path: "",
+      label: wording.MON_COMPTE,
+      path: "/profile",
     },
   ]);
 
@@ -21,8 +21,7 @@ export default function MotPasseOublie() {
       backToSearchContext.setIsInfoPage(false);
       localStorage.clear();
     }
-  }, [backToSearchContext])
+  }, [backToSearchContext]);
 
   return <ChangePwdPage />;
 }
-

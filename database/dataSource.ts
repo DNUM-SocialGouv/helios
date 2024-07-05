@@ -58,6 +58,7 @@ import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-Ajou
 import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
 import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
 import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
+import { AjoutOptionPardefautPlierBlocs1720008938584 } from "./migrations/1720008938584-AjoutOptionPardefautPlierBlocs";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -191,6 +192,7 @@ export default new DataSource({
     AjoutFichierSourceSirec1708679781472,
     AjoutEvenementsIndesirables1710326854362,
     AjoutDateOuverture1713452627276,
+    AjoutOptionPardefautPlierBlocs1720008938584,
     AjoutTableInspectionsControles1712743083892,
     ModificationValeurProfil1797341938070,
     AjoutTableAllocationRessource1718010452960,

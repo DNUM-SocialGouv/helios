@@ -422,6 +422,7 @@ export interface Wording {
   readonly OLD_MOT_DE_PASSE_REINITIALISATION: string;
   readonly OLD_MOT_DE_PASSE: string;
   readonly MOT_DE_PASSE: string;
+  readonly MOT_DE_PASSE_: string;
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
   readonly CONFIRM_CREATE_PASSWORD: string;
@@ -453,7 +454,9 @@ export interface Wording {
   readonly PROJECT_TEAM: string;
 
   //  Profile page
-  readonly USER_PROFILE: string;
+  readonly MES_INFORMATIONS: string;
+  readonly PARAMETRAGE: string;
+  readonly MON_COMPTE: string;
   readonly FIRSTNAME: string;
   readonly LASTNAME: string;
   readonly EMAIL: string;
