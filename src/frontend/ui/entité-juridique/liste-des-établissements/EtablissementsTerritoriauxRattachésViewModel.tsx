@@ -16,10 +16,10 @@ export class EtablissementsTerritoriauxRattachésViewModel {
     this.établissementTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
       (établissement) => new ÉtablissementTerritorialRattachéViewModel(établissement, wording)
     );
-    this.établissementSanitaires = this.établissementTerritoriauxRattachésViewModels.filter(this.uniquementETSanitaires).sort(this.trierParNuméroFiness);
+    this.établissementSanitaires = this.établissementTerritoriauxRattachésViewModels.filter(this.uniquementETSanitaires).sort(this.trierParCategorieFiness);
     this.établissementMedicauxSociaux = this.établissementTerritoriauxRattachésViewModels
       .filter(this.uniquementETMedicauxSociaux)
-      .sort(this.trierParNuméroFiness);
+      .sort(this.trierParCategorieFiness);
   }
 
   public voirPlus(setVoirPlus: Dispatch<SetStateAction<boolean>>): void {
@@ -53,8 +53,8 @@ export class EtablissementsTerritoriauxRattachésViewModel {
     return this.établissementSanitaires.length > this.établissementMedicauxSociaux.length;
   }
 
-  private trierParNuméroFiness(établissement1: ÉtablissementTerritorialRattachéViewModel, établissement2: ÉtablissementTerritorialRattachéViewModel) {
-    return établissement1.numéroFiness.localeCompare(établissement2.numéroFiness);
+  private trierParCategorieFiness(établissement1: ÉtablissementTerritorialRattachéViewModel, établissement2: ÉtablissementTerritorialRattachéViewModel) {
+    return établissement1.libelléCatégorieÉtablissement.localeCompare(établissement2.libelléCatégorieÉtablissement);
   }
 
   private uniquementETMedicauxSociaux(établissement: ÉtablissementTerritorialRattachéViewModel) {
