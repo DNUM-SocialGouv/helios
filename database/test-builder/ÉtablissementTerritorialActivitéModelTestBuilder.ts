@@ -1,3 +1,4 @@
+import { ActivitéSanitaireMensuelModel } from "../models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "../models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireModel } from "../models/ActivitéSanitaireModel";
 
@@ -32,6 +33,22 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéSanitaireModel.nombreJournéesCompletePsy = champsSurchargés?.nombreJournéesCompletePsy || 60;
     activitéSanitaireModel.nombreJournéesPartiellesPsy = champsSurchargés?.nombreJournéesPartiellesPsy || 60;
     activitéSanitaireModel.nombreSéjoursHad = champsSurchargés?.nombreSéjoursHad || 60;
+    return activitéSanitaireModel;
+  }
+
+  public static créeSanitaireMensuel(champsSurchargés?: Partial<ActivitéSanitaireMensuelModel>): ActivitéSanitaireMensuelModel {
+    const activitéSanitaireModel = new ActivitéSanitaireMensuelModel();
+    activitéSanitaireModel.année = champsSurchargés?.année || 2022;
+    activitéSanitaireModel.mois = champsSurchargés?.mois || 1;
+    activitéSanitaireModel.numeroFinessEtablissementTerritorial = champsSurchargés?.numeroFinessEtablissementTerritorial || "210987665";
+    activitéSanitaireModel.nombreSéjoursPartielsMédecine = champsSurchargés?.nombreSéjoursPartielsMédecine || 60;
+    activitéSanitaireModel.nombreSéjoursPartielsObstétrique = champsSurchargés?.nombreSéjoursPartielsObstétrique || 60;
+    activitéSanitaireModel.nombreSéjoursPartielsChirurgie = champsSurchargés?.nombreSéjoursPartielsChirurgie || 60;
+    activitéSanitaireModel.nombreSéjoursCompletsMédecine = champsSurchargés?.nombreSéjoursCompletsMédecine || 60;
+    activitéSanitaireModel.nombreSéjoursCompletsObstétrique = champsSurchargés?.nombreSéjoursCompletsObstétrique || 60;
+    activitéSanitaireModel.nombreSéjoursCompletsChirurgie = champsSurchargés?.nombreSéjoursCompletsChirurgie || 60;
+    activitéSanitaireModel.nombreJournéesCompletesSsr = champsSurchargés?.nombreJournéesCompletesSsr || 60;
+    activitéSanitaireModel.nombreJournéesPartiellesSsr = champsSurchargés?.nombreJournéesPartiellesSsr || 60;
     return activitéSanitaireModel;
   }
 }
