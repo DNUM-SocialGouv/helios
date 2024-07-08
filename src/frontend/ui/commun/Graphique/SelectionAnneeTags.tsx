@@ -18,8 +18,7 @@ export const SelectionAnneeTags = ({ setAnnéeEnCours, annees, id, prefix }: lis
   if (prefix && prefix.length > 0) {
     anneesTriees = annees.map(item => prefix + ' ' + item)
   }
-  // change selected tag style
-  // test
+
   if (anneesTriees.length > 0) {
     return (
       <ul className="fr-tags-group" id={id}>

@@ -422,15 +422,10 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
-      const année = within(tauxDAbsentéisme).getByRole("combobox");
-      expect(année).toBeInTheDocument();
-      const années = within(année).getAllByRole("option");
-      expect(années[0]).toHaveAttribute("value", "2021");
-      expect(années[0].textContent).toBe("2021");
-      expect(années[1]).toHaveAttribute("value", "2020");
+      const années = within(tauxDAbsentéisme).getAllByTestId("groupe-annees");
+      expect(années[0].textContent).toBe("2019");
       expect(années[1].textContent).toBe("2020");
-      expect(années[2]).toHaveAttribute("value", "2019");
-      expect(années[2].textContent).toBe("2019");
+      expect(années[2].textContent).toBe("2021");
     });
   });
 
