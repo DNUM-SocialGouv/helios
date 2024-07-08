@@ -460,7 +460,8 @@ export interface Wording {
   readonly ORGANIZATION: string;
   readonly ROLE: string;
   readonly SUPER_ADMIN: string;
-  readonly ADMIN: string;
+  readonly ADMIN_REGIONAL: string;
+  readonly ADMINISTRATION_CENTRALE: string;
   readonly USER: string;
   readonly PROFILE: string;
 
