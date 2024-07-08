@@ -20,7 +20,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public NOMBRE_ANNEES = 5;
   public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
-  public autorisations : any;
+  public autorisations: any;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], allocationRessources: IAllocationRessources, wording: Wording, autorisations: any) {
     this.wording = wording;
@@ -36,7 +36,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get annéeInitiale() {
     const years = this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
-    const anneesTriees = years.sort((année1, année2) => année2 - année1);
+    const anneesTriees = years.sort((année1, année2) => année1 - année2);
     return anneesTriees[0];
   }
 
@@ -46,7 +46,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get lesDonnéesBudgetEtFinanceNeSontPasRenseignées() {
     return (
-      (!this.budgetEtFinance ) ||
+      (!this.budgetEtFinance) ||
       (this.budgetEtFinance.length === 0) ||
       (this.compteDeResultatVide() &&
         !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() &&
@@ -55,10 +55,9 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     );
   }
 
-  public lesDonnéesBudgetairePasRenseignee(type : Itype): string[] {
+  public lesDonnéesBudgetairePasRenseignee(type: Itype): string[] {
     const nonRenseignees = [];
-    if(type === 'EJ' || type === 'ET_PNL')
-    {
+    if (type === 'EJ' || type === 'ET_PNL') {
       if (this.compteDeResultatVide()) nonRenseignees.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
       if (!this.resultatNetComptable.auMoinsUnResultatNetRenseigné()) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
@@ -69,18 +68,17 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     return nonRenseignees;
   }
 
-  public lesDonnéesBudgetairePasAutorisés(type: Itype ): string[] {
+  public lesDonnéesBudgetairePasAutorisés(type: Itype): string[] {
     const nonAutorisés = [];
-    if(type === 'EJ' || type === 'ET_PNL')
-    {
+    if (type === 'EJ' || type === 'ET_PNL') {
       if (!this.compteDeResultatEstIlAutorisé) nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT_CF);
       if (!this.resultatNetComptable.resultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
       if (!this.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé) nonAutorisés.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
     }
-    
+
     if (!this.allocationRessources.estIlAutorisé) nonAutorisés.push(this.wording.ALLOCATION_DE_RESSOURCES);
-    
+
     return nonAutorisés;
   }
 
@@ -97,12 +95,11 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   }
 
   public get compteDeResultatEstIlAutorisé() {
-    if(
-      this.autorisations && 
-      this.autorisations.budgetEtFinance && 
-      this.autorisations.budgetEtFinance.compteRésultats && 
-      this.autorisations.budgetEtFinance.compteRésultats === 'ok')
-    {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.compteRésultats &&
+      this.autorisations.budgetEtFinance.compteRésultats === 'ok') {
       return true
     }
     return false
@@ -131,7 +128,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public get dateMiseÀJour(): string {
     return StringFormater.formatDate(this.budgetEtFinance[0]?.dateMiseÀJourSource as string);
   }
- 
+
   public dataGraphiqueCharges(budget: EntitéJuridiqueBudgetFinance): HistogrammeData {
     const depensesGlobales = [
       budget.totalDepensesGlobal,

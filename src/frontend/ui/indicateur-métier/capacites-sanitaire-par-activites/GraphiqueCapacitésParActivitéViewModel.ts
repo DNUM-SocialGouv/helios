@@ -18,7 +18,7 @@ export class GraphiqueCapacitésParActivitéViewModel implements AnneeModifiable
   constructor(private readonly capacitésSanitaire: CapacitéSanitaire[], private wording: Wording) { }
 
   public get annéeInitiale() {
-    const anneesTriees = this.annéesAvecDonnées().sort((année1, année2) => année2 - année1);
+    const anneesTriees = this.annéesAvecDonnées().sort((année1, année2) => année1 - année2);
     return anneesTriees[0];
   }
 

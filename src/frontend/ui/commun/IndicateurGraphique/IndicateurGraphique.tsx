@@ -1,7 +1,7 @@
 import { ReactChild, ReactElement, useState } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
-import { SelectionAnnee } from "../Graphique/SelectionAnnee";
+import { SelectionAnneeTags } from "../Graphique/SelectionAnneeTags";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./IndicateurGraphique.module.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
@@ -25,7 +25,6 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
     <li className={styles["print-only"]}>
       <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
         {nomDeLIndicateur}
-        {années ? <SelectionAnnee annees={années.liste} id={identifiant} prefix={prefixSelect} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
       </h3>
       <div className={styles["mise-a-jour-source"]}>
         <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
@@ -40,6 +39,7 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
           {wording.DÉTAILS}
         </button>
       </div>
+      {années ? <SelectionAnneeTags annees={années.liste} id={identifiant} prefix={prefixSelect} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
       <div className={styles["graphe"]}>{children}</div>
       <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
         {contenuInfoBulle}
