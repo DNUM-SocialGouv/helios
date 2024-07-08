@@ -74,8 +74,8 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
       const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
       expect(itemEtablissementSanitaire).toHaveLength(2);
-      expect(within(itemEtablissementSanitaire[0]).getByText("112233", { exact: false })).toBeInTheDocument();
-      expect(within(itemEtablissementSanitaire[1]).getByText("445566", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[0]).getByText("445566", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("112233", { exact: false })).toBeInTheDocument();
     });
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements sanitaire", () => {
@@ -117,8 +117,8 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const listeEtablissementSanitaire = screen.getAllByRole("list")[0];
       const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
       expect(itemEtablissementSanitaire).toHaveLength(2);
-      expect(within(itemEtablissementSanitaire[0]).getByText("112233", { exact: false })).toBeInTheDocument();
-      expect(within(itemEtablissementSanitaire[1]).getByText("445566", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[0]).getByText("445566", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("112233", { exact: false })).toBeInTheDocument();
     });
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {
@@ -166,14 +166,14 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
       const itemEtablissementMedicauxSociaux = within(listeEtablissementMedicauxSociaux).getAllByRole("listitem");
       expect(itemEtablissementMedicauxSociaux).toHaveLength(3);
       expect(within(itemEtablissementMedicauxSociaux[0]).getByText("445566", { exact: false })).toBeInTheDocument();
-      expect(within(itemEtablissementMedicauxSociaux[1]).getByText("556677", { exact: false })).toBeInTheDocument();
-      expect(within(itemEtablissementMedicauxSociaux[2]).getByText("778899", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementMedicauxSociaux[1]).getByText("778899", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementMedicauxSociaux[2]).getByText("556677", { exact: false })).toBeInTheDocument();
 
       const listeEtablissementSanitaire = screen.getAllByRole("list")[1];
       const itemEtablissementSanitaire = within(listeEtablissementSanitaire).getAllByRole("listitem");
       expect(itemEtablissementSanitaire).toHaveLength(2);
-      expect(within(itemEtablissementSanitaire[0]).getByText("222333", { exact: false })).toBeInTheDocument();
-      expect(within(itemEtablissementSanitaire[1]).getByText("999888", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[0]).getByText("999888", { exact: false })).toBeInTheDocument();
+      expect(within(itemEtablissementSanitaire[1]).getByText("222333", { exact: false })).toBeInTheDocument();
     });
 
     it("n'affiche pas le tag ni la liste s'il n'y a pas d'établissements médicaux sociaux", () => {

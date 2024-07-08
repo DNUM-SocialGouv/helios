@@ -79,16 +79,19 @@ describe("Établissement territorial rattaché loader", () => {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: numéroFinessET1,
         raisonSocialeCourte: "HP VILLENEUVE DASCQ",
+        libelléCatégorieÉtablissement: "A"
       },
       {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: numéroFinessET3,
         raisonSocialeCourte: "CH NANTUA v2",
+        libelléCatégorieÉtablissement: "B"
       },
       {
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         numéroFiness: numéroFinessET2,
         raisonSocialeCourte: "CH NANTUA",
+        libelléCatégorieÉtablissement: "C"
       },
     ];
     expect(établissementsTerritoriaux).toStrictEqual(établissementsTerritoriauxAttendus);
