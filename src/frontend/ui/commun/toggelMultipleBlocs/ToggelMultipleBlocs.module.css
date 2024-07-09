@@ -1,5 +1,5 @@
-.toggelMultipleBtnContainer button
-{
-  float: right;
-  margin-bottom: 10px;
+.toggelMultipleBtnContainer {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 1rem;
 }
