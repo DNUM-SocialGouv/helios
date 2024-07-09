@@ -12,13 +12,13 @@ describe("La récupération des établissements territoriaux rattachés à une e
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: "111222333",
         raisonSocialeCourte: "Établissement 1",
-        libelléCatégorieÉtablissement: "A"
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)"
       },
       {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         numéroFiness: "333222111",
         raisonSocialeCourte: "Établissement 2",
-        libelléCatégorieÉtablissement: "B"
+        libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)"
       },
     ];
     const mockedRécupèreParFinessDeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(établissementsTerritoriauxAttendus);

@@ -49,12 +49,12 @@ const établissementMédicoSocial: ÉtablissementTerritorialRattaché = {
   domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
   numéroFiness: "010000040",
   raisonSocialeCourte: "CH NANTUA",
-  libelléCatégorieÉtablissement: "A"
+  libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)"
 };
 
 const établissementSanitaire: ÉtablissementTerritorialRattaché = {
   domaine: DomaineÉtablissementTerritorial.SANITAIRE,
   numéroFiness: "590782553",
   raisonSocialeCourte: "HP VILLENEUVE DASCQ",
-  libelléCatégorieÉtablissement: "B"
+  libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)"
 };
