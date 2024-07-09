@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-sort-props */
 import Head from "next/head";
 import { useRef, useCallback, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -8,6 +9,8 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
+import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
@@ -71,6 +74,8 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
       backToSearchContext.setIsInfoPage(true);
   }, [backToSearchContext])
 
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
+
   return (
     <main className="fr-container">
       <Head>
@@ -82,26 +87,34 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
             {établissementTerritorialSanitaireViewModel.titre}
           </Titre>
           <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
+
+          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} /> 
+
           <BlocAutorisationEtCapacitéSanitaire
             établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+            opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} 
+           opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(1)}/>
           <SeparatorHorizontal></SeparatorHorizontal>
 
           {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL" />
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL" 
+             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(2)}/>
             <SeparatorHorizontal></SeparatorHorizontal>
           </> }
 
           {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres" />
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres" 
+             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(3)}/>
             <SeparatorHorizontal></SeparatorHorizontal>
           </> }
 
-          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} />
+          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} 
+           opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(4)}/>
           
         </div>
       </>

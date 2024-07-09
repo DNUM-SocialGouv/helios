@@ -16,17 +16,19 @@ import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./Éta
 
 type BlocActivitéMédicoSocialProps = Readonly<{
   établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel }: BlocActivitéMédicoSocialProps) => {
+export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel, opnedBloc, toggelBlocs  }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
+    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
+    <Bloc  opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}>
       {établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés} /> :
         établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees} /> :
           <></>}

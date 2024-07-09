@@ -12,9 +12,11 @@ import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridi
 
 type BlocAutorisationsCapacitesProps = Readonly<{
   entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel }: BlocAutorisationsCapacitesProps) => {
+export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
   const { wording } = useDependencies();
 
   if (
@@ -24,11 +26,11 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
     entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées() &&
     entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()
   ) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}/>;
   }
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}>
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
       {entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
         entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
           <></>}

@@ -562,4 +562,8 @@ export class WordingFr implements Wording {
   readonly INSTITUTION: string = "Institution";
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
   readonly ADMIN_PAGE: string = "Console d’administration";
+
+  //Blocs
+  readonly TOUT_REPLIER: string = "Tout replier";
+  readonly TOUT_DEPLIER: string = "Tout déplier";
 }
