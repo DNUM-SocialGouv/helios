@@ -23,7 +23,7 @@ export const SelectionAnneeTags = ({ setAnnéeEnCours, annees, id, prefix }: lis
     return (
       <ul className="fr-tags-group" id={id}>
         {anneesTriees.map((annee, index) => (
-          <li key={index}>
+          <li data-testid="groupe-annees" key={index}>
             <button
               className={`fr-tag ${selectedIndex === index ? styles["tag-active"] : ""}`}
               onClick={() => {
