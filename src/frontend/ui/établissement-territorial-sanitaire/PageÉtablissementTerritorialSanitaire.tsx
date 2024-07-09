@@ -74,7 +74,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
       backToSearchContext.setIsInfoPage(true);
   }, [backToSearchContext])
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4);
 
   return (
     <main className="fr-container">
@@ -88,34 +88,34 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           </Titre>
           <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} /> 
+          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
           <BlocAutorisationEtCapacitéSanitaire
             établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} 
-           opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(1)}/>
+          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel}
+            opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
           <SeparatorHorizontal></SeparatorHorizontal>
 
-          {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
-          <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL" 
-             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(2)}/>
-            <SeparatorHorizontal></SeparatorHorizontal>
-          </> }
+          {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+            <>
+              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL"
+                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
+              <SeparatorHorizontal></SeparatorHorizontal>
+            </>}
 
-          {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif && 
-          <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres" 
-             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(3)}/>
-            <SeparatorHorizontal></SeparatorHorizontal>
-          </> }
+          {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+            <>
+              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres"
+                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
+              <SeparatorHorizontal></SeparatorHorizontal>
+            </>}
 
-          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel} 
-           opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(4)}/>
-          
+          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
+            opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
+
         </div>
       </>
     </main>

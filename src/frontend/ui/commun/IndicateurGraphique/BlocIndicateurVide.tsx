@@ -5,7 +5,7 @@ export function BlocIndicateurVide({ title, opnedBloc, toggelBlocs }: { title: s
   const { wording } = useDependencies();
 
   return (
-    <Bloc isExpandable={false} opnedBloc={opnedBloc} titre={title} toggelBlocs={toggelBlocs}>
+    <Bloc  /* isExpandable={false} */ opnedBloc={opnedBloc} titre={title} toggelBlocs={toggelBlocs}>
       {wording.INDICATEURS_VIDES}
     </Bloc>
   );
