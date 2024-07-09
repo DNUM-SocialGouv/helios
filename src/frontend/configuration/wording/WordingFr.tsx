@@ -206,7 +206,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
 
   // Bloc Autorisation
-  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";
+  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
   readonly AUTORISATIONS_SANITAIRE: string = "Autorisations de soins";
   readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
@@ -359,7 +359,7 @@ export class WordingFr implements Wording {
   readonly OGD_PA: string = "OGD PA";
   readonly OGD_PH: string = "OGD PH";
   readonly OBJECTIF_QUANTIFIÉ_NATIONAL: string = "Objectif Quantifié National";
- 
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
