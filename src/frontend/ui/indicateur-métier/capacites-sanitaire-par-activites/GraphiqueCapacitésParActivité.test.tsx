@@ -291,7 +291,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Changes les capacités par année", () => {
     let autorisationsViewModel: GraphiqueCapacitésParActivitéViewModel;
 
-    it("les deux années sont dans le select trié par ordre anté chronologique", () => {
+    it("les deux années sont dans le select trié par ordre chronologique", () => {
       // GIVEN
       autorisationsViewModel = new GraphiqueCapacitésParActivitéViewModel(
         [mock<CapacitéSanitaire>({ année: 2021 }), mock<CapacitéSanitaire>({ année: 2022 })],
@@ -301,24 +301,10 @@ describe("GraphiqueCapacitésParActivité", () => {
       // WHEN
       renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
       // THEN
-      const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
+      const indicateursAutorisationsEtCapacités = screen.getAllByTestId("groupe-annees");
       expect(indicateursAutorisationsEtCapacités).toHaveLength(2);
-      expect(indicateursAutorisationsEtCapacités[0].textContent).toBe("2022");
-      expect(indicateursAutorisationsEtCapacités[1].textContent).toBe("2021");
-    });
-
-    it("l’année la plus récente est selectionnée par défaut", () => {
-      // GIVEN
-      autorisationsViewModel = new GraphiqueCapacitésParActivitéViewModel(
-        [mock<CapacitéSanitaire>({ année: 2021 }), mock<CapacitéSanitaire>({ année: 2022 })],
-        wording
-      );
-
-      // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
-      // THEN
-      const années: HTMLOptionElement[] = screen.getAllByRole("option");
-      expect(années[0].selected).toBe(true);
+      expect(indicateursAutorisationsEtCapacités[0].textContent).toBe("2021");
+      expect(indicateursAutorisationsEtCapacités[1].textContent).toBe("2022");
     });
 
     it("n'affiche pas les années avec des capacités vides", () => {
@@ -350,7 +336,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       // WHEN
       renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
       // THEN
-      const indicateursAutorisationsEtCapacités = screen.getAllByRole("option");
+      const indicateursAutorisationsEtCapacités = screen.getAllByTestId("groupe-annees");
       expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
     });
 
@@ -372,8 +358,10 @@ describe("GraphiqueCapacitésParActivité", () => {
 
       // WHEN
       renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
-      const select = screen.getByRole("combobox");
-      fireEvent.change(select, { target: { value: "2021" } });
+      const année = screen.getByRole("button", { name: "2021" });
+
+      // WHEN
+      fireEvent.click(année);
 
       // THEN
       const tableauDesCapacités = screen.getByRole("table");

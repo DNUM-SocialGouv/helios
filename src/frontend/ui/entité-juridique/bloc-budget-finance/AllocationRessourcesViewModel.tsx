@@ -17,7 +17,7 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
 
 
-export function convertFloatToComma(number : number) {
+export function convertFloatToComma(number: number) {
   // Convert the number to a string
   let numberString = number.toString();
 
@@ -29,7 +29,7 @@ export function convertFloatToComma(number : number) {
   return numberString.replace('.', ',');
 }
 
-export function formatNumbuerWithSpaces(number : number) {
+export function formatNumbuerWithSpaces(number: number) {
 
   const numberV2 = parseFloat(number.toFixed(2))
 
@@ -48,7 +48,7 @@ export class AllocationRessourcesViewModel {
   private readonly annéesAvecDesAllocationDeRessource: number[];
   private readonly IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES = "légende-graphique-entite-juridique-allocation-ressources";
   private wording: Wording;
-  private autorisations : any;
+  private autorisations: any;
 
   constructor(allocationRessources: IAllocationRessources, wording: Wording, autorisations: any) {
     this.wording = wording;
@@ -77,16 +77,15 @@ export class AllocationRessourcesViewModel {
 
   public get annéeInitiale() {
 
-    if(this.allocationRessourcesData && this.allocationRessourcesData.data)
-      {
-        const years = this.allocationRessourcesData.data
+    if (this.allocationRessourcesData && this.allocationRessourcesData.data) {
+      const years = this.allocationRessourcesData.data
         .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
         .map((allocationRessources) => allocationRessources.année);
-        const anneesTriees = years.sort((année1, année2) => année2 - année1);
-    
-        return anneesTriees[0];
-      }
-      return 0;
+      const anneesTriees = years.sort((année1, année2) => année1 - année2);
+
+      return anneesTriees[0];
+    }
+    return 0;
   }
 
   public get dateMiseÀJour(): string {
@@ -266,8 +265,7 @@ export class AllocationRessourcesViewModel {
   }
 
   public lesAnnéesEffectivesDuAllocationRessources(): number[] {
-    if(this.allocationRessourcesData && this.allocationRessourcesData.data)
-    {
+    if (this.allocationRessourcesData && this.allocationRessourcesData.data) {
       return this.allocationRessourcesData.data
         .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
         .map((allocationRessources) => allocationRessources.année);
@@ -284,12 +282,11 @@ export class AllocationRessourcesViewModel {
   }
 
   public get estIlAutorisé() {
-    if(
-      this.autorisations && 
-      this.autorisations.budgetEtFinance && 
-      this.autorisations.budgetEtFinance.allocationDeRessources && 
-      this.autorisations.budgetEtFinance.allocationDeRessources === 'ok')
-    {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.allocationDeRessources &&
+      this.autorisations.budgetEtFinance.allocationDeRessources === 'ok') {
       return true
     }
     return false

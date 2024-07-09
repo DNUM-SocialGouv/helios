@@ -1,8 +1,9 @@
+/* eslint-disable jest/no-commented-out-tests */
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { textMatch, fakeFrontDependencies, renderFakeComponent/*, annéeEnCours*/ } from "../../../test-helpers/testHelper";
+import { textMatch, fakeFrontDependencies, renderFakeComponent, /*annéeEnCours */ } from "../../../test-helpers/testHelper";
 import { BlocBudgetEtFinancesMédicoSocial } from "./BlocBudgetEtFinancesMédicoSocial";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
@@ -36,12 +37,12 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     année: -1,
     cadreBudgétaire: -1,
     chargesEtProduits: -1,
-    contributionAuxFraisDeSiège: 2,
-    fondsDeRoulement: 5,
+    contributionAuxFraisDeSiège: 5,
+    fondsDeRoulement: 8,
     recettesEtDépenses: 0,
-    résultatNetComptable: 1,
-    tauxDeCafNette: 3,
-    tauxDeVétustéConstruction: 4,
+    résultatNetComptable: 4,
+    tauxDeCafNette: 6,
+    tauxDeVétustéConstruction: 7,
   };
 
   it.each([
@@ -133,7 +134,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     expect(détails).toHaveAttribute("data-fr-opened", "false");
   });
 
-  // eslint-disable-next-line jest/no-commented-out-tests
   // it.each([
   //   [indiceDeLIndicateur.recettesEtDépenses],
   //   [indiceDeLIndicateur.résultatNetComptable],
@@ -158,13 +158,13 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   //   // THEN
   //   const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
   //   const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-  //   const indicateur = indicateurs[indiceDeLIndicateur];
+  //   const indicateur = indicateurs[indiceDeLIndicateur - 1];
   //   const exergue = within(indicateur).getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 1}`, { selector: "p" });
   //   expect(exergue).toBeInTheDocument();
   // });
 
   describe("L’indicateur de compte de résultat", () => {
-    it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le budget et finances est ERRD", () => {
+    it("affiche les années dans une liste des tags par ordre chronologique quand le budget et finances est ERRD", () => {
       // WHEN
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
@@ -172,53 +172,10 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("combobox");
-      expect(année).toBeInTheDocument();
-      const années = within(année).getAllByRole("option");
-      expect(années[0]).toHaveAttribute("value", "2021");
-      expect(années[0].textContent).toBe("2021");
-      expect(années[1]).toHaveAttribute("value", "2020");
+      const années = within(recettesEtDépenses).getAllByTestId("groupe-annees");
+      expect(années[0].textContent).toBe("2019");
       expect(années[1].textContent).toBe("2020");
-      expect(années[2]).toHaveAttribute("value", "2019");
-      expect(années[2].textContent).toBe("2019");
-    });
-
-    it("n’affiche pas les années dans une liste déroulante quand aucune donnée n’est renseignée", () => {
-      // GIVEN
-      const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-        [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({
-            année: 2019,
-            chargesEtProduits: {
-              charges: null,
-              dateMiseÀJourSource: "2022-01-01",
-              produits: null,
-            },
-          }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({
-            année: 2020,
-            recettesEtDépenses: {
-              dateMiseÀJourSource: "2022-01-01",
-              dépensesGroupe1: null,
-              dépensesGroupe2: null,
-              dépensesGroupe3: null,
-              recettesGroupe1: null,
-              recettesGroupe2: null,
-              recettesGroupe3: null,
-            },
-          }),
-        ],
-        wording,
-        autorisationsMockData
-      );
-
-      // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
-
-      // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const année = within(budgetEtFinances).queryByLabelText(wording.ANNÉE);
-      expect(année).not.toBeInTheDocument();
+      expect(années[2].textContent).toBe("2021");
     });
 
     it("affiche un tableau descriptif sur la dernière année qui est ERRD", () => {
@@ -239,23 +196,23 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const titresBudgétairesEtDépensesEtRecettes = [
         {
-          dépense: "3 254 418 €",
-          recette: "3 540 117 €",
+          dépense: "1 392 795 €",
+          recette: "1 400 085 €",
           titreBudgétaire: wording.TOTAL,
         },
         {
-          dépense: "129 491 €",
-          recette: "3 388 394 €",
+          dépense: "161 786 €",
+          recette: "1 376 745 €",
           titreBudgétaire: wording.GROUPE_I,
         },
         {
-          dépense: "2 718 457 €",
-          recette: "22 231 €",
+          dépense: "1 222 577 €",
+          recette: "23 340 €",
           titreBudgétaire: wording.GROUPE_II,
         },
         {
-          dépense: "406 469 €",
-          recette: "129 491 €",
+          dépense: "8 433 €",
+          recette: "0 €",
           titreBudgétaire: wording.GROUPE_III,
         },
       ];
@@ -308,10 +265,10 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("combobox");
+      const année = within(recettesEtDépenses).getByRole("button", { name: "2019" });
 
       // WHEN
-      fireEvent.change(année, { target: { value: "2019" } });
+      fireEvent.click(année);
 
       // THEN
       const tableau = within(recettesEtDépenses).getByRole("table");
@@ -542,35 +499,35 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     //   });
     // });
 
-  // eslint-disable-next-line jest/no-commented-out-tests
-  //   it("affiche un tableau descriptif du taux de caf avec une seule année", () => {
-  //     // GIVEN
-  //     const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
-  //       [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
-  //       wording,
-  //       autorisationsMockData
-  //     );
+    // eslint-disable-next-line jest/no-commented-out-tests
+    //   it("affiche un tableau descriptif du taux de caf avec une seule année", () => {
+    //     // GIVEN
+    //     const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
+    //       [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 })],
+    //       wording,
+    //       autorisationsMockData
+    //     );
 
-  //     // WHEN
-  //     renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    //     // WHEN
+    //     renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
-  //     // THEN
-  //     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-  //     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-  //     const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
-  //     const tableau = within(tauxDeCaf).getByRole("table");
-  //     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
-  //     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
-  //     expect(annéeLigneDEnTête).toBeInTheDocument();
-  //     expect(indicateurLigneDEnTête).toBeInTheDocument();
+    //     // THEN
+    //     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
+    //     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
+    //     const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
+    //     const tableau = within(tauxDeCaf).getByRole("table");
+    //     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
+    //     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
+    //     expect(annéeLigneDEnTête).toBeInTheDocument();
+    //     expect(indicateurLigneDEnTête).toBeInTheDocument();
 
-  //     const tbody = within(tableau).getAllByRole("rowgroup")[1];
-  //     const lignes = within(tbody).getAllByRole("row");
-  //     const annéeDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "2020" });
-  //     expect(annéeDeLaPremièreLigne).toBeInTheDocument();
-  //     const valeurDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "13,5 %" });
-  //     expect(valeurDeLaPremièreLigne).toBeInTheDocument();
-  //   });
+    //     const tbody = within(tableau).getAllByRole("rowgroup")[1];
+    //     const lignes = within(tbody).getAllByRole("row");
+    //     const annéeDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "2020" });
+    //     expect(annéeDeLaPremièreLigne).toBeInTheDocument();
+    //     const valeurDeLaPremièreLigne = within(lignes[0]).getByRole("cell", { name: "13,5 %" });
+    //     expect(valeurDeLaPremièreLigne).toBeInTheDocument();
+    //   });
   });
 
   describe("L’indicateur du taux de vétusté construction", () => {
@@ -629,7 +586,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction];
+      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction - 1];
       const tableau = within(tauxDeVétustéConstruction).getByRole("table");
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
@@ -670,7 +627,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction];
+      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction - 2];
       const tableau = within(tauxDeVétustéConstruction).getByRole("table");
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
