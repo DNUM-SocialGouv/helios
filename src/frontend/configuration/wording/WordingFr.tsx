@@ -549,7 +549,8 @@ export class WordingFr implements Wording {
   readonly ORGANIZATION: string = "Institution";
   readonly ROLE: string = "Rôle";
   readonly SUPER_ADMIN: string = "Administrateur national";
-  readonly ADMIN: string = "Administrateur régional ou en administration centrale";
+  readonly ADMIN_REGIONAL: string = "Administrateur régional";
+  readonly ADMINISTRATION_CENTRALE: string = "Administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Autorisation";
 
