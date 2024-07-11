@@ -282,6 +282,7 @@ export interface Wording {
   readonly POURCENTAGE: string;
   readonly REPARTITION_DES_ENVELOPPES: string;
   readonly REPARTITION_DES_SOUS_ENVELOPPES: string;
+  readonly REPARTITION_DES_MODES_DELEGATION: string;
 
   readonly PRODUITS_PRINCIPAUX: string;
   readonly PRODUITS_ANNEXES: string;

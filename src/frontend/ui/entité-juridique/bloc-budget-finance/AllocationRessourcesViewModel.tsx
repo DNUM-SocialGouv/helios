@@ -231,7 +231,7 @@ export class AllocationRessourcesViewModel {
         // Traiter les modes de délégation
         sousEnveloppeItem.modesDeDélégation.forEach((modeDeDélégationItem) => {
           result.push({
-            key: `${modeDeDélégationItem.modeDeDélégation}`,
+            key: `Mode de délégation ${modeDeDélégationItem.modeDeDélégation}`,
             value: `${modeDeDélégationItem.montantNotifié} € (${convertFloatToComma(modeDeDélégationItem.pourcentage)}%)`,
           });
         });
