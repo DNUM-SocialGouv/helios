@@ -11,8 +11,8 @@
 }
 
 .repSmallTitle {
-  font-weight: bold;
-  font-size: medium;
+  font-weight: bolder;
+  font-size: smaller;
   margin-bottom: 12px;
   margin-top: 12px;
   text-transform: none;

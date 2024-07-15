@@ -1,7 +1,5 @@
 import { Chart as ChartJS } from "chart.js";
 
-//import { StringFormater } from "../../commun/StringFormater";
-
 
 export function construisLePluginDeLaLegendeDonut() {
   function créeLeLibelléPourLaLégende(/*chart: ChartJS,*/ libellé: any): HTMLLIElement {
@@ -18,25 +16,6 @@ export function construisLePluginDeLaLegendeDonut() {
     libelléCaseÀCocher.classList.add("fr-label");
     libelléCaseÀCocher.htmlFor = libellé.text;
 
-    const handleCheckboxChange = () => {
-      /*
-      chart.toggleDataVisibility(libellé.index);
-      // @ts-ignore
-      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
-      let sum;
-      if (chart.getDataVisibility(libellé.index)) {
-        // @ts-ignore
-        sum = currentSum + chart.data.datasets[0].data[libellé.index]
-      } else {
-        // @ts-ignore
-        sum = currentSum - chart.data.datasets[0].data[libellé.index]
-      }
-      // @ts-ignore
-      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
-      chart.update();*/
-    }
-
-    caseÀCocher.addEventListener('change', handleCheckboxChange);
 
     const cercleDeCouleur = document.createElement("span");
     cercleDeCouleur.style.background = libellé.fillStyle as string;
@@ -47,7 +26,6 @@ export function construisLePluginDeLaLegendeDonut() {
     const texteDuLibellé = document.createTextNode(libellé.text);
     libelléCaseÀCocher.appendChild(texteDuLibellé);
 
-   // conteneur.appendChild(caseÀCocher);
     conteneur.appendChild(libelléCaseÀCocher);
     return conteneur;
   }

@@ -18,8 +18,11 @@ import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/Detai
 
 
 export function convertFloatToComma(number: number) {
+
   // Convert the number to a string
   let numberString = number.toString();
+
+  if (numberString === '0.0' || numberString === '-0.0') return '';
 
   if (numberString.endsWith('.0')) {
     numberString = numberString.slice(0, -2);
@@ -222,17 +225,17 @@ export class AllocationRessourcesViewModel {
 
     data.forEach((enveloppeItem) => {
       // Ajouter l'objet pour l'enveloppe principale
-      result.push({ key: `Enveloppe ${enveloppeItem.enveloppe}`, value: enveloppeItem.total + " €" });
+      result.push({ key: `Enveloppe: ${enveloppeItem.enveloppe}`, value: formatNumbuerWithSpaces(enveloppeItem.total) + " €" });
 
       // Traiter les sous-enveloppes
       enveloppeItem.sousEnveloppes.forEach((sousEnveloppeItem) => {
-        result.push({ key: `Sous Enveloppe ${sousEnveloppeItem.sousEnveloppe}`, value: `${sousEnveloppeItem.total} € (${convertFloatToComma(sousEnveloppeItem.pourcentage)}%)` });
+        result.push({ key: `Sous Enveloppe: ${sousEnveloppeItem.sousEnveloppe}`, value: `${formatNumbuerWithSpaces(sousEnveloppeItem.total)} € (${convertFloatToComma(sousEnveloppeItem.pourcentage)}%)` });
 
         // Traiter les modes de délégation
         sousEnveloppeItem.modesDeDélégation.forEach((modeDeDélégationItem) => {
           result.push({
-            key: `Mode de délégation ${modeDeDélégationItem.modeDeDélégation}`,
-            value: `${modeDeDélégationItem.montantNotifié} € (${convertFloatToComma(modeDeDélégationItem.pourcentage)}%)`,
+            key: `Mode de délégation: ${modeDeDélégationItem.modeDeDélégation}`,
+            value: convertFloatToComma(modeDeDélégationItem.pourcentage) !== '' ? `${formatNumbuerWithSpaces(modeDeDélégationItem.montantNotifié)} € (${convertFloatToComma(modeDeDélégationItem.pourcentage)}%)` : `${formatNumbuerWithSpaces(modeDeDélégationItem.montantNotifié)} €`,
           });
         });
       });
@@ -315,9 +318,8 @@ export class AllocationRessourcesViewModel {
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];
 
-    const valeursAvecMotif = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours);
-    const treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode = this.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours);
-
+    const valeursAvecMotif = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours).filter((valeur: any) => valeur.valeur !== 0);
+    const treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode = this.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours).filter((valeur: any) => valeur.total !== 0);;
     const transformDataToTranscriptionData = this.transformDataToTranscriptionData(treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode);
     const transcriptionDataKeys = transformDataToTranscriptionData.map((item) => item.key);
     const transcriptionDataValues = transformDataToTranscriptionData.map((item) => item.value);
@@ -327,12 +329,11 @@ export class AllocationRessourcesViewModel {
       couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(item.motif));
     });
 
-    const valeursDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => Math.floor(item.valeur));
     const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
 
     const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map(
-      (item: AllocationValeursAvecMotif) => `${item.motif} (${convertFloatToComma(parseFloat(item.valeur.toFixed(1)))}%)`
+      (item: AllocationValeursAvecMotif) => `${item.motif} : ${convertFloatToComma(parseFloat(item.valeur.toFixed(1)))}%`
     );
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
@@ -346,10 +347,9 @@ export class AllocationRessourcesViewModel {
               couleursLibelle={couleursDesLibelles}
               idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES}
               libellés={motifsDesAllocationDeRessourceWithPourcentage}
-              texteCentral=""
               title={this.wording.REPARTITION_DES_ENVELOPPES}
               total={1}
-              valeurs={valeursDesAllocationDeRessource}
+              valeurs={valeursDesAllocationDeRessourcePourcentage}
             />
           </div>
           <div className="fr-col-7">

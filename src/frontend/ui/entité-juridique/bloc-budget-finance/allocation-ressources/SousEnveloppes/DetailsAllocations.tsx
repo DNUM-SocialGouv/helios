@@ -107,10 +107,11 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               key={sousEnveloppe.sousEnveloppe}
             >
               <div className={styles['repSmallTitle']}>{wording.REPARTITION_DES_MODES_DELEGATION}</div>
+
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € ({convertFloatToComma(mode.pourcentage)}%)
+                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € {convertFloatToComma(mode.pourcentage) !== '' ? <span>({convertFloatToComma(mode.pourcentage)}%)</span> : null}
                   </div>
                 ))}
 
