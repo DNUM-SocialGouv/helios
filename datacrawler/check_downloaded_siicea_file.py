@@ -23,14 +23,10 @@ def filter_inspection(donnees_inspections, logger):
             & ((donnees_inspections['Date réelle Visite'].str.fullmatch(date_regex, na=True)))
             ]  
 
-
-           
-
-
 def check_downloaded_siicea_file(chemin_local_du_fichier_siicea: str, fichier_siicea_traite: str, logger:Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_siicea_helios)
     donnees_inspections = lis_le_fichier_csv(chemin_local_du_fichier_siicea, colonnes_a_lire_bloc_qualite_inspections, types_des_colonnes)
-    donnees_inspections_filtrees = filter_inspection(donnees_inspections, logger)
+    donnees_inspections_filtrees = filter_inspection(donnees_inspections, logger).drop_duplicates()
     donnees_inspections_filtrees.to_csv(fichier_siicea_traite, index=False, sep=';')
 
     
