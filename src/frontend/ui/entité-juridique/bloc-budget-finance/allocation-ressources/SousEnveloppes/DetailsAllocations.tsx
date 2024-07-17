@@ -75,8 +75,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
             <div className={styles["titleContainer"]}>
               <div className={styles["titleDetails"]}>
                 <HistogrammeHorizontalRowMultiple
-                  data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
-                  realPercentage={enveloppe.pourcentage}
+                  data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.total }))}
                 />
                 <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>
               </div>
@@ -92,7 +91,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               className={styles["subEnvContainer"]}
               dataTitle={
                 <>
-                  <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index], color: colorsAllocations[index] }}>
+                  <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index].premierPlan, color: colorsAllocations[index].premierPlan }}>
                     i
                   </div>
                   <span className={styles["subEnvTitle"]}>

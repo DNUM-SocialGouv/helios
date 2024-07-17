@@ -1,7 +1,30 @@
+import { Bar } from "react-chartjs-2";
+
+import { CouleurHistogramme } from "../../../../commun/Graphique/couleursGraphique";
 import styles from "./HistogrammeHorizontalRowMultiple.module.css";
 
-export const colorsAllocations = [
-  "#6a6af4", "#000091", "#9898f8", "#aeaef9", "#2323ff", "#cbcbfa", "#a1a1f8", "#313178", "#5757ad", "#6c6cbb", "#4a4a7d", "#5e5e90", "#272747", "#518fff", "#273961", "#0078f3", "#b1c6ff", "#95b4ff", "#f4f6ff", "#dde5ff"
+
+export const colorsAllocations: CouleurHistogramme[] = [
+  { premierPlan: "#6a6af4" },
+  { premierPlan: "#000091" },
+  { premierPlan: "#9898f8" },
+  { premierPlan: "#aeaef9" },
+  { premierPlan: "#2323ff" },
+  { premierPlan: "#cbcbfa" },
+  { premierPlan: "#a1a1f8" },
+  { premierPlan: "#313178" },
+  { premierPlan: "#5757ad" },
+  { premierPlan: "#6c6cbb" },
+  { premierPlan: "#4a4a7d" },
+  { premierPlan: "#5e5e90" },
+  { premierPlan: "#272747" },
+  { premierPlan: "#518fff" },
+  { premierPlan: "#273961" },
+  { premierPlan: "#0078f3" },
+  { premierPlan: "#b1c6ff" },
+  { premierPlan: "#95b4ff" },
+  { premierPlan: "#f4f6ff" },
+  { premierPlan: "#dde5ff" },
 ];
 
 type HistogrammeHorizontalRowMultipleProps = Readonly<{
@@ -9,30 +32,45 @@ type HistogrammeHorizontalRowMultipleProps = Readonly<{
     key: string;
     value: number;
   }[];
-  realPercentage: number;
 }>;
 
-export const HistogrammeHorizontalRowMultiple = ({ data, realPercentage }: HistogrammeHorizontalRowMultipleProps) => {
-  if (realPercentage <= 0 || realPercentage > 100) return null;
+export const HistogrammeHorizontalRowMultiple = ({ data }: HistogrammeHorizontalRowMultipleProps) => {
+  const dataTest = {
+    labels: [''],
+    datasets: data.map((elt, index) => {
+      return {
+        label: '',
+        data: [elt.value],
+        backgroundColor: colorsAllocations[index].premierPlan,
+        borderWidth: 0
+      }
+    })
+  };
+  const options = {
+    indexAxis: 'y' as const,
+    scales: {
+      x: {
+        stacked: true,
+        display: false,
+      },
+      y: {
+        stacked: true,
+        display: false
+      }
+    },
+    plugins: {
+      legend: {
+        display: false // Hide legend
+      }
+    },
+    aspectRatio: 8,
+    tooltips: {
+      enabled: false // Disable tooltips completely
+    }
+  };
   return (
-  
-      <div className={styles["histogramme_horizontal_row_container"]} style={{ width: `${realPercentage * 0.8}%` }}>
-        <ul>
-          {data.map((item, index) => {
-            return (
-              <li key={item.key}>
-                <div
-                  className={styles["barHistogramme"]}
-                  data-testid={`bar-${item.key}`}
-                  style={{ width: `${Math.floor(item.value)}%`, backgroundColor: colorsAllocations[index] }}
-                >
-                  i
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-    
+    <div className={styles["histogramme_horizontal_row_container"]}>
+      <Bar data={dataTest} options={options} />
     </div>
-  );
+  )
 };
