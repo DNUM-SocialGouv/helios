@@ -18,7 +18,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -85,10 +85,21 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   async createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void> {
     try {
       const account = new UtilisateurModel();
-
+      let roleToSave;
+      let profileToSave;
+      const profileAdminCentral = await (await this.orm).getRepository(ProfilModel).findOneBy({
+        label: ILike("%central%"),
+      })
+      const profileUser = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 }) as ProfilModel;
       const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
-      const roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "USER" });
-      const profileToSave = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 });
+
+      if (institution === 'ADMIN_CENTR') {
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "ADMIN_CENTR" });
+        profileToSave = profileAdminCentral ? profileAdminCentral : profileUser;
+      } else {
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "USER" });
+        profileToSave = profileUser;
+      }
 
       const passwordToSave = "HeliosConnect-" + institutionToSave?.codeGeo;
 
