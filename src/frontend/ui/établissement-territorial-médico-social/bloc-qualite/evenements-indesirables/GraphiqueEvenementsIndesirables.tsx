@@ -19,7 +19,7 @@ type GraphiqueEvenementsIndesirablesProps = Readonly<{
 
 export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, annéesTotales }: GraphiqueEvenementsIndesirablesProps) => {
   const { wording } = useDependencies();
-  const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
+  const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
   const [total, setTotal] = useState<number>(0);
   const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
 
