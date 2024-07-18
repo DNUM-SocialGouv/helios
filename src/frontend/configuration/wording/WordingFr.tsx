@@ -66,7 +66,7 @@ export class WordingFr implements Wording {
   readonly SEND: string = "Envoyer";
   readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
   readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
-
+  readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";

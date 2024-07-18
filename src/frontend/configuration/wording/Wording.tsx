@@ -57,6 +57,7 @@ export interface Wording {
   readonly SEND: string;
   readonly REGISTRARTION_SUCCESS_MESSAGE: string;
   readonly EMAIL_ALREADY_USED: string;
+  readonly NOT_AUTORIZED_EMAIL: string;
 
   // Connexion
   readonly CONNEXION_LIBELLE: string;
