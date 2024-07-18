@@ -57,7 +57,6 @@ export function DonutNoCenterText(props: {
 
 function optionsDiagrammeDoughnut(idDeLaLégende: string, libellés: string[]): ChartOptions<"doughnut"> {
   return {
-    animation: true,
     cutout: "40%",
     plugins: {
       datalabels: {
