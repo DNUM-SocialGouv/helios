@@ -35,8 +35,12 @@ export const ProfilePage = () => {
               <label> {wording.SUPER_ADMIN}</label>
             </div>
             <div className="fr-fieldset__element">
-              <input checked={data?.user?.role === 2} readOnly type="checkbox" value={wording.ADMIN} />
-              <label> {wording.ADMIN}</label>
+              <input checked={data?.user?.role === 2} readOnly type="checkbox" value={wording.ADMIN_REGIONAL} />
+              <label> {wording.ADMIN_REGIONAL}</label>
+            </div>
+            <div className="fr-fieldset__element">
+              <input checked={data?.user?.role === 4} readOnly type="checkbox" value={wording.ADMINISTRATION_CENTRALE} />
+              <label> {wording.ADMINISTRATION_CENTRALE}</label>
             </div>
             <div className="fr-fieldset__element">
               <input checked={data?.user?.role === 3} readOnly type="checkbox" value={wording.USER} />

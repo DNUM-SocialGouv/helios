@@ -36,7 +36,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
 
   public get annéeInitiale() {
     const years = this.budgetEtFinance.filter((budgetEtFinance) => !this.compteResultatVide(budgetEtFinance)).map((budgetFinance) => budgetFinance.année);
-    const anneesTriees = years.sort((année1, année2) => année2 - année1);
+    const anneesTriees = years.sort((année1, année2) => année1 - année2);
     return anneesTriees[0];
   }
 

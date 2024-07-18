@@ -57,6 +57,7 @@ export interface Wording {
   readonly SEND: string;
   readonly REGISTRARTION_SUCCESS_MESSAGE: string;
   readonly EMAIL_ALREADY_USED: string;
+  readonly NOT_AUTORIZED_EMAIL: string;
 
   // Connexion
   readonly CONNEXION_LIBELLE: string;
@@ -460,7 +461,8 @@ export interface Wording {
   readonly ORGANIZATION: string;
   readonly ROLE: string;
   readonly SUPER_ADMIN: string;
-  readonly ADMIN: string;
+  readonly ADMIN_REGIONAL: string;
+  readonly ADMINISTRATION_CENTRALE: string;
   readonly USER: string;
   readonly PROFILE: string;
 
@@ -472,4 +474,8 @@ export interface Wording {
   readonly ROLE_: string;
   readonly INSTITUTION: string;
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string;
+
+  //Blocs
+  readonly TOUT_REPLIER: string;
+  readonly TOUT_DEPLIER: string;
 }

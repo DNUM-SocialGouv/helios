@@ -11,17 +11,19 @@ import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivité
 
 type BlocActivitéSanitaireProps = Readonly<{
   entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel }: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opnedBloc, toggelBlocs}: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_ACTIVITÉ} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}/>;
   }
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_ACTIVITÉ}>
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}>
       {entitéJuridiqueActivitéViewModel.lesDonnéesActivitéPasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={entitéJuridiqueActivitéViewModel.lesDonnéesActivitéPasAutorisés} />
       ) : entitéJuridiqueActivitéViewModel.lesDonnéesActivitéPasRenseignees.length !== 0 ? (

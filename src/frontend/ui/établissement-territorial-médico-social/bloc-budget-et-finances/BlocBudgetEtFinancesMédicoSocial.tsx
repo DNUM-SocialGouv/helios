@@ -15,17 +15,19 @@ import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from 
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialBudgetEtFinancesViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMédicoSocialBudgetEtFinancesViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
+export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMédicoSocialBudgetEtFinancesViewModel, opnedBloc, toggelBlocs  }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} />;
+    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc isMain={false} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES}>
+    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
 
       {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés} /> :
         établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees} /> : <></>}

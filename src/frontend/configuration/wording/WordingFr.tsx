@@ -66,7 +66,7 @@ export class WordingFr implements Wording {
   readonly SEND: string = "Envoyer";
   readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
   readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
-
+  readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";
@@ -206,7 +206,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
 
   // Bloc Autorisation
-  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";
+  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
   readonly AUTORISATIONS_SANITAIRE: string = "Autorisations de soins";
   readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
@@ -359,7 +359,7 @@ export class WordingFr implements Wording {
   readonly OGD_PA: string = "OGD PA";
   readonly OGD_PH: string = "OGD PH";
   readonly OBJECTIF_QUANTIFIÉ_NATIONAL: string = "Objectif Quantifié National";
- 
+
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
@@ -549,7 +549,8 @@ export class WordingFr implements Wording {
   readonly ORGANIZATION: string = "Institution";
   readonly ROLE: string = "Rôle";
   readonly SUPER_ADMIN: string = "Administrateur national";
-  readonly ADMIN: string = "Administrateur régional ou en administration centrale";
+  readonly ADMIN_REGIONAL: string = "Administrateur régional";
+  readonly ADMINISTRATION_CENTRALE: string = "Administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Autorisation";
 
@@ -562,4 +563,8 @@ export class WordingFr implements Wording {
   readonly INSTITUTION: string = "Institution";
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
   readonly ADMIN_PAGE: string = "Console d’administration";
+
+  //Blocs
+  readonly TOUT_REPLIER: string = "Tout replier";
+  readonly TOUT_DEPLIER: string = "Tout déplier";
 }
