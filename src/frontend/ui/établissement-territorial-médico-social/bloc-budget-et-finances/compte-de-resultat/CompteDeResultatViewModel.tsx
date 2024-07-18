@@ -164,7 +164,7 @@ export class CompteDeResultatViewModel {
   }
 
   public get annéeInitiale() {
-    const anneesTriees = this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => année1 - année2);
+    const anneesTriees = this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => année2 - année1);
     return anneesTriees[0];
   }
 

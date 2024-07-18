@@ -84,7 +84,7 @@ export class AllocationRessourcesViewModel {
       const years = this.allocationRessourcesData.data
         .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
         .map((allocationRessources) => allocationRessources.année);
-      const anneesTriees = years.sort((année1, année2) => année1 - année2);
+      const anneesTriees = years.sort((année1, année2) => année2 - année1);
 
       return anneesTriees[0];
     }

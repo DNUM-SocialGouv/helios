@@ -265,7 +265,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("button", { name: "2019" });
+      const année = within(recettesEtDépenses).getByRole("button", { name: "2021" });
 
       // WHEN
       fireEvent.click(année);
@@ -322,7 +322,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const annéesEtMontants = [
         {
           année: "2019",
-          montant: "7 290 €",
+          montant: "−38 331 €",
         },
         {
           année: "2020",
@@ -330,7 +330,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
         },
         {
           année: "2021",
-          montant: "−38 331 €",
+          montant: "7 290 €",
         },
       ];
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
@@ -391,7 +391,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const annéesEtMontants = [
         {
           année: "2019",
-          montant: "−10 000 €",
+          montant: "−30 000 €",
         },
         {
           année: "2020",
@@ -399,7 +399,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
         },
         {
           année: "2021",
-          montant: "−30 000 €",
+          montant: "−10 000 €",
         },
       ];
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
@@ -548,7 +548,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const annéesEtTauxDeVétusté = [
         {
           année: "2019",
-          tauxDeVétusté: "38,8 %",
+          tauxDeVétusté: "31,2 %",
         },
         {
           année: "2020",
@@ -556,7 +556,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
         },
         {
           année: "2021",
-          tauxDeVétusté: "31,2 %",
+          tauxDeVétusté: "38,8 %",
         },
       ];
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
@@ -663,7 +663,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const annéesEtMontants = [
         {
           année: "2019",
-          montant: "1 057 218 €",
+          montant: "2 206 969 €",
         },
         {
           année: "2020",
@@ -671,7 +671,8 @@ describe("La page établissement territorial - bloc budget et finances", () => {
         },
         {
           année: "2021",
-          montant: "2 206 969 €",
+          montant: "1 057 218 €",
+
         },
       ];
       const tbody = within(tableau).getAllByRole("rowgroup")[1];
