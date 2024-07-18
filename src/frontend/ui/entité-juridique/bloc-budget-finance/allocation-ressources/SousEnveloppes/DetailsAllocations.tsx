@@ -14,27 +14,27 @@ const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: S
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-<span
-  aria-controls={identifiant}
-  aria-expanded={isOpen}
-  className={
-    styles["titleDetails"] +
-    " fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-" +
-    direction +
-    (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
-  }
-  data-fr-opened={isOpen}
-  data-testid="show-details-title"
-  icon-direction={direction}
-  onClick={() => {
-    setIsOpen(!isOpen);
-  }} 
-  onKeyDown={() => {}}
-  role="button"
-  tabIndex={0} 
->
-  {children}
-</span>
+    <span
+      aria-controls={identifiant}
+      aria-expanded={isOpen}
+      className={
+        styles["titleDetails"] +
+        " fr-btn-NO fr-btn--sm-NO fr-btn--tertiary-no-outline-NO fr-btn--icon-" +
+        direction +
+        (isOpen ? " fr-icon-arrow-up-s-line" : " fr-icon-arrow-down-s-line")
+      }
+      data-fr-opened={isOpen}
+      data-testid="show-details-title"
+      icon-direction={direction}
+      onClick={() => {
+        setIsOpen(!isOpen);
+      }}
+      onKeyDown={() => { }}
+      role="button"
+      tabIndex={0}
+    >
+      {children}
+    </span>
 
   );
 };
@@ -55,14 +55,14 @@ const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIc
     </div>
   );
 };
- 
+
 type DetailsAllocationsProps = Readonly<{
   data: IEnveloppe[];
 }>;
 
 export function DetailsAllocations({ data }: DetailsAllocationsProps) {
   const { wording } = useDependencies();
- 
+
   return (
     <div className={styles['bigContainer']}>
       <div className={styles['repBigTitle']}>{wording.REPARTITION_DES_SOUS_ENVELOPPES}</div>
@@ -78,9 +78,9 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
                   data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
                   realPercentage={enveloppe.pourcentage}
                 />
-               <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>
+                <span className={styles["envTotal"]}>{formatNumbuerWithSpaces(enveloppe.total)} €</span>
               </div>
-       
+
             </div>
           }
           directionIcone="left"
@@ -93,7 +93,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               dataTitle={
                 <>
                   <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index], color: colorsAllocations[index] }}>
-                  i
+                    i
                   </div>
                   <span className={styles["subEnvTitle"]}>
                     Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
@@ -106,13 +106,15 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               id={enveloppe.enveloppe + sousEnveloppe.sousEnveloppe}
               key={sousEnveloppe.sousEnveloppe}
             >
+              <div className={styles['repSmallTitle']}>{wording.REPARTITION_DES_MODES_DELEGATION}</div>
+
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € ({convertFloatToComma(mode.pourcentage)}%)
+                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € {convertFloatToComma(mode.pourcentage) !== '' ? <span>({convertFloatToComma(mode.pourcentage)}%)</span> : null}
                   </div>
                 ))}
-        
+
               </div>
             </ShowDetails>
           ))}

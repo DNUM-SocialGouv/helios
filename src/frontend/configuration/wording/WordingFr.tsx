@@ -338,6 +338,7 @@ export class WordingFr implements Wording {
   readonly POURCENTAGE: string = "Pourcentage";
   readonly REPARTITION_DES_ENVELOPPES: string = "Répartition des enveloppes";
   readonly REPARTITION_DES_SOUS_ENVELOPPES: string = "Répartition des sous-enveloppes";
+  readonly REPARTITION_DES_MODES_DELEGATION: string = "Modes de délégation:";
   readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
   readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
