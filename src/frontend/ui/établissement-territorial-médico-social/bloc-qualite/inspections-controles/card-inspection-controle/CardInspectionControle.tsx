@@ -15,27 +15,27 @@ const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactEle
 
   const getSumCardEcartRemarqueText = useCallback(
     (data: Inspection) => {
-    const sumCardEcartRemarque = [];
-  
-    if (data.nombreEcart > 1) {
-      sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecarts" });
-    } else {
-      sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "ecart" });
-    }
-  
-    if (data.nombreRemarque > 1) {
-      sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarques" });
-    } else {
-      sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarque" });
-    }
-  
-    const sumCardEcartRemarqueText = sumCardEcartRemarque.map((item) => {
-      return `${item.nb} ${item.label}`;
-    });
-    return sumCardEcartRemarqueText.join(", ");
-  },
-  [data]
-);
+      const sumCardEcartRemarque = [];
+
+      if (data.nombreEcart > 1) {
+        sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "écarts" });
+      } else {
+        sumCardEcartRemarque.push({ nb: data.nombreEcart, label: "écart" });
+      }
+
+      if (data.nombreRemarque > 1) {
+        sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarques" });
+      } else {
+        sumCardEcartRemarque.push({ nb: data.nombreRemarque, label: "remarque" });
+      }
+
+      const sumCardEcartRemarqueText = sumCardEcartRemarque.map((item) => {
+        return `${item.nb} ${item.label}`;
+      });
+      return sumCardEcartRemarqueText.join(", ");
+    },
+    [data]
+  );
 
   const getMissions = useCallback(
     (data: Inspection) => {
@@ -56,9 +56,9 @@ const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactEle
       }
       if (data.recommandation > 0) {
         if (data.recommandation === 1) {
-          sumCard.push({ nb: 1, label: "recomandation" });
+          sumCard.push({ nb: 1, label: "recommandation" });
         } else {
-          sumCard.push({ nb: data.recommandation, label: "recomandations" });
+          sumCard.push({ nb: data.recommandation, label: "recommandations" });
         }
       }
       if (data.saisineCng > 0) {
@@ -89,7 +89,7 @@ const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactEle
           sumCard.push({ nb: data.saisineAutre, label: "autres parquets" });
         }
       }
-    
+
       const sumCardText = sumCard.map((item) => {
         return `${item.nb} ${item.label}`;
       });
@@ -97,13 +97,13 @@ const CardInspectionControle = ({ data }: CardInspectionControleProps): ReactEle
     },
     [data]
   );
-  
+
   const missions = getMissions(data);
   const sumCardEcartRemarqueText = getSumCardEcartRemarqueText(data);
 
   return (
     <div className={styles["card-inspection-controle"]}>
- 
+
       <div className="card-dates">
         <ul className="fr-badge-group">
           {data.dateVisite && (

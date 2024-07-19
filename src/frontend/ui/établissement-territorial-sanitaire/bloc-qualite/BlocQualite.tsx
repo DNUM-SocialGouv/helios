@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-// import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
+import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -8,7 +8,7 @@ import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
 import { GraphiqueEvenementsIndesirables } from "../../établissement-territorial-médico-social/bloc-qualite/evenements-indesirables/GraphiqueEvenementsIndesirables";
-// import { GraphiqueInspectionsControles } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/GraphiqueInspectionsControles";
+import { GraphiqueInspectionsControles } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/GraphiqueInspectionsControles";
 import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
 
 type BlocQualitéProps = Readonly<{
@@ -36,7 +36,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
         <></>
       )}
 
-      {/* <ul className="indicateurs">
+      <ul className="indicateurs">
         {!etablissementTerritorialQualiteSanitairelViewModel.lesInspectionsEtControlesNeSontPasRenseignées &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesInspectionsEtControlesNeSontPasAutorisées && (
             <GraphiqueInspectionsControles
@@ -44,7 +44,7 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: Bl
               dateMiseAJour={convertDateDDMMYYYY(etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourSourceInspectionsEtControles)}
             />
           )}
-      </ul> */}
+      </ul>
 
       <ul className="indicateurs">
         {!etablissementTerritorialQualiteSanitairelViewModel.lesReclamationsNeSontPasRenseignées &&
