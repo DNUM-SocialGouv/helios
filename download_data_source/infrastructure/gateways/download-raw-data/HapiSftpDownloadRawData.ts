@@ -1,4 +1,5 @@
 import { mkdirSync, rmSync } from "fs";
+import path from "path";
 import { FileInfo } from "ssh2-sftp-client";
 
 import { DownloadRawData } from "../../../métier/gateways/DownloadRawData";
@@ -25,7 +26,11 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
             await this.connexionAuSftp();
             const fichiersSurLeSftp = await this.listeLesFichiersDuSftp();
             const fichiersATelecharger = this.trouveLesFichiersDe5DernieresAnneesPortantLePrefixe(this.prefixeDesFichiersATelecharger, fichiersSurLeSftp);
-            this.logger.info(`[HAPI] les fichiers à téléchargés ${fichiersATelecharger}`);
+            if (fichiersATelecharger.length !== 0) {
+                for (const fichier of fichiersATelecharger) {
+                    await this.téléchargeLeFichier(fichier.name);
+                }
+            }
         } catch (erreur) {
             throw new HeliosError(`[HAPI] Une erreur est survenue lors de la connexion au SFTP : ${erreur.message}`);
         }
@@ -33,6 +38,18 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
 
     private async listeLesFichiersDuSftp() {
         return await this.clientSftp.list(this.cheminDesFichiersSourcesSurLeSftp);
+    }
+
+    private async téléchargeLeFichier(fichierÀTélécharger: string) {
+        await this.clientSftp.fastGet(
+            path.join(this.cheminDesFichiersSourcesSurLeSftp, fichierÀTélécharger),
+            path.join(this.répertoireDeDestination, fichierÀTélécharger),
+            {
+                chunkSize: 1000000,
+                concurrency: 2,
+            }
+        );
+        this.logger.info(`[HAPI] Le fichier ${fichierÀTélécharger} a été téléchargé.`);
     }
 
     private recréeLeRépertoireDeDestination() {
@@ -51,9 +68,16 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
         this.logger.info("[Hapi] La connexion au SFTP est ouverte.");
     }
 
+    private ParmisLesDernieresAnnees(anneeFichier: number): boolean {
+        const currentYear = new Date().getFullYear();
+        return anneeFichier <= currentYear && anneeFichier >= currentYear - 5
+    }
+
     private trouveLesFichiersDe5DernieresAnneesPortantLePrefixe(prefixeDesFichiersATelecharger: string, fichiersSurLeSftp: FileInfo[]) {
         const formatDuNomDeFichier = new RegExp(`^${prefixeDesFichiersATelecharger}_\\d{4}_\\d{14}`);
-        const fichiersPertinents = fichiersSurLeSftp.filter((file: FileInfo) => formatDuNomDeFichier.test(file.name));
+        const fichiersPertinents = fichiersSurLeSftp.filter((file: FileInfo) => {
+            return formatDuNomDeFichier.test(file.name) && this.ParmisLesDernieresAnnees(Number(file.name.split('_')[3]))
+        });
         this.logger.info(`[HAPI] ${fichiersPertinents.length}  fichiers HAPI ont été trouvés.`);
         return fichiersPertinents;
     }

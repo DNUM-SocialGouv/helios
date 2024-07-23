@@ -44,6 +44,7 @@ data_set/sivss
 data_set/checked_sivss
 data_set/siicea
 data_set/checked_siicea
+data_set/hapi
 sshd_config
 ssh_key
 
