@@ -10,11 +10,7 @@ services:
     volumes:
       - type: bind
         source: ${PWD}/data_set
-<<<<<<< HEAD
-        target: /home/finess/usr_finess
-=======
         target: /home/finess/
->>>>>>> origin/develop
       - type: bind
         source: ${HOME}/.ssh/sftp_local.pub
         target: /home/finess/.ssh/keys/sftp_local.pub
