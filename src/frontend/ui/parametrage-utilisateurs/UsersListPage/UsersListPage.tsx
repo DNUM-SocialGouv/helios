@@ -255,6 +255,13 @@ const UsersListPage = ({
     getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
+  const roleClasses: any = {
+    1: "error",
+    2: "success",
+    3: "info",
+    4: "new"
+  };
+
   return (
     <main className="fr-container">
       {userData && (
@@ -301,8 +308,8 @@ const UsersListPage = ({
                   <tbody>
                     {userData &&
                       userData.map((user: UtilisateurModel) => {
-                        const roleClass = user.role.id === 1 ? "error" : user.role.id === 2 ? "success" : "info";
-
+                        const roleClass = roleClasses[user.role.id] || "info";
+                     
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>

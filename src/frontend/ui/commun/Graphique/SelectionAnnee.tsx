@@ -5,13 +5,19 @@ import { Select } from "../Select/Select";
 
 type listeDeroulanteAnneesProps = {
   setAnnéeEnCours: (value: number) => void;
-  annees: number[];
+  annees: string[] | number[];
   id?: string;
+  prefix?: string;
 };
 
-export const SelectionAnnee = ({ setAnnéeEnCours, annees, id }: listeDeroulanteAnneesProps) => {
+export const SelectionAnnee = ({ setAnnéeEnCours, annees, id, prefix}: listeDeroulanteAnneesProps) => {
   const { wording } = useDependencies();
-  const anneesTriees = annees.sort((année1, année2) => année2 - année1);
+  let anneesTriees = annees.sort((année1, année2) => (année2 as number) - (année1 as number));
+
+  if(prefix && prefix.length > 0)
+  {
+    anneesTriees = annees.map(item => prefix + ' ' + item)
+  }
 
   if (anneesTriees.length > 0) {
     return (
@@ -19,7 +25,15 @@ export const SelectionAnnee = ({ setAnnéeEnCours, annees, id }: listeDeroulante
         id={id}
         label={wording.ANNÉE}
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-          setAnnéeEnCours(Number(event.target.value));
+
+          if(prefix && prefix.length > 0)
+          {
+            setAnnéeEnCours(Number(event.target.value.slice(prefix.length+1)));
+          }
+          else
+          {
+            setAnnéeEnCours(Number(event.target.value));
+          }
         }}
         options={anneesTriees}
       />

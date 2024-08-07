@@ -34,7 +34,6 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
         donnees_quo_san_finance, numéros_finess_des_entites_juridiques_connues
     )
 
-
     transform_donnees_quo_san_finance_et = transform_les_donnees_budget_finance_etablissement_territorial(
         donnees_quo_san_finance, numéros_finess_des_etablissements_territoriaux_connus
     )
@@ -65,10 +64,10 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
             connection,
             TABLES_DES_BUDGETS_ET_FINANCES_ETABLISSEMENT_TERRITORIAL,
             donnees_filtrees_only_ET,
-
             [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
             logger,
         )
+
 
 
 if __name__ == "__main__":

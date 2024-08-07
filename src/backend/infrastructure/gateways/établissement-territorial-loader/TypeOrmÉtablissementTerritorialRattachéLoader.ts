@@ -16,7 +16,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
   private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
     return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ order: { domaine: "ASC", numéroFinessÉtablissementTerritorial: "ASC" }, where: { numéroFinessEntitéJuridique } });
+      .find({ order: { domaine: "ASC", libelléCatégorieÉtablissement: "ASC" , numéroFinessÉtablissementTerritorial: "ASC" }, where: { numéroFinessEntitéJuridique } });
   }
 
   private construisLesÉtablissementsTerritoriauxRattachés(
@@ -27,6 +27,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
         domaine: établissementTerritorialModel.domaine,
         numéroFiness: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
         raisonSocialeCourte: établissementTerritorialModel.raisonSocialeCourte,
+        libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
       };
     });
   }

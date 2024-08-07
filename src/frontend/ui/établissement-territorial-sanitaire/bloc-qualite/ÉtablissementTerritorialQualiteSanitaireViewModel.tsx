@@ -149,6 +149,10 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
         if (!annees.includes(event.annee)) annees.push(event.annee);
       }
     }
+<<<<<<< HEAD
     return annees.sort().reverse();
+=======
+    return annees.sort();
+>>>>>>> origin/develop
   }
 }

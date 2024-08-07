@@ -7,6 +7,8 @@ import { BackToSearchContext, BackToSearchContextValue } from "../commun/context
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
+import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
+import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
 import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
@@ -67,6 +69,8 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
     }
   }, [onBeforeGetContentResolve.current]);
 
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
+
   return (
     <main className="fr-container">
       <Head>
@@ -80,13 +84,20 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
           </Titre>
           <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
           <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+
+          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
+
           <BlocAutorisationsCapacites
             entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
+            opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} />
+          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel}
+            opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} />
+          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+            toggelBlocs={() => toggelBlocs(2)} type="EJ" />
+
         </div>
       </>
     </main>

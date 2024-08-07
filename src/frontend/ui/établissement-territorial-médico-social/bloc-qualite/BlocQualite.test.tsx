@@ -161,3 +161,4 @@ describe("La page établissement territorial - bloc qualité", () => {
         });
     });
 });
+

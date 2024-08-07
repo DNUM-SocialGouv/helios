@@ -14,13 +14,15 @@ type RatioDependanceFinanciere = { ratio: number | null | ''; année: number; da
 export class RatioDependanceFinanciereViewModel {
   readonly NOMBRE_ANNEES = 5;
   private ratioDependanceFinanciere: RatioDependanceFinanciere[];
+  private autorisations: any;
 
-  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[]) {
+  constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any) {
     this.ratioDependanceFinanciere = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       ratio: budget.ratioDependanceFinanciere,
       dateDeMiseÀJour: budget.dateMiseÀJourSource,
     }));
+    this.autorisations = autorisations;
   }
 
   public get années(): number[] {
@@ -36,9 +38,14 @@ export class RatioDependanceFinanciereViewModel {
   }
 
   public get ratioDependanceFinanciereEstIlAutorisé(): boolean {
-    return this.ratioDependanceFinanciere.some(
-      (ratio: RatioDependanceFinanciere) => ratio.ratio !== ''
-    );
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.ratioDépendanceFinancière &&
+      this.autorisations.budgetEtFinance.ratioDépendanceFinancière === 'ok') {
+      return true
+    }
+    return false
   }
 
   private ratioRemplis(ratio: RatioDependanceFinanciere): boolean {

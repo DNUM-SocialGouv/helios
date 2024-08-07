@@ -16,7 +16,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   private etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
-  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths) {
+  constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths, autorisations: any) {
     this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
       établissementTerritorial.identité,
       wording,
@@ -30,11 +30,13 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
-    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
+    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(wording, établissementTerritorial.qualite);
+    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
+      établissementTerritorial.budgetFinance,
+      établissementTerritorial.allocationRessource,
       wording,
-      établissementTerritorial.qualite,
-    )
-    this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(établissementTerritorial.budgetFinance, wording);
+      autorisations
+    );
   }
 
   public get titre(): string {
@@ -72,7 +74,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
   }
 
   public get appartientAEtablissementsSantePrivesIntérêtsCollectif(): any {
-    return this.établissementTerritorial.appartientAEtablissementsSantePrivesIntérêtsCollectif
+    return this.établissementTerritorial.appartientAEtablissementsSantePrivesIntérêtsCollectif;
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {

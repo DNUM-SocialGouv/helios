@@ -32,15 +32,20 @@ export const RegistrationForm = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.err === "Email already used") {
-          setErrorMessage(wording.EMAIL_ALREADY_USED);
+          setErrorMessage("EMAIL_ALREADY_USED");
           setEmailSent(false);
         } else {
-          setInstitution(institutionList[0]?.code);
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setEmailSent(true);
-          setErrorMessage("");
+          if (data.err === "Can't use this email for this institution") {
+            setErrorMessage("NOT_AUTORIZED_EMAIL");
+            setEmailSent(false);
+          } else {
+            setInstitution(institutionList[0]?.code);
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setEmailSent(true);
+            setErrorMessage("");
+          }
         }
         setClickBtnSend(false);
       })
@@ -76,7 +81,7 @@ export const RegistrationForm = () => {
       <h1>{wording.REGISTRATION_PAGE_TITLE}</h1>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
         <div className="fr-col-12 fr-col-md-8 fr-mt-5w">
-          {errorMessage && (
+          {errorMessage && errorMessage === "EMAIL_ALREADY_USED" && (
             <div className={"fr-mb-5w " + styles["error"]}>
               {" "}
               {wording.EMAIL_ALREADY_USED}{" "}
@@ -84,6 +89,11 @@ export const RegistrationForm = () => {
                 {" "}
                 ici{" "}
               </Link>{" "}
+            </div>
+          )}
+          {errorMessage && errorMessage === "NOT_AUTORIZED_EMAIL" && (
+            <div className={"fr-mb-5w " + styles["error"]}>
+              {wording.NOT_AUTORIZED_EMAIL}
             </div>
           )}
           {emailSent && <div className={"fr-mb-5w " + styles["success"]}> {wording.REGISTRARTION_SUCCESS_MESSAGE} </div>}

@@ -66,7 +66,7 @@ export class WordingFr implements Wording {
   readonly SEND: string = "Envoyer";
   readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
   readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
-
+  readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
   readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";
@@ -206,7 +206,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
 
   // Bloc Autorisation
-  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "autorisation et capacité";
+  readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
   readonly AUTORISATIONS_SANITAIRE: string = "Autorisations de soins";
   readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
@@ -333,6 +333,12 @@ export class WordingFr implements Wording {
   readonly TITRE_II: string = "Titre II";
   readonly TITRE_III: string = "Titre III";
   readonly TITRE_IV: string = "Titre IV";
+  readonly ALLOCATION_DE_RESSOURCES: string = "Allocation de ressources";
+
+  readonly POURCENTAGE: string = "Pourcentage";
+  readonly REPARTITION_DES_ENVELOPPES: string = "Répartition des enveloppes";
+  readonly REPARTITION_DES_SOUS_ENVELOPPES: string = "Répartition des sous-enveloppes";
+  readonly REPARTITION_DES_MODES_DELEGATION: string = "Modes de délégation:";
   readonly COMPTE_DE_RÉSULTAT: string = "Compte de résultat";
   readonly COMPTE_DE_RÉSULTAT_CF: string = "Compte de résultat (CF)";
   readonly PRODUITS_PRINCIPAUX: string = "Produits principaux";
@@ -341,6 +347,19 @@ export class WordingFr implements Wording {
   readonly CHARGES_PRINCIPALES: string = "Charges principales";
   readonly BUDGET_PRINCIPAL: string = "Budget Principal";
   readonly BUDGET_ANNEXE: string = "Budgets Annexes";
+
+  readonly DAF: string = "DAF";
+  readonly DOTATIONS_ACTIVITÉ: string = "Dotations activités";
+  readonly DOTATIONS_DE_SOINS_USLD: string = "Dotations de soins USLD";
+  readonly DOTATIONS_URGENCES: string = "Dotations urgences";
+  readonly FIR: string = "FIR";
+  readonly FORFAITS: string = "Forfaits";
+  readonly MIGAC: string = "MIGAC";
+  readonly ODMCO: string = "ODMCO";
+  readonly ODSV: string = "ODSV";
+  readonly OGD_PA: string = "OGD PA";
+  readonly OGD_PH: string = "OGD PH";
+  readonly OBJECTIF_QUANTIFIÉ_NATIONAL: string = "Objectif Quantifié National";
 
   // Bloc ressources humaines
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
@@ -395,6 +414,7 @@ export class WordingFr implements Wording {
   readonly DIAMANT_TITLE: string = "Décisionnel Inter ARS pour la Maîtrise et ANTicipation";
   readonly CNSA_TITLE: string = "Caisse Nationale de Solidarité pour l’Autonomie";
   readonly ANCRE_TITLE: string = "Application Nationale Compte financier Rapport infra-annuel Eprd";
+  readonly HAPI_TITLE: string = "HArmonisation et Partage d'Information (Autres champs)";
   readonly TDB_PERF_TITLE: string = "Tableau de Bord de la Performance dans le secteur médico-social";
   readonly PMSI_TITLE: string = "Programme de Médicalisation des Systèmes d’Information";
   readonly ARHGOS_TITLE: string = "Agence Régionale Hospitalière Gestion des Objectifs Sanitaires";
@@ -408,6 +428,7 @@ export class WordingFr implements Wording {
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
   readonly CNSA: ReactElement = (<abbr title={this.CNSA_TITLE}>CNSA</abbr>);
   readonly ANCRE: ReactElement = (<abbr title={this.ANCRE_TITLE}>ANCRE</abbr>);
+  readonly HAPI: ReactElement = (<abbr title={this.HAPI_TITLE}>HAPI</abbr>);
   readonly TDB_PERF: ReactElement = (<abbr title={this.TDB_PERF_TITLE}>TdB Perf</abbr>);
   readonly PMSI: ReactElement = (<abbr title={this.PMSI_TITLE}>PMSI</abbr>);
   readonly ARHGOS: ReactElement = (<abbr title={this.ARHGOS_TITLE}>ARHGOS</abbr>);
@@ -529,7 +550,8 @@ export class WordingFr implements Wording {
   readonly ORGANIZATION: string = "Institution";
   readonly ROLE: string = "Rôle";
   readonly SUPER_ADMIN: string = "Administrateur national";
-  readonly ADMIN: string = "Administrateur régional ou en administration centrale";
+  readonly ADMIN_REGIONAL: string = "Administrateur régional";
+  readonly ADMINISTRATION_CENTRALE: string = "Administration centrale";
   readonly USER: string = "Utilisateur";
   readonly PROFILE: string = "Autorisation";
 
@@ -542,4 +564,8 @@ export class WordingFr implements Wording {
   readonly INSTITUTION: string = "Institution";
   readonly PAGE_EDIT_UTILISATEUR_TITRE: string = "Modifier utilisateur";
   readonly ADMIN_PAGE: string = "Console d’administration";
+
+  //Blocs
+  readonly TOUT_REPLIER: string = "Tout replier";
+  readonly TOUT_DEPLIER: string = "Tout déplier";
 }

@@ -128,16 +128,25 @@ describe("getSelectedRole function", () => {
       id: 1,
       code: "ADMIN_NAT",
       libelle: "Administrateur national",
+      ordre: 1
     },
     {
       id: 2,
       code: "ADMIN_REG",
       libelle: "Administrateur régional",
+      ordre: 2
     },
     {
       id: 3,
       code: "USER",
       libelle: "Utilisateur",
+      ordre: 4
+    },
+    {
+      id: 4,
+      code: "ADMIN_CENTR",
+      libelle: "Administration centrale",
+      ordre: 3
     },
   ];
 

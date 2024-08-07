@@ -14,4 +14,5 @@ export type ÉtablissementTerritorialMédicoSocial = Readonly<{
   identité: ÉtablissementTerritorialIdentité & MonoÉtablissement & EntitéJuridiqueDeRattachement;
   ressourcesHumaines: ÉtablissementTerritorialMédicoSocialRessourcesHumaines[];
   qualite: ÉtablissementTerritorialQualite;
+  autorisations: any;
 }>;

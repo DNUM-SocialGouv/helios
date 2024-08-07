@@ -56,7 +56,8 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
         estMonoÉtablissement,
       },
       ressourcesHumaines: établissementTerritorialMédicoSocialRessourcesHumaines,
-      qualite: établissementTerritorialMédicoSocialQualite
+      qualite: établissementTerritorialMédicoSocialQualite,
+      autorisations: {}
     };
   }
 }
