@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.1.18",
+  "version": "1.1.16",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
