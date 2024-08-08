@@ -8,9 +8,11 @@ type BlocProps = Readonly<{
   isMain?: boolean;
   titre: string;
   isExpandable?: boolean;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-export const Bloc = ({ children, isMain = false, titre, isExpandable = true }: BlocProps) => {
+export const Bloc = ({ children, isMain = false, titre, isExpandable = true, opnedBloc = false, toggelBlocs }: BlocProps) => {
   const contenuBloc = isMain ? styles["contenu-bloc-main"] : styles["contenu-bloc"];
   const classeDuTitre = isMain ? styles["titre-bloc-main"] : styles["titre-bloc-secondary"];
   const classesContent = (isExpandable ? "fr-collapse " : "") + contenuBloc;
@@ -20,7 +22,12 @@ export const Bloc = ({ children, isMain = false, titre, isExpandable = true }: B
     <section aria-label={titre}>
       {isExpandable ? (
         <h2 className={styles["titre-bloc"]}>
-          <button aria-controls={contentId} aria-expanded="true" className={"fr-accordion__btn " + styles["titre-button-bloc"] + " " + classeDuTitre}>
+          <button
+            aria-controls={contentId}
+            aria-expanded={opnedBloc}
+            className={"fr-accordion__btn " + styles["titre-button-bloc"] + " " + classeDuTitre}
+            onClick={() => {if(toggelBlocs) {toggelBlocs()}} }
+          >
             {titre}
           </button>
         </h2>

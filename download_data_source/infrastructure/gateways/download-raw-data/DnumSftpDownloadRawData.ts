@@ -27,8 +27,9 @@ export class DnumSftpDownloadRawData implements DownloadRawData {
       "ANN_SAE",
       "MEN_PMSI_ANNUEL",
       "QUO_SAN_FINANCE",
+      "MEN_HAPI"
     ]
-  ) {}
+  ) { }
 
   async exécute(): Promise<void> {
     this.recréeLeRépertoireDeDestination();

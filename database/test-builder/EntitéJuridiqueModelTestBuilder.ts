@@ -1,3 +1,4 @@
+import { AllocationRessourceModel } from "../models/AllocationRessourceModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../models/CapacitesSanitaireEntiteJuridiqueModel";
 import { EntitéJuridiqueModel } from "../models/EntitéJuridiqueModel";
 
@@ -8,7 +9,7 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.adresseNuméroVoie = champsSurchargés?.adresseNuméroVoie || "1";
     entitéJuridique.adresseTypeVoie = champsSurchargés?.adresseTypeVoie || "RTE";
     entitéJuridique.adresseVoie = champsSurchargés?.adresseVoie || "DE VEYZIAT";
-    entitéJuridique.commune = champsSurchargés?.commune || "OYONNAX";
+    entitéJuridique.commune = champsSurchargés?.commune || "OYONNAX"; ''
     entitéJuridique.département = champsSurchargés?.département || "AIN";
     entitéJuridique.libelléStatutJuridique = champsSurchargés?.libelléStatutJuridique || "Etablissement Public Intercommunal dHospitalisation";
     entitéJuridique.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "010018407";
@@ -41,5 +42,20 @@ export class EntitéJuridiqueModelTestBuilder {
     capacitéAutorisationSanitaireModel.nombreDePlacesEnPsyHospitalisationPartielle = champsSurchargés?.nombreDePlacesEnPsyHospitalisationPartielle || 13;
     capacitéAutorisationSanitaireModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "670799667";
     return capacitéAutorisationSanitaireModel;
+  }
+
+  public static créeAllocationRessourceEntiteJuridique(
+    champsSurchargés?: Partial<AllocationRessourceModel>
+  ): AllocationRessourceModel {
+    const allocationRessourceModel = new AllocationRessourceModel();
+    allocationRessourceModel.année = champsSurchargés?.année || 2022;
+    allocationRessourceModel.mois = champsSurchargés?.mois || "1/2022";
+    allocationRessourceModel.enveloppe = champsSurchargés?.enveloppe || "FIR";
+    allocationRessourceModel.sousEnveloppe = champsSurchargés?.sousEnveloppe || "Sanitaire";
+    allocationRessourceModel.modeDelegation = champsSurchargés?.modeDelegation || "Intervention (Ex. cour.)";
+    allocationRessourceModel.montant = champsSurchargés?.montant || 3300;
+    allocationRessourceModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "010018407";
+
+    return allocationRessourceModel;
   }
 }

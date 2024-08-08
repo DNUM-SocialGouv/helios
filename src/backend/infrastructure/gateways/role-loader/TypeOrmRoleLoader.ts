@@ -9,7 +9,7 @@ export class TypeOrmRoleLoader implements RoleLoader {
   async getAllRoles(): Promise<RoleModel[]> {
     return await (await this.orm).getRepository(RoleModel).find({
       order: {
-        id: "ASC",
+        ordre: "ASC",
       },
     });
   }

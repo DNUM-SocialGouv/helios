@@ -11,6 +11,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
     const activités = await this.entitéJuridiqueLoader.chargeActivités(numéroFiness);
     const budgetFinance = await this.entitéJuridiqueLoader.chargeBudgetFinance(numéroFiness);
     const autorisationsEtCapacites = await this.entitéJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFiness);
+    const allocationRessource = await this.entitéJuridiqueLoader.chargeAllocationRessource(numéroFiness);
 
     if (entitéJuridiqueIdentitéOuErreur instanceof EntitéJuridiqueNonTrouvée) {
       throw entitéJuridiqueIdentitéOuErreur;
@@ -21,6 +22,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
       activités,
       budgetFinance,
       autorisationsEtCapacites: AutorisationsEtCapacitesPresenter.present(autorisationsEtCapacites),
+      allocationRessource
     };
   }
 }

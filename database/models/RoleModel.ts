@@ -10,4 +10,7 @@ export class RoleModel {
 
   @Column({ name: "role_libelle" })
   public libelle!: string;
+
+  @Column({ name: "ordre" })
+  public ordre!: number;
 }

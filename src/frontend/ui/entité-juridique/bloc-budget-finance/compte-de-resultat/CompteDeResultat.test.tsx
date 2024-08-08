@@ -11,6 +11,29 @@ import { CompteDeResultat } from "./CompteDeResultat";
 const { wording } = fakeFrontDependencies;
 let graphiqueTest: GraphiqueTest;
 
+const allocationRessourceMockData = {
+  dateMiseÀJourSource: '20/20/2020',
+  data: [],
+}
+
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 describe("CompteDeResultat", () => {
   let budgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
@@ -52,7 +75,9 @@ describe("CompteDeResultat", () => {
           totalRecettesAnnexe: 940,
         } as EntitéJuridiqueBudgetFinance,
       ],
-      wording
+      allocationRessourceMockData,
+      wording,
+      autorisationsMockData
     );
   });
 
@@ -153,7 +178,9 @@ describe("CompteDeResultat", () => {
       // GIVEN
       const budgetFinanceVide = new EntitéJuridiqueBudgetFinanceViewModel(
         [mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 2 }), mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 })],
-        wording
+        allocationRessourceMockData,
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceVide} />);
@@ -173,7 +200,9 @@ describe("CompteDeResultat", () => {
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 4 }),
           mock<EntitéJuridiqueBudgetFinance>({ année: annéeEnCours - 5 }),
         ],
-        wording
+        allocationRessourceMockData,
+        wording,
+        autorisationsMockData
       );
       // WHEN
       renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceAnnees} />);

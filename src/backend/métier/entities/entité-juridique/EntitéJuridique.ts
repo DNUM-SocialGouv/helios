@@ -1,3 +1,4 @@
+import { AllocationRessource } from "../AllocationRessource";
 import { EntitéJuridiqueActivités } from "./EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacité } from "./EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "./EntitéJuridiqueBudgetFinance";
@@ -56,6 +57,7 @@ export type EntitéJuridique = EntitéJuridiqueIdentité &
     activités: EntitéJuridiqueActivités[];
     budgetFinance: EntitéJuridiqueBudgetFinance[];
     autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacité;
+    allocationRessource: AllocationRessource;
   }>;
 
 export enum CatégorisationEnum {

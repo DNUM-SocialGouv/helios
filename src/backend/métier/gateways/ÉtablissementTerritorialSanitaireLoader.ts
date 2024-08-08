@@ -1,3 +1,4 @@
+import { AllocationRessource } from "../entities/AllocationRessource";
 import { EntitéJuridiqueBudgetFinance } from "../entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialSanitaireActivité } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
@@ -11,4 +12,5 @@ export interface ÉtablissementTerritorialSanitaireLoader {
   chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité>;
   chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée>;
   chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite>;
+  chargeAllocationRessource(numéroFinessÉtablissementTerritorial: string): Promise<AllocationRessource>;
 }

@@ -164,9 +164,8 @@ export class CompteDeResultatViewModel {
   }
 
   public get annéeInitiale() {
-    // const anneesTriees = this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => année2 - année1);
-    // return anneesTriees[0];
-    return this.budgetEtFinancesMédicoSocial[this.budgetEtFinancesMédicoSocial.length - 1]?.année;
+    const anneesTriees = this.lesAnnéesEffectivesDuCompteDeRésultat().sort((année1, année2) => année2 - année1);
+    return anneesTriees[0];
   }
 
   public get dateMiseÀJour(): string {

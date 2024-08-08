@@ -13,6 +13,10 @@ export class ÉtablissementTerritorialRattachéViewModel {
     return this.établissementTerritorialRattaché.numéroFiness;
   }
 
+  public get libelléCatégorieÉtablissement(): string {
+    return this.établissementTerritorialRattaché.libelléCatégorieÉtablissement;
+  }
+
   public get identifiant(): ReactElement {
     return (
       <>

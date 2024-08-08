@@ -13,17 +13,19 @@ import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./Établisse
 
 type BlocQualitéProps = Readonly<{
   etablissementTerritorialQualiteSanitairelViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
+  opnedBloc?: boolean;
+  toggelBlocs?: () => void;
 }>;
 
-const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel }: BlocQualitéProps) => {
+const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   if (etablissementTerritorialQualiteSanitairelViewModel.lesDonneesQualiteNeSontPasRenseignées) {
-    return <BlocIndicateurVide title={wording.TITRE_BLOC_QUALITE} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc titre={wording.TITRE_BLOC_QUALITE}>
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs}>
 
       {etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={etablissementTerritorialQualiteSanitairelViewModel.lesDonnéesQualitePasAutorisés} />

@@ -19,6 +19,8 @@ TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL = "ressources_humaines_medico_soci
 TABLES_DES_RECLAMATIONS = "reclamation_etablissement_territorial"
 TABLES_DES_EVENEMENTS_INDESIRABLES = "evenement_indesirable_etablissement_territorial"
 TABLES_DES_INSPECTIONS_ET_CONTROLES = "inspections_controles_etablissement_territorial"
+TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
+TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
@@ -29,6 +31,7 @@ class FichierSource(Enum):
     DIAMANT_ANN_CA_EJ_ET = "ann_ca_ej_et"
     DIAMANT_ANN_ERRD_EJ = "ann_errd_ej"
     DIAMANT_QUO_SAN_FINANCE = "quo_san_finance"
+    DIAMANT_MEN_HAPI = "men_hapi"
     FINESS_CS1400103 = "finess_cs1400103"
     FINESS_CS1400104 = "finess_cs1400104"
     FINESS_CS1400105 = "finess_cs1400105"

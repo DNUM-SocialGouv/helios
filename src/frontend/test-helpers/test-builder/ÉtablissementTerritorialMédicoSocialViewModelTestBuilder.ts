@@ -7,6 +7,24 @@ import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
+const autorisationsMockData = {
+  budgetEtFinance: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    résultatNetComptable: "ok",
+    ratioDépendanceFinancière: "ok",
+    allocationDeRessources: "ok",
+  },
+  budgetEtFinances: {
+    tauxDeCafNette: "ok",
+    compteRésultats: "ok",
+    fondsDeRoulement: "ok",
+    résultatNetComptable: "ok",
+    tauxDeVétustéConstruction: "ok",
+    contributionAuxFraisDeSiège: "ok",
+  },
+};
+
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
     adresseAcheminement: {
@@ -314,32 +332,32 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: -10000,
+        valeur: -30000,
       },
       fondsDeRoulement: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 1057217.9299999999,
+        valeur: 2206969.2599999998,
       },
       recettesEtDépenses: {
         dateMiseÀJourSource: "2022-01-01",
-        dépensesGroupe1: -161786,
-        dépensesGroupe2: -1222576.5799999998,
-        dépensesGroupe3: -8432.5499999999993,
-        recettesGroupe1: 1376744.76,
-        recettesGroupe2: 23340.290000000001,
-        recettesGroupe3: 0,
+        dépensesGroupe1: -129491.19,
+        dépensesGroupe2: -2718457.1600000001,
+        dépensesGroupe3: -406469.14999999997,
+        recettesGroupe1: 3388394.2000000002,
+        recettesGroupe2: 22231.200000000001,
+        recettesGroupe3: 129491.19,
       },
       résultatNetComptable: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 7289.9200000003912,
+        valeur: -38330.669999999503,
       },
       tauxDeCafNette: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 0.13548734436644624,
+        valeur: 0.3833016699999,
       },
       tauxDeVétustéConstruction: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 0.38845089702004892,
+        valeur: 0.31154835988672847,
       },
     },
     {
@@ -390,34 +408,35 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       },
       contributionAuxFraisDeSiège: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: -30000,
+        valeur: -10000,
       },
       fondsDeRoulement: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 2206969.2599999998,
+        valeur: 1057217.9299999999,
       },
       recettesEtDépenses: {
         dateMiseÀJourSource: "2022-01-01",
-        dépensesGroupe1: -129491.19,
-        dépensesGroupe2: -2718457.1600000001,
-        dépensesGroupe3: -406469.14999999997,
-        recettesGroupe1: 3388394.2000000002,
-        recettesGroupe2: 22231.200000000001,
-        recettesGroupe3: 129491.19,
+        dépensesGroupe1: -161786,
+        dépensesGroupe2: -1222576.5799999998,
+        dépensesGroupe3: -8432.5499999999993,
+        recettesGroupe1: 1376744.76,
+        recettesGroupe2: 23340.290000000001,
+        recettesGroupe3: 0,
       },
       résultatNetComptable: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: -38330.669999999503,
+        valeur: 7289.9200000003912,
       },
       tauxDeCafNette: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 0.3833016699999,
+        valeur: 0.13548734436644624,
       },
       tauxDeVétustéConstruction: {
         dateMiseÀJourSource: "2022-01-01",
-        valeur: 0.31154835988672847,
+        valeur: 0.38845089702004892,
       },
-    },
+    }
+
   ];
 
   public static ressourcesHumaines: ÉtablissementTerritorialMédicoSocial["ressourcesHumaines"] = [
@@ -576,9 +595,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
           ...champsSurchargés,
         },
         ressourcesHumaines: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
+        autorisations: autorisationsMockData,
       },
       wording,
-      paths
+      paths,
+      autorisationsMockData
     );
   }
 

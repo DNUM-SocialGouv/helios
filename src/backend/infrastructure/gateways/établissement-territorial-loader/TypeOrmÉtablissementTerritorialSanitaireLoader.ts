@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
+import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
@@ -12,6 +13,7 @@ import { ReclamationETModel } from "../../../../../database/models/ReclamationET
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
@@ -902,5 +904,52 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
       tauxDeCafNetSan: budget.tauxDeCafNetteSan,
     }));
+  }
+
+  async chargeAllocationRessource(numéroFiness: string): Promise<AllocationRessource> {
+    const allocation = await (await this.orm)
+      .getRepository(AllocationRessourceETModel)
+      .createQueryBuilder("allocation_ressource_et")
+      .select(["enveloppe", "sous_enveloppe", "mode_delegation", "annee"])
+      .addSelect("SUM(montant)", "montant_annuel")
+      .where("numero_finess_etablissement_territorial = :finess", { finess: numéroFiness })
+      .groupBy("enveloppe")
+      .addGroupBy("sous_enveloppe")
+      .addGroupBy("mode_delegation")
+      .addGroupBy("annee")
+      .getRawMany();
+
+    const dateMiseAJourMenHapi = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_MEN_HAPI })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisEtablissementSanitaireAllocation(allocation, dateMiseAJourMenHapi);
+  }
+
+  private construisEtablissementSanitaireAllocation(
+    allocations: any[],
+    dateDeMiseÀJourDiamantMenHapiModel: DateMiseÀJourFichierSourceModel
+  ): AllocationRessource {
+    const allocationRessource = allocations
+      .reduce((acc: AllocationRessourceData[], curr: any) => {
+        let allocationRessourceAnnuel = acc.find((allocation) => allocation.année === curr.annee);
+
+        if (!allocationRessourceAnnuel) {
+          allocationRessourceAnnuel = { année: curr.annee, allocationRessoure: [] }
+          acc.push(allocationRessourceAnnuel);
+        }
+        allocationRessourceAnnuel.allocationRessoure.push({
+          enveloppe: curr.enveloppe,
+          sousEnveloppe: curr.sous_enveloppe,
+          modeDeDélégation: curr.mode_delegation,
+          montantNotifié: curr.montant_annuel,
+        });
+        return acc;
+      }, [])
+
+    return {
+      dateMiseÀJourSource: dateDeMiseÀJourDiamantMenHapiModel.dernièreMiseÀJour,
+      data: allocationRessource
+    }
   }
 }

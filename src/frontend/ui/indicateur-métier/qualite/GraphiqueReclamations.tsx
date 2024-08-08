@@ -16,8 +16,8 @@ type GraphiqueReclamationsProps = Readonly<{
 
 const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
-  const annees = Object.keys(data).sort().reverse().map(Number);
-  const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[0]);
+  const annees = Object.keys(data).sort().map(Number);
+  const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
   const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
   const libelles = [

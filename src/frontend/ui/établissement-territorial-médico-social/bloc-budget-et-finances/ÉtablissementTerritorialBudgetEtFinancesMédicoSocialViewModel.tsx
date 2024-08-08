@@ -26,10 +26,16 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   private readonly nombreDAnnéesParIndicateur = 3;
   public compteDeResultatViewModel: CompteDeResultatViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
+  public autorisations: any;
 
-  constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], private wording: Wording) {
+  constructor(
+    private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[],
+    private wording: Wording,
+    autorisations: any
+  ) {
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
-    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording, autorisations);
+    this.autorisations = autorisations;
   }
 
   public get lesDonnéesBudgetEtFinancesNeSontPasRenseignées(): boolean {
@@ -59,7 +65,10 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get montantDeLaContributionAuxFraisDeSiège(): ReactElement {
     const montantDesContributionsAuxFraisDeSiègeParAnnée: { année: number; valeur: string }[] = this.budgetEtFinancesMédicoSocial.reduce(
       (montantParAnnée: { année: number; valeur: string }[], budgetEtFinancesMédicoSocial) => {
-        if (budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== null && budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== "") {
+        if (
+          budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== null &&
+          budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur !== ""
+        ) {
           montantParAnnée.push({
             année: budgetEtFinancesMédicoSocial.année,
             valeur: StringFormater.formatInEuro(budgetEtFinancesMédicoSocial.contributionAuxFraisDeSiège.valeur),
@@ -88,7 +97,15 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.contributionAuxFraisDeSiège.dateMiseÀJourSource !== "");
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.contributionAuxFraisDeSiège &&
+      this.autorisations.budgetEtFinances.contributionAuxFraisDeSiège === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
 
   public get leTauxDeVétustéEstIlRenseigné(): boolean {
@@ -98,7 +115,15 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leTauxDeVétustéEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.tauxDeVétustéConstruction.dateMiseÀJourSource !== "")
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.tauxDeVétustéConstruction &&
+      this.autorisations.budgetEtFinances.tauxDeVétustéConstruction === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
 
   private construisLaCouleurDeLaBarre(valeur: number, année: number | string): CouleurHistogramme {
@@ -173,8 +198,17 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leRésultatNetComptableEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.résultatNetComptable.dateMiseÀJourSource !== "");
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.résultatNetComptable &&
+      this.autorisations.budgetEtFinances.résultatNetComptable === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
+
   public get fondDeRoulementNetGlobal(): ReactElement {
     const annéesSousCadreAutreQueErrd: number[] = [];
     const fondsDeRoulementNetGlobalParAnnée: IndicateurTabulaireProps["valeursParAnnée"] = this.budgetEtFinancesMédicoSocial.reduce(
@@ -210,7 +244,15 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leFondsDeRoulementEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.fondsDeRoulement.dateMiseÀJourSource !== '');
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.fondsDeRoulement &&
+      this.autorisations.budgetEtFinances.fondsDeRoulement === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
 
   private construisLesAnnéesEtSesTaux(
@@ -230,17 +272,33 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   }
 
   public get leTauxDeCafEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.tauxDeCafNette.dateMiseÀJourSource !== '');
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.tauxDeCafNette &&
+      this.autorisations.budgetEtFinances.tauxDeCafNette === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
 
-  public get leCompteDeRésultatEstIlAutorisé(): boolean {
-    return this.budgetEtFinancesMédicoSocial.some((budgetEtFinances) => budgetEtFinances.recettesEtDépenses.dateMiseÀJourSource !== '');
+  public get leCompteDeRésultatEstIlAutorisé() {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinances &&
+      this.autorisations.budgetEtFinances.compteRésultats &&
+      this.autorisations.budgetEtFinances.compteRésultats === "ok"
+    ) {
+      return true;
+    }
+    return false;
   }
 
   public get lesDonnéesBudgetairesPasAutorisés(): string[] {
     const nonAutorisés = [];
 
-    if (!this.leCompteDeRésultatEstIlAutorisé) nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT);
+   if (!this.leCompteDeRésultatEstIlAutorisé) { nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT);}
     if (!this.leRésultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
     if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé) nonAutorisés.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
     if (!this.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
