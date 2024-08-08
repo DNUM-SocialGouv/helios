@@ -161,9 +161,5 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
             expect(détails).toHaveAttribute("data-fr-opened", "false");
         });
     });
-<<<<<<< HEAD
-});
-=======
 });
 
->>>>>>> origin/develop
