@@ -31,6 +31,7 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
                     await this.téléchargeLeFichier(fichier.name);
                 }
             }
+            await this.deconnexionDuSftp();
         } catch (erreur) {
             throw new HeliosError(`[HAPI] Une erreur est survenue lors de la connexion au SFTP : ${erreur.message}`);
         }
@@ -80,6 +81,11 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
         });
         this.logger.info(`[HAPI] ${fichiersPertinents.length}  fichiers HAPI ont été trouvés.`);
         return fichiersPertinents;
+    }
+
+    private async deconnexionDuSftp() {
+        await this.clientSftp.end();
+        this.logger.info("[HAPI] La connexion au SFTP est fermée.");
     }
 
 }
