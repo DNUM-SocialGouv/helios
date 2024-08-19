@@ -84,7 +84,6 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
 
 
 
-
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
