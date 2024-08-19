@@ -15,11 +15,11 @@ type BlocActivitéSanitaireProps = Readonly<{
   toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opnedBloc, toggelBlocs}: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}/>;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
@@ -34,13 +34,21 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opn
 
       <ul className="indicateurs">
         {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés &&
-        entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
+<<<<<<< HEAD
+          entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
+=======
+          entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
+>>>>>>> origin/master
           <GraphiqueNombreDeSejourMCO estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
         ) : (
           <></>
         )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé &&
-        entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
+<<<<<<< HEAD
+          entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
+=======
+          entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
+>>>>>>> origin/master
           <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         ) : (
           <></>

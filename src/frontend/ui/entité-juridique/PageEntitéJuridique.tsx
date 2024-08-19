@@ -69,7 +69,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
     }
   }, [onBeforeGetContentResolve.current]);
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue} = useToggelMultipleBlocs(false, 3);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
 
   return (
     <main className="fr-container">
@@ -85,7 +85,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
           <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
           <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} /> 
+          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
           <BlocAutorisationsCapacites
             entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
@@ -93,11 +93,11 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel}
-          opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)}/>
+            opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-          toggelBlocs={() => toggelBlocs(2)} type="EJ"/>
- 
+            toggelBlocs={() => toggelBlocs(2)} type="EJ" />
+
         </div>
       </>
     </main>

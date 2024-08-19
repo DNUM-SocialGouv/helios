@@ -28,7 +28,7 @@ export class TauxDeCafViewModel {
   private readonly seuilDuTauxDeCaf = 2;
   private readonly seuilMinimalDuTauxDeCaf = -21;
   private readonly seuilMaximalDuTauxDeCaf = 21;
-  private readonly autorisations : any;
+  private readonly autorisations: any;
 
   static fromBudgetFinanceMedicoSocial(budgetFinance: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], autorisations: any, wording: Wording) {
     const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
@@ -39,7 +39,7 @@ export class TauxDeCafViewModel {
     return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, autorisations, wording, 3);
   }
 
-  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[],autorisations: any, wording: Wording) {
+  static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any, wording: Wording) {
     const tauxDeCaf: TauxDeCaf[] = budgetFinance && budgetFinance.map((budget) => ({
       année: budget.année,
       valeur: budget.tauxDeCafNetSan,
@@ -50,7 +50,7 @@ export class TauxDeCafViewModel {
 
   constructor(private tauxDeCafParAnnée: TauxDeCaf[], private dateMiseÀJourSource: string, autorisations: any, private wording: Wording, private nombreDAnnéesParIndicateur = 5) {
     this.autorisations = autorisations;
-   }
+  }
 
   public get leTauxDeCafEstIlRenseigné(): boolean {
     const [années] = this.construisLesAnnéesEtSesTaux();
@@ -59,12 +59,11 @@ export class TauxDeCafViewModel {
   }
 
   public get leTauxDeCafEstIlAutorisé(): boolean {
-    if(
-      this.autorisations && 
-      this.autorisations.budgetEtFinance && 
-      this.autorisations.budgetEtFinance.tauxDeCafNette && 
-      this.autorisations.budgetEtFinance.tauxDeCafNette === 'ok')
-    {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.tauxDeCafNette &&
+      this.autorisations.budgetEtFinance.tauxDeCafNette === 'ok') {
       return true
     }
     return false

@@ -26,7 +26,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
 
 def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_quo_san_finance: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
-
     donnees_quo_san_finance = lis_le_fichier_csv(chemin_du_fichier_quo_san_finance, colonnes_a_lire_bloc_budget_finance_entite_juridique, types_des_colonnes)
     numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
     numéros_finess_des_etablissements_territoriaux_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
@@ -68,6 +67,21 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
             [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
             logger,
         )
+
+    ## filtrer les données
+    donnees_filtrees_only_ET = extrais_les_donnees_etablissements_territoriaux_sanitaires(transform_donnees_quo_san_finance_et)
+
+    with base_de_données.begin() as connection:
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs budget et finances des etablissements territoriaux sanitaire",
+            "DIAMANT",
+            connection,
+            TABLES_DES_BUDGETS_ET_FINANCES_ETABLISSEMENT_TERRITORIAL,
+            donnees_filtrees_only_ET,
+            [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
+            logger,
+        )
+
 
 
 

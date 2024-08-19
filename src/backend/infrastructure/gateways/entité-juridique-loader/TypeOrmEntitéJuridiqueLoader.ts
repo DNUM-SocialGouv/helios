@@ -45,7 +45,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean> {
     const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
-    return (entitéJuridiqueModel.catégorisation === 'prive_non_lucratif'); 
+    return (entitéJuridiqueModel.catégorisation === 'prive_non_lucratif');
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {

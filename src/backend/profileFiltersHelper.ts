@@ -285,7 +285,6 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
 };
 
 const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
-
   for (const budget of budgetFinance) {
     budget.depensesTitreIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIGlobal : "";
     budget.depensesTitreIIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIIGlobal : "";

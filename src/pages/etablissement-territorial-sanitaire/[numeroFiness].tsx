@@ -55,6 +55,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         codeRegion,
         codeProfiles
       )) as ÉtablissementTerritorialSanitaire;
+
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
       return {

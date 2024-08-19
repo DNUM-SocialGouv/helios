@@ -573,8 +573,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
-        budgetFinance:[],
-        allocationRessource: { 
+        budgetFinance: [],
+        allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',
           data: []
         }
@@ -599,8 +599,13 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         },
         qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-        budgetFinance:[],
-        allocationRessource: { 
+<<<<<<< HEAD
+        budgetFinance: [],
+        allocationRessource: {
+=======
+        budgetFinance: [],
+        allocationRessource: {
+>>>>>>> origin/master
           dateMiseÀJourSource: '10/10/2020',
           data: []
         }

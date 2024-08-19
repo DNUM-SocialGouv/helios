@@ -1,5 +1,6 @@
 import pandas as pd
 
+from logging import Logger
 from datacrawler import filtre_les_données_sur_les_n_dernières_années
 from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
@@ -9,7 +10,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 NOMBRE_D_ANNEES_BUDGET_FINANCE = 5
-
 
 def transform_les_donnees_budget_finance_entite_juridique(
     données_quo_san_finance: pd.DataFrame, numéros_finess_des_entites_juridiques_connues: pd.DataFrame
@@ -75,7 +75,6 @@ def extrais_les_donnees_etablissements_territoriaux_sanitaires(data):
 
     # Définir l'index sur les champs "annee" et "numero_finess_etablissement_territorial"
     df_filtre.set_index(["annee", "numero_finess_etablissement_territorial"], inplace=True)
-
     # Supprimer la colonne spécifiée
     df_filtre.drop(columns=["numero_finess_entite_juridique"], inplace=True)
 
