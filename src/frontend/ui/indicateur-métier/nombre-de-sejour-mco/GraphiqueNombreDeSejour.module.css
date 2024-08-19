@@ -1,0 +1,12 @@
+.filtersgroup {
+    display: flex;
+}
+
+.filterElement {
+    padding-right: 1rem;
+}
+
+.filterActiviteElement {
+    padding-left: 1rem;
+    display: flex;
+}
