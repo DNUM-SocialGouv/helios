@@ -1,3 +1,4 @@
+import { ActivitesSanitaireMensuel } from "../entities/ActivitesSanitaireMensuel";
 import { AllocationRessource } from "../entities/AllocationRessource";
 import { EntitéJuridiqueIdentité } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../entities/entité-juridique/EntitéJuridiqueActivités";
@@ -12,6 +13,7 @@ export interface EntitéJuridiqueLoader {
   chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean>;
 
   chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités[]>;
+  chargeActivitésMensuel(numéroFiness: string): Promise<ActivitesSanitaireMensuel>;
 
   chargeBudgetFinance(numéroFiness: string): Promise<EntitéJuridiqueBudgetFinance[]>;
   chargeAutorisationsEtCapacités(numéroFiness: string): Promise<EntitéJuridiqueAutorisationEtCapacitéLoader>;

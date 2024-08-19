@@ -1,3 +1,4 @@
+import { ActivitesSanitaireMensuel } from "../métier/entities/ActivitesSanitaireMensuel";
 import { CadreBudgétaire } from "../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
@@ -250,6 +251,153 @@ export class ÉtablissementTerritorialTestBuilder {
     },
     numéroFinessÉtablissementTerritorial: "123456789",
   };
+
+  private static activitesSanitairesMensuelles: ActivitesSanitaireMensuel = {
+    dateDeMiseAJour: "2024-11-05",
+    activitesSanitaireMensuelList: [{
+      année: 2023,
+      mois: 1,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    }, {
+      année: 2023,
+      mois: 2,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 3,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 4,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 5,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 6,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 7,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 8,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 9,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 10,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    },
+    {
+      année: 2023,
+      mois: 11,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    }, {
+      année: 2023,
+      mois: 12,
+      nombreJournéesPartiellesSsr: 100,
+      nombreJournéesCompletesSsr: 100,
+      nombreSéjoursCompletsChirurgie: 100,
+      nombreSéjoursCompletsMédecine: 100,
+      nombreSéjoursCompletsObstétrique: 100,
+      nombreSéjoursPartielsChirurgie: 100,
+      nombreSéjoursPartielsMédecine: 100,
+      nombreSéjoursPartielsObstétrique: 100,
+    }]
+  };
+
 
   private static autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = {
     autorisations: {
@@ -733,6 +881,14 @@ export class ÉtablissementTerritorialTestBuilder {
       ...champsSurchargés,
     };
   }
+
+  public static créeUneActivitéMensuelSanitaire(champsSurchargés?: Partial<ActivitesSanitaireMensuel>): ActivitesSanitaireMensuel {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.activitesSanitairesMensuelles,
+      ...champsSurchargés,
+    };
+  }
+
 
   public static créeUneAutorisationMédicoSocial(
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité>
