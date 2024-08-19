@@ -599,13 +599,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         },
         qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-<<<<<<< HEAD
         budgetFinance: [],
         allocationRessource: {
-=======
-        budgetFinance: [],
-        allocationRessource: {
->>>>>>> origin/master
           dateMiseÀJourSource: '10/10/2020',
           data: []
         }
