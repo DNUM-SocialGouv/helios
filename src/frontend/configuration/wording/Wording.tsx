@@ -111,6 +111,7 @@ export interface Wording {
 
   readonly TITRE_TRANSCRIPTION: string;
   readonly ANNÉE: string;
+  readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;

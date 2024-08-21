@@ -1,15 +1,17 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
+import { NombreDeJournneesPsySsrHistogrammes } from "./NombreDeJournneePsySsrHistogrammes";
 
 type GraphiquePsySSRProps = Readonly<{
   nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+  activitéMensuelleViewModel: ActivitésMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
 
-export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
+export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
   const { wording } = useDependencies();
 
   return (
@@ -26,15 +28,9 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, estEntitéJuri
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
     >
-      <HistogrammeVerticalABandes
-        annéesTotales={nombreJournéesPsySSRViewModel.NOMBRE_ANNEES}
-        créeLeLibelléDuTooltip={nombreJournéesPsySSRViewModel.tooltipJournéesPsyEtSsr}
-        data={nombreJournéesPsySSRViewModel.histogrammeDataSet}
-        id={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-        idDeLaLégende={nombreJournéesPsySSRViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-        identifiants={nombreJournéesPsySSRViewModel.identifiants}
-        libellés={nombreJournéesPsySSRViewModel.années}
-        valeurs={nombreJournéesPsySSRViewModel.valeurs}
+      <NombreDeJournneesPsySsrHistogrammes
+        activitéMensuelleViewModel={activitéMensuelleViewModel}
+        nombreDeJourneePsySsrViewModel={nombreJournéesPsySSRViewModel}
       />
     </IndicateurGraphique>
   );

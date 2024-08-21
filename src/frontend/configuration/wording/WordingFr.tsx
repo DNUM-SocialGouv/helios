@@ -134,6 +134,7 @@ export class WordingFr implements Wording {
   readonly AFFICHER_LA_TRANSCRIPTION: string = "Afficher la transcription";
   readonly TITRE_TRANSCRIPTION: string = "Transcription du graphique";
   readonly ANNÉE: string = "Année";
+  readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";

@@ -1,5 +1,11 @@
 .filtersgroup {
     display: flex;
+    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+}
+
+.filtersgroupMonthly {
+    display: flex;
 }
 
 .filterElement {
