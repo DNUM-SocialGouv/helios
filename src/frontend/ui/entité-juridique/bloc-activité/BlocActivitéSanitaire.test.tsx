@@ -1,9 +1,11 @@
 import { screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
+import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 const { wording } = fakeFrontDependencies;
@@ -29,8 +31,13 @@ describe("Bloc Activité Sanitaire", () => {
       wording
     );
 
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
+
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "h3" });
@@ -65,9 +72,13 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "h3" });
@@ -114,9 +125,13 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "h3" });
@@ -142,9 +157,13 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h3" });
