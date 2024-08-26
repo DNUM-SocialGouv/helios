@@ -4,7 +4,6 @@ import { IEnveloppe } from "../../../../../../backend/métier/entities/entité-j
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
   HistogrammeHorizontalRowMultiple,
-  colorsAllocations,
 } from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
 import { convertFloatToComma, formatNumbuerWithSpaces } from "../../AllocationRessourcesViewModel";
 import styles from "./DetailsAllocations.module.css";
@@ -58,9 +57,11 @@ const ShowDetails = ({ dataTitle, children, id, className, dataName, directionIc
 
 type DetailsAllocationsProps = Readonly<{
   data: IEnveloppe[];
+  ListeCouleursSousEnveloppes: string[]
 }>;
 
-export function DetailsAllocations({ data }: DetailsAllocationsProps) {
+
+export function DetailsAllocations({ data, ListeCouleursSousEnveloppes }: DetailsAllocationsProps) {
   const { wording } = useDependencies();
 
   return (
@@ -75,6 +76,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
             <div className={styles["titleContainer"]}>
               <div className={styles["titleDetails"]}>
                 <HistogrammeHorizontalRowMultiple
+                  ListeCouleursSousEnveloppes={ListeCouleursSousEnveloppes}
                   data={enveloppe.sousEnveloppes.map((sousEnveloppe) => ({ key: sousEnveloppe.sousEnveloppe, value: sousEnveloppe.pourcentage }))}
                   realPercentage={enveloppe.pourcentage}
                 />
@@ -92,7 +94,7 @@ export function DetailsAllocations({ data }: DetailsAllocationsProps) {
               className={styles["subEnvContainer"]}
               dataTitle={
                 <>
-                  <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: colorsAllocations[index], color: colorsAllocations[index] }}>
+                  <div className={styles["carreSousEnveloppe"]} style={{ backgroundColor: ListeCouleursSousEnveloppes[index], color: ListeCouleursSousEnveloppes[index] }}>
                     i
                   </div>
                   <span className={styles["subEnvTitle"]}>
