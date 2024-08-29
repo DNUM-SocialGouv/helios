@@ -33,7 +33,7 @@ export class WordingFr implements Wording {
   );
   readonly ACCUEIL: string = "Accueil";
   readonly MENU: string = "Menu";
-  readonly DÉCONNEXION: string = "Déconnexion";
+  readonly DÉCONNEXION: string = "Se déconnecter";
   readonly FERMER: string = "Fermer";
   readonly TITRE_DU_SITE: string = "Bienvenue sur Helios !";
 
