@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -13,6 +14,7 @@ import { ReclamationETModel } from "../../../../../database/models/ReclamationET
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
@@ -39,6 +41,7 @@ import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/É
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
+import { construisActiviteMensuel } from "../entité-juridique-loader/ConstrutitActivitesMensuel";
 
 export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -51,6 +54,38 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     )) as DateMiseÀJourFichierSourceModel;
 
     return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
+  }
+
+  async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
+
+    const activitéSanitaireMensuelModel = await (await this.orm)
+      .getRepository(ActivitéSanitaireMensuelModel)
+      .createQueryBuilder("activite_sanitaire_mensuel")
+      .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
+      .orderBy('annee', 'ASC')
+      .addOrderBy('mois', 'ASC')
+      .getMany();
+
+    const dateDeMiseAJourMenPmsiMensuel = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_MEN_PMSI_MENCUMU,
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const activitesSanitaireMensuelCumulé = activitéSanitaireMensuelModel.map((activite) => {
+      return {
+        année: activite.année,
+        mois: activite.mois,
+        nombreJournéesPartiellesSsr: activite.nombreJournéesPartiellesSsr,
+        nombreJournéesCompletesSsr: activite.nombreJournéesCompletesSsr,
+        nombreSéjoursCompletsChirurgie: activite.nombreSéjoursCompletsChirurgie,
+        nombreSéjoursCompletsMédecine: activite.nombreSéjoursCompletsMédecine,
+        nombreSéjoursCompletsObstétrique: activite.nombreSéjoursCompletsObstétrique,
+        nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
+        nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
+        nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+      }
+    })
+
+    return construisActiviteMensuel(activitesSanitaireMensuelCumulé, dateDeMiseAJourMenPmsiMensuel);
   }
 
   async chargeIdentité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialIdentité | ÉtablissementTerritorialSanitaireNonTrouvée> {

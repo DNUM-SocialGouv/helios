@@ -50,7 +50,7 @@ describe("En-tête de page", () => {
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
-    const menuDeDéconnexion = screen.getByRole("button", { name: wording.MENU });
+    const menuDeDéconnexion = screen.getAllByRole("button", { name: wording.MENU })[0];
     expect(menuDeDéconnexion).toHaveAttribute("title", wording.MENU);
     const menuDeRecherche = screen.getAllByRole("button", { name: wording.RECHERCHE_LABEL });
     expect(menuDeRecherche[0]).toHaveAttribute("title", wording.RECHERCHE_LABEL);

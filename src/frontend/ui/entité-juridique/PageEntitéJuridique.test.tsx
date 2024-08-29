@@ -1,12 +1,15 @@
 import { screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
+import { ActivitesSanitaireMensuel } from "../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
 import { StringFormater } from "../commun/StringFormater";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import { ActivitésMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
 const { wording, paths } = fakeFrontDependencies;
@@ -24,6 +27,7 @@ const mockSession = {
   },
   expires: "1235",
 };
+
 const entitéJuridiqueViewModel = EntitéJuridiqueViewModelTestBuilder.crée(wording);
 const entitéJuridique = EntitéJuridiqueViewModelTestBuilder.entitéJuridique;
 const établissementsTerritoriauxRattachésViewModels = new EtablissementsTerritoriauxRattachésTestBuilder(wording).build();
@@ -31,11 +35,18 @@ const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntit�
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("La page Entité Juridique", () => {
-   it("affiche le titre court dans l’onglet", () => {
+
+  it("affiche le titre court dans l’onglet", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
+
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -48,10 +59,15 @@ describe("La page Entité Juridique", () => {
   });
 
   it('affiche le titre : "EJ - numéro de FINESS - nom court de l’entité juridique"', () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -68,10 +84,15 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bouton pour imprimer", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -85,10 +106,16 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche la categorisation", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -102,10 +129,16 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc activité", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -119,10 +152,16 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc budget et finance", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -136,10 +175,16 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc autorisation et capacité", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
           entitéJuridiqueViewModel={entitéJuridiqueViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -150,14 +195,20 @@ describe("La page Entité Juridique", () => {
     // THEN
     const blocAutorisationCapacites = screen.getByText(wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ);
     expect(blocAutorisationCapacites).toBeInTheDocument();
-  }); 
+  });
 
   describe("affiche le bloc identité de l’entité juridique", () => {
-   it("affiche le nom de l’établissement", () => {
+    it("affiche le nom de l’établissement", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -180,21 +231,27 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche la date d’ouverture", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
           />
         </SessionProvider>
       );
-  
+
       // THENs
       const ficheDIdentité = screen.getByRole("region", { name: wording.TITRE_BLOC_IDENTITÉ });
       const indicateurs = within(ficheDIdentité).getAllByRole("listitem");
- 
+
       const labelÉtablissement = within(indicateurs[1]).getByText(
         textMatch(`${wording.DATE_D_OUVERTURE} - ${wording.miseÀJour("02/02/2022")} - Source : FINESS`),
         { selector: "p" }
@@ -206,11 +263,17 @@ describe("La page Entité Juridique", () => {
       expect(nomDeLÉtablissement).toBeInTheDocument();
     });
 
-     it("affiche le numéro FINESS", () => {
+    it("affiche le numéro FINESS", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -231,9 +294,15 @@ describe("La page Entité Juridique", () => {
 
     it("affiche le SIREN", () => {
       // WHEN
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -253,10 +322,16 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche l’adresse", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -276,10 +351,16 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche le téléphone", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -299,10 +380,16 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche le statut de l’établissement", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -330,11 +417,16 @@ describe("La page Entité Juridique", () => {
           value: "",
         },
       });
-
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -350,6 +442,10 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche l’adresse incomplète lorsqu’il manque des champs d’adresse", () => {
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // GIVEN
       const entitéJuridiqueViewModelAvecUneValeurVide = EntitéJuridiqueViewModelTestBuilder.crée(wording, {
         adresseTypeVoie: {
@@ -362,6 +458,8 @@ describe("La page Entité Juridique", () => {
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+
             entitéJuridiqueViewModel={entitéJuridiqueViewModelAvecUneValeurVide}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}

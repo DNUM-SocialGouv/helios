@@ -1,10 +1,13 @@
 import { screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { StringFormater } from "../../commun/StringFormater";
+import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 
@@ -30,10 +33,15 @@ const identité = ÉtablissementTerritorialSanitaireViewModelTestBuilder.identit
 
 describe("La page établissement territorial sanitaire - bloc identité", () => {
   it("affiche le titre dans l’onglet", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -45,10 +53,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -64,10 +77,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le bouton pour imprimer", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -80,10 +98,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le nom de l’établissement", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -105,12 +128,17 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
 
-  
+
   it("affiche la date d’ouverture", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -133,10 +161,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le numéro FINESS", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -156,9 +189,14 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le SIRET", () => {
     // WHEN
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -177,10 +215,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche l’adresse", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -199,10 +242,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le téléphone et e-mail", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -222,10 +270,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche un lien pour naviguer vers l’entité juridique de rattachement", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -245,10 +298,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche la catégorie de l’établissement avec son libellé", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -268,10 +326,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le mode de tarification", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -291,10 +354,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le statut juridique de l’établissement", () => {
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
         />
@@ -322,11 +390,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
           value: "",
         },
       });
-
+      const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageÉtablissementTerritorialSanitaire
+            activitéMensuelleViewModel={activitéMensuelleViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementTerritorialSanitaireViewModel={établissementTerritorialSansTéléphone}
           />
@@ -348,11 +420,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
           value: "",
         },
       });
-
+      const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+        activitesSanitaireMensuelList: [],
+        dateDeMiseAJour: "11/12/12"
+      }), wording);
       // WHEN
       renderFakeComponent(
         <SessionProvider session={mockSession}>
           <PageÉtablissementTerritorialSanitaire
+            activitéMensuelleViewModel={activitéMensuelleViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementTerritorialSanitaireViewModel={établissementTerritorialSansEMail}
           />
@@ -375,11 +451,15 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
         value: "",
       },
     });
-
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
           rechercheViewModel={rechercheViewModel}
           établissementTerritorialSanitaireViewModel={établissementTerritorialSansAdresseVoie}
         />

@@ -83,6 +83,10 @@ export class EntitéJuridiqueViewModelTestBuilder {
       reconnaissanceContractuelleActivités: { autorisations: [], dateMiseÀJourSource: "" },
       equipementMaterielLourdsActivités: { autorisations: [], dateMiseÀJourSource: "" },
     },
+    activitésMensuels: {
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }
   };
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
