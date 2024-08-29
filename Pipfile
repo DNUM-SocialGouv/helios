@@ -52,6 +52,8 @@ populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressour
 check_downloaded_sivss_file = 'python -m datacrawler.check_downloaded_sivss_file'
 check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_file'
 populate_inspections = 'python -m datacrawler.import_inspections'
+populate_activites_mensuel = 'python -m datacrawler.import_activites_mensuel'
+populate_activites_mensuel_ej = 'python -m datacrawler.import_activites_mensuel_entite_juridique'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'

@@ -1,7 +1,9 @@
 import { within } from "@testing-library/react";
 
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
+import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
@@ -36,20 +38,26 @@ const activitesMCO: ActivitéMCO[] = [
     },
   },
 ];
+const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {
+  activitesSanitaireMensuelList: [],
+  dateDeMiseAJour: "11/12/12"
+}
 
 describe("Graphique Nombre de Sejour MCO", () => {
   let viewModel: NombreDeSejourMCOViewModel;
   let graphiqueTest: GraphiqueTest;
+  let activitéMensuelleViewModel: ActivitésMensuelViewModel;
 
   beforeAll(() => {
     // GIVEN
     viewModel = new NombreDeSejourMCOViewModel(activitesMCO, wording);
+    activitéMensuelleViewModel = new ActivitésMensuelViewModel(activitesSanitaireMensuel, wording)
     graphiqueTest = new GraphiqueTest(wording);
   });
 
   it("affiche abréviation du fichier source", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
     // THEN
     const pmsi = graphiqueTest.abréviationFichierSource("PMSI");
@@ -59,7 +67,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
   it("affiche le titre", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
     // THEN
     const titre = graphiqueTest.titre(wording.NOMBRE_DE_SÉJOUR_MCO);
     expect(titre).toBeInTheDocument();
@@ -67,7 +75,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
   it("affiche la date de mise à jour du fichier PMSI", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
     // THEN
     const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2022");
@@ -84,7 +92,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -94,7 +102,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
       // WHEN
       graphiqueTest.ouvreDétail();
@@ -108,7 +116,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -121,7 +129,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -131,7 +139,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
     it("affiche le contenu de la transcription", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -151,7 +159,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
   it("affiche la mise en exergue pour les années manquantes", () => {
     // WHEN
-    renderFakeComponent(<GraphiqueNombreDeSejourMCO nombreDeSejourMCOViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={activitéMensuelleViewModel} nombreDeSejourMCOViewModel={viewModel} />);
 
     // THEN
     const exergue = graphiqueTest.miseEnExergue([annéeEnCours - 5, annéeEnCours - 4, annéeEnCours - 3, annéeEnCours - 2]);

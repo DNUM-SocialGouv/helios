@@ -58,6 +58,8 @@ import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-Ajou
 import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
 import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
 import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
+import { AjoutActiviteSanitaireMensuel1719306882823 } from "./migrations/1719306882823-AjoutActiviteSanitaireMensuel";
+import { AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129 } from "./migrations/1719927727129-AjoutActiviteSanitaireMensuelEntiteJuridique";
 import { AjoutRoleAdministrationCentrale1720186540616 } from "./migrations/1720186540616-AjoutRoleAdministrationCentrale";
 import { AjoutInstitutionAdministrationCentrale1720187617872 } from "./migrations/1720187617872-AjoutInstitutionAdministrationCentrale";
 import { AjoutOrdreRole1720428140655 } from "./migrations/1720428140655-AjoutOrdreRole";
@@ -67,6 +69,8 @@ import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -135,7 +139,9 @@ export default new DataSource({
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
     AllocationRessourceModel,
-    AllocationRessourceETModel
+    AllocationRessourceETModel,
+    ActivitéSanitaireMensuelModel,
+    ActivitéSanitaireMensuelEntiteJuridiqueModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -204,6 +210,8 @@ export default new DataSource({
     AjouterTableBudgetEtFinancesSanitaire1714055066913,
     AjoutBudgetEtFinanceAProfilETSanitaire1797688226682,
     AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682,
+    AjoutActiviteSanitaireMensuel1719306882823,
+    AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
