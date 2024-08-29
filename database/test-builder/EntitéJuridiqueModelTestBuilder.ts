@@ -49,7 +49,6 @@ export class EntitéJuridiqueModelTestBuilder {
   ): AllocationRessourceModel {
     const allocationRessourceModel = new AllocationRessourceModel();
     allocationRessourceModel.année = champsSurchargés?.année || 2022;
-    allocationRessourceModel.mois = champsSurchargés?.mois || "1/2022";
     allocationRessourceModel.enveloppe = champsSurchargés?.enveloppe || "FIR";
     allocationRessourceModel.sousEnveloppe = champsSurchargés?.sousEnveloppe || "Sanitaire";
     allocationRessourceModel.modeDelegation = champsSurchargés?.modeDelegation || "Intervention (Ex. cour.)";

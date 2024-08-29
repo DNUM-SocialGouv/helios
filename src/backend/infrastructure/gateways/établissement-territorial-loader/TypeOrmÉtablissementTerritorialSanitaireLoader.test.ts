@@ -921,7 +921,6 @@ describe("Établissement territorial sanitaire loader", () => {
       allocationRessource.année = 2020;
       allocationRessource.enveloppe = "MIGAC";
       allocationRessource.sousEnveloppe = "MIG";
-      allocationRessource.mois = "1/2022";
       allocationRessource.modeDelegation = "BASE";
       allocationRessource.montant = 53643;
 
