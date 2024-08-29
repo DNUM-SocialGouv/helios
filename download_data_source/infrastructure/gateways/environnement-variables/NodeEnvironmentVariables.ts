@@ -26,6 +26,12 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
   readonly DNUM_SFTP_PRIVATE_KEY: string = this.getOrElse("DNUM_SFTP_PRIVATE_KEY");
   readonly DNUM_SFTP_USERNAME: string = this.getOrElse("DNUM_SFTP_USERNAME");
 
+  readonly HAPI_DATA_PATH: string = this.getOrElse("HAPI_DATA_PATH");
+  readonly HAPI_SFTP_HOST: string = this.getOrElse("HAPI_SFTP_HOST");
+  readonly HAPI_SFTP_PORT: string = this.getOrElse("HAPI_SFTP_PORT");
+  readonly HAPI_SFTP_PASSWORD: string = this.getOrElse("HAPI_SFTP_PASSWORD");
+  readonly HAPI_SFTP_USERNAME: string = this.getOrElse("HAPI_SFTP_USERNAME");
+
   readonly SIREC_DATA_PATH: string = this.getOrElse("SIREC_DATA_PATH");
   readonly CHECKED_SIREC_DATA_PATH: string = this.getOrElse("CHECKED_SIREC_DATA_PATH");
 

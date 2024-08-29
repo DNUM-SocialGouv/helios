@@ -214,23 +214,23 @@ index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_e
 index_du_bloc_budget_et_finances_etablissement_territorial: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
-    "Finess": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
-    "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
-    "Mois Année": ColonneHelios(nom="mois", type=str),
-    "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
-    "Sous Enveloppe": ColonneHelios(nom="sous_enveloppe", type=str),
-    "Mode de Délégation": ColonneHelios(nom="mode_delegation", type=str),
-    "HAPI - Montant Notifié": ColonneHelios(nom="montant", type=float)
+    "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
+    "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
+    "CAMPAGNE": ColonneHelios(nom="annee", type=str),
+    "ENVELOPPE": ColonneHelios(nom="enveloppe", type=str),
+    "SOUS_ENVELOPPE": ColonneHelios(nom="sous_enveloppe", type=str),
+    "MODE_DELEGATION_DELEGUE": ColonneHelios(nom="mode_delegation", type=str),
+    "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float)
 }
 
 équivalences_diamant_men_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
-    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
-    "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
-    "Mois Année": ColonneHelios(nom="mois", type=str),
-    "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
-    "Sous Enveloppe": ColonneHelios(nom="sous_enveloppe", type=str),
-    "Mode de Délégation": ColonneHelios(nom="mode_delegation", type=str),
-    "HAPI - Montant Notifié": ColonneHelios(nom="montant", type=float)
+    "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
+    "CAMPAGNE": ColonneHelios(nom="annee", type=str),
+    "ENVELOPPE": ColonneHelios(nom="enveloppe", type=str),
+    "SOUS_ENVELOPPE": ColonneHelios(nom="sous_enveloppe", type=str),
+    "MODE_DELEGATION_DELEGUE": ColonneHelios(nom="mode_delegation", type=str),
+    "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float)
 }
 
 colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_helios.keys())

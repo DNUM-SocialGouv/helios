@@ -40,4 +40,5 @@ def récupère_les_variables_d_environnement(
         CHECKED_SIVSS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIVSS_DATA_PATH"),
         SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("SIICEA_DATA_PATH"),
         CHECKED_SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIICEA_DATA_PATH"),
+        HAPI_DATA_PATH=signale_si_la_variable_n_est_pas_présente("HAPI_DATA_PATH"),
     )
