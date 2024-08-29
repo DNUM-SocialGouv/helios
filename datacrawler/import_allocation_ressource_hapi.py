@@ -6,6 +6,7 @@ from logging import Logger
 
 from sqlalchemy.engine import Engine, create_engine
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_hapi
 from datacrawler.extract.lecteur_sql import (
     récupère_les_numéros_finess_des_entites_juridiques_de_la_base,
     récupère_les_numéros_finess_des_établissements_de_la_base
@@ -42,13 +43,12 @@ def import_allocation_ressource(fichiers: str, men_hapi_data_path: str, base_de_
     transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
         donnees_allocation_ressource, numéros_finess_des_établissements_connus, logger
     )
-
-    #date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_hapi)
-    date_du_fichier_men_hapi = '20240511'
+    chemin_local_du_dernier_fichier_men_hapi = os.path.join(men_hapi_data_path, sorted(fichiers, reverse = True)[0])
+    date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_hapi(chemin_local_du_dernier_fichier_men_hapi)
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "indicateurs allocation ressource entité juridique",
-            "DIAMANT",
+            "HAPI",
             connection,
             TABLE_RESSOURCE_ALLOCATION_EJ,
             transform_donnees_allocation_ressource,
@@ -59,7 +59,7 @@ def import_allocation_ressource(fichiers: str, men_hapi_data_path: str, base_de_
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
             "indicateurs allocation ressource établissement sanitaire",
-            "DIAMANT",
+            "HAPI",
             connection,
             TABLE_RESSOURCE_ALLOCATION_ET,
             transform_donnees_allocation_ressource_et,
