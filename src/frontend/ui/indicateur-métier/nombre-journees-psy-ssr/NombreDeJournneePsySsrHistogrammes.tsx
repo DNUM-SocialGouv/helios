@@ -18,7 +18,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
     const { wording } = useDependencies();
     const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
-    const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[0]);
+    const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
     const [selectedActivity, setSelectedActivity] = useState(wording.SSR);
 
     const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
