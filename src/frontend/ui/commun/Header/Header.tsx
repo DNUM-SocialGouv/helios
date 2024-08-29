@@ -143,14 +143,14 @@ export const Header = () => {
               {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
                   <button
-                    className={"fr-icon-account-line " + styles["account-logo"]}
+                    className={"fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-menu-fill " + styles["no-border"]}
                     onClick={() => {
                       setDisplayMenu(!displayMenu);
                     }}
                     ref={ref}
                     title="Menu du compte"
                   >
-                    {data?.user?.firstname} {data?.user?.name}
+                    Menu
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
@@ -172,6 +172,7 @@ export const Header = () => {
                           Historique
                         </button>
                       </li>
+                      <hr className={styles["menu-sperator"]} />
                       {(data.user.role === 1) && (
                         <li className={styles["menu-item"]}>
                           <button onClick={() => {
@@ -180,15 +181,18 @@ export const Header = () => {
                         </li>
                       )}
                       {(data.user.role === 1 || data.user.role === 2) && (
-                        <li className={styles["menu-item"]}>
-                          <button
-                            onClick={() => {
-                              router.push(paths.USERS_LIST);
-                            }}
-                          >
-                            Console d’administration
-                          </button>
-                        </li>
+                        <>
+                          <li className={styles["menu-item"]}>
+                            <button
+                              onClick={() => {
+                                router.push(paths.USERS_LIST);
+                              }}
+                            >
+                              Console d’administration
+                            </button>
+                          </li>
+                          <hr className={styles["menu-sperator"]} />
+                        </>
                       )}
                       <li className={styles["menu-item"]}>
                         <button
@@ -208,8 +212,9 @@ export const Header = () => {
                           Mot de passe
                         </button>
                       </li>
+                      <hr className={styles["menu-sperator"]} />
                       <li className={styles["menu-item"]}>
-                        <button onClick={logOut}>{wording.DÉCONNEXION}</button>
+                        <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={logOut}>{wording.DÉCONNEXION}</button>
                       </li>
                     </ul>
                   ) : null}

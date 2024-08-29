@@ -94,6 +94,24 @@ describe("La récupération d’une entité juridique", () => {
     expect(entitéJuridique.activités).toStrictEqual(mockActivités);
   });
 
+  it("récupère toutes les activités mensuelles agrégées de Entité Juridique", async () => {
+    // GIVEN
+    const mockActivitésMensuelles = {
+      dateDeMiseAJour: "2024-11-05",
+      activitesSanitaireMensuelList: []
+    }
+
+    const mockChargeActivités = jest.fn().mockResolvedValue(mockActivitésMensuelles);
+    entiteJuridiqueLoaderMock.chargeActivitésMensuel = mockChargeActivités;
+    const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entiteJuridiqueLoaderMock);
+
+    // WHEN
+    const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+    // THEN
+    expect(entitéJuridique.activitésMensuels).toStrictEqual(mockActivitésMensuelles);
+  });
+
   it("récupère toutes les budget et finance pour un Entité Juridique", async () => {
     // GIVEN
     const mockBudgetFinance = {

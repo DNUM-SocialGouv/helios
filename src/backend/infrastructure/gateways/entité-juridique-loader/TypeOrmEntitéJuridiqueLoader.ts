@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -10,6 +11,7 @@ import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
+import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
@@ -21,6 +23,7 @@ import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
+import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -45,7 +48,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean> {
     const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
-    return (entitéJuridiqueModel.catégorisation === 'prive_non_lucratif'); 
+    return (entitéJuridiqueModel.catégorisation === 'prive_non_lucratif');
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -70,6 +73,38 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
 
     return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
+  }
+
+  async chargeActivitésMensuel(numeroFinessEntiteJuridique: string): Promise<ActivitesSanitaireMensuel> {
+
+    const activitéSanitaireMensuelModel = await (await this.orm)
+      .getRepository(ActivitéSanitaireMensuelEntiteJuridiqueModel)
+      .createQueryBuilder("activite_sanitaire_mensuel_entite_juridique")
+      .where("numero_finess_entite_juridique = :finess", { finess: numeroFinessEntiteJuridique })
+      .orderBy('annee', 'ASC')
+      .addOrderBy('mois', 'ASC')
+      .getMany();
+
+    const dateDeMiseAJourMenPmsiMensuel = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_MEN_PMSI_MENCUMU,
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const activitesSanitaireMensuelCumulé = activitéSanitaireMensuelModel.map((activite) => {
+      return {
+        année: activite.année,
+        mois: activite.mois,
+        nombreJournéesPartiellesSsr: activite.nombreJournéesPartiellesSsr,
+        nombreJournéesCompletesSsr: activite.nombreJournéesCompletesSsr,
+        nombreSéjoursCompletsChirurgie: activite.nombreSéjoursCompletsChirurgie,
+        nombreSéjoursCompletsMédecine: activite.nombreSéjoursCompletsMédecine,
+        nombreSéjoursCompletsObstétrique: activite.nombreSéjoursCompletsObstétrique,
+        nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
+        nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
+        nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+      }
+    })
+
+    return construisActiviteMensuel(activitesSanitaireMensuelCumulé, dateDeMiseAJourMenPmsiMensuel);
   }
 
   async chargeAllocationRessource(numéroFiness: string): Promise<AllocationRessource> {

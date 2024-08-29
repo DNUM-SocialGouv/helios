@@ -80,15 +80,29 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string, libellés: string[]): 
   };
 }
 
-export const couleurDesArcsDuDonut = {
-  opaque: ["#6a6af4", "#000091", "#9898f8", "#aeaef9", "#2323ff", "#cbcbfa", "#a1a1f8", "#313178", "#5757ad", "#6c6cbb", "#4a4a7d", "#5e5e90", "#272747", "#518fff", "#273961", "#0078f3", "#b1c6ff", "#95b4ff", "#f4f6ff", "#dde5ff"],
+export const getRandomBlueShade = (toGenerate: number): string[] => {
+  const colors = new Set<string>();
 
-  transparent: [
-    "rgba(22, 29, 55, 0.1)",
-    "rgba(22, 29, 56, 0.1)",
-    "rgba(22, 29, 57, 0.1)",
-    "rgba(22, 29, 58, 0.1)",
-    "rgba(22, 29, 59, 0.1)",
-    "rgba(22, 29, 60, 0.1)",
-  ],
+  while (colors.size < toGenerate) {
+    const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    const color = `#0000${blue}`;
+    colors.add(color);
+  }
+
+  return Array.from(colors);
+}
+
+export const couleurDesArcsDuDonut = (length: number) => {
+  return {
+    opaque: getRandomBlueShade(length),
+
+    transparent: [
+      "rgba(22, 29, 55, 0.1)",
+      "rgba(22, 29, 56, 0.1)",
+      "rgba(22, 29, 57, 0.1)",
+      "rgba(22, 29, 58, 0.1)",
+      "rgba(22, 29, 59, 0.1)",
+      "rgba(22, 29, 60, 0.1)",
+    ],
+  }
 };

@@ -1,6 +1,8 @@
 import { screen, within } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import PageDAccueil from "../../../../pages";
 import Accessibilité from "../../../../pages/accessibilite";
@@ -11,6 +13,7 @@ import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-h
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
+import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageRégion } from "../../région/PageRégion";
@@ -85,13 +88,17 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
       .avecEtablissementMédicoSocial()
       .avecEtablissementSanitaire()
       .build();
-
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <>
         <SessionProvider session={mockSession}>
           <Breadcrumb />
           <PageEntitéJuridique
+            entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel}
             entitéJuridiqueViewModel={entitéJuridiqueViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
@@ -149,13 +156,17 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
   it("affiche le chemin jusqu’à la page établissement territorial sanitaire", () => {
     // GIVEN
     const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
-
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
     // WHEN
     renderFakeComponent(
       <>
         <SessionProvider session={mockSession}>
           <Breadcrumb />
           <PageÉtablissementTerritorialSanitaire
+            activitéMensuelleViewModel={activitéMensuelleViewModel}
             rechercheViewModel={rechercheViewModel}
             établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
           />

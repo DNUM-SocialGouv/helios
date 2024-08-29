@@ -1,3 +1,4 @@
+import { ActivitesSanitaireMensuel } from "../ActivitesSanitaireMensuel";
 import { AllocationRessource } from "../AllocationRessource";
 import { EntitéJuridiqueActivités } from "./EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacité } from "./EntitéJuridiqueAutorisationEtCapacité";
@@ -55,6 +56,7 @@ export type EntitéJuridiqueIdentité = {
 export type EntitéJuridique = EntitéJuridiqueIdentité &
   Readonly<{
     activités: EntitéJuridiqueActivités[];
+    activitésMensuels: ActivitesSanitaireMensuel;
     budgetFinance: EntitéJuridiqueBudgetFinance[];
     autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacité;
     allocationRessource: AllocationRessource;
