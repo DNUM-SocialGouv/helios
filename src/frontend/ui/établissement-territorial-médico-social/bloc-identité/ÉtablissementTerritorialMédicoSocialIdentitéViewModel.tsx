@@ -122,18 +122,19 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get principalOuSecondaire(): ReactChild {
-    const lienVersLETMS = `${this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
-    const libelle = `${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
+    // const lienVersLETMS = `${this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
+    // const libelle = `${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
 
     return this.établissementTerritorialIdentité.typeÉtablissement.value === "P"
       ? this.wording.PRINCIPAL
-      : (<>
-        <span>{this.wording.SECONDAIRE} ({this.wording.PRINCIPAL} : </span>
-        <Link href={lienVersLETMS} legacyBehavior passHref prefetch={false}>
-          {libelle}
-        </Link>
-        <span>)</span>
-      </>);
+      : `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL} : ${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value})`;
+    // : (<>
+    //   <span>{this.wording.SECONDAIRE} ({this.wording.PRINCIPAL} : </span>
+    //   <Link href={lienVersLETMS} legacyBehavior passHref prefetch={false}>
+    //     {libelle}
+    //   </Link>
+    //   <span>)</span>
+    // </>);
   }
 
   public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {

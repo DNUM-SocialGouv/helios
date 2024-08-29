@@ -31,7 +31,7 @@ export const construisActiviteMensuel = (
     });
 
     return {
-        dateDeMiseAJour: dateDeMiseAJourMenPmsiMensuel.dernièreMiseÀJour,
+        dateDeMiseAJour: dateDeMiseAJourMenPmsiMensuel.dernièreMiseÀJour || '',
         activitesSanitaireMensuelList: activitesSanitaireMensuel
     };
 }
