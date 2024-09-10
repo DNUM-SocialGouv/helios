@@ -5,7 +5,7 @@ export const construisActiviteMensuel = (
     activitesSanitaireMensuelCumulé: ActiviteSanitaireMensuel[],
     dateDeMiseAJourMenPmsiMensuel: DateMiseÀJourFichierSourceModel,
 ): ActivitesSanitaireMensuel => {
-    const previousValues: { [key: string]: number } = {};
+    const previousValues: { [key: string]: number | null } = {};
     let previousYear: number | null = null;
 
     const activitesSanitaireMensuel = activitesSanitaireMensuelCumulé.map((entry, index) => {
@@ -19,7 +19,11 @@ export const construisActiviteMensuel = (
             if (index === 0 || entry.année !== previousYear) {
                 newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel];
             } else {
-                newEntry[key] = entry[key as keyof ActiviteSanitaireMensuel] - (previousValues[key] || 0);
+                if (entry[key as keyof ActiviteSanitaireMensuel] === null) {
+                    newEntry[key] = null;
+                } else {
+                    newEntry[key] = Number(entry[key as keyof ActiviteSanitaireMensuel]) - (previousValues[key] || 0);
+                }
             }
 
             previousValues[key] = value;

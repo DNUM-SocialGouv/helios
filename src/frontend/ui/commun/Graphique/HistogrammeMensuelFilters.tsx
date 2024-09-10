@@ -38,11 +38,11 @@ export const HistogrammeMensuelFilters = ({ identifiant, selectedFrequency, hand
                 <div aria-live="assertive" className="fr-messages-group" id={`checkboxe-month-messages-${identifiant}`}>
                 </div>
             </div>
-            {selectedFrequency === wording.MENSUEL ?
+            {selectedFrequency === wording.MENSUEL && ListeActivites.length > 1 ?
                 <div className={styles["filtersgroupMonthly"]}>
                     <SelectionAnneeTags annees={ListeAnnees} id="activite-mco-mensuel" prefix="" setAnnéeEnCours={setAnnéeEnCours} />
                     <div className={`${styles["filterActiviteElement"]} fr-select-group`}>
-                        <label className="fr-label" htmlFor="select-hint"> Sélectinner une activité  </label>
+                        <label className="fr-label" htmlFor="select-hint"> Sélectionner une activité  </label>
                         <select className="fr-select" id="select-hint" name="select-hint" onChange={handleOnChangeMCO} title='Activités MCO'>
                             {ListeActivites.map((activite) => (
                                 <option key={activite} value={activite} > {activite}  </option>

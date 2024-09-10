@@ -86,7 +86,7 @@ export function HistogrammeVerticalABandes(props: {
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
