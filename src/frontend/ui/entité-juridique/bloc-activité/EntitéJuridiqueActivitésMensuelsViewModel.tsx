@@ -244,6 +244,7 @@ export class ActivitésMensuelViewModel {
 
   public getValeurTableIndicateur(annee: number) {
     const nombreDeSéjours = this.construisLesSéjoursMCOParMois(annee);
+
     return [
       this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsMédecine),
       this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsMédecine),
@@ -271,7 +272,7 @@ export class ActivitésMensuelViewModel {
 
   private valeursDesNombresDeSéjours(nombresSéjours: { x: number; y: number | null | '' }[]): (string | null)[] {
     return nombresSéjours.map((nombreSéjour) => {
-      return nombreSéjour.y ? nombreSéjour.y.toLocaleString("fr") : null;
+      return nombreSéjour.y !== null ? nombreSéjour.y.toLocaleString("fr") : null;
     });
   }
 }
