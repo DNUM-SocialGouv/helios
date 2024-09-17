@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
+import * as ftp from "basic-ftp";
 import Ssh2SftpClient from "ssh2-sftp-client";
+
 
 import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSirecLoader";
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
@@ -115,7 +117,7 @@ const createDependencies = (): Dependencies => {
       logger
     ),
     hapiDownloadRawData: new HapiSftpDownloadRawData(
-      new Ssh2SftpClient(),
+      new ftp.Client(),
       environmentVariables,
       cheminDesFichiersSourcesHapiSurLeSftpHapi,
       environmentVariables.HAPI_DATA_PATH,
