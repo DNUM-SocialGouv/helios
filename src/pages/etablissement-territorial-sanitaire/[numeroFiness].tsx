@@ -63,7 +63,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       return {
         props: {
-          établissementTerritorial,
+          établissementTerritorial: JSON.parse(JSON.stringify(établissementTerritorial)),
           rechercheResult: rechercheResult,
           autorisations: établissementTerritorial.autorisations
         },

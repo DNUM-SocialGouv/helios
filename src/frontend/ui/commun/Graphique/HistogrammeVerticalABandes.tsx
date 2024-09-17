@@ -78,18 +78,26 @@ export function HistogrammeVerticalABandes(props: {
   grapheMensuel: boolean
 }) {
   const { wording } = useDependencies();
+
+  const indexPremierMoisNonDisponible = () => {
+    const index = props.valeurs[0].indexOf(null);
+    const checkIndex = props.valeurs.filter((valeur: (string | null)[]) => valeur[index] !== null);
+    if (checkIndex.length > 0) return -1; else return index;
+  }
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
+  const premierMoisNonDisponible = indexPremierMoisNonDisponible();
 
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {props.grapheMensuel && premierMoisNonDisponible !== -1 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[premierMoisNonDisponible]}`}</MiseEnExergue>}
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}

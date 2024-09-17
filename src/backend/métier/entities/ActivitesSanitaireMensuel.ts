@@ -6,12 +6,12 @@ export type ActivitesSanitaireMensuel = Readonly<{
 export type ActiviteSanitaireMensuel = Readonly<{
     année: number;
     mois: number;
-    nombreJournéesPartiellesSsr: number;
-    nombreJournéesCompletesSsr: number;
-    nombreSéjoursCompletsChirurgie: number;
-    nombreSéjoursCompletsMédecine: number;
-    nombreSéjoursCompletsObstétrique: number;
-    nombreSéjoursPartielsChirurgie: number;
-    nombreSéjoursPartielsMédecine: number;
-    nombreSéjoursPartielsObstétrique: number;
+    nombreJournéesPartiellesSsr: number | null;
+    nombreJournéesCompletesSsr: number | null;
+    nombreSéjoursCompletsChirurgie: number | null;
+    nombreSéjoursCompletsMédecine: number | null;
+    nombreSéjoursCompletsObstétrique: number | null;
+    nombreSéjoursPartielsChirurgie: number | null;
+    nombreSéjoursPartielsMédecine: number | null;
+    nombreSéjoursPartielsObstétrique: number | null;
 }>;

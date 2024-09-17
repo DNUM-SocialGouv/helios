@@ -8,9 +8,9 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_entites_juridiques_de_la_base, récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
-from datacrawler.extract.lecteur_csv import lis_le_fichier_sirec_csv
+from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 
 from datacrawler.load.nom_des_tables import TABLE_ACTIVITE_SANITAIRE_MENSUEL, FichierSource
 from datacrawler.transform.transforme_les_activites_sanitaires_mensuels.transforme_les_donnees_activites_mensuels import transforme_les_donnees_activites_mensuels
@@ -28,19 +28,19 @@ def filter_activites_mensuels(donnees_activites_mencumu: pd.DataFrame) -> pd.Dat
             & ((donnees_activites_mencumu['Année'].str.fullmatch(year_regex, na=True)))
             & ((donnees_activites_mencumu['Année'].astype(int).between(année_de_départ, année_n_moins_1)))
             & ((donnees_activites_mencumu['Mois'].astype(int).between(1, 12)))
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Médecine'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Chirurgie'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Obstétrique'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Médecine'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Chirurgie'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Obstétrique'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles hospit complète SSR'].astype(str).str.isnumeric())
-            & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles HTP SSR'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Médecine'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Chirurgie'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Obstétrique'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Médecine'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Chirurgie'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Obstétrique'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles hospit complète SSR'].astype(str).str.isnumeric())
+            # & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles HTP SSR'].astype(str).str.isnumeric())
             ]
 
 def check_downloaded_men_pmsi_mencumu_file(chemin_local_du_fichier_men_pmsi_mencumu: str) -> pd.DataFrame:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_mensumu_helios)
-    donnees_activites_mencumu = lis_le_fichier_sirec_csv(chemin_local_du_fichier_men_pmsi_mencumu, colonnes_a_lire_activites_mensuel, types_des_colonnes)
+    donnees_activites_mencumu = lis_le_fichier_csv(chemin_local_du_fichier_men_pmsi_mencumu, colonnes_a_lire_activites_mensuel, types_des_colonnes)
     activites_mensuel = filter_activites_mensuels(donnees_activites_mencumu)
     return activites_mensuel
 
