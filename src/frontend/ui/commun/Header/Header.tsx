@@ -197,19 +197,10 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/profile");
+                            router.push("/mon-compte");
                           }}
                         >
                           Mon compte
-                        </button>
-                      </li>
-                      <li className={styles["menu-item"]}>
-                        <button
-                          onClick={() => {
-                            router.push("/change-mot-passe");
-                          }}
-                        >
-                          Mot de passe
                         </button>
                       </li>
                       <hr className={styles["menu-sperator"]} />

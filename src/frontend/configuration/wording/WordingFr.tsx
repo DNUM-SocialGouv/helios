@@ -512,7 +512,7 @@ export class WordingFr implements Wording {
   readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
 
   // Changement de mot de passe
-  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Changement de mot de passe";
+  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Mot de passe";
   readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs suivants";
   readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
   readonly OLD_MOT_DE_PASSE_REINITIALISATION: string = "Mot de passe précédemment utilisé. Merci de renseigner un nouveau mot de passe unique.";
@@ -548,6 +548,7 @@ export class WordingFr implements Wording {
 
   //  Profile page
   readonly USER_PROFILE: string = "Mes informations";
+  readonly MON_COMPTE: string = "Mon compte";
   readonly FIRSTNAME: string = "Prénom";
   readonly LASTNAME: string = "Nom";
   readonly EMAIL: string = "Email";
