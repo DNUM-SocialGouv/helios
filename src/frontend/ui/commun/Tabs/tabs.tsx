@@ -2,7 +2,7 @@ import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 import { ReactChild } from "react";
 
 
-export const Tabs = ({ selectedTabId, labels, children, onChange }: { selectedTabId: string, labels: { text: string, tabId: string }[], children: ReactChild[], onChange: (tabId: string) => void }) => {
+export const Tabs = ({ labels, children, }: { labels: { text: string, tabId: string }[], children: ReactChild[] }) => {
     return (
         <div className="fr-tabs">
             <ul className="fr-tabs__list" role="tablist">
@@ -10,9 +10,8 @@ export const Tabs = ({ selectedTabId, labels, children, onChange }: { selectedTa
                     <li key={index} >
                         <button
                             aria-controls={`tabpanel-${label.tabId}`}
-                            aria-selected={selectedTabId === label.tabId ? "true" : "false"}
+                            aria-selected={label.tabId === "1" ? "true" : "false"}
                             className="fr-tabs__tab"
-                            onClick={() => onChange(label.tabId)}
                             role="tab"
                             tabIndex={index}>
                             {label.text}

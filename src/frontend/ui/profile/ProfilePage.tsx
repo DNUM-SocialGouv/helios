@@ -1,33 +1,22 @@
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 
 import { ChangePwdPage } from "../change-mot-passe/ChangePwdPage";
+import { TabContent } from "../commun/Tabs/tabContent";
+import { Tabs } from "../commun/Tabs/tabs";
 import { UserInfoTab } from "./UserInfoTab";
 
 export const ProfilePage = () => {
 
-
   return (
     <main >
-      <div className="fr-tabs">
-        <ul className="fr-tabs__list" role="tablist">
-          <li role="presentation">
-            <button aria-controls="tabpanel-infos" aria-selected="true" className="fr-tabs__tab" role="tab">
-              Mes informations
-            </button>
-          </li>
-          <li role="presentation">
-            <button aria-controls="tabpanel-pwd" aria-selected="false" className="fr-tabs__tab" role="tab">
-              Mot de passe
-            </button>
-          </li>
-        </ul>
-        <div className="fr-tabs__panel fr-tabs__panel--selected" id="tabpanel-infos" role="tabpanel">
+      <Tabs labels={[{ text: "Mes informations", tabId: "1" }, { text: "Mot de passe", tabId: "2" }]}>
+        <TabContent index="1">
           <UserInfoTab />
-        </div>
-        <div className="fr-tabs__panel" id="tabpanel-pwd" role="tabpanel">
+        </TabContent>
+        <TabContent index="2">
           <ChangePwdPage />
-        </div>
-      </div>
+        </TabContent>
+      </Tabs>
 
     </main>
   );
