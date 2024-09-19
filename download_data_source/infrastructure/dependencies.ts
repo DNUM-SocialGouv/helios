@@ -1,5 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
+import * as ftp from "basic-ftp";
 import Ssh2SftpClient from "ssh2-sftp-client";
+
 
 import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSirecLoader";
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
@@ -16,6 +18,7 @@ import { ÉtablissementTerritorialSourceExterneLoader } from "../métier/gateway
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
+import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDownloadRawData";
 import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
@@ -44,6 +47,7 @@ export type Dependencies = Readonly<{
   sirecDownloadRawData: DownloadRawData;
   siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
+  hapiDownloadRawData: DownloadRawData;
   établissementTerritorialSourceExterneLoader: ÉtablissementTerritorialSourceExterneLoader;
   établissementTerritorialHeliosLoader: ÉtablissementTerritorialHeliosLoader;
   établissementTerritorialHeliosRepository: ÉtablissementTerritorialRepository;
@@ -66,6 +70,8 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
   const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
+
+  const cheminDesFichiersSourcesHapiSurLeSftpHapi = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -108,6 +114,13 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesSivssSurLeSftpDnum,
       environmentVariables.SIVSS_DATA_PATH,
+      logger
+    ),
+    hapiDownloadRawData: new HapiSftpDownloadRawData(
+      new ftp.Client(),
+      environmentVariables,
+      cheminDesFichiersSourcesHapiSurLeSftpHapi,
+      environmentVariables.HAPI_DATA_PATH,
       logger
     ),
     entitéJuridiqueHeliosLoader: typeOrmEntitéJuridiqueHeliosLoader,

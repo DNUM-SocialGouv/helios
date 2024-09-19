@@ -7,19 +7,21 @@ import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/Graph
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
+import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 type BlocActivitéSanitaireProps = Readonly<{
   entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opnedBloc, toggelBlocs}: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, entitéJuridiqueActivitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}/>;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
@@ -34,14 +36,14 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, opn
 
       <ul className="indicateurs">
         {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés &&
-        entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
-          <GraphiqueNombreDeSejourMCO estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
+          entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
+          <GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel} estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
         ) : (
           <></>
         )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé &&
-        entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
-          <GraphiquePsySSR estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
+          entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
+          <GraphiquePsySSR activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel} estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         ) : (
           <></>
         )}

@@ -33,7 +33,7 @@ export class WordingFr implements Wording {
   );
   readonly ACCUEIL: string = "Accueil";
   readonly MENU: string = "Menu";
-  readonly DÉCONNEXION: string = "Déconnexion";
+  readonly DÉCONNEXION: string = "Se déconnecter";
   readonly FERMER: string = "Fermer";
   readonly TITRE_DU_SITE: string = "Bienvenue sur Helios !";
 
@@ -134,8 +134,10 @@ export class WordingFr implements Wording {
   readonly AFFICHER_LA_TRANSCRIPTION: string = "Afficher la transcription";
   readonly TITRE_TRANSCRIPTION: string = "Transcription du graphique";
   readonly ANNÉE: string = "Année";
+  readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
 
   // Catégorisation
@@ -185,7 +187,7 @@ export class WordingFr implements Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string =
-    "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)";
+    "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = "Total Hospitalisation Médecine";
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = "Total Hospitalisation Chirurgie";
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = "Total Hospitalisation Obstétrique";
@@ -198,12 +200,14 @@ export class WordingFr implements Wording {
   readonly TOTAL_HOSPITALISATION_SSR: string = "Total Hospitalisation SSR";
   readonly TOTAL_HOSPITALISATION_PSY: string = "Total Hospitalisation PSY";
   readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string =
-    "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle par année (si applicable)";
+    "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
   readonly HOSPITALISATION_PARTIELLE_SSR: string = "Hospitalisation Partielle SSR";
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = "Hospitalisation Complète SSR";
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = "Hospitalisation Complète PSY";
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
+  readonly ANNUEL: string = "Annuel";
+  readonly MENSUEL: string = "Mensuel";
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";

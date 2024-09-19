@@ -1,0 +1,18 @@
+.filtersgroup {
+    display: flex;
+    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+}
+
+.filtersgroupMonthly {
+    display: flex;
+}
+
+.filterElement {
+    padding-right: 1rem;
+}
+
+.filterActiviteElement {
+    padding-left: 1rem;
+    display: flex;
+}

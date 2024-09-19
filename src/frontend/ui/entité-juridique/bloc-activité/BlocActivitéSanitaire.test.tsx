@@ -1,9 +1,11 @@
-import { screen } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
+import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 const { wording } = fakeFrontDependencies;
@@ -29,8 +31,13 @@ describe("Bloc Activité Sanitaire", () => {
       wording
     );
 
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
+
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, { selector: "h3" });
@@ -65,13 +72,68 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.getByText(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, { selector: "h3" });
     expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche le filtre annuel/mensuel", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueActivitésViewModel(
+      [
+        mock<EntitéJuridiqueActivités>({
+          année: annéeEnCours - 1,
+          nombreJournéesPartiellesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 1111,
+          },
+          nombreJournéesCompletesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 2222,
+          },
+          nombreJournéesPartiellesPsy: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 3333,
+          },
+          nombreJournéesCompletesSsr: {
+            dateMiseÀJourSource: "2020-10-01",
+            value: 4444,
+          },
+          nombreSéjoursHad: {},
+          nombreDePassagesAuxUrgences: {},
+        }),
+      ],
+      wording
+    );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
+
+    // WHEN
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
+
+    // THEN
+    const checkboxAnnuel = screen.getAllByRole('checkbox', { name: /Annuel/i })[0];
+    expect(checkboxAnnuel).toBeInTheDocument();
+    expect(checkboxAnnuel).toBeChecked();
+    const checkboxMensuel = screen.getAllByRole('checkbox', { name: /Mensuel/i })[0];
+    expect(checkboxMensuel).toBeInTheDocument();
+    expect(checkboxMensuel).not.toBeChecked();
+    fireEvent.click(checkboxMensuel);
+    expect(checkboxMensuel).toBeChecked();
+    expect(checkboxAnnuel).not.toBeChecked();
+    const selectActivite = screen.getAllByRole('combobox')[0] as HTMLSelectElement;
+    expect(selectActivite).toBeInTheDocument();
+    expect(selectActivite.value).toBe('Médecine');
   });
 
   it("affiche le GraphiqueNombreDeSejourMCO", () => {
@@ -114,9 +176,13 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.queryByText(wording.NOMBRE_DE_SÉJOUR_MCO, { selector: "h3" });
@@ -142,9 +208,13 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
+    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      activitesSanitaireMensuelList: [],
+      dateDeMiseAJour: "11/12/12"
+    }), wording);
 
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={viewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel} entitéJuridiqueActivitéViewModel={viewModel} />);
 
     // THEN
     const titre = screen.queryByText(wording.NOMBRE_DE_HAD, { selector: "h3" });

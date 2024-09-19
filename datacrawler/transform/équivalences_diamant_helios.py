@@ -214,27 +214,44 @@ index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_e
 index_du_bloc_budget_et_finances_etablissement_territorial: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
-    "Finess": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
-    "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
-    "Mois Année": ColonneHelios(nom="mois", type=str),
-    "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
-    "Sous Enveloppe": ColonneHelios(nom="sous_enveloppe", type=str),
-    "Mode de Délégation": ColonneHelios(nom="mode_delegation", type=str),
-    "HAPI - Montant Notifié": ColonneHelios(nom="montant", type=float)
+    "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
+    "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
+    "CAMPAGNE": ColonneHelios(nom="annee", type=str),
+    "ENVELOPPE": ColonneHelios(nom="enveloppe", type=str),
+    "SOUS_ENVELOPPE": ColonneHelios(nom="sous_enveloppe", type=str),
+    "MODE_DELEGATION_DELEGUE": ColonneHelios(nom="mode_delegation", type=str),
+    "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float)
 }
 
 équivalences_diamant_men_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
-    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
-    "Année Campagne HAPI": ColonneHelios(nom="annee", type=str),
-    "Mois Année": ColonneHelios(nom="mois", type=str),
-    "Enveloppe": ColonneHelios(nom="enveloppe", type=str),
-    "Sous Enveloppe": ColonneHelios(nom="sous_enveloppe", type=str),
-    "Mode de Délégation": ColonneHelios(nom="mode_delegation", type=str),
-    "HAPI - Montant Notifié": ColonneHelios(nom="montant", type=float)
+    "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
+    "CAMPAGNE": ColonneHelios(nom="annee", type=str),
+    "ENVELOPPE": ColonneHelios(nom="enveloppe", type=str),
+    "SOUS_ENVELOPPE": ColonneHelios(nom="sous_enveloppe", type=str),
+    "MODE_DELEGATION_DELEGUE": ColonneHelios(nom="mode_delegation", type=str),
+    "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float)
 }
 
 colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_helios.keys())
 index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "annee"]
+
+équivalences_diamant_men_pmsi_mensumu_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=str),
+    "Mois": ColonneHelios(nom="mois", type=str),
+    "Nombre de séjours mensuels cumulés Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=str),
+    "Nombre de séjours mensuels cumulés Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=str),
+    "Nombre de séjours mensuels cumulés Obstétrique": ColonneHelios(nom="nombre_sejours_complets_obstetrique", type=str),
+    "Nombre de séjours mensuels cumulés HTP/AMBU Médecine": ColonneHelios(nom="nombre_sejours_partiels_medecine", type=str),
+    "Nombre de séjours mensuels cumulés HTP/AMBU Chirurgie": ColonneHelios(nom="nombre_sejours_partiels_chirurgie", type=str),
+    "Nombre de séjours mensuels cumulés HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
+    "Nombre de journées cumulées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
+    "Nombre de journées cumulées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str)
+}
+
+colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())
+index__activites_mensuel: List[str] = ["numero_finess_etablissement_territorial", "annee", "mois"]
 
 colonnes_a_lire_allocation_ressource_et: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_et_helios.keys())
 index_allocation_ressource_et: List[str] = ["numero_finess_etablissement_territorial", "annee"]

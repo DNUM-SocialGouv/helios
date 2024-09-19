@@ -134,6 +134,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
         </Link>
         <span>)</span>
       </>);
+
   }
 
   public get dateDeMiseÀJourDuPrincipalOuDuSecondaire(): string {

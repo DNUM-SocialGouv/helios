@@ -1,3 +1,4 @@
+import { ActivitesSanitaireMensuel } from "../ActivitesSanitaireMensuel";
 import { AllocationRessource } from "../AllocationRessource";
 import { EntitéJuridiqueBudgetFinance } from "../entité-juridique/EntitéJuridiqueBudgetFinance";
 import { ÉtablissementTerritorialIdentité } from "../ÉtablissementTerritorialIdentité";
@@ -8,6 +9,7 @@ import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "./Ét
 
 export type ÉtablissementTerritorialSanitaire = Readonly<{
   activités: ÉtablissementTerritorialSanitaireActivité[];
+  activitésMensuels: ActivitesSanitaireMensuel;
   autorisationsEtCapacités: ÉtablissementTerritorialSanitaireAutorisationEtCapacité;
   qualite: ÉtablissementTerritorialQualite,
   identité: ÉtablissementTerritorialIdentité & EntitéJuridiqueDeRattachement;

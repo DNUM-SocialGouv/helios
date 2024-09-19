@@ -66,32 +66,41 @@ export function HistogrammeVerticalABandes(props: {
       | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
       | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
     )[];
-    labels: number[];
+    labels: (string | number)[];
   };
   id: string;
   identifiants: string[];
-  libellés: number[];
+  libellés: (string | number)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
   annéesTotales: number;
+  grapheMensuel: boolean
 }) {
   const { wording } = useDependencies();
+
+  const indexPremierMoisNonDisponible = () => {
+    const index = props.valeurs[0].indexOf(null);
+    const checkIndex = props.valeurs.filter((valeur: (string | null)[]) => valeur[index] !== null);
+    if (checkIndex.length > 0) return -1; else return index;
+  }
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
+  const premierMoisNonDisponible = indexPremierMoisNonDisponible();
 
   return (
     <>
-      {!aucuneDonnee ? (
+      {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {props.grapheMensuel && premierMoisNonDisponible !== -1 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[premierMoisNonDisponible]}`}</MiseEnExergue>}
       <Transcription
-        disabled={aucuneDonnee}
-        entêteLibellé={wording.ANNÉE}
+        disabled={props.grapheMensuel ? false : aucuneDonnee}
+        entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
         identifiants={props.identifiants}
         libellés={props.libellés}
         valeurs={props.valeurs}
