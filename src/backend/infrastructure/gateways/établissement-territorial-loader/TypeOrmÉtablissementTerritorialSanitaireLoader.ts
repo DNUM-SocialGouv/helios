@@ -96,8 +96,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     }
 
     const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
+    const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel);
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, domaineÉtablissementPrincipal);
   }
 
   async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireAutorisationEtCapacité> {
@@ -374,9 +375,18 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: fichierSource });
   }
 
+  private async chargePrincipaDomaine(numéroFinessÉtablissementTerritorial: string): Promise<string> {
+    const etablissementPrincipal = await (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel).findOneBy({
+      numéroFinessÉtablissementTerritorial,
+    });
+
+    return etablissementPrincipal ? etablissementPrincipal.domaine : "";
+  }
+
   private construisIdentité(
     établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
-    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel
+    dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel,
+    domaineÉtablissementPrincipal: string,
   ): ÉtablissementTerritorialIdentité {
     return {
       adresseAcheminement: {
@@ -427,6 +437,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal,
       },
+      domaineÉtablissementPrincipal: domaineÉtablissementPrincipal,
       numéroFinessÉtablissementTerritorial: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementTerritorial,

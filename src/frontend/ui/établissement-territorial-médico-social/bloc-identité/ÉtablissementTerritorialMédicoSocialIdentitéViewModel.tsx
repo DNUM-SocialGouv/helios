@@ -122,7 +122,8 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get principalOuSecondaire(): ReactChild {
-    const lienVersLETMS = `${this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
+    const domaine = this.établissementTerritorialIdentité.domaineÉtablissementPrincipal === "Médico-social" ? this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL : this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE;
+    const lienVersLETMS = `${domaine}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
     const libelle = `${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
 
     return this.établissementTerritorialIdentité.typeÉtablissement.value === "P"

@@ -97,6 +97,7 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
     raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
+    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   }
@@ -170,6 +171,7 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
     estMonoÉtablissement: profil.mono_établissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
+    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
     dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   }
   return filtredIdentite;
