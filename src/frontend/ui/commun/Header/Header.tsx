@@ -89,6 +89,7 @@ export const Header = () => {
                   <Link href="/" passHref title={wording.ACCUEIL}>
                     <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
                   </Link>
+                  <p className="fr-header__service-tagline">Données des établissement de santé et médico-sociaux</p>
                 </div>
               </div>
               <div className="fr-header__tools">

@@ -35,7 +35,7 @@ export class WordingFr implements Wording {
   readonly MENU: string = "Menu";
   readonly DÉCONNEXION: string = "Se déconnecter";
   readonly FERMER: string = "Fermer";
-  readonly TITRE_DU_SITE: string = "Bienvenue sur Helios !";
+  readonly TITRE_DU_SITE: string = "Helios";
 
   // Titre des pages
   readonly TITRE_PAGE_ACCUEIL: string = "Accueil - Helios";
