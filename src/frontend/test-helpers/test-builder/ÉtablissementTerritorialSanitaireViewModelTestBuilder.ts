@@ -109,6 +109,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       value: "2001-01-01",
     },
     codeRegion: '84',
+    domaineÉtablissementPrincipal: 'Médico-social',
   };
   public static activités: ÉtablissementTerritorialSanitaire["activités"] = [
     {
@@ -573,8 +574,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
           ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
-        budgetFinance:[],
-        allocationRessource: { 
+        budgetFinance: [],
+        allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',
           data: []
         }
@@ -599,8 +600,8 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         },
         qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
-        budgetFinance:[],
-        allocationRessource: { 
+        budgetFinance: [],
+        allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',
           data: []
         }

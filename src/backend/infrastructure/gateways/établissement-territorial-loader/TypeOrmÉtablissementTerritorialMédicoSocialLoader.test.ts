@@ -99,6 +99,7 @@ describe("Établissement territorial médico-social loader", () => {
             dateMiseÀJourSource: "2022-02-02",
             value: numéroFinessÉtablissementTerritorial,
           },
+          domaineÉtablissementPrincipal: ""
         })
       );
     });

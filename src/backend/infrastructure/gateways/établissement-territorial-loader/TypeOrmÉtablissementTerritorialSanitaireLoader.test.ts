@@ -107,6 +107,7 @@ describe("Établissement territorial sanitaire loader", () => {
             dateMiseÀJourSource: "2022-02-02",
             value: numéroFinessÉtablissementTerritorial,
           },
+          domaineÉtablissementPrincipal: "",
         })
       );
     });

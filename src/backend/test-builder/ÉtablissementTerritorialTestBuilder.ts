@@ -87,7 +87,8 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "2001-01-01",
     },
-    codeRegion: '84'
+    codeRegion: '84',
+    domaineÉtablissementPrincipal: 'Médico-social',
   };
 
   private static sanitaire: ÉtablissementTerritorialIdentité = {
@@ -167,7 +168,8 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "2001-01-01",
     },
-    codeRegion: '84'
+    codeRegion: '84',
+    domaineÉtablissementPrincipal: 'Médico-social'
   };
 
   private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
