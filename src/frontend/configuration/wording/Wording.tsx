@@ -459,6 +459,7 @@ export interface Wording {
 
   //  Profile page
   readonly USER_PROFILE: string;
+  readonly MON_COMPTE: string;
   readonly FIRSTNAME: string;
   readonly LASTNAME: string;
   readonly EMAIL: string;
