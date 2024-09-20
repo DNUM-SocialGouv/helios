@@ -18,20 +18,18 @@ export const ChangePwdPage = () => {
     } = useChangeMdp();
 
     return (
-        <main className="fr-container">
-            <FormulaireChangeMdp
-                annuler={annuler}
-                changePassword={changePassword}
-                confirmPasswordValue={confirmPasswordValue}
-                confirmPasswordValueOnChange={confirmPasswordValueOnChange}
-                errorMessage={errorMessage}
-                isLoading={isLoading}
-                oldPasswordValue={oldPasswordValue}
-                oldPasswordValueOnChange={oldPasswordValueOnChange}
-                passwordValue={passwordValue}
-                passwordValueOnChange={passwordValueOnChange}
-                updated={updated}
-            />
-        </main>
+        <FormulaireChangeMdp
+            annuler={annuler}
+            changePassword={changePassword}
+            confirmPasswordValue={confirmPasswordValue}
+            confirmPasswordValueOnChange={confirmPasswordValueOnChange}
+            errorMessage={errorMessage}
+            isLoading={isLoading}
+            oldPasswordValue={oldPasswordValue}
+            oldPasswordValueOnChange={oldPasswordValueOnChange}
+            passwordValue={passwordValue}
+            passwordValueOnChange={passwordValueOnChange}
+            updated={updated}
+        />
     );
 };
