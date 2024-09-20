@@ -72,7 +72,7 @@ export class HapiSftpDownloadRawData implements DownloadRawData {
 
     private ParmisLesDernieresAnnees(anneeFichier: number): boolean {
         const currentYear = new Date().getFullYear();
-        return anneeFichier <= currentYear && anneeFichier >= currentYear - 5
+        return anneeFichier <= currentYear && anneeFichier >= currentYear - 4
     }
 
     private trouveLesFichiersDe5DernieresAnneesPortantLePrefixe(prefixeDesFichiersATelecharger: string, fichiersSurLeSftp: FileInfo[]) {
