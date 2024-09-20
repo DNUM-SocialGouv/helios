@@ -116,6 +116,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       value: "2001-01-01",
     },
     codeRegion: '84',
+    domaineÉtablissementPrincipal: 'Médico-social',
   };
 
   public static activités: ÉtablissementTerritorialMédicoSocial["activités"] = [
