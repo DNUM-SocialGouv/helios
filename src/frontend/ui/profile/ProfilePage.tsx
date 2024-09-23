@@ -8,7 +8,7 @@ import { UserInfoTab } from "./UserInfoTab";
 export const ProfilePage = () => {
 
   return (
-    <main >
+    <main className="fr-container" >
       <Tabs labels={[{ text: "Mes informations", tabId: "1" }, { text: "Mot de passe", tabId: "2" }]}>
         <TabContent index="1">
           <UserInfoTab />
