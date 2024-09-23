@@ -71,6 +71,7 @@ export interface Wording {
   readonly RECHERCHE_DESCRIPTION: ReactElement;
   readonly RECHERCHE_PLACEHOLDER: string;
   readonly RECHERCHE_LABEL: string;
+  readonly RECHERCHE_AVANCEE_LABEL: string;
   readonly RÉSULTAT_DE_RECHERCHE: string;
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string;
   readonly RECHERCHE_EN_ATTENTE: string;
