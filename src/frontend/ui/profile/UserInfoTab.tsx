@@ -10,7 +10,7 @@ export const UserInfoTab = () => {
     const { data } = useSession();
 
     return (
-        <div className="fr-grid-row">
+        <div className="fr-grid-row fr-mt-5w">
             <h1 className={styles["title"]}>{wording.USER_PROFILE}</h1>
             <section className="fr-col-11 fr-mt-5w fr-ml-8w">
                 <div className="fr-mt-4w">
