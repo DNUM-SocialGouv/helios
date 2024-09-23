@@ -10,9 +10,9 @@ export const UserInfoTab = () => {
     const { data } = useSession();
 
     return (
-        <div className="fr-grid-row fr-grid-row--center">
-            <section className="fr-col-8 fr-mt-5w">
-                <h1 className={styles["title"]}>{wording.USER_PROFILE}</h1>
+        <div className="fr-grid-row">
+            <h1 className={styles["title"]}>{wording.USER_PROFILE}</h1>
+            <section className="fr-col-11 fr-mt-5w fr-ml-8w">
                 <div className="fr-mt-4w">
                     <label className="fr-label">{wording.FIRSTNAME}</label>
                     <input className="fr-input" readOnly type="text" value={data?.user?.firstname || ""} />

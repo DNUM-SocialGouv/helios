@@ -22,15 +22,15 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
     const { wording } = useDependencies();
 
     return (
-        <div className="fr-grid-row fr-grid-row--center">
-            <section className="fr-col-8 fr-mt-5w">
+        <div className="fr-grid-row">
+            <section className="fr-col-12 fr-mt-5w">
                 <h1 className={styles["title"]}>{wording.CHANGEMENT_MOT_PASSE_TITRE}</h1>
                 <p>{wording.CHANGEMENT_MOT_PASSE_DESCRIPTION}</p>
-                <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
-                    <form className="fr-col-12 fr-col-md-10 fr-mt-5w" onSubmit={changePassword} >
+                <div className="fr-grid-row fr-mt-8w fr-ml-8w">
+                    <form className="fr-col-11 fr-mt-5w" onSubmit={changePassword} >
                         {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}
                         {updated && <div className={"fr-mb-5w " + styles["success"]}> votre mot de passe a été changé avec succès</div>}
-                        <div className="fr-grid-row fr-grid-row--center">
+                        <div className="fr-grid-row ">
                             <div className="fr-col-12 fr-col-md-4">
                                 <label className="fr-label">
                                     {wording.OLD_MOT_DE_PASSE}
@@ -48,7 +48,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                                 />
                             </div>
                         </div>
-                        <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
+                        <div className="fr-grid-row fr-mt-5w">
                             <div className="fr-col-12 fr-col-md-4">
                                 <label className="fr-label">
                                     {wording.MOT_DE_PASSE}
@@ -66,7 +66,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                                 />
                             </div>
                         </div>
-                        <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
+                        <div className="fr-grid-row  fr-mt-5w">
                             <div className="fr-col-12 fr-col-md-4">
                                 <label className="fr-label">
                                     {wording.CONFIRMER_MOT_DE_PASSE}
