@@ -38,6 +38,7 @@ export const config = {
     "/etablissement-territorial-medico-social/:path*",
     "/settings/:path*",
     "/mon-compte",
+    "/recherche-avancee",
     "/favoris",
     "/history",
     "/change-mot-passe",

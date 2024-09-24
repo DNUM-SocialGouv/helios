@@ -1,0 +1,14 @@
+.criteresRechercheButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ResultatRechercheAvanceeText {
+    width: 100%;
+    height: 40vh;
+    border-radius: 15px;
+    background-color: var(--background-contrast-grey);
+    text-align: center;
+    padding-top: 2rem;
+    color: #161616A3;
+}

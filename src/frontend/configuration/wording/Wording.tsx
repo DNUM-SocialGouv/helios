@@ -71,7 +71,6 @@ export interface Wording {
   readonly RECHERCHE_DESCRIPTION: ReactElement;
   readonly RECHERCHE_PLACEHOLDER: string;
   readonly RECHERCHE_LABEL: string;
-  readonly RECHERCHE_AVANCEE_LABEL: string;
   readonly RÉSULTAT_DE_RECHERCHE: string;
   readonly rechercheNombreRésultats: (nombre: number, terme: string) => string;
   readonly RECHERCHE_EN_ATTENTE: string;
@@ -80,6 +79,14 @@ export interface Wording {
   readonly VOIR_PLUS_RÉSULTATS: string;
   readonly RECHERCHE_TITRE: string;
   readonly BACK_TO_SEARCH: string;
+
+  // Recherche avancée
+  readonly RECHERCHE_AVANCEE_LABEL: string;
+  readonly ZONE_GEOGRAPHIQUE: string;
+  readonly STRUCTURE: string;
+  readonly CAPACITE: string;
+  readonly RECHERCHE_AVANCEE_TEXT: string;
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;
