@@ -1,6 +1,6 @@
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
-import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/rechecheAvanceeFormulaire";
+import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/RechecheAvanceeFormulaire";
 import { ResultatRechercheBLocText } from "../frontend/ui/recherche-avancee/ResultatRechercheBlocText";
 
 

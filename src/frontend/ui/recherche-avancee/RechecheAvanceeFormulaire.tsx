@@ -1,8 +1,10 @@
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import styles from "./RechercheAvanceeFormulaire.module.css"
 
 export const RechercheAvanceeFormulaire = () => {
     const { wording } = useDependencies();
+
     return (
         <div>
             <div className="fr-grid-row">
@@ -31,7 +33,11 @@ export const RechercheAvanceeFormulaire = () => {
             </div>
             <div className="fr-grid-row fr-mt-2w">
                 <div className={"fr-col-5 " + styles["criteresRechercheButtons"]}>
-                    <button className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">
+                    <button
+                        aria-controls="fr-modal-Zone-Geographique-Filtre"
+                        className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+                        data-fr-opened="false"
+                    >
                         {wording.ZONE_GEOGRAPHIQUE}
                     </button>
                     <button className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">
@@ -41,6 +47,9 @@ export const RechercheAvanceeFormulaire = () => {
                         {wording.CAPACITE}
                     </button>
                 </div>
+            </div>
+            <div>
+                <FiltreZoneGeographique />
             </div>
         </div >
     );

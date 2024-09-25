@@ -12,3 +12,15 @@
     padding-top: 2rem;
     color: #161616A3;
 }
+
+.eraseButton {
+    box-shadow: none !important;
+}
+
+.applyButton {
+    margin-left: auto;
+}
+
+.notice {
+    background-color: white !important;
+}
