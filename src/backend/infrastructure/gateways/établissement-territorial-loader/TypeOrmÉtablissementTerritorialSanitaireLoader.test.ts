@@ -257,8 +257,8 @@ describe("Établissement territorial sanitaire loader", () => {
 
       // THEN
       expect(activitéMensuelle.activitesSanitaireMensuelList).toHaveLength(3);
-      expect(activitéMensuelle.activitesSanitaireMensuelList[1].nombreSéjoursCompletsChirurgie).toBe(0);
-      expect(activitéMensuelle.activitesSanitaireMensuelList[2].nombreSéjoursCompletsChirurgie).toBe(70);
+      expect(activitéMensuelle.activitesSanitaireMensuelList[1].nombreSéjoursCompletsChirurgie).toBe(60);
+      expect(activitéMensuelle.activitesSanitaireMensuelList[2].nombreSéjoursCompletsChirurgie).toBe(130);
       expect(activitéMensuelle.dateDeMiseAJour).toBe("2022-02-02");
     });
   });
