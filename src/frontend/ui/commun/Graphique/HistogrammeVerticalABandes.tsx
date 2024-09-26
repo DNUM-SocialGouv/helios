@@ -1,4 +1,5 @@
 import { ChartOptions } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { Wording } from "../../../configuration/wording/Wording";
@@ -9,6 +10,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import { couleurDelAbscisse } from "./couleursGraphique";
+
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
   return {
@@ -79,14 +81,13 @@ export function HistogrammeVerticalABandes(props: {
 }) {
   const { wording } = useDependencies();
 
-  const indexPremierMoisNonDisponible = () => {
-    const index = props.valeurs[0].indexOf(null);
-    const checkIndex = props.valeurs.filter((valeur: (string | null)[]) => valeur[index] !== null);
-    if (checkIndex.length > 0) return -1; else return index;
-  }
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
-  const premierMoisNonDisponible = indexPremierMoisNonDisponible();
+  const [indexPremierMoisNonRenseigne, setindexPremierMoisNonRenseigne] = useState(props.valeurs.length)
+
+  useEffect(() => {
+    setindexPremierMoisNonRenseigne(props.valeurs[0].length);
+  }, [props.valeurs])
 
   return (
     <>
@@ -97,7 +98,7 @@ export function HistogrammeVerticalABandes(props: {
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-      {props.grapheMensuel && premierMoisNonDisponible !== -1 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[premierMoisNonDisponible]}`}</MiseEnExergue>}
+      {props.grapheMensuel && indexPremierMoisNonRenseigne < 12 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[indexPremierMoisNonRenseigne]}`}</MiseEnExergue>}
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
