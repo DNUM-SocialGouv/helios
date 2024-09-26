@@ -240,14 +240,14 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=str),
     "Mois": ColonneHelios(nom="mois", type=str),
-    "Nombre de séjours mensuels cumulés Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=str),
-    "Nombre de séjours mensuels cumulés Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=str),
-    "Nombre de séjours mensuels cumulés Obstétrique": ColonneHelios(nom="nombre_sejours_complets_obstetrique", type=str),
-    "Nombre de séjours mensuels cumulés HTP/AMBU Médecine": ColonneHelios(nom="nombre_sejours_partiels_medecine", type=str),
-    "Nombre de séjours mensuels cumulés HTP/AMBU Chirurgie": ColonneHelios(nom="nombre_sejours_partiels_chirurgie", type=str),
-    "Nombre de séjours mensuels cumulés HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
-    "Nombre de journées cumulées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
-    "Nombre de journées cumulées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str)
+    "Nombre de séjours mensuels Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=str),
+    "Nombre de séjours mensuels Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=str),
+    "Nombre de séjours mensuels Obstétrique": ColonneHelios(nom="nombre_sejours_complets_obstetrique", type=str),
+    "Nombre de séjours mensuels HTP/AMBU Médecine": ColonneHelios(nom="nombre_sejours_partiels_medecine", type=str),
+    "Nombre de séjours mensuels  HTP/AMBU Chirurgie": ColonneHelios(nom="nombre_sejours_partiels_chirurgie", type=str),
+    "Nombre de séjours mensuels HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
+    "Nombre de journées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
+    "Nombre de journées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str)
 }
 
 colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())

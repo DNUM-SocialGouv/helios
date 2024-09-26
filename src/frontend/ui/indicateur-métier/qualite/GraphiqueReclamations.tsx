@@ -20,14 +20,8 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('make it to here', annees[annees.length - 1]);
     setAnnéeEnCours(annees[annees.length - 1]);
   }, [annees])
-  // eslint-disable-next-line no-console
-  console.log('annees', annees);
-  // eslint-disable-next-line no-console
-  console.log('annéeEnCours', annéeEnCours);
 
   const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
