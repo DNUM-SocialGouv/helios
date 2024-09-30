@@ -24,3 +24,21 @@
 .notice {
     background-color: white !important;
 }
+
+.autocompleteList {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    margin-top: 5px;
+    list-style-type: none;
+}
+
+.autocompleteListItem {
+    padding: 8px;
+    cursor: pointer
+}
+
+.autocompleteListItemButton {
+    width: 100%;
+    text-align: left;
+}
