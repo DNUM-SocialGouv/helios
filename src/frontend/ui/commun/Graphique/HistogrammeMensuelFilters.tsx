@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 
 import { Wording } from "../../../configuration/wording/Wording";
 import styles from "./HistogrammeMensuelFilters.module.css";
-import { SelectionAnneeTags } from "./SelectionAnneeTags";
+import { SelectionAnneeTags } from "../Tag/SelectionAnneeTags";
 
 
 type HistogrammeMensuelFiltersProps = Readonly<{
