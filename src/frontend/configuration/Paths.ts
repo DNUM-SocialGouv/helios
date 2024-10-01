@@ -21,4 +21,5 @@ export class Paths {
   readonly REGISTRATION = '/registration';
   readonly REINITIALISATION_PASSWORD = '/reinitialisation-mot-passe';
   readonly CREATE_PASSWORD = '/creation-mot-passe';
+  readonly RECHERCHE_AVANCEE = '/recherche-avancee';
 }

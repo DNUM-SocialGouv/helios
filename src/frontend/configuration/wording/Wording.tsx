@@ -80,6 +80,14 @@ export interface Wording {
   readonly RECHERCHE_TITRE: string;
   readonly BACK_TO_SEARCH: string;
 
+  // Recherche avancée
+  readonly RECHERCHE_AVANCEE_LABEL: string;
+  readonly ZONE_GEOGRAPHIQUE: string;
+  readonly STRUCTURE: string;
+  readonly CAPACITE: string;
+  readonly RECHERCHE_AVANCEE_TEXT: string;
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
+
   // Cartographie
   readonly CARTOGRAPHIE: string;
   readonly OFFRE_SANTÉ_PAR_REGION: string;

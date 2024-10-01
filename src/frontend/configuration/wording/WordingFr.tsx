@@ -95,7 +95,15 @@ export class WordingFr implements Wording {
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
   readonly RECHERCHE_TITRE: string = "";
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
 
+
+  // Recherche avancée
+  readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
+  readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
+  readonly STRUCTURE: string = "Structure";
+  readonly CAPACITE: string = "Capacité";
+  readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
