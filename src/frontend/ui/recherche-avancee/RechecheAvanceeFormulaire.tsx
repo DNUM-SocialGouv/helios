@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ChangeEvent, MouseEvent, useContext, useState } from "react";
 
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -47,6 +48,19 @@ export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus,
         <div>
             <div className="fr-grid-row">
                 <form className="fr-search-bar fr-col-5" id="search-540" role="search">
+=======
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
+import styles from "./RechercheAvanceeFormulaire.module.css"
+
+export const RechercheAvanceeFormulaire = () => {
+    const { wording } = useDependencies();
+
+    return (
+        <div>
+            <div className="fr-grid-row">
+                <form action="/recherche" className="fr-search-bar fr-col-5" id="search-540" role="search">
+>>>>>>> feat/recherche-avancee
                     <label className="fr-label" htmlFor="recherche-avancee-input">
                         {wording.RECHERCHE_LABEL}
                     </label>
@@ -54,6 +68,7 @@ export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus,
                         className="fr-input"
                         id="recherche-avancee-input"
                         name="terme"
+<<<<<<< HEAD
                         onChange={rechercheTermeOnChange}
                         placeholder="Nom, Finess, etc."
                         type="search"
@@ -62,6 +77,16 @@ export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus,
                     <button
                         className="fr-btn"
                         onClick={(e) => lancerLaRecherche(e)}
+=======
+                        placeholder="Nom, Finess, etc."
+                        type="search"
+                    />
+                    <button
+                        className="fr-btn"
+                        onClick={(event) => {
+                            event.preventDefault();
+                        }}
+>>>>>>> feat/recherche-avancee
                         title="Rechercher"
                         type="submit"
                     >
