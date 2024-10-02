@@ -1,14 +1,52 @@
+import { ChangeEvent, MouseEvent, useContext, useState } from "react";
+
+import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
-import styles from "./RechercheAvanceeFormulaire.module.css"
+import styles from "./RechercheAvanceeFormulaire.module.css";
 
-export const RechercheAvanceeFormulaire = () => {
+type RechercheAvanceeFormulaireProps = Readonly<{
+    setEstCeQueLesRésultatsSontReçus: (state: boolean) => void;
+    setEstCeEnAttente: (state: boolean) => void;
+}>;
+
+export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus, setEstCeEnAttente }: RechercheAvanceeFormulaireProps) => {
     const { wording } = useDependencies();
+
+    const [termeDeRecherche, setTermeDeRecherche] = useState("");
+
+    const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+
+    const rechercheTermeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setTermeDeRecherche(event.target.value);
+    }
+
+    const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setEstCeEnAttente(true);
+        setEstCeQueLesRésultatsSontReçus(false);
+
+        fetch("/api/recherche-avancee", {
+            body: JSON.stringify({ page: 1, terme: termeDeRecherche, commune: rechercheAvanceeContext?.zoneGeo }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setEstCeEnAttente(false);
+                setEstCeQueLesRésultatsSontReçus(true);
+                // eslint-disable-next-line no-console
+                console.log("data", data);
+            })
+            .catch(() => {
+                setEstCeEnAttente(false);
+            });
+    };
 
     return (
         <div>
             <div className="fr-grid-row">
-                <form action="/recherche" className="fr-search-bar fr-col-5" id="search-540" role="search">
+                <form className="fr-search-bar fr-col-5" id="search-540" role="search">
                     <label className="fr-label" htmlFor="recherche-avancee-input">
                         {wording.RECHERCHE_LABEL}
                     </label>
@@ -16,14 +54,14 @@ export const RechercheAvanceeFormulaire = () => {
                         className="fr-input"
                         id="recherche-avancee-input"
                         name="terme"
+                        onChange={rechercheTermeOnChange}
                         placeholder="Nom, Finess, etc."
                         type="search"
+                        value={termeDeRecherche}
                     />
                     <button
                         className="fr-btn"
-                        onClick={(event) => {
-                            event.preventDefault();
-                        }}
+                        onClick={(e) => lancerLaRecherche(e)}
                         title="Rechercher"
                         type="submit"
                     >
