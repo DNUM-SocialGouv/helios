@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 
-
 interface RechercheAvanceeContextValue {
     zoneGeo: string;
     setZoneGeo: (zoneGeo: string) => void;
