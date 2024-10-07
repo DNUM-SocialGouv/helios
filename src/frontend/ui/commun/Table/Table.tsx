@@ -60,12 +60,12 @@ export const Table = ({ headers, data = [], selectedRows = [], setSelectedRows }
                                         </div>
                                     </th>
                                     {headers.map((header, index) => header.sort ? (
-                                        <th key={index}>
+                                        <th className={["etsLogo", "favori"].includes(header.key) ? styles["header-logo"] : ""} key={index}>
                                             <span className="fr-cell__title">{header.label}</span>
                                             <button className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w" id="table-miscellaneous-thead-sort-asc-desc" >Trier</button>
                                         </th>
                                     ) : (
-                                        <th className={styles["logo-center"]} key={index}>
+                                        <th key={index}>
                                             <span>{header.label}</span>
                                             {header.key !== "delete" && <span className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />}
                                         </th>
@@ -90,7 +90,7 @@ export const Table = ({ headers, data = [], selectedRows = [], setSelectedRows }
                                             </div>
                                         </th>
                                         {headers.map((header, colIndex) => (
-                                            <td className={header.key === "favori" ? "fr-cell--center" : ""} key={colIndex}>
+                                            <td className={header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} key={colIndex}>
                                                 {header.key === "delete" && (
                                                     <button aria-controls="fr-modal-2" className="fr-icon-delete-line fr-cell--center" data-fr-opened="false" title="Supprimer" type="button" />
                                                 )}

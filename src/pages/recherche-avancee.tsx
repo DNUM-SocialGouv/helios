@@ -1,17 +1,17 @@
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
-import Spinner from "../frontend/ui/commun/Spinner/Spinner";
+import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
 import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/RechecheAvanceeFormulaire";
 import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/ResultatRechercheAvancee";
+import { ResultatRecherchePlaceholderText } from "../frontend/ui/recherche-avancee/ResultatRecherchePlaceHolderText";
 import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRechercheAvancee";
-
-
 
 export default function RechercheAvancee() {
     const { wording } = useDependencies();
     const {
         estCeEnAttente, 
         estCeQueLesRésultatsSontReçus,
+        estCeQueLaRechercheEstLancee,
         lancerLaRecherche,
         rechercheOnChange,
         terme,
@@ -29,7 +29,8 @@ export default function RechercheAvancee() {
         <main className="fr-container">
             <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
             {estCeQueLesRésultatsSontReçus && <ResultatRechercheAvancee data={résultats} />}
-            {estCeEnAttente && <Spinner />}
+            {!estCeQueLaRechercheEstLancee && <ResultatRecherchePlaceholderText />}
+            {estCeEnAttente && <RechercheEnAttente />}
         </main>
     );
 }

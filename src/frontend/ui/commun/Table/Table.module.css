@@ -16,3 +16,12 @@
     height: 23px;
     width: 15px;
 }
+
+.cell-container {
+    max-width: 1rem;
+    text-wrap: wrap !important;
+}
+
+.header-logo {
+    text-align: center !important;
+}

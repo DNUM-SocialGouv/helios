@@ -9,7 +9,7 @@ type RechercheAvanceeState = Readonly<{
     estCeEnAttente: boolean;
     estCeQueLeBackendNeRépondPas: boolean;
     estCeQueLesRésultatsSontReçus: boolean;
-    rechercheLancee: boolean
+    estCeQueLaRechercheEstLancee: boolean
     nombreRésultats: number;
     page: number;
     résultats: RechercheViewModel[];
@@ -21,12 +21,11 @@ export function useRechercheAvancee() {
     const { paths } = useDependencies();
     const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
     const pageInitiale = 1;
-
     const [state, setState] = useState<RechercheAvanceeState>({
         estCeEnAttente: false,
         estCeQueLeBackendNeRépondPas: false,
         estCeQueLesRésultatsSontReçus: false,
-        rechercheLancee: false,
+        estCeQueLaRechercheEstLancee: false,
         nombreRésultats: 0,
         page: pageInitiale,
         résultats: [],
@@ -40,9 +39,7 @@ export function useRechercheAvancee() {
             ...state,
             estCeEnAttente: true,
             estCeQueLesRésultatsSontReçus: false,
-            rechercheLancee: true,
         });
-        
         rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, pageInitiale);
     };
 
@@ -65,19 +62,19 @@ export function useRechercheAvancee() {
                     ...state,
                     estCeEnAttente: false,
                     estCeQueLesRésultatsSontReçus: true,
+                    estCeQueLaRechercheEstLancee: true,
                     nombreRésultats: data.nombreDeRésultats,
                     page,
                     résultats: page === pageInitiale ? construisLesRésultatsDeLaRecherche(data) : state.résultats.concat(construisLesRésultatsDeLaRecherche(data)),
                     terme,
                 });
-                // eslint-disable-next-line no-console
-                console.log("data", data);
             })
             .catch(() => {
                 setState({
                     ...state,
                     estCeEnAttente: false,
                     estCeQueLeBackendNeRépondPas: true,
+                    // estCeQueLaRechercheEstLancee: true,
                 });
             });
     };
@@ -107,6 +104,7 @@ export function useRechercheAvancee() {
         estCeEnAttente: state.estCeEnAttente,
         estCeQueLeBackendNeRépondPas: state.estCeQueLeBackendNeRépondPas,
         estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
+        estCeQueLaRechercheEstLancee: state.estCeQueLaRechercheEstLancee,
         estCeQueLesRésultatsSontTousAffichés,
         lancerLaRecherche,
         nombreRésultats: state.nombreRésultats,
