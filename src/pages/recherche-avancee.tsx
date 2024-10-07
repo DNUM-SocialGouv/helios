@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
@@ -12,7 +10,7 @@ export default function RechercheAvancee() {
     const { wording } = useDependencies();
 
     const {
-        estCeEnAttente, 
+        estCeEnAttente,
         estCeQueLesRésultatsSontReçus,
         estCeQueLaRechercheEstLancee,
         lancerLaRecherche,

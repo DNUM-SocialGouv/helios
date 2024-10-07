@@ -1,4 +1,3 @@
-
 import { ChangeEvent, MouseEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -13,36 +12,6 @@ type RechercheAvanceeFormulaireProps = Readonly<{
 
 export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
     const { wording } = useDependencies();
-
-    const [termeDeRecherche, setTermeDeRecherche] = useState("");
-
-    const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
-
-    const rechercheTermeOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setTermeDeRecherche(event.target.value);
-    }
-
-    const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        setEstCeEnAttente(true);
-        setEstCeQueLesRésultatsSontReçus(false);
-
-        fetch("/api/recherche-avancee", {
-            body: JSON.stringify({ page: 1, terme: termeDeRecherche, commune: rechercheAvanceeContext?.zoneGeo }),
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setEstCeEnAttente(false);
-                setEstCeQueLesRésultatsSontReçus(true);
-                // eslint-disable-next-line no-console
-                console.log("data", data);
-            })
-            .catch(() => {
-                setEstCeEnAttente(false);
-            });
-    };
 
     return (
         <div>
