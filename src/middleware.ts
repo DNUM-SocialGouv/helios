@@ -40,6 +40,7 @@ export const config = {
     "/mon-compte",
     "/recherche-avancee",
     "/favoris",
+    "/comparaison",
     "/history",
     "/change-mot-passe",
     "/api/recherche",

@@ -1,7 +1,7 @@
 import { ReactChild, ReactElement, useState } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
-import { SelectionAnneeTags } from "../Graphique/SelectionAnneeTags";
+import { SelectionAnneeTags } from "../Tag/SelectionAnneeTags";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./IndicateurGraphique.module.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
