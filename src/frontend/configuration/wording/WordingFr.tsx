@@ -508,6 +508,10 @@ export class WordingFr implements Wording {
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
 
+  // Comparaison
+  readonly COMPARAISON: string = "Comparaison";
+  readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
+
   // Favoris
   readonly FAVORIS_LIST: string = "Liste des favoris";
   readonly EJ_SECTION_TITLE: string = "Entités juridiques";

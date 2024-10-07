@@ -52,6 +52,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const conditions = [];
     const parameters: any = {};
 
+
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
       .select("recherche.numero_finess", "numero_finess")

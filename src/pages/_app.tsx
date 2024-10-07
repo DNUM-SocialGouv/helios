@@ -18,6 +18,7 @@ import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import "@gouvfr/dsfr/dist/component/radio/radio.min.css";
 import "@gouvfr/dsfr/dist/component/notice/notice.min.css";
+import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { BackToSearchContextProvider } from "../frontend/ui/commun/contexts/BackToSearchContextProvider";

@@ -1,16 +1,17 @@
-import { ChangeEvent, MouseEvent, useContext, useState } from "react";
 
-import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
+import { ChangeEvent, MouseEvent } from "react";
+
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 
 type RechercheAvanceeFormulaireProps = Readonly<{
-    setEstCeQueLesRésultatsSontReçus: (state: boolean) => void;
-    setEstCeEnAttente: (state: boolean) => void;
+    lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void
+    rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void
+    terme: string
 }>;
 
-export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus, setEstCeEnAttente }: RechercheAvanceeFormulaireProps) => {
+export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
     const { wording } = useDependencies();
 
     const [termeDeRecherche, setTermeDeRecherche] = useState("");
@@ -54,14 +55,14 @@ export const RechercheAvanceeFormulaire = ({ setEstCeQueLesRésultatsSontReçus,
                         className="fr-input"
                         id="recherche-avancee-input"
                         name="terme"
-                        onChange={rechercheTermeOnChange}
+                        onChange={rechercheOnChange}
                         placeholder="Nom, Finess, etc."
                         type="search"
-                        value={termeDeRecherche}
+                        value={terme}
                     />
                     <button
                         className="fr-btn"
-                        onClick={(e) => lancerLaRecherche(e)}
+                        onClick={lancerLaRecherche}
                         title="Rechercher"
                         type="submit"
                     >
