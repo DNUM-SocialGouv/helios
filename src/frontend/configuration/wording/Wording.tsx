@@ -419,6 +419,10 @@ export interface Wording {
 
   readonly EN_CONSTRUCTION: string;
 
+  // Comparaison
+  readonly COMPARAISON: string;
+  readonly AJOUTER_DES_ETABLISSEMENTS: string;
+
   // Favoris
   readonly FAVORIS_LIST: string;
   readonly EJ_SECTION_TITLE: string;
