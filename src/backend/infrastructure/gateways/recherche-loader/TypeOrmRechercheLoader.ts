@@ -48,6 +48,10 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   async rechercheAvancee(terme: string, commune: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
+    const majusCommune = commune.replaceAll(/-/g, " ").toLocaleUpperCase();
+    const conditions = [];
+    const parameters: any = {};
+
 
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
@@ -56,14 +60,24 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
-      .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
-      .from(RechercheModel, "recherche")
-      .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
-      .orWhere("commune = :commune", { commune })
-      .orderBy("rank", "DESC")
-      .addOrderBy("type", "ASC")
+      .from(RechercheModel, "recherche");
+
+    if (majusCommune) {
+      conditions.push("recherche.commune = :commune");
+      parameters.commune = majusCommune;
+    }
+
+    if (terme) {
+      conditions.push("(recherche.termes @@ plainto_tsquery('unaccent_helios', :terme) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets))");
+      parameters.terme = terme;
+      parameters.termeSansEspaces = termeSansEspaces;
+      parameters.termeSansTirets = termeSansTirets
+    }
+
+    if (conditions.length > 0) requêteDeLaRecherche.where(conditions.join(' AND '), parameters);
+
+
+    requêteDeLaRecherche.orderBy("type", "ASC")
       .addOrderBy("numero_finess", "ASC")
       .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
       .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1));

@@ -8,8 +8,9 @@ import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRecherc
 
 export default function RechercheAvancee() {
     const { wording } = useDependencies();
+
     const {
-        estCeEnAttente, 
+        estCeEnAttente,
         estCeQueLesRésultatsSontReçus,
         estCeQueLaRechercheEstLancee,
         lancerLaRecherche,
