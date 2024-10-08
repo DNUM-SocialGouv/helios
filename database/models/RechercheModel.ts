@@ -7,6 +7,7 @@ import { ViewColumn, ViewEntity } from "typeorm";
       raison_sociale_courte,
       'Entité juridique' AS type,
       termes_de_recherche AS termes,
+      categorisation AS statut_juridique,
       commune,
       departement
     FROM entite_juridique
@@ -36,4 +37,7 @@ export class RechercheModel {
 
   @ViewColumn({ name: "type" })
   public type!: string;
+
+  @ViewColumn({ name: "statut_juridique" })
+  public statut_juridique!: string;
 }
