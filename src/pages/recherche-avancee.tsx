@@ -2,14 +2,15 @@ import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies"
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
 import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/RechecheAvanceeFormulaire";
-import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/ResultatRechercheAvancee";
-import { ResultatRecherchePlaceholderText } from "../frontend/ui/recherche-avancee/ResultatRecherchePlaceHolderText";
+import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
+import { ResultatRecherchePlaceholderText } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRecherchePlaceHolderText";
 import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRechercheAvancee";
 
 export default function RechercheAvancee() {
     const { wording } = useDependencies();
+
     const {
-        estCeEnAttente, 
+        estCeEnAttente,
         estCeQueLesRésultatsSontReçus,
         estCeQueLaRechercheEstLancee,
         lancerLaRecherche,
