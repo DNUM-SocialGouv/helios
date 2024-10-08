@@ -6,7 +6,11 @@ export async function rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
     try {
         const rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase = new RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase(dependencies.rechercheLoader);
 
-        return await rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.exécute(terme, commune, page);
+        const type: string[] = [];
+        const statutJuridique: string[] = [];
+        const order = "ASC";
+        const orderBy = "";
+        return await rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.exécute(terme, commune, type, statutJuridique, orderBy, order, page);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;
