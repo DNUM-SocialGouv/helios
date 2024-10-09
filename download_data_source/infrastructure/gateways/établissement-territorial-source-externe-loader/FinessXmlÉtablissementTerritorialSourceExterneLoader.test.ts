@@ -1,5 +1,5 @@
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
-import { Classification, ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
+import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { créerFichierXMLTest, fakeLogger, getFakeDataCrawlerDependencies, getOrm, supprimerDossier } from "../../../testHelper";
 import { NodeXmlToJs } from "../xml-to-js/NodeXmlToJs";
 import { FinessXmlÉtablissementTerritorialSourceExterneLoader } from "./FinessXmlÉtablissementTerritorialSourceExterneLoader";
@@ -123,7 +123,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         département: "AIN",
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -149,7 +148,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         département: "AIN",
         libelléCatégorieÉtablissement: "Autres lits de m.R.",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -219,7 +217,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         département: "AIN",
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -245,7 +242,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         département: "AIN",
         libelléCatégorieÉtablissement: "Autres lits de m.R.",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -317,7 +313,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         département: "AIN",
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -412,7 +407,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
         département: "AIN",
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",
@@ -438,7 +432,6 @@ describe("Récupération des établissements territoriaux de la source de donné
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
         département: "AIN",
         libelléCatégorieÉtablissement: "Autres lits de m.R.",
-        classification: Classification.NON_CALSSIFIE,
         libelléCourtCatégorieÉtablissement: "C.H.",
         libelléModeTarification: "ARS établissements Publics de santé dotation globale",
         numéroFinessEntitéJuridique: "010008407",

@@ -13,7 +13,7 @@ export type ÉtablissementTerritorialIdentité = Readonly<{
   domaine: DomaineÉtablissementTerritorial;
   libelléCatégorieÉtablissement: string;
   libelléCourtCatégorieÉtablissement: string;
-  classification?: Classification;
+  classificationEtablissement?: Classification;
   libelléModeTarification: string;
   numéroFinessEntitéJuridique: string;
   numéroFinessÉtablissementPrincipal: string;
