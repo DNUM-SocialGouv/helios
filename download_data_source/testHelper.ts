@@ -4,7 +4,7 @@ import { Dependencies } from "./infrastructure/dependencies";
 import { typeOrmOrm } from "./infrastructure/gateways/orm/typeOrmOrm";
 import { DomaineÉtablissementTerritorial } from "./métier/entities/DomaineÉtablissementTerritorial";
 import { Catégorisation, EntitéJuridique } from "./métier/entities/EntitéJuridique";
-import { ÉtablissementTerritorialIdentité } from "./métier/entities/ÉtablissementTerritorialIdentité";
+import { Classification, ÉtablissementTerritorialIdentité } from "./métier/entities/ÉtablissementTerritorialIdentité";
 import { EnvironmentVariables } from "./métier/gateways/EnvironmentVariables";
 import { Logger } from "./métier/gateways/Logger";
 
@@ -123,6 +123,7 @@ export const unÉtablissementMédicoSocial: ÉtablissementTerritorialIdentité =
   domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
   département: "AIN",
   libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+  classification: Classification.NON_CALSSIFIE,
   libelléCourtCatégorieÉtablissement: "C.H.",
   libelléModeTarification: "Indéterminé",
   numéroFinessEntitéJuridique: "010018407",
@@ -149,6 +150,7 @@ export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
   domaine: DomaineÉtablissementTerritorial.SANITAIRE,
   département: "NORD",
   libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
+  classification: Classification.NON_CALSSIFIE,
   libelléCourtCatégorieÉtablissement: "C.H.",
   libelléModeTarification: "Tarif AM - Services de Soins Infirmiers A Domicile",
   numéroFinessEntitéJuridique: "590000741",
