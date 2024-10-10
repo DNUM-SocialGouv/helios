@@ -12,7 +12,7 @@ type PaginationBtnProps = Readonly<{
 }>;
 
 const PaginationBtn = ({
-  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, etatId, itemsPerPage, sortDir, orderBy, setPage },
+  paginationData: { lastPage, page, setPage, ...props },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
@@ -30,7 +30,7 @@ const PaginationBtn = ({
 
       return true;
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
+    [props]
   );
 
   return (
