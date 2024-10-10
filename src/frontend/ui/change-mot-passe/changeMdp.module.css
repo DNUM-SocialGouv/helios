@@ -3,6 +3,10 @@
     margin-top: 6rem;
 }
 
+.title {
+    color: #000091;
+}
+
 .form {
     display: flex;
     flex-direction: column;

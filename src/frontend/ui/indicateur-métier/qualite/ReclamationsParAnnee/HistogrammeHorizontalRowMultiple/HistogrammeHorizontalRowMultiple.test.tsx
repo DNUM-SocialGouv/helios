@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
-import { HistogrammeHorizontalRowMultiple, colorsAllocations } from './HistogrammeHorizontalRowMultiple';
+import { HistogrammeHorizontalRowMultiple } from './HistogrammeHorizontalRowMultiple';
 
 // Mock des styles pour éviter les erreurs liées aux modules CSS
 jest.mock('./HistogrammeHorizontalRowMultiple.module.css', () => ({
@@ -21,7 +21,8 @@ describe('HistogrammeHorizontalRowMultiple', () => {
 
   it('renders correctly with valid props', () => {
     const realPercentage = 50;
-    render(<HistogrammeHorizontalRowMultiple data={data} realPercentage={realPercentage} />);
+    const ListeCouleursSousEnveloppes: string[] = [];
+    render(<HistogrammeHorizontalRowMultiple ListeCouleursSousEnveloppes={ListeCouleursSousEnveloppes} data={data} realPercentage={realPercentage} />);
 
     // Vérifie que le conteneur est rendu avec la bonne largeur
     // eslint-disable-next-line testing-library/no-node-access
@@ -32,20 +33,20 @@ describe('HistogrammeHorizontalRowMultiple', () => {
     data.forEach((item, index) => {
       const bar = screen.getByTestId(`bar-${item.key}`);
       expect(bar).toHaveStyle(`width: ${item.value}%`);
-      expect(bar).toHaveStyle(`background-color: ${colorsAllocations[index]}`);
+      expect(bar).toHaveStyle(`background-color: ${ListeCouleursSousEnveloppes[index]}`);
     });
   });
 
   it('does not render if realPercentage is 0 or negative', () => {
-    render(<HistogrammeHorizontalRowMultiple data={data} realPercentage={0} />);
+    render(<HistogrammeHorizontalRowMultiple ListeCouleursSousEnveloppes={[]} data={data} realPercentage={0} />);
     expect(screen.queryByRole('list')).not.toBeInTheDocument();
 
-    render(<HistogrammeHorizontalRowMultiple data={data} realPercentage={-10} />);
+    render(<HistogrammeHorizontalRowMultiple ListeCouleursSousEnveloppes={[]} data={data} realPercentage={-10} />);
     expect(screen.queryByRole('list')).not.toBeInTheDocument();
   });
 
   it('does not render if realPercentage is greater than 100', () => {
-    render(<HistogrammeHorizontalRowMultiple data={data} realPercentage={110} />);
+    render(<HistogrammeHorizontalRowMultiple ListeCouleursSousEnveloppes={[]} data={data} realPercentage={110} />);
     expect(screen.queryByRole('list')).not.toBeInTheDocument();
   });
 });

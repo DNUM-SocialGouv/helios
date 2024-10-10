@@ -11,9 +11,6 @@ export class AllocationRessourceETModel {
     @Column({ length: 9, name: "numero_finess_etablissement_territorial" })
     public numeroFinessEtablissementTerritorial!: string;
 
-    @Column({ name: "mois", type: "varchar" })
-    public mois!: string;
-
     @Column({ name: "enveloppe", type: "varchar" })
     public enveloppe!: string;
 

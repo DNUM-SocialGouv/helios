@@ -27,6 +27,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const autorisationsEtCapacites = filterAutorisationCapaciteEJ(result.autorisationsEtCapacites, profil.autorisationsEtCapacités);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
+  const activitésMensuels = result.activitésMensuels;
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -42,6 +43,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     téléphone: profil.identité.télEtEmail === 'ok' ? result.téléphone : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: result.codeRegion,
     activités: activités,
+    activitésMensuels: activitésMensuels,
     autorisationsEtCapacites: autorisationsEtCapacites,
     budgetFinance: budgetFinance,
     allocationRessource: allocationRessource,
@@ -62,6 +64,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   return {
     identité: identité,
     activités: activités,
+    activitésMensuels: result.activitésMensuels,
     autorisationsEtCapacités: autorisationsEtCapacités,
     qualite: qualite,
     budgetFinance: budgetFinance,
@@ -94,6 +97,7 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
     raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
+    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   }
@@ -167,6 +171,7 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
     estMonoÉtablissement: profil.mono_établissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
+    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
     dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
   }
   return filtredIdentite;
@@ -285,6 +290,7 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
 };
 
 const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
+
   for (const budget of budgetFinance) {
     budget.depensesTitreIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIGlobal : "";
     budget.depensesTitreIIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIIGlobal : "";

@@ -26,6 +26,11 @@ const environmentVariables: EnvironmentVariables = {
   SFTP_PORT: "22",
   SFTP_PRIVATE_KEY: "privateKey",
   SFTP_USERNAME: "usr_finess_ls",
+  HAPI_DATA_PATH: "",
+  HAPI_SFTP_HOST: "",
+  HAPI_SFTP_PORT: "",
+  HAPI_SFTP_PASSWORD: "",
+  HAPI_SFTP_USERNAME: ""
 };
 
 export function getOrm() {
@@ -47,6 +52,7 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     sirecDownloadRawData: { exécute: jest.fn() },
     siiceaDownloadRawData: { exécute: jest.fn() },
     sivssDownloadRawData: { exécute: jest.fn() },
+    hapiDownloadRawData: { exécute: jest.fn() },
     logger: fakeLogger,
     unzipRawData: { exécute: jest.fn() },
     établissementTerritorialHeliosLoader: { récupèreLeNuméroFinessDesÉtablissementsTerritoriaux: jest.fn() },
@@ -146,7 +152,7 @@ export const unÉtablissementSanitaire: ÉtablissementTerritorialIdentité = {
   libelléCourtCatégorieÉtablissement: "C.H.",
   libelléModeTarification: "Tarif AM - Services de Soins Infirmiers A Domicile",
   numéroFinessEntitéJuridique: "590000741",
-  numéroFinessÉtablissementPrincipal: "",
+  numéroFinessÉtablissementPrincipal: "010000057",
   numéroFinessÉtablissementTerritorial: "590782553",
   raisonSociale: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
   raisonSocialeCourte: "HOPITAL PRIVE DE VILLENEUVE DASCQ",

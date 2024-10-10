@@ -11,6 +11,7 @@ import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
+import { ActivitésMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
@@ -22,10 +23,11 @@ import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTer
 
 type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel;
+  activitéMensuelleViewModel: ActivitésMensuelViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
 
-export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, établissementTerritorialSanitaireViewModel }: ÉtablissementTerritorialProps) => {
+export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, établissementTerritorialSanitaireViewModel, activitéMensuelleViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
   const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
@@ -96,7 +98,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel}
-            opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+            activitéMensuelleViewModel={activitéMensuelleViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
           <SeparatorHorizontal></SeparatorHorizontal>
 
           {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&

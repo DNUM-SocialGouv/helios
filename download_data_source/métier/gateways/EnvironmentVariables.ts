@@ -20,4 +20,10 @@ export interface EnvironmentVariables {
   readonly DNUM_SFTP_PORT: string;
   readonly DNUM_SFTP_PRIVATE_KEY: string;
   readonly DNUM_SFTP_USERNAME: string;
+
+  readonly HAPI_DATA_PATH: string;
+  readonly HAPI_SFTP_HOST: string;
+  readonly HAPI_SFTP_PORT: string;
+  readonly HAPI_SFTP_PASSWORD: string;
+  readonly HAPI_SFTP_USERNAME: string;
 }

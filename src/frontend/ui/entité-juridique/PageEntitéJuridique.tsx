@@ -11,6 +11,7 @@ import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipl
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
+import { ActivitésMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
@@ -22,11 +23,12 @@ import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-étab
 
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
 
-export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
+export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiqueActivitéMensuelleViewModel, rechercheViewModel, établissementsTerritoriauxRattachésViewModels }: EntitéJuridiqueProps) => {
   const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
@@ -92,8 +94,8 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, rechercheViewM
             opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel}
-            opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+          <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+            entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
             toggelBlocs={() => toggelBlocs(2)} type="EJ" />

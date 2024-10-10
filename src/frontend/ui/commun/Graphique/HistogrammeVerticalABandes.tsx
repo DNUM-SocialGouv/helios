@@ -1,4 +1,5 @@
 import { ChartOptions } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { Wording } from "../../../configuration/wording/Wording";
@@ -9,6 +10,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import { couleurDelAbscisse } from "./couleursGraphique";
+
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
   return {
@@ -66,32 +68,40 @@ export function HistogrammeVerticalABandes(props: {
       | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
       | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
     )[];
-    labels: number[];
+    labels: (string | number)[];
   };
   id: string;
   identifiants: string[];
-  libellés: number[];
+  libellés: (string | number)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
   annéesTotales: number;
+  grapheMensuel: boolean
 }) {
   const { wording } = useDependencies();
+
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
+  const [indexPremierMoisNonRenseigne, setindexPremierMoisNonRenseigne] = useState(props.valeurs.length)
+
+  useEffect(() => {
+    setindexPremierMoisNonRenseigne(props.valeurs[0].length);
+  }, [props.valeurs])
 
   return (
     <>
-      {!aucuneDonnee ? (
+      {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {props.grapheMensuel && indexPremierMoisNonRenseigne < 12 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[indexPremierMoisNonRenseigne]}`}</MiseEnExergue>}
       <Transcription
-        disabled={aucuneDonnee}
-        entêteLibellé={wording.ANNÉE}
+        disabled={props.grapheMensuel ? false : aucuneDonnee}
+        entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
         identifiants={props.identifiants}
         libellés={props.libellés}
         valeurs={props.valeurs}

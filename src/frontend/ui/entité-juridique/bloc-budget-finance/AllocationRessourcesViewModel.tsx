@@ -10,7 +10,7 @@ import {
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { CouleurHistogramme, noir } from "../../commun/Graphique/couleursGraphique";
-import { DonutNoCenterText, couleurDesArcsDuDonut } from "../../commun/Graphique/DonutNoCenterText";
+import { DonutNoCenterText, couleurDesArcsDuDonut, getRandomBlueShade } from "../../commun/Graphique/DonutNoCenterText";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
@@ -47,7 +47,6 @@ export function formatNumbuerWithSpaces(number: number) {
 export class AllocationRessourcesViewModel {
   public allocationRessourcesData: IAllocationRessources;
   private NOMBRE_ANNEES = 5;
-  private readonly couleursDuDoughnutDesAllocationDeRessource: Record<string, { couleurDeLArc: string; couleurDuLibellé: string }>;
   private readonly annéesAvecDesAllocationDeRessource: number[];
   private readonly IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES = "légende-graphique-entite-juridique-allocation-ressources";
   private wording: Wording;
@@ -57,22 +56,6 @@ export class AllocationRessourcesViewModel {
     this.wording = wording;
 
     this.allocationRessourcesData = allocationRessources;
-
-    this.couleursDuDoughnutDesAllocationDeRessource = {
-      [this.wording.DAF]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[0], couleurDuLibellé: noir },
-      [this.wording.DOTATIONS_ACTIVITÉ]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[1], couleurDuLibellé: noir },
-      [this.wording.DOTATIONS_DE_SOINS_USLD]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[2], couleurDuLibellé: noir },
-      [this.wording.DOTATIONS_URGENCES]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[3], couleurDuLibellé: noir },
-      [this.wording.FIR]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[4], couleurDuLibellé: noir },
-      [this.wording.FORFAITS]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[5], couleurDuLibellé: noir },
-      [this.wording.MIGAC]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[6], couleurDuLibellé: noir },
-      [this.wording.ODMCO]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[7], couleurDuLibellé: noir },
-      [this.wording.ODSV]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[8], couleurDuLibellé: noir },
-      [this.wording.OGD_PA]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[9], couleurDuLibellé: noir },
-      [this.wording.OGD_PH]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[10], couleurDuLibellé: noir },
-      [this.wording.OBJECTIF_QUANTIFIÉ_NATIONAL]: { couleurDeLArc: couleurDesArcsDuDonut.opaque[11], couleurDuLibellé: noir },
-    };
-
     this.annéesAvecDesAllocationDeRessource = this.lesAnnéesEffectivesDuAllocationRessources();
 
     this.autorisations = autorisations;
@@ -244,6 +227,16 @@ export class AllocationRessourcesViewModel {
     return result;
   }
 
+  getCouleursSousEnveloppes(data: IEnveloppe[]) {
+    const sousEnveloppes = new Set();
+    data.forEach((enveloppe) => {
+      enveloppe.sousEnveloppes.forEach((sousEnveloppe) => {
+        sousEnveloppes.add(sousEnveloppe)
+      })
+    })
+    return getRandomBlueShade(sousEnveloppes.size);
+  }
+
   allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours: number): any {
     const dataAllocationRessources = this.allocationRessourcesEnCours(annéeEnCours);
     return this.allocationRessourcesGroubByEnveloppeSousEnvelopeETMode(dataAllocationRessources.allocationRessoure);
@@ -301,33 +294,29 @@ export class AllocationRessourcesViewModel {
     );
   }
 
-  private associeLaCouleurDeLArcAuMotifDuAllocationDeRessource(motif: string) {
-    return {
-      premierPlan: this.couleursDuDoughnutDesAllocationDeRessource[motif].couleurDeLArc,
-      secondPlan: this.couleursDuDoughnutDesAllocationDeRessource[motif].couleurDeLArc,
-    };
-  }
-
-  private associeLaCouleurDuLibelléAuMotifDAbsentéisme(motif: string): string {
-    return this.couleursDuDoughnutDesAllocationDeRessource[motif].couleurDuLibellé;
-  }
-
   public allocationDeRessource(annéeEnCours: number): ReactElement {
     if (!annéeEnCours) return this.pasDeAllocationDeRessource;
 
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];
 
+
+
     const valeursAvecMotif = this.allocationRessourcesEnCoursGroubByEnveloppe(annéeEnCours).filter((valeur: any) => valeur.valeur !== 0);
     const treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode = this.allocationRessourcesEnCoursGroubByEnveloppeSousEnvelopeETMode(annéeEnCours).filter((valeur: any) => valeur.total !== 0);;
     const transformDataToTranscriptionData = this.transformDataToTranscriptionData(treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode);
+    const ListeCouleursSousEnveloppes = this.getCouleursSousEnveloppes(treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode);
     const transcriptionDataKeys = transformDataToTranscriptionData.map((item) => item.key);
     const transcriptionDataValues = transformDataToTranscriptionData.map((item) => item.value);
 
-    valeursAvecMotif.forEach((item: AllocationValeursAvecMotif) => {
-      couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuAllocationDeRessource(item.motif));
-      couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(item.motif));
-    });
+    for (let index = 0; index < valeursAvecMotif.length; index++) {
+      const generatedColor = couleurDesArcsDuDonut(valeursAvecMotif.length).opaque[index];
+      couleursDuDoughnut.push({
+        premierPlan: generatedColor,
+        secondPlan: generatedColor,
+      });
+      couleursDesLibelles.push(noir);
+    }
 
     const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
@@ -353,7 +342,7 @@ export class AllocationRessourcesViewModel {
             />
           </div>
           <div className="fr-col-7">
-            <DetailsAllocations data={treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode} />
+            <DetailsAllocations ListeCouleursSousEnveloppes={ListeCouleursSousEnveloppes} data={treeAllocationRessourcesGroubByEnveloppeSousEnvelopeETMode} />
           </div>
         </div>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

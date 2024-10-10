@@ -49,8 +49,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
     const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)) as DateMiseÀJourFichierSourceModel;
+    const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
-    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel);
+    return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel, domaineÉtablissementPrincipal);
   }
 
   async chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité> {
@@ -125,6 +126,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     });
   }
 
+  private async chargePrincipaDomaine(numéroFinessÉtablissementTerritorial: string): Promise<string> {
+    const etablissementPrincipal = await (await this.orm).getRepository(ÉtablissementTerritorialIdentitéModel).findOneBy({
+      numéroFinessÉtablissementTerritorial,
+    });
+
+    return etablissementPrincipal ? etablissementPrincipal.domaine : "";
+  }
+
   private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string) {
     return await (await this.orm).getRepository(AutorisationMédicoSocialModel).find({
       order: { disciplineDÉquipement: "ASC" },
@@ -196,7 +205,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   private construisIdentité(
     établissementTerritorialIdentitéModel: ÉtablissementTerritorialIdentitéModel,
     dateDeMiseÀJourIdentitéModel: DateMiseÀJourFichierSourceModel,
-    dateDeMiseÀJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel
+    dateDeMiseÀJourAnnMsTdpEtModel: DateMiseÀJourFichierSourceModel,
+    domaineÉtablissementPrincipal: string
   ): ÉtablissementTerritorialIdentité {
     return {
       adresseAcheminement: {
@@ -247,6 +257,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal,
       },
+      domaineÉtablissementPrincipal: domaineÉtablissementPrincipal,
       numéroFinessÉtablissementTerritorial: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.numéroFinessÉtablissementTerritorial,

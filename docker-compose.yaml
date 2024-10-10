@@ -45,6 +45,20 @@ services:
         target: /home/HELIOS/.ssh/keys/sftp_local.pub
         read_only: true
     command: HELIOS::1001
+  
+  sftp-hapi:
+    image: aminvakil/alpine-ftp-server-tls
+    container_name: helios_sftp_hapi
+    ports:
+      - "990:990"
+      - "30000-30009:30000-30009"
+    volumes:
+      - type: bind
+        source: ${PWD}/data_set/flux_hapi
+        target: /home/infocentre_helios/ftps/Infocentre/Production/download/HAPI/anciennes_campagnes
+        read_only: true
+    environment:
+      USERS: "infocentre_helios|passwordforhapi|/home/infocentre_helios"
 
   postgres:
     image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml

@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -38,6 +39,7 @@ import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./TypeOrmÉtabl
 describe("Établissement territorial sanitaire loader", () => {
   const orm = getOrm();
   let activitéSanitaireModelRepository: Repository<ActivitéSanitaireModel>;
+  let activitéSanitaireMensuelModelRepository: Repository<ActivitéSanitaireMensuelModel>;
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
@@ -54,6 +56,7 @@ describe("Établissement territorial sanitaire loader", () => {
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
+    activitéSanitaireMensuelModelRepository = (await orm).getRepository(ActivitéSanitaireMensuelModel);
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);
@@ -104,6 +107,7 @@ describe("Établissement territorial sanitaire loader", () => {
             dateMiseÀJourSource: "2022-02-02",
             value: numéroFinessÉtablissementTerritorial,
           },
+          domaineÉtablissementPrincipal: "",
         })
       );
     });
@@ -218,6 +222,44 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
+    });
+  });
+
+
+  describe("Charge l’activité mensuel d’un établissement sanitaire", () => {
+    it("charge par numéro FINESS", async () => {
+      // GIVEN
+      await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
+      await établissementTerritorialIdentitéRepository.insert(
+        ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+          numéroFinessEntitéJuridique,
+          numéroFinessÉtablissementTerritorial,
+        })
+      );
+      await activitéSanitaireMensuelModelRepository.insert([
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaireMensuel({
+          numeroFinessEtablissementTerritorial: numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaireMensuel({
+          mois: 2,
+          numeroFinessEtablissementTerritorial: numéroFinessÉtablissementTerritorial,
+        }),
+        ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaireMensuel({
+          mois: 3,
+          nombreSéjoursCompletsChirurgie: 130,
+          numeroFinessEtablissementTerritorial: numéroFinessÉtablissementTerritorial,
+        }),
+      ]);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+
+      // WHEN
+      const activitéMensuelle = await typeOrmÉtablissementTerritorialLoader.chargeActivitéMensuel(numéroFinessÉtablissementTerritorial);
+
+      // THEN
+      expect(activitéMensuelle.activitesSanitaireMensuelList).toHaveLength(3);
+      expect(activitéMensuelle.activitesSanitaireMensuelList[1].nombreSéjoursCompletsChirurgie).toBe(60);
+      expect(activitéMensuelle.activitesSanitaireMensuelList[2].nombreSéjoursCompletsChirurgie).toBe(130);
+      expect(activitéMensuelle.dateDeMiseAJour).toBe("2022-02-02");
     });
   });
 
@@ -921,7 +963,6 @@ describe("Établissement territorial sanitaire loader", () => {
       allocationRessource.année = 2020;
       allocationRessource.enveloppe = "MIGAC";
       allocationRessource.sousEnveloppe = "MIG";
-      allocationRessource.mois = "1/2022";
       allocationRessource.modeDelegation = "BASE";
       allocationRessource.montant = 53643;
 

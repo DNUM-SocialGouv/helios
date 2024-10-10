@@ -9,6 +9,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
   async exécute(numéroFiness: string): Promise<EntitéJuridique> {
     const entitéJuridiqueIdentitéOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);
     const activités = await this.entitéJuridiqueLoader.chargeActivités(numéroFiness);
+    const activitésMensuels = await this.entitéJuridiqueLoader.chargeActivitésMensuel(numéroFiness);
     const budgetFinance = await this.entitéJuridiqueLoader.chargeBudgetFinance(numéroFiness);
     const autorisationsEtCapacites = await this.entitéJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFiness);
     const allocationRessource = await this.entitéJuridiqueLoader.chargeAllocationRessource(numéroFiness);
@@ -20,6 +21,7 @@ export class RécupèreLEntitéJuridiqueUseCase {
     return {
       ...entitéJuridiqueIdentitéOuErreur,
       activités,
+      activitésMensuels,
       budgetFinance,
       autorisationsEtCapacites: AutorisationsEtCapacitesPresenter.present(autorisationsEtCapacites),
       allocationRessource

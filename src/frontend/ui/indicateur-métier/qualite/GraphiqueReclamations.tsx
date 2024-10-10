@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { annéesManquantesQualite } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -18,6 +18,11 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort().map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
+
+  useEffect(() => {
+    setAnnéeEnCours(annees[annees.length - 1]);
+  }, [annees])
+
   const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
   const libelles = [
@@ -39,8 +44,8 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
     const encours: any[] = [];
     const clotures: any[] = [];
 
-    for (let index = 0; index < data[annéeEnCours].details.length; index++) {
-      const motifDetails = data[annéeEnCours].details[index];
+    for (let index = 0; index < data[annéeEnCours]?.details.length; index++) {
+      const motifDetails = data[annéeEnCours]?.details[index];
       encours.push(motifDetails.encours);
       clotures.push(motifDetails.clot);
       totals.push(motifDetails.encours + motifDetails.clot);
@@ -62,9 +67,9 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
         source={wording.SIREC}
       >
         <ReclamationsParAnnee
-          details={data[annéeEnCours].details}
-          total_clotures={data[annéeEnCours].total_clotures}
-          total_encours={data[annéeEnCours].total_encours}
+          details={data[annéeEnCours]?.details}
+          total_clotures={data[annéeEnCours]?.total_clotures}
+          total_encours={data[annéeEnCours]?.total_encours}
         />
       </IndicateurGraphique>
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

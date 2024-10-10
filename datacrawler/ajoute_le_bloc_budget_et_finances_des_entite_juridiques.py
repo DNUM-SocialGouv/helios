@@ -68,20 +68,6 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
             logger,
         )
 
-    ## filtrer les données
-    donnees_filtrees_only_ET = extrais_les_donnees_etablissements_territoriaux_sanitaires(transform_donnees_quo_san_finance_et)
-
-    with base_de_données.begin() as connection:
-        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
-            "indicateurs budget et finances des etablissements territoriaux sanitaire",
-            "DIAMANT",
-            connection,
-            TABLES_DES_BUDGETS_ET_FINANCES_ETABLISSEMENT_TERRITORIAL,
-            donnees_filtrees_only_ET,
-            [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
-            logger,
-        )
-
 
 
 if __name__ == "__main__":
