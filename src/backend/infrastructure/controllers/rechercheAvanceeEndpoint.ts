@@ -6,7 +6,7 @@ export async function rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
     try {
         const rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase = new RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase(dependencies.rechercheLoader);
 
-        const type: string[] = [];
+        const type: string = "Sanitaire";
         const statutJuridique: string[] = [];
         const order = "ASC";
         const orderBy = "";
