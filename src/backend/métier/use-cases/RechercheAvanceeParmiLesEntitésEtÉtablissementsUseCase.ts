@@ -10,4 +10,5 @@ export class RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase {
   async exécute(terme: string, commune: string, type: string, statutJuridique: string[], orderBy: string, order: OrderDir, page: number): Promise<RésultatDeRecherche> {
     return await this.rechercheLoader.rechercheAvancee(terme, commune, type, statutJuridique, orderBy, order, page);
   }
+  
 }
