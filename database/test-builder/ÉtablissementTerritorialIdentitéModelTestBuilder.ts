@@ -1,4 +1,5 @@
 import { DomaineÉtablissementTerritorial } from "../../download_data_source/métier/entities/DomaineÉtablissementTerritorial";
+import { Classification } from "../../download_data_source/métier/entities/ÉtablissementTerritorialIdentité";
 import { ÉtablissementTerritorialIdentitéModel } from "../models/ÉtablissementTerritorialIdentitéModel";
 
 export class ÉtablissementTerritorialIdentitéModelTestBuilder {
@@ -15,6 +16,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.MÉDICO_SOCIAL;
     établissementTerritorialModel.département = champsSurchargés?.département || "AIN";
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || "Centre Hospitalier (C.H.)";
+    établissementTerritorialModel.classificationEtablissement = champsSurchargés?.classificationEtablissement || Classification.NON_CALSSIFIE;
     établissementTerritorialModel.libelléCourtCatégorieÉtablissement = champsSurchargés?.libelléCourtCatégorieÉtablissement || "C.H.";
     établissementTerritorialModel.libelléModeTarification = champsSurchargés?.libelléModeTarification || "ARS établissements Publics de santé dotation globale";
     établissementTerritorialModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "010008407";
@@ -43,6 +45,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.SANITAIRE;
     établissementTerritorialModel.département = champsSurchargés?.département || "NORD";
     établissementTerritorialModel.libelléCatégorieÉtablissement = champsSurchargés?.libelléCatégorieÉtablissement || "Centre Hospitalier (C.H.)";
+    établissementTerritorialModel.classificationEtablissement = champsSurchargés?.classificationEtablissement || Classification.NON_CALSSIFIE;
     établissementTerritorialModel.libelléCourtCatégorieÉtablissement = champsSurchargés?.libelléCourtCatégorieÉtablissement || "C.H.";
     établissementTerritorialModel.libelléModeTarification =
       champsSurchargés?.libelléModeTarification || "ARS établissements de santé non financés dotation globale";

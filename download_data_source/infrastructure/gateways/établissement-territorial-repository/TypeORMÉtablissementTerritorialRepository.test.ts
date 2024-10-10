@@ -7,6 +7,7 @@ import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../databas
 import { EntitéJuridiqueModelTestBuilder } from "../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
+import { Classification } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { fakeLogger, getOrm, unÉtablissementMédicoSocial, unÉtablissementSanitaire } from "../../../testHelper";
 import { TypeOrmÉtablissementTerritorialRepository } from "./TypeOrmÉtablissementTerritorialRepository";
 
@@ -76,6 +77,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialIdentité1.département = "fake";
     établissementTerritorialIdentité1.libelléCatégorieÉtablissement = "fake";
     établissementTerritorialIdentité1.libelléCourtCatégorieÉtablissement = "fake";
+    établissementTerritorialIdentité1.classificationEtablissement = Classification.NON_CALSSIFIE;
     établissementTerritorialIdentité1.libelléModeTarification = "fake";
     établissementTerritorialIdentité1.numéroFinessEntitéJuridique = entitéJuridique1.numéroFinessEntitéJuridique;
     établissementTerritorialIdentité1.numéroFinessÉtablissementPrincipal = "010000057";
@@ -117,6 +119,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial1MisAJourAttendu.département = "AIN";
     établissementTerritorial1MisAJourAttendu.libelléCatégorieÉtablissement = "Centre Hospitalier (C.H.)";
     établissementTerritorial1MisAJourAttendu.libelléCourtCatégorieÉtablissement = "C.H.";
+    établissementTerritorial1MisAJourAttendu.classificationEtablissement = Classification.NON_CALSSIFIE;
     établissementTerritorial1MisAJourAttendu.libelléModeTarification = "Indéterminé";
     établissementTerritorial1MisAJourAttendu.numéroFinessEntitéJuridique = "010018407";
     établissementTerritorial1MisAJourAttendu.numéroFinessÉtablissementPrincipal = "010000057";
@@ -141,6 +144,7 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorial2MisAJourAttendu.département = "NORD";
     établissementTerritorial2MisAJourAttendu.libelléCatégorieÉtablissement = "Centre Hospitalier (C.H.)";
     établissementTerritorial2MisAJourAttendu.libelléCourtCatégorieÉtablissement = "C.H.";
+    établissementTerritorial2MisAJourAttendu.classificationEtablissement = Classification.NON_CALSSIFIE;
     établissementTerritorial2MisAJourAttendu.libelléModeTarification = "Tarif AM - Services de Soins Infirmiers A Domicile";
     établissementTerritorial2MisAJourAttendu.numéroFinessEntitéJuridique = "590000741";
     établissementTerritorial2MisAJourAttendu.numéroFinessÉtablissementPrincipal = "010000057";
@@ -206,7 +210,8 @@ describe("Sauvegarde de l’établissement territorial", () => {
     établissementTerritorialAttendu.domaine = DomaineÉtablissementTerritorial.MÉDICO_SOCIAL;
     établissementTerritorialAttendu.département = "AIN";
     établissementTerritorialAttendu.libelléCatégorieÉtablissement = "Centre Hospitalier (C.H.)";
-    établissementTerritorialAttendu.libelléCourtCatégorieÉtablissement = "C.H.";
+    établissementTerritorialAttendu.classificationEtablissement = Classification.NON_CALSSIFIE,
+      établissementTerritorialAttendu.libelléCourtCatégorieÉtablissement = "C.H.";
     établissementTerritorialAttendu.libelléModeTarification = "ARS établissements Publics de santé dotation globale";
     établissementTerritorialAttendu.numéroFinessEntitéJuridique = numéroFinessEntitéJuridique;
     établissementTerritorialAttendu.numéroFinessÉtablissementPrincipal = "010018407";
