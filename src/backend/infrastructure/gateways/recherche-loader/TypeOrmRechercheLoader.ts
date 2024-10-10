@@ -47,7 +47,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats);
   }
 
-  async rechercheAvancee(terme: string, commune: string, type: string[], statutJuridique: string[], orderBy: string, order: OrderDir, page: number): Promise<RésultatDeRecherche> {
+  async rechercheAvancee(terme: string, commune: string, type: string, statutJuridique: string[], orderBy: string, order: OrderDir, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
     const majusCommune = commune.replaceAll(/\b(?:-|')\b/gi, " ").toLocaleUpperCase();
@@ -77,8 +77,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       parameters.termeSansTirets = termeSansTirets;
     }
 
-    if (type.length > 0) {
-      conditions.push("recherche.type IN (:...type)");
+    if (type) {
+      conditions.push("recherche.type = :type");
       parameters.type = type;
     }
 
