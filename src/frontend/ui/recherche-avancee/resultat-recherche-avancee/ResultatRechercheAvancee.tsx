@@ -3,7 +3,7 @@ import { useState } from "react";
 import "@gouvfr/dsfr/dist/component/segmented/segmented.min.css";
 import { Table } from "../../commun/Table/Table";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import PaginationBtn from "../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn";
+import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
@@ -19,18 +19,19 @@ const tableHeaders = [
 
 type ResultatRechercheAvanceeProps = Readonly<{
     data: RechercheViewModel[]
+    nombreRésultats: number
 }>;
 
-export const ResultatRechercheAvancee = ({ data }: ResultatRechercheAvanceeProps) => {
+export const ResultatRechercheAvancee = ({ data, nombreRésultats }: ResultatRechercheAvanceeProps) => {
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [page, setPage] = useState(1);
-    const lastPage = 20;
+    const lastPage = 2;
 
     return (
         <>
             <TableHeaderRechercheAvancee selectedRows={selectedRows} />
             <Table data={data} headers={tableHeaders} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
-            <PaginationBtn paginationData={{lastPage, page, setPage}} />
+            <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page} setPage={setPage} />
         </>
     )
 };

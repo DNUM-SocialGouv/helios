@@ -4,11 +4,12 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
+import { PaginationEts } from "../../../../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { iPaginationData } from "../../UsersListPage";
 import styles from "./PaginationBtn.module.css";
 
 type PaginationBtnProps = Readonly<{
-  paginationData: iPaginationData;
+  paginationData: iPaginationData | PaginationEts;
 }>;
 
 const PaginationBtn = ({

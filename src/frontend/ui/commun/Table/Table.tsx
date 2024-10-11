@@ -103,7 +103,7 @@ export const Table = ({ headers, data = [], selectedRows = [], setSelectedRows }
     };
 
     return (
-        <div className="fr-table" id="table-selectable-component">
+        <div id="table-selectable-component">
             <div className="fr-table__wrapper">
                 <div className="fr-table__container">
                     <div className="fr-table__content">
