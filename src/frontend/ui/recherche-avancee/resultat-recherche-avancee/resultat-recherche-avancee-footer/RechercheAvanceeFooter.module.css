@@ -11,4 +11,5 @@
 
 .number-lines-container {
     text-wrap: nowrap;
+    margin-top: 7px;
 }

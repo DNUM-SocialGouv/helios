@@ -5,17 +5,6 @@
   user-select: none;
 }
 
-.disabledBtn {
-  color: var(--text-disabled-grey);
-  cursor: not-allowed;
-}
-
-.enabledBtn {
-  cursor: pointer !important;
-  --active-tint: var(--active) !important;
-  color: inherit !important;
-}
-
 .enabledBtn:hover {
   background-color: var(--hover);
 }

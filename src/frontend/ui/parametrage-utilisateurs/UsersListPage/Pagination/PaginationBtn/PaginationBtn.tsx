@@ -40,7 +40,8 @@ const PaginationBtn = ({
         <ul className="fr-pagination__list">
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--first  ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--first"
+              disabled={page === 1}
               onClick={(e) => changePage(e, 1)}
             >
               Première page
@@ -48,8 +49,8 @@ const PaginationBtn = ({
           </li>
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label 
-              ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label" 
+              disabled={page === 1}
               onClick={(e) => changePage(e, page - 1, page === 1)}
             >
               Page précédente
@@ -112,8 +113,8 @@ const PaginationBtn = ({
           )}
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label 
-              ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label" 
+              disabled={page === lastPage}
               onClick={(e) => changePage(e, page + 1, page === lastPage)}
             >
               Page suivante
@@ -121,7 +122,8 @@ const PaginationBtn = ({
           </li>
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--last ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--last"
+              disabled={page === lastPage}
               onClick={(e) => changePage(e, lastPage)}
             >
               Dernière page
