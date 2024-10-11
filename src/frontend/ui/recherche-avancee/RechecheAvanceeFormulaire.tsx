@@ -3,6 +3,7 @@ import { ChangeEvent, MouseEvent } from "react";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { FiltreStructure } from "./FiltreStructure";
 
 type RechercheAvanceeFormulaireProps = Readonly<{
     lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void
@@ -48,7 +49,8 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
                     >
                         {wording.ZONE_GEOGRAPHIQUE}
                     </button>
-                    <button className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">
+                    <button aria-controls="fr-modal-Structure-Filtre" data-fr-opened="false"
+                     className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">
                         {wording.STRUCTURE}
                     </button>
                     <button className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">
@@ -58,6 +60,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             </div>
             <div>
                 <FiltreZoneGeographique />
+                <FiltreStructure />
             </div>
         </div >
     );

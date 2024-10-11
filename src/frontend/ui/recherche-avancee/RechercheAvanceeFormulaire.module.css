@@ -43,3 +43,15 @@
     width: 100%;
     text-align: left;
 }
+
+
+.checkElement {
+    padding: 5px 0px 5px 1px;
+}
+
+.checkboxLabelBackgroud {
+    width: max-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
