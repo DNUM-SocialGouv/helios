@@ -31,7 +31,7 @@ export default function RechercheAvancee() {
         <main className="fr-container">
             <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
             {estCeQueLesRésultatsSontReçus && <ResultatRechercheAvancee data={résultats} nombreRésultats={nombreRésultats} />}
-            {!estCeQueLaRechercheEstLancee && <ResultatRecherchePlaceholderText />}
+            {(!estCeQueLaRechercheEstLancee && !estCeEnAttente) && <ResultatRecherchePlaceholderText />}
             {estCeEnAttente && <RechercheEnAttente />}
         </main>
     );
