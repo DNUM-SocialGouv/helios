@@ -17,6 +17,7 @@ export default function RechercheAvancee() {
         rechercheOnChange,
         terme,
         résultats,
+        nombreRésultats
     } = useRechercheAvancee();
 
     useBreadcrumb([
@@ -29,8 +30,8 @@ export default function RechercheAvancee() {
     return (
         <main className="fr-container">
             <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
-            {estCeQueLesRésultatsSontReçus && <ResultatRechercheAvancee data={résultats} />}
-            {!estCeQueLaRechercheEstLancee && <ResultatRecherchePlaceholderText />}
+            {estCeQueLesRésultatsSontReçus && <ResultatRechercheAvancee data={résultats} nombreRésultats={nombreRésultats} />}
+            {(!estCeQueLaRechercheEstLancee && !estCeEnAttente) && <ResultatRecherchePlaceholderText />}
             {estCeEnAttente && <RechercheEnAttente />}
         </main>
     );
