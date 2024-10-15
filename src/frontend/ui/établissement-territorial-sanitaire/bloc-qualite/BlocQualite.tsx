@@ -17,7 +17,7 @@ type BlocQualitéProps = Readonly<{
   toggelBlocs?: () => void;
 }>;
 
-const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel, opnedBloc, toggelBlocs  }: BlocQualitéProps) => {
+const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   if (etablissementTerritorialQualiteSanitairelViewModel.lesDonneesQualiteNeSontPasRenseignées) {
