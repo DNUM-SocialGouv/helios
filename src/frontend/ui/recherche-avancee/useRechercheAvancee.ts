@@ -40,7 +40,8 @@ export function useRechercheAvancee() {
             estCeEnAttente: true,
             estCeQueLesRésultatsSontReçus: false,
         });
-        rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, pageInitiale);
+        rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
+            rechercheAvanceeContext?.statutJuridiqueStructure, pageInitiale);
     };
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,9 +51,9 @@ export function useRechercheAvancee() {
         });
     };
 
-    const rechercher = (terme: string, commune: string = "", page: number) => {
+    const rechercher = (terme: string, commune: string = "", type : string = "", statutJuridique : string[] = [], page: number) => {
         fetch("/api/recherche-avancee", {
-            body: JSON.stringify({ page, terme, commune }),
+            body: JSON.stringify({ page, terme, commune, type, statutJuridique }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
@@ -92,7 +93,8 @@ export function useRechercheAvancee() {
             ...state,
             estCeEnAttente: true,
         });
-        rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, pageSuivante());
+        rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
+            rechercheAvanceeContext?.statutJuridiqueStructure, pageSuivante());
     };
 
     const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
