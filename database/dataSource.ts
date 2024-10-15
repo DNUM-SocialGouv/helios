@@ -66,6 +66,7 @@ import { AjoutOrdreRole1720428140655 } from "./migrations/1720428140655-AjoutOrd
 import { SupprimeColonneMoisDeTableAllocationRessource1723542249780 } from "./migrations/1723542249780-supprimeColonneMoisDeTableAllocationRessource";
 import { AjoutDeStatutJuridiqueDansLaRecherche1728314215381 } from "./migrations/1728314215381-ajoutDeStatutJuridiqueDansLaRecherche";
 import { AjoutClassificationEtablissementTerritorial1728465089456 } from "./migrations/1728465089456-AjoutClassificationEtablissementTerritorial";
+import { AjoutClassificationDansLaRecherche1728914554142 } from "./migrations/1728914554142-AjoutClassificationDansLaRecherche";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -217,7 +218,8 @@ export default new DataSource({
     AjoutActiviteSanitaireMensuel1719306882823,
     AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129,
     AjoutDeStatutJuridiqueDansLaRecherche1728314215381,
-    AjoutClassificationEtablissementTerritorial1728465089456
+    AjoutClassificationEtablissementTerritorial1728465089456,
+    AjoutClassificationDansLaRecherche1728914554142
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
