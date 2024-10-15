@@ -495,4 +495,13 @@ export interface Wording {
   //Blocs
   readonly TOUT_REPLIER: string;
   readonly TOUT_DEPLIER: string;
+
+  //Filtre recherche avancée
+  //--Filtre Structure
+  readonly ENTITES_JURIDIQUES: string;
+  readonly ETABLISSEMENTS_SANITAIRES: string;
+  readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string;
+  readonly STATUT_JURIDIQUE_PUBLIC: string;
+  readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string;
+  readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string;
 }

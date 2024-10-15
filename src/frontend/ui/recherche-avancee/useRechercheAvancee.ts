@@ -43,25 +43,25 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
     const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
         if (terme !== "") {
-            event.preventDefault();
-            setState({
-                ...state,
-                estCeEnAttente: true,
-                estCeQueLesRésultatsSontReçus: false,
-            });
-            rechercher(terme, rechercheAvanceeContext?.zoneGeo, pageInitiale);
+        event.preventDefault();
+        setState({
+            ...state,
+            estCeEnAttente: true,
+            estCeQueLesRésultatsSontReçus: false,
+        });
+        rechercher(terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
+            rechercheAvanceeContext?.statutJuridiqueStructure, pageInitiale);
         }
+
     };
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setTerme(event.target.value, { shallow: false })
     };
 
-    const rechercher = (terme: string, commune: string = "", page: number) => {
-        setPage(page, { shallow: false });
-        setTerme(terme, { shallow: false })
-        fetch(`/api/recherche-avancee`, {
-            body: JSON.stringify({ page, terme, commune }),
+    const rechercher = (terme: string, commune: string = "", type : string = "", statutJuridique : string[] = [], page: number) => {
+        fetch("/api/recherche-avancee", {
+            body: JSON.stringify({ page, terme, commune, type, statutJuridique }),
             headers: { "Content-Type": "application/json" },
             method: "POST",
         })
@@ -94,10 +94,11 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
             estCeQueLesRésultatsSontReçus: true,
             estCeQueLaRechercheEstLancee: true,
         })
+     
         setPage(page, { shallow: false })
-        rechercher(terme, rechercheAvanceeContext?.zoneGeo, page);
-    }
-
+        rechercher(terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
+            rechercheAvanceeContext?.statutJuridiqueStructure, page);
+    };
 
 
     return {

@@ -142,6 +142,5 @@ describe('DetailsAllocations component', () => {
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 1')).toBeInTheDocument();
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 2')).toBeInTheDocument();
     expect(screen.getByText('Sous enveloppe Sous Enveloppe 3')).toBeInTheDocument();
-
   });
 });

@@ -1,6 +1,6 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeMensuelFilters } from "../../commun/Graphique/HistogrammeMensuelFilters";
@@ -21,6 +21,10 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
     const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
     const [selectedActivity, setSelectedActivity] = useState(wording.SSR);
 
+    useEffect(() => {
+        setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+    }, [selectedFrequency])
+
     const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
         setSelectedFrequency(event.target.value);
     }
@@ -34,6 +38,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
                 ListeAnnees={activitéMensuelleViewModel.annees}
                 handleFrequency={handleFrequency}
                 identifiant="PsySSR"
+                selectedActivity={selectedActivity}
                 selectedFrequency={selectedFrequency}
                 setAnnéeEnCours={setAnnéeEnCours}
                 setSelectedActivity={setSelectedActivity}

@@ -38,17 +38,16 @@ export class RatioDependanceFinanciereViewModel {
   }
 
   public get ratioDependanceFinanciereEstIlAutorisé(): boolean {
-    if(
-      this.autorisations && 
-      this.autorisations.budgetEtFinance && 
-      this.autorisations.budgetEtFinance.ratioDépendanceFinancière && 
-      this.autorisations.budgetEtFinance.ratioDépendanceFinancière === 'ok')
-    {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.ratioDépendanceFinancière &&
+      this.autorisations.budgetEtFinance.ratioDépendanceFinancière === 'ok') {
       return true
     }
     return false
   }
- 
+
   private ratioRemplis(ratio: RatioDependanceFinanciere): boolean {
     return !!ratio.ratio;
   }

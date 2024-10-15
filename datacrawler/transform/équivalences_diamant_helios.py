@@ -238,7 +238,7 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
 
 équivalences_diamant_men_pmsi_mensumu_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
-    "Année": ColonneHelios(nom="annee", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
     "Mois": ColonneHelios(nom="mois", type=str),
     "Nombre de séjours mensuels Médecine": ColonneHelios(nom="nombre_sejours_complets_medecine", type=str),
     "Nombre de séjours mensuels Chirurgie": ColonneHelios(nom="nombre_sejours_complets_chirurgie", type=str),

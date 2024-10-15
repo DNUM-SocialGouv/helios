@@ -57,6 +57,9 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: "libelle_court_categorie_etablissement" })
   public libelléCourtCatégorieÉtablissement!: string;
 
+  @Column({ length: 50, name: "classification" })
+  public classificationEtablissement!: string;
+
   @Column({ length: 255, name: "libelle_du_mode_tarification" })
   public libelléModeTarification!: string;
 
@@ -88,6 +91,6 @@ export class ÉtablissementTerritorialIdentitéModel {
   @JoinColumn({ name: "numero_finess_etablissement_territorial", referencedColumnName: "numéroFinessÉtablissementTerritorial" })
   public cpom!: CpomModel;
 
-  @Column({ type: 'date', name: "date_ouverture" , nullable: true })
+  @Column({ type: 'date', name: "date_ouverture", nullable: true })
   public dateOuverture!: string;
 }

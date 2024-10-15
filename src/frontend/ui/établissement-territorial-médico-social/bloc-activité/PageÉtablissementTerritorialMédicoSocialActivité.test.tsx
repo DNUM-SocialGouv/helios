@@ -246,7 +246,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
           autorisations: autorisationsMockData,
         },
         wording,
-        paths, 
+        paths,
         autorisationsMockData
       );
       renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
@@ -384,7 +384,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
           autorisations: autorisationsMockData,
         },
         wording,
-        paths, 
+        paths,
         autorisationsMockData
       );
       renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
