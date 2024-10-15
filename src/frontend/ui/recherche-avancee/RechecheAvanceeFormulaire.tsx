@@ -11,7 +11,7 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 type RechercheAvanceeFormulaireProps = Readonly<{
   lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void;
   rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  terme: string | undefined;
+  terme: string;
 }>;
 
 export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
