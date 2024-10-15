@@ -1,13 +1,14 @@
-import styles from "./RechercheAvanceeFormulaire.module.css";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
-import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
 import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
-import Image from "next/image";
-import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { AttribuesDefaults } from "./model/Attribues";
+import styles from "./RechercheAvanceeFormulaire.module.css";
 
 export const FiltreStructure = () => {
   const wording = new WordingFr();
@@ -23,7 +24,7 @@ export const FiltreStructure = () => {
   }
 
   function onChangeStatutJuridique(i: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
-    if (statut.length > 0 && statut.findIndex((a) => i === a) != -1) {
+    if (statut.length > 0 && statut.findIndex((a) => i === a) !== -1) {
       statut.splice(
         statut.findIndex((a) => i === a),
         1
@@ -49,7 +50,7 @@ export const FiltreStructure = () => {
   }
 
   const appliquerButton = () => {
-    if (typeSelected != AttribuesDefaults.entiteJuridque) {
+    if (typeSelected !== AttribuesDefaults.entiteJuridque) {
       emptyStatutJuridiqueCheckboxs();
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
@@ -64,17 +65,19 @@ export const FiltreStructure = () => {
             <div className="fr-modal__body">
               <div className="fr-modal__content fr-pt-5w">
                 <div id="type">
-                  <label className="fr-label">Type</label>
-                  <div className="fr-mb-1w" style={{ marginTop: "10px" }}>
+                  <label className="fr-label" htmlFor="type">
+                    Type
+                  </label>
+                  <div className="fr-mb-1w" id="type" style={{ marginTop: "10px" }}>
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-ej"
+                        checked={typeSelected === AttribuesDefaults.entiteJuridque}
                         id="checkboxe-ej"
                         name="checkboxe-ej"
+                        onChange={() => onChangeType(AttribuesDefaults.entiteJuridque)}
                         type="checkbox"
                         value={AttribuesDefaults.entiteJuridque}
-                        checked={typeSelected == AttribuesDefaults.entiteJuridque}
-                        onChange={() => onChangeType(AttribuesDefaults.entiteJuridque)}
                       />
                       <label className="fr-label" htmlFor="checkboxe-ej">
                         <Image alt="" height="22" src={LogoEntitéJuridiqueNoir} width="22" />
@@ -85,12 +88,12 @@ export const FiltreStructure = () => {
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-es"
+                        checked={typeSelected === AttribuesDefaults.etablissementSanitaire}
                         id="checkboxe-es"
                         name="checkboxe-es"
+                        onChange={() => onChangeType(AttribuesDefaults.etablissementSanitaire)}
                         type="checkbox"
                         value={AttribuesDefaults.etablissementSanitaire}
-                        checked={typeSelected == AttribuesDefaults.etablissementSanitaire}
-                        onChange={() => onChangeType(AttribuesDefaults.etablissementSanitaire)}
                       />
                       <label className="fr-label" htmlFor="checkboxe-es">
                         <Image alt="" height="22" src={LogoÉtablissementTerritorialSanitaire} width="22" />
@@ -101,12 +104,12 @@ export const FiltreStructure = () => {
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-esms"
+                        checked={typeSelected === AttribuesDefaults.etablissementMedicoSocial}
                         id="checkboxe-esms"
                         name="checkboxe-esms"
+                        onChange={() => onChangeType(AttribuesDefaults.etablissementMedicoSocial)}
                         type="checkbox"
                         value={AttribuesDefaults.etablissementMedicoSocial}
-                        checked={typeSelected == AttribuesDefaults.etablissementMedicoSocial}
-                        onChange={() => onChangeType(AttribuesDefaults.etablissementMedicoSocial)}
                       />
                       <label className="fr-label" htmlFor="checkboxe-esms">
                         <Image alt="" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
@@ -117,20 +120,22 @@ export const FiltreStructure = () => {
                   </div>
                 </div>
                 <div id="statut-juridique" style={{ display: typeSelected === AttribuesDefaults.entiteJuridque ? "unset" : "none" }}>
-                  <label className="fr-label">Statut juridique</label>
-                  <div className="fr-mb-1w" style={{ marginTop: "10px" }}>
+                  <label className="fr-label" htmlFor="statut">
+                    Statut juridique
+                  </label>
+                  <div className="fr-mb-1w" id="statut" style={{ marginTop: "10px" }}>
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-sj-public"
                         id="checkboxe-sj-public"
                         name="checkboxe-sj-public"
-                        type="checkbox"
-                        ref={checkboxElementPublic}
-                        value={AttribuesDefaults.statutPublic}
                         onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        ref={checkboxElementPublic}
+                        type="checkbox"
+                        value={AttribuesDefaults.statutPublic}
                       />
                       <label htmlFor="checkboxe-sj-public">
-                        <Badge label={wording.PUBLIC} className="" colour="purple-glycine"></Badge>
+                        <Badge className="" colour="purple-glycine" label={wording.PUBLIC}></Badge>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-sj-public"></div>
                     </div>
@@ -139,13 +144,13 @@ export const FiltreStructure = () => {
                         aria-describedby="checkboxe-sj-prive-lucratif"
                         id="checkboxe-sj-prive-lucratif"
                         name="checkboxe-sj-prive-lucratif"
-                        type="checkbox"
-                        ref={checkboxElementPriveL}
-                        value={AttribuesDefaults.statutPriveLucratif}
                         onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        ref={checkboxElementPriveL}
+                        type="checkbox"
+                        value={AttribuesDefaults.statutPriveLucratif}
                       />
                       <label htmlFor="checkboxe-sj-prive-lucratif">
-                        <Badge label={wording.PRIVÉ_LUCRATIF} className="" colour="green-archipel"></Badge>
+                        <Badge className="" colour="green-archipel" label={wording.PRIVÉ_LUCRATIF}></Badge>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-sj-prive-lucratif"></div>
                     </div>
@@ -154,13 +159,13 @@ export const FiltreStructure = () => {
                         aria-describedby="checkboxe-sj-prive-non-lucratif"
                         id="checkboxe-sj-prive-non-lucratif"
                         name="checkboxe-sj-prive-non-lucratif"
-                        type="checkbox"
-                        ref={checkboxElementPriveNL}
-                        value={AttribuesDefaults.statutPriveNonLucratif}
                         onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        ref={checkboxElementPriveNL}
+                        type="checkbox"
+                        value={AttribuesDefaults.statutPriveNonLucratif}
                       />
                       <label htmlFor="checkboxe-sj-prive-non-lucratif">
-                        <Badge label={wording.PRIVÉ_NON_LUCRATIF} className="" colour="blue-ecume"></Badge>
+                        <Badge className="" colour="blue-ecume" label={wording.PRIVÉ_NON_LUCRATIF}></Badge>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-sj-prive-non-lucratif"></div>
                     </div>
@@ -172,9 +177,9 @@ export const FiltreStructure = () => {
                   Effacer
                 </button>
                 <button
+                  aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
                   disabled={!typeSelected}
-                  aria-controls="fr-modal-Structure-Filtre"
                   onClick={appliquerButton}
                 >
                   Appliquer
