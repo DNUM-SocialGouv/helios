@@ -1,5 +1,5 @@
 import { HeliosError } from "../../infrastructure/HeliosError";
-import { ÉtablissementTerritorialIdentité } from "../entities/ÉtablissementTerritorialIdentité";
+import { ÉtablissementTerritorialIdentité, Classification, ListeDesCategoriesPourLaClassificationPublicsEnSituationHandicap, ListeDesCategoriesPourLaClassificationPersonnesAgees } from "../entities/ÉtablissementTerritorialIdentité";
 import { EntitéJuridiqueHeliosLoader } from "../gateways/EntitéJuridiqueHeliosLoader";
 import { ÉtablissementTerritorialHeliosLoader } from "../gateways/ÉtablissementTerritorialHeliosLoader";
 import { ÉtablissementTerritorialRepository } from "../gateways/ÉtablissementTerritorialRepository";
@@ -29,9 +29,11 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
         établissementsTerritoriauxSauvegardés
       );
 
+      const établissementsTerritoriauxClassifies = this.associeLaClassification(établissementsTerritoriauxOuverts);
+
       await this.établissementTerritorialHeliosRepository.supprime(établissementsTerritoriauxÀSupprimer);
 
-      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxOuverts, dateDeMiseAJourDuFichierSource);
+      await this.établissementTerritorialHeliosRepository.sauvegarde(établissementsTerritoriauxClassifies, dateDeMiseAJourDuFichierSource);
     } catch (error) {
       throw new HeliosError(error.message);
     }
@@ -47,5 +49,27 @@ export class MetsÀJourLesÉtablissementsTerritoriauxUseCase {
     const numérosFinessDesÉtablissementsTerritoriauxSauvegardés = new Set(établissementsTerritoriauxSauvegardés);
 
     return détecteLesObjetsÀSupprimer(numérosFinessDesÉtablissementsTerritoriauxOuverts, numérosFinessDesÉtablissementsTerritoriauxSauvegardés);
+  }
+
+  private associeLaClassification(établissementsTerritoriauxOuverts: ÉtablissementTerritorialIdentité[]) {
+    return établissementsTerritoriauxOuverts.map((etablissementTerritorialOuvert) => {
+      const classification = this.trouverLaBonneClassification(etablissementTerritorialOuvert.libelléCatégorieÉtablissement,
+      );
+      return {
+        ...etablissementTerritorialOuvert,
+        classificationEtablissement: classification
+      }
+    });
+  }
+
+  private trouverLaBonneClassification(libelléCatégorieÉtablissement: string) {
+
+    if (ListeDesCategoriesPourLaClassificationPublicsEnSituationHandicap.includes(libelléCatégorieÉtablissement)) {
+      return Classification.PUBLICS_SITUATION_HANDICAP;
+    }
+    if (ListeDesCategoriesPourLaClassificationPersonnesAgees.includes(libelléCatégorieÉtablissement)) {
+      return Classification.PERSONNES_AGEES;
+    }
+    return Classification.NON_CALSSIFIE;
   }
 }
