@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/segmented/segmented.min.css";
@@ -20,12 +22,13 @@ const tableHeaders = [
 type ResultatRechercheAvanceeProps = Readonly<{
     data: RechercheViewModel[]
     nombreRésultats: number
+    setPage: (page: number) => void
+    lastPage: number
+    page: number
 }>;
 
-export const ResultatRechercheAvancee = ({ data, nombreRésultats }: ResultatRechercheAvanceeProps) => {
+export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
-    const [page, setPage] = useState(1);
-    const lastPage = 2;
 
     return (
         <>
