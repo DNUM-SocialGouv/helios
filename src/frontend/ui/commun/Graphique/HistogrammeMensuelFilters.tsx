@@ -10,13 +10,14 @@ type HistogrammeMensuelFiltersProps = Readonly<{
     selectedFrequency: string;
     handleFrequency: any;
     ListeActivites: string[];
+    selectedActivity: string;
     setSelectedActivity: any;
     ListeAnnees: number[];
     setAnnéeEnCours: any;
     wording: Wording;
 }>;
 
-export const HistogrammeMensuelFilters = ({ identifiant, selectedFrequency, handleFrequency, ListeActivites, setSelectedActivity, ListeAnnees, setAnnéeEnCours, wording }: HistogrammeMensuelFiltersProps) => {
+export const HistogrammeMensuelFilters = ({ identifiant, selectedFrequency, handleFrequency, ListeActivites, selectedActivity, setSelectedActivity, ListeAnnees, setAnnéeEnCours, wording }: HistogrammeMensuelFiltersProps) => {
     const handleOnChangeMCO = (event: ChangeEvent<HTMLSelectElement>) => {
         setSelectedActivity(event.target.value)
     }
@@ -45,7 +46,7 @@ export const HistogrammeMensuelFilters = ({ identifiant, selectedFrequency, hand
                         <label className="fr-label" htmlFor="select-hint"> Sélectionner une activité  </label>
                         <select className="fr-select" id="select-hint" name="select-hint" onChange={handleOnChangeMCO} title='Activités MCO'>
                             {ListeActivites.map((activite) => (
-                                <option key={activite} value={activite} > {activite}  </option>
+                                <option key={activite} selected={activite === selectedActivity} value={activite} > {activite}  </option>
                             ))}
                         </select>
                     </div> : <></>}

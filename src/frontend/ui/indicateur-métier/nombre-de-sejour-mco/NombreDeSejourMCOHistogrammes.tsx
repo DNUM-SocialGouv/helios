@@ -1,6 +1,6 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeMensuelFilters } from "../../commun/Graphique/HistogrammeMensuelFilters";
@@ -25,6 +25,10 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
         setSelectedFrequency(event.target.value);
     }
 
+    useEffect(() => {
+        setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+    }, [selectedFrequency])
+
     const activitesMCO = [wording.MÉDECINE, wording.CHIRURGIE, wording.OBSTÉTRIQUE];
 
     return (
@@ -34,6 +38,7 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
                 ListeAnnees={activitéMensuelleViewModel.annees}
                 handleFrequency={handleFrequency}
                 identifiant="MCO"
+                selectedActivity={selectedActivity}
                 selectedFrequency={selectedFrequency}
                 setAnnéeEnCours={setAnnéeEnCours}
                 setSelectedActivity={setSelectedActivity}

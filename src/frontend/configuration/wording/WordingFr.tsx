@@ -97,7 +97,6 @@ export class WordingFr implements Wording {
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
 
-
   // Recherche avancée
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
@@ -194,8 +193,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = "Nombre de passages aux urgences";
 
   // Bloc Activité Sanitaire
-  readonly NOMBRE_DE_SÉJOUR_MCO: string =
-    "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = "Total Hospitalisation Médecine";
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = "Total Hospitalisation Chirurgie";
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = "Total Hospitalisation Obstétrique";
@@ -207,8 +205,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = "Hospitalisation Complète Obstétrique";
   readonly TOTAL_HOSPITALISATION_SSR: string = "Total Hospitalisation SSR";
   readonly TOTAL_HOSPITALISATION_PSY: string = "Total Hospitalisation PSY";
-  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string =
-    "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
   readonly HOSPITALISATION_PARTIELLE_SSR: string = "Hospitalisation Partielle SSR";
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = "Hospitalisation Complète SSR";
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
@@ -585,4 +582,13 @@ export class WordingFr implements Wording {
   //Blocs
   readonly TOUT_REPLIER: string = "Tout replier";
   readonly TOUT_DEPLIER: string = "Tout déplier";
+
+  //Filtre recherche avancée
+  //--Filtre Structure
+  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques (EJ)";
+  readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissement Sanitaires";
+  readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string = "Etablissements Sociaux et Médico-Sociaux";
+  readonly STATUT_JURIDIQUE_PUBLIC: string = "PUBLIC";
+  readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string = "PRIVÉ LUCRATIF";
+  readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string = "PRIVÉ NON LUCRATIF";
 }

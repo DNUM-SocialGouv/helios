@@ -8,7 +8,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
         response.status(405).send("Method not allowed");
     }
 
-    const { terme, commune, page } = request.body;
-    const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, commune, page);
+    const { terme, commune, type, statutJuridique, page } = request.body;
+    const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, commune,
+        type, statutJuridique, page);
     response.status(200).json(recherche);
 }
