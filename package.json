@@ -82,6 +82,7 @@
     "updateActivitesSanitairesMensuel:local": "pipenv run populate_activites_mensuel",
     "updateActivitesSanitairesMensuelEJ": "python -m datacrawler.import_activites_mensuel_entite_juridique",
     "updateActivitesSanitairesMensuelEJ:local": "pipenv run populate_activites_mensuel_ej",
+    "testReadHAS": "pipenv run test_read_has",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",
