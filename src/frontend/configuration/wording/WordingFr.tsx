@@ -96,6 +96,8 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_TITRE: string = "";
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
+  readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Aucun résultat ne correspond à votre recherche";
+
 
   // Recherche avancée
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";

@@ -40,6 +40,7 @@ export function useRechercheAvancee() {
             estCeEnAttente: true,
             estCeQueLesRésultatsSontReçus: false,
         });
+        rechercheAvanceeContext?.setTerme(state.terme);
         rechercher(state.terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
             rechercheAvanceeContext?.statutJuridiqueStructure, pageInitiale);
     };
@@ -51,7 +52,7 @@ export function useRechercheAvancee() {
         });
     };
 
-    const rechercher = (terme: string, commune: string = "", type : string = "", statutJuridique : string[] = [], page: number) => {
+    const rechercher = (terme: string, commune: string = "", type: string = "", statutJuridique: string[] = [], page: number) => {
         fetch("/api/recherche-avancee", {
             body: JSON.stringify({ page, terme, commune, type, statutJuridique }),
             headers: { "Content-Type": "application/json" },

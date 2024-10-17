@@ -87,6 +87,7 @@ export interface Wording {
   readonly CAPACITE: string;
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
+  readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
 
   // Cartographie
   readonly CARTOGRAPHIE: string;

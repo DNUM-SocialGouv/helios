@@ -10,9 +10,10 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   const [zoneGeo, setZoneGeo] = useState("");
   const [typeStructure, setTypeStructure] = useState("");
   const [statutJuridiqueStructure, setStatutJuridiqueStructure] = useState<string[]>([]);
+  const [terme, setTerme] = useState("");
 
   return (
-    <RechercheAvanceeContext.Provider value={{ zoneGeo, setZoneGeo, typeStructure, setTypeStructure, statutJuridiqueStructure, setStatutJuridiqueStructure }}>
+    <RechercheAvanceeContext.Provider value={{ zoneGeo, setZoneGeo, typeStructure, setTypeStructure, statutJuridiqueStructure, setStatutJuridiqueStructure, terme, setTerme }}>
       {children}
     </RechercheAvanceeContext.Provider>
   );
