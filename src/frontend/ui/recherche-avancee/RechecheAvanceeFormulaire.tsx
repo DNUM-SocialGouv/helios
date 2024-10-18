@@ -1,8 +1,11 @@
-import { ChangeEvent, MouseEvent } from "react";
+import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from "react";
 
+import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { FiltreCapacite } from "./FiltreCapacite";
 import { FiltreStructure } from "./FiltreStructure";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
+import { AttribuesDefaults } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 
 type RechercheAvanceeFormulaireProps = Readonly<{
@@ -13,6 +16,18 @@ type RechercheAvanceeFormulaireProps = Readonly<{
 
 export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
+  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
+  const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
+
+  useEffect(() => {
+    const structureType = rechercheAvanceeContext?.typeStructure ?? "";
+    if (listTypes.includes(structureType, 0)) {
+      setDisableCapaciter(true);
+    } else {
+      setDisableCapaciter(false);
+    }
+  }, [rechercheAvanceeContext?.typeStructure]);
 
   return (
     <div>
@@ -51,12 +66,20 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
           >
             {wording.STRUCTURE}
           </button>
-          <button className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary">{wording.CAPACITE}</button>
+          <button
+            aria-controls="fr-modal-Capacite-Filtre"
+            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            data-fr-opened="false"
+            disabled={disableCapaciter}
+          >
+            {wording.CAPACITE}
+          </button>
         </div>
       </div>
       <div>
         <FiltreZoneGeographique />
         <FiltreStructure />
+        <FiltreCapacite />
       </div>
     </div>
   );
