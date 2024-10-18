@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
@@ -18,6 +18,13 @@ export const FiltreStructure = () => {
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
+
+  useEffect(() => {
+    if (rechercheAvanceeContext?.capaciter.length && rechercheAvanceeContext?.capaciter.length > 0) {
+      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    }
+  }, [rechercheAvanceeContext?.capaciter]);
 
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));
@@ -38,6 +45,8 @@ export const FiltreStructure = () => {
   const effacerButton = () => {
     setTypeSelected("");
     emptyStatutJuridiqueCheckboxs();
+    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
   };
 
   function emptyStatutJuridiqueCheckboxs() {
@@ -55,6 +64,9 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
+    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && rechercheAvanceeContext?.capaciter && rechercheAvanceeContext?.capaciter.length > 0) {
+      rechercheAvanceeContext?.setCapaciter([]);
+    }
   };
 
   return (

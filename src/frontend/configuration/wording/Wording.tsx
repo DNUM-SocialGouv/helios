@@ -504,4 +504,9 @@ export interface Wording {
   readonly STATUT_JURIDIQUE_PUBLIC: string;
   readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string;
   readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string;
+  //--Filtre capacité
+  readonly CAPACITE_INITIALE: string;
+  readonly ETABLISSEMENT_PUBLIC_HANDICAP: string;
+  readonly ETABLISSEMENT_PERSONNE_AGEES: string;
+  readonly CAPACITE_INSTALLEE_EN_PLACE: string;
 }
