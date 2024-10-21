@@ -1,0 +1,15 @@
+.footer-container {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    width: 95%;
+}
+
+.number-lines-container {
+    text-wrap: nowrap;
+    margin-top: 7px;
+}
