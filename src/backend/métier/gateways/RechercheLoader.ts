@@ -3,5 +3,14 @@ import { OrderDir } from "../use-cases/RechercheAvanceeParmiLesEntitésEtÉtabli
 
 export interface RechercheLoader {
   recherche(terme: string, page: number): Promise<RésultatDeRecherche>;
-  rechercheAvancee(terme: string, commune: string, type: string, statutJuridique: string[], orderBy: string, order: OrderDir, page: number): Promise<RésultatDeRecherche>;
+  rechercheAvancee(
+    terme: string,
+    commune: string,
+    type: string,
+    statutJuridique: string[],
+    capaciter: any[],
+    orderBy: string,
+    order: OrderDir,
+    page: number
+  ): Promise<RésultatDeRecherche>;
 }
