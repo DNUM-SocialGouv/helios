@@ -48,12 +48,12 @@ describe('PaginationBtn Component', () => {
 });
 
 
-describe('TableFooterRechercheAvancee lines number Component', () => {
+describe('TableFooterRechercheAvancee établissements number Component', () => {
     const setPage = jest.fn();
 
     it('renders the correct number of results', () => {
         render(<TableFooterRechercheAvancee lastPage={10} nombreRésultats={100} page={1} setPage={setPage} />);
-        expect(screen.getByText(/100 lignes/i)).toBeInTheDocument();
+        expect(screen.getByText(/100 établissements/i)).toBeInTheDocument();
     });
 
     it('applies the correct CSS classes', () => {
