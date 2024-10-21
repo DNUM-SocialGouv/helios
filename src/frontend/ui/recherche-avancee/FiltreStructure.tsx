@@ -20,11 +20,11 @@ export const FiltreStructure = () => {
   const checkboxElementPriveNL = useRef<any>();
 
   useEffect(() => {
-    if (rechercheAvanceeContext?.capaciter.length && rechercheAvanceeContext?.capaciter.length > 0) {
+    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
       setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
       rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
     }
-  }, [rechercheAvanceeContext?.capaciter]);
+  }, [rechercheAvanceeContext?.capaciteSMS]);
 
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));
@@ -64,8 +64,12 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && rechercheAvanceeContext?.capaciter && rechercheAvanceeContext?.capaciter.length > 0) {
-      rechercheAvanceeContext?.setCapaciter([]);
+    if (
+      typeSelected !== AttribuesDefaults.etablissementMedicoSocial &&
+      rechercheAvanceeContext?.capaciteSMS &&
+      rechercheAvanceeContext?.capaciteSMS.length > 0
+    ) {
+      rechercheAvanceeContext?.setCapaciteSMS([]);
     }
   };
 

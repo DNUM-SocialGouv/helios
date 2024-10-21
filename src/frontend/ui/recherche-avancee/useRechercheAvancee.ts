@@ -78,7 +78,6 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   ) => {
     setPage(page, { shallow: false });
     setTerme(terme, { shallow: false });
-
     fetch("/api/recherche-avancee", {
       body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },

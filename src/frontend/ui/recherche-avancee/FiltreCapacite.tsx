@@ -74,7 +74,7 @@ export const FiltreCapacite = () => {
   }
 
   const appliquerButton = () => {
-    rechercheAvanceeContext?.setCapaciter([capaciteMedicoSociaux, capaciteHandicap, capaciteAgees]);
+    rechercheAvanceeContext?.setCapaciteSMS([capaciteMedicoSociaux, capaciteHandicap, capaciteAgees]);
   };
 
   const effacerButton = () => {
@@ -82,7 +82,7 @@ export const FiltreCapacite = () => {
     setCapaciteHandicap(new CapaciteEtablissement("", []));
     setCapaciteAgees(new CapaciteEtablissement("", []));
     emptyCheckboxs();
-    rechercheAvanceeContext?.setCapaciter([]);
+    rechercheAvanceeContext?.setCapaciteSMS([]);
   };
 
   // -- Cette fonction permet de unchecker tou les checkbox du modal capacité
