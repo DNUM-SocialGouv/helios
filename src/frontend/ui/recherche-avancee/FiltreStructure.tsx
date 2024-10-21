@@ -26,6 +26,13 @@ export const FiltreStructure = () => {
     }
   }, [rechercheAvanceeContext?.capaciteSMS]);
 
+  useEffect(() => {
+    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
+      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    }
+  }, [rechercheAvanceeContext?.capaciteSMS]);
+
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));
   }
