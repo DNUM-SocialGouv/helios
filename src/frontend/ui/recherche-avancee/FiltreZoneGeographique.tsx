@@ -7,7 +7,7 @@ import styles from "./RechercheAvanceeFormulaire.module.css"
 export const FiltreZoneGeographique = () => {
     const { data } = useSession();
     const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
-    const [zoneGeoValue, setZoneGeoValue] = useState("");
+    const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo);
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [zoneGeoSelected, setZoneGeoSelected] = useState("");

@@ -8,7 +8,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows }: TableHeaderRecherc
     const router = useRouter();
     return (
         <div className="fr-table__header">
-                <p className="fr-table__detail">Nombre de lignes sélectionnées : {selectedRows?.length}</p>
+                <p className="fr-table__detail">{selectedRows?.length} établissements sélectionnées</p>
                 <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-md fr-btns-group--icon-left">
                     <li>
                         <button

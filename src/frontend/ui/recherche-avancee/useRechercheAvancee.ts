@@ -20,10 +20,13 @@ type RechercheAvanceeState = Readonly<{
 
 export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
     const { paths } = useDependencies();
+
     const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+    
     const pageInitiale = 1;
-    const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / 20) : 1;
-    const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(data.page));
+    const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / 3) : 1;
+    
+    const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(data.page).withOptions({history: "push"}));
     const [terme, setTerme] = useQueryState<string>("terme", parseAsString.withDefault(""));
 
     const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
@@ -43,23 +46,30 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
     const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
         if (terme !== "") {
-        event.preventDefault();
-        setState({
-            ...state,
-            estCeEnAttente: true,
-            estCeQueLesRésultatsSontReçus: false,
-        });
-        rechercher(terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
-            rechercheAvanceeContext?.statutJuridiqueStructure, pageInitiale);
+            event.preventDefault();
+            setState({
+                ...state,
+                estCeEnAttente: true,
+                estCeQueLesRésultatsSontReçus: false,
+            });
+            rechercher(
+                terme,
+                rechercheAvanceeContext?.zoneGeo,
+                rechercheAvanceeContext?.typeStructure,
+                rechercheAvanceeContext?.statutJuridiqueStructure,
+                pageInitiale
+            );
         }
-
     };
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setTerme(event.target.value, { shallow: false })
+        setTerme(event.target.value)
     };
 
-    const rechercher = (terme: string, commune: string = "", type : string = "", statutJuridique : string[] = [], page: number) => {
+    const rechercher = async (terme: string, commune: string = "", type: string = "", statutJuridique: string[] = [], page: number) => {
+        setPage(page, {shallow: false});
+        setTerme(terme, {shallow: false});
+
         fetch("/api/recherche-avancee", {
             body: JSON.stringify({ page, terme, commune, type, statutJuridique }),
             headers: { "Content-Type": "application/json" },
@@ -94,10 +104,14 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
             estCeQueLesRésultatsSontReçus: true,
             estCeQueLaRechercheEstLancee: true,
         })
-     
-        setPage(page, { shallow: false })
-        rechercher(terme, rechercheAvanceeContext?.zoneGeo, rechercheAvanceeContext?.typeStructure,
-            rechercheAvanceeContext?.statutJuridiqueStructure, page);
+
+        rechercher(
+            terme, 
+            rechercheAvanceeContext?.zoneGeo, 
+            rechercheAvanceeContext?.typeStructure,
+            rechercheAvanceeContext?.statutJuridiqueStructure, 
+            page
+        );
     };
 
 
@@ -107,15 +121,11 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
         estCeQueLesRésultatsSontReçus: state.estCeQueLesRésultatsSontReçus,
         estCeQueLaRechercheEstLancee: state.estCeQueLaRechercheEstLancee,
         lancerLaRecherche,
-        nombreRésultats: state.nombreRésultats,
         rechercheOnChange,
-        résultats: state.résultats,
-        pageInitiale,
         lastPage: state.lastPage,
         terme,
-        termeFixe: state.termeFixe,
-        rechercher,
         setPage: setPageWithSearch,
-        page
+        page,
+        construisLesRésultatsDeLaRecherche,
     };
 }

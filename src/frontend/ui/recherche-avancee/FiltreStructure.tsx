@@ -12,12 +12,12 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 
 export const FiltreStructure = () => {
   const wording = new WordingFr();
-  const [typeSelected, setTypeSelected] = useState("");
-  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>([]);
+  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
+  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));

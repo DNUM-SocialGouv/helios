@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/segmented/segmented.min.css";
@@ -9,14 +7,13 @@ import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
-    { label: "", key: "delete" },
     { label: "", key: "etsLogo", sort: true },
-    { label: "", key: "favori", sort: true },
+    { label: "", key: "favori" },
+    { label: "Raison Sociale", key: "socialReason", sort: true },
     { label: "Commune", key: "commune", sort: true },
     { label: "Département", key: "departement", sort: true },
-    { label: "Numéro Finess", key: "numéroFiness" },
-    { label: "Raison Sociale Courte", key: "socialReason" },
-    { label: "Type", key: "type" }
+    { label: "Finess ET", key: "numéroFiness", sort: true },
+    { label: "Type", key: "type", sort: true }
 ];
 
 type ResultatRechercheAvanceeProps = Readonly<{

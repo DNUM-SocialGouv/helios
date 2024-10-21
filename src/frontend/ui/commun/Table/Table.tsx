@@ -61,10 +61,10 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow }: TableBodyPr
                     <th className="fr-cell--fixed" scope="row">
                         <div className="fr-checkbox-group fr-checkbox-group--sm">
                             <input
-                                checked={selectedRows.includes(rowIndex)}
+                                checked={selectedRows.includes(row["numéroFiness"])}
                                 id={`table-select-checkbox-7748--${rowIndex}`}
                                 name="row-select"
-                                onChange={() => handleSelectRow(rowIndex)}
+                                onChange={() => handleSelectRow(row["numéroFiness"])}
                                 type="checkbox" />
                             <label className="fr-label" htmlFor={`table-select-checkbox-7748--${rowIndex}`}>
                                 Séléction {rowIndex}

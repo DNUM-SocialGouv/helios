@@ -14,6 +14,9 @@ import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRecherc
 export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
     page: number;
     terme: string;
+    commune: string;
+    type: string;
+    statutJuridique: string[]
 }
 
 export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
@@ -26,8 +29,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
         lancerLaRecherche,
         rechercheOnChange,
         terme,
-        résultats,
-        nombreRésultats,
+        construisLesRésultatsDeLaRecherche,
         page,
         lastPage,
         setPage,
@@ -45,14 +47,14 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
             <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
             {(estCeQueLesRésultatsSontReçus || props.nombreDeRésultats > 0 && !estCeEnAttente) &&
                 <ResultatRechercheAvancee
-                    data={résultats}
+                    data={construisLesRésultatsDeLaRecherche({ résultats: props.résultats, nombreDeRésultats: props.nombreDeRésultats })}
                     lastPage={lastPage}
-                    nombreRésultats={nombreRésultats}
+                    nombreRésultats={props.nombreDeRésultats}
                     page={page}
                     setPage={setPage}
                 />
             }
-            {(!estCeQueLaRechercheEstLancee && !estCeEnAttente && props.nombreDeRésultats === 0) && <ResultatRecherchePlaceholderText />}
+            {(!estCeQueLaRechercheEstLancee && !estCeEnAttente && Number(props.nombreDeRésultats) === 0) && <ResultatRecherchePlaceholderText />}
             {estCeEnAttente && <RechercheEnAttente />}
         </main>
     );
@@ -63,18 +65,35 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         const { query: {
             terme = "",
             commune = "",
-            page
+            page = 1,
+            statuts = [],
+            type = ""
         } } = context;
+
         const pageParam = Number(page)
         const termeParam = String(terme)
         const communeParam = String(commune)
-        if (pageParam && termeParam !== "") {
-            const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, termeParam, communeParam, pageParam)
+        const typeParam = String(type)
+        const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : []
+
+        if (pageParam || termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam) {
+            const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
+                dependencies,
+                termeParam,
+                communeParam,
+                typeParam,
+                statutJuridiqueParam,
+                pageParam
+            )
+
             return {
                 props: {
                     ...recherche,
                     page: pageParam,
-                    terme: termeParam
+                    terme: termeParam,
+                    commune: communeParam,
+                    type: typeParam,
+                    statutJuridique: statutJuridiqueParam
                 }
             }
         } else {
@@ -83,7 +102,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
                     nombreDeRésultats: 0,
                     résultats: [],
                     page: 1,
-                    terme: ""
+                    terme: "",
+                    commune: "",
+                    type: "",
+                    statutJuridique: []
                 }
             }
         }
