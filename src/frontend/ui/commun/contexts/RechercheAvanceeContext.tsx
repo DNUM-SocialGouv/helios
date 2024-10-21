@@ -6,11 +6,11 @@ interface RechercheAvanceeContextValue {
   zoneGeo: string;
   typeStructure: string;
   statutJuridiqueStructure: string[];
-  capaciter: CapaciteEtablissement[];
+  capaciteSMS: CapaciteEtablissement[];
   setZoneGeo: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
-  setCapaciter: (capaciter: CapaciteEtablissement[]) => void;
+  setCapaciteSMS: (capaciteSMS: CapaciteEtablissement[]) => void;
 }
 
 export const RechercheAvanceeContext = createContext<RechercheAvanceeContextValue | undefined>(undefined);
