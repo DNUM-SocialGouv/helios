@@ -4,5 +4,5 @@ export { Tag, TAG_SIZE } from "./Tag";
 export { TagCliquable } from "./TagCliquable";
 export { TagGroup } from "./TagGroup";
 export { SelectionAnneeTags } from "./SelectionAnneeTags"
-// export { SelectionTags } from "./SelectionTags"
+export { SelectionTags } from "./SelectionTags"
 
