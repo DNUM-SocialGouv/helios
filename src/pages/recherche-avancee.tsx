@@ -22,18 +22,19 @@ export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
 export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
   const { wording } = useDependencies();
 
-  const {
-    estCeEnAttente,
-    estCeQueLesRésultatsSontReçus,
-    estCeQueLaRechercheEstLancee,
-    lancerLaRecherche,
-    rechercheOnChange,
-    terme,
-    construisLesRésultatsDeLaRecherche,
-    page,
-    lastPage,
-    setPage,
-  } = useRechercheAvancee(props);
+    const {
+        estCeEnAttente,
+        estCeQueLesRésultatsSontReçus,
+        estCeQueLaRechercheEstLancee,
+        lancerLaRecherche,
+        rechercheOnChange,
+        terme,
+        resultats,
+        nombreRésultats,
+        page,
+        lastPage,
+        setPage,
+    } = useRechercheAvancee(props);
 
   useBreadcrumb([
     {
@@ -42,22 +43,22 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
     },
   ]);
 
-  return (
-    <main className="fr-container">
-      <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
-      {(estCeQueLesRésultatsSontReçus || (props.nombreDeRésultats > 0 && !estCeEnAttente)) && (
-        <ResultatRechercheAvancee
-          data={construisLesRésultatsDeLaRecherche({ résultats: props.résultats, nombreDeRésultats: props.nombreDeRésultats })}
-          lastPage={lastPage}
-          nombreRésultats={props.nombreDeRésultats}
-          page={page}
-          setPage={setPage}
-        />
-      )}
-      {!estCeQueLaRechercheEstLancee && !estCeEnAttente && Number(props.nombreDeRésultats) === 0 && <ResultatRecherchePlaceholderText />}
-      {estCeEnAttente && <RechercheEnAttente />}
-    </main>
-  );
+    return (
+        <main className="fr-container">
+            <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+            {(estCeQueLesRésultatsSontReçus || nombreRésultats > 0 && !estCeEnAttente) &&
+                <ResultatRechercheAvancee
+                    data={resultats}
+                    lastPage={lastPage}
+                    nombreRésultats={nombreRésultats}
+                    page={page}
+                    setPage={setPage}
+                />
+            }
+            {(!estCeQueLaRechercheEstLancee && !estCeEnAttente && Number(nombreRésultats) === 0) && <ResultatRecherchePlaceholderText />}
+            {estCeEnAttente && <RechercheEnAttente />}
+        </main>
+    );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<ExtendedRésultatDeRecherche>> {
