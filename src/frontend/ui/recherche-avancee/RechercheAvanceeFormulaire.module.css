@@ -57,7 +57,7 @@
 
 .sticky {
     position: sticky;
-    top: 0px;
+    top: 0;
     background-color: white;
     color: white;
 }
