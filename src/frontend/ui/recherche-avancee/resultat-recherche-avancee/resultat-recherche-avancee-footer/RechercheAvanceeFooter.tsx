@@ -4,7 +4,7 @@ import styles from "./RechercheAvanceeFooter.module.css"
 export type PaginationEts = {
     lastPage: number
     page: number
-    setPage: (page: number) => void
+    setPage: ((page: number) => void)
 }
 
 type TableFooterRechercheAvanceeProps = {
@@ -15,11 +15,11 @@ export const TableFooterRechercheAvancee = ({ nombreRésultats, lastPage, page, 
     return (
         <div className={styles["footer-container"]} data-testid="footer-container">
             <span className={"fr-table__detail " + styles["number-lines-container"]} data-testid="number-lines-container">{nombreRésultats} établissements</span>
-            {nombreRésultats > 20 &&
+            {/* {nombreRésultats > 20 && */}
                 <div className={styles["pagination-container"]} data-testid="pagination-container">
                     <PaginationBtn paginationData={{ lastPage, page, setPage }} />
                 </div>
-            }
+            {/* } */}
         </div>
     )
 }
