@@ -8,7 +8,7 @@ export type CapaciteSMS = {
 };
 
 export class RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase {
-  constructor(private rechercheLoader: RechercheLoader) {}
+  constructor(private rechercheLoader: RechercheLoader) { }
 
   async exécute(
     terme: string,
