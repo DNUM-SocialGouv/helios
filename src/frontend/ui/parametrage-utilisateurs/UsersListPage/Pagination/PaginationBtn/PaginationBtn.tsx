@@ -4,15 +4,16 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
+import { PaginationEts } from "../../../../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { iPaginationData } from "../../UsersListPage";
 import styles from "./PaginationBtn.module.css";
 
 type PaginationBtnProps = Readonly<{
-  paginationData: iPaginationData;
+  paginationData: iPaginationData | PaginationEts;
 }>;
 
 const PaginationBtn = ({
-  paginationData: { lastPage, page, keyWord, institutionId, roleId, profileId, etatId, itemsPerPage, sortDir, orderBy, setPage },
+  paginationData: { lastPage, page, setPage, ...props },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
@@ -30,7 +31,7 @@ const PaginationBtn = ({
 
       return true;
     },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
+    [props]
   );
 
   return (
@@ -39,7 +40,8 @@ const PaginationBtn = ({
         <ul className="fr-pagination__list">
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--first  ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--first"
+              disabled={page === 1}
               onClick={(e) => changePage(e, 1)}
             >
               Première page
@@ -47,8 +49,8 @@ const PaginationBtn = ({
           </li>
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label 
-              ${page === 1 ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label" 
+              disabled={page === 1}
               onClick={(e) => changePage(e, page - 1, page === 1)}
             >
               Page précédente
@@ -111,8 +113,8 @@ const PaginationBtn = ({
           )}
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label 
-              ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label" 
+              disabled={page === lastPage}
               onClick={(e) => changePage(e, page + 1, page === lastPage)}
             >
               Page suivante
@@ -120,7 +122,8 @@ const PaginationBtn = ({
           </li>
           <li>
             <button
-              className={`fr-pagination__link fr-pagination__link--last ${page === lastPage ? styles["disabledBtn"] : styles["enabledBtn"]}`}
+              className="fr-pagination__link fr-pagination__link--last"
+              disabled={page === lastPage}
               onClick={(e) => changePage(e, lastPage)}
             >
               Dernière page
