@@ -94,9 +94,17 @@ export const FiltreCapacite = () => {
   }
 
   const appliquerButton = () => {
-    rechercheAvanceeContext?.setCapaciteSMS([capaciteMedicoSociaux, capaciteHandicap, capaciteAgees]);
-    // eslint-disable-next-line no-console
-    console.log("Context Values = ", rechercheAvanceeContext);
+    const listCapaciterSMS = [];
+    if (capaciteMedicoSociaux.ranges.length > 0) {
+      listCapaciterSMS.push(capaciteMedicoSociaux);
+    }
+    if (capaciteHandicap.ranges.length > 0) {
+      listCapaciterSMS.push(capaciteHandicap);
+    }
+    if (capaciteAgees.ranges.length > 0) {
+      listCapaciterSMS.push(capaciteAgees);
+    }
+    rechercheAvanceeContext?.setCapaciteSMS(listCapaciterSMS);
   };
 
   const effacerButton = () => {
@@ -162,7 +170,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-capacite-initiale-tranche-1"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
                           type="checkbox"
-                          value=">51"
+                          value="1,50"
                         />
                         <label htmlFor="checkboxe-capacite-initiale-tranche-1">1-50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-1"></div>
@@ -210,7 +218,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-capacite-initiale-tranche-5"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
                           type="checkbox"
-                          value="<199"
+                          value=">199"
                         />
                         <label htmlFor="checkboxe-capacite-initiale-tranche-5">200 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-5"></div>
@@ -241,7 +249,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-etablissements-public-tranche-1"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
                           type="checkbox"
-                          value=">31"
+                          value="1,30"
                         />
                         <label htmlFor="checkboxe-etablissements-public-tranche-1">1-30</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-1"></div>
@@ -277,7 +285,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-etablissements-public-tranche-4"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
                           type="checkbox"
-                          value="<100"
+                          value=">100"
                         />
                         <label htmlFor="checkboxe-etablissements-public-tranche-4">101 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-4"></div>
@@ -308,7 +316,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-etablissements-personnes-agees-tranche-1"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
                           type="checkbox"
-                          value=">45"
+                          value="1,45"
                         />
                         <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1-44</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-1"></div>
@@ -356,7 +364,7 @@ export const FiltreCapacite = () => {
                           name="checkboxe-etablissements-personnes-agees-tranche-5"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
                           type="checkbox"
-                          value="<200"
+                          value=">199"
                         />
                         <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-5">200 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-5"></div>
