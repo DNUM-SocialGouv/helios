@@ -1,7 +1,8 @@
 import { parseAsArrayOf, parseAsString, useQueryState } from "next-usequerystate";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
+import { CapaciteEtablissement } from "../../recherche-avancee/model/CapaciteEtablissement";
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";
 
 type RechercheAvanceeProviderProps = Readonly<{
@@ -20,16 +21,21 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   const [zoneGeo, setZoneGeo] = useQueryState<string>("commune", parseAsString.withDefault(String(commune)));
   const [typeStructure, setTypeStructure] = useQueryState<string>("type", parseAsString.withDefault(String(type)));
   const [statutJuridiqueStructure, setStatutJuridiqueStructure] = useQueryState<string[]>("statuts", parseAsArrayOf(parseAsString).withDefault(statuts));
+  const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
 
   return (
-    <RechercheAvanceeContext.Provider value={{
-      zoneGeo,
-      setZoneGeo,
-      typeStructure,
-      setTypeStructure,
-      statutJuridiqueStructure, 
-      setStatutJuridiqueStructure,
-    }}>
+    <RechercheAvanceeContext.Provider
+      value={{
+        zoneGeo,
+        setZoneGeo,
+        typeStructure,
+        setTypeStructure,
+        statutJuridiqueStructure,
+        setStatutJuridiqueStructure,
+        capaciteSMS,
+        setCapaciteSMS,
+      }}
+    >
       {children}
     </RechercheAvanceeContext.Provider>
   );

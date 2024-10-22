@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
@@ -18,6 +18,20 @@ export const FiltreStructure = () => {
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
+
+  useEffect(() => {
+    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
+      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    }
+  }, [rechercheAvanceeContext?.capaciteSMS]);
+
+  useEffect(() => {
+    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
+      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    }
+  }, [rechercheAvanceeContext?.capaciteSMS]);
 
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));
@@ -38,6 +52,8 @@ export const FiltreStructure = () => {
   const effacerButton = () => {
     setTypeSelected("");
     emptyStatutJuridiqueCheckboxs();
+    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
   };
 
   function emptyStatutJuridiqueCheckboxs() {
@@ -55,6 +71,15 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
+    if (
+      typeSelected !== AttribuesDefaults.etablissementMedicoSocial &&
+      rechercheAvanceeContext?.capaciteSMS &&
+      rechercheAvanceeContext?.capaciteSMS.length > 0
+    ) {
+      rechercheAvanceeContext?.setCapaciteSMS([]);
+    }
+    // eslint-disable-next-line no-console
+    console.log("Context Values = ", rechercheAvanceeContext);
   };
 
   return (

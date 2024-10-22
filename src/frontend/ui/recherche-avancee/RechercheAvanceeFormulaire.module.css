@@ -54,3 +54,10 @@
     padding-right: 5px;
     border-radius: 5px;
 }
+
+.sticky {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    color: white;
+}
