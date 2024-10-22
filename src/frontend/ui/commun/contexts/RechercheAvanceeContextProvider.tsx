@@ -18,7 +18,7 @@ interface SearchParams {
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
   const router = useRouter()
-
+  const initialPage = 1;
   const { query } = router;
 
   const commune = query["commune"] ?? '';
@@ -53,11 +53,11 @@ const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
   return (
     <RechercheAvanceeContext.Provider value={{
       ...searchParams,
-      setZoneGeo: (value) => updateSearchParams({ zoneGeo: value }),
-      setTypeStructure: (value) => updateSearchParams({ typeStructure: value }),
-      setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value }),
-      setTerme: (value) => setSearchParams({...searchParams, terme: value}),
-      setPage: (value) => updateSearchParams({ page: value }),
+      setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
+      setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
+      setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
+      setTerme: (value) => setSearchParams({...searchParams, terme: value }),
+      setPage: (value, shallow) => setSearchParams({...searchParams, page: value }, { shallow: !!shallow  }),
       capaciteSMS,
       setCapaciteSMS,
     }}>

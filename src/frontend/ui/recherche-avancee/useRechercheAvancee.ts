@@ -71,7 +71,8 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
         rechercheAvanceeContext?.setTerme(event.target.value)
     };
 
-    const rechercher = async (terme: string = "", commune: string = "", type: string = "", statutJuridique: string[] = [], capaciteSMS: CapaciteEtablissement[] = [],page: number = 1) => {
+    const rechercher = async (terme: string = "", commune: string = "", type: string = "", statutJuridique: string[] = [], capaciteSMS: CapaciteEtablissement[] = [], page: number = 1) => {
+        rechercheAvanceeContext?.setPage(page, true)
         fetch("/api/recherche-avancee", {
             body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
             headers: { "Content-Type": "application/json" },

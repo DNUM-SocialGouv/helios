@@ -10,7 +10,7 @@ export interface RechercheAvanceeContextValue {
   statutJuridiqueStructure: string[];
   capaciteSMS: CapaciteEtablissement[];
   setTerme: (terme: string) => void
-  setPage: (page: number) => void
+  setPage: (page: number, shallow?: boolean) => void
   setZoneGeo: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
