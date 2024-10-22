@@ -596,4 +596,6 @@ export class WordingFr implements Wording {
   readonly ETABLISSEMENT_PUBLIC_HANDICAP: string = "Etablissements pour Publics en Situation de Handicap";
   readonly ETABLISSEMENT_PERSONNE_AGEES: string = "Etablissements pour Personnes Agées";
   readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
+  readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
+  readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
 }

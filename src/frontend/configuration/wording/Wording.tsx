@@ -509,4 +509,6 @@ export interface Wording {
   readonly ETABLISSEMENT_PUBLIC_HANDICAP: string;
   readonly ETABLISSEMENT_PERSONNE_AGEES: string;
   readonly CAPACITE_INSTALLEE_EN_PLACE: string;
+  readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string;
+  readonly TITRE_CAPACITE_PERSONNES_AGEES: string;
 }

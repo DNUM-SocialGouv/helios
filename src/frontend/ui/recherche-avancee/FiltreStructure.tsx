@@ -78,6 +78,8 @@ export const FiltreStructure = () => {
     ) {
       rechercheAvanceeContext?.setCapaciteSMS([]);
     }
+    // eslint-disable-next-line no-console
+    console.log("Context Values = ", rechercheAvanceeContext);
   };
 
   return (

@@ -16,37 +16,57 @@ export const FiltreCapacite = () => {
   const [capaciteAgees, setCapaciteAgees] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const contenuInfoBulle = (
-    <span style={{ lineHeight: "22px", fontSize: "12px" }}>
-      <ul>
-        <li>SESSAD - Service d’Education Spéciale et de Soins à Domicile (cat FINESS 182)</li>
-        <li>IME - Institut Médico Éducatif (Cat FINESS 183)</li>
-        <li>ITEP - Institut Thérapeutique Éducatif et Pédagogique (cat FINESS 186)</li>
-        <li>EEAP - Établissement pour Enfants ou Adolescents Polyhandicapés (cat FINESS 188)</li>
-        <li>CMPP - Centre Médico-Psycho-Pédagogique (cat FINESS 189)</li>
-        <li>CAMSP - Centre Action Médico-Sociale Précoce (cat FINESS 190)</li>
-        <li>IEM - Institut d’Education Motrice (cat FINESS 192)</li>
-        <li>IDV - Institut pour Déficients Visuels (cat FINESS 194)</li>
-        <li>IDA - Institut pour Déficients Auditifs (cat FINESS 195)</li>
-        <li>CPO - Établissement et Service de Pré-orientation (cat FINESS 198)</li>
-        <li>ESAT - Établissement et Service d’Aide par le Travail (cat FINESS 246)</li>
-        <li>CRP - Établissement et Service de Réadaptation Professionnelle (cat FINESS 249)</li>
-        <li>MAS - Maison d’Accueil Spécialisée (cat FINESS 255)</li>
-        <li>FAM - Foyer d’Accueil Médicalisé pour adultes handicapés (cat FINESS 437)</li>
-        <li>SAMSAH - Service d’Accompagnement Médico-Social Adultes Handicapés (cat FINESS 445)</li>
-        <li>EAM - Établissement Accueil Médicalisé en tout ou partie personnes handicapées (cat FINESS 448)</li>
-        <li>CRA - Centre de Ressources Sans Autre Indication (cat FINESS 461)</li>
-        <li>UEROS - Unités Évaluation Réentraînement et d’Orientation Sociale et Professionnelle (cat FINESS 464)</li>
-      </ul>
-    </span>
+    <>
+      <span>
+        Source: FINESS
+        <br />
+        <br />
+        Les établissements pour public en situation de handicap regroupent ces catégories d&apos;établissements:
+      </span>
+      <br />
+      <br />
+      <span>
+        <ul>
+          <li>CAMSP - Centre Action Médico-Sociale Précoce (cat FINESS 190)</li>
+          <li>CMPP - Centre Médico-Psycho-Pédagogique (cat FINESS 189)</li>
+          <li>CPO - Etablissement et Service de Pré-orientation (cat FINESS 198)</li>
+          <li>CRA - Centre de Ressources Sans Autre Indication (cat FINESS 461)</li>
+          <li>CRP - Etablissement et Service de Réadaptation Professionnelle (cat FINESS 249)</li>
+          <li>EAM - Etablissement Accueil Médicalisé en tout ou partie personnes handicapés (cat FINESS 448)</li>
+          <li>EEAP - Etablissement pour Enfants ou Adolescents Polyhandicapés (cat FINESS 188)</li>
+          <li>ESAT - Etablissement et Service d’Aide par le Travail (cat FINESS 246)</li>
+          <li>FAM - Foyer d’Accueil Médicalisé pour adultes handicapés (cat FINESS 437)</li>
+          <li>IDA - Institut pour Déficients Auditifs (cat FINESS 195)</li>
+          <li>IDV - Institut pour Déficients Visuels (cat FINESS 194)</li>
+          <li>IEM - Institut d’Education Motrice (cat FINESS 192)</li>
+          <li>IME - Institut Médico Educatif (cat FINESS 183)</li>
+          <li>ITEP - Institut Thérapeutique Educatif et Pédagogique (cat FINESS 186)</li>
+          <li>MAS - Maison d’Accueil Spécialisée (cat FINESS 255)</li>
+          <li>SESSAD - Service d’Education Spéciale et de Soins à Domicile (cat FINESS 182)</li>
+          <li>SAMSAH - Service d’Accompagnement Médico-Social Adultes Handicapés (cat FINESS 445)</li>
+          <li>UEROS - Unités Evaluation Réentraînement et d’Orientation Sociale et Professionnelle (cat FINESS 464)</li>
+        </ul>
+      </span>
+    </>
   );
   const contenuInfoBulleAgee = (
-    <span style={{ lineHeight: "22px", fontSize: "12px" }}>
-      <ul>
-        <li>EHPAD- Etablissement d’Hébergement pour Personnes Agées Dépendantes (cat FINESS 500)</li>
-        <li>SSIAD- Service de Soins Infirmiers A Domicile (cat FINESS 354)</li>
-        <li>SAAS- Service Autonomie Aide et Soins (cat FINESS 209)</li>
-      </ul>
-    </span>
+    <>
+      <span>
+        Source: FINESS
+        <br />
+        <br />
+        Les établissements pour personnes âgées regroupent ces catégories d&apos;établissements:
+      </span>
+      <br />
+      <br />
+      <span>
+        <ul>
+          <li>EHPAD- Etablissement d’Hébergement pour Personnes Agées Dépendantes (cat FINESS 500)</li>
+          <li>SAAS- Service Autonomie Aide et Soins (cat FINESS 209)</li>
+          <li>SSIAD- Service de Soins Infirmiers A Domicile (cat FINESS 354)</li>
+        </ul>
+      </span>
+    </>
   );
 
   const onchange = (value: string, typeEtablissement: string) => {
@@ -75,6 +95,8 @@ export const FiltreCapacite = () => {
 
   const appliquerButton = () => {
     rechercheAvanceeContext?.setCapaciteSMS([capaciteMedicoSociaux, capaciteHandicap, capaciteAgees]);
+    // eslint-disable-next-line no-console
+    console.log("Context Values = ", rechercheAvanceeContext);
   };
 
   const effacerButton = () => {
@@ -100,7 +122,7 @@ export const FiltreCapacite = () => {
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
             <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "block" : "none" }}>
-              <div className="fr-modal__header">
+              <div className={`${styles["sticky"]} fr-modal__header`}>
                 <button
                   aria-controls="titre-info-bulle-etablissement"
                   className="fr-btn--close fr-btn"
@@ -117,7 +139,7 @@ export const FiltreCapacite = () => {
               <div className="fr-modal__content">
                 <h1 className="fr-modal__title" id="titre-info-bulle-etablissement">
                   <span aria-hidden="true" className="fr-fi-arrow-right-line fr-fi--lg"></span>
-                  Liste des Etablissements concerné
+                  {showToolip ? wording.TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP : wording.TITRE_CAPACITE_PERSONNES_AGEES}:
                 </h1>
                 {showToolip ? contenuInfoBulle : contenuInfoBulleAgee}
               </div>
