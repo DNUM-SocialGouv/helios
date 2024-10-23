@@ -585,7 +585,7 @@ export class WordingFr implements Wording {
 
   //Filtre recherche avancée
   //--Filtre Structure
-  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques (EJ)";
+  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques";
   readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissements Sanitaires";
   readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string = "Etablissements Sociaux et Médico-Sociaux";
   readonly STATUT_JURIDIQUE_PUBLIC: string = "PUBLIC";
