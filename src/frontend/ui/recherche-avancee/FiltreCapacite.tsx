@@ -11,10 +11,10 @@ export const FiltreCapacite = () => {
   const wording = new WordingFr();
   const [showToolip, setShowTooltip] = useState<boolean>(false);
   const [showToolip2, setShowTooltip2] = useState<boolean>(false);
-  const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
-  const [capaciteHandicap, setCapaciteHandicap] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
-  const [capaciteAgees, setCapaciteAgees] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(new CapaciteEtablissement("non_classifie", rechercheAvanceeContext?.capaciteMedicoSociaux || []));
+  const [capaciteHandicap, setCapaciteHandicap] = useState<CapaciteEtablissement>(new CapaciteEtablissement("publics_en_situation_de_handicap", rechercheAvanceeContext?.capaciteHandicap || []));
+  const [capaciteAgees, setCapaciteAgees] = useState<CapaciteEtablissement>(new CapaciteEtablissement("personnes_agees", rechercheAvanceeContext?.capaciteAgees || []));
   const contenuInfoBulle = (
     <>
       <span>
@@ -94,17 +94,15 @@ export const FiltreCapacite = () => {
   }
 
   const appliquerButton = () => {
-    const listCapaciterSMS = [];
     if (capaciteMedicoSociaux.ranges.length > 0) {
-      listCapaciterSMS.push(capaciteMedicoSociaux);
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
     }
     if (capaciteHandicap.ranges.length > 0) {
-      listCapaciterSMS.push(capaciteHandicap);
+      rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
     }
     if (capaciteAgees.ranges.length > 0) {
-      listCapaciterSMS.push(capaciteAgees);
+      rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
     }
-    rechercheAvanceeContext?.setCapaciteSMS(listCapaciterSMS);
   };
 
   const effacerButton = () => {
@@ -112,7 +110,9 @@ export const FiltreCapacite = () => {
     setCapaciteHandicap(new CapaciteEtablissement("", []));
     setCapaciteAgees(new CapaciteEtablissement("", []));
     emptyCheckboxs();
-    rechercheAvanceeContext?.setCapaciteSMS([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteAgees([]);
   };
 
   // -- Cette fonction permet de unchecker tou les checkbox du modal capacité

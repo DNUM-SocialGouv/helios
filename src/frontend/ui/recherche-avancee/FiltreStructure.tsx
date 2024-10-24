@@ -18,20 +18,16 @@ export const FiltreStructure = () => {
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
+  const changedCapacite = (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) || 
+  (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) || 
+  (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
   useEffect(() => {
-    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
+    if (changedCapacite) {
       setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
       rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
     }
-  }, [rechercheAvanceeContext?.capaciteSMS]);
-
-  useEffect(() => {
-    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
-      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
-      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
-    }
-  }, [rechercheAvanceeContext?.capaciteSMS]);
+  }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
   function onChangeType(i: any): any {
     setTypeSelected((prev) => (i === prev ? null : i));
@@ -73,10 +69,11 @@ export const FiltreStructure = () => {
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
     if (
       typeSelected !== AttribuesDefaults.etablissementMedicoSocial &&
-      rechercheAvanceeContext?.capaciteSMS &&
-      rechercheAvanceeContext?.capaciteSMS.length > 0
+      changedCapacite
     ) {
-      rechercheAvanceeContext?.setCapaciteSMS([]);
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+      rechercheAvanceeContext?.setCapaciteHandicap([]);
+      rechercheAvanceeContext?.setCapaciteAgees([]);
     }
   };
 

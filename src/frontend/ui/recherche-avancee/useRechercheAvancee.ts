@@ -49,6 +49,12 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       }, [data]);
 
     const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
+        const capacites = [
+            {classification: "non_classifie", ranges: rechercheAvanceeContext?.capaciteMedicoSociaux || []}, 
+            {classification: "publics_en_situation_de_handicap", ranges: rechercheAvanceeContext?.capaciteHandicap || []},
+            {classification: "personnes_agees", ranges: rechercheAvanceeContext?.capaciteAgees || []},
+          ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
+          
         if (rechercheAvanceeContext?.terme !== "") {
             event.preventDefault();
             setState({
@@ -61,7 +67,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
                 rechercheAvanceeContext?.zoneGeo,
                 rechercheAvanceeContext?.typeStructure,
                 rechercheAvanceeContext?.statutJuridiqueStructure,
-                rechercheAvanceeContext?.capaciteSMS,
+                capacites,
                 pageInitiale
             );
         }
