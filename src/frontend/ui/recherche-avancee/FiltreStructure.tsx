@@ -18,9 +18,10 @@ export const FiltreStructure = () => {
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
-  const changedCapacite = (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) || 
-  (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) || 
-  (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
+  const changedCapacite =
+    (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) ||
+    (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||
+    (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
   useEffect(() => {
     if (changedCapacite) {
@@ -77,10 +78,7 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-    if (
-      typeSelected !== AttribuesDefaults.etablissementMedicoSocial &&
-      changedCapacite
-    ) {
+    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
       rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
       rechercheAvanceeContext?.setCapaciteHandicap([]);
       rechercheAvanceeContext?.setCapaciteAgees([]);
