@@ -64,23 +64,42 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<ExtendedRésultatDeRecherche>> {
   try {
     const {
-      query: { terme = "", commune = "", page = 1, statuts = [], type = "" },
+      query: { 
+        terme = "",
+        commune = "", 
+        page = 1, 
+        statuts = [], 
+        type = "", 
+        capacite_medico_sociaux: capaciteMedicoSociaux = [], 
+        capacite_handicap: capaciteHandicap = [], 
+        capacite_agees: capaciteAgees = [] 
+      },
     } = context;
 
     const pageParam = Number(page);
     const termeParam = String(terme);
     const communeParam = String(commune);
     const typeParam = String(type);
-    const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
 
-    if (pageParam || termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam) {
+    const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
+    const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
+    const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];
+    const capaciteAgeesParam = capaciteAgees.length > 0 && typeof capaciteAgees === "string" ? capaciteAgees.split(";") : [];
+    
+    const capacites = [
+      {classification: "non_classifie", ranges: capaciteMedicoSociauxParam}, 
+      {classification: "publics_en_situation_de_handicap", ranges: capaciteHandicapParam},
+      {classification: "personnes_agees", ranges: capaciteAgeesParam},
+    ].filter((capacite) => capacite.ranges.length > 0);
+
+    if (pageParam && (termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam)) {
       const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
         dependencies,
         termeParam,
         communeParam,
         typeParam,
         statutJuridiqueParam,
-        [],
+        capacites,
         pageParam
       );
 

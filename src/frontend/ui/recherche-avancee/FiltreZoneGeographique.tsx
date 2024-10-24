@@ -62,6 +62,7 @@ export const FiltreZoneGeographique = () => {
 
     const eraseZoneGeoValue = () => {
         setZoneGeoValue("");
+        rechercheAvanceeContext?.setZoneGeo("");
     }
 
     const applyZoneGeoValue = () => {
