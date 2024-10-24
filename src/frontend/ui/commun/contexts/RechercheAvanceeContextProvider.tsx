@@ -19,7 +19,7 @@ interface SearchParams {
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
-  const router = useRouter()
+  const router = useRouter();
   const initialPage = 1;
   const { query } = router;
 
@@ -54,7 +54,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
         capaciteAgees: "capacite_agees"
       },
     }
-  )
+  );
 
   const updateSearchParams = async (newParams: Partial<SearchParams>) =>
     setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
