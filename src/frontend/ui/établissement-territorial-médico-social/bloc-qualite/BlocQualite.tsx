@@ -17,15 +17,15 @@ type BlocQualitéProps = Readonly<{
   toggelBlocs?: () => void;
 }>;
 
-const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel, opnedBloc, toggelBlocs  }: BlocQualitéProps) => {
+const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   if (etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesQualiteNeSontPasRenseignées) {
-    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc  opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs}>
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_QUALITE} toggelBlocs={toggelBlocs}>
 
       {etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés.length !== 0 ? (
         <NotAUthorized indicateurs={etablissementTerritorialQualiteMédicoSocialViewModel.lesDonnéesQualitePasAutorisés} />

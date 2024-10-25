@@ -1,0 +1,27 @@
+.star {
+    color: #000091;
+}
+
+.logo-container {
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.logo-center {
+    text-align: -webkit-center !important;
+}
+
+.info-container::before {
+    height: 23px;
+    width: 15px;
+}
+
+.cell-container {
+    max-width: 1rem;
+    text-wrap: wrap !important;
+}
+
+.header-logo {
+    text-align: center !important;
+}

@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.1.22",
+  "version": "1.1.23",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -100,7 +100,7 @@
     "typecheck:python": "pipenv run typecheck"
   },
   "dependencies": {
-    "@gouvfr/dsfr": "1.9.2",
+    "@gouvfr/dsfr": "1.12.1",
     "@next/bundle-analyzer": "^13.2.4",
     "@sentry/nextjs": "7.29.0",
     "@types/bcrypt": "^5.0.0",
@@ -124,7 +124,7 @@
     "jsonwebtoken": "^9.0.0",
     "next": "13",
     "next-auth": "^4.22.1",
-    "next-usequerystate": "^1.12.2",
+    "next-usequerystate": "^1.20.0",
     "node-fetch": "2.6.7",
     "papaparse": "^5.4.1",
     "pg": "^8.7.3",

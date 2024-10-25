@@ -2,7 +2,6 @@ import * as Sentry from "@sentry/nextjs";
 import * as ftp from "basic-ftp";
 import Ssh2SftpClient from "ssh2-sftp-client";
 
-
 import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSirecLoader";
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
 import { EntitéJuridiqueHeliosLoader } from "../métier/gateways/EntitéJuridiqueHeliosLoader";

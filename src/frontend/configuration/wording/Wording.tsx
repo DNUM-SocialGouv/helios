@@ -80,6 +80,15 @@ export interface Wording {
   readonly RECHERCHE_TITRE: string;
   readonly BACK_TO_SEARCH: string;
 
+  // Recherche avancée
+  readonly RECHERCHE_AVANCEE_LABEL: string;
+  readonly ZONE_GEOGRAPHIQUE: string;
+  readonly STRUCTURE: string;
+  readonly CAPACITE: string;
+  readonly RECHERCHE_AVANCEE_TEXT: string;
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
+  readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
+
   // Cartographie
   readonly CARTOGRAPHIE: string;
   readonly OFFRE_SANTÉ_PAR_REGION: string;
@@ -411,6 +420,10 @@ export interface Wording {
 
   readonly EN_CONSTRUCTION: string;
 
+  // Comparaison
+  readonly COMPARAISON: string;
+  readonly AJOUTER_DES_ETABLISSEMENTS: string;
+
   // Favoris
   readonly FAVORIS_LIST: string;
   readonly EJ_SECTION_TITLE: string;
@@ -483,4 +496,20 @@ export interface Wording {
   //Blocs
   readonly TOUT_REPLIER: string;
   readonly TOUT_DEPLIER: string;
+
+  //Filtre recherche avancée
+  //--Filtre Structure
+  readonly ENTITES_JURIDIQUES: string;
+  readonly ETABLISSEMENTS_SANITAIRES: string;
+  readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string;
+  readonly STATUT_JURIDIQUE_PUBLIC: string;
+  readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string;
+  readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string;
+  //--Filtre capacité
+  readonly CAPACITE_INITIALE: string;
+  readonly ETABLISSEMENT_PUBLIC_HANDICAP: string;
+  readonly ETABLISSEMENT_PERSONNE_AGEES: string;
+  readonly CAPACITE_INSTALLEE_EN_PLACE: string;
+  readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string;
+  readonly TITRE_CAPACITE_PERSONNES_AGEES: string;
 }

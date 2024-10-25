@@ -21,6 +21,12 @@
   text-transform: capitalize;
 }
 
+.rechercheAvancee {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
+}
+
 @media (max-width: 48em) {
   .tuile {
     align-self: center;

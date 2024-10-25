@@ -26,7 +26,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
 
 def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_quo_san_finance: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
-
     donnees_quo_san_finance = lis_le_fichier_csv(chemin_du_fichier_quo_san_finance, colonnes_a_lire_bloc_budget_finance_entite_juridique, types_des_colonnes)
     numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
     numéros_finess_des_etablissements_territoriaux_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
