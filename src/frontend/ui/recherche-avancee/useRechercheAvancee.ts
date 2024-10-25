@@ -61,6 +61,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
         ...state,
         estCeEnAttente: true,
         estCeQueLesRésultatsSontReçus: false,
+        estCeQueLaRechercheEstLancee: true,
       });
       rechercher(
         rechercheAvanceeContext?.terme,
