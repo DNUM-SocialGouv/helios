@@ -67,6 +67,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
       .select("recherche.numero_finess", "numero_finess")
+      .distinct(true)
       .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
