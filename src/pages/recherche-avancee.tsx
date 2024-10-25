@@ -45,9 +45,6 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
     },
   ]);
 
-  // eslint-disable-next-line no-console
-  console.log("nombreRésultats", nombreRésultats, estCeQueLesRésultatsSontReçus, nombreRésultats > 0, estCeQueLesRésultatsSontReçus || nombreRésultats > 0 && !estCeEnAttente)
-
   return (
     <main className="fr-container">
       <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
