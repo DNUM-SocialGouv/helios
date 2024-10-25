@@ -6110,7 +6110,7 @@ __metadata:
     next: 13
     next-auth: ^4.22.1
     next-router-mock: ^0.7.4
-    next-usequerystate: ^1.12.2
+    next-usequerystate: ^1.20.0
     node-fetch: 2.6.7
     papaparse: ^5.4.1
     pg: ^8.7.3
@@ -8584,14 +8584,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-usequerystate@npm:^1.12.2":
-  version: 1.12.2
-  resolution: "next-usequerystate@npm:1.12.2"
+"next-usequerystate@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "next-usequerystate@npm:1.20.0"
   dependencies:
     mitt: ^3.0.1
   peerDependencies:
     next: ">=13.4 <14.0.2 || ^14.0.3"
-  checksum: cfb79d26e373f51faffb9ef677b92d138ee4d7d9b155063a431987efec3b035dd799106423228dbdafe99f09878d32a27de8e4e280932f013f62787318c684f6
+  checksum: fbe915a99e2374eb43c4b1c7ab9b29f4bf46c4383ee66c61ecb13d768e5552f040a90b33a0df1675c20d0cab64d62035cea1b801512f936648af78726ec6860e
   languageName: node
   linkType: hard
 

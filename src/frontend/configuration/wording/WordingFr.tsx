@@ -587,10 +587,17 @@ export class WordingFr implements Wording {
 
   //Filtre recherche avancée
   //--Filtre Structure
-  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques (EJ)";
-  readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissement Sanitaires";
+  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques";
+  readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissements Sanitaires";
   readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string = "Etablissements Sociaux et Médico-Sociaux";
   readonly STATUT_JURIDIQUE_PUBLIC: string = "PUBLIC";
   readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string = "PRIVÉ LUCRATIF";
   readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string = "PRIVÉ NON LUCRATIF";
+  //--Filtre capacité
+  readonly CAPACITE_INITIALE: string = "Capacité installée (en places)";
+  readonly ETABLISSEMENT_PUBLIC_HANDICAP: string = "Etablissements pour Publics en Situation de Handicap";
+  readonly ETABLISSEMENT_PERSONNE_AGEES: string = "Etablissements pour Personnes Agées";
+  readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
+  readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
+  readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
 }

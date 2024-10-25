@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
@@ -12,32 +12,55 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 
 export const FiltreStructure = () => {
   const wording = new WordingFr();
-  const [typeSelected, setTypeSelected] = useState("");
-  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>([]);
+  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
+  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const changedCapacite =
+    (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) ||
+    (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||
+    (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
-  function onChangeType(i: any): any {
-    setTypeSelected((prev) => (i === prev ? null : i));
+  useEffect(() => {
+    if (changedCapacite) {
+      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    }
+  }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
+
+  function onChangeType(value: any): any {
+    setTypeSelected((prec) => (value === prec ? null : value));
+    if (value === AttribuesDefaults.entiteJuridque) {
+      setStatutJuridiqueSelected([AttribuesDefaults.statutPublic, AttribuesDefaults.statutPriveLucratif, AttribuesDefaults.statutPriveNonLucratif]);
+      if (checkboxElementPublic && checkboxElementPriveL && checkboxElementPriveNL) {
+        checkboxElementPublic.current.checked = true;
+        checkboxElementPriveL.current.checked = true;
+        checkboxElementPriveNL.current.checked = true;
+      }
+    } else {
+      emptyStatutJuridiqueCheckboxs();
+    }
   }
 
-  function onChangeStatutJuridique(i: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
-    if (statut.length > 0 && statut.findIndex((a) => i === a) !== -1) {
+  function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
+    if (statut.length > 0 && statut.findIndex((attr) => value === attr) !== -1) {
       statut.splice(
-        statut.findIndex((a) => i === a),
+        statut.findIndex((attr) => value === attr),
         1
       );
       setStatut([...statut]);
     } else {
-      setStatut([...statut, i]);
+      setStatut([...statut, value]);
     }
   }
 
   const effacerButton = () => {
     setTypeSelected("");
     emptyStatutJuridiqueCheckboxs();
+    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
   };
 
   function emptyStatutJuridiqueCheckboxs() {
@@ -55,6 +78,11 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
+    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+      rechercheAvanceeContext?.setCapaciteHandicap([]);
+      rechercheAvanceeContext?.setCapaciteAgees([]);
+    }
   };
 
   return (
@@ -173,13 +201,17 @@ export const FiltreStructure = () => {
                 </div>
               </div>
               <div className="fr-modal__footer">
-                <button className={"fr-btn fr-btn--secondary " + styles["eraseButton"]} disabled={!typeSelected} onClick={effacerButton}>
+                <button
+                  className={"fr-btn fr-btn--secondary " + styles["eraseButton"]}
+                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
+                  onClick={effacerButton}
+                >
                   Effacer
                 </button>
                 <button
                   aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
-                  disabled={!typeSelected}
+                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
                   onClick={appliquerButton}
                 >
                   Appliquer

@@ -3,5 +3,14 @@ import { CapaciteSMS, OrderDir } from "../use-cases/RechercheAvanceeParmiLesEnti
 
 export interface RechercheLoader {
   recherche(terme: string, page: number): Promise<RésultatDeRecherche>;
-  rechercheAvancee(terme: string, commune: string, type: string, statutJuridique: string[], capaciteSMS: CapaciteSMS[], orderBy: string, order: OrderDir, page: number): Promise<RésultatDeRecherche>;
+  rechercheAvancee(
+    terme: string,
+    commune: string,
+    type: string,
+    statutJuridique: string[],
+    capaciteSMS: CapaciteSMS[],
+    orderBy: string,
+    order: OrderDir,
+    page: number
+  ): Promise<RésultatDeRecherche>;
 }
