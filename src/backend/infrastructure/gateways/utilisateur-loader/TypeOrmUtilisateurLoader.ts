@@ -18,7 +18,7 @@ import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
   async getUserByCode(code: string): Promise<UtilisateurModel | null> {
     return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code } });
   }
@@ -37,7 +37,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     if (user) {
       user.lastConnectionDate = new Date();
       return (await this.orm)
@@ -56,7 +56,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     // if user is not addmin
     if (user && ![1, 2].includes(parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
