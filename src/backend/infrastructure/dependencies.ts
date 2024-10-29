@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 
 import { ChangePasswordLoader } from "../métier/gateways/ChangePasswordLoader";
+import { ComparaisonLoader } from "../métier/gateways/ComparaisonLoader";
 import { EntitéJuridiqueLoader } from "../métier/gateways/EntitéJuridiqueLoader";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
 import { FavorisLoader } from "../métier/gateways/FavorisLoader";
@@ -12,6 +13,7 @@ import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateway
 import { ÉtablissementTerritorialRattachéLoader } from "../métier/gateways/ÉtablissementTerritorialRattachéLoader";
 import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
+import { TypeOrmComparaisonLoader } from "./gateways/comparaison-loader/TypeOrmComparaisonLoader";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
@@ -45,6 +47,7 @@ export type Dependencies = Readonly<{
   profileLoader: TypeOrmProfileLoader;
   roleLoader: TypeOrmRoleLoader;
   institutionLoader: TypeOrmInstitutionLoader;
+  comparaisonLoader: ComparaisonLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -75,6 +78,7 @@ const createDependencies = (): Dependencies => {
     profileLoader: new TypeOrmProfileLoader(orm),
     roleLoader: new TypeOrmRoleLoader(orm),
     institutionLoader: new TypeOrmInstitutionLoader(orm),
+    comparaisonLoader: new TypeOrmComparaisonLoader(orm),
   };
 };
 
