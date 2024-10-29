@@ -1,25 +1,32 @@
-import Image from 'next/image';
-import React, { useState } from 'react';
+import Image from "next/image";
+import React, { Dispatch, SetStateAction } from "react";
 
 import LogoÉtablissementTerritorialMédicoSocial from "../../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
 import LogoEntitéJuridiqueNoir from "../../home/logo-entité-juridique-noir.svg";
-import styles from "./SelectionAnneeTag.module.css"
+import styles from "./SelectionAnneeTag.module.css";
 
-
-export const SelectionTags = ({ choices }: { choices: string[] }) => {
-  const [selectedChoice, setSelectedChoice] = useState<string>("");
-
+export const SelectionTags = ({
+  choices,
+  noSelectableChoices,
+  selectedChoice,
+  setSelectedChoice,
+}: {
+  choices: string[];
+  noSelectableChoices: string[];
+  selectedChoice: string;
+  setSelectedChoice: Dispatch<SetStateAction<string>>;
+}) => {
   const handleChoiceClick = (choice: string) => {
     setSelectedChoice(choice);
   };
 
-  const getlogoByEtsType = (choice: string): JSX.Element | string => {      
+  const getlogoByEtsType = (choice: string): JSX.Element | string => {
     if (choice === "Sanitaire") return <Image alt="" height="20" src={LogoÉtablissementTerritorialSanitaire} width="20" />;
-    if (choice === "Social et Médico-social") return <Image alt="" height="20" src={LogoÉtablissementTerritorialMédicoSocial} width="20" />
-    if (choice === "Entités Juridiques") return <Image alt="" height="20" src={LogoEntitéJuridiqueNoir} width="20" />
-    return ""
-  }
+    if (choice === "Social et Médico-social") return <Image alt="" height="20" src={LogoÉtablissementTerritorialMédicoSocial} width="20" />;
+    if (choice === "Entités Juridiques") return <Image alt="" height="20" src={LogoEntitéJuridiqueNoir} width="20" />;
+    return "";
+  };
 
   return (
     <ul className="fr-tags-group">
@@ -27,6 +34,7 @@ export const SelectionTags = ({ choices }: { choices: string[] }) => {
         <li data-testid="groupe-annees" key={index}>
           <button
             className={`fr-tag ${selectedChoice === choice ? styles["tag-active"] : ""} `}
+            disabled={!noSelectableChoices.includes(choice)}
             key={index}
             onClick={() => handleChoiceClick(choice)}
           >

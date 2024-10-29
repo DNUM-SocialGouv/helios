@@ -19,7 +19,7 @@ type RechercheAvanceeState = Readonly<{
 
 export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   const { paths } = useDependencies();
-  const take = 2;
+  const take = 20;
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
   const pageInitiale = 1;
