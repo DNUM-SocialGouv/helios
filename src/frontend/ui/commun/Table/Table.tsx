@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/aria-props */
 import { Dispatch, SetStateAction } from "react";
 
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
@@ -14,12 +15,20 @@ interface DataTableProps {
     headers: Header[];
     data: Record<string, any>[];
     onButtonClick?: (rowIndex: number, colIndex: number) => void;
-    selectedRows: number[]
-    setSelectedRows: Dispatch<SetStateAction<number[]>>
+    selectedRows: number[];
+    setSelectedRows: Dispatch<SetStateAction<number[]>>;
+    order: string;
+    orderBy: string;
+    setOrder: (order: string) => void
+    setOrderBy: (orderBy: string) => void
 }
 
 interface TableHeaderProps {
     headers: Header[];
+    order: string;
+    orderBy: string;
+    setOrder: (order: string) => void
+    setOrderBy: (orderBy: string) => void
 }
 
 interface TableBodyProps {
@@ -29,7 +38,38 @@ interface TableBodyProps {
     handleSelectRow: (index: number) => void
 }
 
-const TableHeader = ({ headers }: TableHeaderProps) => {
+interface TriProps {
+    order: string;
+    orderBy: string;
+    setOrder: (order: string) => void
+    setOrderBy: (orderBy: string) => void
+    headerKey: string;
+}
+
+const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps)  => {
+    if (order === "ASC" && headerKey === orderBy) {
+        return <button
+            aria-sorting="asc"
+            className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
+            id="table-miscellaneous-thead-sort-asc"
+            onClick={() => { setOrderBy(headerKey); setOrder("DESC") }}
+        >Trier</button>
+    } else if (order === "DESC" && headerKey === orderBy) {
+        return <button
+            aria-sorting="desc"
+            className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
+            id="table-miscellaneous-thead-sort-desc"
+            onClick={() => { setOrderBy(headerKey); setOrder("") }}
+        >Trier</button>
+    } else return <button
+        className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
+        id="table-miscellaneous-thead-sort-asc-desc"
+        onClick={() => { setOrderBy(headerKey); setOrder("ASC") }}
+    >Trier
+    </button>
+}
+
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHeaderProps) => {
     return (
         <thead>
             <tr>
@@ -39,7 +79,7 @@ const TableHeader = ({ headers }: TableHeaderProps) => {
                 {headers.map((header, index) => header.sort ? (
                     <th className={["etsLogo", "favori"].includes(header.key) ? styles["header-logo"] : ""} key={index}>
                         <span className="fr-cell__title">{header.label}</span>
-                        <button className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w" id="table-miscellaneous-thead-sort-asc-desc" >Trier</button>
+                        <Tri headerKey={header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
                     </th>
                 ) : (
                     <th key={index}>
@@ -93,7 +133,15 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow }: TableBodyPr
     )
 }
 
-export const Table = ({ headers, data = [], selectedRows = [], setSelectedRows }: DataTableProps) => {
+export const Table = ({ 
+    headers,
+    data = [],
+    selectedRows = [], 
+    setSelectedRows, 
+    order,
+    orderBy,
+    setOrder,
+    setOrderBy }: DataTableProps) => {
     const handleSelectRow = (rowIndex: number) => {
         if (selectedRows.includes(rowIndex)) {
             setSelectedRows(selectedRows.filter(index => index !== rowIndex));
@@ -108,7 +156,7 @@ export const Table = ({ headers, data = [], selectedRows = [], setSelectedRows }
                 <div className="fr-table__container">
                     <div className="fr-table__content">
                         <table id="table-selectable">
-                            <TableHeader headers={headers} />
+                            <TableHeader headers={headers} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
                             <TableBody data={data} handleSelectRow={handleSelectRow} headers={headers} selectedRows={selectedRows} />
                         </table>
                     </div>

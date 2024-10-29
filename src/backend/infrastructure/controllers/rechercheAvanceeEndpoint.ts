@@ -12,12 +12,13 @@ export async function rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
   type: string,
   statutJuridique: string[],
   capaciteSMS: CapaciteSMS[],
+  order: string,
+  orderBy: string,
   page: number
 ): Promise<RésultatDeRecherche> {
   try {
     const rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase = new RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase(dependencies.rechercheLoader);
-    const order = "ASC";
-    const orderBy = "";
+    
     return await rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.exécute(terme, commune, type, statutJuridique, capaciteSMS, orderBy, order, page);
   } catch (error) {
     dependencies.logger.error(error);

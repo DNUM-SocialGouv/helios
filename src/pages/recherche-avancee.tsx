@@ -64,15 +64,18 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<ExtendedRésultatDeRecherche>> {
   try {
     const {
-      query: { terme = "", commune = "", page = 1, statuts = [], type = "" },
+      query: { terme = "", commune = "", page = 1, statuts = [], type = "", order= "", order_by: orderBy = "" },
     } = context;
 
     const pageParam = Number(page);
     const termeParam = String(terme);
     const communeParam = String(commune);
     const typeParam = String(type);
+    const orderParam = String(order);
+    const orderByParam = String(orderBy);
     const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
-
+    console.log(orderByParam);
+    
     if (pageParam || termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam) {
       const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
         dependencies,
@@ -81,6 +84,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         typeParam,
         statutJuridiqueParam,
         [],
+        orderParam,
+        orderByParam,
         pageParam
       );
 

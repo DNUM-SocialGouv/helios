@@ -14,6 +14,8 @@ interface SearchParams {
   zoneGeo?: string;
   typeStructure?: string;
   statutJuridiqueStructure?: string[];
+  order?: string;
+  orderBy?: string; 
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
@@ -26,6 +28,9 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   const page = query["page"] ?? '1';
   const terme = query["terme"] ?? '';
   const statuts = query["statuts"] && typeof query["statuts"] === "string" ? query["statuts"].split(",") : []
+  const order = query["order"] ?? '';
+  const orderBy = query["order_by"] ?? '';
+
 
 const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
 
@@ -35,13 +40,16 @@ const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
       page: parseAsInteger.withDefault(Number(page)),
       zoneGeo: parseAsString.withDefault(String(commune)),
       typeStructure: parseAsString.withDefault(String(type)),
-      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts)
+      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts),
+      order: parseAsString.withDefault(String(order)),
+      orderBy:parseAsString.withDefault(String(orderBy)),
     },
     {
       urlKeys: {
         zoneGeo: "commune",
         typeStructure: "type",
-        statutJuridiqueStructure: "statuts"
+        statutJuridiqueStructure: "statuts",
+        orderBy: "order_by"
       },
     }
   )
@@ -58,6 +66,8 @@ const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value }),
       setTerme: (value) => setSearchParams({...searchParams, terme: value}),
       setPage: (value) => updateSearchParams({ page: value }),
+      setOrder: (value) => updateSearchParams({ order: value }),
+      setOrderBy: (value) => updateSearchParams({ orderBy: value }),
       capaciteSMS,
       setCapaciteSMS,
     }}>
