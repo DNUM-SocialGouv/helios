@@ -8,10 +8,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
         response.status(405).send("Method not allowed");
     }
 
-    const { type, numerosFiness } = request.body;
+    // const { type, numerosFiness } = request.body;
 
-    // const type = 'Médico-social';
-    // const numerosFiness = ['010003598', '010007961'];
+    const type = 'Médico-social';
+    const numerosFiness = ['010003598', '010007961'];
 
     if (type !== 'Médico-social' && type !== 'Sanitaire' && type !== 'Entité juridique') {
         response.status(400).send("invalid type");
