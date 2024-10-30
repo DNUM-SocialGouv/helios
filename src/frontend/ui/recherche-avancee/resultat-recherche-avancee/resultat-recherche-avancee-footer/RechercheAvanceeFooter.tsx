@@ -3,8 +3,8 @@ import styles from "./RechercheAvanceeFooter.module.css"
 
 export type PaginationEts = {
     lastPage: number
-    page: number | undefined
-    setPage: ((page: number) => void) | undefined
+    page: number
+    setPage: ((page: number) => void)
 }
 
 type TableFooterRechercheAvanceeProps = {
