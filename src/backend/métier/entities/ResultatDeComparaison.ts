@@ -35,4 +35,7 @@ export type ResultatES = Readonly<{
     type: string;
 }>;
 
-export type ResultatDeComparaison = ResultatEJ[] | ResultatSMS[] | ResultatES[];
+export type ResultatDeComparaison = {
+    nombreDeResultats: number,
+    resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[]
+};

@@ -27,14 +27,15 @@ type ComparaisonSMSTypeOrm = Readonly<{
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
+    private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 20;
 
-    async compare(type: string, numerosFiness: string[]): Promise<ResultatDeComparaison> {
+    async compare(type: string, numerosFiness: string[], page: number): Promise<ResultatDeComparaison> {
         try {
             if (type === 'Entité juridique') {
                 return await this.compareEJ();
             } else {
                 if (type === 'Médico-social') {
-                    return await this.compareSMS(numerosFiness);
+                    return await this.compareSMS(numerosFiness, page);
                 } else {
                     return await this.compareSAN();
                 }
@@ -45,11 +46,11 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     }
 
     private async compareEJ(): Promise<ResultatDeComparaison> {
-        return [];
+        return { nombreDeResultats: 0, resultat: [] };
     }
 
-    private async compareSMS(numerosFiness: string[]): Promise<ResultatDeComparaison> {
-        const compareSMSQueryResult = await (await this.orm).query(`
+    private async compareSMS(numerosFiness: string[], page: number): Promise<ResultatDeComparaison> {
+        const compareSMSQuery = `
         select 
         COALESCE(capacites.numero_finess, annual.numero_finess) as numero_finess,
         annual.annee,
@@ -109,13 +110,25 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         ON etablissement.numero_finess_etablissement_territorial = COALESCE(activite.numero_finess_etablissement_territorial, budget.numero_finess_etablissement_territorial, rh.numero_finess_etablissement_territorial)
         where etablissement.numero_finess_etablissement_territorial IN ( ${numerosFiness.map((finess) => "'" + finess + "'")} )) annual 
         on capacites.numero_finess = annual.numero_finess 
-        `)
+        `;
 
-        return this.contruitResultatSMS(compareSMSQueryResult);
+        const paginatedCompareSMSQuery = compareSMSQuery + `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`
+
+        const countCompareSMSQuery = `
+        SELECT COUNT(*) AS count
+        FROM (${compareSMSQuery}) AS subquery
+      `;
+
+
+        const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
+
+        const nombreDeResultats = await (await this.orm).query(countCompareSMSQuery);
+
+        return { nombreDeResultats: parseInt(nombreDeResultats[0].count, 10), resultat: this.contruitResultatSMS(compareSMSQueryResult) };
     }
 
     private async compareSAN(): Promise<ResultatDeComparaison> {
-        return [];
+        return { nombreDeResultats: 0, resultat: [] };
     }
 
     private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
