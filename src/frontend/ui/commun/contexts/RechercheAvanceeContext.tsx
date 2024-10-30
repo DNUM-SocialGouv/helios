@@ -9,6 +9,8 @@ export interface RechercheAvanceeContextValue {
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
+  order: string;
+  orderBy: string;
   setTerme: (terme: string) => void;
   setPage: (page: number, shallow?: boolean) => void;
   setZoneGeo: (zoneGeo: string) => void;
@@ -17,6 +19,9 @@ export interface RechercheAvanceeContextValue {
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;
   setCapaciteAgees: (capaciteAgees: string[]) => void;
+  setOrder: (order: string) => void
+  setOrderBy: (orderBy: string) => void
+
 }
 
 export const RechercheAvanceeContext = createContext<RechercheAvanceeContextValue | undefined>(undefined);
