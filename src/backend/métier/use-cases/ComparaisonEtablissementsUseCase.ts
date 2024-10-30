@@ -7,7 +7,8 @@ export class ComparaisonEtablissementsUseCase {
     async exécute(
         type: string,
         numerosFiness: string[],
+        page: number
     ): Promise<ResultatDeComparaison> {
-        return await this.comparaisonLoader.compare(type, numerosFiness);
+        return await this.comparaisonLoader.compare(type, numerosFiness, page);
     }
 }

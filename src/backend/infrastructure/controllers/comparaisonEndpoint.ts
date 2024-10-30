@@ -5,11 +5,12 @@ import { Dependencies } from "../dependencies";
 export async function comparaisonEndpoint(
     dependencies: Dependencies,
     type: string,
-    numerosFiness: string[]
+    numerosFiness: string[],
+    page: number
 ): Promise<ResultatDeComparaison> {
     try {
         const comparaisonEtablissementsUseCase = new ComparaisonEtablissementsUseCase(dependencies.comparaisonLoader);
-        return await comparaisonEtablissementsUseCase.exécute(type, numerosFiness);
+        return await comparaisonEtablissementsUseCase.exécute(type, numerosFiness, page);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;

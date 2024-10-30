@@ -8,10 +8,11 @@ export default async function handler(request: NextApiRequest, response: NextApi
         response.status(405).send("Method not allowed");
     }
 
-    // const { type, numerosFiness } = request.body;
+    // const { type, numerosFiness, page } = request.body;
 
     const type = 'Médico-social';
     const numerosFiness = ['010003598', '010007961'];
+    const page = 1;
 
     if (type !== 'Médico-social' && type !== 'Sanitaire' && type !== 'Entité juridique') {
         response.status(400).send("invalid type");
@@ -19,6 +20,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
     // TODO check if all numeros finess belong to the type  
 
-    const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness);
+    const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness, page);
+
     response.status(200).json(comparaisonResult);
 }
