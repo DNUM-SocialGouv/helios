@@ -1,6 +1,7 @@
 import { RésultatDeRecherche } from "../../métier/entities/RésultatDeRecherche";
 import {
   CapaciteSMS,
+  OrderDir,
   RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase,
 } from "../../métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { Dependencies } from "../dependencies";
@@ -12,7 +13,7 @@ export async function rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
   type: string,
   statutJuridique: string[],
   capaciteSMS: CapaciteSMS[],
-  order: string,
+  order: OrderDir,
   orderBy: string,
   page: number
 ): Promise<RésultatDeRecherche> {

@@ -11,6 +11,7 @@ import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/Rec
 import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { ResultatRecherchePlaceholderText } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRecherchePlaceHolderText";
 import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRechercheAvancee";
+import { OrderDir } from "../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
   page: number;
@@ -85,7 +86,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const termeParam = String(terme);
     const communeParam = String(commune);
     const typeParam = String(type);
-    const orderParam = String(order);
+    const orderParam = String(order) as OrderDir;
     const orderByParam = String(orderBy);
     const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
     const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
