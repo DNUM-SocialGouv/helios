@@ -20,7 +20,7 @@ const tableHeaders = [
 type ResultatRechercheAvanceeProps = Readonly<{
     data: RechercheViewModel[]
     nombreRésultats: number
-    setPage: ((page: number) => void) | undefined
+    setPage: ((page: number, shallow?: boolean) => void) | undefined
     lastPage: number
     page: number | undefined
 }>;

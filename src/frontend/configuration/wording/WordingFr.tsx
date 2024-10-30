@@ -96,6 +96,8 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_TITRE: string = "";
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
+  readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Aucun résultat ne correspond à votre recherche";
+
 
   // Recherche avancée
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
@@ -585,7 +587,7 @@ export class WordingFr implements Wording {
 
   //Filtre recherche avancée
   //--Filtre Structure
-  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques (EJ)";
+  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques";
   readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissements Sanitaires";
   readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string = "Etablissements Sociaux et Médico-Sociaux";
   readonly STATUT_JURIDIQUE_PUBLIC: string = "PUBLIC";

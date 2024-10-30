@@ -18,34 +18,41 @@ export const FiltreStructure = () => {
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
+  const changedCapacite =
+    (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) ||
+    (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||
+    (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
   useEffect(() => {
-    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
+    if (changedCapacite) {
       setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
       rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
     }
-  }, [rechercheAvanceeContext?.capaciteSMS]);
+  }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
-  useEffect(() => {
-    if (rechercheAvanceeContext?.capaciteSMS.length && rechercheAvanceeContext?.capaciteSMS.length > 0) {
-      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
-      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+  function onChangeType(value: any): any {
+    setTypeSelected((prec) => (value === prec ? null : value));
+    if (value === AttribuesDefaults.entiteJuridque) {
+      setStatutJuridiqueSelected([AttribuesDefaults.statutPublic, AttribuesDefaults.statutPriveLucratif, AttribuesDefaults.statutPriveNonLucratif]);
+      if (checkboxElementPublic && checkboxElementPriveL && checkboxElementPriveNL) {
+        checkboxElementPublic.current.checked = true;
+        checkboxElementPriveL.current.checked = true;
+        checkboxElementPriveNL.current.checked = true;
+      }
+    } else {
+      emptyStatutJuridiqueCheckboxs();
     }
-  }, [rechercheAvanceeContext?.capaciteSMS]);
-
-  function onChangeType(i: any): any {
-    setTypeSelected((prev) => (i === prev ? null : i));
   }
 
-  function onChangeStatutJuridique(i: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
-    if (statut.length > 0 && statut.findIndex((a) => i === a) !== -1) {
+  function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
+    if (statut.length > 0 && statut.findIndex((attr) => value === attr) !== -1) {
       statut.splice(
-        statut.findIndex((a) => i === a),
+        statut.findIndex((attr) => value === attr),
         1
       );
       setStatut([...statut]);
     } else {
-      setStatut([...statut, i]);
+      setStatut([...statut, value]);
     }
   }
 
@@ -71,15 +78,11 @@ export const FiltreStructure = () => {
     }
     rechercheAvanceeContext?.setTypeStructure(typeSelected);
     rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-    if (
-      typeSelected !== AttribuesDefaults.etablissementMedicoSocial &&
-      rechercheAvanceeContext?.capaciteSMS &&
-      rechercheAvanceeContext?.capaciteSMS.length > 0
-    ) {
-      rechercheAvanceeContext?.setCapaciteSMS([]);
+    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+      rechercheAvanceeContext?.setCapaciteHandicap([]);
+      rechercheAvanceeContext?.setCapaciteAgees([]);
     }
-    // eslint-disable-next-line no-console
-    console.log("Context Values = ", rechercheAvanceeContext);
   };
 
   return (
@@ -198,13 +201,17 @@ export const FiltreStructure = () => {
                 </div>
               </div>
               <div className="fr-modal__footer">
-                <button className={"fr-btn fr-btn--secondary " + styles["eraseButton"]} disabled={!typeSelected} onClick={effacerButton}>
+                <button
+                  className={"fr-btn fr-btn--secondary " + styles["eraseButton"]}
+                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
+                  onClick={effacerButton}
+                >
                   Effacer
                 </button>
                 <button
                   aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
-                  disabled={!typeSelected}
+                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
                   onClick={appliquerButton}
                 >
                   Appliquer
