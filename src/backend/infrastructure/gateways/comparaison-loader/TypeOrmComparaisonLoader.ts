@@ -46,31 +46,11 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     }
 
     private async compareEJ(): Promise<ResultatDeComparaison> {
-        return { nombreDeResultats: 0, resultat: [] };
+        return { nombreDeResultats: { annee: 2020, total: 0 }, resultat: [], moyennes: [] };
     }
 
     private async compareSMS(numerosFiness: string[], page: number): Promise<ResultatDeComparaison> {
-        const compareSMSQuery = `
-        select
-        COALESCE(capacites.numero_finess, annual.numero_finess) as numero_finess,
-            annual.annee,
-            annual.raison_sociale_courte,
-            annual.structure,
-            annual.taux_realisation_activite,
-            annual.file_active_personnes_accompagnees,
-            annual.taux_occupation_en_hebergement_permanent,
-            annual.taux_occupation_en_hebergement_temporaire,
-            annual.taux_occupation_accueil_de_jour,
-            annual.taux_de_caf,
-            annual.taux_de_vetuste_construction,
-            annual.fonds_de_roulement,
-            annual.resultat_net_comptable,
-            annual.taux_prestation_externes,
-            annual.taux_rotation_personnel,
-            annual.taux_etp_vacants,
-            annual.taux_absenteisme_hors_formation,
-            capacites.capacite_total
-        From
+        const compareSMSQueryBody = ` From
             (select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
                 public.autorisation_medico_social.numero_finess_etablissement_territorial as numero_finess
         FROM public.autorisation_medico_social
@@ -109,26 +89,64 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         etablissement_territorial etablissement
         ON etablissement.numero_finess_etablissement_territorial = COALESCE(activite.numero_finess_etablissement_territorial, budget.numero_finess_etablissement_territorial, rh.numero_finess_etablissement_territorial)
         where etablissement.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})) annual 
-        on capacites.numero_finess = annual.numero_finess
-            `;
+        on capacites.numero_finess = annual.numero_finess `
 
-        const paginatedCompareSMSQuery = compareSMSQuery + `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+        const compareSMSQuery = `select COALESCE(capacites.numero_finess, annual.numero_finess) as numero_finess,
+            annual.annee,
+            annual.raison_sociale_courte,
+            annual.structure,
+            annual.taux_realisation_activite,
+            annual.file_active_personnes_accompagnees,
+            annual.taux_occupation_en_hebergement_permanent,
+            annual.taux_occupation_en_hebergement_temporaire,
+            annual.taux_occupation_accueil_de_jour,
+            annual.taux_de_caf,
+            annual.taux_de_vetuste_construction,
+            annual.fonds_de_roulement,
+            annual.resultat_net_comptable,
+            annual.taux_prestation_externes,
+            annual.taux_rotation_personnel,
+            annual.taux_etp_vacants,
+            annual.taux_absenteisme_hors_formation,
+            capacites.capacite_total ` + compareSMSQueryBody;
+
+        const paginatedCompareSMSQuery = compareSMSQuery + ` LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+
+        const averagesCompareSMSQuery = `
+        select
+            annual.annee,
+            AVG(annual.taux_realisation_activite) as realisationAcitiviteMoyenne,
+            AVG(annual.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
+            AVG(annual.taux_occupation_en_hebergement_permanent) as hebergementPermanentMoyenne,
+            AVG(annual.taux_occupation_en_hebergement_temporaire) as hebergementTemporaireMoyenne ,
+            AVG(annual.taux_occupation_accueil_de_jour) as acceuilDeJourMoyenne,
+            AVG(annual.taux_de_caf) as tauxCafMoyenne,
+            AVG(annual.taux_de_vetuste_construction) as vetusteConstructionMoyenne,
+            AVG(annual.fonds_de_roulement) as roulementNetGlobalMoyenne,
+            AVG(annual.resultat_net_comptable) as resultatNetComptableMoyenne,
+            AVG(annual.taux_prestation_externes) as prestationExterneMoyenne,
+            AVG(annual.taux_rotation_personnel) as rotationPersonnelMoyenne,
+            AVG(annual.taux_etp_vacants) as etpVacantMoyenne,
+            AVG(annual.taux_absenteisme_hors_formation) as absenteismeMoyenne,
+            AVG(capacites.capacite_total) as capaciteMoyenne
+        ` + compareSMSQueryBody + ' GROUP BY annee';
 
         const countCompareSMSQuery = `
-        SELECT COUNT(*) AS count
+        SELECT COUNT(*) AS total, annee
         FROM(${compareSMSQuery}) AS subquery
+        GROUP BY annee
       `;
 
 
         const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
-
+        const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
         const nombreDeResultats = await (await this.orm).query(countCompareSMSQuery);
 
-        return { nombreDeResultats: parseInt(nombreDeResultats[0].count, 10), resultat: this.contruitResultatSMS(compareSMSQueryResult) };
+        return { nombreDeResultats: nombreDeResultats, resultat: this.contruitResultatSMS(compareSMSQueryResult), moyennes: moyennesCompareSMSQueryResult };
     }
 
     private async compareSAN(): Promise<ResultatDeComparaison> {
-        return { nombreDeResultats: 0, resultat: [] };
+        return { nombreDeResultats: { annee: 2020, total: 0 }, resultat: [], moyennes: [] };
     }
 
     private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {

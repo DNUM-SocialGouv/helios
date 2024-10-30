@@ -35,7 +35,28 @@ export type ResultatES = Readonly<{
     type: string;
 }>;
 
+export type MoyenneEJ = Readonly<{}>;
+export type MoyenneSMS = Readonly<{
+    annee: number;
+    capaciteMoyenne: number;
+    realisationAcitiviteMoyenne: number;
+    acceuilDeJourMoyenne: number;
+    hebergementPermanentMoyenne: number;
+    hebergementTemporaireMoyenne: number;
+    fileActivePersonnesAccompagnesMoyenne: number;
+    rotationPersonnelMoyenne: number;
+    absenteismeMoyenne: number;
+    prestationExterneMoyenne: number;
+    etpVacantMoyenne: number;
+    tauxCafMoyenne: number;
+    vetusteConstructionMoyenne: number;
+    roulementNetGlobalMoyenne: number;
+    resultatNetComptableMoyenne: number;
+}>;
+export type MoyenneES = Readonly<{}>;
+
 export type ResultatDeComparaison = {
-    nombreDeResultats: number,
-    resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[]
+    nombreDeResultats: { annee: number, total: number },
+    resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[],
+    moyennes: MoyenneEJ[] | MoyenneSMS[] | MoyenneES[],
 };
