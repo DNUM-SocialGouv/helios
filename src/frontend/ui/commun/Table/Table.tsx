@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/aria-props */
 import { Dispatch, SetStateAction } from "react";
 
+import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
+import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import styles from "./Table.module.css";
 
 interface Header {
@@ -9,6 +11,7 @@ interface Header {
     key: string;
     isButton?: boolean;
     sort?: boolean;
+    orderBy?: string;
 }
 
 interface DataTableProps {
@@ -46,7 +49,7 @@ interface TriProps {
     headerKey: string;
 }
 
-const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps)  => {
+const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     if (order === "ASC" && headerKey === orderBy) {
         return <button
             aria-sorting="asc"
@@ -79,7 +82,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHea
                 {headers.map((header, index) => header.sort ? (
                     <th className={["etsLogo", "favori"].includes(header.key) ? styles["header-logo"] : ""} key={index}>
                         <span className="fr-cell__title">{header.label}</span>
-                        <Tri headerKey={header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
+                        <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
                     </th>
                 ) : (
                     <th key={index}>
@@ -118,7 +121,9 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow }: TableBodyPr
                             )}
                             {header.key === "etsLogo" && (
                                 <div className={styles["logo-center"]}>
-                                    <span className={styles["logo-container"]}>{LogoÉtablissementTerritorial}</span>
+                                    {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorial}</span>}
+                                    {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorialSanitaire}</span>}
+                                    {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                                 </div>
                             )}
                             {header.key === "favori" && (
@@ -133,11 +138,11 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow }: TableBodyPr
     )
 }
 
-export const Table = ({ 
+export const Table = ({
     headers,
     data = [],
-    selectedRows = [], 
-    setSelectedRows, 
+    selectedRows = [],
+    setSelectedRows,
     order,
     orderBy,
     setOrder,

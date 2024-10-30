@@ -74,7 +74,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const orderParam = String(order);
     const orderByParam = String(orderBy);
     const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
-    console.log(orderByParam);
     
     if (pageParam || termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam) {
       const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
@@ -88,7 +87,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         orderByParam,
         pageParam
       );
-
+      
       return {
         props: {
           ...recherche,

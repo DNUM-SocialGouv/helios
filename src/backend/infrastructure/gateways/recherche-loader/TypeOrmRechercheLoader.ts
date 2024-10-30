@@ -117,7 +117,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
-    console.log("azdazdazd", order, orderBy);
     if (orderBy && order) {
       
       requêteDeLaRecherche
