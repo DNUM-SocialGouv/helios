@@ -88,6 +88,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const typeParam = String(type);
     const orderParam = String(order) as OrderDir;
     const orderByParam = String(orderBy);
+
     const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
     const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
     const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];

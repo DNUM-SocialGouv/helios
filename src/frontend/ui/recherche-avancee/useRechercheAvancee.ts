@@ -111,7 +111,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
           estCeQueLeBackendNeRépondPas: true,
         });
       });
-    }
+  };
 
   return {
     estCeEnAttente: state.estCeEnAttente,

@@ -47,6 +47,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
                 page={page || 1}
                 setPage={setPage || (() => { })}
             />
+
         </>
     )
 };

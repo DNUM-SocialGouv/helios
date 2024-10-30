@@ -21,6 +21,7 @@ interface SearchParams {
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
+
   const router = useRouter()
   const initialPage = 1;
 
@@ -33,11 +34,11 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   const statuts = query["statuts"] && typeof query["statuts"] === "string" ? query["statuts"].split(",") : []
   const order = query["order"] ?? '';
   const orderBy = query["order_by"] ?? '';
+
   const capaciteMedicoSociaux =
     query["capacite_medico_sociaux"] && typeof query["capacite_medico_sociaux"] === "string" ? query["capacite_medico_sociaux"].split(";") : [];
   const capaciteHandicap = query["capacite_handicap"] && typeof query["capacite_handicap"] === "string" ? query["capacite_handicap"].split(";") : [];
   const capaciteAgees = query["capacite_agees"] && typeof query["capacite_agees"] === "string" ? query["capacite_agees"].split(";") : [];
-
 
   const [searchParams, setSearchParams] = useQueryStates(
     {
@@ -63,7 +64,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
         capaciteAgees: "capacite_agees",
       },
     }
-  )
+  );
 
   const updateSearchParams = async (newParams: Partial<SearchParams>) => setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false });
 
