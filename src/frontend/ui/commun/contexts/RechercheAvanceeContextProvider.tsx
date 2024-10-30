@@ -1,8 +1,7 @@
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "next-usequerystate";
 import { useRouter } from "next/router";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 
-import { CapaciteEtablissement } from "../../recherche-avancee/model/CapaciteEtablissement";
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";
 
 type RechercheAvanceeProviderProps = Readonly<{
@@ -14,20 +13,25 @@ interface SearchParams {
   zoneGeo?: string;
   typeStructure?: string;
   statutJuridiqueStructure?: string[];
+  capaciteMedicoSociaux: string[];
+  capaciteHandicap: string[];
+  capaciteAgees: string[];
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
-  const router = useRouter()
-
+  const router = useRouter();
+  const initialPage = 1;
   const { query } = router;
 
-  const commune = query["commune"] ?? '';
-  const type = query["type"] ?? '';
-  const page = query["page"] ?? '1';
-  const terme = query["terme"] ?? '';
-  const statuts = query["statuts"] && typeof query["statuts"] === "string" ? query["statuts"].split(",") : []
-
-const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
+  const commune = query["commune"] ?? "";
+  const type = query["type"] ?? "";
+  const page = query["page"] ?? "1";
+  const terme = query["terme"] ?? "";
+  const statuts = query["statuts"] && typeof query["statuts"] === "string" ? query["statuts"].split(",") : [];
+  const capaciteMedicoSociaux =
+    query["capacite_medico_sociaux"] && typeof query["capacite_medico_sociaux"] === "string" ? query["capacite_medico_sociaux"].split(";") : [];
+  const capaciteHandicap = query["capacite_handicap"] && typeof query["capacite_handicap"] === "string" ? query["capacite_handicap"].split(";") : [];
+  const capaciteAgees = query["capacite_agees"] && typeof query["capacite_agees"] === "string" ? query["capacite_agees"].split(";") : [];
 
   const [searchParams, setSearchParams] = useQueryStates(
     {
@@ -35,32 +39,39 @@ const [capaciteSMS, setCapaciteSMS] = useState<CapaciteEtablissement[]>([]);
       page: parseAsInteger.withDefault(Number(page)),
       zoneGeo: parseAsString.withDefault(String(commune)),
       typeStructure: parseAsString.withDefault(String(type)),
-      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts)
+      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts),
+      capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault(capaciteMedicoSociaux),
+      capaciteHandicap: parseAsArrayOf(parseAsString, ";").withDefault(capaciteHandicap),
+      capaciteAgees: parseAsArrayOf(parseAsString, ";").withDefault(capaciteAgees),
     },
     {
       urlKeys: {
         zoneGeo: "commune",
         typeStructure: "type",
-        statutJuridiqueStructure: "statuts"
+        statutJuridiqueStructure: "statuts",
+        capaciteMedicoSociaux: "capacite_medico_sociaux",
+        capaciteHandicap: "capacite_handicap",
+        capaciteAgees: "capacite_agees",
       },
     }
-  )
+  );
 
-  const updateSearchParams = async (newParams: Partial<SearchParams>) => 
-    setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), {shallow: false})
-  
+  const updateSearchParams = async (newParams: Partial<SearchParams>) => setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false });
 
   return (
-    <RechercheAvanceeContext.Provider value={{
-      ...searchParams,
-      setZoneGeo: (value) => updateSearchParams({ zoneGeo: value }),
-      setTypeStructure: (value) => updateSearchParams({ typeStructure: value }),
-      setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value }),
-      setTerme: (value) => setSearchParams({...searchParams, terme: value}),
-      setPage: (value) => updateSearchParams({ page: value }),
-      capaciteSMS,
-      setCapaciteSMS,
-    }}>
+    <RechercheAvanceeContext.Provider
+      value={{
+        ...searchParams,
+        setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
+        setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
+        setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
+        setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
+        setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
+        setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
+        setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+        setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
+      }}
+    >
       {children}
     </RechercheAvanceeContext.Provider>
   );

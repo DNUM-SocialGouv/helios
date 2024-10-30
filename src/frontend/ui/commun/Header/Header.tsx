@@ -105,7 +105,8 @@ export const Header = () => {
                   router.pathname !== paths.HISTORY &&
                   router.pathname !== paths.FAVORIS &&
                   router.pathname !== paths.REINITIALISATION_PASSWORD &&
-                  router.pathname !== paths.REGISTRATION && (
+                  router.pathname !== paths.REGISTRATION &&
+                  router.pathname !== paths.RECHERCHE_AVANCEE && (
                     <div className="fr-header__search fr-modal" id="modal-541">
                       <div className="fr-container fr-container-lg--fluid">
                         <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
@@ -128,7 +129,7 @@ export const Header = () => {
                             className="fr-btn"
                             onClick={(event) => {
                               event.preventDefault();
-                              localStorage.setItem('searchItem', terme);
+                              localStorage.setItem("searchItem", terme);
                               router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
                             }}
                             title="Rechercher"
@@ -174,11 +175,15 @@ export const Header = () => {
                         </button>
                       </li>
                       <hr className={styles["menu-sperator"]} />
-                      {(data.user.role === 1) && (
+                      {data.user.role === 1 && (
                         <li className={styles["menu-item"]}>
-                          <button onClick={() => {
-                            router.push(paths.PROFILES_LIST);
-                          }}>Paramétrage</button>
+                          <button
+                            onClick={() => {
+                              router.push(paths.PROFILES_LIST);
+                            }}
+                          >
+                            Paramétrage
+                          </button>
                         </li>
                       )}
                       {(data.user.role === 1 || data.user.role === 2) && (
@@ -206,7 +211,9 @@ export const Header = () => {
                       </li>
                       <hr className={styles["menu-sperator"]} />
                       <li className={styles["menu-item"]}>
-                        <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={logOut}>{wording.DÉCONNEXION}</button>
+                        <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={logOut}>
+                          {wording.DÉCONNEXION}
+                        </button>
                       </li>
                     </ul>
                   ) : null}
@@ -232,11 +239,10 @@ export const Header = () => {
           </div>
         )}
       </header>
-      <div className="fr-grid-row fr-container" >
+      <div className="fr-grid-row fr-container">
         <Breadcrumb />
         <BtnRetourRecherche />
       </div>
-
     </>
   );
 };

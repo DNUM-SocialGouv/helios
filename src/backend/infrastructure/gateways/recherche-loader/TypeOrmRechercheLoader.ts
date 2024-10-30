@@ -16,9 +16,9 @@ type RechercheTypeOrm = Readonly<{
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 12;
-  private readonly NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE = 2;
+  private readonly NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE = 20;
 
-  constructor(private readonly orm: Promise<DataSource>) { }
+  constructor(private readonly orm: Promise<DataSource>) {}
 
   async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
@@ -67,14 +67,13 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
       .select("recherche.numero_finess", "numero_finess")
+      .distinct(true)
       .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
       .addSelect("recherche.statut_juridique", "statutJuridique")
       .from(RechercheModel, "recherche");
-
-
 
     if (majusCommune) {
       conditions.push("recherche.commune = :commune");
@@ -117,10 +116,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (conditions.length > 0) requêteDeLaRecherche.where(conditions.join(" AND "), parameters);
 
-    const nombreDeRésultats = await requêteDeLaRecherche
-      .clone()
-      .select('COUNT(DISTINCT recherche.numero_finess)', 'count')
-      .getRawOne();
+    const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
     if (orderBy && order) {
       requêteDeLaRecherche
