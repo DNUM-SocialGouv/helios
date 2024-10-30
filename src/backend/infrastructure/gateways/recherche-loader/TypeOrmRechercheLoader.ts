@@ -67,6 +67,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
       .select("recherche.numero_finess", "numero_finess")
+      .distinct(true)
       .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
@@ -118,6 +119,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
     if (orderBy && order) {
+      
       requêteDeLaRecherche
         .orderBy(orderBy, order)
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)

@@ -11,10 +11,16 @@ export const FiltreCapacite = () => {
   const wording = new WordingFr();
   const [showToolip, setShowTooltip] = useState<boolean>(false);
   const [showToolip2, setShowTooltip2] = useState<boolean>(false);
-  const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
-  const [capaciteHandicap, setCapaciteHandicap] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
-  const [capaciteAgees, setCapaciteAgees] = useState<CapaciteEtablissement>(new CapaciteEtablissement("", []));
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(
+    new CapaciteEtablissement("non_classifie", rechercheAvanceeContext?.capaciteMedicoSociaux || [])
+  );
+  const [capaciteHandicap, setCapaciteHandicap] = useState<CapaciteEtablissement>(
+    new CapaciteEtablissement("publics_en_situation_de_handicap", rechercheAvanceeContext?.capaciteHandicap || [])
+  );
+  const [capaciteAgees, setCapaciteAgees] = useState<CapaciteEtablissement>(
+    new CapaciteEtablissement("personnes_agees", rechercheAvanceeContext?.capaciteAgees || [])
+  );
   const contenuInfoBulle = (
     <>
       <span>
@@ -94,26 +100,24 @@ export const FiltreCapacite = () => {
   }
 
   const appliquerButton = () => {
-    rechercheAvanceeContext?.setCapaciteSMS([capaciteMedicoSociaux, capaciteHandicap, capaciteAgees]);
-    // eslint-disable-next-line no-console
-    console.log("Context Values = ", rechercheAvanceeContext);
+    if (capaciteMedicoSociaux.ranges.length > 0) {
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
+    }
+    if (capaciteHandicap.ranges.length > 0) {
+      rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
+    }
+    if (capaciteAgees.ranges.length > 0) {
+      rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
+    }
   };
 
   const effacerButton = () => {
     setCapaciteMedicoSociaux(new CapaciteEtablissement("", []));
     setCapaciteHandicap(new CapaciteEtablissement("", []));
     setCapaciteAgees(new CapaciteEtablissement("", []));
-    emptyCheckboxs();
-    rechercheAvanceeContext?.setCapaciteSMS([]);
-  };
-
-  // -- Cette fonction permet de unchecker tou les checkbox du modal capacité
-  const emptyCheckboxs = () => {
-    const container = document.querySelectorAll("#capaciter-container")[0];
-    var list = container?.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    list?.forEach((e) => {
-      e.checked = false;
-    });
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteAgees([]);
   };
 
   return (
@@ -158,11 +162,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-capacite-initiale-tranche-1"
+                          checked={capaciteMedicoSociaux.ranges.includes("1,50")}
                           id="checkboxe-capacite-initiale-tranche-1"
                           name="checkboxe-capacite-initiale-tranche-1"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
                           type="checkbox"
-                          value=">51"
+                          value="1,50"
                         />
                         <label htmlFor="checkboxe-capacite-initiale-tranche-1">1-50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-1"></div>
@@ -170,6 +175,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-capacite-initiale-tranche-2"
+                          checked={capaciteMedicoSociaux.ranges.includes("51,100")}
                           id="checkboxe-capacite-initiale-tranche-2"
                           name="checkboxe-capacite-initiale-tranche-2"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
@@ -182,6 +188,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-capacite-initiale-tranche-3"
+                          checked={capaciteMedicoSociaux.ranges.includes("101,150")}
                           id="checkboxe-capacite-initiale-tranche-3"
                           name="checkboxe-capacite-initiale-tranche-3"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
@@ -194,6 +201,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-capacite-initiale-tranche-4"
+                          checked={capaciteMedicoSociaux.ranges.includes("151,199")}
                           id="checkboxe-capacite-initiale-tranche-4"
                           name="checkboxe-capacite-initiale-tranche-4"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
@@ -206,11 +214,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-capacite-initiale-tranche-5"
+                          checked={capaciteMedicoSociaux.ranges.includes(">199")}
                           id="checkboxe-capacite-initiale-tranche-5"
                           name="checkboxe-capacite-initiale-tranche-5"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
                           type="checkbox"
-                          value="<199"
+                          value=">199"
                         />
                         <label htmlFor="checkboxe-capacite-initiale-tranche-5">200 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-5"></div>
@@ -237,11 +246,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-public-tranche-1"
+                          checked={capaciteHandicap.ranges.includes("1,30")}
                           id="checkboxe-etablissements-public-tranche-1"
                           name="checkboxe-etablissements-public-tranche-1"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
                           type="checkbox"
-                          value=">31"
+                          value="1,30"
                         />
                         <label htmlFor="checkboxe-etablissements-public-tranche-1">1-30</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-1"></div>
@@ -249,6 +259,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-public-tranche-2"
+                          checked={capaciteHandicap.ranges.includes("31,50")}
                           id="checkboxe-etablissements-public-tranche-2"
                           name="checkboxe-etablissements-public-tranche-2"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
@@ -261,6 +272,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-public-tranche-3"
+                          checked={capaciteHandicap.ranges.includes("51,100")}
                           id="checkboxe-etablissements-public-tranche-3"
                           name="checkboxe-etablissements-public-tranche-3"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
@@ -273,11 +285,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-public-tranche-4"
+                          checked={capaciteHandicap.ranges.includes(">100")}
                           id="checkboxe-etablissements-public-tranche-4"
                           name="checkboxe-etablissements-public-tranche-4"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
                           type="checkbox"
-                          value="<100"
+                          value=">100"
                         />
                         <label htmlFor="checkboxe-etablissements-public-tranche-4">101 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-4"></div>
@@ -304,11 +317,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-personnes-agees-tranche-1"
+                          checked={capaciteAgees.ranges.includes("1,44")}
                           id="checkboxe-etablissements-personnes-agees-tranche-1"
                           name="checkboxe-etablissements-personnes-agees-tranche-1"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
                           type="checkbox"
-                          value=">45"
+                          value="1,44"
                         />
                         <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1-44</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-1"></div>
@@ -316,6 +330,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-personnes-agees-tranche-2"
+                          checked={capaciteAgees.ranges.includes("45,80")}
                           id="checkboxe-etablissements-personnes-agees-tranche-2"
                           name="checkboxe-etablissements-personnes-agees-tranche-2"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
@@ -328,6 +343,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-personnes-agees-tranche-3"
+                          checked={capaciteAgees.ranges.includes("81,120")}
                           id="checkboxe-etablissements-personnes-agees-tranche-3"
                           name="checkboxe-etablissements-personnes-agees-tranche-3"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
@@ -340,6 +356,7 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-personnes-agees-tranche-4"
+                          checked={capaciteAgees.ranges.includes("121,199")}
                           id="checkboxe-etablissements-personnes-agees-tranche-4"
                           name="checkboxe-etablissements-personnes-agees-tranche-4"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
@@ -352,11 +369,12 @@ export const FiltreCapacite = () => {
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
                           aria-describedby="checkboxe-etablissements-personnes-agees-tranche-5"
+                          checked={capaciteAgees.ranges.includes(">199")}
                           id="checkboxe-etablissements-personnes-agees-tranche-5"
                           name="checkboxe-etablissements-personnes-agees-tranche-5"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
                           type="checkbox"
-                          value="<200"
+                          value=">199"
                         />
                         <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-5">200 et plus</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-5"></div>
