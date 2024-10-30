@@ -87,7 +87,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHea
                 ) : (
                     <th key={index}>
                         <span>{header.label}</span>
-                        {header.key !== "delete" && <span className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />}
+                        {/* {header.key !== "delete" && <span className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />} */}
                     </th>
                 )
                 )}
@@ -121,8 +121,8 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow }: TableBodyPr
                             )}
                             {header.key === "etsLogo" && (
                                 <div className={styles["logo-center"]}>
-                                    {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorial}</span>}
-                                    {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorialSanitaire}</span>}
+                                    {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorialSanitaire}</span>}
+                                    {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorial}</span>}
                                     {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                                 </div>
                             )}
