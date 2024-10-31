@@ -98,7 +98,6 @@ export class WordingFr implements Wording {
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Aucun résultat ne correspond à votre recherche";
 
-
   // Recherche avancée
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
@@ -600,4 +599,9 @@ export class WordingFr implements Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
+  //Comparaison
+  //--Alert-comparaison
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Établissements de type different";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string =
+    "Pour réaliser une comparaison, vous devez sélectionner des établissements de structure identique (Entité juridique, Etablissement sanitaire ou Etablissement médico-social)";
 }

@@ -1,15 +1,27 @@
 import { useRouter } from "next/router";
+import { Dispatch, SetStateAction } from "react";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
-  selectedRows: number[];
+  selectedRows: any[];
+  setShowAlert: Dispatch<SetStateAction<boolean>>;
 }>;
 
-export const TableHeaderRechercheAvancee = ({ selectedRows }: TableHeaderRechercheAvanceeProps) => {
+export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: TableHeaderRechercheAvanceeProps) => {
   const router = useRouter();
 
   const onClickComparer = () => {
-    router.push("/comparaison");
+    const firstType = selectedRows[0].recherche.type;
+    const hasDifferentTypes = selectedRows.some((row) => row.recherche.type !== firstType);
+
+    if (hasDifferentTypes) {
+      setShowAlert(true);
+    } else {
+      // Navigate if types are the same
+      setShowAlert(false);
+      router.push("/comparaison");
+    }
   };
+
   return (
     <div className="fr-table__header">
       <p className="fr-table__detail">{selectedRows?.length} établissements sélectionnées</p>

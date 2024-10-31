@@ -39,9 +39,9 @@ interface TableHeaderProps {
 
 interface TableBodyProps {
   headers: Header[];
-  selectedRows: number[];
+  selectedRows: any[];
   data: Record<string, any>[];
-  handleSelectRow: (index: number) => void;
+  handleSelectRow: (valeurs: any) => void;
   redirectingPath: string;
   isShowAvrage: boolean;
 }
@@ -131,10 +131,10 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow, redirectingPa
           <th className="fr-cell--fixed" scope="row">
             <div className="fr-checkbox-group fr-checkbox-group--sm">
               <input
-                checked={selectedRows.includes(row["numéroFiness"])}
+                checked={selectedRows.includes(row)}
                 id={`table-select-checkbox-7748--${rowIndex}`}
                 name="row-select"
-                onChange={() => handleSelectRow(row["numéroFiness"])}
+                onChange={() => handleSelectRow(row)}
                 type="checkbox"
               />
               <label className="fr-label" htmlFor={`table-select-checkbox-7748--${rowIndex}`}>
@@ -182,7 +182,7 @@ export const Table = ({
   redirectingPath = "/",
   isShowAvrage = false,
 }: DataTableProps) => {
-  const handleSelectRow = (rowIndex: number) => {
+  const handleSelectRow = (rowIndex: any) => {
     if (selectedRows.includes(rowIndex)) {
       setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
     } else {

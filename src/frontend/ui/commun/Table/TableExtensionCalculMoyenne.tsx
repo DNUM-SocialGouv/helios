@@ -49,7 +49,8 @@ export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalcul
   };
 
   const parsDataToNumber = (value: string): number => {
-    return +value.split(" ")[0];
+    const newValue = value.includes("%") ? +value.split(" ")[0] : +value.split("€")[0].replace(/\s/g, "");
+    return newValue;
   };
 
   const averages = calculMoyenne();
@@ -64,13 +65,17 @@ export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalcul
         <td>{dataSource.length} établissements</td>
         <td>
           <span>Moyenne</span>
-          <button className="fr-btn--tooltip fr-btn" id="button-info-handicap" name="tooltip-info-handicap" onClick={() => {}} type="button">
-            Info
-          </button>
+          <button className={"fr-fi-information-line " + styles["info-container-bulle"]} onClick={() => {}} />
         </td>
-        {Object.keys(averages).map((cle) => (
-          <td key={cle}>{averages[cle as keyof typeof averages]}</td>
-        ))}
+        {Object.keys(averages).map((cle) => {
+          if (cle === "resultat_net_comptable") {
+            return <td key={cle}>{averages[cle as keyof typeof averages]} €</td>;
+          } else if (cle === "capacite_totale") {
+            return <td key={cle}>{averages[cle as keyof typeof averages]}</td>;
+          } else {
+            return <td key={cle}>{averages[cle as keyof typeof averages]} %</td>;
+          }
+        })}
       </tr>
     </>
   );

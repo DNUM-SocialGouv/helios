@@ -29,6 +29,7 @@ const tableHeaders = [
 ];
 
 export const ComparaisonPage = () => {
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const { construisLeLien } = useComparaison();
   const { wording } = useDependencies();
   // const { buildRechecheView } = useFavoris();
@@ -89,10 +90,8 @@ export const ComparaisonPage = () => {
           headers={tableHeaders}
           isShowAvrage={true}
           redirectingPath={construisLeLien(structureChoice)}
-          selectedRows={[]}
-          setSelectedRows={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
         />
       </div>
     </main>
