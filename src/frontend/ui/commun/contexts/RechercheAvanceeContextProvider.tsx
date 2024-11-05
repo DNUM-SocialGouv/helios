@@ -1,6 +1,6 @@
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "next-usequerystate";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";
 
@@ -66,11 +66,14 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     }
   );
 
+  const [termeFixe, setTermeFixe] = useState("");
+
   const updateSearchParams = async (newParams: Partial<SearchParams>) => setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false });
 
   return (
     <RechercheAvanceeContext.Provider value={{
       ...searchParams,
+      termeFixe,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
@@ -78,6 +81,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
       setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+      setTermeFixe,
       setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
       setOrder: (value) => updateSearchParams({ order: value }),
       setOrderBy: (value) => updateSearchParams({ orderBy: value }),

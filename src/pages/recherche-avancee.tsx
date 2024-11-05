@@ -3,6 +3,7 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
 import { RésultatDeRecherche } from "../backend/métier/entities/RésultatDeRecherche";
+import { OrderDir } from "../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
@@ -11,7 +12,6 @@ import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/Rec
 import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { ResultatRecherchePlaceholderText } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRecherchePlaceHolderText";
 import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRechercheAvancee";
-import { OrderDir } from "../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
   page: number;
@@ -49,7 +49,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
   return (
     <main className="fr-container">
       <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
-      {((estCeQueLesRésultatsSontReçus || props.laRechercheEtendueEstLancee) && Number(nombreRésultats) === 0 && !estCeEnAttente) && <PasResultatRechercheAvancee />}
+      {(estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente) && <PasResultatRechercheAvancee />}
       {(nombreRésultats > 0 && !estCeEnAttente) &&
         <ResultatRechercheAvancee
           data={resultats}
@@ -77,7 +77,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         capacite_medico_sociaux: capaciteMedicoSociaux = [],
         capacite_handicap: capaciteHandicap = [],
         capacite_agees: capaciteAgees = [],
-        order= "", 
+        order = "",
         order_by: orderBy = ""
       },
     } = context;
@@ -112,7 +112,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         orderByParam,
         pageParam
       );
-      
+
       return {
         props: {
           ...recherche,

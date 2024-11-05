@@ -40,12 +40,14 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   });
 
   useEffect(() => {
-    setState({
-      ...state,
-      résultats: construisLesRésultatsDeLaRecherche(data),
-      nombreRésultats: data.nombreDeRésultats || 0,
-      lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
-    });
+    if (data.laRechercheEtendueEstLancee) {
+      setState({
+        ...state,
+        résultats: construisLesRésultatsDeLaRecherche(data),
+        nombreRésultats: data.nombreDeRésultats || 0,
+        lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
+      });
+    }
   }, [data]);
 
   const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -103,6 +105,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
           lastPage: Math.ceil(data.nombreDeRésultats / take),
           résultats: construisLesRésultatsDeLaRecherche(data),
         });
+        rechercheAvanceeContext?.setTermeFixe(terme);
       })
       .catch(() => {
         setState({

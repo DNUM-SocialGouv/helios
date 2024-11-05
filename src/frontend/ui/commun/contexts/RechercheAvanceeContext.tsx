@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 export interface RechercheAvanceeContextValue {
   terme: string;
+  termeFixe: string;
   page: number;
   zoneGeo: string;
   typeStructure: string;
@@ -12,6 +13,7 @@ export interface RechercheAvanceeContextValue {
   order: string;
   orderBy: string;
   setTerme: (terme: string) => void;
+  setTermeFixe: (terme: string) => void;
   setPage: (page: number, shallow?: boolean) => void;
   setZoneGeo: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string) => void;
