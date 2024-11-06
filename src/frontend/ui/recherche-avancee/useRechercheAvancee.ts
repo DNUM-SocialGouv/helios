@@ -40,7 +40,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   });
 
   useEffect(() => {
-    if (data.laRechercheEtendueEstLancee) {
+    if (data.laRechercheEtendueEstLancee && data.terme === rechercheAvanceeContext?.termeFixe) {
       setState({
         ...state,
         résultats: construisLesRésultatsDeLaRecherche(data),
