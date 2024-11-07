@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 
 type ComparaisonSMSTypeOrm = Readonly<{
@@ -29,13 +29,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
     private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 20;
 
-    async compare(type: string, numerosFiness: string[], page: number): Promise<ResultatDeComparaison> {
+    async compare(type: string, numerosFiness: string[], page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
         try {
             if (type === 'Entité juridique') {
                 return await this.compareEJ();
             } else {
                 if (type === 'Médico-social') {
-                    return await this.compareSMS(numerosFiness, page);
+                    return await this.compareSMS(numerosFiness, page, order, orderBy);
                 } else {
                     return await this.compareSAN();
                 }
@@ -46,10 +46,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     }
 
     private async compareEJ(): Promise<ResultatDeComparaison> {
-        return { nombreDeResultats: { annee: 2020, total: 0 }, resultat: [], moyennes: [] };
+        return { nombreDeResultats: [{ annee: 2020, total: 0 }], resultat: [], moyennes: [] };
     }
 
-    private async compareSMS(numerosFiness: string[], page: number): Promise<ResultatDeComparaison> {
+    private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
         const compareSMSQueryBody = ` From
             (select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
                 public.autorisation_medico_social.numero_finess_etablissement_territorial as numero_finess
@@ -110,7 +110,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
             annual.taux_absenteisme_hors_formation,
             capacites.capacite_total ` + compareSMSQueryBody;
 
-        const paginatedCompareSMSQuery = compareSMSQuery + ` LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+        const paginatedCompareSMSQuery = (order && orderBy) ?
+            compareSMSQuery + `ORDER BY ${orderBy} ${order} LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+            : compareSMSQuery + `ORDER BY numero_finess ASC LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
 
         const averagesCompareSMSQuery = `
         select
@@ -142,11 +144,33 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
         const nombreDeResultats = await (await this.orm).query(countCompareSMSQuery);
 
-        return { nombreDeResultats: nombreDeResultats, resultat: this.contruitResultatSMS(compareSMSQueryResult), moyennes: moyennesCompareSMSQueryResult };
+        return { nombreDeResultats: nombreDeResultats, resultat: this.contruitResultatSMS(compareSMSQueryResult), moyennes: this.contruitMoyennesSMS(moyennesCompareSMSQueryResult) };
     }
 
     private async compareSAN(): Promise<ResultatDeComparaison> {
-        return { nombreDeResultats: { annee: 2020, total: 0 }, resultat: [], moyennes: [] };
+        return { nombreDeResultats: [{ annee: 2020, total: 0 }], resultat: [], moyennes: [] };
+    }
+
+    private contruitMoyennesSMS(moyennes: any[]): MoyenneSMS[] {
+        return moyennes.map((moyenne: any): MoyenneSMS => {
+            return {
+                annee: moyenne.annee,
+                capaciteMoyenne: moyenne.capacitemoyenne ? Number(moyenne.capacitemoyenne) : null,
+                realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne,
+                acceuilDeJourMoyenne: moyenne.realisationacitivitemoyenne,
+                hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne,
+                hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne,
+                fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
+                rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne,
+                absenteismeMoyenne: moyenne.absenteismemoyenne,
+                prestationExterneMoyenne: moyenne.prestationexternemoyenne,
+                etpVacantMoyenne: moyenne.etpvacantmoyenne,
+                tauxCafMoyenne: moyenne.tauxcafmoyenne,
+                vetusteConstructionMoyenne: moyenne.vetusteconstructionmoyenne,
+                roulementNetGlobalMoyenne: moyenne.roulementnetglobalmoyenne,
+                resultatNetComptableMoyenne: moyenne.resultatnetcomptablemoyenne,
+            };
+        })
     }
 
     private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
@@ -156,7 +180,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
                 numeroFiness: resultat.numero_finess,
                 raisonSociale: resultat.raison_sociale_courte,
                 type: resultat.structure,
-                capacite: resultat.capacite_total,
+                capacite: resultat.capacite_total ? Number(resultat.capacite_total) : null,
                 realisationAcitivite: resultat.taux_realisation_activite,
                 acceuilDeJour: resultat.taux_occupation_accueil_de_jour,
                 hebergementPermanent: resultat.taux_occupation_en_hebergement_permanent,
