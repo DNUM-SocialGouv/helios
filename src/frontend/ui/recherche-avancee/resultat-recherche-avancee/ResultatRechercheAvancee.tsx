@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 
-import "@gouvfr/dsfr/dist/component/segmented/segmented.min.css";
+import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { Table } from "../../commun/Table/Table";

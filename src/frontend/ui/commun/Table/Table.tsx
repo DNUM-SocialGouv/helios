@@ -114,7 +114,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHea
           ) : (
             <th key={index}>
               <span>{header.label}</span>
-              {/* {header.key !== "delete" && <span className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />} */}
+              {header.key !== "delete" && <button className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />}
             </th>
           )
         )}
@@ -156,16 +156,16 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow, redirectingPa
               )}
               {header.key === "favori" && <button className={"fr-icon-star-line .fr-icon--lg " + styles["star"]} />}
               {header.key === "socialReason" && (
-                <a className="fr-tile__link" href={redirectingPath !== "" ? redirectingPath + row["numéroFiness"] : "#"} style={{ backgroundImage: "none" }}>
+                <a className="fr-tile__link" href={redirectingPath ? redirectingPath + row["numéroFiness"] : "#"} style={{ backgroundImage: "none" }}>
                   {row[header.key]}
                 </a>
               )}
-              {row[header.key]}
+              {header.key !== "socialReason" && row[header.key] !== null ? row[header.key] : header.key !== "socialReason" && "-"}
             </td>
           ))}
         </tr>
       ))}
-      {isShowAvrage && <TableExtensionCalculMoyenne dataSource={data} />}
+      {/* {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={data} />} */}
     </tbody>
   );
 };

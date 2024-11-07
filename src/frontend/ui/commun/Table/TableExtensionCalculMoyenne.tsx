@@ -6,35 +6,35 @@ interface TableExtensionCalculMoyenneProps {
 
 export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalculMoyenneProps) {
   const result = {
-    capacite_totale: 0,
-    realisation_activite: 0,
-    hp: 0,
-    ht: 0,
-    aj: 0,
-    prestations_externes_vs_direct: 0,
-    rotation_personnel: 0,
-    ETP_vacants: 0,
-    abesenteisme: 0,
-    CAF: 0,
-    vetuste: 0,
-    resultat_net_comptable: 0,
+    capacite: 0,
+    realisationActivite: 0,
+    hebergementPermanent: 0,
+    hebergementTemporaire: 0,
+    acceuilDeJour: 0,
+    prestationExterne: 0,
+    rotationPersonnel: 0,
+    etpVacant: 0,
+    absenteisme: 0,
+    tauxCaf: 0,
+    vetusteConstruction: 0,
+    resultatNetComptable: 0,
   };
 
   const calculMoyenne = (): typeof result => {
     // Sum the values from each line in dataSource
     dataSource.forEach((ligne) => {
-      result.capacite_totale += parsDataToNumber(ligne["capacite_totale"]);
-      result.realisation_activite += parsDataToNumber(ligne["realisation_activite"]);
-      result.hp += parsDataToNumber(ligne["hp"]);
-      result.ht += parsDataToNumber(ligne["ht"]);
-      result.aj += parsDataToNumber(ligne["aj"]);
-      result.prestations_externes_vs_direct += parsDataToNumber(ligne["prestations_externes_vs_direct"]);
-      result.rotation_personnel += parsDataToNumber(ligne["rotation_personnel"]);
-      result.ETP_vacants += parsDataToNumber(ligne["ETP_vacants"]);
-      result.abesenteisme += parsDataToNumber(ligne["abesenteisme"]);
-      result.CAF += parsDataToNumber(ligne["CAF"]);
-      result.vetuste += parsDataToNumber(ligne["vetuste"]);
-      result.resultat_net_comptable += parsDataToNumber(ligne["resultat_net_comptable"]);
+      result.capacite += parsDataToNumber(ligne["capacite_totale"]);
+      result.realisationActivite += parsDataToNumber(ligne["realisation_activite"]);
+      result.hebergementPermanent += parsDataToNumber(ligne["hp"]);
+      result.hebergementTemporaire += parsDataToNumber(ligne["ht"]);
+      result.acceuilDeJour += parsDataToNumber(ligne["aj"]);
+      result.prestationExterne += parsDataToNumber(ligne["prestations_externes_vs_direct"]);
+      result.rotationPersonnel += parsDataToNumber(ligne["rotation_personnel"]);
+      result.etpVacant += parsDataToNumber(ligne["ETP_vacants"]);
+      result.absenteisme += parsDataToNumber(ligne["abesenteisme"]);
+      result.tauxCaf += parsDataToNumber(ligne["CAF"]);
+      result.vetusteConstruction += parsDataToNumber(ligne["vetuste"]);
+      result.resultatNetComptable += parsDataToNumber(ligne["resultat_net_comptable"]);
     });
 
     // Calculate the average

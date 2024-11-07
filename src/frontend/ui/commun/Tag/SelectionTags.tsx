@@ -1,9 +1,8 @@
-import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";
 
-import LogoÉtablissementTerritorialMédicoSocial from "../../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
-import LogoÉtablissementTerritorialSanitaire from "../../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
-import LogoEntitéJuridiqueNoir from "../../home/logo-entité-juridique-noir.svg";
+import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
+import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
+import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import styles from "./SelectionAnneeTag.module.css";
 
 export const SelectionTags = ({
@@ -21,11 +20,21 @@ export const SelectionTags = ({
     setSelectedChoice(choice);
   };
 
+  const logoCodeCouleur = (choice: string): string => {
+    const codeColorOfDisabled = "#808080";
+    const codeColorOfSelected = "#000091";
+    return choice !== choiceLibelle(selectedChoice) ? codeColorOfDisabled : codeColorOfSelected;
+  };
+
   const getlogoByEtsType = (choice: string): JSX.Element | string => {
-    if (choice === "Sanitaire") return <Image alt="" height="20" src={LogoÉtablissementTerritorialSanitaire} width="20" />;
-    if (choice === "Social et Médico-social") return <Image alt="" height="20" src={LogoÉtablissementTerritorialMédicoSocial} width="20" />;
-    if (choice === "Entités Juridiques") return <Image alt="" height="20" src={LogoEntitéJuridiqueNoir} width="20" />;
+    if (choice === "Sanitaire") return LogoEtablissementTerritorialSanitaireSvg(logoCodeCouleur(choice));
+    if (choice === "Social et Médico-social") return LogoEtablissementTerritorialMedicoSociauxSvg(logoCodeCouleur(choice));
+    if (choice === "Entités Juridiques") return LogoEntiteJuridiqueSvg(logoCodeCouleur(choice));
     return "";
+  };
+
+  const choiceLibelle = (choice: string) => {
+    return choice === "Médico-social" ? "Social et Médico-social" : choice;
   };
 
   return (
@@ -38,8 +47,8 @@ export const SelectionTags = ({
             key={index}
             onClick={() => handleChoiceClick(choice)}
           >
-            <span className={styles["logo-container"]}>{getlogoByEtsType(choice)}</span>
-            {choice}
+            <span className={styles["logo-container"]}>{getlogoByEtsType(choiceLibelle(choice))}</span>
+            {choiceLibelle(choice)}
           </button>
         </li>
       ))}

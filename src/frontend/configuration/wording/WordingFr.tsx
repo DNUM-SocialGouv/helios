@@ -601,7 +601,7 @@ export class WordingFr implements Wording {
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
   //Comparaison
   //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Établissements de type different";
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string =
     "Pour réaliser une comparaison, vous devez sélectionner des établissements de structure identique (Entité juridique, Etablissement sanitaire ou Etablissement médico-social)";
 }

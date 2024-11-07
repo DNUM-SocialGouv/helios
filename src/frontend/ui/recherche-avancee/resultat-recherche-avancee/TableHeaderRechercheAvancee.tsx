@@ -12,11 +12,14 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
   const onClickComparer = () => {
     const firstType = selectedRows[0].recherche.type;
     const hasDifferentTypes = selectedRows.some((row) => row.recherche.type !== firstType);
+    const listFinessNumbers = selectedRows.map((row) => row.recherche.numéroFiness);
 
     if (hasDifferentTypes) {
       setShowAlert(true);
     } else {
       // Navigate if types are the same
+      sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
+      sessionStorage.setItem("comparaisonType", firstType);
       setShowAlert(false);
       router.push("/comparaison");
     }
