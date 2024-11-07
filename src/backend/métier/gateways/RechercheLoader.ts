@@ -5,7 +5,8 @@ export interface RechercheLoader {
   recherche(terme: string, page: number): Promise<RésultatDeRecherche>;
   rechercheAvancee(
     terme: string,
-    commune: string,
+    zone: string,
+    typeZone: string,
     type: string,
     statutJuridique: string[],
     capaciteSMS: CapaciteSMS[],

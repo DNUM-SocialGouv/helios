@@ -15,6 +15,7 @@ export const FiltreZoneGeographique = () => {
     const { data } = useSession();
     const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
     const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
+    const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
     const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [zoneGeoSelected, setZoneGeoSelected] = useState("");
@@ -76,10 +77,13 @@ export const FiltreZoneGeographique = () => {
     const eraseZoneGeoValue = () => {
         setZoneGeoValue("");
         rechercheAvanceeContext?.setZoneGeo("");
+        setZoneGeoType("");
+        rechercheAvanceeContext?.setZoneGeoType("");
     }
 
     const applyZoneGeoValue = () => {
         rechercheAvanceeContext?.setZoneGeo(zoneGeoValue);
+        rechercheAvanceeContext?.setZoneGeoType(zoneGeoType)
     }
 
     return (
@@ -112,8 +116,9 @@ export const FiltreZoneGeographique = () => {
                                                 <button className={styles["autocompleteListItemButton"]}
                                                     onClick={() => {
                                                         setSuggestions([]);
-                                                        setZoneGeoValue(item.nom);
-                                                        setZoneGeoSelected(item.nom);
+                                                        setZoneGeoType(item.type);
+                                                        setZoneGeoValue(item.type === 'R' ? item.code : item.nom);
+                                                        setZoneGeoSelected(item.type === 'R' ? item.code : item.nom);
                                                     }}>
                                                     {item.type === 'R' ? item.nom : `${item.nom} (${item.code})`}
                                                 </button>

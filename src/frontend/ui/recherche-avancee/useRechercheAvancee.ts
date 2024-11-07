@@ -43,6 +43,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
     if (data.laRechercheEtendueEstLancee && data.terme === rechercheAvanceeContext?.termeFixe) {
       setState({
         ...state,
+        estCeQueLesRésultatsSontReçus: true,
         résultats: construisLesRésultatsDeLaRecherche(data),
         nombreRésultats: data.nombreDeRésultats || 0,
         lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
