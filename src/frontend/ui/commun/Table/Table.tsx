@@ -18,6 +18,7 @@ interface Header {
 interface DataTableProps {
   headers: Header[];
   data: Record<string, any>[];
+  forMoyenne: Record<string, any>[];
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: number[];
   setSelectedRows: Dispatch<SetStateAction<number[]>>;
@@ -41,6 +42,7 @@ interface TableBodyProps {
   headers: Header[];
   selectedRows: any[];
   data: Record<string, any>[];
+  forMoyenne: Record<string, any>[];
   handleSelectRow: (valeurs: any) => void;
   redirectingPath: string;
   isShowAvrage: boolean;
@@ -123,7 +125,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHea
   );
 };
 
-const TableBody = ({ headers, data, selectedRows, handleSelectRow, redirectingPath, isShowAvrage }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, redirectingPath, isShowAvrage }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -165,7 +167,7 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow, redirectingPa
           ))}
         </tr>
       ))}
-      {/* {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={data} />} */}
+      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} />}
     </tbody>
   );
 };
@@ -173,6 +175,7 @@ const TableBody = ({ headers, data, selectedRows, handleSelectRow, redirectingPa
 export const Table = ({
   headers,
   data = [],
+  forMoyenne,
   selectedRows = [],
   setSelectedRows,
   order,
@@ -199,6 +202,7 @@ export const Table = ({
               <TableHeader headers={headers} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
               <TableBody
                 data={data}
+                forMoyenne={forMoyenne}
                 handleSelectRow={handleSelectRow}
                 headers={headers}
                 isShowAvrage={isShowAvrage}

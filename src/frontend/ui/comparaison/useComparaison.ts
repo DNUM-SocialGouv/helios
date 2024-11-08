@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { ApiComparaisonResultat, ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { ApiComparaisonResultat, ComparaisonMoyenneViewModel, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 
 type comparaisonState = Readonly<{
   nombreRésultats: number;
   lastPage: number;
   résultats: ComparaisonViewModel[];
+  moyenne: MoyenneResultatComparaison[];
 }>;
 
 export function useComparaison() {
@@ -16,6 +17,7 @@ export function useComparaison() {
     nombreRésultats: 0,
     lastPage: 1,
     résultats: [],
+    moyenne: [],
   });
 
   const pageInitiale = 1;
@@ -49,10 +51,14 @@ export function useComparaison() {
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
 
-  const comparer = async (type: string = "", numerosFiness: string[] = [], page: number = 1) => {
+  const construisLaMoyenneDesResultat = (data: ApiComparaisonResultat): MoyenneResultatComparaison[] => {
+    return data.moyennes.map((resultat) => new ComparaisonMoyenneViewModel(resultat));
+  };
+
+  const comparer = async (type: string = "", numerosFiness: string[] = [], page: number = 1, order = "", orderBy = "") => {
     // rechercheAvanceeContext?.setPage(page, true);
     fetch("/api/comparaison", {
-      body: JSON.stringify({ type, numerosFiness, page }),
+      body: JSON.stringify({ type, numerosFiness, page, order, orderBy }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
@@ -63,16 +69,16 @@ export function useComparaison() {
           // nombreRésultats: data.nombreDeRésultats,
           // lastPage: Math.ceil(data.nombreDeRésultats / take),
           résultats: construisLesRésultatsDeLaComparaison(data),
+          moyenne: construisLaMoyenneDesResultat(data),
         });
       })
       .catch(() => {});
   };
 
-  console.log("matttt", state);
-
   return {
     lancerLaComparaison,
     construisLeLien,
     resultats: state.résultats,
+    moyenne: state.moyenne,
   };
 }

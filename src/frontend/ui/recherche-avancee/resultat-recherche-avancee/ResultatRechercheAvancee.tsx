@@ -50,6 +50,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
       <TableHeaderRechercheAvancee selectedRows={selectedRows} setShowAlert={setShowAlert} />
       <Table
         data={data}
+        forMoyenne={[]}
         headers={tableHeaders}
         isShowAvrage={false}
         order={rechercheAvanceeContext?.order || ""}

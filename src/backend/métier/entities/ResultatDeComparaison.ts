@@ -8,11 +8,11 @@ export type ResultatEJ = Readonly<{
 
 export type ResultatSMS = Readonly<{
   annee: number;
-  numeroFiness: string;
-  raisonSociale: string;
+  numéroFiness: string;
+  socialReason: string;
   type: string;
   capacite: number | null;
-  realisationAcitivite: number | null;
+  realisationActivite: number | null;
   acceuilDeJour: number | null;
   hebergementPermanent: number | null;
   hebergementTemporaire: number | null;

@@ -19,8 +19,26 @@ export type ResultatComparaison = Readonly<{
   resultatNetComptable: number;
 }>;
 
+export type MoyenneResultatComparaison = Readonly<{
+  annee: number;
+  capaciteMoyenne: number;
+  realisationAcitiviteMoyenne: number;
+  acceuilDeJourMoyenne: number;
+  hebergementPermanentMoyenne: number;
+  hebergementTemporaireMoyenne: number;
+  fileActivePersonnesAccompagnesMoyenne: number;
+  rotationPersonnelMoyenne: number;
+  absenteismeMoyenne: number;
+  prestationExterneMoyenne: number;
+  etpVacantMoyenne: number;
+  tauxCafMoyenne: number;
+  vetusteConstructionMoyenne: number;
+  roulementNetGlobalMoyenne: number;
+  resultatNetComptableMoyenne: number;
+}>;
+
 export type ApiComparaisonResultat = Readonly<{
-  moyennes: ResultatComparaison[];
+  moyennes: MoyenneResultatComparaison[];
   nombreDeResultats: [{ annee: number; total: string }];
   resultat: ResultatComparaison[];
 }>;
@@ -48,110 +66,63 @@ export class ComparaisonViewModel {
     return this.comparaison.capacite;
   }
 
-  public get realisationActivite(): number {
-    return this.comparaison.realisationActivite;
+  public get realisationActivite(): string | null {
+    return this.comparaison.realisationActivite ? this.comparaison.realisationActivite + "%" : null;
   }
 
-  public get acceuilDeJour(): number {
-    return this.comparaison.acceuilDeJour;
+  public get acceuilDeJour(): string | null {
+    return this.comparaison.acceuilDeJour ? this.comparaison.acceuilDeJour + "%" : null;
   }
 
-  public get hebergementPermanent(): number {
-    return this.comparaison.hebergementPermanent;
+  public get hebergementPermanent(): string | null {
+    return this.comparaison.hebergementPermanent ? this.comparaison.hebergementPermanent + "%" : null;
   }
 
-  public get hebergementTemporaire(): number {
-    return this.comparaison.hebergementTemporaire;
+  public get hebergementTemporaire(): string | null {
+    return this.comparaison.hebergementTemporaire ? this.comparaison.hebergementTemporaire + "%" : null;
   }
 
-  public get fileActivePersonnesAccompagnes(): number {
+  public get fileActivePersonnesAccompagnes(): number | null {
     return this.comparaison.fileActivePersonnesAccompagnes;
   }
 
-  public get rotationPersonnel(): number {
-    return this.comparaison.rotationPersonnel;
+  public get rotationPersonnel(): string | null {
+    return this.comparaison.rotationPersonnel ? this.comparaison.rotationPersonnel + "%" : null;
   }
 
-  public get absenteisme(): number {
-    return this.comparaison.absenteisme;
+  public get absenteisme(): string | null {
+    return this.comparaison.absenteisme ? this.comparaison.absenteisme + "%" : null;
   }
 
-  public get prestationExterne(): number {
-    return this.comparaison.prestationExterne;
+  public get prestationExterne(): string | null {
+    return this.comparaison.prestationExterne ? this.comparaison.prestationExterne + "%" : null;
   }
 
-  public get etpVacant(): number {
-    return this.comparaison.etpVacant;
+  public get etpVacant(): string | null {
+    return this.comparaison.etpVacant ? this.comparaison.etpVacant + "%" : null;
   }
 
-  public get tauxCaf(): number {
-    return this.comparaison.tauxCaf;
+  public get tauxCaf(): string | null {
+    return this.comparaison.tauxCaf ? this.comparaison.tauxCaf + "%" : null;
   }
 
-  public get vetusteConstruction(): number {
-    return this.comparaison.vetusteConstruction;
+  public get vetusteConstruction(): string | null {
+    return this.comparaison.vetusteConstruction ? this.comparaison.vetusteConstruction + "%" : null;
   }
 
   public get roulementNetGlobal(): number {
     return this.comparaison.roulementNetGlobal;
   }
 
-  public get resultatNetComptable(): number {
-    return this.comparaison.resultatNetComptable;
-  }
-
-  // Méthodes supplémentaires pour les calculs ou ratios :
-
-  // Pourcentage d'occupation de l'activité par rapport à la capacité
-  public get pourcentageOccupation(): number {
-    return parseFloat((this.comparaison.realisationActivite * 100).toFixed(2));
-  }
-
-  // Ratio d'occupation entre l'hébergement permanent et l'ensemble de l'hébergement (permanent + temporaire)
-  public get ratioHebergementPermanent(): number {
-    const totalHebergement = this.comparaison.hebergementPermanent + this.comparaison.hebergementTemporaire;
-    return totalHebergement > 0 ? (this.comparaison.hebergementPermanent / totalHebergement) * 100 : 0;
-  }
-
-  // Ratio d'occupation de l'hébergement temporaire par rapport au total
-  public get ratioHebergementTemporaire(): number {
-    const totalHebergement = this.comparaison.hebergementPermanent + this.comparaison.hebergementTemporaire;
-    return totalHebergement > 0 ? (this.comparaison.hebergementTemporaire / totalHebergement) * 100 : 0;
-  }
-
-  // Taux d'absentéisme en pourcentage
-  public get tauxAbsenteisme(): number {
-    return parseFloat((this.comparaison.absenteisme * 100).toFixed(2));
-  }
-
-  // Rotation du personnel en pourcentage
-  public get tauxRotationPersonnel(): number {
-    return parseFloat((this.comparaison.rotationPersonnel * 100).toFixed(2));
-  }
-
-  // Ratio de la prestation externe par rapport au total de l'activité
-  public get ratioPrestationExterne(): number {
-    return parseFloat((this.comparaison.prestationExterne * 100).toFixed(2));
-  }
-
-  // Taux de vétusté de la construction
-  public get tauxVetusteConstruction(): number {
-    return parseFloat((this.comparaison.vetusteConstruction * 100).toFixed(2));
-  }
-
-  // Calcul du résultat net en pourcentage par rapport au roulement net global
-  public get pourcentageResultatNet(): number {
-    return this.comparaison.roulementNetGlobal > 0
-      ? parseFloat(((this.comparaison.resultatNetComptable / this.comparaison.roulementNetGlobal) * 100).toFixed(2))
-      : 0;
-  }
-
-  // Méthode pour formater le résultat net en valeur absolue
-  public get formatResultatNetComptable(): string {
-    return this.comparaison.resultatNetComptable.toLocaleString("fr-FR", {
-      style: "currency",
-      currency: "EUR",
-    });
+  public get resultatNetComptable(): string {
+    return this.comparaison.resultatNetComptable
+      ? this.comparaison.resultatNetComptable
+          .toLocaleString("fr-FR", {
+            style: "currency",
+            currency: "EUR",
+          })
+          .split(",")[0] + "€"
+      : "-";
   }
 
   // Méthode pour formater le roulement net global en valeur absolue
@@ -162,3 +133,77 @@ export class ComparaisonViewModel {
     });
   }
 }
+
+export class ComparaisonMoyenneViewModel {
+  constructor(private moyenne: MoyenneResultatComparaison) {}
+
+  // Accesseur pour l'année
+  public get annee(): number {
+    return this.moyenne.annee;
+  }
+
+  // Accesseurs pour les autres propriétés
+  public get capaciteMoyenne(): number {
+    return this.moyenne.capaciteMoyenne;
+  }
+
+  public get realisationAcitiviteMoyenne(): number {
+    return transformInRate(this.moyenne.realisationAcitiviteMoyenne, 1);
+  }
+
+  public get acceuilDeJourMoyenne(): number {
+    return transformInRate(this.moyenne.acceuilDeJourMoyenne, 1);
+  }
+
+  public get hebergementPermanentMoyenne(): number {
+    return transformInRate(this.moyenne.hebergementPermanentMoyenne, 1);
+  }
+
+  public get hebergementTemporaireMoyenne(): number {
+    return transformInRate(this.moyenne.hebergementTemporaireMoyenne, 1);
+  }
+
+  public get fileActivePersonnesAccompagnesMoyenne(): number {
+    return transformInRate(this.moyenne.fileActivePersonnesAccompagnesMoyenne, 1);
+  }
+
+  public get rotationPersonnelMoyenne(): number {
+    return transformInRate(this.moyenne.rotationPersonnelMoyenne, 1);
+  }
+
+  public get absenteismeMoyenne(): number {
+    return transformInRate(this.moyenne.absenteismeMoyenne, 1);
+  }
+
+  public get prestationExterneMoyenne(): number {
+    return transformInRate(this.moyenne.prestationExterneMoyenne, 1);
+  }
+
+  public get etpVacantMoyenne(): number {
+    return transformInRate(this.moyenne.etpVacantMoyenne, 1);
+  }
+
+  public get tauxCafMoyenne(): number {
+    return transformInRate(this.moyenne.tauxCafMoyenne, 1);
+  }
+
+  public get vetusteConstructionMoyenne(): number {
+    return transformInRate(this.moyenne.vetusteConstructionMoyenne, 1);
+  }
+
+  public get roulementNetGlobalMoyenne(): number {
+    return makeNumberArrondi(this.moyenne.roulementNetGlobalMoyenne, 0);
+  }
+
+  public get resultatNetComptableMoyenne(): number {
+    return makeNumberArrondi(this.moyenne.resultatNetComptableMoyenne, 0);
+  }
+}
+
+const makeNumberArrondi = (value: number, num: number): number => {
+  return Number(value.toFixed(num));
+};
+
+const transformInRate = (number: number, chiffre: number): number => {
+  return makeNumberArrondi(number * 100, chiffre);
+};

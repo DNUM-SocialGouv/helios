@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 import styles from "./Comparaison.module.css";
 import { useComparaison } from "./useComparaison";
 
@@ -33,9 +33,10 @@ export const ComparaisonPage = () => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(2021);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { construisLeLien, lancerLaComparaison, resultats } = useComparaison();
+  const { construisLeLien, lancerLaComparaison, resultats, moyenne } = useComparaison();
 
   const [dataTable, setDataTable] = useState<ComparaisonViewModel[]>([]);
+  const [moyenneResultat, setMoyenneResultat] = useState<MoyenneResultatComparaison[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Nouvelle variable d'état pour le chargement
   const [listeAnnees, setListeAnnees] = useState<number[]>([]);
 
@@ -61,11 +62,12 @@ export const ComparaisonPage = () => {
         filtredList.push(element);
       }
     });
+    if (moyenne.length > 0) {
+      setMoyenneResultat(moyenne);
+    }
     setDataTable(filtredList);
     getAllYears();
   }, [loading, resultats]); // Dépendance sur les résultats et les filtres
-
-  console.log("checkkk", dataTable);
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -118,6 +120,7 @@ export const ComparaisonPage = () => {
         ) : (
           <Table
             data={dataTable}
+            forMoyenne={moyenneResultat}
             headers={tableHeaders}
             isShowAvrage={true}
             order=""
