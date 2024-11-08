@@ -18,7 +18,12 @@ export const FiltreZoneGeographique = () => {
     const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
     const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [zoneGeoSelected, setZoneGeoSelected] = useState("");
+    const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
+        type: "",
+        nom: "",
+        code: "",
+        codeRegion: "",
+    });
 
 
     // Debounce function to control the rate of API calls
@@ -62,7 +67,7 @@ export const FiltreZoneGeographique = () => {
     const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
 
     useEffect(() => {
-        if (zoneGeoSelected !== zoneGeoValue) {
+        if (zoneGeoSelected?.nom !== zoneGeoValue) {
             debouncedFetchSuggestions(zoneGeoValue);
         } else {
             setSuggestions([]);
@@ -82,7 +87,7 @@ export const FiltreZoneGeographique = () => {
     }
 
     const applyZoneGeoValue = () => {
-        rechercheAvanceeContext?.setZoneGeo(zoneGeoValue);
+        rechercheAvanceeContext?.setZoneGeo(zoneGeoType === 'R' ? zoneGeoSelected?.codeRegion : zoneGeoValue);
         rechercheAvanceeContext?.setZoneGeoType(zoneGeoType)
     }
 
@@ -117,8 +122,8 @@ export const FiltreZoneGeographique = () => {
                                                     onClick={() => {
                                                         setSuggestions([]);
                                                         setZoneGeoType(item.type);
-                                                        setZoneGeoValue(item.type === 'R' ? item.code : item.nom);
-                                                        setZoneGeoSelected(item.type === 'R' ? item.code : item.nom);
+                                                        setZoneGeoValue(item.nom);
+                                                        setZoneGeoSelected(item);
                                                     }}>
                                                     {item.type === 'R' ? item.nom : `${item.nom} (${item.code})`}
                                                 </button>

@@ -69,6 +69,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       rechercher(
         rechercheAvanceeContext?.terme,
         rechercheAvanceeContext?.zoneGeo,
+        rechercheAvanceeContext?.zoneGeoType,
         rechercheAvanceeContext?.typeStructure,
         rechercheAvanceeContext?.statutJuridiqueStructure,
         capacites,
@@ -83,7 +84,8 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
   const rechercher = async (
     terme: string = "",
-    commune: string = "",
+    zone: string = "",
+    typeZone: string = "",
     type: string = "",
     statutJuridique: string[] = [],
     capaciteSMS: CapaciteEtablissement[] = [],
@@ -91,7 +93,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   ) => {
     rechercheAvanceeContext?.setPage(page, true);
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, typeZone, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })

@@ -18,7 +18,9 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const premièrePage = 1;
 
     const termeRecherche = "helios";
-    const communeRecherche = "PARIS";
+    const communeRecherche = "VILLENEUVE D ASCQ";
+    const departementRecherche = "NORD";
+    const regionRecherche = "32";
     const type = 'prive_lucratif';
 
 
@@ -32,6 +34,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
                 numéroFinessEntitéJuridique: "000000000",
                 raisonSocialeCourte: `${termeRecherche} - entité juridique visible en recherche par terme, commune et type`,
                 commune: communeRecherche,
+                département: departementRecherche,
+                codeRégion: regionRecherche,
                 catégorisation: `${type}`,
             }),
             EntitéJuridiqueModelTestBuilder.crée({
@@ -52,6 +56,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
                 numéroFinessÉtablissementTerritorial: "100000000",
                 raisonSocialeCourte: `${termeRecherche} - établissement territorial sanitaire visible en recherche par terme et commune`,
                 commune: communeRecherche,
+                département: departementRecherche,
+                codeRégion: regionRecherche,
             }),
             ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
                 numéroFinessEntitéJuridique: "000000001",
@@ -68,6 +74,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
                 numéroFinessÉtablissementTerritorial: "200000000",
                 raisonSocialeCourte: `${termeRecherche} - établissement territorial médico-social visible en recherche par terme`,
                 commune: communeRecherche,
+                département: departementRecherche,
+                codeRégion: regionRecherche,
                 classificationEtablissement: "publics_en_situation_de_handicap"
             }),
             ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
@@ -75,6 +83,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
                 numéroFinessÉtablissementTerritorial: "299999999",
                 raisonSocialeCourte: "établissement territorial médico-social non visible en recherche par terme",
                 commune: communeRecherche,
+                département: departementRecherche,
+                codeRégion: regionRecherche,
                 classificationEtablissement: "non_classifie"
 
             }),
@@ -90,10 +100,35 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "", [], [], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "C", "", [], [], '', 'ASC', premièrePage);
+
+        //THEN
+        expect(rechercheAvancee.nombreDeRésultats).toBe("4");
+
+    });
+
+    it("par terme de recherche et département", async () => {
+        // GIVEN
+        const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+        // WHEN
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, departementRecherche, "D", "", [], [], '', 'ASC', premièrePage);
+
+        //THEN
+        expect(rechercheAvancee.nombreDeRésultats).toBe("4");
+
+    });
+
+    it("par terme de recherche et région", async () => {
+        // GIVEN
+        const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+        // WHEN
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, regionRecherche, "R", "", [], [], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("3");
+
     });
 
     it("par terme de recherche, commune et structure", async () => {
@@ -101,7 +136,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "Médico-social", [], [], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "C", "Médico-social", [], [], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("1");
@@ -112,7 +147,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, "Médico-social", [], [], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, "", "Médico-social", [], [], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("2");
@@ -123,7 +158,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "Entité juridique", ["prive_lucratif"], [], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "C", "Entité juridique", ["prive_lucratif"], [], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("1");
@@ -134,7 +169,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, "", "Entité juridique", ["prive_lucratif"], [], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, "", "", "Entité juridique", ["prive_lucratif"], [], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("2");
@@ -163,7 +198,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         ]);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, "", [], [{ classification: 'publics_en_situation_de_handicap', ranges: ['1,30', '>100'] }, { classification: 'non_classifie', ranges: ['1,50', '>199'] }], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, "", "", [], [{ classification: 'publics_en_situation_de_handicap', ranges: ['1,30', '>100'] }, { classification: 'non_classifie', ranges: ['1,50', '>199'] }], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("2");
@@ -174,7 +209,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
         const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
         // WHEN
-        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "", [], [{ classification: 'publics_en_situation_de_handicap', ranges: ['1,30', '>100'] }, { classification: 'non_classifie', ranges: ['1,50', '>199'] }], '', 'ASC', premièrePage);
+        const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, "", "", [], [{ classification: 'publics_en_situation_de_handicap', ranges: ['1,30', '>100'] }, { classification: 'non_classifie', ranges: ['1,50', '>199'] }], '', 'ASC', premièrePage);
 
         //THEN
         expect(rechercheAvancee.nombreDeRésultats).toBe("1");
