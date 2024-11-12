@@ -19,7 +19,7 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
     className = "fr-modal fr-modal--opened";
   }
 
-  if (estCeOuvert) {
+  if (!estCeOuvert) {
     className = "fr-modal";
   }
 

@@ -1,32 +1,14 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { ReactChild, useEffect, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 import styles from "./Comparaison.module.css";
+import { contenuModal, tableHeaders } from "./model/data";
 import { useComparaison } from "./useComparaison";
-
-const tableHeaders = [
-  { label: "", key: "delete" },
-  { label: "", key: "etsLogo", sort: true },
-  { label: "", key: "favori", sort: true },
-  { label: "Raison Sociale Courte", key: "socialReason", sort: true },
-  { label: "Numéro Finess", key: "numéroFiness", sort: true },
-  { label: "Capacité Totale", key: "capacite", sort: true },
-  { label: "Réalisation de l'activité", key: "realisationActivite" },
-  { label: "HP", key: "hebergementPermanent" },
-  { label: "HT", key: "hebergementTemporaire" },
-  { label: "AJ", key: "acceuilDeJour" },
-  { label: "Prestations externes vs directes", key: "prestationExterne" },
-  { label: "Rotation du personnel", key: "rotationPersonnel" },
-  { label: "ETP vacants", key: "etpVacant" },
-  { label: "Absentéiseme", key: "absenteisme" },
-  { label: "CAF", key: "tauxCaf" },
-  { label: "Vétusté", key: "vetusteConstruction" },
-  { label: "Resultat net comptable", key: "resultatNetComptable" },
-];
 
 export const ComparaisonPage = () => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
@@ -39,6 +21,9 @@ export const ComparaisonPage = () => {
   const [moyenneResultat, setMoyenneResultat] = useState<MoyenneResultatComparaison[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Nouvelle variable d'état pour le chargement
   const [listeAnnees, setListeAnnees] = useState<number[]>([]);
+  const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
+  const [titre, setTitre] = useState<ReactChild>("");
+  const [contenu, setContenu] = useState();
 
   // Utilisation de useEffect pour lancer la comparaison
   useEffect(() => {
@@ -89,50 +74,66 @@ export const ComparaisonPage = () => {
     setListeAnnees(result);
   };
 
+  const openModal = (header: string) => {
+    // const title = "";
+    // const corps = "";
+    // if (header === "") {
+    // }
+    setTitre(contenuModal(header).titre);
+    setContenu(contenuModal(header).contenu);
+    setEstCeOuvert(true);
+  };
+
   return (
-    <main className="fr-container">
-      <Head>
-        <title>Page de comparaison</title>
-      </Head>
-      <div className={styles["container"]}>
-        <h1>{wording.COMPARAISON}</h1>
-        <button className="fr-btn fr-btn--secondary fr-mb-1w" type="button">
-          {wording.AJOUTER_DES_ETABLISSEMENTS}
-        </button>
-        <div className={styles["years-container"]}>
+    <>
+      <main className="fr-container">
+        <Head>
+          <title>Page de comparaison</title>
+        </Head>
+        <div className={styles["container"]}>
+          <h1>{wording.COMPARAISON}</h1>
+          <button className="fr-btn fr-btn--secondary fr-mb-1w" type="button">
+            {wording.AJOUTER_DES_ETABLISSEMENTS}
+          </button>
           <div className={styles["years-container"]}>
-            <span style={{ marginTop: "5px" }}>Année</span>
-            <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />
+            <div className={styles["years-container"]}>
+              <span style={{ marginTop: "5px" }}>Année</span>
+              {listeAnnees.length > 0 && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
+            </div>
+            <div className={styles["years-container"]}>
+              <span style={{ marginTop: "5px" }}>Indicateurs</span>
+              <SelectionTags
+                choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
+                noSelectableChoices={getAllTypes()}
+                selectedChoice={structureChoice}
+                setSelectedChoice={setStructurechoice}
+              />
+            </div>
           </div>
-          <div className={styles["years-container"]}>
-            <span style={{ marginTop: "5px" }}>Indicateurs</span>
-            <SelectionTags
-              choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-              noSelectableChoices={getAllTypes()}
-              selectedChoice={structureChoice}
-              setSelectedChoice={setStructurechoice}
+          {/* Affichage conditionnel pendant le chargement */}
+          {loading ? (
+            <div>Chargement des résultats...</div>
+          ) : (
+            <Table
+              data={dataTable}
+              forMoyenne={moyenneResultat}
+              headers={tableHeaders}
+              isShowAvrage={true}
+              onClickInfobull={openModal}
+              order=""
+              orderBy=""
+              redirectingPath={construisLeLien(structureChoice)}
+              selectedRows={selectedRows}
+              setOrder={() => {}}
+              setOrderBy={() => {}}
+              setSelectedRows={setSelectedRows}
             />
-          </div>
+          )}
         </div>
-        {/* Affichage conditionnel pendant le chargement */}
-        {loading ? (
-          <div>Chargement des résultats...</div>
-        ) : (
-          <Table
-            data={dataTable}
-            forMoyenne={moyenneResultat}
-            headers={tableHeaders}
-            isShowAvrage={true}
-            order=""
-            orderBy=""
-            redirectingPath={construisLeLien(structureChoice)}
-            selectedRows={selectedRows}
-            setOrder={() => {}}
-            setOrderBy={() => {}}
-            setSelectedRows={setSelectedRows}
-          />
-        )}
-      </div>
-    </main>
+        <InfoBulle estCeOuvert={estCeOuvert} identifiant="id77" setEstCeOuvert={setEstCeOuvert} titre={titre}>
+          <>{contenu}</>
+        </InfoBulle>
+      </main>
+    </>
   );
 };
