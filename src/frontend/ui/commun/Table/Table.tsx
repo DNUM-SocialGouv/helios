@@ -28,6 +28,7 @@ interface DataTableProps {
   setOrderBy: (orderBy: string) => void;
   redirectingPath: string;
   isShowAvrage: boolean;
+  onClickInfobull?: (name: string) => void;
 }
 
 interface TableHeaderProps {
@@ -36,6 +37,7 @@ interface TableHeaderProps {
   orderBy: string;
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
+  onClickInfobull?: (name: string) => void;
 }
 
 interface TableBodyProps {
@@ -100,7 +102,7 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     );
 };
 
-const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHeaderProps) => {
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull }: TableHeaderProps) => {
   return (
     <thead>
       <tr>
@@ -116,7 +118,9 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder }: TableHea
           ) : (
             <th key={index}>
               <span>{header.label}</span>
-              {header.key !== "delete" && <button className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} />}
+              {header.key !== "delete" && onClickInfobull && (
+                <button className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} onClick={() => onClickInfobull(header.key)} />
+              )}
             </th>
           )
         )}
@@ -184,6 +188,7 @@ export const Table = ({
   setOrderBy,
   redirectingPath = "/",
   isShowAvrage = false,
+  onClickInfobull,
 }: DataTableProps) => {
   const handleSelectRow = (rowIndex: any) => {
     if (selectedRows.includes(rowIndex)) {
@@ -199,7 +204,7 @@ export const Table = ({
         <div className="fr-table__container">
           <div className="fr-table__content">
             <table id="table-selectable">
-              <TableHeader headers={headers} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
+              <TableHeader headers={headers} onClickInfobull={onClickInfobull} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
               <TableBody
                 data={data}
                 forMoyenne={forMoyenne}
