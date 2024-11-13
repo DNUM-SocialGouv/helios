@@ -49,13 +49,15 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
   return (
     <main className="fr-container">
       <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
-      {(estCeQueLesRésultatsSontReçus || props.laRechercheEtendueEstLancee) && Number(nombreRésultats) === 0 && !estCeEnAttente && (
+      {props.laRechercheEtendueEstLancee && estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && (
         <PasResultatRechercheAvancee />
       )}
       {nombreRésultats > 0 && !estCeEnAttente && (
         <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page} setPage={setPage} />
       )}
-      {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}
+      {!estCeQueLaRechercheEstLancee && !estCeQueLesRésultatsSontReçus && !props.laRechercheEtendueEstLancee && !estCeEnAttente && (
+        <ResultatRecherchePlaceholderText />
+      )}{" "}
       {estCeEnAttente && <RechercheEnAttente />}
     </main>
   );
