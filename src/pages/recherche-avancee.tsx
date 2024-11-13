@@ -16,7 +16,7 @@ import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRecherc
 export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
   page: number;
   terme: string;
-  commune: string;
+  zone: string;
   type: string;
   statutJuridique: string[];
   laRechercheEtendueEstLancee: boolean;
@@ -66,7 +66,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const {
       query: {
         terme = "",
-        commune = "",
+        zone = "",
+        typeZone = "",
         page = 1,
         statuts = [],
         type = "",
@@ -80,7 +81,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
     const pageParam = Number(page);
     const termeParam = String(terme);
-    const communeParam = String(commune);
+    const zoneParam = String(zone);
+    const typeZoneParam = String(typeZone);
     const typeParam = String(type);
     const orderParam = String(order) as OrderDir;
     const orderByParam = String(orderBy);
@@ -96,11 +98,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       { classification: "personnes_agees", ranges: capaciteAgeesParam },
     ].filter((capacite) => capacite.ranges.length > 0);
 
-    if (pageParam && (termeParam || communeParam || statutJuridiqueParam.length > 0 || typeParam)) {
+    if (pageParam && (termeParam || zoneParam || statutJuridiqueParam.length > 0 || typeParam)) {
       const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
         dependencies,
         termeParam,
-        communeParam,
+        zoneParam,
+        typeZoneParam,
         typeParam,
         statutJuridiqueParam,
         capacites,
@@ -114,7 +117,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           ...recherche,
           page: pageParam,
           terme: termeParam,
-          commune: communeParam,
+          zone: zoneParam,
           type: typeParam,
           statutJuridique: statutJuridiqueParam,
           laRechercheEtendueEstLancee: true,
@@ -127,7 +130,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           résultats: [],
           page: 1,
           terme: "",
-          commune: "",
+          zone: "",
           type: "",
           statutJuridique: [],
           laRechercheEtendueEstLancee: false,

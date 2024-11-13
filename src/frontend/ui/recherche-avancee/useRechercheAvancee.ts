@@ -40,12 +40,15 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   });
 
   useEffect(() => {
-    setState({
-      ...state,
-      résultats: construisLesRésultatsDeLaRecherche(data),
-      nombreRésultats: data.nombreDeRésultats || 0,
-      lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
-    });
+    if (data.laRechercheEtendueEstLancee && data.terme === rechercheAvanceeContext?.termeFixe) {
+      setState({
+        ...state,
+        estCeQueLesRésultatsSontReçus: true,
+        résultats: construisLesRésultatsDeLaRecherche(data),
+        nombreRésultats: data.nombreDeRésultats || 0,
+        lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
+      });
+    }
   }, [data]);
 
   const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -66,6 +69,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       rechercher(
         rechercheAvanceeContext?.terme,
         rechercheAvanceeContext?.zoneGeo,
+        rechercheAvanceeContext?.zoneGeoType,
         rechercheAvanceeContext?.typeStructure,
         rechercheAvanceeContext?.statutJuridiqueStructure,
         capacites,
@@ -80,7 +84,8 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
   const rechercher = async (
     terme: string = "",
-    commune: string = "",
+    zone: string = "",
+    typeZone: string = "",
     type: string = "",
     statutJuridique: string[] = [],
     capaciteSMS: CapaciteEtablissement[] = [],
@@ -88,7 +93,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   ) => {
     rechercheAvanceeContext?.setPage(page, true);
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, typeZone, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
@@ -103,6 +108,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
           lastPage: Math.ceil(data.nombreDeRésultats / take),
           résultats: construisLesRésultatsDeLaRecherche(data),
         });
+        rechercheAvanceeContext?.setTermeFixe(terme);
       })
       .catch(() => {
         setState({

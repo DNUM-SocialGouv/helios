@@ -1,6 +1,6 @@
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "next-usequerystate";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";
 
@@ -11,6 +11,7 @@ type RechercheAvanceeProviderProps = Readonly<{
 interface SearchParams {
   page?: number;
   zoneGeo?: string;
+  zoneGeoType?: string;
   typeStructure?: string;
   statutJuridiqueStructure?: string[];
   order?: string;
@@ -27,7 +28,8 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
 
   const { query } = router;
 
-  const commune = query["commune"] ?? '';
+  const zone = query["zone"] ?? '';
+  const typeZone = query["typeZone"] ?? '';
   const type = query["type"] ?? '';
   const page = query["page"] ?? '1';
   const terme = query["terme"] ?? '';
@@ -44,7 +46,8 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     {
       terme: parseAsString.withDefault(String(terme)),
       page: parseAsInteger.withDefault(Number(page)),
-      zoneGeo: parseAsString.withDefault(String(commune)),
+      zoneGeo: parseAsString.withDefault(String(zone)),
+      zoneGeoType: parseAsString.withDefault(String(typeZone)),
       typeStructure: parseAsString.withDefault(String(type)),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts),
       order: parseAsString.withDefault(String(order)),
@@ -55,7 +58,8 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     },
     {
       urlKeys: {
-        zoneGeo: "commune",
+        zoneGeo: "zone",
+        zoneGeoType: "typeZone",
         typeStructure: "type",
         statutJuridiqueStructure: "statuts",
         orderBy: "order_by",
@@ -66,18 +70,23 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     }
   );
 
+  const [termeFixe, setTermeFixe] = useState("");
+
   const updateSearchParams = async (newParams: Partial<SearchParams>) => setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false });
 
   return (
     <RechercheAvanceeContext.Provider value={{
       ...searchParams,
+      termeFixe,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
+      setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
       setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+      setTermeFixe,
       setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
       setOrder: (value) => updateSearchParams({ order: value }),
       setOrderBy: (value) => updateSearchParams({ orderBy: value }),

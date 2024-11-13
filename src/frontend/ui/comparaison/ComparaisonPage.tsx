@@ -75,10 +75,6 @@ export const ComparaisonPage = () => {
   };
 
   const openModal = (header: string) => {
-    // const title = "";
-    // const corps = "";
-    // if (header === "") {
-    // }
     setTitre(contenuModal(header).titre);
     setContenu(contenuModal(header).contenu);
     setEstCeOuvert(true);

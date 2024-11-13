@@ -9,6 +9,7 @@ import { CapaciteSMS, OrderDir } from "../../../métier/use-cases/RechercheAvanc
 type RechercheTypeOrm = Readonly<{
   commune: string;
   departement: string;
+  codeRegion: string;
   numero_finess: string;
   raison_sociale_courte: string;
   type: string;
@@ -18,7 +19,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 12;
   private readonly NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE = 20;
 
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
@@ -50,7 +51,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   async rechercheAvancee(
     terme: string,
-    commune: string,
+    zone: string,
+    typeZone: string,
     type: string,
     statutJuridique: string[],
     capaciteSMS: CapaciteSMS[],
@@ -60,9 +62,10 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   ): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
-    const majusCommune = commune.replaceAll(/\b(?:-|')\b/gi, " ").toLocaleUpperCase();
+    const zoneParam = zone ? typeZone === 'R' ? zone : zone.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\b(?:-|')\b/gi, " ").toLocaleUpperCase() : '';
     const conditions = [];
     let parameters: any = {};
+
 
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
@@ -72,12 +75,24 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
+      .addSelect("recherche.code_region", "code_region")
       .addSelect("recherche.statut_juridique", "statutJuridique")
       .from(RechercheModel, "recherche");
 
-    if (majusCommune) {
-      conditions.push("recherche.commune = :commune");
-      parameters = { ...parameters, commune: majusCommune };
+    if (zoneParam) {
+      if (typeZone === 'C') {
+        conditions.push("recherche.commune = :commune");
+        parameters = { ...parameters, commune: zoneParam };
+      }
+      if (typeZone === 'D') {
+        conditions.push("recherche.departement = :departement");
+        parameters = { ...parameters, departement: zoneParam };
+      }
+      if (typeZone === 'R') {
+        conditions.push("recherche.code_region = :codeRegion");
+        parameters = { ...parameters, codeRegion: zoneParam };
+      }
+
     }
 
     if (terme) {
@@ -119,7 +134,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
     if (orderBy && order) {
-      
+
       requêteDeLaRecherche
         .orderBy(orderBy, order)
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
