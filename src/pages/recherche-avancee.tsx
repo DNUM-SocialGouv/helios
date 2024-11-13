@@ -19,7 +19,7 @@ export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
   zone: string;
   type: string;
   statutJuridique: string[];
-  laRechercheEtendueEstLancee: boolean
+  laRechercheEtendueEstLancee: boolean;
 }
 
 export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
@@ -138,7 +138,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           zone: "",
           type: "",
           statutJuridique: [],
-          laRechercheEtendueEstLancee: false
+          laRechercheEtendueEstLancee: false,
         },
       };
     }
