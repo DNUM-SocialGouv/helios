@@ -118,6 +118,7 @@ export const FiltreCapacite = () => {
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setTypeStructure("");
   };
 
   return (

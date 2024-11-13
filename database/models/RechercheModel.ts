@@ -9,7 +9,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       termes_de_recherche AS termes,
       categorisation AS statut_juridique,
       commune,
-      departement
+      departement,
+      code_region
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -19,7 +20,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       termes_de_recherche AS termes,
       classification,
       commune,
-      departement
+      departement,
+      code_region
     FROM etablissement_territorial;`,
   name: "recherche",
 })
@@ -29,6 +31,9 @@ export class RechercheModel {
 
   @ViewColumn({ name: "departement" })
   public département!: string;
+
+  @ViewColumn({ name: "code_region" })
+  public codeRegion!: string;
 
   @ViewColumn({ name: "numero_finess" })
   public numeroFiness!: string;

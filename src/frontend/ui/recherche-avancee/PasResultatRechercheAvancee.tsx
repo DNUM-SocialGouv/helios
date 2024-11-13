@@ -9,7 +9,7 @@ export const PasResultatRechercheAvancee = () => {
 
     return (
         <>
-            {!rechercheAvanceeContext?.terme ? (
+            {!rechercheAvanceeContext?.termeFixe ? (
                 <div className="fr-mt-5w">
                     {wording.AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT}.
                 </div>
@@ -19,7 +19,7 @@ export const PasResultatRechercheAvancee = () => {
                 </div>
             ) : (
                 <div className="fr-mt-5w">
-                    {wording.AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT}  {rechercheAvanceeContext?.terme}.
+                    {wording.AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT}  {rechercheAvanceeContext?.termeFixe}.
                 </div>
             )}
         </>
