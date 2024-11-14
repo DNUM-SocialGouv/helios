@@ -2,6 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
+import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import styles from "./Table.module.css";
@@ -18,7 +19,7 @@ interface Header {
 interface DataTableProps {
   headers: Header[];
   data: Record<string, any>[];
-  forMoyenne: Record<string, any>[];
+  forMoyenne: MoyenneResultatComparaison;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: number[];
   setSelectedRows: Dispatch<SetStateAction<number[]>>;
@@ -44,7 +45,7 @@ interface TableBodyProps {
   headers: Header[];
   selectedRows: any[];
   data: Record<string, any>[];
-  forMoyenne: Record<string, any>[];
+  forMoyenne: MoyenneResultatComparaison;
   handleSelectRow: (valeurs: any) => void;
   redirectingPath: string;
   isShowAvrage: boolean;

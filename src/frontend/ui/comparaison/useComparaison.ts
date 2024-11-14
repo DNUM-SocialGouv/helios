@@ -12,7 +12,7 @@ type comparaisonState = Readonly<{
 
 export function useComparaison() {
   const { paths } = useDependencies();
-  // const take = 20;
+  const take = 20;
   const [state, setState] = useState<comparaisonState>({
     nombreRésultats: 0,
     lastPage: 1,
@@ -66,8 +66,7 @@ export function useComparaison() {
       .then((data) => {
         setState({
           ...state,
-          // nombreRésultats: data.nombreDeRésultats,
-          // lastPage: Math.ceil(data.nombreDeRésultats / take),
+          lastPage: Math.ceil(data.resultat.length / take),
           résultats: construisLesRésultatsDeLaComparaison(data),
           moyenne: construisLaMoyenneDesResultat(data),
         });
@@ -80,5 +79,6 @@ export function useComparaison() {
     construisLeLien,
     resultats: state.résultats,
     moyenne: state.moyenne,
+    lastPage: state.lastPage,
   };
 }

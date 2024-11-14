@@ -94,3 +94,18 @@ export const tableHeaders = [
   { label: "Vétusté", key: "vetusteConstruction" },
   { label: "Resultat net comptable", key: "resultatNetComptable" },
 ];
+
+export const moyenneInitialValues = {
+  capaciteMoyenne: 0,
+  realisationAcitiviteMoyenne: 0,
+  hebergementPermanentMoyenne: 0,
+  hebergementTemporaireMoyenne: 0,
+  acceuilDeJourMoyenne: 0,
+  prestationExterneMoyenne: 0,
+  rotationPersonnelMoyenne: 0,
+  etpVacantMoyenne: 0,
+  absenteismeMoyenne: 0,
+  tauxCafMoyenne: 0,
+  vetusteConstructionMoyenne: 0,
+  resultatNetComptableMoyenne: 0,
+};
