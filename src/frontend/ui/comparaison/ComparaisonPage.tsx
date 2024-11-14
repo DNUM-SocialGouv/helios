@@ -52,7 +52,7 @@ export const ComparaisonPage = () => {
     }
     setDataTable(filtredList);
     getAllYears();
-  }, [loading, resultats]); // Dépendance sur les résultats et les filtres
+  }, [loading, resultats, annéeEnCours]); // Dépendance sur les résultats et les filtres
 
   const getAllTypes = () => {
     const result: string[] = [];

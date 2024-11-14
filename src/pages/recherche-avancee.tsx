@@ -55,9 +55,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
       {nombreRésultats > 0 && !estCeEnAttente && (
         <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page} setPage={setPage} />
       )}
-      {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && (
-        <ResultatRecherchePlaceholderText />
-      )}{" "}
+      {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}{" "}
       {estCeEnAttente && <RechercheEnAttente />}
     </main>
   );
@@ -100,7 +98,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       { classification: "personnes_agees", ranges: capaciteAgeesParam },
     ].filter((capacite) => capacite.ranges.length > 0);
 
-    if (pageParam && (termeParam || zoneParam || statutJuridiqueParam.length > 0 || typeParam || capaciteMedicoSociauxParam.length > 0 || capaciteHandicapParam.length > 0 || capaciteAgeesParam.length > 0)) {
+    if (
+      pageParam &&
+      (termeParam ||
+        zoneParam ||
+        statutJuridiqueParam.length > 0 ||
+        typeParam ||
+        capaciteMedicoSociauxParam.length > 0 ||
+        capaciteHandicapParam.length > 0 ||
+        capaciteAgeesParam.length > 0)
+    ) {
       const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
         dependencies,
         termeParam,
