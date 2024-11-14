@@ -26,7 +26,6 @@ interface DataTableProps {
   orderBy: string;
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
-  redirectingPath: string;
   isShowAvrage: boolean;
   onClickInfobull?: (name: string) => void;
 }
@@ -46,7 +45,6 @@ interface TableBodyProps {
   data: Record<string, any>[];
   forMoyenne: Record<string, any>[];
   handleSelectRow: (valeurs: any) => void;
-  redirectingPath: string;
   isShowAvrage: boolean;
 }
 
@@ -102,6 +100,15 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     );
 };
 
+const construisLeLien = (type: string, finess: string): string => {
+  if (type === "Médico-social") {
+    return "/etablissement-territorial-medico-social/" + finess;
+  } else if (type === "Sanitaire") {
+    return "/etablissement-territorial-sanitaire/" + finess;
+  }
+  return "/entite-juridique/" + finess;
+}
+
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull }: TableHeaderProps) => {
   return (
     <thead>
@@ -129,7 +136,9 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, redirectingPath, isShowAvrage }: TableBodyProps) => {
+
+const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage }: TableBodyProps) => {
+
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -162,7 +171,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, r
               )}
               {header.key === "favori" && <button className={"fr-icon-star-line .fr-icon--lg " + styles["star"]} />}
               {header.key === "socialReason" && (
-                <a className="fr-tile__link" href={redirectingPath ? redirectingPath + row["numéroFiness"] : "#"} style={{ backgroundImage: "none" }}>
+                <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} style={{ backgroundImage: "none" }}>
                   {row[header.key]}
                 </a>
               )}
@@ -186,7 +195,6 @@ export const Table = ({
   orderBy,
   setOrder,
   setOrderBy,
-  redirectingPath = "/",
   isShowAvrage = false,
   onClickInfobull,
 }: DataTableProps) => {
@@ -211,7 +219,6 @@ export const Table = ({
                 handleSelectRow={handleSelectRow}
                 headers={headers}
                 isShowAvrage={isShowAvrage}
-                redirectingPath={redirectingPath}
                 selectedRows={selectedRows}
               />
             </table>
