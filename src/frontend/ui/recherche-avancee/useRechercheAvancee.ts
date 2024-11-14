@@ -49,6 +49,15 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
         lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
       });
     }
+
+    if (!data.laRechercheEtendueEstLancee && !state.estCeQueLaRechercheEstLancee) {
+      setState({
+        ...state,
+        estCeQueLesRésultatsSontReçus: false,
+        résultats: [],
+        nombreRésultats: 0,
+      });
+    }
   }, [data]);
 
   const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -58,7 +67,14 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       { classification: "personnes_agees", ranges: rechercheAvanceeContext?.capaciteAgees || [] },
     ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
 
-    if (rechercheAvanceeContext?.terme !== "") {
+    if (rechercheAvanceeContext?.terme !== "" ||
+      rechercheAvanceeContext?.zoneGeo !== "" ||
+      rechercheAvanceeContext?.typeStructure !== "" ||
+      rechercheAvanceeContext?.statutJuridiqueStructure.length > 0 ||
+      rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0 ||
+      rechercheAvanceeContext?.capaciteHandicap.length > 0 ||
+      rechercheAvanceeContext?.capaciteAgees.length > 0
+    ) {
       event.preventDefault();
       setState({
         ...state,
