@@ -2,9 +2,11 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
-import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
+import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
+import { StarButton } from "../StarButton/StarButton";
 import styles from "./Table.module.css";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 
@@ -18,7 +20,7 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: Record<string, any>[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: number[];
@@ -43,7 +45,7 @@ interface TableHeaderProps {
 interface TableBodyProps {
   headers: Header[];
   selectedRows: any[];
-  data: Record<string, any>[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
@@ -139,7 +141,6 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 
 
 const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage }: TableBodyProps) => {
-
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -170,13 +171,13 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                 </div>
               )}
-              {header.key === "favori" && <button className={"fr-icon-star-line .fr-icon--lg " + styles["star"]} />}
+              {header.key === "favori" && <StarButton favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
                 <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} style={{ backgroundImage: "none" }}>
                   {row[header.key]}
                 </a>
               )}
-              {header.key !== "socialReason" && row[header.key] !== null ? row[header.key] : header.key !== "socialReason" && "-"}
+              {header.key !== "socialReason" && (row as any)[header.key] !== null ? (row as any)[header.key] : header.key !== "socialReason" && "-"}
             </td>
           ))}
         </tr>
