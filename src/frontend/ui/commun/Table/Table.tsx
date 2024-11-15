@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
-import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
+import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
@@ -20,7 +20,7 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: RechercheViewModel[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: number[];
@@ -45,7 +45,7 @@ interface TableHeaderProps {
 interface TableBodyProps {
   headers: Header[];
   selectedRows: any[];
-  data: RechercheViewModel[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
@@ -171,7 +171,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                 </div>
               )}
-              {header.key === "favori" && <StarButton favorite={row} parent="tab" />}
+              {header.key === "favori" && <StarButton favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
                 <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} style={{ backgroundImage: "none" }}>
                   {row[header.key]}
