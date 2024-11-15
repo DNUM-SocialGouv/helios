@@ -105,13 +105,6 @@ export class WordingFr implements Wording {
   readonly CAPACITE: string = "Capacité";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
 
-  // Recherche avancée
-  readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
-  readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
-  readonly STRUCTURE: string = "Structure";
-  readonly CAPACITE: string = "Capacité";
-  readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
-
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
   readonly OFFRE_SANTÉ_PAR_REGION: string = "Offre de santé par région";
