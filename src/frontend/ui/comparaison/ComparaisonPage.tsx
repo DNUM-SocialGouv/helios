@@ -16,7 +16,7 @@ export const ComparaisonPage = () => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(0);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { construisLeLien, lancerLaComparaison, resultats, moyenne, lastPage } = useComparaison();
+  const { lancerLaComparaison, resultats, moyenne, lastPage } = useComparaison();
 
   const [dataTable, setDataTable] = useState<ComparaisonViewModel[]>([]);
   const [moyenneResultat, setMoyenneResultat] = useState<MoyenneResultatComparaison>(initialData);
@@ -141,7 +141,6 @@ export const ComparaisonPage = () => {
                 onClickInfobull={openModal}
                 order=""
                 orderBy=""
-                redirectingPath={construisLeLien(structureChoice)}
                 selectedRows={selectedRows}
                 setOrder={() => {}}
                 setOrderBy={() => {}}
