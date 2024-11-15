@@ -2,21 +2,30 @@ import { createContext } from "react";
 
 export interface RechercheAvanceeContextValue {
   terme: string;
+  termeFixe: string;
   page: number;
   zoneGeo: string;
+  zoneGeoType: string;
   typeStructure: string;
   statutJuridiqueStructure: string[];
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
+  order: string;
+  orderBy: string;
   setTerme: (terme: string) => void;
+  setTermeFixe: (terme: string) => void;
   setPage: (page: number, shallow?: boolean) => void;
   setZoneGeo: (zoneGeo: string) => void;
+  setZoneGeoType: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;
   setCapaciteAgees: (capaciteAgees: string[]) => void;
+  setOrder: (order: string) => void
+  setOrderBy: (orderBy: string) => void
+
 }
 
 export const RechercheAvanceeContext = createContext<RechercheAvanceeContextValue | undefined>(undefined);

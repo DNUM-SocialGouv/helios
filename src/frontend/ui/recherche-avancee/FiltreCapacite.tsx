@@ -118,6 +118,7 @@ export const FiltreCapacite = () => {
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setTypeStructure("");
   };
 
   return (
@@ -232,7 +233,7 @@ export const FiltreCapacite = () => {
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
-                      className="fr-btn--tooltip fr-btn"
+                      className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-handicap"
                       name="tooltip-info-handicap"
                       onClick={() => {
@@ -240,7 +241,6 @@ export const FiltreCapacite = () => {
                       }}
                       type="button"
                     >
-                      Info
                     </button>
                     <div className="fr-mb-1w" id="statut" style={{ marginTop: "10px" }}>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -303,15 +303,15 @@ export const FiltreCapacite = () => {
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
-                      className="fr-btn--tooltip fr-btn"
+                      className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-agee"
                       name="tooltip-info-agee"
                       onClick={() => {
                         setShowTooltip2(!showToolip2);
                       }}
+                      title=" "
                       type="button"
                     >
-                      Information contextuelle
                     </button>
                     <div className="fr-mb-1w" id="statut" style={{ marginTop: "10px" }}>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>

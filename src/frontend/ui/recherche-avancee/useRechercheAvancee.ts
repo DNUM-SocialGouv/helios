@@ -19,7 +19,7 @@ type RechercheAvanceeState = Readonly<{
 
 export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   const { paths } = useDependencies();
-  const take = 2;
+  const take = 20;
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
   const pageInitiale = 1;
@@ -40,12 +40,24 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   });
 
   useEffect(() => {
-    setState({
-      ...state,
-      résultats: construisLesRésultatsDeLaRecherche(data),
-      nombreRésultats: data.nombreDeRésultats || 0,
-      lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
-    });
+    if (data.laRechercheEtendueEstLancee && data.terme === rechercheAvanceeContext?.termeFixe) {
+      setState({
+        ...state,
+        estCeQueLesRésultatsSontReçus: true,
+        résultats: construisLesRésultatsDeLaRecherche(data),
+        nombreRésultats: data.nombreDeRésultats || 0,
+        lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
+      });
+    }
+
+    if (!data.laRechercheEtendueEstLancee && !state.estCeQueLaRechercheEstLancee) {
+      setState({
+        ...state,
+        estCeQueLesRésultatsSontReçus: false,
+        résultats: [],
+        nombreRésultats: 0,
+      });
+    }
   }, [data]);
 
   const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -55,7 +67,14 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       { classification: "personnes_agees", ranges: rechercheAvanceeContext?.capaciteAgees || [] },
     ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
 
-    if (rechercheAvanceeContext?.terme !== "") {
+    if (rechercheAvanceeContext?.terme !== "" ||
+      rechercheAvanceeContext?.zoneGeo !== "" ||
+      rechercheAvanceeContext?.typeStructure !== "" ||
+      rechercheAvanceeContext?.statutJuridiqueStructure.length > 0 ||
+      rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0 ||
+      rechercheAvanceeContext?.capaciteHandicap.length > 0 ||
+      rechercheAvanceeContext?.capaciteAgees.length > 0
+    ) {
       event.preventDefault();
       setState({
         ...state,
@@ -66,6 +85,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       rechercher(
         rechercheAvanceeContext?.terme,
         rechercheAvanceeContext?.zoneGeo,
+        rechercheAvanceeContext?.zoneGeoType,
         rechercheAvanceeContext?.typeStructure,
         rechercheAvanceeContext?.statutJuridiqueStructure,
         capacites,
@@ -80,7 +100,8 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
   const rechercher = async (
     terme: string = "",
-    commune: string = "",
+    zone: string = "",
+    typeZone: string = "",
     type: string = "",
     statutJuridique: string[] = [],
     capaciteSMS: CapaciteEtablissement[] = [],
@@ -88,7 +109,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   ) => {
     rechercheAvanceeContext?.setPage(page, true);
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, typeZone, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
@@ -103,6 +124,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
           lastPage: Math.ceil(data.nombreDeRésultats / take),
           résultats: construisLesRésultatsDeLaRecherche(data),
         });
+        rechercheAvanceeContext?.setTermeFixe(terme);
       })
       .catch(() => {
         setState({

@@ -4,13 +4,26 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import styles from "./RechercheAvanceeFormulaire.module.css"
 
+type ZoneGeo = Readonly<{
+    type: string;
+    nom: string;
+    code: string;
+    codeRegion: string;
+}>;
+
 export const FiltreZoneGeographique = () => {
     const { data } = useSession();
     const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
     const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
-    const [suggestions, setSuggestions] = useState<any[]>([]);
+    const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
+    const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [zoneGeoSelected, setZoneGeoSelected] = useState("");
+    const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
+        type: "",
+        nom: "",
+        code: "",
+        codeRegion: "",
+    });
 
 
     // Debounce function to control the rate of API calls
@@ -26,15 +39,21 @@ export const FiltreZoneGeographique = () => {
         if (!searchQuery) return;
         setIsLoading(true);
         try {
-            const response = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${searchQuery}&type=municipality&limit=50`);
-            const responseData = await response.json();
-            const maRegion = data?.user.institution.slice(4);
-            const sortedOptions = (data?.user.role === 3 || data?.user.role === 2) ? [...responseData.features].sort((a, b) => {
-                const estMaRegionA = a.properties.context.split(',')[2].trim() === maRegion;
-                const estMaRegionB = b.properties.context.split(',')[2].trim() === maRegion;
+            const searchParam = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
+
+            const responseRegion = await (await (await fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)).json()).map((elt: any) => { return { ...elt, type: 'R', codeRegion: elt.code } });
+            const responseDepartement = await (await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParam}`)).json()).map((elt: any) => { return { ...elt, type: 'D' } });
+            const responseCommune = await (await (await fetch(`https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion&format=json&type=arrondissement-municipal,commune-actuelle&${searchParam}`)).json()).map((elt: any) => { return { ...elt, type: 'C' } });
+
+            const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
+
+            const maRegion = data?.user.codeRegion;
+            const sortedOptions = (data?.user.role === 3 || data?.user.role === 2) ? responseData.sort((a: any, b: any) => {
+                const estMaRegionA = a.codeRegion === maRegion;
+                const estMaRegionB = b.codeRegion === maRegion;
                 if (estMaRegionA === estMaRegionB) return 0;
                 return estMaRegionA ? -1 : 1;
-            }) : responseData.features;
+            }) : responseData;
             setSuggestions(sortedOptions);
         } catch (error) {
             // eslint-disable-next-line no-console
@@ -48,7 +67,7 @@ export const FiltreZoneGeographique = () => {
     const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
 
     useEffect(() => {
-        if (zoneGeoValue.length > 2 && zoneGeoSelected !== zoneGeoValue) {
+        if (zoneGeoSelected?.nom !== zoneGeoValue) {
             debouncedFetchSuggestions(zoneGeoValue);
         } else {
             setSuggestions([]);
@@ -63,10 +82,13 @@ export const FiltreZoneGeographique = () => {
     const eraseZoneGeoValue = () => {
         setZoneGeoValue("");
         rechercheAvanceeContext?.setZoneGeo("");
+        setZoneGeoType("");
+        rechercheAvanceeContext?.setZoneGeoType("");
     }
 
     const applyZoneGeoValue = () => {
-        rechercheAvanceeContext?.setZoneGeo(zoneGeoValue);
+        rechercheAvanceeContext?.setZoneGeo(zoneGeoType === 'R' ? zoneGeoSelected?.codeRegion : zoneGeoValue);
+        rechercheAvanceeContext?.setZoneGeoType(zoneGeoType)
     }
 
     return (
@@ -77,19 +99,19 @@ export const FiltreZoneGeographique = () => {
                         <div className="fr-modal__body">
                             <div className="fr-modal__content fr-pt-5w">
                                 <div className="fr-mb-1w">
-                                    <label className="fr-label" htmlFor="text-input-text">Ville, commune ou département :</label>
+                                    <label className="fr-label" htmlFor="text-input-text">Ville, département ou région :</label>
                                     <input
-                                        className="fr-input"
+                                        className="fr-input  fr-mt-1w"
                                         id="text-input-text"
                                         name="text-input-text"
                                         onChange={changeZoneGeoValue}
-                                        placeholder="Ville, commune ou département"
+                                        placeholder="Ville, département ou région"
                                         type="text"
                                         value={zoneGeoValue}
                                     />
                                 </div>
                                 {isLoading && <div>Loading...</div>}
-                                {suggestions.length > 0 && (
+                                {suggestions?.length > 0 && (
                                     <ul className={styles["autocompleteList"]}>
                                         {suggestions.map((item, index) => (
                                             <li
@@ -99,10 +121,11 @@ export const FiltreZoneGeographique = () => {
                                                 <button className={styles["autocompleteListItemButton"]}
                                                     onClick={() => {
                                                         setSuggestions([]);
-                                                        setZoneGeoValue(item.properties.label);
-                                                        setZoneGeoSelected(item.properties.label);
+                                                        setZoneGeoType(item.type);
+                                                        setZoneGeoValue(item.nom);
+                                                        setZoneGeoSelected(item);
                                                     }}>
-                                                    {item.properties.label} ({item.properties.postcode})
+                                                    {item.type === 'R' ? item.nom : `${item.nom} (${item.code})`}
                                                 </button>
 
                                             </li>
