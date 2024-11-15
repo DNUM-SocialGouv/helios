@@ -61,3 +61,10 @@
     background-color: white;
     color: white;
 }
+
+.info-container-bulle::before {
+    height: 16px;
+    width: 16px;
+    margin-bottom: 3px;
+    color: var(--blue-france-sun-113-625);
+}

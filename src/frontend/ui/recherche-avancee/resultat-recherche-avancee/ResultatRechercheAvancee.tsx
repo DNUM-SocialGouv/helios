@@ -55,13 +55,12 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isShowAvrage={false}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
-        redirectingPath="#"
         selectedRows={selectedRows}
-        setOrder={rechercheAvanceeContext?.setOrder || (() => {})}
-        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => {})}
+        setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
+        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
         setSelectedRows={setSelectedRows}
       />
-      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
+      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );
 };

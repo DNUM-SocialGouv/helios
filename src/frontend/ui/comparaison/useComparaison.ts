@@ -38,15 +38,6 @@ export function useComparaison() {
     comparer(type, parsedFiness, pageInitiale);
   };
 
-  function construisLeLien(type: string): string {
-    if (type === "Médico-social") {
-      return paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/";
-    } else if (type === "Sanitaire") {
-      return paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/";
-    }
-    return paths.ENTITÉ_JURIDIQUE + "/";
-  }
-
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
@@ -76,7 +67,6 @@ export function useComparaison() {
 
   return {
     lancerLaComparaison,
-    construisLeLien,
     resultats: state.résultats,
     moyenne: state.moyenne,
     lastPage: state.lastPage,
