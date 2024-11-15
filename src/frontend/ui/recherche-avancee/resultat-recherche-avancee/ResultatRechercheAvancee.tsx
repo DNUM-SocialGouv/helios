@@ -7,6 +7,7 @@ import { Table } from "../../commun/Table/Table";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
+import { initialData } from "../../home/ComparaisonViewModel";
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -50,17 +51,17 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
       <TableHeaderRechercheAvancee selectedRows={selectedRows} setShowAlert={setShowAlert} />
       <Table
         data={data}
-        forMoyenne={[]}
+        forMoyenne={initialData}
         headers={tableHeaders}
         isShowAvrage={false}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
         selectedRows={selectedRows}
-        setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
-        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
+        setOrder={rechercheAvanceeContext?.setOrder || (() => {})}
+        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => {})}
         setSelectedRows={setSelectedRows}
       />
-      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
     </>
   );
 };

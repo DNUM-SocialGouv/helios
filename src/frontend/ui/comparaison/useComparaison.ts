@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import { ApiComparaisonResultat, ComparaisonMoyenneViewModel, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 
 type comparaisonState = Readonly<{
@@ -11,7 +10,6 @@ type comparaisonState = Readonly<{
 }>;
 
 export function useComparaison() {
-  const { paths } = useDependencies();
   const take = 20;
   const [state, setState] = useState<comparaisonState>({
     nombreRésultats: 0,
