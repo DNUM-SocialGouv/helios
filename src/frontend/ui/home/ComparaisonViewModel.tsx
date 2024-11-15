@@ -19,7 +19,8 @@ export type ResultatComparaison = Readonly<{
   resultatNetComptable: number;
 }>;
 
-export type MoyenneResultatComparaison = Readonly<{
+export type MoyenneResultatComparaison = {
+  nombreEtablissement?: number;
   annee: number;
   capaciteMoyenne: number;
   realisationAcitiviteMoyenne: number;
@@ -35,7 +36,7 @@ export type MoyenneResultatComparaison = Readonly<{
   vetusteConstructionMoyenne: number;
   roulementNetGlobalMoyenne: number;
   resultatNetComptableMoyenne: number;
-}>;
+};
 
 export type ApiComparaisonResultat = Readonly<{
   moyennes: MoyenneResultatComparaison[];
@@ -201,9 +202,28 @@ export class ComparaisonMoyenneViewModel {
 }
 
 const makeNumberArrondi = (value: number, num: number): number => {
-  return Number(value.toFixed(num));
+  return value ? Number(value.toFixed(num)) : 0;
 };
 
 const transformInRate = (number: number, chiffre: number): number => {
   return makeNumberArrondi(number * 100, chiffre);
+};
+
+export const initialData: MoyenneResultatComparaison = {
+  nombreEtablissement: 0,
+  annee: 0,
+  capaciteMoyenne: 0,
+  realisationAcitiviteMoyenne: 0,
+  hebergementPermanentMoyenne: 0,
+  hebergementTemporaireMoyenne: 0,
+  acceuilDeJourMoyenne: 0,
+  prestationExterneMoyenne: 0,
+  rotationPersonnelMoyenne: 0,
+  etpVacantMoyenne: 0,
+  absenteismeMoyenne: 0,
+  tauxCafMoyenne: 0,
+  vetusteConstructionMoyenne: 0,
+  resultatNetComptableMoyenne: 0,
+  fileActivePersonnesAccompagnesMoyenne: 0,
+  roulementNetGlobalMoyenne: 0,
 };
