@@ -110,7 +110,7 @@ const construisLeLien = (type: string, finess: string): string => {
     return "/etablissement-territorial-sanitaire/" + finess;
   }
   return "/entite-juridique/" + finess;
-}
+};
 
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull }: TableHeaderProps) => {
   return (
@@ -138,7 +138,6 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
     </thead>
   );
 };
-
 
 const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage }: TableBodyProps) => {
   return (
