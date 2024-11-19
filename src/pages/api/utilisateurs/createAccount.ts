@@ -13,7 +13,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
         if (institution === "ADMIN_CENTR") {
             const domaine = email.slice(email.indexOf('@') + 1);
-            if (domaine !== 'sg.social.gouv.fr')
+            if (domaine !== 'sg.social.gouv.fr' && domaine !== 'sante.gouv.fr' && domaine !== 'social.gouv.fr')
                 return response.status(400).send({ err: "Can't use this email for this institution" })
         }
 
