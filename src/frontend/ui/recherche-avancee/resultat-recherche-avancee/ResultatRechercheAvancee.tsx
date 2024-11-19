@@ -4,10 +4,10 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { Table } from "../../commun/Table/Table";
+import { initialData } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
-import { initialData } from "../../home/ComparaisonViewModel";
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
