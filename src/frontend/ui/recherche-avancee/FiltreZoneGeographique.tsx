@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import styles from "./RechercheAvanceeFormulaire.module.css";
@@ -11,7 +11,11 @@ type ZoneGeo = Readonly<{
   codeRegion: string;
 }>;
 
-export const FiltreZoneGeographique = () => {
+type ZoneGeographique = Readonly<{
+  setZoneGeographique: Dispatch<SetStateAction<string>>;
+}>;
+
+export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
@@ -118,6 +122,7 @@ export const FiltreZoneGeographique = () => {
     setZoneGeoType("");
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
+    setZoneGeographique("");
   };
 
   const applyZoneGeoValue = () => {
@@ -158,6 +163,7 @@ export const FiltreZoneGeographique = () => {
                             setZoneGeoType(item.type);
                             setZoneGeoValue(item.nom);
                             setZoneGeoSelected(item);
+                            setZoneGeographique(item.nom + " (" + item.code + ")");
                           }}
                         >
                           {item.type === "R" ? item.nom : `${item.nom} (${item.code})`}
