@@ -27,7 +27,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
 
   return (
     <div className="fr-table__header">
-      <p className="fr-table__detail">{selectedRows?.length} établissements sélectionnées</p>
+      <p className="fr-table__detail">{`${selectedRows?.length} ${selectedRows?.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`}</p>
       <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-md fr-btns-group--icon-left">
         <li>
           <button
