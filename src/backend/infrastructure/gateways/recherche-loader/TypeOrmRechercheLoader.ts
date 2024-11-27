@@ -34,6 +34,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
+      .addSelect("recherche.rattachement", "rattachement")
       .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
       .from(RechercheModel, "recherche")
       .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
