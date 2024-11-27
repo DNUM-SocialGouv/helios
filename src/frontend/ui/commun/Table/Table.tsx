@@ -223,8 +223,8 @@ export const Table = ({
   page,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
-    if (selectedRows[page]?.find((aa) => row.numéroFiness === aa.numéroFiness)) {
-      setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((index) => index !== row) });
+    if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
+      setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
     } else {
       selectedRows[page] ?
         setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) :
