@@ -89,12 +89,17 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect(
         `CASE 
           WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
-          ELSE recherche.type
+          ELSE 
+          CONCAT(
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Sanitaire' THEN etablissement_territorial.numero_finess_entite_juridique END), ' Sanitaire , ',
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Médico-social' THEN etablissement_territorial.numero_finess_entite_juridique END), ' SMS'
+          )
         END`,
         "rattachement"
       )
       .from(RechercheModel, "recherche")
-      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique");
+      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
+      .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess");
 
     if (zoneParam) {
       if (typeZone === "C") {
@@ -151,6 +156,17 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
+    requêteDeLaRecherche
+      .addGroupBy("recherche.commune")
+      .addGroupBy("recherche.type")
+      .addGroupBy("recherche.statut_juridique")
+      .addGroupBy("recherche.numero_finess")
+      .addGroupBy("recherche.raison_sociale_courte")
+      .addGroupBy("recherche.departement")
+      .addGroupBy("recherche.code_region")
+      .addGroupBy("recherche.rattachement")
+      .addGroupBy("entite_juridique.raison_sociale_courte");
+
     if (orderBy && order) {
       requêteDeLaRecherche
         .orderBy(orderBy, order)
@@ -163,8 +179,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     }
-
-    console.log(requêteDeLaRecherche.getSql());
 
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
 
