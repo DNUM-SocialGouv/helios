@@ -16,7 +16,7 @@ const tableHeaders = [
   { label: "Commune", key: "commune", sort: true },
   { label: "Département", key: "departement", sort: true },
   { label: "Finess ET", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-  { label: "Type", key: "type", sort: true },
+  { label: "Rattachement", key: "rattachement", sort: true },
 ];
 
 type ResultatRechercheAvanceeProps = Readonly<{

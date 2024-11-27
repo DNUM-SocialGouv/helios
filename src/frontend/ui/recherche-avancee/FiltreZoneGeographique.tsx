@@ -9,6 +9,7 @@ type ZoneGeo = Readonly<{
   nom: string;
   code: string;
   codeRegion: string;
+  codesPostaux: string[];
 }>;
 
 type ZoneGeographique = Readonly<{
@@ -27,6 +28,7 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
     nom: "",
     code: "",
     codeRegion: "",
+    codesPostaux: [],
   });
 
   // Debounce function to control the rate of API calls
@@ -39,7 +41,10 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
   };
 
   const fetchSuggestions = async (searchQuery: string) => {
-    if (!searchQuery) return;
+    if (!searchQuery) {
+      setSuggestions([]);
+      return;
+    }
     setIsLoading(true);
     try {
       const searchParam = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
@@ -54,7 +59,7 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
       ).map((elt: any) => {
         return { ...elt, type: "D" };
       });
-      const responseCommune = await (
+      const responseCommuneByNom = await (
         await (
           await fetch(
             `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion&format=json&type=arrondissement-municipal,commune-actuelle&${searchParam}`
@@ -63,6 +68,13 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
       ).map((elt: any) => {
         return { ...elt, type: "C" };
       });
+      const responseCommuneByCodePostal = await (
+        await (await fetch(`https://geo.api.gouv.fr/communes?&format=json&type=arrondissement-municipal,commune-actuelle&codePostal=${searchQuery}`)).json()
+      ).map((elt: any) => {
+        return { ...elt, type: "C" };
+      });
+
+      const responseCommune = searchParam.includes("nom") ? responseCommuneByNom : responseCommuneByCodePostal;
 
       const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
@@ -76,7 +88,16 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
               return estMaRegionA ? -1 : 1;
             })
           : responseData;
-      setSuggestions(sortedOptions);
+
+      // Separate the items that match the search value and the ones that don't
+      const matchingItems = sortedOptions.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      const nonMatchingItems = sortedOptions.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+
+      // Sort both lists alphabetically by 'nom'
+      const sortedMatchingItems = matchingItems.sort((a: any, b: any) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()));
+      const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()));
+
+      setSuggestions([...sortedMatchingItems, ...sortedNonMatchingItems]);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("Error fetching data:", error);
@@ -154,22 +175,25 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
                 {isLoading && <div>Loading...</div>}
                 {suggestions?.length > 0 && (
                   <ul className={styles["autocompleteList"]}>
-                    {suggestions.map((item, index) => (
-                      <li className={styles["autocompleteListItem"]} key={index}>
-                        <button
-                          className={styles["autocompleteListItemButton"]}
-                          onClick={() => {
-                            setSuggestions([]);
-                            setZoneGeoType(item.type);
-                            setZoneGeoValue(item.nom);
-                            setZoneGeoSelected(item);
-                            setZoneGeographique(item.nom + " (" + item.code + ")");
-                          }}
-                        >
-                          {item.type === "R" ? item.nom : `${item.nom} (${item.code})`}
-                        </button>
-                      </li>
-                    ))}
+                    {suggestions.map(
+                      (item, index) =>
+                        (item.codesPostaux === undefined || (item.codesPostaux && item.codesPostaux.length < 2)) && (
+                          <li className={styles["autocompleteListItem"]} key={index}>
+                            <button
+                              className={styles["autocompleteListItemButton"]}
+                              onClick={() => {
+                                setSuggestions([]);
+                                setZoneGeoType(item.type);
+                                setZoneGeoValue(item.nom);
+                                setZoneGeoSelected(item);
+                                setZoneGeographique(item.nom + " (" + item.code + ")");
+                              }}
+                            >
+                              {item.type === "R" ? item.nom : `${item.nom} (${item.codesPostaux ? item.codesPostaux : item.code})`}
+                            </button>
+                          </li>
+                        )
+                    )}
                   </ul>
                 )}
                 {(data?.user.role === 3 || data?.user.role === 2) && (

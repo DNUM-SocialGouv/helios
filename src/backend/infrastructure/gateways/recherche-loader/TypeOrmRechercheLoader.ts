@@ -2,6 +2,7 @@ import { DataSource, SelectQueryBuilder } from "typeorm";
 
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { RechercheModel } from "../../../../../database/models/RechercheModel";
+import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { Résultat, RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RechercheLoader } from "../../../métier/gateways/RechercheLoader";
 import { CapaciteSMS, OrderDir } from "../../../métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
@@ -13,13 +14,14 @@ type RechercheTypeOrm = Readonly<{
   numero_finess: string;
   raison_sociale_courte: string;
   type: string;
+  rattachement: string;
 }>;
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 12;
   private readonly NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE = 20;
 
-  constructor(private readonly orm: Promise<DataSource>) { }
+  constructor(private readonly orm: Promise<DataSource>) {}
 
   async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
@@ -62,10 +64,17 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   ): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
-    const zoneParam = zone ? typeZone === 'R' ? zone : zone.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\b(?:-|')\b/gi, " ").toLocaleUpperCase() : '';
+    const zoneParam = zone
+      ? typeZone === "R"
+        ? zone
+        : zone
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\b(?:-|')\b/gi, " ")
+            .toLocaleUpperCase()
+      : "";
     const conditions = [];
     let parameters: any = {};
-
 
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
@@ -77,22 +86,29 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.departement", "departement")
       .addSelect("recherche.code_region", "code_region")
       .addSelect("recherche.statut_juridique", "statutJuridique")
-      .from(RechercheModel, "recherche");
+      .addSelect(
+        `CASE 
+          WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
+          ELSE recherche.type
+        END`,
+        "rattachement"
+      )
+      .from(RechercheModel, "recherche")
+      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique");
 
     if (zoneParam) {
-      if (typeZone === 'C') {
+      if (typeZone === "C") {
         conditions.push("recherche.commune = :commune");
         parameters = { ...parameters, commune: zoneParam };
       }
-      if (typeZone === 'D') {
+      if (typeZone === "D") {
         conditions.push("recherche.departement = :departement");
         parameters = { ...parameters, departement: zoneParam };
       }
-      if (typeZone === 'R') {
+      if (typeZone === "R") {
         conditions.push("recherche.code_region = :codeRegion");
         parameters = { ...parameters, codeRegion: zoneParam };
       }
-
     }
 
     if (terme) {
@@ -115,14 +131,16 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (capaciteSMS.length !== 0) {
       const capaciteSMSConditions: string[] = [];
-      requêteDeLaRecherche.innerJoin(
-        AutorisationMédicoSocialModel,
-        "capacite_sms",
-        "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial"
-      );
-      capaciteSMS.forEach((capacite, index) => {
-        const conditionsSMS = this.construisLesConditionsCapacitesSMS(capacite, index);
-
+      requêteDeLaRecherche
+        .innerJoin(AutorisationMédicoSocialModel, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
+        .innerJoin(
+          ÉtablissementTerritorialIdentitéModel,
+          "etablissement",
+          "capacite_sms.numéroFinessÉtablissementTerritorial = etablissement.numéroFinessÉtablissementTerritorial"
+        );
+      capaciteSMS.forEach((capacite) => {
+        const conditionsSMS = this.construireLaLogiqueCapaciteEtablissements(capacite);
+        //const conditionsSMS = this.construisLesConditionsCapacitesSMS(capacite);
         capaciteSMSConditions.push(conditionsSMS.capaciteSMSConditions);
         parameters = { ...parameters, ...conditionsSMS.parameters };
       });
@@ -134,7 +152,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
 
     if (orderBy && order) {
-
       requêteDeLaRecherche
         .orderBy(orderBy, order)
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
@@ -147,16 +164,16 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     }
 
+    console.log(requêteDeLaRecherche.getSql());
+
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
 
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats.count);
   }
 
-  private construisLesConditionsCapacitesSMS(capaciteSMS: CapaciteSMS, indexClassification: number): any {
+  private construisLesConditionsCapacitesSMS(capaciteSMS: CapaciteSMS, conditionsBefore: string, parameters: { [key: string]: any }): any {
     const conditions: string[] = [];
     let capaciteSMSConditions = "";
-    const parameters: { [key: string]: any } = {};
-
     capaciteSMS.ranges.forEach((range, index) => {
       if (range.includes(">")) {
         conditions.push(`capacite_sms.capacite_installee_totale > :range${capaciteSMS.classification}${index}`);
@@ -174,8 +191,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     else {
       capaciteSMSConditions = "(" + conditions.join(" OR ") + ")";
     }
-    capaciteSMSConditions = "(" + capaciteSMSConditions + ` AND recherche.classification = :classification${indexClassification})`;
-    parameters[`classification${indexClassification}`] = capaciteSMS.classification;
+    capaciteSMSConditions = conditionsBefore !== "" ? "(" + conditionsBefore + ") AND " + "(" + capaciteSMSConditions + ")" : "(" + capaciteSMSConditions + ")";
+    //parameters[`classification${indexClassification}`] = capaciteSMS.classification;
     return { capaciteSMSConditions, parameters };
   }
 
@@ -193,8 +210,28 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           numéroFiness: rechercheRésultat.numero_finess,
           raisonSocialeCourte: rechercheRésultat.raison_sociale_courte,
           type: rechercheRésultat.type,
+          rattachement: rechercheRésultat.rattachement,
         };
       }),
     };
+  }
+
+  private construireLaLogiqueCapaciteEtablissements(capacite: CapaciteSMS): any {
+    const listCapaciteHandicape = [189, 190, 198, 461, 249, 448, 188, 246, 437, 195, 194, 192, 183, 186, 255, 182, 445, 464];
+    const listCapaciteAgee = [500, 209, 354];
+    const conditions: string[] = [];
+    let capaciteSMSConditions = "";
+    const parameters: { [key: string]: any } = {};
+    if (capacite.classification === "publics_en_situation_de_handicap") {
+      conditions.push(`etablissement.cat_etablissement IN (:...listCapaciteHandicape)`);
+      parameters[`listCapaciteHandicape`] = listCapaciteHandicape;
+    } else if (capacite.classification === "personnes_agees") {
+      conditions.push(`etablissement.cat_etablissement IN (:...listCapaciteAgee)`);
+      parameters[`listCapaciteAgee`] = listCapaciteAgee;
+    }
+
+    capaciteSMSConditions = conditions.length > 1 ? "(" + conditions.join(" OR ") + ")" : conditions.length === 1 ? conditions[0] : "";
+
+    return this.construisLesConditionsCapacitesSMS(capacite, capaciteSMSConditions, parameters);
   }
 }

@@ -46,7 +46,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
         structureWording += ":Etablissements SMS";
       }
       if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
-        structureWording += ", +" + (rechercheAvanceeContext.statutJuridiqueStructure.length - 1);
+        structureWording += ", +" + rechercheAvanceeContext.statutJuridiqueStructure.length;
       }
       return structureWording;
     }

@@ -115,7 +115,7 @@ const construisLeLien = (type: string, finess: string): string => {
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull }: TableHeaderProps) => {
   return (
     <thead>
-      <tr>
+      <tr className={styles["sticky-header"]}>
         <th className="fr-cell--fixed" role="columnheader">
           <span className="fr-sr-only">Sélectionner</span>
         </th>
@@ -210,7 +210,7 @@ export const Table = ({
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className="fr-table__container">
+        <div className={"fr-table__container " + styles["table_container_surcharge"]}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader headers={headers} onClickInfobull={onClickInfobull} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
