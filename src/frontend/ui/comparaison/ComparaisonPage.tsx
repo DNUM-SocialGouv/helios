@@ -7,12 +7,13 @@ import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ComparaisonViewModel, initialData, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
+import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import styles from "./Comparaison.module.css";
 import { contenuModal, tableHeaders } from "./model/data";
 import { useComparaison } from "./useComparaison";
 
 export const ComparaisonPage = () => {
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(0);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
@@ -26,7 +27,7 @@ export const ComparaisonPage = () => {
   const [titre, setTitre] = useState<ReactChild>("");
   const [contenu, setContenu] = useState();
 
-  const [page, setPage] = useState<number | undefined>(1);
+  const [page, setPage] = useState<number>(1);
   const [nombreRésultats, setNombreRésultats] = useState<number>(1);
 
   // Utilisation de useEffect pour lancer la comparaison
@@ -102,6 +103,16 @@ export const ComparaisonPage = () => {
     setEstCeOuvert(true);
   };
 
+  const isAllSelected = (dataTable.length > 0 && selectedRows[page]) && selectedRows[page].length === dataTable.length;
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+        setSelectedRows({...selectedRows, [page]: [] });
+    } else {
+        setSelectedRows({...selectedRows, [page]: dataTable});
+    }
+  };
+
   return (
     <>
       <main className="fr-container">
@@ -136,14 +147,17 @@ export const ComparaisonPage = () => {
               <Table
                 data={dataTable}
                 forMoyenne={moyenneResultat}
+                handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
+                isAllSelected={isAllSelected}
                 isShowAvrage={true}
                 onClickInfobull={openModal}
                 order=""
                 orderBy=""
+                page={page || 1}
                 selectedRows={selectedRows}
                 setOrder={() => {}}
-                setOrderBy={() => {}}
+                setOrderBy={() => {}} 
                 setSelectedRows={setSelectedRows}
               />
               <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
