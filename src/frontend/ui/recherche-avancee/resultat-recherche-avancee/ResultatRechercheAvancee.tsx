@@ -62,7 +62,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
           ></button>
         </div>
       )}
-      <TableHeaderRechercheAvancee page={page} selectedRows={selectedRows} setShowAlert={setShowAlert} />
+      <TableHeaderRechercheAvancee selectedRows={selectedRows} setShowAlert={setShowAlert} />
       <Table
         data={data}
         forMoyenne={initialData}
