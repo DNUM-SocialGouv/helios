@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { SelectedRows } from "../../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButton } from "../StarButton/StarButton";
@@ -23,14 +24,17 @@ interface DataTableProps {
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
-  selectedRows: number[];
-  setSelectedRows: Dispatch<SetStateAction<number[]>>;
+  selectedRows: SelectedRows;
+  setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>
   order: string;
   orderBy: string;
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
   isShowAvrage: boolean;
   onClickInfobull?: (name: string) => void;
+  page: number
+  handleSelectAll: () => void
+  isAllSelected: boolean;
 }
 
 interface TableHeaderProps {
@@ -40,15 +44,19 @@ interface TableHeaderProps {
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
   onClickInfobull?: (name: string) => void;
+  handleSelectAll: () => void;
+  isAllSelected: boolean;
+  page: number;
 }
 
 interface TableBodyProps {
   headers: Header[];
-  selectedRows: any[];
+  selectedRows: SelectedRows;
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
+  page: number;
 }
 
 interface TriProps {
@@ -112,16 +120,28 @@ const construisLeLien = (type: string, finess: string): string => {
   return "/entite-juridique/" + finess;
 };
 
-const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull }: TableHeaderProps) => {
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll,
+  isAllSelected }: TableHeaderProps) => {
   return (
     <thead>
       <tr>
         <th className="fr-cell--fixed" role="columnheader">
-          <span className="fr-sr-only">Sélectionner</span>
+          <div className="fr-checkbox-group fr-checkbox-group--sm">
+            <input
+              checked={isAllSelected}
+              id="table-select-checkbox-7748--0"
+              name="row-select"
+              onChange={handleSelectAll}
+              type="checkbox"
+            />
+            <label className="fr-label" htmlFor="table-select-checkbox-7748--0">
+              Séléctionner tous les éléments
+            </label>
+          </div>
         </th>
         {headers.map((header, index) =>
           header.sort ? (
-            <th className={["etsLogo", "favori"].includes(header.key) ? styles["header-logo"] : ""} key={index}>
+            <th key={index}>
               <span className="fr-cell__title">{header.label}</span>
               <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
             </th>
@@ -139,7 +159,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -147,7 +167,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
           <th className="fr-cell--fixed" scope="row">
             <div className="fr-checkbox-group fr-checkbox-group--sm">
               <input
-                checked={selectedRows.includes(row)}
+                checked={!!selectedRows[page]?.find((item) => item.numéroFiness === row.numéroFiness)}
                 id={`table-select-checkbox-7748--${rowIndex}`}
                 name="row-select"
                 onChange={() => handleSelectRow(row)}
@@ -190,7 +210,7 @@ export const Table = ({
   headers,
   data = [],
   forMoyenne,
-  selectedRows = [],
+  selectedRows,
   setSelectedRows,
   order,
   orderBy,
@@ -198,12 +218,17 @@ export const Table = ({
   setOrderBy,
   isShowAvrage = false,
   onClickInfobull,
+  handleSelectAll,
+  isAllSelected,
+  page,
 }: DataTableProps) => {
-  const handleSelectRow = (rowIndex: any) => {
-    if (selectedRows.includes(rowIndex)) {
-      setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
+  const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
+    if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
+      setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
     } else {
-      setSelectedRows([...selectedRows, rowIndex]);
+      selectedRows[page] ?
+        setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) :
+        setSelectedRows({ ...selectedRows, [page]: [row] });
     }
   };
 
@@ -213,13 +238,24 @@ export const Table = ({
         <div className="fr-table__container">
           <div className="fr-table__content">
             <table id="table-selectable">
-              <TableHeader headers={headers} onClickInfobull={onClickInfobull} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
+              <TableHeader
+                handleSelectAll={handleSelectAll}
+                headers={headers}
+                isAllSelected={isAllSelected}
+                onClickInfobull={onClickInfobull}
+                order={order}
+                orderBy={orderBy}
+                page={page}
+                setOrder={setOrder}
+                setOrderBy={setOrderBy}
+              />
               <TableBody
                 data={data}
                 forMoyenne={forMoyenne}
                 handleSelectRow={handleSelectRow}
                 headers={headers}
                 isShowAvrage={isShowAvrage}
+                page={page}
                 selectedRows={selectedRows}
               />
             </table>

@@ -53,7 +53,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
         <PasResultatRechercheAvancee />
       )}
       {nombreRésultats > 0 && !estCeEnAttente && (
-        <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page} setPage={setPage} />
+        <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage} />
       )}
       {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}{" "}
       {estCeEnAttente && <RechercheEnAttente />}

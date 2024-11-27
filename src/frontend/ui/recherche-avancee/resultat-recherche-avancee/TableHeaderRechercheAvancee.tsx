@@ -1,21 +1,30 @@
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { SelectedRows } from "./ResultatRechercheAvancee";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
-  selectedRows: any[];
+  selectedRows: SelectedRows;
   setShowAlert: Dispatch<SetStateAction<boolean>>;
 }>;
 
 export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: TableHeaderRechercheAvanceeProps) => {
   const router = useRouter();
+  const [disabledButton, setDisabledButton] = useState(false);
+
+  useEffect(() => {
+    setDisabledButton(false);
+  }, [selectedRows])
 
   const onClickComparer = () => {
-    const firstType = selectedRows[0].recherche.type;
-    const hasDifferentTypes = selectedRows.some((row) => row.recherche.type !== firstType);
-    const listFinessNumbers = selectedRows.map((row) => row.recherche.numéroFiness);
+    const formattedSelectedRows = Object.values(selectedRows).flat();    
+    const firstType = formattedSelectedRows[0].type;
+    const hasDifferentTypes = formattedSelectedRows.some((row) => row.type !== firstType);
+    const listFinessNumbers = formattedSelectedRows.map((row) => row.numéroFiness);
 
     if (hasDifferentTypes) {
       setShowAlert(true);
+      setDisabledButton(true);
     } else {
       // Navigate if types are the same
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
@@ -27,12 +36,12 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
 
   return (
     <div className="fr-table__header">
-      <p className="fr-table__detail">{selectedRows?.length} établissements sélectionnées</p>
+      <p className="fr-table__detail">{`${Object.values(selectedRows).flat().length} ${Object.values(selectedRows).flat().length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`}</p>
       <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-md fr-btns-group--icon-left">
         <li>
           <button
             className="fr-btn fr-btn--icon-left fr-btn--secondary"
-            disabled={selectedRows.length < 2}
+            disabled={Object.values(selectedRows).flat().length < 2 || disabledButton}
             id="table-header-button-primary-7842"
             onClick={onClickComparer}
           >
