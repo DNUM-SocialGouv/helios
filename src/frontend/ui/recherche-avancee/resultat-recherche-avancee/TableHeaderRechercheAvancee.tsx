@@ -6,10 +6,9 @@ import { SelectedRows } from "./ResultatRechercheAvancee";
 type TableHeaderRechercheAvanceeProps = Readonly<{
   selectedRows: SelectedRows;
   setShowAlert: Dispatch<SetStateAction<boolean>>;
-  page: number;
 }>;
 
-export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert, page }: TableHeaderRechercheAvanceeProps) => {
+export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: TableHeaderRechercheAvanceeProps) => {
   const router = useRouter();
   const [disabledButton, setDisabledButton] = useState(false);
 
@@ -42,7 +41,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert, page }
         <li>
           <button
             className="fr-btn fr-btn--icon-left fr-btn--secondary"
-            disabled={selectedRows[page]?.length < 2 || disabledButton}
+            disabled={Object.values(selectedRows).flat().length < 2 || disabledButton}
             id="table-header-button-primary-7842"
             onClick={onClickComparer}
           >
