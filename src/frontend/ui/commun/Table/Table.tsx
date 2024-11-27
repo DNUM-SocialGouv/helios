@@ -128,7 +128,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
         <th className="fr-cell--fixed" role="columnheader">
           <div className="fr-checkbox-group fr-checkbox-group--sm">
             <input
-              checked={isAllSelected}
+              checked={isAllSelected || false}
               id="table-select-checkbox-7748--0"
               name="row-select"
               onChange={handleSelectAll}
@@ -192,7 +192,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
               )}
               {header.key === "favori" && <StarButton favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
-                <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} style={{ backgroundImage: "none" }}>
+                <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} rel="noreferrer" style={{ backgroundImage: "none" }} target="_blank">
                   {row[header.key]}
                 </a>
               )}
