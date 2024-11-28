@@ -251,6 +251,7 @@ describe("La recherche d’entités et d’établissements", () => {
         numéroFiness: numéroFinessEntitéJuridique.replaceAll(" ", ""),
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
+        rattachement: "Sanitaire (2), SMS (5)",
       },
     ]);
   });
@@ -274,6 +275,7 @@ describe("La recherche d’entités et d’établissements", () => {
         numéroFiness: "010018407",
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
+        rattachement: "Sanitaire (2), SMS (5)",
       },
     ]);
   });
@@ -360,6 +362,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CENTRE HOSPITALIER DU HAUT BUGEY",
           type: "Entité juridique",
+          rattachement: "Sanitaire (1), SMS (4)",
         },
       ]);
     });
@@ -509,6 +512,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
+          rattachement: "Sanitaire (0), SMS (5)",
         },
       ]);
     });
@@ -561,6 +565,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
+          rattachement: "Sanitaire (2), SMS (5)",
         },
       ]);
     });

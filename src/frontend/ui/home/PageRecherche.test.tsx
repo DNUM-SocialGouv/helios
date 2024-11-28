@@ -15,21 +15,25 @@ const mockSession = {
   name: "john",
   email: "test@test.fr",
   user: {
-    idUser: '1',
-    firstname: 'Doe',
+    idUser: "1",
+    firstname: "Doe",
     role: 1,
     institution: {},
     institutionId: 1,
     codeRegion: 84,
-    codeProfiles: [""]
+    codeProfiles: [""],
   },
-  expires: "1235"
-}
+  expires: "1235",
+};
 
 describe("La page de d’accueil", () => {
   it("n'affiche pas un bandeau d’information mentionnant le développement du site", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
 
     // THEN
     expect(screen.queryByText(wording.SITE_EN_CONSTRUCTION)).not.toBeInTheDocument();
@@ -37,7 +41,11 @@ describe("La page de d’accueil", () => {
 
   it("affiche le formulaire", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
 
     // THEN
     const description = screen.getByText(htmlNodeAndReactElementMatcher(wording.RECHERCHE_DESCRIPTION), { selector: "p" });
@@ -53,7 +61,11 @@ describe("La page de d’accueil", () => {
 
   it("affiche la cartographie", () => {
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
 
     // THEN
     const cartographie = screen.getByLabelText(wording.CARTOGRAPHIE);
@@ -76,6 +88,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010003598",
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
+        rattachement: "EJ-010008407-CH VILLENEUVE DASCQ",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -83,6 +96,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010005239",
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
+        rattachement: "EJ-010008407-CH VILLENEUVE DASCQ",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -90,6 +104,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010008407",
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
+        rattachement: "Sanitaire (1), SMS (1)",
       },
     ];
     // @ts-ignore
@@ -100,7 +115,11 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -150,7 +169,11 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -185,7 +208,11 @@ describe("La page de d’accueil", () => {
           résultats,
         }),
     });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -245,7 +272,11 @@ describe("La page de d’accueil", () => {
             résultats: résultatsSecondePage,
           }),
       });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -314,7 +345,11 @@ describe("La page de d’accueil", () => {
             résultats: résultatsSecondeRecherche,
           }),
       });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const termeDeLaPremièreRecherche = "hospitalier";
     const formulaire = screen.getByRole("search");
     const boutonRechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -352,7 +387,11 @@ describe("La page de d’accueil", () => {
           résultats: [],
         }),
     });
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -373,7 +412,11 @@ describe("La page de d’accueil", () => {
   it("affiche une phrase explicite si le backend ne répond plus", async () => {
     // GIVEN
     jest.spyOn(global, "fetch").mockRejectedValue("API is down");
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
     const terme = "hospitalier";
     const formulaire = screen.getByRole("search");
     const rechercher = within(formulaire).getByRole("button", { name: wording.RECHERCHE_LABEL });
@@ -403,6 +446,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010003598",
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
+        rattachement: "EJ-010008407-H VILLENEUVE DASCQ",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -410,6 +454,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010005239",
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
+        rattachement: "EJ-010008407-H VILLENEUVE DASCQ",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -417,6 +462,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010008407",
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
+        rattachement: "Sanitaire (1), SMS (1)",
       },
     ];
     // @ts-ignore
@@ -429,7 +475,11 @@ describe("La page de d’accueil", () => {
     });
 
     // WHEN
-    renderFakeComponent(<SessionProvider session={mockSession}><PageRecherche /></SessionProvider>);
+    renderFakeComponent(
+      <SessionProvider session={mockSession}>
+        <PageRecherche />
+      </SessionProvider>
+    );
 
     // THEN
     const formulaire = screen.getByRole("search");

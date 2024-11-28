@@ -36,6 +36,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "010018407",
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
+          rattachement: "Sanitaire (1), SMS (1)",
         },
         {
           commune: "NANTUA",
@@ -43,6 +44,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "010000040",
           raisonSocialeCourte: "CH NANTUA",
           type: "Médico-social",
+          rattachement: "EJ-010018407-CH DU HAUT BUGEY",
         },
         {
           commune: "VILLENEUVE D ASCQ",
@@ -50,6 +52,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "590782553",
           raisonSocialeCourte: "HP VILLENEUVE DASCQ",
           type: "Sanitaire",
+          rattachement: "EJ-010018407-CH DU HAUT BUGEY",
         },
       ],
     });
