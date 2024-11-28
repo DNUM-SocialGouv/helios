@@ -169,7 +169,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addGroupBy("recherche.code_region")
       .addGroupBy("recherche.rattachement")
       .addGroupBy("entite_juridique.raison_sociale_courte");
-
+      
     if (orderBy && order) {
       requêteDeLaRecherche
         .orderBy(orderBy, order)
