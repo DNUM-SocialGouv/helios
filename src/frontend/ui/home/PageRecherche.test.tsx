@@ -88,7 +88,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010003598",
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
-        rattachement: "EJ-010008407-CH VILLENEUVE DASCQ",
+        rattachement: "010008407",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -96,7 +96,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010005239",
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
-        rattachement: "EJ-010008407-CH VILLENEUVE DASCQ",
+        rattachement: "010008407",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -104,7 +104,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010008407",
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
-        rattachement: "Sanitaire (1), SMS (1)",
+        rattachement: "",
       },
     ];
     // @ts-ignore
@@ -446,7 +446,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010003598",
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
-        rattachement: "EJ-010008407-H VILLENEUVE DASCQ",
+        rattachement: "010008407",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -454,7 +454,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010005239",
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
-        rattachement: "EJ-010008407-H VILLENEUVE DASCQ",
+        rattachement: "010008407",
       },
       {
         commune: "SAINT-BRIEUC",
@@ -462,7 +462,7 @@ describe("La page de d’accueil", () => {
         numéroFiness: "010008407",
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
-        rattachement: "Sanitaire (1), SMS (1)",
+        rattachement: "",
       },
     ];
     // @ts-ignore

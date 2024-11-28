@@ -7,7 +7,7 @@ export class RésultatDeRechercheTestBuilder {
     numéroFiness: "010018407",
     raisonSocialeCourte: "CH DU HAUT BUGEY",
     type: "Entité juridique",
-    rattachement: "Sanitaire (1), SMS (1)",
+    rattachement: "",
   };
   private static résultatDeRechercheÉtablissementMédicoSocial: Résultat = {
     commune: "NANTUA",
@@ -15,7 +15,7 @@ export class RésultatDeRechercheTestBuilder {
     numéroFiness: "010000040",
     raisonSocialeCourte: "CH NANTUA",
     type: "Médico-social",
-    rattachement: "EJ-010018407-CH DU HAUT BUGEY",
+    rattachement: "010018407",
   };
   private static résultatDeRechercheÉtablissementSanitaire: Résultat = {
     commune: "VILLENEUVE D ASCQ",
@@ -23,7 +23,7 @@ export class RésultatDeRechercheTestBuilder {
     numéroFiness: "590782553",
     raisonSocialeCourte: "HP VILLENEUVE DASCQ",
     type: "Sanitaire",
-    rattachement: "EJ-010018407-CH DU HAUT BUGEY",
+    rattachement: "010018407",
   };
 
   public static créeUnRésultatDeRechercheEntité(champsSurchargés?: Partial<Résultat>): Résultat {

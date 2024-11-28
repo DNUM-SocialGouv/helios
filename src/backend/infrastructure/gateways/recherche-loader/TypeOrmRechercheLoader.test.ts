@@ -109,24 +109,29 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: "200000001",
           raisonSocialeCourte: `${raisonSocialeEJ} ${termeRecherché} - entité juridique très pertinente`,
           type: "Médico-social",
+          rattachement: "000000001",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000000",
           raisonSocialeCourte: `${raisonSocialeEJ} - entité juridique très pertinente`,
+          rattachement: "",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000001",
           raisonSocialeCourte: `${termeRecherché} - entité juridique pertinente`,
+          rattachement: "",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000002",
           raisonSocialeCourte: `${termeRecherché} - entité juridique pertinente`,
+          rattachement: "",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "NANTUA",
           numéroFiness: "200000000",
           raisonSocialeCourte: `${termeRecherché} - établissement territorial médico-social pertinent`,
           type: "Médico-social",
+          rattachement: "000000000",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "VILLENEUVE D ASCQ",
@@ -251,7 +256,7 @@ describe("La recherche d’entités et d’établissements", () => {
         numéroFiness: numéroFinessEntitéJuridique.replaceAll(" ", ""),
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
-        rattachement: "Sanitaire (2), SMS (5)",
+        rattachement: "",
       },
     ]);
   });
@@ -275,7 +280,7 @@ describe("La recherche d’entités et d’établissements", () => {
         numéroFiness: "010018407",
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
-        rattachement: "Sanitaire (2), SMS (5)",
+        rattachement: "",
       },
     ]);
   });
@@ -362,7 +367,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CENTRE HOSPITALIER DU HAUT BUGEY",
           type: "Entité juridique",
-          rattachement: "Sanitaire (1), SMS (4)",
+          rattachement: "",
         },
       ]);
     });
@@ -512,7 +517,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
-          rattachement: "Sanitaire (0), SMS (5)",
+          rattachement: "",
         },
       ]);
     });
@@ -565,7 +570,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
-          rattachement: "Sanitaire (2), SMS (5)",
+          rattachement: "",
         },
       ]);
     });
