@@ -30,7 +30,24 @@ export const FiltreStructure = () => {
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
-  function onChangeType(value: any): any {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
+        document.getElementById("structure-appliquer-botton")?.click();
+      }
+    };
+
+    // Ajouter l'écouteur d'événement pour "Enter"
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Nettoyer l'écouteur quand le modal est fermé
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [typeSelected]);
+
+  function onChangeType(value: any): void {
     setTypeSelected((prec) => (value === prec ? null : value));
     if (value === AttribuesDefaults.entiteJuridque) {
       setStatutJuridiqueSelected([AttribuesDefaults.statutPublic, AttribuesDefaults.statutPriveLucratif, AttribuesDefaults.statutPriveNonLucratif]);
@@ -212,6 +229,7 @@ export const FiltreStructure = () => {
                   aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
                   disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
+                  id="structure-appliquer-botton"
                   onClick={appliquerButton}
                 >
                   Appliquer

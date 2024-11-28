@@ -19,6 +19,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
+  const [zoneGeographique, setZoneGeographique] = useState<string>(wording.ZONE_GEOGRAPHIQUE);
 
   useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
@@ -28,6 +29,46 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
       setDisableCapaciter(false);
     }
   }, [rechercheAvanceeContext?.typeStructure]);
+
+  const getWording = (defValue: string) => {
+    if (wording.ZONE_GEOGRAPHIQUE === defValue) {
+      return zoneGeographique ? zoneGeographique : rechercheAvanceeContext?.zoneGeo ? rechercheAvanceeContext?.zoneGeo : wording.ZONE_GEOGRAPHIQUE;
+    }
+    if (wording.STRUCTURE === defValue) {
+      let structureWording = wording.STRUCTURE;
+      if (AttribuesDefaults.entiteJuridque === rechercheAvanceeContext?.typeStructure) {
+        structureWording += " : Etablissements Juridiques";
+      }
+      if (AttribuesDefaults.etablissementSanitaire === rechercheAvanceeContext?.typeStructure) {
+        structureWording += " : Etablissements Sanitaires";
+      }
+      if (AttribuesDefaults.etablissementMedicoSocial === rechercheAvanceeContext?.typeStructure) {
+        structureWording += " : Etablissements SMS";
+      }
+      if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
+        structureWording += ", +" + rechercheAvanceeContext.statutJuridiqueStructure.length;
+      }
+      return structureWording;
+    }
+    if (wording.CAPACITE === defValue) {
+      let capaciterWording = wording.CAPACITE;
+      if (rechercheAvanceeContext?.capaciteMedicoSociaux || rechercheAvanceeContext?.capaciteHandicap || rechercheAvanceeContext?.capaciteAgees) {
+        const allCapacities = [
+          ...rechercheAvanceeContext.capaciteMedicoSociaux,
+          ...rechercheAvanceeContext.capaciteHandicap,
+          ...rechercheAvanceeContext.capaciteAgees,
+        ];
+        if (allCapacities.length > 0) {
+          capaciterWording += " : " + allCapacities[0].replace(",", "-");
+          if (allCapacities.length > 1) {
+            capaciterWording += ", +" + (allCapacities.length - 1);
+          }
+        }
+      }
+      return capaciterWording;
+    }
+    return defValue;
+  };
 
   return (
     <div>
@@ -41,7 +82,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             id="recherche-avancee-input"
             name="terme"
             onChange={rechercheOnChange}
-            placeholder="Nom, Finess, etc."
+            placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"
             type="search"
             value={terme}
           />
@@ -51,20 +92,20 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
         </form>
       </div>
       <div className="fr-grid-row fr-mt-2w">
-        <div className={"fr-col-5 " + styles["criteresRechercheButtons"]}>
+        <div className={styles["criteresRechercheButtons"]}>
           <button
             aria-controls="fr-modal-Zone-Geographique-Filtre"
             className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
             data-fr-opened="false"
           >
-            {wording.ZONE_GEOGRAPHIQUE}
+            {getWording(wording.ZONE_GEOGRAPHIQUE)}
           </button>
           <button
             aria-controls="fr-modal-Structure-Filtre"
             className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
             data-fr-opened="false"
           >
-            {wording.STRUCTURE}
+            {getWording(wording.STRUCTURE)}
           </button>
           <button
             aria-controls="fr-modal-Capacite-Filtre"
@@ -72,12 +113,12 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             data-fr-opened="false"
             disabled={disableCapaciter}
           >
-            {wording.CAPACITE}
+            {getWording(wording.CAPACITE)}
           </button>
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique />
+        <FiltreZoneGeographique setZoneGeographique={setZoneGeographique} />
         <FiltreStructure />
         <FiltreCapacite />
       </div>

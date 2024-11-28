@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -86,6 +86,23 @@ export const FiltreCapacite = () => {
       onChangeCheck(value, capaciteAgees?.ranges, setCapaciteAgees, classificationTypes.etablissement_agees.classification);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
+        document.getElementById("capaciter-appliquer-botton")?.click();
+      }
+    };
+
+    // Ajouter l'écouteur d'événement pour "Enter"
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Nettoyer l'écouteur quand le modal est fermé
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [capaciteAgees, capaciteHandicap, capaciteMedicoSociaux]);
 
   function onChangeCheck(i: string, statut: string[], setStatut: Dispatch<SetStateAction<CapaciteEtablissement>>, clasification: string): any {
     if (statut.length > 0 && statut.findIndex((a) => i === a) !== -1) {
@@ -240,8 +257,7 @@ export const FiltreCapacite = () => {
                         setShowTooltip(!showToolip);
                       }}
                       type="button"
-                    >
-                    </button>
+                    ></button>
                     <div className="fr-mb-1w" id="statut" style={{ marginTop: "10px" }}>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
@@ -311,8 +327,7 @@ export const FiltreCapacite = () => {
                       }}
                       title=" "
                       type="button"
-                    >
-                    </button>
+                    ></button>
                     <div className="fr-mb-1w" id="statut" style={{ marginTop: "10px" }}>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                         <input
@@ -395,6 +410,7 @@ export const FiltreCapacite = () => {
                   aria-controls="fr-modal-Capacite-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
                   disabled={capaciteMedicoSociaux.ranges.length === 0 && capaciteHandicap.ranges.length === 0 && capaciteAgees.ranges.length === 0}
+                  id="capaciter-appliquer-botton"
                   onClick={appliquerButton}
                 >
                   Appliquer

@@ -1,6 +1,8 @@
 .criteresRechercheButtons {
     display: flex;
     justify-content: space-between;
+    flex: .05 0 fit-content;
+    max-width: 66%;
 }
 
 .ResultatRechercheAvanceeText {

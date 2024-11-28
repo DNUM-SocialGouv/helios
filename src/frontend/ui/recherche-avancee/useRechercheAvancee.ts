@@ -67,7 +67,8 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
       { classification: "personnes_agees", ranges: rechercheAvanceeContext?.capaciteAgees || [] },
     ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
 
-    if (rechercheAvanceeContext?.terme !== "" ||
+    if (
+      rechercheAvanceeContext?.terme !== "" ||
       rechercheAvanceeContext?.zoneGeo !== "" ||
       rechercheAvanceeContext?.typeStructure !== "" ||
       rechercheAvanceeContext?.statutJuridiqueStructure.length > 0 ||
