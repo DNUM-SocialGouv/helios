@@ -186,7 +186,7 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
                                 setZoneGeoType(item.type);
                                 setZoneGeoValue(item.nom);
                                 setZoneGeoSelected(item);
-                                setZoneGeographique(item.nom + " (" + item.code + ")");
+                                setZoneGeographique(item.nom + " (" + item.codesPostaux + ")");
                               }}
                             >
                               {item.type === "R" ? item.nom : `${item.nom} (${item.codesPostaux ? item.codesPostaux : item.code})`}
