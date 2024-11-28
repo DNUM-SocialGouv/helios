@@ -124,7 +124,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   isAllSelected }: TableHeaderProps) => {
   return (
     <thead>
-      <tr>
+      <tr className={styles["sticky-header"]}>
         <th className="fr-cell--fixed" role="columnheader">
           <div className="fr-checkbox-group fr-checkbox-group--sm">
             <input
@@ -235,7 +235,7 @@ export const Table = ({
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className="fr-table__container">
+        <div className={"fr-table__container " + styles["table_container_surcharge"]}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader

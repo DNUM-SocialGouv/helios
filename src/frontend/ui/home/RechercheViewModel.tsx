@@ -29,6 +29,10 @@ export class RechercheViewModel {
     return this.recherche.raisonSocialeCourte;
   }
 
+  public get rattachement(): string {
+    return this.recherche.rattachement;
+  }
+
   public get titre(): ReactElement {
     return (
       <>

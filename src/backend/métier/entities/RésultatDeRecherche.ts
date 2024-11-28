@@ -4,6 +4,7 @@ export type Résultat = Readonly<{
   numéroFiness: string;
   raisonSocialeCourte: string;
   type: string;
+  rattachement: string;
 }>;
 
 export type RésultatDeRecherche = Readonly<{

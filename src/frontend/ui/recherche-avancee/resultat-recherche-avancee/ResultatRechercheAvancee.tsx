@@ -15,13 +15,13 @@ const tableHeaders = [
   { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
   { label: "Commune", key: "commune", sort: true },
   { label: "Département", key: "departement", sort: true },
-  { label: "Finess ET", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-  { label: "Type", key: "type", sort: true },
+  { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+  { label: "Rattachement(s)", key: "rattachement" },
 ];
 
 export type SelectedRows = Readonly<{
   [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-}>
+}>;
 
 type ResultatRechercheAvanceeProps = Readonly<{
   data: RechercheViewModel[];
@@ -32,18 +32,18 @@ type ResultatRechercheAvanceeProps = Readonly<{
 }>;
 
 export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>({1: []});
+  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const wording = new WordingFr();
 
-  const isAllSelected = (data.length > 0 && selectedRows[page]) && selectedRows[page].length === data.length;
+  const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-        setSelectedRows({...selectedRows, [page]: [] });
+      setSelectedRows({ ...selectedRows, [page]: [] });
     } else {
-        setSelectedRows({...selectedRows, [page]: data});
+      setSelectedRows({ ...selectedRows, [page]: data });
     }
   };
 
