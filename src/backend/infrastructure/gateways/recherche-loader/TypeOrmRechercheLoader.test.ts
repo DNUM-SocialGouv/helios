@@ -139,6 +139,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: "100000000",
           raisonSocialeCourte: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: "Sanitaire",
+          rattachement: "000000000",
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "VILLENEUVE D ASCQ",
@@ -146,6 +147,7 @@ describe("La recherche d’entités et d’établissements", () => {
           numéroFiness: "100000001",
           raisonSocialeCourte: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: "Sanitaire",
+          rattachement: "000000001",
         }),
       ],
     });
