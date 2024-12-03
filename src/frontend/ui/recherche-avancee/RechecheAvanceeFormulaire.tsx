@@ -35,15 +35,15 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
       return zoneGeographique ? zoneGeographique : rechercheAvanceeContext?.zoneGeo ? rechercheAvanceeContext?.zoneGeo : wording.ZONE_GEOGRAPHIQUE;
     }
     if (wording.STRUCTURE === defValue) {
-      var structureWording = wording.STRUCTURE;
+      let structureWording = wording.STRUCTURE;
       if (AttribuesDefaults.entiteJuridque === rechercheAvanceeContext?.typeStructure) {
-        structureWording += ":Etablissements Juridiques";
+        structureWording += " : Etablissements Juridiques";
       }
       if (AttribuesDefaults.etablissementSanitaire === rechercheAvanceeContext?.typeStructure) {
-        structureWording += ":Etablissements Sanitaires";
+        structureWording += " : Etablissements Sanitaires";
       }
       if (AttribuesDefaults.etablissementMedicoSocial === rechercheAvanceeContext?.typeStructure) {
-        structureWording += ":Etablissements SMS";
+        structureWording += " : Etablissements SMS";
       }
       if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
         structureWording += ", +" + rechercheAvanceeContext.statutJuridiqueStructure.length;
@@ -51,15 +51,15 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
       return structureWording;
     }
     if (wording.CAPACITE === defValue) {
-      var capaciterWording = wording.CAPACITE;
+      let capaciterWording = wording.CAPACITE;
       if (rechercheAvanceeContext?.capaciteMedicoSociaux || rechercheAvanceeContext?.capaciteHandicap || rechercheAvanceeContext?.capaciteAgees) {
-        var allCapacities = [
+        const allCapacities = [
           ...rechercheAvanceeContext.capaciteMedicoSociaux,
           ...rechercheAvanceeContext.capaciteHandicap,
           ...rechercheAvanceeContext.capaciteAgees,
         ];
         if (allCapacities.length > 0) {
-          capaciterWording += ":" + allCapacities[0].replace(",", "-");
+          capaciterWording += " : " + allCapacities[0].replace(",", "-");
           if (allCapacities.length > 1) {
             capaciterWording += ", +" + (allCapacities.length - 1);
           }
@@ -82,7 +82,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             id="recherche-avancee-input"
             name="terme"
             onChange={rechercheOnChange}
-            placeholder="Nom, Finess, etc."
+            placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"
             type="search"
             value={terme}
           />

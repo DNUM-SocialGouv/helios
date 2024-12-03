@@ -47,7 +47,7 @@ export const FiltreStructure = () => {
     };
   }, [typeSelected]);
 
-  function onChangeType(value: any): any {
+  function onChangeType(value: any): void {
     setTypeSelected((prec) => (value === prec ? null : value));
     if (value === AttribuesDefaults.entiteJuridque) {
       setStatutJuridiqueSelected([AttribuesDefaults.statutPublic, AttribuesDefaults.statutPriveLucratif, AttribuesDefaults.statutPriveNonLucratif]);
