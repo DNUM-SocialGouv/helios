@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import styles from "./RechercheAvanceeFormulaire.module.css";
@@ -10,13 +10,10 @@ type ZoneGeo = Readonly<{
   code: string;
   codeRegion: string;
   codesPostaux: string[];
+  codeNum: string;
 }>;
 
-type ZoneGeographique = Readonly<{
-  setZoneGeographique: Dispatch<SetStateAction<string>>;
-}>;
-
-export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique) => {
+export const FiltreZoneGeographique = () => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
@@ -29,6 +26,7 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
     code: "",
     codeRegion: "",
     codesPostaux: [],
+    codeNum: "",
   });
 
   // Debounce function to control the rate of API calls
@@ -47,57 +45,59 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
     }
     setIsLoading(true);
     try {
-      const searchParam = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
+      const searchParamDepartement = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
+      const searchParamCommune = +searchQuery ? `codePostal=${searchQuery}` : `nom=${searchQuery}`;
 
       const responseRegion = await (
         await (await fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)).json()
       ).map((elt: any) => {
-        return { ...elt, type: "R", codeRegion: elt.code };
+        return { ...elt, type: "R", codeRegion: elt.code, codeNum: '' };
       });
       const responseDepartement = await (
-        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParam}`)).json()
+        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)).json()
       ).map((elt: any) => {
-        return { ...elt, type: "D" };
+        return { ...elt, type: "D", codeNum: elt.code };
       });
-      const responseCommuneByNom = await (
+      const responseCommune = await (
         await (
           await fetch(
-            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion&format=json&type=arrondissement-municipal,commune-actuelle&${searchParam}`
+            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
           )
         ).json()
       ).map((elt: any) => {
+        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+        if (elt.nom === 'Marseille' || elt.nom === 'Paris' || elt.nom === 'Lyon') {
+          elt.codeNum = 'tous les arrondissements'
+        } else {
+          if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0]
+        }
         return { ...elt, type: "C" };
       });
-      const responseCommuneByCodePostal = await (
-        await (await fetch(`https://geo.api.gouv.fr/communes?&format=json&type=arrondissement-municipal,commune-actuelle&codePostal=${searchQuery}`)).json()
-      ).map((elt: any) => {
-        return { ...elt, type: "C" };
-      });
-
-      const responseCommune = searchParam.includes("nom") ? responseCommuneByNom : responseCommuneByCodePostal;
 
       const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
-      const maRegion = data?.user.codeRegion;
-      const sortedOptions =
-        data?.user.role === 3 || data?.user.role === 2
-          ? responseData.sort((a: any, b: any) => {
-              const estMaRegionA = a.codeRegion === maRegion;
-              const estMaRegionB = b.codeRegion === maRegion;
-              if (estMaRegionA === estMaRegionB) return 0;
-              return estMaRegionA ? -1 : 1;
-            })
-          : responseData;
-
       // Separate the items that match the search value and the ones that don't
-      const matchingItems = sortedOptions.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
-      const nonMatchingItems = sortedOptions.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
       // Sort both lists alphabetically by 'nom'
       const sortedMatchingItems = matchingItems.sort((a: any, b: any) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()));
       const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => a.nom.toLowerCase().localeCompare(b.nom.toLowerCase()));
 
-      setSuggestions([...sortedMatchingItems, ...sortedNonMatchingItems]);
+      const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems]
+
+      const maRegion = data?.user.codeRegion;
+      const sortedOptions =
+        data?.user.role === 3 || data?.user.role === 2
+          ? sortedAlphabetically.sort((a: any, b: any) => {
+            const estMaRegionA = a.codeRegion === maRegion;
+            const estMaRegionB = b.codeRegion === maRegion;
+            if (estMaRegionA === estMaRegionB) return 0;
+            return estMaRegionA ? -1 : 1;
+          })
+          : sortedAlphabetically;
+
+      setSuggestions(sortedOptions);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("Error fetching data:", error);
@@ -143,12 +143,13 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
     setZoneGeoType("");
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
-    setZoneGeographique("");
+    rechercheAvanceeContext?.setZoneGeoLabel;
   };
 
   const applyZoneGeoValue = () => {
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);
+    rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);
   };
 
   return (
@@ -176,23 +177,21 @@ export const FiltreZoneGeographique = ({ setZoneGeographique }: ZoneGeographique
                 {suggestions?.length > 0 && (
                   <ul className={styles["autocompleteList"]}>
                     {suggestions.map(
-                      (item, index) =>
-                        (item.codesPostaux === undefined || (item.codesPostaux && item.codesPostaux.length < 2)) && (
-                          <li className={styles["autocompleteListItem"]} key={index}>
-                            <button
-                              className={styles["autocompleteListItemButton"]}
-                              onClick={() => {
-                                setSuggestions([]);
-                                setZoneGeoType(item.type);
-                                setZoneGeoValue(item.nom);
-                                setZoneGeoSelected(item);
-                                setZoneGeographique(item.nom + " (" + item.codesPostaux + ")");
-                              }}
-                            >
-                              {item.type === "R" ? item.nom : `${item.nom} (${item.codesPostaux ? item.codesPostaux : item.code})`}
-                            </button>
-                          </li>
-                        )
+                      (item, index) => (
+                        <li className={styles["autocompleteListItem"]} key={index}>
+                          <button
+                            className={styles["autocompleteListItemButton"]}
+                            onClick={() => {
+                              setSuggestions([]);
+                              setZoneGeoType(item.type);
+                              setZoneGeoValue(item.nom);
+                              setZoneGeoSelected(item);
+                            }}
+                          >
+                            {item.codeNum ? `${item.nom} (${item.codeNum})` : item.nom}
+                          </button>
+                        </li>
+                      )
                     )}
                   </ul>
                 )}

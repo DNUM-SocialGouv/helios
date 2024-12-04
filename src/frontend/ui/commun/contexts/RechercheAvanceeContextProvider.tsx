@@ -12,6 +12,7 @@ interface SearchParams {
   page?: number;
   zoneGeo?: string;
   zoneGeoType?: string;
+  zoneGeoLabel?: string;
   typeStructure?: string;
   statutJuridiqueStructure?: string[];
   order?: string;
@@ -30,6 +31,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
 
   const zone = query["zone"] ?? '';
   const typeZone = query["typeZone"] ?? '';
+  const zoneGeoLabel = query["zoneLabel"] ?? '';
   const type = query["type"] ?? '';
   const page = query["page"] ?? '1';
   const terme = query["terme"] ?? '';
@@ -48,6 +50,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       page: parseAsInteger.withDefault(Number(page)),
       zoneGeo: parseAsString.withDefault(String(zone)),
       zoneGeoType: parseAsString.withDefault(String(typeZone)),
+      zoneGeoLabel: parseAsString.withDefault(String(zoneGeoLabel)),
       typeStructure: parseAsString.withDefault(String(type)),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts),
       order: parseAsString.withDefault(String(order)),
@@ -60,6 +63,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       urlKeys: {
         zoneGeo: "zone",
         zoneGeoType: "typeZone",
+        zoneGeoLabel: 'zoneLabel',
         typeStructure: "type",
         statutJuridiqueStructure: "statuts",
         orderBy: "order_by",
@@ -80,6 +84,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       termeFixe,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
       setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
+      setZoneGeoLabel: (value) => updateSearchParams({ zoneGeoLabel: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
