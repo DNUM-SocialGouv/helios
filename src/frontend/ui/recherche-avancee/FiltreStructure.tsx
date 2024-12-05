@@ -59,6 +59,9 @@ export const FiltreStructure = () => {
     } else {
       emptyStatutJuridiqueCheckboxs();
     }
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
   }
 
   function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
