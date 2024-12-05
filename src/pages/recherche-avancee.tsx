@@ -31,7 +31,6 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
     estCeQueLaRechercheEstLancee,
     lancerLaRecherche,
     rechercheOnChange,
-    terme,
     resultats,
     nombreRésultats,
     page,
@@ -48,7 +47,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
 
   return (
     <main className="fr-container">
-      <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+      <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} />
       {estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && <PasResultatRechercheAvancee />}
       {nombreRésultats > 0 && !estCeEnAttente && (
         <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage} />
@@ -72,7 +71,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         capacite_medico_sociaux: capaciteMedicoSociaux = [],
         capacite_handicap: capaciteHandicap = [],
         capacite_agees: capaciteAgees = [],
-        order = "",
+        order = "ASC",
         order_by: orderBy = "",
       },
     } = context;

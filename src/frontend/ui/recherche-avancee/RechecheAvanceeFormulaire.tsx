@@ -11,10 +11,9 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 type RechercheAvanceeFormulaireProps = Readonly<{
   lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void;
   rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  terme: string | undefined;
 }>;
 
-export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
+export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
@@ -87,7 +86,6 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             onChange={rechercheOnChange}
             placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"
             type="search"
-            value={terme}
           />
           <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="button">
             {wording.RECHERCHE_LABEL}

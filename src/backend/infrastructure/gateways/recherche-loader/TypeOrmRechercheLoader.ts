@@ -106,8 +106,15 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (zoneParam) {
       if (typeZone === "C") {
-        conditions.push("recherche.commune = :commune");
-        parameters = { ...parameters, commune: zoneParam };
+        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+        if (zoneParam === "LYON" || zoneParam === "MARSEILLE" || zoneParam === "PARIS") {
+          conditions.push("recherche.commune like :commune");
+          parameters = { ...parameters, commune: `%${zoneParam}%` };
+        }
+        else {
+          conditions.push("recherche.commune = :commune");
+          parameters = { ...parameters, commune: zoneParam };
+        }
       }
       if (typeZone === "D") {
         conditions.push("recherche.departement = :departement");

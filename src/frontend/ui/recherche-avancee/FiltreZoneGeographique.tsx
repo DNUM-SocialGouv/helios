@@ -143,7 +143,7 @@ export const FiltreZoneGeographique = () => {
     setZoneGeoType("");
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
-    rechercheAvanceeContext?.setZoneGeoLabel;
+    rechercheAvanceeContext?.setZoneGeoLabel("");
   };
 
   const applyZoneGeoValue = () => {
