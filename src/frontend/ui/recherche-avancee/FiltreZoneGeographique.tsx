@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import styles from "./RechercheAvanceeFormulaire.module.css";
