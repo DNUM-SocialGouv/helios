@@ -19,7 +19,6 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
-  const [zoneGeographique, setZoneGeographique] = useState<string>(wording.ZONE_GEOGRAPHIQUE);
 
   useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
@@ -32,7 +31,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
 
   const getWording = (defValue: string) => {
     if (wording.ZONE_GEOGRAPHIQUE === defValue) {
-      return zoneGeographique ? zoneGeographique : rechercheAvanceeContext?.zoneGeo ? rechercheAvanceeContext?.zoneGeo : wording.ZONE_GEOGRAPHIQUE;
+      return rechercheAvanceeContext?.zoneGeoLabel ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
     }
     if (wording.STRUCTURE === defValue) {
       let structureWording = wording.STRUCTURE;
@@ -122,7 +121,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique setZoneGeographique={setZoneGeographique} />
+        <FiltreZoneGeographique />
         <FiltreStructure />
         <FiltreCapacite />
       </div>

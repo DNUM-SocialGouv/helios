@@ -21,7 +21,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 12;
   private readonly NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE = 20;
 
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
@@ -69,10 +69,10 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       ? typeZone === "R"
         ? zone
         : zone
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\b(?:-|')\b/gi, " ")
-            .toLocaleUpperCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\b(?:-|')\b/gi, " ")
+          .toLocaleUpperCase()
       : "";
     const conditions = [];
     let parameters: any = {};
