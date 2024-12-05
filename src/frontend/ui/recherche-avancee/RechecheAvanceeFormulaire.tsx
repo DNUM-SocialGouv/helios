@@ -90,7 +90,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             type="search"
             value={terme}
           />
-          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="submit">
+          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="button">
             {wording.RECHERCHE_LABEL}
           </button>
         </form>
