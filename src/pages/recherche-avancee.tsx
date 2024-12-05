@@ -15,7 +15,7 @@ import { useRechercheAvancee } from "../frontend/ui/recherche-avancee/useRecherc
 
 export interface ExtendedRésultatDeRecherche extends RésultatDeRecherche {
   page: number;
-  terme: string;
+  termeFixe: string;
   zone: string;
   type: string;
   statutJuridique: string[];
@@ -62,7 +62,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const {
       query: {
-        terme = "",
+        termeFixe = "",
         zone = "",
         typeZone = "",
         page = 1,
@@ -76,7 +76,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       },
     } = context;
     const pageParam = Number(page);
-    const termeParam = String(terme);
+    const termeParam = String(termeFixe);
     const zoneParam = String(zone);
     const typeZoneParam = String(typeZone);
     const typeParam = String(type);
@@ -93,6 +93,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       { classification: "publics_en_situation_de_handicap", ranges: capaciteHandicapParam },
       { classification: "personnes_agees", ranges: capaciteAgeesParam },
     ].filter((capacite) => capacite.ranges.length > 0);
+
+
+    // eslint-disable-next-line no-console
+    console.log('termeParam', termeParam);
 
     if (
       pageParam &&
@@ -121,7 +125,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         props: {
           ...recherche,
           page: pageParam,
-          terme: termeParam,
+          termeFixe: termeParam,
           zone: zoneParam,
           type: typeParam,
           statutJuridique: statutJuridiqueParam,
@@ -134,7 +138,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           nombreDeRésultats: 0,
           résultats: [],
           page: 1,
-          terme: "",
+          termeFixe: "",
           zone: "",
           type: "",
           statutJuridique: [],
