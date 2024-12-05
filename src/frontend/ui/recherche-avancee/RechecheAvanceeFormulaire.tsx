@@ -59,7 +59,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
           ...rechercheAvanceeContext.capaciteAgees,
         ];
         if (allCapacities.length > 0) {
-          capaciterWording += " : " + allCapacities[0].replace(",", "-");
+          capaciterWording += " : " + ajusteementLibelleCapacite(allCapacities[0]);
           if (allCapacities.length > 1) {
             capaciterWording += ", +" + (allCapacities.length - 1);
           }
@@ -68,6 +68,10 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
       return capaciterWording;
     }
     return defValue;
+  };
+
+  const ajusteementLibelleCapacite = (str: string): string => {
+    return str.includes(">") ? +str.replace(">", "") + 1 + " et plus" : str.replace(",", "-");
   };
 
   return (
@@ -86,7 +90,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             type="search"
             value={terme}
           />
-          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="submit">
+          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="button">
             {wording.RECHERCHE_LABEL}
           </button>
         </form>

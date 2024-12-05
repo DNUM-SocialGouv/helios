@@ -1,11 +1,10 @@
-import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { ExtendedRésultatDeRecherche } from "../../../pages/recherche-avancee";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../home/RechercheViewModel";
-import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 
 type RechercheAvanceeState = Readonly<{
   estCeEnAttente: boolean;
@@ -22,7 +21,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   const take = 20;
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
-  const pageInitiale = 1;
+  //const pageInitiale = 1;
   const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
@@ -40,7 +39,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   });
 
   useEffect(() => {
-    if (data.laRechercheEtendueEstLancee && data.terme === rechercheAvanceeContext?.termeFixe) {
+    if (data.laRechercheEtendueEstLancee) {
       setState({
         ...state,
         estCeQueLesRésultatsSontReçus: true,
@@ -60,80 +59,13 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
     }
   }, [data]);
 
-  const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
-    const capacites = [
-      { classification: "non_classifie", ranges: rechercheAvanceeContext?.capaciteMedicoSociaux || [] },
-      { classification: "publics_en_situation_de_handicap", ranges: rechercheAvanceeContext?.capaciteHandicap || [] },
-      { classification: "personnes_agees", ranges: rechercheAvanceeContext?.capaciteAgees || [] },
-    ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
-
-    if (
-      rechercheAvanceeContext?.terme !== "" ||
-      rechercheAvanceeContext?.zoneGeo !== "" ||
-      rechercheAvanceeContext?.typeStructure !== "" ||
-      rechercheAvanceeContext?.statutJuridiqueStructure.length > 0 ||
-      rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0 ||
-      rechercheAvanceeContext?.capaciteHandicap.length > 0 ||
-      rechercheAvanceeContext?.capaciteAgees.length > 0
-    ) {
-      event.preventDefault();
-      setState({
-        ...state,
-        estCeEnAttente: true,
-        estCeQueLesRésultatsSontReçus: false,
-        estCeQueLaRechercheEstLancee: true,
-      });
-      rechercher(
-        rechercheAvanceeContext?.terme,
-        rechercheAvanceeContext?.zoneGeo,
-        rechercheAvanceeContext?.zoneGeoType,
-        rechercheAvanceeContext?.typeStructure,
-        rechercheAvanceeContext?.statutJuridiqueStructure,
-        capacites,
-        pageInitiale
-      );
-    }
+  const lancerLaRecherche = (): void => {
+    rechercheAvanceeContext?.setTermeFixe(rechercheAvanceeContext?.terme);
+    rechercheAvanceeContext?.setTypeStructure(rechercheAvanceeContext.typeStructure);
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     rechercheAvanceeContext?.setTerme(event.target.value);
-  };
-
-  const rechercher = async (
-    terme: string = "",
-    zone: string = "",
-    typeZone: string = "",
-    type: string = "",
-    statutJuridique: string[] = [],
-    capaciteSMS: CapaciteEtablissement[] = [],
-    page: number = 1
-  ) => {
-    rechercheAvanceeContext?.setPage(page, true);
-    fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, zone, typeZone, type, statutJuridique, capaciteSMS }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setState({
-          ...state,
-          estCeEnAttente: false,
-          estCeQueLesRésultatsSontReçus: true,
-          estCeQueLaRechercheEstLancee: true,
-          nombreRésultats: data.nombreDeRésultats,
-          lastPage: Math.ceil(data.nombreDeRésultats / take),
-          résultats: construisLesRésultatsDeLaRecherche(data),
-        });
-        rechercheAvanceeContext?.setTermeFixe(terme);
-      })
-      .catch(() => {
-        setState({
-          ...state,
-          estCeEnAttente: false,
-          estCeQueLeBackendNeRépondPas: true,
-        });
-      });
   };
 
   return {
