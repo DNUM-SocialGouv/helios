@@ -76,7 +76,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
     lancerLaRecherche,
     rechercheOnChange,
     lastPage: state.lastPage,
-    termeFixe: rechercheAvanceeContext?.termeFixe,
+    terme: rechercheAvanceeContext?.terme,
     setPage: rechercheAvanceeContext?.setPage,
     page: rechercheAvanceeContext?.page,
     resultats: state.résultats,
