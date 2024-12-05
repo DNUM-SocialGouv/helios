@@ -23,8 +23,7 @@ interface SearchParams {
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
-
-  const router = useRouter()
+  const router = useRouter();
   const initialPage = 1;
 
   const { query } = router;

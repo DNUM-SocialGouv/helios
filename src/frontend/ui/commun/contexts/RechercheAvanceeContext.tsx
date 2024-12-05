@@ -25,9 +25,8 @@ export interface RechercheAvanceeContextValue {
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;
   setCapaciteAgees: (capaciteAgees: string[]) => void;
-  setOrder: (order: string) => void
-  setOrderBy: (orderBy: string) => void
-
+  setOrder: (order: string) => void;
+  setOrderBy: (orderBy: string) => void;
 }
 
 export const RechercheAvanceeContext = createContext<RechercheAvanceeContextValue | undefined>(undefined);

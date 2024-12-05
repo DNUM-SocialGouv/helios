@@ -59,6 +59,9 @@ export const FiltreStructure = () => {
     } else {
       emptyStatutJuridiqueCheckboxs();
     }
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
   }
 
   function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
@@ -93,12 +96,14 @@ export const FiltreStructure = () => {
     if (typeSelected !== AttribuesDefaults.entiteJuridque) {
       emptyStatutJuridiqueCheckboxs();
     }
-    rechercheAvanceeContext?.setTypeStructure(typeSelected);
-    rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
-      rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
-      rechercheAvanceeContext?.setCapaciteHandicap([]);
-      rechercheAvanceeContext?.setCapaciteAgees([]);
+    if (rechercheAvanceeContext) {
+      rechercheAvanceeContext?.setTypeStructure(typeSelected);
+      rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
+      if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
+        rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+        rechercheAvanceeContext?.setCapaciteHandicap([]);
+        rechercheAvanceeContext?.setCapaciteAgees([]);
+      }
     }
   };
 
