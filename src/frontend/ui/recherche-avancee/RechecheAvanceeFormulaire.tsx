@@ -86,6 +86,7 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
             onChange={rechercheOnChange}
             placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"
             type="search"
+            value={rechercheAvanceeContext?.terme}
           />
           <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="button">
             {wording.RECHERCHE_LABEL}

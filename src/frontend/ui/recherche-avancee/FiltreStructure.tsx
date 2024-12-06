@@ -47,6 +47,22 @@ export const FiltreStructure = () => {
     };
   }, [typeSelected]);
 
+  useEffect(() => {
+    setTypeSelected(rechercheAvanceeContext?.typeStructure || "");
+    rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
+      if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
+        checkboxElementPublic.current.checked = true;
+      }
+      if (checkboxElementPriveL && AttribuesDefaults.statutPriveLucratif === status) {
+        checkboxElementPriveL.current.checked = true;
+      }
+      if (checkboxElementPriveNL && AttribuesDefaults.statutPriveNonLucratif === status) {
+        checkboxElementPriveNL.current.checked = true;
+      }
+    })
+  }, [rechercheAvanceeContext?.typeStructure])
+
+
   function onChangeType(value: any): void {
     setTypeSelected((prec) => (value === prec ? null : value));
     if (value === AttribuesDefaults.entiteJuridque) {
