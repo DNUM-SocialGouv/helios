@@ -1,5 +1,4 @@
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "next-usequerystate";
-import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
 
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";
@@ -9,9 +8,11 @@ type RechercheAvanceeProviderProps = Readonly<{
 }>;
 
 interface SearchParams {
+  terme?: string;
   page?: number;
   zoneGeo?: string;
   zoneGeoType?: string;
+  zoneGeoLabel?: string;
   typeStructure?: string;
   statutJuridiqueStructure?: string[];
   order?: string;
@@ -22,44 +23,29 @@ interface SearchParams {
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
-
-  const router = useRouter()
   const initialPage = 1;
 
-  const { query } = router;
-
-  const zone = query["zone"] ?? '';
-  const typeZone = query["typeZone"] ?? '';
-  const type = query["type"] ?? '';
-  const page = query["page"] ?? '1';
-  const terme = query["terme"] ?? '';
-  const statuts = query["statuts"] && typeof query["statuts"] === "string" ? query["statuts"].split(",") : []
-  const order = query["order"] ?? '';
-  const orderBy = query["order_by"] ?? '';
-
-  const capaciteMedicoSociaux =
-    query["capacite_medico_sociaux"] && typeof query["capacite_medico_sociaux"] === "string" ? query["capacite_medico_sociaux"].split(";") : [];
-  const capaciteHandicap = query["capacite_handicap"] && typeof query["capacite_handicap"] === "string" ? query["capacite_handicap"].split(";") : [];
-  const capaciteAgees = query["capacite_agees"] && typeof query["capacite_agees"] === "string" ? query["capacite_agees"].split(";") : [];
 
   const [searchParams, setSearchParams] = useQueryStates(
     {
-      terme: parseAsString.withDefault(String(terme)),
-      page: parseAsInteger.withDefault(Number(page)),
-      zoneGeo: parseAsString.withDefault(String(zone)),
-      zoneGeoType: parseAsString.withDefault(String(typeZone)),
-      typeStructure: parseAsString.withDefault(String(type)),
-      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault(statuts),
-      order: parseAsString.withDefault(String(order)),
-      orderBy: parseAsString.withDefault(String(orderBy)),
-      capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault(capaciteMedicoSociaux),
-      capaciteHandicap: parseAsArrayOf(parseAsString, ";").withDefault(capaciteHandicap),
-      capaciteAgees: parseAsArrayOf(parseAsString, ";").withDefault(capaciteAgees),
+      terme: parseAsString.withDefault(""),
+      page: parseAsInteger.withDefault(1),
+      zoneGeo: parseAsString.withDefault(""),
+      zoneGeoType: parseAsString.withDefault(""),
+      zoneGeoLabel: parseAsString.withDefault(""),
+      typeStructure: parseAsString.withDefault(""),
+      statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault([]),
+      order: parseAsString.withDefault(""),
+      orderBy: parseAsString.withDefault(""),
+      capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      capaciteHandicap: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      capaciteAgees: parseAsArrayOf(parseAsString, ";").withDefault([]),
     },
     {
       urlKeys: {
         zoneGeo: "zone",
         zoneGeoType: "typeZone",
+        zoneGeoLabel: 'zoneLabel',
         typeStructure: "type",
         statutJuridiqueStructure: "statuts",
         orderBy: "order_by",
@@ -72,7 +58,11 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
 
   const [termeFixe, setTermeFixe] = useState("");
 
-  const updateSearchParams = async (newParams: Partial<SearchParams>) => setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false });
+  const updateSearchParams = async (newParams: Partial<SearchParams>) => {
+    setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
+  };
+
+
 
   return (
     <RechercheAvanceeContext.Provider value={{
@@ -80,6 +70,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       termeFixe,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
       setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
+      setZoneGeoLabel: (value) => updateSearchParams({ zoneGeoLabel: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
@@ -89,7 +80,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setTermeFixe,
       setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
       setOrder: (value) => updateSearchParams({ order: value }),
-      setOrderBy: (value) => updateSearchParams({ orderBy: value }),
+      setOrderBy: (value) => updateSearchParams({ orderBy: value })
     }}>
       {children}
     </RechercheAvanceeContext.Provider>

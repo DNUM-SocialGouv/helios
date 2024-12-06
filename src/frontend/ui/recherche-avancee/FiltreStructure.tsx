@@ -47,6 +47,22 @@ export const FiltreStructure = () => {
     };
   }, [typeSelected]);
 
+  useEffect(() => {
+    setTypeSelected(rechercheAvanceeContext?.typeStructure || "");
+    rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
+      if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
+        checkboxElementPublic.current.checked = true;
+      }
+      if (checkboxElementPriveL && AttribuesDefaults.statutPriveLucratif === status) {
+        checkboxElementPriveL.current.checked = true;
+      }
+      if (checkboxElementPriveNL && AttribuesDefaults.statutPriveNonLucratif === status) {
+        checkboxElementPriveNL.current.checked = true;
+      }
+    })
+  }, [rechercheAvanceeContext?.typeStructure])
+
+
   function onChangeType(value: any): void {
     setTypeSelected((prec) => (value === prec ? null : value));
     if (value === AttribuesDefaults.entiteJuridque) {
@@ -59,6 +75,9 @@ export const FiltreStructure = () => {
     } else {
       emptyStatutJuridiqueCheckboxs();
     }
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
   }
 
   function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
@@ -93,12 +112,14 @@ export const FiltreStructure = () => {
     if (typeSelected !== AttribuesDefaults.entiteJuridque) {
       emptyStatutJuridiqueCheckboxs();
     }
-    rechercheAvanceeContext?.setTypeStructure(typeSelected);
-    rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-    if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
-      rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
-      rechercheAvanceeContext?.setCapaciteHandicap([]);
-      rechercheAvanceeContext?.setCapaciteAgees([]);
+    if (rechercheAvanceeContext) {
+      rechercheAvanceeContext?.setTypeStructure(typeSelected);
+      rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
+      if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
+        rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+        rechercheAvanceeContext?.setCapaciteHandicap([]);
+        rechercheAvanceeContext?.setCapaciteAgees([]);
+      }
     }
   };
 

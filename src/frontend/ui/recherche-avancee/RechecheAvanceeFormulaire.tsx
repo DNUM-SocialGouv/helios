@@ -11,15 +11,30 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 type RechercheAvanceeFormulaireProps = Readonly<{
   lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void;
   rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  terme: string | undefined;
 }>;
 
-export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
+export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
-  const [zoneGeographique, setZoneGeographique] = useState<string>(wording.ZONE_GEOGRAPHIQUE);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
+        document.getElementById("recherche-terme-botton")?.click();
+      }
+    };
+
+    // Ajouter l'écouteur d'événement pour "Enter"
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Nettoyer l'écouteur quand le modal est fermé
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [rechercheAvanceeContext?.terme]);
 
   useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
@@ -32,7 +47,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
 
   const getWording = (defValue: string) => {
     if (wording.ZONE_GEOGRAPHIQUE === defValue) {
-      return zoneGeographique ? zoneGeographique : rechercheAvanceeContext?.zoneGeo ? rechercheAvanceeContext?.zoneGeo : wording.ZONE_GEOGRAPHIQUE;
+      return rechercheAvanceeContext?.zoneGeoLabel ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
     }
     if (wording.STRUCTURE === defValue) {
       let structureWording = wording.STRUCTURE;
@@ -59,7 +74,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
           ...rechercheAvanceeContext.capaciteAgees,
         ];
         if (allCapacities.length > 0) {
-          capaciterWording += " : " + allCapacities[0].replace(",", "-");
+          capaciterWording += " : " + ajusteementLibelleCapacite(allCapacities[0]);
           if (allCapacities.length > 1) {
             capaciterWording += ", +" + (allCapacities.length - 1);
           }
@@ -68,6 +83,10 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
       return capaciterWording;
     }
     return defValue;
+  };
+
+  const ajusteementLibelleCapacite = (str: string): string => {
+    return str.includes(">") ? +str.replace(">", "") + 1 + " et plus" : str.replace(",", "-");
   };
 
   return (
@@ -84,9 +103,10 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
             onChange={rechercheOnChange}
             placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"
             type="search"
-            value={terme}
+            value={rechercheAvanceeContext?.terme}
           />
-          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="submit">
+          <button className="fr-btn" id="recherche-terme-botton" onClick={lancerLaRecherche} title="Rechercher"
+            type="button">
             {wording.RECHERCHE_LABEL}
           </button>
         </form>
@@ -118,7 +138,7 @@ export const RechercheAvanceeFormulaire = ({ terme, lancerLaRecherche, recherche
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique setZoneGeographique={setZoneGeographique} />
+        <FiltreZoneGeographique />
         <FiltreStructure />
         <FiltreCapacite />
       </div>
