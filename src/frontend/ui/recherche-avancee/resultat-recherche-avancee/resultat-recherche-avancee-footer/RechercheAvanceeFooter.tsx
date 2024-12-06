@@ -15,7 +15,7 @@ export const TableFooterRechercheAvancee = ({ nombreRésultats, lastPage, page, 
   return (
     <div className={styles["footer-container"]} data-testid="footer-container">
       <span className={"fr-table__detail " + styles["number-lines-container"]} data-testid="number-lines-container">
-        {nombreRésultats + (nombreRésultats > 2 ? " établissements" : " établissement")}
+        {nombreRésultats + (nombreRésultats > 1 ? " établissements" : " établissement")}
       </span>
       {nombreRésultats > 20 && (
         <div className={styles["pagination-container"]} data-testid="pagination-container">
