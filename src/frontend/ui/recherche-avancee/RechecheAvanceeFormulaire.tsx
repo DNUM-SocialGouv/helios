@@ -20,6 +20,23 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
+        document.getElementById("recherche-terme-botton")?.click();
+      }
+    };
+
+    // Ajouter l'écouteur d'événement pour "Enter"
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Nettoyer l'écouteur quand le modal est fermé
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [rechercheAvanceeContext?.terme]);
+
+  useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
     if (listTypes.includes(structureType, 0)) {
       setDisableCapaciter(true);
@@ -88,7 +105,8 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
             type="search"
             value={rechercheAvanceeContext?.terme}
           />
-          <button className="fr-btn" onClick={lancerLaRecherche} title="Rechercher" type="button">
+          <button className="fr-btn" id="recherche-terme-botton" onClick={lancerLaRecherche} title="Rechercher"
+            type="button">
             {wording.RECHERCHE_LABEL}
           </button>
         </form>
