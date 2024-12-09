@@ -104,6 +104,18 @@ export const FiltreCapacite = () => {
     };
   }, [capaciteAgees, capaciteHandicap, capaciteMedicoSociaux]);
 
+  useEffect(() => {
+    if (
+      rechercheAvanceeContext?.capaciteAgees.length === 0 &&
+      rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
+      rechercheAvanceeContext?.capaciteMedicoSociaux.length === 0
+    ) {
+      setCapaciteAgees(new CapaciteEtablissement("personnes_agees", []));
+      setCapaciteHandicap(new CapaciteEtablissement("publics_en_situation_de_handicap", []));
+      setCapaciteMedicoSociaux(new CapaciteEtablissement("non_classifie", []));
+    }
+  }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
+
   function onChangeCheck(i: string, statut: string[], setStatut: Dispatch<SetStateAction<CapaciteEtablissement>>, clasification: string): any {
     if (statut.length > 0 && statut.findIndex((a) => i === a) !== -1) {
       statut.splice(
@@ -117,14 +129,16 @@ export const FiltreCapacite = () => {
   }
 
   const appliquerButton = () => {
-    if (capaciteMedicoSociaux.ranges.length > 0) {
-      rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
-    }
-    if (capaciteHandicap.ranges.length > 0) {
-      rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
-    }
-    if (capaciteAgees.ranges.length > 0) {
-      rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
+    if (rechercheAvanceeContext) {
+      if (capaciteMedicoSociaux.ranges.length > 0) {
+        rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
+      }
+      if (capaciteHandicap.ranges.length > 0) {
+        rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
+      }
+      if (capaciteAgees.ranges.length > 0) {
+        rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
+      }
     }
   };
 
@@ -135,7 +149,7 @@ export const FiltreCapacite = () => {
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
-    rechercheAvanceeContext?.setTypeStructure("");
+    // rechercheAvanceeContext?.setTypeStructure("");
   };
 
   return (

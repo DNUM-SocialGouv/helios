@@ -4,7 +4,7 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { Table } from "../../commun/Table/Table";
-import { initialData } from "../../home/ComparaisonViewModel";
+import { ComparaisonViewModel, initialData } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
@@ -15,23 +15,37 @@ const tableHeaders = [
   { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
   { label: "Commune", key: "commune", sort: true },
   { label: "Département", key: "departement", sort: true },
-  { label: "Finess ET", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-  { label: "Type", key: "type", sort: true },
+  { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+  { label: "Rattachement(s)", key: "rattachement" },
 ];
+
+export type SelectedRows = Readonly<{
+  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
+}>;
 
 type ResultatRechercheAvanceeProps = Readonly<{
   data: RechercheViewModel[];
   nombreRésultats: number;
   setPage: ((page: number, shallow?: boolean) => void) | undefined;
   lastPage: number;
-  page: number | undefined;
+  page: number;
 }>;
 
 export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const wording = new WordingFr();
+
+  const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      setSelectedRows({ ...selectedRows, [page]: [] });
+    } else {
+      setSelectedRows({ ...selectedRows, [page]: data });
+    }
+  };
 
   return (
     <>
@@ -52,10 +66,13 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
       <Table
         data={data}
         forMoyenne={initialData}
+        handleSelectAll={handleSelectAll}
         headers={tableHeaders}
+        isAllSelected={isAllSelected}
         isShowAvrage={false}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
+        page={page}
         selectedRows={selectedRows}
         setOrder={rechercheAvanceeContext?.setOrder || (() => {})}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => {})}

@@ -10,7 +10,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       categorisation AS statut_juridique,
       commune,
       departement,
-      code_region
+      code_region,
+      '' AS rattachement
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -21,7 +22,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       classification,
       commune,
       departement,
-      code_region
+      code_region,
+      numero_finess_entite_juridique AS rattachement
     FROM etablissement_territorial;`,
   name: "recherche",
 })
@@ -49,4 +51,7 @@ export class RechercheModel {
 
   @ViewColumn({ name: "classification" })
   public classification!: string;
+
+  @ViewColumn({ name: "rattachement" })
+  public rattachement!: string;
 }

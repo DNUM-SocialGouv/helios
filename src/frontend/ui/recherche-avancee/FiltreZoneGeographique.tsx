@@ -9,6 +9,8 @@ type ZoneGeo = Readonly<{
   nom: string;
   code: string;
   codeRegion: string;
+  codesPostaux: string[];
+  codeNum: string;
 }>;
 
 export const FiltreZoneGeographique = () => {
@@ -23,6 +25,8 @@ export const FiltreZoneGeographique = () => {
     nom: "",
     code: "",
     codeRegion: "",
+    codesPostaux: [],
+    codeNum: "",
   });
 
   // Debounce function to control the rate of API calls
@@ -35,43 +39,72 @@ export const FiltreZoneGeographique = () => {
   };
 
   const fetchSuggestions = async (searchQuery: string) => {
-    if (!searchQuery) return;
+    if (!searchQuery) {
+      setSuggestions([]);
+      return;
+    }
     setIsLoading(true);
     try {
-      const searchParam = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
+      const searchParamDepartement = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
+      const searchParamCommune = +searchQuery ? `codePostal=${searchQuery}` : `nom=${searchQuery}`;
 
       const responseRegion = await (
         await (await fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)).json()
       ).map((elt: any) => {
-        return { ...elt, type: "R", codeRegion: elt.code };
+        return { ...elt, type: "R", codeRegion: elt.code, codeNum: "" };
       });
       const responseDepartement = await (
-        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParam}`)).json()
+        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)).json()
       ).map((elt: any) => {
-        return { ...elt, type: "D" };
+        return { ...elt, type: "D", codeNum: elt.code };
       });
       const responseCommune = await (
         await (
           await fetch(
-            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion&format=json&type=arrondissement-municipal,commune-actuelle&${searchParam}`
+            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
           )
         ).json()
       ).map((elt: any) => {
+        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+        if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
+          elt.codeNum = "tous les arrondissements";
+        } else {
+          if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
+        }
         return { ...elt, type: "C" };
       });
 
       const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
+      // Separate the items that match the search value and the ones that don't
+      const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+
+      //Adds padding to numbers to handle them correctly in comparison
+      const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
+
+      // Sort both lists alphabetically by 'nom'
+      const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {
+        return normalize(a.nom).localeCompare(normalize(b.nom));
+      });
+
+      const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => {
+        return normalize(a.nom).localeCompare(normalize(b.nom));
+      });
+
+      const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems];
+
       const maRegion = data?.user.codeRegion;
       const sortedOptions =
         data?.user.role === 3 || data?.user.role === 2
-          ? responseData.sort((a: any, b: any) => {
+          ? sortedAlphabetically.sort((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
               if (estMaRegionA === estMaRegionB) return 0;
               return estMaRegionA ? -1 : 1;
             })
-          : responseData;
+          : sortedAlphabetically;
+
       setSuggestions(sortedOptions);
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -118,11 +151,13 @@ export const FiltreZoneGeographique = () => {
     setZoneGeoType("");
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
+    rechercheAvanceeContext?.setZoneGeoLabel("");
   };
 
   const applyZoneGeoValue = () => {
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);
+    rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);
   };
 
   return (
@@ -160,7 +195,7 @@ export const FiltreZoneGeographique = () => {
                             setZoneGeoSelected(item);
                           }}
                         >
-                          {item.type === "R" ? item.nom : `${item.nom} (${item.code})`}
+                          {item.codeNum ? `${item.nom} (${item.codeNum})` : item.nom}
                         </button>
                       </li>
                     ))}

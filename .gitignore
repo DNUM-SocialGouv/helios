@@ -39,10 +39,13 @@ yarn-error.log*
 data_test
 data_set/.ssh
 data_set/sirec
+data_set/flux_sirec
 data_set/checked_sirec
 data_set/sivss
+data_set/flux_sivss
 data_set/checked_sivss
 data_set/siicea
+data_set/flux_siicea
 data_set/checked_siicea
 data_set/hapi
 sshd_config

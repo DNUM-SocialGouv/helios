@@ -35,3 +35,13 @@
     width: 15px;
     color: var(--blue-france-sun-113-625);
 }
+
+.table_container_surcharge {
+    overflow: unset !important;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
