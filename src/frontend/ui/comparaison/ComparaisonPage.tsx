@@ -103,13 +103,24 @@ export const ComparaisonPage = () => {
     setEstCeOuvert(true);
   };
 
-  const isAllSelected = (dataTable.length > 0 && selectedRows[page]) && selectedRows[page].length === dataTable.length;
+  const isAllSelected = dataTable.length > 0 && selectedRows[page] && selectedRows[page].length === dataTable.length;
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-        setSelectedRows({...selectedRows, [page]: [] });
+      setSelectedRows({ ...selectedRows, [page]: [] });
     } else {
-        setSelectedRows({...selectedRows, [page]: dataTable});
+      setSelectedRows({ ...selectedRows, [page]: dataTable });
+    }
+  };
+
+  const onClickDelete = (numeroFinessASupprimer: string) => {
+    const listFiness = sessionStorage.getItem("listFinessNumbers");
+    const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
+    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    if (indexElementToDelete > -1) {
+      listFinessArray.splice(indexElementToDelete, 1);
+      sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
+      setLoading(true);
     }
   };
 
@@ -151,13 +162,14 @@ export const ComparaisonPage = () => {
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
                 isShowAvrage={true}
+                onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
                 order=""
                 orderBy=""
                 page={page || 1}
                 selectedRows={selectedRows}
                 setOrder={() => {}}
-                setOrderBy={() => {}} 
+                setOrderBy={() => {}}
                 setSelectedRows={setSelectedRows}
               />
               <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
