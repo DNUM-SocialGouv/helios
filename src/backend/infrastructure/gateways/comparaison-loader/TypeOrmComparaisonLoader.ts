@@ -164,7 +164,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return moyennes.map((moyenne: any): MoyenneSMS => {
       return {
         annee: moyenne.annee,
-        capaciteMoyenne: moyenne.capacitemoyenne ? Number(moyenne.capacitemoyenne) : null,
+        capaciteMoyenne: this.makeNumberArrondi(moyenne.capacitemoyenne, 1),
         realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne,
         acceuilDeJourMoyenne: moyenne.realisationacitivitemoyenne,
         hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne,
@@ -182,11 +182,20 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     });
   }
 
-  private makeNumberArrondi(value: number, num: number): number {
-    return value ? Number(value.toFixed(num)) : value;
+  private makeNumberArrondi(value: any, num: number): number | null {
+    // Convert value to a number and check if it's a valid number
+    const numericValue = Number(value);
+
+    if (!isNaN(numericValue)) {
+      // If numericValue is a valid number, return the rounded number
+      return Number(numericValue.toFixed(num));
+    } else {
+      // If it's not a valid number, return null or handle as needed
+      return null;
+    }
   }
 
-  private transformInRate(number: number, chiffre: number): number {
+  private transformInRate(number: number, chiffre: number): number | null {
     return number ? this.makeNumberArrondi(number * 100, chiffre) : number;
   }
 

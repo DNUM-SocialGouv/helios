@@ -25,16 +25,17 @@ interface DataTableProps {
   forMoyenne: MoyenneResultatComparaison;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: SelectedRows;
-  setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>
+  setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
   order: string;
   orderBy: string;
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
   isShowAvrage: boolean;
   onClickInfobull?: (name: string) => void;
-  page: number
-  handleSelectAll: () => void
+  page: number;
+  handleSelectAll: () => void;
   isAllSelected: boolean;
+  onClickDelete: (finessNumber: string) => void;
 }
 
 interface TableHeaderProps {
@@ -57,6 +58,7 @@ interface TableBodyProps {
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   page: number;
+  onClickDelete: (finessNumber: string) => void;
 }
 
 interface TriProps {
@@ -120,20 +122,13 @@ const construisLeLien = (type: string, finess: string): string => {
   return "/entite-juridique/" + finess;
 };
 
-const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll,
-  isAllSelected }: TableHeaderProps) => {
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected }: TableHeaderProps) => {
   return (
     <thead>
       <tr className={styles["sticky-header"]}>
         <th className="fr-cell--fixed" role="columnheader">
           <div className="fr-checkbox-group fr-checkbox-group--sm">
-            <input
-              checked={isAllSelected || false}
-              id="table-select-checkbox-7748--0"
-              name="row-select"
-              onChange={handleSelectAll}
-              type="checkbox"
-            />
+            <input checked={isAllSelected || false} id="table-select-checkbox-7748--0" name="row-select" onChange={handleSelectAll} type="checkbox" />
             <label className="fr-label" htmlFor="table-select-checkbox-7748--0">
               Séléctionner tous les éléments
             </label>
@@ -148,7 +143,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
           ) : (
             <th key={index}>
               <span>{header.label}</span>
-              {header.key !== "delete" && onClickInfobull && (
+              {header.key !== "delete" && header.key !== "favori" && onClickInfobull && (
                 <button className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} onClick={() => onClickInfobull(header.key)} />
               )}
             </th>
@@ -159,7 +154,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -181,7 +176,14 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
           {headers.map((header, colIndex) => (
             <td className={header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} key={colIndex}>
               {header.key === "delete" && (
-                <button aria-controls="fr-modal-2" className="fr-icon-delete-line fr-cell--center" data-fr-opened="false" title="Supprimer" type="button" />
+                <button
+                  aria-controls="fr-modal-2"
+                  className="fr-icon-delete-line fr-cell--center"
+                  data-fr-opened="false"
+                  onClick={() => onClickDelete(row["numéroFiness"])}
+                  title="Supprimer"
+                  type="button"
+                />
               )}
               {header.key === "etsLogo" && (
                 <div className={styles["logo-center"]}>
@@ -192,7 +194,13 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
               )}
               {header.key === "favori" && <StarButton favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
-                <a className="fr-tile__link" href={construisLeLien(row["type"], row["numéroFiness"])} rel="noreferrer" style={{ backgroundImage: "none" }} target="_blank">
+                <a
+                  className="fr-tile__link"
+                  href={construisLeLien(row["type"], row["numéroFiness"])}
+                  rel="noreferrer"
+                  style={{ backgroundImage: "none" }}
+                  target="_blank"
+                >
                   {row[header.key]}
                 </a>
               )}
@@ -221,21 +229,20 @@ export const Table = ({
   handleSelectAll,
   isAllSelected,
   page,
+  onClickDelete,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
       setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
     } else {
-      selectedRows[page] ?
-        setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) :
-        setSelectedRows({ ...selectedRows, [page]: [row] });
+      selectedRows[page] ? setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) : setSelectedRows({ ...selectedRows, [page]: [row] });
     }
   };
 
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className={"fr-table__container " + styles["table_container_surcharge"]}>
+        <div className={`fr-table__container ${!isShowAvrage ? styles["table_container_surcharge"] : ""}`}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader
@@ -255,6 +262,7 @@ export const Table = ({
                 handleSelectRow={handleSelectRow}
                 headers={headers}
                 isShowAvrage={isShowAvrage}
+                onClickDelete={onClickDelete}
                 page={page}
                 selectedRows={selectedRows}
               />
