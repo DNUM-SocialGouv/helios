@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import { moyenneInitialValues } from "../../comparaison/model/data";
 import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
-import { InfoBulle } from "../InfoBulle/InfoBulle";
 import styles from "./Table.module.css";
 
 interface TableExtensionCalculMoyenneProps {
   dataSource: MoyenneResultatComparaison;
+  setEstCeOuvert?: Dispatch<SetStateAction<boolean>>;
 }
 
-export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalculMoyenneProps) {
+export function TableExtensionCalculMoyenne({ dataSource, setEstCeOuvert }: TableExtensionCalculMoyenneProps) {
   const result = moyenneInitialValues;
-
-  const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
 
   return (
     <>
@@ -27,7 +25,9 @@ export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalcul
           <button
             className={"fr-fi-information-line " + styles["info-container-bulle"]}
             onClick={() => {
-              setEstCeOuvert(true);
+              if (setEstCeOuvert) {
+                setEstCeOuvert(true);
+              }
             }}
           >
             <span className={styles["tooltip"]}>This is a tooltip!</span>
@@ -55,9 +55,6 @@ export function TableExtensionCalculMoyenne({ dataSource }: TableExtensionCalcul
           }
         })}
       </tr>
-      <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre="Calcul de la moyenne">
-        <>Les données non renseignées sont exclues du calcul de la moyenne.</>
-      </InfoBulle>
     </>
   );
 }

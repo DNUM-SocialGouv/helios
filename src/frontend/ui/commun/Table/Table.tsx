@@ -36,6 +36,7 @@ interface DataTableProps {
   handleSelectAll: () => void;
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
+  handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface TableHeaderProps {
@@ -59,6 +60,7 @@ interface TableBodyProps {
   isShowAvrage: boolean;
   page: number;
   onClickDelete: (finessNumber: string) => void;
+  handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface TriProps {
@@ -154,7 +156,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -209,7 +211,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
           ))}
         </tr>
       ))}
-      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} />}
+      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} setEstCeOuvert={handleInfoBullMoyenne} />}
     </tbody>
   );
 };
@@ -230,6 +232,7 @@ export const Table = ({
   isAllSelected,
   page,
   onClickDelete,
+  handleInfoBullMoyenne,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
@@ -259,6 +262,7 @@ export const Table = ({
               <TableBody
                 data={data}
                 forMoyenne={forMoyenne}
+                handleInfoBullMoyenne={handleInfoBullMoyenne}
                 handleSelectRow={handleSelectRow}
                 headers={headers}
                 isShowAvrage={isShowAvrage}

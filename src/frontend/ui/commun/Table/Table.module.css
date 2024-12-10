@@ -48,7 +48,7 @@
 
 .tooltip {
     /*visibility: hidden;*/
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, .75);
     color: #fff;
     text-align: center;
     border-radius: 5px;
@@ -59,7 +59,7 @@
     left: 50%;
     margin-left: -60px; /* Offset the tooltip by half its width */
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity .3s;
   }
   
   .button:hover .tooltip {

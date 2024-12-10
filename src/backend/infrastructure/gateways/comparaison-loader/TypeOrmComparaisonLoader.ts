@@ -184,9 +184,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   private makeNumberArrondi(value: any, num: number): number | null {
     // Convert value to a number and check if it's a valid number
-    const numericValue = Number(value);
+    const numericValue = value ? Number(value) : null;
 
-    if (!isNaN(numericValue)) {
+    if (numericValue && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
       return Number(numericValue.toFixed(num));
     } else {

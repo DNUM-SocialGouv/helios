@@ -24,6 +24,7 @@ export const ComparaisonPage = () => {
   const [loading, setLoading] = useState<boolean>(true); // Nouvelle variable d'état pour le chargement
   const [listeAnnees, setListeAnnees] = useState<number[]>([]);
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
+  const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactChild>("");
   const [contenu, setContenu] = useState();
 
@@ -158,6 +159,7 @@ export const ComparaisonPage = () => {
               <Table
                 data={dataTable}
                 forMoyenne={moyenneResultat}
+                handleInfoBullMoyenne={setEstCeOuvertMoyenne}
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
@@ -178,6 +180,14 @@ export const ComparaisonPage = () => {
         </div>
         <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
           <>{contenu}</>
+        </InfoBulle>
+        <InfoBulle
+          estCeOuvert={estCeOuvertMoyenne}
+          identifiant="info-bull-comparaison-table"
+          setEstCeOuvert={setEstCeOuvertMoyenne}
+          titre="Calcul de la moyenne"
+        >
+          <>Les données non renseignées sont exclues du calcul de la moyenne.</>
         </InfoBulle>
       </main>
     </>
