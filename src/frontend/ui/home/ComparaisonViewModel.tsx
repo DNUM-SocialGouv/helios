@@ -17,6 +17,8 @@ export type ResultatComparaison = Readonly<{
   vetusteConstruction: number;
   roulementNetGlobal: number;
   resultatNetComptable: number;
+  commune: string;
+  departement: string;
 }>;
 
 export type MoyenneResultatComparaison = {
@@ -113,6 +115,14 @@ export class ComparaisonViewModel {
 
   public get roulementNetGlobal(): number {
     return this.comparaison.roulementNetGlobal;
+  }
+
+  public get commune(): string {
+    return this.comparaison.commune;
+  }
+
+  public get departement(): string {
+    return this.comparaison.departement;
   }
 
   public get resultatNetComptable(): string {

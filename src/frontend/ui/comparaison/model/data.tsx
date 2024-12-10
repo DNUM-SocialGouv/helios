@@ -78,7 +78,7 @@ export const contenuModal = (name: string): { contenu: any; titre: ReactChild } 
 export const tableHeaders = [
   { label: "", key: "delete" },
   { label: "", key: "etsLogo", sort: true },
-  // { label: "", key: "favori", sort: true },
+  { label: "", key: "favori", sort: true },
   { label: "Raison Sociale Courte", key: "socialReason", sort: true },
   { label: "Numéro Finess", key: "numéroFiness", sort: true },
   { label: "Capacité Totale", key: "capacite", sort: true },
