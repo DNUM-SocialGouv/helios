@@ -146,7 +146,11 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
             <th key={index}>
               <span>{header.label}</span>
               {header.key !== "delete" && header.key !== "favori" && onClickInfobull && (
-                <button className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]} onClick={() => onClickInfobull(header.key)} />
+                <button
+                  className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]}
+                  onClick={() => onClickInfobull(header.key)}
+                  title="Détails de l’indicateur"
+                />
               )}
             </th>
           )

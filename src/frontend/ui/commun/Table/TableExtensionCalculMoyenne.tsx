@@ -29,6 +29,7 @@ export function TableExtensionCalculMoyenne({ dataSource, setEstCeOuvert }: Tabl
                 setEstCeOuvert(true);
               }
             }}
+            title="Détails de la calcul de la moyenne"
           >
             <span className={styles["tooltip"]}>This is a tooltip!</span>
           </button>

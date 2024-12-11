@@ -143,14 +143,21 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       parameters = { ...parameters, statutJuridique: statutJuridique };
     }
 
+    const CapaciteSMS = (await this.orm)
+      .createQueryBuilder()
+      .select("ams.numero_finess_etablissement_territorial", "numero_finess_etablissement_territorial")
+      .addSelect("SUM(ams.capacite_installee_totale)", "capacite_installee_totale")
+      .from(AutorisationMédicoSocialModel, "ams")
+      .groupBy("ams.numero_finess_etablissement_territorial");
+
     if (capaciteSMS.length !== 0) {
       const capaciteSMSConditions: string[] = [];
       requêteDeLaRecherche
-        .innerJoin(AutorisationMédicoSocialModel, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
+        .innerJoin(`(${CapaciteSMS.getQuery()})`, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
         .innerJoin(
           ÉtablissementTerritorialIdentitéModel,
           "etablissement",
-          "capacite_sms.numéroFinessÉtablissementTerritorial = etablissement.numéroFinessÉtablissementTerritorial"
+          "capacite_sms.numero_finess_etablissement_territorial = etablissement.numéroFinessÉtablissementTerritorial"
         );
       capaciteSMS.forEach((capacite) => {
         const conditionsSMS = this.construireLaLogiqueCapaciteEtablissements(capacite);
