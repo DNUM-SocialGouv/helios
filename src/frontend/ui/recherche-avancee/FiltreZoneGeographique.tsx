@@ -98,11 +98,11 @@ export const FiltreZoneGeographique = () => {
       const sortedOptions =
         data?.user.role === 3 || data?.user.role === 2
           ? sortedAlphabetically.sort((a: any, b: any) => {
-            const estMaRegionA = a.codeRegion === maRegion;
-            const estMaRegionB = b.codeRegion === maRegion;
-            if (estMaRegionA === estMaRegionB) return 0;
-            return estMaRegionA ? -1 : 1;
-          })
+              const estMaRegionA = a.codeRegion === maRegion;
+              const estMaRegionB = b.codeRegion === maRegion;
+              if (estMaRegionA === estMaRegionB) return 0;
+              return estMaRegionA ? -1 : 1;
+            })
           : sortedAlphabetically;
 
       setSuggestions(sortedOptions);
