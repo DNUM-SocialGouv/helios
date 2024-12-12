@@ -1,5 +1,6 @@
 import { ResultatDeComparaison } from "../entities/ResultatDeComparaison";
 
 export interface ComparaisonLoader {
-    compare(type: string, numerosFiness: string[], page: number, orderBy: string, order: string): Promise<ResultatDeComparaison>;
+    listeAnnees(type: string, numerosFiness: string[]): Promise<string[]>;
+    compare(type: string, numerosFiness: string[], annee: string, page: number, orderBy: string, order: string): Promise<ResultatDeComparaison>;
 }

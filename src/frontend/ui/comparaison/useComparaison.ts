@@ -24,6 +24,7 @@ export function useComparaison() {
   const lancerLaComparaison = (): void => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
+    const annee = '2021';
 
     let parsedFiness = null;
     try {
@@ -33,7 +34,7 @@ export function useComparaison() {
     }
 
     const type = typeStored || undefined;
-    comparer(type, parsedFiness, pageInitiale);
+    comparer(type, parsedFiness, annee, pageInitiale);
   };
 
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
@@ -44,10 +45,10 @@ export function useComparaison() {
     return data.moyennes.map((resultat) => new ComparaisonMoyenneViewModel(resultat));
   };
 
-  const comparer = async (type: string = "", numerosFiness: string[] = [], page: number = 1, order = "", orderBy = "") => {
+  const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "") => {
     // rechercheAvanceeContext?.setPage(page, true);
     fetch("/api/comparaison", {
-      body: JSON.stringify({ type, numerosFiness, page, order, orderBy }),
+      body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
@@ -60,7 +61,7 @@ export function useComparaison() {
           moyenne: construisLaMoyenneDesResultat(data),
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   return {

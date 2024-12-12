@@ -1,5 +1,4 @@
 export type ResultatComparaison = Readonly<{
-  annee: number;
   numéroFiness: string;
   socialReason: string;
   type: string;
@@ -40,16 +39,12 @@ export type MoyenneResultatComparaison = {
 
 export type ApiComparaisonResultat = Readonly<{
   moyennes: MoyenneResultatComparaison[];
-  nombreDeResultats: [{ annee: number; total: string }];
+  nombreDeResultats: number;
   resultat: ResultatComparaison[];
 }>;
 
 export class ComparaisonViewModel {
-  constructor(private readonly comparaison: ResultatComparaison) {}
-
-  public get annee(): number {
-    return this.comparaison.annee;
-  }
+  constructor(private readonly comparaison: ResultatComparaison) { }
 
   public get numéroFiness(): string {
     return this.comparaison.numéroFiness;
@@ -118,11 +113,11 @@ export class ComparaisonViewModel {
   public get resultatNetComptable(): string {
     return this.comparaison.resultatNetComptable
       ? this.comparaison.resultatNetComptable
-          .toLocaleString("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          })
-          .split(",")[0] + "€"
+        .toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        })
+        .split(",")[0] + "€"
       : "-";
   }
 
@@ -136,7 +131,7 @@ export class ComparaisonViewModel {
 }
 
 export class ComparaisonMoyenneViewModel {
-  constructor(private moyenne: MoyenneResultatComparaison) {}
+  constructor(private moyenne: MoyenneResultatComparaison) { }
 
   // Accesseur pour l'année
   public get annee(): number {

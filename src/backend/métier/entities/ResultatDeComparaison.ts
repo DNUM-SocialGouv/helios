@@ -7,7 +7,6 @@ export type ResultatEJ = Readonly<{
 }>;
 
 export type ResultatSMS = Readonly<{
-  annee: number;
   numéroFiness: string;
   socialReason: string;
   type: string;
@@ -56,7 +55,7 @@ export type MoyenneSMS = Readonly<{
 export type MoyenneES = Readonly<{}>;
 
 export type ResultatDeComparaison = {
-  nombreDeResultats: [{ annee: number; total: number }];
+  nombreDeResultats: number;
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
   moyennes: MoyenneEJ[] | MoyenneSMS[] | MoyenneES[];
 };

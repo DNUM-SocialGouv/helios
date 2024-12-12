@@ -41,6 +41,7 @@ export const ComparaisonPage = () => {
     fetchData();
   }, [loading]);
 
+  /******************************************
   // Utilisation de useEffect pour filtrer les résultats dès que les résultats changent
   useEffect(() => {
     if (!loading) {
@@ -61,6 +62,7 @@ export const ComparaisonPage = () => {
     }
   }, [loading, resultats, annéeEnCours]); // Dépendance sur les résultats et les filtres
 
+  ******************************************************************************************/
   const getAllTypes = () => {
     const result: string[] = [];
     resultats.forEach((element) => {
@@ -107,9 +109,9 @@ export const ComparaisonPage = () => {
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-        setSelectedRows({...selectedRows, [page]: [] });
+      setSelectedRows({ ...selectedRows, [page]: [] });
     } else {
-        setSelectedRows({...selectedRows, [page]: dataTable});
+      setSelectedRows({ ...selectedRows, [page]: dataTable });
     }
   };
 
@@ -145,7 +147,7 @@ export const ComparaisonPage = () => {
           ) : (
             <>
               <Table
-                data={dataTable}
+                data={resultats}
                 forMoyenne={moyenneResultat}
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
@@ -156,11 +158,11 @@ export const ComparaisonPage = () => {
                 orderBy=""
                 page={page || 1}
                 selectedRows={selectedRows}
-                setOrder={() => {}}
-                setOrderBy={() => {}} 
+                setOrder={() => { }}
+                setOrderBy={() => { }}
                 setSelectedRows={setSelectedRows}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
+              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>
           )}
         </div>

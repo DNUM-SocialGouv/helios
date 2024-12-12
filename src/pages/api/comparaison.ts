@@ -8,10 +8,11 @@ export default async function handler(request: NextApiRequest, response: NextApi
     response.status(405).send("Method not allowed");
   }
 
-  const { type, numerosFiness, page, order, orderBy } = request.body;
+  const { type, numerosFiness, annee, page, order, orderBy } = request.body;
 
   // const type = 'Médico-social';
-  // const numerosFiness = ['010003598', '010007961'];
+  // const annee = '2021';
+  // const numerosFiness = ["010003598", "010007961", "010786036", "010786077"];
   // const page = 1;
   // const order = '';
   // const orderBy = '';
@@ -21,7 +22,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   }
 
   // TODO check if all numeros finess belong to the type
-  const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness, page, order, orderBy);
+  const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness, annee, page, order, orderBy);
 
   response.status(200).json(comparaisonResult);
 }
