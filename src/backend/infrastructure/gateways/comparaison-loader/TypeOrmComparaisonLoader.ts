@@ -204,11 +204,20 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   //   });
   // }
 
-  private makeNumberArrondi(value: number, num: number): number {
-    return value ? Number(value.toFixed(num)) : value;
+  private makeNumberArrondi(value: any, num: number): number | null {
+    // Convert value to a number and check if it's a valid number
+    const numericValue = value ? Number(value) : null;
+
+    if (numericValue && !isNaN(numericValue)) {
+      // If numericValue is a valid number, return the rounded number
+      return Number(numericValue.toFixed(num));
+    } else {
+      // If it's not a valid number, return null or handle as needed
+      return null;
+    }
   }
 
-  private transformInRate(number: number, chiffre: number): number {
+  private transformInRate(number: number, chiffre: number): number | null {
     return number ? this.makeNumberArrondi(number * 100, chiffre) : number;
   }
 

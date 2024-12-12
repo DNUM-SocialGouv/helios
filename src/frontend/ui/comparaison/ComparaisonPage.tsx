@@ -24,6 +24,7 @@ export const ComparaisonPage = () => {
   const [loading, setLoading] = useState<boolean>(true); // Nouvelle variable d'état pour le chargement
   const [listeAnnees, setListeAnnees] = useState<number[]>([]);
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
+  const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactChild>("");
   const [contenu, setContenu] = useState();
 
@@ -105,13 +106,24 @@ export const ComparaisonPage = () => {
     setEstCeOuvert(true);
   };
 
-  const isAllSelected = (dataTable.length > 0 && selectedRows[page]) && selectedRows[page].length === dataTable.length;
+  const isAllSelected = dataTable.length > 0 && selectedRows[page] && selectedRows[page].length === dataTable.length;
 
   const handleSelectAll = () => {
     if (isAllSelected) {
       setSelectedRows({ ...selectedRows, [page]: [] });
     } else {
       setSelectedRows({ ...selectedRows, [page]: dataTable });
+    }
+  };
+
+  const onClickDelete = (numeroFinessASupprimer: string) => {
+    const listFiness = sessionStorage.getItem("listFinessNumbers");
+    const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
+    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    if (indexElementToDelete > -1) {
+      listFinessArray.splice(indexElementToDelete, 1);
+      sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
+      setLoading(true);
     }
   };
 
@@ -149,10 +161,12 @@ export const ComparaisonPage = () => {
               <Table
                 data={resultats}
                 forMoyenne={moyenneResultat}
+                handleInfoBullMoyenne={setEstCeOuvertMoyenne}
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
                 isShowAvrage={true}
+                onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
                 order=""
                 orderBy=""
@@ -168,6 +182,14 @@ export const ComparaisonPage = () => {
         </div>
         <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
           <>{contenu}</>
+        </InfoBulle>
+        <InfoBulle
+          estCeOuvert={estCeOuvertMoyenne}
+          identifiant="info-bull-comparaison-table"
+          setEstCeOuvert={setEstCeOuvertMoyenne}
+          titre="Calcul de la moyenne"
+        >
+          <>Les données non renseignées sont exclues du calcul de la moyenne.</>
         </InfoBulle>
       </main>
     </>
