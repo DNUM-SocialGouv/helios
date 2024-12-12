@@ -130,15 +130,9 @@ export const FiltreCapacite = () => {
 
   const appliquerButton = () => {
     if (rechercheAvanceeContext) {
-      if (capaciteMedicoSociaux.ranges.length > 0) {
-        rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
-      }
-      if (capaciteHandicap.ranges.length > 0) {
-        rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
-      }
-      if (capaciteAgees.ranges.length > 0) {
-        rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
-      }
+      rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
+      rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
+      rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
     }
   };
 

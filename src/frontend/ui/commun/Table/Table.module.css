@@ -45,3 +45,24 @@
     top: 0;
     z-index: 2;
 }
+
+.tooltip {
+    /*visibility: hidden;*/
+    background-color: rgba(0, 0, 0, .75);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the button */
+    left: 50%;
+    margin-left: -60px; /* Offset the tooltip by half its width */
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  
+  .button:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }

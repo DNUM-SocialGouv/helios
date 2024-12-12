@@ -59,9 +59,8 @@ export const FiltreStructure = () => {
       if (checkboxElementPriveNL && AttribuesDefaults.statutPriveNonLucratif === status) {
         checkboxElementPriveNL.current.checked = true;
       }
-    })
-  }, [rechercheAvanceeContext?.typeStructure])
-
+    });
+  }, [rechercheAvanceeContext?.typeStructure]);
 
   function onChangeType(value: any): void {
     setTypeSelected((prec) => (value === prec ? null : value));
