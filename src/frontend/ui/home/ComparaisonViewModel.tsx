@@ -19,8 +19,6 @@ export type ResultatComparaison = Readonly<{
 }>;
 
 export type MoyenneResultatComparaison = {
-  nombreEtablissement?: number;
-  annee: number;
   capaciteMoyenne: number;
   realisationAcitiviteMoyenne: number;
   acceuilDeJourMoyenne: number;
@@ -133,11 +131,6 @@ export class ComparaisonViewModel {
 export class ComparaisonMoyenneViewModel {
   constructor(private moyenne: MoyenneResultatComparaison) { }
 
-  // Accesseur pour l'année
-  public get annee(): number {
-    return this.moyenne.annee;
-  }
-
   // Accesseurs pour les autres propriétés
   public get capaciteMoyenne(): number {
     return this.moyenne.capaciteMoyenne;
@@ -205,8 +198,6 @@ const transformInRate = (number: number, chiffre: number): number => {
 };
 
 export const initialData: MoyenneResultatComparaison = {
-  nombreEtablissement: 0,
-  annee: 0,
   capaciteMoyenne: 0,
   realisationAcitiviteMoyenne: 0,
   hebergementPermanentMoyenne: 0,

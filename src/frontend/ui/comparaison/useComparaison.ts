@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import { ApiComparaisonResultat, ComparaisonMoyenneViewModel, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
+import { ApiComparaisonResultat, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 
 type comparaisonState = Readonly<{
   nombreRésultats: number;
   lastPage: number;
   résultats: ComparaisonViewModel[];
-  moyenne: MoyenneResultatComparaison[];
+  moyenne: MoyenneResultatComparaison;
 }>;
 
 export function useComparaison() {
@@ -15,13 +15,28 @@ export function useComparaison() {
     nombreRésultats: 0,
     lastPage: 1,
     résultats: [],
-    moyenne: [],
+    moyenne: {
+      capaciteMoyenne: 0,
+      realisationAcitiviteMoyenne: 0,
+      acceuilDeJourMoyenne: 0,
+      hebergementPermanentMoyenne: 0,
+      hebergementTemporaireMoyenne: 0,
+      fileActivePersonnesAccompagnesMoyenne: 0,
+      rotationPersonnelMoyenne: 0,
+      absenteismeMoyenne: 0,
+      prestationExterneMoyenne: 0,
+      etpVacantMoyenne: 0,
+      tauxCafMoyenne: 0,
+      vetusteConstructionMoyenne: 0,
+      roulementNetGlobalMoyenne: 0,
+      resultatNetComptableMoyenne: 0
+    },
   });
 
-  const pageInitiale = 1;
+  // const pageInitiale = 1;
   // const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
 
-  const lancerLaComparaison = (): void => {
+  const lancerLaComparaison = (page: number): void => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
     const annee = '2021';
@@ -34,15 +49,13 @@ export function useComparaison() {
     }
 
     const type = typeStored || undefined;
-    comparer(type, parsedFiness, annee, pageInitiale);
+    comparer(type, parsedFiness, annee, page);
   };
 
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
+    // eslint-disable-next-line no-console
+    console.log('data================', data);
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
-  };
-
-  const construisLaMoyenneDesResultat = (data: ApiComparaisonResultat): MoyenneResultatComparaison[] => {
-    return data.moyennes.map((resultat) => new ComparaisonMoyenneViewModel(resultat));
   };
 
   const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "") => {
@@ -56,9 +69,10 @@ export function useComparaison() {
       .then((data) => {
         setState({
           ...state,
+          nombreRésultats: data.nombreDeResultats,
           lastPage: Math.ceil(data.resultat.length / take),
           résultats: construisLesRésultatsDeLaComparaison(data),
-          moyenne: construisLaMoyenneDesResultat(data),
+          moyenne: data.moyennes,
         });
       })
       .catch(() => { });
@@ -66,6 +80,7 @@ export function useComparaison() {
 
   return {
     lancerLaComparaison,
+    nombreRésultats: state.nombreRésultats,
     resultats: state.résultats,
     moyenne: state.moyenne,
     lastPage: state.lastPage,

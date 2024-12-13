@@ -17,10 +17,9 @@ export const ComparaisonPage = () => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(0);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, resultats, moyenne, lastPage } = useComparaison();
+  const { lancerLaComparaison, resultats, moyenne, nombreRésultats, lastPage } = useComparaison();
 
   const [dataTable, setDataTable] = useState<ComparaisonViewModel[]>([]);
-  const [moyenneResultat, setMoyenneResultat] = useState<MoyenneResultatComparaison>(initialData);
   const [loading, setLoading] = useState<boolean>(true); // Nouvelle variable d'état pour le chargement
   const [listeAnnees, setListeAnnees] = useState<number[]>([]);
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
@@ -29,18 +28,17 @@ export const ComparaisonPage = () => {
   const [contenu, setContenu] = useState();
 
   const [page, setPage] = useState<number>(1);
-  const [nombreRésultats, setNombreRésultats] = useState<number>(1);
 
   // Utilisation de useEffect pour lancer la comparaison
   useEffect(() => {
     const type = sessionStorage.getItem("comparaisonType");
     setStructurechoice(type || "Médico-social");
     const fetchData = async () => {
-      await lancerLaComparaison();
+      await lancerLaComparaison(page);
       setLoading(false); // Lorsque les résultats sont prêts, on arrête le chargement
     };
     fetchData();
-  }, [loading]);
+  }, [loading, page]);
 
   /******************************************
   // Utilisation de useEffect pour filtrer les résultats dès que les résultats changent
@@ -74,7 +72,8 @@ export const ComparaisonPage = () => {
     return result;
   };
 
-  const getAllYears = () => {
+  /*******
+   const getAllYears = () => {
     const result: number[] = [];
     let nearestYear = resultats && resultats.length > 0 ? resultats[0].annee : 2022;
     resultats.forEach((element) => {
@@ -98,6 +97,7 @@ export const ComparaisonPage = () => {
       }
     });
   };
+  ******************/
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
@@ -160,7 +160,7 @@ export const ComparaisonPage = () => {
             <>
               <Table
                 data={resultats}
-                forMoyenne={moyenneResultat}
+                forMoyenne={moyenne}
                 handleInfoBullMoyenne={setEstCeOuvertMoyenne}
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
@@ -175,6 +175,7 @@ export const ComparaisonPage = () => {
                 setOrder={() => { }}
                 setOrderBy={() => { }}
                 setSelectedRows={setSelectedRows}
+                total={nombreRésultats}
               />
               <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>

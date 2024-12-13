@@ -23,6 +23,7 @@ interface DataTableProps {
   headers: Header[];
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
+  total: number;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: SelectedRows;
   setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
@@ -56,6 +57,7 @@ interface TableBodyProps {
   selectedRows: SelectedRows;
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne: MoyenneResultatComparaison;
+  total: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   page: number;
@@ -160,7 +162,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -215,7 +217,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
           ))}
         </tr>
       ))}
-      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} setEstCeOuvert={handleInfoBullMoyenne} />}
+      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} setEstCeOuvert={handleInfoBullMoyenne} total={total} />}
     </tbody>
   );
 };
@@ -224,6 +226,7 @@ export const Table = ({
   headers,
   data = [],
   forMoyenne,
+  total,
   selectedRows,
   setSelectedRows,
   order,
@@ -273,6 +276,7 @@ export const Table = ({
                 onClickDelete={onClickDelete}
                 page={page}
                 selectedRows={selectedRows}
+                total={total}
               />
             </table>
           </div>

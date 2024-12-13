@@ -36,7 +36,6 @@ export type ResultatES = Readonly<{
 
 export type MoyenneEJ = Readonly<{}>;
 export type MoyenneSMS = Readonly<{
-  annee: number;
   capaciteMoyenne: number | null;
   realisationAcitiviteMoyenne: number | null;
   acceuilDeJourMoyenne: number | null;
@@ -57,5 +56,5 @@ export type MoyenneES = Readonly<{}>;
 export type ResultatDeComparaison = {
   nombreDeResultats: number;
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
-  moyennes: MoyenneEJ[] | MoyenneSMS[] | MoyenneES[];
+  moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
 };
