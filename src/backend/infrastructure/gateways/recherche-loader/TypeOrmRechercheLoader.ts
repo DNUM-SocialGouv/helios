@@ -55,6 +55,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   async rechercheAvancee(
     terme: string,
     zone: string,
+    zoneD: string,
     typeZone: string,
     type: string,
     statutJuridique: string[],
@@ -63,6 +64,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     order: OrderDir,
     page: number
   ): Promise<RésultatDeRecherche> {
+
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
     const zoneParam = zone
@@ -74,6 +76,11 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           .replace(/\b(?:-|')\b/gi, " ")
           .toLocaleUpperCase()
       : "";
+    const zoneDParam = typeZone === 'C' ? zoneD.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\b(?:-|')\b/gi, " ")
+      .toLocaleUpperCase() : '';
+
     const conditions = [];
     let parameters: any = {};
 
@@ -112,7 +119,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           parameters = { ...parameters, commune: `%${zoneParam}%ARRONDISSEMENT%` };
         } else {
           conditions.push("recherche.commune = :commune");
-          parameters = { ...parameters, commune: zoneParam };
+          conditions.push("recherche.departement = :departement");
+          parameters = { ...parameters, commune: zoneParam, departement: zoneDParam };
         }
       }
       if (typeZone === "D") {
