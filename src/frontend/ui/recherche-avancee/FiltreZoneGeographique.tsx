@@ -7,6 +7,10 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 type ZoneGeo = Readonly<{
   type: string;
   nom: string;
+  departement: {
+    code: string;
+    nom: string;
+  },
   code: string;
   codeRegion: string;
   codesPostaux: string[];
@@ -23,6 +27,10 @@ export const FiltreZoneGeographique = () => {
   const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
     type: "",
     nom: "",
+    departement: {
+      code: "",
+      nom: ""
+    },
     code: "",
     codeRegion: "",
     codesPostaux: [],
@@ -155,6 +163,7 @@ export const FiltreZoneGeographique = () => {
   };
 
   const applyZoneGeoValue = () => {
+    rechercheAvanceeContext?.setZoneGeoD(zoneGeoType === "C" ? zoneGeoSelected?.departement.nom : '');
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);
     rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);

@@ -6,6 +6,7 @@ export interface RechercheLoader {
   rechercheAvancee(
     terme: string,
     zone: string,
+    zoneD: string,
     typeZone: string,
     type: string,
     statutJuridique: string[],

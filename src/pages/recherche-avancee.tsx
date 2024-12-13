@@ -64,6 +64,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       query: {
         terme = "",
         zone = "",
+        zoneD = "",
         typeZone = "",
         page = 1,
         statuts = [],
@@ -78,6 +79,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const pageParam = Number(page);
     const termeParam = String(terme);
     const zoneParam = String(zone);
+    const zoneDParam = String(zoneD);
     const typeZoneParam = String(typeZone);
     const typeParam = String(type);
     const orderParam = String(order) as OrderDir;
@@ -108,6 +110,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         dependencies,
         termeParam,
         zoneParam,
+        zoneDParam,
         typeZoneParam,
         typeParam,
         statutJuridiqueParam,

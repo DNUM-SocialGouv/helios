@@ -13,6 +13,7 @@ export class RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase {
   async exécute(
     terme: string,
     zone: string,
+    zoneD: string,
     typeZone: string,
     type: string,
     statutJuridique: string[],
@@ -21,6 +22,6 @@ export class RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase {
     order: OrderDir,
     page: number
   ): Promise<RésultatDeRecherche> {
-    return await this.rechercheLoader.rechercheAvancee(terme, zone, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page);
+    return await this.rechercheLoader.rechercheAvancee(terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page);
   }
 }
