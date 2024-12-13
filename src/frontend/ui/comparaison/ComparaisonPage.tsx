@@ -11,6 +11,7 @@ import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/Re
 import styles from "./Comparaison.module.css";
 import { contenuModal, tableHeaders } from "./model/data";
 import { useComparaison } from "./useComparaison";
+import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 
 export const ComparaisonPage = () => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
@@ -133,7 +134,11 @@ export const ComparaisonPage = () => {
         </Head>
         <div className={styles["container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <button className="fr-btn fr-btn--secondary fr-mb-1w" type="button">
+          <button
+            aria-controls="fr-modal-ajout-etablissement-comparaison"
+            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            data-fr-opened="false"
+          >
             {wording.AJOUTER_DES_ETABLISSEMENTS}
           </button>
           <div className={styles["years-container"]}>
@@ -190,6 +195,7 @@ export const ComparaisonPage = () => {
           <>Les données non renseignées sont exclues du calcul de la moyenne.</>
         </InfoBulle>
       </main>
+      <AjoutEtablissements></AjoutEtablissements>
     </>
   );
 };
