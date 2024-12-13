@@ -104,6 +104,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     // WHEN
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, departementRecherche, "C", "", [], [], "", "ASC", premièrePage);
 
+
     //THEN
     expect(rechercheAvancee.nombreDeRésultats).toBe("4");
   });
@@ -115,6 +116,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     // WHEN
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, departementRecherche, "", "D", "", [], [], "", "ASC", premièrePage);
 
+
     //THEN
     expect(rechercheAvancee.nombreDeRésultats).toBe("4");
   });
@@ -125,6 +127,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
     // WHEN
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, regionRecherche, "", "R", "", [], [], "", "ASC", premièrePage);
+
 
     //THEN
     expect(rechercheAvancee.nombreDeRésultats).toBe("3");
