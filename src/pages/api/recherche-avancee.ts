@@ -9,7 +9,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   }
 
 
-  const { terme, zone, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page } = request.body;
-  const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, zone, typeZone, type, statutJuridique, capaciteSMS, order, orderBy, page);
+  const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page } = request.body;
+  const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, order, orderBy, page);
   response.status(200).json(recherche);
 }
