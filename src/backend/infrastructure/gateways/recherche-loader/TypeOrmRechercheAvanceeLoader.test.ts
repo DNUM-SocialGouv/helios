@@ -162,6 +162,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     // WHEN
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, departementRecherche, "C", "Médico-social", [], [], "", "ASC", premièrePage);
 
+
     //THEN
     expect(rechercheAvancee.nombreDeRésultats).toBe("2");
   });
