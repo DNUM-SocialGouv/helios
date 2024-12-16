@@ -11,6 +11,7 @@ interface SearchParams {
   terme?: string;
   page?: number;
   zoneGeo?: string;
+  zoneGeoD?: string;
   zoneGeoType?: string;
   zoneGeoLabel?: string;
   typeStructure?: string;
@@ -31,6 +32,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       terme: parseAsString.withDefault(""),
       page: parseAsInteger.withDefault(1),
       zoneGeo: parseAsString.withDefault(""),
+      zoneGeoD: parseAsString.withDefault(""),
       zoneGeoType: parseAsString.withDefault(""),
       zoneGeoLabel: parseAsString.withDefault(""),
       typeStructure: parseAsString.withDefault(""),
@@ -44,6 +46,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     {
       urlKeys: {
         zoneGeo: "zone",
+        zoneGeoD: "zoneD",
         zoneGeoType: "typeZone",
         zoneGeoLabel: 'zoneLabel',
         typeStructure: "type",
@@ -69,6 +72,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       ...searchParams,
       termeFixe,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
+      setZoneGeoD: (value) => updateSearchParams({ zoneGeoD: value, page: initialPage }),
       setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
       setZoneGeoLabel: (value) => updateSearchParams({ zoneGeoLabel: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),

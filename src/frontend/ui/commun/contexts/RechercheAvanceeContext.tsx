@@ -5,6 +5,7 @@ export interface RechercheAvanceeContextValue {
   termeFixe: string;
   page: number;
   zoneGeo: string;
+  zoneGeoD: string;
   zoneGeoType: string;
   zoneGeoLabel: string;
   typeStructure: string;
@@ -18,6 +19,7 @@ export interface RechercheAvanceeContextValue {
   setTermeFixe: (terme: string) => void;
   setPage: (page: number, shallow?: boolean) => void;
   setZoneGeo: (zoneGeo: string) => void;
+  setZoneGeoD: (zoneGeoD: string) => void;
   setZoneGeoType: (zoneGeo: string) => void;
   setZoneGeoLabel: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string) => void;
