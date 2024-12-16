@@ -5,8 +5,8 @@ import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import styles from "./Table.module.css";
 
 interface TableExtensionCalculMoyenneProps {
-  dataSource: MoyenneResultatComparaison;
-  total: number;
+  dataSource?: MoyenneResultatComparaison;
+  total?: number;
   setEstCeOuvert?: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -39,22 +39,19 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
           if (cle === "resultatNetComptableMoyenne" || cle === "roulementNetGlobalMoyenne") {
             return (
               <td key={cle}>
-                {/* {
-                  dataSource[cle]
-                    .toLocaleString("fr-FR", {
-                      style: "currency",
-                      currency: "EUR",
-                    })
-                    .split(",")[0]
-                }{" "}
-                € */}
-                {dataSource[cle]}
+                {dataSource && dataSource[cle] ? `${dataSource[cle]
+                  .toLocaleString("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                  .split(",")[0]} €`
+                  : `-`}
               </td>
             );
-          } else if (cle === "capaciteMoyenne") {
-            return <td key={cle}>{dataSource[cle]}</td>;
+          } else if (cle === "capaciteMoyenne" || cle === "fileActivePersonnesAccompagnesMoyenne") {
+            return <td key={cle}>{dataSource && dataSource[cle] ? dataSource[cle] : `-`}</td>;
           } else {
-            return <td key={cle}>{dataSource[cle as keyof MoyenneResultatComparaison]} %</td>;
+            return <td key={cle}>{dataSource && dataSource[cle as keyof MoyenneResultatComparaison] !== null ? `${dataSource[cle as keyof MoyenneResultatComparaison]} %` : `-`}</td>;
           }
         })}
       </tr>

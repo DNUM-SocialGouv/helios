@@ -32,9 +32,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       return [];
     } else {
       if (type === "Médico-social") {
-        const generateAnnees = `SELECT generate_series(minannee,maxannee) annee
+        const generateAnnees = `SELECT generate_series(maxannee - 2,maxannee) annee
 				FROM (
-					SELECT min(annee) minannee, max(annee) maxannee FROM (
+					SELECT max(annee) maxannee FROM (
 					Select annee from activite_medico_social ac where ac.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
 					UNION
 					Select annee from ressources_humaines_medico_social rh where rh.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
@@ -181,20 +181,20 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   private contruitMoyennesSMS(moyenne: any): MoyenneSMS {
     return {
-      capaciteMoyenne: moyenne.capacitemoyenne ? Number(moyenne.capacitemoyenne) : null,
+      capaciteMoyenne: moyenne.capacitemoyenne ? this.makeNumberArrondi(Number(moyenne.capacitemoyenne), 2) : null,
       realisationAcitiviteMoyenne: this.transformInRate(moyenne.realisationacitivitemoyenne, 1),
       acceuilDeJourMoyenne: this.transformInRate(moyenne.realisationacitivitemoyenne, 1),
       hebergementPermanentMoyenne: this.transformInRate(moyenne.hebergementpermanentmoyenne, 1),
       hebergementTemporaireMoyenne: this.transformInRate(moyenne.hebergementtemporairemoyenne, 1),
-      fileActivePersonnesAccompagnesMoyenne: this.transformInRate(moyenne.fileactivepersonnesaccompagnesmoyenne, 1),
+      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
       rotationPersonnelMoyenne: this.transformInRate(moyenne.rotationpersonnelmoyenne, 1),
       absenteismeMoyenne: this.transformInRate(moyenne.absenteismemoyenne, 1),
       prestationExterneMoyenne: this.transformInRate(moyenne.prestationexternemoyenne, 1),
       etpVacantMoyenne: this.transformInRate(moyenne.etpvacantmoyenne, 1),
       tauxCafMoyenne: this.transformInRate(moyenne.tauxcafmoyenne, 1),
       vetusteConstructionMoyenne: this.transformInRate(moyenne.vetusteconstructionmoyenne, 1),
-      roulementNetGlobalMoyenne: this.transformInRate(moyenne.roulementnetglobalmoyenne, 1),
-      resultatNetComptableMoyenne: this.transformInRate(moyenne.resultatnetcomptablemoyenne, 1),
+      roulementNetGlobalMoyenne: this.makeNumberArrondi(moyenne.roulementnetglobalmoyenne, 2),
+      resultatNetComptableMoyenne: this.makeNumberArrondi(moyenne.resultatnetcomptablemoyenne, 2)
     };
   }
 
@@ -226,15 +226,15 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         acceuilDeJour: this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
         hebergementPermanent: this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
         hebergementTemporaire: this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
-        fileActivePersonnesAccompagnes: this.transformInRate(resultat.file_active_personnes_accompagnees, 1),
+        fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees,
         rotationPersonnel: this.transformInRate(resultat.taux_rotation_personnel, 1),
         absenteisme: this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
         prestationExterne: this.transformInRate(resultat.taux_prestation_externes, 1),
         etpVacant: this.transformInRate(resultat.taux_etp_vacants, 1),
         tauxCaf: this.transformInRate(resultat.taux_de_caf, 1),
         vetusteConstruction: this.transformInRate(resultat.taux_de_vetuste_construction, 1),
-        roulementNetGlobal: this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
-        resultatNetComptable: this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
+        roulementNetGlobal: this.makeNumberArrondi(resultat.fonds_de_roulement, 2),
+        resultatNetComptable: this.makeNumberArrondi(resultat.resultat_net_comptable, 2),
       };
     });
   }

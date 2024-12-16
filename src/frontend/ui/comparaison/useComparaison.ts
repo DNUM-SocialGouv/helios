@@ -7,6 +7,7 @@ type comparaisonState = Readonly<{
   lastPage: number;
   résultats: ComparaisonViewModel[];
   moyenne: MoyenneResultatComparaison;
+  loading: boolean;
 }>;
 
 export function useComparaison() {
@@ -14,6 +15,7 @@ export function useComparaison() {
   const [state, setState] = useState<comparaisonState>({
     nombreRésultats: 0,
     lastPage: 1,
+    loading: false,
     résultats: [],
     moyenne: {
       capaciteMoyenne: 0,
@@ -33,13 +35,9 @@ export function useComparaison() {
     },
   });
 
-  // const pageInitiale = 1;
-  // const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
-
-  const lancerLaComparaison = (page: number): void => {
+  const lancerLaComparaison = (page: number, annee: string): void => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
-    const annee = '2021';
 
     let parsedFiness = null;
     try {
@@ -53,14 +51,12 @@ export function useComparaison() {
   };
 
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
-    // eslint-disable-next-line no-console
-    console.log('data================', data);
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
 
   const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "") => {
-    // rechercheAvanceeContext?.setPage(page, true);
-    fetch("/api/comparaison", {
+    setState({ ...state, loading: true });
+    fetch("/api/comparaison/compare", {
       body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
@@ -73,9 +69,12 @@ export function useComparaison() {
           lastPage: Math.ceil(data.resultat.length / take),
           résultats: construisLesRésultatsDeLaComparaison(data),
           moyenne: data.moyennes,
+          loading: false
         });
       })
-      .catch(() => { });
+      .catch(() => {
+        setState({ ...state, loading: false });
+      });
   };
 
   return {
@@ -84,5 +83,6 @@ export function useComparaison() {
     resultats: state.résultats,
     moyenne: state.moyenne,
     lastPage: state.lastPage,
+    loading: state.loading
   };
 }

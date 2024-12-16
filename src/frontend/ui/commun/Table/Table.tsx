@@ -22,8 +22,8 @@ interface Header {
 interface DataTableProps {
   headers: Header[];
   data: RechercheViewModel[] | ComparaisonViewModel[];
-  forMoyenne: MoyenneResultatComparaison;
-  total: number;
+  forMoyenne?: MoyenneResultatComparaison;
+  total?: number;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: SelectedRows;
   setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
@@ -56,8 +56,8 @@ interface TableBodyProps {
   headers: Header[];
   selectedRows: SelectedRows;
   data: RechercheViewModel[] | ComparaisonViewModel[];
-  forMoyenne: MoyenneResultatComparaison;
-  total: number;
+  forMoyenne?: MoyenneResultatComparaison;
+  total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   page: number;

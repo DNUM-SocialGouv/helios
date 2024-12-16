@@ -50,16 +50,19 @@ describe("La comparaison des établissements médico sociaux", () => {
         numéroFinessEntitéJuridique: "000000000",
         numéroFinessÉtablissementTerritorial: "100000000",
         raisonSociale: `établissement territorial MS 1`,
+        raisonSocialeCourte: `établissement territorial MS 1`,
       }),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
         numéroFinessEntitéJuridique: "000000000",
         numéroFinessÉtablissementTerritorial: "100000001",
         raisonSociale: `établissement territorial MS 2`,
+        raisonSocialeCourte: `établissement territorial MS 2`,
       }),
       ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
         numéroFinessEntitéJuridique: "000000000",
         numéroFinessÉtablissementTerritorial: "199999999",
         raisonSociale: `établissement territorial MS 3`,
+        raisonSocialeCourte: `établissement territorial MS 3`,
       }),
     ]);
 
@@ -165,7 +168,7 @@ describe("La comparaison des établissements médico sociaux", () => {
       acceuilDeJourMoyenne: 8000,
       hebergementPermanentMoyenne: 8000,
       hebergementTemporaireMoyenne: 8000,
-      fileActivePersonnesAccompagnesMoyenne: 8000,
+      fileActivePersonnesAccompagnesMoyenne: 80,
       rotationPersonnelMoyenne: 66.7,
       absenteismeMoyenne: 7.7,
       prestationExterneMoyenne: 65.9,
@@ -173,7 +176,7 @@ describe("La comparaison des établissements médico sociaux", () => {
       tauxCafMoyenne: 16.5,
       vetusteConstructionMoyenne: 53.2,
       roulementNetGlobalMoyenne: null,
-      resultatNetComptableMoyenne: 95999,
+      resultatNetComptableMoyenne: 95999.21,
     });
     expect(comparaison.resultat).toStrictEqual([
       {
@@ -185,7 +188,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 8000,
+        fileActivePersonnesAccompagnes: 80,
         rotationPersonnel: 66.7,
         absenteisme: 7.7,
         prestationExterne: 65.9,
@@ -193,7 +196,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         tauxCaf: 16.5,
         vetusteConstruction: 53.2,
         roulementNetGlobal: null,
-        resultatNetComptable: 95999,
+        resultatNetComptable: 95999.21,
       },
       {
         numéroFiness: "100000001",
@@ -204,7 +207,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 8000,
+        fileActivePersonnesAccompagnes: 80,
         rotationPersonnel: 66.7,
         absenteisme: 7.7,
         prestationExterne: 65.9,
@@ -212,7 +215,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         tauxCaf: 16.5,
         vetusteConstruction: 53.2,
         roulementNetGlobal: null,
-        resultatNetComptable: 95999,
+        resultatNetComptable: 95999.21,
       },
       {
         numéroFiness: "199999999",
@@ -223,7 +226,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 8000,
+        fileActivePersonnesAccompagnes: 80,
         rotationPersonnel: null,
         absenteisme: null,
         prestationExterne: null,
