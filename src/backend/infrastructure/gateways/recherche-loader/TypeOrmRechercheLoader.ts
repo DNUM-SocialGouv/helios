@@ -55,6 +55,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   async rechercheAvancee(
     terme: string,
     zone: string,
+    zoneD: string,
     typeZone: string,
     type: string,
     statutJuridique: string[],
@@ -63,6 +64,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     order: OrderDir,
     page: number
   ): Promise<RésultatDeRecherche> {
+
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
     const zoneParam = zone
@@ -74,6 +76,11 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           .replace(/\b(?:-|')\b/gi, " ")
           .toLocaleUpperCase()
       : "";
+    const zoneDParam = typeZone === 'C' ? zoneD.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\b(?:-|')\b/gi, " ")
+      .toLocaleUpperCase() : '';
+
     const conditions = [];
     let parameters: any = {};
 
@@ -112,7 +119,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           parameters = { ...parameters, commune: `%${zoneParam}%ARRONDISSEMENT%` };
         } else {
           conditions.push("recherche.commune = :commune");
-          parameters = { ...parameters, commune: zoneParam };
+          conditions.push("recherche.departement = :departement");
+          parameters = { ...parameters, commune: zoneParam, departement: zoneDParam };
         }
       }
       if (typeZone === "D") {
@@ -143,14 +151,21 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       parameters = { ...parameters, statutJuridique: statutJuridique };
     }
 
+    const CapaciteSMS = (await this.orm)
+      .createQueryBuilder()
+      .select("ams.numero_finess_etablissement_territorial", "numero_finess_etablissement_territorial")
+      .addSelect("SUM(ams.capacite_installee_totale)", "capacite_installee_totale")
+      .from(AutorisationMédicoSocialModel, "ams")
+      .groupBy("ams.numero_finess_etablissement_territorial");
+
     if (capaciteSMS.length !== 0) {
       const capaciteSMSConditions: string[] = [];
       requêteDeLaRecherche
-        .innerJoin(AutorisationMédicoSocialModel, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
+        .innerJoin(`(${CapaciteSMS.getQuery()})`, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
         .innerJoin(
           ÉtablissementTerritorialIdentitéModel,
           "etablissement",
-          "capacite_sms.numéroFinessÉtablissementTerritorial = etablissement.numéroFinessÉtablissementTerritorial"
+          "capacite_sms.numero_finess_etablissement_territorial = etablissement.numéroFinessÉtablissementTerritorial"
         );
       capaciteSMS.forEach((capacite) => {
         const conditionsSMS = this.construireLaLogiqueCapaciteEtablissements(capacite);
