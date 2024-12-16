@@ -8,10 +8,10 @@ import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ComparaisonViewModel, initialData, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
+import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import { contenuModal, tableHeaders } from "./model/data";
 import { useComparaison } from "./useComparaison";
-import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 
 export const ComparaisonPage = () => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
