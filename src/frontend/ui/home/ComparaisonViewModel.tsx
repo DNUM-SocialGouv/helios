@@ -1,5 +1,4 @@
 export type ResultatComparaison = Readonly<{
-  annee: number;
   numéroFiness: string;
   socialReason: string;
   type: string;
@@ -20,8 +19,6 @@ export type ResultatComparaison = Readonly<{
 }>;
 
 export type MoyenneResultatComparaison = {
-  nombreEtablissement?: number;
-  annee: number;
   capaciteMoyenne: number;
   realisationAcitiviteMoyenne: number;
   acceuilDeJourMoyenne: number;
@@ -40,16 +37,12 @@ export type MoyenneResultatComparaison = {
 
 export type ApiComparaisonResultat = Readonly<{
   moyennes: MoyenneResultatComparaison[];
-  nombreDeResultats: [{ annee: number; total: string }];
+  nombreDeResultats: number;
   resultat: ResultatComparaison[];
 }>;
 
 export class ComparaisonViewModel {
-  constructor(private readonly comparaison: ResultatComparaison) {}
-
-  public get annee(): number {
-    return this.comparaison.annee;
-  }
+  constructor(private readonly comparaison: ResultatComparaison) { }
 
   public get numéroFiness(): string {
     return this.comparaison.numéroFiness;
@@ -68,19 +61,19 @@ export class ComparaisonViewModel {
   }
 
   public get realisationActivite(): string | null {
-    return this.comparaison.realisationActivite ? this.comparaison.realisationActivite + "%" : null;
+    return this.comparaison.realisationActivite !== null ? this.comparaison.realisationActivite + "%" : null;
   }
 
   public get acceuilDeJour(): string | null {
-    return this.comparaison.acceuilDeJour ? this.comparaison.acceuilDeJour + "%" : null;
+    return this.comparaison.acceuilDeJour !== null ? this.comparaison.acceuilDeJour + "%" : null;
   }
 
   public get hebergementPermanent(): string | null {
-    return this.comparaison.hebergementPermanent ? this.comparaison.hebergementPermanent + "%" : null;
+    return this.comparaison.hebergementPermanent !== null ? this.comparaison.hebergementPermanent + "%" : null;
   }
 
   public get hebergementTemporaire(): string | null {
-    return this.comparaison.hebergementTemporaire ? this.comparaison.hebergementTemporaire + "%" : null;
+    return this.comparaison.hebergementTemporaire !== null ? this.comparaison.hebergementTemporaire + "%" : null;
   }
 
   public get fileActivePersonnesAccompagnes(): number | null {
@@ -88,27 +81,27 @@ export class ComparaisonViewModel {
   }
 
   public get rotationPersonnel(): string | null {
-    return this.comparaison.rotationPersonnel ? this.comparaison.rotationPersonnel + "%" : null;
+    return this.comparaison.rotationPersonnel !== null ? this.comparaison.rotationPersonnel + "%" : null;
   }
 
   public get absenteisme(): string | null {
-    return this.comparaison.absenteisme ? this.comparaison.absenteisme + "%" : null;
+    return this.comparaison.absenteisme !== null ? this.comparaison.absenteisme + "%" : null;
   }
 
   public get prestationExterne(): string | null {
-    return this.comparaison.prestationExterne ? this.comparaison.prestationExterne + "%" : null;
+    return this.comparaison.prestationExterne !== null ? this.comparaison.prestationExterne + "%" : null;
   }
 
   public get etpVacant(): string | null {
-    return this.comparaison.etpVacant ? this.comparaison.etpVacant + "%" : null;
+    return this.comparaison.etpVacant !== null ? this.comparaison.etpVacant + "%" : null;
   }
 
   public get tauxCaf(): string | null {
-    return this.comparaison.tauxCaf ? this.comparaison.tauxCaf + "%" : null;
+    return this.comparaison.tauxCaf !== null ? this.comparaison.tauxCaf + "%" : null;
   }
 
   public get vetusteConstruction(): string | null {
-    return this.comparaison.vetusteConstruction ? this.comparaison.vetusteConstruction + "%" : null;
+    return this.comparaison.vetusteConstruction !== null ? this.comparaison.vetusteConstruction + "%" : null;
   }
 
   public get roulementNetGlobal(): number {
@@ -118,11 +111,11 @@ export class ComparaisonViewModel {
   public get resultatNetComptable(): string {
     return this.comparaison.resultatNetComptable
       ? this.comparaison.resultatNetComptable
-          .toLocaleString("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          })
-          .split(",")[0] + "€"
+        .toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+        })
+        .split(",")[0] + "€"
       : "-";
   }
 
@@ -136,12 +129,7 @@ export class ComparaisonViewModel {
 }
 
 export class ComparaisonMoyenneViewModel {
-  constructor(private moyenne: MoyenneResultatComparaison) {}
-
-  // Accesseur pour l'année
-  public get annee(): number {
-    return this.moyenne.annee;
-  }
+  constructor(private moyenne: MoyenneResultatComparaison) { }
 
   // Accesseurs pour les autres propriétés
   public get capaciteMoyenne(): number {
@@ -209,21 +197,3 @@ const transformInRate = (number: number, chiffre: number): number => {
   return makeNumberArrondi(number * 100, chiffre);
 };
 
-export const initialData: MoyenneResultatComparaison = {
-  nombreEtablissement: 0,
-  annee: 0,
-  capaciteMoyenne: 0,
-  realisationAcitiviteMoyenne: 0,
-  hebergementPermanentMoyenne: 0,
-  hebergementTemporaireMoyenne: 0,
-  acceuilDeJourMoyenne: 0,
-  prestationExterneMoyenne: 0,
-  rotationPersonnelMoyenne: 0,
-  etpVacantMoyenne: 0,
-  absenteismeMoyenne: 0,
-  tauxCafMoyenne: 0,
-  vetusteConstructionMoyenne: 0,
-  resultatNetComptableMoyenne: 0,
-  fileActivePersonnesAccompagnesMoyenne: 0,
-  roulementNetGlobalMoyenne: 0,
-};

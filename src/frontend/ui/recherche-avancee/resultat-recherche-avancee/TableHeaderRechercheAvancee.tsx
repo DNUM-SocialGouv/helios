@@ -17,7 +17,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
   }, [selectedRows])
 
   const onClickComparer = () => {
-    const formattedSelectedRows = Object.values(selectedRows).flat();    
+    const formattedSelectedRows = Object.values(selectedRows).flat();
     const firstType = formattedSelectedRows[0].type;
     const hasDifferentTypes = formattedSelectedRows.some((row) => row.type !== firstType);
     const listFinessNumbers = formattedSelectedRows.map((row) => row.numéroFiness);
@@ -29,6 +29,8 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
       // Navigate if types are the same
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
       sessionStorage.setItem("comparaisonType", firstType);
+      document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
+      document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
       setShowAlert(false);
       router.push("/comparaison");
     }

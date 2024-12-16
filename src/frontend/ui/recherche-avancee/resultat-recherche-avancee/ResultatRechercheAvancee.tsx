@@ -4,7 +4,7 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { Table } from "../../commun/Table/Table";
-import { ComparaisonViewModel, initialData } from "../../home/ComparaisonViewModel";
+import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
@@ -65,21 +65,19 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
       <TableHeaderRechercheAvancee selectedRows={selectedRows} setShowAlert={setShowAlert} />
       <Table
         data={data}
-        forMoyenne={initialData}
         handleSelectAll={handleSelectAll}
         headers={tableHeaders}
         isAllSelected={isAllSelected}
         isShowAvrage={false}
-        onClickDelete={() => {}}
+        onClickDelete={() => { }}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
         page={page}
         selectedRows={selectedRows}
-        setOrder={rechercheAvanceeContext?.setOrder || (() => {})}
-        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => {})}
-        setSelectedRows={setSelectedRows}
-      />
-      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
+        setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
+        setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
+        setSelectedRows={setSelectedRows} />
+      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );
 };
