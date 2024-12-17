@@ -7,6 +7,8 @@ type ComparaisonSMSTypeOrm = Readonly<{
   numero_finess_etablissement_territorial: string;
   raison_sociale_courte: string;
   domaine: string;
+  commune: string;
+  departement: string;
   taux_realisation_activite: number;
   file_active_personnes_accompagnees: number;
   taux_occupation_en_hebergement_permanent: number;
@@ -221,6 +223,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         numéroFiness: resultat.numero_finess_etablissement_territorial,
         socialReason: resultat.raison_sociale_courte,
         type: resultat.domaine,
+        commune: resultat.commune,
+        departement: resultat.departement,
         capacite: resultat.capacite_total,
         realisationActivite: this.transformInRate(resultat.taux_realisation_activite, 1),
         acceuilDeJour: this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
