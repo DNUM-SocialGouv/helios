@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
-import { MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { DatesMisAjourSources, MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 
 type ComparaisonSMSTypeOrm = Readonly<{
@@ -52,6 +53,22 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     }
   }
 
+  async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
+    const dateMAJFiness = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.FINESS_CS1400105
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const dateMAJTdbperf = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_ANN_MS_TDP_ET
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const dateMAJCnsa = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_ANN_ERRD_EJ
+    )) as DateMiseÀJourFichierSourceModel;
+
+    return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
+  }
+
   async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
     try {
       if (type === "Entité juridique") {
@@ -70,6 +87,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   private async compareEJ(): Promise<ResultatDeComparaison> {
     return { nombreDeResultats: 0, resultat: [], moyennes: [] };
+  }
+
+  private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
+    return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel;
   }
 
   private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string): Promise<ResultatDeComparaison> {

@@ -16,6 +16,7 @@ interface Header {
   key: string;
   isButton?: boolean;
   sort?: boolean;
+  info?: boolean;
   orderBy?: string;
 }
 
@@ -139,23 +140,16 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
           </div>
         </th>
         {headers.map((header, index) =>
-          header.sort ? (
-            <th key={index}>
-              <span className="fr-cell__title">{header.label}</span>
-              <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
-            </th>
-          ) : (
-            <th key={index}>
-              <span>{header.label}</span>
-              {header.key !== "delete" && header.key !== "favori" && onClickInfobull && (
-                <button
-                  className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]}
-                  onClick={() => onClickInfobull(header.key)}
-                  title="Détails de l’indicateur"
-                />
-              )}
-            </th>
-          )
+          <th key={index}>
+            <span className="fr-cell__title">{header.label}</span>
+            {header.info && onClickInfobull && (
+              <button
+                className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]}
+                onClick={() => onClickInfobull(header.key)}
+                title="Détails de l’indicateur"
+              />
+            )}
+            {header.sort && <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />}            </th>
         )}
       </tr>
     </thead>
