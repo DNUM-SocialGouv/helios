@@ -137,6 +137,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
+                isCenter={true}
                 isShowAvrage={true}
                 onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
