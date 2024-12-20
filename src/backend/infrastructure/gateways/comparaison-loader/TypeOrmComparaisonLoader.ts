@@ -35,7 +35,16 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       return [];
     } else {
       if (type === "Médico-social") {
-        const generateAnnees = `SELECT generate_series(maxannee - 2,maxannee) annee
+        const generateAnnees = `SELECT generate_series(
+          CASE 
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 2)::int
+          ELSE (extract(year FROM current_date) - 3)::int
+      END,
+      CASE
+          WHEN maxannee = extract(year FROM current_date) THEN maxannee::int
+          ELSE (extract(year FROM current_date) - 1)::int
+      END
+      ) annee
 				FROM (
 					SELECT max(annee) maxannee FROM (
 					Select annee from activite_medico_social ac where ac.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
