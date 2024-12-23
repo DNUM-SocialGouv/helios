@@ -147,19 +147,19 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         `ORDER BY numero_finess_etablissement_territorial ASC LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `;
 
     const averagesCompareSMSQuery = `select
-            AVG(ac.taux_realisation_activite) as realisationAcitiviteMoyenne,
+            AVG(ROUND(ac.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
             AVG(ac.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
-            AVG(ac.taux_occupation_en_hebergement_permanent) as hebergementPermanentMoyenne,
-            AVG(ac.taux_occupation_en_hebergement_temporaire) as hebergementTemporaireMoyenne ,
-            AVG(ac.taux_occupation_accueil_de_jour) as acceuilDeJourMoyenne,
-            AVG(bg.taux_de_caf) as tauxCafMoyenne,
-            AVG(bg.taux_de_vetuste_construction) as vetusteConstructionMoyenne,
-            AVG(bg.fonds_de_roulement) as roulementNetGlobalMoyenne,
-            AVG(bg.resultat_net_comptable) as resultatNetComptableMoyenne,
-            AVG(rh.taux_prestation_externes) as prestationExterneMoyenne,
-            AVG(rh.taux_rotation_personnel) as rotationPersonnelMoyenne,
-            AVG(rh.taux_etp_vacants) as etpVacantMoyenne,
-            AVG(rh.taux_absenteisme_hors_formation) as absenteismeMoyenne,
+            AVG(ROUND(ac.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
+            AVG(ROUND(ac.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
+            AVG(ROUND(ac.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
+            AVG(ROUND(bg.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
+            AVG(ROUND(bg.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
+            AVG(ROUND(bg.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
+            AVG(ROUND(bg.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
+            AVG(ROUND(rh.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
+            AVG(ROUND(rh.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
+            AVG(ROUND(rh.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
+            AVG(ROUND(rh.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
             AVG(cp.capacite_total) as capaciteMoyenne
         ` +
       compareSMSQueryBody;
@@ -167,9 +167,6 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
     const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
-
-    // eslint-disable-next-line no-console
-    console.log("moyennesCompareSMSQueryResult !!!!!!!!", moyennesCompareSMSQueryResult)
 
     return {
       nombreDeResultats: numerosFiness.length,
@@ -185,27 +182,27 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   private contruitMoyennesSMS(moyenne: any): MoyenneSMS {
     return {
       capaciteMoyenne: moyenne.capacitemoyenne ? this.makeNumberArrondi(Number(moyenne.capacitemoyenne), 2) : null,
-      realisationAcitiviteMoyenne: this.transformInRate(moyenne.realisationacitivitemoyenne, 1),
-      acceuilDeJourMoyenne: this.transformInRate(moyenne.acceuildejourmoyenne, 1),
-      hebergementPermanentMoyenne: this.transformInRate(moyenne.hebergementpermanentmoyenne, 1),
-      hebergementTemporaireMoyenne: this.transformInRate(moyenne.hebergementtemporairemoyenne, 1),
+      realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne !== null ? this.transformInRate(moyenne.realisationacitivitemoyenne, 1) : null,
+      acceuilDeJourMoyenne: moyenne.acceuildejourmoyenne !== null ? this.transformInRate(moyenne.acceuildejourmoyenne, 1) : null,
+      hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne !== null ? this.transformInRate(moyenne.hebergementpermanentmoyenne, 1) : null,
+      hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne !== null ? this.transformInRate(moyenne.hebergementtemporairemoyenne, 1) : null,
       fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
-      rotationPersonnelMoyenne: this.transformInRate(moyenne.rotationpersonnelmoyenne, 1),
-      absenteismeMoyenne: this.transformInRate(moyenne.absenteismemoyenne, 1),
-      prestationExterneMoyenne: this.transformInRate(moyenne.prestationexternemoyenne, 1),
-      etpVacantMoyenne: this.transformInRate(moyenne.etpvacantmoyenne, 1),
-      tauxCafMoyenne: this.transformInRate(moyenne.tauxcafmoyenne, 1),
-      vetusteConstructionMoyenne: this.transformInRate(moyenne.vetusteconstructionmoyenne, 1),
-      roulementNetGlobalMoyenne: this.makeNumberArrondi(moyenne.roulementnetglobalmoyenne, 2),
-      resultatNetComptableMoyenne: this.makeNumberArrondi(moyenne.resultatnetcomptablemoyenne, 2)
+      rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne !== null ? this.transformInRate(moyenne.rotationpersonnelmoyenne, 1) : null,
+      absenteismeMoyenne: moyenne.absenteismemoyenne !== null ? this.transformInRate(moyenne.absenteismemoyenne, 1) : null,
+      prestationExterneMoyenne: moyenne.prestationexternemoyenne !== null ? this.transformInRate(moyenne.prestationexternemoyenne, 1) : null,
+      etpVacantMoyenne: moyenne.etpvacantmoyenne !== null ? this.transformInRate(moyenne.etpvacantmoyenne, 1) : null,
+      tauxCafMoyenne: moyenne.tauxcafmoyenne !== null ? this.transformInRate(moyenne.tauxcafmoyenne, 1) : null,
+      vetusteConstructionMoyenne: moyenne.vetusteconstructionmoyenne !== null ? this.transformInRate(moyenne.vetusteconstructionmoyenne, 1) : null,
+      roulementNetGlobalMoyenne: moyenne.roulementnetglobalmoyenne !== null ? this.makeNumberArrondi(moyenne.roulementnetglobalmoyenne, 0) : null,
+      resultatNetComptableMoyenne: moyenne.resultatnetcomptablemoyenne !== null ? this.makeNumberArrondi(moyenne.resultatnetcomptablemoyenne, 0) : null
     };
   }
 
   private makeNumberArrondi(value: any, num: number): number | null {
     // Convert value to a number and check if it's a valid number
-    const numericValue = value ? Number(value) : null;
+    const numericValue = value !== null ? Number(value) : null;
 
-    if (numericValue && !isNaN(numericValue)) {
+    if (numericValue !== null && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
       return Number(numericValue.toFixed(num));
     } else {
@@ -215,7 +212,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   }
 
   private transformInRate(number: number, chiffre: number): number | null {
-    return number ? this.makeNumberArrondi(number * 100, chiffre) : number;
+    return number !== null ? this.makeNumberArrondi(number * 100, chiffre) : number;
   }
 
   private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
@@ -238,8 +235,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         etpVacant: this.transformInRate(resultat.taux_etp_vacants, 1),
         tauxCaf: this.transformInRate(resultat.taux_de_caf, 1),
         vetusteConstruction: this.transformInRate(resultat.taux_de_vetuste_construction, 1),
-        roulementNetGlobal: this.makeNumberArrondi(resultat.fonds_de_roulement, 2),
-        resultatNetComptable: this.makeNumberArrondi(resultat.resultat_net_comptable, 2),
+        roulementNetGlobal: this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
+        resultatNetComptable: this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
       };
     });
   }
