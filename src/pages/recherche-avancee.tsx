@@ -47,7 +47,7 @@ export default function RechercheAvancee(props: ExtendedRésultatDeRecherche) {
 
   return (
     <main className="fr-container">
-      <RechercheAvanceeFormulaire lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} />
+      <RechercheAvanceeFormulaire isComparaison={false} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} />
       {estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && <PasResultatRechercheAvancee />}
       {nombreRésultats > 0 && !estCeEnAttente && (
         <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage} />

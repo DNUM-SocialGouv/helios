@@ -14,3 +14,98 @@
   width: 24px;
   height: 24px;
 }
+
+.titreComposentSpan {
+  font-size: larger;
+  font-weight: 700;
+}
+
+.logo-container {
+  display: block;
+  height: 24px;
+  width: 24px;
+  margin-right: 10px;
+}
+
+.list-etablissements {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+.list-etablissements-container {
+  max-height: 380px;
+  overflow-y: scroll;
+}
+
+.list-etablissements-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track (background area) */
+.list-etablissements-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle (draggable part) */
+.list-etablissements-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+/* Thumb hover effect */
+.list-etablissements-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Scrollbar corner */
+.list-etablissements-container::-webkit-scrollbar-corner {
+  background-color: #f1f1f1;
+}
+
+.etablissement-info:hover {
+  background-color: #e8e7e7;
+  cursor: pointer;
+  /*cursor: not-allowed;*/
+}
+
+.main-span {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.icon-check-fill {
+  height: 15px;
+  width: 25px;
+}
+
+.disabled-container {
+  pointer-events: none;
+  opacity: 0.5;
+  color: gray;
+}
+
+.ajout-etab-body {
+  --modal-max-height: calc(100vh - 2rem);
+  --idle: transparent;
+  --hover: var(--background-lifted-grey-hover);
+  --active: var(--background-lifted-grey-active);
+  background-color: var(--background-lifted-grey);
+  filter: drop-shadow(var(--lifted-shadow));
+  flex: 1 1 auto;
+  max-height: var(--modal-max-height);
+  overflow-y: auto;
+  pointer-events: all;
+}  
+
+.button-add-etab {
+  transition: transform 0.2s ease;
+}
+
+  .button-add-etab:active {
+    transform: translateY(10px);
+}

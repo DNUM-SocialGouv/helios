@@ -1,37 +1,86 @@
-import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvanceeFormulaire";
+import { useContext, useEffect, useState } from "react";
 
-export const AjoutEtablissements = () => {
+import { WordingFr } from "../../../configuration/wording/WordingFr";
+import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvanceeFormulaire";
+import styles from "../Comparaison.module.css";
+import { ListEtablissements } from "./ListEtablissements";
+import { useRechercheAvanceeComparaison } from "./useRechercheAvanceeComparaison";
+import type { Dispatch, MouseEvent, SetStateAction } from "react";
+
+type AjoutEtablissementsProps = {
+  setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
+};
+
+export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsProps) => {
+  const { lancerLaRecherche, rechercheOnChange, resultats } = useRechercheAvanceeComparaison();
+  const wording = new WordingFr();
+  const [listData, setListData] = useState<RechercheViewModel[] | undefined>(undefined);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const comparaisonContext = useContext(ComparaisonContext);
+
+  useEffect(() => {
+    if (isAtBottom) {
+      comparaisonContext?.setPage(comparaisonContext.page + 1);
+      const button = document.createElement("button");
+      button.style.display = "none";
+      document.body.appendChild(button);
+
+      // Simulate the click event on the fake button
+      const clickEvent = new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      button.addEventListener("click", (event) => {
+        lancerLaRecherche(event as unknown as MouseEvent<HTMLButtonElement>);
+      });
+
+      button.dispatchEvent(clickEvent);
+      document.body.removeChild(button);
+    }
+    if (resultats) {
+      setListData(resultats);
+    }
+  }, [resultats, isAtBottom]);
+
   return (
-    <>
-      <dialog aria-labelledby="fr-modal-ajout-etablissement-comparaison-title" className="fr-modal" id="fr-modal-ajout-etablissement-comparaison">
-        <div className="fr-container fr-container--fluid fr-container-md">
-          <div className="fr-grid-row fr-grid-row--center">
-            <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
-              <div className="fr-modal__body">
-                <div className="fr-modal__header">
-                  <button
-                    aria-controls="titre-info-bulle-etablissement"
-                    className="fr-btn--close fr-btn"
-                    onClick={() => {}}
-                    title="Fermer la fenêtre modale"
-                    type="button"
-                  >
-                    FERMER
-                  </button>
-                </div>
-                <div className="fr-modal__content">
-                  <h1 className="fr-modal__title" id="titre-info-bulle-etablissement">
-                    <span aria-hidden="true" className="fr-fi-arrow-right-line fr-fi--lg"></span>
-                    TITRE DE LA POP UP
-                  </h1>
-                  <RechercheAvanceeFormulaire lancerLaRecherche={() => {}} rechercheOnChange={() => {}}></RechercheAvanceeFormulaire>
-                </div>
-                <div className="fr-modal__footer"></div>
-              </div>
-            </div>
+    <div className="fr-col-12 fr-col-md-8 fr-col-lg-12" style={{ marginBottom: 20 }}>
+      <div className={styles["ajout-etab-body"]} id="recherche-avancee-comparaison-modal-body">
+        <div className="fr-modal__header">
+          <h1 className="fr-modal__title" id="titre-info-bulle-etablissement" style={{ marginTop: "20px" }}>
+            {wording.TITRE_AJOUTER_DES_ETABLISSEMENTS}
+          </h1>
+          <button className="fr-btn--close fr-btn" onClick={() => setIsShowAjoutEtab(false)} title="Fermer la fenêtre modale" type="button">
+            {wording.FERMER}
+          </button>
+        </div>
+        <div className="fr-modal__content">
+          <div className={`${styles["titreComposentSpan"]}`} id="modal-body-composents-title">
+            <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS}</span>
+          </div>
+          <div id="modal-body-composents" style={{ marginTop: "10px" }}>
+            <RechercheAvanceeFormulaire
+              isComparaison={true}
+              lancerLaRecherche={lancerLaRecherche}
+              rechercheOnChange={rechercheOnChange}
+            ></RechercheAvanceeFormulaire>
+            {listData && listData?.length > 0 && <ListEtablissements resultatRechercheList={listData} setIsAtBottom={setIsAtBottom}></ListEtablissements>}
           </div>
         </div>
-      </dialog>
-    </>
+        <div className="fr-modal__footer">
+          <button
+            aria-controls="fr-modal-Capacite-Filtre"
+            className="fr-btn fr-btn--primary"
+            disabled={true}
+            id="ajouter-etablissement-botton"
+            onClick={() => {}}
+          >
+            Ajouter
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };

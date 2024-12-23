@@ -32,6 +32,8 @@ export const ComparaisonPage = () => {
   const [page, setPage] = useState<number>(1);
   const [nombreRésultats, setNombreRésultats] = useState<number>(1);
 
+  const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
+
   // Utilisation de useEffect pour lancer la comparaison
   useEffect(() => {
     const type = sessionStorage.getItem("comparaisonType");
@@ -134,13 +136,17 @@ export const ComparaisonPage = () => {
         </Head>
         <div className={styles["container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <button
-            aria-controls="fr-modal-ajout-etablissement-comparaison"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
-            data-fr-opened="false"
-          >
-            {wording.AJOUTER_DES_ETABLISSEMENTS}
-          </button>
+          <div className={styles["ajout-etab-div"]}>
+            {!isShowAjoutEtab && (
+              <button
+                className={`${styles["button-add-etab"]} fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary`}
+                onClick={() => setIsShowAjoutEtab(true)}
+              >
+                {wording.AJOUTER_DES_ETABLISSEMENTS}
+              </button>
+            )}
+            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab}></AjoutEtablissements>}
+          </div>
           <div className={styles["years-container"]}>
             <div className={styles["years-container"]}>
               <span style={{ marginTop: "5px" }}>Année</span>
@@ -195,7 +201,6 @@ export const ComparaisonPage = () => {
           <>Les données non renseignées sont exclues du calcul de la moyenne.</>
         </InfoBulle>
       </main>
-      <AjoutEtablissements></AjoutEtablissements>
     </>
   );
 };
