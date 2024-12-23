@@ -85,17 +85,16 @@
 
 .disabled-container {
   pointer-events: none;
-  opacity: 0.5;
+  opacity: .5;
   color: gray;
 }
 
 .ajout-etab-body {
-  --modal-max-height: calc(100vh - 2rem);
   --idle: transparent;
   --hover: var(--background-lifted-grey-hover);
   --active: var(--background-lifted-grey-active);
   background-color: var(--background-lifted-grey);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .2);
   flex: 1 1 auto;
   max-height: var(--modal-max-height);
   overflow-y: auto;
@@ -103,7 +102,7 @@
 }  
 
 .button-add-etab {
-  transition: transform 0.2s ease;
+  transition: transform .2s ease;
 }
 
   .button-add-etab:active {
