@@ -6,13 +6,14 @@ export async function comparaisonEndpoint(
     dependencies: Dependencies,
     type: string,
     numerosFiness: string[],
+    annee: string,
     page: number,
     order: string,
     orderBy: string
 ): Promise<ResultatDeComparaison> {
     try {
         const comparaisonEtablissementsUseCase = new ComparaisonEtablissementsUseCase(dependencies.comparaisonLoader);
-        return await comparaisonEtablissementsUseCase.exécute(type, numerosFiness, page, order, orderBy);
+        return await comparaisonEtablissementsUseCase.exécute(type, numerosFiness, annee, page, order, orderBy);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;
