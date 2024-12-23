@@ -52,7 +52,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const tableHeaders = [
     { label: "", key: "delete" },
     { label: "", key: "etsLogo", sort: true },
-    { label: "", key: "favori", sort: true },
+    { label: "", key: "favori" },
     { label: "Raison Sociale Courte", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
     { label: "Numéro Finess", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
     { label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess), key: "capacite", info: true, sort: true, orderBy: "capacite_total" },
