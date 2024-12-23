@@ -108,54 +108,22 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         FROM autorisation_medico_social
         GROUP BY autorisation_medico_social.numero_finess_etablissement_territorial) cp`;
 
-    const compareSMSActivite = `(Select activite.taux_realisation_activite,
-      activite.file_active_personnes_accompagnees,
-      activite.taux_occupation_en_hebergement_permanent,
-      activite.taux_occupation_en_hebergement_temporaire,
-      activite.taux_occupation_accueil_de_jour,
-      activite.numero_finess_etablissement_territorial
-      FROM activite_medico_social activite
-      where activite.annee = ${annee}) ac`;
-
-    const compareSMSRH = `(Select  rhms.taux_prestation_externes,
-    	rhms.taux_rotation_personnel,
-    	rhms.taux_etp_vacants,
-    	rhms.taux_absenteisme_hors_formation,
-    	rhms.numero_finess_etablissement_territorial
-    	from ressources_humaines_medico_social rhms
-    	where rhms.annee = ${annee}) rh`;
-
-    const compareIdentite = `(Select etablissement.raison_sociale_courte,
-      etablissement.commune,
-      etablissement.departement,
-      etablissement.domaine,
-      etablissement.numero_finess_etablissement_territorial
-      from  etablissement_territorial etablissement) id `;
-
-    const compareSMSBudget = `(Select budget.taux_de_caf,
-    	budget.taux_de_vetuste_construction,
-    	budget.fonds_de_roulement,
-    	budget.resultat_net_comptable,
-    	budget.numero_finess_etablissement_territorial
-    	from budget_et_finances_medico_social budget
-   		where budget.annee = ${annee}) bg`;
-
-    const compareSMSQueryBody = ` from ${compareIdentite} 
-    LEFT JOIN ${compareSMSActivite}
-    on id.numero_finess_etablissement_territorial = ac.numero_finess_etablissement_territorial
-    LEFT JOIN ${compareSMSBudget}
-    on id.numero_finess_etablissement_territorial = bg.numero_finess_etablissement_territorial
-    LEFT JOIN ${compareSMSRH}
-    on id.numero_finess_etablissement_territorial = rh.numero_finess_etablissement_territorial
+    const compareSMSQueryBody = ` from etablissement_territorial et 
+    LEFT JOIN activite_medico_social ac
+    on et.numero_finess_etablissement_territorial = ac.numero_finess_etablissement_territorial and ac.annee = ${annee}
+    LEFT JOIN budget_et_finances_medico_social bg
+    on et.numero_finess_etablissement_territorial = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
+    LEFT JOIN ressources_humaines_medico_social rh
+    on et.numero_finess_etablissement_territorial = rh.numero_finess_etablissement_territorial and rh.annee = ${annee}
     LEFT JOIN ${compareSMSCapacite}
-    on id.numero_finess_etablissement_territorial = cp.numero_finess_etablissement_territorial
-    where id.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})`;
+    on et.numero_finess_etablissement_territorial = cp.numero_finess_etablissement_territorial
+    where et.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})`;
 
-    const compareSMSQuery = `Select id.numero_finess_etablissement_territorial,
-    id.raison_sociale_courte,
-    id.domaine,
-    id.commune,
-    id.departement,
+    const compareSMSQuery = `Select et.numero_finess_etablissement_territorial,
+    et.raison_sociale_courte,
+    et.domaine,
+    et.commune,
+    et.departement,
     ac.taux_realisation_activite,
     ac.file_active_personnes_accompagnees,
     ac.taux_occupation_en_hebergement_permanent,
