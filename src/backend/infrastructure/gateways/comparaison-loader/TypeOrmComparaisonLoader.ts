@@ -168,6 +168,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
     const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
 
+    // eslint-disable-next-line no-console
+    console.log("moyennesCompareSMSQueryResult !!!!!!!!", moyennesCompareSMSQueryResult)
+
     return {
       nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatSMS(compareSMSQueryResult),
@@ -183,7 +186,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return {
       capaciteMoyenne: moyenne.capacitemoyenne ? this.makeNumberArrondi(Number(moyenne.capacitemoyenne), 2) : null,
       realisationAcitiviteMoyenne: this.transformInRate(moyenne.realisationacitivitemoyenne, 1),
-      acceuilDeJourMoyenne: this.transformInRate(moyenne.realisationacitivitemoyenne, 1),
+      acceuilDeJourMoyenne: this.transformInRate(moyenne.acceuildejourmoyenne, 1),
       hebergementPermanentMoyenne: this.transformInRate(moyenne.hebergementpermanentmoyenne, 1),
       hebergementTemporaireMoyenne: this.transformInRate(moyenne.hebergementtemporairemoyenne, 1),
       fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
