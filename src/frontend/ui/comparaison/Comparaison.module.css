@@ -95,7 +95,7 @@
   --hover: var(--background-lifted-grey-hover);
   --active: var(--background-lifted-grey-active);
   background-color: var(--background-lifted-grey);
-  filter: drop-shadow(var(--lifted-shadow));
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   flex: 1 1 auto;
   max-height: var(--modal-max-height);
   overflow-y: auto;

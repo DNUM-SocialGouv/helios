@@ -29,20 +29,7 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
   const [contenu, setContenu] = useState();
 
   const [page, setPage] = useState<number>(1);
-  const [nombreRésultats, setNombreRésultats] = useState<number>(1);
-
   const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
-
-  // Utilisation de useEffect pour lancer la comparaison
-  useEffect(() => {
-    const type = sessionStorage.getItem("comparaisonType");
-    setStructurechoice(type || "Médico-social");
-    const fetchData = async () => {
-      await lancerLaComparaison();
-      setLoading(false); // Lorsque les résultats sont prêts, on arrête le chargement
-    };
-    fetchData();
-  }, [loading]);
 
   // lancer la comparaison en changeant l'année ou la page
   useEffect(() => {
