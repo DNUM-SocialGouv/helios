@@ -176,7 +176,7 @@ describe("La comparaison des établissements médico sociaux", () => {
       tauxCafMoyenne: 16.5,
       vetusteConstructionMoyenne: 53.2,
       roulementNetGlobalMoyenne: null,
-      resultatNetComptableMoyenne: 95999.21,
+      resultatNetComptableMoyenne: 95999,
     });
     expect(comparaison.resultat).toStrictEqual([
       {
@@ -198,7 +198,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         tauxCaf: 16.5,
         vetusteConstruction: 53.2,
         roulementNetGlobal: null,
-        resultatNetComptable: 95999.21,
+        resultatNetComptable: 95999,
       },
       {
         numéroFiness: "100000001",
@@ -219,7 +219,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         tauxCaf: 16.5,
         vetusteConstruction: 53.2,
         roulementNetGlobal: null,
-        resultatNetComptable: 95999.21,
+        resultatNetComptable: 95999,
       },
       {
         numéroFiness: "199999999",
