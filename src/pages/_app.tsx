@@ -22,6 +22,7 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "../frontend/ui/commun/global.css";
 
 import { BackToSearchContextProvider } from "../frontend/ui/commun/contexts/BackToSearchContextProvider";
+import { ComparaisonContextProvider } from "../frontend/ui/commun/contexts/ComparaisonContextProvider";
 import { ProfileContextProvider } from "../frontend/ui/commun/contexts/ProfileContextProvider";
 import { RechecheAvanceeContextProvider } from "../frontend/ui/commun/contexts/RechercheAvanceeContextProvider";
 import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependencies";
@@ -73,20 +74,22 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
         <ProfileContextProvider>
           <BackToSearchContextProvider>
             <RechecheAvanceeContextProvider>
-              <DependenciesProvider>
-                <Head>
-                  <meta charSet="utf-8" />
-                  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
-                  {/*<script src="/tarteaucitron.min.js"></script>
+              <ComparaisonContextProvider>
+                <DependenciesProvider>
+                  <Head>
+                    <meta charSet="utf-8" />
+                    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+                    {/*<script src="/tarteaucitron.min.js"></script>
               <script src="/tarteaucitron.init.js"></script>*/}
-                </Head>
-                <Header />
-                <Component {...pageProps} />
-                <Footer />
-                <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
-                <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
-                {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
-              </DependenciesProvider>
+                  </Head>
+                  <Header />
+                  <Component {...pageProps} />
+                  <Footer />
+                  <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
+                  <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
+                  {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
+                </DependenciesProvider>
+              </ComparaisonContextProvider>
             </RechecheAvanceeContextProvider>
           </BackToSearchContextProvider>
         </ProfileContextProvider>

@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from "react";
 
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FiltreCapacite } from "./FiltreCapacite";
@@ -11,11 +12,12 @@ import styles from "./RechercheAvanceeFormulaire.module.css";
 type RechercheAvanceeFormulaireProps = Readonly<{
   lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void;
   rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  isComparaison: boolean;
 }>;
 
-export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChange }: RechercheAvanceeFormulaireProps) => {
+export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChange, isComparaison }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
 
@@ -123,6 +125,7 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
             aria-controls="fr-modal-Structure-Filtre"
             className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
             data-fr-opened="false"
+            disabled={isComparaison}
           >
             {getWording(wording.STRUCTURE)}
           </button>
@@ -137,9 +140,9 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique />
-        <FiltreStructure />
-        <FiltreCapacite />
+        <FiltreZoneGeographique isComparaison={isComparaison} />
+        <FiltreStructure isComparaison={isComparaison} />
+        <FiltreCapacite isComparaison={isComparaison} />
       </div>
     </div>
   );

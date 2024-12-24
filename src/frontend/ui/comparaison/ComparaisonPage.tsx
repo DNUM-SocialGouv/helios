@@ -9,6 +9,7 @@ import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
+import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import { useComparaison } from "./useComparaison";
 
@@ -30,6 +31,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const [contenu, setContenu] = useState();
 
   const [page, setPage] = useState<number>(1);
+  const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
 
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("");
@@ -38,6 +40,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   useEffect(() => {
     lancerLaComparaison(page, annéeEnCours + '', order, orderBy);
   }, [page, annéeEnCours, order, orderBy]);
+
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -107,9 +110,17 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
         </Head>
         <div className={styles["container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <button className="fr-btn fr-btn--secondary fr-mb-1w" type="button">
-            {wording.AJOUTER_DES_ETABLISSEMENTS}
-          </button>
+          <div className={styles["ajout-etab-div"]}>
+            {!isShowAjoutEtab && (
+              <button
+                className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`}
+                onClick={() => setIsShowAjoutEtab(true)}
+              >
+                {wording.AJOUTER_DES_ETABLISSEMENTS}
+              </button>
+            )}
+            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab}></AjoutEtablissements>}
+          </div>
           <div className={styles["years-container"]}>
             <div className={styles["years-container"]}>
               <span style={{ marginTop: "5px" }}>Année</span>
