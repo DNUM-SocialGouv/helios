@@ -87,7 +87,7 @@ export function useComparaison() {
           ...state,
           dateDeMiseAJourCapacite: data.date_mis_a_jour_capacite,
           nombreRésultats: data.nombreDeResultats,
-          lastPage: Math.ceil(data.resultat.length / take),
+          lastPage: Math.ceil(data.nombreDeResultats / take),
           résultats: construisLesRésultatsDeLaComparaison(data),
           moyenne: data.moyennes,
           loading: false

@@ -35,11 +35,12 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
 
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("");
+  const [deleteEt, setDeleteET] = useState(false);
 
-  // lancer la comparaison en changeant l'année ou la page
+  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression 
   useEffect(() => {
     lancerLaComparaison(page, annéeEnCours + '', order, orderBy);
-  }, [page, annéeEnCours, order, orderBy]);
+  }, [page, annéeEnCours, order, orderBy, deleteEt]);
 
 
   const getAllTypes = () => {
@@ -99,7 +100,11 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
+      if (lastPage > Math.ceil(listFinessArray.length / 2)) {
+        setPage(page - 1);
+      }
     }
+    setDeleteET(!deleteEt);
   };
 
   return (
