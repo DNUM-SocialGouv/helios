@@ -85,7 +85,7 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
               <button
-                className={`${styles["button-add-etab"]} fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary`}
+                className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`}
                 onClick={() => setIsShowAjoutEtab(true)}
               >
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
@@ -127,12 +127,12 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
                 orderBy=""
                 page={page || 1}
                 selectedRows={selectedRows}
-                setOrder={() => {}}
-                setOrderBy={() => {}}
+                setOrder={() => { }}
+                setOrderBy={() => { }}
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
+              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>
           )}
         </div>
