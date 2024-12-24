@@ -1,4 +1,4 @@
-import { ResultatDeComparaison } from "../entities/ResultatDeComparaison";
+import { DatesMisAjourSources, ResultatDeComparaison } from "../entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../gateways/ComparaisonLoader";
 
 export class ComparaisonEtablissementsUseCase {
@@ -20,6 +20,10 @@ export class ComparaisonEtablissementsUseCase {
         numerosFiness: string[],
     ): Promise<string[]> {
         return await this.comparaisonLoader.listeAnnees(type, numerosFiness);
+    }
+
+    async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
+        return await this.comparaisonLoader.getDatesMisAJourSourcesComparaison();
     }
 
 }

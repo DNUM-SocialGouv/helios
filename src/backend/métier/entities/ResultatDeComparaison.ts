@@ -60,3 +60,9 @@ export type ResultatDeComparaison = {
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
   moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
 };
+
+export type DatesMisAjourSources = {
+  date_mis_a_jour_finess: string;
+  date_mis_a_jour_tdbPerf: string;
+  date_mis_a_jour_cnsa: string;
+};

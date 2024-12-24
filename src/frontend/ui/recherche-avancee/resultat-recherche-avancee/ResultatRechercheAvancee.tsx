@@ -68,6 +68,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         handleSelectAll={handleSelectAll}
         headers={tableHeaders}
         isAllSelected={isAllSelected}
+        isCenter={false}
         isShowAvrage={false}
         onClickDelete={() => { }}
         order={rechercheAvanceeContext?.order || ""}
