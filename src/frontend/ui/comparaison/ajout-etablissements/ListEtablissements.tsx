@@ -25,7 +25,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom }: lis
 
     if (scrollableDiv) {
       const handleScroll = () => {
-        if (scrollableDiv.scrollHeight - scrollableDiv.scrollTop === scrollableDiv.clientHeight) {
+        if (Math.floor(scrollableDiv.scrollHeight - scrollableDiv.scrollTop) === scrollableDiv.clientHeight) {
           setIsAtBottom(true);
         } else {
           setIsAtBottom(false);

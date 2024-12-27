@@ -23,7 +23,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
   const [prevPage, setPrevPage] = useState<number>(1);
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
-  const [termeOfSearch, setTermeOfSearch] = useState<string>("");
+  const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
     if (isAtBottom && comparaisonContext) {
@@ -35,15 +35,22 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
     }
     if (resultats) {
       setCurrentPageData(resultats);
-      //if (comparaisonContext) setTermeOfSearch(comparaisonContext.termeFixe);
     }
   }, [resultats, isAtBottom]);
+
+  // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
+  useEffect(() => {
+    if (!arraysAreEqual(currentPageData, listData)) {
+      const collectData = comparaisonContext?.page === 1 ? currentPageData : [...listData, ...currentPageData];
+      setListData(collectData);
+    }
+  }, [currentPageData]);
 
   // lancer la recherche quand la page change
   useEffect(() => {
     if (
       comparaisonContext &&
-      (comparaisonContext?.termeFixe ||
+      (comparaisonContext?.terme ||
         comparaisonContext?.capaciteAgees.length > 0 ||
         comparaisonContext?.capaciteHandicap.length > 0 ||
         comparaisonContext?.capaciteMedicoSociaux.length > 0 ||
@@ -51,34 +58,30 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
         comparaisonContext?.zoneGeoD)
     ) {
       lancerLaRecherche();
+      setReload(false);
     }
-  }, [prevPage]);
+  }, [prevPage, reload]);
 
   useEffect(() => {
-    console.log("qsdqdqsdqsdq");
-    if (isChangedZG || isChangedCapacite || termeOfSearch !== comparaisonContext?.termeFixe) {
-      if (comparaisonContext) setTermeOfSearch(comparaisonContext.termeFixe);
-      setListData([]);
-      lancerLaRecherche();
-      setIsChangedCapacite(false);
-      setIsChangedZG(false);
+    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
+      comparaisonContext?.setPage(1);
+      //lancerLaRecherche();
+      if (isChangedZG || isChangedCapacite) {
+        setIsChangedCapacite(false);
+        setIsChangedZG(false);
+        setReload(true);
+      }
     }
   }, [isChangedZG, isChangedCapacite, comparaisonContext?.terme]);
 
-  // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
-  useEffect(() => {
-    if (!arraysAreEqual(currentPageData, listData)) {
-      const collectData = [...listData, ...currentPageData];
-      setListData(collectData);
-    }
-  }, [currentPageData]);
-
   // check if lits are equals or not
   const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
-    if (arr1.length !== arr2.length) {
+    const str1 = JSON.stringify(arr1);
+    const str2 = JSON.stringify(arr2);
+    if (str1 !== str2) {
       return false;
     }
-    return arr1.every((value, index) => value === arr2[index]);
+    return true;
   };
 
   return (
