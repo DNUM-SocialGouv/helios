@@ -181,6 +181,7 @@ export function useComparaison() {
     resultats: state.résultats,
     moyenne: state.moyenne,
     lastPage: state.lastPage,
-    loading: state.loading
+    loading: state.loading,
+    NombreDeResultatsMaxParPage: take
   };
 }
