@@ -18,7 +18,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     return response.status(200).json({
       nombreDeResultats: 0,
       resultat: [],
-    });
+    }); ''
   }
 
   // TODO check if all numeros finess belong to the type
