@@ -37,10 +37,13 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const [orderBy, setOrderBy] = useState("");
   const [deleteEt, setDeleteET] = useState(false);
 
+  const [reloadTable, setReloadTable] = useState<boolean>(false);
+
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
     lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
-  }, [page, annéeEnCours, order, orderBy, deleteEt]);
+    setReloadTable(false);
+  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -126,7 +129,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
-            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab}></AjoutEtablissements>}
+            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
           </div>
           <div className={styles["years-container"]}>
             <div className={styles["years-container"]}>

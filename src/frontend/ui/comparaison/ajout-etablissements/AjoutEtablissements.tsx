@@ -11,9 +11,10 @@ import type { Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
+  setReloadTable: Dispatch<SetStateAction<boolean>>;
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -24,6 +25,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
+  const [newEtablissements, setNewEtablissement] = useState<string[]>([]);
 
   useEffect(() => {
     if (isAtBottom && comparaisonContext) {
@@ -40,7 +42,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
 
   // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
   useEffect(() => {
-    if (!arraysAreEqual(currentPageData, listData)) {
+    if (!arraysAreEqual(currentPageData, listData.slice(-20))) {
       const collectData = comparaisonContext?.page === 1 ? currentPageData : [...listData, ...currentPageData];
       setListData(collectData);
     }
@@ -73,6 +75,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
     return true;
   };
 
+  // fonction de la fermeture du composent
   const onClickFermer = () => {
     comparaisonContext?.setCapaciteAgees([]);
     comparaisonContext?.setCapaciteHandicap([]);
@@ -83,6 +86,16 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
     comparaisonContext?.setZoneGeoType("");
     setPrevPage(1);
     setIsShowAjoutEtab(false);
+  };
+
+  const onClickAjouter = () => {
+    const stringListOfTable = sessionStorage.getItem("listFinessNumbers");
+    const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
+    const listToCompare = [...arrayListOfTable, ...newEtablissements];
+    sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
+    document.cookie = `list=${encodeURIComponent(JSON.stringify(listToCompare))}; path=/`;
+    setReloadTable(true);
+    onClickFermer();
   };
 
   return (
@@ -108,18 +121,30 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
               setIsChangedCapacite={setIsChangedCapacite}
               setIsChangedZG={setIsChangedZG}
             ></RechercheAvanceeFormulaire>
-            {listData && listData?.length > 0 && <ListEtablissements resultatRechercheList={listData} setIsAtBottom={setIsAtBottom}></ListEtablissements>}
+            {listData && listData?.length > 0 && (
+              <ListEtablissements
+                newEtablissements={newEtablissements}
+                resultatRechercheList={listData}
+                setIsAtBottom={setIsAtBottom}
+                setNewEtablissement={setNewEtablissement}
+              ></ListEtablissements>
+            )}
           </div>
         </div>
         <div className="fr-modal__footer" style={{ display: "flex", alignItems: "center" }}>
           <button
             aria-controls="fr-modal-Capacite-Filtre"
             className="fr-btn fr-btn--primary"
-            disabled={true}
+            disabled={false}
             id="ajouter-etablissement-botton"
-            onClick={() => {}}
+            onClick={onClickAjouter}
           >
-            Ajouter
+            Ajouter{" "}
+            {newEtablissements.length > 0
+              ? newEtablissements.length === 1
+                ? newEtablissements.length + " établissement"
+                : newEtablissements.length + " établissements"
+              : ""}
           </button>
           {nombreRésultats > 0 && <span style={{ marginLeft: "auto", fontSize: "small", opacity: 0.5 }}>{nombreRésultats} Établissement(s)</span>}
         </div>
