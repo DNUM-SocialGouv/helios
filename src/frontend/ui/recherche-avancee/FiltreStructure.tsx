@@ -11,11 +11,12 @@ import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
 import { AttribuesDefaults } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 
-type FiltresProps = Readonly<{
+type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
 }>;
 
-export const FiltreStructure = ({ isComparaison }: FiltresProps) => {
+export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
@@ -124,6 +125,7 @@ export const FiltreStructure = ({ isComparaison }: FiltresProps) => {
         rechercheAvanceeContext?.setCapaciteHandicap([]);
         rechercheAvanceeContext?.setCapaciteAgees([]);
       }
+      if (setIsChanged) setIsChanged(true);
     }
   };
 

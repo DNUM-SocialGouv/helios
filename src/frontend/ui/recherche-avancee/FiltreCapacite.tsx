@@ -8,11 +8,12 @@ import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";
 
-type FiltresProps = Readonly<{
+type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
 }>;
 
-export const FiltreCapacite = ({ isComparaison }: FiltresProps) => {
+export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
   const [showToolip, setShowTooltip] = useState<boolean>(false);
   const [showToolip2, setShowTooltip2] = useState<boolean>(false);
@@ -138,6 +139,7 @@ export const FiltreCapacite = ({ isComparaison }: FiltresProps) => {
       rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
       rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
       rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
+      if (setIsChanged) setIsChanged(true);
     }
   };
 

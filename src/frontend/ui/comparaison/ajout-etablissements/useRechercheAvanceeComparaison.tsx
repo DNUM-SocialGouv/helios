@@ -1,6 +1,7 @@
-import { ChangeEvent, MouseEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
+import { OrderDir } from "../../../../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
@@ -13,7 +14,7 @@ type RechercheAvanceeState = Readonly<{
   estCeQueLesRésultatsSontReçus: boolean;
   estCeQueLaRechercheEstLancee: boolean;
   nombreRésultats: number;
-  //lastPage: number;
+  lastPage: number;
   résultats: RechercheViewModel[];
 }>;
 
@@ -22,6 +23,7 @@ export function useRechercheAvanceeComparaison() {
   const comparaisonContext = useContext(ComparaisonContext);
   const pageInitiale = 1;
   const statutsJuridiquesDefaultValue: string[] = [];
+  const take = 20;
   // const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
@@ -33,18 +35,17 @@ export function useRechercheAvanceeComparaison() {
     estCeQueLesRésultatsSontReçus: false,
     estCeQueLaRechercheEstLancee: false,
     nombreRésultats: 0,
-    // lastPage,
+    lastPage: pageInitiale,
     résultats: construisLesRésultatsDeLaRecherche({ nombreDeRésultats: 0, résultats: [] }),
   });
 
-  const lancerLaRecherche = (event: MouseEvent<HTMLButtonElement>): void => {
-    const capacites = [
-      { classification: "non_classifie", ranges: comparaisonContext?.capaciteMedicoSociaux || [] },
-      { classification: "publics_en_situation_de_handicap", ranges: comparaisonContext?.capaciteHandicap || [] },
-      { classification: "personnes_agees", ranges: comparaisonContext?.capaciteAgees || [] },
-    ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
-    if (comparaisonContext?.terme !== "") {
-      event.preventDefault();
+  const lancerLaRecherche = (): void => {
+    if (lancerRechercheRequisParamValidator()) {
+      const capacites = [
+        { classification: "non_classifie", ranges: comparaisonContext?.capaciteMedicoSociaux || [] },
+        { classification: "publics_en_situation_de_handicap", ranges: comparaisonContext?.capaciteHandicap || [] },
+        { classification: "personnes_agees", ranges: comparaisonContext?.capaciteAgees || [] },
+      ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
       setState({
         ...state,
         estCeEnAttente: true,
@@ -54,9 +55,13 @@ export function useRechercheAvanceeComparaison() {
       rechercher(
         comparaisonContext?.terme,
         comparaisonContext?.zoneGeo,
+        comparaisonContext?.zoneGeoD,
+        comparaisonContext?.zoneGeoType,
         AttribuesDefaults.etablissementMedicoSocial,
         statutsJuridiquesDefaultValue,
         capacites,
+        "",
+        "ASC",
         comparaisonContext?.page
       );
     }
@@ -67,16 +72,19 @@ export function useRechercheAvanceeComparaison() {
   };
   const rechercher = async (
     terme: string | undefined,
-    commune: string | undefined,
+    zone: string | undefined,
+    zoneD: string | undefined,
+    typeZone: string | undefined,
     type: string,
     statutJuridique: string[],
     capaciteSMS: CapaciteEtablissement[] | undefined,
+    orderBy: string | undefined,
+    order: OrderDir,
     page: number | undefined
   ) => {
-    rechercheParamValidator(terme, commune, capaciteSMS, page);
-    comparaisonContext?.setPage(page ?? 1, true);
+    rechercheParamValidator(terme, zone, zoneD, typeZone, capaciteSMS, orderBy, order, page);
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, commune, type, statutJuridique, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
@@ -88,7 +96,7 @@ export function useRechercheAvanceeComparaison() {
           estCeQueLesRésultatsSontReçus: true,
           estCeQueLaRechercheEstLancee: true,
           nombreRésultats: data.nombreDeRésultats,
-          //lastPage: Math.ceil(data.nombreDeRésultats / take),
+          lastPage: Math.ceil(data.nombreDeRésultats / take),
           résultats: construisLesRésultatsDeLaRecherche(data),
         });
       })
@@ -103,14 +111,35 @@ export function useRechercheAvanceeComparaison() {
 
   const rechercheParamValidator = (
     terme: string | undefined,
-    commune: string | undefined,
+    zone: string | undefined,
+    zoneD: string | undefined,
+    typeZone: string | undefined,
     capaciteSMS: CapaciteEtablissement[] | undefined,
+    orderBy: string | undefined,
+    order: OrderDir,
     page: number | undefined
   ) => {
     terme ?? "";
-    commune ?? "";
+    zone ?? "";
+    zoneD ?? "";
+    typeZone ?? "";
     capaciteSMS ?? [];
     page ?? pageInitiale;
+    orderBy ?? "numéroFiness";
+    order ?? "ASC";
+  };
+
+  const lancerRechercheRequisParamValidator = () => {
+    if (
+      comparaisonContext?.capaciteAgees.length === 0 &&
+      comparaisonContext?.capaciteHandicap.length === 0 &&
+      comparaisonContext?.capaciteMedicoSociaux.length === 0 &&
+      comparaisonContext?.zoneGeo === "" &&
+      comparaisonContext?.zoneGeoD === ""
+    ) {
+      return false;
+    }
+    return true;
   };
 
   return {
@@ -120,7 +149,7 @@ export function useRechercheAvanceeComparaison() {
     estCeQueLaRechercheEstLancee: state.estCeQueLaRechercheEstLancee,
     lancerLaRecherche,
     rechercheOnChange,
-    //lastPage: state.lastPage,
+    lastPage: state.lastPage,
     terme: comparaisonContext?.terme,
     setPage: comparaisonContext?.setPage,
     page: comparaisonContext?.page,

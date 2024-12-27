@@ -7,46 +7,82 @@ import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvan
 import styles from "../Comparaison.module.css";
 import { ListEtablissements } from "./ListEtablissements";
 import { useRechercheAvanceeComparaison } from "./useRechercheAvanceeComparaison";
-import type { Dispatch, MouseEvent, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
 };
 
 export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsProps) => {
-  const { lancerLaRecherche, rechercheOnChange, resultats } = useRechercheAvanceeComparaison();
+  const { lancerLaRecherche, rechercheOnChange, resultats, lastPage } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
-  const [listData, setListData] = useState<RechercheViewModel[] | undefined>(undefined);
+  const [listData, setListData] = useState<RechercheViewModel[]>([]);
+  const [currentPageData, setCurrentPageData] = useState<RechercheViewModel[]>([]);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const comparaisonContext = useContext(ComparaisonContext);
+  const [prevPage, setPrevPage] = useState<number>(1);
+  const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
+  const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
+  const [termeOfSearch, setTermeOfSearch] = useState<string>("");
 
   useEffect(() => {
-    if (isAtBottom) {
-      comparaisonContext?.setPage(comparaisonContext.page + 1);
-      const button = document.createElement("button");
-      button.style.display = "none";
-      document.body.appendChild(button);
-
-      // Simulate the click event on the fake button
-      const clickEvent = new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true,
-      });
-
-      button.addEventListener("click", (event) => {
-        lancerLaRecherche(event as unknown as MouseEvent<HTMLButtonElement>);
-      });
-
-      button.dispatchEvent(clickEvent);
-      document.body.removeChild(button);
+    if (isAtBottom && comparaisonContext) {
+      if (comparaisonContext.page < lastPage) {
+        comparaisonContext.setPage(prevPage + 1);
+        setPrevPage(prevPage + 1);
+      }
+      setIsAtBottom(false);
     }
     if (resultats) {
-      setListData(resultats);
+      setCurrentPageData(resultats);
+      //if (comparaisonContext) setTermeOfSearch(comparaisonContext.termeFixe);
     }
   }, [resultats, isAtBottom]);
 
+  // lancer la recherche quand la page change
+  useEffect(() => {
+    if (
+      comparaisonContext &&
+      (comparaisonContext?.termeFixe ||
+        comparaisonContext?.capaciteAgees.length > 0 ||
+        comparaisonContext?.capaciteHandicap.length > 0 ||
+        comparaisonContext?.capaciteMedicoSociaux.length > 0 ||
+        comparaisonContext?.zoneGeo ||
+        comparaisonContext?.zoneGeoD)
+    ) {
+      lancerLaRecherche();
+    }
+  }, [prevPage]);
+
+  useEffect(() => {
+    console.log("qsdqdqsdqsdq");
+    if (isChangedZG || isChangedCapacite || termeOfSearch !== comparaisonContext?.termeFixe) {
+      if (comparaisonContext) setTermeOfSearch(comparaisonContext.termeFixe);
+      setListData([]);
+      lancerLaRecherche();
+      setIsChangedCapacite(false);
+      setIsChangedZG(false);
+    }
+  }, [isChangedZG, isChangedCapacite, comparaisonContext?.terme]);
+
+  // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
+  useEffect(() => {
+    if (!arraysAreEqual(currentPageData, listData)) {
+      const collectData = [...listData, ...currentPageData];
+      setListData(collectData);
+    }
+  }, [currentPageData]);
+
+  // check if lits are equals or not
+  const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+    return arr1.every((value, index) => value === arr2[index]);
+  };
+
   return (
-    <div className="fr-col-12 fr-col-md-8 fr-col-lg-12" style={{ marginBottom: 20 }}>
+    <div className="fr-col-12 fr-col-md-12 fr-col-lg-12" style={{ marginBottom: 20 }}>
       <div className={styles["ajout-etab-body"]} id="recherche-avancee-comparaison-modal-body">
         <div className="fr-modal__header">
           <h1 className="fr-modal__title" id="titre-info-bulle-etablissement" style={{ marginTop: "20px" }}>
@@ -65,6 +101,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
               rechercheOnChange={rechercheOnChange}
+              setIsChangedCapacite={setIsChangedCapacite}
+              setIsChangedZG={setIsChangedZG}
             ></RechercheAvanceeFormulaire>
             {listData && listData?.length > 0 && <ListEtablissements resultatRechercheList={listData} setIsAtBottom={setIsAtBottom}></ListEtablissements>}
           </div>
