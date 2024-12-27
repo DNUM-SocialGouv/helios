@@ -37,11 +37,10 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const [orderBy, setOrderBy] = useState("");
   const [deleteEt, setDeleteET] = useState(false);
 
-  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression 
+  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + '', order, orderBy);
+    lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
   }, [page, annéeEnCours, order, orderBy, deleteEt]);
-
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -59,7 +58,13 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     { label: "", key: "favori" },
     { label: "Raison Sociale Courte", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
     { label: "Numéro Finess", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
-    { label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess), key: "capacite", info: true, sort: true, orderBy: "capacite_total" },
+    {
+      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+      key: "capacite",
+      info: true,
+      sort: true,
+      orderBy: "capacite_total",
+    },
     { label: "Réalisation de l'activité", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
     { label: "Activité personnes accompagnées", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
     { label: "HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
@@ -117,10 +122,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           <h1>{wording.COMPARAISON}</h1>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button
-                className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`}
-                onClick={() => setIsShowAjoutEtab(true)}
-              >
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
@@ -166,7 +168,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
             </>
           )}
         </div>
