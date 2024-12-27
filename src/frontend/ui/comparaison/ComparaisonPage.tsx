@@ -23,7 +23,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading } = useComparaison();
+  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
@@ -108,7 +108,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
-      if (lastPage > Math.ceil(listFinessArray.length / 2)) {
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage)) {
         setPage(page - 1);
       }
     }
@@ -171,7 +171,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => {})} />
+              <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>
           )}
         </div>
