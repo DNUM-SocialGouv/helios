@@ -16,7 +16,8 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom }: lis
   //const codeColorOfDisabled = "#808080";
   const codeColorOfSelected = "#3a3a3a";
 
-  const teeeestliisst = ["060790730", "620024331", "620029603"];
+  const listFinessFromStorage = sessionStorage.getItem("listFinessNumbers");
+  const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : null;
   const [newEtablissements, setNewEtablissement] = useState<string[]>([]);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom }: lis
 
     if (scrollableDiv) {
       const handleScroll = () => {
-        if (scrollableDiv.scrollHeight - scrollableDiv.scrollTop === scrollableDiv.clientHeight) {
+        if (Math.floor(scrollableDiv.scrollHeight - scrollableDiv.scrollTop) === scrollableDiv.clientHeight) {
           setIsAtBottom(true);
         } else {
           setIsAtBottom(false);
@@ -56,7 +57,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom }: lis
           {resultatRechercheList.map((res) => (
             <li className={styles["etablissement-info"]} key={res.numéroFiness}>
               <div
-                className={teeeestliisst.includes(res.numéroFiness) ? styles["disabled-container"] : ""}
+                className={finessNumbersListFromTable && finessNumbersListFromTable.includes(res.numéroFiness) ? styles["disabled-container"] : ""}
                 onClick={() => onHandleSelectEtablissement(res.numéroFiness)}
                 onKeyDown={() => {}}
                 role="button"
@@ -72,7 +73,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom }: lis
                 </span>
                 <span className={styles["main-span"]}>
                   {res.numéroFiness} - {res.socialReason}
-                  {(newEtablissements.includes(res.numéroFiness) || teeeestliisst.includes(res.numéroFiness)) && (
+                  {(newEtablissements.includes(res.numéroFiness) || (finessNumbersListFromTable && finessNumbersListFromTable.includes(res.numéroFiness))) && (
                     <div className={styles["icon-check-fill"]}>{checkFillSvg}</div>
                   )}
                 </span>
