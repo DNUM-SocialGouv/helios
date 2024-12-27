@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -42,6 +42,8 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
     codeNum: "",
   });
 
+  const requestCounterRef = useRef(0);
+
   // Debounce function to control the rate of API calls
   const debounce = (func: any, delay: number) => {
     let timeout: any;
@@ -51,7 +53,7 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
     };
   };
 
-  const fetchSuggestions = async (searchQuery: string) => {
+  const fetchSuggestions = async (searchQuery: string, requestId: number) => {
     if (!searchQuery) {
       setSuggestions([]);
       return;
@@ -87,38 +89,41 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
         return { ...elt, type: "C" };
       });
 
-      const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
+      if (requestId === requestCounterRef.current) {
 
-      // Separate the items that match the search value and the ones that don't
-      const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
-      const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+        const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
-      //Adds padding to numbers to handle them correctly in comparison
-      const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
+        // Separate the items that match the search value and the ones that don't
+        const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+        const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
-      // Sort both lists alphabetically by 'nom'
-      const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {
-        return normalize(a.nom).localeCompare(normalize(b.nom));
-      });
+        //Adds padding to numbers to handle them correctly in comparison
+        const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
 
-      const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => {
-        return normalize(a.nom).localeCompare(normalize(b.nom));
-      });
+        // Sort both lists alphabetically by 'nom'
+        const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {
+          return normalize(a.nom).localeCompare(normalize(b.nom));
+        });
 
-      const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems];
+        const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => {
+          return normalize(a.nom).localeCompare(normalize(b.nom));
+        });
 
-      const maRegion = data?.user.codeRegion;
-      const sortedOptions =
-        data?.user.role === 3 || data?.user.role === 2
-          ? sortedAlphabetically.sort((a: any, b: any) => {
+        const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems];
+
+        const maRegion = data?.user.codeRegion;
+        const sortedOptions =
+          data?.user.role === 3 || data?.user.role === 2
+            ? sortedAlphabetically.sort((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
               if (estMaRegionA === estMaRegionB) return 0;
               return estMaRegionA ? -1 : 1;
             })
-          : sortedAlphabetically;
+            : sortedAlphabetically;
 
-      setSuggestions(sortedOptions);
+        setSuggestions(sortedOptions);
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("Error fetching data:", error);
@@ -127,8 +132,10 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
     }
   };
 
-  // Debounced version of fetchSuggestions
-  const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
+  const debouncedFetchSuggestions = debounce((searchQuery: string) => {
+    const requestId = ++requestCounterRef.current; // Increment the request counter
+    fetchSuggestions(searchQuery, requestId);
+  }, 300);
 
   useEffect(() => {
     if (zoneGeoSelected?.nom !== zoneGeoValue) {
