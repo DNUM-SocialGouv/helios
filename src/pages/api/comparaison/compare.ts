@@ -14,6 +14,13 @@ export default async function handler(request: NextApiRequest, response: NextApi
     response.status(400).send("invalid type");
   }
 
+  if (numerosFiness.length === 0) {
+    return response.status(200).json({
+      nombreDeResultats: 0,
+      resultat: [],
+    }); ''
+  }
+
   // TODO check if all numeros finess belong to the type
   const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness, annee, page, order, orderBy);
 
