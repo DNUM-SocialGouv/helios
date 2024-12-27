@@ -64,6 +64,12 @@ export function useRechercheAvanceeComparaison() {
         "ASC",
         comparaisonContext?.page
       );
+    } else {
+      setState({
+        ...state,
+        nombreRésultats: 0,
+        résultats: [],
+      });
     }
   };
 

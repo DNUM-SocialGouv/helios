@@ -166,6 +166,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
     rechercheAvanceeContext?.setZoneGeoLabel("");
+    if (setIsChanged) setIsChanged(true);
   };
 
   const applyZoneGeoValue = () => {

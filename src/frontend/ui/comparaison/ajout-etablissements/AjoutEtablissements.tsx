@@ -48,18 +48,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
 
   // lancer la recherche quand la page change
   useEffect(() => {
-    if (
-      comparaisonContext &&
-      (comparaisonContext?.terme ||
-        comparaisonContext?.capaciteAgees.length > 0 ||
-        comparaisonContext?.capaciteHandicap.length > 0 ||
-        comparaisonContext?.capaciteMedicoSociaux.length > 0 ||
-        comparaisonContext?.zoneGeo ||
-        comparaisonContext?.zoneGeoD)
-    ) {
-      lancerLaRecherche();
-      setReload(false);
-    }
+    lancerLaRecherche();
+    setReload(false);
   }, [prevPage, reload]);
 
   useEffect(() => {

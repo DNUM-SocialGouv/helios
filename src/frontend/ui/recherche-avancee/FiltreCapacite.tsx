@@ -150,6 +150,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
+    if (setIsChanged) setIsChanged(true);
     // rechercheAvanceeContext?.setTypeStructure("");
   };
 

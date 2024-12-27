@@ -102,6 +102,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     emptyStatutJuridiqueCheckboxs();
     rechercheAvanceeContext?.setTypeStructure("");
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
+    if (setIsChanged) setIsChanged(true);
   };
 
   function emptyStatutJuridiqueCheckboxs() {
