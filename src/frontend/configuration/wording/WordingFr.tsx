@@ -604,6 +604,6 @@ export class WordingFr implements Wording {
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string =
     "Pour réaliser une comparaison, vous devez sélectionner des établissements de structure identique (Entité juridique, Etablissement sanitaire ou Etablissement médico-social)";
-  readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajout un ou plusiers établissements";
+  readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
 }

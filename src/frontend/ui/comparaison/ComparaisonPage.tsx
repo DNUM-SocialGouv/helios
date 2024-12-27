@@ -1,27 +1,29 @@
 import Head from "next/head";
 import { ReactChild, useEffect, useState } from "react";
 
+import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
+import { StringFormater } from "../commun/StringFormater";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
-import { contenuModal, tableHeaders } from "./model/data";
 import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
-  listeAnnees: number[]; // Define the expected prop type
+  listeAnnees: number[];
+  datesMisAjour: DatesMisAjourSources;
 }
 
-export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
+export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageProps) => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, resultats, moyenne, nombreRésultats, lastPage, loading } = useComparaison();
+  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
@@ -31,10 +33,14 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
   const [page, setPage] = useState<number>(1);
   const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
 
-  // lancer la comparaison en changeant l'année ou la page
+  const [order, setOrder] = useState("");
+  const [orderBy, setOrderBy] = useState("");
+  const [deleteEt, setDeleteET] = useState(false);
+
+  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + "");
-  }, [page, annéeEnCours]);
+    lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
+  }, [page, annéeEnCours, order, orderBy, deleteEt]);
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -46,10 +52,38 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
     return result;
   };
 
+  const tableHeaders = [
+    { label: "", key: "delete" },
+    { label: "", key: "etsLogo", sort: true },
+    { label: "", key: "favori" },
+    { label: "Raison Sociale Courte", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+    { label: "Numéro Finess", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
+    {
+      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+      key: "capacite",
+      info: true,
+      sort: true,
+      orderBy: "capacite_total",
+    },
+    { label: "Réalisation de l'activité", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
+    { label: "Activité personnes accompagnées", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
+    { label: "HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+    { label: "HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+    { label: "AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+    { label: "Prestations externes vs directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
+    { label: "Rotation du personnel", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
+    { label: "ETP vacants", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
+    { label: "Absentéiseme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+    { label: "CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
+    { label: "Vétusté", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
+    { label: "Fond net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+    { label: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
+  ];
+
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
-    setTitre(contenuModal(header).titre);
-    setContenu(contenuModal(header).contenu);
+    setTitre(contenuModal(header, datesMisAjour).titre);
+    setContenu(contenuModal(header, datesMisAjour).contenu);
     setEstCeOuvert(true);
   };
 
@@ -71,7 +105,11 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
+      if (lastPage > Math.ceil(listFinessArray.length / 2)) {
+        setPage(page - 1);
+      }
     }
+    setDeleteET(!deleteEt);
   };
 
   return (
@@ -84,10 +122,7 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
           <h1>{wording.COMPARAISON}</h1>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button
-                className={`${styles["button-add-etab"]} fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary`}
-                onClick={() => setIsShowAjoutEtab(true)}
-              >
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
@@ -120,15 +155,16 @@ export const ComparaisonPage = ({ listeAnnees }: ComparaisonPageProps) => {
                 handleSelectAll={handleSelectAll}
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
+                isCenter={true}
                 isShowAvrage={true}
                 onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
-                order=""
-                orderBy=""
+                order={order}
+                orderBy={orderBy}
                 page={page || 1}
                 selectedRows={selectedRows}
-                setOrder={() => {}}
-                setOrderBy={() => {}}
+                setOrder={setOrder}
+                setOrderBy={setOrderBy}
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />

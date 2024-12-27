@@ -106,8 +106,14 @@ export class ComparaisonViewModel {
     return this.comparaison.vetusteConstruction !== null ? this.comparaison.vetusteConstruction + "%" : null;
   }
 
-  public get roulementNetGlobal(): number {
-    return this.comparaison.roulementNetGlobal;
+  public get roulementNetGlobal(): string {
+    return this.comparaison.roulementNetGlobal ? this.comparaison.roulementNetGlobal
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
   }
 
   public get commune(): string {
@@ -125,16 +131,8 @@ export class ComparaisonViewModel {
           style: "currency",
           currency: "EUR",
         })
-        .split(",")[0] + "€"
+        .split(",")[0] + " €"
       : "-";
-  }
-
-  // Méthode pour formater le roulement net global en valeur absolue
-  public get formatRoulementNetGlobal(): string {
-    return this.comparaison.roulementNetGlobal.toLocaleString("fr-FR", {
-      style: "currency",
-      currency: "EUR",
-    });
   }
 }
 

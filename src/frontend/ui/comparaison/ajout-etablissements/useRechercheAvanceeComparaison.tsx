@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { ChangeEvent, useContext, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
 import { OrderDir } from "../../../../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
+=======
+import { ChangeEvent, MouseEvent, useContext, useState } from "react";
+
+import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
+>>>>>>> 85b98c0518c58fdac7dc7cbbc37b8e211cdf34f1
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../../home/RechercheViewModel";

@@ -20,8 +20,8 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
         <td></td>
         <td></td>
         <td></td>
-        <td>{total} établissements</td>
-        <td>
+        <td className="fr-cell--center">{total} établissements</td>
+        <td className="fr-cell--center">
           <span>Moyenne</span>
           <button
             className={"fr-fi-information-line " + styles["info-container-bulle"]}
@@ -38,7 +38,7 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
         {Object.keys(result).map((cle: string) => {
           if (cle === "resultatNetComptableMoyenne" || cle === "roulementNetGlobalMoyenne") {
             return (
-              <td key={cle}>
+              <td className="fr-cell--center" key={cle}>
                 {dataSource && dataSource[cle] ? `${dataSource[cle]
                   .toLocaleString("fr-FR", {
                     style: "currency",
@@ -49,9 +49,9 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
               </td>
             );
           } else if (cle === "capaciteMoyenne" || cle === "fileActivePersonnesAccompagnesMoyenne") {
-            return <td key={cle}>{dataSource && dataSource[cle] ? dataSource[cle] : `-`}</td>;
+            return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle] ? dataSource[cle] : `-`}</td>;
           } else {
-            return <td key={cle}>{dataSource && dataSource[cle as keyof MoyenneResultatComparaison] !== null ? `${dataSource[cle as keyof MoyenneResultatComparaison]} %` : `-`}</td>;
+            return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle as keyof MoyenneResultatComparaison] !== null ? `${dataSource[cle as keyof MoyenneResultatComparaison]} %` : `-`}</td>;
           }
         })}
       </tr>
