@@ -14,7 +14,7 @@ type AjoutEtablissementsProps = {
 };
 
 export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsProps) => {
-  const { lancerLaRecherche, rechercheOnChange, resultats, lastPage } = useRechercheAvanceeComparaison();
+  const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
   const [currentPageData, setCurrentPageData] = useState<RechercheViewModel[]>([]);
@@ -55,7 +55,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
   useEffect(() => {
     if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
       comparaisonContext?.setPage(1);
-      //lancerLaRecherche();
       if (isChangedZG || isChangedCapacite) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
@@ -74,6 +73,18 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
     return true;
   };
 
+  const onClickFermer = () => {
+    comparaisonContext?.setCapaciteAgees([]);
+    comparaisonContext?.setCapaciteHandicap([]);
+    comparaisonContext?.setCapaciteMedicoSociaux([]);
+    comparaisonContext?.setZoneGeo("");
+    comparaisonContext?.setZoneGeoD("");
+    comparaisonContext?.setZoneGeoLabel("");
+    comparaisonContext?.setZoneGeoType("");
+    setPrevPage(1);
+    setIsShowAjoutEtab(false);
+  };
+
   return (
     <div className="fr-col-12 fr-col-md-12 fr-col-lg-12" style={{ marginBottom: 20 }}>
       <div className={styles["ajout-etab-body"]} id="recherche-avancee-comparaison-modal-body">
@@ -81,7 +92,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
           <h1 className="fr-modal__title" id="titre-info-bulle-etablissement" style={{ marginTop: "20px" }}>
             {wording.TITRE_AJOUTER_DES_ETABLISSEMENTS}
           </h1>
-          <button className="fr-btn--close fr-btn" onClick={() => setIsShowAjoutEtab(false)} title="Fermer la fenêtre modale" type="button">
+          <button className="fr-btn--close fr-btn" onClick={onClickFermer} title="Fermer la fenêtre modale" type="button">
             {wording.FERMER}
           </button>
         </div>
@@ -100,7 +111,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
             {listData && listData?.length > 0 && <ListEtablissements resultatRechercheList={listData} setIsAtBottom={setIsAtBottom}></ListEtablissements>}
           </div>
         </div>
-        <div className="fr-modal__footer">
+        <div className="fr-modal__footer" style={{ display: "flex", alignItems: "center" }}>
           <button
             aria-controls="fr-modal-Capacite-Filtre"
             className="fr-btn fr-btn--primary"
@@ -110,6 +121,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
           >
             Ajouter
           </button>
+          {nombreRésultats > 0 && <span style={{ marginLeft: "auto", fontSize: "small", opacity: 0.5 }}>{nombreRésultats} Établissement(s)</span>}
         </div>
       </div>
     </div>
