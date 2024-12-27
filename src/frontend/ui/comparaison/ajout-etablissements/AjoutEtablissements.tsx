@@ -55,7 +55,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab }: AjoutEtablissementsP
   useEffect(() => {
     if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
       comparaisonContext?.setPage(1);
-      //lancerLaRecherche();
       if (isChangedZG || isChangedCapacite) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
