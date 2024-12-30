@@ -54,6 +54,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     setReload(false);
   }, [prevPage, reload]);
 
+  // detect filtre(s) changes to update results
   useEffect(() => {
     if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
       comparaisonContext?.setPage(1);
