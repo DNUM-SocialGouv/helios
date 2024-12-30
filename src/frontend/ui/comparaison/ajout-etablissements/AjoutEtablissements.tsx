@@ -58,6 +58,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   useEffect(() => {
     if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
       comparaisonContext?.setPage(1);
+      setPrevPage(1);
       if (isChangedZG || isChangedCapacite) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
@@ -136,7 +137,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           <button
             aria-controls="fr-modal-Capacite-Filtre"
             className="fr-btn fr-btn--primary"
-            disabled={newEtablissements.length < 1}
+            //disabled={newEtablissements.length < 1}
+            disabled={true}
             id="ajouter-etablissement-botton"
             onClick={onClickAjouter}
           >
