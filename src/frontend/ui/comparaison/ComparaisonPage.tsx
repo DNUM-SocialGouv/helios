@@ -11,6 +11,7 @@ import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-reche
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
+import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
@@ -122,7 +123,16 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           <title>Page de comparaison</title>
         </Head>
         <div className={styles["container"]}>
+          <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
+          <ExportExcel 
+            datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)} 
+            disabled={resultats.length === 0}
+            order={order}
+            orderBy={orderBy} 
+            year={String(annéeEnCours)} 
+          />
+          </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
               <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
