@@ -158,7 +158,7 @@ describe("La comparaison des établissements médico sociaux", () => {
     const typeOrmComparaisonLoader = new TypeOrmComparaisonLoader(orm);
 
     // WHEN
-    const comparaison = await typeOrmComparaisonLoader.compare("Médico-social", ["100000000", "100000001", "199999999"], '2022', premièrePage, "", "");
+    const comparaison = await typeOrmComparaisonLoader.compare("Médico-social", ["100000000", "100000001", "199999999"], '2022', premièrePage, "", "", false);
 
     expect(comparaison.nombreDeResultats).toBe(3);
 

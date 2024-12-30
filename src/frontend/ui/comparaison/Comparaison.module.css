@@ -84,9 +84,13 @@
 }
 
 .disabled-container {
-  pointer-events: none;
+  /*pointer-events: none;*/
   opacity: .5;
   color: gray;
+}
+
+.selected-container {
+  color: black;
 }
 
 .ajout-etab-body {
@@ -99,12 +103,18 @@
   max-height: var(--modal-max-height);
   overflow-y: auto;
   pointer-events: all;
-}  
+}
 
 .button-add-etab {
   transition: transform .2s ease;
 }
 
-  .button-add-etab:active {
-    transform: translateY(10px);
+.button-add-etab:active {
+  transform: translateY(10px);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }

@@ -10,9 +10,10 @@ export class ComparaisonEtablissementsUseCase {
         annee: string,
         page: number,
         order: string,
-        orderBy: string
+        orderBy: string,
+        forExport: boolean
     ): Promise<ResultatDeComparaison> {
-        return await this.comparaisonLoader.compare(type, numerosFiness, annee, page, order, orderBy);
+        return await this.comparaisonLoader.compare(type, numerosFiness, annee, page, order, orderBy, forExport);
     }
 
     async getAnneesComparaison(
