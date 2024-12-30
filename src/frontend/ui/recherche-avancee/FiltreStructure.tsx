@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } fro
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
@@ -10,9 +11,14 @@ import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
 import { AttribuesDefaults } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 
-export const FiltreStructure = () => {
+type FiltresForComparaisonProps = Readonly<{
+  isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
+}>;
+
+export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
   const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
   const checkboxElementPublic = useRef<any>();
@@ -24,9 +30,9 @@ export const FiltreStructure = () => {
     (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
   useEffect(() => {
-    if (changedCapacite) {
+    if (changedCapacite || isComparaison) {
       setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
-      rechercheAvanceeContext.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+      rechercheAvanceeContext?.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
@@ -96,6 +102,7 @@ export const FiltreStructure = () => {
     emptyStatutJuridiqueCheckboxs();
     rechercheAvanceeContext?.setTypeStructure("");
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
+    if (setIsChanged) setIsChanged(true);
   };
 
   function emptyStatutJuridiqueCheckboxs() {
@@ -119,6 +126,7 @@ export const FiltreStructure = () => {
         rechercheAvanceeContext?.setCapaciteHandicap([]);
         rechercheAvanceeContext?.setCapaciteAgees([]);
       }
+      if (setIsChanged) setIsChanged(true);
     }
   };
 

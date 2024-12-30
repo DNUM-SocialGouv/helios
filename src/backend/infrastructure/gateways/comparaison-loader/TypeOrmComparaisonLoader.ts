@@ -1,13 +1,15 @@
 import { DataSource } from "typeorm";
 
-import { MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { DatesMisAjourSources, MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 
 type ComparaisonSMSTypeOrm = Readonly<{
-  numero_finess: string;
-  annee: number;
+  numero_finess_etablissement_territorial: string;
   raison_sociale_courte: string;
-  structure: string;
+  domaine: string;
+  commune: string;
+  departement: string;
   taux_realisation_activite: number;
   file_active_personnes_accompagnees: number;
   taux_occupation_en_hebergement_permanent: number;
@@ -25,16 +27,64 @@ type ComparaisonSMSTypeOrm = Readonly<{
 }>;
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 20;
 
-  async compare(type: string, numerosFiness: string[], page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
+  async listeAnnees(type: string, numerosFiness: string[]): Promise<string[]> {
+    if (type === "Entité juridique") {
+      return [];
+    } else {
+      if (type === "Médico-social") {
+        const generateAnnees = `SELECT generate_series(
+          CASE 
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 2)::int
+          ELSE (extract(year FROM current_date) - 3)::int
+      END,
+      CASE
+          WHEN maxannee = extract(year FROM current_date) THEN maxannee::int
+          ELSE (extract(year FROM current_date) - 1)::int
+      END
+      ) annee
+				FROM (
+					SELECT max(annee) maxannee FROM (
+					Select annee from activite_medico_social ac where ac.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+					UNION
+					Select annee from ressources_humaines_medico_social rh where rh.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+					UNION
+					Select annee from budget_et_finances_medico_social budget where budget.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+					  ) anc ) ang
+            `;
+        const generateAnneesResult = await (await this.orm).query(generateAnnees);
+        return generateAnneesResult.map((item: any) => item.annee);
+      } else {
+        return [];
+      }
+    }
+  }
+
+  async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
+    const dateMAJFiness = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.FINESS_CS1400105
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const dateMAJTdbperf = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_ANN_MS_TDP_ET
+    )) as DateMiseÀJourFichierSourceModel;
+
+    const dateMAJCnsa = (await this.chargeLaDateDeMiseÀJourModel(
+      FichierSource.DIAMANT_ANN_ERRD_EJ
+    )) as DateMiseÀJourFichierSourceModel;
+
+    return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
+  }
+
+  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string, forExport: boolean): Promise<ResultatDeComparaison> {
     try {
       if (type === "Entité juridique") {
         return await this.compareEJ();
       } else {
         if (type === "Médico-social") {
-          return await this.compareSMS(numerosFiness, page, order, orderBy);
+          return await this.compareSMS(numerosFiness, page, order, orderBy, annee, forExport);
         } else {
           return await this.compareSAN();
         }
@@ -45,148 +95,114 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   }
 
   private async compareEJ(): Promise<ResultatDeComparaison> {
-    return { nombreDeResultats: [{ annee: 2020, total: 0 }], resultat: [], moyennes: [] };
+    return { nombreDeResultats: 0, resultat: [], moyennes: [] };
   }
 
-  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
-    const compareSMSQueryBody = ` From
-            (select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
-                public.autorisation_medico_social.numero_finess_etablissement_territorial as numero_finess
-        FROM public.autorisation_medico_social
-	    where public.autorisation_medico_social.numero_finess_etablissement_territorial 
-	    IN(${numerosFiness.map((finess) => "'" + finess + "'")})
-	    GROUP BY public.autorisation_medico_social.numero_finess_etablissement_territorial
-            ) capacites 
-        FULL JOIN
-            (SELECT etablissement.numero_finess_etablissement_territorial as numero_finess,
-                etablissement.raison_sociale as raison_sociale_courte,
-                etablissement.domaine as structure,
-                activite.taux_realisation_activite,
-                activite.file_active_personnes_accompagnees,
-                activite.taux_occupation_en_hebergement_permanent,
-                activite.taux_occupation_en_hebergement_temporaire,
-                activite.taux_occupation_accueil_de_jour,
-                budget.taux_de_caf,
-                budget.taux_de_vetuste_construction,
-                budget.fonds_de_roulement,
-                budget.resultat_net_comptable,
-                rh.taux_prestation_externes,
-                rh.taux_rotation_personnel,
-                rh.taux_etp_vacants,
-                rh.taux_absenteisme_hors_formation,
-                COALESCE(activite.annee, budget.annee, rh.annee) as annee
-        FROM ressources_humaines_medico_social rh
-        FULL JOIN 
-        budget_et_finances_medico_social budget
-        ON rh.numero_finess_etablissement_territorial = budget.numero_finess_etablissement_territorial
-        AND rh.annee = budget.annee
-        FULL JOIN 
-        activite_medico_social activite
-        ON activite.numero_finess_etablissement_territorial = COALESCE(budget.numero_finess_etablissement_territorial, rh.numero_finess_etablissement_territorial)
-        AND activite.annee = COALESCE(budget.annee, rh.annee)
-        left JOIN 
-        etablissement_territorial etablissement
-        ON etablissement.numero_finess_etablissement_territorial = COALESCE(activite.numero_finess_etablissement_territorial, budget.numero_finess_etablissement_territorial, rh.numero_finess_etablissement_territorial)
-        where etablissement.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})) annual 
-        on capacites.numero_finess = annual.numero_finess `;
+  private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
+    return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel;
+  }
 
-    const compareSMSQuery =
-      `select COALESCE(capacites.numero_finess, annual.numero_finess) as numero_finess,
-            annual.annee,
-            annual.raison_sociale_courte,
-            annual.structure,
-            annual.taux_realisation_activite,
-            annual.file_active_personnes_accompagnees,
-            annual.taux_occupation_en_hebergement_permanent,
-            annual.taux_occupation_en_hebergement_temporaire,
-            annual.taux_occupation_accueil_de_jour,
-            annual.taux_de_caf,
-            annual.taux_de_vetuste_construction,
-            annual.fonds_de_roulement,
-            annual.resultat_net_comptable,
-            annual.taux_prestation_externes,
-            annual.taux_rotation_personnel,
-            annual.taux_etp_vacants,
-            annual.taux_absenteisme_hors_formation,
-            capacites.capacite_total ` + compareSMSQueryBody;
+  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string, forExport: boolean): Promise<ResultatDeComparaison> {
+    const compareSMSCapacite = `(select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
+        autorisation_medico_social.numero_finess_etablissement_territorial
+        FROM autorisation_medico_social
+        GROUP BY autorisation_medico_social.numero_finess_etablissement_territorial) cp`;
+
+    const compareSMSQueryBody = ` from etablissement_territorial et 
+    LEFT JOIN activite_medico_social ac
+    on et.numero_finess_etablissement_territorial = ac.numero_finess_etablissement_territorial and ac.annee = ${annee}
+    LEFT JOIN budget_et_finances_medico_social bg
+    on et.numero_finess_etablissement_territorial = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
+    LEFT JOIN ressources_humaines_medico_social rh
+    on et.numero_finess_etablissement_territorial = rh.numero_finess_etablissement_territorial and rh.annee = ${annee}
+    LEFT JOIN ${compareSMSCapacite}
+    on et.numero_finess_etablissement_territorial = cp.numero_finess_etablissement_territorial
+    where et.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})`;
+
+    const compareSMSQuery = `Select et.numero_finess_etablissement_territorial,
+    et.raison_sociale_courte,
+    et.domaine,
+    et.commune,
+    et.departement,
+    ac.taux_realisation_activite,
+    ac.file_active_personnes_accompagnees,
+    ac.taux_occupation_en_hebergement_permanent,
+    ac.taux_occupation_en_hebergement_temporaire,
+    ac.taux_occupation_accueil_de_jour,
+    bg.taux_de_caf,
+    bg.taux_de_vetuste_construction,
+    bg.fonds_de_roulement,
+    bg.resultat_net_comptable,
+    rh.taux_prestation_externes,
+    rh.taux_rotation_personnel,
+    rh.taux_etp_vacants,
+    rh.taux_absenteisme_hors_formation,
+    cp.capacite_total` + compareSMSQueryBody;
 
     const paginatedCompareSMSQuery =
       order && orderBy
         ? compareSMSQuery +
-          `ORDER BY ${orderBy} ${order} LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+        `ORDER BY ${orderBy} ${order} ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `
         : compareSMSQuery +
-          `ORDER BY numero_finess ASC LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `;
+        `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
 
-    const averagesCompareSMSQuery =
-      `
-        select
-            annual.annee,
-            AVG(annual.taux_realisation_activite) as realisationAcitiviteMoyenne,
-            AVG(annual.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
-            AVG(annual.taux_occupation_en_hebergement_permanent) as hebergementPermanentMoyenne,
-            AVG(annual.taux_occupation_en_hebergement_temporaire) as hebergementTemporaireMoyenne ,
-            AVG(annual.taux_occupation_accueil_de_jour) as acceuilDeJourMoyenne,
-            AVG(annual.taux_de_caf) as tauxCafMoyenne,
-            AVG(annual.taux_de_vetuste_construction) as vetusteConstructionMoyenne,
-            AVG(annual.fonds_de_roulement) as roulementNetGlobalMoyenne,
-            AVG(annual.resultat_net_comptable) as resultatNetComptableMoyenne,
-            AVG(annual.taux_prestation_externes) as prestationExterneMoyenne,
-            AVG(annual.taux_rotation_personnel) as rotationPersonnelMoyenne,
-            AVG(annual.taux_etp_vacants) as etpVacantMoyenne,
-            AVG(annual.taux_absenteisme_hors_formation) as absenteismeMoyenne,
-            AVG(capacites.capacite_total) as capaciteMoyenne
+    const averagesCompareSMSQuery = `select
+            AVG(ROUND(ac.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
+            AVG(ac.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
+            AVG(ROUND(ac.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
+            AVG(ROUND(ac.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
+            AVG(ROUND(ac.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
+            AVG(ROUND(bg.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
+            AVG(ROUND(bg.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
+            AVG(ROUND(bg.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
+            AVG(ROUND(bg.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
+            AVG(ROUND(rh.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
+            AVG(ROUND(rh.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
+            AVG(ROUND(rh.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
+            AVG(ROUND(rh.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
+            AVG(cp.capacite_total) as capaciteMoyenne
         ` +
-      compareSMSQueryBody +
-      " GROUP BY annee";
+      compareSMSQueryBody;
 
-    const countCompareSMSQuery = `
-        SELECT COUNT(*) AS total, annee
-        FROM(${compareSMSQuery}) AS subquery
-        GROUP BY annee
-      `;
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
     const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
-    const nombreDeResultats = await (await this.orm).query(countCompareSMSQuery);
 
     return {
-      nombreDeResultats: nombreDeResultats,
+      nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatSMS(compareSMSQueryResult),
-      moyennes: this.contruitMoyennesSMS(moyennesCompareSMSQueryResult),
+      moyennes: this.contruitMoyennesSMS(moyennesCompareSMSQueryResult[0]),
     };
   }
 
   private async compareSAN(): Promise<ResultatDeComparaison> {
-    return { nombreDeResultats: [{ annee: 2020, total: 0 }], resultat: [], moyennes: [] };
+    return { nombreDeResultats: 0, resultat: [], moyennes: [] };
   }
 
-  private contruitMoyennesSMS(moyennes: any[]): MoyenneSMS[] {
-    return moyennes.map((moyenne: any): MoyenneSMS => {
-      return {
-        annee: moyenne.annee,
-        capaciteMoyenne: this.makeNumberArrondi(moyenne.capacitemoyenne, 1),
-        realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne,
-        acceuilDeJourMoyenne: moyenne.realisationacitivitemoyenne,
-        hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne,
-        hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne,
-        fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
-        rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne,
-        absenteismeMoyenne: moyenne.absenteismemoyenne,
-        prestationExterneMoyenne: moyenne.prestationexternemoyenne,
-        etpVacantMoyenne: moyenne.etpvacantmoyenne,
-        tauxCafMoyenne: moyenne.tauxcafmoyenne,
-        vetusteConstructionMoyenne: moyenne.vetusteconstructionmoyenne,
-        roulementNetGlobalMoyenne: moyenne.roulementnetglobalmoyenne,
-        resultatNetComptableMoyenne: moyenne.resultatnetcomptablemoyenne,
-      };
-    });
+  private contruitMoyennesSMS(moyenne: any): MoyenneSMS {
+    return {
+      capaciteMoyenne: moyenne.capacitemoyenne ? this.makeNumberArrondi(Number(moyenne.capacitemoyenne), 2) : null,
+      realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne !== null ? this.transformInRate(moyenne.realisationacitivitemoyenne, 1) : null,
+      acceuilDeJourMoyenne: moyenne.acceuildejourmoyenne !== null ? this.transformInRate(moyenne.acceuildejourmoyenne, 1) : null,
+      hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne !== null ? this.transformInRate(moyenne.hebergementpermanentmoyenne, 1) : null,
+      hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne !== null ? this.transformInRate(moyenne.hebergementtemporairemoyenne, 1) : null,
+      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
+      rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne !== null ? this.transformInRate(moyenne.rotationpersonnelmoyenne, 1) : null,
+      absenteismeMoyenne: moyenne.absenteismemoyenne !== null ? this.transformInRate(moyenne.absenteismemoyenne, 1) : null,
+      prestationExterneMoyenne: moyenne.prestationexternemoyenne !== null ? this.transformInRate(moyenne.prestationexternemoyenne, 1) : null,
+      etpVacantMoyenne: moyenne.etpvacantmoyenne !== null ? this.transformInRate(moyenne.etpvacantmoyenne, 1) : null,
+      tauxCafMoyenne: moyenne.tauxcafmoyenne !== null ? this.transformInRate(moyenne.tauxcafmoyenne, 1) : null,
+      vetusteConstructionMoyenne: moyenne.vetusteconstructionmoyenne !== null ? this.transformInRate(moyenne.vetusteconstructionmoyenne, 1) : null,
+      roulementNetGlobalMoyenne: moyenne.roulementnetglobalmoyenne !== null ? this.makeNumberArrondi(moyenne.roulementnetglobalmoyenne, 0) : null,
+      resultatNetComptableMoyenne: moyenne.resultatnetcomptablemoyenne !== null ? this.makeNumberArrondi(moyenne.resultatnetcomptablemoyenne, 0) : null
+    };
   }
 
   private makeNumberArrondi(value: any, num: number): number | null {
     // Convert value to a number and check if it's a valid number
-    const numericValue = value ? Number(value) : null;
+    const numericValue = value !== null ? Number(value) : null;
 
-    if (numericValue && !isNaN(numericValue)) {
+    if (numericValue !== null && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
       return Number(numericValue.toFixed(num));
     } else {
@@ -196,22 +212,23 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   }
 
   private transformInRate(number: number, chiffre: number): number | null {
-    return number ? this.makeNumberArrondi(number * 100, chiffre) : number;
+    return number !== null ? this.makeNumberArrondi(number * 100, chiffre) : number;
   }
 
   private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
     return resultats.map((resultat: ComparaisonSMSTypeOrm): ResultatSMS => {
       return {
-        annee: resultat.annee,
-        numéroFiness: resultat.numero_finess,
+        numéroFiness: resultat.numero_finess_etablissement_territorial,
         socialReason: resultat.raison_sociale_courte,
-        type: resultat.structure,
+        type: resultat.domaine,
+        commune: resultat.commune,
+        departement: resultat.departement,
         capacite: resultat.capacite_total,
         realisationActivite: this.transformInRate(resultat.taux_realisation_activite, 1),
         acceuilDeJour: this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
         hebergementPermanent: this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
         hebergementTemporaire: this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
-        fileActivePersonnesAccompagnes: this.transformInRate(resultat.file_active_personnes_accompagnees, 1),
+        fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees,
         rotationPersonnel: this.transformInRate(resultat.taux_rotation_personnel, 1),
         absenteisme: this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
         prestationExterne: this.transformInRate(resultat.taux_prestation_externes, 1),

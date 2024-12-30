@@ -16,13 +16,15 @@ interface Header {
   key: string;
   isButton?: boolean;
   sort?: boolean;
+  info?: boolean;
   orderBy?: string;
 }
 
 interface DataTableProps {
   headers: Header[];
   data: RechercheViewModel[] | ComparaisonViewModel[];
-  forMoyenne: MoyenneResultatComparaison;
+  forMoyenne?: MoyenneResultatComparaison;
+  total?: number;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: SelectedRows;
   setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
@@ -31,6 +33,7 @@ interface DataTableProps {
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
   isShowAvrage: boolean;
+  isCenter: boolean;
   onClickInfobull?: (name: string) => void;
   page: number;
   handleSelectAll: () => void;
@@ -48,6 +51,7 @@ interface TableHeaderProps {
   onClickInfobull?: (name: string) => void;
   handleSelectAll: () => void;
   isAllSelected: boolean;
+  isCenter: boolean;
   page: number;
 }
 
@@ -55,9 +59,11 @@ interface TableBodyProps {
   headers: Header[];
   selectedRows: SelectedRows;
   data: RechercheViewModel[] | ComparaisonViewModel[];
-  forMoyenne: MoyenneResultatComparaison;
+  forMoyenne?: MoyenneResultatComparaison;
+  total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
+  isCenter: boolean;
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
@@ -124,7 +130,7 @@ const construisLeLien = (type: string, finess: string): string => {
   return "/entite-juridique/" + finess;
 };
 
-const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected }: TableHeaderProps) => {
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter }: TableHeaderProps) => {
   return (
     <thead>
       <tr className={styles["sticky-header"]}>
@@ -137,30 +143,23 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
           </div>
         </th>
         {headers.map((header, index) =>
-          header.sort ? (
-            <th key={index}>
-              <span className="fr-cell__title">{header.label}</span>
-              <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />
-            </th>
-          ) : (
-            <th key={index}>
-              <span>{header.label}</span>
-              {header.key !== "delete" && header.key !== "favori" && onClickInfobull && (
-                <button
-                  className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]}
-                  onClick={() => onClickInfobull(header.key)}
-                  title="Détails de l’indicateur"
-                />
-              )}
-            </th>
-          )
+          <th className={isCenter ? "fr-cell--center" : ""} key={index}>
+            <span className="fr-cell__title">{header.label}</span>
+            {header.info && onClickInfobull && (
+              <button
+                className={"fr-fi-information-line fr-mx-1w " + styles["info-container"]}
+                onClick={() => onClickInfobull(header.key)}
+                title="Détails de l’indicateur"
+              />
+            )}
+            {header.sort && <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />}            </th>
         )}
       </tr>
     </thead>
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, isShowAvrage, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -180,7 +179,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
             </div>
           </th>
           {headers.map((header, colIndex) => (
-            <td className={header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} key={colIndex}>
+            <td className={isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} key={colIndex}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
@@ -215,7 +214,7 @@ const TableBody = ({ headers, data, forMoyenne, selectedRows, handleSelectRow, i
           ))}
         </tr>
       ))}
-      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} setEstCeOuvert={handleInfoBullMoyenne} />}
+      {isShowAvrage && data.length > 0 && <TableExtensionCalculMoyenne dataSource={forMoyenne} setEstCeOuvert={handleInfoBullMoyenne} total={total} />}
     </tbody>
   );
 };
@@ -224,6 +223,7 @@ export const Table = ({
   headers,
   data = [],
   forMoyenne,
+  total,
   selectedRows,
   setSelectedRows,
   order,
@@ -231,6 +231,7 @@ export const Table = ({
   setOrder,
   setOrderBy,
   isShowAvrage = false,
+  isCenter = false,
   onClickInfobull,
   handleSelectAll,
   isAllSelected,
@@ -256,6 +257,7 @@ export const Table = ({
                 handleSelectAll={handleSelectAll}
                 headers={headers}
                 isAllSelected={isAllSelected}
+                isCenter={isCenter}
                 onClickInfobull={onClickInfobull}
                 order={order}
                 orderBy={orderBy}
@@ -269,10 +271,12 @@ export const Table = ({
                 handleInfoBullMoyenne={handleInfoBullMoyenne}
                 handleSelectRow={handleSelectRow}
                 headers={headers}
+                isCenter={isCenter}
                 isShowAvrage={isShowAvrage}
                 onClickDelete={onClickDelete}
                 page={page}
                 selectedRows={selectedRows}
+                total={total}
               />
             </table>
           </div>

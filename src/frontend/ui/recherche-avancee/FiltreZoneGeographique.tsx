@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 
@@ -17,9 +18,14 @@ type ZoneGeo = Readonly<{
   codeNum: string;
 }>;
 
-export const FiltreZoneGeographique = () => {
+type FiltresForComparaisonProps = Readonly<{
+  isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
+}>;
+
+export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const { data } = useSession();
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
   const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
   const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
@@ -29,7 +35,7 @@ export const FiltreZoneGeographique = () => {
     nom: "",
     departement: {
       code: "",
-      nom: ""
+      nom: "",
     },
     code: "",
     codeRegion: "",
@@ -106,11 +112,11 @@ export const FiltreZoneGeographique = () => {
       const sortedOptions =
         data?.user.role === 3 || data?.user.role === 2
           ? sortedAlphabetically.sort((a: any, b: any) => {
-            const estMaRegionA = a.codeRegion === maRegion;
-            const estMaRegionB = b.codeRegion === maRegion;
-            if (estMaRegionA === estMaRegionB) return 0;
-            return estMaRegionA ? -1 : 1;
-          })
+              const estMaRegionA = a.codeRegion === maRegion;
+              const estMaRegionB = b.codeRegion === maRegion;
+              if (estMaRegionA === estMaRegionB) return 0;
+              return estMaRegionA ? -1 : 1;
+            })
           : sortedAlphabetically;
 
       setSuggestions(sortedOptions);
@@ -160,13 +166,15 @@ export const FiltreZoneGeographique = () => {
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
     rechercheAvanceeContext?.setZoneGeoLabel("");
+    if (setIsChanged) setIsChanged(true);
   };
 
   const applyZoneGeoValue = () => {
-    rechercheAvanceeContext?.setZoneGeoD(zoneGeoType === "C" ? zoneGeoSelected?.departement.nom : '');
+    rechercheAvanceeContext?.setZoneGeoD(zoneGeoType === "C" ? zoneGeoSelected?.departement.nom : "");
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);
     rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);
+    if (setIsChanged) setIsChanged(true);
   };
 
   return (

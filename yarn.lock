@@ -3946,6 +3946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 2c5a6214147ffa7135ce41860c781de17e93128689b0d080d3116468274b3593b607bcd462ac210d3a61f081db3d3b09ae106e18d60b1f529580e95cf2db8a55
+  languageName: node
+  linkType: hard
+
 "cookies-next@npm:^4.1.0":
   version: 4.1.0
   resolution: "cookies-next@npm:4.1.0"
@@ -6085,6 +6092,7 @@ __metadata:
     bcrypt: ^5.1.0
     chart.js: ^3.8.0
     chartjs-plugin-datalabels: ^2.0.0
+    cookie: ^1.0.2
     cookies-next: ^4.1.0
     crypto: ^1.0.1
     csv-parser: ^3.0.0

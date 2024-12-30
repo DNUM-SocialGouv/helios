@@ -7,9 +7,10 @@ export type ResultatEJ = Readonly<{
 }>;
 
 export type ResultatSMS = Readonly<{
-  annee: number;
   numéroFiness: string;
   socialReason: string;
+  commune: string;
+  departement: string;
   type: string;
   capacite: number | null;
   realisationActivite: number | null;
@@ -37,7 +38,6 @@ export type ResultatES = Readonly<{
 
 export type MoyenneEJ = Readonly<{}>;
 export type MoyenneSMS = Readonly<{
-  annee: number;
   capaciteMoyenne: number | null;
   realisationAcitiviteMoyenne: number | null;
   acceuilDeJourMoyenne: number | null;
@@ -56,7 +56,13 @@ export type MoyenneSMS = Readonly<{
 export type MoyenneES = Readonly<{}>;
 
 export type ResultatDeComparaison = {
-  nombreDeResultats: [{ annee: number; total: number }];
+  nombreDeResultats: number;
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
-  moyennes: MoyenneEJ[] | MoyenneSMS[] | MoyenneES[];
+  moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
+};
+
+export type DatesMisAjourSources = {
+  date_mis_a_jour_finess: string;
+  date_mis_a_jour_tdbPerf: string;
+  date_mis_a_jour_cnsa: string;
 };

@@ -5,11 +5,12 @@ import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import styles from "./Table.module.css";
 
 interface TableExtensionCalculMoyenneProps {
-  dataSource: MoyenneResultatComparaison;
+  dataSource?: MoyenneResultatComparaison;
+  total?: number;
   setEstCeOuvert?: Dispatch<SetStateAction<boolean>>;
 }
 
-export function TableExtensionCalculMoyenne({ dataSource, setEstCeOuvert }: TableExtensionCalculMoyenneProps) {
+export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert }: TableExtensionCalculMoyenneProps) {
   const result = moyenneInitialValues;
 
   return (
@@ -19,8 +20,9 @@ export function TableExtensionCalculMoyenne({ dataSource, setEstCeOuvert }: Tabl
         <td></td>
         <td></td>
         <td></td>
-        <td>{dataSource["nombreEtablissement"]} établissements</td>
-        <td>
+        <td className="fr-cell--center">{total + (total && total > 1 ? " établissements" : " établissement")}
+        </td>
+        <td className="fr-cell--center">
           <span>Moyenne</span>
           <button
             className={"fr-fi-information-line " + styles["info-container-bulle"]}
@@ -37,22 +39,20 @@ export function TableExtensionCalculMoyenne({ dataSource, setEstCeOuvert }: Tabl
         {Object.keys(result).map((cle: string) => {
           if (cle === "resultatNetComptableMoyenne" || cle === "roulementNetGlobalMoyenne") {
             return (
-              <td key={cle}>
-                {
-                  dataSource[cle]
-                    .toLocaleString("fr-FR", {
-                      style: "currency",
-                      currency: "EUR",
-                    })
-                    .split(",")[0]
-                }{" "}
-                €
+              <td className="fr-cell--center" key={cle}>
+                {dataSource && dataSource[cle] ? `${dataSource[cle]
+                  .toLocaleString("fr-FR", {
+                    style: "currency",
+                    currency: "EUR",
+                  })
+                  .split(",")[0]} €`
+                  : `-`}
               </td>
             );
-          } else if (cle === "capaciteMoyenne") {
-            return <td key={cle}>{dataSource[cle]}</td>;
+          } else if (cle === "capaciteMoyenne" || cle === "fileActivePersonnesAccompagnesMoyenne") {
+            return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle] ? dataSource[cle] : `-`}</td>;
           } else {
-            return <td key={cle}>{dataSource[cle as keyof MoyenneResultatComparaison]} %</td>;
+            return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle as keyof MoyenneResultatComparaison] !== null ? `${dataSource[cle as keyof MoyenneResultatComparaison]} %` : `-`}</td>;
           }
         })}
       </tr>

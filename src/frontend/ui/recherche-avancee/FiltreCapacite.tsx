@@ -1,17 +1,23 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { WordingFr } from "../../configuration/wording/WordingFr";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";
 
-export const FiltreCapacite = () => {
+type FiltresForComparaisonProps = Readonly<{
+  isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
+}>;
+
+export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
   const [showToolip, setShowTooltip] = useState<boolean>(false);
   const [showToolip2, setShowTooltip2] = useState<boolean>(false);
-  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
+  const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(
     new CapaciteEtablissement("non_classifie", rechercheAvanceeContext?.capaciteMedicoSociaux || [])
   );
@@ -133,6 +139,7 @@ export const FiltreCapacite = () => {
       rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
       rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);
       rechercheAvanceeContext?.setCapaciteAgees(capaciteAgees.ranges);
+      if (setIsChanged) setIsChanged(true);
     }
   };
 
@@ -143,6 +150,7 @@ export const FiltreCapacite = () => {
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
+    if (setIsChanged) setIsChanged(true);
     // rechercheAvanceeContext?.setTypeStructure("");
   };
 
@@ -174,7 +182,7 @@ export const FiltreCapacite = () => {
                 {showToolip ? contenuInfoBulle : contenuInfoBulleAgee}
               </div>
             </div>
-            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "none" : "block" }}>
+            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "none" : "block", height: isComparaison ? "547px" : "100%" }}>
               <div className="fr-modal__content fr-pt-5w" id="capaciter-container">
                 <div>
                   <div id="etablissement-medico-sociaux">
