@@ -136,7 +136,7 @@ async function generateAndExportExcel(
     "Taux de CAF (en %)",
     "Taux de vétusté des construction (en %)",
     "Fond de roulement net global (en €)",
-    "Resultat net comptable (en €)"
+    "Résultat net comptable (en €)"
   ];
   ExportToExcel(headerYear, headerType,  headers, dataTransormed, fileName, moyenneTransformed);
 }
