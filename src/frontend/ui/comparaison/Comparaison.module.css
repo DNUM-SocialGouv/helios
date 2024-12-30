@@ -84,9 +84,13 @@
 }
 
 .disabled-container {
-  pointer-events: none;
+  /*pointer-events: none;*/
   opacity: .5;
   color: gray;
+}
+
+.selected-container {
+  color: black;
 }
 
 .ajout-etab-body {
