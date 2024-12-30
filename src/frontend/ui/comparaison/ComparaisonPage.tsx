@@ -109,7 +109,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
-      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage)) {
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
     }
