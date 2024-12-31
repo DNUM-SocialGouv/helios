@@ -204,7 +204,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     if (numericValue !== null && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
-      return Number(numericValue.toFixed(num));
+      return Math.round(Number(numericValue) * 10) / 10
+      // return Number(numericValue.toFixed(num));
     } else {
       // If it's not a valid number, return null or handle as needed
       return null;
