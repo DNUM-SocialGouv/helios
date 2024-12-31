@@ -11,7 +11,7 @@ type ZoneGeo = Readonly<{
   departement: {
     code: string;
     nom: string;
-  };
+  },
   code: string;
   codeRegion: string;
   codesPostaux: string[];
