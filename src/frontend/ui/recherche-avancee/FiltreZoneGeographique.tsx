@@ -64,36 +64,33 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
       const searchParamDepartement = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
       const searchParamCommune = +searchQuery ? `codePostal=${searchQuery}` : `nom=${searchQuery}`;
 
-      const responseRegion = await (
-        await (await fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)).json()
-      ).map((elt: any) => {
-        return { ...elt, type: "R", codeRegion: elt.code, codeNum: "" };
-      });
-      const responseDepartement = await (
-        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)).json()
-      ).map((elt: any) => {
-        return { ...elt, type: "D", codeNum: elt.code };
-      });
-      const responseCommune = await (
-        await (
-          await fetch(
-            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
-          )
-        ).json()
-      ).map((elt: any) => {
-        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
-        if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
-          elt.codeNum = "tous les arrondissements";
-        } else {
-          if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
-        }
-        return { ...elt, type: "C" };
-      });
+      const [responseRegion, responseDepartement, responseCommune] = await Promise.all([
+        fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            return { ...elt, type: "R", codeRegion: elt.code, codeNum: "" };
+          })),
+        fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            return { ...elt, type: "D", codeNum: elt.code };
+          })),
+        fetch(
+          `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
+        )
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+            if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
+              elt.codeNum = "tous les arrondissements";
+            } else {
+              if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
+            }
+            return { ...elt, type: "C" };
+          }))]);
+      const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
       if (requestId === requestCounterRef.current) {
-
-        const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
-
         // Separate the items that match the search value and the ones that don't
         const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
         const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
