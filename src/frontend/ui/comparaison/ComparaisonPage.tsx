@@ -77,10 +77,10 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     { label: "Prestations externes vs directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
     { label: "Rotation du personnel", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
     { label: "ETP vacants", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Absentéiseme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+    { label: "Absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
     { label: "CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
     { label: "Vétusté", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "Fond net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+    { label: "FRNG", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
     { label: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
   ];
 
@@ -109,7 +109,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
-      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage)) {
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
     }
@@ -124,14 +124,14 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
         </Head>
         <div className={styles["container"]}>
           <div className={styles["header-container"]}>
-          <h1>{wording.COMPARAISON}</h1>
-          <ExportExcel 
-            datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)} 
-            disabled={resultats.length === 0}
-            order={order}
-            orderBy={orderBy} 
-            year={String(annéeEnCours)} 
-          />
+            <h1>{wording.COMPARAISON}</h1>
+            <ExportExcel
+              datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
+              disabled={resultats.length === 0}
+              order={order}
+              orderBy={orderBy}
+              year={String(annéeEnCours)}
+            />
           </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
