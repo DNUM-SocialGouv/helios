@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
 
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -43,6 +43,8 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     codeNum: "",
   });
 
+  const requestCounterRef = useRef(0);
+
   // Debounce function to control the rate of API calls
   const debounce = (func: any, delay: number) => {
     let timeout: any;
@@ -52,7 +54,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     };
   };
 
-  const fetchSuggestions = async (searchQuery: string) => {
+  const fetchSuggestions = async (searchQuery: string, requestId: number) => {
     if (!searchQuery) {
       setSuggestions([]);
       return;
@@ -62,64 +64,64 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
       const searchParamDepartement = +searchQuery ? `code=${searchQuery}` : `nom=${searchQuery}`;
       const searchParamCommune = +searchQuery ? `codePostal=${searchQuery}` : `nom=${searchQuery}`;
 
-      const responseRegion = await (
-        await (await fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)).json()
-      ).map((elt: any) => {
-        return { ...elt, type: "R", codeRegion: elt.code, codeNum: "" };
-      });
-      const responseDepartement = await (
-        await (await fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)).json()
-      ).map((elt: any) => {
-        return { ...elt, type: "D", codeNum: elt.code };
-      });
-      const responseCommune = await (
-        await (
-          await fetch(
-            `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
-          )
-        ).json()
-      ).map((elt: any) => {
-        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
-        if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
-          elt.codeNum = "tous les arrondissements";
-        } else {
-          if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
-        }
-        return { ...elt, type: "C" };
-      });
-
+      const [responseRegion, responseDepartement, responseCommune] = await Promise.all([
+        fetch(`https://geo.api.gouv.fr/regions?fields=nom&nom=${searchQuery}`)
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            return { ...elt, type: "R", codeRegion: elt.code, codeNum: "" };
+          })),
+        fetch(`https://geo.api.gouv.fr/departements?fields=code,codeRegion&format=json&zone=metro,drom,com&${searchParamDepartement}`)
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            return { ...elt, type: "D", codeNum: elt.code };
+          })),
+        fetch(
+          `https://geo.api.gouv.fr/communes?fields=codesPostaux,codeRegion,departement&format=json&type=arrondissement-municipal,commune-actuelle&${searchParamCommune}`
+        )
+          .then((res) => res.json())
+          .then((data) => data.map((elt: any) => {
+            // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+            if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
+              elt.codeNum = "tous les arrondissements";
+            } else {
+              if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
+            }
+            return { ...elt, type: "C" };
+          }))]);
       const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
-      // Separate the items that match the search value and the ones that don't
-      const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
-      const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      if (requestId === requestCounterRef.current) {
+        // Separate the items that match the search value and the ones that don't
+        const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
+        const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
-      //Adds padding to numbers to handle them correctly in comparison
-      const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
+        //Adds padding to numbers to handle them correctly in comparison
+        const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
 
-      // Sort both lists alphabetically by 'nom'
-      const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {
-        return normalize(a.nom).localeCompare(normalize(b.nom));
-      });
+        // Sort both lists alphabetically by 'nom'
+        const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {
+          return normalize(a.nom).localeCompare(normalize(b.nom));
+        });
 
-      const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => {
-        return normalize(a.nom).localeCompare(normalize(b.nom));
-      });
+        const sortedNonMatchingItems = nonMatchingItems.sort((a: any, b: any) => {
+          return normalize(a.nom).localeCompare(normalize(b.nom));
+        });
 
-      const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems];
+        const sortedAlphabetically = [...sortedMatchingItems, ...sortedNonMatchingItems];
 
-      const maRegion = data?.user.codeRegion;
-      const sortedOptions =
-        data?.user.role === 3 || data?.user.role === 2
-          ? sortedAlphabetically.sort((a: any, b: any) => {
+        const maRegion = data?.user.codeRegion;
+        const sortedOptions =
+          data?.user.role === 3 || data?.user.role === 2
+            ? sortedAlphabetically.sort((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
               if (estMaRegionA === estMaRegionB) return 0;
               return estMaRegionA ? -1 : 1;
             })
-          : sortedAlphabetically;
+            : sortedAlphabetically;
 
-      setSuggestions(sortedOptions);
+        setSuggestions(sortedOptions);
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("Error fetching data:", error);
@@ -128,8 +130,10 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     }
   };
 
-  // Debounced version of fetchSuggestions
-  const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
+  const debouncedFetchSuggestions = debounce((searchQuery: string) => {
+    const requestId = ++requestCounterRef.current; // Increment the request counter
+    fetchSuggestions(searchQuery, requestId);
+  }, 300);
 
   useEffect(() => {
     if (zoneGeoSelected?.nom !== zoneGeoValue) {
