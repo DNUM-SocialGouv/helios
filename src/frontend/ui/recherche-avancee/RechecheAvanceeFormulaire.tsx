@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -13,9 +13,19 @@ type RechercheAvanceeFormulaireProps = Readonly<{
   lancerLaRecherche: (event: MouseEvent<HTMLButtonElement>) => void;
   rechercheOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   isComparaison: boolean;
+  setIsChangedZG?: Dispatch<SetStateAction<boolean>>;
+  setIsChangedCapacite?: Dispatch<SetStateAction<boolean>>;
+  setIsChangedStructure?: Dispatch<SetStateAction<boolean>>;
 }>;
 
-export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChange, isComparaison }: RechercheAvanceeFormulaireProps) => {
+export const RechercheAvanceeFormulaire = ({
+  lancerLaRecherche,
+  rechercheOnChange,
+  isComparaison,
+  setIsChangedZG,
+  setIsChangedStructure,
+  setIsChangedCapacite,
+}: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
@@ -140,9 +150,9 @@ export const RechercheAvanceeFormulaire = ({ lancerLaRecherche, rechercheOnChang
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique isComparaison={isComparaison} />
-        <FiltreStructure isComparaison={isComparaison} />
-        <FiltreCapacite isComparaison={isComparaison} />
+        <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} />
+        <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
+        <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />
       </div>
     </div>
   );

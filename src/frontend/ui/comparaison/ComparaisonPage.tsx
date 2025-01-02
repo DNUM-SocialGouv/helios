@@ -11,6 +11,7 @@ import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-reche
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
+import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
@@ -23,7 +24,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
   const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading } = useComparaison();
+  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
@@ -37,11 +38,13 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
   const [orderBy, setOrderBy] = useState("");
   const [deleteEt, setDeleteET] = useState(false);
 
-  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression 
-  useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + '', order, orderBy);
-  }, [page, annéeEnCours, order, orderBy, deleteEt]);
+  const [reloadTable, setReloadTable] = useState<boolean>(false);
 
+  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
+  useEffect(() => {
+    lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
+    setReloadTable(false);
+  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
   const getAllTypes = () => {
     const result: string[] = [];
@@ -59,19 +62,25 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     { label: "", key: "favori" },
     { label: "Raison Sociale Courte", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
     { label: "Numéro Finess", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
-    { label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess), key: "capacite", info: true, sort: true, orderBy: "capacite_total" },
+    {
+      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+      key: "capacite",
+      info: true,
+      sort: true,
+      orderBy: "capacite_total",
+    },
     { label: "Réalisation de l'activité", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
     { label: "Activité personnes accompagnées", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+    { label: "TO HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+    { label: "TO HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+    { label: "TO AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
     { label: "Prestations externes vs directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
     { label: "Rotation du personnel", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
     { label: "ETP vacants", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Absentéiseme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+    { label: "Absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
     { label: "CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
     { label: "Vétusté", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "Fond net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+    { label: "FRNG", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
     { label: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
   ];
 
@@ -100,7 +109,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
-      if (lastPage > Math.ceil(listFinessArray.length / 2)) {
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
     }
@@ -114,17 +123,23 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           <title>Page de comparaison</title>
         </Head>
         <div className={styles["container"]}>
-          <h1>{wording.COMPARAISON}</h1>
+          <div className={styles["header-container"]}>
+            <h1>{wording.COMPARAISON}</h1>
+            <ExportExcel
+              datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
+              disabled={resultats.length === 0}
+              order={order}
+              orderBy={orderBy}
+              year={String(annéeEnCours)}
+            />
+          </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button
-                className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`}
-                onClick={() => setIsShowAjoutEtab(true)}
-              >
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
-            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab}></AjoutEtablissements>}
+            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
           </div>
           <div className={styles["years-container"]}>
             <div className={styles["years-container"]}>
@@ -166,7 +181,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+              <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>
           )}
         </div>

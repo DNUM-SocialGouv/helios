@@ -78,7 +78,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
         setSelectedRows={setSelectedRows} />
-      <TableFooterRechercheAvancee lastPage={lastPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+      <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );
 };

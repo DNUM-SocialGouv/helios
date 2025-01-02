@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
 
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -11,18 +11,19 @@ type ZoneGeo = Readonly<{
   departement: {
     code: string;
     nom: string;
-  };
+  },
   code: string;
   codeRegion: string;
   codesPostaux: string[];
   codeNum: string;
 }>;
 
-type FiltresProps = Readonly<{
+type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
 }>;
 
-export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
+export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
@@ -172,6 +173,7 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
     rechercheAvanceeContext?.setZoneGeoLabel("");
+    if (setIsChanged) setIsChanged(true);
   };
 
   const applyZoneGeoValue = () => {
@@ -179,6 +181,7 @@ export const FiltreZoneGeographique = ({ isComparaison }: FiltresProps) => {
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);
     rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);
+    if (setIsChanged) setIsChanged(true);
   };
 
   return (

@@ -78,13 +78,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
   }
 
-  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string): Promise<ResultatDeComparaison> {
+  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string, forExport: boolean): Promise<ResultatDeComparaison> {
     try {
       if (type === "Entité juridique") {
         return await this.compareEJ();
       } else {
         if (type === "Médico-social") {
-          return await this.compareSMS(numerosFiness, page, order, orderBy, annee);
+          return await this.compareSMS(numerosFiness, page, order, orderBy, annee, forExport);
         } else {
           return await this.compareSAN();
         }
@@ -102,7 +102,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel;
   }
 
-  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string): Promise<ResultatDeComparaison> {
+  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string, forExport: boolean): Promise<ResultatDeComparaison> {
     const compareSMSCapacite = `(select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
         autorisation_medico_social.numero_finess_etablissement_territorial
         FROM autorisation_medico_social
@@ -142,9 +142,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     const paginatedCompareSMSQuery =
       order && orderBy
         ? compareSMSQuery +
-        `ORDER BY ${orderBy} ${order} LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `
+        `ORDER BY ${orderBy} ${order} ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `
         : compareSMSQuery +
-        `ORDER BY numero_finess_etablissement_territorial ASC LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)} `;
+        `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
 
     const averagesCompareSMSQuery = `select
             AVG(ROUND(ac.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
@@ -186,7 +186,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       acceuilDeJourMoyenne: moyenne.acceuildejourmoyenne !== null ? this.transformInRate(moyenne.acceuildejourmoyenne, 1) : null,
       hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne !== null ? this.transformInRate(moyenne.hebergementpermanentmoyenne, 1) : null,
       hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne !== null ? this.transformInRate(moyenne.hebergementtemporairemoyenne, 1) : null,
-      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
+      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne ? this.makeNumberArrondi(Number(moyenne.fileactivepersonnesaccompagnesmoyenne), 2) : null,
       rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne !== null ? this.transformInRate(moyenne.rotationpersonnelmoyenne, 1) : null,
       absenteismeMoyenne: moyenne.absenteismemoyenne !== null ? this.transformInRate(moyenne.absenteismemoyenne, 1) : null,
       prestationExterneMoyenne: moyenne.prestationexternemoyenne !== null ? this.transformInRate(moyenne.prestationexternemoyenne, 1) : null,
@@ -204,9 +204,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     if (numericValue !== null && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
-      return Number(numericValue.toFixed(num));
+      if (num === 0) return Math.round(numericValue)
+      return Math.round(numericValue * (10 * num)) / (10 * num)
     } else {
-      // If it's not a valid number, return null or handle as needed
+      // If it's not a valid number, return null
       return null;
     }
   }

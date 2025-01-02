@@ -5,6 +5,7 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { StringFormater } from "../commun/StringFormater";
 import { ApiComparaisonResultat, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
+import { ContenuCapacitéParActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuCapacitéParActivité";
 import { ContenuDesTauxDAbsentéismes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDesTauxDAbsentéismes";
 import { ContenuDePrestationsExternes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDuTauxDePrestationsExternes";
 import { ContenuDuTauxDeRotationDuPersonnel } from "../établissement-territorial-médico-social/InfoBulle/ContenuDuTauxDeRotationDuPersonnel";
@@ -15,7 +16,6 @@ import { ContenuFondDeRoulementNetGlobal } from "../établissement-territorial-m
 import { ContenuRésultatNetComptable } from "../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeVétustéConstruction";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
-import { ContenuCapacitéParActivités } from "../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
 
 
 type comparaisonState = Readonly<{
@@ -165,7 +165,7 @@ export function useComparaison() {
         };
       case "capacite":
         return {
-          contenu: <ContenuCapacitéParActivités dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_finess)} estEntitéJuridique={false} source={wording.FINESS} />,
+          contenu: <ContenuCapacitéParActivité dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_finess)} source={wording.FINESS} />,
           titre: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
         };
       default:
@@ -181,6 +181,7 @@ export function useComparaison() {
     resultats: state.résultats,
     moyenne: state.moyenne,
     lastPage: state.lastPage,
-    loading: state.loading
+    loading: state.loading,
+    NombreDeResultatsMaxParPage: take
   };
 }
