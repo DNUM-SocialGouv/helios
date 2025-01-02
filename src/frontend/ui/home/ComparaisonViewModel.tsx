@@ -118,6 +118,7 @@ export class ComparaisonViewModel {
 
   public get commune(): string {
     return this.comparaison.commune;
+
   }
 
   public get departement(): string {
@@ -135,5 +136,4 @@ export class ComparaisonViewModel {
       : "-";
   }
 }
-
 
