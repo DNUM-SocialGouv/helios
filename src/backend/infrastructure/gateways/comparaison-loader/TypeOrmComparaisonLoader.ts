@@ -186,7 +186,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       acceuilDeJourMoyenne: moyenne.acceuildejourmoyenne !== null ? this.transformInRate(moyenne.acceuildejourmoyenne, 1) : null,
       hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne !== null ? this.transformInRate(moyenne.hebergementpermanentmoyenne, 1) : null,
       hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne !== null ? this.transformInRate(moyenne.hebergementtemporairemoyenne, 1) : null,
-      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne,
+      fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne ? this.makeNumberArrondi(Number(moyenne.fileactivepersonnesaccompagnesmoyenne), 2) : null,
       rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne !== null ? this.transformInRate(moyenne.rotationpersonnelmoyenne, 1) : null,
       absenteismeMoyenne: moyenne.absenteismemoyenne !== null ? this.transformInRate(moyenne.absenteismemoyenne, 1) : null,
       prestationExterneMoyenne: moyenne.prestationexternemoyenne !== null ? this.transformInRate(moyenne.prestationexternemoyenne, 1) : null,
@@ -204,9 +204,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     if (numericValue !== null && !isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
-      return Number(numericValue.toFixed(num));
+      if (num === 0) return Math.round(numericValue)
+      return Math.round(numericValue * (10 * num)) / (10 * num)
     } else {
-      // If it's not a valid number, return null or handle as needed
+      // If it's not a valid number, return null
       return null;
     }
   }

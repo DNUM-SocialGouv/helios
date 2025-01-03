@@ -45,6 +45,6 @@ export namespace StringFormater {
   }
 
   export function transformInRate(number: number): number {
-    return Number((number * 100).toFixed(1));
+    return Math.round((number * 100) * 10) / 10;
   }
 }
