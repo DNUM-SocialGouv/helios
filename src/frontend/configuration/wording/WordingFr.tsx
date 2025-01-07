@@ -532,7 +532,7 @@ export class WordingFr implements Wording {
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
 
   // Historique de recherche
-  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
   readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
   readonly DATE: string = "Date";
   readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
