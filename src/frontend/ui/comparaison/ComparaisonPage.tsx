@@ -15,6 +15,7 @@ import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements"
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
+import { useSearchHistory } from "../search-history/useSearchHistory";
 
 interface ComparaisonPageProps {
   listeAnnees: number[];
@@ -47,6 +48,8 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
   const [deleteEt, setDeleteET] = useState(false);
 
   const [reloadTable, setReloadTable] = useState<boolean>(false);
+
+  const { saveSearchHistory } = useSearchHistory();
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
@@ -195,6 +198,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 setOrderBy={setOrderBy}
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
+                onClickSocialReason={saveSearchHistory}
               />
               <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>

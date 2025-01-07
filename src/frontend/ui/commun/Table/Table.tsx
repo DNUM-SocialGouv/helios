@@ -40,6 +40,7 @@ interface DataTableProps {
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
+  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TableHeaderProps {
@@ -67,6 +68,7 @@ interface TableBodyProps {
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
+  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TriProps {
@@ -159,7 +161,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, onClickSocialReason }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -205,6 +207,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   rel="noreferrer"
                   style={{ backgroundImage: "none" }}
                   target="_blank"
+                  onClick={() => onClickSocialReason(row["socialReason"], row["numéroFiness"], row["type"])}
                 >
                   {row[header.key]}
                 </a>
@@ -238,6 +241,7 @@ export const Table = ({
   page,
   onClickDelete,
   handleInfoBullMoyenne,
+  onClickSocialReason,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
@@ -277,6 +281,7 @@ export const Table = ({
                 page={page}
                 selectedRows={selectedRows}
                 total={total}
+                onClickSocialReason={onClickSocialReason}
               />
             </table>
           </div>

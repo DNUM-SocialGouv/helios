@@ -9,6 +9,7 @@ import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import styles from "./ResultatRechercheAvancee.module.css"
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
+import { useSearchHistory } from "../../search-history/useSearchHistory";
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -36,6 +37,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const { wording } = useDependencies();
+  const { saveSearchHistory } = useSearchHistory();
 
   const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
 
@@ -74,7 +76,8 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         selectedRows={selectedRows}
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
-        setSelectedRows={setSelectedRows} />
+        setSelectedRows={setSelectedRows}
+        onClickSocialReason={saveSearchHistory} />
       <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );
