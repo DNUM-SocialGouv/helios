@@ -17,7 +17,7 @@ export function getCurrentDate() {
 }
 
 function getType(type: string | undefined) {
-  if(type === "Médico-social") return "Social et Médico-Social"
+  if (type === "Médico-social") return "Social et Médico-Social"
   else return type;
 }
 
@@ -53,51 +53,51 @@ function getFavoris(favoris: RechercheViewModel[] | undefined, numeroFiness: str
 
 function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
   return data.resultat.map((etab: ResultatSMS) => [
-    etab.type || "-",
+    etab.type ?? "-",
     getFavoris(favoris, etab.numéroFiness),
-    etab.socialReason || "-",
-    etab.numéroFiness || "-",
-    etab.capacite || "-",
-    etab.realisationActivite || "-",
-    etab.fileActivePersonnesAccompagnes || "-",
-    etab.hebergementPermanent || "-",
-    etab.hebergementTemporaire || "-",
-    etab.acceuilDeJour || "-",
-    etab.prestationExterne || "-",
-    etab.rotationPersonnel || "-",
-    etab.etpVacant || "-",
-    etab.absenteisme || "-",
-    etab.tauxCaf || "-",
-    etab.vetusteConstruction || "-",
-    etab.roulementNetGlobal || "-",
-    etab.resultatNetComptable || "-"
+    etab.socialReason ?? "-",
+    etab.numéroFiness ?? "-",
+    etab.capacite ?? "-",
+    etab.realisationActivite ?? "-",
+    etab.fileActivePersonnesAccompagnes ?? "-",
+    etab.hebergementPermanent ?? "-",
+    etab.hebergementTemporaire ?? "-",
+    etab.acceuilDeJour ?? "-",
+    etab.prestationExterne ?? "-",
+    etab.rotationPersonnel ?? "-",
+    etab.etpVacant ?? "-",
+    etab.absenteisme ?? "-",
+    etab.tauxCaf ?? "-",
+    etab.vetusteConstruction ?? "-",
+    etab.roulementNetGlobal ?? "-",
+    etab.resultatNetComptable ?? "-"
   ]);
 }
 
-function transformMoyenne(moyenne: MoyenneSMS ): (string | number)[] {
+function transformMoyenne(moyenne: MoyenneSMS): (string | number)[] {
   return [
     "Moyenne",
     "-",
     "-",
     "-",
-    moyenne.capaciteMoyenne || "-",
-    moyenne.realisationAcitiviteMoyenne || "-",
-    moyenne.fileActivePersonnesAccompagnesMoyenne || "-",
-    moyenne.hebergementPermanentMoyenne || "-",
-    moyenne.hebergementTemporaireMoyenne || "-",
-    moyenne.acceuilDeJourMoyenne || "-",
-    moyenne.prestationExterneMoyenne || "-",
-    moyenne.rotationPersonnelMoyenne || "-",
-    moyenne.etpVacantMoyenne || "-",
-    moyenne.absenteismeMoyenne || "-",
-    moyenne.tauxCafMoyenne || "-",
-    moyenne.vetusteConstructionMoyenne || "-",
-    moyenne.roulementNetGlobalMoyenne || "-",
-    moyenne.resultatNetComptableMoyenne || "-"
+    moyenne.capaciteMoyenne ?? "-",
+    moyenne.realisationAcitiviteMoyenne ?? "-",
+    moyenne.fileActivePersonnesAccompagnesMoyenne ?? "-",
+    moyenne.hebergementPermanentMoyenne ?? "-",
+    moyenne.hebergementTemporaireMoyenne ?? "-",
+    moyenne.acceuilDeJourMoyenne ?? "-",
+    moyenne.prestationExterneMoyenne ?? "-",
+    moyenne.rotationPersonnelMoyenne ?? "-",
+    moyenne.etpVacantMoyenne ?? "-",
+    moyenne.absenteismeMoyenne ?? "-",
+    moyenne.tauxCafMoyenne ?? "-",
+    moyenne.vetusteConstructionMoyenne ?? "-",
+    moyenne.roulementNetGlobalMoyenne ?? "-",
+    moyenne.resultatNetComptableMoyenne ?? "-"
   ]
 }
 
-function ExportToExcel(header: string[], headerType: (string|undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
+function ExportToExcel(header: string[], headerType: (string | undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
   const ws = XLSX.utils.aoa_to_sheet([header, headerType, [""], headers, moyenneResultat, ...data]);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
@@ -138,7 +138,7 @@ async function generateAndExportExcel(
     "Fond de roulement net global (en €)",
     "Résultat net comptable (en €)"
   ];
-  ExportToExcel(headerYear, headerType,  headers, dataTransormed, fileName, moyenneTransformed);
+  ExportToExcel(headerYear, headerType, headers, dataTransormed, fileName, moyenneTransformed);
 }
 
 const ExportExcel = ({

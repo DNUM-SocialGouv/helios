@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { ReactChild, useEffect, useState } from "react";
+import { ReactChild, useContext, useEffect, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
@@ -20,6 +21,8 @@ interface ComparaisonPageProps {
 }
 
 export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageProps) => {
+  const comparaisonContext = useContext(ComparaisonContext);
+
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
@@ -71,9 +74,9 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     },
     { label: "Réalisation de l'activité", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
     { label: "Activité personnes accompagnées", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+    { label: "TO HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+    { label: "TO HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+    { label: "TO AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
     { label: "Prestations externes vs directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
     { label: "Rotation du personnel", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
     { label: "ETP vacants", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
@@ -116,6 +119,11 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     setDeleteET(!deleteEt);
   };
 
+  const onClickAjoutEtablissement = () => {
+    comparaisonContext?.setTerme("");
+    setIsShowAjoutEtab(true);
+  };
+
   return (
     <>
       <main className="fr-container">
@@ -135,7 +143,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}

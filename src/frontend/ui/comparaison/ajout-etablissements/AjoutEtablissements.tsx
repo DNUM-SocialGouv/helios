@@ -137,8 +137,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           <button
             aria-controls="fr-modal-Capacite-Filtre"
             className="fr-btn fr-btn--primary"
-            //disabled={newEtablissements.length < 1}
-            disabled={true}
+            disabled={newEtablissements.length < 1}
             id="ajouter-etablissement-botton"
             onClick={onClickAjouter}
           >
