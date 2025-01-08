@@ -90,7 +90,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
           }))]);
       const responseData = responseRegion.concat(responseDepartement.concat(responseCommune));
 
-      if (requestId === requestCounterRef.current) {
+      if (requestId === requestCounterRef.current && zoneGeoValue !== '') {
         // Separate the items that match the search value and the ones that don't
         const matchingItems = responseData.filter((item: any) => item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
         const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
