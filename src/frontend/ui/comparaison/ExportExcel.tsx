@@ -17,11 +17,11 @@ export function getCurrentDate() {
 }
 
 function getType(type: string | undefined) {
-  if(type === "Médico-social") return "Social et Médico-Social"
+  if (type === "Médico-social") return "Social et Médico-Social"
   else return type;
 }
 
-async function getComparaisonData(annee: string, order = "", orderBy = "") {
+async function getComparaisonData(annee: string, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) {
   const listFiness = sessionStorage.getItem("listFinessNumbers");
   const typeStored = sessionStorage.getItem("comparaisonType");
 
@@ -35,7 +35,7 @@ async function getComparaisonData(annee: string, order = "", orderBy = "") {
   const type = typeStored || undefined;
 
   return fetch("/api/comparaison/compare", {
-    body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true }),
+    body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles }),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   })
@@ -74,7 +74,7 @@ function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
   ]);
 }
 
-function transformMoyenne(moyenne: MoyenneSMS ): (string | number)[] {
+function transformMoyenne(moyenne: MoyenneSMS): (string | number)[] {
   return [
     "Moyenne",
     "-",
@@ -97,7 +97,7 @@ function transformMoyenne(moyenne: MoyenneSMS ): (string | number)[] {
   ]
 }
 
-function ExportToExcel(header: string[], headerType: (string|undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
+function ExportToExcel(header: string[], headerType: (string | undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
   const ws = XLSX.utils.aoa_to_sheet([header, headerType, [""], headers, moyenneResultat, ...data]);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
@@ -105,11 +105,11 @@ function ExportToExcel(header: string[], headerType: (string|undefined)[], heade
 }
 
 async function generateAndExportExcel(
-  year: string, order: string, orderBy: string, favoris: RechercheViewModel[] | undefined, datesMisAjour: string,
+  year: string, order: string, orderBy: string, favoris: RechercheViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 ) {
 
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
-  const data = await getComparaisonData(year, order, orderBy)
+  const data = await getComparaisonData(year, order, orderBy, codeRegion, codeProfiles)
   const dataTransormed = transformData(data, favoris);
   const moyenneTransformed = transformMoyenne(data.moyenne as MoyenneSMS)
 
@@ -138,13 +138,13 @@ async function generateAndExportExcel(
     "Fond de roulement net global (en €)",
     "Résultat net comptable (en €)"
   ];
-  ExportToExcel(headerYear, headerType,  headers, dataTransormed, fileName, moyenneTransformed);
+  ExportToExcel(headerYear, headerType, headers, dataTransormed, fileName, moyenneTransformed);
 }
 
 const ExportExcel = ({
-  year, order, orderBy, disabled, datesMisAjour
+  year, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
 }: {
-  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string
+  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 }) => {
   const userContext = useContext(UserContext);
 
@@ -153,7 +153,7 @@ const ExportExcel = ({
       className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left fr-mt-1w"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favoris, datesMisAjour)}
+      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favoris, datesMisAjour, codeRegion, codeProfiles)}
       title="Exporter"
       type="button"
     >

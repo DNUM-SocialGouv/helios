@@ -16,10 +16,12 @@ import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
   listeAnnees: number[];
+  codeProfiles: string[];
+  codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
 }
 
-export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageProps) => {
+export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
@@ -42,7 +44,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
+    lancerLaComparaison(page, annéeEnCours + "", order, orderBy, codeRegion, codeProfiles);
     setReloadTable(false);
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
@@ -126,6 +128,8 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           <div className={styles["header-container"]}>
             <h1>{wording.COMPARAISON}</h1>
             <ExportExcel
+              codeProfiles={codeProfiles}
+              codeRegion={codeRegion}
               datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
               disabled={resultats.length === 0}
               order={order}
