@@ -187,6 +187,64 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ELSE 'NA'
     END AS capacite_total` + compareSMSQueryBody;
 
+    const averageSubQuery = ` FROM (Select et.code_region,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $1 = 'ok' THEN ac.file_active_personnes_accompagnees
+    ELSE null
+    END AS file_active_personnes_accompagnees,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $2 = 'ok' THEN ac.taux_realisation_activite
+    ELSE null
+    END AS taux_realisation_activite,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $3 = 'ok' THEN ac.taux_occupation_en_hebergement_permanent
+    ELSE null
+    END AS taux_occupation_en_hebergement_permanent,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $4 = 'ok' THEN ac.taux_occupation_en_hebergement_temporaire
+    ELSE null
+    END AS taux_occupation_en_hebergement_temporaire,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN ac.taux_occupation_accueil_de_jour
+    ELSE null
+    END AS taux_occupation_accueil_de_jour,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN bg.taux_de_caf
+    ELSE null
+    END AS taux_de_caf,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $7 = 'ok' THEN bg.taux_de_vetuste_construction
+    ELSE null
+    END AS taux_de_vetuste_construction,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $8 = 'ok' THEN bg.fonds_de_roulement
+    ELSE null
+    END AS fonds_de_roulement,
+    CASE
+         WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $9 = 'ok' THEN bg.resultat_net_comptable
+    ELSE null
+    END AS resultat_net_comptable,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $10 = 'ok' THEN rh.taux_prestation_externes
+    ELSE null
+    END AS taux_prestation_externes,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $11 = 'ok' THEN rh.taux_etp_vacants
+    ELSE null
+    END AS taux_etp_vacants,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $12 = 'ok' THEN rh.taux_rotation_personnel
+    ELSE null
+    END AS taux_rotation_personnel,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $13 = 'ok' THEN rh.taux_absenteisme_hors_formation
+    ELSE null
+    END AS taux_absenteisme_hors_formation,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $14 = 'ok' THEN cp.capacite_total
+    ELSE null
+    END AS capacite_total` + compareSMSQueryBody + `) D`;
+
     const paginatedCompareSMSQuery =
       order && orderBy
         ? compareSMSQuery +
@@ -195,22 +253,21 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
 
     const averagesCompareSMSQuery = `select
-            AVG(ROUND(ac.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
-            AVG(ac.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
-            AVG(ROUND(ac.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
-            AVG(ROUND(ac.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
-            AVG(ROUND(ac.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
-            AVG(ROUND(bg.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
-            AVG(ROUND(bg.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
-            AVG(ROUND(bg.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
-            AVG(ROUND(bg.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
-            AVG(ROUND(rh.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
-            AVG(ROUND(rh.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
-            AVG(ROUND(rh.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
-            AVG(ROUND(rh.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
-            AVG(cp.capacite_total) as capaciteMoyenne
-        ` +
-      compareSMSQueryBody;
+            AVG(ROUND(D.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
+            AVG(D.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
+            AVG(ROUND(D.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
+            AVG(ROUND(D.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
+            AVG(ROUND(D.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
+            AVG(ROUND(D.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
+            AVG(ROUND(D.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
+            AVG(ROUND(D.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
+            AVG(ROUND(D.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
+            AVG(ROUND(D.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
+            AVG(ROUND(D.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
+            AVG(ROUND(D.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
+            AVG(ROUND(D.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
+            AVG(D.capacite_total) as capaciteMoyenne
+        ` + averageSubQuery;
 
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery,
@@ -230,7 +287,23 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       autorisations.autorisationsEtCapacités.capacités
       ]
     );
-    const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
+    const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery,
+      [autorisations.activités.fileActivePersonnesAccompagnées,
+      autorisations.activités.tauxRéalisationActivité,
+      autorisations.activités.tauxOccupationHébergementPermanent,
+      autorisations.activités.tauxOccupationHébergementTemporaire,
+      autorisations.activités.tauxOccupationAccueilDeJour,
+      autorisations.budgetEtFinances.tauxDeCafNette,
+      autorisations.budgetEtFinances.tauxDeVétustéConstruction,
+      autorisations.budgetEtFinances.fondsDeRoulement,
+      autorisations.budgetEtFinances.résultatNetComptable,
+      autorisations.ressourcesHumaines.tauxDePrestationsExternes,
+      autorisations.ressourcesHumaines.nombreDEtpRéalisés,
+      autorisations.ressourcesHumaines.tauxDeRotationDuPersonnel,
+      autorisations.ressourcesHumaines.tauxDAbsentéisme,
+      autorisations.autorisationsEtCapacités.capacités
+      ]
+    );
 
     return {
       nombreDeResultats: numerosFiness.length,
