@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { ReactChild, useEffect, useState } from "react";
+import { ReactChild, useContext, useEffect, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
@@ -20,6 +21,8 @@ interface ComparaisonPageProps {
 }
 
 export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageProps) => {
+  const comparaisonContext = useContext(ComparaisonContext);
+
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
@@ -116,6 +119,11 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     setDeleteET(!deleteEt);
   };
 
+  const onClickAjoutEtablissement = () => {
+    comparaisonContext?.setTerme("");
+    setIsShowAjoutEtab(true);
+  };
+
   return (
     <>
       <main className="fr-container">
@@ -135,7 +143,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
