@@ -17,7 +17,7 @@ export function getCurrentDate() {
 }
 
 function getType(type: string | undefined) {
-  if(type === "Médico-social") return "Social et Médico-Social"
+  if (type === "Médico-social") return "Social et Médico-Social"
   else return type;
 }
 
@@ -74,7 +74,7 @@ function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
   ]);
 }
 
-function transformMoyenne(moyenne: MoyenneSMS ): (string | number)[] {
+function transformMoyenne(moyenne: MoyenneSMS): (string | number)[] {
   return [
     "Moyenne",
     "-",
@@ -97,7 +97,7 @@ function transformMoyenne(moyenne: MoyenneSMS ): (string | number)[] {
   ]
 }
 
-function ExportToExcel(header: string[], headerType: (string|undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
+function ExportToExcel(header: string[], headerType: (string | undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
   const ws = XLSX.utils.aoa_to_sheet([header, headerType, [""], headers, moyenneResultat, ...data]);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
@@ -138,7 +138,7 @@ async function generateAndExportExcel(
     "Fond de roulement net global (en €)",
     "Résultat net comptable (en €)"
   ];
-  ExportToExcel(headerYear, headerType,  headers, dataTransormed, fileName, moyenneTransformed);
+  ExportToExcel(headerYear, headerType, headers, dataTransormed, fileName, moyenneTransformed);
 }
 
 const ExportExcel = ({
