@@ -602,8 +602,9 @@ export class WordingFr implements Wording {
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string =
-    "Pour réaliser une comparaison, vous devez sélectionner des établissements de structure identique (Entité juridique, Etablissement sanitaire ou Etablissement médico-social)";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = `Actuellement, vous ne pouvez sélectionner que des établissements médico-sociaux, pour réaliser une comparaison.
+
+A venir : la comparaison des établissements sanitaires et entités juridiques.`;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";

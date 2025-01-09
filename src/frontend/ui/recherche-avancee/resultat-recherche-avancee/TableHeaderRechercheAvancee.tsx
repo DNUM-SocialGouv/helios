@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SelectedRows } from "./ResultatRechercheAvancee";
+import { AttribuesDefaults } from "../model/Attribues";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
   selectedRows: SelectedRows;
-  setShowAlert: Dispatch<SetStateAction<boolean>>;
 }>;
 
-export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: TableHeaderRechercheAvanceeProps) => {
+export const TableHeaderRechercheAvancee = ({ selectedRows }: TableHeaderRechercheAvanceeProps) => {
   const router = useRouter();
   const [disabledButton, setDisabledButton] = useState(false);
 
@@ -16,24 +16,21 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
     setDisabledButton(false);
   }, [selectedRows])
 
+  const isCompareButtonDisabled = () => {
+    const formattedSelectedRows = Object.values(selectedRows).flat();
+    return formattedSelectedRows.length < 2 || formattedSelectedRows.some((row) => row.type !== AttribuesDefaults.etablissementMedicoSocial);
+  }
+
   const onClickComparer = () => {
     const formattedSelectedRows = Object.values(selectedRows).flat();
     const firstType = formattedSelectedRows[0].type;
-    const hasDifferentTypes = formattedSelectedRows.some((row) => row.type !== firstType);
     const listFinessNumbers = formattedSelectedRows.map((row) => row.numéroFiness);
 
-    if (hasDifferentTypes) {
-      setShowAlert(true);
-      setDisabledButton(true);
-    } else {
-      // Navigate if types are the same
-      sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
-      sessionStorage.setItem("comparaisonType", firstType);
-      document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
-      document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
-      setShowAlert(false);
-      router.push("/comparaison");
-    }
+    sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
+    sessionStorage.setItem("comparaisonType", firstType);
+    document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
+    document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
+    router.push("/comparaison");
   };
 
   return (
@@ -43,7 +40,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, setShowAlert }: Tabl
         <li>
           <button
             className="fr-btn fr-btn--icon-left fr-btn--secondary"
-            disabled={Object.values(selectedRows).flat().length < 2 || disabledButton}
+            disabled={isCompareButtonDisabled() || disabledButton}
             id="table-header-button-primary-7842"
             onClick={onClickComparer}
           >

@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
-import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { Table } from "../../commun/Table/Table";
 import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import styles from "./ResultatRechercheAvancee.module.css"
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -34,8 +35,7 @@ type ResultatRechercheAvanceeProps = Readonly<{
 export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
-  const [showAlert, setShowAlert] = useState<boolean>(false);
-  const wording = new WordingFr();
+  const { wording } = useDependencies();
 
   const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
 
@@ -47,22 +47,19 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     }
   };
 
+  const showAlert = () => {
+    return Object.values(selectedRows).flat().length >= 2;
+  }
+
   return (
     <>
-      {showAlert && (
-        <div className="fr-alert fr-alert--info fr-mt-2w fr-mb-1w">
+      {showAlert() && (
+        <div className={"fr-alert fr-alert--info fr-mt-2w fr-mb-1w " + styles['multiline']}>
           <h3 className="fr-alert__title">{wording.ALERTE_TYPE_DIFFERENT_TITRE}</h3>
-          <p>{wording.ALERTE_TYPE_DIFFERENT_CORPS}</p>{" "}
-          <button
-            className="fr-btn--close fr-btn"
-            onClick={() => {
-              setShowAlert(false);
-            }}
-            title="Masquer le message"
-          ></button>
+          <p>{wording.ALERTE_TYPE_DIFFERENT_CORPS}</p>
         </div>
       )}
-      <TableHeaderRechercheAvancee selectedRows={selectedRows} setShowAlert={setShowAlert} />
+      <TableHeaderRechercheAvancee selectedRows={selectedRows} />
       <Table
         data={data}
         handleSelectAll={handleSelectAll}
