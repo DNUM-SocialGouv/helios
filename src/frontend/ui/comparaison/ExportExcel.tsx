@@ -58,19 +58,19 @@ function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
     etab.socialReason ?? "-",
     etab.numéroFiness ?? "-",
     etab.capacite ?? "-",
-    etab.realisationActivite ?? "-",
-    etab.fileActivePersonnesAccompagnes ?? "-",
-    etab.hebergementPermanent ?? "-",
-    etab.hebergementTemporaire ?? "-",
-    etab.acceuilDeJour ?? "-",
-    etab.prestationExterne ?? "-",
-    etab.rotationPersonnel ?? "-",
-    etab.etpVacant ?? "-",
-    etab.absenteisme ?? "-",
-    etab.tauxCaf ?? "-",
-    etab.vetusteConstruction ?? "-",
-    etab.roulementNetGlobal ?? "-",
-    etab.resultatNetComptable ?? "-"
+    etab.realisationActivite === 'NA' ? '' : etab.realisationActivite === null ? '-' : etab.realisationActivite,
+    etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes === null ? '-' : etab.fileActivePersonnesAccompagnes,
+    etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent === null ? '-' : etab.hebergementPermanent,
+    etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire === null ? '-' : etab.hebergementTemporaire,
+    etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour === null ? '-' : etab.acceuilDeJour,
+    etab.prestationExterne === 'NA' ? '' : etab.prestationExterne === null ? '-' : etab.prestationExterne,
+    etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel === null ? '-' : etab.rotationPersonnel,
+    etab.etpVacant === 'NA' ? '' : etab.etpVacant === null ? '-' : etab.etpVacant,
+    etab.absenteisme === 'NA' ? '' : etab.absenteisme === null ? '-' : etab.absenteisme,
+    etab.tauxCaf === 'NA' ? '' : etab.tauxCaf === null ? '-' : etab.tauxCaf,
+    etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction === null ? '-' : etab.vetusteConstruction,
+    etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal === null ? '-' : etab.roulementNetGlobal,
+    etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable === null ? '-' : etab.resultatNetComptable
   ]);
 }
 
