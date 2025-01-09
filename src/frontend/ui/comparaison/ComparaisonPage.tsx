@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { ReactChild, useEffect, useState } from "react";
 
@@ -22,6 +23,8 @@ interface ComparaisonPageProps {
 }
 
 export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
+  const { data } = useSession();
+
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
@@ -198,7 +201,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
           setEstCeOuvert={setEstCeOuvertMoyenne}
           titre="Calcul de la moyenne"
         >
-          <>Les données non renseignées sont exclues du calcul de la moyenne.</>
+          <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
         </InfoBulle>
       </main>
     </>

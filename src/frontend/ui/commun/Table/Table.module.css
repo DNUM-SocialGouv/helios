@@ -23,7 +23,7 @@
 }
 
 .cell-not-authorized {
-    background-color: beige;
+    background-color: beige !important;
 }
 
 .header-logo {
