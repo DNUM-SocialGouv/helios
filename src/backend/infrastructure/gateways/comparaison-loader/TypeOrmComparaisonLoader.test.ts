@@ -4,6 +4,7 @@ import { ActivitéMédicoSocialModel } from "../../../../../database/models/Acti
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
+import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -157,8 +158,46 @@ describe("La comparaison des établissements médico sociaux", () => {
   it("retourne le nombre des résultats, les moyennes et les résultats triés par numéro FINESS", async () => {
     const typeOrmComparaisonLoader = new TypeOrmComparaisonLoader(orm);
 
+    const autorisation = new ProfilModel();
+    autorisation.value = {
+      institution: { profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {} },
+      autreRegion: {
+        profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {
+          "activités": {
+            "tauxRéalisationActivité": "ok",
+            "tauxOccupationAccueilDeJour": "ok",
+            "fileActivePersonnesAccompagnées": "ok",
+            "tauxOccupationHébergementPermanent": "ok",
+            "tauxOccupationHébergementTemporaire": "ok",
+            "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
+            "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
+          },
+          "budgetEtFinances": {
+            "tauxDeCafNette": "ok",
+            "compteRésultats": "ok",
+            "fondsDeRoulement": "ok",
+            "résultatNetComptable": "ok",
+            "tauxDeVétustéConstruction": "ok",
+            "contributionAuxFraisDeSiège": "ok"
+          },
+          "ressourcesHumaines": {
+            "tauxDEtpVacants": "ok",
+            "tauxDAbsentéisme": "ok",
+            "nombreDEtpRéalisés": "ok",
+            "nombreDeCddDeRemplacement": "ok",
+            "tauxDePrestationsExternes": "ok",
+            "tauxDeRotationDuPersonnel": "ok"
+          },
+          "autorisationsEtCapacités": {
+            "capacités": "ok",
+            "autorisations": "ok"
+          }
+        }
+      }
+    };
+
     // WHEN
-    const comparaison = await typeOrmComparaisonLoader.compare("Médico-social", ["100000000", "100000001", "199999999"], '2022', premièrePage, "", "", false);
+    const comparaison = await typeOrmComparaisonLoader.compare("Médico-social", ["100000000", "100000001", "199999999"], '2022', premièrePage, "", "", false, '84', [autorisation]);
 
     expect(comparaison.nombreDeResultats).toBe(3);
 
@@ -190,7 +229,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 80,
+        fileActivePersonnesAccompagnes: "80",
         rotationPersonnel: 66.7,
         absenteisme: 7.7,
         prestationExterne: 65.9,
@@ -211,7 +250,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 80,
+        fileActivePersonnesAccompagnes: "80",
         rotationPersonnel: 66.7,
         absenteisme: 7.7,
         prestationExterne: 65.9,
@@ -232,7 +271,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         acceuilDeJour: 8000,
         hebergementPermanent: 8000,
         hebergementTemporaire: 8000,
-        fileActivePersonnesAccompagnes: 80,
+        fileActivePersonnesAccompagnes: "80",
         rotationPersonnel: null,
         absenteisme: null,
         prestationExterne: null,

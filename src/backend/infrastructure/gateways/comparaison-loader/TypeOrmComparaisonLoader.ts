@@ -1,8 +1,10 @@
 import { DataSource } from "typeorm";
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
+import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { DatesMisAjourSources, MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
+import { combineProfils } from "../../../profileFiltersHelper";
 
 type ComparaisonSMSTypeOrm = Readonly<{
   numero_finess_etablissement_territorial: string;
@@ -10,20 +12,20 @@ type ComparaisonSMSTypeOrm = Readonly<{
   domaine: string;
   commune: string;
   departement: string;
-  taux_realisation_activite: number;
-  file_active_personnes_accompagnees: number;
-  taux_occupation_en_hebergement_permanent: number;
-  taux_occupation_en_hebergement_temporaire: number;
-  taux_occupation_accueil_de_jour: number;
-  taux_de_caf: number;
-  taux_de_vetuste_construction: number;
-  fonds_de_roulement: number;
-  resultat_net_comptable: number;
-  taux_prestation_externes: number;
-  taux_rotation_personnel: number;
-  taux_etp_vacants: number;
-  taux_absenteisme_hors_formation: number;
-  capacite_total: number;
+  taux_realisation_activite: number | 'NA';
+  file_active_personnes_accompagnees: number | 'NA';
+  taux_occupation_en_hebergement_permanent: number | 'NA';
+  taux_occupation_en_hebergement_temporaire: number | 'NA';
+  taux_occupation_accueil_de_jour: number | 'NA';
+  taux_de_caf: number | 'NA';
+  taux_de_vetuste_construction: number | 'NA';
+  fonds_de_roulement: number | 'NA';
+  resultat_net_comptable: number | 'NA';
+  taux_prestation_externes: number | 'NA';
+  taux_rotation_personnel: number | 'NA';
+  taux_etp_vacants: number | 'NA';
+  taux_absenteisme_hors_formation: number | 'NA';
+  capacite_total: number | 'NA';
 }>;
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
@@ -78,13 +80,15 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
   }
 
-  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string, forExport: boolean): Promise<ResultatDeComparaison> {
+  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string, forExport: boolean, codeRegion: string, profiles: ProfilModel[]): Promise<ResultatDeComparaison> {
     try {
       if (type === "Entité juridique") {
         return await this.compareEJ();
       } else {
         if (type === "Médico-social") {
-          return await this.compareSMS(numerosFiness, page, order, orderBy, annee, forExport);
+          const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
+          const autorisations = combineProfils(profilesAutreRegValues);
+          return await this.compareSMS(numerosFiness, page, order, orderBy, annee, forExport, codeRegion, autorisations);
         } else {
           return await this.compareSAN();
         }
@@ -102,7 +106,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel;
   }
 
-  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string, forExport: boolean): Promise<ResultatDeComparaison> {
+  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string, forExport: boolean, codeRegion: string, autorisations: any): Promise<ResultatDeComparaison> {
+
     const compareSMSCapacite = `(select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
         autorisation_medico_social.numero_finess_etablissement_territorial
         FROM autorisation_medico_social
@@ -124,20 +129,121 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     et.domaine,
     et.commune,
     et.departement,
-    ac.taux_realisation_activite,
-    ac.file_active_personnes_accompagnees,
-    ac.taux_occupation_en_hebergement_permanent,
-    ac.taux_occupation_en_hebergement_temporaire,
-    ac.taux_occupation_accueil_de_jour,
-    bg.taux_de_caf,
-    bg.taux_de_vetuste_construction,
-    bg.fonds_de_roulement,
-    bg.resultat_net_comptable,
-    rh.taux_prestation_externes,
-    rh.taux_rotation_personnel,
-    rh.taux_etp_vacants,
-    rh.taux_absenteisme_hors_formation,
-    cp.capacite_total` + compareSMSQueryBody;
+    et.code_region,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $1 = 'ok' THEN CAST(ac.file_active_personnes_accompagnees AS TEXT)
+    ELSE 'NA'
+    END AS file_active_personnes_accompagnees,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $2 = 'ok' THEN CAST(ac.taux_realisation_activite AS TEXT)
+    ELSE 'NA'
+    END AS taux_realisation_activite,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $3 = 'ok' THEN CAST(ac.taux_occupation_en_hebergement_permanent AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_en_hebergement_permanent,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $4 = 'ok' THEN CAST(ac.taux_occupation_en_hebergement_temporaire AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_en_hebergement_temporaire,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_accueil_de_jour AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_accueil_de_jour,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN CAST(bg.taux_de_caf AS TEXT)
+    ELSE 'NA'
+    END AS taux_de_caf,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $7 = 'ok' THEN CAST(bg.taux_de_vetuste_construction AS TEXT)
+    ELSE 'NA'
+    END AS taux_de_vetuste_construction,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $8 = 'ok' THEN CAST(bg.fonds_de_roulement AS TEXT)
+    ELSE 'NA'
+    END AS fonds_de_roulement,
+    CASE
+         WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $9 = 'ok' THEN CAST(bg.resultat_net_comptable AS TEXT)
+    ELSE 'NA'
+    END AS resultat_net_comptable,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $10 = 'ok' THEN CAST(rh.taux_prestation_externes AS TEXT)
+    ELSE 'NA'
+    END AS taux_prestation_externes,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $11 = 'ok' THEN CAST(rh.taux_etp_vacants AS TEXT)
+    ELSE 'NA'
+    END AS taux_etp_vacants,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $12 = 'ok' THEN CAST(rh.taux_rotation_personnel AS TEXT)
+    ELSE 'NA'
+    END AS taux_rotation_personnel,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $13 = 'ok' THEN CAST(rh.taux_absenteisme_hors_formation AS TEXT)
+    ELSE 'NA'
+    END AS taux_absenteisme_hors_formation,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $14 = 'ok' THEN CAST(cp.capacite_total AS TEXT)
+    ELSE 'NA'
+    END AS capacite_total` + compareSMSQueryBody;
+
+    const averageSubQuery = ` FROM (Select et.code_region,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $1 = 'ok' THEN ac.file_active_personnes_accompagnees
+    ELSE null
+    END AS file_active_personnes_accompagnees,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $2 = 'ok' THEN ac.taux_realisation_activite
+    ELSE null
+    END AS taux_realisation_activite,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $3 = 'ok' THEN ac.taux_occupation_en_hebergement_permanent
+    ELSE null
+    END AS taux_occupation_en_hebergement_permanent,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $4 = 'ok' THEN ac.taux_occupation_en_hebergement_temporaire
+    ELSE null
+    END AS taux_occupation_en_hebergement_temporaire,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN ac.taux_occupation_accueil_de_jour
+    ELSE null
+    END AS taux_occupation_accueil_de_jour,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN bg.taux_de_caf
+    ELSE null
+    END AS taux_de_caf,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $7 = 'ok' THEN bg.taux_de_vetuste_construction
+    ELSE null
+    END AS taux_de_vetuste_construction,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $8 = 'ok' THEN bg.fonds_de_roulement
+    ELSE null
+    END AS fonds_de_roulement,
+    CASE
+         WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $9 = 'ok' THEN bg.resultat_net_comptable
+    ELSE null
+    END AS resultat_net_comptable,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $10 = 'ok' THEN rh.taux_prestation_externes
+    ELSE null
+    END AS taux_prestation_externes,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $11 = 'ok' THEN rh.taux_etp_vacants
+    ELSE null
+    END AS taux_etp_vacants,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $12 = 'ok' THEN rh.taux_rotation_personnel
+    ELSE null
+    END AS taux_rotation_personnel,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $13 = 'ok' THEN rh.taux_absenteisme_hors_formation
+    ELSE null
+    END AS taux_absenteisme_hors_formation,
+    CASE
+    WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $14 = 'ok' THEN cp.capacite_total
+    ELSE null
+    END AS capacite_total` + compareSMSQueryBody + `) D`;
 
     const paginatedCompareSMSQuery =
       order && orderBy
@@ -147,26 +253,57 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
 
     const averagesCompareSMSQuery = `select
-            AVG(ROUND(ac.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
-            AVG(ac.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
-            AVG(ROUND(ac.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
-            AVG(ROUND(ac.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
-            AVG(ROUND(ac.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
-            AVG(ROUND(bg.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
-            AVG(ROUND(bg.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
-            AVG(ROUND(bg.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
-            AVG(ROUND(bg.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
-            AVG(ROUND(rh.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
-            AVG(ROUND(rh.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
-            AVG(ROUND(rh.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
-            AVG(ROUND(rh.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
-            AVG(cp.capacite_total) as capaciteMoyenne
-        ` +
-      compareSMSQueryBody;
+            AVG(ROUND(D.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
+            AVG(D.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
+            AVG(ROUND(D.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
+            AVG(ROUND(D.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
+            AVG(ROUND(D.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
+            AVG(ROUND(D.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
+            AVG(ROUND(D.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
+            AVG(ROUND(D.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
+            AVG(ROUND(D.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
+            AVG(ROUND(D.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
+            AVG(ROUND(D.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
+            AVG(ROUND(D.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
+            AVG(ROUND(D.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
+            AVG(D.capacite_total) as capaciteMoyenne
+        ` + averageSubQuery;
 
 
-    const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery);
-    const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery);
+    const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery,
+      [autorisations.activités.fileActivePersonnesAccompagnées,
+      autorisations.activités.tauxRéalisationActivité,
+      autorisations.activités.tauxOccupationHébergementPermanent,
+      autorisations.activités.tauxOccupationHébergementTemporaire,
+      autorisations.activités.tauxOccupationAccueilDeJour,
+      autorisations.budgetEtFinances.tauxDeCafNette,
+      autorisations.budgetEtFinances.tauxDeVétustéConstruction,
+      autorisations.budgetEtFinances.fondsDeRoulement,
+      autorisations.budgetEtFinances.résultatNetComptable,
+      autorisations.ressourcesHumaines.tauxDePrestationsExternes,
+      autorisations.ressourcesHumaines.nombreDEtpRéalisés,
+      autorisations.ressourcesHumaines.tauxDeRotationDuPersonnel,
+      autorisations.ressourcesHumaines.tauxDAbsentéisme,
+      autorisations.autorisationsEtCapacités.capacités
+      ]
+    );
+    const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery,
+      [autorisations.activités.fileActivePersonnesAccompagnées,
+      autorisations.activités.tauxRéalisationActivité,
+      autorisations.activités.tauxOccupationHébergementPermanent,
+      autorisations.activités.tauxOccupationHébergementTemporaire,
+      autorisations.activités.tauxOccupationAccueilDeJour,
+      autorisations.budgetEtFinances.tauxDeCafNette,
+      autorisations.budgetEtFinances.tauxDeVétustéConstruction,
+      autorisations.budgetEtFinances.fondsDeRoulement,
+      autorisations.budgetEtFinances.résultatNetComptable,
+      autorisations.ressourcesHumaines.tauxDePrestationsExternes,
+      autorisations.ressourcesHumaines.nombreDEtpRéalisés,
+      autorisations.ressourcesHumaines.tauxDeRotationDuPersonnel,
+      autorisations.ressourcesHumaines.tauxDAbsentéisme,
+      autorisations.autorisationsEtCapacités.capacités
+      ]
+    );
 
     return {
       nombreDeResultats: numerosFiness.length,
@@ -225,19 +362,19 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         commune: resultat.commune,
         departement: resultat.departement,
         capacite: resultat.capacite_total,
-        realisationActivite: this.transformInRate(resultat.taux_realisation_activite, 1),
-        acceuilDeJour: this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
-        hebergementPermanent: this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
-        hebergementTemporaire: this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
+        realisationActivite: resultat.taux_realisation_activite === 'NA' ? 'NA' : this.transformInRate(resultat.taux_realisation_activite, 1),
+        acceuilDeJour: resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
+        hebergementPermanent: resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
+        hebergementTemporaire: resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
         fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees,
-        rotationPersonnel: this.transformInRate(resultat.taux_rotation_personnel, 1),
-        absenteisme: this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
-        prestationExterne: this.transformInRate(resultat.taux_prestation_externes, 1),
-        etpVacant: this.transformInRate(resultat.taux_etp_vacants, 1),
-        tauxCaf: this.transformInRate(resultat.taux_de_caf, 1),
-        vetusteConstruction: this.transformInRate(resultat.taux_de_vetuste_construction, 1),
-        roulementNetGlobal: this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
-        resultatNetComptable: this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
+        rotationPersonnel: resultat.taux_rotation_personnel === 'NA' ? 'NA' : this.transformInRate(resultat.taux_rotation_personnel, 1),
+        absenteisme: resultat.taux_absenteisme_hors_formation === 'NA' ? 'NA' : this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
+        prestationExterne: resultat.taux_prestation_externes === 'NA' ? 'NA' : this.transformInRate(resultat.taux_prestation_externes, 1),
+        etpVacant: resultat.taux_etp_vacants === 'NA' ? 'NA' : this.transformInRate(resultat.taux_etp_vacants, 1),
+        tauxCaf: resultat.taux_de_caf === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_caf, 1),
+        vetusteConstruction: resultat.taux_de_vetuste_construction === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_vetuste_construction, 1),
+        roulementNetGlobal: resultat.fonds_de_roulement === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
+        resultatNetComptable: resultat.resultat_net_comptable === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
       };
     });
   }

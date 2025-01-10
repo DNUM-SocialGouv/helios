@@ -179,7 +179,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
             </div>
           </th>
           {headers.map((header, colIndex) => (
-            <td className={isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} key={colIndex}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"

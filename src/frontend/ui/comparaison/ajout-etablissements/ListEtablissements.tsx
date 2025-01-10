@@ -61,7 +61,13 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
           {resultatRechercheList.map((res) => (
             <li className={styles["etablissement-info"]} key={res.numéroFiness}>
               <div
-                className={newEtablissements.includes(res.numéroFiness) ? styles["selected-container"] : styles["disabled-container"]}
+                className={
+                  finessNumbersListFromTable && finessNumbersListFromTable.includes(res.numéroFiness)
+                    ? styles["disabled-container"]
+                    : newEtablissements.includes(res.numéroFiness)
+                    ? styles["selected-container"]
+                    : ""
+                }
                 onClick={() => onHandleSelectEtablissement(res.numéroFiness)}
                 onKeyDown={() => {}}
                 role="button"
@@ -69,11 +75,21 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
                 tabIndex={0}
               >
                 <span className={styles["logo-center"]}>
-                  {res.type === "Sanitaire" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorialSanitaire(codeColorOfBlack)}</span>}
-                  {res.type === "Médico-social" && (
-                    <span className={styles["logo-container"]}>{LogoEtablissementTerritorialMedicoSociauxSvg(codeColorOfBlack)}</span>
+                  {res.type === "Sanitaire" && (
+                    <span className={styles["logo-container"]}>
+                      {LogoÉtablissementTerritorialSanitaire(newEtablissements.includes(res.numéroFiness) ? codeColorOfSelected : codeColorOfBlack)}
+                    </span>
                   )}
-                  {res.type === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg(codeColorOfBlack)}</span>}
+                  {res.type === "Médico-social" && (
+                    <span className={styles["logo-container"]}>
+                      {LogoEtablissementTerritorialMedicoSociauxSvg(newEtablissements.includes(res.numéroFiness) ? codeColorOfSelected : codeColorOfBlack)}
+                    </span>
+                  )}
+                  {res.type === "Entité juridique" && (
+                    <span className={styles["logo-container"]}>
+                      {LogoEntiteJuridiqueSvg(newEtablissements.includes(res.numéroFiness) ? codeColorOfSelected : codeColorOfBlack)}
+                    </span>
+                  )}
                 </span>
                 <span className={styles["main-span"]}>
                   {res.numéroFiness} - {res.socialReason}
