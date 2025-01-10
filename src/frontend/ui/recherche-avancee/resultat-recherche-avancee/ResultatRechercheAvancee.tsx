@@ -6,10 +6,10 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Table } from "../../commun/Table/Table";
 import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import styles from "./ResultatRechercheAvancee.module.css"
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
-import { useSearchHistory } from "../../search-history/useSearchHistory";
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -70,14 +70,14 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isCenter={false}
         isShowAvrage={false}
         onClickDelete={() => { }}
+        onClickSocialReason={saveSearchHistory}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
         page={page}
         selectedRows={selectedRows}
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
-        setSelectedRows={setSelectedRows}
-        onClickSocialReason={saveSearchHistory} />
+        setSelectedRows={setSelectedRows} />
       <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );

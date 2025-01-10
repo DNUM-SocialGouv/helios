@@ -11,11 +11,11 @@ import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
+import { useSearchHistory } from "../search-history/useSearchHistory";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
-import { useSearchHistory } from "../search-history/useSearchHistory";
 
 interface ComparaisonPageProps {
   listeAnnees: number[];
@@ -190,6 +190,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 isShowAvrage={true}
                 onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
+                onClickSocialReason={saveSearchHistory}
                 order={order}
                 orderBy={orderBy}
                 page={page || 1}
@@ -198,7 +199,6 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 setOrderBy={setOrderBy}
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
-                onClickSocialReason={saveSearchHistory}
               />
               <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>

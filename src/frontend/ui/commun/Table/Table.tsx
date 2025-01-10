@@ -204,10 +204,10 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                 <a
                   className="fr-tile__link"
                   href={construisLeLien(row["type"], row["numéroFiness"])}
+                  onClick={() => onClickSocialReason(row["socialReason"], row["numéroFiness"], row["type"])}
                   rel="noreferrer"
                   style={{ backgroundImage: "none" }}
                   target="_blank"
-                  onClick={() => onClickSocialReason(row["socialReason"], row["numéroFiness"], row["type"])}
                 >
                   {row[header.key]}
                 </a>
@@ -278,10 +278,10 @@ export const Table = ({
                 isCenter={isCenter}
                 isShowAvrage={isShowAvrage}
                 onClickDelete={onClickDelete}
+                onClickSocialReason={onClickSocialReason}
                 page={page}
                 selectedRows={selectedRows}
                 total={total}
-                onClickSocialReason={onClickSocialReason}
               />
             </table>
           </div>
