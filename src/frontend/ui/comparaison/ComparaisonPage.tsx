@@ -25,6 +25,7 @@ interface ComparaisonPageProps {
 
 export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
   const { data } = useSession();
+
   const comparaisonContext = useContext(ComparaisonContext);
 
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
