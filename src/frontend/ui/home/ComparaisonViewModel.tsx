@@ -63,51 +63,51 @@ export class ComparaisonViewModel {
   }
 
   public get realisationActivite(): string | null | string {
-    return this.comparaison.realisationActivite !== null ? this.comparaison.realisationActivite === 'NA' ? 'Consultation non autorisé' : this.comparaison.realisationActivite + "%" : null;
+    return this.comparaison.realisationActivite !== null ? this.comparaison.realisationActivite === 'NA' ? 'Consultation non autorisée' : this.comparaison.realisationActivite + "%" : null;
   }
 
   public get acceuilDeJour(): string | null {
-    return this.comparaison.acceuilDeJour !== null ? this.comparaison.acceuilDeJour === 'NA' ? 'Consultation non autorisé' : this.comparaison.acceuilDeJour + "%" : null;
+    return this.comparaison.acceuilDeJour !== null ? this.comparaison.acceuilDeJour === 'NA' ? 'Consultation non autorisée' : this.comparaison.acceuilDeJour + "%" : null;
   }
 
   public get hebergementPermanent(): string | null {
-    return this.comparaison.hebergementPermanent !== null ? this.comparaison.hebergementPermanent === 'NA' ? 'Consultation non autorisé' : this.comparaison.hebergementPermanent + "%" : null;
+    return this.comparaison.hebergementPermanent !== null ? this.comparaison.hebergementPermanent === 'NA' ? 'Consultation non autorisée' : this.comparaison.hebergementPermanent + "%" : null;
   }
 
   public get hebergementTemporaire(): string | null {
-    return this.comparaison.hebergementTemporaire !== null ? this.comparaison.hebergementTemporaire === 'NA' ? 'Consultation non autorisé' : this.comparaison.hebergementTemporaire + "%" : null;
+    return this.comparaison.hebergementTemporaire !== null ? this.comparaison.hebergementTemporaire === 'NA' ? 'Consultation non autorisée' : this.comparaison.hebergementTemporaire + "%" : null;
   }
 
   public get fileActivePersonnesAccompagnes(): number | null | string {
-    return this.comparaison.fileActivePersonnesAccompagnes === 'NA' ? 'Consultation non autorisé' : this.comparaison.fileActivePersonnesAccompagnes;
+    return this.comparaison.fileActivePersonnesAccompagnes === 'NA' ? 'Consultation non autorisée' : this.comparaison.fileActivePersonnesAccompagnes;
   }
 
   public get rotationPersonnel(): string | null {
-    return this.comparaison.rotationPersonnel !== null ? this.comparaison.rotationPersonnel === 'NA' ? 'Consultation non autorisé' : this.comparaison.rotationPersonnel + "%" : null;
+    return this.comparaison.rotationPersonnel !== null ? this.comparaison.rotationPersonnel === 'NA' ? 'Consultation non autorisée' : this.comparaison.rotationPersonnel + "%" : null;
   }
 
   public get absenteisme(): string | null {
-    return this.comparaison.absenteisme !== null ? this.comparaison.absenteisme === 'NA' ? 'Consultation non autorisé' : this.comparaison.absenteisme + "%" : null;
+    return this.comparaison.absenteisme !== null ? this.comparaison.absenteisme === 'NA' ? 'Consultation non autorisée' : this.comparaison.absenteisme + "%" : null;
   }
 
   public get prestationExterne(): string | null {
-    return this.comparaison.prestationExterne !== null ? this.comparaison.prestationExterne === 'NA' ? 'Consultation non autorisé' : this.comparaison.prestationExterne + "%" : null;
+    return this.comparaison.prestationExterne !== null ? this.comparaison.prestationExterne === 'NA' ? 'Consultation non autorisée' : this.comparaison.prestationExterne + "%" : null;
   }
 
   public get etpVacant(): string | null {
-    return this.comparaison.etpVacant !== null ? this.comparaison.etpVacant === 'NA' ? 'Consultation non autorisé' : this.comparaison.etpVacant + "%" : null;
+    return this.comparaison.etpVacant !== null ? this.comparaison.etpVacant === 'NA' ? 'Consultation non autorisée' : this.comparaison.etpVacant + "%" : null;
   }
 
   public get tauxCaf(): string | null {
-    return this.comparaison.tauxCaf !== null ? this.comparaison.tauxCaf === 'NA' ? 'Consultation non autorisé' : this.comparaison.tauxCaf + "%" : null;
+    return this.comparaison.tauxCaf !== null ? this.comparaison.tauxCaf === 'NA' ? 'Consultation non autorisée' : this.comparaison.tauxCaf + "%" : null;
   }
 
   public get vetusteConstruction(): string | null {
-    return this.comparaison.vetusteConstruction !== null ? this.comparaison.vetusteConstruction === 'NA' ? 'Consultation non autorisé' : this.comparaison.vetusteConstruction + "%" : null;
+    return this.comparaison.vetusteConstruction !== null ? this.comparaison.vetusteConstruction === 'NA' ? 'Consultation non autorisée' : this.comparaison.vetusteConstruction + "%" : null;
   }
 
   public get roulementNetGlobal(): string {
-    return this.comparaison.roulementNetGlobal ? this.comparaison.roulementNetGlobal === 'NA' ? 'Consultation non autorisé' : this.comparaison.roulementNetGlobal
+    return this.comparaison.roulementNetGlobal ? this.comparaison.roulementNetGlobal === 'NA' ? 'Consultation non autorisée' : this.comparaison.roulementNetGlobal
       .toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR",
@@ -126,7 +126,7 @@ export class ComparaisonViewModel {
   }
 
   public get resultatNetComptable(): string {
-    return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable === 'NA' ? 'Consultation non autorisé' : this.comparaison.resultatNetComptable
+    return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable === 'NA' ? 'Consultation non autorisée' : this.comparaison.resultatNetComptable
       .toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR",
