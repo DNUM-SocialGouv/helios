@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { SelectedRows } from "./ResultatRechercheAvancee";
 import { AttribuesDefaults } from "../model/Attribues";
+import { SelectedRows } from "./ResultatRechercheAvancee";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
   selectedRows: SelectedRows;

@@ -2,13 +2,13 @@ import { useContext, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
+import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Table } from "../../commun/Table/Table";
 import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
-import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
-import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./ResultatRechercheAvancee.module.css"
+import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
   { label: "", key: "etsLogo", orderBy: "type", sort: true },
