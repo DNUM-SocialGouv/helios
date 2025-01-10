@@ -1,3 +1,4 @@
+import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { DatesMisAjourSources, ResultatDeComparaison } from "../entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../gateways/ComparaisonLoader";
 
@@ -11,9 +12,11 @@ export class ComparaisonEtablissementsUseCase {
         page: number,
         order: string,
         orderBy: string,
-        forExport: boolean
+        forExport: boolean,
+        codeRegion: string,
+        profiles: ProfilModel[]
     ): Promise<ResultatDeComparaison> {
-        return await this.comparaisonLoader.compare(type, numerosFiness, annee, page, order, orderBy, forExport);
+        return await this.comparaisonLoader.compare(type, numerosFiness, annee, page, order, orderBy, forExport, codeRegion, profiles);
     }
 
     async getAnneesComparaison(

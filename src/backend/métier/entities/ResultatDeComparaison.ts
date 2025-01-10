@@ -12,20 +12,20 @@ export type ResultatSMS = Readonly<{
   commune: string;
   departement: string;
   type: string;
-  capacite: number | null;
-  realisationActivite: number | null;
-  acceuilDeJour: number | null;
-  hebergementPermanent: number | null;
-  hebergementTemporaire: number | null;
-  fileActivePersonnesAccompagnes: number | null;
-  rotationPersonnel: number | null;
-  absenteisme: number | null;
-  prestationExterne: number | null;
-  etpVacant: number | null;
-  tauxCaf: number | null;
-  vetusteConstruction: number | null;
-  roulementNetGlobal: number | null;
-  resultatNetComptable: number | null;
+  capacite: number | null | string;
+  realisationActivite: number | null | string;
+  acceuilDeJour: number | null | string;
+  hebergementPermanent: number | null | string;
+  hebergementTemporaire: number | null | string;
+  fileActivePersonnesAccompagnes: number | null | string;
+  rotationPersonnel: number | null | string;
+  absenteisme: number | null | string;
+  prestationExterne: number | null | string;
+  etpVacant: number | null | string;
+  tauxCaf: number | null | string;
+  vetusteConstruction: number | null | string;
+  roulementNetGlobal: number | null | string;
+  resultatNetComptable: number | null | string;
 }>;
 
 export type ResultatES = Readonly<{

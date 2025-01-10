@@ -55,7 +55,7 @@ export function useComparaison() {
     },
   });
 
-  const lancerLaComparaison = (page: number, annee: string, order: string, orderBy: string): void => {
+  const lancerLaComparaison = (page: number, annee: string, order: string, orderBy: string, codeRegion: string, codeProfiles: string[]): void => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
 
@@ -67,17 +67,17 @@ export function useComparaison() {
     }
 
     const type = typeStored || undefined;
-    comparer(type, parsedFiness, annee, page, order, orderBy);
+    comparer(type, parsedFiness, annee, page, order, orderBy, codeRegion, codeProfiles);
   };
 
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
 
-  const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "") => {
+  const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) => {
     setState({ ...state, loading: true });
     fetch("/api/comparaison/compare", {
-      body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy }),
+      body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })

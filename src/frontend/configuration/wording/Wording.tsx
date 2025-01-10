@@ -518,4 +518,6 @@ export interface Wording {
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
+  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
+  readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
 }

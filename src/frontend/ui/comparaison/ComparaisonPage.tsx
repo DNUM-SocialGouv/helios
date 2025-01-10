@@ -1,7 +1,9 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { ReactChild, useEffect, useState } from "react";
+import { ReactChild, useContext, useEffect, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
@@ -16,10 +18,15 @@ import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
   listeAnnees: number[];
+  codeProfiles: string[];
+  codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
 }
 
-export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageProps) => {
+export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
+  const { data } = useSession();
+  const comparaisonContext = useContext(ComparaisonContext);
+
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
@@ -42,7 +49,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + "", order, orderBy);
+    lancerLaComparaison(page, annéeEnCours + "", order, orderBy, codeRegion, codeProfiles);
     setReloadTable(false);
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
@@ -116,6 +123,11 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
     setDeleteET(!deleteEt);
   };
 
+  const onClickAjoutEtablissement = () => {
+    comparaisonContext?.setTerme("");
+    setIsShowAjoutEtab(true);
+  };
+
   return (
     <>
       <main className="fr-container">
@@ -126,6 +138,8 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           <div className={styles["header-container"]}>
             <h1>{wording.COMPARAISON}</h1>
             <ExportExcel
+              codeProfiles={codeProfiles}
+              codeRegion={codeRegion}
               datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
               disabled={resultats.length === 0}
               order={order}
@@ -135,7 +149,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           </div>
           <div className={styles["ajout-etab-div"]}>
             {!isShowAjoutEtab && (
-              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={() => setIsShowAjoutEtab(true)}>
+              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
                 {wording.AJOUTER_DES_ETABLISSEMENTS}
               </button>
             )}
@@ -194,7 +208,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour }: ComparaisonPageP
           setEstCeOuvert={setEstCeOuvertMoyenne}
           titre="Calcul de la moyenne"
         >
-          <>Les données non renseignées sont exclues du calcul de la moyenne.</>
+          <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
         </InfoBulle>
       </main>
     </>
