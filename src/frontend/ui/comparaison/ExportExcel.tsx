@@ -21,7 +21,7 @@ function getType(type: string | undefined) {
   else return type;
 }
 
-async function getComparaisonData(annee: string, order = "", orderBy = "") {
+async function getComparaisonData(annee: string, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) {
   const listFiness = sessionStorage.getItem("listFinessNumbers");
   const typeStored = sessionStorage.getItem("comparaisonType");
 
@@ -35,7 +35,7 @@ async function getComparaisonData(annee: string, order = "", orderBy = "") {
   const type = typeStored || undefined;
 
   return fetch("/api/comparaison/compare", {
-    body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true }),
+    body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles }),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   })
@@ -58,19 +58,19 @@ function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
     etab.socialReason ?? "-",
     etab.numéroFiness ?? "-",
     etab.capacite ?? "-",
-    etab.realisationActivite ?? "-",
-    etab.fileActivePersonnesAccompagnes ?? "-",
-    etab.hebergementPermanent ?? "-",
-    etab.hebergementTemporaire ?? "-",
-    etab.acceuilDeJour ?? "-",
-    etab.prestationExterne ?? "-",
-    etab.rotationPersonnel ?? "-",
-    etab.etpVacant ?? "-",
-    etab.absenteisme ?? "-",
-    etab.tauxCaf ?? "-",
-    etab.vetusteConstruction ?? "-",
-    etab.roulementNetGlobal ?? "-",
-    etab.resultatNetComptable ?? "-"
+    etab.realisationActivite === 'NA' ? '' : etab.realisationActivite === null ? '-' : etab.realisationActivite,
+    etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes === null ? '-' : etab.fileActivePersonnesAccompagnes,
+    etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent === null ? '-' : etab.hebergementPermanent,
+    etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire === null ? '-' : etab.hebergementTemporaire,
+    etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour === null ? '-' : etab.acceuilDeJour,
+    etab.prestationExterne === 'NA' ? '' : etab.prestationExterne === null ? '-' : etab.prestationExterne,
+    etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel === null ? '-' : etab.rotationPersonnel,
+    etab.etpVacant === 'NA' ? '' : etab.etpVacant === null ? '-' : etab.etpVacant,
+    etab.absenteisme === 'NA' ? '' : etab.absenteisme === null ? '-' : etab.absenteisme,
+    etab.tauxCaf === 'NA' ? '' : etab.tauxCaf === null ? '-' : etab.tauxCaf,
+    etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction === null ? '-' : etab.vetusteConstruction,
+    etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal === null ? '-' : etab.roulementNetGlobal,
+    etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable === null ? '-' : etab.resultatNetComptable
   ]);
 }
 
@@ -105,11 +105,11 @@ function ExportToExcel(header: string[], headerType: (string | undefined)[], hea
 }
 
 async function generateAndExportExcel(
-  year: string, order: string, orderBy: string, favoris: RechercheViewModel[] | undefined, datesMisAjour: string,
+  year: string, order: string, orderBy: string, favoris: RechercheViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 ) {
 
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
-  const data = await getComparaisonData(year, order, orderBy)
+  const data = await getComparaisonData(year, order, orderBy, codeRegion, codeProfiles)
   const dataTransormed = transformData(data, favoris);
   const moyenneTransformed = transformMoyenne(data.moyenne as MoyenneSMS)
 
@@ -142,9 +142,9 @@ async function generateAndExportExcel(
 }
 
 const ExportExcel = ({
-  year, order, orderBy, disabled, datesMisAjour
+  year, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
 }: {
-  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string
+  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 }) => {
   const userContext = useContext(UserContext);
 
@@ -153,7 +153,7 @@ const ExportExcel = ({
       className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left fr-mt-1w"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favoris, datesMisAjour)}
+      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favoris, datesMisAjour, codeRegion, codeProfiles)}
       title="Exporter"
       type="button"
     >
