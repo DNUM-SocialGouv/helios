@@ -361,7 +361,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         type: resultat.domaine,
         commune: resultat.commune,
         departement: resultat.departement,
-        capacite: resultat.capacite_total,
+        capacite: resultat.capacite_total ? Number(resultat.capacite_total) : null,
         realisationActivite: resultat.taux_realisation_activite === 'NA' ? 'NA' : this.transformInRate(resultat.taux_realisation_activite, 1),
         acceuilDeJour: resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
         hebergementPermanent: resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
