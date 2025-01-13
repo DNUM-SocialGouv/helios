@@ -511,7 +511,7 @@ export class WordingFr implements Wording {
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
 
   // Favoris
-  readonly FAVORIS_LIST: string = "Liste des favoris";
+  readonly FAVORIS_LIST: string = "Mes listes";
   readonly EJ_SECTION_TITLE: string = "Entités juridiques";
   readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
   readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";

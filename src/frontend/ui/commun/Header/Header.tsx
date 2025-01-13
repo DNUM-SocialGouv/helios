@@ -162,7 +162,7 @@ export const Header = () => {
                             router.push("/favoris");
                           }}
                         >
-                          Favoris
+                          Mes listes (x)
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
