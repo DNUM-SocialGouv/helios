@@ -520,4 +520,7 @@ export interface Wording {
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
+
+  //Page d’une liste d’etablissements
+  readonly titrePageListe: (nom: string, nombreElements: number) => string;
 }

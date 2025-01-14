@@ -3,10 +3,11 @@ import { useContext } from "react";
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { UserContext } from "../contexts/userContext";
+import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./StarButton.module.css";
 
 type StarButtonProps = Readonly<{
-    favorite: RechercheViewModel | undefined;
+    favorite: RechercheViewModel | TuileEtablissementViewModel | undefined;
     parent: string;
 }>;
 
