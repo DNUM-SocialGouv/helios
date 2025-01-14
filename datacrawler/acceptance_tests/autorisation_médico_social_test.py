@@ -127,21 +127,6 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "libelle_discipline_equipement": "Éducation Générale et Soins Spécialisés Enfants Handicapés",
                     "numero_finess_etablissement_territorial": autre_numéro_finess,
                 },
-                {
-                    "activite": "11",
-                    "capacite_autorisee_totale": NaN,
-                    "capacite_installee_totale": 0,
-                    "clientele": "701",
-                    "date_autorisation": None,
-                    "date_derniere_installation": date(2011, 12, 31),
-                    "date_mise_a_jour_autorisation": None,
-                    "discipline_equipement": "926",
-                    "est_installee": False,
-                    "libelle_activite": "Hébergement Complet Internat",
-                    "libelle_clientele": "Personnes Agées Autonomes",
-                    "libelle_discipline_equipement": "Hébergement résidence autonomie personnes âgées couple F2",
-                    "numero_finess_etablissement_territorial": numéro_finess_avec_valeurs_manquantes,
-                },
             ]
         )
 

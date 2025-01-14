@@ -458,6 +458,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         numéro_finess_avec_valeurs_manquantes,
                     ],
+                    "date_ouverture": [None, None, None],
                 },
             )
 
@@ -559,6 +560,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                     ],
+                    "date_ouverture": [None, None],
                 },
             )
 
