@@ -2,7 +2,7 @@ import { Entity, Column, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn 
 
 import { UserListModel } from "./UserListModel";
 
-@Entity({ name: "UserList" })
+@Entity({ name: "user_list_etablissement" })
 export class UserListEtablissementModel {
     @PrimaryColumn({ name: "list_id" })
     public listId!: number;
