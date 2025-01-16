@@ -11,7 +11,7 @@ export class UserListEtablissementModel {
     public finessNumber!: string;
 
     @Column({ name: 'type_etablissement' })
-    public typeEtablissement!: boolean;
+    public typeEtablissement!: string;
 
     @CreateDateColumn({ name: "date_creation" })
     public dateCreation!: Date;
