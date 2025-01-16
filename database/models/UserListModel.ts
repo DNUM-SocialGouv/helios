@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDa
 import { UserListEtablissementModel } from "./UserListEtablissementModel";
 import { UtilisateurModel } from "./UtilisateurModel";
 
-@Entity({ name: "favori" })
+@Entity({ name: "user_list" })
 export class UserListModel {
     @PrimaryGeneratedColumn({ name: "list_id" })
     public id!: number;
