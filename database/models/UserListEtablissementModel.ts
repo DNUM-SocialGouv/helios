@@ -2,7 +2,7 @@ import { Entity, Column, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn 
 
 import { UserListModel } from "./UserListModel";
 
-@Entity({ name: "user_list_etablissement" })
+@Entity({ name: "UserList" })
 export class UserListEtablissementModel {
     @PrimaryColumn({ name: "list_id" })
     public listId!: number;
@@ -11,13 +11,13 @@ export class UserListEtablissementModel {
     public finessNumber!: string;
 
     @Column({ name: 'type_etablissement' })
-    public typeEtablissement!: string;
+    public typeEtablissement!: boolean;
 
     @CreateDateColumn({ name: "date_creation" })
     public dateCreation!: Date;
 
     @ManyToOne(() => UserListModel, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'list_id', referencedColumnName: 'id' })
+    @JoinColumn({ name: 'list_id', referencedColumnName: 'listId' })
     public userList!: UserListModel;
 
 }
