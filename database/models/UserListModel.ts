@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDa
 import { UserListEtablissementModel } from "./UserListEtablissementModel";
 import { UtilisateurModel } from "./UtilisateurModel";
 
-@Entity({ name: "user_list" })
+@Entity({ name: "favori" })
 export class UserListModel {
     @PrimaryGeneratedColumn({ name: "list_id" })
     public id!: number;
@@ -21,7 +21,7 @@ export class UserListModel {
     public dateCreation!: Date;
 
     @ManyToOne(() => UtilisateurModel, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'ut_id', referencedColumnName: 'code' })
+    @JoinColumn({ name: 'ut_id', referencedColumnName: 'utCode' })
     public user!: UtilisateurModel;
 
     @OneToMany('UserListEtablissementModel', 'userList', { eager: true })
