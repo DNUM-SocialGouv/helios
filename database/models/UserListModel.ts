@@ -21,7 +21,7 @@ export class UserListModel {
     public dateCreation!: Date;
 
     @ManyToOne(() => UtilisateurModel, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'ut_id', referencedColumnName: 'utCode' })
+    @JoinColumn({ name: 'ut_id', referencedColumnName: 'code' })
     public user!: UtilisateurModel;
 
     @OneToMany('UserListEtablissementModel', 'userList', { eager: true })
