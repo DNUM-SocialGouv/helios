@@ -17,7 +17,7 @@ export class UserListEtablissementModel {
     public dateCreation!: Date;
 
     @ManyToOne(() => UserListModel, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'list_id', referencedColumnName: 'listId' })
+    @JoinColumn({ name: 'list_id', referencedColumnName: 'id' })
     public userList!: UserListModel;
 
 }
