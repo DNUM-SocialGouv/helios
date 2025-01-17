@@ -17,28 +17,28 @@ export class TypeOrmUserListLoader implements UserListLoader {
     async getAll(idUser: string): Promise<UserListModel[]> {
         return await (await this.orm).getRepository(UserListModel).findBy({ userId: idUser });
     }
-    async getById(idUser: string, idList: number): Promise<UserListModel | null> {
-        return await (await this.orm).getRepository(UserListModel).findOneBy({ id: idList, userId: idUser });
+    async getById(idList: number): Promise<UserListModel | null> {
+        return await (await this.orm).getRepository(UserListModel).findOneBy({ id: idList });
     }
     async getAllIdAndName(idUser: string): Promise<InformationSurListe[]> {
-        const requêteDeLaRecherche = (await this.orm)
-            .createQueryBuilder()
-            .select("liste.id", "id")
-            .addSelect("liste.nom", "nom")
-            .from(UserListModel, "liste")
-            .where("liste.userId = :idUser", { idUser: idUser });
-
-        return (await requêteDeLaRecherche.getRawMany<UserListModel>()).map((list) => {
-            return {
-                id: list.id,
-                nom: list.nom,
-            }
-        });
+            const requêteDeLaRecherche = (await this.orm)
+              .createQueryBuilder()
+              .select("liste.id", "id")
+              .addSelect("liste.nom", "nom")
+              .from(UserListModel, "liste")
+              .where("liste.userId = :idUser", { idUser: idUser });
+        
+            return (await requêteDeLaRecherche.getRawMany<UserListModel>()).map((list) => {
+                return {
+                    id: list.id,
+                    nom: list.nom,
+                }
+            });
     }
-    async updateName(idUser: string, idList: number, listName: string): Promise<void> {
-        await (await this.orm).getRepository(UserListModel).update({ id: idList, userId: idUser }, { nom: listName });
+    async updateName(idList: number, listName: string): Promise<void> {
+        await (await this.orm).getRepository(UserListModel).update(idList, { nom: listName });
     }
-    async delete(idUser: string, idList: number): Promise<void> {
-        await (await this.orm).getRepository(UserListModel).delete({ id: idList, userId: idUser });
+    async delete(idList: number): Promise<void> {
+        await (await this.orm).getRepository(UserListModel).delete(idList);
     }
 }
