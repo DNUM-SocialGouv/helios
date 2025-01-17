@@ -126,7 +126,7 @@ describe("La recherche de liste", () => {
         expect(results[0].nom).toBe(listName);
     });
 
-    it("récupère la liste par son id", async () => {
+    it("récupére la liste par son id", async () => {
         // GIVEN
         const userListLoader = new TypeOrmUserListLoader(orm);
 
@@ -137,28 +137,11 @@ describe("La recherche de liste", () => {
         await createList(otherListName, userUuid);
 
         // WHEN
-        const result = await userListLoader.getById(userUuid, list.id);
+        const result = await userListLoader.getById(list.id);
 
         // THEN
         expect(result).not.toBeNull();
         expect(result?.nom).toBe(listName);
-    });
-
-    it("ne récupère pas la liste d’un autre user par son id", async () => {
-        // GIVEN
-        const userListLoader = new TypeOrmUserListLoader(orm);
-
-        const listName = "listName";
-        const otherListName = "OtherListName";
-
-        const list = await createList(listName, userUuid);
-        await createList(otherListName, userUuid);
-
-        // WHEN
-        const result = await userListLoader.getById(otherUserUuid, list.id);
-
-        // THEN
-        expect(result).toBeNull();
     });
 
     it("récupére les etablissements dans la liste", async () => {
@@ -172,7 +155,7 @@ describe("La recherche de liste", () => {
         await addEtablishmentToList(list.id, finess);
 
         // WHEN
-        const result = await userListLoader.getById(userUuid, list.id);
+        const result = await userListLoader.getById(list.id);
 
         // THEN
         expect(result).not.toBeNull();
@@ -214,30 +197,12 @@ describe("La recherche de liste", () => {
         const list = await createList(listName, userUuid);
 
         // WHEN
-        await userListLoader.updateName(userUuid, list.id, newListName);
+        await userListLoader.updateName(list.id, newListName);
 
         // THEN
         const dbList = await userListRepository.findOneByOrFail({ id: list.id });
         expect(dbList).not.toBeNull();
         expect(dbList.nom).toEqual(newListName);
-    });
-
-    it("ne modifie le nom d’une liste d’un autre user", async () => {
-        // GIVEN
-        const userListLoader = new TypeOrmUserListLoader(orm);
-
-        const listName = "listName";
-        const newListName = "NewListName";
-
-        const list = await createList(listName, userUuid);
-
-        // WHEN
-        await userListLoader.updateName(otherUserUuid, list.id, newListName);
-
-        // THEN
-        const dbList = await userListRepository.findOneByOrFail({ id: list.id });
-        expect(dbList).not.toBeNull();
-        expect(dbList.nom).toEqual(listName);
     });
 
     it("supprime une liste", async () => {
@@ -249,31 +214,12 @@ describe("La recherche de liste", () => {
         const list = await createList(listName, userUuid);
 
         // WHEN
-        await userListLoader.delete(userUuid, list.id);
+        await userListLoader.delete(list.id);
 
         // THEN
         const dbList = await userListRepository.findOneBy({ id: list.id });
         expect(dbList).toBeNull();
         const lists = await userListRepository.find();
         expect(lists).toHaveLength(0);
-    });
-
-    
-    it("ne supprime pas la liste d’un autre user", async () => {
-        // GIVEN
-        const userListLoader = new TypeOrmUserListLoader(orm);
-
-        const listName = "listName";
-
-        const list = await createList(listName, userUuid);
-
-        // WHEN
-        await userListLoader.delete(otherUserUuid, list.id);
-
-        // THEN
-        const dbList = await userListRepository.findOneBy({ id: list.id });
-        expect(dbList).not.toBeNull();
-        const lists = await userListRepository.find();
-        expect(lists).toHaveLength(1);
     });
 });
