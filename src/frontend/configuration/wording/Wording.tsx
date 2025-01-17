@@ -445,6 +445,7 @@ export interface Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
   readonly CONFIRM_CREATE_PASSWORD: string;
+  readonly INVALID_PASSWORD_MESSAGE: string;
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;

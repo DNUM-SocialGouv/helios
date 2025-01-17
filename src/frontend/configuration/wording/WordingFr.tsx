@@ -530,6 +530,7 @@ export class WordingFr implements Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
+  readonly INVALID_PASSWORD_MESSAGE: string = "Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial parmi !@#$%^&* .";
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
