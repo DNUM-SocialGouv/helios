@@ -12,8 +12,9 @@ export class TypeOrmUserListEtablissementLoader implements UserListEtablissement
         userListEtablissementModel.finessNumber = finessNumber;
         userListEtablissementModel.typeEtablissement = typeEtablissement;
 
-        await (await this.orm).getRepository(UserListEtablissementModel).create(userListEtablissementModel);
+        await (await this.orm).getRepository(UserListEtablissementModel).save(userListEtablissementModel);
     }
+
     async delete(idList: number, finess: string): Promise<void> {
         await (await this.orm).getRepository(UserListEtablissementModel).delete({ listId: idList, finessNumber: finess });
     }
