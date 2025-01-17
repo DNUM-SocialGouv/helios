@@ -222,7 +222,7 @@ describe("La comparaison des établissements médico sociaux", () => {
         numéroFiness: "100000000",
         socialReason: "établissement territorial MS 1",
         type: "Médico-social",
-        capacite: "40",
+        capacite: 40,
         commune: "NANTUA",
         departement: "AIN",
         realisationActivite: 8000,
