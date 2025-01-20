@@ -11,6 +11,7 @@ import { TypeOrmUserListEtablissementLoader } from "./TypeOrmUserListEtablisseme
 describe("La recherche des etablissements dans une liste", () => {
     const orm = getOrm();
     const userUuid = "d4d1c0b2-592b-406d-ac72-f27a5300345a";
+    const otherUserUuid = "e406415d-1c52-4a4f-b574-abfda22ff0b2";
 
     let institutionRepository: Repository<InstitutionModel>;
     let roleRepository: Repository<RoleModel>;
@@ -94,7 +95,7 @@ describe("La recherche des etablissements dans une liste", () => {
         const typeEtablissement = "type";
 
         // WHEN
-        await userListEtablissementLoader.create(listId, finess, typeEtablissement);
+        await userListEtablissementLoader.create(userUuid, listId, finess, typeEtablissement);
 
         // THEN
         const list = await userListRepository.findOneByOrFail({ id: listId });
@@ -102,6 +103,22 @@ describe("La recherche des etablissements dans une liste", () => {
         expect(list?.userListEtablissements).toHaveLength(1);
         expect(list?.userListEtablissements[0].finessNumber).toEqual(finess);
         expect(list?.userListEtablissements[0].typeEtablissement).toEqual(typeEtablissement);
+    });
+
+    it("n’ajoute pas un etablissement à une liste d’un autre utilisateur", async () => {
+        // GIVEN
+        const userListEtablissementLoader = new TypeOrmUserListEtablissementLoader(orm);
+
+        const finess = "finess";
+        const typeEtablissement = "type";
+
+        // WHEN
+        await userListEtablissementLoader.create(otherUserUuid, listId, finess, typeEtablissement);
+
+        // THEN
+        const list = await userListRepository.findOneByOrFail({ id: listId });
+        expect(list).not.toBeNull();
+        expect(list?.userListEtablissements).toHaveLength(0);
     });
 
     it("supprime un etablissement d’une liste", async () => {
@@ -121,12 +138,37 @@ describe("La recherche des etablissements dans une liste", () => {
         expect(list?.userListEtablissements).toHaveLength(1);
 
         // WHEN
-        await userListEtablissementLoader.delete(listId, finess);
+        await userListEtablissementLoader.delete(userUuid, listId, finess);
 
         // THEN
         list = await userListRepository.findOneByOrFail({ id: listId });
         expect(list).not.toBeNull();
         expect(list?.userListEtablissements).toHaveLength(0);
+    });
+
+    it("ne supprime un etablissement de la liste d’un autre utilisateur", async () => {
+        // GIVEN
+        const userListEtablissementLoader = new TypeOrmUserListEtablissementLoader(orm);
+
+        const finess = "finess";
+
+        const userListEtablissement = new UserListEtablissementModel();
+        userListEtablissement.listId = listId;
+        userListEtablissement.finessNumber = finess;
+        userListEtablissement.typeEtablissement = "type";
+        
+        await userListEtablissementRepository.save(userListEtablissement);
+        let list = await userListRepository.findOneByOrFail({ id: listId });
+        expect(list).not.toBeNull();
+        expect(list?.userListEtablissements).toHaveLength(1);
+
+        // WHEN
+        await userListEtablissementLoader.delete(otherUserUuid, listId, finess);
+
+        // THEN
+        list = await userListRepository.findOneByOrFail({ id: listId });
+        expect(list).not.toBeNull();
+        expect(list?.userListEtablissements).toHaveLength(1);
     });
 
 });
