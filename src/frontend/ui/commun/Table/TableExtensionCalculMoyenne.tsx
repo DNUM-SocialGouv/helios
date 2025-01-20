@@ -20,7 +20,7 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
         <td></td>
         <td></td>
         <td></td>
-        <td className="fr-cell--center">{total + (total && total > 1 ? " établissements" : " établissement")}
+        <td className="fr-cell--center fr-cell--fixed">{total + (total && total > 1 ? " établissements" : " établissement")}
         </td>
         <td className="fr-cell--center">
           <span>Moyenne</span>
