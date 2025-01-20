@@ -69,6 +69,7 @@ import { AjoutClassificationEtablissementTerritorial1728465089456 } from "./migr
 import { AjoutClassificationDansLaRecherche1728914554142 } from "./migrations/1728914554142-AjoutClassificationDansLaRecherche";
 import { AjoutCodeRegionDansLaRecherche1730971588532 } from "./migrations/1730971588532-AjoutCodeRegionDansLaRecherche";
 import { AjoutRattachementRecherche1732629322484 } from "./migrations/1732629322484-AjoutRattachementRecherche";
+import { AjoutListEtEtsList1736865415982 } from "./migrations/1736865415982-AjoutListEtEtsList";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -105,6 +106,8 @@ import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
+import { UserListEtablissementModel } from "./models/UserListEtablissementModel";
+import { UserListModel } from "./models/UserListModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
@@ -148,6 +151,8 @@ export default new DataSource({
     AllocationRessourceETModel,
     ActivitéSanitaireMensuelModel,
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
+    UserListModel,
+    UserListEtablissementModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -224,6 +229,7 @@ export default new DataSource({
     AjoutClassificationDansLaRecherche1728914554142,
     AjoutCodeRegionDansLaRecherche1730971588532,
     AjoutRattachementRecherche1732629322484,
+    AjoutListEtEtsList1736865415982,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
