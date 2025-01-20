@@ -14,6 +14,7 @@ import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 interface Header {
   label: string;
   key: string;
+  nomComplet: string;
   isButton?: boolean;
   sort?: boolean;
   info?: boolean;
@@ -145,7 +146,8 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
           </div>
         </th>
         {headers.map((header, index) =>
-          <th className={isCenter ? "fr-cell--center" : ""} key={index}>
+          <th className={`${isCenter ? "fr-cell--center" : ""} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''}`}
+            key={index} title={header.nomComplet}>
             <span className="fr-cell__title">{header.label}</span>
             {header.info && onClickInfobull && (
               <button
@@ -181,7 +183,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
             </div>
           </th>
           {headers.map((header, colIndex) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
@@ -254,7 +256,7 @@ export const Table = ({
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className={`fr-table__container ${!isShowAvrage ? styles["table_container_surcharge"] : ""}`}>
+        <div className={isShowAvrage ? styles["table_container_vscroll"] : styles["table_container_sticky"]}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader

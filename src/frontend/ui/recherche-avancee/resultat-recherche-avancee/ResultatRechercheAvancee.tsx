@@ -12,13 +12,13 @@ import styles from "./ResultatRechercheAvancee.module.css"
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
-  { label: "", key: "etsLogo", orderBy: "type", sort: true },
-  { label: "", key: "favori" },
-  { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
-  { label: "Commune", key: "commune", sort: true },
-  { label: "Département", key: "departement", sort: true },
-  { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-  { label: "Rattachement(s)", key: "rattachement" },
+  { label: "", nomComplet: "", key: "etsLogo", orderBy: "type", sort: true },
+  { label: "", nomComplet: "", key: "favori" },
+  { label: "Raison Sociale", nomComplet: "", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
+  { label: "Commune", nomComplet: "", key: "commune", sort: true },
+  { label: "Département", nomComplet: "", key: "departement", sort: true },
+  { label: "Finess", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+  { label: "Rattachement(s)", nomComplet: "", key: "rattachement" },
 ];
 
 export type SelectedRows = Readonly<{
