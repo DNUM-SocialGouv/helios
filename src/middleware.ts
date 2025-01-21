@@ -45,5 +45,6 @@ export const config = {
     "/change-mot-passe",
     "/api/recherche",
     "/api/revalidate",
+    "/api/liste/:path*"
   ],
 };
