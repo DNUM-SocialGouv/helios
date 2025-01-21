@@ -1,6 +1,6 @@
 import { useDependencies } from "../contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { Etablissement } from "../TuileEtablissement/Etablissement";
+import { TuileEtablissement } from "../TuileEtablissement/TuileEtablissement";
 import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./GrilleEtablissement.module.css";
 
@@ -20,9 +20,9 @@ export const GrilleEtablissements = ({
   return (
     <>
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
-        {résultats.map((résultatViewModel, index) => (
-          <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
-            <Etablissement résultatViewModel={résultatViewModel} />
+        {résultats.map((tuileEtablissementViewModel, index) => (
+          <li className="fr-col-3" key={tuileEtablissementViewModel.numéroFiness + index}>
+            <TuileEtablissement tuileEtablissementViewModel={tuileEtablissementViewModel} />
           </li>
         ))}
       </ul>
