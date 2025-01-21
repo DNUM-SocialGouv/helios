@@ -105,15 +105,15 @@ describe("La page établissement territorial médico-social - bloc activité", (
 
     const annéesEtValeurs = [
       {
-        année: "2019",
+        année: "2020",
         valeurIndicateur: valeurIndicateur1,
       },
       {
-        année: "2020",
+        année: "2021",
         valeurIndicateur: valeurIndicateur2,
       },
       {
-        année: "2021",
+        année: "2022",
         valeurIndicateur: valeurIndicateur3,
       },
     ];
@@ -142,71 +142,71 @@ describe("La page établissement territorial médico-social - bloc activité", (
         {
           activités: [
             {
-              année: 2019,
-              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              fileActivePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              numéroFinessÉtablissementTerritorial: "010000040",
-              tauxOccupationAccueilDeJour: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxOccupationHébergementPermanent: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxOccupationHébergementTemporaire: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxRéalisationActivité: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-            },
-            {
               année: 2020,
               duréeMoyenneSéjourAccompagnementPersonnesSorties: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               fileActivePersonnesAccompagnées: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               nombreMoyenJournéesAbsencePersonnesAccompagnées: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               numéroFinessÉtablissementTerritorial: "010000040",
               tauxOccupationAccueilDeJour: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxOccupationHébergementPermanent: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxOccupationHébergementTemporaire: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
             },
             {
               année: 2021,
+              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              fileActivePersonnesAccompagnées: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              numéroFinessÉtablissementTerritorial: "010000040",
+              tauxOccupationAccueilDeJour: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxOccupationHébergementPermanent: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxOccupationHébergementTemporaire: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxRéalisationActivité: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+            },
+            {
+              année: 2022,
               duréeMoyenneSéjourAccompagnementPersonnesSorties: {
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur3,
@@ -280,71 +280,71 @@ describe("La page établissement territorial médico-social - bloc activité", (
         {
           activités: [
             {
-              année: 2019,
-              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              fileActivePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              numéroFinessÉtablissementTerritorial: "010000040",
-              tauxOccupationAccueilDeJour: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxOccupationHébergementPermanent: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxOccupationHébergementTemporaire: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-              tauxRéalisationActivité: {
-                dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur1,
-              },
-            },
-            {
               année: 2020,
               duréeMoyenneSéjourAccompagnementPersonnesSorties: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               fileActivePersonnesAccompagnées: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               nombreMoyenJournéesAbsencePersonnesAccompagnées: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               numéroFinessÉtablissementTerritorial: "010000040",
               tauxOccupationAccueilDeJour: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxOccupationHébergementPermanent: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxOccupationHébergementTemporaire: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
-                value: valeurIndicateur2,
+                value: valeurIndicateur1,
               },
             },
             {
               année: 2021,
+              duréeMoyenneSéjourAccompagnementPersonnesSorties: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              fileActivePersonnesAccompagnées: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              nombreMoyenJournéesAbsencePersonnesAccompagnées: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              numéroFinessÉtablissementTerritorial: "010000040",
+              tauxOccupationAccueilDeJour: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxOccupationHébergementPermanent: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxOccupationHébergementTemporaire: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+              tauxRéalisationActivité: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
+            },
+            {
+              année: 2022,
               duréeMoyenneSéjourAccompagnementPersonnesSorties: {
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur3,
