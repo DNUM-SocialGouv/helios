@@ -173,9 +173,9 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
       const années = within(recettesEtDépenses).getAllByTestId("groupe-annees");
-      expect(années[0].textContent).toBe("2019");
-      expect(années[1].textContent).toBe("2020");
-      expect(années[2].textContent).toBe("2021");
+      expect(années[0].textContent).toBe("2020");
+      expect(années[1].textContent).toBe("2021");
+      expect(années[2].textContent).toBe("2022");
     });
 
     it("affiche un tableau descriptif sur la dernière année qui est ERRD", () => {
@@ -265,7 +265,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const année = within(recettesEtDépenses).getByRole("button", { name: "2021" });
+      const année = within(recettesEtDépenses).getByRole("button", { name: "2022" });
 
       // WHEN
       fireEvent.click(année);
@@ -321,15 +321,15 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const annéesEtMontants = [
         {
-          année: "2019",
+          année: "2020",
           montant: "−38 331 €",
         },
         {
-          année: "2020",
+          année: "2021",
           montant: "3 034 €",
         },
         {
-          année: "2021",
+          année: "2022",
           montant: "7 290 €",
         },
       ];
@@ -390,15 +390,15 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const annéesEtMontants = [
         {
-          année: "2019",
+          année: "2020",
           montant: "−30 000 €",
         },
         {
-          année: "2020",
+          année: "2021",
           montant: "−20 000 €",
         },
         {
-          année: "2021",
+          année: "2022",
           montant: "−10 000 €",
         },
       ];
@@ -547,15 +547,15 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const annéesEtTauxDeVétusté = [
         {
-          année: "2019",
+          année: "2020",
           tauxDeVétusté: "31,2 %",
         },
         {
-          année: "2020",
+          année: "2021",
           tauxDeVétusté: "53,2 %",
         },
         {
-          année: "2021",
+          année: "2022",
           tauxDeVétusté: "38,8 %",
         },
       ];
@@ -573,8 +573,8 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       // GIVEN
       const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
         [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2019 }),
           ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2020 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021 }),
         ],
         wording,
         autorisationsMockData
@@ -595,11 +595,11 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const annéesEtTauxDeVétusté = [
         {
-          année: "2019",
+          année: "2020",
           tauxDeVétusté: "38,8 %",
         },
         {
-          année: "2020",
+          année: "2021",
           tauxDeVétusté: "38,8 %",
         },
       ];
@@ -662,15 +662,15 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
       const annéesEtMontants = [
         {
-          année: "2019",
+          année: "2020",
           montant: "2 206 969 €",
         },
         {
-          année: "2020",
+          année: "2021",
           montant: "3 988 284 €",
         },
         {
-          année: "2021",
+          année: "2022",
           montant: "1 057 218 €",
 
         },
@@ -690,9 +690,9 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       // GIVEN
       const budgetFinanceViewModel = new ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel(
         [
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2019 }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPh({ année: 2020 }),
-          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2021 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPa({ année: 2020 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesCaPh({ année: 2021 }),
+          ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeBudgetEtFinancesErrd({ année: 2022 }),
         ],
         wording,
         autorisationsMockData

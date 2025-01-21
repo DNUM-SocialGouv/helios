@@ -1,5 +1,6 @@
 import os
-import datetime
+from datetime import datetime
+from datetime import date
 
 import pandas as pd
 
@@ -14,7 +15,7 @@ from datacrawler.transform.equivalences_sivss_helios import (
 )
 
 def get_year_from_date(date_to_convert):
-    return int(datetime.datetime.strptime(date_to_convert, '%d/%m/%Y').strftime("%Y"))
+    return datetime.strptime(date_to_convert, '%Y-%m-%d').year
 
 def filter_famille(famille):
     return (famille == 'Evénements indésirables/graves associés aux soins') | (famille == 'Evénements/incidents dans un établissement ou organisme')
@@ -26,8 +27,8 @@ def filter_etat(etat):
      return (etat != 'Interco')
 
 def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame):
-    current_year = int(datetime.date.today().strftime("%Y"))
-    date_regex = r'((((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)))|)'
+    current_year = int(date.today().strftime("%Y"))
+    date_regex = r'^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$'
     return  donnees_evenements_indesirables[(donnees_evenements_indesirables['DATE_CLOTURE'].str.fullmatch(date_regex, na=True)) & (donnees_evenements_indesirables['MOTIF_CLOTURE'].apply(filter_motif)) & (donnees_evenements_indesirables['ETAT'].apply(filter_etat)) & (donnees_evenements_indesirables['FAMILLE_PRINCIPALE'].apply(filter_famille)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).le(current_year)) & (donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date).ge(current_year - 5)) & (donnees_evenements_indesirables['NUMERO_SIVSS'].astype(str).str.len() == 6)]
 
 def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite: str) -> None:
