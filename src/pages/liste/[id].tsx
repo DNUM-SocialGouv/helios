@@ -1,31 +1,23 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
-
-import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
-import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablissements/GrilleEtablissements";
-import { TuileEtablissementViewModel } from "../../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
-import { listenerCount } from "process";
+import { getSession } from "next-auth/react";
 import { useState } from "react";
+
+import { UserListModel } from "../../../database/models/UserListModel";
+import { rechercheParNumeroFinessEndpoint } from "../../backend/infrastructure/controllers/rechercheParNumeroFinessEndpoints";
+import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
+import { Résultat } from "../../backend/métier/entities/RésultatDeRecherche";
+import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
+import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablissements/GrilleEtablissements";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
-
-class List {
-  constructor(readonly name: string, readonly elements: ListElement[]) { }
-}
-
-class ListElement {
-  constructor(readonly commune: string,
-    readonly département: string,
-    readonly numéroFiness: string,
-    readonly raisonSocialeCourte: string,
-    readonly type: string,
-    readonly rattachement: string) { };
-}
+import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
+import { TuileEtablissementViewModel } from "../../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
 
 type RouterProps = Readonly<{
-  list: List;
+  list: UserListModel;
+  etablissements: Résultat[];
 }>;
 
-export default function Router({ list }: RouterProps) {
+export default function Router({ list, etablissements }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [resultSize, setResultSize] = useState(12);
 
@@ -35,14 +27,14 @@ export default function Router({ list }: RouterProps) {
       path: "TODO",
     },
     {
-      label: list ? list.name : "Not found", // TODO Wording
+      label: list ? list.nom : "Not found", // TODO Wording
       path: "",
     },
   ]);
 
   if (!list) return null;
 
-  const elements = list.elements.map((elmt) => {
+  const elements = etablissements.map((elmt) => {
     return new TuileEtablissementViewModel(elmt, paths);
   });
 
@@ -55,7 +47,7 @@ export default function Router({ list }: RouterProps) {
 
   const titleHead = <>
     <h1>
-      {list.name}
+      {list.nom}
     </h1>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
@@ -103,15 +95,25 @@ export default function Router({ list }: RouterProps) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
-    // TODO Get the real list
-    if (context.params && context.params["id"]) {
-      const listId = context.params["id"] as string;
 
-      const list = getResults(listId);
+    const session = await getSession(context);
+    const userUuid = session?.user?.idUser as string;
+    if (context.params && context.params["id"]) {
+      const listId = Number(context.params["id"]);
+
+      const list = await getById(userUuid, listId);
+      if (!list) {
+        return { notFound: true };
+      }
+
+      const finessNumber = list?.userListEtablissements.map((etablissement) => etablissement.finessNumber);
+      const etablissementList = await rechercheParNumeroFinessEndpoint(finessNumber);
+
 
       return {
         props: {
           list: JSON.parse(JSON.stringify(list)),
+          etablissements: etablissementList,
         },
       };
     } else {
@@ -120,48 +122,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   } catch (error) {
     return { notFound: true };
   }
-}
-
-function getResults(listId: string): List {
-  const listElements = [
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-    new ListElement("Paris", "Paris 9e  Arrondissement", listId, "Udaf de Paris", "type", "rattachement"),
-  ];
-  return new List("test", listElements);
-
 }
