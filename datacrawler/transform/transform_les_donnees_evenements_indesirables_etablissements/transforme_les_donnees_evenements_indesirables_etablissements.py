@@ -31,16 +31,6 @@ def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFra
     donnees_evenements_indesirables['ETAT'].replace({'Initial': 'EN_COURS', 'En gestion': 'EN_COURS', 'A qualifier': 'EN_COURS', 'A réguler': 'EN_COURS', 'A valider':'EN_COURS', 'Clôturé': 'CLOTURE' }, inplace=True)
     return donnees_evenements_indesirables
 
-def formate_la_date_de_cloture(données: pd.DataFrame) -> pd.DataFrame:
-    def formate_la_date(date_du_cpom: str) -> str:
-        return datetime.strptime(date_du_cpom, "%d/%m/%Y").strftime("%Y-%m-%d")
-
-    dates_formatees_de_cloture = données.copy()
-    dates_formatees_de_cloture["date_cloture"] = données["date_cloture"].map(
-        formate_la_date, na_action="ignore"
-    )
-    return dates_formatees_de_cloture
-
 def transform_les_donnees_evenements_indesirables_etablissements(
     donnees_evenements_indesirables: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
@@ -53,6 +43,6 @@ def transform_les_donnees_evenements_indesirables_etablissements(
         .drop_duplicates(subset=index_evenement_indesirable)
         .sort_values(by=["annee"], ascending=False)
     )
-    return formate_la_date_de_cloture(donnees_evenements_indesirables_transforme).set_index(index_evenement_indesirable)
+    return donnees_evenements_indesirables_transforme.set_index(index_evenement_indesirable)
 
     
