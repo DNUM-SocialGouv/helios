@@ -16,7 +16,7 @@ def filter_statut(statut):
      return (statut == 'Clôturé') 
 
 def filter_inspection(donnees_inspections, logger):
-    date_regex = r'((((0[1-9])|([12][0-9])|(3[01]))\/((0[0-9])|(1[012]))\/((20[012]\d|19\d\d)))|)'
+    date_regex = r'^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$'
     return donnees_inspections[(donnees_inspections['Statut de la mission'].apply(filter_statut))
             & (donnees_inspections['Code FINESS'].astype(str).str.len() == 9)
             & ((donnees_inspections['Date réelle Rapport'].str.fullmatch(date_regex, na=True))) 
