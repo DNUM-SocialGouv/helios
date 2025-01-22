@@ -1,5 +1,5 @@
-import { useDependencies } from "../contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import { useDependencies } from "../contexts/useDependencies";
 import { TuileEtablissement } from "../TuileEtablissement/TuileEtablissement";
 import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./GrilleEtablissement.module.css";
@@ -9,6 +9,7 @@ type GrilleEtablissementsProps = Readonly<{
   chargeLesRésultatsSuivants: () => void;
   résultats: TuileEtablissementViewModel[];
   currentListId: number;
+  rafraichitAuRetraitFavoris?: boolean;
 }>;
 
 export const GrilleEtablissements = ({
@@ -16,6 +17,7 @@ export const GrilleEtablissements = ({
   chargeLesRésultatsSuivants,
   résultats,
   currentListId,
+  rafraichitAuRetraitFavoris,
 }: GrilleEtablissementsProps) => {
   const { wording } = useDependencies();
 
@@ -24,7 +26,7 @@ export const GrilleEtablissements = ({
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
         {résultats.map((tuileEtablissementViewModel, index) => (
           <li className="fr-col-3" key={tuileEtablissementViewModel.numéroFiness + index}>
-            <TuileEtablissement currentListId={currentListId} tuileEtablissementViewModel={tuileEtablissementViewModel} />
+            <TuileEtablissement currentListId={currentListId} rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} tuileEtablissementViewModel={tuileEtablissementViewModel} />
           </li>
         ))}
       </ul>
