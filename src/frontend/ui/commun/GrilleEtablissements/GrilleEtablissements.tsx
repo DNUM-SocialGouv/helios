@@ -8,12 +8,14 @@ type GrilleEtablissementsProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
   chargeLesRésultatsSuivants: () => void;
   résultats: TuileEtablissementViewModel[];
+  currentListId: number;
 }>;
 
 export const GrilleEtablissements = ({
   estCeQueLesRésultatsSontTousAffichés,
   chargeLesRésultatsSuivants,
   résultats,
+  currentListId,
 }: GrilleEtablissementsProps) => {
   const { wording } = useDependencies();
 
@@ -22,7 +24,7 @@ export const GrilleEtablissements = ({
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
         {résultats.map((tuileEtablissementViewModel, index) => (
           <li className="fr-col-3" key={tuileEtablissementViewModel.numéroFiness + index}>
-            <TuileEtablissement tuileEtablissementViewModel={tuileEtablissementViewModel} />
+            <TuileEtablissement currentListId={currentListId} tuileEtablissementViewModel={tuileEtablissementViewModel} />
           </li>
         ))}
       </ul>
