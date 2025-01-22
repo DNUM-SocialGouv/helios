@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useContext } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
@@ -13,12 +14,15 @@ type StarButtonProps = Readonly<{
 
 export const StarButtonList = ({ favorite, parent, currentListId }: StarButtonProps) => {
     const userContext = useContext(UserContext);
+    const router = useRouter();
+
     const { addToFavorisList, removeFromFavorisList } = useFavoris();
 
     const handleFavoriteStatus = () => {
 
         if (isInFavoris()) {
             removeFromFavorisList(favorite, currentListId);
+            router.replace(router.asPath);
         } else {
             addToFavorisList(favorite, currentListId);
         }

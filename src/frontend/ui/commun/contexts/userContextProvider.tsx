@@ -1,9 +1,9 @@
 import { ReactNode, useState } from "react";
 
-import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { InformationListe, UserContext } from "./userContext";
-import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UserListEtablissementModel } from "../../../../../database/models/UserListEtablissementModel";
+import { UserListModel } from "../../../../../database/models/UserListModel";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { UserContext } from "./userContext";
 
 type UserProviderProps = Readonly<{
     children: ReactNode;
