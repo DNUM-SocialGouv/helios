@@ -2,10 +2,9 @@ import { useSession } from "next-auth/react";
 import { useContext, useEffect, useState } from "react";
 
 import { FavorisModel } from "../../../../database/models/FavorisModel";
-import { UserListModel } from "../../../../database/models/UserListModel";
 import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { InformationListe, UserContext } from "../commun/contexts/userContext";
+import { UserContext } from "../commun/contexts/userContext";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 
 export function useFavoris() {
@@ -31,23 +30,6 @@ export function useFavoris() {
     const rechercheViewModel = new RechercheViewModel(result, paths);
     return rechercheViewModel;
   };
-
-  const buildFavorisList = (userList: UserListModel[]): Map<string, InformationListe[]> => {
-    const favorisListe = new Map<string, InformationListe[]>();
-    userList.forEach(liste => {
-      const informationListe: InformationListe = { id: liste.id, nom: liste.nom };
-
-      liste.userListEtablissements.forEach(etablissement => {
-        let etablissementLists = favorisListe.get(etablissement.finessNumber);
-        if (etablissementLists) {
-          etablissementLists = [...etablissementLists, informationListe];
-        } else {
-          favorisListe.set(etablissement.finessNumber, [informationListe]);
-        }
-      })
-    });
-    return favorisListe;
-  }
 
   const addToFavoris = (favorite: any) => {
     fetch("/api/favoris/add", {
