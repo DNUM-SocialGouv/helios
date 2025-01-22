@@ -83,7 +83,7 @@ export default function Router({ list, etablissements }: RouterProps) {
         <main className="fr-container">
           <section aria-label={wording.RÉSULTAT_DE_RECHERCHE}>
             {titleHead}
-            <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} résultats={elements.slice(0, resultSize)} />
+            <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} résultats={elements.slice(0, resultSize)} />
           </section>
         </main>
       ) : (
