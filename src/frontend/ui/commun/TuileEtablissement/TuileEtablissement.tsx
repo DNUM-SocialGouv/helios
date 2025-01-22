@@ -1,15 +1,17 @@
 import Image from "next/image";
 
-import { StarButton } from "../StarButton/StarButton";
+import { StarButtonList } from "../StarButtonList/StarButtonList";
 import styles from "./TuileEtablissement.module.css";
 import { TuileEtablissementViewModel } from "./TuileEtablissementViewModel";
 
 type EstablishmentProps = Readonly<{
   tuileEtablissementViewModel: TuileEtablissementViewModel;
+  currentListId: number;
 }>;
 
 export const TuileEtablissement = ({
-  tuileEtablissementViewModel
+  tuileEtablissementViewModel,
+  currentListId,
 }: EstablishmentProps) => {
 
   return (
@@ -29,7 +31,7 @@ export const TuileEtablissement = ({
           <Image alt="" height="40" src={tuileEtablissementViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
-      <StarButton favorite={tuileEtablissementViewModel} parent="establishment" />
+      <StarButtonList currentListId={currentListId} favorite={tuileEtablissementViewModel} parent="establishment" />
     </>
   );
 };
