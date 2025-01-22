@@ -209,6 +209,27 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats.count);
   }
 
+  async rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]> {
+    //const requêteDeLaRecherche = (await this.orm).getRepository(RechercheModel).findBy({numeroFiness: In(finessNumber)});
+    const resultatDeLaRecherche = await (await this.orm).createQueryBuilder()
+      .select("recherche.numero_finess", "numeroFiness")
+      .addSelect("recherche.raison_sociale_courte", "raisonSocialeCourte")
+      .addSelect("recherche.type", "type")
+      .addSelect("recherche.commune", "commune")
+      .addSelect("recherche.departement", "département")
+      .addSelect("recherche.rattachement", "rattachement")
+      .from(RechercheModel, "recherche")
+      .where("recherche.numeroFiness  IN(:...numeroFiness)", { numeroFiness: finessNumber })
+      .getRawMany<RechercheModel>();
+
+    return resultatDeLaRecherche.map((resultat) => {
+      return {
+        numéroFiness: resultat.numeroFiness,
+        ...resultat
+      }
+    });
+  }
+
   private construisLesConditionsCapacitesSMS(capaciteSMS: CapaciteSMS, conditionsBefore: string, parameters: { [key: string]: any }): any {
     const conditions: string[] = [];
     let capaciteSMSConditions = "";
