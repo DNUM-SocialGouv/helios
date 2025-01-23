@@ -107,7 +107,7 @@ export const Header = () => {
                   router.pathname !== paths.PROFILES_LIST &&
                   router.pathname !== paths.USERS_LIST &&
                   router.pathname !== paths.HISTORY &&
-                  router.pathname !== paths.FAVORIS &&
+                  router.pathname !== paths.MES_LISTES &&
                   router.pathname !== paths.REINITIALISATION_PASSWORD &&
                   router.pathname !== paths.REGISTRATION &&
                   router.pathname !== paths.RECHERCHE_AVANCEE && (
@@ -163,7 +163,7 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/favoris");
+                            router.push(paths.MES_LISTES);
                           }}
                         >
                           Mes listes ({userContext?.favorisLists?.length})
@@ -172,7 +172,7 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/history");
+                            router.push(paths.HISTORY);
                           }}
                         >
                           Historique

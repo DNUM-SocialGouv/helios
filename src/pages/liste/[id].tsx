@@ -24,8 +24,8 @@ export default function Router({ list, etablissements }: RouterProps) {
 
   useBreadcrumb([
     {
-      label: "lists",
-      path: "TODO",
+      label: wording.FAVORIS_LIST,
+      path: paths.MES_LISTES,
     },
     {
       label: list ? list.nom : wording.LISTE_NON_TROUVÉE,
