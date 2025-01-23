@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
@@ -12,6 +12,7 @@ import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
+import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
@@ -20,6 +21,8 @@ export const Header = () => {
   const router = useRouter();
   const { data, status } = useSession();
   const { getAllFavoris, getFavorisLists } = useFavoris();
+  const userContext = useContext(UserContext);
+
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -163,7 +166,7 @@ export const Header = () => {
                             router.push("/favoris");
                           }}
                         >
-                          Mes listes (x)
+                          Mes listes ({userContext?.favorisLists?.length})
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
