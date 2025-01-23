@@ -2,7 +2,6 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
 import { ChangeEventHandler, useState } from "react";
 
-import { UserListModel } from "../../../database/models/UserListModel";
 import { rechercheParNumeroFinessEndpoint } from "../../backend/infrastructure/controllers/rechercheParNumeroFinessEndpoints";
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
 import { Résultat } from "../../backend/métier/entities/RésultatDeRecherche";
@@ -12,9 +11,10 @@ import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { TuileEtablissementViewModel } from "../../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
+import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 type RouterProps = Readonly<{
-  list: UserListModel;
+  list: UserListViewModel;
   etablissements: Résultat[];
 }>;
 
