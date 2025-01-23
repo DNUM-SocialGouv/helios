@@ -428,9 +428,9 @@ export interface Wording {
 
   // Favoris
   readonly FAVORIS_LIST: string;
-  readonly EJ_SECTION_TITLE: string;
-  readonly SANITAIRE_SECTION_TITLE: string;
-  readonly SOCIAL_SECTION_TITLE: string;
+  readonly FAVORIS_LIST_TITLE: string;
+
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;

@@ -512,9 +512,7 @@ export class WordingFr implements Wording {
 
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
-  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
-  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
-  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+  readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

@@ -14,7 +14,7 @@ export const FavorisPage = () => {
             <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
             {userContext?.favorisLists?.map((etablissement: any, index: number) => (
                 <div key={index}>
-                    <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} title={etablissement.nom} />
+                    <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} isFavoris={etablissement.isFavoris} title={etablissement.nom} />
                 </div>
             ))}
         </main>

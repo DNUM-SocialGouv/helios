@@ -13,14 +13,16 @@ type FavorisBlockProps = Readonly<{
     currentListId: number;
     favorisList: any[];
     title: string;
+    isFavoris: boolean;
 }>;
 
 export const FavorisBlock = ({
+    isFavoris,
     currentListId,
     favorisList,
     title,
 }: FavorisBlockProps) => {
-    const { paths } = useDependencies();
+    const { wording, paths } = useDependencies();
     const list = favorisList.length > 4 ? favorisList.slice(0, 3) : favorisList;
     const [listEtablissements, setLlistEtablissements] = useState<TuileEtablissementViewModel[]>([]);
 
@@ -41,7 +43,7 @@ export const FavorisBlock = ({
 
     return (
         <div className="fr-mb-3w" >
-            <h5 className="fr-mb-1w" >{title + " (" + favorisList.length + ")"}</h5>
+            <h5 className="fr-mb-1w" >{(isFavoris ? wording.FAVORIS_LIST_TITLE : title) + " (" + favorisList.length + ")"}</h5>
             <br />
             <section>
                 <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
