@@ -91,7 +91,7 @@ export function useFavoris() {
   };
 
   const removeFromFavorisList = (favorite: any, listId: number) => {
-    fetch(`/api/liste/${listId}/etablissement`,
+    return fetch(`/api/liste/${listId}/etablissement`,
       {
         body: JSON.stringify({ finessNumber: favorite.numéroFiness }),
         headers: { "Content-Type": "application/json" },

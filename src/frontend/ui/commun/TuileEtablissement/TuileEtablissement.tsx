@@ -7,11 +7,13 @@ import { TuileEtablissementViewModel } from "./TuileEtablissementViewModel";
 type EstablishmentProps = Readonly<{
   tuileEtablissementViewModel: TuileEtablissementViewModel;
   currentListId: number;
+  rafraichitAuRetraitFavoris?: boolean;
 }>;
 
 export const TuileEtablissement = ({
   tuileEtablissementViewModel,
   currentListId,
+  rafraichitAuRetraitFavoris,
 }: EstablishmentProps) => {
 
   return (
@@ -31,7 +33,7 @@ export const TuileEtablissement = ({
           <Image alt="" height="40" src={tuileEtablissementViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
-      <StarButtonList currentListId={currentListId} favorite={tuileEtablissementViewModel} parent="establishment" />
+      <StarButtonList currentListId={currentListId} favorite={tuileEtablissementViewModel} parent="establishment" rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} />
     </>
   );
 };

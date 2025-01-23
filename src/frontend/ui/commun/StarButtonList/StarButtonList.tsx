@@ -10,9 +10,10 @@ type StarButtonProps = Readonly<{
     favorite: TuileEtablissementViewModel | undefined;
     parent: string;
     currentListId: number;
+    rafraichitAuRetraitFavoris?: boolean;
 }>;
 
-export const StarButtonList = ({ favorite, parent, currentListId }: StarButtonProps) => {
+export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRetraitFavoris = false }: StarButtonProps) => {
     const userContext = useContext(UserContext);
     const router = useRouter();
 
@@ -21,8 +22,11 @@ export const StarButtonList = ({ favorite, parent, currentListId }: StarButtonPr
     const handleFavoriteStatus = () => {
 
         if (isInFavoris()) {
-            removeFromFavorisList(favorite, currentListId);
-            router.replace(router.asPath);
+            removeFromFavorisList(favorite, currentListId).finally(() => {
+                if (rafraichitAuRetraitFavoris) {
+                    router.replace(router.asPath);
+                }    
+            })
         } else {
             addToFavorisList(favorite, currentListId);
         }
@@ -37,7 +41,7 @@ export const StarButtonList = ({ favorite, parent, currentListId }: StarButtonPr
         const listForElement = favorite ? userContext?.favorisLists.flatMap(list => list.userListEtablissements).filter(etablissement => etablissement.finessNumber === favorite.numéroFiness) : undefined;
 
         // Si ou on regarde si il est dans la « currentListId »
-        if(listForElement) {
+        if (listForElement) {
             return listForElement.some(etablissement => etablissement.listId === currentListId);
         }
 
