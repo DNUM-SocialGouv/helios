@@ -608,8 +608,7 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
 
-  //Page d’une liste d’etablissements
-  readonly titrePageListe = (nom: string, nombreElements: number) => {
-    return nom + " (" + nombreElements + ")";
-  };
+  //Page d’une liste de favoris
+  readonly LISTE_DE_FAVORIS = "Liste de favoris";
+  readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
 }

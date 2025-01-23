@@ -522,5 +522,6 @@ export interface Wording {
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
 
   //Page d’une liste d’etablissements
-  readonly titrePageListe: (nom: string, nombreElements: number) => string;
+  readonly LISTE_DE_FAVORIS: string;
+  readonly LISTE_NON_TROUVÉE: string;
 }

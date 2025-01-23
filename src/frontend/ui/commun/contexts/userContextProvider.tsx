@@ -1,8 +1,7 @@
 import { ReactNode, useState } from "react";
 
-import { UserListEtablissementModel } from "../../../../../database/models/UserListEtablissementModel";
-import { UserListModel } from "../../../../../database/models/UserListModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { UserListEtablissementViewModel, UserListViewModel } from "../../user-list/UserListViewModel";
 import { UserContext } from "./userContext";
 
 type UserProviderProps = Readonly<{
@@ -11,7 +10,7 @@ type UserProviderProps = Readonly<{
 
 export const UserContextProvider = ({ children }: UserProviderProps) => {
     const [favoris, setFavoris] = useState<RechercheViewModel[]>([]);
-    const [favorisLists, setFavorisLists] = useState<UserListModel[]>([]);
+    const [favorisLists, setFavorisLists] = useState<UserListViewModel[]>([]);
     const [passwordCreated, setPasswordCreated] = useState(false);
 
 
@@ -33,12 +32,9 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
             });
 
             if (listToUpdate) {
-                const userListEtablissements : UserListEtablissementModel = {
-                    listId: listId,
+                const userListEtablissements: UserListEtablissementViewModel = {
                     finessNumber: element.numéroFiness,
-                    typeEtablissement: element.type,
                     dateCreation: new Date(),
-                    userList: new UserListModel()
                 }
                 listToUpdate?.userListEtablissements.push(userListEtablissements);
                 newFavorisList[index] = listToUpdate;

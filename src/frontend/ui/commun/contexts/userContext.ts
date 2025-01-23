@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { UserListModel } from '../../../../../database/models/UserListModel';
 import { RechercheViewModel } from "../../../ui/home/RechercheViewModel";
+import { UserListViewModel } from '../../user-list/UserListViewModel';
 
 export type InformationListe = {
     nom: string,
@@ -10,14 +10,14 @@ export type InformationListe = {
 
 interface UserContextValue {
     favoris: RechercheViewModel[];
-    favorisLists: UserListModel[];
+    favorisLists: UserListViewModel[];
     passwordCreated: boolean;
     setPasswordCreated: (value: boolean) => void;
     setFavoris: (favoris: RechercheViewModel[]) => void;
     addToFavoris: (element: any) => void;
     removeFromFavoris: (element: any) => void;
-    
-    setFavorisLists: (favoris: UserListModel[]) => void;
+
+    setFavorisLists: (favoris: UserListViewModel[]) => void;
     addToFavorisList: (element: any, listId: number) => void;
     removeFromFavorisList: (element: any, listId: number) => void;
 }
