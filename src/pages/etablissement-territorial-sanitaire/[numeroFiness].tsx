@@ -12,8 +12,6 @@ import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
-import { useSearchHistory } from "../../frontend/ui/search-history/useSearchHistory";
-import { useEffect } from "react";
 import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 
 type RouterProps = Readonly<{
@@ -24,8 +22,6 @@ type RouterProps = Readonly<{
 
 export default function Router({ rechercheResult, établissementTerritorial, autorisations }: RouterProps) {
   const { paths, wording } = useDependencies();
-    const { saveSearchHistory } = useSearchHistory();
-  
 
   if (!établissementTerritorial) return null;
 
@@ -67,7 +63,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
       saveSearchHistoryEndpoint(dependencies,rechercheResult.résultats[0]?.raisonSocialeCourte,session?.user.idUser!,rechercheResult.résultats[0]?.numéroFiness,rechercheResult.résultats[0]?.type);
-            console.log('save historique sanitaire');
 
       return {
         props: {
