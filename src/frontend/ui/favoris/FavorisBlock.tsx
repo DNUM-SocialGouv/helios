@@ -1,4 +1,5 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -49,7 +50,7 @@ export const FavorisBlock = ({
                     ))}
                     {favorisList.length > 4 && <li className="fr-col-3">
                         <div className={styles["reste-liste"]}>
-                            <h5> + {favorisList.length - 3} </h5>
+                            <Link href={`/liste/${currentListId}`}> + {favorisList.length - 3} </Link>
                         </div>
                     </li>}
                 </ul>

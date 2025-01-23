@@ -12,6 +12,13 @@
     align-items: center;
 }
 
+.reste-liste a {
+    text-decoration: none;
+    background-image: none;
+    font-size: x-large;
+    font-weight: bolder;
+}
+
 .tuiles {
     list-style: none;
 }
