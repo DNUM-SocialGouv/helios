@@ -27,7 +27,7 @@ export default function Router({ list, etablissements }: RouterProps) {
       path: "TODO",
     },
     {
-      label: list ? list.nom : "Not found", // TODO Wording
+      label: list ? list.nom : wording.LISTE_NON_TROUVÉE,
       path: "",
     },
   ]);
@@ -81,7 +81,7 @@ export default function Router({ list, etablissements }: RouterProps) {
     <>
       {list ? (
         <main className="fr-container">
-          <section aria-label={wording.RÉSULTAT_DE_RECHERCHE}>
+          <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
           </section>
