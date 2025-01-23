@@ -69,6 +69,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isAllSelected={isAllSelected}
         isCenter={false}
         isShowAvrage={false}
+        isVScroll={false}
         onClickDelete={() => { }}
         onClickSocialReason={saveSearchHistory}
         order={rechercheAvanceeContext?.order || ""}

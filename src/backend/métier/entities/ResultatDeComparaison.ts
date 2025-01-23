@@ -58,7 +58,7 @@ export type MoyenneES = Readonly<{}>;
 export type ResultatDeComparaison = {
   nombreDeResultats: number;
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
-  moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
+  // moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
 };
 
 export type DatesMisAjourSources = {
