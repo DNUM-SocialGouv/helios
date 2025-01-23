@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 
 import { UserListModel } from "../../../database/models/UserListModel";
 import { rechercheParNumeroFinessEndpoint } from "../../backend/infrastructure/controllers/rechercheParNumeroFinessEndpoints";
@@ -9,6 +9,7 @@ import { Résultat } from "../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablissements/GrilleEtablissements";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
+import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { TuileEtablissementViewModel } from "../../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
 
@@ -45,6 +46,9 @@ export default function Router({ list, etablissements }: RouterProps) {
     return resultSize >= elements.length;
   }
 
+  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
+  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
+
   const titleHead = <>
     <h1>
       {list.nom}
@@ -54,25 +58,7 @@ export default function Router({ list, etablissements }: RouterProps) {
         <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
       </div>
       <div className="fr-col--right">
-        <fieldset className="fr-segmented fr-segmented--no-legend fr-segmented--sm">
-          <legend className="fr-segmented__legend">
-            Légende
-          </legend>
-          <div className="fr-segmented__elements">
-            <div className="fr-segmented__element">
-              <input disabled id="display-format-table" name="display-format" type="radio" value="1" />
-              <label className="fr-icon-table-line fr-label" htmlFor="display-format-table">
-                Tableau
-              </label>
-            </div>
-            <div className="fr-segmented__element">
-              <input checked id="display-format-tile" name="display-format" type="radio" value="2" />
-              <label className="fr-icon-layout-grid-line fr-label" htmlFor="display-format-tile">
-                Vignette
-              </label>
-            </div>
-          </div>
-        </fieldset>
+        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Vignette} disabled={true} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
