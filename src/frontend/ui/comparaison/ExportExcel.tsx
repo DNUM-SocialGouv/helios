@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import * as XLSX from "xlsx";
 
-import { MoyenneSMS, ResultatDeComparaison, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ResultatDeComparaison, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { UserContext } from "../commun/contexts/userContext";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 
@@ -41,7 +41,11 @@ async function getComparaisonData(annee: string, order = "", orderBy = "", codeR
   })
     .then((response) => response.json())
     .then((data: ResultatDeComparaison) => {
-      return ({ resultat: data.resultat, moyenne: data.moyennes, type })
+      return ({
+        resultat: data.resultat,
+        // moyenne: data.moyennes, 
+        type
+      })
     }
     )
 }
@@ -74,41 +78,51 @@ function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
   ]);
 }
 
-function transformMoyenne(moyenne: MoyenneSMS): (string | number)[] {
-  return [
-    "Moyenne",
-    "-",
-    "-",
-    "-",
-    moyenne.capaciteMoyenne ?? "-",
-    //moyenne.realisationAcitiviteMoyenne ?? "-",
-    "",
-    moyenne.fileActivePersonnesAccompagnesMoyenne ?? "-",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    // moyenne.hebergementPermanentMoyenne ?? "-",
-    // moyenne.hebergementTemporaireMoyenne ?? "-",
-    // moyenne.acceuilDeJourMoyenne ?? "-",
-    // moyenne.prestationExterneMoyenne ?? "-",
-    // moyenne.rotationPersonnelMoyenne ?? "-",
-    // moyenne.etpVacantMoyenne ?? "-",
-    // moyenne.absenteismeMoyenne ?? "-",
-    // moyenne.tauxCafMoyenne ?? "-",
-    // moyenne.vetusteConstructionMoyenne ?? "-",
-    moyenne.roulementNetGlobalMoyenne ?? "-",
-    moyenne.resultatNetComptableMoyenne ?? "-"
-  ]
-}
+// function transformMoyenne(moyenne: MoyenneSMS): (string | number)[] {
+//   return [
+//     "Moyenne",
+//     "-",
+//     "-",
+//     "-",
+//     moyenne.capaciteMoyenne ?? "-",
+//     //moyenne.realisationAcitiviteMoyenne ?? "-",
+//     "",
+//     moyenne.fileActivePersonnesAccompagnesMoyenne ?? "-",
+//     "",
+//     "",
+//     "",
+//     "",
+//     "",
+//     "",
+//     "",
+//     "",
+//     "",
+//     // moyenne.hebergementPermanentMoyenne ?? "-",
+//     // moyenne.hebergementTemporaireMoyenne ?? "-",
+//     // moyenne.acceuilDeJourMoyenne ?? "-",
+//     // moyenne.prestationExterneMoyenne ?? "-",
+//     // moyenne.rotationPersonnelMoyenne ?? "-",
+//     // moyenne.etpVacantMoyenne ?? "-",
+//     // moyenne.absenteismeMoyenne ?? "-",
+//     // moyenne.tauxCafMoyenne ?? "-",
+//     // moyenne.vetusteConstructionMoyenne ?? "-",
+//     moyenne.roulementNetGlobalMoyenne ?? "-",
+//     moyenne.resultatNetComptableMoyenne ?? "-"
+//   ]
+// }
 
-function ExportToExcel(header: string[], headerType: (string | undefined)[], headers: string[], data: (string | Number)[][], fileName: string, moyenneResultat: (string | Number)[]) {
-  const ws = XLSX.utils.aoa_to_sheet([header, headerType, [""], headers, moyenneResultat, ...data]);
+function ExportToExcel(header: string[], headerType: (string | undefined)[],
+  headers: string[],
+  data: (string | Number)[][],
+  fileName: string,
+  // moyenneResultat: (string | Number)[]
+) {
+  const ws = XLSX.utils.aoa_to_sheet([header,
+    headerType,
+    [""],
+    headers,
+    // moyenneResultat,
+    ...data]);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
   XLSX.writeFile(wb, fileName);
@@ -121,7 +135,7 @@ async function generateAndExportExcel(
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
   const data = await getComparaisonData(year, order, orderBy, codeRegion, codeProfiles)
   const dataTransormed = transformData(data, favoris);
-  const moyenneTransformed = transformMoyenne(data.moyenne as MoyenneSMS)
+  // const moyenneTransformed = transformMoyenne(data.moyenne as MoyenneSMS)
 
   const headerYear = ["Année", year];
 
@@ -148,7 +162,13 @@ async function generateAndExportExcel(
     "Fond de roulement net global (en €)",
     "Résultat net comptable (en €)"
   ];
-  ExportToExcel(headerYear, headerType, headers, dataTransormed, fileName, moyenneTransformed);
+  ExportToExcel(headerYear,
+    headerType,
+    headers,
+    dataTransormed,
+    fileName,
+    // moyenneTransformed
+  );
 }
 
 const ExportExcel = ({
