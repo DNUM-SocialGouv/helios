@@ -25,17 +25,19 @@ export const FavorisBlock = ({
     const [listEtablissements, setLlistEtablissements] = useState<TuileEtablissementViewModel[]>([]);
 
     useEffect(() => {
-        fetch("/api/recherche-par-finess", {
-            body: JSON.stringify({
-                finessNumber: list.map((etb) => { return etb.finessNumber })
-            }),
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-        }).then((response) => response.json())
-            .then((data) => {
-                setLlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
-            });
-    }, [])
+        if (list.length === 0) setLlistEtablissements([]);
+        else
+            fetch("/api/recherche-par-finess", {
+                body: JSON.stringify({
+                    finessNumber: list.map((etb) => { return etb.finessNumber })
+                }),
+                headers: { "Content-Type": "application/json" },
+                method: "POST",
+            }).then((response) => response.json())
+                .then((data) => {
+                    setLlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+                });
+    }, [favorisList])
 
     return (
         <div className="fr-mb-3w" >
