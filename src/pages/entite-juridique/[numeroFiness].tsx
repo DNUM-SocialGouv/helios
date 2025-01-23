@@ -14,6 +14,9 @@ import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/E
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import { useSearchHistory } from "../../frontend/ui/search-history/useSearchHistory";
+import { useEffect } from "react";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
@@ -22,8 +25,11 @@ type RouterProps = Readonly<{
   autorisations: any;
 }>;
 
+
+
 export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés, autorisations }: RouterProps) {
   const { wording, paths } = useDependencies();
+  const { saveSearchHistory } = useSearchHistory();
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
@@ -59,6 +65,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion, codeProfiles)) as RouterProps;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
+      saveSearchHistoryEndpoint(dependencies,rechercheResult.résultats[0]?.raisonSocialeCourte,session?.user.idUser!,rechercheResult.résultats[0]?.numéroFiness,rechercheResult.résultats[0]?.type);
+
       return {
         props: {
           entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
@@ -81,4 +89,5 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     }
     throw error;
   }
+
 }
