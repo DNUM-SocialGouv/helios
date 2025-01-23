@@ -19,7 +19,7 @@ export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
   const { data, status } = useSession();
-  const { getAllFavoris, getFavorisLists } = useFavoris();
+  const { getFavorisLists } = useFavoris();
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -36,7 +36,6 @@ export const Header = () => {
 
   useEffect(() => {
     if (data?.user?.idUser) {
-      getAllFavoris(data?.user?.idUser);
       getFavorisLists();
     }
   }, [data?.user?.idUser]);

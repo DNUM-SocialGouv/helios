@@ -1,19 +1,21 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import { Badge } from "../commun/Badge/Badge";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { Establishment } from "../home/Establishment";
-import { RechercheViewModel } from "../home/RechercheViewModel";
+import { TuileEtablissement } from "../commun/TuileEtablissement/TuileEtablissement";
+import { TuileEtablissementViewModel } from "../commun/TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./Favoris.module.css";
 
 
 type FavorisBlockProps = Readonly<{
-    favorisList: RechercheViewModel[];
+    favorisList: TuileEtablissementViewModel[];
     title: string;
+    currentListId: number;
 }>;
 
 export const FavorisBlock = ({
     favorisList,
     title,
+    currentListId
 }: FavorisBlockProps) => {
     const { wording } = useDependencies();
 
@@ -31,7 +33,7 @@ export const FavorisBlock = ({
                 <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
                     {favorisList.map((résultatViewModel, index) => (
                         <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
-                            <Establishment résultatViewModel={résultatViewModel} />
+                            <TuileEtablissement currentListId={currentListId} rafraichitAuRetraitFavoris={true} tuileEtablissementViewModel={résultatViewModel} />
                         </li>
                     ))}
                 </ul>

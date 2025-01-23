@@ -9,18 +9,8 @@ type UserProviderProps = Readonly<{
 }>;
 
 export const UserContextProvider = ({ children }: UserProviderProps) => {
-    const [favoris, setFavoris] = useState<RechercheViewModel[]>([]);
     const [favorisLists, setFavorisLists] = useState<UserListViewModel[]>([]);
     const [passwordCreated, setPasswordCreated] = useState(false);
-
-
-    const addToFavoris = (element: RechercheViewModel) => {
-        setFavoris(prevFavoris => [...prevFavoris, element]);
-    };
-
-    const removeFromFavoris = (element: RechercheViewModel) => {
-        setFavoris(prevFavoris => prevFavoris.filter(item => item.numéroFiness !== element.numéroFiness));
-    };
 
     const addToFavorisList = (element: RechercheViewModel, listId: number) => {
         setFavorisLists(prevFavorisList => {
@@ -66,7 +56,7 @@ export const UserContextProvider = ({ children }: UserProviderProps) => {
     };
 
     return (
-        <UserContext.Provider value={{ favoris, favorisLists, passwordCreated, setPasswordCreated, setFavoris, addToFavoris, removeFromFavoris, setFavorisLists, addToFavorisList, removeFromFavorisList }}>
+        <UserContext.Provider value={{ favorisLists, passwordCreated, setPasswordCreated, setFavorisLists, addToFavorisList, removeFromFavorisList }}>
             {children}
         </UserContext.Provider>
     );
