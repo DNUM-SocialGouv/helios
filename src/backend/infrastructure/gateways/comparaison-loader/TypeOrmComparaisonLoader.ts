@@ -366,7 +366,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         acceuilDeJour: resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
         hebergementPermanent: resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
         hebergementTemporaire: resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
-        fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees,
+        fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees ? Number(resultat.file_active_personnes_accompagnees) : null,
         rotationPersonnel: resultat.taux_rotation_personnel === 'NA' ? 'NA' : this.transformInRate(resultat.taux_rotation_personnel, 1),
         absenteisme: resultat.taux_absenteisme_hors_formation === 'NA' ? 'NA' : this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
         prestationExterne: resultat.taux_prestation_externes === 'NA' ? 'NA' : this.transformInRate(resultat.taux_prestation_externes, 1),
