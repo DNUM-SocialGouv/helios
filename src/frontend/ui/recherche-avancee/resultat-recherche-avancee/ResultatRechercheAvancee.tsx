@@ -17,7 +17,7 @@ const tableHeaders = [
   { label: "Raison Sociale", nomComplet: "", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
   { label: "Commune", nomComplet: "", key: "commune", sort: true },
   { label: "Département", nomComplet: "", key: "departement", sort: true },
-  { label: "Finess", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+  { label: "N°FINESS", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },
   { label: "Rattachement(s)", nomComplet: "", key: "rattachement" },
 ];
 
@@ -69,6 +69,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isAllSelected={isAllSelected}
         isCenter={false}
         isShowAvrage={false}
+        isVScroll={false}
         onClickDelete={() => { }}
         onClickSocialReason={saveSearchHistory}
         order={rechercheAvanceeContext?.order || ""}

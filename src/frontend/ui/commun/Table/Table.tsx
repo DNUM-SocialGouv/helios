@@ -35,6 +35,7 @@ interface DataTableProps {
   setOrderBy: (orderBy: string) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
+  isVScroll: boolean;
   onClickInfobull?: (name: string) => void;
   page: number;
   handleSelectAll: () => void;
@@ -237,6 +238,7 @@ export const Table = ({
   setOrderBy,
   isShowAvrage = false,
   isCenter = false,
+  isVScroll = false,
   onClickInfobull,
   handleSelectAll,
   isAllSelected,
@@ -256,7 +258,7 @@ export const Table = ({
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className={isShowAvrage ? styles["table_container_vscroll"] : styles["table_container_sticky"]}>
+        <div className={isVScroll ? styles["table_container_vscroll"] : styles["table_container_sticky"]}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader
