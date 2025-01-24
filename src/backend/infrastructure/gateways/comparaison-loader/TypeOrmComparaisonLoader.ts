@@ -187,88 +187,12 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ELSE 'NA'
     END AS capacite_total` + compareSMSQueryBody;
 
-    // const averageSubQuery = ` FROM (Select et.code_region,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $1 = 'ok' THEN ac.file_active_personnes_accompagnees
-    // ELSE null
-    // END AS file_active_personnes_accompagnees,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $2 = 'ok' THEN ac.taux_realisation_activite
-    // ELSE null
-    // END AS taux_realisation_activite,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $3 = 'ok' THEN ac.taux_occupation_en_hebergement_permanent
-    // ELSE null
-    // END AS taux_occupation_en_hebergement_permanent,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $4 = 'ok' THEN ac.taux_occupation_en_hebergement_temporaire
-    // ELSE null
-    // END AS taux_occupation_en_hebergement_temporaire,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN ac.taux_occupation_accueil_de_jour
-    // ELSE null
-    // END AS taux_occupation_accueil_de_jour,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN bg.taux_de_caf
-    // ELSE null
-    // END AS taux_de_caf,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $7 = 'ok' THEN bg.taux_de_vetuste_construction
-    // ELSE null
-    // END AS taux_de_vetuste_construction,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $8 = 'ok' THEN bg.fonds_de_roulement
-    // ELSE null
-    // END AS fonds_de_roulement,
-    // CASE
-    //      WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $9 = 'ok' THEN bg.resultat_net_comptable
-    // ELSE null
-    // END AS resultat_net_comptable,
-    // CASE
-    //       WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $10 = 'ok' THEN rh.taux_prestation_externes
-    // ELSE null
-    // END AS taux_prestation_externes,
-    // CASE
-    // WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $11 = 'ok' THEN rh.taux_etp_vacants
-    // ELSE null
-    // END AS taux_etp_vacants,
-    // CASE
-    // WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $12 = 'ok' THEN rh.taux_rotation_personnel
-    // ELSE null
-    // END AS taux_rotation_personnel,
-    // CASE
-    // WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $13 = 'ok' THEN rh.taux_absenteisme_hors_formation
-    // ELSE null
-    // END AS taux_absenteisme_hors_formation,
-    // CASE
-    // WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $14 = 'ok' THEN cp.capacite_total
-    // ELSE null
-    // END AS capacite_total` + compareSMSQueryBody + `) D`;
-
     const paginatedCompareSMSQuery =
       order && orderBy
         ? compareSMSQuery +
         `ORDER BY ${orderBy} ${order} ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `
         : compareSMSQuery +
         `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
-
-    // const averagesCompareSMSQuery = `select
-    //         AVG(ROUND(D.taux_realisation_activite::NUMERIC , 3)) as realisationAcitiviteMoyenne,
-    //         AVG(D.file_active_personnes_accompagnees) as fileActivePersonnesAccompagnesMoyenne,
-    //         AVG(ROUND(D.taux_occupation_en_hebergement_permanent::NUMERIC , 3)) as hebergementPermanentMoyenne,
-    //         AVG(ROUND(D.taux_occupation_en_hebergement_temporaire::NUMERIC , 3)) as hebergementTemporaireMoyenne ,
-    //         AVG(ROUND(D.taux_occupation_accueil_de_jour::NUMERIC , 3)) as acceuilDeJourMoyenne,
-    //         AVG(ROUND(D.taux_de_caf::NUMERIC , 3)) as tauxCafMoyenne,
-    //         AVG(ROUND(D.taux_de_vetuste_construction::NUMERIC , 3)) as vetusteConstructionMoyenne,
-    //         AVG(ROUND(D.fonds_de_roulement::NUMERIC , 2)) as roulementNetGlobalMoyenne,
-    //         AVG(ROUND(D.resultat_net_comptable::NUMERIC , 2)) as resultatNetComptableMoyenne,
-    //         AVG(ROUND(D.taux_prestation_externes::NUMERIC , 3)) as prestationExterneMoyenne,
-    //         AVG(ROUND(D.taux_rotation_personnel::NUMERIC , 3)) as rotationPersonnelMoyenne,
-    //         AVG(ROUND(D.taux_etp_vacants::NUMERIC , 3)) as etpVacantMoyenne,
-    //         AVG(ROUND(D.taux_absenteisme_hors_formation::NUMERIC , 3)) as absenteismeMoyenne,
-    //         AVG(D.capacite_total) as capaciteMoyenne
-    //     ` + averageSubQuery;
-
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery,
       [autorisations.activités.fileActivePersonnesAccompagnées,
@@ -287,53 +211,16 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       autorisations.autorisationsEtCapacités.capacités
       ]
     );
-    // const moyennesCompareSMSQueryResult = await (await this.orm).query(averagesCompareSMSQuery,
-    //   [autorisations.activités.fileActivePersonnesAccompagnées,
-    //   autorisations.activités.tauxRéalisationActivité,
-    //   autorisations.activités.tauxOccupationHébergementPermanent,
-    //   autorisations.activités.tauxOccupationHébergementTemporaire,
-    //   autorisations.activités.tauxOccupationAccueilDeJour,
-    //   autorisations.budgetEtFinances.tauxDeCafNette,
-    //   autorisations.budgetEtFinances.tauxDeVétustéConstruction,
-    //   autorisations.budgetEtFinances.fondsDeRoulement,
-    //   autorisations.budgetEtFinances.résultatNetComptable,
-    //   autorisations.ressourcesHumaines.tauxDePrestationsExternes,
-    //   autorisations.ressourcesHumaines.nombreDEtpRéalisés,
-    //   autorisations.ressourcesHumaines.tauxDeRotationDuPersonnel,
-    //   autorisations.ressourcesHumaines.tauxDAbsentéisme,
-    //   autorisations.autorisationsEtCapacités.capacités
-    //   ]
-    // );
 
     return {
       nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatSMS(compareSMSQueryResult),
-      // moyennes: this.contruitMoyennesSMS(moyennesCompareSMSQueryResult[0]),
     };
   }
 
   private async compareSAN(): Promise<ResultatDeComparaison> {
     return { nombreDeResultats: 0, resultat: [] };
   }
-
-  // private contruitMoyennesSMS(moyenne: any): MoyenneSMS {
-  //   return {
-  //     capaciteMoyenne: moyenne.capacitemoyenne ? this.makeNumberArrondi(Number(moyenne.capacitemoyenne), 2) : null,
-  //     realisationAcitiviteMoyenne: moyenne.realisationacitivitemoyenne !== null ? this.transformInRate(moyenne.realisationacitivitemoyenne, 1) : null,
-  //     acceuilDeJourMoyenne: moyenne.acceuildejourmoyenne !== null ? this.transformInRate(moyenne.acceuildejourmoyenne, 1) : null,
-  //     hebergementPermanentMoyenne: moyenne.hebergementpermanentmoyenne !== null ? this.transformInRate(moyenne.hebergementpermanentmoyenne, 1) : null,
-  //     hebergementTemporaireMoyenne: moyenne.hebergementtemporairemoyenne !== null ? this.transformInRate(moyenne.hebergementtemporairemoyenne, 1) : null,
-  //     fileActivePersonnesAccompagnesMoyenne: moyenne.fileactivepersonnesaccompagnesmoyenne ? this.makeNumberArrondi(Number(moyenne.fileactivepersonnesaccompagnesmoyenne), 2) : null,
-  //     rotationPersonnelMoyenne: moyenne.rotationpersonnelmoyenne !== null ? this.transformInRate(moyenne.rotationpersonnelmoyenne, 1) : null,
-  //     absenteismeMoyenne: moyenne.absenteismemoyenne !== null ? this.transformInRate(moyenne.absenteismemoyenne, 1) : null,
-  //     prestationExterneMoyenne: moyenne.prestationexternemoyenne !== null ? this.transformInRate(moyenne.prestationexternemoyenne, 1) : null,
-  //     etpVacantMoyenne: moyenne.etpvacantmoyenne !== null ? this.transformInRate(moyenne.etpvacantmoyenne, 1) : null,
-  //     tauxCafMoyenne: moyenne.tauxcafmoyenne !== null ? this.transformInRate(moyenne.tauxcafmoyenne, 1) : null,
-  //     vetusteConstructionMoyenne: moyenne.vetusteconstructionmoyenne !== null ? this.transformInRate(moyenne.vetusteconstructionmoyenne, 1) : null,
-  //     roulementNetGlobalMoyenne: moyenne.roulementnetglobalmoyenne !== null ? this.makeNumberArrondi(moyenne.roulementnetglobalmoyenne, 0) : null,
-  //     resultatNetComptableMoyenne: moyenne.resultatnetcomptablemoyenne !== null ? this.makeNumberArrondi(moyenne.resultatnetcomptablemoyenne, 0) : null
-  //   };
-  // }
 
   private makeNumberArrondi(value: any, num: number): number | null {
     // Convert value to a number and check if it's a valid number

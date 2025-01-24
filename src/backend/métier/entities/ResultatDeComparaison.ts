@@ -36,29 +36,9 @@ export type ResultatES = Readonly<{
   type: string;
 }>;
 
-export type MoyenneEJ = Readonly<{}>;
-export type MoyenneSMS = Readonly<{
-  capaciteMoyenne: number | null;
-  realisationAcitiviteMoyenne: number | null;
-  acceuilDeJourMoyenne: number | null;
-  hebergementPermanentMoyenne: number | null;
-  hebergementTemporaireMoyenne: number | null;
-  fileActivePersonnesAccompagnesMoyenne: number | null;
-  rotationPersonnelMoyenne: number | null;
-  absenteismeMoyenne: number | null;
-  prestationExterneMoyenne: number | null;
-  etpVacantMoyenne: number | null;
-  tauxCafMoyenne: number | null;
-  vetusteConstructionMoyenne: number | null;
-  roulementNetGlobalMoyenne: number | null;
-  resultatNetComptableMoyenne: number | null;
-}>;
-export type MoyenneES = Readonly<{}>;
-
 export type ResultatDeComparaison = {
   nombreDeResultats: number;
   resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
-  // moyennes: MoyenneEJ | MoyenneSMS | MoyenneES;
 };
 
 export type DatesMisAjourSources = {

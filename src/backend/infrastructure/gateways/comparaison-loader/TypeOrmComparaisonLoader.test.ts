@@ -201,22 +201,6 @@ describe("La comparaison des établissements médico sociaux", () => {
 
     expect(comparaison.nombreDeResultats).toBe(3);
 
-    // expect(comparaison.moyennes).toStrictEqual({
-    //   capaciteMoyenne: 40,
-    //   realisationAcitiviteMoyenne: 8000,
-    //   acceuilDeJourMoyenne: 8000,
-    //   hebergementPermanentMoyenne: 8000,
-    //   hebergementTemporaireMoyenne: 8000,
-    //   fileActivePersonnesAccompagnesMoyenne: 80,
-    //   rotationPersonnelMoyenne: 66.7,
-    //   absenteismeMoyenne: 7.7,
-    //   prestationExterneMoyenne: 65.9,
-    //   etpVacantMoyenne: 65.2,
-    //   tauxCafMoyenne: 16.5,
-    //   vetusteConstructionMoyenne: 53.2,
-    //   roulementNetGlobalMoyenne: null,
-    //   resultatNetComptableMoyenne: 95999,
-    // });
     expect(comparaison.resultat).toStrictEqual([
       {
         numéroFiness: "100000000",
