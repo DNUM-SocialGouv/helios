@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLÉtablissementTerritorialMédicoSocialEndpoint } from "../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialMédicoSocialEndpoint";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { ÉtablissementTerritorialMédicoSocial } from "../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../backend/métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
@@ -11,9 +12,6 @@ import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../frontend/ui/établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
-import { useSearchHistory } from "../../frontend/ui/search-history/useSearchHistory";
-import { useEffect } from "react";
-import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialMédicoSocial;
@@ -23,7 +21,6 @@ type RouterProps = Readonly<{
 
 export default function Router({ rechercheResult, établissementTerritorial, autorisations }: RouterProps) {
   const { paths, wording } = useDependencies();
-    const { saveSearchHistory } = useSearchHistory();
   
   if (!établissementTerritorial) return null;
 
@@ -63,7 +60,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
       saveSearchHistoryEndpoint(dependencies,rechercheResult.résultats[0]?.raisonSocialeCourte,session?.user.idUser!,rechercheResult.résultats[0]?.numéroFiness,rechercheResult.résultats[0]?.type);
-            console.log('save historique Médico');
 
       return { props: { établissementTerritorial, rechercheResult: rechercheResult, autorisations: établissementTerritorial.autorisations } };
     } else {

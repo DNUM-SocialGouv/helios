@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLEntitéJuridiqueEndpoint } from "../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
@@ -14,9 +15,6 @@ import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/E
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
-import { useSearchHistory } from "../../frontend/ui/search-history/useSearchHistory";
-import { useEffect } from "react";
-import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
@@ -29,7 +27,6 @@ type RouterProps = Readonly<{
 
 export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés, autorisations }: RouterProps) {
   const { wording, paths } = useDependencies();
-  const { saveSearchHistory } = useSearchHistory();
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
