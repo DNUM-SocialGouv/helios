@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 export function useSearchHistory() {
     const { data } = useSession();
 
-    const [searchHistory, setSearchHistory] = useState<any[]>([]);
-
     const [idUser, setIdUser] = useState<string>();
 
     useEffect(() => {
@@ -45,12 +43,10 @@ export function useSearchHistory() {
                         type: elt.type,
                     };
                 });
-                setSearchHistory(formattedHistory);
             })
     }
 
     return {
-        searchHistory,
         saveSearchHistory,
         getAllSearchHistory,
     };
