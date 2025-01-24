@@ -9,26 +9,32 @@ import styles from "./StarButtonList.module.css";
 type StarButtonProps = Readonly<{
     favorite: TuileEtablissementViewModel | undefined;
     parent: string;
-    currentListId: number;
+    currentListId?: number;
     rafraichitAuRetraitFavoris?: boolean;
 }>;
 
 export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRetraitFavoris = false }: StarButtonProps) => {
     const userContext = useContext(UserContext);
     const router = useRouter();
-
     const { addToFavorisList, removeFromFavorisList } = useFavoris();
+
+    // En attendant la modal, on prend la liste de favoris si aucune liste n’est passée en param
+    const processedListId = currentListId || userContext?.favorisLists.find(list => list.isFavoris)?.id;
+    // Si on ne trouve pas la liste de favoris et qu’une liste n’est pas passée en param alors on ne peut rien faire
+    if (!processedListId) {
+        return (<></>);
+    }
 
     const handleFavoriteStatus = () => {
 
         if (isInFavoris()) {
-            removeFromFavorisList(favorite, currentListId).finally(() => {
+            removeFromFavorisList(favorite, processedListId).finally(() => {
                 if (rafraichitAuRetraitFavoris) {
                     router.replace(router.asPath);
                 }
             })
         } else {
-            addToFavorisList(favorite, currentListId);
+            addToFavorisList(favorite, processedListId);
         }
     }
 
@@ -38,7 +44,7 @@ export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRe
         // Quand il y aura la modale, currentListId sera optionnel et devra être géré
 
         // On récurére la liste
-        const currentList = favorite ? userContext?.favorisLists.find(list => list.id === currentListId) : undefined;
+        const currentList = favorite ? userContext?.favorisLists.find(list => list.id === processedListId) : undefined;
 
         // On regarde si l’element est dans la liste
         if (currentList) {
