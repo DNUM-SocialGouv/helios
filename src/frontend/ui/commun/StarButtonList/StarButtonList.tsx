@@ -25,7 +25,7 @@ export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRe
             removeFromFavorisList(favorite, currentListId).finally(() => {
                 if (rafraichitAuRetraitFavoris) {
                     router.replace(router.asPath);
-                }    
+                }
             })
         } else {
             addToFavorisList(favorite, currentListId);
@@ -37,12 +37,12 @@ export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRe
         // La liste courante est donc obligatoire et doit être la liste « Favoris »
         // Quand il y aura la modale, currentListId sera optionnel et devra être géré
 
-        // On regarde si l’etablissement est dans une liste de favoris
-        const listForElement = favorite ? userContext?.favorisLists.flatMap(list => list.userListEtablissements).filter(etablissement => etablissement.finessNumber === favorite.numéroFiness) : undefined;
+        // On récurére la liste
+        const currentList = favorite ? userContext?.favorisLists.find(list => list.id === currentListId) : undefined;
 
-        // Si ou on regarde si il est dans la « currentListId »
-        if (listForElement) {
-            return listForElement.some(etablissement => etablissement.listId === currentListId);
+        // On regarde si l’element est dans la liste
+        if (currentList) {
+            return currentList.userListEtablissements.some(etablissement => etablissement.finessNumber === favorite?.numéroFiness);
         }
 
         return false;
