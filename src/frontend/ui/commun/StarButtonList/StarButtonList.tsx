@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { UserContext } from "../contexts/userContext";
-import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./StarButtonList.module.css";
 
 type StarButtonProps = Readonly<{
-    favorite: TuileEtablissementViewModel | undefined;
+    favorite: RechercheViewModel | undefined;
     parent: string;
     currentListId?: number;
     rafraichitAuRetraitFavoris?: boolean;

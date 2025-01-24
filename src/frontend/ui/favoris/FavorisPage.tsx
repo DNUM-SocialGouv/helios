@@ -1,12 +1,12 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { TuileEtablissementViewModel } from "../commun/TuileEtablissement/TuileEtablissementViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
 
 type FavorisProps = Readonly<{
     listId: number;
-    favoris: TuileEtablissementViewModel[];
+    favoris: RechercheViewModel[];
 }>;
 
 export const FavorisPage = ({ listId, favoris }: FavorisProps) => {

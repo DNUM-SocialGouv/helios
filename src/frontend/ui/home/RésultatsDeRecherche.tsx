@@ -1,13 +1,13 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { GrilleEtablissements } from "../commun/GrilleEtablissements/GrilleEtablissements";
-import { TuileEtablissementViewModel } from "../commun/TuileEtablissement/TuileEtablissementViewModel";
+import { RechercheViewModel } from "./RechercheViewModel";
 
 type RésultatsDeRechercheProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
   chargeLesRésultatsSuivants: () => void;
   nombreRésultats: number;
-  résultats: TuileEtablissementViewModel[];
+  résultats: RechercheViewModel[];
   termeFixe: string;
 }>;
 

@@ -3,11 +3,11 @@ import { Dispatch, SetStateAction } from "react";
 
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { SelectedRows } from "../../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./Table.module.css";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 
@@ -22,7 +22,7 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: TuileEtablissementViewModel[] | ComparaisonViewModel[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   onButtonClick?: (rowIndex: number, colIndex: number) => void;
@@ -59,7 +59,7 @@ interface TableHeaderProps {
 interface TableBodyProps {
   headers: Header[];
   selectedRows: SelectedRows;
-  data: TuileEtablissementViewModel[] | ComparaisonViewModel[];
+  data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   handleSelectRow: (valeurs: any) => void;
@@ -199,7 +199,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                 </div>
               )}
-              {header.key === "favori" && <StarButtonList favorite={row as TuileEtablissementViewModel} parent="tab" />}
+              {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"
@@ -243,7 +243,7 @@ export const Table = ({
   handleInfoBullMoyenne,
   onClickSocialReason,
 }: DataTableProps) => {
-  const handleSelectRow = (row: TuileEtablissementViewModel | ComparaisonViewModel) => {
+  const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
       setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
     } else {

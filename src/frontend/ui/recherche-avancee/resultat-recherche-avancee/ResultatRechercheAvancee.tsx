@@ -4,8 +4,8 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Table } from "../../commun/Table/Table";
-import { TuileEtablissementViewModel } from "../../commun/TuileEtablissement/TuileEtablissementViewModel";
 import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import styles from "./ResultatRechercheAvancee.module.css";
@@ -22,11 +22,11 @@ const tableHeaders = [
 ];
 
 export type SelectedRows = Readonly<{
-  [page: number]: TuileEtablissementViewModel[] | ComparaisonViewModel[] | (TuileEtablissementViewModel | ComparaisonViewModel)[];
+  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
 }>;
 
 type ResultatRechercheAvanceeProps = Readonly<{
-  data: TuileEtablissementViewModel[];
+  data: RechercheViewModel[];
   nombreRésultats: number;
   setPage: ((page: number, shallow?: boolean) => void) | undefined;
   lastPage: number;

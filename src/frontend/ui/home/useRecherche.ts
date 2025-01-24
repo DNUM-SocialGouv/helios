@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { TuileEtablissementViewModel } from "../commun/TuileEtablissement/TuileEtablissementViewModel";
+import { RechercheViewModel } from "./RechercheViewModel";
 
 type RechercheState = Readonly<{
   estCeEnAttente: boolean;
@@ -11,7 +11,7 @@ type RechercheState = Readonly<{
   estCeQueLesRésultatsSontReçus: boolean;
   nombreRésultats: number;
   page: number;
-  résultats: TuileEtablissementViewModel[];
+  résultats: RechercheViewModel[];
   terme: string;
   termeFixe: string;
 }>;
@@ -106,8 +106,8 @@ export function useRecherche() {
     rechercher(state.terme, pageSuivante());
   };
 
-  const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): TuileEtablissementViewModel[] => {
-    return data.résultats.map((résultat: Résultat) => new TuileEtablissementViewModel(résultat, paths));
+  const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
+    return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths));
   };
 
   return {

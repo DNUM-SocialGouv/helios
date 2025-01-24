@@ -10,7 +10,7 @@ import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablisseme
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { TuileEtablissementViewModel } from "../../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
+import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 type RouterProps = Readonly<{
@@ -21,7 +21,6 @@ type RouterProps = Readonly<{
 export default function Router({ list, etablissements }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [resultSize, setResultSize] = useState(12);
-
   useBreadcrumb([
     {
       label: "lists",
@@ -36,7 +35,7 @@ export default function Router({ list, etablissements }: RouterProps) {
   if (!list) return null;
 
   const elements = etablissements.map((elmt) => {
-    return new TuileEtablissementViewModel(elmt, paths);
+    return new RechercheViewModel(elmt, paths);
   });
 
   const chargeLesRésultatsSuivants = () => {

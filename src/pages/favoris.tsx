@@ -8,8 +8,8 @@ import { Résultat } from "../backend/métier/entities/RésultatDeRecherche";
 import { BackToSearchContext, BackToSearchContextValue } from "../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
-import { TuileEtablissementViewModel } from "../frontend/ui/commun/TuileEtablissement/TuileEtablissementViewModel";
 import { FavorisPage } from "../frontend/ui/favoris/FavorisPage";
+import { RechercheViewModel } from "../frontend/ui/home/RechercheViewModel";
 
 type RouterProps = Readonly<{
     listId: number;
@@ -35,10 +35,10 @@ export default function Router({ listId, etablissements }: RouterProps) {
     }, [backToSearchContext])
 
     const elements = etablissements.map((elmt) => {
-        return new TuileEtablissementViewModel(elmt, paths);
+        return new RechercheViewModel(elmt, paths);
     });
 
-    return <FavorisPage favoris={elements} listId={listId}/>;
+    return <FavorisPage favoris={elements} listId={listId} />;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
