@@ -1,14 +1,14 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { TuileEtablissement } from "../TuileEtablissement/TuileEtablissement";
-import { TuileEtablissementViewModel } from "../TuileEtablissement/TuileEtablissementViewModel";
 import styles from "./GrilleEtablissement.module.css";
 
 type GrilleEtablissementsProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
   chargeLesRésultatsSuivants: () => void;
-  résultats: TuileEtablissementViewModel[];
-  currentListId: number;
+  résultats: RechercheViewModel[];
+  currentListId?: number;
   rafraichitAuRetraitFavoris?: boolean;
 }>;
 
@@ -24,9 +24,9 @@ export const GrilleEtablissements = ({
   return (
     <>
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
-        {résultats.map((tuileEtablissementViewModel, index) => (
-          <li className="fr-col-3" key={tuileEtablissementViewModel.numéroFiness + index}>
-            <TuileEtablissement currentListId={currentListId} rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} tuileEtablissementViewModel={tuileEtablissementViewModel} />
+        {résultats.map((rechercheViewModel, index) => (
+          <li className="fr-col-3" key={rechercheViewModel.numéroFiness + index}>
+            <TuileEtablissement currentListId={currentListId} rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} rechercheViewModel={rechercheViewModel} />
           </li>
         ))}
       </ul>

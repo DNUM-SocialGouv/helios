@@ -8,7 +8,7 @@ import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
-import styles from "./ResultatRechercheAvancee.module.css"
+import styles from "./ResultatRechercheAvancee.module.css";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [

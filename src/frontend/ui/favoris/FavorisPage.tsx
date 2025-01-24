@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
+import { UserListViewModel } from "../user-list/UserListViewModel";
 import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
 
@@ -12,7 +13,7 @@ export const FavorisPage = () => {
     return (
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
-            {userContext?.favorisLists?.map((etablissement: any, index: number) => (
+            {userContext?.favorisLists?.map((etablissement: UserListViewModel, index: number) => (
                 <div key={index}>
                     <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} isFavoris={etablissement.isFavoris} title={etablissement.nom} />
                 </div>
