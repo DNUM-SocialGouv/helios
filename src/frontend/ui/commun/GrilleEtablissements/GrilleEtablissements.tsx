@@ -8,7 +8,7 @@ type GrilleEtablissementsProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
   chargeLesRésultatsSuivants: () => void;
   résultats: TuileEtablissementViewModel[];
-  currentListId: number;
+  currentListId?: number;
   rafraichitAuRetraitFavoris?: boolean;
 }>;
 

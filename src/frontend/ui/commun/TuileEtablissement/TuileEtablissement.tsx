@@ -6,7 +6,7 @@ import { TuileEtablissementViewModel } from "./TuileEtablissementViewModel";
 
 type EstablishmentProps = Readonly<{
   tuileEtablissementViewModel: TuileEtablissementViewModel;
-  currentListId: number;
+  currentListId?: number;
   rafraichitAuRetraitFavoris?: boolean;
 }>;
 
