@@ -428,9 +428,9 @@ export interface Wording {
 
   // Favoris
   readonly FAVORIS_LIST: string;
-  readonly EJ_SECTION_TITLE: string;
-  readonly SANITAIRE_SECTION_TITLE: string;
-  readonly SOCIAL_SECTION_TITLE: string;
+  readonly FAVORIS_LIST_TITLE: string;
+
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
@@ -521,4 +521,8 @@ export interface Wording {
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
+
+  //Page d’une liste d’etablissements
+  readonly LISTE_DE_FAVORIS: string;
+  readonly LISTE_NON_TROUVÉE: string;
 }

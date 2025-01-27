@@ -257,7 +257,6 @@ describe("La recherche de liste", () => {
         const lists = await userListRepository.find();
         expect(lists).toHaveLength(0);
     });
-
     
     it("ne supprime pas la liste d’un autre user", async () => {
         // GIVEN

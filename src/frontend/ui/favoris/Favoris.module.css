@@ -4,28 +4,19 @@
     color: #000091;
 }
 
-.ejStyle {
-    background-color: #dddddd;
-    color: #777777;
-    font-weight: 700;
-    width: fit-content;
-    font-size: 1.3rem;
+.reste-liste {
+    background-color: var(--background-alt-blue-france);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.ejStyle span {
-    padding: 1rem;
-}
-
-.sanitaireStyle {
-    background-color: #ffe9e9;
-    color: #cb5555;
-    font-weight: 700;
-}
-
-.socialStyle {
-    background-color: #b8fec9;
-    color: #478558;
-    font-weight: 700;
+.reste-liste a {
+    text-decoration: none;
+    background-image: none;
+    font-size: x-large;
+    font-weight: bolder;
 }
 
 .tuiles {
