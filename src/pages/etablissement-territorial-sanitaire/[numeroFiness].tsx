@@ -13,6 +13,7 @@ import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { ETB_SANITAIRE } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialSanitaire;
@@ -62,7 +63,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
-      saveSearchHistoryEndpoint(dependencies,rechercheResult.résultats[0]?.raisonSocialeCourte,session?.user.idUser!,rechercheResult.résultats[0]?.numéroFiness,rechercheResult.résultats[0]?.type);
+      saveSearchHistoryEndpoint(dependencies,établissementTerritorial.identité.raisonSocialeCourte.value,session?.user.idUser!,
+        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value,ETB_SANITAIRE);
 
       return {
         props: {
