@@ -29,13 +29,14 @@ export function useSearchHistory() {
 
     const getAllSearchHistory = (idUser: string) => {
         const params = { idUser: idUser };
+        
         fetch("/api/history/get/?" + (new URLSearchParams(params)).toString(), {
             headers: { "Content-Type": "application/json" },
             method: "GET",
         })
             .then((response) => response.json())
             .then((data) => {
-                const formattedHistory = data.map((elt: any) => {
+                data.map((elt: any) => {
                     return {
                         title: getTitleType(elt.type) + ' - ' + elt.finessNumber + ' - ' + elt.title,
                         date: elt.date,
