@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
-import { Table } from "../commun/Table/Table";
-import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { SelectedRows, Table } from "../commun/Table/Table";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import PaginationBtn from "../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn";
 import { useSearchHistory } from "../search-history/useSearchHistory";
@@ -17,10 +16,6 @@ const tableHeaders = [
     { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
     { label: "Rattachement(s)", key: "rattachement", orderBy: "rattachement", sort: true },
 ];
-
-export type SelectedRows = Readonly<{
-    [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-}>;
 
 type TableauListeEtablissementsProps = Readonly<{
     data: RechercheViewModel[];
