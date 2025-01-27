@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 import { getAllUserSearchHistoryEndpoint } from "../backend/infrastructure/controllers/getAllUserSearchHistory";
 import { dependencies } from "../backend/infrastructure/dependencies";
