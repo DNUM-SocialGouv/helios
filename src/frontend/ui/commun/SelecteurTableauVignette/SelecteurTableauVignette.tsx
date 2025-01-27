@@ -5,10 +5,10 @@ type SelectProps = Readonly<{
     onChangeToTable: ChangeEventHandler<HTMLInputElement>;
     onChangeToGrid: ChangeEventHandler<HTMLInputElement>;
     defaultCheckedButton: BoutonActif;
-    disabled: boolean;
+    disabled?: boolean;
 }>;
 
-export const SelecteurTableauVignette = ({ onChangeToTable, onChangeToGrid, defaultCheckedButton, disabled }: SelectProps) => {
+export const SelecteurTableauVignette = ({ onChangeToTable, onChangeToGrid, defaultCheckedButton, disabled = false }: SelectProps) => {
     return (
         <fieldset className="fr-segmented fr-segmented--no-legend fr-segmented--sm" disabled={disabled}>
             <legend className="fr-segmented__legend">

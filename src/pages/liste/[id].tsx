@@ -11,6 +11,7 @@ import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 type RouterProps = Readonly<{
@@ -21,6 +22,8 @@ type RouterProps = Readonly<{
 export default function Router({ list, etablissements }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [resultSize, setResultSize] = useState(12);
+  const [displayTable, setDisplayTable] = useState(true);
+
   useBreadcrumb([
     {
       label: wording.FAVORIS_LIST,
@@ -45,8 +48,8 @@ export default function Router({ list, etablissements }: RouterProps) {
     return resultSize >= elements.length;
   }
 
-  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
-  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
+  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
+  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
 
   const titleHead = <>
     <h1>
@@ -57,7 +60,7 @@ export default function Router({ list, etablissements }: RouterProps) {
         <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
       </div>
       <div className="fr-col--right">
-        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Vignette} disabled={true} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
+        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
@@ -68,7 +71,10 @@ export default function Router({ list, etablissements }: RouterProps) {
         <main className="fr-container">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
-            <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+            {displayTable
+              ? <TableauListeEtablissements data={elements} />
+              : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+            }
           </section>
         </main>
       ) : (
