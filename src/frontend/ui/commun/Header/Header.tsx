@@ -2,12 +2,13 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
@@ -20,6 +21,7 @@ export const Header = () => {
   const router = useRouter();
   const { data, status } = useSession();
   const userContext = useContext(UserContext);
+  const { getFavorisLists } = useFavoris();
 
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
@@ -34,6 +36,10 @@ export const Header = () => {
     signOut({ callbackUrl: paths.CONNEXION });
     setDisplayMenu(false);
   };
+
+  useEffect(() => {
+    getFavorisLists();
+  }, []);
 
   return (
     <>
