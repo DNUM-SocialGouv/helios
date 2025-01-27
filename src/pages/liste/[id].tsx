@@ -83,7 +83,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
     const session = await getSession(context);
     const userUuid = session?.user?.idUser as string;
-    if (context.params && context.params["id"]) {
+    if (context.params?.["id"]) {
       const listId = Number(context.params["id"]);
 
       const list = await getById(userUuid, listId);
@@ -92,7 +92,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       }
 
       const finessNumber = list?.userListEtablissements.map((etablissement) => etablissement.finessNumber);
-      const etablissementList = await rechercheParNumeroFinessEndpoint(finessNumber);
+      const etablissementList = (await rechercheParNumeroFinessEndpoint(finessNumber)).sort((a, b) => a.numéroFiness.localeCompare(b.numéroFiness));
 
 
       return {
