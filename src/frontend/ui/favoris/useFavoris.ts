@@ -36,6 +36,32 @@ export function useFavoris() {
       });
   };
 
+  const updateListName = (listId: number, listName: string) => {
+     fetch(`/api/liste/${listId}`,
+      {
+        body: JSON.stringify({ listName }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      })
+      .then((response) => response.json())
+      .then((updatedList) => {
+        const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+        userContext?.setFavorisLists([...newList, updatedList])
+      });
+  };
+
+  const deleteList = (listId: number) => {
+    fetch(`/api/liste/${listId}`,
+     {
+       headers: { "Content-Type": "application/json" },
+       method: "DELETE",
+     })
+     .then(() => {
+       const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+       userContext?.setFavorisLists([...newList])
+     });
+ };
+
   const removeFromFavorisList = (favorite: any, listId: number) => {
     return fetch(`/api/liste/${listId}/etablissement`,
       {
@@ -69,5 +95,7 @@ export function useFavoris() {
     removeFromFavorisList,
     addToFavorisList,
     buildRechecheView,
+    updateListName,
+    deleteList
   };
 }

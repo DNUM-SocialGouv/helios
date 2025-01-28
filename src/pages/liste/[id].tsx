@@ -11,6 +11,7 @@ import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 type RouterProps = Readonly<{
@@ -21,6 +22,7 @@ type RouterProps = Readonly<{
 export default function Router({ list, etablissements }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [resultSize, setResultSize] = useState(12);
+  
   useBreadcrumb([
     {
       label: wording.FAVORIS_LIST,
@@ -49,9 +51,7 @@ export default function Router({ list, etablissements }: RouterProps) {
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
 
   const titleHead = <>
-    <h1>
-      {list.nom}
-    </h1>
+    <ListNameButton id={list.id} name={list.nom} />
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
