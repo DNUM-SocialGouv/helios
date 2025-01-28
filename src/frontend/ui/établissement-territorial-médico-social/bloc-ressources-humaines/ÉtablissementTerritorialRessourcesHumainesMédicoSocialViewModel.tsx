@@ -183,7 +183,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables.bind(this))
@@ -220,7 +220,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables.bind(this))
@@ -258,7 +258,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables.bind(this))
