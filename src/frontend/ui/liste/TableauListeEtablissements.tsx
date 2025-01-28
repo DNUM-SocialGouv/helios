@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
-import { SelectedRows, Table } from "../commun/Table/Table";
-import { RechercheViewModel } from "../home/RechercheViewModel";
-import PaginationBtn from "../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn";
-import { useSearchHistory } from "../search-history/useSearchHistory";
-import { useTableauListEtablissement } from "./useTableauListEtablissement";
+import { SelectedRows, Table } from '../commun/Table/Table';
+import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
+import { useSearchHistory } from '../search-history/useSearchHistory';
+import { TableauListEtalblissementViewModel } from './TableauListEtablissementViewModel';
+import { useTableauListEtablissement } from './useTableauListEtablissement';
 
 const PAGE_SIZE = 20;
 
@@ -19,28 +18,32 @@ const tableHeaders = [
 ];
 
 type TableauListeEtablissementsProps = Readonly<{
-    data: RechercheViewModel[];
+    rawData: TableauListEtalblissementViewModel[];
 }>;
 
-export const TableauListeEtablissements = ({ data }: TableauListeEtablissementsProps) => {
+export const TableauListeEtablissements = ({ rawData }: TableauListeEtablissementsProps) => {
+    const { getSortFunction, sortByDefault, defaultOrder, defaultOrderBy } = useTableauListEtablissement();
     const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
     const [page, setPage] = useState(1);
     const startDataIndex = PAGE_SIZE * (page - 1);
-    const [dataOnPage, setDataOnPage] = useState(data.slice(startDataIndex, startDataIndex + PAGE_SIZE))
-    const [order, setOrder] = useState("ASC");
-    const [orderBy, setOrderBy] = useState("numero_finess");
+    const [dataOnPage, setDataOnPage] = useState(() => {
+        rawData.sort(sortByDefault);
+        return rawData.slice(startDataIndex, startDataIndex + PAGE_SIZE)
+        .map(elmt => elmt.recherche)
+    })
+    const [order, setOrder] = useState(defaultOrder);
+    const [orderBy, setOrderBy] = useState(defaultOrderBy);
     let nextOrderBy = orderBy;
     const { saveSearchHistory } = useSearchHistory();
-    const lastPage = Math.ceil(data.length / PAGE_SIZE);
-    const { getSortFunction, sortByDefault, defaultOrder, defaultOrderBy } = useTableauListEtablissement();
+    const lastPage = Math.ceil(rawData.length / PAGE_SIZE);
 
-    const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
+    const isAllSelected = rawData.length > 0 && selectedRows[page] && selectedRows[page].length === rawData.length;
 
     const handleSelectAll = () => {
         if (isAllSelected) {
             setSelectedRows({ ...selectedRows, [page]: [] });
         } else {
-            setSelectedRows({ ...selectedRows, [page]: data });
+            setSelectedRows({ ...selectedRows, [page]: dataOnPage });
         }
     };
 
@@ -55,12 +58,12 @@ export const TableauListeEtablissements = ({ data }: TableauListeEtablissementsP
         // Si il n'y a pas d'ordre passé on passe au tri par defaut
         if (newOrder.trim()) {
             const sortFunction = getSortFunction(newOrder, nextOrderBy);
-            data.sort(sortFunction);
-            setDataOnPage(data.slice(startDataIndex, startDataIndex + PAGE_SIZE));
+            rawData.sort(sortFunction);
+            setDataOnPage(rawData.slice(startDataIndex, startDataIndex + PAGE_SIZE).map(elmt => elmt.recherche));
             setOrder(newOrder);
         } else {
-            data.sort(sortByDefault);
-            setDataOnPage(data.slice(startDataIndex, startDataIndex + PAGE_SIZE));
+            rawData.sort(sortByDefault);
+            setDataOnPage(rawData.slice(startDataIndex, startDataIndex + PAGE_SIZE).map(elmt => elmt.recherche));
             setOrderBy(defaultOrderBy);
             setOrder(defaultOrder);
         }
@@ -69,7 +72,7 @@ export const TableauListeEtablissements = ({ data }: TableauListeEtablissementsP
     const onPageChange = (newPage: number) => {
         setPage(newPage);
         const startDataIndex = PAGE_SIZE * (newPage - 1);
-        setDataOnPage(data.slice(startDataIndex, startDataIndex + PAGE_SIZE));
+        setDataOnPage(rawData.slice(startDataIndex, startDataIndex + PAGE_SIZE).map(elmt => elmt.recherche));
     }
 
     return (
@@ -90,7 +93,7 @@ export const TableauListeEtablissements = ({ data }: TableauListeEtablissementsP
                 setOrder={onOrderChange}
                 setOrderBy={onOrderByChange}
                 setSelectedRows={setSelectedRows} />
-            {data.length > PAGE_SIZE &&
+            {rawData.length > PAGE_SIZE &&
                 <div>
                     <PaginationBtn paginationData={{ lastPage, page, setPage: onPageChange }} />
                 </div>

@@ -1,4 +1,4 @@
-import { RechercheViewModel } from "../home/RechercheViewModel";
+import { TableauListEtalblissementViewModel } from "./TableauListEtablissementViewModel";
 
 export enum Order {
     ASC = "ASC",
@@ -11,26 +11,29 @@ export enum OrderBy {
     COMMUNE = "commune",
     DEPARTEMENT = "departement",
     NUMERO_FINESS = "numero_finess",
-    RATTACHEMENT = "rattachement"
+    RATTACHEMENT = "rattachement",
+    DATE_CREATION = "dateCreation"
 }
 
 const sortOptions: Intl.CollatorOptions = { numeric: true };
-const sortByTypeAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.type.localeCompare(etab2.type, undefined, sortOptions);
-const sortByTypeDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.type.localeCompare(etab1.type, undefined, sortOptions);
-const sortByRaisonSocialeAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.socialReason.localeCompare(etab2.socialReason, undefined, sortOptions);
-const sortByRaisonSocialeDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.socialReason.localeCompare(etab1.socialReason, undefined, sortOptions);
-const sortByCommuneAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.commune.localeCompare(etab2.commune, undefined, sortOptions);
-const sortByCommuneDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.commune.localeCompare(etab1.commune, undefined, sortOptions);
-const sortByDepartementAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.departement.localeCompare(etab2.departement, undefined, sortOptions);
-const sortByDepartementDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.departement.localeCompare(etab1.departement, undefined, sortOptions);
-const sortByFinessAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.numéroFiness.localeCompare(etab2.numéroFiness, undefined, sortOptions);
-const sortByFinessDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.numéroFiness.localeCompare(etab1.numéroFiness, undefined, sortOptions);
-const sortByRattachementAsc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab1.rattachement.localeCompare(etab2.rattachement, undefined, sortOptions);
-const sortByRattachementDesc = (etab1: RechercheViewModel, etab2: RechercheViewModel) => etab2.rattachement.localeCompare(etab1.rattachement, undefined, sortOptions);
+const sortByTypeAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.type.localeCompare(etab2.recherche.type, undefined, sortOptions);
+const sortByTypeDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.type.localeCompare(etab1.recherche.type, undefined, sortOptions);
+const sortByRaisonSocialeAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.socialReason.localeCompare(etab2.recherche.socialReason, undefined, sortOptions);
+const sortByRaisonSocialeDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.socialReason.localeCompare(etab1.recherche.socialReason, undefined, sortOptions);
+const sortByCommuneAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.commune.localeCompare(etab2.recherche.commune, undefined, sortOptions);
+const sortByCommuneDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.commune.localeCompare(etab1.recherche.commune, undefined, sortOptions);
+const sortByDepartementAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.departement.localeCompare(etab2.recherche.departement, undefined, sortOptions);
+const sortByDepartementDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.departement.localeCompare(etab1.recherche.departement, undefined, sortOptions);
+const sortByFinessAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.numéroFiness.localeCompare(etab2.recherche.numéroFiness, undefined, sortOptions);
+const sortByFinessDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.numéroFiness.localeCompare(etab1.recherche.numéroFiness, undefined, sortOptions);
+const sortByRattachementAsc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab1.recherche.rattachement.localeCompare(etab2.recherche.rattachement, undefined, sortOptions);
+const sortByRattachementDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) => etab2.recherche.rattachement.localeCompare(etab1.recherche.rattachement, undefined, sortOptions);
+const sortByDateCreationDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) =>  new Date(etab2.dateCreation).getTime() - new Date(etab1.dateCreation).getTime()
+
 
 const defaultOrder = Order.ASC.valueOf();
-const defaultOrderBy = OrderBy.NUMERO_FINESS.valueOf();
-const sortByDefault = sortByFinessAsc;
+const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
+const sortByDefault = sortByDateCreationDesc;
 
 export function useTableauListEtablissement() {
 

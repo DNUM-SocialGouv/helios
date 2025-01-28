@@ -12,6 +12,7 @@ import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import { TableauListEtalblissementViewModel } from "../../frontend/ui/liste/TableauListEtablissementViewModel";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 type RouterProps = Readonly<{
@@ -39,6 +40,20 @@ export default function Router({ list, etablissements }: RouterProps) {
 
   const elements = etablissements.map((elmt) => {
     return new RechercheViewModel(elmt, paths);
+  });
+
+  const finessDateMap: Map<string, Date> = new Map();
+  list.userListEtablissements.forEach(etablissement => {
+    finessDateMap.set(etablissement.finessNumber, etablissement.dateCreation);
+  });
+  
+  const elementsTableau = elements.flatMap(elmt => {
+    const dateCreation = finessDateMap.get(elmt.numéroFiness);
+    if(dateCreation){
+      return new TableauListEtalblissementViewModel(elmt, dateCreation);
+    } else {
+      return [];
+    }
   });
 
   const chargeLesRésultatsSuivants = () => {
@@ -72,7 +87,7 @@ export default function Router({ list, etablissements }: RouterProps) {
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             {displayTable
-              ? <TableauListeEtablissements data={elements} />
+              ? <TableauListeEtablissements rawData={elementsTableau} />
               : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
             }
           </section>
