@@ -65,7 +65,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       saveSearchHistoryEndpoint(dependencies,établissementTerritorial.identité.raisonSocialeCourte.value,session?.user.idUser!,
         établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value,ETB_SANITAIRE);
-
+        
       return {
         props: {
           établissementTerritorial: JSON.parse(JSON.stringify(établissementTerritorial)),
