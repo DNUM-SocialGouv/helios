@@ -46,10 +46,10 @@ export default function Router({ list, etablissements }: RouterProps) {
   list.userListEtablissements.forEach(etablissement => {
     finessDateMap.set(etablissement.finessNumber, etablissement.dateCreation);
   });
-  
+
   const elementsTableau = elements.flatMap(elmt => {
     const dateCreation = finessDateMap.get(elmt.numéroFiness);
-    if(dateCreation){
+    if (dateCreation) {
       return new TableauListEtalblissementViewModel(elmt, dateCreation);
     } else {
       return [];
@@ -65,6 +65,7 @@ export default function Router({ list, etablissements }: RouterProps) {
 
   const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
+  const isListEmpty = () => list?.userListEtablissements.length === 0;
 
   const titleHead = <>
     <h1>
@@ -75,7 +76,7 @@ export default function Router({ list, etablissements }: RouterProps) {
         <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
       </div>
       <div className="fr-col--right">
-        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
+        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
@@ -86,9 +87,13 @@ export default function Router({ list, etablissements }: RouterProps) {
         <main className="fr-container">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
-            {displayTable
-              ? <TableauListeEtablissements rawData={elementsTableau} />
-              : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+            {!isListEmpty() &&
+              <>
+                {displayTable
+                  ? <TableauListeEtablissements rawData={elementsTableau} />
+                  : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+                }
+              </>
             }
           </section>
         </main>
@@ -113,7 +118,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       }
 
       const finessNumber = list?.userListEtablissements.map((etablissement) => etablissement.finessNumber);
-      const etablissementList = (await rechercheParNumeroFinessEndpoint(finessNumber)).sort((a, b) => a.numéroFiness.localeCompare(b.numéroFiness));
+      let etablissementList: Résultat[] = [];
+      if (finessNumber.length !== 0) {
+        etablissementList = (await rechercheParNumeroFinessEndpoint(finessNumber)).sort((a, b) => a.numéroFiness.localeCompare(b.numéroFiness));
+      }
 
 
       return {
