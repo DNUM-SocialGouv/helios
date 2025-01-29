@@ -31,7 +31,7 @@ const sortByRattachementDesc = (etab1: TableauListEtalblissementViewModel, etab2
 const sortByDateCreationDesc = (etab1: TableauListEtalblissementViewModel, etab2: TableauListEtalblissementViewModel) =>  new Date(etab2.dateCreation).getTime() - new Date(etab1.dateCreation).getTime()
 
 
-const defaultOrder = Order.ASC.valueOf();
+const defaultOrder = Order.DESC.valueOf();
 const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
 const sortByDefault = sortByDateCreationDesc;
 

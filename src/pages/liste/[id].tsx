@@ -2,27 +2,22 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
 import { ChangeEventHandler, useState } from "react";
 
-import { rechercheParNumeroFinessEndpoint } from "../../backend/infrastructure/controllers/rechercheParNumeroFinessEndpoints";
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
-import { Résultat } from "../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
-import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablissements/GrilleEtablissements";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
-import { TableauListEtalblissementViewModel } from "../../frontend/ui/liste/TableauListEtablissementViewModel";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
+
 
 type RouterProps = Readonly<{
   list: UserListViewModel;
-  etablissements: Résultat[];
 }>;
 
-export default function Router({ list, etablissements }: RouterProps) {
+export default function Router({ list }: RouterProps) {
   const { paths, wording } = useDependencies();
-  const [resultSize, setResultSize] = useState(12);
   const [displayTable, setDisplayTable] = useState(true);
 
   useBreadcrumb([
@@ -36,36 +31,12 @@ export default function Router({ list, etablissements }: RouterProps) {
     },
   ]);
 
-  if (!list) return null;
-
-  const elements = etablissements.map((elmt) => {
-    return new RechercheViewModel(elmt, paths);
-  });
-
-  const finessDateMap: Map<string, Date> = new Map();
-  list.userListEtablissements.forEach(etablissement => {
-    finessDateMap.set(etablissement.finessNumber, etablissement.dateCreation);
-  });
-
-  const elementsTableau = elements.flatMap(elmt => {
-    const dateCreation = finessDateMap.get(elmt.numéroFiness);
-    if (dateCreation) {
-      return new TableauListEtalblissementViewModel(elmt, dateCreation);
-    } else {
-      return [];
-    }
-  });
-
-  const chargeLesRésultatsSuivants = () => {
-    setResultSize(Math.min(resultSize + 12, elements.length));
-  }
-  const tousLesRésultatsSontAffichés = () => {
-    return resultSize >= elements.length;
-  }
+  if (!list) return { notFound: true };
 
   const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
-  const isListEmpty = () => list?.userListEtablissements.length === 0;
+  const listLength = list.userListEtablissements.length;
+  const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
     <h1>
@@ -73,7 +44,7 @@ export default function Router({ list, etablissements }: RouterProps) {
     </h1>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
-        <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
+        <p className="fr-table__detail">{"(" + listLength + ") établissements"}</p>
       </div>
       <div className="fr-col--right">
         <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
@@ -83,15 +54,15 @@ export default function Router({ list, etablissements }: RouterProps) {
 
   return (
     <>
-      {list ? (
+      {true ? (
         <main className="fr-container">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             {!isListEmpty() &&
               <>
                 {displayTable
-                  ? <TableauListeEtablissements rawData={elementsTableau} />
-                  : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+                  ? <TableauListeEtablissements list={list} />
+                  : <GrilleListEtablissements list={list} />
                 }
               </>
             }
@@ -117,17 +88,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         return { notFound: true };
       }
 
-      const finessNumber = list?.userListEtablissements.map((etablissement) => etablissement.finessNumber);
-      let etablissementList: Résultat[] = [];
-      if (finessNumber.length !== 0) {
-        etablissementList = (await rechercheParNumeroFinessEndpoint(finessNumber)).sort((a, b) => a.numéroFiness.localeCompare(b.numéroFiness));
-      }
-
-
       return {
         props: {
           list: JSON.parse(JSON.stringify(list)),
-          etablissements: etablissementList,
         },
       };
     } else {
