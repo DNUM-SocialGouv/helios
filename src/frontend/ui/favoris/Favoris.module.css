@@ -19,6 +19,11 @@
     font-weight: bolder;
 }
 
+.titre-liste {
+    font-size: large;
+    font-weight: bolder;
+}
+
 .tuiles {
     list-style: none;
 }
