@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn, PrimaryColumn, CreateDateColumn } from "typeorm";
+import { CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 import { UserListModel } from "./UserListModel";
 
@@ -9,9 +9,6 @@ export class UserListEtablissementModel {
 
     @PrimaryColumn({ name: "numero_finess" })
     public finessNumber!: string;
-
-    @Column({ name: 'type_etablissement' })
-    public typeEtablissement!: string;
 
     @CreateDateColumn({ name: "date_creation" })
     public dateCreation!: Date;

@@ -92,17 +92,15 @@ describe("La recherche des etablissements dans une liste", () => {
         const userListEtablissementLoader = new TypeOrmUserListEtablissementLoader(orm);
 
         const finess = "finess";
-        const typeEtablissement = "type";
 
         // WHEN
-        await userListEtablissementLoader.create(userUuid, listId, finess, typeEtablissement);
+        await userListEtablissementLoader.create(userUuid, listId, finess);
 
         // THEN
         const list = await userListRepository.findOneByOrFail({ id: listId });
         expect(list).not.toBeNull();
         expect(list?.userListEtablissements).toHaveLength(1);
         expect(list?.userListEtablissements[0].finessNumber).toEqual(finess);
-        expect(list?.userListEtablissements[0].typeEtablissement).toEqual(typeEtablissement);
     });
 
     it("n’ajoute pas un etablissement à une liste d’un autre utilisateur", async () => {
@@ -110,10 +108,9 @@ describe("La recherche des etablissements dans une liste", () => {
         const userListEtablissementLoader = new TypeOrmUserListEtablissementLoader(orm);
 
         const finess = "finess";
-        const typeEtablissement = "type";
 
         // WHEN
-        await userListEtablissementLoader.create(otherUserUuid, listId, finess, typeEtablissement);
+        await userListEtablissementLoader.create(otherUserUuid, listId, finess);
 
         // THEN
         const list = await userListRepository.findOneByOrFail({ id: listId });
@@ -130,8 +127,7 @@ describe("La recherche des etablissements dans une liste", () => {
         const userListEtablissement = new UserListEtablissementModel();
         userListEtablissement.listId = listId;
         userListEtablissement.finessNumber = finess;
-        userListEtablissement.typeEtablissement = "type";
-        
+
         await userListEtablissementRepository.save(userListEtablissement);
         let list = await userListRepository.findOneByOrFail({ id: listId });
         expect(list).not.toBeNull();
@@ -155,8 +151,7 @@ describe("La recherche des etablissements dans une liste", () => {
         const userListEtablissement = new UserListEtablissementModel();
         userListEtablissement.listId = listId;
         userListEtablissement.finessNumber = finess;
-        userListEtablissement.typeEtablissement = "type";
-        
+
         await userListEtablissementRepository.save(userListEtablissement);
         let list = await userListRepository.findOneByOrFail({ id: listId });
         expect(list).not.toBeNull();
