@@ -1,0 +1,24 @@
+name;description;type;comment;warning
+finess_et;identifiant Finess de l’établissement;character;;attention aux problèmes d’identification ou d’appariement
+year;année;dict(numeric);;
+month;mois;dict(numeric);;
+nature_contrat;nature du contrat;dict(character);regroupé à partir des modalités présentes en DSN : voir la nomenclature;
+profession1;filière (profession);dict(character);voir la liste utilisée et la construction sur la page de référence;
+profession2;groupe (profession);dict(character);voir la liste utilisée et la construction sur la page de référence;
+effectif;effectifs;numeric;décompte des postes selon {groups.dimension};
+turnover;taux de rotation;numeric;calculé selon la formule (E+S)/N;
+entrees_taux;taux d’entrée;numeric;ratio E/N;
+sorties_taux;taux de sortie;numeric;ratio S/N;
+entrees;nombre d’entrées;numeric;explications de ce qui est comptabilisé;
+sorties;nombre de sorties;numeric;explications de ce qui est comptabilisé;attention aux cas limites à expliquer
+turnover_ref_region;[référence régional] taux de rotation;numeric;;
+turnover_ref_nation;[référence national] taux de rotation;numeric;;
+turnover_ref_homogene;[référence groupe homogène] taux de rotation;numeric;;
+XXX_ref_homogene;[référence groupe homogène] indicateur XXX;numeric;;
+ind_qual_finess_et;indicatrice de qualité sur l’identifiant Finess;dict(character);description des problèmes d’identification ou d’appariement;
+ind_qual_effectif;indicatrice de qualité sur effectif;dict(character);;
+ind_redr_effectif;indicatrice de redressement sur effectif;dict(character);;
+ind_masq_effectif;indicatrice de masque secret sur effectif;dict(character);;
+ind_qual_XXX;indicatrice de qualité sur XXX;dict(character);;
+ind_redr_XXX;indicatrice de redressement sur XXX;dict(character);;
+ind_masq_XXX;indicatrice de masque secret sur XXX;dict(character);;
