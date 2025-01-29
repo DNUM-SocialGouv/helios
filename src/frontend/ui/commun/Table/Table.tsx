@@ -41,7 +41,6 @@ interface DataTableProps {
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TableHeaderProps {
@@ -69,7 +68,6 @@ interface TableBodyProps {
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TriProps {
@@ -163,7 +161,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, onClickSocialReason }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -206,7 +204,6 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                 <a
                   className="fr-tile__link"
                   href={construisLeLien(row["type"], row["numéroFiness"])}
-                  onClick={() => onClickSocialReason(row["socialReason"], row["numéroFiness"], row["type"])}
                   rel="noreferrer"
                   style={{ backgroundImage: "none" }}
                   target="_blank"
@@ -243,7 +240,6 @@ export const Table = ({
   page,
   onClickDelete,
   handleInfoBullMoyenne,
-  onClickSocialReason,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
@@ -280,7 +276,6 @@ export const Table = ({
                 isCenter={isCenter}
                 isShowAvrage={isShowAvrage}
                 onClickDelete={onClickDelete}
-                onClickSocialReason={onClickSocialReason}
                 page={page}
                 selectedRows={selectedRows}
                 total={total}

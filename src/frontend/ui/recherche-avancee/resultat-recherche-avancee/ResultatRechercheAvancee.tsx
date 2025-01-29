@@ -6,7 +6,6 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Table } from "../../commun/Table/Table";
 import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import styles from "./ResultatRechercheAvancee.module.css"
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
@@ -37,7 +36,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const { wording } = useDependencies();
-  const { saveSearchHistory } = useSearchHistory();
 
   const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
 
@@ -70,7 +68,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isCenter={false}
         isShowAvrage={false}
         onClickDelete={() => { }}
-        onClickSocialReason={saveSearchHistory}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
         page={page}
