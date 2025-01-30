@@ -9,6 +9,7 @@ from datacrawler.transform.equivalences_sirec_helios import (
     index_reclamations,
 )
 
+
 def transform_les_donnees_reclamations_etablissements(
     donnees_reclamations: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
@@ -22,4 +23,3 @@ def transform_les_donnees_reclamations_etablissements(
         .sort_values(by=["annee"], ascending=False)
         .set_index(index_reclamations)
     )
-    

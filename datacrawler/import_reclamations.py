@@ -25,9 +25,7 @@ def import_reclamations(chemin_local_du_fichier_reclamations: str, base_de_donn�
 
     donnees_reclamations = lis_le_fichier_sirec_csv(chemin_local_du_fichier_reclamations, colonnes_a_lire_bloc_qualite_reclamations, types_des_colonnes)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
-    transform_donnees_reclamations = transform_les_donnees_reclamations_etablissements(
-        donnees_reclamations, numéros_finess_des_établissements_connus, logger
-    )
+    transform_donnees_reclamations = transform_les_donnees_reclamations_etablissements(donnees_reclamations, numéros_finess_des_établissements_connus, logger)
 
     date_du_fichier_sirec = extrais_la_date_du_nom_de_fichier_qualite(chemin_local_du_fichier_reclamations)
 
@@ -50,8 +48,6 @@ if __name__ == "__main__":
     sirec_data_path = variables_d_environnement["CHECKED_SIREC_DATA_PATH"]
     fichiers = os.listdir(sirec_data_path)
 
-    chemin_local_du_fichier_reclamations = os.path.join(
-        sirec_data_path, trouve_le_nom_du_fichier_qualite(fichiers, "sirec", logger_helios)
-    )
+    chemin_local_du_fichier_reclamations = os.path.join(sirec_data_path, trouve_le_nom_du_fichier_qualite(fichiers, "sirec", logger_helios))
 
-    import_reclamations (chemin_local_du_fichier_reclamations, base_de_données_helios, logger_helios)
+    import_reclamations(chemin_local_du_fichier_reclamations, base_de_données_helios, logger_helios)

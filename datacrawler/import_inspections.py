@@ -24,7 +24,7 @@ def import_inspections_controles(chemin_local_du_fichier_siicea: str, base_de_do
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_siicea_helios)
     donnees_inspections_controles = lis_le_fichier_csv(chemin_local_du_fichier_siicea, colonnes_a_lire_bloc_qualite_inspections, types_des_colonnes)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
-    transform_donnees_inspections_controles= transform_les_donnees_inspections_etablissements(
+    transform_donnees_inspections_controles = transform_les_donnees_inspections_etablissements(
         donnees_inspections_controles, numéros_finess_des_établissements_connus, logger
     )
 
@@ -49,8 +49,6 @@ if __name__ == "__main__":
     siicea_data_path = variables_d_environnement["CHECKED_SIICEA_DATA_PATH"]
     fichiers = os.listdir(siicea_data_path)
 
-    chemin_local_du_fichier_siicea = os.path.join(
-        siicea_data_path, trouve_le_nom_du_fichier_qualite(fichiers, "siicea", logger_helios)
-    )
+    chemin_local_du_fichier_siicea = os.path.join(siicea_data_path, trouve_le_nom_du_fichier_qualite(fichiers, "siicea", logger_helios))
 
     import_inspections_controles(chemin_local_du_fichier_siicea, base_de_données_helios, logger_helios)

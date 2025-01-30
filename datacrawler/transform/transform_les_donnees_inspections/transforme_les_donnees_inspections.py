@@ -14,10 +14,7 @@ def transform_les_donnees_inspections_etablissements(
 ) -> pd.DataFrame:
     est_dans_siicea = donnees_inspections_controles["Code FINESS"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
     logger.info(f"[SIICEA] {est_dans_siicea.sum()} inspections et controles sont liées à un ET trouvé en base dans le fichier siicea")
-    donnees_inspections_transforme = (
-        donnees_inspections_controles[est_dans_siicea]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_siicea_helios))
+    donnees_inspections_transforme = donnees_inspections_controles[est_dans_siicea].rename(
+        columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_siicea_helios)
     )
     return donnees_inspections_transforme.set_index(index_inspections_controles)
-
-    

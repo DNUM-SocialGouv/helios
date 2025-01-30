@@ -57,7 +57,7 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
                 "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
                 "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
-                "nombre_sejours_had": [1674.0, 1103.0 , 1087.0 , NaN, NaN],
+                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
             }
         )
 
@@ -124,7 +124,7 @@ class TestAjouteLesActivitésDesÉtablissementsSanitaires:
                 "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
                 "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
-                "nombre_sejours_had": [1674.0, 1103.0 , 1087.0 , NaN, NaN],
+                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
             }
         )
 

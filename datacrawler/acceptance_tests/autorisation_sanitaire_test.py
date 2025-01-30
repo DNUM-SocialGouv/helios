@@ -64,7 +64,7 @@ fichier_de_données_diamant_ann_sae = os.path.join("data_set", "diamant", "ANN_S
 class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
-        for (archive_de_données, fichier_de_données) in [
+        for archive_de_données, fichier_de_données in [
             (
                 archive_de_données_finess_cs1400103_de_test,
                 fichier_de_données_finess_cs1400103_de_test,
