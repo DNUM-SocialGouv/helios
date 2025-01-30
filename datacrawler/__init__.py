@@ -35,7 +35,7 @@ def filtre_les_données_sur_les_n_dernières_années(données_brutes: pd.DataFra
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n_moins_1)]
 
 
-def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(données_brutes: pd.DataFrame, nombre_d_années: int, logger: Logger) -> pd.DataFrame:
+def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(données_brutes: pd.DataFrame, nombre_d_années: int) -> pd.DataFrame:
     année_n = datetime.now().year
     année_de_départ = datetime.now().year - nombre_d_années + 1
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]

@@ -1,7 +1,5 @@
 import os
 
-from logging import Logger
-
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_qualite
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -17,7 +15,7 @@ def filter_statut(statut):
     return statut == "Clôturé"
 
 
-def filter_inspection(donnees_inspections, logger):
+def filter_inspection(donnees_inspections):
     date_regex = r"^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
     return donnees_inspections[
         (donnees_inspections["Statut de la mission"].apply(filter_statut))
@@ -27,10 +25,10 @@ def filter_inspection(donnees_inspections, logger):
     ]
 
 
-def check_downloaded_siicea_file(chemin_local_du_fichier_siicea: str, fichier_siicea_traite: str, logger: Logger) -> None:
+def check_downloaded_siicea_file(chemin_local_du_fichier_siicea: str, fichier_siicea_traite: str) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_siicea_helios)
     donnees_inspections = lis_le_fichier_csv(chemin_local_du_fichier_siicea, colonnes_a_lire_bloc_qualite_inspections, types_des_colonnes)
-    donnees_inspections_filtrees = filter_inspection(donnees_inspections, logger).drop_duplicates()
+    donnees_inspections_filtrees = filter_inspection(donnees_inspections).drop_duplicates()
     donnees_inspections_filtrees.to_csv(fichier_siicea_traite, index=False, sep=";")
 
 
@@ -50,4 +48,4 @@ if __name__ == "__main__":
 
     fichier_sivss_traite = os.path.join(checked_siicea_data_path, trouve_le_nom_du_fichier_qualite(fichiers, "siicea", logger_helios))
 
-    check_downloaded_siicea_file(chemin_local_du_fichier_sivss, fichier_sivss_traite, logger_helios)
+    check_downloaded_siicea_file(chemin_local_du_fichier_sivss, fichier_sivss_traite)
