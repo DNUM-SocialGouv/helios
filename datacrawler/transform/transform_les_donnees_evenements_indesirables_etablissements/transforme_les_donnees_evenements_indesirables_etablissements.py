@@ -18,8 +18,7 @@ def build_finess(row):
         row["DECLARANT_ORGANISME_NUMERO_FINESS"] = row["DECLARANT_ORGANISME_NUMERO_FINESS"][:9]
     if pd.notna(row["SCC_ORGANISME_FINESS"]):
         return row["SCC_ORGANISME_FINESS"]
-    else:
-        return row["DECLARANT_ORGANISME_NUMERO_FINESS"]
+    return row["DECLARANT_ORGANISME_NUMERO_FINESS"]
 
 
 def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFrame) -> pd.DataFrame:
