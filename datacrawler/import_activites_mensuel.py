@@ -1,9 +1,8 @@
 import os
-
 from datetime import datetime
-import pandas as pd
 from logging import Logger
 
+import pandas as pd
 from sqlalchemy.engine import Engine, create_engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances

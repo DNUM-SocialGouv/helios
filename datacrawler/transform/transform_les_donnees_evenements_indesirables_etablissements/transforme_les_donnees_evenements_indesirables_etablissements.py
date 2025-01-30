@@ -1,7 +1,6 @@
-import pandas as pd
-import numpy as np
-from datetime import datetime
 from logging import Logger
+
+import pandas as pd
 
 from datacrawler.transform.equivalences_sivss_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,

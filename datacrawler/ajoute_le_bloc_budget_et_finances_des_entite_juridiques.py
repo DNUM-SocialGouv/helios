@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 from logging import Logger
 
 from sqlalchemy.engine import Engine, create_engine

@@ -1,11 +1,10 @@
-import pandas as pd
-import numpy as np
 from logging import Logger
 
-from datacrawler import filtre_les_données_sur_les_n_dernières_années
+import pandas as pd
+
 from datacrawler.transform.equivalences_sirec_helios import (
-    extrais_l_equivalence_des_noms_des_colonnes,
     equivalences_sirec_reclamations_helios,
+    extrais_l_equivalence_des_noms_des_colonnes,
     index_reclamations,
 )
 

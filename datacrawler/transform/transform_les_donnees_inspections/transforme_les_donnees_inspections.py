@@ -1,12 +1,8 @@
-import pandas as pd
 from logging import Logger
-from datetime import datetime
 
-from datacrawler.transform.equivalence_siicea_helios import (
-    extrais_l_equivalence_des_noms_des_colonnes,
-    equivalences_siicea_helios,
-    index_inspections_controles,
-)
+import pandas as pd
+
+from datacrawler.transform.equivalence_siicea_helios import equivalences_siicea_helios, extrais_l_equivalence_des_noms_des_colonnes, index_inspections_controles
 
 
 def transform_les_donnees_inspections_etablissements(
