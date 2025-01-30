@@ -7,9 +7,11 @@ import { RechercheViewModel } from '../home/RechercheViewModel';
 import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
 import { useSearchHistory } from '../search-history/useSearchHistory';
 import { UserListViewModel } from '../user-list/UserListViewModel';
-import { useTableauListEtablissement } from './useTableauListEtablissement';
+import { Order, OrderBy } from './usePageListe';
 
 const PAGE_SIZE = 20;
+const defaultOrder = Order.DESC.valueOf();
+const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
 
 const tableHeaders = [
     { label: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -26,7 +28,6 @@ type TableauListeEtablissementsProps = Readonly<{
 
 export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsProps) => {
     const { paths } = useDependencies();
-    const { defaultOrder, defaultOrderBy } = useTableauListEtablissement();
     const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState(defaultOrder);

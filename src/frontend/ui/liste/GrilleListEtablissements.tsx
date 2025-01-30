@@ -5,8 +5,8 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import { GrilleEtablissements } from "../commun/GrilleEtablissements/GrilleEtablissements";
 import { RechercheViewModel } from "../home/RechercheViewModel";
-import { Order, OrderBy } from "../liste/useTableauListEtablissement";
 import { UserListViewModel } from "../user-list/UserListViewModel";
+import { Order, OrderBy } from "./usePageListe";
 
 const PAGE_SIZE = 12;
 const ORDER = Order.ASC;
