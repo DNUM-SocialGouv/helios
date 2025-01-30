@@ -7,11 +7,10 @@ import { UserListEtablissementLoader } from "../../../métier/gateways/UserListE
 export class TypeOrmUserListEtablissementLoader implements UserListEtablissementLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
 
-    async create(userId: string, listId: number, finessNumber: string, typeEtablissement: string): Promise<void> {
+    async create(userId: string, listId: number, finessNumber: string): Promise<void> {
         const userListEtablissementModel = new UserListEtablissementModel();
         userListEtablissementModel.listId = listId;
         userListEtablissementModel.finessNumber = finessNumber;
-        userListEtablissementModel.typeEtablissement = typeEtablissement;
 
         const countList = await (await this.orm).getRepository(UserListModel).countBy({ id: listId, userId: userId });
 
