@@ -11,8 +11,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def filter_type_beneficiaire(type):
-    return type == "ES"
+def filter_type_beneficiaire(type_beneficiaire):
+    return type_beneficiaire == "ES"
 
 
 def transforme_les_donnees_allocation_ressource_ej(
