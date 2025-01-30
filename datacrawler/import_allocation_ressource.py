@@ -37,28 +37,27 @@ def filter_allocation_ressource(donnees_allocation_ressource: pd.DataFrame) -> p
     ]
 
 
-def check_downloaded_men_hapi_file(chemin_local_du_fichier_men_hapi: str) -> pd.DataFrame:
+def check_downloaded_men_hapi_file(chemin_local_du_fichier_men_hapi_param: str) -> pd.DataFrame:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios)
-    donnees_allocation_ressource = lis_le_fichier_csv(chemin_local_du_fichier_men_hapi, colonnes_a_lire_allocation_ressource, types_des_colonnes)
-    donnees_allocation_ressource_filtrees = filter_allocation_ressource(donnees_allocation_ressource)
-    return donnees_allocation_ressource_filtrees
+    donnees_allocation_ressource = lis_le_fichier_csv(chemin_local_du_fichier_men_hapi_param, colonnes_a_lire_allocation_ressource, types_des_colonnes)
+    return filter_allocation_ressource(donnees_allocation_ressource)
 
 
 def import_allocation_ressource(
-    donnees_allocation_ressource_filtrees: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_hapi: str, logger: Logger
+    donnees_allocation_ressource_filtrees_param: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_hapi_param: str, logger: Logger
 ) -> None:
     numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     transform_donnees_allocation_ressource = transforme_les_donnees_allocation_ressource_ej(
-        donnees_allocation_ressource_filtrees, numéros_finess_des_entites_juridiques_connues, logger
+        donnees_allocation_ressource_filtrees_param, numéros_finess_des_entites_juridiques_connues, logger
     )
 
     transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
-        donnees_allocation_ressource_filtrees, numéros_finess_des_établissements_connus, logger
+        donnees_allocation_ressource_filtrees_param, numéros_finess_des_établissements_connus, logger
     )
 
-    date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_hapi)
+    date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_hapi_param)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(

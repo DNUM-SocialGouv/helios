@@ -24,13 +24,13 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def import_allocation_ressource(fichiers: str, men_hapi_data_path: str, base_de_données: Engine, logger: Logger) -> None:
-    numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données_helios)
+def import_allocation_ressource(fichiers_param: str, men_hapi_data_path_param: str, base_de_données: Engine, logger: Logger) -> None:
+    numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios)
     dataframes = []
-    for fichier in fichiers:
-        chemin_local_du_fichier_men_hapi = os.path.join(men_hapi_data_path, fichier)
+    for fichier in fichiers_param:
+        chemin_local_du_fichier_men_hapi = os.path.join(men_hapi_data_path_param, fichier)
         donnees_allocation_ressource_par_annee = lis_le_fichier_hapi_csv(
             chemin_local_du_fichier_men_hapi, colonnes_a_lire_allocation_ressource, types_des_colonnes
         )
@@ -42,7 +42,7 @@ def import_allocation_ressource(fichiers: str, men_hapi_data_path: str, base_de_
     transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
         donnees_allocation_ressource, numéros_finess_des_établissements_connus, logger
     )
-    chemin_local_du_dernier_fichier_men_hapi = os.path.join(men_hapi_data_path, sorted(fichiers, reverse=True)[0])
+    chemin_local_du_dernier_fichier_men_hapi = os.path.join(men_hapi_data_path_param, sorted(fichiers_param, reverse=True)[0])
     date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_hapi(chemin_local_du_dernier_fichier_men_hapi)
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(

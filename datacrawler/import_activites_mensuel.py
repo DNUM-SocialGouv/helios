@@ -42,15 +42,15 @@ def filter_activites_mensuels(donnees_activites_mencumu: pd.DataFrame) -> pd.Dat
     ]
 
 
-def check_downloaded_men_pmsi_mencumu_file(chemin_local_du_fichier_men_pmsi_mencumu: str) -> pd.DataFrame:
+def check_downloaded_men_pmsi_mencumu_file(chemin_local_du_fichier_men_pmsi_mencumu_param: str) -> pd.DataFrame:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_mensumu_helios)
-    donnees_activites_mencumu = lis_le_fichier_csv(chemin_local_du_fichier_men_pmsi_mencumu, colonnes_a_lire_activites_mensuel, types_des_colonnes)
+    donnees_activites_mencumu = lis_le_fichier_csv(chemin_local_du_fichier_men_pmsi_mencumu_param, colonnes_a_lire_activites_mensuel, types_des_colonnes)
     activites_mensuel = filter_activites_mensuels(donnees_activites_mencumu)
     return activites_mensuel
 
 
 def import_activites_mensuels(
-    donnees_activites_mensuel_filtrees: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_pmsi_mencumu: str, logger: Logger
+    donnees_activites_mensuel_filtrees: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_pmsi_mencumu_param: str, logger: Logger
 ) -> None:
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
@@ -58,7 +58,7 @@ def import_activites_mensuels(
         donnees_activites_mensuel_filtrees, numéros_finess_des_établissements_connus, logger
     )
 
-    date_du_fichier_men_pmsi_mencumu = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_pmsi_mencumu)
+    date_du_fichier_men_pmsi_mencumu = extrais_la_date_du_nom_de_fichier_diamant(chemin_local_du_fichier_men_pmsi_mencumu_param)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(

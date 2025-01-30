@@ -45,13 +45,13 @@ def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame
     ]
 
 
-def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite: str) -> None:
+def check_downloaded_sivss_file(chemin_local_du_fichier_evenements_indesirables: str, fichier_sivss_traite_param: str) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_sivss_evenements_indesirables_helios)
     donnees_evenements_indesirables = lis_le_fichier_csv(
         chemin_local_du_fichier_evenements_indesirables, colonnes_a_lire_bloc_qualite_evenements_indesirables, types_des_colonnes
     )
     donnees_evenements_indesirables_filtrees = filter_evenements_indesirables(donnees_evenements_indesirables)
-    donnees_evenements_indesirables_filtrees.to_csv(fichier_sivss_traite, index=False, sep=";")
+    donnees_evenements_indesirables_filtrees.to_csv(fichier_sivss_traite_param, index=False, sep=";")
 
 
 if __name__ == "__main__":
