@@ -29,7 +29,10 @@ export const FavorisBlock = ({
     const [estCeEnAttente, setestCeEnAttente] = useState(true);
 
     useEffect(() => {
-        if (list.length === 0) setLlistEtablissements([]);
+        if (list.length === 0) {
+            setLlistEtablissements([]);
+            setestCeEnAttente(false);
+        }
         else
             fetch("/api/recherche-par-finess", {
                 body: JSON.stringify({
