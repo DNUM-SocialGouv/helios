@@ -47,7 +47,7 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
     date_du_fichier_quo_san_finance = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_quo_san_finance)
 
     ## filtrer les données
-    donnees_filtrees_only_EJ = extrais_les_donnees_entites_juridiques(transform_donnees_quo_san_finance)
+    donnees_filtrees_only_ej = extrais_les_donnees_entites_juridiques(transform_donnees_quo_san_finance)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
@@ -55,13 +55,13 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
             "DIAMANT",
             connection,
             TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
-            donnees_filtrees_only_EJ,
+            donnees_filtrees_only_ej,
             [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
             logger,
         )
 
     ## filtrer les données
-    donnees_filtrees_only_ET = extrais_les_donnees_etablissements_territoriaux_sanitaires(transform_donnees_quo_san_finance_et)
+    donnees_filtrees_only_et = extrais_les_donnees_etablissements_territoriaux_sanitaires(transform_donnees_quo_san_finance_et)
 
     with base_de_données.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
@@ -69,7 +69,7 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
             "DIAMANT",
             connection,
             TABLES_DES_BUDGETS_ET_FINANCES_ETABLISSEMENT_TERRITORIAL,
-            donnees_filtrees_only_ET,
+            donnees_filtrees_only_et,
             [(FichierSource.DIAMANT_QUO_SAN_FINANCE, date_du_fichier_quo_san_finance)],
             logger,
         )
