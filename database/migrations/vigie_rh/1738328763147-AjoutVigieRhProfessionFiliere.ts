@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjoutVigieRhProfessionFiliere implements MigrationInterface {
+export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     // Création de la table
     await queryRunner.query(`
@@ -17,15 +17,13 @@ export class AjoutVigieRhProfessionFiliere implements MigrationInterface {
         turnover_ref_region FLOAT,
         turnover_ref_nation FLOAT,
         turnover_ref_categorie FLOAT,
+        dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
 
-        PRIMARY KEY (numero_finess, annee, mois)
+        PRIMARY KEY (numero_finess, annee, mois, profession)
       );
     `);
 
-    // Ajout de l'index sur la colonne 'profession'
-    await queryRunner.query(`
-      CREATE INDEX idx_profession ON vigie_rh_profession_filiere (profession);
-    `);
+    // TODO :  Ajout de l'index éventuellement   
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {

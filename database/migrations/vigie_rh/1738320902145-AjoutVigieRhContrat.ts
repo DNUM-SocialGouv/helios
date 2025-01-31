@@ -1,16 +1,17 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjoutVigieRhContrat implements MigrationInterface {
+export class AjoutVigieRhContrat1738320902145 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
       CREATE TABLE vigie_rh_contrat (
         numero_finess VARCHAR(9) NOT NULL,
         annee INT NOT NULL,
         mois INT NOT NULL,
-        type_contrat int NOT NULL,
+        type_contrat INT NOT NULL,
         effectif INT,
+        dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
 
-        PRIMARY KEY (numero_finess, annee, mois)
+        PRIMARY KEY (numero_finess, annee, mois,type_contrat)
       );
     `);
   }

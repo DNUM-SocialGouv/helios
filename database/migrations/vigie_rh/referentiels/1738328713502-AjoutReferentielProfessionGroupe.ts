@@ -1,12 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjoutReferentielTypeContrat implements MigrationInterface{
+export class AjoutReferentielProfessionGroupe1738328713502 implements MigrationInterface{
 
     async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-          CREATE TABLE vigie_rh_ref_type_contrat (
+          CREATE TABLE vigie_rh_ref_profession_groupe (
             id int NOT NULL,
             label varchar(255),
+            dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
     
             PRIMARY KEY (id)
           );
@@ -14,7 +15,7 @@ export class AjoutReferentielTypeContrat implements MigrationInterface{
       }
     
       async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query("DROP TABLE IF EXISTS vigie_rh_ref_type_contrat;");
+        await queryRunner.query("DROP TABLE IF EXISTS vigie_rh_ref_profession_groupe;");
       }
 
 }
