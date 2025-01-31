@@ -11,7 +11,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def filter_type_beneficiaire(type_beneficiaire):
+def filter_type_beneficiaire(type_beneficiaire: str) -> bool:
     return type_beneficiaire == "ES"
 
 

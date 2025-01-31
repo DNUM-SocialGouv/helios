@@ -11,7 +11,7 @@ from datacrawler.transform.equivalences_sivss_helios import (
 from datacrawler.check_downloaded_sivss_file import get_year_from_date
 
 
-def build_finess(row):
+def build_finess(row: pd.Series) -> str:
     if "§" in str(row["SCC_ORGANISME_FINESS"]):
         row["SCC_ORGANISME_FINESS"] = row["SCC_ORGANISME_FINESS"][:9]
     if "§" in str(row["DECLARANT_ORGANISME_NUMERO_FINESS"]):

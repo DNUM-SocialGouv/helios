@@ -1,5 +1,7 @@
 import os
 
+import pandas as pd
+
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_qualite
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
@@ -11,11 +13,11 @@ from datacrawler.transform.equivalence_siicea_helios import (
 )
 
 
-def filter_statut(statut):
+def filter_statut(statut: str) -> bool:
     return statut == "Clôturé"
 
 
-def filter_inspection(donnees_inspections):
+def filter_inspection(donnees_inspections: pd.DataFrame) -> pd.DataFrame:
     date_regex = r"^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
     return donnees_inspections[
         (donnees_inspections["Statut de la mission"].apply(filter_statut))

@@ -39,7 +39,7 @@ def transform_les_donnees_budget_finance_etablissement_territorial(
     )
 
 
-def extrais_les_donnees_entites_juridiques(data):
+def extrais_les_donnees_entites_juridiques(data: pd.DataFrame):
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     data_frame = pd.DataFrame(data)
 
@@ -57,7 +57,7 @@ def extrais_les_donnees_entites_juridiques(data):
     return df_filtre
 
 
-def extrais_les_donnees_etablissements_territoriaux_sanitaires(data):
+def extrais_les_donnees_etablissements_territoriaux_sanitaires(data: pd.DataFrame):
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     data_frame = pd.DataFrame(data)
 

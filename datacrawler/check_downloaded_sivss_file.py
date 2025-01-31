@@ -15,23 +15,23 @@ from datacrawler.transform.equivalences_sivss_helios import (
 )
 
 
-def get_year_from_date(date_to_convert):
+def get_year_from_date(date_to_convert: str) -> int:
     return datetime.strptime(date_to_convert, "%Y-%m-%d").year
 
 
-def filter_famille(famille):
+def filter_famille(famille: str) -> bool:
     return (famille == "Evénements indésirables/graves associés aux soins") | (famille == "Evénements/incidents dans un établissement ou organisme")
 
 
-def filter_motif(motif):
+def filter_motif(motif: str) -> bool:
     return (motif != "Incomplet") & (motif != "Doublon") & (motif != "Non validé")
 
 
-def filter_etat(etat):
+def filter_etat(etat: str) -> bool:
     return etat != "Interco"
 
 
-def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame):
+def filter_evenements_indesirables(donnees_evenements_indesirables: pd.DataFrame) -> pd.DataFrame:
     current_year = int(date.today().strftime("%Y"))
     date_regex = r"^(19\d{2}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
     return donnees_evenements_indesirables[
