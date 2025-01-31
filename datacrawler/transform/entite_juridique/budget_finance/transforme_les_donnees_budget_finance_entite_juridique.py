@@ -39,14 +39,9 @@ def transform_les_donnees_budget_finance_etablissement_territorial(
     )
 
 
-def extrais_les_donnees_entites_juridiques(data: pd.DataFrame):
+def extrais_les_donnees_entites_juridiques(data: pd.DataFrame) -> pd.DataFrame:
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     data_frame = pd.DataFrame(data)
-
-    # Vérifier si la colonne spécifiée existe dans les données
-    if "numero_finess_etablissement_territorial" not in data_frame.columns:
-        print("La colonne 'numero_finess_etablissement_territorial' n'existe pas dans les données.")
-        return None
 
     # Filtrer les lignes où la colonne spécifiée est vide ou ""
     df_filtre = data_frame.loc[data_frame["numero_finess_etablissement_territorial"].isna() | (data_frame["numero_finess_etablissement_territorial"] == "")]
@@ -57,22 +52,12 @@ def extrais_les_donnees_entites_juridiques(data: pd.DataFrame):
     return df_filtre
 
 
-def extrais_les_donnees_etablissements_territoriaux_sanitaires(data: pd.DataFrame):
+def extrais_les_donnees_etablissements_territoriaux_sanitaires(data: pd.DataFrame) -> pd.DataFrame:
     # Créer un DataFrame pandas à partir des données en excluant la première ligne (l'en-tête)
     data_frame = pd.DataFrame(data)
 
     # Assurer que les champs d'ancien index deviennent des colonnes
     data_frame.reset_index(inplace=True)
-
-    # Vérifier si la colonne spécifiée existe dans les données
-    if "numero_finess_etablissement_territorial" not in data_frame.columns:
-        print("La colonne 'numero_finess_etablissement_territorial' n'existe pas dans les données.")
-        return None
-
-    # Vérifier si les colonnes spécifiées existent dans les données
-    if "numero_finess_etablissement_territorial" not in data_frame.columns:
-        print("Les colonnes 'annee' ou 'numero_finess_etablissement_territorial' n'existent pas dans les données.")
-        return None
 
     # Filtrer les lignes où la colonne spécifiée n'est pas vide ou ""
     df_filtre = data_frame.loc[data_frame["numero_finess_etablissement_territorial"].notna() & (data_frame["numero_finess_etablissement_territorial"] != "")]
