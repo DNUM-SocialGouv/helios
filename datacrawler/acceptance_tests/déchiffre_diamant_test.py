@@ -9,7 +9,7 @@ from datacrawler.déchiffre_diamant import _vérifie_la_clef, déchiffre
 
 
 class TestDéchiffre:
-    dossier_avec_les_données_chiffrées = "data_set/diamant_chiffré"
+    dossier_avec_les_données_chiffrées = "data_set/diamant_chiffré_test"
     dossier_où_sauvegarder_les_csv = "data_test/diamant_test/"
     logger = crée_le_logger()
 
