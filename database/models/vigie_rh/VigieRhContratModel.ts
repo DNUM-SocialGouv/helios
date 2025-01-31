@@ -4,19 +4,22 @@ import { VigieRhRefTypeContratModel } from "./referentiel/VigieRhRefTypeContratM
 
 @Entity("vigie_rh_contrat")
 export class VigieRhContratModel {
-  @PrimaryColumn({ type: "varchar", length: 9 })
-  public numero_finess!: string;
+  @PrimaryColumn({ type: "varchar", length: 9, name: "numero_finess" })
+  public numeroFiness!: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "int", name: "annee" })
   public annee!: number;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "int", name: "mois" })
   public mois!: number;
 
-  @ManyToOne(() => VigieRhRefTypeContratModel, { nullable: true })
-  @JoinColumn({ name: "type_contrat" })
-  public type_contrat!: VigieRhRefTypeContratModel;
+  @PrimaryColumn({ type: "int", name: "type_contrat" })
+  public typeContratId!: number;
 
-  @Column({ type: "int", nullable: true })
+  @ManyToOne(() => VigieRhRefTypeContratModel, { nullable: false, eager: true })
+  @JoinColumn({ name: "type_contrat" })
+  public readonly typeContrat!: VigieRhRefTypeContratModel;
+
+  @Column({ type: "int", nullable: true, name: "effectif" })
   public effectif!: number;
 }

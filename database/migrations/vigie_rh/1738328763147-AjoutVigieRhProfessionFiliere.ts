@@ -27,8 +27,6 @@ export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInte
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    // Suppression de l'index et de la table en cas de rollback
-    await queryRunner.query("DROP INDEX IF EXISTS idx_profession;");
     await queryRunner.query("DROP TABLE IF EXISTS vigie_rh_profession_filiere;");
   }
 }

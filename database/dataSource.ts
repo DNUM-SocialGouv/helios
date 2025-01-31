@@ -75,6 +75,7 @@ import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -106,8 +107,13 @@ import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumaine
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
+import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
+import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
+import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
+import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -148,6 +154,9 @@ export default new DataSource({
     AllocationRessourceETModel,
     ActivitéSanitaireMensuelModel,
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
+    VigieRhRefTypeContratModel,
+    VigieRhProfessionFiliereModel,
+    VigieRhProfessionGroupeModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -224,6 +233,9 @@ export default new DataSource({
     AjoutClassificationDansLaRecherche1728914554142,
     AjoutCodeRegionDansLaRecherche1730971588532,
     AjoutRattachementRecherche1732629322484,
+    AjoutVigieRhContrat1738320902145,
+    AjoutVigieRhProfessionFiliere1738328763147,
+    AjoutVigieRhProfessionGroupe1738328796095
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
