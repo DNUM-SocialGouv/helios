@@ -1,5 +1,6 @@
 import os
 from logging import Logger
+from typing import List
 
 import pandas as pd
 from sqlalchemy.engine import Engine, create_engine
@@ -24,7 +25,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def import_allocation_ressource(fichiers_param: str, men_hapi_data_path_param: str, base_de_données: Engine, logger: Logger) -> None:
+def import_allocation_ressource(fichiers_param: List[str], men_hapi_data_path_param: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios)
     dataframes = []
     for fichier in fichiers_param:
