@@ -20,7 +20,7 @@ const ConfirmDeleteListModal = ({ deleteList }: { deleteList: () => void }) => {
                                     </li>
                                     <li>
                                         <button aria-controls="fr-modal-2" className="fr-btn" onClick={deleteList}>
-                                            Confirmer
+                                            Oui
                                         </button>
                                     </li>
                                 </ul>

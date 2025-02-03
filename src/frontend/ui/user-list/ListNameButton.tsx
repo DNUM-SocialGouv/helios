@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { KeyboardEvent, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useOutsideClick } from "../commun/hooks/useOutsideClick";
@@ -12,6 +12,7 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
     const [updateListName, setUpdateListName] = useState(false);
     const { breadcrumbHandler, wording, paths } = useDependencies();
     const [listName, setListName] = useState(name);
+    const [newName, setNewName] = useState(listName);
     const router = useRouter();
     const { updateListName: updateName, deleteList } = useFavoris();
     const ref = useOutsideClick(() => setDisplayMenu(false));
@@ -33,19 +34,32 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
                 path: paths.MES_LISTES,
             },
             {
-                label: listName,
+                label: newName,
                 path: "",
             },
         ])
-        updateName(id, listName);
+        updateName(id, newName);
+        setListName(newName);
     }
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onClickConfirmUpdate();
+        }
+    };
 
     return <div className={styles["title"]}>
         {updateListName ?
             <>
-                <input className="fr-input" onChange={(e) => setListName(e.target.value)} value={listName} />
+                <input
+                    className="fr-input fr-input--error"
+                    onChange={(e) => setNewName(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    required
+                    value={newName}
+                />
                 <button className="fr-btn" onClick={onClickConfirmUpdate}>Valider</button>
-                <button className="fr-btn fr-btn--secondary" onClick={() => setUpdateListName(false)}>Annuler</button>
+                <button className="fr-btn fr-btn--secondary" onClick={() => {setUpdateListName(false); setNewName(listName)}}>Annuler</button>
             </> :
             <h1 className={styles["list-title"]}>
                 {listName}
@@ -70,7 +84,7 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
                     <hr className={styles["menu-sperator"]} />
                     <li>
                         <button
-                            aria-controls="fr-modal-2" className="fr-btn" data-fr-opened="false" onClick={onClickDeleteList} title="Supprimer"
+                            aria-controls="fr-modal-2" className="fr-btn" data-fr-opened="false" title="Supprimer"
                             type="button"
                         >
                             Supprimer la liste
@@ -79,7 +93,7 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
                 </ul>
             ) : null}
         </div>
-        <ConfirmDeleteListModal deleteList={() => deleteList} />
+        <ConfirmDeleteListModal deleteList={() => onClickDeleteList()} />
     </div>
 }
 
