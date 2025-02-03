@@ -46,19 +46,19 @@ from datacrawler.test_helpers.helios_builder import (
     helios_équipement_matériel_lourd_sanitaire_builder,
 )
 
-archive_de_données_finess_cs1400103_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400103_stock_20211214-0343.xml.gz")
-fichier_de_données_finess_cs1400103_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400103_stock_20211214-0343.xml")
+archive_de_données_finess_cs1400103_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400103_stock_20211214-0343.xml.gz")
+fichier_de_données_finess_cs1400103_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400103_stock_20211214-0343.xml")
 
-archive_de_données_finess_cs1400104_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400104_stock_20211214-0345.xml.gz")
-fichier_de_données_finess_cs1400104_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400104_stock_20211214-0345.xml")
+archive_de_données_finess_cs1400104_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400104_stock_20211214-0345.xml.gz")
+fichier_de_données_finess_cs1400104_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400104_stock_20211214-0345.xml")
 
-archive_de_données_finess_cs1600101_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600101_stock_20211214-0332.xml.gz")
-fichier_de_données_finess_cs1600101_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600101_stock_20211214-0332.xml")
+archive_de_données_finess_cs1600101_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1600101_stock_20211214-0332.xml.gz")
+fichier_de_données_finess_cs1600101_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1600101_stock_20211214-0332.xml")
 
-archive_de_données_finess_cs1600102_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml.gz")
-fichier_de_données_finess_cs1600102_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml")
+archive_de_données_finess_cs1600102_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml.gz")
+fichier_de_données_finess_cs1600102_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1600102_stock_20211214-0417.xml")
 
-fichier_de_données_diamant_ann_sae = os.path.join("data_set", "diamant", "ANN_SAE_2022_08_03.CSV")
+fichier_de_données_diamant_ann_sae = os.path.join("data_test", "entrée", "diamant", "ANN_SAE_2022_08_03.CSV")
 
 
 class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:

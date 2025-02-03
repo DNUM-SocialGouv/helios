@@ -24,7 +24,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
     @freeze_time("2023-01-14")
     def test_sauvegarde_le_bloc_budget_finance_entite_juridique(self) -> None:
         # GIVEN
-        quo_san_finance_file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+        quo_san_finance_file_path = get_absolute_file_path("data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
 
         # WHEN
@@ -64,7 +64,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
         # GIVEN
         numero_finess_existant_en_base = "590000741"
 
-        quo_san_finance_file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+        quo_san_finance_file_path = get_absolute_file_path("data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         sauvegarde_une_entité_juridique_en_base(numero_finess_existant_en_base, base_de_données_test)
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
@@ -90,7 +90,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
 
     def test_sauvegarde_les_dates_de_mises_à_jour_de_fichier_quo_san_finance(self) -> None:
         # GIVEN
-        quo_san_finance_file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+        quo_san_finance_file_path = get_absolute_file_path("data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
         # WHEN

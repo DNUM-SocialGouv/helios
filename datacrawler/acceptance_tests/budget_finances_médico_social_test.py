@@ -34,10 +34,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_financières_et_les_taux_de_caf_et_vétusté(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -158,10 +158,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-06-07")
     def test_sauvegarde_les_dates_de_mises_à_jour_des_indicateurs_budget_et_finances(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -199,10 +199,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -334,10 +334,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-06-07")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_budget_et_finances_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

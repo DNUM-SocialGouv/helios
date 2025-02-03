@@ -24,8 +24,8 @@ from datacrawler.test_helpers import (
 
 
 class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
-    archive_de_données_de_test = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400105_stock_20211214-0346.xml.gz")
-    fichier_de_données = os.path.join("data_set", "flux_finess", "enrichi", "finess_cs1400105_stock_20211214-0346.xml")
+    archive_de_données_de_test = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400105_stock_20211214-0346.xml.gz")
+    fichier_de_données = os.path.join("data_test", "entrée", "flux_finess", "enrichi", "finess_cs1400105_stock_20211214-0346.xml")
 
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)

@@ -11,8 +11,8 @@ class TestChiffre:
 
     def test_enregistre_les_données_diamant_chiffrés_dans_un_dossier_donné(self) -> None:
         # Given
-        dossier_source = "data_set/diamant"
-        dossier_cible = "data_test/diamant_chiffre/"
+        dossier_source = "data_test/entrée/diamant"
+        dossier_cible = "data_test/sortie/diamant_chiffre/"
         Path(dossier_cible).mkdir(exist_ok=True)
         for fichier in os.listdir(dossier_cible):
             os.unlink(os.path.join(dossier_cible, fichier))
