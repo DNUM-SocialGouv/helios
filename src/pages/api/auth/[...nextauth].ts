@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/connexion",
   },
@@ -78,4 +78,6 @@ export default NextAuth({
   },
   // Enable debug messages in the console if you are having problems
   debug: process.env.NODE_ENV === "development",
-});
+}
+
+export default NextAuth(authOptions);
