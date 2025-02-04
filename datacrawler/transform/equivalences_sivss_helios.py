@@ -1,5 +1,6 @@
 from typing import Dict, List, TypedDict
 
+
 class ColonneHelios(TypedDict):
     nom: str
     type: type
@@ -34,11 +35,8 @@ equivalences_sivss_evenements_indesirables_helios_base: EquivalencesSivssHelios 
 
 colonnes_a_lire_bloc_qualite_evenements_indesirables: List[str] = list(equivalences_sivss_evenements_indesirables_helios.keys())
 
-index_evenement_indesirable: List[str] = [
-    "annee",
-    "numero_finess_etablissement_territorial",
-    "numero_sivss"
-]
+index_evenement_indesirable: List[str] = ["annee", "numero_finess_etablissement_territorial", "numero_sivss"]
+
 
 def extrais_l_equivalence_des_types_des_colonnes(equivalences: EquivalencesSivssHelios) -> Dict[str, type]:
     return {nom_ei: colonne_evenement_indesirable["type"] for nom_ei, colonne_evenement_indesirable in equivalences.items()}

@@ -36,6 +36,14 @@ class TestVariablesDEnvironnement:
             "DIAMANT_ENCRYPTED_DATA_PATH": "test",
             "SENTRY_DSN": "test",
             "SFTP_LOCAL_PATH": "test",
+            "SENTRY_ENVIRONMENT": "test",
+            "UTILISATEURS_DATA_PATH": "test",
+            "CHECKED_SIREC_DATA_PATH": "test",
+            "SIVSS_DATA_PATH": "test",
+            "CHECKED_SIVSS_DATA_PATH": "test",
+            "SIICEA_DATA_PATH": "test",
+            "CHECKED_SIICEA_DATA_PATH": "test",
+            "HAPI_DATA_PATH": "test",
         }
 
         # WHEN

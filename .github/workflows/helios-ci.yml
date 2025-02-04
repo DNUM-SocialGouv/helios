@@ -136,7 +136,7 @@ jobs:
         run: pipenv run typecheck
       - name: Create the DIAMANT public key
         env:
-          DIAMANT_PRIVATE_KEY: ${{ secrets.DIAMANT_PRIVATE_KEY }}
-        run: echo "$DIAMANT_PRIVATE_KEY" | gpg --import
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        run: echo "$GPG_PRIVATE_KEY" | gpg --import
       - name: Test
         run: pipenv run test_coverage
