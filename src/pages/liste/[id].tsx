@@ -2,25 +2,24 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
 import { ChangeEventHandler, useState } from "react";
 
-import { rechercheParNumeroFinessEndpoint } from "../../backend/infrastructure/controllers/rechercheParNumeroFinessEndpoints";
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
-import { Résultat } from "../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
-import { GrilleEtablissements } from "../../frontend/ui/commun/GrilleEtablissements/GrilleEtablissements";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
+import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
+
 
 type RouterProps = Readonly<{
   list: UserListViewModel;
-  etablissements: Résultat[];
 }>;
 
-export default function Router({ list, etablissements }: RouterProps) {
+export default function Router({ list }: RouterProps) {
   const { paths, wording } = useDependencies();
-  const [resultSize, setResultSize] = useState(12);
+  const [displayTable, setDisplayTable] = useState(true);
+
   useBreadcrumb([
     {
       label: wording.FAVORIS_LIST,
@@ -32,21 +31,10 @@ export default function Router({ list, etablissements }: RouterProps) {
     },
   ]);
 
-  if (!list) return null;
-
-  const elements = etablissements.map((elmt) => {
-    return new RechercheViewModel(elmt, paths);
-  });
-
-  const chargeLesRésultatsSuivants = () => {
-    setResultSize(Math.min(resultSize + 12, elements.length));
-  }
-  const tousLesRésultatsSontAffichés = () => {
-    return resultSize >= elements.length;
-  }
-
-  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
-  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
+  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
+  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
+  const listLength = list.userListEtablissements.length;
+  const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
     <h1>
@@ -54,10 +42,10 @@ export default function Router({ list, etablissements }: RouterProps) {
     </h1>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
-        <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
+        <p className="fr-table__detail">{"(" + listLength + ") établissements"}</p>
       </div>
       <div className="fr-col--right">
-        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Vignette} disabled={true} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
+        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
@@ -68,7 +56,14 @@ export default function Router({ list, etablissements }: RouterProps) {
         <main className="fr-container">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
-            <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={tousLesRésultatsSontAffichés()} rafraichitAuRetraitFavoris={true} résultats={elements.slice(0, resultSize)} />
+            {!isListEmpty() &&
+              <>
+                {displayTable
+                  ? <TableauListeEtablissements list={list} />
+                  : <GrilleListEtablissements list={list} />
+                }
+              </>
+            }
           </section>
         </main>
       ) : (
@@ -91,14 +86,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         return { notFound: true };
       }
 
-      const finessNumber = list?.userListEtablissements.map((etablissement) => etablissement.finessNumber);
-      const etablissementList = (await rechercheParNumeroFinessEndpoint(finessNumber)).sort((a, b) => a.numéroFiness.localeCompare(b.numéroFiness));
-
-
       return {
         props: {
           list: JSON.parse(JSON.stringify(list)),
-          etablissements: etablissementList,
         },
       };
     } else {

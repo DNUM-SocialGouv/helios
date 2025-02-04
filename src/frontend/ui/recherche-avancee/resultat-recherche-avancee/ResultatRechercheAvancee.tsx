@@ -3,8 +3,7 @@ import { useContext, useState } from "react";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { Table } from "../../commun/Table/Table";
-import { ComparaisonViewModel } from "../../home/ComparaisonViewModel";
+import { SelectedRows, Table } from "../../commun/Table/Table";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
@@ -20,10 +19,6 @@ const tableHeaders = [
   { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
   { label: "Rattachement(s)", key: "rattachement" },
 ];
-
-export type SelectedRows = Readonly<{
-  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-}>;
 
 type ResultatRechercheAvanceeProps = Readonly<{
   data: RechercheViewModel[];
