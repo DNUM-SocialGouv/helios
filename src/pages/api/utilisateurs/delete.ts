@@ -1,11 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
 import { deleteUserEndpoint } from "../../../backend/infrastructure/controllers/deleteUserEndpoint";
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
-import { getUserSessionBack } from "../../../frontend/utils/getUserSessionBack";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
@@ -16,7 +17,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
 
-    const userSession = await getUserSessionBack(request);
+    const userSession = await getServerSession(request, response, authOptions);
 
     //no one can delete itself
     if (userSession?.user.idUser === userCode) {
