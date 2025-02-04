@@ -36,7 +36,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   try {
     const session = await getSession(context);
 
-    if (session?.user?.role === 3 || session?.user?.role === 2) {
+    if (session?.user?.role !== 1) {
       return {
         redirect: {
           permanent: false,
