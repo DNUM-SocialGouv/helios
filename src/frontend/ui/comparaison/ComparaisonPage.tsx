@@ -11,7 +11,6 @@ import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import { SelectedRows } from "../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
-import { useSearchHistory } from "../search-history/useSearchHistory";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
@@ -48,8 +47,6 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
   const [deleteEt, setDeleteET] = useState(false);
 
   const [reloadTable, setReloadTable] = useState<boolean>(false);
-
-  const { saveSearchHistory } = useSearchHistory();
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
@@ -192,7 +189,6 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 isVScroll={true}
                 onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
-                onClickSocialReason={saveSearchHistory}
                 order={order}
                 orderBy={orderBy}
                 page={page || 1}
