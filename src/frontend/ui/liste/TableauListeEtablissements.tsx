@@ -18,7 +18,7 @@ const tableHeaders = [
     { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
     { label: "Commune", key: "commune", sort: true },
     { label: "Département", key: "departement", sort: true },
-    { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+    { label: "N° FINESS", key: "numéroFiness", orderBy: "numero_finess", sort: true },
     { label: "Rattachement(s)", key: "rattachement", orderBy: "rattachement", sort: true },
 ];
 
