@@ -4,22 +4,22 @@ export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInte
   async up(queryRunner: QueryRunner): Promise<void> {
     // Création de la table
     await queryRunner.query(`
-      CREATE TABLE vigie_rh_profession_filiere (
+      CREATE TABLE vigierh_profession_filiere (
         numero_finess VARCHAR(9) NOT NULL,
         annee INT NOT NULL,
         mois INT NOT NULL,
-        profession int NOT NULL,
+        profession_code int NOT NULL,
         turnover FLOAT,
-        entree_taux FLOAT,
-        entree_sortie FLOAT,
-        entrees INT,
-        sorties INT,
-        turnover_ref_region FLOAT,
-        turnover_ref_nation FLOAT,
-        turnover_ref_categorie FLOAT,
+        taux_entrees FLOAT,
+        taux_sorties FLOAT,
+        nombre_entrees INT,
+        nombre_sorties INT,
+        region_turnover FLOAT,
+        nation_turnover FLOAT,
+        groupe_turnover FLOAT,
         dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
 
-        PRIMARY KEY (numero_finess, annee, mois, profession)
+        PRIMARY KEY (numero_finess, annee, mois, profession_code)
       );
     `);
 
@@ -27,6 +27,6 @@ export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInte
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS vigie_rh_profession_filiere;");
+    await queryRunner.query("DROP TABLE IF EXISTS vigierh_profession_filiere;");
   }
 }

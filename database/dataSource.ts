@@ -120,6 +120,12 @@ import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/
 import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
+import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
+import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
+import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/referentiels/1738593046415-AjoutReferentielMasque";
+import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
+import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
+import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/VigieRhRefRedressementModel";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -163,6 +169,9 @@ export default new DataSource({
     VigieRhRefProfessionFiliereModel,
     VigieRhRefProfessionGroupeModel,
     VigieRhRefTypeContratModel,
+    VigieRhRefMasqueModel,
+    VigieRhRefQualiteModel,
+    VigieRhRefRedressementModel,
     VigieRhContratModel,
     VigieRhProfessionFiliereModel,
     VigieRhProfessionGroupeModel
@@ -247,8 +256,10 @@ export default new DataSource({
     AjoutVigieRhProfessionGroupe1738328796095,
     AjoutReferentielTypeContrat1738227384991,
     AjoutReferentielProfessionFiliere1738328597314,
-    AjoutReferentielProfessionGroupe1738328713502
-
+    AjoutReferentielProfessionGroupe1738328713502,
+    AjoutReferentielMasque1738593046415,
+    AjoutReferentielQualite1738593074489,
+    AjoutReferentielRedressement1738593097578
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

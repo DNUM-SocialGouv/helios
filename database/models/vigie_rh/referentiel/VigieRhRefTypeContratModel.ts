@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryColumn, Column } from "typeorm";
 
-@Entity("vigie_rh_ref_type_contrat")
+@Entity("vigierh_ref_type_contrat")
 export class VigieRhRefTypeContratModel {
-  @PrimaryGeneratedColumn()
-  public id!: number;
+  @PrimaryColumn({ type: "int", name: "code" })
+  public code!: number;
 
-  @Column({ type: "varchar", length: 255, nullable: true })
-  public label!: string;
+  @Column({ type: "varchar", length: 255, nullable: true, name: "label" })
+  public label!: string | null;
 }

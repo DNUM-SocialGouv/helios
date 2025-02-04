@@ -4,18 +4,18 @@ export class AjoutReferentielProfessionFiliere1738328597314 implements Migration
 
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-          CREATE TABLE vigie_rh_ref_profession_filiere (
-            id int NOT NULL,
+          CREATE TABLE vigierh_ref_profession_filiere (
+            code int NOT NULL,
             label varchar(255),
             dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
     
-            PRIMARY KEY (id)
+            PRIMARY KEY (code)
           );
         `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS vigie_rh_ref_profession_filiere;");
+    await queryRunner.query("DROP TABLE IF EXISTS vigierh_ref_profession_filiere;");
   }
 
 }

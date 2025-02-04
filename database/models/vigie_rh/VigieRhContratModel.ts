@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 import { VigieRhRefTypeContratModel } from "./referentiel/VigieRhRefTypeContratModel";
 
-@Entity("vigie_rh_contrat")
+@Entity("vigierh_contrat")
 export class VigieRhContratModel {
   @PrimaryColumn({ type: "varchar", length: 9, name: "numero_finess" })
   public numeroFiness!: string;
@@ -13,13 +13,10 @@ export class VigieRhContratModel {
   @PrimaryColumn({ type: "int", name: "mois" })
   public mois!: number;
 
-  @PrimaryColumn({ type: "int", name: "type_contrat" })
-  public typeContratId!: number;
-
-  @ManyToOne(() => VigieRhRefTypeContratModel, { nullable: false, eager: true })
-  @JoinColumn({ name: "type_contrat" })
+  @ManyToOne(() => VigieRhRefTypeContratModel, { eager: true })
+  @JoinColumn({ name: "type_contrat_code", referencedColumnName: "code" })
   public readonly typeContrat!: VigieRhRefTypeContratModel;
 
   @Column({ type: "int", nullable: true, name: "effectif" })
-  public effectif!: number;
+  public effectif!: number | null;
 }

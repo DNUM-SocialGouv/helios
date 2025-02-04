@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column } from "typeorm";
 
-@Entity("vigierh_ref_profession_filiere")
-export class VigieRhRefProfessionFiliereModel {
+@Entity("vigierh_ref_qualite")
+export class VigieRhRefQualiteModel {
   @PrimaryColumn({ type: "int", name: "code" })
   public code!: number;
 
