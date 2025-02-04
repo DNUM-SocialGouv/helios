@@ -29,7 +29,10 @@ export const FavorisBlock = ({
     const [estCeEnAttente, setestCeEnAttente] = useState(true);
 
     useEffect(() => {
-        if (list.length === 0) setLlistEtablissements([]);
+        if (list.length === 0) {
+            setLlistEtablissements([]);
+            setestCeEnAttente(false);
+        }
         else
             fetch("/api/recherche-par-finess", {
                 body: JSON.stringify({
@@ -46,12 +49,12 @@ export const FavorisBlock = ({
 
     return (
         <div className="fr-mb-3w" >
-            <h5 className="fr-mb-1w" >{(isFavoris ? wording.FAVORIS_LIST_TITLE : title) + " (" + favorisList.length + ")"}</h5>
+            <Link className={styles["titre-liste"]} href={`/liste/${currentListId}`} >{(isFavoris ? wording.FAVORIS_LIST_TITLE : title) + " (" + favorisList.length + ")"}</Link>
             <br />
             {
                 !estCeEnAttente ?
                     <section>
-                        <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
+                        <ul className={"fr-grid-row fr-grid-row--gutters fr-mt-1w " + styles["tuiles"]}>
                             {listEtablissements.map((résultatViewModel, index) => (
                                 <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
                                     <TuileEtablissement currentListId={currentListId} rechercheViewModel={résultatViewModel} />

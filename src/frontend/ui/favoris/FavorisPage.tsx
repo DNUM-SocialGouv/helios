@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
@@ -10,10 +10,18 @@ export const FavorisPage = () => {
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
 
+    const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
+
+    useEffect(() => {
+        setSortedFavorisList(userContext?.favorisLists?.sort((a, b) =>
+            (b.isFavoris === a.isFavoris ? 0 : b.isFavoris ? 1 : -1)
+        ))
+    }, [userContext?.favorisLists])
+
     return (
         <main className="fr-container">
             <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
-            {userContext?.favorisLists?.map((etablissement: UserListViewModel, index: number) => (
+            {sortedFavorisList?.map((etablissement: UserListViewModel, index: number) => (
                 <div key={index}>
                     <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} isFavoris={etablissement.isFavoris} title={etablissement.nom} />
                 </div>
