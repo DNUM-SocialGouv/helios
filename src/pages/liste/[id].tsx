@@ -31,8 +31,6 @@ export default function Router({ list }: RouterProps) {
     },
   ]);
 
-  if (!list) return { notFound: true };
-
   const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
   const listLength = list.userListEtablissements.length;
@@ -54,7 +52,7 @@ export default function Router({ list }: RouterProps) {
 
   return (
     <>
-      {true ? (
+      {list ? (
         <main className="fr-container">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
