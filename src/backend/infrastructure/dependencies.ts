@@ -30,6 +30,8 @@ import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmU
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
 import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { VigieRhContratLoader } from "../métier/gateways/vigie-rh/VigieRhContratLoader";
+import { TypeOrmVigieRhContratLoader } from "./gateways/vigie-rh/TypeOrmVigieRhContratLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -48,6 +50,7 @@ export type Dependencies = Readonly<{
   roleLoader: TypeOrmRoleLoader;
   institutionLoader: TypeOrmInstitutionLoader;
   comparaisonLoader: ComparaisonLoader;
+  vigieRhContratLoader:VigieRhContratLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -79,6 +82,7 @@ const createDependencies = (): Dependencies => {
     roleLoader: new TypeOrmRoleLoader(orm),
     institutionLoader: new TypeOrmInstitutionLoader(orm),
     comparaisonLoader: new TypeOrmComparaisonLoader(orm),
+    vigieRhContratLoader : new TypeOrmVigieRhContratLoader(orm)
   };
 };
 
