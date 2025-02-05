@@ -210,16 +210,36 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   }
 
   async rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]> {
-    //const requêteDeLaRecherche = (await this.orm).getRepository(RechercheModel).findBy({numeroFiness: In(finessNumber)});
     const resultatDeLaRecherche = await (await this.orm).createQueryBuilder()
       .select("recherche.numero_finess", "numeroFiness")
       .addSelect("recherche.raison_sociale_courte", "raisonSocialeCourte")
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "département")
-      .addSelect("recherche.rattachement", "rattachement")
+      .addSelect(
+        `CASE 
+          WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
+          ELSE 
+          CONCAT(
+            'Sanitaire (', 
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Sanitaire' THEN etablissement_territorial.numero_finess_entite_juridique END),
+            '), SMS (',
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Médico-social' THEN etablissement_territorial.numero_finess_entite_juridique END), ')'
+          )
+        END`,
+        "rattachement"
+      )
       .from(RechercheModel, "recherche")
+      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
+      .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess")
       .where("recherche.numeroFiness  IN(:...numeroFiness)", { numeroFiness: finessNumber })
+      .addGroupBy("recherche.numero_finess")
+      .addGroupBy("recherche.raison_sociale_courte")
+      .addGroupBy("recherche.type")
+      .addGroupBy("recherche.commune")
+      .addGroupBy("recherche.departement")
+      .addGroupBy("recherche.rattachement")
+      .addGroupBy("entite_juridique.raison_sociale_courte")
       .getRawMany<RechercheModel>();
 
     return resultatDeLaRecherche.map((resultat) => {
