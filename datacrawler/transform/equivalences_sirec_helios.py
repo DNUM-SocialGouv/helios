@@ -1,5 +1,6 @@
 from typing import Dict, List, TypedDict
 
+
 class ColonneHelios(TypedDict):
     nom: str
     type: type
@@ -44,6 +45,7 @@ index_reclamations: List[str] = [
     "annee",
     "numero_finess_etablissement_territorial",
 ]
+
 
 def extrais_l_equivalence_des_types_des_colonnes(equivalences: EquivalencesSirecHelios) -> Dict[str, type]:
     return {nom_rec: colonne_reclamation["type"] for nom_rec, colonne_reclamation in equivalences.items()}
