@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <structureet>
+        <nofinesset>010000040</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>[Fermé] CH NANTUA</rs>
+        <rslongue>CENTRE HOSPITALIER NANTUA</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>50</numvoie>
+        <typvoie>R</typvoie>
+        <voie>PAUL PAINLEVE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>BP 116</lieuditbp>
+        <commune>269</commune>
+        <libcommune>NANTUA</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01130</codepostal>
+        <ligneacheminement>01130 NANTUA</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474754800</telephone>
+        <telecopie>0774750663</telecopie>
+        <courriel xsi:nil="true"/>
+        <categetab>355</categetab>
+        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <libcourtcategetab>C.H.</libcourtcategetab>
+        <categagretab>1102</categagretab>
+        <libcategagretab>Centres Hospitaliers</libcategagretab>
+        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010000057</nofinessppal>
+        <natureet>G</natureet>
+        <siret>26011021800047</siret>
+        <datemodifsiret>2009-01-01</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1901-01-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture>DEF</typefermeture>
+        <datefermeture>2007-04-20</datefermeture>
+        <dateautor>1901-01-01</dateautor>
+        <datemaj>2008-01-17</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010000057</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>[Fermé] CH OYONNAX</rs>
+        <rslongue>CENTRE HOSPITALIER OYONNAX</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie xsi:nil="true"/>
+        <typvoie>RTE</typvoie>
+        <voie>DE VEYZIAT</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01100</codepostal>
+        <ligneacheminement>01100 OYONNAX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731001</telephone>
+        <telecopie>0774731002</telecopie>
+        <courriel xsi:nil="true"/>
+        <categetab>355</categetab>
+        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <libcourtcategetab>C.H.</libcourtcategetab>
+        <categagretab>1102</categagretab>
+        <libcategagretab>Centres Hospitaliers</libcategagretab>
+        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010005239</nofinessppal>
+        <natureet>G</natureet>
+        <siret>26011021800013</siret>
+        <datemodifsiret>2009-01-01</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1901-01-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture>DEF</typefermeture>
+        <datefermeture>2007-04-20</datefermeture>
+        <dateautor>1901-01-01</dateautor>
+        <datemaj>2018-10-26</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010003598</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>IFAS CH DU HAUT BUGEY</rs>
+        <rslongue xsi:nil="true"/>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>1</numvoie>
+        <typvoie>RTE</typvoie>
+        <voie>DE VEYZIAT</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>CS 20100</lieuditbp>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01117</codepostal>
+        <ligneacheminement>01117 OYONNAX CEDEX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731121</telephone>
+        <telecopie>0474731002</telecopie>
+        <courriel>sec.ifas@ch-hautbugey.fr</courriel>
+        <categetab>300</categetab>
+        <libcategetab>Ecoles Formant aux Professions Sanitaires</libcategetab>
+        <libcourtcategetab>Ecoles sanitaires</libcourtcategetab>
+        <categagretab>6101</categagretab>
+        <libcategagretab>Etablissements de Formation des Personnels Sanitaires</libcategagretab>
+        <libcourtcategagretab>Etab.Form.Pers.San.</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010005239</nofinessppal>
+        <natureet>B</natureet>
+        <siret>26011021800096</siret>
+        <datemodifsiret>2013-09-23</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1901-01-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>1901-01-01</dateautor>
+        <datemaj>2013-09-23</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010005239</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>CH DU HAUT BUGEY - GEOVREISSET</rs>
+        <rslongue>CENTRE HOSPITALIER DU HAUT BUGEY - GEOVREISSET</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>1</numvoie>
+        <typvoie>RTE</typvoie>
+        <voie>DE VEYZIAT</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>BP 818</lieuditbp>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01108</codepostal>
+        <ligneacheminement>01108 OYONNAX CEDEX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731001</telephone>
+        <telecopie>0474731002</telecopie>
+        <courriel xsi:nil="true"/>
+        <categetab>355</categetab>
+        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <libcourtcategetab>C.H.</libcourtcategetab>
+        <categagretab>1102</categagretab>
+        <libcategagretab>Centres Hospitaliers</libcategagretab>
+        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>G</natureet>
+        <siret>26011021800112</siret>
+        <datemodifsiret>2016-02-11</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>2007-04-20</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>2007-03-14</dateautor>
+        <datemaj>2018-01-12</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010005478</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>[Fermé] CH DU HAUT BUGEY</rs>
+        <rslongue xsi:nil="true"/>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie xsi:nil="true"/>
+        <typvoie>RTE</typvoie>
+        <voie>DE GEOVREISSET</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01100</codepostal>
+        <ligneacheminement>01100 OYONNAX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone xsi:nil="true"/>
+        <telecopie xsi:nil="true"/>
+        <courriel xsi:nil="true"/>
+        <categetab>355</categetab>
+        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <libcourtcategetab>C.H.</libcourtcategetab>
+        <categagretab>1102</categagretab>
+        <libcategagretab>Centres Hospitaliers</libcategagretab>
+        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010000057</nofinessppal>
+        <natureet>G</natureet>
+        <siret xsi:nil="true"/>
+        <datemodifsiret xsi:nil="true"/>
+        <originemodifsiret xsi:nil="true"/>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv xsi:nil="true"/>
+        <datelimite>2010-07-10</datelimite>
+        <indcaduc>N</indcaduc>
+        <typefermeture>ERR</typefermeture>
+        <datefermeture>2007-07-25</datefermeture>
+        <dateautor>2007-07-11</dateautor>
+        <datemaj>2007-07-25</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010007961</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>SSIAD CH HAUT-BUGEY SITE DE NANTUA</rs>
+        <rslongue>SERVICE DE SOINS INFIRMIERS A DOMICILE NANTUA</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>50</numvoie>
+        <typvoie>R</typvoie>
+        <voie>PAUL PAINLEVE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>269</commune>
+        <libcommune>NANTUA</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01130</codepostal>
+        <ligneacheminement>01130 NANTUA</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474754869</telephone>
+        <telecopie>0474754805</telecopie>
+        <courriel>ssiad@ch-hautbugey.fr</courriel>
+        <categetab>354</categetab>
+        <libcategetab>Service de Soins Infirmiers A Domicile (S.S.I.A.D)</libcategetab>
+        <libcourtcategetab>S.S.I.A.D.</libcourtcategetab>
+        <categagretab>4605</categagretab>
+        <libcategagretab>Etablissements et services multi-clientèles</libcategagretab>
+        <libcourtcategagretab>Etab.multi-clientèle</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>B</natureet>
+        <siret>26011021800120</siret>
+        <datemodifsiret>2011-02-07</datemodifsiret>
+        <originemodifsiret>RMESSMAIA_AUTO</originemodifsiret>
+        <codeape>8690D</codeape>
+        <codemft>54</codemft>
+        <libmft>Tarif AM - Services de Soins Infirmiers A Domicile</libmft>
+        <libcourtmft>Tarif AM - SSIAD</libcourtmft>
+        <codesph xsi:nil="true"/>
+        <libsph xsi:nil="true"/>
+        <libcourtsph xsi:nil="true"/>
+        <dateouv>2000-07-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>2017-01-03</dateautor>
+        <datemaj>2017-04-21</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010786036</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>EHPAD NANTUA "LES JARDINS DU LAC"</rs>
+        <rslongue>EHPAD CH DU HAUT BUGEY "LE JARDIN DES SAISONS"</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>50</numvoie>
+        <typvoie>R</typvoie>
+        <voie>PAUL PAINLEVE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>269</commune>
+        <libcommune>NANTUA</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01130</codepostal>
+        <ligneacheminement>01130 NANTUA</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474754879</telephone>
+        <telecopie>0474731002</telecopie>
+        <courriel>secretariatdir@ch-hautbugey.fr</courriel>
+        <categetab>500</categetab>
+        <libcategetab>Etablissement d'hébergement pour personnes âgées dépendantes</libcategetab>
+        <libcourtcategetab>EHPAD</libcourtcategetab>
+        <categagretab>4401</categagretab>
+        <libcategagretab>Etablissements d'Hébergement pour Personnes Âgées</libcategagretab>
+        <libcourtcategagretab>Héberg.Pers.Agées</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010786077</nofinessppal>
+        <natureet>B</natureet>
+        <siret>26011021800054</siret>
+        <datemodifsiret>2011-02-07</datemodifsiret>
+        <originemodifsiret>RMESSMAIA_AUTO</originemodifsiret>
+        <codeape>8710A</codeape>
+        <codemft>40</codemft>
+        <libmft>ARS/PCD, Tarif global, habilité aide sociale, recours PUI</libmft>
+        <libcourtmft>ARS TG HAS PUI</libcourtmft>
+        <codesph xsi:nil="true"/>
+        <libsph xsi:nil="true"/>
+        <libcourtsph xsi:nil="true"/>
+        <dateouv>1993-02-15</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>2017-01-03</dateautor>
+        <datemaj>2021-08-19</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010786077</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>EHPAD LE TOURNANT DES SAISONS</rs>
+        <rslongue>EHPAD  CH DU  HAUT BUGEY "LE TOURNANT DES SAISONS</rslongue>
+        <complrs>EHPAD DU CH DU HAUT BUGEY</complrs>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>1</numvoie>
+        <typvoie>R</typvoie>
+        <voie>BELLEVUE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01108</codepostal>
+        <ligneacheminement>01108 OYONNAX CEDEX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731076</telephone>
+        <telecopie>0474731002</telecopie>
+        <courriel>secretariatdir@ch-hautbugey.fr</courriel>
+        <categetab>500</categetab>
+        <libcategetab>Etablissement d'hébergement pour personnes âgées dépendantes</libcategetab>
+        <libcourtcategetab>EHPAD</libcourtcategetab>
+        <categagretab>4401</categagretab>
+        <libcategagretab>Etablissements d'Hébergement pour Personnes Âgées</libcategagretab>
+        <libcourtcategagretab>Héberg.Pers.Agées</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>B</natureet>
+        <siret>26011021800138</siret>
+        <datemodifsiret>2011-02-07</datemodifsiret>
+        <originemodifsiret>RMESSMAIA_AUTO</originemodifsiret>
+        <codeape>8730A</codeape>
+        <codemft>40</codemft>
+        <libmft>ARS/PCD, Tarif global, habilité aide sociale, recours PUI</libmft>
+        <libcourtmft>ARS TG HAS PUI</libcourtmft>
+        <codesph xsi:nil="true"/>
+        <libsph xsi:nil="true"/>
+        <libcourtsph xsi:nil="true"/>
+        <dateouv>1988-01-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>2017-01-03</dateautor>
+        <datemaj>2021-08-19</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010786259</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>USLD CH DE NANTUA</rs>
+        <rslongue xsi:nil="true"/>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>50</numvoie>
+        <typvoie>R</typvoie>
+        <voie>PAUL PAINLEVÉ</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>BP 119</lieuditbp>
+        <commune>269</commune>
+        <libcommune>NANTUA</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01130</codepostal>
+        <ligneacheminement>01130 NANTUA</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731001</telephone>
+        <telecopie xsi:nil="true"/>
+        <courriel>secretariatdir@ch-hautbugey.fr</courriel>
+        <categetab>362</categetab>
+        <libcategetab>Etablissement de Soins Longue Durée</libcategetab>
+        <libcourtcategetab>Etab.Soins Long.Dur.</libcourtcategetab>
+        <categagretab>1109</categagretab>
+        <libcategagretab>Etablissements de Soins de Longue Durée</libcategagretab>
+        <libcourtcategagretab>Etab.Longue Durée</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010789717</nofinessppal>
+        <natureet>B</natureet>
+        <siret>26011021800062</siret>
+        <datemodifsiret>2009-01-01</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>17</codemft>
+        <libmft>Autorité mixte ARS PCD  dotation globale</libmft>
+        <libcourtmft>ARS PCD mixte DG</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1904-04-04</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>1904-04-04</dateautor>
+        <datemaj>2015-11-02</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010789089</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>[Fermé] CTRE PLANIF.EDUC.FAM. NANTUA</rs>
+        <rslongue>CENTRE DE PLANIFICATION ET D'EDUCATION FAMILIALE - NANTUA</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib>CENTRE HOSPITALIER DE NANTUA</compldistrib>
+        <numvoie>50</numvoie>
+        <typvoie>R</typvoie>
+        <voie>PAUL PAINLEVE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>269</commune>
+        <libcommune>NANTUA</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01130</codepostal>
+        <ligneacheminement>01130 NANTUA</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474754800</telephone>
+        <telecopie xsi:nil="true"/>
+        <courriel xsi:nil="true"/>
+        <categetab>355</categetab>
+        <libcategetab>Centre Hospitalier (C.H.)</libcategetab>
+        <libcourtcategetab>C.H.</libcourtcategetab>
+        <categagretab>1102</categagretab>
+        <libcategagretab>Centres Hospitaliers</libcategagretab>
+        <libcourtcategagretab>Centres Hospitaliers</libcourtcategagretab>
+        <typeet>S</typeet>
+        <nofinessppal>010000057</nofinessppal>
+        <natureet>G</natureet>
+        <siret>26011021800070</siret>
+        <datemodifsiret>2009-01-01</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>03</codemft>
+        <libmft>ARS établissements Publics de santé dotation globale</libmft>
+        <libcourtmft>ARS / DG EPS</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1989-10-05</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture>DEF</typefermeture>
+        <datefermeture>2015-01-01</datefermeture>
+        <dateautor>1989-10-05</dateautor>
+        <datemaj>2015-06-12</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010789717</nofinesset>
+        <nofinessej>010008407</nofinessej>
+        <rs>USLD CH D'OYONNAX</rs>
+        <rslongue xsi:nil="true"/>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>1</numvoie>
+        <typvoie>R</typvoie>
+        <voie>BELLEVUE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>283</commune>
+        <libcommune>OYONNAX</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01108</codepostal>
+        <ligneacheminement>01108 OYONNAX CEDEX</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474731001</telephone>
+        <telecopie xsi:nil="true"/>
+        <courriel>secretariatdir@ch-hautbugey.fr</courriel>
+        <categetab>362</categetab>
+        <libcategetab>Etablissement de Soins Longue Durée</libcategetab>
+        <libcourtcategetab>Etab.Soins Long.Dur.</libcourtcategetab>
+        <categagretab>1109</categagretab>
+        <libcategagretab>Etablissements de Soins de Longue Durée</libcategagretab>
+        <libcourtcategagretab>Etab.Longue Durée</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>B</natureet>
+        <siret>26011021800039</siret>
+        <datemodifsiret>2009-01-01</datemodifsiret>
+        <originemodifsiret>SAISIE</originemodifsiret>
+        <codeape xsi:nil="true"/>
+        <codemft>17</codemft>
+        <libmft>Autorité mixte ARS PCD  dotation globale</libmft>
+        <libcourtmft>ARS PCD mixte DG</libcourtmft>
+        <codesph>1</codesph>
+        <libsph>Etablissement public de santé</libsph>
+        <libcourtsph>Etab.public de santé</libcourtsph>
+        <dateouv>1993-03-01</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>1993-03-01</dateautor>
+        <datemaj>2015-11-02</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>590782553</nofinesset>
+        <nofinessej>590000741</nofinessej>
+        <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rs>
+        <rslongue>HOPITAL PRIVE DE VILLENEUVE D'ASCQ</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>20</numvoie>
+        <typvoie>AV</typvoie>
+        <voie>DE LA RECONNAISSANCE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>QUARTIER DU RECUEIL</lieuditbp>
+        <commune>009</commune>
+        <libcommune>VILLENEUVE D ASCQ</libcommune>
+        <departement>59</departement>
+        <libdepartement>NORD</libdepartement>
+        <codepostal>59650</codepostal>
+        <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0826666900</telephone>
+        <telecopie>0320995678</telecopie>
+        <courriel>320prea@gsante.fr</courriel>
+        <categetab>365</categetab>
+        <libcategetab>Etablissement de Soins Pluridisciplinaire</libcategetab>
+        <libcourtcategetab>Etab.Soins Pluridis.</libcourtcategetab>
+        <categagretab>1110</categagretab>
+        <libcategagretab>Etablissements de Soins de Courte Durée</libcategagretab>
+        <libcourtcategagretab>Soins Courte Durée</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>G</natureet>
+        <siret>47678033300037</siret>
+        <datemodifsiret>2014-03-26</datemodifsiret>
+        <originemodifsiret>SIRETISATION</originemodifsiret>
+        <codeape>8610Z</codeape>
+        <codemft>07</codemft>
+        <libmft>ARS établissements de santé non financés dotation globale</libmft>
+        <libcourtmft>ARS / san pr non DG</libcourtmft>
+        <codesph>0</codesph>
+        <libsph>Non concerné</libsph>
+        <libcourtsph>Non concerné</libcourtsph>
+        <dateouv>1967-07-24</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>1967-07-24</dateautor>
+        <datemaj>2016-08-30</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010009066</nofinesset>
+        <nofinessej>590000741</nofinessej>
+        <rs>HOPITAL PRIVE DE VILLENEUVE D'ASCQ 2</rs>
+        <rslongue>HOPITAL PRIVE DE VILLENEUVE D'ASCQ 2</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>20</numvoie>
+        <typvoie>AV</typvoie>
+        <voie>DE LA RECONNAISSANCE</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp>QUARTIER DU RECUEIL</lieuditbp>
+        <commune>009</commune>
+        <libcommune>VILLENEUVE D ASCQ</libcommune>
+        <departement>59</departement>
+        <libdepartement>NORD</libdepartement>
+        <codepostal>59650</codepostal>
+        <ligneacheminement>59650 VILLENEUVE D ASCQ</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0826666900</telephone>
+        <telecopie>0320995678</telecopie>
+        <courriel>320prea@gsante.fr</courriel>
+        <categetab>365</categetab>
+        <libcategetab>Etablissement de Soins Pluridisciplinaire</libcategetab>
+        <libcourtcategetab>Etab.Soins Pluridis.</libcourtcategetab>
+        <categagretab>1110</categagretab>
+        <libcategagretab>Etablissements de Soins de Courte Durée</libcategagretab>
+        <libcourtcategagretab>Soins Courte Durée</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>G</natureet>
+        <siret>47678033300037</siret>
+        <datemodifsiret>2014-03-26</datemodifsiret>
+        <originemodifsiret>SIRETISATION</originemodifsiret>
+        <codeape>8610Z</codeape>
+        <codemft>07</codemft>
+        <libmft>ARS établissements de santé non financés dotation globale</libmft>
+        <libcourtmft>ARS / san pr non DG</libcourtmft>
+        <codesph>0</codesph>
+        <libsph>Non concerné</libsph>
+        <libcourtsph>Non concerné</libcourtsph>
+        <dateouv>1967-07-24</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture xsi:nil="true"/>
+        <datefermeture xsi:nil="true"/>
+        <dateautor>1967-07-24</dateautor>
+        <datemaj>2016-08-30</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+    <structureet>
+        <nofinesset>010787190</nofinesset>
+        <nofinessej>010000164</nofinessej>
+        <rs>[Fermé] SMUR POLYCLINIQUE AMBERIEU</rs>
+        <rslongue>SMUR POLYCLINIQUE AMBERIEU EN BUGEY</rslongue>
+        <complrs xsi:nil="true"/>
+        <compldistrib xsi:nil="true"/>
+        <numvoie>17</numvoie>
+        <typvoie>R</typvoie>
+        <voie>AIME VINGTRINIER</voie>
+        <compvoie xsi:nil="true"/>
+        <lieuditbp xsi:nil="true"/>
+        <commune>004</commune>
+        <libcommune>AMBERIEU EN BUGEY</libcommune>
+        <departement>01</departement>
+        <libdepartement>AIN</libdepartement>
+        <codepostal>01500</codepostal>
+        <ligneacheminement>01500 AMBERIEU EN BUGEY</ligneacheminement>
+        <codepays xsi:nil="true"/>
+        <libellepays xsi:nil="true"/>
+        <telephone>0474383000</telephone>
+        <telecopie xsi:nil="true"/>
+        <courriel xsi:nil="true"/>
+        <categetab>321</categetab>
+        <libcategetab>Unité Mobile Hospitalière</libcategetab>
+        <libcourtcategetab>Unité Mobile Hosp.</libcourtcategetab>
+        <categagretab>1204</categagretab>
+        <libcategagretab>Urgence et Réanimation</libcategagretab>
+        <libcourtcategagretab>Urgence Réanimation</libcourtcategagretab>
+        <typeet>P</typeet>
+        <nofinessppal xsi:nil="true"/>
+        <natureet>G</natureet>
+        <siret xsi:nil="true"/>
+        <datemodifsiret xsi:nil="true"/>
+        <originemodifsiret xsi:nil="true"/>
+        <codeape xsi:nil="true"/>
+        <codemft>01</codemft>
+        <libmft>Etablissement Tarif Libre</libmft>
+        <libcourtmft>Tarif libre</libcourtmft>
+        <codesph>3</codesph>
+        <libsph>PSPH par concession</libsph>
+        <libcourtsph>PSPH par concession</libcourtsph>
+        <dateouv>1982-03-04</dateouv>
+        <datelimite xsi:nil="true"/>
+        <indcaduc xsi:nil="true"/>
+        <typefermeture>DEF</typefermeture>
+        <datefermeture>1993-01-01</datefermeture>
+        <dateautor>1982-03-04</dateautor>
+        <datemaj>1993-12-09</datemaj>
+        <numuai xsi:nil="true"/>
+    </structureet>
+</fluxfiness>
