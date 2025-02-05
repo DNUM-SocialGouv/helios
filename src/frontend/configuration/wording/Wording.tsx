@@ -429,7 +429,10 @@ export interface Wording {
   // Favoris
   readonly FAVORIS_LIST: string;
   readonly FAVORIS_LIST_TITLE: string;
-
+  readonly ACTIONS: string;
+  readonly COMPARER: string;
+  readonly SUPPRIMER_DE_LA_LISTE: string;
+  readonly EXPORTER: string;
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
@@ -525,4 +528,5 @@ export interface Wording {
   //Page d’une liste d’etablissements
   readonly LISTE_DE_FAVORIS: string;
   readonly LISTE_NON_TROUVÉE: string;
+
 }
