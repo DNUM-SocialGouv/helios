@@ -7,6 +7,7 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
+import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
@@ -20,6 +21,8 @@ type RouterProps = Readonly<{
 export default function Router({ list }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
+  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+
 
   useBreadcrumb([
     {
@@ -42,7 +45,7 @@ export default function Router({ list }: RouterProps) {
       <h1>
         {list.nom}
       </h1>
-      {displayTable && <ListActionsButton />}
+      {displayTable && <ListActionsButton selectedRows={selectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
@@ -63,7 +66,7 @@ export default function Router({ list }: RouterProps) {
             {!isListEmpty() &&
               <>
                 {displayTable
-                  ? <TableauListeEtablissements list={list} />
+                  ? <TableauListeEtablissements list={list} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
                   : <GrilleListEtablissements list={list} />
                 }
               </>

@@ -24,11 +24,12 @@ const tableHeaders = [
 
 type TableauListeEtablissementsProps = Readonly<{
     list: UserListViewModel;
+    selectedRows: SelectedRows,
+    setSelectedRows: any
 }>;
 
-export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsProps) => {
+export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows }: TableauListeEtablissementsProps) => {
     const { paths } = useDependencies();
-    const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState(defaultOrder);
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
