@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { NewFeaturesCallout } from "../commun/NewFeaturesCallout/NewFeaturesNotice";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
@@ -35,26 +36,29 @@ export const PageRecherche = () => {
   }, [])
 
   return (
-    <main className="fr-container">
+    <main>
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
-      <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+      <NewFeaturesCallout />
+      <div className="fr-container">
+        <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
-      {estCeEnAttente && <RechercheEnAttente />}
+        {estCeEnAttente && <RechercheEnAttente />}
 
-      {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
+        {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
 
-      {estCeQueLesRésultatsSontReçus && (
-        <RésultatsDeRecherche
-          chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
-          estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
-          nombreRésultats={nombreRésultats}
-          résultats={résultats}
-          termeFixe={termeFixe}
-        />
-      )}
-      <Cartographie />
+        {estCeQueLesRésultatsSontReçus && (
+          <RésultatsDeRecherche
+            chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
+            estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
+            nombreRésultats={nombreRésultats}
+            résultats={résultats}
+            termeFixe={termeFixe}
+          />
+        )}
+        <Cartographie />
+      </div>
     </main>
   );
 };
