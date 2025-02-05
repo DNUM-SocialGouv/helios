@@ -1,12 +1,10 @@
-import "@gouvfr/dsfr/dist/component/callout/callout.min.css";
-
 import { useState } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
 import styles from "./NewFeaturesNotice.module.css";
 
 
-export const NewFeaturesCallout = () => {
+export const NewFeaturesNotice = () => {
     const { wording } = useDependencies();
     const [removeNotice, setRemoveNotice] = useState(false);
     return (

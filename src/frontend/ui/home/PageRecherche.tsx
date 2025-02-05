@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { NewFeaturesCallout } from "../commun/NewFeaturesCallout/NewFeaturesNotice";
+import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
@@ -28,6 +28,8 @@ export const PageRecherche = () => {
     rechercher,
   } = useRecherche();
 
+  const showNotice = new Date() <= new Date('2025-03-28');
+
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
       rechercher(localStorage.getItem('searchItem') || '', 1);
@@ -40,7 +42,7 @@ export const PageRecherche = () => {
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
-      <NewFeaturesCallout />
+      {showNotice ? <NewFeaturesNotice /> : null}
       <div className="fr-container">
         <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
