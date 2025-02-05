@@ -15,7 +15,7 @@ export class TypeOrmVigieRhContratLoader implements VigieRhContratLoader {
 
     private async chargerContratModel(numFiness: string): Promise<VigieRhContratModel[]> {
         return await (await this.orm).getRepository(VigieRhContratModel).find({
-            where: { numeroFiness: numFiness },
+            where: { numeroFiness:  numFiness },
         });
     }
 }
