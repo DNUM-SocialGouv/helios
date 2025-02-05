@@ -58,7 +58,7 @@ export function useFavoris() {
      })
      .then(() => {
        const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
-       userContext?.setFavorisLists([...newList])
+       userContext?.setFavorisLists(newList)
      });
  };
 

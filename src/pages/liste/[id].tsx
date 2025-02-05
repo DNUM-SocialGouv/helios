@@ -7,9 +7,9 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 
