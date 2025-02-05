@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
@@ -27,6 +28,8 @@ export const PageRecherche = () => {
     rechercher,
   } = useRecherche();
 
+  const showNotice = new Date() <= new Date('2025-03-28');
+
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
       rechercher(localStorage.getItem('searchItem') || '', 1);
@@ -35,26 +38,29 @@ export const PageRecherche = () => {
   }, [])
 
   return (
-    <main className="fr-container">
+    <main>
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
-      <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+      {showNotice ? <NewFeaturesNotice /> : null}
+      <div className="fr-container">
+        <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
 
-      {estCeEnAttente && <RechercheEnAttente />}
+        {estCeEnAttente && <RechercheEnAttente />}
 
-      {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
+        {estCeQueLeBackendNeRépondPas && <RechercheCassée />}
 
-      {estCeQueLesRésultatsSontReçus && (
-        <RésultatsDeRecherche
-          chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
-          estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
-          nombreRésultats={nombreRésultats}
-          résultats={résultats}
-          termeFixe={termeFixe}
-        />
-      )}
-      <Cartographie />
+        {estCeQueLesRésultatsSontReçus && (
+          <RésultatsDeRecherche
+            chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
+            estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
+            nombreRésultats={nombreRésultats}
+            résultats={résultats}
+            termeFixe={termeFixe}
+          />
+        )}
+        <Cartographie />
+      </div>
     </main>
   );
 };

@@ -609,4 +609,9 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
+
+  //Callout page d'acceuil
+  readonly NOUVEAU: string = "NOUVEAU";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
 }

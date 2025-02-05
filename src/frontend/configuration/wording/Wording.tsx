@@ -520,4 +520,9 @@ export interface Wording {
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
+
+  //Callout page d'acceuil
+  readonly NOUVEAU: string;
+  readonly NOUVELLES_FONCTIONNALITÉS: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 }
