@@ -8,8 +8,9 @@ const ConfirmDeleteListModal = ({ deleteList }: { deleteList: () => void }) => {
                             <div className="fr-modal__header"></div>
                             <div className="fr-modal__content">
                                 <h1 className="fr-modal__title" id="fr-modal-2-title">
-                                    Souhaitez-vous confirmer la suppression de la liste ?
+                                Confirmation de la suppression
                                 </h1>
+                                <p>Confirmez-vous la suppression de la liste ?</p>
                             </div>
                             <div className="fr-modal__footer">
                                 <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">

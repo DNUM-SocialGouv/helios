@@ -52,34 +52,33 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
         {updateListName ?
             <>
                 <input
-                    className="fr-input fr-input--error"
+                    className="fr-input"
                     onChange={(e) => setNewName(e.target.value)}
                     onKeyDown={handleKeyDown}
                     required
                     value={newName}
                 />
                 <button className="fr-btn" onClick={onClickConfirmUpdate}>Valider</button>
-                <button className="fr-btn fr-btn--secondary" onClick={() => {setUpdateListName(false); setNewName(listName)}}>Annuler</button>
+                <button className="fr-btn fr-btn--secondary" onClick={() => { setUpdateListName(false); setNewName(listName) }}>Annuler</button>
             </> :
             <h1 className={styles["list-title"]}>
                 {listName}
             </h1>
         }
         <div className={styles["dropdown"]}>
-            {!updateListName ? <button
-                className={"fr-icon-edit-line " + styles["menu-button"]}
-                onClick={() => {
-                    setDisplayMenu(!displayMenu);
-                }}
-                ref={ref}
-                title="Modifier la liste"
-            /> : null}
+            {!updateListName ?
+                <button
+                    className={"fr-icon-edit-line " + styles["menu-button"]}
+                    onClick={() => {
+                        setDisplayMenu(!displayMenu);
+                    }}
+                    ref={ref}
+                    title="Modifier la liste"
+                /> : null}
             {displayMenu ? (
                 <ul className={styles["menu"]}>
                     <li>
-                        <button onClick={onClickUpdateTitle}>
-                            Modifier le titre
-                        </button>
+                        <button onClick={onClickUpdateTitle}>Modifier le titre</button>
                     </li>
                     <hr className={styles["menu-sperator"]} />
                     <li>

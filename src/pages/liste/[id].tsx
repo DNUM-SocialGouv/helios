@@ -51,7 +51,10 @@ export default function Router({ list, etablissements }: RouterProps) {
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {/* TODO Pour le moment on ne gère pas l’affichage en tableau */ };
 
   const titleHead = <>
-    <ListNameButton id={list.id} name={list.nom} />
+    {!list.isFavoris ?
+      <ListNameButton id={list.id} name={list.nom} /> :
+      <h1>{list.nom}</h1>
+    }
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{"(" + elements.length + ") établissements"}</p>
