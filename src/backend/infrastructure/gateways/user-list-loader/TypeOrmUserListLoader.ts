@@ -35,8 +35,9 @@ export class TypeOrmUserListLoader implements UserListLoader {
             }
         });
     }
-    async updateName(idUser: string, idList: number, listName: string): Promise<void> {
+    async updateName(idUser: string, idList: number, listName: string): Promise<UserListModel | null> {
         await (await this.orm).getRepository(UserListModel).update({ id: idList, userId: idUser }, { nom: listName });
+        return this.getById(idUser, idList)
     }
     async delete(idUser: string, idList: number): Promise<void> {
         await (await this.orm).getRepository(UserListModel).delete({ id: idList, userId: idUser });

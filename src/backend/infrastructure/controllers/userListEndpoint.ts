@@ -40,7 +40,7 @@ export async function getAllIdAndName(idUser: string): Promise<InformationSurLis
         throw error;
     }
 }
-export async function updateName(idUser: string, idList: number, listName: string): Promise<void> {
+export async function updateName(idUser: string, idList: number, listName: string): Promise<UserListModel | null> {
     try {
         const userListUseCase = new UserListUseCase(dependencies.userListLoader);
         return await userListUseCase.updateName(idUser, idList, listName);

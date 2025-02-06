@@ -6,6 +6,6 @@ export interface UserListLoader {
     getAll(idUser: string): Promise<UserListModel[]>;
     getById(idUser: string, idList: number): Promise<UserListModel | null>;
     getAllIdAndName(idUser: string): Promise<InformationSurListe[]>; // TODO Use a specific object an not the Entity
-    updateName(idUser: string, idList: number, listName: string): Promise<void>;
+    updateName(idUser: string, idList: number, listName: string): Promise<UserListModel | null>;
     delete(idUser: string, idList: number): Promise<void>;
 }

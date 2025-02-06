@@ -11,6 +11,7 @@ import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 
@@ -42,9 +43,10 @@ export default function Router({ list }: RouterProps) {
 
   const titleHead = <>
     <div className="fr-grid-row">
-      <h1>
-        {list.nom}
-      </h1>
+      {!list.isFavoris ?
+        <ListNameButton id={list.id} name={list.nom} /> :
+        <h1>{list.nom}</h1>
+      }
       {displayTable && <ListActionsButton selectedRows={Object.values(selectedRows).flat()} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
