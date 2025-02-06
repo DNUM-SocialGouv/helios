@@ -9,6 +9,7 @@ import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
 
@@ -37,9 +38,10 @@ export default function Router({ list }: RouterProps) {
   const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
-    <h1>
-      {list.nom}
-    </h1>
+    {!list.isFavoris ?
+      <ListNameButton id={list.id} name={list.nom} /> :
+      <h1>{list.nom}</h1>
+    }
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{"(" + listLength + ") établissements"}</p>

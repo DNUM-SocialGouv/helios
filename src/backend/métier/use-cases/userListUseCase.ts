@@ -21,7 +21,7 @@ export class UserListUseCase {
         return await this.userListLoader.getAllIdAndName(idUser); // TODO security
     }
 
-    async updateName(idUser: string, idList: number, listName: string): Promise<void> {
+    async updateName(idUser: string, idList: number, listName: string): Promise<UserListModel | null> {
         return await this.userListLoader.updateName(idUser, idList, listName); // TODO security
     }
 
