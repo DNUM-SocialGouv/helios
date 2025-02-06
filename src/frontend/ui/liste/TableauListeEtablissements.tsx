@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDependencies } from '../commun/contexts/useDependencies';
 import Spinner from '../commun/Spinner/Spinner';
 import { SelectedRows, Table } from '../commun/Table/Table';
+import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
 import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
 import { useSearchHistory } from '../search-history/useSearchHistory';
@@ -85,6 +86,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
             {loading
                 ? <Spinner />
                 : <>
+                    {Object.values(selectedRows).flat().length > 1 && <AlerteComparaison />}
                     <Table
                         data={dataOnPage}
                         handleSelectAll={handleSelectAll}

@@ -1,13 +1,11 @@
 import { useContext, useState } from "react";
 
-import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
-import { useDependencies } from "../../commun/contexts/useDependencies";
 import { SelectedRows, Table } from "../../commun/Table/Table";
+import { AlerteComparaison } from "../../comparaison/alerte-comparaison/AlerteComparaison";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
-import styles from "./ResultatRechercheAvancee.module.css";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
@@ -31,7 +29,6 @@ type ResultatRechercheAvanceeProps = Readonly<{
 export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
-  const { wording } = useDependencies();
   const { saveSearchHistory } = useSearchHistory();
 
   const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
@@ -50,12 +47,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
 
   return (
     <>
-      {showAlert() && (
-        <div className={"fr-alert fr-alert--info fr-mt-2w fr-mb-1w " + styles['multiline']}>
-          <h3 className="fr-alert__title">{wording.ALERTE_TYPE_DIFFERENT_TITRE}</h3>
-          <p>{wording.ALERTE_TYPE_DIFFERENT_CORPS}</p>
-        </div>
-      )}
+      {showAlert() && <AlerteComparaison />}
       <TableHeaderRechercheAvancee selectedRows={selectedRows} />
       <Table
         data={data}
