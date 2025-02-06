@@ -7,8 +7,11 @@ import { ViewColumn, ViewEntity } from "typeorm";
       raison_sociale_courte,
       'Entité juridique' AS type,
       termes_de_recherche AS termes,
+      categorisation AS statut_juridique,
       commune,
-      departement
+      departement,
+      code_region,
+      '' AS rattachement
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -16,8 +19,11 @@ import { ViewColumn, ViewEntity } from "typeorm";
       raison_sociale_courte,
       domaine::text AS type,
       termes_de_recherche AS termes,
+      classification,
       commune,
-      departement
+      departement,
+      code_region,
+      numero_finess_entite_juridique AS rattachement
     FROM etablissement_territorial;`,
   name: "recherche",
 })
@@ -28,6 +34,9 @@ export class RechercheModel {
   @ViewColumn({ name: "departement" })
   public département!: string;
 
+  @ViewColumn({ name: "code_region" })
+  public codeRegion!: string;
+
   @ViewColumn({ name: "numero_finess" })
   public numeroFiness!: string;
 
@@ -36,4 +45,13 @@ export class RechercheModel {
 
   @ViewColumn({ name: "type" })
   public type!: string;
+
+  @ViewColumn({ name: "statut_juridique" })
+  public statut_juridique!: string;
+
+  @ViewColumn({ name: "classification" })
+  public classification!: string;
+
+  @ViewColumn({ name: "rattachement" })
+  public rattachement!: string;
 }

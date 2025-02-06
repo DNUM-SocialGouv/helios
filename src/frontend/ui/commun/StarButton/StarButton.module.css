@@ -1,8 +1,11 @@
-.star {
+.star, .star-tab {
     color: #000091;
     min-width: 3rem !important;
     background-color: transparent !important;
     position: relative;
+}
+
+.star {
     top: -8px;
 }
 

@@ -56,7 +56,7 @@ import { AjoutEvenementsIndesirables1710326854362 } from "./migrations/171032685
 import { AjoutTableInspectionsControles1712743083892 } from "./migrations/1712743083892-AjoutTableInspectionsControles";
 import { AjoutDateOuverture1713452627276 } from "./migrations/1713452627276-AjoutDateOuverture";
 import { AjouterTableBudgetEtFinancesSanitaire1714055066913 } from "./migrations/1714055066913-AjouterTableBudget_et_finances_sanitaire";
-import { AjoutTableAllocationRessource1718010452960 } from './migrations/1718010452960-ajoutTableAllocationRessource';
+import { AjoutTableAllocationRessource1718010452960 } from "./migrations/1718010452960-ajoutTableAllocationRessource";
 import { AjoutTableAllocationRessourceET1718177983190 } from "./migrations/1718177983190-AjoutTableAllocationRessourceET";
 import { AjoutActiviteSanitaireMensuel1719306882823 } from "./migrations/1719306882823-AjoutActiviteSanitaireMensuel";
 import { AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129 } from "./migrations/1719927727129-AjoutActiviteSanitaireMensuelEntiteJuridique";
@@ -64,6 +64,11 @@ import { AjoutRoleAdministrationCentrale1720186540616 } from "./migrations/17201
 import { AjoutInstitutionAdministrationCentrale1720187617872 } from "./migrations/1720187617872-AjoutInstitutionAdministrationCentrale";
 import { AjoutOrdreRole1720428140655 } from "./migrations/1720428140655-AjoutOrdreRole";
 import { SupprimeColonneMoisDeTableAllocationRessource1723542249780 } from "./migrations/1723542249780-supprimeColonneMoisDeTableAllocationRessource";
+import { AjoutDeStatutJuridiqueDansLaRecherche1728314215381 } from "./migrations/1728314215381-ajoutDeStatutJuridiqueDansLaRecherche";
+import { AjoutClassificationEtablissementTerritorial1728465089456 } from "./migrations/1728465089456-AjoutClassificationEtablissementTerritorial";
+import { AjoutClassificationDansLaRecherche1728914554142 } from "./migrations/1728914554142-AjoutClassificationDansLaRecherche";
+import { AjoutCodeRegionDansLaRecherche1730971588532 } from "./migrations/1730971588532-AjoutCodeRegionDansLaRecherche";
+import { AjoutRattachementRecherche1732629322484 } from "./migrations/1732629322484-AjoutRattachementRecherche";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -142,7 +147,7 @@ export default new DataSource({
     AllocationRessourceModel,
     AllocationRessourceETModel,
     ActivitéSanitaireMensuelModel,
-    ActivitéSanitaireMensuelEntiteJuridiqueModel
+    ActivitéSanitaireMensuelEntiteJuridiqueModel,
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -213,7 +218,12 @@ export default new DataSource({
     AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682,
     SupprimeColonneMoisDeTableAllocationRessource1723542249780,
     AjoutActiviteSanitaireMensuel1719306882823,
-    AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129
+    AjoutActiviteSanitaireMensuelEntiteJuridique1719927727129,
+    AjoutDeStatutJuridiqueDansLaRecherche1728314215381,
+    AjoutClassificationEtablissementTerritorial1728465089456,
+    AjoutClassificationDansLaRecherche1728914554142,
+    AjoutCodeRegionDansLaRecherche1730971588532,
+    AjoutRattachementRecherche1732629322484,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

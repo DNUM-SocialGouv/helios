@@ -1,0 +1,79 @@
+.star {
+    color: #000091;
+}
+
+.logo-container {
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.logo-center {
+    text-align: -webkit-center !important;
+}
+
+.info-container::before {
+    height: 23px;
+    width: 15px;
+}
+
+.cell-container {
+    max-width: 1rem;
+    text-wrap: wrap !important;
+}
+
+.cell-not-authorized {
+    background-color: beige !important;
+}
+
+.header-logo {
+    text-align: center !important;
+}
+
+.table-tr-avrage td {
+    color: #979797;
+}
+
+.info-container-bulle::before {
+    height: 23px;
+    width: 15px;
+    color: var(--blue-france-sun-113-625);
+}
+
+.table_container_vscroll {
+    overflow-x: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.table_container_sticky-header {
+    overflow: unset !important;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.tooltip {
+    /*visibility: hidden;*/
+    background-color: rgba(0, 0, 0, .75);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    /* Position the tooltip above the button */
+    left: 50%;
+    margin-left: -60px;
+    /* Offset the tooltip by half its width */
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.button:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}

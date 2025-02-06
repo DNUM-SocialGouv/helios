@@ -11,7 +11,7 @@ type listeAnneesTagsProps = {
 
 
 
-export const SelectionAnneeTags = ({ setAnnéeEnCours, annees, id, prefix }: listeAnneesTagsProps) => {
+export function SelectionAnneeTags({ setAnnéeEnCours, annees, id, prefix }: listeAnneesTagsProps) {
   let anneesTriees = annees.sort((année1, année2) => (année1 as number) - (année2 as number));
   const [selectedIndex, setSelectedIndex] = useState(annees.length - 1);
 
@@ -35,12 +35,11 @@ export const SelectionAnneeTags = ({ setAnnéeEnCours, annees, id, prefix }: lis
                   setAnnéeEnCours(Number(annee));
                 }
               }}
-            >{annee}</button >
+            >{annee}
+            </button >
           </li>
         ))}
       </ul>
     );
-  }
-
-  return <></>;
+  } else return <></>;
 };

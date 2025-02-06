@@ -601,10 +601,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gouvfr/dsfr@npm:1.9.2":
-  version: 1.9.2
-  resolution: "@gouvfr/dsfr@npm:1.9.2"
-  checksum: 3516c42d3444f009d0b3ba6fddfba2939c7916ad042e5dbef89552441bc067d69e893f97a6ced428ab60e23f3a23ddf2b457777b485cc468d5a65857c4ac62ed
+"@gouvfr/dsfr@npm:1.12.1":
+  version: 1.12.1
+  resolution: "@gouvfr/dsfr@npm:1.12.1"
+  peerDependencies:
+    browser-sync: ^2.27.10
+  checksum: 65820e88eecc7c48066d615bf2f6d20282a447774d8a8cde363dd1b21003a091295627067dc265c8669a3147ff31283f56810c7c944a8294eb871191119fdf03
   languageName: node
   linkType: hard
 
@@ -3944,6 +3946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 2c5a6214147ffa7135ce41860c781de17e93128689b0d080d3116468274b3593b607bcd462ac210d3a61f081db3d3b09ae106e18d60b1f529580e95cf2db8a55
+  languageName: node
+  linkType: hard
+
 "cookies-next@npm:^4.1.0":
   version: 4.1.0
   resolution: "cookies-next@npm:4.1.0"
@@ -6050,7 +6059,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "helios@workspace:."
   dependencies:
-    "@gouvfr/dsfr": 1.9.2
+    "@gouvfr/dsfr": 1.12.1
     "@lhci/cli": ^0.9.0
     "@next/bundle-analyzer": ^13.2.4
     "@sentry/nextjs": 7.29.0
@@ -6083,6 +6092,7 @@ __metadata:
     bcrypt: ^5.1.0
     chart.js: ^3.8.0
     chartjs-plugin-datalabels: ^2.0.0
+    cookie: ^1.0.2
     cookies-next: ^4.1.0
     crypto: ^1.0.1
     csv-parser: ^3.0.0
@@ -6108,7 +6118,7 @@ __metadata:
     next: 13
     next-auth: ^4.22.1
     next-router-mock: ^0.7.4
-    next-usequerystate: ^1.12.2
+    next-usequerystate: ^1.20.0
     node-fetch: 2.6.7
     papaparse: ^5.4.1
     pg: ^8.7.3
@@ -8582,14 +8592,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-usequerystate@npm:^1.12.2":
-  version: 1.12.2
-  resolution: "next-usequerystate@npm:1.12.2"
+"next-usequerystate@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "next-usequerystate@npm:1.20.0"
   dependencies:
     mitt: ^3.0.1
   peerDependencies:
     next: ">=13.4 <14.0.2 || ^14.0.3"
-  checksum: cfb79d26e373f51faffb9ef677b92d138ee4d7d9b155063a431987efec3b035dd799106423228dbdafe99f09878d32a27de8e4e280932f013f62787318c684f6
+  checksum: fbe915a99e2374eb43c4b1c7ab9b29f4bf46c4383ee66c61ecb13d768e5552f040a90b33a0df1675c20d0cab64d62035cea1b801512f936648af78726ec6860e
   languageName: node
   linkType: hard
 

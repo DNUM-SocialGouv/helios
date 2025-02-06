@@ -15,7 +15,7 @@ describe("La recherche des entités juridiques et des établissements territoria
       ],
     };
     const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce(résultatDeRecherche);
-    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme };
+    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme, rechercheAvancee: mockedRechercheParTerme };
     const termeDeLaRecherche = "terme de la recherche";
     const premièrePage = 1;
 
@@ -36,6 +36,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "010018407",
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
+          rattachement: "",
         },
         {
           commune: "NANTUA",
@@ -43,6 +44,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "010000040",
           raisonSocialeCourte: "CH NANTUA",
           type: "Médico-social",
+          rattachement: "010018407",
         },
         {
           commune: "VILLENEUVE D ASCQ",
@@ -50,6 +52,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           numéroFiness: "590782553",
           raisonSocialeCourte: "HP VILLENEUVE DASCQ",
           type: "Sanitaire",
+          rattachement: "010018407",
         },
       ],
     });

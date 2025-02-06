@@ -8,9 +8,7 @@
 }
 
 .tuile {
-  align-self: flex-start;
-  margin: 2.5rem 0 0 2rem;
-  min-width: 3rem;
+  padding: 2rem 0 0 !important;
 }
 
 .hideArrow::after {
@@ -21,11 +19,10 @@
   text-transform: capitalize;
 }
 
-@media (max-width: 48em) {
-  .tuile {
-    align-self: center;
-    margin-left: 0;
-  }
+.rechercheAvancee {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
 }
 
 .voir-plus-de-résultats {

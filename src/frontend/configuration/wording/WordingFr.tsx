@@ -95,7 +95,15 @@ export class WordingFr implements Wording {
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
   readonly RECHERCHE_TITRE: string = "";
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
+  readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Aucun résultat ne correspond à votre recherche";
 
+  // Recherche avancée
+  readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
+  readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
+  readonly STRUCTURE: string = "Structure";
+  readonly CAPACITE: string = "Capacité";
+  readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
@@ -186,8 +194,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = "Nombre de passages aux urgences";
 
   // Bloc Activité Sanitaire
-  readonly NOMBRE_DE_SÉJOUR_MCO: string =
-    "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = "Total Hospitalisation Médecine";
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = "Total Hospitalisation Chirurgie";
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = "Total Hospitalisation Obstétrique";
@@ -199,8 +206,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = "Hospitalisation Complète Obstétrique";
   readonly TOTAL_HOSPITALISATION_SSR: string = "Total Hospitalisation SSR";
   readonly TOTAL_HOSPITALISATION_PSY: string = "Total Hospitalisation PSY";
-  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string =
-    "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
   readonly HOSPITALISATION_PARTIELLE_SSR: string = "Hospitalisation Partielle SSR";
   readonly HOSPITALISATION_COMPLÈTE_SSR: string = "Hospitalisation Complète SSR";
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
@@ -500,6 +506,10 @@ export class WordingFr implements Wording {
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
 
+  // Comparaison
+  readonly COMPARAISON: string = "Comparaison";
+  readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
+
   // Favoris
   readonly FAVORIS_LIST: string = "Liste des favoris";
   readonly EJ_SECTION_TITLE: string = "Entités juridiques";
@@ -522,7 +532,7 @@ export class WordingFr implements Wording {
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
 
   // Historique de recherche
-  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés suite à une recherche";
+  readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
   readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
   readonly DATE: string = "Date";
   readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
@@ -573,4 +583,35 @@ export class WordingFr implements Wording {
   //Blocs
   readonly TOUT_REPLIER: string = "Tout replier";
   readonly TOUT_DEPLIER: string = "Tout déplier";
+
+  //Filtre recherche avancée
+  //--Filtre Structure
+  readonly ENTITES_JURIDIQUES: string = "Entités Juridiques";
+  readonly ETABLISSEMENTS_SANITAIRES: string = "Etablissements Sanitaires";
+  readonly ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX: string = "Etablissements Sociaux et Médico-Sociaux";
+  readonly STATUT_JURIDIQUE_PUBLIC: string = "PUBLIC";
+  readonly STATUT_JURIDIQUE_PRIVE_LUCRATIF: string = "PRIVÉ LUCRATIF";
+  readonly STATUT_JURIDIQUE_PRIVE_NON_LUCRATIF: string = "PRIVÉ NON LUCRATIF";
+  //--Filtre capacité
+  readonly CAPACITE_INITIALE: string = "Capacité installée (en places)";
+  readonly ETABLISSEMENT_PUBLIC_HANDICAP: string = "Etablissements pour Publics en Situation de Handicap";
+  readonly ETABLISSEMENT_PERSONNE_AGEES: string = "Etablissements pour Personnes Agées";
+  readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
+  readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
+  readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
+  //Comparaison
+  //--Alert-comparaison
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = `Actuellement, vous ne pouvez sélectionner que des établissements médico-sociaux, pour réaliser une comparaison.
+
+A venir : la comparaison des établissements sanitaires et entités juridiques.`;
+  readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
+  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
+  readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
+
+  //Callout page d'acceuil
+  readonly NOUVEAU: string = "NOUVEAU";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
 }
