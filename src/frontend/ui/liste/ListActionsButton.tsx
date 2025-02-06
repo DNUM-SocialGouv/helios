@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { SelectedRows } from "../commun/Table/Table";
+import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import styles from "./ListActionsButton.module.css"
 
 type ListActionsButtonProps = Readonly<{
-    selectedRows: SelectedRows;
+    selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
 }>;
 
 export const ListActionsButton = ({ selectedRows }: ListActionsButtonProps) => {
@@ -19,7 +20,7 @@ export const ListActionsButton = ({ selectedRows }: ListActionsButtonProps) => {
             {displayActions &&
                 <ul className={styles["menu"]}>
                     <li className={styles["menu-item"]}>
-                        <button className="fr-btn fr-btn--tertiary-no-outline" disabled={Object.values(selectedRows).flat().length < 2}>
+                        <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length < 2}>
                             {wording.COMPARER}
                         </button>
                     </li>

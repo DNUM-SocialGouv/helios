@@ -45,7 +45,7 @@ export default function Router({ list }: RouterProps) {
       <h1>
         {list.nom}
       </h1>
-      {displayTable && <ListActionsButton selectedRows={selectedRows} />}
+      {displayTable && <ListActionsButton selectedRows={Object.values(selectedRows).flat()} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
