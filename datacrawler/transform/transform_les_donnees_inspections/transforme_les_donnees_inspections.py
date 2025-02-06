@@ -8,7 +8,6 @@ from datacrawler.transform.equivalence_siicea_helios import (
     index_inspections_controles,
 )
 
-
 def transform_les_donnees_inspections_etablissements(
     donnees_inspections_controles: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:

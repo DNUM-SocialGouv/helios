@@ -112,6 +112,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <span className="fr-footer__bottom-link"> v1.3.8</span>
+
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">
