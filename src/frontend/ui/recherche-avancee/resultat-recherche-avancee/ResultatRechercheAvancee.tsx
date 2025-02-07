@@ -39,13 +39,12 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     }
   };
 
-  const showAlert = () => {
-    return Object.values(selectedRows).flat().length >= 2;
-  }
+  const showAlert = Object.values(selectedRows).flat().length >= 2;
+
 
   return (
     <>
-      {showAlert() && <AlerteComparaison />}
+      {showAlert && <AlerteComparaison />}
       <TableHeaderRechercheAvancee selectedRows={selectedRows} />
       <Table
         data={data}

@@ -25,7 +25,7 @@ const tableHeaders = [
 type TableauListeEtablissementsProps = Readonly<{
     list: UserListViewModel;
     selectedRows: SelectedRows,
-    setSelectedRows: any
+    setSelectedRows: React.Dispatch<React.SetStateAction<SelectedRows>>
 }>;
 
 export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows }: TableauListeEtablissementsProps) => {
@@ -40,7 +40,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
     const lastPage = Math.ceil(etablissements.length / PAGE_SIZE);
 
     const isAllSelected = dataOnPage.length > 0 && selectedRows[page] && selectedRows[page].length === dataOnPage.length;
-
+    const showAlert = Object.values(selectedRows).flat().length > 1;
     useEffect(() => {
         setLoading(true);
         const queryParams = new URLSearchParams({
@@ -84,7 +84,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
             {loading
                 ? <Spinner />
                 : <>
-                    {Object.values(selectedRows).flat().length > 1 && <AlerteComparaison />}
+                    {showAlert && <AlerteComparaison />}
                     <Table
                         data={dataOnPage}
                         handleSelectAll={handleSelectAll}
