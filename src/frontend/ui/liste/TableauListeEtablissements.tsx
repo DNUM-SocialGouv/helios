@@ -6,7 +6,6 @@ import { SelectedRows, Table } from '../commun/Table/Table';
 import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
 import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
-import { useSearchHistory } from '../search-history/useSearchHistory';
 import { UserListViewModel } from '../user-list/UserListViewModel';
 import { Order, OrderBy } from './usePageListe';
 
@@ -15,12 +14,12 @@ const defaultOrder = Order.DESC.valueOf();
 const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
 
 const tableHeaders = [
-    { label: "", key: "etsLogo", orderBy: "type", sort: true },
-    { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
-    { label: "Commune", key: "commune", sort: true },
-    { label: "Département", key: "departement", sort: true },
-    { label: "N° FINESS", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-    { label: "Rattachement(s)", key: "rattachement", orderBy: "rattachement", sort: true },
+    { label: "", nomComplet: "", key: "etsLogo", orderBy: "type", sort: true },
+    { label: "Raison Sociale", nomComplet: "", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
+    { label: "Commune", nomComplet: "", key: "commune", sort: true },
+    { label: "Département", nomComplet: "", key: "departement", sort: true },
+    { label: "N° FINESS", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+    { label: "Rattachement(s)", nomComplet: "", key: "rattachement", orderBy: "rattachement", sort: true },
 ];
 
 type TableauListeEtablissementsProps = Readonly<{
@@ -36,7 +35,6 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
     const [dataOnPage, setDataOnPage] = useState<RechercheViewModel[]>([])
     const [loading, setLoading] = useState(true);
-    const { saveSearchHistory } = useSearchHistory();
 
     const etablissements = list.userListEtablissements;
     const lastPage = Math.ceil(etablissements.length / PAGE_SIZE);
@@ -94,8 +92,8 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
                         isAllSelected={isAllSelected}
                         isCenter={false}
                         isShowAvrage={false}
+                        isVScroll={false}
                         onClickDelete={() => { }}
-                        onClickSocialReason={saveSearchHistory}
                         order={order}
                         orderBy={orderBy}
                         page={page}

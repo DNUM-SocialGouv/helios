@@ -33,9 +33,9 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
     @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_des_ressources_humaines(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_ca = "010002269"
@@ -60,21 +60,20 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
                     numéro_finess_ca,
-                    numéro_finess_ca,
                 ],
-                "annee": [2019, 2021, 2020, 2019, 2020, 2019],
-                "nombre_cdd_remplacement": [2.0, 5.0, 5.0, 5.0, NaN, NaN],
-                "taux_etp_vacants": [0.1197, 0.0, 0.0, 0.0, NaN, NaN],
-                "taux_prestation_externes": [0.0232, 0.0164, 0.0164, 0.0082, NaN, NaN],
-                "taux_rotation_personnel": [0.1923, 0.0352, 0.0352, 0.0141, NaN, NaN],
-                "taux_absenteisme_maladie_courte_duree": [0.0028, 0.0083, 0.0083, 0.0125, NaN, NaN],
-                "taux_absenteisme_maladie_moyenne_duree": [0.0465, 0.0166, 0.0166, 0.0149, NaN, NaN],
-                "taux_absenteisme_maladie_longue_duree": [0.0, 0.0089, 0.0089, 0.0319, NaN, NaN],
-                "taux_absenteisme_maternite_paternite": [0.0, 0.0128, 0.0128, 0.0005, NaN, NaN],
-                "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0085, 0.0085, 0.0088, NaN, NaN],
-                "taux_absenteisme_conges_speciaux": [0.0109, 0.0004, 0.0004, 0.0, NaN, NaN],
-                "taux_absenteisme_hors_formation": [0.0609, 0.0554, 0.0554, 0.0685, NaN, NaN],
-                "nombre_etp_realises": [NaN, 188.49999999999997, 50.649999999999991, 17.190000000000001, 9.2200000000000006, 9.7100000000000009],
+                "annee": [2019, 2021, 2020, 2019, 2019],
+                "nombre_cdd_remplacement": [2.0, 5.0, 5.0, 5.0, NaN],
+                "taux_etp_vacants": [0.1197, 0.0, 0.0, 0.0, NaN],
+                "taux_prestation_externes": [0.0232, 0.0164, 0.0164, 0.0082, NaN],
+                "taux_rotation_personnel": [0.1923, 0.0352, 0.0352, 0.0141, NaN],
+                "taux_absenteisme_maladie_courte_duree": [0.0028, 0.0083, 0.0083, 0.0125, NaN],
+                "taux_absenteisme_maladie_moyenne_duree": [0.0465, 0.0166, 0.0166, 0.0149, NaN],
+                "taux_absenteisme_maladie_longue_duree": [0.0, 0.0089, 0.0089, 0.0319, NaN],
+                "taux_absenteisme_maternite_paternite": [0.0, 0.0128, 0.0128, 0.0005, NaN],
+                "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0085, 0.0085, 0.0088, NaN],
+                "taux_absenteisme_conges_speciaux": [0.0109, 0.0004, 0.0004, 0.0, NaN],
+                "taux_absenteisme_hors_formation": [0.0609, 0.0554, 0.0554, 0.0685, NaN],
+                "nombre_etp_realises": [NaN, 188.49999999999997, 50.649999999999991, 17.190000000000001, 9.7100000000000009],
             },
         )
 
@@ -87,9 +86,9 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
 
     def test_sauvegarde_les_dates_de_mises_à_jour_des_indicateurs_ressources_humaines(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -122,9 +121,9 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
     @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -237,9 +236,9 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
     @patch.object(datacrawler, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_ressources_humaines_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

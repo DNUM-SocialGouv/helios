@@ -1,10 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
-import { getUserSessionBack } from "../../../frontend/utils/getUserSessionBack";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
@@ -12,10 +13,10 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       response.status(405).send("Method not allowed");
     }
 
-    const userSession = await getUserSessionBack(request);
+    const userSession = await getServerSession(request, response, authOptions);
 
     //if current user is not Admin National => forced institutionId_fiter to be institutionId of current user
-    const institutionIdSession = (userSession.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
+    const institutionIdSession = (userSession?.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
 
     const key = request.query["key"] as string | "";
     const orderBy = request.query["orderBy"] as string | "";

@@ -528,5 +528,8 @@ export interface Wording {
   //Page d’une liste d’etablissements
   readonly LISTE_DE_FAVORIS: string;
   readonly LISTE_NON_TROUVÉE: string;
-
+  //Callout page d'acceuil
+  readonly NOUVEAU: string;
+  readonly NOUVELLES_FONCTIONNALITÉS: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 }

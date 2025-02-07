@@ -4,7 +4,10 @@ from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_sql import récupère_les_activités_sanitaires_mensuels_de_la_base, récupère_les_numéros_finess_des_établissements_de_la_base, récupère_les_activités_sanitaires_de_la_base
+from datacrawler.extract.lecteur_sql import (
+    récupère_les_activités_sanitaires_mensuels_de_la_base,
+    récupère_les_numéros_finess_des_établissements_de_la_base,
+)
 from datacrawler.load.nom_des_tables import TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ
 from datacrawler.transform.entite_juridique.bloc_activités.agrège_les_activités_dans_les_entites_juridiques import (
     agrège_les_activités_mensuels_dans_les_entites_juridiques,

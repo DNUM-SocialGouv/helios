@@ -1,5 +1,8 @@
 import os
+import subprocess
 from unittest.mock import MagicMock
+from typing import Any
+import pytest
 
 import pandas as pd
 from pytest import LogCaptureFixture
@@ -9,9 +12,28 @@ from datacrawler.déchiffre_diamant import _vérifie_la_clef, déchiffre
 
 
 class TestDéchiffre:
-    dossier_avec_les_données_chiffrées = "data_set/diamant_chiffré"
-    dossier_où_sauvegarder_les_csv = "data_test/diamant_test/"
+    dossier_avec_les_données_chiffrées = "data_test/entrée/diamant_chiffré"
+    dossier_où_sauvegarder_les_csv = "data_test/sortie/diamant_test/"
     logger = crée_le_logger()
+
+    @pytest.fixture(autouse=True)
+    def importe_la_clef_gpg_puis_la_retire(self) -> Any:
+        # Import de la clef GPG de test
+        subprocess.run(
+            "gpg --import data_test/CLEF_POUR_TEST_UNITAIRE_UNIQUEMENT.asc",
+            shell=True,
+            check=True,
+        )
+
+        # Lancement du test
+        yield
+
+        # Retrait de la clef GPG de test
+        subprocess.run(
+            "gpg --batch --yes --delete-secret-and-public-key 'B698 31A4 1F38 B660 2C53 4101 7FC5 ABE1 6458 2E31'",
+            shell=True,
+            check=True,
+        )
 
     def test_crée_autant_de_fichiers_csv_qu_il_y_a_de_fichiers_chiffrés(self) -> None:
         # When

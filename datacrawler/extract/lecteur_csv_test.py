@@ -31,7 +31,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 class TestLisLeFichierCsv:
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_errd_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_activités_ann_errd_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios)
 
@@ -81,7 +81,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_ms_tdp(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_ann_ms_tdp_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios)
 
@@ -106,7 +106,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_men_pmsi_annuel(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/MEN_PMSI_ANNUEL_2022_06_07.CSV")
         colonnes = colonnes_à_lire_men_pmsi_annuel
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios)
 
@@ -138,7 +138,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_ann_rpu(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_RPU_2022_06_23.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_RPU_2022_06_23.CSV")
         colonnes = colonnes_à_lire_ann_rpu
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_rpu_helios)
 
@@ -160,7 +160,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_ann_sae(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_SAE_2022_08_03.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_SAE_2022_08_03.CSV")
         colonnes = colonnes_à_lire_ann_sae
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_sae_helios)
 
@@ -203,7 +203,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_dates_d_entrée_en_vigueur_des_cpom_du_fichier_csv_ann_ms_tdp_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_ann_ms_tdp_et_cpom
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios)
 
@@ -224,7 +224,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ms_tsp_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ms_tdp_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_errd_ej_et_ressources_humaines_helios)
 
@@ -336,7 +336,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_ca_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_ca_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ca_ej_et_ressources_humaines_helios)
 
@@ -346,8 +346,8 @@ class TestLisLeFichierCsv:
         # THEN
         données_des_ressources_humaines_attendues = pd.DataFrame(
             {
-                "Finess": ["010002269", "010002269", "010002269", "010009066", "010009066"],
-                "Année": [2020, 2019, 2018, 2020, 2019],
+                "Finess": ["010003598", "010002269", "010002269", "010009066", "010009066"],
+                "Année": [2021, 2019, 2018, 2020, 2019],
                 "Nombre ETP total réalisé CA": [
                     9.2200000000000006,
                     9.7100000000000009,
@@ -364,7 +364,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_du_bloc_ressources_humaines_du_fichier_ann_errd_ej_et(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV")
         colonnes = colonnes_à_lire_bloc_ressources_humaines_ann_errd_ej_et
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_ressources_humaines_helios)
 
@@ -395,7 +395,7 @@ class TestLisLeFichierCsv:
 
     def test_lis_les_colonnes_demandées_du_fichier_csv_quo_san_finance(self) -> None:
         # GIVEN
-        file_path = get_absolute_file_path("data_set/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
+        file_path = get_absolute_file_path("data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         colonnes = colonnes_a_lire_bloc_budget_finance_entite_juridique
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
 
@@ -406,6 +406,7 @@ class TestLisLeFichierCsv:
         données_des_quo_san_finance_attendues = pd.DataFrame(
             {
                 "Finess EJ": ["010008407", "010008407", "010008407", "010008407", "010008407"],
+                "Finess ET": ["350039574", "010003598", "010005239", NaN, NaN],
                 "Année": [2022, 2021, 2020, 2019, 2017],
                 "Dépenses Titre I Budget global": [-38315470.489920005, -8855071.9100400023, -39714875.189880006, -6388587.3598799994, -5932308.5200800011],
                 "Dépenses Titre II Budget global": [-7262125.2101999987, -1702097.3504400002, -9714938.7098399997, -759828.06984000001, -406173.92999999999],
@@ -424,7 +425,7 @@ class TestLisLeFichierCsv:
                 "Recettes Titre III Budget H": [7910023.6198800011, 2042000.8801200003, 11185621.609919997, 2322363.7799999998, 1235483.1899999999],
                 "SAN Résultat net comptable": [24315.749399994413, -247544.77019999945, -487130.65967999981, -330217.60992000037, -119190.18984000012],
                 "SAN Taux de CAF nette": [2.1120000000000003e-2, -9.2399999999999982e-3, 0.00396, -5.7600000000000012e-3, 4.4400000000000004e-3],
-                "Ration de dépendance financière": [0.44184000000000007, 0.34164, 0.72671999999999981, 0, 0.17579999999999998],
+                "Ratio de dépendance financière": [0.44184000000000007, 0.34164, 0.72671999999999981, 0, 0.17579999999999998],
             }
         )
 

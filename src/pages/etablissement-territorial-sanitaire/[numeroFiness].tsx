@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLÉtablissementTerritorialSanitaireEndpoint } from "../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialSanitaireEndpoint";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { ÉtablissementTerritorialSanitaire } from "../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../backend/métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
@@ -12,6 +13,7 @@ import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { ETB_SANITAIRE } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialSanitaire;
@@ -28,7 +30,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
   const activitéMensuelleViewModel = new ActivitésMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
-
+  
   return (
     <>
       {rechercheViewModel ? (
@@ -61,6 +63,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
+      saveSearchHistoryEndpoint(dependencies,établissementTerritorial.identité.raisonSocialeCourte.value,session?.user.idUser!,
+        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value,ETB_SANITAIRE);
+        
       return {
         props: {
           établissementTerritorial: JSON.parse(JSON.stringify(établissementTerritorial)),

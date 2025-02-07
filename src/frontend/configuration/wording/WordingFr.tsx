@@ -616,4 +616,8 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   //Page d’une liste de favoris
   readonly LISTE_DE_FAVORIS = "Liste de favoris";
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
+  //Callout page d'acceuil
+  readonly NOUVEAU: string = "NOUVEAU";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
 }

@@ -20,7 +20,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
   };
 
   afterEach(() => {
-    fs.rmSync("data_test/source-fake", { recursive: true });
+    fs.rmSync("data_test/sortie/source-fake", { recursive: true });
   });
 
   it("efface les dossiers contenant les anciens fichiers téléchargés en local pour éviter d’utiliser d’anciennes données", async () => {
@@ -62,7 +62,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     await sftpDownloadDataSource.exécute();
 
     // THEN
-    expect(fs.existsSync("data_test/source-fake/simple")).toBe(true);
+    expect(fs.existsSync("data_test/sortie/source-fake/simple")).toBe(true);
   });
 
   it('crée le répertoire "nomenclature"', async () => {
@@ -83,7 +83,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     await sftpDownloadDataSource.exécute();
 
     // THEN
-    expect(fs.existsSync("data_test/source-fake/nomenclature")).toBe(true);
+    expect(fs.existsSync("data_test/sortie/source-fake/nomenclature")).toBe(true);
   });
 
   it('crée le répertoire "enrichi"', async () => {
@@ -104,7 +104,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     await sftpDownloadDataSource.exécute();
 
     // THEN
-    expect(fs.existsSync("data_test/source-fake/enrichi")).toBe(true);
+    expect(fs.existsSync("data_test/sortie/source-fake/enrichi")).toBe(true);
   });
 
   it("se connecte au SFTP", async () => {
@@ -163,7 +163,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       1,
       `${simpleSftpPath}/finess_cs1400101_stock_20211214-0333.xml.gz`,
-      `data_test/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`,
+      `data_test/sortie/${localPath}/simple/finess_cs1400101_stock_20211214-0333.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -172,7 +172,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       2,
       `${simpleSftpPath}/finess_cs1400102_stock_20211214-0336.xml.gz`,
-      `data_test/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`,
+      `data_test/sortie/${localPath}/simple/finess_cs1400102_stock_20211214-0336.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -207,7 +207,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       1,
       `${nomenclatureSftpPath}/finess_cs1500106_stock_20211214-0417.xml.gz`,
-      `data_test/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`,
+      `data_test/sortie/${localPath}/nomenclature/finess_cs1500106_stock_20211214-0417.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -216,7 +216,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       2,
       `${nomenclatureSftpPath}/finess_cs1500107_stock_20221214-0336.xml.gz`,
-      `data_test/${localPath}/nomenclature/finess_cs1500107_stock_20221214-0336.xml.gz`,
+      `data_test/sortie/${localPath}/nomenclature/finess_cs1500107_stock_20221214-0336.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -261,7 +261,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       1,
       `${enrichiSftpPath}/finess_cs1400103_stock_20211214-0343.xml.gz`,
-      `data_test/${localPath}/enrichi/finess_cs1400103_stock_20211214-0343.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/finess_cs1400103_stock_20211214-0343.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -270,7 +270,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       2,
       `${enrichiSftpPath}/finess_cs1400104_stock_20211214-0344.xml.gz`,
-      `data_test/${localPath}/enrichi/finess_cs1400104_stock_20211214-0344.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/finess_cs1400104_stock_20211214-0344.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -279,7 +279,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       3,
       `${enrichiSftpPath}/finess_cs1400105_stock_20211214-0345.xml.gz`,
-      `data_test/${localPath}/enrichi/finess_cs1400105_stock_20211214-0345.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/finess_cs1400105_stock_20211214-0345.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -288,7 +288,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       4,
       `${enrichiSftpPath}/finess_cs1600101_stock_20211214-0346.xml.gz`,
-      `data_test/${localPath}/enrichi/finess_cs1600101_stock_20211214-0346.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/finess_cs1600101_stock_20211214-0346.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
@@ -297,7 +297,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
     expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
       5,
       `${enrichiSftpPath}/finess_cs1600102_stock_20211214-0347.xml.gz`,
-      `data_test/${localPath}/enrichi/finess_cs1600102_stock_20211214-0347.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/finess_cs1600102_stock_20211214-0347.xml.gz`,
       {
         chunkSize: 1000000,
         concurrency: 2,
