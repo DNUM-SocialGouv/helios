@@ -7,7 +7,9 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
+import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
+import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
 import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
@@ -20,6 +22,8 @@ type RouterProps = Readonly<{
 export default function Router({ list }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
+  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+
 
   useBreadcrumb([
     {
@@ -38,10 +42,13 @@ export default function Router({ list }: RouterProps) {
   const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
-    {!list.isFavoris ?
-      <ListNameButton id={list.id} name={list.nom} /> :
-      <h1>{list.nom}</h1>
-    }
+    <div className="fr-grid-row">
+      {!list.isFavoris ?
+        <ListNameButton id={list.id} name={list.nom} /> :
+        <h1>{list.nom}</h1>
+      }
+      {displayTable && <ListActionsButton selectedRows={Object.values(selectedRows).flat()} />}
+    </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{"(" + listLength + ") établissements"}</p>
@@ -61,7 +68,7 @@ export default function Router({ list }: RouterProps) {
             {!isListEmpty() &&
               <>
                 {displayTable
-                  ? <TableauListeEtablissements list={list} />
+                  ? <TableauListeEtablissements list={list} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
                   : <GrilleListEtablissements list={list} />
                 }
               </>
