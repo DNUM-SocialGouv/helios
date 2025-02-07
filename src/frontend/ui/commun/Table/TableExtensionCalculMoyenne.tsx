@@ -20,7 +20,7 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
         <td></td>
         <td></td>
         <td></td>
-        <td className="fr-cell--center">{total + (total && total > 1 ? " établissements" : " établissement")}
+        <td className="fr-cell--center fr-cell--fixed">{total + (total && total > 1 ? " établissements" : " établissement")}
         </td>
         <td className="fr-cell--center">
           <span>Moyenne</span>
@@ -52,7 +52,7 @@ export function TableExtensionCalculMoyenne({ dataSource, total, setEstCeOuvert 
           } else if (cle === "capaciteMoyenne" || cle === "fileActivePersonnesAccompagnesMoyenne") {
             return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle] ? dataSource[cle] : `-`}</td>;
           } else {
-            return <td className="fr-cell--center" key={cle}>{dataSource && dataSource[cle as keyof MoyenneResultatComparaison] !== null ? `${dataSource[cle as keyof MoyenneResultatComparaison]} %` : `-`}</td>;
+            return <td className="fr-cell--center" key={cle}></td>;
           }
         })}
       </tr>

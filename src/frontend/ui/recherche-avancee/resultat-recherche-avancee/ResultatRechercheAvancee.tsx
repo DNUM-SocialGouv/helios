@@ -5,19 +5,18 @@ import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeC
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { SelectedRows, Table } from "../../commun/Table/Table";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { useSearchHistory } from "../../search-history/useSearchHistory";
 import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
 import styles from "./ResultatRechercheAvancee.module.css";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
-  { label: "", key: "etsLogo", orderBy: "type", sort: true },
-  { label: "", key: "favori" },
-  { label: "Raison Sociale", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
-  { label: "Commune", key: "commune", sort: true },
-  { label: "Département", key: "departement", sort: true },
-  { label: "Finess", key: "numéroFiness", orderBy: "numero_finess", sort: true },
-  { label: "Rattachement(s)", key: "rattachement" },
+  { label: "", nomComplet: "", key: "etsLogo", orderBy: "type", sort: true },
+  { label: "", nomComplet: "", key: "favori" },
+  { label: "Raison Sociale", nomComplet: "", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
+  { label: "Commune", nomComplet: "", key: "commune", sort: true },
+  { label: "Département", nomComplet: "", key: "departement", sort: true },
+  { label: "N°FINESS", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },
+  { label: "Rattachement(s)", nomComplet: "", key: "rattachement" },
 ];
 
 type ResultatRechercheAvanceeProps = Readonly<{
@@ -32,7 +31,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
   const { wording } = useDependencies();
-  const { saveSearchHistory } = useSearchHistory();
 
   const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
 
@@ -64,8 +62,8 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isAllSelected={isAllSelected}
         isCenter={false}
         isShowAvrage={false}
+        isVScroll={false}
         onClickDelete={() => { }}
-        onClickSocialReason={saveSearchHistory}
         order={rechercheAvanceeContext?.order || ""}
         orderBy={rechercheAvanceeContext?.orderBy || ""}
         page={page}

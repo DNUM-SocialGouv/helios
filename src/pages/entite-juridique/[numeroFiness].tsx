@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLEntitéJuridiqueEndpoint } from "../../backend/infrastructure/controllers/récupèreLEntitéJuridiqueEndpoint";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { EntitéJuridique } from "../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialRattaché } from "../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
@@ -14,6 +15,7 @@ import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/E
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
+import { ETB_ENTITE_JURIDIQUE } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
   entitéJuridique: EntitéJuridique;
@@ -21,6 +23,8 @@ type RouterProps = Readonly<{
   rechercheResult: any;
   autorisations: any;
 }>;
+
+
 
 export default function Router({ rechercheResult, entitéJuridique, établissementsTerritoriauxRattachés, autorisations }: RouterProps) {
   const { wording, paths } = useDependencies();
@@ -59,6 +63,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion, codeProfiles)) as RouterProps;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
+      saveSearchHistoryEndpoint(dependencies,entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value,session?.user.idUser!,
+        entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value,ETB_ENTITE_JURIDIQUE);
+
       return {
         props: {
           entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
@@ -81,4 +88,5 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     }
     throw error;
   }
+
 }

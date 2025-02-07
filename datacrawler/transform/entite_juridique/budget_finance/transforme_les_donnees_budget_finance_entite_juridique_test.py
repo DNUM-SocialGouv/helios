@@ -32,7 +32,7 @@ class TestTransformeDonnesBudgetFinanceEntiteJuridque:
                 "Recettes Titre III Budget H": [300.00],
                 "SAN Résultat net comptable": [0.01],
                 "SAN Taux de CAF nette": [0.20],
-                "Ration de dépendance financière": [0.10],
+                "Ratio de dépendance financière": [0.10],
             }
         )
 
@@ -93,7 +93,7 @@ class TestTransformeDonnesBudgetFinanceEntiteJuridque:
                 "Recettes Titre III Budget H": [300.00, 100.00, 100.00],
                 "SAN Résultat net comptable": [0.01, 0.02, 0.03],
                 "SAN Taux de CAF nette": [0.20, 0.10, 0.30],
-                "Ration de dépendance financière": [0.10, 0.01, 0.01],
+                "Ratio de dépendance financière": [0.10, 0.01, 0.01],
             }
         )
 
@@ -154,7 +154,7 @@ class TestTransformeDonnesBudgetFinanceEntiteJuridque:
                 "Recettes Titre III Budget H": [300.00, 100.00, 100.00],
                 "SAN Résultat net comptable": [0.01, 0.02, 0.03],
                 "SAN Taux de CAF nette": [0.20, 0.10, 0.30],
-                "Ration de dépendance financière": [0.10, 0.01, 0.01],
+                "Ratio de dépendance financière": [0.10, 0.01, 0.01],
             }
         )
 

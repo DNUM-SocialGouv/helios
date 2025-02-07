@@ -34,10 +34,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-01-14")
     def test_sauvegarde_les_données_financières_et_les_taux_de_caf_et_vétusté(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -59,22 +59,20 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # THEN
         budget_et_finances_attendus = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021, 2020, 2019, 2020, 2019],
+                "annee": [2019, 2020, 2021, 2019, 2020, 2019],
                 "numero_finess_etablissement_territorial": [
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_ca_ph,
-                    numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN],
                 "depenses_groupe_i": [
                     -161786,
                     -85102.530010000002,
                     -85102.530010000002,
-                    -16901.360000000001,
                     -16062.690000000001,
                     NaN,
                     NaN,
@@ -83,7 +81,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -1222576.5799999998,
                     -442475.08000000007,
                     -442475.08000000007,
-                    -464929.67000000004,
                     -482402.46000000008,
                     NaN,
                     NaN,
@@ -92,7 +89,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -8432.5499999999993,
                     -9134.2200000000012,
                     -9134.2200000000012,
-                    -51421.190000000002,
                     -44491.319999999992,
                     NaN,
                     NaN,
@@ -101,7 +97,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     1376744.76,
                     543015.84999999998,
                     543015.84999999998,
-                    595042.94999999995,
                     588568.68999999994,
                     NaN,
                     NaN,
@@ -110,27 +105,24 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
-                    17724.380000000001,
                     782.12,
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0, 12830, 12830, 16484.099999999999, 26733.739999999998, NaN, NaN],
+                "recettes_groupe_iii": [0, 12830, 12830, 26733.739999999998, NaN, NaN],
                 "resultat_net_comptable": [
                     7289.9200000003912,
                     28544.479989999854,
                     28544.479989999854,
-                    95999.209999999963,
                     73128.079999999842,
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     -0.012266115563337794,
                     0.12519374136642053,
                     0.12519374136642053,
-                    0.16460754444264256,
                     0.11776359918113584,
                     NaN,
                     NaN,
@@ -139,7 +131,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.80906837452219427,
                     0.56203591359317973,
                     0.56203591359317973,
-                    0.5319629026790017,
                     0.51376936316695354,
                     0.31154835988672847,
                     NaN,
@@ -151,10 +142,9 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                     NaN,
-                    NaN,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 
@@ -165,12 +155,13 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
 
         pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1), budget_et_finances_attendus.sort_index(axis=1))
 
+    @freeze_time("2022-06-07")
     def test_sauvegarde_les_dates_de_mises_à_jour_des_indicateurs_budget_et_finances(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -208,10 +199,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
     @freeze_time("2022-01-14")
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -243,22 +234,20 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # THEN
         budget_et_finances_attendus = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021, 2020, 2019, 2020, 2019],
+                "annee": [2019, 2020, 2021, 2019, 2020, 2019],
                 "numero_finess_etablissement_territorial": [
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_ca_ph,
-                    numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN],
                 "depenses_groupe_i": [
                     -161786,
                     -85102.530010000002,
                     -85102.530010000002,
-                    -16901.360000000001,
                     -16062.690000000001,
                     NaN,
                     NaN,
@@ -267,7 +256,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -1222576.5799999998,
                     -442475.08000000007,
                     -442475.08000000007,
-                    -464929.67000000004,
                     -482402.46000000008,
                     NaN,
                     NaN,
@@ -276,7 +264,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -8432.5499999999993,
                     -9134.2200000000012,
                     -9134.2200000000012,
-                    -51421.190000000002,
                     -44491.319999999992,
                     NaN,
                     NaN,
@@ -285,7 +272,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     1376744.76,
                     543015.84999999998,
                     543015.84999999998,
-                    595042.94999999995,
                     588568.68999999994,
                     NaN,
                     NaN,
@@ -294,27 +280,24 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
-                    17724.380000000001,
                     782.12,
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0, 12830, 12830, 16484.099999999999, 26733.739999999998, NaN, NaN],
+                "recettes_groupe_iii": [0, 12830, 12830, 26733.739999999998, NaN, NaN],
                 "resultat_net_comptable": [
                     7289.9200000003912,
                     28544.479989999854,
                     28544.479989999854,
-                    95999.209999999963,
                     73128.079999999842,
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     -0.012266115563337794,
                     0.12519374136642053,
                     0.12519374136642053,
-                    0.16460754444264256,
                     0.11776359918113584,
                     NaN,
                     NaN,
@@ -323,7 +306,6 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.80906837452219427,
                     0.56203591359317973,
                     0.56203591359317973,
-                    0.5319629026790017,
                     0.51376936316695354,
                     0.31154835988672847,
                     NaN,
@@ -335,10 +317,9 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                     NaN,
-                    NaN,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 
@@ -350,12 +331,13 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         pd.testing.assert_frame_equal(budget_et_finances_enregistrés.sort_index(axis=1), budget_et_finances_attendus.sort_index(axis=1))
 
     @patch.object(datacrawler, "sauvegarde")
+    @freeze_time("2022-06-07")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_indicateurs_budget_et_finances_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
-        chemin_du_fichier_ann_errd_ej_et = "data_set/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
-        chemin_du_fichier_ann_ca_ej_et = "data_set/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
-        chemin_du_fichier_ann_errd_ej = "data_set/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
-        chemin_du_fichier_ann_per_errd_eprd = "data_set/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ca_ej_et = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+        chemin_du_fichier_ann_errd_ej = "data_test/entrée/diamant/ANN_ERRD_EJ_2022_09_01.CSV"
+        chemin_du_fichier_ann_per_errd_eprd = "data_test/entrée/diamant/ANN_PER_ERRD_EPRD_2022_09_01.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

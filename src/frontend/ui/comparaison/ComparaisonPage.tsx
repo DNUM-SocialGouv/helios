@@ -10,7 +10,6 @@ import { StringFormater } from "../commun/StringFormater";
 import { SelectedRows, Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
-import { useSearchHistory } from "../search-history/useSearchHistory";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
@@ -48,8 +47,6 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
 
   const [reloadTable, setReloadTable] = useState<boolean>(false);
 
-  const { saveSearchHistory } = useSearchHistory();
-
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
     lancerLaComparaison(page, annéeEnCours + "", order, orderBy, codeRegion, codeProfiles);
@@ -67,31 +64,32 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
   };
 
   const tableHeaders = [
-    { label: "", key: "delete" },
-    { label: "", key: "etsLogo", sort: true },
-    { label: "", key: "favori" },
-    { label: "Raison Sociale Courte", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
-    { label: "Numéro Finess", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
+    { label: "", key: "delete", nomComplet: "" },
+    { label: "", key: "etsLogo", nomComplet: "", sort: true },
+    { label: "", key: "favori", nomComplet: "" },
+    { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+    { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
     {
       label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+      nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
       key: "capacite",
       info: true,
       sort: true,
       orderBy: "capacite_total",
     },
-    { label: "Réalisation de l'activité", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
-    { label: "Activité personnes accompagnées", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "TO HP", key: "hebergementPermanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "TO HT", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "TO AJ", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
-    { label: "Prestations externes vs directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
-    { label: "Rotation du personnel", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
-    { label: "ETP vacants", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
-    { label: "CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
-    { label: "Vétusté", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "FRNG", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
-    { label: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
+    { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
+    { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
+    { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+    { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+    { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+    { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
+    { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
+    { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
+    { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+    { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
+    { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
+    { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+    { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
   ];
 
   // Ovrir la Pop-up d'info des icones de tableau
@@ -186,10 +184,10 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 headers={tableHeaders}
                 isAllSelected={isAllSelected}
                 isCenter={true}
-                isShowAvrage={true}
+                isShowAvrage={false}
+                isVScroll={true}
                 onClickDelete={onClickDelete}
                 onClickInfobull={openModal}
-                onClickSocialReason={saveSearchHistory}
                 order={order}
                 orderBy={orderBy}
                 page={page || 1}

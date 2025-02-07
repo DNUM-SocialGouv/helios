@@ -27,7 +27,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_les_numéros_finess_et_dates_d_entrée_en_vigueur_du_cpom(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
@@ -60,7 +60,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
 
     def test_sauvegarde_la_date_de_mise_à_jour_des_dates_d_entrée_en_vigueur_des_cpom(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         numéro_finess_avec_valeurs_manquantes = "010001261"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -81,7 +81,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
 
     def test_supprime_les_données_existantes_avant_de_sauvegarder_les_données_en_base(self) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_une_date_d_entrée_de_cpom_en_base(
@@ -121,7 +121,7 @@ class TestAjouteLeCpomDesÉtablissementsMédicoSociaux:
     @patch.object(datacrawler, "sauvegarde")
     def test_revient_à_la_situation_initiale_si_l_écriture_des_dates_d_entrée_en_vigueur_des_cpom_échoue(self, mocked_sauvegarde: Mock) -> None:
         # GIVEN
-        chemin_du_fichier_ann_ms_tdp_et = "data_set/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
+        chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
         numéro_finess_avec_valeurs_manquantes = "010001261"
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

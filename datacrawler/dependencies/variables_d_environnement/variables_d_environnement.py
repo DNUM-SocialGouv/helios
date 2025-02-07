@@ -10,6 +10,12 @@ class VariablesDEnvironnement(TypedDict):
     DIAMANT_ENCRYPTED_DATA_PATH: str
     FINESS_SFTP_LOCAL_PATH: str
     UTILISATEURS_DATA_PATH: str
+    CHECKED_SIREC_DATA_PATH: str
+    SIVSS_DATA_PATH: str
+    CHECKED_SIVSS_DATA_PATH: str
+    SIICEA_DATA_PATH: str
+    CHECKED_SIICEA_DATA_PATH: str
+    HAPI_DATA_PATH: str
 
 
 def récupère_les_variables_d_environnement(

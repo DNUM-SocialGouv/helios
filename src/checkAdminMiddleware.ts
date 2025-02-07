@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
-import { getUserSessionBack } from "./frontend/utils/getUserSessionBack";
+import { authOptions } from "./pages/api/auth/[...nextauth]";
 
 export async function checkAdminRole(req: NextApiRequest, res: NextApiResponse): Promise<boolean> {
-  const userSession = await getUserSessionBack(req);
+  const userSession = await getServerSession(req, res, authOptions);
 
   if (userSession && (userSession?.user?.role === 1 || userSession?.user?.role === 2)) {
     return true;

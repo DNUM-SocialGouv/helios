@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import { getSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 
 import { ProfileValue } from "../../../../database/models/ProfilModel";
@@ -45,6 +46,18 @@ export default function Router({ profileValue, profileLabel, profileCode, profil
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
     try {
+        const session = await getSession(context);
+
+        // if current user is not a National admin
+        if (session?.user?.role !== 1) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: "/inaccessible",
+                },
+            };
+        }
+
         const { params } = context;
         if (params && params["profileCode"]) {
             const profile = (await getProfileByCodeEndpoint(dependencies, params["profileCode"] as string));

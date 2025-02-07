@@ -40,7 +40,12 @@
     color: var(--blue-france-sun-113-625);
 }
 
-.table_container_surcharge {
+.table_container_vscroll {
+    overflow-x: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.table_container_sticky-header {
     overflow: unset !important;
 }
 

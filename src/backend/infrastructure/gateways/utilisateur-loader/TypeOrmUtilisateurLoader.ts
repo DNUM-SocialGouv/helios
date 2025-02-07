@@ -259,9 +259,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         orders = { nom: "ASC" };
     }
 
-    // eslint-disable-next-line no-console
-    console.log('conditions', conditions);
-
     const data = await utilisateurRepo.find({
       // @ts-ignore
       where: conditions,

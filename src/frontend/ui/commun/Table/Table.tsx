@@ -17,6 +17,7 @@ export type SelectedRows = Readonly<{
 interface Header {
   label: string;
   key: string;
+  nomComplet: string;
   isButton?: boolean;
   sort?: boolean;
   info?: boolean;
@@ -37,13 +38,13 @@ interface DataTableProps {
   setOrderBy: (orderBy: string) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
+  isVScroll: boolean;
   onClickInfobull?: (name: string) => void;
   page: number;
   handleSelectAll: () => void;
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TableHeaderProps {
@@ -71,7 +72,6 @@ interface TableBodyProps {
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  onClickSocialReason: (title: string, finessNumber: string, type: string) => void;
 }
 
 interface TriProps {
@@ -148,7 +148,8 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
           </div>
         </th>
         {headers.map((header, index) =>
-          <th className={isCenter ? "fr-cell--center" : ""} key={index}>
+          <th className={`${isCenter ? "fr-cell--center" : ""} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''}`}
+            key={index} title={header.nomComplet}>
             <span className="fr-cell__title">{header.label}</span>
             {header.info && onClickInfobull && (
               <button
@@ -164,7 +165,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, onClickSocialReason }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -184,7 +185,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
             </div>
           </th>
           {headers.map((header, colIndex) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
@@ -207,7 +208,6 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                 <a
                   className="fr-tile__link"
                   href={construisLeLien(row["type"], row["numéroFiness"])}
-                  onClick={() => onClickSocialReason(row["socialReason"], row["numéroFiness"], row["type"])}
                   rel="noreferrer"
                   style={{ backgroundImage: "none" }}
                   target="_blank"
@@ -238,13 +238,13 @@ export const Table = ({
   setOrderBy,
   isShowAvrage = false,
   isCenter = false,
+  isVScroll = false,
   onClickInfobull,
   handleSelectAll,
   isAllSelected,
   page,
   onClickDelete,
   handleInfoBullMoyenne,
-  onClickSocialReason,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
@@ -257,7 +257,7 @@ export const Table = ({
   return (
     <div id="table-selectable-component">
       <div className="fr-table__wrapper">
-        <div className={`fr-table__container ${!isShowAvrage ? styles["table_container_surcharge"] : ""}`}>
+        <div className={isVScroll ? styles["table_container_vscroll"] : styles["table_container_sticky"]}>
           <div className="fr-table__content">
             <table id="table-selectable">
               <TableHeader
@@ -281,7 +281,6 @@ export const Table = ({
                 isCenter={isCenter}
                 isShowAvrage={isShowAvrage}
                 onClickDelete={onClickDelete}
-                onClickSocialReason={onClickSocialReason}
                 page={page}
                 selectedRows={selectedRows}
                 total={total}
