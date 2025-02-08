@@ -84,6 +84,7 @@ import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigi
 import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/referentiels/1738593046415-AjoutReferentielMasque";
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
+import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -259,7 +260,8 @@ export default new DataSource({
     AjoutReferentielProfessionGroupe1738328713502,
     AjoutReferentielMasque1738593046415,
     AjoutReferentielQualite1738593074489,
-    AjoutReferentielRedressement1738593097578
+    AjoutReferentielRedressement1738593097578,
+    AjoutClésEtrangèresVigieRh1739011319358
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
