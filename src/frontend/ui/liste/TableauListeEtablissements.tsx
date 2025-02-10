@@ -5,7 +5,7 @@ import Spinner from '../commun/Spinner/Spinner';
 import { SelectedRows, Table } from '../commun/Table/Table';
 import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
-import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
+import { TableFooter } from '../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter';
 import { UserListViewModel } from '../user-list/UserListViewModel';
 import { Order, OrderBy } from './usePageListe';
 
@@ -101,11 +101,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
                         setOrder={onOrderChange}
                         setOrderBy={setOrderBy}
                         setSelectedRows={setSelectedRows} />
-                    {etablissements.length > PAGE_SIZE &&
-                        <div>
-                            <PaginationBtn paginationData={{ lastPage, page, setPage }} />
-                        </div>
-                    }
+                    <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={PAGE_SIZE} nombreRésultats={etablissements.length} page={page || 1} setPage={setPage} />
                 </>
             }
         </>

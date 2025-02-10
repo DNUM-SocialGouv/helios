@@ -4,7 +4,7 @@ import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeC
 import { SelectedRows, Table } from "../../commun/Table/Table";
 import { AlerteComparaison } from "../../comparaison/alerte-comparaison/AlerteComparaison";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { TableFooterRechercheAvancee } from "./resultat-recherche-avancee-footer/RechercheAvanceeFooter";
+import { TableFooter } from "./resultat-recherche-avancee-footer/TableFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 
 const tableHeaders = [
@@ -62,7 +62,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
         setSelectedRows={setSelectedRows} />
-      <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+      <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
     </>
   );
 };

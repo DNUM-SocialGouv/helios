@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import PaginationBtn from '../../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
-import { TableFooterRechercheAvancee } from './RechercheAvanceeFooter';
 import styles from './RechercheAvanceeFooter.module.css';
+import { TableFooter } from './TableFooter';
 
 describe('PaginationBtn Component', () => {
     const setPage = jest.fn();
@@ -52,12 +52,12 @@ describe('TableFooterRechercheAvancee établissements number Component', () => {
     const setPage = jest.fn();
 
     it('renders the correct number of results', () => {
-        render(<TableFooterRechercheAvancee lastPage={10} nombreDeResultatsMaxParPage={20} nombreRésultats={100} page={1} setPage={setPage} />);
+        render(<TableFooter lastPage={10} nombreDeResultatsMaxParPage={20} nombreRésultats={100} page={1} setPage={setPage} />);
         expect(screen.getByText(/100 établissements/i)).toBeInTheDocument();
     });
 
     it('applies the correct CSS classes', () => {
-        render(<TableFooterRechercheAvancee lastPage={10} nombreDeResultatsMaxParPage={20} nombreRésultats={100} page={1} setPage={setPage} />);
+        render(<TableFooter lastPage={10} nombreDeResultatsMaxParPage={20} nombreRésultats={100} page={1} setPage={setPage} />);
 
         const footerContainer = screen.getByTestId('footer-container');
         expect(footerContainer).toHaveClass(styles["footer-container"]);

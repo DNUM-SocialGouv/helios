@@ -39,6 +39,9 @@ export default function Router({ list }: RouterProps) {
   const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
   const listLength = list.userListEtablissements.length;
+  const selectedRowsValues = Object.values(selectedRows).flat();
+  const tableMessage = `${selectedRowsValues.length} ${selectedRowsValues.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
+  const vignetteMessage = `${listLength} ${listLength > 1 ? 'établissements' : 'établissement'}`;
   const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
@@ -47,11 +50,11 @@ export default function Router({ list }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list.nom}</h1>
       }
-      {displayTable && <ListActionsButton selectedRows={Object.values(selectedRows).flat()} />}
+      {displayTable && <ListActionsButton selectedRows={selectedRowsValues} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
-        <p className="fr-table__detail">{"(" + listLength + ") établissements"}</p>
+        <p className="fr-table__detail">{displayTable ? tableMessage : vignetteMessage}</p>
       </div>
       <div className="fr-col--right">
         <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
