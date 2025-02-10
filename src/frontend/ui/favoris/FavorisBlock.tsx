@@ -14,16 +14,14 @@ type FavorisBlockProps = Readonly<{
     favorisList: UserListEtablissementViewModel[];
     title: string;
     currentListId: number;
-    isFavoris: boolean;
 }>;
 
 export const FavorisBlock = ({
-    isFavoris,
     currentListId,
     favorisList,
     title,
 }: FavorisBlockProps) => {
-    const { wording, paths } = useDependencies();
+    const { paths } = useDependencies();
     const list = favorisList.length > 4 ? favorisList.slice(0, 3) : favorisList;
     const [listEtablissements, setLlistEtablissements] = useState<RechercheViewModel[]>([]);
     const [estCeEnAttente, setestCeEnAttente] = useState(true);
@@ -49,7 +47,7 @@ export const FavorisBlock = ({
 
     return (
         <div className="fr-mb-3w" >
-            <Link className={styles["titre-liste"]} href={`/liste/${currentListId}`} >{(isFavoris ? wording.FAVORIS_LIST_TITLE : title) + " (" + favorisList.length + ")"}</Link>
+            <Link className={styles["titre-liste"]} href={`/liste/${currentListId}`} >{title + " (" + favorisList.length + ")"}</Link>
             <br />
             {
                 !estCeEnAttente ?
