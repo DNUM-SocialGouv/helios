@@ -14,6 +14,11 @@
 .menu>li {
     margin: 0;
     background-color: white;
+    border-bottom: 1px solid var(--border-default-grey);
+}
+
+.menu>li:last-child {
+    border-bottom: none;
 }
 
 .menu>li:hover {
