@@ -166,6 +166,8 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 };
 
 const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+  const couleurLogo = "#000000"; // Logos en noir
+  
   return (
     <tbody>
       {data.map((row, rowIndex) => (
@@ -198,9 +200,9 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               )}
               {header.key === "etsLogo" && (
                 <div className={styles["logo-center"]}>
-                  {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialSanitaireSvg("#000000")}</span>}
-                  {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialMedicoSociauxSvg("#000000")}</span>}
-                  {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg("#000000")}</span>}
+                  {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialSanitaireSvg(couleurLogo)}</span>}
+                  {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialMedicoSociauxSvg(couleurLogo)}</span>}
+                  {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg(couleurLogo)}</span>}
                 </div>
               )}
               {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
