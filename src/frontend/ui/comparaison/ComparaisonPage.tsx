@@ -9,7 +9,7 @@ import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
 import { SelectedRows, Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { TableFooterRechercheAvancee } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
+import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
@@ -197,7 +197,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
                 setSelectedRows={setSelectedRows}
                 total={nombreRésultats}
               />
-              <TableFooterRechercheAvancee lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+              <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
             </>
           )}
         </div>

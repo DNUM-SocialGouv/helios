@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { useDependencies } from '../commun/contexts/useDependencies';
 import Spinner from '../commun/Spinner/Spinner';
 import { SelectedRows, Table } from '../commun/Table/Table';
+import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
-import PaginationBtn from '../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
+import { TableFooter } from '../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter';
 import { UserListViewModel } from '../user-list/UserListViewModel';
 import { Order, OrderBy } from './usePageListe';
 
@@ -23,11 +24,12 @@ const tableHeaders = [
 
 type TableauListeEtablissementsProps = Readonly<{
     list: UserListViewModel;
+    selectedRows: SelectedRows,
+    setSelectedRows: React.Dispatch<React.SetStateAction<SelectedRows>>
 }>;
 
-export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsProps) => {
+export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows }: TableauListeEtablissementsProps) => {
     const { paths } = useDependencies();
-    const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
     const [page, setPage] = useState(1);
     const [order, setOrder] = useState(defaultOrder);
     const [orderBy, setOrderBy] = useState(defaultOrderBy);
@@ -38,7 +40,7 @@ export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsP
     const lastPage = Math.ceil(etablissements.length / PAGE_SIZE);
 
     const isAllSelected = dataOnPage.length > 0 && selectedRows[page] && selectedRows[page].length === dataOnPage.length;
-
+    const showAlert = Object.values(selectedRows).flat().length > 1;
     useEffect(() => {
         setLoading(true);
         const queryParams = new URLSearchParams({
@@ -82,6 +84,7 @@ export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsP
             {loading
                 ? <Spinner />
                 : <>
+                    {showAlert && <AlerteComparaison />}
                     <Table
                         data={dataOnPage}
                         handleSelectAll={handleSelectAll}
@@ -98,11 +101,7 @@ export const TableauListeEtablissements = ({ list }: TableauListeEtablissementsP
                         setOrder={onOrderChange}
                         setOrderBy={setOrderBy}
                         setSelectedRows={setSelectedRows} />
-                    {etablissements.length > PAGE_SIZE &&
-                        <div>
-                            <PaginationBtn paginationData={{ lastPage, page, setPage }} />
-                        </div>
-                    }
+                    <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={PAGE_SIZE} nombreRésultats={etablissements.length} page={page || 1} setPage={setPage} />
                 </>
             }
         </>

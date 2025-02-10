@@ -513,6 +513,10 @@ export class WordingFr implements Wording {
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
   readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
+  readonly ACTIONS: string = "Actions";
+  readonly COMPARER: string = "Comparer";
+  readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
+  readonly EXPORTER: string = "Exporter";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
