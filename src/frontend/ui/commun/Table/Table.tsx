@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/aria-props */
 import { Dispatch, SetStateAction } from "react";
 
-import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
+import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
-import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
+import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
+import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
 import styles from "./Table.module.css";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
@@ -198,9 +198,9 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               )}
               {header.key === "etsLogo" && (
                 <div className={styles["logo-center"]}>
-                  {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorialSanitaire}</span>}
-                  {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoÉtablissementTerritorial}</span>}
-                  {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
+                  {row["type"] === "Sanitaire" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialSanitaireSvg("#000000")}</span>}
+                  {row["type"] === "Médico-social" && <span className={styles["logo-container"]}>{LogoEtablissementTerritorialMedicoSociauxSvg("#000000")}</span>}
+                  {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg("#000000")}</span>}
                 </div>
               )}
               {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
