@@ -7,12 +7,12 @@ export type PaginationEts = {
   setPage: (page: number) => void;
 };
 
-type TableFooterRechercheAvanceeProps = {
+type TableFooterProps = {
   nombreRésultats: number;
   nombreDeResultatsMaxParPage: number
 } & PaginationEts;
 
-export const TableFooterRechercheAvancee = ({ nombreRésultats, lastPage, page, setPage, nombreDeResultatsMaxParPage }: TableFooterRechercheAvanceeProps) => {
+export const TableFooter = ({ nombreRésultats, lastPage, page, setPage, nombreDeResultatsMaxParPage }: TableFooterProps) => {
   return (
     <div className={styles["footer-container"]} data-testid="footer-container">
       <span className={"fr-table__detail " + styles["number-lines-container"]} data-testid="number-lines-container">

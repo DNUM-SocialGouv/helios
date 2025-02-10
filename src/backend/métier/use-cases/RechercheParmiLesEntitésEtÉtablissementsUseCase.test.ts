@@ -15,7 +15,7 @@ describe("La recherche des entités juridiques et des établissements territoria
       ],
     };
     const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce(résultatDeRecherche);
-    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme, rechercheAvancee: mockedRechercheParTerme };
+    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme, rechercheAvancee: mockedRechercheParTerme, rechercheParNumeroFiness: mockedRechercheParTerme };
     const termeDeLaRecherche = "terme de la recherche";
     const premièrePage = 1;
 

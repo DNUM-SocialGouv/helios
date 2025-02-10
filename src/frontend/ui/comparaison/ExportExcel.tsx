@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
 
 import { ResultatDeComparaison, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { UserContext } from "../commun/contexts/userContext";
-import { RechercheViewModel } from "../home/RechercheViewModel";
+import { UserListViewModel } from "../user-list/UserListViewModel";
 
 export function getCurrentDate() {
   const today = new Date();
@@ -49,12 +49,12 @@ async function getComparaisonData(annee: string, order = "", orderBy = "", codeR
     )
 }
 
-function getFavoris(favoris: RechercheViewModel[] | undefined, numeroFiness: string): string {
-  const filtredFavoris = favoris?.filter((item) => item.numéroFiness === numeroFiness);
-  return filtredFavoris && filtredFavoris.length > 0 ? "Oui" : "Non"
+function getFavoris(favoris: UserListViewModel[] | undefined, numeroFiness: string): string {
+  const isFavoris = favoris?.some(list => list.userListEtablissements.some(etablissement => etablissement.finessNumber === numeroFiness));
+  return isFavoris ? "Oui" : "Non"
 }
 
-function transformData(data: any, favoris: RechercheViewModel[] | undefined) {
+function transformData(data: any, favoris: UserListViewModel[] | undefined) {
   return data.resultat.map((etab: ResultatSMS) => [
     etab.type ?? "-",
     getFavoris(favoris, etab.numéroFiness),
@@ -93,9 +93,8 @@ function ExportToExcel(header: string[], headerType: (string | undefined)[],
 }
 
 async function generateAndExportExcel(
-  year: string, order: string, orderBy: string, favoris: RechercheViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
+  year: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 ) {
-
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
   const data = await getComparaisonData(year, order, orderBy, codeRegion, codeProfiles)
   const dataTransormed = transformData(data, favoris);
@@ -144,7 +143,7 @@ const ExportExcel = ({
       className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left fr-mt-1w"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favoris, datesMisAjour, codeRegion, codeProfiles)}
+      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles)}
       title="Exporter"
       type="button"
     >

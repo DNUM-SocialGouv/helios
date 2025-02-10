@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { StarButton } from "../StarButton/StarButton";
+import { StarButtonList } from "../StarButtonList/StarButtonList";
 import styles from "./Titre.module.css";
 
 type TitreProps = Readonly<{
@@ -19,7 +19,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
       <h1>
         {children}
         <span className="hiddenPdf">
-          <StarButton favorite={rechercheViewModel} parent="titre" />
+          <StarButtonList favorite={rechercheViewModel} parent="titre" />
         </span>
       </h1>
       {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}

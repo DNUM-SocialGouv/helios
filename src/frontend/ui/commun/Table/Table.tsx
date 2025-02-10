@@ -4,12 +4,15 @@ import { Dispatch, SetStateAction } from "react";
 import { LogoEntitéJuridique } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { SelectedRows } from "../../recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
 import { LogoÉtablissementTerritorial } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoÉtablissementTerritorial as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
-import { StarButton } from "../StarButton/StarButton";
+import { StarButtonList } from "../StarButtonList/StarButtonList";
 import styles from "./Table.module.css";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
+
+export type SelectedRows = Readonly<{
+  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
+}>;
 
 interface Header {
   label: string;
@@ -200,7 +203,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntitéJuridique}</span>}
                 </div>
               )}
-              {header.key === "favori" && <StarButton favorite={row as RechercheViewModel} parent="tab" />}
+              {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"

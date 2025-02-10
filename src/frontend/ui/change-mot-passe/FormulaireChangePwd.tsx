@@ -42,7 +42,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                                     onChange={oldPasswordValueOnChange}
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                                     required
-                                    title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                                    title={wording.INVALID_PASSWORD_MESSAGE}
                                     type="password"
                                     value={oldPasswordValue}
                                 />
@@ -60,7 +60,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                                     onChange={passwordValueOnChange}
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                                     required
-                                    title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                                    title={wording.INVALID_PASSWORD_MESSAGE}
                                     type="password"
                                     value={passwordValue}
                                 />
@@ -78,7 +78,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                                     onChange={confirmPasswordValueOnChange}
                                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                                     required
-                                    title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                                    title={wording.INVALID_PASSWORD_MESSAGE}
                                     type="password"
                                     value={confirmPasswordValue}
                                 />
