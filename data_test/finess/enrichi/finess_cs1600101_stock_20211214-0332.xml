@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <horodatage>
+        <emetteur>finess</emetteur>
+        <destinataire>finess</destinataire>
+        <versionmessage>1</versionmessage>
+        <fluxnum>1460</fluxnum>
+        <datemaj>2022-08-24</datemaj>
+    </horodatage>
+    <autreactivite>
+        <noautor>752217289</noautor>
+        <nofinessej>640780813</nofinessej>
+        <rsej>PAS DANS LES NoFINESS CONNUS</rsej>
+        <nofinesset>640000402</nofinesset>
+        <rset>PAS DANS LES NoFINESS CONNUS</rset>
+        <codeautorarhgos>00-00-00000</codeautorarhgos>
+        <activite>A1</activite>
+        <libactivite>Dépôt de sang</libactivite>
+        <modalite>M0</modalite>
+        <libmodalite>Dépôt d'urgence</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <datedecision>2009-09-16</datedecision>
+        <nodecision>--</nodecision>
+        <etatautorisation>7</etatautorisation>
+        <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
+        <datevisite xsi:nil="true"/>
+        <resultatvisite xsi:nil="true"/>
+        <datefin>2024-09-15</datefin>
+        <datemeo>2009-09-16</datemeo>
+        <datelimitemeo xsi:nil="true"/>
+        <datelimitedepot>2024-05-15</datelimitedepot>
+        <datelimvisite xsi:nil="true"/>
+        <datemaj>2022-08-24</datemaj>
+    </autreactivite>
+    <autreactivite>
+        <noautor>322123594</noautor>
+        <nofinessej>010008407</nofinessej>
+        <rsej>NOMINAL</rsej>
+        <nofinesset>010005239</nofinesset>
+        <rset>NOMINAL</rset>
+        <codeautorarhgos>01-00-00000</codeautorarhgos>
+        <activite>A1</activite>
+        <libactivite>Dépôt de sang</libactivite>
+        <modalite>M0</modalite>
+        <libmodalite>Dépôt d'urgence</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <datedecision>2019-06-03</datedecision>
+        <nodecision>20190603</nodecision>
+        <etatautorisation>12</etatautorisation>
+        <libetatautorisation>Modification de l'échéance</libetatautorisation>
+        <datevisite xsi:nil="true"/>
+        <resultatvisite xsi:nil="true"/>
+        <datefin>2024-08-31</datefin>
+        <datemeo>2019-06-03</datemeo>
+        <datelimitemeo xsi:nil="true"/>
+        <datelimitedepot>2024-04-30</datelimitedepot>
+        <datelimvisite xsi:nil="true"/>
+        <datemaj>2021-12-14</datemaj>
+    </autreactivite>
+    <autreactivite>
+        <noautor>322123598</noautor>
+        <nofinessej>010008407</nofinessej>
+        <rsej>NOMINAL</rsej>
+        <nofinesset>010005239</nofinesset>
+        <rset>NOMINAL</rset>
+        <codeautorarhgos>01-00-00001</codeautorarhgos>
+        <activite>A1</activite>
+        <libactivite>Dépôt de sang</libactivite>
+        <modalite>M2</modalite>
+        <libmodalite>Dépôt relais</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <datedecision>2019-06-03</datedecision>
+        <nodecision>20190603</nodecision>
+        <etatautorisation>12</etatautorisation>
+        <libetatautorisation>Modification de l'échéance</libetatautorisation>
+        <datevisite xsi:nil="true"/>
+        <resultatvisite xsi:nil="true"/>
+        <datefin>2024-08-31</datefin>
+        <datemeo>2019-06-03</datemeo>
+        <datelimitemeo xsi:nil="true"/>
+        <datelimitedepot>2024-04-30</datelimitedepot>
+        <datelimvisite xsi:nil="true"/>
+        <datemaj>2021-12-14</datemaj>
+    </autreactivite>
+    <autreactivite>
+        <noautor>322128226</noautor>
+        <nofinessej>010008407</nofinessej>
+        <rsej>AVEC VALEURS MANQUANTES</rsej>
+        <nofinesset>010786259</nofinesset>
+        <rset>AVEC VALEURS MANQUANTES</rset>
+        <codeautorarhgos>02-00-00000</codeautorarhgos>
+        <activite>A0</activite>
+        <libactivite>Installation de chirurgie esthétique</libactivite>
+        <modalite>00</modalite>
+        <libmodalite>Pas de modalité</libmodalite>
+        <forme>15</forme>
+        <libforme>Forme non précisée</libforme>
+        <datedecision xsi:nil="true"/>
+        <nodecision>2006</nodecision>
+        <etatautorisation>6</etatautorisation>
+        <libetatautorisation>Renouvellement tacite</libetatautorisation>
+        <datevisite>2007-09-24</datevisite>
+        <resultatvisite>C</resultatvisite>
+        <datefin xsi:nil="true"/>
+        <datemeo xsi:nil="true"/>
+        <datelimitemeo xsi:nil="true"/>
+        <datelimitedepot>2025-09-04</datelimitedepot>
+        <datelimvisite xsi:nil="true"/>
+        <datemaj>2021-12-14</datemaj>
+    </autreactivite>
+    <autreactivite>
+        <noautor>442220770</noautor>
+        <nofinessej>540023264</nofinessej>
+        <rsej>AVEC ACTIVITÉ MANQUANTE</rsej>
+        <nofinesset>490019148</nofinesset>
+        <rset>AVEC ACTIVITÉ MANQUANTE</rset>
+        <codeautorarhgos>03-00-00000</codeautorarhgos>
+        <activite xsi:nil="true"/>
+        <libactivite>Prélèvement de cellules hématopoïétiques</libactivite>
+        <modalite>M6</modalite>
+        <libmodalite>CSH moelle osseuse autologues</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <datedecision>2008-04-16</datedecision>
+        <nodecision>16/04/2008</nodecision>
+        <etatautorisation>7</etatautorisation>
+        <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
+        <datevisite xsi:nil="true"/>
+        <resultatvisite xsi:nil="true"/>
+        <datefin>2023-04-10</datefin>
+        <datemeo>2008-04-16</datemeo>
+        <datelimitemeo xsi:nil="true"/>
+        <datelimitedepot>2022-09-10</datelimitedepot>
+        <datelimvisite xsi:nil="true"/>
+        <datemaj>2022-08-24</datemaj>
+    </autreactivite>
+    <evenement>
+        <noautor>442217168</noautor>
+        <numordre>150399</numordre>
+        <nature>7</nature>
+        <libelle>Renouvellement sur décision DGARS</libelle>
+        <datedecision>2019-10-22</datedecision>
+        <dateeffet>2019-09-07</dateeffet>
+        <numerodecision>2019/1609</numerodecision>
+        <commentaire xsi:nil="true"/>
+    </evenement>
+    <evenement>
+        <noautor>442217169</noautor>
+        <numordre>74964</numordre>
+        <nature>1</nature>
+        <libelle>Création</libelle>
+        <datedecision>2009-09-07</datedecision>
+        <dateeffet>2009-09-07</dateeffet>
+        <numerodecision xsi:nil="true"/>
+        <commentaire xsi:nil="true"/>
+    </evenement>
+</fluxfiness>

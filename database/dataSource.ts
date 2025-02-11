@@ -76,6 +76,16 @@ import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
+import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
+import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
+import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
+import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
+import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
+import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/referentiels/1738593046415-AjoutReferentielMasque";
+import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
+import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
+import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -109,6 +119,15 @@ import { SearchHistoryModel } from "./models/SearchHistoryModel";
 import { UserListEtablissementModel } from "./models/UserListEtablissementModel";
 import { UserListModel } from "./models/UserListModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
+import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
+import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
+import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
+import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
+import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/VigieRhRefRedressementModel";
+import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
+import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
+import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
 
@@ -153,6 +172,16 @@ export default new DataSource({
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
+    VigieRhRefProfessionFiliereModel,
+    VigieRhRefProfessionGroupeModel,
+    VigieRhRefTypeContratModel,
+    VigieRhRefMasqueModel,
+    VigieRhRefQualiteModel,
+    VigieRhRefRedressementModel,
+    VigieRhContratModel,
+    VigieRhProfessionFiliereModel,
+    VigieRhProfessionGroupeModel
+
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -230,6 +259,16 @@ export default new DataSource({
     AjoutCodeRegionDansLaRecherche1730971588532,
     AjoutRattachementRecherche1732629322484,
     AjoutListEtEtsList1736865415982,
+    AjoutVigieRhContrat1738320902145,
+    AjoutVigieRhProfessionFiliere1738328763147,
+    AjoutVigieRhProfessionGroupe1738328796095,
+    AjoutReferentielTypeContrat1738227384991,
+    AjoutReferentielProfessionFiliere1738328597314,
+    AjoutReferentielProfessionGroupe1738328713502,
+    AjoutReferentielMasque1738593046415,
+    AjoutReferentielQualite1738593074489,
+    AjoutReferentielRedressement1738593097578,
+    AjoutClésEtrangèresVigieRh1739011319358
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
