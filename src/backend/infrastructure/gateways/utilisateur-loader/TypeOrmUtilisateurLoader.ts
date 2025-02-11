@@ -16,6 +16,7 @@ import { Institution } from "../../../métier/entities/Utilisateur/Institution";
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
+import { create } from "../../controllers/userListEndpoint";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -118,7 +119,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.dateCreation = new Date();
       }
 
-      (await this.orm)
+      await (await this.orm)
         .getRepository(UtilisateurModel)
         .save(account)
         .then(async () => {
@@ -150,6 +151,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
           // eslint-disable-next-line no-console
           console.log("error", error);
         });
+
+      (await this.orm)
+        .getRepository(UtilisateurModel)
+        .findOne({ where: { email: account.email } })
+        .then((data) => { if (data) create(data?.code, 'Favoris', true) })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+        });
+
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("error", error);
