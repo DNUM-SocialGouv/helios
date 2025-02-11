@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { UserContext } from "../contexts/userContext";
 import styles from "./TuileEtablissement.module.css";
+import { useDependencies } from "../contexts/useDependencies";
 
 type EstablishmentProps = Readonly<{
   rechercheViewModel: RechercheViewModel;
@@ -15,6 +16,7 @@ export const TuileEtablissement = ({
   currentListId,
 }: EstablishmentProps) => {
   const userContext = useContext(UserContext);
+  const { wording } = useDependencies();
   const processedListId = currentListId || userContext?.favorisLists.find(list => list.isFavoris)?.id;
 
   const isInFavoris = () => {
@@ -50,7 +52,11 @@ export const TuileEtablissement = ({
           <Image alt="" height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
-      <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}></div>
+      <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}>
+        <span className="fr-sr-only">
+          {isInFavoris() ? wording.DANS_FAVORIS : wording.NON_FAVORIS}
+        </span>
+      </div>
     </>
   );
 };
