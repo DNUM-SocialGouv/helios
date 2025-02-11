@@ -1,20 +1,38 @@
 import Image from "next/image";
+import { useContext } from "react";
 
 import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { StarButtonList } from "../StarButtonList/StarButtonList";
+import { UserContext } from "../contexts/userContext";
 import styles from "./TuileEtablissement.module.css";
 
 type EstablishmentProps = Readonly<{
   rechercheViewModel: RechercheViewModel;
   currentListId?: number;
-  rafraichitAuRetraitFavoris?: boolean;
 }>;
 
 export const TuileEtablissement = ({
   rechercheViewModel,
   currentListId,
-  rafraichitAuRetraitFavoris,
 }: EstablishmentProps) => {
+  const userContext = useContext(UserContext);
+  const processedListId = currentListId || userContext?.favorisLists.find(list => list.isFavoris)?.id;
+
+  const isInFavoris = () => {
+    // Pour le moment il n’y a pas les modal de choix de liste.
+    // La liste courante est donc obligatoire et doit être la liste « Favoris »
+    // Quand il y aura la modale, currentListId sera optionnel et devra être géré
+
+    // On récurére la liste
+    const currentList = rechercheViewModel ? userContext?.favorisLists.find(list => list.id === processedListId) : undefined;
+
+    // On regarde si l’element est dans la liste
+    if (currentList) {
+      return currentList.userListEtablissements.some(etablissement => etablissement.finessNumber === rechercheViewModel?.numéroFiness);
+    }
+
+    return false;
+  }
+
   return (
     <>
       <div className={"fr-tile " + styles["tuile"]}>
@@ -32,7 +50,7 @@ export const TuileEtablissement = ({
           <Image alt="" height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
-      <StarButtonList currentListId={currentListId} favorite={rechercheViewModel} parent="establishment" rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} />
+      <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}></div>
     </>
   );
 };
