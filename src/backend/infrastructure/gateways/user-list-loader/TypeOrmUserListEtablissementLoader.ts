@@ -1,4 +1,4 @@
-import { DataSource } from "typeorm";
+import { DataSource, In } from "typeorm";
 
 import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { UserListEtablissementModel } from "../../../../../database/models/UserListEtablissementModel";
@@ -63,11 +63,11 @@ export class TypeOrmUserListEtablissementLoader implements UserListEtablissement
         }
     }
 
-    async delete(userId: string, listId: number, finess: string): Promise<void> {
+    async delete(userId: string, listId: number, finessNumbers: string[]): Promise<void> {
         const countList = await (await this.orm).getRepository(UserListModel).countBy({ id: listId, userId: userId });
 
         if (countList !== 0) {
-            await (await this.orm).getRepository(UserListEtablissementModel).delete({ listId: listId, finessNumber: finess });
+            await (await this.orm).getRepository(UserListEtablissementModel).delete({ listId: listId, finessNumber: In(finessNumbers) });
         }
     }
 }

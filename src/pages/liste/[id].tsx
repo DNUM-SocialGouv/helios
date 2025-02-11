@@ -50,7 +50,7 @@ export default function Router({ list }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list.nom}</h1>
       }
-      {displayTable && <ListActionsButton selectedRows={selectedRowsValues} />}
+      {displayTable && <ListActionsButton listId={list.id} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
