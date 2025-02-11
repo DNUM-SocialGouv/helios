@@ -6,7 +6,7 @@ import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-b
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RésultatDeRechercheTestBuilder } from "../../../test-builder/RésultatDeRechercheTestBuilder";
-import { getOrm, clearAllTables, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
+import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
 import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 
 describe("La recherche d’entités et d’établissements", () => {
