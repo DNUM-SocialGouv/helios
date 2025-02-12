@@ -180,7 +180,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        numéro_finess_établissement_ca_ph = "010002269"  
+        numéro_finess_établissement_ca_ph = "010002269"
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_pa = "010009066"
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
