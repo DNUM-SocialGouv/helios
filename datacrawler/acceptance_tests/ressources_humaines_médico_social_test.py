@@ -74,7 +74,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                 "taux_absenteisme_maternite_paternite": [0.0, 0.0, 0.0128, 0.0128, 0.0005, 0.0128, NaN],
                 "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0246, 0.0085, 0.0085, 0.0088,0.0085, NaN],
                 "taux_absenteisme_conges_speciaux": [0.0109, 0.0, 0.0004, 0.0004, 0.0, 0.0004, NaN],
-                "taux_absenteisme_hors_formation": [0.0609, 0..2179, 0.0554, 0.0554, 0.0685, 0.0554, NaN],
+                "taux_absenteisme_hors_formation": [0.0609, 0.2179, 0.0554, 0.0554, 0.0685, 0.0554, NaN],
                 "nombre_etp_realises": [NaN, 188.49999999999997, 50.649999999999991, 17.190000000000001, 9.7100000000000009],
             },
         )

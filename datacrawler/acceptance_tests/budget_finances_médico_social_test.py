@@ -281,8 +281,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "depenses_groupe_iii": [,
-                    -88214.989999999991
+                "depenses_groupe_iii": [
+                    -88214.989999999991,
                     -8432.5499999999993,
                     -9134.2200000000012,
                     -9134.2200000000012,
