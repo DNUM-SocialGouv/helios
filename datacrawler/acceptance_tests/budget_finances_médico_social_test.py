@@ -59,8 +59,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # THEN
         budget_et_finances_attendus = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021, 2019, 2020, 2019],
+                "annee": [2018, 2019, 2020, 2021, 2018, 2019, 2020, 2019],
                 "numero_finess_etablissement_territorial": [
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
@@ -68,40 +70,50 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [-22312.0,0.0, 0.0, 0.0, NaN, NaN, NaN],
                 "depenses_groupe_i": [
+                    -105389.53,
                     -161786,
                     -85102.530010000002,
                     -85102.530010000002,
+                    -582311.22000000009,
                     -16062.690000000001,
                     NaN,
                     NaN,
                 ],
                 "depenses_groupe_ii": [
+                    -506251.12999999995,
                     -1222576.5799999998,
                     -442475.08000000007,
                     -442475.08000000007,
+                    -2633723.79,
                     -482402.46000000008,
                     NaN,
                     NaN,
                 ],
-                "depenses_groupe_iii": [
+                "depenses_groupe_iii": [,
+                    -88214.989999999991
                     -8432.5499999999993,
                     -9134.2200000000012,
                     -9134.2200000000012,
+                    -669962.28000000003
                     -44491.319999999992,
                     NaN,
                     NaN,
                 ],
                 "recettes_groupe_i": [
+                    628872.06999999995,
                     1376744.76,
                     543015.84999999998,
                     543015.84999999998,
+                    104985.98,
+                    102202.93000000001,
                     588568.68999999994,
                     NaN,
                     NaN,
                 ],
                 "recettes_groupe_ii": [
+                    27174.48,
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
@@ -109,16 +121,18 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0, 12830, 12830, 26733.739999999998, NaN, NaN],
+                "recettes_groupe_iii": [0.99779299847793002,0, 12830, 12830, 104985.98, 26733.739999999998, NaN, NaN],
                 "resultat_net_comptable": [
+                    3034.3799999998928,
                     7289.9200000003912,
                     28544.479989999854,
                     28544.479989999854,
+                    58726.620000000345,
                     73128.079999999842,
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     -0.012266115563337794,
                     0.12519374136642053,
@@ -136,6 +150,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                 ],
                 "fonds_de_roulement": [
+                    2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
                     3988284.410000000100000000,
@@ -143,8 +158,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [Nan, Nan, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [Nan, Nan, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 
@@ -165,7 +180,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_errd = NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_errd, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        numéro_finess_établissement_ca_ph = "010002269"
+        numéro_finess_établissement_ca_ph = "010002269"  
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_ph, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         numéro_finess_établissement_ca_pa = "010009066"
         sauvegarde_un_établissement_en_base(numéro_finess_établissement_ca_pa, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
@@ -234,8 +249,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         # THEN
         budget_et_finances_attendus = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021, 2019, 2020, 2019],
+                "annee": [2018, 2019, 2020, 2021, 2018, 2019, 2020, 2019],
                 "numero_finess_etablissement_territorial": [
+                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
@@ -243,40 +260,50 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [0.0, 0.0, 0.0, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [-22312.0,0.0, 0.0, 0.0, NaN, NaN, NaN],
                 "depenses_groupe_i": [
+                    -105389.53,
                     -161786,
                     -85102.530010000002,
                     -85102.530010000002,
+                    -582311.22000000009,
                     -16062.690000000001,
                     NaN,
                     NaN,
                 ],
                 "depenses_groupe_ii": [
+                    -506251.12999999995,
                     -1222576.5799999998,
                     -442475.08000000007,
                     -442475.08000000007,
+                    -2633723.79,
                     -482402.46000000008,
                     NaN,
                     NaN,
                 ],
-                "depenses_groupe_iii": [
+                "depenses_groupe_iii": [,
+                    -88214.989999999991
                     -8432.5499999999993,
                     -9134.2200000000012,
                     -9134.2200000000012,
+                    -669962.28000000003
                     -44491.319999999992,
                     NaN,
                     NaN,
                 ],
                 "recettes_groupe_i": [
+                    628872.06999999995,
                     1376744.76,
                     543015.84999999998,
                     543015.84999999998,
+                    104985.98,
+                    102202.93000000001,
                     588568.68999999994,
                     NaN,
                     NaN,
                 ],
                 "recettes_groupe_ii": [
+                    27174.48,
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
@@ -284,16 +311,18 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0, 12830, 12830, 26733.739999999998, NaN, NaN],
+                "recettes_groupe_iii": [0.99779299847793002,0, 12830, 12830, 104985.98, 26733.739999999998, NaN, NaN],
                 "resultat_net_comptable": [
+                    3034.3799999998928,
                     7289.9200000003912,
                     28544.479989999854,
                     28544.479989999854,
+                    58726.620000000345,
                     73128.079999999842,
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     -0.012266115563337794,
                     0.12519374136642053,
@@ -311,6 +340,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                 ],
                 "fonds_de_roulement": [
+                    2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
                     3988284.410000000100000000,
@@ -318,8 +348,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [Nan, Nan, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [Nan, Nan, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 

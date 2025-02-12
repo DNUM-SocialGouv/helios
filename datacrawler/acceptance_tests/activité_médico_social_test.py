@@ -80,7 +80,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                     17.86,
                 ],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [
-                    2351.81,
+                    2359.81
                     2226.21,
                     2352.81,
                     2351.81,
@@ -174,7 +174,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
                     17.86,
                 ],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [
-                    2351.81,
+                    2359.81,
                     2226.21,
                     2352.81,
                     2351.81,
