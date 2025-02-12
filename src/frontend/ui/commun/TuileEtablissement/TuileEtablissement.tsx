@@ -19,7 +19,7 @@ export const TuileEtablissement = ({
     <>
       <div className={"fr-tile " + styles["tuile"]}>
         <div className="fr-tile__body fr-enlarge-link">
-          <div className="fr-tile__content">
+          <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
               <a href={rechercheViewModel.construisLeLien()} rel="noreferrer">
                 {rechercheViewModel.titre}
