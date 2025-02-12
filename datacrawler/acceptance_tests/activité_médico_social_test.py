@@ -41,39 +41,46 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021],
-                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598"],
+                "annee": [2018, 2019, 2020, 2021],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010003598"],
                 "taux_occupation_accueil_de_jour": [
+                    0.48012820512820514,
                     0.36153846153846153,
                     0.33974358974358976,
                     0.33974358974358976,
                 ],
                 "taux_occupation_en_hebergement_temporaire": [
+                    0.93698630136986305,
                     0.25136612021857924,
                     0.75890410958904109,
                     0.75890410958904109,
                 ],
                 "taux_occupation_en_hebergement_permanent": [
+                    0.99779299847793002,
                     0.93245060949978986,
                     0.99023972602739729,
                     0.99023972602739729,
                 ],
                 "taux_realisation_activite": [
+                    0.899300000000000000000000000,
                     1.018200000000000000000000000,
                     0.899300000000000000000000000,
                     0.899300000000000000000000000,
                 ],
                 "file_active_personnes_accompagnees": [
+                    121.0,
                     119.0,
                     121.0,
                     121.0,
                 ],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [
+                    17.86,
                     18.52,
                     17.86,
                     17.86,
                 ],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [
+                    2351.81,
                     2226.21,
                     2352.81,
                     2351.81,
@@ -128,39 +135,46 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         # THEN
         data_frame_attendu = pd.DataFrame(
             {
-                "annee": [2019, 2020, 2021],
-                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598"],
+            "annee": [2018, 2019, 2020, 2021],
+                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010003598"],
                 "taux_occupation_accueil_de_jour": [
+                    0.48012820512820514,
                     0.36153846153846153,
                     0.33974358974358976,
                     0.33974358974358976,
                 ],
                 "taux_occupation_en_hebergement_temporaire": [
+                    0.93698630136986305,
                     0.25136612021857924,
                     0.75890410958904109,
                     0.75890410958904109,
                 ],
                 "taux_occupation_en_hebergement_permanent": [
+                    0.99779299847793002,
                     0.93245060949978986,
                     0.99023972602739729,
                     0.99023972602739729,
                 ],
                 "taux_realisation_activite": [
+                    0.899300000000000000000000000,
                     1.018200000000000000000000000,
                     0.899300000000000000000000000,
                     0.899300000000000000000000000,
                 ],
                 "file_active_personnes_accompagnees": [
+                    121.0,
                     119.0,
                     121.0,
                     121.0,
                 ],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [
+                    17.86,
                     18.52,
                     17.86,
                     17.86,
                 ],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [
+                    2351.81,
                     2226.21,
                     2352.81,
                     2351.81,
