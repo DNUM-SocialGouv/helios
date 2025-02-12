@@ -76,7 +76,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                 "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0246, 0.0085, 0.0085, 0.0088, 0.0085, NaN, NaN],
                 "taux_absenteisme_conges_speciaux": [0.0109, 0.0, 0.0004, 0.0004, 0.0, 0.0004, NaN, NaN],
                 "taux_absenteisme_hors_formation": [0.0609, 0.2179, 0.0554, 0.0554, 0.0685, 0.0554, NaN, NaN],
-                "nombre_etp_realises": [NaN, NaN, 188.5, 50.64999999999999, 17.19, 4.55, NaN, NaN],
+                "nombre_etp_realises": [NaN, NaN, 188.5, 50.64999999999999, 17.19, 4.55, 9.71, 10.34],
             },
         )
 
