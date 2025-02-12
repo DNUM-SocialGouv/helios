@@ -132,7 +132,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     0.13548734436644624,
                     -0.012266115563337794,
@@ -327,7 +327,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     18887.12999999999,
                     11986.649999999994,
                 ],
-                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA", "CA_PA"],
+                "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "ERRD", "CA_PH", "CA_PH", "CA_PA", "CA_PA"],
                 "taux_de_caf": [
                     0.13548734436644624,
                     -0.012266115563337794,
