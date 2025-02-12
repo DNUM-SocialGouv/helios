@@ -25,7 +25,7 @@ class TestAjouteLesActivitésDesÉtablissementsMedicoSociaux:
         supprime_les_données_des_tables(base_de_données_test)
 
     @freeze_time("2022-01-14")
-    def test_sauvegarde_les_trois_dernières_années_dans_une_table_vide(self) -> None:
+    def test_sauvegarde_les_cinqs_dernières_années_dans_une_table_vide(self) -> None:
         # GIVEN
         chemin_du_fichier_ann_errd_ej_et = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
         chemin_du_fichier_ann_ms_tdp_et = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
