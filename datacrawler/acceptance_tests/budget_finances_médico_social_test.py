@@ -151,7 +151,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.51376936316695354,
                     0.31154835988672847,
                     NaN,
-                    Nan,
+                    NaN,
                 ],
                 "fonds_de_roulement": [
                     2206969.259999999800000000,
