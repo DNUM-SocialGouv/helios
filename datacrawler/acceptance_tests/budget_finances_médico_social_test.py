@@ -158,8 +158,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "charges": [Nan, Nan, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [Nan, Nan, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [NaN, NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 
@@ -348,8 +348,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "charges": [Nan, Nan, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [Nan, Nan, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
+                "produits": [NaN, NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
             },
         )
 

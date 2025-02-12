@@ -165,7 +165,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL
                 ],
                 "annee": [2019, 2018, 2021, 2020, 2019, 2018],
-                "nombre_cdd_remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0]
+                "nombre_cdd_remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0],
                 "taux_etp_vacants": [0.1197, 0.0483, 0.0, 0.0, 0.0],
                 "taux_prestation_externes": [0.0232, NaN, 0.0164, 0.0164, 0.0082, 0.0164],
                 "taux_rotation_personnel": [0.1923, 0.1429, 0.0352, 0.0352, 0.0141, 0.0352],
