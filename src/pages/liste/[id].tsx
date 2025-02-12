@@ -9,6 +9,7 @@ import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
+import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
@@ -28,15 +29,18 @@ export default function Router({ listServer }: RouterProps) {
   const [displayTable, setDisplayTable] = useState(true);
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
   const [list, setList] = useState<UserListViewModel>();
+  const [chargement, setChargement] = useState(true);
 
   // Quand la liste des favoris à été changée en local on la recharge depuis le server
   useEffect(() => {
+    setChargement(true);
     fetch(`/api/liste/${listServer.id}`, {
       headers: { "Content-Type": "application/json" },
       method: "GET",
     }).then((response) => response.json())
       .then((data) => {
         setList(data);
+        setChargement(false);
       });
   }, [userContext?.favorisLists])
 
@@ -84,7 +88,7 @@ export default function Router({ listServer }: RouterProps) {
         <p className="fr-table__detail">{displayTable ? tableMessage : vignetteMessage}</p>
       </div>
       <div className="fr-col--right">
-        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
+        <SelecteurTableauVignette defaultCheckedButton={displayTable ? BoutonActif.Tableau : BoutonActif.Vignette} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
@@ -106,7 +110,13 @@ export default function Router({ listServer }: RouterProps) {
           </section>
         </main>
       ) : (
-        <Spinner />
+        <>
+          {chargement ? (
+            <Spinner />
+          ) : (
+            <Page404 />
+          )}
+        </>
       )}
     </>
   );
