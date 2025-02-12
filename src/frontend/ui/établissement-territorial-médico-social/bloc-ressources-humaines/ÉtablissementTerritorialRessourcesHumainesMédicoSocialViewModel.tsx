@@ -103,7 +103,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
-        nombreDeLibelléTotal={3}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -136,7 +136,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
-        nombreDeLibelléTotal={3}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -183,7 +183,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables.bind(this))
@@ -220,7 +220,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables.bind(this))
@@ -258,7 +258,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables.bind(this))

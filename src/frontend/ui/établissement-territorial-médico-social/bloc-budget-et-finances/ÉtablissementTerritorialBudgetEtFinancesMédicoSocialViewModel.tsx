@@ -150,7 +150,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
         entêteLibellé={this.wording.ANNÉE}
@@ -298,7 +298,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get lesDonnéesBudgetairesPasAutorisés(): string[] {
     const nonAutorisés = [];
 
-   if (!this.leCompteDeRésultatEstIlAutorisé) { nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT);}
+    if (!this.leCompteDeRésultatEstIlAutorisé) { nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT); }
     if (!this.leRésultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
     if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé) nonAutorisés.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
     if (!this.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
