@@ -259,7 +259,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
-                    numéro_finess_établissement_errd,  
+                    numéro_finess_établissement_errd,
                     numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_pa,
