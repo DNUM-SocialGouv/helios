@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
   private readonly seuilDuContrasteDuLibellé = 10;
-  private readonly nombreDAnnéesParIndicateur = 3;
+  private readonly nombreDAnnéesParIndicateur = 5;
   public compteDeResultatViewModel: CompteDeResultatViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
   public autorisations: any;
@@ -82,7 +82,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     const listeAnnéesManquantes = annéesManquantes(
       montantDesContributionsAuxFraisDeSiègeParAnnée.map(
         (montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année
-      )
+      ), this.nombreDAnnéesParIndicateur
     );
 
     return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;
@@ -184,7 +184,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
       []
     );
 
-    const listeAnnéesManquantes = annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année));
+    const listeAnnéesManquantes = annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année), this.nombreDAnnéesParIndicateur);
 
     return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />;
   }
