@@ -41,7 +41,7 @@ def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(don
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
 
 
-def supprimer_donnees_existantes(engine, fournisseur, table_name, logger):
+def supprimer_donnees_existantes(table_name, engine, fournisseur, logger):
     try:
         with engine.begin() as conn:
             conn.execute(text(f"DELETE FROM {table_name};"))
@@ -50,7 +50,7 @@ def supprimer_donnees_existantes(engine, fournisseur, table_name, logger):
         logger.info(f"[{fournisseur}]❌  Erreur lors de la suppression des données : {e}")
 
 
-def inserer_nouvelles_donnees(engine, fournisseur, table_name, df, logger):
+def inserer_nouvelles_donnees(table_name, engine, fournisseur, df, logger):
     try:
         # Vérifier si le DataFrame est vide après filtrage
         if df.empty:
