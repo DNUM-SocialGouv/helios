@@ -29,7 +29,6 @@ interface DataTableProps {
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
-  onButtonClick?: (rowIndex: number, colIndex: number) => void;
   selectedRows: SelectedRows;
   setSelectedRows: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
   order: string;
@@ -57,7 +56,6 @@ interface TableHeaderProps {
   handleSelectAll: () => void;
   isAllSelected: boolean;
   isCenter: boolean;
-  page: number;
 }
 
 interface TableBodyProps {
@@ -147,9 +145,9 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
             </label>
           </div>
         </th>
-        {headers.map((header, index) =>
+        {headers.map((header) =>
           <th className={`${isCenter ? "fr-cell--center" : ""} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''}`}
-            key={index} title={header.nomComplet}>
+            key={header.key} title={header.nomComplet}>
             <span className="fr-cell__title">{header.label}</span>
             {header.info && onClickInfobull && (
               <button
@@ -158,7 +156,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
                 title="Détails de l’indicateur"
               />
             )}
-            {header.sort && <Tri headerKey={header.orderBy || header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />}            </th>
+            {header.sort && <Tri headerKey={header.orderBy ?? header.key} order={order} orderBy={orderBy} setOrder={setOrder} setOrderBy={setOrderBy} />}            </th>
         )}
       </tr>
     </thead>
@@ -173,7 +171,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
   return (
     <tbody>
       {data.map((row, rowIndex) => (
-        <tr aria-selected={selectedMap.get(row.numéroFiness)} data-row-key={rowIndex} id={`table-selectable-row-key-${rowIndex}`} key={rowIndex}>
+        <tr aria-selected={selectedMap.get(row.numéroFiness)} data-row-key={row.numéroFiness} id={`table-selectable-row-key-${row.numéroFiness}`} key={row.numéroFiness}>
           <th className="fr-cell--fixed" scope="row">
             <div className="fr-checkbox-group fr-checkbox-group--sm">
               <input
@@ -188,8 +186,8 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               </label>
             </div>
           </th>
-          {headers.map((header, colIndex) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={colIndex}>
+          {headers.map((header) => (
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
@@ -272,7 +270,6 @@ export const Table = ({
                 onClickInfobull={onClickInfobull}
                 order={order}
                 orderBy={orderBy}
-                page={page}
                 setOrder={setOrder}
                 setOrderBy={setOrderBy}
               />
