@@ -12,7 +12,7 @@ def filter_contrat_data(donnees: pd.DataFrame) -> pd.DataFrame:
     return donnees[
         (donnees["numero_finess"].astype(str).str.len() == 9) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
-        #(donnees["annee"] >= annee_actuelle - 2)  # Garde seulement les 3 dernières années
+        (donnees["annee"] >= annee_actuelle - 10)  # Garde seulement les 3 dernières années
     ]
 
 def import_vigie_rh_profession_filiere(dbEngine: Engine, logger_helios) -> None:
