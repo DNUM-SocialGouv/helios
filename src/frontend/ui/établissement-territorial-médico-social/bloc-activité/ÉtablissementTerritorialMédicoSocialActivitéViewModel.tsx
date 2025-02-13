@@ -198,7 +198,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -228,7 +228,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -258,7 +258,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
