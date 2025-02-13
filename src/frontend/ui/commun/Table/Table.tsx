@@ -184,7 +184,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                 type="checkbox"
               />
               <label className="fr-label" htmlFor={`table-select-checkbox-7748--${rowIndex}`}>
-                Séléction {rowIndex}
+                Séléctionner {row.socialReason}
               </label>
             </div>
           </th>
