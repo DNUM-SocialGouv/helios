@@ -6,19 +6,32 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 
 type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
     établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+    statusSousBlocs: boolean[];
+    setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>
 }>;
 
 export const ContenuBlocRHMedicoSocialVigieRH = ({
-    établissementTerritorialMédicoSocialRessourcesHumainesViewModel
+    établissementTerritorialMédicoSocialRessourcesHumainesViewModel, setStatusSousBlocs, statusSousBlocs
 }: ContenuBlocRHMedicoSocialVigieRHProps) => {
     const { wording } = useDependencies();
 
+    const toggelBlocs = (index: number) => {
+        const newBoolArray = [...statusSousBlocs];
+        newBoolArray[index] = !newBoolArray[index];
+        setStatusSousBlocs(newBoolArray);
+    };
+
     const showNewBadge = new Date() <= new Date('2025-09-01');
     return (
-        <div className="fr-accordions-group">
-            <section className="fr-accordion">
+        <div>
+            <section className={styles["sous-bloc"] + " fr-accordion"}>
                 <h3 className="fr-accordion__title">
-                    <button aria-controls="accordion-indicateurs-rh-helios" aria-expanded="false" className="fr-accordion__btn">
+                    <button
+                        aria-controls="accordion-indicateurs-rh-helios"
+                        aria-expanded={statusSousBlocs[0]}
+                        className="fr-accordion__btn"
+                        onClick={() => toggelBlocs(0)}
+                    >
                         {wording.INDICATEURS_HELIOS_BLOC_TITLE}
                     </button>
                 </h3>
@@ -26,9 +39,14 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
                     <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
                 </div>
             </section>
-            <section className="fr-accordion">
+            <section className={styles["sous-bloc"] + " fr-accordion"}>
                 <h3 className="fr-accordion__title">
-                    <button aria-controls="accordion-indicateurs-rh-vigierh" aria-expanded="false" className="fr-accordion__btn">
+                    <button
+                        aria-controls="accordion-indicateurs-rh-vigierh"
+                        aria-expanded={statusSousBlocs[1]}
+                        className="fr-accordion__btn"
+                        onClick={() => toggelBlocs(1)}
+                    >
                         {wording.INDICATEURS_VIGIERH_BLOC_TITLE} {showNewBadge && <p className={styles["badge-nouveau"] + " fr-badge fr-badge--new fr-badge--no-icon"}>{wording.NOUVEAU}</p>}
                     </button>
                 </h3>

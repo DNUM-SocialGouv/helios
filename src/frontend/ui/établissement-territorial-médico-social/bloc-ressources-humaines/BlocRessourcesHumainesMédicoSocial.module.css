@@ -44,6 +44,11 @@
   margin-left: 1rem;
 }
 
+.sous-bloc {
+  border-bottom: solid 1px var(--border-default-grey);
+  border-top: solid 1px var(--border-default-grey);
+}
+
 @media print {
   .liste-indicateurs {
     display: block !important;

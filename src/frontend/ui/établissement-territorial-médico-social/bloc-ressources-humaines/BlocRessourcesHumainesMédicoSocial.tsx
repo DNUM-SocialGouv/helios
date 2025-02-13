@@ -9,10 +9,12 @@ type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
+  statusSousBlocs: boolean[];
+  setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>
 }>;
 
 export const BlocRessourcesHumainesMédicoSocial = ({
-  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, opnedBloc, toggelBlocs
+  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
@@ -23,7 +25,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
       {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' ?
-        <ContenuBlocRHMedicoSocialVigieRH établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
+        <ContenuBlocRHMedicoSocialVigieRH setStatusSousBlocs={setStatusSousBlocs} statusSousBlocs={statusSousBlocs} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
         : <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
       }
     </Bloc>

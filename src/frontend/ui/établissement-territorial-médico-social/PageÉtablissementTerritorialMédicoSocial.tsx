@@ -72,7 +72,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       backToSearchContext.setIsInfoPage(true);
   }, [backToSearchContext])
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 
   return (
     <main className="fr-container">
@@ -99,6 +99,8 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocRessourcesHumainesMédicoSocial
             opnedBloc={statusBlocs[2]}
+            setStatusSousBlocs={setStatusSousBlocs}
+            statusSousBlocs={statusSousBlocs}
             toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
