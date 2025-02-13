@@ -620,4 +620,11 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly NOUVEAU: string = "NOUVEAU";
   readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+
 }
+
+

@@ -20,13 +20,10 @@ export const BlocRessourcesHumainesMédicoSocial = ({
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs} />;
   }
 
-  // eslint-disable-next-line no-console
-  console.log('variable !!!', process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"])
-
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
       {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' ?
-        <ContenuBlocRHMedicoSocialVigieRH />
+        <ContenuBlocRHMedicoSocialVigieRH établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
         : <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
       }
     </Bloc>

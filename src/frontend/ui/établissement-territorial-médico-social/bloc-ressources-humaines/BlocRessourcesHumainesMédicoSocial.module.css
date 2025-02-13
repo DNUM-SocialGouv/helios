@@ -40,6 +40,10 @@
   }
 }
 
+.badge-nouveau {
+  margin-left: 1rem;
+}
+
 @media print {
   .liste-indicateurs {
     display: block !important;
