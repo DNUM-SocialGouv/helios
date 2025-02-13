@@ -77,3 +77,7 @@
     visibility: visible;
     opacity: 1;
 }
+
+.selected-row {
+    background-color: var(--background-default-grey-active) !important;
+}

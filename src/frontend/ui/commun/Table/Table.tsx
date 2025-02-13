@@ -166,14 +166,18 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 };
 
 const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+  const selectedMap = new Map();
+  selectedRows[page]?.forEach(element => {
+    selectedMap.set(element.numéroFiness, true);
+  });
   return (
     <tbody>
       {data.map((row, rowIndex) => (
-        <tr data-row-key={rowIndex} id={`table-selectable-row-key-${rowIndex}`} key={rowIndex}>
+        <tr aria-selected={selectedMap.get(row.numéroFiness)} data-row-key={rowIndex} id={`table-selectable-row-key-${rowIndex}`} key={rowIndex}>
           <th className="fr-cell--fixed" scope="row">
             <div className="fr-checkbox-group fr-checkbox-group--sm">
               <input
-                checked={!!selectedRows[page]?.find((item) => item.numéroFiness === row.numéroFiness)}
+                checked={selectedMap.get(row.numéroFiness)}
                 id={`table-select-checkbox-7748--${rowIndex}`}
                 name="row-select"
                 onChange={() => handleSelectRow(row)}
@@ -185,7 +189,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
             </div>
           </th>
           {headers.map((header, colIndex) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={colIndex}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
