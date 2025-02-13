@@ -112,7 +112,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                 ],
                 "recettes_groupe_ii": [
-                    27174.48,
+                    46843.48,
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
@@ -121,7 +121,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0.99779299847793002, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
+                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
                 "resultat_net_comptable": [
                     3034.3799999998928,
                     7289.9200000003912,
@@ -259,7 +259,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
                     numéro_finess_établissement_errd,
-                    numéro_finess_établissement_errd,
+                    numéro_finess_établissement_errd,  
                     numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_ph,
                     numéro_finess_établissement_ca_pa,
@@ -307,7 +307,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                 ],
                 "recettes_groupe_ii": [
-                    27174.48,
+                    46843.48,
                     23340.290000000001,
                     9410.4599999999991,
                     9410.4599999999991,
@@ -316,7 +316,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     NaN,
                     NaN,
                 ],
-                "recettes_groupe_iii": [0.99779299847793002, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
+                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
                 "resultat_net_comptable": [
                     3034.3799999998928,
                     7289.9200000003912,
