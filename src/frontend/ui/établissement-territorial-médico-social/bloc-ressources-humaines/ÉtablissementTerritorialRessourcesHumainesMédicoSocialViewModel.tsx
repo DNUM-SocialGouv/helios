@@ -94,7 +94,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
       secondPlan: couleurDuFond,
     }));
-    const listeAnnéesManquantes = annéesManquantes(années);
+    const listeAnnéesManquantes = annéesManquantes(années, 5);
 
     return (
       <HistogrammeHorizontal
@@ -127,8 +127,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
       secondPlan: couleurDuFond,
     }));
-    const listeAnnéesManquantes = annéesManquantes(années);
-
+    const listeAnnéesManquantes = annéesManquantes(années, 5);
     return (
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursDeLHistogramme}
@@ -314,7 +313,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       ? pourcentageDuTauxDAbsentéismeHorsFormation
       : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
 
-    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
+    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes, 5);
 
     return (
       <>
@@ -336,7 +335,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <Transcription
-          disabled={listeAnnéesManquantes.length === 3}
+          disabled={listeAnnéesManquantes.length === 5}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
