@@ -52,6 +52,6 @@ export const GrilleListEtablissements = ({
     const chargeLesRésultatsSuivants = () => setLimit(limit + PAGE_SIZE);
 
     return (
-        <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()} rafraichitAuRetraitFavoris={true} résultats={dataOnPage} />
+        <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} currentListId={list.id} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()} résultats={dataOnPage} />
     );
 };
