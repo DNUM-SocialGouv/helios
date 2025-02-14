@@ -19,7 +19,7 @@ export const TuileEtablissement = ({
     <>
       <div className={"fr-tile " + styles["tuile"]}>
         <div className="fr-tile__body fr-enlarge-link">
-          <div className="fr-tile__content">
+          <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
               <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien()} rel="noreferrer">
                 {rechercheViewModel.titre}
@@ -29,7 +29,7 @@ export const TuileEtablissement = ({
           </div>
         </div>
         <div>
-          <Image alt="" height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
+          <Image alt="" className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
       <StarButtonList currentListId={currentListId} favorite={rechercheViewModel} parent="establishment" rafraichitAuRetraitFavoris={rafraichitAuRetraitFavoris} />
