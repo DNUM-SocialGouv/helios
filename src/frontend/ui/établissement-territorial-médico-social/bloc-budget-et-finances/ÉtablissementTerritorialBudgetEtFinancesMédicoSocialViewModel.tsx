@@ -34,7 +34,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     autorisations: any
   ) {
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
-    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording, autorisations);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, autorisations, wording);
     this.autorisations = autorisations;
   }
 
