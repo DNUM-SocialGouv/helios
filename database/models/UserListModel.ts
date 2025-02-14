@@ -24,7 +24,7 @@ export class UserListModel {
     @JoinColumn({ name: 'ut_id', referencedColumnName: 'code' })
     public user!: UtilisateurModel;
 
-    @OneToMany('UserListEtablissementModel', 'userList', { eager: true })
-    public userListEtablissements!: UserListEtablissementModel[];
+    @OneToMany(() => UserListEtablissementModel, (userListEtablissements) => userListEtablissements.userList, { eager: true, onDelete: 'CASCADE' })
+    public userListEtablissements?: UserListEtablissementModel[];
 
 }

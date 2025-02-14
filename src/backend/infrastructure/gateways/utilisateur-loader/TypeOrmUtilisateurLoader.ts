@@ -10,13 +10,13 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { SearchHistoryModel } from "../../../../../database/models/SearchHistoryModel";
+import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
-import { create } from "../../controllers/userListEndpoint";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -152,14 +152,15 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
           console.log("error", error);
         });
 
-      (await this.orm)
+      const user = await (await this.orm)
         .getRepository(UtilisateurModel)
-        .findOne({ where: { email: account.email } })
-        .then((data) => { if (data) create(data?.code, 'Favoris', true) })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log("error", error);
-        });
+        .findOne({ where: { email: account.email } });
+
+        const userListModel = new UserListModel();
+        userListModel.nom = 'Favoris';
+        userListModel.userId = user?.code || '';
+        userListModel.isFavoris = true;
+        if(user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
 
     } catch (error) {
       // eslint-disable-next-line no-console
