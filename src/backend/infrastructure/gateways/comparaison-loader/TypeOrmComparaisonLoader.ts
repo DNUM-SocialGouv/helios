@@ -39,8 +39,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       if (type === "Médico-social") {
         const generateAnnees = `SELECT generate_series(
           CASE 
-          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 2)::int
-          ELSE (extract(year FROM current_date) - 3)::int
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 4)::int
+          ELSE (extract(year FROM current_date) - 5)::int
       END,
       CASE
           WHEN maxannee = extract(year FROM current_date) THEN maxannee::int

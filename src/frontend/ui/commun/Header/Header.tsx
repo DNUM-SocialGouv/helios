@@ -38,8 +38,10 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    getFavorisLists();
-  }, []);
+    if (status === "authenticated") {
+      getFavorisLists();
+    }
+  }, [status]);
 
   return (
     <>

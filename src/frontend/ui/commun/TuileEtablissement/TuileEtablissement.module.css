@@ -13,3 +13,7 @@
 .content {
   padding: 0 .5rem 0 .5rem;
 }
+
+.texte-noir {
+  color: #000 !important;
+}
