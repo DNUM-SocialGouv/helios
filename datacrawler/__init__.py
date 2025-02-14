@@ -3,7 +3,8 @@ from logging import Logger
 from typing import List, Tuple
 
 import pandas as pd
-from sqlalchemy import create_engine, text, inspect, Connection
+from sqlalchemy.engine import Connection
+from sqlalchemy import create_engine, text, inspect
 
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
