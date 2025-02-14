@@ -43,7 +43,9 @@ export const config = {
     "/comparaison",
     "/history",
     "/change-mot-passe",
+    "/liste/:path*",
     "/api/recherche",
     "/api/revalidate",
+    "/api/liste/:path*"
   ],
 };

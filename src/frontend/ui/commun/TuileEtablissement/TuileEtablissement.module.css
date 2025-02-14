@@ -1,0 +1,7 @@
+.tuile {
+  padding: 2rem 0 0 !important;
+}
+
+.description {
+  text-transform: capitalize;
+}

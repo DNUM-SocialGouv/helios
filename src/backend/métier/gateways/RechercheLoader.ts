@@ -1,4 +1,4 @@
-import { RésultatDeRecherche } from "../entities/RésultatDeRecherche";
+import { Résultat, RésultatDeRecherche } from "../entities/RésultatDeRecherche";
 import { CapaciteSMS, OrderDir } from "../use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 export interface RechercheLoader {
@@ -15,4 +15,5 @@ export interface RechercheLoader {
     order: OrderDir,
     page: number
   ): Promise<RésultatDeRecherche>;
+  rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]>;
 }

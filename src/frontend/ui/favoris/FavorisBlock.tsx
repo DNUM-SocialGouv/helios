@@ -1,41 +1,74 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { Badge } from "../commun/Badge/Badge";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { Establishment } from "../home/Establishment";
+import Spinner from "../commun/Spinner/Spinner";
+import { TuileEtablissement } from "../commun/TuileEtablissement/TuileEtablissement";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import { UserListEtablissementViewModel } from "../user-list/UserListViewModel";
 import styles from "./Favoris.module.css";
 
 
 type FavorisBlockProps = Readonly<{
-    favorisList: RechercheViewModel[];
+    favorisList: UserListEtablissementViewModel[];
     title: string;
+    currentListId: number;
 }>;
 
 export const FavorisBlock = ({
+    currentListId,
     favorisList,
     title,
 }: FavorisBlockProps) => {
-    const { wording } = useDependencies();
+    const { paths } = useDependencies();
+    const list = favorisList.length > 4 ? favorisList.slice(0, 3) : favorisList;
+    const [listEtablissements, setLlistEtablissements] = useState<RechercheViewModel[]>([]);
+    const [estCeEnAttente, setestCeEnAttente] = useState(true);
 
-    const getTitleColor = (title: string) => {
-        if (title === wording.EJ_SECTION_TITLE) return "default";
-        else if (title === wording.SANITAIRE_SECTION_TITLE) return "pink-tuile";
-        else return "green-emeraude"
-    }
+    useEffect(() => {
+        if (list.length === 0) {
+            setLlistEtablissements([]);
+            setestCeEnAttente(false);
+        }
+        else
+            fetch("/api/recherche-par-finess", {
+                body: JSON.stringify({
+                    finessNumber: list.map((etb) => { return etb.finessNumber })
+                }),
+                headers: { "Content-Type": "application/json" },
+                method: "POST",
+            }).then((response) => response.json())
+                .then((data) => {
+                    setestCeEnAttente(false);
+                    setLlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+                });
+    }, [favorisList])
 
     return (
         <div className="fr-mb-3w" >
-            <Badge className="fr-mb-1w" colour={getTitleColor(title)} label={title + " (" + favorisList.length + ")"} />
+            <Link className={styles["titre-liste"]} href={`/liste/${currentListId}`} >{title + " (" + favorisList.length + ")"}</Link>
             <br />
-            <section>
-                <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
-                    {favorisList.map((résultatViewModel, index) => (
-                        <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
-                            <Establishment résultatViewModel={résultatViewModel} />
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        </div>
+            {
+                !estCeEnAttente ?
+                    <section>
+                        <ul className={"fr-grid-row fr-grid-row--gutters fr-mt-1w " + styles["tuiles"]}>
+                            {listEtablissements.map((résultatViewModel, index) => (
+                                <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
+                                    <TuileEtablissement currentListId={currentListId} rechercheViewModel={résultatViewModel} />
+                                </li>
+                            ))}
+                            {favorisList.length > 4 && <li className="fr-col-3">
+                                <div className={styles["reste-liste"]}>
+                                    <Link href={`/liste/${currentListId}`}> + {favorisList.length - 3} </Link>
+                                </div>
+                            </li>}
+                        </ul>
+                    </section>
+                    : (
+                        <Spinner />
+                    )
+            }
+        </div >
     );
 };

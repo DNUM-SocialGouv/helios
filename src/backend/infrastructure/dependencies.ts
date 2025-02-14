@@ -27,6 +27,8 @@ import { TypeOrmProfileLoader } from "./gateways/profile-loader/TypeOrmProfileLo
 import { TypeOrmRechercheLoader } from "./gateways/recherche-loader/TypeOrmRechercheLoader";
 import { TypeOrmRoleLoader } from "./gateways/role-loader/TypeOrmRoleLoader";
 import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/TypeOrmSearchHistoryLoader";
+import { TypeOrmUserListEtablissementLoader } from "./gateways/user-list-loader/TypeOrmUserListEtablissementLoader";
+import { TypeOrmUserListLoader } from "./gateways/user-list-loader/TypeOrmUserListLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmVigieRhContratLoader } from "./gateways/vigierh-loader/TypeOrmVigieRhContratLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
@@ -50,6 +52,8 @@ export type Dependencies = Readonly<{
   roleLoader: TypeOrmRoleLoader;
   institutionLoader: TypeOrmInstitutionLoader;
   comparaisonLoader: ComparaisonLoader;
+  userListLoader: TypeOrmUserListLoader;
+  userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
   vigieRhContratLoader:VigieRhContratLoader;
 }>;
 
@@ -82,6 +86,8 @@ const createDependencies = (): Dependencies => {
     roleLoader: new TypeOrmRoleLoader(orm),
     institutionLoader: new TypeOrmInstitutionLoader(orm),
     comparaisonLoader: new TypeOrmComparaisonLoader(orm),
+    userListLoader: new TypeOrmUserListLoader(orm),
+    userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
     vigieRhContratLoader : new TypeOrmVigieRhContratLoader(orm)
   };
 };

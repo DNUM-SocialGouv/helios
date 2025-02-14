@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
@@ -12,6 +12,7 @@ import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
+import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
@@ -19,7 +20,9 @@ export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
   const { data, status } = useSession();
-  const { getAllFavoris } = useFavoris();
+  const userContext = useContext(UserContext);
+  const { getFavorisLists } = useFavoris();
+
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -35,10 +38,8 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    if (data?.user?.idUser) {
-      getAllFavoris(data?.user?.idUser);
-    }
-  }, [data?.user?.idUser]);
+    getFavorisLists();
+  }, []);
 
   return (
     <>
@@ -103,7 +104,7 @@ export const Header = () => {
                   router.pathname !== paths.PROFILES_LIST &&
                   router.pathname !== paths.USERS_LIST &&
                   router.pathname !== paths.HISTORY &&
-                  router.pathname !== paths.FAVORIS &&
+                  router.pathname !== paths.MES_LISTES &&
                   router.pathname !== paths.REINITIALISATION_PASSWORD &&
                   router.pathname !== paths.REGISTRATION &&
                   router.pathname !== paths.RECHERCHE_AVANCEE && (
@@ -159,16 +160,16 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/favoris");
+                            router.push(paths.MES_LISTES);
                           }}
                         >
-                          Favoris
+                          Mes listes ({userContext?.favorisLists?.length})
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/history");
+                            router.push(paths.HISTORY);
                           }}
                         >
                           Historique

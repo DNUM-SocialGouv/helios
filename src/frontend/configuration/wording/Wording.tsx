@@ -428,9 +428,12 @@ export interface Wording {
 
   // Favoris
   readonly FAVORIS_LIST: string;
-  readonly EJ_SECTION_TITLE: string;
-  readonly SANITAIRE_SECTION_TITLE: string;
-  readonly SOCIAL_SECTION_TITLE: string;
+  readonly FAVORIS_LIST_TITLE: string;
+  readonly ACTIONS: string;
+  readonly COMPARER: string;
+  readonly SUPPRIMER_DE_LA_LISTE: string;
+  readonly EXPORTER: string;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
@@ -445,6 +448,7 @@ export interface Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
   readonly CONFIRM_CREATE_PASSWORD: string;
+  readonly INVALID_PASSWORD_MESSAGE: string;
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
@@ -520,4 +524,12 @@ export interface Wording {
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
+
+  //Page d’une liste d’etablissements
+  readonly LISTE_DE_FAVORIS: string;
+  readonly LISTE_NON_TROUVÉE: string;
+  //Callout page d'acceuil
+  readonly NOUVEAU: string;
+  readonly NOUVELLES_FONCTIONNALITÉS: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 }

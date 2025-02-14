@@ -1,7 +1,6 @@
-import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { Establishment } from "./Establishment";
-import styles from "./Recherche.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { GrilleEtablissements } from "../commun/GrilleEtablissements/GrilleEtablissements";
 import { RechercheViewModel } from "./RechercheViewModel";
 
 type RésultatsDeRechercheProps = Readonly<{
@@ -26,20 +25,7 @@ export const RésultatsDeRecherche = ({
       <p className="fr-h6 fr-mt-4w">
         {(nombreRésultats === 0 && wording.aucunRésultat(termeFixe)) || wording.rechercheNombreRésultats(nombreRésultats, termeFixe)}
       </p>
-      <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
-        {résultats.map((résultatViewModel, index) => (
-          <li className="fr-col-3" key={résultatViewModel.numéroFiness + index}>
-            <Establishment résultatViewModel={résultatViewModel} />
-          </li>
-        ))}
-      </ul>
-      {!estCeQueLesRésultatsSontTousAffichés && (
-        <div className={styles["voir-plus-de-résultats"]}>
-          <button className="fr-btn fr-btn--secondary" onClick={chargeLesRésultatsSuivants}>
-            {wording.VOIR_PLUS_RÉSULTATS}
-          </button>
-        </div>
-      )}
+      <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés} résultats={résultats} />
     </section>
   );
 };

@@ -37,7 +37,7 @@ export const FormulaireCreatePwd = ({ annuler, changePassword, confirmPasswordVa
                                 onChange={passwordValueOnChange}
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                                 required
-                                title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                                title={wording.INVALID_PASSWORD_MESSAGE}
                                 type="password"
                                 value={passwordValue}
                             />
@@ -55,7 +55,7 @@ export const FormulaireCreatePwd = ({ annuler, changePassword, confirmPasswordVa
                                 onChange={confirmPasswordValueOnChange}
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                                 required
-                                title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                                title={wording.INVALID_PASSWORD_MESSAGE}
                                 type="password"
                                 value={confirmPasswordValue}
                             />

@@ -511,10 +511,12 @@ export class WordingFr implements Wording {
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
 
   // Favoris
-  readonly FAVORIS_LIST: string = "Liste des favoris";
-  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
-  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
-  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+  readonly FAVORIS_LIST: string = "Mes listes";
+  readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
+  readonly ACTIONS: string = "Actions";
+  readonly COMPARER: string = "Comparer";
+  readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
+  readonly EXPORTER: string = "Exporter";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
@@ -530,6 +532,7 @@ export class WordingFr implements Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
+  readonly INVALID_PASSWORD_MESSAGE: string = "Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial parmi !@#$%^&* .";
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
@@ -609,4 +612,12 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
+
+  //Page d’une liste de favoris
+  readonly LISTE_DE_FAVORIS = "Liste de favoris";
+  readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
+  //Callout page d'acceuil
+  readonly NOUVEAU: string = "NOUVEAU";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
 }
