@@ -3,6 +3,7 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { useFavoris } from "../favoris/useFavoris";
 import { RechercheViewModel } from "./RechercheViewModel";
 
 type RechercheState = Readonly<{
@@ -18,6 +19,7 @@ type RechercheState = Readonly<{
 
 export function useRecherche() {
   const { paths } = useDependencies();
+  const { getFavorisLists } = useFavoris();
   const router = useRouter();
   const pageInitiale = 1;
 
@@ -33,6 +35,7 @@ export function useRecherche() {
   });
 
   const lancerLaRecherche = (event: MouseEvent) => {
+    getFavorisLists();
     event.preventDefault();
     setState({
       ...state,
