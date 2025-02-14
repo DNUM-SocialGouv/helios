@@ -5,3 +5,7 @@
 .description {
   text-transform: capitalize;
 }
+
+.texte-noir {
+  color: #000 !important;
+}
