@@ -17,7 +17,6 @@ import { Institution } from "../../../métier/entities/Utilisateur/Institution";
 import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
-import { create } from "../../controllers/userListEndpoint";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
