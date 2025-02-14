@@ -1,10 +1,11 @@
 from datetime import datetime
 from logging import Logger
 from typing import List, Tuple
+import logging
 
 import pandas as pd
 from pandas.errors import EmptyDataError
-from sqlalchemy.engine import Connection
+from sqlalchemy.engine import Connection, Engine
 from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -44,7 +45,7 @@ def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(don
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
 
 
-def supprimer_donnees_existantes(table_name, engine, fournisseur, logger) -> None:
+def supprimer_donnees_existantes(table_name: str, engine: Engine, fournisseur: str, logger: logging.Logger) -> None:
     try:
         with engine.begin() as conn:
             conn.execute(text(f"DELETE FROM {table_name};"))
@@ -54,7 +55,7 @@ def supprimer_donnees_existantes(table_name, engine, fournisseur, logger) -> Non
         raise  # Relance l'exception pour ne pas la masquer
 
 
-def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logger) -> None:
+def inserer_nouvelles_donnees(table_name: str, engine: Engine, fournisseur: str, data_frame: pd.DataFrame, logger: logging.Logger) -> None:
     try:
         # Vérifier si le DataFrame est vide après filtrage
         if data_frame.empty:

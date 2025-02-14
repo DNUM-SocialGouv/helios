@@ -1,14 +1,14 @@
 import os
 from datetime import datetime
 import pandas as pd
-from sqlalchemy.engine import create_engine
+from sqlalchemy.engine import create_engine, Engine
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
 
-def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees) -> pd.DataFrame:
+def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
     numéros_finess_liste = numéros_finess_des_établissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
