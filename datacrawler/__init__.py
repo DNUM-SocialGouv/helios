@@ -46,27 +46,26 @@ def supprimer_donnees_existantes(table_name, engine, fournisseur, logger):
         with engine.begin() as conn:
             conn.execute(text(f"DELETE FROM {table_name};"))
         logger.info(f"[{fournisseur}]✅ Données supprimées avec succès de la table {table_name} !")
-    except Exception as e:
-        logger.info(f"[{fournisseur}]❌  Erreur lors de la suppression des données : {e}")
+    except Exception as exception:
+        logger.info(f"[{fournisseur}]❌  Erreur lors de la suppression des données : {exception}")
 
 
-def inserer_nouvelles_donnees(table_name, engine, fournisseur, df, logger):
+def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logger):
     try:
         # Vérifier si le DataFrame est vide après filtrage
-        if df.empty:
+        if data_frame.empty:
             logger.info(f"[{fournisseur}]⚠️ Aucune donnée à insérer après filtrage.")
             return
 
         # Récupérer les colonnes de la table SQL
-        with engine.begin() as conn:
-            inspector = inspect(engine)
-            table_columns = [col["name"] for col in inspector.get_columns(table_name)]
+        inspector = inspect(engine)
+        table_columns = [col["name"] for col in inspector.get_columns(table_name)]
 
         # Filtrer les colonnes pour ne garder que celles qui existent dans la table
-        df = df[[col for col in df.columns if col in table_columns]]
+        data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
 
         # Insérer les nouvelles données
-        df.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
+        data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
-    except Exception as e:
-        logger.error(f"[{fournisseur}]❌ Erreur lors de l'insertion des données : {e}")
+    except Exception as exception:
+        logger.error(f"[{fournisseur}]❌ Erreur lors de l'insertion des données : {exception}")
