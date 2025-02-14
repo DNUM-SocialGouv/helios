@@ -25,6 +25,6 @@ export class UserListModel {
     public user!: UtilisateurModel;
 
     @OneToMany(() => UserListEtablissementModel, (userListEtablissements) => userListEtablissements.userList, { eager: true, onDelete: 'CASCADE' })
-    public userListEtablissements?: UserListEtablissementModel[];
+    public userListEtablissements!: UserListEtablissementModel[];
 
 }
