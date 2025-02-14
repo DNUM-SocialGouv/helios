@@ -68,7 +68,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
@@ -99,7 +99,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
@@ -130,7 +130,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
@@ -161,7 +161,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
@@ -198,8 +198,8 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
-        nombreDeLibelléTotal={3}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -228,8 +228,8 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
-        nombreDeLibelléTotal={3}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -258,8 +258,8 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
         libellés={années}
-        libellésDeValeursManquantes={annéesManquantes(années)}
-        nombreDeLibelléTotal={3}
+        libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );

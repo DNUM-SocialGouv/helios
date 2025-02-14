@@ -23,7 +23,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;
   private readonly seuilMaximalDuTauxDeVétustéConstruction = 80;
   private readonly seuilDuContrasteDuLibellé = 10;
-  private readonly nombreDAnnéesParIndicateur = 3;
+  private readonly nombreDAnnéesParIndicateur = 5;
   public compteDeResultatViewModel: CompteDeResultatViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
   public autorisations: any;
@@ -34,7 +34,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     autorisations: any
   ) {
     this.compteDeResultatViewModel = new CompteDeResultatViewModel(budgetEtFinancesMédicoSocial, wording);
-    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, wording, autorisations);
+    this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceMedicoSocial(budgetEtFinancesMédicoSocial, autorisations, wording);
     this.autorisations = autorisations;
   }
 
@@ -82,7 +82,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     const listeAnnéesManquantes = annéesManquantes(
       montantDesContributionsAuxFraisDeSiègeParAnnée.map(
         (montantDesContributionsAuxFraisDeSiègeParAnnée) => montantDesContributionsAuxFraisDeSiègeParAnnée.année
-      )
+      ), this.nombreDAnnéesParIndicateur
     );
 
     return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={montantDesContributionsAuxFraisDeSiègeParAnnée} />;
@@ -150,7 +150,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
         entêteLibellé={this.wording.ANNÉE}
@@ -184,7 +184,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
       []
     );
 
-    const listeAnnéesManquantes = annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année));
+    const listeAnnéesManquantes = annéesManquantes(this.budgetEtFinancesMédicoSocial.map((résultatNetComptableParAnnée) => résultatNetComptableParAnnée.année), this.nombreDAnnéesParIndicateur);
 
     return <IndicateurTabulaire annéesManquantes={listeAnnéesManquantes} valeursParAnnée={résultatNetComptableParAnnée} />;
   }
@@ -298,7 +298,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   public get lesDonnéesBudgetairesPasAutorisés(): string[] {
     const nonAutorisés = [];
 
-   if (!this.leCompteDeRésultatEstIlAutorisé) { nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT);}
+    if (!this.leCompteDeRésultatEstIlAutorisé) { nonAutorisés.push(this.wording.COMPTE_DE_RÉSULTAT); }
     if (!this.leRésultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
     if (!this.leMontantDeLaContributionAuxFraisDeSiègeEstIlAutorisé) nonAutorisés.push(this.wording.MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE);
     if (!this.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
