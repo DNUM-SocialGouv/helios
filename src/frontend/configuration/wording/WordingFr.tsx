@@ -517,6 +517,8 @@ export class WordingFr implements Wording {
   readonly COMPARER: string = "Comparer";
   readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
   readonly EXPORTER: string = "Exporter";
+  readonly DANS_FAVORIS: string = "Dans les favoris";
+  readonly NON_FAVORIS: string = "Pas dans les favoris";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

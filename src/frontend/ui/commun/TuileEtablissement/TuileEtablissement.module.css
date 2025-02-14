@@ -6,6 +6,39 @@
   text-transform: capitalize;
 }
 
+.starInEstablishment {
+  color: #000091;
+  background-color: transparent !important;
+  position: relative;
+  bottom: 97%;
+  left: 88%;
+}
+
+.hidden-star {
+  /* Contenu caché */
+  visibility: hidden;
+}
+
+@media (max-width: 55em) {
+  .starInEstablishment {
+      color: #000091;
+      background-color: transparent !important;
+      position: relative;
+      bottom: 97%;
+      left: 84%;
+  }
+}
+
+@media (max-width: 40em) {
+  .starInEstablishment {
+      color: #000091;
+      background-color: transparent !important;
+      position: relative;
+      bottom: 97%;
+      left: 75%;
+  }
+}
+
 .logo {
   margin: 1.75rem 0 1rem;
 }
