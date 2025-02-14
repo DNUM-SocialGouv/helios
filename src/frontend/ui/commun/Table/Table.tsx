@@ -211,7 +211,6 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   className="fr-tile__link"
                   href={construisLeLien(row["type"], row["numéroFiness"])}
                   rel="noreferrer"
-                  style={{ backgroundImage: "none" }}
                   target="_blank"
                 >
                   {row[header.key]}
