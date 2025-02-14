@@ -3,8 +3,10 @@ from logging import Logger
 from typing import List, Tuple
 
 import pandas as pd
+from pandas.errors import EmptyDataError
 from sqlalchemy.engine import Connection
 from sqlalchemy import create_engine, text, inspect
+from sqlalchemy.exc import SQLAlchemyError
 
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
@@ -47,8 +49,9 @@ def supprimer_donnees_existantes(table_name, engine, fournisseur, logger):
         with engine.begin() as conn:
             conn.execute(text(f"DELETE FROM {table_name};"))
         logger.info(f"[{fournisseur}]✅ Données supprimées avec succès de la table {table_name} !")
-    except Exception as exception:
-        logger.info(f"[{fournisseur}]❌  Erreur lors de la suppression des données : {exception}")
+    except SQLAlchemyError as exception:
+        logger.error(f"[{fournisseur}]❌ Erreur SQL lors de la suppression des données : {exception}")
+        raise  # Relance l'exception pour ne pas la masquer
 
 
 def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logger):
@@ -68,5 +71,19 @@ def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logge
         # Insérer les nouvelles données
         data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
-    except Exception as exception:
-        logger.error(f"[{fournisseur}]❌ Erreur lors de l'insertion des données : {exception}")
+
+    except SQLAlchemyError as exception:  # Capture les erreurs SQLAlchemy
+        logger.error(f"[{fournisseur}]❌ Erreur SQL lors de l'insertion des données : {exception}")
+        raise  # Relance l'exception pour ne pas la masquer
+
+    except EmptyDataError as exception:  # Capture les erreurs liées à un DataFrame vide (pandas)
+        logger.error(f"[{fournisseur}]❌ Erreur Pandas : Données vides à insérer. {exception}")
+        raise
+
+    except ValueError as exception:  # Capture d'éventuelles erreurs de type (ex : colonnes invalides)
+        logger.error(f"[{fournisseur}]❌ Erreur de valeur : {exception}")
+        raise
+
+    except Exception as exception:  # Dernier recours (peut être évité si inutile)
+        logger.error(f"[{fournisseur}]❌ Erreur inattendue lors de l'insertion des données : {exception}")
+        raise  # Relance pour ne pas masquer l'erreur
