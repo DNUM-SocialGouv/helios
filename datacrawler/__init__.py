@@ -44,7 +44,7 @@ def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(don
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
 
 
-def supprimer_donnees_existantes(table_name, engine, fournisseur, logger):
+def supprimer_donnees_existantes(table_name, engine, fournisseur, logger) -> None:
     try:
         with engine.begin() as conn:
             conn.execute(text(f"DELETE FROM {table_name};"))
@@ -54,7 +54,7 @@ def supprimer_donnees_existantes(table_name, engine, fournisseur, logger):
         raise  # Relance l'exception pour ne pas la masquer
 
 
-def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logger):
+def inserer_nouvelles_donnees(table_name, engine, fournisseur, data_frame, logger) -> None:
     try:
         # Vérifier si le DataFrame est vide après filtrage
         if data_frame.empty:
