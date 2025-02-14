@@ -39,9 +39,9 @@ export const TuileEtablissement = ({
     <>
       <div className={"fr-tile " + styles["tuile"]}>
         <div className="fr-tile__body fr-enlarge-link">
-          <div className="fr-tile__content">
+          <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
-              <a href={rechercheViewModel.construisLeLien()} rel="noreferrer">
+              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien()} rel="noreferrer">
                 {rechercheViewModel.titre}
               </a>
             </h2>
@@ -49,7 +49,7 @@ export const TuileEtablissement = ({
           </div>
         </div>
         <div>
-          <Image alt="" height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
+          <Image alt="" className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
       <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}>

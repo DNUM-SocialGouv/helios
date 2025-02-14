@@ -7,7 +7,7 @@ import { HistogrammeData } from "../../../commun/Graphique/HistogrammesHorizonta
 import { StringFormater } from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
-  private readonly nombreDAnnéesParIndicateur = 3;
+  private readonly nombreDAnnéesParIndicateur = 5;
   private wording: Wording;
 
   constructor(private readonly budgetEtFinancesMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances[], wording: Wording) {
@@ -135,7 +135,7 @@ export class CompteDeResultatViewModel {
   }
 
   public lesAnnéesManquantesDuCompteDeRésultat(): number[] {
-    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat());
+    return annéesManquantes(this.lesAnnéesEffectivesDuCompteDeRésultat(), this.nombreDAnnéesParIndicateur);
   }
 
   private lesAnnéesEffectivesDuCompteDeRésultat(): number[] {

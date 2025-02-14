@@ -1,5 +1,5 @@
 .tuile {
-  padding: 2rem 0 0 !important;
+  padding: 0 !important;
 }
 
 .description {
@@ -37,4 +37,16 @@
       bottom: 97%;
       left: 75%;
   }
+}
+
+.logo {
+  margin: 1.75rem 0 1rem;
+}
+
+.content {
+  padding: 0 .5rem 0 .5rem;
+}
+
+.texte-noir {
+  color: #000 !important;
 }

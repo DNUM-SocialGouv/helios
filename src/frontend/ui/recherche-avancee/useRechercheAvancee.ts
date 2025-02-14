@@ -4,6 +4,7 @@ import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entiti
 import { ExtendedRésultatDeRecherche } from "../../../pages/recherche-avancee";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { useFavoris } from "../favoris/useFavoris";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 
 type RechercheAvanceeState = Readonly<{
@@ -18,6 +19,7 @@ type RechercheAvanceeState = Readonly<{
 
 export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
   const { paths } = useDependencies();
+  const { getFavorisLists } = useFavoris();
   const take = 20;
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
@@ -40,6 +42,7 @@ export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
 
   useEffect(() => {
     if (data.laRechercheEtendueEstLancee) {
+      getFavorisLists();
       setState({
         ...state,
         estCeQueLesRésultatsSontReçus: true,
