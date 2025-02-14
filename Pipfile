@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sqlalchemy = "*"
+sqlalchemy = "==1.4.37"
 psycopg2 = "2.9.3"
 sentry-sdk = "1.16.0"
 python-dotenv = "0.20.0"
-pandas = "*"
+pandas = "==1.5.2"
 lxml = "4.9.1"
-pyarrow = "*"
+pyarrow = "==13.0.0"
 
 [dev-packages]
 jupyter = "1.0.0"
