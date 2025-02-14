@@ -16,6 +16,7 @@ class VariablesDEnvironnement(TypedDict):
     SIICEA_DATA_PATH: str
     CHECKED_SIICEA_DATA_PATH: str
     HAPI_DATA_PATH: str
+    VIGIE_RH_DATA_PATH: str
 
 
 def récupère_les_variables_d_environnement(
