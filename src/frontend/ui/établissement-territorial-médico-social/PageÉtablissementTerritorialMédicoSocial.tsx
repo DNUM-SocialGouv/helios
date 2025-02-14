@@ -98,6 +98,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
             toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocRessourcesHumainesMédicoSocial
+            categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement}
             opnedBloc={statusBlocs[2]}
             setStatusSousBlocs={setStatusSousBlocs}
             statusSousBlocs={statusSousBlocs}

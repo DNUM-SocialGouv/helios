@@ -7,6 +7,7 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  categorie: string;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
   statusSousBlocs: boolean[];
@@ -14,7 +15,7 @@ type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
 }>;
 
 export const BlocRessourcesHumainesMédicoSocial = ({
-  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs
+  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, categorie, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
@@ -24,7 +25,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
 
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
-      {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' ?
+      {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' && categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes" ?
         <ContenuBlocRHMedicoSocialVigieRH setStatusSousBlocs={setStatusSousBlocs} statusSousBlocs={statusSousBlocs} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
         : <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
       }
