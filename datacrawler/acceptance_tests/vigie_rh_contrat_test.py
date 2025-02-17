@@ -1,15 +1,15 @@
-# import os
-# from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-# from datacrawler.load.nom_des_tables import FichierSource
-# from datacrawler.test_helpers import (
-#     base_de_données_test,
-#     mocked_logger,
-#     supprime_les_données_des_tables,
+import os
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
+from datacrawler.load.nom_des_tables import FichierSource
+from datacrawler.test_helpers import (
+    base_de_données_test,
+    mocked_logger,
+    supprime_les_données_des_tables,
 #     sauvegarde_un_établissement_en_base,
 #     sauvegarde_une_entité_juridique_en_base,
 #     compte_nombre_de_lignes
-# )
-from datacrawler.test_helpers import ( base_de_données_test, supprime_les_données_des_tables)
+)
+
 # from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 # from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 # from datacrawler.load.vigie_rh import SOURCE, Table, ColumMapping
@@ -29,14 +29,14 @@ class TestImportVigieRhContrat:
     def test_import_vigie_rh_contrat(self) -> None:
         # Initialisations
         vegie_rh_data_path = 'data_test/entrée/vigie_rh'
-        # fichiers = os.listdir(vegie_rh_data_path)
+        fichiers = os.listdir(vegie_rh_data_path)
 
-        # chemin_local_du_fichier_contrat = os.path.join(
-        #     vegie_rh_data_path,
-        #     trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CONTRAT.value, mocked_logger)
-        # )
+        chemin_local_du_fichier_contrat = os.path.join(
+            vegie_rh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CONTRAT.value, mocked_logger)
+        )
 
-        # assert chemin_local_du_fichier_contrat == 'data_test/entrée/vigie_rh/vigierh_contrat_2024_01_01.parquet'
+        assert chemin_local_du_fichier_contrat == 'data_test/entrée/vigie_rh/vigierh_contrat_2024_01_01.parquet'
 
         # chemin_local_du_fichier_ref = os.path.join(
         #     vegie_rh_data_path,
