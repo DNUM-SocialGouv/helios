@@ -125,15 +125,6 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_TYPE_CONTRAT.value};")
-    base_de_données.execute(f"DELETE FROM {Table.CONTRAT.value};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_PROFESSION_FILIERE.value};")
-    base_de_données.execute(f"DELETE FROM {Table.PROFESSION_FILIERE.value};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_MASQUE.value};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_PROFESSION_GROUPE.value};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_QUALITE.value};")
-    base_de_données.execute(f"DELETE FROM {Table.REF_REDRESSEMENT.value};")
-    base_de_données.execute(f"DELETE FROM {Table.PROFESSION_GROUPE.value};")
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")

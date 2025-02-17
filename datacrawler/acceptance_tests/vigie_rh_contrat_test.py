@@ -1,11 +1,6 @@
 import os
-import pandas as pd
-import pytest
-from numpy import NaN
-from datetime import date
 from unittest.mock import Mock, patch
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-import datacrawler
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.test_helpers import (
     base_de_données_test,
@@ -56,7 +51,7 @@ class TestImportVigieRhContrat:
 
         # Traitements des données
         df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
-        
+
         nombre_de_lignes = df_ref.shape[0]
         assert nombre_de_lignes == 3
 
@@ -81,6 +76,14 @@ class TestImportVigieRhContrat:
         nb_lignes = compte_nombre_de_lignes(Table.REF_TYPE_CONTRAT.value, base_de_données_test)
         assert nb_lignes == 3
 
-        inserer_nouvelles_donnees(Table.CONTRAT.value, base_de_données_test, SOURCE, df_filtré, mocked_logger, FichierSource.VIGIE_RH_CONTRAT, date_de_mise_à_jour)
+        inserer_nouvelles_donnees(
+            Table.CONTRAT.value,
+            base_de_données_test,
+            SOURCE,
+            df_filtré,
+            mocked_logger,
+            FichierSource.VIGIE_RH_CONTRAT,
+            date_de_mise_à_jour
+        )
         nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
         assert nb_lignes == 190
