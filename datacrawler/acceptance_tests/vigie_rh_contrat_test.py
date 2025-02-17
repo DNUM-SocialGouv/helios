@@ -7,16 +7,14 @@ from datacrawler.test_helpers import (
     supprime_les_données_des_tables,
     sauvegarde_un_établissement_en_base,
     sauvegarde_une_entité_juridique_en_base,
-#     compte_nombre_de_lignes
+    compte_nombre_de_lignes
 )
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
-#from datacrawler.load.vigie_rh import SOURCE, Table, ColumMapping
-from datacrawler.load.vigie_rh import ColumMapping
-# from datacrawler.import_vigie_rh_contrat import filter_contrat_data
-# from datacrawler import supprimer_donnees_existantes
-# from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
+from datacrawler.load.vigie_rh import SOURCE, Table, ColumMapping
+from datacrawler.import_vigie_rh_contrat import filter_contrat_data
+from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
 
 class TestImportVigieRhContrat:
@@ -57,35 +55,35 @@ class TestImportVigieRhContrat:
         nombre_de_lignes = df_ref.shape[0]
         assert nombre_de_lignes == 3
 
-        # data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-        # df_filtré = filter_contrat_data(data_frame, base_de_données_test)
+        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+        df_filtré = filter_contrat_data(data_frame, base_de_données_test)
 
-        # nombre_de_lignes = df_filtré.shape[0]
-        # assert nombre_de_lignes == 190
+        nombre_de_lignes = df_filtré.shape[0]
+        assert nombre_de_lignes == 190
 
-        # supprimer_donnees_existantes(Table.CONTRAT.value, base_de_données_test, SOURCE, mocked_logger)
+        supprimer_donnees_existantes(Table.CONTRAT.value, base_de_données_test, SOURCE, mocked_logger)
 
-        # nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
-        # assert nb_lignes == 0
+        nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
+        assert nb_lignes == 0
 
-        # supprimer_donnees_existantes(Table.REF_TYPE_CONTRAT.value, base_de_données_test, SOURCE, mocked_logger)
+        supprimer_donnees_existantes(Table.REF_TYPE_CONTRAT.value, base_de_données_test, SOURCE, mocked_logger)
 
-        # nb_lignes = compte_nombre_de_lignes(Table.REF_TYPE_CONTRAT.value, base_de_données_test)
-        # assert nb_lignes == 0
+        nb_lignes = compte_nombre_de_lignes(Table.REF_TYPE_CONTRAT.value, base_de_données_test)
+        assert nb_lignes == 0
 
-        # inserer_nouvelles_donnees(Table.REF_TYPE_CONTRAT.value, base_de_données_test, SOURCE, df_ref, mocked_logger)
+        inserer_nouvelles_donnees(Table.REF_TYPE_CONTRAT.value, base_de_données_test, SOURCE, df_ref, mocked_logger)
 
-        # nb_lignes = compte_nombre_de_lignes(Table.REF_TYPE_CONTRAT.value, base_de_données_test)
-        # assert nb_lignes == 3
+        nb_lignes = compte_nombre_de_lignes(Table.REF_TYPE_CONTRAT.value, base_de_données_test)
+        assert nb_lignes == 3
 
-        # inserer_nouvelles_donnees(
-        #     Table.CONTRAT.value,
-        #     base_de_données_test,
-        #     SOURCE,
-        #     df_filtré,
-        #     mocked_logger,
-        #     FichierSource.VIGIE_RH_CONTRAT,
-        #     date_de_mise_à_jour
-        # )
-        # nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
-        # assert nb_lignes == 190
+        inserer_nouvelles_donnees(
+            Table.CONTRAT.value,
+            base_de_données_test,
+            SOURCE,
+            df_filtré,
+            mocked_logger,
+            FichierSource.VIGIE_RH_CONTRAT,
+            date_de_mise_à_jour
+        )
+        nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
+        assert nb_lignes == 190
