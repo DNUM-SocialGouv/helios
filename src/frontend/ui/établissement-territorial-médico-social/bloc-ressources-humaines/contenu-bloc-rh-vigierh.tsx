@@ -1,17 +1,19 @@
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocVigieRH } from "./bloc-vigie-rh/BlocVigieRh";
+import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import styles from "./BlocRessourcesHumainesMédicoSocial.module.css"
 import { ContenuBlocRHMedicoSocialHelios } from "./contenu-bloc-rh-helios";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
-
 type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
     établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
     statusSousBlocs: boolean[];
-    setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>
+    setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>;
+    blocVigieRhViewModel: BlocVigieRHViewModel;
 }>;
 
 export const ContenuBlocRHMedicoSocialVigieRH = ({
-    établissementTerritorialMédicoSocialRessourcesHumainesViewModel, setStatusSousBlocs, statusSousBlocs
+    établissementTerritorialMédicoSocialRessourcesHumainesViewModel, setStatusSousBlocs, statusSousBlocs, blocVigieRhViewModel
 }: ContenuBlocRHMedicoSocialVigieRHProps) => {
     const { wording } = useDependencies();
 
@@ -51,7 +53,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
                     </button>
                 </h3>
                 <div className="fr-collapse" id="accordion-indicateurs-rh-vigierh">
-                    Ici, les indicateurs Vigie RH
+                    <BlocVigieRH blocVigieRHViewModel={blocVigieRhViewModel} />
                 </div>
             </section>
         </div>
