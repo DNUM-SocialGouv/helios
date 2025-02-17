@@ -46,8 +46,8 @@ if __name__ == "__main__":
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
 
-    df = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
-    df_filtré = filter_profession_filiere_data(df, base_de_données)
+    data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
+    df_filtré = filter_profession_filiere_data(data_frame, base_de_données)
 
     supprimer_donnees_existantes(Table.PROFESSION_FILIERE.value, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(Table.REF_PROFESSION_FILIERE.value, base_de_données, SOURCE, logger_helios)

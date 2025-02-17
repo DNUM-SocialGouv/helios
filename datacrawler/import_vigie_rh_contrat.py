@@ -47,8 +47,8 @@ if __name__ == "__main__":
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
 
-    df = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-    df_filtré = filter_contrat_data(df, base_de_données)
+    data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+    df_filtré = filter_contrat_data(data_frame, base_de_données)
 
     supprimer_donnees_existantes(Table.CONTRAT.value, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(Table.REF_TYPE_CONTRAT.value, base_de_données, SOURCE, logger_helios)

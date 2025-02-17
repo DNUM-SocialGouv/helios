@@ -1,5 +1,4 @@
 import os
-from unittest.mock import Mock, patch
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.test_helpers import (
@@ -55,8 +54,8 @@ class TestImportVigieRhContrat:
         nombre_de_lignes = df_ref.shape[0]
         assert nombre_de_lignes == 3
 
-        df = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-        df_filtré = filter_contrat_data(df, base_de_données_test)
+        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+        df_filtré = filter_contrat_data(data_frame, base_de_données_test)
 
         nombre_de_lignes1 = df_filtré.shape[0]
         assert nombre_de_lignes1 == 190

@@ -61,8 +61,8 @@ if __name__ == "__main__":
     df_ref_profession_groupe = lis_le_fichier_parquet(chemin_local_du_fichier_ref_profession_groupe, ColumMapping.REF_PROFESSION_GROUPE.value)
     df_ref_qualite = lis_le_fichier_parquet(chemin_local_du_fichier_ref_qualite, ColumMapping.REF_QUALITE.value)
     df_ref_redressement = lis_le_fichier_parquet(chemin_local_du_fichier_ref_redressement, ColumMapping.REF_REDRESSEMENT.value)
-    df = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
-    df_filtré = filter_profession_groupe_data(df, base_de_données)
+    data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
+    df_filtré = filter_profession_groupe_data(data_frame, base_de_données)
 
     supprimer_donnees_existantes(Table.PROFESSION_GROUPE.value, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(Table.REF_MASQUE.value, base_de_données, SOURCE, logger_helios)
