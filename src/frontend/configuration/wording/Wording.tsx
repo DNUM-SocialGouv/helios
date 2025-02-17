@@ -532,4 +532,8 @@ export interface Wording {
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
 }
