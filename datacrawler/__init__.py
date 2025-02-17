@@ -1,6 +1,6 @@
 from datetime import datetime
 from logging import Logger
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 import logging
 
 import pandas as pd
@@ -61,8 +61,8 @@ def inserer_nouvelles_donnees(
     fournisseur: str,
     data_frame: pd.DataFrame,
     logger: logging.Logger,
-    fichier: FichierSource = None,
-    date_de_mise_à_jour: str = None
+    fichier: Optional[FichierSource] = None,
+    date_de_mise_à_jour: Optional[str] = None
 ) -> None:
     try:
         # Vérifier si le DataFrame est vide après filtrage
@@ -80,7 +80,8 @@ def inserer_nouvelles_donnees(
         # Insérer les nouvelles données
         data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
         if fichier and date_de_mise_à_jour:
-            mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(engine, date_de_mise_à_jour, fichier)
+            with engine.connect() as connection:
+                mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
 
 
