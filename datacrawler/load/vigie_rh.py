@@ -95,5 +95,3 @@ class ColumMapping(Enum):
         'ind_redressement_code': 'code',
         'ind_redressement': 'label'
     }
-
-
