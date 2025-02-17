@@ -5,8 +5,8 @@ from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
     supprime_les_données_des_tables,
-    # sauvegarde_un_établissement_en_base,
-    # sauvegarde_une_entité_juridique_en_base,
+    sauvegarde_un_établissement_en_base,
+    sauvegarde_une_entité_juridique_en_base,
 #     compte_nombre_de_lignes
 )
 
@@ -22,10 +22,10 @@ from datacrawler.load.vigie_rh import ColumMapping
 class TestImportVigieRhContrat:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
-        # sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        # sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
-        # sauvegarde_un_établissement_en_base("010001436", "010008407", base_de_données_test)
-        # sauvegarde_un_établissement_en_base("010001741", "010008407", base_de_données_test)
+        sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
+        sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
+        sauvegarde_un_établissement_en_base("010001436", "010008407", base_de_données_test)
+        sauvegarde_un_établissement_en_base("010001741", "010008407", base_de_données_test)
 
 
     def test_import_vigie_rh_contrat(self) -> None:
