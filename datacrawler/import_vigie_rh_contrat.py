@@ -46,6 +46,7 @@ if __name__ == "__main__":
 
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
+    nombre_de_lignes = df_ref.shape[0]
 
     df = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
     df_filtré = filter_contrat_data(df, base_de_données)
