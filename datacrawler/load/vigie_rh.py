@@ -18,22 +18,6 @@ class Table(Enum):
     REF_QUALITE = "vigierh_ref_qualite"
     REF_REDRESSEMENT = "vigierh_ref_redressement"
 
-class FichierSource(Enum):
-    # contrat
-    PREFIX_FICHIER_CONTRAT = "vigierh_anneemois_contrat_"
-    PREFIX_FICHIER_REF_TYPE_CONTRAT = "vigierh_ref_nature_contrat"
-
-    # profession_filiere
-    PREFIX_FICHIER_PROFESSION_FILIERE = "vigierh_anneemois_profession1_"
-    PREFIX_FICHIER_REF_PROFESSION_FILIERE = "vigierh_ref_profession1"
-
-    # profession_groupe
-    PREFIX_FICHIER_PROFESSION_GROUPE = "vigierh_anneemois_profession2"
-    PREFIX_FICHIER_REF_MASQUE = "vigierh_ref_masque"
-    PREFIX_FICHIER_REF_PROFESSION_GROUPE = "vigierh_ref_profession2"
-    PREFIX_FICHIER_REF_QUALITE = "vigierh_ref_qualite"
-    PREFIX_FICHIER_REF_REDRESSEMENT = "vigierh_ref_redressement"
-
 class ColumMapping(Enum):
     # contrat
     CONTRAT = {

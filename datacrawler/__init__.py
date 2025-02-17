@@ -55,7 +55,15 @@ def supprimer_donnees_existantes(table_name: str, engine: Engine, fournisseur: s
         raise  # Relance l'exception pour ne pas la masquer
 
 
-def inserer_nouvelles_donnees(table_name: str, engine: Engine, fournisseur: str, data_frame: pd.DataFrame, logger: logging.Logger) -> None:
+def inserer_nouvelles_donnees(
+    table_name: str,
+    engine: Engine,
+    fournisseur: str,
+    data_frame: pd.DataFrame,
+    logger: logging.Logger,
+    fichier: FichierSource = None,
+    date_de_mise_à_jour: str = None
+) -> None:
     try:
         # Vérifier si le DataFrame est vide après filtrage
         if data_frame.empty:
@@ -71,7 +79,10 @@ def inserer_nouvelles_donnees(table_name: str, engine: Engine, fournisseur: str,
 
         # Insérer les nouvelles données
         data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
+        if fichier and date_de_mise_à_jour:
+            mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(engine, date_de_mise_à_jour, fichier)
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
+
 
     except SQLAlchemyError as exception:  # Capture les erreurs SQLAlchemy
         logger.error(f"[{fournisseur}]❌ Erreur SQL lors de l'insertion des données : {exception}")

@@ -6,7 +6,9 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.load.vigie_rh import SOURCE, FichierSource, Table, ColumMapping
+from datacrawler.load.vigie_rh import SOURCE, Table, ColumMapping
+from datacrawler.load.nom_des_tables import FichierSource
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
 def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
@@ -34,12 +36,13 @@ if __name__ == "__main__":
 
     chemin_local_du_fichier_contrat = os.path.join(
         vegie_rh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.PREFIX_FICHIER_CONTRAT.value, logger_helios)
+        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CONTRAT.value, logger_helios)
     )
     chemin_local_du_fichier_ref = os.path.join(
         vegie_rh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.PREFIX_FICHIER_REF_TYPE_CONTRAT.value, logger_helios)
+        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value, logger_helios)
     )
+    date_de_mise_à_jour = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_contrat)
 
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
@@ -51,4 +54,4 @@ if __name__ == "__main__":
     supprimer_donnees_existantes(Table.REF_TYPE_CONTRAT.value, base_de_données, SOURCE, logger_helios)
 
     inserer_nouvelles_donnees(Table.REF_TYPE_CONTRAT.value, base_de_données, SOURCE, df_ref, logger_helios)
-    inserer_nouvelles_donnees(Table.CONTRAT.value, base_de_données, SOURCE, df_filtré, logger_helios)
+    inserer_nouvelles_donnees(Table.CONTRAT.value, base_de_données, SOURCE, df_filtré, logger_helios, FichierSource.VIGIE_RH_CONTRAT, date_de_mise_à_jour)
