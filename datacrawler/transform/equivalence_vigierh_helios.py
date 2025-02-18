@@ -2,22 +2,6 @@ from enum import Enum
 
 SOURCE = 'VigieRh'
 
-class Table(Enum):
-    # contrat
-    CONTRAT = "vigierh_contrat"
-    REF_TYPE_CONTRAT = "vigierh_ref_type_contrat"
-
-    # profession_filiere
-    PROFESSION_FILIERE = "vigierh_profession_filiere"
-    REF_PROFESSION_FILIERE = "vigierh_ref_profession_filiere"
-
-    # profession_groupe
-    PROFESSION_GROUPE = "vigierh_profession_groupe"
-    REF_MASQUE = "vigierh_ref_masque"
-    REF_PROFESSION_GROUPE = "vigierh_ref_profession_groupe"
-    REF_QUALITE = "vigierh_ref_qualite"
-    REF_REDRESSEMENT = "vigierh_ref_redressement"
-
 class ColumMapping(Enum):
     # contrat
     CONTRAT = {

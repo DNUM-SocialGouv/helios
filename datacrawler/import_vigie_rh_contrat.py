@@ -6,8 +6,8 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
-from datacrawler.load.nom_des_tables import FichierSource
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
+from datacrawler.load.nom_des_tables import FichierSource, TABLE_CONTRAT, TABLE_REF_TYPE_CONTRAT
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
 def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
@@ -50,8 +50,8 @@ if __name__ == "__main__":
     data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
     df_filtré = filter_contrat_data(data_frame, base_de_données)
 
-    supprimer_donnees_existantes(Table.CONTRAT.value, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(Table.REF_TYPE_CONTRAT.value, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(Table.REF_TYPE_CONTRAT.value, base_de_données, SOURCE, df_ref, logger_helios)
-    inserer_nouvelles_donnees(Table.CONTRAT.value, base_de_données, SOURCE, df_filtré, logger_helios, FichierSource.VIGIE_RH_CONTRAT, date_de_mise_à_jour)
+    inserer_nouvelles_donnees(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, df_ref, logger_helios)
+    inserer_nouvelles_donnees(TABLE_CONTRAT, base_de_données, SOURCE, df_filtré, logger_helios, FichierSource.VIGIE_RH_CONTRAT, date_de_mise_à_jour)
