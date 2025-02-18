@@ -27,8 +27,8 @@ export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRe
 
     const handleFavoriteStatus = () => {
 
-        if (isInFavoris()) {
-            removeFromFavorisList(favorite, processedListId).finally(() => {
+        if (isInFavoris() && favorite) {
+            removeFromFavorisList([favorite?.numéroFiness], processedListId).finally(() => {
                 if (rafraichitAuRetraitFavoris) {
                     router.replace(router.asPath);
                 }

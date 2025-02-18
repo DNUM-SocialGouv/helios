@@ -49,7 +49,7 @@ async function doCreate(request: NextApiRequest, response: NextApiResponse, idUs
 
 async function doDelete(request: NextApiRequest, response: NextApiResponse, idUser: string) {
     const { id } = request.query;
-    const { finessNumber } = request.body;
-    await deleteEtablissementFromList(idUser, Number(id), finessNumber);
+    const { finessNumbers } = request.body;
+    await deleteEtablissementFromList(idUser, Number(id), finessNumbers);
     return response.status(204).send(null);
 }

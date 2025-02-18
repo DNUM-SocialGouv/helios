@@ -11,7 +11,7 @@ export class UserListEtablissementUseCase {
         return await this.userListEtablissementLoader.create(idUser, listId, finessNumber, typeEtablissement);
     }
 
-    async delete(idUser: string, idList: number, finessNumber: string): Promise<void> {
-        return await this.userListEtablissementLoader.delete(idUser, idList, finessNumber);
+    async delete(idUser: string, idList: number, finessNumbers: string[]): Promise<void> {
+        return await this.userListEtablissementLoader.delete(idUser, idList, finessNumbers);
     }
 }

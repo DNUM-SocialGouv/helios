@@ -54,7 +54,7 @@ export default function Router({ list }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list.nom}</h1>
       }
-      {displayTable && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} />}
+      {displayTable && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">

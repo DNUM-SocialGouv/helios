@@ -23,10 +23,10 @@ export async function create(idUser: string, listId: number, finessNumber: strin
     }
 }
 
-export async function deleteEtablissementFromList(idUser: string, idList: number, finessNumber: string): Promise<void> {
+export async function deleteEtablissementFromList(idUser: string, idList: number, finessNumbers: string[]): Promise<void> {
     try {
         const userListEtablissementUseCase = new UserListEtablissementUseCase(dependencies.userListEtablissementLoader);
-        return await userListEtablissementUseCase.delete(idUser, idList, finessNumber);
+        return await userListEtablissementUseCase.delete(idUser, idList, finessNumbers);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;
