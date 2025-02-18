@@ -79,3 +79,10 @@ class ColumMapping(Enum):
         'ind_redressement_code': 'code',
         'ind_redressement': 'label'
     }
+    
+    # pyramide des ages
+    REF_TRANCHE_AGE = {
+        'tranche_code': 'code_tranche_age',
+        'tranche_age': 'tranche_age'
+    }
+    

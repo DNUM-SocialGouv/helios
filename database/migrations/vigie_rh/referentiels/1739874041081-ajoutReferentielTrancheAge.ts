@@ -2,8 +2,10 @@ import { MigrationInterface, QueryRunner } from "typeorm"
 
 export class AjoutReferentielTrancheAge1739874041081 implements MigrationInterface {
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+          ALTER TYPE fichier_source ADD VALUE IF NOT EXISTS 'vigierh_ref_tranche_age';
+
           CREATE TABLE referentiel_tranche_age_vigierh (
             code_tranche_age int NOT NULL,
             tranche_age varchar(255),
@@ -11,10 +13,10 @@ export class AjoutReferentielTrancheAge1739874041081 implements MigrationInterfa
             PRIMARY KEY (code_tranche_age)
           );
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query("DROP TABLE IF EXISTS referentiel_tranche_age_vigierh;");
-    }
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query("DROP TABLE IF EXISTS referentiel_tranche_age_vigierh;");
+  }
 
 }
