@@ -6,13 +6,8 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-<<<<<<< HEAD
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
-=======
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
-from datacrawler.load.nom_des_tables import FichierSource
->>>>>>> 026c5ac8b0be8f4398e9020237b2174637b170f7
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
 def filter_profession_filiere_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
