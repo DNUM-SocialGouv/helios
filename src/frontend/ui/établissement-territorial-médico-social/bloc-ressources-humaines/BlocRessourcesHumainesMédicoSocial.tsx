@@ -7,12 +7,15 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  categorie: string;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
+  statusSousBlocs: boolean[];
+  setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>
 }>;
 
 export const BlocRessourcesHumainesMédicoSocial = ({
-  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, opnedBloc, toggelBlocs
+  établissementTerritorialMédicoSocialRessourcesHumainesViewModel, categorie, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
@@ -20,13 +23,10 @@ export const BlocRessourcesHumainesMédicoSocial = ({
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs} />;
   }
 
-  // eslint-disable-next-line no-console
-  console.log('variable !!!', process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"])
-
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
-      {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' ?
-        <ContenuBlocRHMedicoSocialVigieRH />
+      {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' && categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes" ?
+        <ContenuBlocRHMedicoSocialVigieRH setStatusSousBlocs={setStatusSousBlocs} statusSousBlocs={statusSousBlocs} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
         : <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
       }
     </Bloc>

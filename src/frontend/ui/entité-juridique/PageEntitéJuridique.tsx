@@ -71,7 +71,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
     }
   }, [onBeforeGetContentResolve.current]);
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3, 0);
 
   return (
     <main className="fr-container">
