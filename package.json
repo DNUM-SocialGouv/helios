@@ -13,6 +13,7 @@
     "depcheck": "depcheck --ignore-patterns=spikes,.venv",
     "dev": "yarn start:db && next dev",
     "encryptDiamant:local": "pipenv run encrypt_diamant",
+    "transfromeParquetEnCSV:local": "pipenv run transforme_parquet_en_csv",
     "format:typescript": "prettier --write \"**/*.+(js|ts|json|tsx|jsx)\"",
     "lint": "yarn lint:typescript && yarn lint:python",
     "lint:typescript": "npx eslint src database download_data_source",
