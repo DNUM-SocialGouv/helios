@@ -1,6 +1,5 @@
 import os
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
@@ -9,10 +8,17 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     compte_nombre_de_lignes
 )
-
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
+from datacrawler.load.nom_des_tables import (
+    FichierSource,
+    TABLE_PROFESSION_GROUPE,
+    TABLE_REF_MASQUE,
+    TABLE_REF_PROFESSION_GROUPE,
+    TABLE_REF_QUALITE,
+    TABLE_REF_REDRESSEMENT
+)
 from datacrawler.import_vigie_rh_profession_groupe import filter_profession_groupe_data
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
@@ -96,35 +102,35 @@ class TestImportVigiePprofessionGroupe:
         assert df_filtré.shape[0] == 198
 
 
-        supprimer_donnees_existantes(Table.PROFESSION_GROUPE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.PROFESSION_GROUPE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, base_de_données_test) == 0
 
-        supprimer_donnees_existantes(Table.REF_MASQUE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_MASQUE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_REF_MASQUE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_MASQUE, base_de_données_test) == 0
 
-        supprimer_donnees_existantes(Table.REF_PROFESSION_GROUPE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_PROFESSION_GROUPE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 0
 
-        supprimer_donnees_existantes(Table.REF_QUALITE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_QUALITE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_REF_QUALITE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_QUALITE, base_de_données_test) == 0
 
-        supprimer_donnees_existantes(Table.REF_REDRESSEMENT.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_REDRESSEMENT.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_REF_REDRESSEMENT, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_REDRESSEMENT, base_de_données_test) == 0
 
-        inserer_nouvelles_donnees(Table.REF_MASQUE.value, base_de_données_test, SOURCE, df_ref_masque, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_MASQUE.value, base_de_données_test) == 1
+        inserer_nouvelles_donnees(TABLE_REF_MASQUE, base_de_données_test, SOURCE, df_ref_masque, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_MASQUE, base_de_données_test) == 1
 
-        inserer_nouvelles_donnees(Table.REF_PROFESSION_GROUPE.value, base_de_données_test, SOURCE, df_ref_profession_groupe, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_PROFESSION_GROUPE.value, base_de_données_test) == 16
+        inserer_nouvelles_donnees(TABLE_REF_PROFESSION_GROUPE, base_de_données_test, SOURCE, df_ref_profession_groupe, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 16
 
-        inserer_nouvelles_donnees(Table.REF_QUALITE.value, base_de_données_test, SOURCE, df_ref_qualite, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_QUALITE.value, base_de_données_test) == 1
+        inserer_nouvelles_donnees(TABLE_REF_QUALITE, base_de_données_test, SOURCE, df_ref_qualite, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_QUALITE, base_de_données_test) == 1
 
-        inserer_nouvelles_donnees(Table.REF_REDRESSEMENT.value, base_de_données_test, SOURCE, df_ref_redressement, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_REDRESSEMENT.value, base_de_données_test) == 2
+        inserer_nouvelles_donnees(TABLE_REF_REDRESSEMENT, base_de_données_test, SOURCE, df_ref_redressement, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_REDRESSEMENT, base_de_données_test) == 2
 
         inserer_nouvelles_donnees(
-            Table.PROFESSION_GROUPE.value,
+            TABLE_PROFESSION_GROUPE,
             base_de_données_test,
             SOURCE,
             df_filtré,
@@ -132,4 +138,4 @@ class TestImportVigiePprofessionGroupe:
             FichierSource.VIGIE_RH_PROFESSION_GROUPE,
             date_de_mise_à_jour
         )
-        assert compte_nombre_de_lignes(Table.PROFESSION_GROUPE.value, base_de_données_test) == 198
+        assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, base_de_données_test) == 198

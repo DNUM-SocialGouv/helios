@@ -1,6 +1,6 @@
 import os
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-from datacrawler.load.nom_des_tables import FichierSource
+from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
@@ -12,7 +12,7 @@ from datacrawler.test_helpers import (
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.import_vigie_rh_profession_filiere import filter_profession_filiere_data
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
@@ -31,7 +31,7 @@ class TestImportVigiePprofessionFiliere:
 
 
     def test_import_vigie_rh_profession_filiere_test(self) -> None:
-               # Initialisations
+        # Initialisations
         vegie_rh_data_path = 'data_test/entrée/vigie_rh'
         fichiers = os.listdir(vegie_rh_data_path)
 
@@ -59,21 +59,21 @@ class TestImportVigiePprofessionFiliere:
         df_filtré = filter_profession_filiere_data(data_frame, base_de_données_test)
         assert df_filtré.shape[0] == 74
 
-        supprimer_donnees_existantes(Table.PROFESSION_FILIERE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_PROFESSION_FILIERE, base_de_données_test) == 0
 
-        supprimer_donnees_existantes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test) == 0
+        supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test, SOURCE, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test) == 0
 
-        inserer_nouvelles_donnees(Table.REF_PROFESSION_FILIERE.value, base_de_données_test, SOURCE, df_ref, mocked_logger)
-        assert compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test) == 5
+        inserer_nouvelles_donnees(TABLE_REF_PROFESSION_FILIERE, base_de_données_test, SOURCE, df_ref, mocked_logger)
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test) == 5
 
         inserer_nouvelles_donnees(
-            Table.PROFESSION_FILIERE.value,
+            TABLE_PROFESSION_FILIERE,
             base_de_données_test,
             SOURCE, df_filtré,
             mocked_logger,
             FichierSource.VIGIE_RH_PROFESSION_FILIERE,
             date_de_mise_à_jour
         )
-        assert compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test) == 74
+        assert compte_nombre_de_lignes(TABLE_PROFESSION_FILIERE, base_de_données_test) == 74
