@@ -4,13 +4,19 @@ import { useState } from "react";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import ExportList from "./ExportList";
 import styles from "./ListActionsButton.module.css"
 
 type ListActionsButtonProps = Readonly<{
     selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
+    listId: number;
+    listName: string;
+    order: string;
+    orderBy: string;
+    disabledExport: boolean
 }>;
 
-export const ListActionsButton = ({ selectedRows }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, listId, listName, order, orderBy, disabledExport}: ListActionsButtonProps) => {
     const { wording } = useDependencies();
     const router = useRouter();
 
@@ -42,9 +48,7 @@ export const ListActionsButton = ({ selectedRows }: ListActionsButtonProps) => {
                         </button>
                     </li>
                     <li className={styles["menu-item"]}>
-                        <button className="fr-btn fr-btn--tertiary-no-outline">
-                            {wording.EXPORTER}
-                        </button>
+                        <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
                     </li>
                 </ul>
             }

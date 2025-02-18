@@ -26,13 +26,15 @@ type TableauListeEtablissementsProps = Readonly<{
     list: UserListViewModel;
     selectedRows: SelectedRows,
     setSelectedRows: React.Dispatch<React.SetStateAction<SelectedRows>>
+    order: string
+    setOrder: React.Dispatch<React.SetStateAction<string>>
+    orderBy: string
+    setOrderBy: React.Dispatch<React.SetStateAction<string>>
 }>;
 
-export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows }: TableauListeEtablissementsProps) => {
+export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows, order, orderBy, setOrder, setOrderBy }: TableauListeEtablissementsProps) => {
     const { paths } = useDependencies();
     const [page, setPage] = useState(1);
-    const [order, setOrder] = useState(defaultOrder);
-    const [orderBy, setOrderBy] = useState(defaultOrderBy);
     const [dataOnPage, setDataOnPage] = useState<RechercheViewModel[]>([])
     const [loading, setLoading] = useState(true);
 

@@ -28,9 +28,12 @@ export default async function handler(request: NextApiRequest, response: NextApi
 };
 
 async function doGetOrderedAndPaginated(request: NextApiRequest, response: NextApiResponse, idUser: string) {
-    const { id, order, orderBy, page, limit } = request.query;
+    const { id, order, orderBy, page, limit, forExport } = request.query;
     if (id && order && orderBy && page && limit) {
-        const list = await getByListIdOrderedAndPaginated(idUser, Number(id), String(order), String(orderBy), Number(page), Number(limit));
+        const list = await getByListIdOrderedAndPaginated(idUser, Number(id), String(order), String(orderBy), Number(page), Number(limit), false);
+        return response.status(200).json(list);
+    } else if(id && order && orderBy && forExport) {
+        const list = await getByListIdOrderedAndPaginated(idUser, Number(id), String(order), String(orderBy), Number(page), Number(limit), true);
         return response.status(200).json(list);
     } else {
         return response.status(400);
