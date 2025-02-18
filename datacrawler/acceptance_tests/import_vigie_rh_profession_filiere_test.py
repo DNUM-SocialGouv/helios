@@ -31,7 +31,7 @@ class TestImportVigiePprofessionFiliere:
 
 
     def test_import_vigie_rh_profession_filiere_test(self) -> None:
-        # Initialisations
+               # Initialisations
         vegie_rh_data_path = 'data_test/entrée/vigie_rh'
         fichiers = os.listdir(vegie_rh_data_path)
 
@@ -39,46 +39,34 @@ class TestImportVigiePprofessionFiliere:
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PROFESSION_FILIERE.value, mocked_logger)
         )
-
         assert chemin_local_du_fichier_profession_filiere == 'data_test/entrée/vigie_rh/vigierh_profession1_2024_01_01.parquet'
 
         chemin_local_du_fichier_ref = os.path.join(
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value, mocked_logger)
         )
-
         assert chemin_local_du_fichier_ref == 'data_test/entrée/vigie_rh/vigierh_ref_profession1.parquet'
 
         date_de_mise_à_jour = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
-
         assert date_de_mise_à_jour == '2024-01-01'
 
         # Traitements des données
         df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
 
-        nombre_de_lignes = df_ref.shape[0]
-        assert nombre_de_lignes == 5
+        assert df_ref.shape[0] == 5
 
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
         df_filtré = filter_profession_filiere_data(data_frame, base_de_données_test)
-
-        nombre_de_lignes = df_filtré.shape[0]
-        assert nombre_de_lignes == 74
+        assert df_filtré.shape[0] == 74
 
         supprimer_donnees_existantes(Table.PROFESSION_FILIERE.value, base_de_données_test, SOURCE, mocked_logger)
-
-        nb_lignes = compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test)
-        assert nb_lignes == 0
+        assert compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test) == 0
 
         supprimer_donnees_existantes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test, SOURCE, mocked_logger)
-
-        nb_lignes = compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test)
-        assert nb_lignes == 0
+        assert compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test) == 0
 
         inserer_nouvelles_donnees(Table.REF_PROFESSION_FILIERE.value, base_de_données_test, SOURCE, df_ref, mocked_logger)
-
-        nb_lignes = compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test)
-        assert nb_lignes == 5
+        assert compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test) == 5
 
         inserer_nouvelles_donnees(
             Table.PROFESSION_FILIERE.value,
@@ -88,5 +76,4 @@ class TestImportVigiePprofessionFiliere:
             FichierSource.VIGIE_RH_PROFESSION_FILIERE,
             date_de_mise_à_jour
         )
-        nb_lignes = compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test)
-        assert nb_lignes == 74
+        assert compte_nombre_de_lignes(Table.PROFESSION_FILIERE.value, base_de_données_test) == 74
