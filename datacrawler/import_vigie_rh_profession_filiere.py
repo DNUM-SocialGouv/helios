@@ -6,7 +6,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.load.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
