@@ -6,8 +6,15 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
-from datacrawler.load.nom_des_tables import FichierSource
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
+from datacrawler.load.nom_des_tables import (
+    FichierSource,
+    TABLE_PROFESSION_GROUPE,
+    TABLE_REF_MASQUE,
+    TABLE_REF_PROFESSION_GROUPE,
+    TABLE_REF_QUALITE,
+    TABLE_REF_REDRESSEMENT
+)
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
 def filter_profession_groupe_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
@@ -64,18 +71,18 @@ if __name__ == "__main__":
     data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
     df_filtré = filter_profession_groupe_data(data_frame, base_de_données)
 
-    supprimer_donnees_existantes(Table.PROFESSION_GROUPE.value, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(Table.REF_MASQUE.value, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(Table.REF_PROFESSION_GROUPE.value, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(Table.REF_QUALITE.value, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(Table.REF_REDRESSEMENT.value, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_REF_MASQUE, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_REF_QUALITE, base_de_données, SOURCE, logger_helios)
+    supprimer_donnees_existantes(TABLE_REF_REDRESSEMENT, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(Table.REF_MASQUE.value, base_de_données, SOURCE, df_ref_masque, logger_helios)
-    inserer_nouvelles_donnees(Table.REF_PROFESSION_GROUPE.value, base_de_données, SOURCE, df_ref_profession_groupe, logger_helios)
-    inserer_nouvelles_donnees(Table.REF_QUALITE.value, base_de_données, SOURCE, df_ref_qualite, logger_helios)
-    inserer_nouvelles_donnees(Table.REF_REDRESSEMENT.value, base_de_données, SOURCE, df_ref_redressement, logger_helios)
+    inserer_nouvelles_donnees(TABLE_REF_MASQUE, base_de_données, SOURCE, df_ref_masque, logger_helios)
+    inserer_nouvelles_donnees(TABLE_REF_PROFESSION_GROUPE, base_de_données, SOURCE, df_ref_profession_groupe, logger_helios)
+    inserer_nouvelles_donnees(TABLE_REF_QUALITE, base_de_données, SOURCE, df_ref_qualite, logger_helios)
+    inserer_nouvelles_donnees(TABLE_REF_REDRESSEMENT, base_de_données, SOURCE, df_ref_redressement, logger_helios)
     inserer_nouvelles_donnees(
-        Table.PROFESSION_GROUPE.value,
+        TABLE_PROFESSION_GROUPE,
         base_de_données,
         SOURCE,
         df_filtré,

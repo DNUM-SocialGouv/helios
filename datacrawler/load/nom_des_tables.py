@@ -24,6 +24,21 @@ TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
 
+# VIGIE_RH contrat
+TABLE_CONTRAT = "vigierh_contrat"
+TABLE_REF_TYPE_CONTRAT = "vigierh_ref_type_contrat"
+
+# VIGIE_RH profession_filiere
+TABLE_PROFESSION_FILIERE = "vigierh_profession_filiere"
+TABLE_REF_PROFESSION_FILIERE = "vigierh_ref_profession_filiere"
+
+# VIGIE_RH profession_groupe
+TABLE_PROFESSION_GROUPE = "vigierh_profession_groupe"
+TABLE_REF_MASQUE = "vigierh_ref_masque"
+TABLE_REF_PROFESSION_GROUPE = "vigierh_ref_profession_groupe"
+TABLE_REF_QUALITE = "vigierh_ref_qualite"
+TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
+
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
