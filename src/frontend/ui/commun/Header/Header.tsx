@@ -56,6 +56,10 @@ export const Header = () => {
       router.pathname !== paths.RECHERCHE_AVANCEE;
   }
 
+  const shouldDisplayMenu = (): boolean => {
+    return status === "authenticated" && paths.CONNEXION !== router.pathname;
+  }
+
   return (
     <>
       <header className="fr-header">
@@ -145,10 +149,11 @@ export const Header = () => {
                   </div>
                 )}
               </div>
-              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
+              {shouldDisplayMenu() ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-menu-fill " + styles["no-border"]}
+                    id="menu-btn"
                     onClick={() => {
                       setDisplayMenu(!displayMenu);
                     }}
@@ -178,7 +183,7 @@ export const Header = () => {
                         </button>
                       </li>
                       <hr className={styles["menu-sperator"]} />
-                      {data.user.role === 1 && (
+                      {data?.user.role === 1 && (
                         <li className={styles["menu-item"]}>
                           <button
                             onClick={() => {
@@ -189,7 +194,7 @@ export const Header = () => {
                           </button>
                         </li>
                       )}
-                      {(data.user.role === 1 || data.user.role === 2) && (
+                      {(data?.user.role === 1 || data?.user.role === 2) && (
                         <>
                           <li className={styles["menu-item"]}>
                             <button
