@@ -79,13 +79,14 @@ import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./mig
 import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
 import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
 import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
+import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
+import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_rh/1739804255435-AjoutEnumFichierDateMiseAjour";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
 import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/referentiels/1738593046415-AjoutReferentielMasque";
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
-import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -268,7 +269,8 @@ export default new DataSource({
     AjoutReferentielMasque1738593046415,
     AjoutReferentielQualite1738593074489,
     AjoutReferentielRedressement1738593097578,
-    AjoutClésEtrangèresVigieRh1739011319358
+    AjoutClésEtrangèresVigieRh1739011319358,
+    AjoutEnumFichierDateMiseAjour1739804255435
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
