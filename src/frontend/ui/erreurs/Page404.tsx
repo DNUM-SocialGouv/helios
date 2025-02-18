@@ -10,7 +10,7 @@ export const Page404 = () => {
   const { paths, wording } = useDependencies();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.PAGE_NON_TROUVÉE_404}</title>
       </Head>

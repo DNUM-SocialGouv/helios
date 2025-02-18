@@ -7,25 +7,25 @@ import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
 
 export const FavorisPage = () => {
-    const { wording } = useDependencies();
-    const userContext = useContext(UserContext);
+  const { wording } = useDependencies();
+  const userContext = useContext(UserContext);
 
-    const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
+  const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
 
-    useEffect(() => {
-        setSortedFavorisList(userContext?.favorisLists?.sort((a, b) =>
-            (b.isFavoris === a.isFavoris ? 0 : b.isFavoris ? 1 : -1)
-        ))
-    }, [userContext?.favorisLists])
+  useEffect(() => {
+    setSortedFavorisList(userContext?.favorisLists?.sort((a, b) =>
+      (b.isFavoris === a.isFavoris ? 0 : b.isFavoris ? 1 : -1)
+    ))
+  }, [userContext?.favorisLists])
 
-    return (
-        <main className="fr-container">
-            <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
-            {sortedFavorisList?.map((etablissement: UserListViewModel, index: number) => (
-                <div key={index}>
-                    <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} title={etablissement.nom} />
-                </div>
-            ))}
-        </main>
-    );
+  return (
+    <main className="fr-container" id="content">
+      <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
+      {sortedFavorisList?.map((etablissement: UserListViewModel, index: number) => (
+        <div key={index}>
+          <FavorisBlock currentListId={etablissement.id} favorisList={etablissement.userListEtablissements} title={etablissement.nom} />
+        </div>
+      ))}
+    </main>
+  );
 };

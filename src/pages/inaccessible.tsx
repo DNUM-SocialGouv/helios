@@ -6,7 +6,7 @@ export default function Inaccessible() {
   const { wording } = useDependencies();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.TITRE_PAGE_INACCESSIBLE}</title>
       </Head>

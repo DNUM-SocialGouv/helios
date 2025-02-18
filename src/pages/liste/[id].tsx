@@ -96,7 +96,7 @@ export default function Router({ listServer }: RouterProps) {
   return (
     <>
       {list ? (
-        <main className="fr-container">
+        <main className="fr-container" id="content">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             {!isListEmpty() &&
