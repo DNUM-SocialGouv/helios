@@ -12,7 +12,7 @@ from datacrawler.test_helpers import (
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
-from datacrawler.load.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
 from datacrawler.import_vigie_rh_contrat import filter_contrat_data
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 

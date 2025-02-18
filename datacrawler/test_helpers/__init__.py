@@ -22,7 +22,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
     TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
 )
-from datacrawler.load.equivalence_vigierh_helios import Table
+from datacrawler.transform.equivalence_vigierh_helios import Table
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
     index_des_capacités_sanitaires,
