@@ -43,6 +43,19 @@ export const Header = () => {
     }
   }, [status]);
 
+  const shouldDisplaySearchBar = (): boolean => {
+    return router.pathname !== paths.ACCUEIL &&
+      router.pathname !== paths.CREATE_PASSWORD &&
+      router.pathname !== paths.FORGET_PASSWORD &&
+      router.pathname !== paths.CHANGE_PASSWORD &&
+      router.pathname !== paths.CONNEXION &&
+      router.pathname !== paths.SETTINGS &&
+      router.pathname !== paths.USERS_LIST &&
+      router.pathname !== paths.REINITIALISATION_PASSWORD &&
+      router.pathname !== paths.REGISTRATION &&
+      router.pathname !== paths.RECHERCHE_AVANCEE;
+  }
+
   return (
     <>
       <header className="fr-header">
@@ -96,54 +109,41 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL &&
-                  router.pathname !== paths.CREATE_PASSWORD &&
-                  router.pathname !== paths.FORGET_PASSWORD &&
-                  router.pathname !== paths.CHANGE_PASSWORD &&
-                  router.pathname !== paths.CONNEXION &&
-                  router.pathname !== paths.SETTINGS &&
-                  router.pathname !== paths.ADD_PROFILE &&
-                  router.pathname !== paths.PROFILES_LIST &&
-                  router.pathname !== paths.USERS_LIST &&
-                  router.pathname !== paths.HISTORY &&
-                  router.pathname !== paths.MES_LISTES &&
-                  router.pathname !== paths.REINITIALISATION_PASSWORD &&
-                  router.pathname !== paths.REGISTRATION &&
-                  router.pathname !== paths.RECHERCHE_AVANCEE && (
-                    <div className="fr-header__search fr-modal" id="modal-541">
-                      <div className="fr-container fr-container-lg--fluid">
-                        <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
-                          {wording.FERMER}
+                {shouldDisplaySearchBar() && (
+                  <div className="fr-header__search fr-modal" id="modal-541">
+                    <div className="fr-container fr-container-lg--fluid">
+                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                        {wording.FERMER}
+                      </button>
+                      <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
+                        <label className="fr-label" htmlFor="search-540-input">
+                          {wording.RECHERCHE_LABEL}
+                        </label>
+                        <input
+                          className="fr-input"
+                          id="search-540-input"
+                          name="terme"
+                          onChange={rechercheOnChange}
+                          placeholder={wording.RECHERCHE_LABEL}
+                          type="search"
+                          value={terme}
+                        />
+                        <button
+                          className="fr-btn"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            localStorage.setItem("searchItem", terme);
+                            router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
+                          }}
+                          title="Rechercher"
+                          type="submit"
+                        >
+                          {wording.RECHERCHE_LABEL}
                         </button>
-                        <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
-                          <label className="fr-label" htmlFor="search-540-input">
-                            {wording.RECHERCHE_LABEL}
-                          </label>
-                          <input
-                            className="fr-input"
-                            id="search-540-input"
-                            name="terme"
-                            onChange={rechercheOnChange}
-                            placeholder={wording.RECHERCHE_LABEL}
-                            type="search"
-                            value={terme}
-                          />
-                          <button
-                            className="fr-btn"
-                            onClick={(event) => {
-                              event.preventDefault();
-                              localStorage.setItem("searchItem", terme);
-                              router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
-                            }}
-                            title="Rechercher"
-                            type="submit"
-                          >
-                            {wording.RECHERCHE_LABEL}
-                          </button>
-                        </form>
-                      </div>
+                      </form>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
               {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
                 <div className={styles["dropdown"]}>
