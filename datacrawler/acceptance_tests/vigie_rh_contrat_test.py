@@ -12,18 +12,22 @@ from datacrawler.test_helpers import (
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
-from datacrawler.load.vigie_rh import SOURCE, Table, ColumMapping
+from datacrawler.load.equivalence_vigierh_helios import SOURCE, Table, ColumMapping
 from datacrawler.import_vigie_rh_contrat import filter_contrat_data
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
+NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010001261"
+NUMÉRO_FINESS_ÉTABLISSEMENT_2 = "010001436"
+NUMÉRO_FINESS_ÉTABLISSEMENT_3 = "010001741"
 
 class TestImportVigieRhContrat:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
-        sauvegarde_une_entité_juridique_en_base("010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("010001261", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("010001436", "010008407", base_de_données_test)
-        sauvegarde_un_établissement_en_base("010001741", "010008407", base_de_données_test)
+        sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_1, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_2, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_3, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
 
     def test_import_vigie_rh_contrat(self) -> None:
