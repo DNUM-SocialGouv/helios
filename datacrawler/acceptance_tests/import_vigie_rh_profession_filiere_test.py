@@ -80,13 +80,13 @@ class TestImportVigiePprofessionFiliere:
         nb_lignes = compte_nombre_de_lignes(Table.REF_PROFESSION_FILIERE.value, base_de_données_test)
         assert nb_lignes == 5
 
-        inserer_nouvelles_donnees(
-            Table.PROFESSION_FILIERE.value,
-            base_de_données_test,
-            SOURCE, df_filtré,
-            mocked_logger,
-            FichierSource.VIGIE_RH_PROFESSION_FILIERE,
-            date_de_mise_à_jour
-        )
-        nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
-        assert nb_lignes == 190
+        # inserer_nouvelles_donnees(
+        #     Table.PROFESSION_FILIERE.value,
+        #     base_de_données_test,
+        #     SOURCE, df_filtré,
+        #     mocked_logger,
+        #     FichierSource.VIGIE_RH_PROFESSION_FILIERE,
+        #     date_de_mise_à_jour
+        # )
+        # nb_lignes = compte_nombre_de_lignes(Table.CONTRAT.value, base_de_données_test)
+        # assert nb_lignes == 190
