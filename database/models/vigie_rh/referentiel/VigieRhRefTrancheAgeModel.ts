@@ -1,6 +1,6 @@
 import { Entity, PrimaryColumn, Column } from "typeorm";
 
-@Entity("referentiel_tranche_age_vigierh")
+@Entity("vigierh_referentiel_tranche_age")
 export class VigieRhRefTrancheAgeModel {
     @PrimaryColumn({ type: "int", name: "code_tranche_age" })
     public codeTrancheAge!: number;

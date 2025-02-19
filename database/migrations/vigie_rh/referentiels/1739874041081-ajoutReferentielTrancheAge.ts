@@ -6,7 +6,7 @@ export class AjoutReferentielTrancheAge1739874041081 implements MigrationInterfa
     await queryRunner.query(`
           ALTER TYPE fichier_source ADD VALUE IF NOT EXISTS 'vigierh_ref_tranche_age';
 
-          CREATE TABLE referentiel_tranche_age_vigierh (
+          CREATE TABLE vigierh_referentiel_tranche_age (
             code_tranche_age int NOT NULL,
             tranche_age varchar(255),
             creation_date DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -16,7 +16,7 @@ export class AjoutReferentielTrancheAge1739874041081 implements MigrationInterfa
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS referentiel_tranche_age_vigierh;");
+    await queryRunner.query("DROP TABLE IF EXISTS vigierh_referentiel_tranche_age;");
   }
 
 }
