@@ -43,8 +43,12 @@ export const Header = () => {
     }
   }, [status]);
 
+  const isAuthenticated = (): boolean => {
+    return status === "authenticated";
+  }
+
   const shouldDisplaySearchBar = (): boolean => {
-    return status !== "unauthenticated" &&
+    return isAuthenticated() &&
       router.pathname !== paths.ACCUEIL &&
       router.pathname !== paths.CREATE_PASSWORD &&
       router.pathname !== paths.FORGET_PASSWORD &&
@@ -58,7 +62,7 @@ export const Header = () => {
   }
 
   const shouldDisplayMenu = (): boolean => {
-    return status === "authenticated" && paths.CONNEXION !== router.pathname;
+    return isAuthenticated() && paths.CONNEXION !== router.pathname;
   }
 
   return (
@@ -66,6 +70,28 @@ export const Header = () => {
       <header className="fr-header">
         <div className="fr-header__body">
           <div className="fr-container">
+            <div className={"fr-skiplinks fr-sr-only " + styles["sr-only-focusable"]}>
+              <nav aria-label="Accès rapide" className="fr-container" role="navigation">
+                <ul className="fr-skiplinks__list">
+                  <li>
+                    <a className="fr-link" href="#content">Contenu</a>
+                  </li>
+                  {shouldDisplayMenu() && (
+                    <li>
+                      <a className="fr-link" href="#menu-btn">Menu</a>
+                    </li>
+                  )}
+                  {isAuthenticated() && (
+                    <li>
+                      <a className="fr-link" href="#search-input">Recherche</a>
+                    </li>
+                  )}
+                  <li>
+                    <a className="fr-link" href="#footer">Pied de page</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             <div className="fr-header__body-row">
               <div className={styles["header-brand"] + " fr-header__brand fr-enlarge-link"}>
                 <div className="fr-header__brand-top">
