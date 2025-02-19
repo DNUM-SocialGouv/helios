@@ -1,6 +1,6 @@
 import os
 from typing import Dict, Tuple
-import pandas as pd 
+import pandas as pd
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.test_helpers import (
     base_de_données_test,
