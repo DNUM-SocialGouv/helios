@@ -42,7 +42,9 @@ if __name__ == "__main__":
         vegie_rh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value, logger_helios)
     )
-    date_de_mise_à_jour = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_contrat)
+
+    date_de_mise_à_jour_contrat = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_contrat)
+    date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
 
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
@@ -53,5 +55,21 @@ if __name__ == "__main__":
     supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, df_ref, logger_helios)
-    inserer_nouvelles_donnees(TABLE_CONTRAT, base_de_données, SOURCE, df_filtré, logger_helios, FichierSource.VIGIE_RH_CONTRAT, date_de_mise_à_jour)
+    inserer_nouvelles_donnees(
+        TABLE_REF_TYPE_CONTRAT,
+        base_de_données,
+        SOURCE,
+        df_ref,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_TYPE_CONTRAT,
+        date_de_mise_à_jour_ref
+    )
+    inserer_nouvelles_donnees(
+        TABLE_CONTRAT,
+        base_de_données,
+        SOURCE,
+        df_filtré,
+        logger_helios,
+        FichierSource.VIGIE_RH_CONTRAT,
+        date_de_mise_à_jour_contrat
+    )

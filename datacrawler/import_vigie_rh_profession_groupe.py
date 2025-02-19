@@ -61,7 +61,11 @@ if __name__ == "__main__":
         vegie_rh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_REDRESSEMENT.value, logger_helios)
     )
-    date_de_mise_à_jour = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_groupe)
+    date_de_mise_à_jour_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_groupe)
+    date_de_mise_à_jour_ref_masque = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_masque)
+    date_de_mise_à_jour_ref_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_profession_groupe)
+    date_de_mise_à_jour_ref_qualite = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_qualite)
+    date_de_mise_à_jour_ref_redressement= extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_redressement)
 
     # Traitements des données
     df_ref_masque = lis_le_fichier_parquet(chemin_local_du_fichier_ref_masque, ColumMapping.REF_MASQUE.value)
@@ -77,10 +81,42 @@ if __name__ == "__main__":
     supprimer_donnees_existantes(TABLE_REF_QUALITE, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(TABLE_REF_REDRESSEMENT, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(TABLE_REF_MASQUE, base_de_données, SOURCE, df_ref_masque, logger_helios)
-    inserer_nouvelles_donnees(TABLE_REF_PROFESSION_GROUPE, base_de_données, SOURCE, df_ref_profession_groupe, logger_helios)
-    inserer_nouvelles_donnees(TABLE_REF_QUALITE, base_de_données, SOURCE, df_ref_qualite, logger_helios)
-    inserer_nouvelles_donnees(TABLE_REF_REDRESSEMENT, base_de_données, SOURCE, df_ref_redressement, logger_helios)
+    inserer_nouvelles_donnees(
+        TABLE_REF_MASQUE,
+        base_de_données,
+        SOURCE,
+        df_ref_masque,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_MASQUE,
+        date_de_mise_à_jour_ref_masque
+    )
+    inserer_nouvelles_donnees(
+        TABLE_REF_PROFESSION_GROUPE,
+        base_de_données,
+        SOURCE,
+        df_ref_profession_groupe,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE,
+        date_de_mise_à_jour_ref_profession_groupe
+    )
+    inserer_nouvelles_donnees(
+        TABLE_REF_QUALITE,
+        base_de_données,
+        SOURCE,
+        df_ref_qualite,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_QUALITE,
+        date_de_mise_à_jour_ref_qualite
+    )
+    inserer_nouvelles_donnees(
+        TABLE_REF_REDRESSEMENT,
+        base_de_données,
+        SOURCE,
+        df_ref_redressement,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_REDRESSEMENT,
+        date_de_mise_à_jour_ref_redressement
+    )
     inserer_nouvelles_donnees(
         TABLE_PROFESSION_GROUPE,
         base_de_données,
@@ -88,5 +124,5 @@ if __name__ == "__main__":
         df_filtré,
         logger_helios,
         FichierSource.VIGIE_RH_PROFESSION_GROUPE,
-        date_de_mise_à_jour
+        date_de_mise_à_jour_profession_groupe
     )

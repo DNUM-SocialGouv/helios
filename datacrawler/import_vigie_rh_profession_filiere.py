@@ -41,7 +41,8 @@ if __name__ == "__main__":
         vegie_rh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value, logger_helios)
     )
-    date_de_mise_à_jour = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
+    date_de_mise_à_jour_profession_filiere = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
+    date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
 
     # Traitements des données
     df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
@@ -52,12 +53,22 @@ if __name__ == "__main__":
     supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
     supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(TABLE_REF_PROFESSION_FILIERE, base_de_données, SOURCE, df_ref, logger_helios)
+    inserer_nouvelles_donnees(
+        TABLE_REF_PROFESSION_FILIERE,
+        base_de_données,
+        SOURCE,
+        df_ref,
+        logger_helios,
+        FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
+        date_de_mise_à_jour_ref
+    )
+
     inserer_nouvelles_donnees(
         TABLE_PROFESSION_FILIERE,
         base_de_données,
-        SOURCE, df_filtré,
+        SOURCE,
+        df_filtré,
         logger_helios,
         FichierSource.VIGIE_RH_PROFESSION_FILIERE,
-        date_de_mise_à_jour
+        date_de_mise_à_jour_profession_filiere
     )
