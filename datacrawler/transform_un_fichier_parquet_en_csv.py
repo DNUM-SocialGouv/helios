@@ -1,7 +1,6 @@
-import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
 import sys
+
+import pandas as pd
 
 FILE_PREFIX = sys.argv[1] 
 # Chemin vers votre fichier Parquet

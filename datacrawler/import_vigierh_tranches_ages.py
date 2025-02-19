@@ -11,17 +11,16 @@ from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichie
 from datacrawler.load.nom_des_tables import TABLE_REF_TRANCHE_AGE, FichierSource
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 
-def import_referentiel_tranche_age(chemin_local_du_fichier_ref_tranche_age: str, base_de_données: Engine, logger_helios: Logger) -> None:
-    donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref_tranche_age, ColumMapping.REF_TRANCHE_AGE.value)
-    date_du_fichier_vigierh_ref_tranche_age = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_tranche_age)
-    
-    supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, base_de_données, SOURCE, logger_helios)
+def import_referentiel_tranche_age(chemin_local_du_fichier_ref: str, base_de_données: Engine, logger: Logger) -> None:
+    donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
+    date_du_fichier_vigierh_ref_tranche_age = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
+    supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, base_de_données, SOURCE, logger)
     inserer_nouvelles_donnees(
         TABLE_REF_TRANCHE_AGE,
         base_de_données,
-        SOURCE, 
+        SOURCE,
         donnees_ref_tranche_age,
-        logger_helios,
+        logger,
         FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
         date_du_fichier_vigierh_ref_tranche_age
     )
@@ -34,6 +33,8 @@ if __name__ == "__main__":
     vigierh_ref_tranche_age_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_ref_tranche_age_data_path)
 
-    chemin_local_du_fichier_ref_tranche_age = os.path.join(vigierh_ref_tranche_age_data_path, trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
+    chemin_local_du_fichier_ref_tranche_age = os.path.join(
+        vigierh_ref_tranche_age_data_path,
+        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
 
     import_referentiel_tranche_age(chemin_local_du_fichier_ref_tranche_age, base_de_données_helios, logger_helios)
