@@ -13,6 +13,7 @@
     "depcheck": "depcheck --ignore-patterns=spikes,.venv",
     "dev": "yarn start:db && next dev",
     "encryptDiamant:local": "pipenv run encrypt_diamant",
+    "transfromeParquetEnCSV:local": "pipenv run transforme_parquet_en_csv",
     "format:typescript": "prettier --write \"**/*.+(js|ts|json|tsx|jsx)\"",
     "lint": "yarn lint:typescript && yarn lint:python",
     "lint:typescript": "npx eslint src database download_data_source",
@@ -27,8 +28,13 @@
     "psql:local": "docker-compose up -d postgres && docker exec -it helios_db psql -U helios helios",
     "psql:production": "scalingo -a helios pgsql-console",
     "postinstall": "husky install",
+<<<<<<< HEAD
     "populateDatabase": "yarn retrieveFiness && yarn retrieveDiamant && yarn retrieveHapi && yarn decryptDiamant && yarn updateEJ && yarn updateET && yarn updateAllocationRessource && yarn updateActivitésMédicoSociaux && yarn updateActivitésSanitaire && yarn updateActivitesSanitairesMensuel && yarn updateActivitesSanitairesMensuelEJ && yarn updateAutorisationsMédicoSocial && yarn updateAutorisationsSanitaire && yarn updateCpomMedicoSocial && yarn updateBudgetEtFinancesMedicoSocial && yarn updateRessourcesHumainesMedicoSocial && yarn updateActivitéSanitaireEntitéJuridique && yarn updateCapacitéSanitaireEntitéJuridique && yarn updateBudgetEtFinancesEntiteJuridique && yarn retreieveAndCheckAndUpdateReclamations && yarn retreieveAndCheckAndUpdateEvenementsIndesirables && yarn retreieveAndCheckAndUpdateInspections && yarn updateVigieRhContrat && yarn updateVigieRhProfessionFiliere && yarn updateVigieRhProfessionGroupe",
     "populateDatabase:local": "yarn retrieveFiness && yarn retrieveDiamant && yarn retrieveHapi && yarn decryptDiamant:local && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial:local && yarn updateAutorisationsSanitaire:local && yarn updateCpomMedicoSocial:local && yarn updateBudgetEtFinancesMedicoSocial:local && yarn updateRessourcesHumainesMedicoSocial:local && yarn updateActivitéSanitaireEntitéJuridique:local && yarn updateCapacitéSanitaireEntitéJuridique:local && yarn updateBudgetEtFinancesEntiteJuridique:local && yarn retreieveAndCheckAndUpdateReclamations:local && yarn retreieveAndCheckAndUpdateEvenementsIndesirables:local && yarn retreieveAndCheckAndUpdateInspections:local && yarn updateAllocationRessource:local && yarn updateActivitesSanitairesMensuel:local && yarn updateActivitesSanitairesMensuelEJ:local && yarn updateVigieRhContrat:local && yarn updateVigieRhProfessionFiliere:local && yarn updateVigieRhProfessionGroupe:local",
+=======
+    "populateDatabase": "yarn retrieveFiness && yarn retrieveDiamant && yarn retrieveHapi && yarn decryptDiamant && yarn updateEJ && yarn updateET && yarn updateAllocationRessource && yarn updateActivitésMédicoSociaux && yarn updateActivitésSanitaire && yarn updateActivitesSanitairesMensuel && yarn updateActivitesSanitairesMensuelEJ && yarn updateAutorisationsMédicoSocial && yarn updateAutorisationsSanitaire && yarn updateCpomMedicoSocial && yarn updateBudgetEtFinancesMedicoSocial && yarn updateRessourcesHumainesMedicoSocial && yarn updateActivitéSanitaireEntitéJuridique && yarn updateCapacitéSanitaireEntitéJuridique && yarn updateBudgetEtFinancesEntiteJuridique && yarn retreieveAndCheckAndUpdateReclamations && yarn retreieveAndCheckAndUpdateEvenementsIndesirables && yarn retreieveAndCheckAndUpdateInspections && yarn updateTranchesDesAges",
+    "populateDatabase:local": "yarn retrieveFiness && yarn retrieveDiamant && yarn retrieveHapi && yarn decryptDiamant:local && yarn updateEJ && yarn updateET && yarn updateActivitésMédicoSociaux:local && yarn updateActivitésSanitaire:local && yarn updateAutorisationsMédicoSocial:local && yarn updateAutorisationsSanitaire:local && yarn updateCpomMedicoSocial:local && yarn updateBudgetEtFinancesMedicoSocial:local && yarn updateRessourcesHumainesMedicoSocial:local && yarn updateActivitéSanitaireEntitéJuridique:local && yarn updateCapacitéSanitaireEntitéJuridique:local && yarn updateBudgetEtFinancesEntiteJuridique:local && yarn retreieveAndCheckAndUpdateReclamations:local && yarn retreieveAndCheckAndUpdateEvenementsIndesirables:local && yarn retreieveAndCheckAndUpdateInspections:local && yarn updateAllocationRessource:local && yarn updateActivitesSanitairesMensuel:local && yarn updateActivitesSanitairesMensuelEJ:local",
+>>>>>>> feature/vigie-rh
     "populateDatabaseUsers": "python -m datacrawler.import_utilisateurs",
     "populateDatabaseUsers:local": "pipenv run populate_app_users",
     "retrieveFiness": "ts-node -T download_data_source/infrastructure/controllers/téléchargeLesDonnéesBrutesDeFinessCron.ts",
@@ -88,6 +94,8 @@
     "updateVigieRhProfessionFiliere:local": "pipenv run populate_vigie_rh_profession_filiere",
     "updateVigieRhProfessionGroupe": "python -m datacrawler.populate_vigie_rh_profession_groupe",
     "updateVigieRhProfessionGroupe:local": "pipenv run populate_vigie_rh_profession_groupe",
+    "updateTranchesDesAges": "python -m datacrawler.import_vigierh_tranches_ages",
+    "updateTranchesDesAges:local": "pipenv run populate_tranches_ages",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",
