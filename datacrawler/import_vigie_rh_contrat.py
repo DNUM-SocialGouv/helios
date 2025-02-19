@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from sqlalchemy.engine import create_engine, Engine
-from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
+from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
@@ -44,32 +44,57 @@ if __name__ == "__main__":
     )
 
     date_de_mise_à_jour_contrat = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_contrat)
+    traite_contract = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_contrat, base_de_données, FichierSource.VIGIE_RH_CONTRAT.value)
+    if traite_contract:
+        logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_CONTRAT.value} a été déjà traité")
+
     date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
+    traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_données, FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value)
+
+    if traite_ref:
+        logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value} a été déjà traité")
+
 
     # Traitements des données
-    df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
+    if not traite_ref:
+        df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
 
-    data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-    df_filtré = filter_contrat_data(data_frame, base_de_données)
+        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+        df_filtré = filter_contrat_data(data_frame, base_de_données)
 
-    supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
-    supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
+        supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
+        supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
 
-    inserer_nouvelles_donnees(
-        TABLE_REF_TYPE_CONTRAT,
-        base_de_données,
-        SOURCE,
-        df_ref,
-        logger_helios,
-        FichierSource.VIGIE_RH_REF_TYPE_CONTRAT,
-        date_de_mise_à_jour_ref
-    )
-    inserer_nouvelles_donnees(
-        TABLE_CONTRAT,
-        base_de_données,
-        SOURCE,
-        df_filtré,
-        logger_helios,
-        FichierSource.VIGIE_RH_CONTRAT,
-        date_de_mise_à_jour_contrat
-    )
+        inserer_nouvelles_donnees(
+            TABLE_REF_TYPE_CONTRAT,
+            base_de_données,
+            SOURCE,
+            df_ref,
+            logger_helios,
+            FichierSource.VIGIE_RH_REF_TYPE_CONTRAT,
+            date_de_mise_à_jour_ref
+        )
+        inserer_nouvelles_donnees(
+            TABLE_CONTRAT,
+            base_de_données,
+            SOURCE,
+            df_filtré,
+            logger_helios,
+            FichierSource.VIGIE_RH_CONTRAT,
+            date_de_mise_à_jour_contrat
+        )
+    else:
+        if not traite_contract:
+            data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+            df_filtré = filter_contrat_data(data_frame, base_de_données)
+
+            supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
+            inserer_nouvelles_donnees(
+                TABLE_CONTRAT,
+                base_de_données,
+                SOURCE,
+                df_filtré,
+                logger_helios,
+                FichierSource.VIGIE_RH_CONTRAT,
+                date_de_mise_à_jour_contrat
+            )
