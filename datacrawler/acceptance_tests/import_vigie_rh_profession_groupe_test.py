@@ -1,4 +1,6 @@
 import os
+from typing import Dict, Tuple
+import pandas as pd 
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.test_helpers import (
     base_de_données_test,
@@ -34,7 +36,7 @@ class TestImportVigiePprofessionGroupe:
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_2, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_3, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
 
-    def _setup_file_paths(self, vegie_rh_data_path):
+    def _setup_file_paths(self, vegie_rh_data_path: str) -> Dict[str, str]:
         fichiers = os.listdir(vegie_rh_data_path)
         return {
             'profession_groupe': os.path.join(
@@ -76,14 +78,14 @@ class TestImportVigiePprofessionGroupe:
             ),
         }
 
-    def _assert_file_paths(self, file_paths):
+    def _assert_file_paths(self, file_paths: Dict[str, str]) -> None:
         assert file_paths['profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_profession2_2024_01_01.parquet'
         assert file_paths['ref_masque'] == 'data_test/entrée/vigie_rh/vigierh_ref_masque_2024_01_01.parquet'
         assert file_paths['ref_profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_ref_profession2_2024_01_01.parquet'
         assert file_paths['ref_qualite'] == 'data_test/entrée/vigie_rh/vigierh_ref_qualite_2024_01_01.parquet'
         assert file_paths['ref_redressement'] == 'data_test/entrée/vigie_rh/vigierh_ref_redressement_2024_01_01.parquet'
 
-    def _extract_dates(self, file_paths):
+    def _extract_dates(self, file_paths: Dict[str, str]) -> Dict[str, str]:
         return {
             'profession_groupe': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['profession_groupe']),
             'ref_masque': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['ref_masque']),
@@ -92,14 +94,14 @@ class TestImportVigiePprofessionGroupe:
             'ref_redressement': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['ref_redressement']),
         }
 
-    def _assert_dates(self, dates):
+    def _assert_dates(self, dates: Dict[str, str]) -> None:
         assert dates['profession_groupe'] == '2024-01-01'
         assert dates['ref_masque'] == '2024-01-01'
         assert dates['ref_profession_groupe'] == '2024-01-01'
         assert dates['ref_qualite'] == '2024-01-01'
         assert dates['ref_redressement'] == '2024-01-01'
 
-    def _read_and_assert_dataframes(self, file_paths):
+    def _read_and_assert_dataframes(self, file_paths: Dict[str, str]) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         df_ref_masque = lis_le_fichier_parquet(file_paths['ref_masque'], ColumMapping.REF_MASQUE.value)
         df_ref_profession_groupe = lis_le_fichier_parquet(file_paths['ref_profession_groupe'], ColumMapping.REF_PROFESSION_GROUPE.value)
         df_ref_qualite = lis_le_fichier_parquet(file_paths['ref_qualite'], ColumMapping.REF_QUALITE.value)
@@ -115,7 +117,7 @@ class TestImportVigiePprofessionGroupe:
 
         return df_ref_masque, df_ref_profession_groupe, df_ref_qualite, df_ref_redressement, df_filtré
 
-    def _clear_existing_data(self):
+    def _clear_existing_data(self) -> None:
         supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
         supprimer_donnees_existantes(TABLE_REF_MASQUE, base_de_données_test, SOURCE, mocked_logger)
         supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
@@ -128,7 +130,7 @@ class TestImportVigiePprofessionGroupe:
         assert compte_nombre_de_lignes(TABLE_REF_QUALITE, base_de_données_test) == 0
         assert compte_nombre_de_lignes(TABLE_REF_REDRESSEMENT, base_de_données_test) == 0
 
-    def _insert_new_data(self, data_frames, dates):
+    def _insert_new_data(self, data_frames: Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame], dates: Dict[str, str]) -> None:
         inserer_nouvelles_donnees(
             TABLE_REF_MASQUE,
             base_de_données_test,
