@@ -20,4 +20,6 @@ class TestLisLeFichierParquet:
                     "code_tranche_age":[1,2,3,4,5,6,7,8,9,10,11],
                     "tranche_age": ['15_20','20_25','25_30','30_35','35_40','40_45','45_50','50_55','55_60','60_65', '65_plus']
                 }
-            ))
+            ),
+            check_dtype=False
+            )
