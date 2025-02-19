@@ -12,6 +12,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 
+from datacrawler.extract.lecteur_sql import recupere_la_derniere_date_de_chargement_du_fichier
+
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES = 3
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES = 5
 
@@ -100,3 +102,10 @@ def inserer_nouvelles_donnees(
     except Exception as exception:  # Dernier recours (peut être évité si inutile)
         logger.error(f"[{fournisseur}]❌ Erreur inattendue lors de l'insertion des données : {exception}")
         raise  # Relance pour ne pas masquer l'erreur
+
+def verifie_si_le_fichier_est_traite(date_mise_a_jour_fichier: str, base_de_données: Engine, prefix_fichier: str) -> bool:
+    derniere_date_de_chargement = recupere_la_derniere_date_de_chargement_du_fichier(base_de_données, prefix_fichier)
+    if derniere_date_de_chargement.empty:
+        return False
+    else:
+        return str(derniere_date_de_chargement.at[0, "derniere_mise_a_jour"]) == date_mise_a_jour_fichier
