@@ -44,7 +44,8 @@ export const Header = () => {
   }, [status]);
 
   const shouldDisplaySearchBar = (): boolean => {
-    return router.pathname !== paths.ACCUEIL &&
+    return status !== "unauthenticated" &&
+      router.pathname !== paths.ACCUEIL &&
       router.pathname !== paths.CREATE_PASSWORD &&
       router.pathname !== paths.FORGET_PASSWORD &&
       router.pathname !== paths.CHANGE_PASSWORD &&
@@ -119,13 +120,13 @@ export const Header = () => {
                       <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
                         {wording.FERMER}
                       </button>
-                      <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
-                        <label className="fr-label" htmlFor="search-540-input">
+                      <form action="/recherche" className="fr-search-bar" id="search" role="search">
+                        <label className="fr-label" htmlFor="search-input">
                           {wording.RECHERCHE_LABEL}
                         </label>
                         <input
                           className="fr-input"
-                          id="search-540-input"
+                          id="search-input"
                           name="terme"
                           onChange={rechercheOnChange}
                           placeholder={wording.RECHERCHE_LABEL}
