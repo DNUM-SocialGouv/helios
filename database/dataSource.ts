@@ -87,6 +87,7 @@ import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigi
 import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/referentiels/1738593046415-AjoutReferentielMasque";
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
+import { AjoutReferentielTrancheAge1739874041081 } from "./migrations/vigie_rh/referentiels/1739874041081-ajoutReferentielTrancheAge";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -125,6 +126,7 @@ import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
 import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/VigieRhRefRedressementModel";
+import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
@@ -181,8 +183,8 @@ export default new DataSource({
     VigieRhRefRedressementModel,
     VigieRhContratModel,
     VigieRhProfessionFiliereModel,
-    VigieRhProfessionGroupeModel
-
+    VigieRhProfessionGroupeModel,
+    VigieRhRefTrancheAgeModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -270,6 +272,7 @@ export default new DataSource({
     AjoutReferentielQualite1738593074489,
     AjoutReferentielRedressement1738593097578,
     AjoutClésEtrangèresVigieRh1739011319358,
+    AjoutReferentielTrancheAge1739874041081,
     AjoutEnumFichierDateMiseAjour1739804255435
   ],
   type: "postgres",

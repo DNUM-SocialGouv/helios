@@ -23,7 +23,7 @@ TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
 TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
-
+TABLE_REF_TRANCHE_AGE = "vigierh_referentiel_tranche_age"
 # VIGIE_RH contrat
 TABLE_CONTRAT = "vigierh_contrat"
 TABLE_REF_TYPE_CONTRAT = "vigierh_ref_type_contrat"
@@ -38,7 +38,6 @@ TABLE_REF_MASQUE = "vigierh_ref_masque"
 TABLE_REF_PROFESSION_GROUPE = "vigierh_ref_profession_groupe"
 TABLE_REF_QUALITE = "vigierh_ref_qualite"
 TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
-
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
@@ -71,3 +70,6 @@ class FichierSource(Enum):
     VIGIE_RH_REF_PROFESSION_GROUPE = "vigierh_ref_profession2"
     VIGIE_RH_REF_QUALITE = "vigierh_ref_qualite"
     VIGIE_RH_REF_REDRESSEMENT = "vigierh_ref_redressement"
+    # tranches des ages
+    VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
+    
