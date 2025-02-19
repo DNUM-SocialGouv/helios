@@ -164,7 +164,7 @@ export const Header = () => {
                           onClick={(event) => {
                             event.preventDefault();
                             localStorage.setItem("searchItem", terme);
-                            router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
+                            router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
                           }}
                           title="Rechercher"
                           type="submit"
