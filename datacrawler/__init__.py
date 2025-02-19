@@ -107,5 +107,4 @@ def verifie_si_le_fichier_est_traite(date_mise_a_jour_fichier: str, base_de_donn
     derniere_date_de_chargement = recupere_la_derniere_date_de_chargement_du_fichier(base_de_données, prefix_fichier)
     if derniere_date_de_chargement.empty:
         return False
-    else:
-        return str(derniere_date_de_chargement.at[0, "derniere_mise_a_jour"]) == date_mise_a_jour_fichier
+    return str(derniere_date_de_chargement.at[0, "derniere_mise_a_jour"]) == date_mise_a_jour_fichier

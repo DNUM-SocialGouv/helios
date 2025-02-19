@@ -15,8 +15,8 @@ def import_referentiel_tranche_age(chemin_local_du_fichier_ref: str, base_de_don
     date_du_fichier_vigierh_ref_tranche_age = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     # si le fichier est déjà traité, on fait rien
     traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_données, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
-    if(traite):
-        logger.info(f"Le fichier {date_du_fichier_vigierh_ref_tranche_age} a été déjà traité")
+    if traite:
+        logger.info(f"Le fichier {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} a été déjà traité")
     else:
         donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
         supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, base_de_données, SOURCE, logger)
