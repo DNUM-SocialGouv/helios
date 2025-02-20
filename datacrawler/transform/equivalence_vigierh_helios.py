@@ -68,3 +68,13 @@ class ColumMapping(Enum):
         'tranche_code': 'code_tranche_age',
         'tranche_age': 'tranche_age'
     }
+    PYRAMIDE_TRANCHE_AGE = {
+        'finess_et': 'numero_finess_etablissement_territorial',
+        'year': 'annee',
+        'effectif': 'effectif',
+        'tranche_code': 'tranche_code',
+        'effectif_homme': 'effectif_homme',
+        'effectif_femme': 'effectif_femme',
+        'effectif_homme_ref': 'effectif_homme_ref',
+        'effectif_femme_ref': 'effectif_femme_ref'
+    }

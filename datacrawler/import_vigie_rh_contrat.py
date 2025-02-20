@@ -14,7 +14,7 @@ def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.Da
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
     numéros_finess_liste = numéros_finess_des_établissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
-    year_regex = r"((20[012]\d{1}|19\d{2}))"
+    year_regex = r"(19\d{2}|2\d{3})"
 
     # Filtrer les données
     donnees_filtrées = donnees[
