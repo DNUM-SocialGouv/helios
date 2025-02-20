@@ -56,7 +56,6 @@
 }
 
 .tooltip {
-    /*visibility: hidden;*/
     background-color: rgba(0, 0, 0, .75);
     color: #fff;
     text-align: center;
@@ -76,4 +75,8 @@
 .button:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.selected-row {
+    background-color: var(--background-default-grey-active) !important;
 }
