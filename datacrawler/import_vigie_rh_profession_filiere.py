@@ -52,30 +52,37 @@ if __name__ == "__main__":
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_FILIERE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
     else:
-        df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
+        if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
+            df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
 
-        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
-        df_filtré = filter_profession_filiere_data(data_frame, base_de_données)
+            data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
+            df_filtré = filter_profession_filiere_data(data_frame, base_de_données)
 
-        supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
-        supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
 
-        inserer_nouvelles_donnees(
-            TABLE_REF_PROFESSION_FILIERE,
-            base_de_données,
-            SOURCE,
-            df_ref,
-            logger_helios,
-            FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
-            date_de_mise_à_jour_ref
-        )
+            inserer_nouvelles_donnees(
+                TABLE_REF_PROFESSION_FILIERE,
+                base_de_données,
+                SOURCE,
+                df_ref,
+                logger_helios,
+                FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
+                date_de_mise_à_jour_ref
+            )
 
-        inserer_nouvelles_donnees(
-            TABLE_PROFESSION_FILIERE,
-            base_de_données,
-            SOURCE,
-            df_filtré,
-            logger_helios,
-            FichierSource.VIGIE_RH_PROFESSION_FILIERE,
-            date_de_mise_à_jour_profession_filiere
-    )
+            inserer_nouvelles_donnees(
+                TABLE_PROFESSION_FILIERE,
+                base_de_données,
+                SOURCE,
+                df_filtré,
+                logger_helios,
+                FichierSource.VIGIE_RH_PROFESSION_FILIERE,
+                date_de_mise_à_jour_profession_filiere
+            )
+        else:
+            logger_helios.error(
+                f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
+                f"({FichierSource.VIGIE_RH_PROFESSION_FILIERE.value}, "
+                f"{FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value})"
+            )

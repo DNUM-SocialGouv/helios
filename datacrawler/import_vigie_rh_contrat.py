@@ -54,29 +54,36 @@ if __name__ == "__main__":
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_CONTRAT.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value} a été déjà traité")
     else:
-        df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
+        if date_de_mise_à_jour_ref == date_de_mise_à_jour_contrat:
+            df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
 
-        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-        df_filtré = filter_contrat_data(data_frame, base_de_données)
+            data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
+            df_filtré = filter_contrat_data(data_frame, base_de_données)
 
-        supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
-        supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
 
-        inserer_nouvelles_donnees(
-            TABLE_REF_TYPE_CONTRAT,
-            base_de_données,
-            SOURCE,
-            df_ref,
-            logger_helios,
-            FichierSource.VIGIE_RH_REF_TYPE_CONTRAT,
-            date_de_mise_à_jour_ref
-        )
-        inserer_nouvelles_donnees(
-            TABLE_CONTRAT,
-            base_de_données,
-            SOURCE,
-            df_filtré,
-            logger_helios,
-            FichierSource.VIGIE_RH_CONTRAT,
-            date_de_mise_à_jour_contrat
-        )
+            inserer_nouvelles_donnees(
+                TABLE_REF_TYPE_CONTRAT,
+                base_de_données,
+                SOURCE,
+                df_ref,
+                logger_helios,
+                FichierSource.VIGIE_RH_REF_TYPE_CONTRAT,
+                date_de_mise_à_jour_ref
+            )
+            inserer_nouvelles_donnees(
+                TABLE_CONTRAT,
+                base_de_données,
+                SOURCE,
+                df_filtré,
+                logger_helios,
+                FichierSource.VIGIE_RH_CONTRAT,
+                date_de_mise_à_jour_contrat
+            )
+        else:
+            logger_helios.error(
+                f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
+                f"({FichierSource.VIGIE_RH_CONTRAT.value}, "
+                f"{FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value})"
+            )
