@@ -624,6 +624,8 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
+
 
 }
 
