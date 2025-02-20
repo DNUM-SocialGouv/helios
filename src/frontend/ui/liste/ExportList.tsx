@@ -20,7 +20,7 @@ function getType(type: string | undefined) {
     else return type;
 }
 
-async function getComparaisonData(listId: number, order = "", orderBy = "", paths: Paths) {
+async function getListEtsData(listId: number, paths: Paths, order = "", orderBy = "") {
     const queryParams = new URLSearchParams({
         order,
         orderBy,
@@ -49,7 +49,7 @@ function transformData(data: any) {
     ]);
 }
 
-function ExportToExcel(headers: string[], data: (string | Number)[][], fileName: string) {
+function ExportToExcel(headers: string[], data: (string | number)[][], fileName: string) {
     const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "List");
@@ -60,7 +60,7 @@ async function generateAndExportExcel(
     listId: number, listName: string, order: string, orderBy: string, paths: Paths,
 ) {
     const fileName: string = `${getCurrentDate()}_Helios_${listName}.xlsx`;
-    const data = await getComparaisonData(listId, order, orderBy, paths)
+    const data = await getListEtsData(listId, paths, order, orderBy)
     const dataTransormed = transformData(data);
 
     const headers = [
