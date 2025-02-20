@@ -1,12 +1,18 @@
 from datetime import datetime
 from logging import Logger
-from typing import List, Tuple
+from typing import List, Tuple, Optional
+import logging
 
 import pandas as pd
-from sqlalchemy.engine import Connection
+from pandas.errors import EmptyDataError
+from sqlalchemy.engine import Connection, Engine
+from sqlalchemy import create_engine, text, inspect
+from sqlalchemy.exc import SQLAlchemyError
 
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
+
+from datacrawler.extract.lecteur_sql import recupere_la_derniere_date_de_chargement_du_fichier
 
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES = 3
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES = 5
@@ -39,3 +45,66 @@ def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(don
     année_n = datetime.now().year
     année_de_départ = datetime.now().year - nombre_d_années + 1
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
+
+
+def supprimer_donnees_existantes(table_name: str, engine: Engine, fournisseur: str, logger: logging.Logger) -> None:
+    try:
+        with engine.begin() as conn:
+            conn.execute(text(f"DELETE FROM {table_name};"))
+        logger.info(f"[{fournisseur}]✅ Données supprimées avec succès de la table {table_name} !")
+    except SQLAlchemyError as exception:
+        logger.error(f"[{fournisseur}]❌ Erreur SQL lors de la suppression des données : {exception}")
+        raise  # Relance l'exception pour ne pas la masquer
+
+
+def inserer_nouvelles_donnees(
+    table_name: str,
+    engine: Engine,
+    fournisseur: str,
+    data_frame: pd.DataFrame,
+    logger: logging.Logger,
+    fichier: Optional[FichierSource] = None,
+    date_de_mise_à_jour: Optional[str] = None
+) -> None:
+    try:
+        # Vérifier si le DataFrame est vide après filtrage
+        if data_frame.empty:
+            logger.info(f"[{fournisseur}]⚠️ Aucune donnée à insérer après filtrage.")
+            return
+
+        # Récupérer les colonnes de la table SQL
+        inspector = inspect(engine)
+        table_columns = [col["name"] for col in inspector.get_columns(table_name)]
+
+        # Filtrer les colonnes pour ne garder que celles qui existent dans la table
+        data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
+
+        # Insérer les nouvelles données
+        data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
+        if fichier and date_de_mise_à_jour:
+            with engine.connect() as connection:
+                mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
+        logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
+
+
+    except SQLAlchemyError as exception:  # Capture les erreurs SQLAlchemy
+        logger.error(f"[{fournisseur}]❌ Erreur SQL lors de l'insertion des données : {exception}")
+        raise  # Relance l'exception pour ne pas la masquer
+
+    except EmptyDataError as exception:  # Capture les erreurs liées à un DataFrame vide (pandas)
+        logger.error(f"[{fournisseur}]❌ Erreur Pandas : Données vides à insérer. {exception}")
+        raise
+
+    except ValueError as exception:  # Capture d'éventuelles erreurs de type (ex : colonnes invalides)
+        logger.error(f"[{fournisseur}]❌ Erreur de valeur : {exception}")
+        raise
+
+    except Exception as exception:  # Dernier recours (peut être évité si inutile)
+        logger.error(f"[{fournisseur}]❌ Erreur inattendue lors de l'insertion des données : {exception}")
+        raise  # Relance pour ne pas masquer l'erreur
+
+def verifie_si_le_fichier_est_traite(date_mise_a_jour_fichier: str, base_de_données: Engine, prefix_fichier: str) -> bool:
+    derniere_date_de_chargement = recupere_la_derniere_date_de_chargement_du_fichier(base_de_données, prefix_fichier)
+    if derniere_date_de_chargement.empty:
+        return False
+    return str(derniere_date_de_chargement.at[0, "derniere_mise_a_jour"]) == date_mise_a_jour_fichier

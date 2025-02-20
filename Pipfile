@@ -9,6 +9,7 @@ psycopg2 = "2.9.3"
 sentry-sdk = "1.16.0"
 python-dotenv = "0.20.0"
 pandas = "==1.5.2"
+pyarrow = "==13.0.0"
 lxml = "4.9.1"
 
 [dev-packages]
@@ -54,6 +55,11 @@ check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_fi
 populate_inspections = 'python -m datacrawler.import_inspections'
 populate_activites_mensuel = 'python -m datacrawler.import_activites_mensuel'
 populate_activites_mensuel_ej = 'python -m datacrawler.import_activites_mensuel_entite_juridique'
+transforme_parquet_en_csv = 'python -m datacrawler.transform_un_fichier_parquet_en_csv'
+populate_vigie_rh_contrat = 'python -m datacrawler.import_vigie_rh_contrat'
+populate_vigie_rh_profession_filiere = 'python -m datacrawler.import_vigie_rh_profession_filiere'
+populate_vigie_rh_profession_groupe = 'python -m datacrawler.import_vigie_rh_profession_groupe'
+populate_tranches_ages = 'python -m datacrawler.import_vigierh_tranches_ages'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'
