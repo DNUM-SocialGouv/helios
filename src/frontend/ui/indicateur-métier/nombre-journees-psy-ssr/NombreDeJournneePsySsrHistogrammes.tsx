@@ -9,66 +9,63 @@ import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activit
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
-    nombreDeJourneePsySsrViewModel: NombreDeJourneesPsySSRViewModel;
-    activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  nombreDeJourneePsySsrViewModel: NombreDeJourneesPsySSRViewModel;
+  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  selectedFrequency: string;
+  onFrequencyChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }>;
 
 
-export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewModel, activitéMensuelleViewModel }: NombreDeSejourMCOHistogrammesProps) => {
-    const { wording } = useDependencies();
-    const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewModel, activitéMensuelleViewModel, selectedFrequency, onFrequencyChange }: NombreDeSejourMCOHistogrammesProps) => {
+  const { wording } = useDependencies();
 
-    const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
-    const [selectedActivity, setSelectedActivity] = useState(wording.SSR);
+  const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+  const [selectedActivity, setSelectedActivity] = useState(wording.SSR);
 
-    useEffect(() => {
-        setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
-    }, [selectedFrequency])
+  useEffect(() => {
+    setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+  }, [selectedFrequency])
 
-    const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
-        setSelectedFrequency(event.target.value);
-    }
+  const activitesPsySsr = [wording.SSR];
 
-    const activitesPsySsr = [wording.SSR];
-
-    return (
-        <>
-            <HistogrammeMensuelFilters
-                ListeActivites={activitesPsySsr}
-                ListeAnnees={activitéMensuelleViewModel.annees}
-                handleFrequency={handleFrequency}
-                identifiant="PsySSR"
-                selectedActivity={selectedActivity}
-                selectedFrequency={selectedFrequency}
-                setAnnéeEnCours={setAnnéeEnCours}
-                setSelectedActivity={setSelectedActivity}
-                wording={wording}
-            />
-            {selectedFrequency === wording.ANNUEL ?
-                <HistogrammeVerticalABandes
-                    annéesTotales={nombreDeJourneePsySsrViewModel.NOMBRE_ANNEES}
-                    créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
-                    data={nombreDeJourneePsySsrViewModel.histogrammeDataSet}
-                    grapheMensuel={false}
-                    id={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-                    idDeLaLégende={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
-                    identifiants={nombreDeJourneePsySsrViewModel.identifiants}
-                    libellés={nombreDeJourneePsySsrViewModel.années}
-                    valeurs={nombreDeJourneePsySsrViewModel.valeurs}
-                />
-                :
-                <HistogrammeVerticalABandes
-                    annéesTotales={12}
-                    créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
-                    data={activitéMensuelleViewModel.getHistogrammePsySsrDataSet(annéeEnCours, selectedActivity)}
-                    grapheMensuel={true}
-                    id={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
-                    idDeLaLégende={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
-                    identifiants={activitéMensuelleViewModel.getIdentifiantTablePsyIndicateur()}
-                    libellés={activitéMensuelleViewModel.listeDesMois}
-                    valeurs={activitéMensuelleViewModel.getValeurTablePsyIndicateur(annéeEnCours)}
-                />
-            }
-        </>
-    );
+  return (
+    <>
+      <HistogrammeMensuelFilters
+        ListeActivites={activitesPsySsr}
+        ListeAnnees={activitéMensuelleViewModel.annees}
+        handleFrequency={onFrequencyChange}
+        identifiant="PsySSR"
+        selectedActivity={selectedActivity}
+        selectedFrequency={selectedFrequency}
+        setAnnéeEnCours={setAnnéeEnCours}
+        setSelectedActivity={setSelectedActivity}
+        wording={wording}
+      />
+      {selectedFrequency === wording.ANNUEL ?
+        <HistogrammeVerticalABandes
+          annéesTotales={nombreDeJourneePsySsrViewModel.NOMBRE_ANNEES}
+          créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
+          data={nombreDeJourneePsySsrViewModel.histogrammeDataSet}
+          grapheMensuel={false}
+          id={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
+          idDeLaLégende={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
+          identifiants={nombreDeJourneePsySsrViewModel.identifiants}
+          libellés={nombreDeJourneePsySsrViewModel.années}
+          valeurs={nombreDeJourneePsySsrViewModel.valeurs}
+        />
+        :
+        <HistogrammeVerticalABandes
+          annéesTotales={12}
+          créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
+          data={activitéMensuelleViewModel.getHistogrammePsySsrDataSet(annéeEnCours, selectedActivity)}
+          grapheMensuel={true}
+          id={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
+          idDeLaLégende={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
+          identifiants={activitéMensuelleViewModel.getIdentifiantTablePsyIndicateur()}
+          libellés={activitéMensuelleViewModel.listeDesMois}
+          valeurs={activitéMensuelleViewModel.getValeurTablePsyIndicateur(annéeEnCours)}
+        />
+      }
+    </>
+  );
 };

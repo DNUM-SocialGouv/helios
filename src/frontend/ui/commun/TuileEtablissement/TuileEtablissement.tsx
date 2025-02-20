@@ -2,9 +2,9 @@ import Image from "next/image";
 import { useContext } from "react";
 
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 import styles from "./TuileEtablissement.module.css";
-import { useDependencies } from "../contexts/useDependencies";
 
 type EstablishmentProps = Readonly<{
   rechercheViewModel: RechercheViewModel;
