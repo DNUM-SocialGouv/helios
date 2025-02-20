@@ -42,7 +42,11 @@ if __name__ == "__main__":
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value, logger_helios)
     )
     date_de_mise_à_jour_profession_filiere = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
-    traite_profession_filiere = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_profession_filiere, base_de_données, FichierSource.VIGIE_RH_PROFESSION_FILIERE.value)
+    traite_profession_filiere = verifie_si_le_fichier_est_traite(
+        date_de_mise_à_jour_profession_filiere,
+        base_de_données,
+        FichierSource.VIGIE_RH_PROFESSION_FILIERE.value
+    )
 
     date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_données, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value)
