@@ -536,4 +536,6 @@ export interface Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
+  readonly PYRAMIDE_DES_AGES: string;
+
 }

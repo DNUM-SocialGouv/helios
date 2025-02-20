@@ -4,22 +4,20 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.liste-indicateurs-vr {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .liste-indicateurs>li {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.liste-indicateurs>li>div:nth-child(1) {
-  min-height: 6rem;
-}
-
 .liste-indicateurs canvas {
   margin-bottom: 1rem;
-}
-
-.liste-indicateurs>ul>li>div:nth-child(1) {
-  min-height: 6.3rem;
 }
 
 .liste-indicateurs canvas {
