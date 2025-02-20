@@ -166,7 +166,7 @@ if __name__ == "__main__":
                 date_de_mise_à_jour_profession_groupe
             )
         else:
-            logger_helios.error(
+            logger_helios.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_PROFESSION_GROUPE.value}, "
                 f"{FichierSource.VIGIE_RH_REF_REDRESSEMENT.value}, "

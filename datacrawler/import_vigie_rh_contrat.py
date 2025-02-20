@@ -82,7 +82,7 @@ if __name__ == "__main__":
                 date_de_mise_à_jour_contrat
             )
         else:
-            logger_helios.error(
+            logger_helios.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_CONTRAT.value}, "
                 f"{FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value})"
