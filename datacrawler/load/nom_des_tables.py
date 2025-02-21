@@ -24,6 +24,7 @@ TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
 TABLE_REF_TRANCHE_AGE = "vigierh_referentiel_tranche_age"
+TABLE_TRANCHE_AGE = "vigierh_pyramide"
 # VIGIE_RH contrat
 TABLE_CONTRAT = "vigierh_contrat"
 TABLE_REF_TYPE_CONTRAT = "vigierh_ref_type_contrat"
@@ -72,4 +73,5 @@ class FichierSource(Enum):
     VIGIE_RH_REF_REDRESSEMENT = "vigierh_ref_redressement"
     # tranches des ages
     VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
+    VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
     
