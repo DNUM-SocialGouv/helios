@@ -86,4 +86,3 @@ if __name__ == "__main__":
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
 
     import_donnees_pyramide(chemin_local_du_fichier_ref_tranche_age, chemin_local_du_fichier_pyramide, base_de_données_helios, logger_helios)
-   
