@@ -82,7 +82,7 @@ if __name__ == "__main__":
             code_list_ref_profession_groupe = np.array(df_ref_profession_groupe['code'].tolist())
 
             data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
-            df_filtré = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_données).head(1000)
+            df_filtré = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_données)
 
             supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
             supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
