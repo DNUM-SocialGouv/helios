@@ -38,7 +38,7 @@ export const PageRecherche = () => {
   }, [])
 
   return (
-    <main>
+    <main id="content">
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>

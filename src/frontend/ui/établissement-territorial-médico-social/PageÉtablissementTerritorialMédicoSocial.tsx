@@ -75,7 +75,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
