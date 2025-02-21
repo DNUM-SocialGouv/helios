@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
     chemin_local_du_fichier_ref_tranche_age = os.path.join(
         vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios)) 
+        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
     chemin_local_du_fichier_pyramide = os.path.join(
         vigierh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
