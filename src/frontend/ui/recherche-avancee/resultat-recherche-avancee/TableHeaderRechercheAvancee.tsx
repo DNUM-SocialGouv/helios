@@ -14,7 +14,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows }: TableHeaderRecherc
       <div className="fr-col">
         <p className="fr-table__detail">{`${Object.values(selectedRows).flat().length} ${Object.values(selectedRows).flat().length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`}</p>
       </div>
-      <div className="fr-col--right">
+      <div className="fr-col--right fr-mb-1w">
         <ListActionsButton selectedRows={selectedRowsValues} />
       </div>
     </div>
