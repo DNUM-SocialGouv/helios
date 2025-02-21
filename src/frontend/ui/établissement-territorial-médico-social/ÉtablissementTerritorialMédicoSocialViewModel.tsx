@@ -8,6 +8,7 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteMédicoSocialViewModel";
+import { BlocVigieRHViewModel } from "./bloc-ressources-humaines/bloc-vigie-rh/BlocVigieRHViewModel";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
@@ -17,6 +18,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
   private établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
   private établissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
+  private blocVigieRHViewModel: BlocVigieRHViewModel;
   public autorisations: any;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths, autorisations: any) {
@@ -45,7 +47,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     this.établissementTerritorialQualiteMédicoSocialViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
       wording,
       établissementTerritorial.qualite
-    )
+    );
+    this.blocVigieRHViewModel = new BlocVigieRHViewModel();
   }
 
   public get titre(): string {
@@ -93,5 +96,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
 
   public get qualiteViewModel(): ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     return this.établissementTerritorialQualiteMédicoSocialViewModel;
+  }
+
+  public get vigieRHViewModel(): BlocVigieRHViewModel {
+    return this.blocVigieRHViewModel;
   }
 }

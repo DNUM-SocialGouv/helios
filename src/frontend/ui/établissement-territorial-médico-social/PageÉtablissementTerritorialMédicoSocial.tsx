@@ -98,11 +98,13 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
             toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocRessourcesHumainesMédicoSocial
+            blocVigieRhViewModel={établissementTerritorialViewModel.vigieRHViewModel}
             categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement}
             opnedBloc={statusBlocs[2]}
             setStatusSousBlocs={setStatusSousBlocs}
             statusSousBlocs={statusSousBlocs}
-            toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+            toggelBlocs={() => toggelBlocs(2)}
+            établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
           />
           <SeparatorHorizontal></SeparatorHorizontal>
           <BlocBudgetEtFinancesMédicoSocial

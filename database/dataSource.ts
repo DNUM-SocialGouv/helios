@@ -81,6 +81,7 @@ import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_r
 import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
 import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
 import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_rh/1739804255435-AjoutEnumFichierDateMiseAjour";
+import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrations/vigie_rh/1739960328134-AjoutEnumFichierDateMiseAjourReferentiel";
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
@@ -275,7 +276,8 @@ export default new DataSource({
     AjoutClésEtrangèresVigieRh1739011319358,
     AjoutReferentielTrancheAge1739874041081,
     AjoutEnumFichierDateMiseAjour1739804255435,
-    AjoutTableVigieRhPyramide1739979832918
+    AjoutTableVigieRhPyramide1739979832918,
+    AjoutEnumFichierDateMiseAjourReferentiel1739960328134
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
