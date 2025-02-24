@@ -22,7 +22,7 @@ def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, b
 
     year_regex = r"(19\d{2}|2\d{3})"
 
-   # Convertir 'mois' et 'quarter' en nombres entiers après gestion des flottants
+    # Convertir 'mois' et 'quarter' en nombres entiers après gestion des flottants
     donnees["mois"] = pd.to_numeric(donnees["mois"], errors='coerce').fillna(0).astype(int)
     donnees["quarter"] = pd.to_numeric(donnees["quarter"], errors='coerce').fillna(0).astype(int)
 
