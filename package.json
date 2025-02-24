@@ -121,7 +121,7 @@
     "dotenv-defaults": "^5.0.2",
     "fs": "^0.0.1-security",
     "husky": "^7.0.4",
-    "joi": "^17.9.2",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.0",
     "next": "13",
     "next-auth": "^4.22.1",
