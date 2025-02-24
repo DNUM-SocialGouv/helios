@@ -3,7 +3,7 @@ import { OrderDir } from "../../métier/use-cases/RechercheAvanceeParmiLesEntit�
 import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from "../../métier/use-cases/RechercheParmiLesEntitésEtÉtablissementsUseCase";
 import { Dependencies } from "../dependencies";
 
-export async function rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies: Dependencies, terme: string, page: number, orderBy: string, order: OrderDir, displayTable:boolean): Promise<RésultatDeRecherche> {
+export async function rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies: Dependencies, terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?:boolean): Promise<RésultatDeRecherche> {
   try {
     const rechercheParmiLesEntitésEtÉtablissementsUseCase = new RechercheParmiLesEntitésEtÉtablissementsUseCase(dependencies.rechercheLoader);
 

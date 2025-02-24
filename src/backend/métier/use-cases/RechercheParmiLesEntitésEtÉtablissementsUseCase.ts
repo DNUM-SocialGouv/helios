@@ -5,7 +5,7 @@ import { OrderDir } from "./RechercheAvanceeParmiLesEntitésEtÉtablissementsUse
 export class RechercheParmiLesEntitésEtÉtablissementsUseCase {
   constructor(private rechercheLoader: RechercheLoader) {}
 
-  async exécute(terme: string, page: number, orderBy: string, order: OrderDir, displayTable: boolean): Promise<RésultatDeRecherche> {
+  async exécute(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
     return await this.rechercheLoader.recherche(terme, page, orderBy, order, displayTable);
   }
 }

@@ -23,7 +23,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   constructor(private readonly orm: Promise<DataSource>) { }
 
-  async recherche(terme: string, page: number, orderBy: string, order: OrderDir, displayTable: boolean): Promise<RésultatDeRecherche> {
+  async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
     

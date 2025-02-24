@@ -2,7 +2,7 @@ import { Résultat, RésultatDeRecherche } from "../entities/RésultatDeRecherch
 import { CapaciteSMS, OrderDir } from "../use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 export interface RechercheLoader {
-  recherche(terme: string, page: number, orderBy: string, order: OrderDir, displayTable: boolean): Promise<RésultatDeRecherche>;
+  recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche>;
   rechercheAvancee(
     terme: string,
     zone: string,
