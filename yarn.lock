@@ -6291,7 +6291,6 @@ __metadata:
     next-auth: ^4.22.1
     next-router-mock: ^0.7.4
     next-usequerystate: ^1.20.0
-    node-fetch: 2.6.7
     papaparse: ^5.5.2
     pg: ^8.7.3
     prettier: ^2.8.2
@@ -8997,7 +8996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
