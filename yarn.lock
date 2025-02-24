@@ -1078,9 +1078,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mapbox/node-pre-gyp@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
+"@mapbox/node-pre-gyp@npm:^1.0.11":
+  version: 1.0.11
+  resolution: "@mapbox/node-pre-gyp@npm:1.0.11"
   dependencies:
     detect-libc: ^2.0.0
     https-proxy-agent: ^5.0.0
@@ -1093,7 +1093,7 @@ __metadata:
     tar: ^6.1.11
   bin:
     node-pre-gyp: bin/node-pre-gyp
-  checksum: 1a98db05d955b74dad3814679593df293b9194853698f3f5f1ed00ecd93128cdd4b14fb8767fe44ac6981ef05c23effcfdc88710e7c1de99ccb6f647890597c8
+  checksum: b848f6abc531a11961d780db813cc510ca5a5b6bf3184d72134089c6875a91c44d571ba6c1879470020803f7803609e7b2e6e429651c026fe202facd11d444b8
   languageName: node
   linkType: hard
 
@@ -1955,12 +1955,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bcrypt@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@types/bcrypt@npm:5.0.0"
+"@types/bcrypt@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@types/bcrypt@npm:5.0.2"
   dependencies:
     "@types/node": "*"
-  checksum: 063c32c7a519d64768dfc0169a319b8244d6a6cb50a355c93992b3c5fee1dbc236526a1111f0e7bb25abc8b0473e5f40a5edfeb8b33cad2a6ea35aa2d7d7db14
+  checksum: b1f97532ffe6079cb57a464f28b5b37a30bc9620f43469e1f27ab9c979c8a114be5b667e7b115a5556fd5be463b65968da9bb32573c6faf74fecf6e565d8974b
   languageName: node
   linkType: hard
 
@@ -3194,13 +3194,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bcrypt@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "bcrypt@npm:5.1.0"
+"bcrypt@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "bcrypt@npm:5.1.1"
   dependencies:
-    "@mapbox/node-pre-gyp": ^1.0.10
+    "@mapbox/node-pre-gyp": ^1.0.11
     node-addon-api: ^5.0.0
-  checksum: a590b65d276d75d861dc85acc3128508b8f78c87431719658ea3be7996368b34b397b6efefe6bca0a3d555bf41a9267307fd4ce04e956598fca3ba81199c6706
+  checksum: 13523b1b1c8f7d7162001d197a600db038f995e0dfca67182f8c88d6de045a1f31b8e4d8a51d6a123ade57fc3828c0be828ea7ee57f7a08d24cd82c92bbaa441
   languageName: node
   linkType: hard
 
@@ -6232,7 +6232,7 @@ __metadata:
     "@swc/jest": ^0.2.20
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.0.1
-    "@types/bcrypt": ^5.0.0
+    "@types/bcrypt": ^5.0.2
     "@types/dompurify": ^3.0.5
     "@types/dotenv-defaults": ^2.0.1
     "@types/jest": ^27.4.1
@@ -6251,7 +6251,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin-tslint": ^5.39.0
     "@typescript-eslint/parser": ^5.39.0
     basic-ftp: ^5.0.5
-    bcrypt: ^5.1.0
+    bcrypt: ^5.1.1
     chart.js: ^3.8.0
     chartjs-plugin-datalabels: ^2.0.0
     cookie: ^1.0.2
