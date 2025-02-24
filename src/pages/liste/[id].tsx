@@ -11,9 +11,12 @@ import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import { Order, OrderBy } from "../../frontend/ui/liste/usePageListe";
 import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
+const defaultOrder = Order.DESC.valueOf();
+const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
 
 type RouterProps = Readonly<{
   list: UserListViewModel;
@@ -23,7 +26,8 @@ export default function Router({ list }: RouterProps) {
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
-
+  const [order, setOrder] = useState(defaultOrder);
+  const [orderBy, setOrderBy] = useState(defaultOrderBy);
 
   useBreadcrumb([
     {
@@ -50,7 +54,7 @@ export default function Router({ list }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list.nom}</h1>
       }
-      {displayTable && <ListActionsButton listId={list.id} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
+      {displayTable && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
@@ -71,7 +75,15 @@ export default function Router({ list }: RouterProps) {
             {!isListEmpty() &&
               <>
                 {displayTable
-                  ? <TableauListeEtablissements list={list} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
+                  ? <TableauListeEtablissements
+                    list={list}
+                    order={order}
+                    orderBy={orderBy}
+                    selectedRows={selectedRows}
+                    setOrder={setOrder}
+                    setOrderBy={setOrderBy}
+                    setSelectedRows={setSelectedRows}
+                  />
                   : <GrilleListEtablissements list={list} />
                 }
               </>

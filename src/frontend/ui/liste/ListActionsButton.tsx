@@ -6,15 +6,21 @@ import { SelectedRows } from "../commun/Table/Table";
 import { useFavoris } from "../favoris/useFavoris";
 import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import ExportList from "./ExportList";
 import styles from "./ListActionsButton.module.css"
 
 type ListActionsButtonProps = Readonly<{
     selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
     setSelectedRows: React.Dispatch<React.SetStateAction<SelectedRows>>
     listId: number;
+    listName: string;
+    order: string;
+    orderBy: string;
+    disabledExport: boolean
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport}: ListActionsButtonProps) => {
+
     const { wording } = useDependencies();
     const router = useRouter();
     const { removeFromFavorisList } = useFavoris()
@@ -53,9 +59,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId }: Lis
                         </button>
                     </li>
                     <li className={styles["menu-item"]}>
-                        <button className="fr-btn fr-btn--tertiary-no-outline">
-                            {wording.EXPORTER}
-                        </button>
+                        <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
                     </li>
                 </ul>
             }

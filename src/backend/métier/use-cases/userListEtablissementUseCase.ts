@@ -3,8 +3,8 @@ import { UserListEtablissementLoader } from "../gateways/UserListEtablissementLo
 export class UserListEtablissementUseCase {
     constructor(private readonly userListEtablissementLoader: UserListEtablissementLoader) { }
 
-    async getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number) {
-        return await this.userListEtablissementLoader.getByListIdOrderedAndPaginated(idUser, listId, order, orderBy, page, limit);
+    async getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number, forExport: boolean) {
+        return await this.userListEtablissementLoader.getByListIdOrderedAndPaginated(idUser, listId, order, orderBy, page, limit, forExport);
     }
 
     async create(idUser: string, listId: number, finessNumber: string, typeEtablissement: string) {

@@ -7,11 +7,18 @@ import { UserListEtablissementLoader } from "../../../métier/gateways/UserListE
 
 export class TypeOrmUserListEtablissementLoader implements UserListEtablissementLoader {
     constructor(private readonly orm: Promise<DataSource>) { }
-    async getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number): Promise<RechercheModel[]> {
+    async getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number, forExport: boolean): Promise<RechercheModel[]> {
         const orderString = order === "ASC" ? "ASC" : "DESC";
         const orderByString = (orderBy === "dateCreation" ? "userListEtab." : "recherche.") + orderBy; 
 
-        return await (await this.orm).createQueryBuilder()
+        const builder = (await this.orm).createQueryBuilder();
+
+        if(!forExport) {
+            builder.limit(limit)
+            .offset((page - 1) * limit)
+        }
+
+        return await builder
         .select("recherche.numero_finess", "numéroFiness")
         .addSelect("recherche.raison_sociale_courte", "raisonSocialeCourte")
         .addSelect("recherche.type", "type")
@@ -46,8 +53,6 @@ export class TypeOrmUserListEtablissementLoader implements UserListEtablissement
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .addGroupBy("userListEtab.date_creation")
         .addOrderBy(orderByString, orderString)
-        .limit(limit)
-        .offset((page - 1) * limit)
         .getRawMany<RechercheModel>();
     }
 
