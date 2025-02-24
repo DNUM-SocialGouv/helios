@@ -13,10 +13,20 @@ export class AjoutVigieRhContrat1738320902145 implements MigrationInterface {
 
         PRIMARY KEY (numero_finess, annee, mois,type_contrat_code)
       );
+
+      ALTER TABLE vigierh_contrat
+      ADD CONSTRAINT fk_contrat_type_contrat
+      FOREIGN KEY (type_contrat_code)
+      REFERENCES vigierh_ref_type_contrat(code);
     `);
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS vigierh_contrat;");
+    await queryRunner.query(`
+      ALTER TABLE vigierh_contrat
+      DROP CONSTRAINT fk_contrat_type_contrat;
+
+      DROP TABLE IF EXISTS vigierh_contrat;
+    `);
   }
 }

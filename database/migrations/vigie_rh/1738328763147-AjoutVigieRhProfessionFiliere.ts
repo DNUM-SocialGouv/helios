@@ -21,12 +21,22 @@ export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInte
 
         PRIMARY KEY (numero_finess, annee, mois, profession_code)
       );
+
+      ALTER TABLE vigierh_profession_filiere
+      ADD CONSTRAINT fk_profession_filiere_profession
+      FOREIGN KEY (profession_code)
+      REFERENCES vigierh_ref_profession_filiere(code);
     `);
 
     // TODO :  Ajout de l'index éventuellement   
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS vigierh_profession_filiere;");
+    await queryRunner.query(`
+      ALTER TABLE vigierh_profession_filiere
+      DROP CONSTRAINT fk_profession_filiere_profession;
+
+      DROP TABLE IF EXISTS vigierh_profession_filiere;
+    `);
   }
 }
