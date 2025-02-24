@@ -16,7 +16,7 @@ export class AjoutReferentielTrancheAge1739874041081 implements MigrationInterfa
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query("DROP TABLE IF EXISTS vigierh_referentiel_tranche_age;");
+    await queryRunner.query(`DROP TABLE IF EXISTS vigierh_referentiel_tranche_age;`);
   }
 
 }

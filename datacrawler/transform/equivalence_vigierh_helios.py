@@ -41,27 +41,14 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
-        'profession2_code': 'profession_code',
+        'profession_code': 'profession_code',
         'effectif': 'effectif',
-        'ind_qual_effectif_code':'indic_qualite_effectif_code',
-        'ind_redr_effectif_code':'indic_redressement_effectif_code',
-        'ind_masq_effectif_code':'indic_masque_secret_effectif_code',
-    }
-    REF_MASQUE = {
-        'ind_masque_code': 'code',
-        'ind_masque': 'label'
+        'effectif_filiere': 'effectif_filiere',
+        'quarter': 'quarter',
     }
     REF_PROFESSION_GROUPE = {
         'profession2_code': 'code',
         'profession2': 'label'
-    }
-    REF_QUALITE = {
-        'ind_qualite_code': 'code',
-        'ind_qualite': 'label'
-    }
-    REF_REDRESSEMENT = {
-        'ind_redressement_code': 'code',
-        'ind_redressement': 'label'
     }
     # pyramide des ages
     REF_TRANCHE_AGE = {

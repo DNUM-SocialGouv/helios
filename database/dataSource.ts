@@ -79,7 +79,6 @@ import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./mig
 import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
 import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
 import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
-import { AjoutClésEtrangèresVigieRh1739011319358 } from "./migrations/vigie_rh/1739011319358-AjoutClésEtrangèresVigieRh";
 import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_rh/1739804255435-AjoutEnumFichierDateMiseAjour";
 import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrations/vigie_rh/1739960328134-AjoutEnumFichierDateMiseAjourReferentiel";
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
@@ -273,7 +272,6 @@ export default new DataSource({
     AjoutReferentielMasque1738593046415,
     AjoutReferentielQualite1738593074489,
     AjoutReferentielRedressement1738593097578,
-    AjoutClésEtrangèresVigieRh1739011319358,
     AjoutReferentielTrancheAge1739874041081,
     AjoutEnumFichierDateMiseAjour1739804255435,
     AjoutTableVigieRhPyramide1739979832918,
