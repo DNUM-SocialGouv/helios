@@ -20,20 +20,6 @@ export class AjoutClésEtrangèresVigieRh1739011319358 implements MigrationInter
         FOREIGN KEY (profession_code)
         REFERENCES vigierh_ref_profession_groupe(code);
 
-        ALTER TABLE vigierh_profession_groupe
-        ADD CONSTRAINT fk_profession_groupe_qualite
-        FOREIGN KEY (indic_qualite_effectif_code)
-        REFERENCES vigierh_ref_qualite(code);
-        
-        ALTER TABLE vigierh_profession_groupe
-        ADD CONSTRAINT fk_profession_groupe_redressement
-        FOREIGN KEY (indic_redressement_effectif_code)
-        REFERENCES vigierh_ref_redressement(code);
-        
-        ALTER TABLE vigierh_profession_groupe
-        ADD CONSTRAINT fk_profession_groupe_masque
-        FOREIGN KEY (indic_masque_secret_effectif_code)
-        REFERENCES vigierh_ref_masque(code);
       `);
     }
 
@@ -48,15 +34,6 @@ export class AjoutClésEtrangèresVigieRh1739011319358 implements MigrationInter
 
         ALTER TABLE vigierh_profession_groupe
         DROP CONSTRAINT fk_profession_groupe_profession;
-        
-        ALTER TABLE vigierh_profession_groupe
-        DROP CONSTRAINT fk_profession_groupe_qualite;
-        
-        ALTER TABLE vigierh_profession_groupe
-        DROP CONSTRAINT fk_profession_groupe_redressement;
-        
-        ALTER TABLE vigierh_profession_groupe
-        DROP CONSTRAINT fk_profession_groupe_masque;
       `);
 
     }

@@ -8,12 +8,10 @@ export class AjoutVigieRhProfessionGroupe1738328796095 implements MigrationInter
         numero_finess VARCHAR(9) NOT NULL,
         annee INT NOT NULL,
         mois INT NOT NULL,
+        quarter INT NOT NULL,
         profession_code int NOT NULL,
         effectif INT, 
-        indic_qualite_effectif_code int,
-        indic_redressement_effectif_code int,
-        indic_masque_secret_effectif_code int,
-        dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
+        effectif_filiere INT, 
 
         PRIMARY KEY (numero_finess, annee, mois, profession_code)
       );
