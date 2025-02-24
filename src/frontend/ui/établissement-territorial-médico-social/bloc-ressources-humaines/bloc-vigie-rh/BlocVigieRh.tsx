@@ -4,6 +4,7 @@ import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/Cont
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 import PyramidChart from "./GraphiquePyramide";
+import LineChart from "./GraphiqueLine";
 
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -27,7 +28,10 @@ export const BlocVigieRH = ({
                     identifiant="activite-0"
                     nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
                 >
+                    <>
                     <PyramidChart />
+                    <LineChart/>
+                    </>
                 </IndicateurGraphique>
             ) : <></>
             }
