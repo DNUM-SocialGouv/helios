@@ -20,11 +20,14 @@ type ContenuBlocRHMedicoSocialHeliosProps = Readonly<{
 }>;
 
 export const ContenuBlocRHMedicoSocialHelios = ({
-    établissementTerritorialMédicoSocialRessourcesHumainesViewModel
+    établissementTerritorialMédicoSocialRessourcesHumainesViewModel,
 }: ContenuBlocRHMedicoSocialHeliosProps) => {
 
     const { wording } = useDependencies();
     const [annéeEnCours, setAnnéeEnCours] = useState<number>(établissementTerritorialMédicoSocialRessourcesHumainesViewModel.annéeInitiale);
+    if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
+        return <div>{wording.INDICATEURS_VIDES}</div>
+    }
 
     return (
         <>
