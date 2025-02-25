@@ -8,9 +8,11 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { EtablissementTerritorialMedicoSocialVigieRH } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -47,8 +49,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
-    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
+    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET));
     const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel, domaineÉtablissementPrincipal);
@@ -69,7 +71,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique });
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
 
     return {
       estMonoÉtablissement: {
@@ -153,6 +155,32 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { année: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
+  }
+
+  async chargeLesDonneesVigieRH(numeroFinessET: string) {
+    const pyramideAges = await (await this.orm).getRepository(VigieRhPyramideAgesModel).find({
+      order: { annee: "ASC" },
+      where: { numeroFinessET },
+    });
+    return this.construisLesDonneesVigieRH(pyramideAges)
+  }
+
+  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[]): EtablissementTerritorialMedicoSocialVigieRH {
+    const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
+      return {
+        annee: pyramideModel.annee,
+        trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
+        effectif: pyramideModel.effectif,
+        effectifHomme: pyramideModel.effectifHomme,
+        effectifFemme: pyramideModel.effectifFemme,
+        effectifHommeRef: pyramideModel.effectifHommeRef,
+        effectifFemmeRef: pyramideModel.effectifFemmeRef,
+      }
+    })
+
+    return {
+      pyramideAges
+    }
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
@@ -533,15 +561,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      }
+      } else if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+      else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private constuisLevenementIndesirable(evenement: EvenementIndesirableETModel) {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -554,7 +580,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private construisInspections(inspections: InspectionsControlesETModel[], dateMisAJour: string) {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,
