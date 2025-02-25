@@ -50,6 +50,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: mockedChargeIdentité,
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -96,6 +97,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: mockedChargeParNuméroFiness,
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: jest.fn(),
     };
 
@@ -157,6 +159,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -207,6 +210,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -259,6 +263,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -311,6 +316,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: mockedChargeRessourcesHumaines,
       chargeQualite: jest.fn(),
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
@@ -363,6 +369,7 @@ describe("La récupération d’un établissement territorial médico-social", (
       chargeIdentité: jest.fn().mockResolvedValueOnce(fakeIdentitéÉtablissementTerritorial),
       chargeRessourcesHumaines: jest.fn(),
       chargeQualite: mockedDonnesQualite,
+      chargeLesDonneesVigieRH: jest.fn(),
       estUnMonoÉtablissement: mockedEstUnMonoÉtablissement,
     };
 
