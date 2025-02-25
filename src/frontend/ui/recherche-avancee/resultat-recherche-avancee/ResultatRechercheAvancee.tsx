@@ -55,8 +55,8 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         isShowAvrage={false}
         isVScroll={false}
         onClickDelete={() => { }}
-        order={rechercheAvanceeContext?.order || ""}
-        orderBy={rechercheAvanceeContext?.orderBy || ""}
+        order={rechercheAvanceeContext?.order ?? ""}
+        orderBy={rechercheAvanceeContext?.orderBy ?? ""}
         page={page}
         selectedRows={selectedRows}
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
