@@ -72,6 +72,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
       queryBuilder
+        .addSelect("recherche.rattachement", "rattachement")
         .orderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
         .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)

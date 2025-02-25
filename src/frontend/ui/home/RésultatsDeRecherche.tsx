@@ -35,14 +35,14 @@ export const RésultatsDeRecherche = ({
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
 
   const activeAffichageTableau = (_event: ChangeEvent<HTMLInputElement>) => {
-      setDisplayTable(true);
-      lancerLaRecherche(_event, true)
-    };
+    setDisplayTable(true);
+    lancerLaRecherche(_event, true)
+  };
 
-    const activeAffichageTuile = (_event: ChangeEvent<HTMLInputElement>) => {
-      setDisplayTable(false);
-      lancerLaRecherche(_event, false)
-    };
+  const activeAffichageTuile = (_event: ChangeEvent<HTMLInputElement>) => {
+    setDisplayTable(false);
+    lancerLaRecherche(_event, false)
+  };
 
   const etsLength = résultats ? résultats.length : 0;
 
@@ -52,7 +52,7 @@ export const RésultatsDeRecherche = ({
 
   const isListEmpty = () => Number(nombreRésultats) === 0;
 
-  const titleHead = 
+  const titleHead =
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{displayTable ? tableMessage : vignetteMessage}</p>
@@ -64,13 +64,16 @@ export const RésultatsDeRecherche = ({
 
   return (
     <section aria-label={wording.RÉSULTAT_DE_RECHERCHE}>
-      {isListEmpty() ?  
-      <p className="fr-h6 fr-mt-4w">
-        {(nombreRésultats === 0 && wording.aucunRésultat(termeFixe)) || wording.rechercheNombreRésultats(nombreRésultats, termeFixe)}
-      </p>
-      :
-      <>
-      {titleHead}
+      {isListEmpty() ?
+        <p className="fr-h6 fr-mt-4w">
+          {wording.aucunRésultat(termeFixe)}
+        </p>
+        :
+        <>
+          <p className="fr-h6 fr-mt-4w">
+            {wording.rechercheNombreRésultats(nombreRésultats, termeFixe)}
+          </p>
+          {titleHead}
           {displayTable
             ? <TableauEtablissements displayTable={displayTable} nombreRésultats={nombreRésultats} rechercher={rechercher} résultats={résultats} selectedRows={selectedRows} setSelectedRows={setSelectedRows} terme={termeFixe} />
             : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés} résultats={résultats} />

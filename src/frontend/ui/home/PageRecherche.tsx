@@ -12,7 +12,7 @@ import { useRecherche } from "./useRecherche";
 
 export const PageRecherche = () => {
   const { wording } = useDependencies();
-  const [displayTable, setDisplayTable] = useState(true);
+  const [displayTable, setDisplayTable] = useState(false);
 
   const {
     estCeEnAttente,
