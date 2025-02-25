@@ -1,6 +1,5 @@
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import { ContenuBlocRHMedicoSocialHelios } from "./contenu-bloc-rh-helios";
 import { ContenuBlocRHMedicoSocialVigieRH } from "./contenu-bloc-rh-vigierh";
@@ -20,10 +19,6 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel, categorie, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs, blocVigieRhViewModel
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
-
-  if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRessourcesHumainesNeSontPasRenseignées) {
-    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs} />;
-  }
 
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>

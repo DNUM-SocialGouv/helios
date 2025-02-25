@@ -46,6 +46,10 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
       numéroFinessÉtablissementTerritorial
     );
 
+    const etablissementTerritorialMedicoSocialVigieRH = await this.établissementTerritorialMédicoSocialLoader.chargeLesDonneesVigieRH(
+      numéroFinessÉtablissementTerritorial
+    );
+
     return {
       activités: établissementTerritorialMédicoSocialActivité,
       autorisationsEtCapacités: établissementTerritorialMédicoSocialAutorisation,
@@ -56,6 +60,7 @@ export class RécupèreLÉtablissementTerritorialMédicoSocialUseCase {
         estMonoÉtablissement,
       },
       ressourcesHumaines: établissementTerritorialMédicoSocialRessourcesHumaines,
+      vigieRh: etablissementTerritorialMedicoSocialVigieRH,
       qualite: établissementTerritorialMédicoSocialQualite,
       autorisations: {}
     };

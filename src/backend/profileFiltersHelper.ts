@@ -10,6 +10,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
   const qualite = filterQualiteMedicoSocial(result.qualite, profil.Qualité);
+  const vigieRh = result.vigieRh;
 
   return {
     identité: identité,
@@ -17,6 +18,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
     autorisationsEtCapacités: autorisationsEtCapacités,
     budgetEtFinances: budgetEtFinances,
     ressourcesHumaines: ressourcesHumaines,
+    vigieRh: vigieRh,
     qualite: qualite,
     autorisations: profil
   };
