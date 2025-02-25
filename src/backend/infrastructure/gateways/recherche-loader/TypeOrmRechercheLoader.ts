@@ -44,7 +44,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
     if (displayTable) {
-      queryBuilder
+      requêteDeLaRecherche
       .addSelect(
         `CASE 
           WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
@@ -71,21 +71,18 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
       .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
-      queryBuilder
+      requêteDeLaRecherche
         .addSelect("recherche.rattachement", "rattachement")
-        .orderBy("type", "ASC")
+        .orderBy("rank", "DESC")
+        .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
         .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1));
     }
 
     if(order && orderBy) {
-      queryBuilder.orderBy(orderBy, order)
-    } else {
-      queryBuilder
-      .orderBy("type", "ASC")
-      .addOrderBy("numero_finess", "ASC")
-    } 
+      requêteDeLaRecherche.orderBy(orderBy, order)
+    }
 
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
 
