@@ -23,31 +23,68 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   constructor(private readonly orm: Promise<DataSource>) { }
 
-  async recherche(terme: string, page: number): Promise<RésultatDeRecherche> {
+  async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
+    
+    const queryBuilder = (await this.orm).createQueryBuilder();
+    
+    const requêteDeLaRecherche = queryBuilder
+    .select("recherche.numero_finess", "numero_finess")
+    .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
+    .addSelect("recherche.type", "type")
+    .addSelect("recherche.commune", "commune")
+    .addSelect("recherche.departement", "departement")
+    .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
+    .from(RechercheModel, "recherche")
+    .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
+    .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
+    .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
+    
+    const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
-    const requêteDeLaRecherche = (await this.orm)
-      .createQueryBuilder()
-      .select("recherche.numero_finess", "numero_finess")
-      .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
-      .addSelect("recherche.type", "type")
-      .addSelect("recherche.commune", "commune")
-      .addSelect("recherche.departement", "departement")
-      .addSelect("recherche.rattachement", "rattachement")
-      .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
-      .from(RechercheModel, "recherche")
-      .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
-      .orderBy("rank", "DESC")
-      .addOrderBy("type", "ASC")
-      .addOrderBy("numero_finess", "ASC")
-      .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
-      .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1));
+    if (displayTable) {
+      requêteDeLaRecherche
+      .addSelect(
+        `CASE 
+          WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
+          ELSE 
+          CONCAT(
+            'Sanitaire (', 
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Sanitaire' THEN etablissement_territorial.numero_finess_entite_juridique END),
+            '), SMS (',
+            COUNT(CASE WHEN etablissement_territorial.domaine = 'Médico-social' THEN etablissement_territorial.numero_finess_entite_juridique END), ')'
+          )
+        END`,
+        "rattachement"
+      )  
+      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
+      .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess")
+      .addGroupBy("recherche.commune")
+      .addGroupBy("recherche.type")
+      .addGroupBy("recherche.numero_finess")
+      .addGroupBy("recherche.raison_sociale_courte")
+      .addGroupBy("recherche.departement")
+      .addGroupBy("recherche.termes")
+      .addGroupBy("recherche.rattachement")
+      .addGroupBy("entite_juridique.raison_sociale_courte")
+      .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
+      .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
+    } else {
+      requêteDeLaRecherche
+        .addSelect("recherche.rattachement", "rattachement")
+        .orderBy("rank", "DESC")
+        .addOrderBy("type", "ASC")
+        .addOrderBy("numero_finess", "ASC")
+        .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
+        .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1));
+    }
+
+    if(order && orderBy) {
+      requêteDeLaRecherche.orderBy(orderBy, order)
+    }
 
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
-    const nombreDeRésultats = await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats);
   }
