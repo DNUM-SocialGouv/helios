@@ -580,6 +580,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   };
 
+  public static vigierh: ÉtablissementTerritorialMédicoSocial["vigieRh"] = {
+    pyramideAges: []
+  };
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -591,6 +595,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
         qualite: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite,
+        vigieRh: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
         identité: {
           ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ...champsSurchargés,

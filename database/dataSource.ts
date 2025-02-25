@@ -132,6 +132,7 @@ import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieR
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
+import { VigieRhPyramideAgesModel } from "./models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
 
@@ -185,7 +186,8 @@ export default new DataSource({
     VigieRhContratModel,
     VigieRhProfessionFiliereModel,
     VigieRhProfessionGroupeModel,
-    VigieRhRefTrancheAgeModel
+    VigieRhRefTrancheAgeModel,
+    VigieRhPyramideAgesModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
