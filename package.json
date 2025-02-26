@@ -117,7 +117,6 @@
     "date-fns": "^4.1.0",
     "dompurify": "^3.2.4",
     "dotenv-defaults": "^5.0.2",
-    "fs": "^0.0.1-security",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "next": "14",
