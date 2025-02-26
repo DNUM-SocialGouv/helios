@@ -61,8 +61,12 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
                         </button>
                     </li>
                     <li className={styles["menu-item"]}>
-                    {listId && listName && order && orderBy && 
+                    {(listId && listName && order && orderBy) ? 
                         <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
+                        : <button className="fr-btn fr-btn--tertiary-no-outline">
+                        {wording.EXPORTER}
+                    </button>
+                
                     }
                     </li>
                 </ul>
