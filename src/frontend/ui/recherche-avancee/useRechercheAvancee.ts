@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
-import { ExtendedRésultatDeRecherche } from "../../../pages/recherche-avancee";
+import { ExtendedResultatDeRecherche } from "../../../pages/recherche-avancee";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useFavoris } from "../favoris/useFavoris";
@@ -17,13 +17,12 @@ type RechercheAvanceeState = Readonly<{
   résultats: RechercheViewModel[];
 }>;
 
-export function useRechercheAvancee(data: ExtendedRésultatDeRecherche) {
+export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
   const { paths } = useDependencies();
   const { getFavorisLists } = useFavoris();
   const take = 20;
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
-  //const pageInitiale = 1;
   const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
