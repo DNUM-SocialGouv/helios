@@ -94,17 +94,15 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     }), wording);
     // WHEN
     renderFakeComponent(
-      <>
-        <SessionProvider session={mockSession}>
-          <Breadcrumb />
-          <PageEntitéJuridique
-            entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel}
-            entitéJuridiqueViewModel={entitéJuridiqueViewModel}
-            rechercheViewModel={rechercheViewModel}
-            établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
-          />
-        </SessionProvider>
-      </>
+      <SessionProvider session={mockSession}>
+        <Breadcrumb />
+        <PageEntitéJuridique
+          entitéJuridiqueActivitéMensuelleViewModel={activitéMensuelleViewModel}
+          entitéJuridiqueViewModel={entitéJuridiqueViewModel}
+          rechercheViewModel={rechercheViewModel}
+          établissementsTerritoriauxRattachésViewModels={établissementsTerritoriauxRattachésViewModels}
+        />
+      </SessionProvider>
     );
 
     // THEN
@@ -126,14 +124,12 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
 
     // WHEN
     renderFakeComponent(
-      <>
-        <SessionProvider session={mockSession}>
-          <Breadcrumb />
-          <PageÉtablissementTerritorialMédicoSocial
-            rechercheViewModel={rechercheViewModel}
-            établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
-        </SessionProvider>
-      </>
+      <SessionProvider session={mockSession}>
+        <Breadcrumb />
+        <PageÉtablissementTerritorialMédicoSocial
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialViewModel={établissementTerritorialMédicoSocialViewModel} />
+      </SessionProvider>
     );
 
     // THEN
@@ -145,7 +141,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     const établissementTerritorial = levels[2];
     const lienAccueil = within(accueil).getByRole("link", { name: wording.ACCUEIL });
     expect(lienAccueil).toHaveAttribute("href", "/");
-    const lienEntitéJuridique = within(entitéJuridique).getByRole("link", { name: "Entité juridique - 010008407 - CH DU HAUT BUGEY" });
+    const lienEntitéJuridique = within(entitéJuridique).getByRole("link", { name: "EJ - 010008407 - CH DU HAUT BUGEY" });
     expect(lienEntitéJuridique).toHaveAttribute("href", `${paths.ENTITÉ_JURIDIQUE}/010008407`);
     expect(lienEntitéJuridique.textContent).toBe("EJ - 010008407 - CH DU HAUT BUGEY");
     expect(within(lienEntitéJuridique).getByText("EJ", { selector: "abbr" })).toHaveAttribute("title", wording.ENTITÉ_JURIDIQUE);
@@ -162,16 +158,14 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     }), wording);
     // WHEN
     renderFakeComponent(
-      <>
-        <SessionProvider session={mockSession}>
-          <Breadcrumb />
-          <PageÉtablissementTerritorialSanitaire
-            activitéMensuelleViewModel={activitéMensuelleViewModel}
-            rechercheViewModel={rechercheViewModel}
-            établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
-          />
-        </SessionProvider>
-      </>
+      <SessionProvider session={mockSession}>
+        <Breadcrumb />
+        <PageÉtablissementTerritorialSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
+          rechercheViewModel={rechercheViewModel}
+          établissementTerritorialSanitaireViewModel={établissementTerritorialSanitaireViewModel}
+        />
+      </SessionProvider>
     );
 
     // THEN
@@ -183,7 +177,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     const établissementTerritorial = levels[2];
     const lienAccueil = within(accueil).getByRole("link", { name: wording.ACCUEIL });
     expect(lienAccueil).toHaveAttribute("href", "/");
-    const lienEntitéJuridique = within(entitéJuridique).getByRole("link", { name: "Entité juridique - 010008407 - HP VILLENEUVE DASCQ" });
+    const lienEntitéJuridique = within(entitéJuridique).getByRole("link", { name: "EJ - 010008407 - HP VILLENEUVE DASCQ" });
     expect(lienEntitéJuridique).toHaveAttribute("href", `${paths.ENTITÉ_JURIDIQUE}/010008407`);
     expect(lienEntitéJuridique.textContent).toBe("EJ - 010008407 - HP VILLENEUVE DASCQ");
     expect(within(lienEntitéJuridique).getByText("EJ", { selector: "abbr" })).toHaveAttribute("title", wording.ENTITÉ_JURIDIQUE);
