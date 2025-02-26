@@ -56,14 +56,18 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
                         </button>
                     </li>
                     <li className={styles["menu-item"]}>
-                        <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={onClickDelete}>
+                        {listId ? <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={onClickDelete}>
                             {wording.SUPPRIMER_DE_LA_LISTE}
+                        </button> :
+                        <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
+                            Ajouter à mes listes
                         </button>
+                        }
                     </li>
                     <li className={styles["menu-item"]}>
                     {(listId && listName && order && orderBy) ? 
                         <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
-                        : <button className="fr-btn fr-btn--tertiary-no-outline">
+                        : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
                         {wording.EXPORTER}
                     </button>
                 
