@@ -175,8 +175,8 @@
     "jest-mock-extended": "^3.0.7",
     "next-router-mock": "^0.9.13",
     "prettier": "^3.5.2",
-    "stylelint": "^14.9.1",
-    "stylelint-order": "^5.0.0",
+    "stylelint": "^16.14.0",
+    "stylelint-order": "^6.0.4",
     "ts-prune": "^0.10.3"
   },
   "resolutions": {
