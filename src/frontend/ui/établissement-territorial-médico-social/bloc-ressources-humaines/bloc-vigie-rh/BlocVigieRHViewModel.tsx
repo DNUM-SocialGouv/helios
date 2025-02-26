@@ -29,8 +29,12 @@ export class BlocVigieRHViewModel {
         return StringFormater.formatDate("2024-11-22");
     }
 
+    public get lesLibellesTranchesAges(): string[] {
+        return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
+    }
+
     public get lesDonneesPyramideAges(): DonneesVigieRh[] {
-        const labels = ["65_plus", "60_65", "55_60", "50_55", "45_50", "40_45", "35_40", "30_35", "25_30", "20_25", "15_20"];
+        const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
         return Object.values(
             this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
                 const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;

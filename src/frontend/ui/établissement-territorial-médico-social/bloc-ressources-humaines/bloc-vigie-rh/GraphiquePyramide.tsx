@@ -7,14 +7,14 @@ import { Transcription } from "../../../commun/Transcription/Transcription";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Title);
 
 type PyramidChartProps = Readonly<{
+    labels: string[];
     effectifHomme: number[];
     effectifHommeRef: number[];
     effectifFemme: number[];
     effectifFemmeRef: number[];
 }>;
 
-const PyramidChart = ({ effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
-    const labels = ["65+", "60-65", "55-60", "50-55", "45-50", "40-45", "35-40", "30-35", "25-30", "20-25", "15-20"];
+const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
     const refColor = "#929292";
 
     const { wording } = useDependencies();

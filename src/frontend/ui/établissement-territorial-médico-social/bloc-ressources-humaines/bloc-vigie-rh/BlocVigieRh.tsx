@@ -16,6 +16,7 @@ export const BlocVigieRH = ({
 }: BlocVigieRHProps) => {
     const { wording } = useDependencies();
     const donneesPyramides = blocVigieRHViewModel.lesDonneesPyramideAges;
+    const libelles = blocVigieRHViewModel.lesLibellesTranchesAges;
     const annees = donneesPyramides.map((donneeAnnuel) => donneeAnnuel.annee).sort((a, b) => a - b);
     const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
     const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
@@ -44,6 +45,7 @@ export const BlocVigieRH = ({
                                 effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                                 effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
                                 effectifHommeRef={donneesAnneeEnCours?.effectifHommeRef}
+                                labels={libelles}
                             />}
                     </>
                 </IndicateurGraphique>

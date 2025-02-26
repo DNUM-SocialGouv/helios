@@ -10,5 +10,6 @@ export type PyramideAges = Readonly<{
 
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
     pyramideAges: PyramideAges[];
+    tranchesAgesLibelles: string[];
 }>;
 

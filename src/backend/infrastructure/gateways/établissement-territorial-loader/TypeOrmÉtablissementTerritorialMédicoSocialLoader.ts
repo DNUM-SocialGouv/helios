@@ -8,6 +8,7 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
@@ -162,10 +163,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { annee: "ASC" },
       where: { numeroFinessET },
     });
-    return this.construisLesDonneesVigieRH(pyramideAges)
+    const tranchesAge = await (await this.orm).getRepository(VigieRhRefTrancheAgeModel).find({
+      order: { trancheAge: "DESC" },
+    });
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge)
   }
 
-  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[]): EtablissementTerritorialMedicoSocialVigieRH {
+  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[]): EtablissementTerritorialMedicoSocialVigieRH {
     const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
         annee: pyramideModel.annee,
@@ -178,8 +182,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
+    const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
+      return trancheModel.trancheAge ?? '';
+    })
+
+
     return {
-      pyramideAges
+      pyramideAges,
+      tranchesAgesLibelles
     }
   }
 
