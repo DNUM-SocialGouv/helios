@@ -175,6 +175,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
       selectedMap.set(element.numéroFiness, true);
     });
   }
+
   const couleurLogo = "#000000"; // Logos en noir
   return (
     <tbody>
@@ -184,7 +185,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
             <th className="fr-cell--fixed" scope="row">
               <div className="fr-checkbox-group fr-checkbox-group--sm">
                 <input
-                  checked={selectedMap.get(row.numéroFiness)}
+                  checked={!!selectedMap.get(row.numéroFiness)}
                   id={`table-select-checkbox-7748--${rowIndex}`}
                   name="row-select"
                   onChange={() => handleSelectRow(row)}
