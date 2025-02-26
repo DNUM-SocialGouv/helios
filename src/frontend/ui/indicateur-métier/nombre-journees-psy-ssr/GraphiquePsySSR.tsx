@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from "react";
+
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
@@ -13,17 +15,32 @@ type GraphiquePsySSRProps = Readonly<{
 
 export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
   const { wording } = useDependencies();
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+
+  const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFrequency(event.target.value);
+  }
+
+  const dateDeMiseAJour = (): string => {
+    if (selectedFrequency === wording.ANNUEL) {
+      return nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr;
+    } else {
+      return activitéMensuelleViewModel.getDateDeMiseAJour();
+    }
+  }
+
+
 
   return (
     <IndicateurGraphique
       contenuInfoBulle={
         <ContenuNombreDeJournéesPSYetSSR
-          dateDeMiseÀJour={nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+          dateDeMiseÀJour={dateDeMiseAJour()}
           estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
       }
-      dateDeMiseÀJour={nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr}
+      dateDeMiseÀJour={dateDeMiseAJour()}
       identifiant="activite-1"
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
@@ -31,6 +48,8 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
       <NombreDeJournneesPsySsrHistogrammes
         activitéMensuelleViewModel={activitéMensuelleViewModel}
         nombreDeJourneePsySsrViewModel={nombreJournéesPsySSRViewModel}
+        onFrequencyChange={handleFrequency}
+        selectedFrequency={selectedFrequency}
       />
     </IndicateurGraphique>
   );

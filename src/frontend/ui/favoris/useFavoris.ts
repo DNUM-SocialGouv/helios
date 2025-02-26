@@ -38,7 +38,7 @@ export function useFavoris() {
   };
 
   const updateListName = (listId: number, listName: string) => {
-    fetch(`/api/liste/${listId}`,
+     fetch(`/api/liste/${listId}`,
       {
         body: JSON.stringify({ listName }),
         headers: { "Content-Type": "application/json" },

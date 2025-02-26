@@ -143,7 +143,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   }
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       {user && (
         <>
           <h1 className={styles["title"]}>

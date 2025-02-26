@@ -15,7 +15,7 @@ export const PageChangeMotPasse = () => {
   } = useReinitialisationMdp();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <FormulaireChangeMdp
         annuler={annuler}
         changePassword={changePassword}

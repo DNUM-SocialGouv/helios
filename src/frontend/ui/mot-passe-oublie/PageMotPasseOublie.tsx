@@ -16,7 +16,7 @@ export const PageMotPasseOublie = () => {
   } = useMdpOublie();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <FormulaireMdpOublie
         annuler={annuler}
         emailSent={emailSent}

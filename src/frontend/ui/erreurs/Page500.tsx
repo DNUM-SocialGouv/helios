@@ -10,7 +10,7 @@ export const Page500 = () => {
   const { paths, wording } = useDependencies();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.ERREUR_INATTENDUE_500}</title>
       </Head>

@@ -82,3 +82,17 @@
     display: none;
   }
 }
+
+.sr-only-focusable {}
+.sr-only-focusable:focus-within {
+  background-color: white;
+  z-index: 1;
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: absolute;
+  left: 0;
+  white-space: normal;
+  width: auto;
+}

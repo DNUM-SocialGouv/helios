@@ -23,7 +23,7 @@ export class AjoutListEtEtsList1736865415982 implements MigrationInterface {
           `);
     await queryRunner.query(`
             INSERT into user_list(ut_id, list_nom, is_favori)
-            select distinct user_id, 'Favoris', true from favori;
+            select ut_code, 'Favoris', true from utilisateur;
           `);
     await queryRunner.query(`
             INSERT into user_list_etablissement(list_id, numero_finess)
