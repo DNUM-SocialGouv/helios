@@ -82,7 +82,7 @@ async function generateAndExportExcel(
 const ExportList = ({
     listId, listName, order, orderBy, disabled,
 }: {
-    listId: number, listName: string, order: string, orderBy: string, disabled: boolean,
+    listId: number, listName: string, order: string, orderBy: string, disabled?: boolean,
 }) => {
     const { wording, paths } = useDependencies();
 
