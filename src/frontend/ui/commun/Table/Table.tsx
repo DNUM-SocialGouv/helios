@@ -44,7 +44,7 @@ interface DataTableProps {
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  isSimpleSearchTable: boolean;
+  isSimpleSearchTable?: boolean;
 }
 
 interface TableHeaderProps {
@@ -57,8 +57,7 @@ interface TableHeaderProps {
   handleSelectAll: () => void;
   isAllSelected: boolean;
   isCenter: boolean;
-  page: number;
-  isSimpleSearchTable: boolean;
+  isSimpleSearchTable?: boolean;
 }
 
 interface TableBodyProps {
@@ -73,7 +72,7 @@ interface TableBodyProps {
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
-  isSimpleSearchTable: boolean;
+  isSimpleSearchTable?: boolean;
 }
 
 interface TriProps {
