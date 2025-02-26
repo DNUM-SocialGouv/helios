@@ -11,12 +11,12 @@ import styles from "./ListActionsButton.module.css"
 
 type ListActionsButtonProps = Readonly<{
     selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-    setSelectedRows: React.Dispatch<React.SetStateAction<SelectedRows>>
-    listId: number;
-    listName: string;
-    order: string;
-    orderBy: string;
-    disabledExport: boolean
+    setSelectedRows?: React.Dispatch<React.SetStateAction<SelectedRows>>
+    listId?: number;
+    listName?: string;
+    order?: string;
+    orderBy?: string;
+    disabledExport?: boolean
 }>;
 
 export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport}: ListActionsButtonProps) => {
@@ -37,10 +37,12 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
     }
 
     const onClickDelete = async () => {
+        if(listId && setSelectedRows) {
         await removeFromFavorisList(listFinessNumbers, listId);
         setSelectedRows([]);
         setDisplayActions(false);
         router.replace(router.asPath);
+    }
     }
 
     return (
@@ -59,7 +61,9 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
                         </button>
                     </li>
                     <li className={styles["menu-item"]}>
+                    {disabledExport && listId && listName && order && orderBy && 
                         <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
+                    }
                     </li>
                 </ul>
             }
