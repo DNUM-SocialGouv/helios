@@ -113,7 +113,6 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "cookie": "^1.0.2",
     "cookies-next": "^4.3.0",
-    "crypto": "^1.0.1",
     "csv-parser": "^3.2.0",
     "date-fns": "^4.1.0",
     "dompurify": "^3.2.4",
