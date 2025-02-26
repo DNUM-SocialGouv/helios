@@ -6426,7 +6426,7 @@ __metadata:
     jsonwebtoken: ^9.0.2
     next: 14
     next-auth: ^4.24.9
-    next-router-mock: ^0.7.4
+    next-router-mock: ^0.9.13
     next-usequerystate: ^1.20.0
     papaparse: ^5.5.2
     pg: ^8.7.3
@@ -8816,13 +8816,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-router-mock@npm:^0.7.4":
-  version: 0.7.4
-  resolution: "next-router-mock@npm:0.7.4"
+"next-router-mock@npm:^0.9.13":
+  version: 0.9.13
+  resolution: "next-router-mock@npm:0.9.13"
   peerDependencies:
     next: ">=10.0.0"
     react: ">=17.0.0"
-  checksum: 0014def3dd61b1ee7d324cef757fccbca72d2df61d17745d78bc7969fde4e5e1614a7401cc9f40735af86fe5699ec5610270a982252e1ef2c9761d24ac187fb7
+  checksum: e6f9bae52cdd4905f628addc14abd1fe9aac7e8a3dbc50d438e82c9c0472cba850a7a624fbd94e68c00b61fd07803a2754587db2ec0fffbd3c45a896c6193bf2
   languageName: node
   linkType: hard
 
