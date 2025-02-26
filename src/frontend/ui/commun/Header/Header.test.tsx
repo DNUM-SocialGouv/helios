@@ -36,7 +36,7 @@ describe("En-tête de page", () => {
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
-    const accueil = screen.getByRole("link", { name: wording.ACCUEIL });
+    const accueil = screen.getByRole("link", { name: "Helios" });
     expect(accueil).toHaveAttribute("href", paths.ACCUEIL);
     expect(accueil.textContent).toBe(wording.TITRE_DU_SITE);
   });
