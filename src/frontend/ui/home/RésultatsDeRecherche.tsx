@@ -1,10 +1,9 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { GrilleEtablissements } from "../commun/GrilleEtablissements/GrilleEtablissements";
 import { BoutonActif, SelecteurTableauVignette } from "../commun/SelecteurTableauVignette/SelecteurTableauVignette";
-import { SelectedRows } from "../commun/Table/Table";
 import { RechercheViewModel } from "./RechercheViewModel";
 import { TableauEtablissements } from "./TableauEtablissements";
 
@@ -32,7 +31,6 @@ export const RésultatsDeRecherche = ({
   lancerLaRecherche,
 }: RésultatsDeRechercheProps) => {
   const { wording } = useDependencies();
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
 
   const activeAffichageTableau = (_event: ChangeEvent<HTMLInputElement>) => {
     setDisplayTable(true);
@@ -46,16 +44,14 @@ export const RésultatsDeRecherche = ({
 
   const etsLength = résultats ? résultats.length : 0;
 
-  const selectedRowsValues = Object.values(selectedRows).flat();
-  const tableMessage = `${selectedRowsValues.length} ${selectedRowsValues.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
-  const vignetteMessage = `${etsLength} ${etsLength > 1 ? 'établissements' : 'établissement'}`;
+  const lengthMessage = `${etsLength} ${etsLength > 1 ? 'établissements' : 'établissement'}`;
 
   const isListEmpty = () => Number(nombreRésultats) === 0;
 
   const titleHead =
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
-        <p className="fr-table__detail">{displayTable ? tableMessage : vignetteMessage}</p>
+        <p className="fr-table__detail">{lengthMessage}</p>
       </div>
       <div className="fr-col--right">
         <SelecteurTableauVignette defaultCheckedButton={displayTable ? BoutonActif.Tableau : BoutonActif.Vignette} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
@@ -75,7 +71,7 @@ export const RésultatsDeRecherche = ({
           </p>
           {titleHead}
           {displayTable
-            ? <TableauEtablissements displayTable={displayTable} nombreRésultats={nombreRésultats} rechercher={rechercher} résultats={résultats} selectedRows={selectedRows} setSelectedRows={setSelectedRows} terme={termeFixe} />
+            ? <TableauEtablissements displayTable={displayTable} nombreRésultats={nombreRésultats} rechercher={rechercher} résultats={résultats} terme={termeFixe} />
             : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés} résultats={résultats} />
           }
         </>
