@@ -68,6 +68,9 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addGroupBy("recherche.termes")
       .addGroupBy("recherche.rattachement")
       .addGroupBy("entite_juridique.raison_sociale_courte")
+      .orderBy("rank", "DESC")
+      .addOrderBy("type", "ASC")
+      .addOrderBy("numero_finess", "ASC")
       .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
       .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
