@@ -2206,12 +2206,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dotenv-defaults@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@types/dotenv-defaults@npm:2.0.1"
+"@types/dotenv-defaults@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@types/dotenv-defaults@npm:2.0.4"
   dependencies:
+    "@types/node": "*"
     dotenv: ^8.2.0
-  checksum: e76630ba2b90d1c76af6c3bbf32e38dbb102fe440dc242a0bd193a26b58b00fe9ca3380d7289e4833a75d12a54931f5cdf19acafe8b3f76f4ef0d6184b38f30f
+  checksum: 619e21a6c10ae3933a75797ff1fa4839c4ba4acfaa02d4799fc08c0c972316e14ca34101b24be59290fc653f4c59c844f8d9d003d5f42c8a797a130da4399b11
   languageName: node
   linkType: hard
 
@@ -2462,15 +2463,6 @@ __metadata:
   version: 3.0.0
   resolution: "@types/wrap-ansi@npm:3.0.0"
   checksum: 492f0610093b5802f45ca292777679bb9b381f1f32ae939956dd9e00bf81dba7cc99979687620a2817d9a7d8b59928207698166c47a0861c6a2e5c30d4aaf1e9
-  languageName: node
-  linkType: hard
-
-"@types/xml-js@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@types/xml-js@npm:1.0.0"
-  dependencies:
-    xml-js: "*"
-  checksum: 2b8e22d00cc950c4585d04acee9fb2d24cfacc934908ebcde330a40194b005aabf2652863dd34528c2c61eccd01e754816eb837dffb6e07dd706cf0d7d110b0f
   languageName: node
   linkType: hard
 
@@ -6392,7 +6384,7 @@ __metadata:
     "@testing-library/react": ^16.2.0
     "@types/bcrypt": ^5.0.2
     "@types/dompurify": ^3.2.0
-    "@types/dotenv-defaults": ^2.0.1
+    "@types/dotenv-defaults": ^2.0.4
     "@types/jest": ^29.5.14
     "@types/joi": ^17.2.3
     "@types/jsonwebtoken": ^9.0.2
@@ -6402,7 +6394,6 @@ __metadata:
     "@types/react-dom": 18.0.0
     "@types/ssh2": ^0.5.52
     "@types/ssh2-sftp-client": ^7.0.1
-    "@types/xml-js": ^1.0.0
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@typescript-eslint/eslint-plugin-tslint": ^5.39.0
     "@typescript-eslint/parser": ^5.39.0
@@ -12488,7 +12479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-js@npm:*, xml-js@npm:^1.6.11":
+"xml-js@npm:^1.6.11":
   version: 1.6.11
   resolution: "xml-js@npm:1.6.11"
   dependencies:
