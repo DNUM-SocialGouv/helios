@@ -134,7 +134,7 @@ describe("La recherche des etablissements dans une liste", () => {
         expect(list?.userListEtablissements).toHaveLength(1);
 
         // WHEN
-        await userListEtablissementLoader.delete(userUuid, listId, finess);
+        await userListEtablissementLoader.delete(userUuid, listId, [finess]);
 
         // THEN
         list = await userListRepository.findOneByOrFail({ id: listId });
@@ -158,7 +158,7 @@ describe("La recherche des etablissements dans une liste", () => {
         expect(list?.userListEtablissements).toHaveLength(1);
 
         // WHEN
-        await userListEtablissementLoader.delete(otherUserUuid, listId, finess);
+        await userListEtablissementLoader.delete(otherUserUuid, listId, [finess]);
 
         // THEN
         list = await userListRepository.findOneByOrFail({ id: listId });
