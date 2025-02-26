@@ -15,4 +15,16 @@ export class BlocVigieRHViewModel {
         return StringFormater.formatDate("2024-11-22");
     }
 
+    public get lesEffectifsSontIlsRenseignees(): boolean {
+        return true;
+    }
+
+    public get lesEffectifsSontIlsAutorisee(): boolean {
+        return true;
+    }
+
+    public get dateDeMiseAJourEffectifs(): string {
+        return StringFormater.formatDate("2024-11-22");
+    }
+
 }

@@ -9,10 +9,12 @@ import { InspectionsControlesETModel } from "../../../../../database/models/Insp
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
+import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
-import { EtablissementTerritorialMedicoSocialVigieRH } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereRow } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -162,10 +164,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { annee: "ASC" },
       where: { numeroFinessET },
     });
-    return this.construisLesDonneesVigieRH(pyramideAges)
+
+    const professionFiliere = await this.getProfessionFiliere(numeroFinessET)
+
+    return this.construisLesDonneesVigieRH(pyramideAges, professionFiliere)
   }
 
-  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[]): EtablissementTerritorialMedicoSocialVigieRH {
+  private async construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], professionFiliereModel: any): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
     const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
         annee: pyramideModel.annee,
@@ -178,9 +183,41 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
+    const professionFiliere: ProfessionFiliere[] = professionFiliereModel.map((item: ProfessionFiliere) => ({
+      categorie: item.categorie,
+      data: item.data.map(profession => ({
+        annee: profession.annee,
+        mois: profession.mois,
+        effectifFiliere: profession.effectifFiliere,
+        effectifEtab: profession.effectifEtab,
+      }))
+    }));
+
     return {
-      pyramideAges
+      pyramideAges,
+      professionFiliere
     }
+  }
+
+  async getProfessionFiliere(numeroFinessET: string) {
+    const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
+      order: { code: "ASC" }
+    });
+
+    const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
+
+      const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
+        order: { annee: "ASC", mois: "ASC" },
+        where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
+      });
+
+      return {
+        categorie: itemRef.label,
+        data: professionFiliere
+      }
+    }))
+
+    return data
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {

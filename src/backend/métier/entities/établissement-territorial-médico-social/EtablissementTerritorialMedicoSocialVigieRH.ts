@@ -8,7 +8,20 @@ export type PyramideAges = Readonly<{
     effectifFemmeRef: number;
 }>;
 
+export type ProfessionFiliereRow = Readonly<{
+    annee: number;
+    mois: number;
+    effectifFiliere: number;
+    effectifEtab: number;
+}>;
+
+export type ProfessionFiliere = Readonly<{
+    categorie: string;
+    data: ProfessionFiliereRow[];
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
     pyramideAges: PyramideAges[];
+    professionFiliere : ProfessionFiliere[];
 }>;
 

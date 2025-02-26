@@ -27,6 +27,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
 
   const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
+  console.log('999999999999',établissementTerritorialViewModel)
 
   return (
     <>
