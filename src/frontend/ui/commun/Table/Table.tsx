@@ -45,6 +45,7 @@ interface DataTableProps {
   isAllSelected: boolean;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
+  isSimpleSearchTable: boolean;
 }
 
 interface TableHeaderProps {
@@ -58,6 +59,7 @@ interface TableHeaderProps {
   isAllSelected: boolean;
   isCenter: boolean;
   page: number;
+  isSimpleSearchTable: boolean;
 }
 
 interface TableBodyProps {
@@ -72,6 +74,7 @@ interface TableBodyProps {
   page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
+  isSimpleSearchTable: boolean;
 }
 
 interface TriProps {
@@ -135,10 +138,11 @@ const construisLeLien = (type: string, finess: string): string => {
   return "/entite-juridique/" + finess;
 };
 
-const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter }: TableHeaderProps) => {
+const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter, isSimpleSearchTable }: TableHeaderProps) => {
   return (
     <thead>
       <tr className={styles["sticky-header"]}>
+      {isSimpleSearchTable ? null :
         <th className="fr-cell--fixed" role="columnheader">
           <div className="fr-checkbox-group fr-checkbox-group--sm">
             <input checked={isAllSelected || false} id="table-select-checkbox-7748--0" name="row-select" onChange={handleSelectAll} type="checkbox" />
@@ -146,7 +150,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
               Séléctionner tous les éléments
             </label>
           </div>
-        </th>
+        </th>}
         {headers.map((header, index) =>
           <th className={`${isCenter ? "fr-cell--center" : ""} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''}`}
             key={index} title={header.nomComplet}>
@@ -165,13 +169,14 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
   );
 };
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne }: TableBodyProps) => {
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
   const couleurLogo = "#000000"; // Logos en noir
   
   return (
     <tbody>
       {data.map((row, rowIndex) => (
         <tr data-row-key={rowIndex} id={`table-selectable-row-key-${rowIndex}`} key={rowIndex}>
+          {isSimpleSearchTable ? null :
           <th className="fr-cell--fixed" scope="row">
             <div className="fr-checkbox-group fr-checkbox-group--sm">
               <input
@@ -185,7 +190,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                 Séléction {rowIndex}
               </label>
             </div>
-          </th>
+          </th>}
           {headers.map((header, colIndex) => (
             <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}`} key={colIndex}>
               {header.key === "delete" && (
@@ -247,6 +252,7 @@ export const Table = ({
   page,
   onClickDelete,
   handleInfoBullMoyenne,
+  isSimpleSearchTable,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
@@ -267,6 +273,7 @@ export const Table = ({
                 headers={headers}
                 isAllSelected={isAllSelected}
                 isCenter={isCenter}
+                isSimpleSearchTable={isSimpleSearchTable}
                 onClickInfobull={onClickInfobull}
                 order={order}
                 orderBy={orderBy}
@@ -282,6 +289,7 @@ export const Table = ({
                 headers={headers}
                 isCenter={isCenter}
                 isShowAvrage={isShowAvrage}
+                isSimpleSearchTable={isSimpleSearchTable}
                 onClickDelete={onClickDelete}
                 page={page}
                 selectedRows={selectedRows}

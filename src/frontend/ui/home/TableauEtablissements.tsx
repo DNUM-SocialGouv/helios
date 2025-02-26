@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { SelectedRows, Table } from '../commun/Table/Table';
-import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
 import { TableFooter } from '../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter';
 
@@ -34,10 +33,9 @@ export const TableauEtablissements = ({ terme, résultats, rechercher, selectedR
     const lastPage = Math.ceil(nombreRésultats / PAGE_SIZE);
 
     const isAllSelected = résultats.length > 0 && selectedRows[page] && selectedRows[page].length === résultats.length;
-    const showAlert = Object.values(selectedRows).flat().length > 1;
 
     useEffect(() => {
-        rechercher(terme, page, order, orderBy, displayTable);        
+        rechercher(terme, page, order, orderBy, displayTable);
     }, [terme, page, order, orderBy])
 
 
@@ -51,7 +49,6 @@ export const TableauEtablissements = ({ terme, résultats, rechercher, selectedR
 
     return (
         <>
-            {showAlert && <AlerteComparaison />}
             <Table
                 data={résultats}
                 handleSelectAll={handleSelectAll}
@@ -59,6 +56,7 @@ export const TableauEtablissements = ({ terme, résultats, rechercher, selectedR
                 isAllSelected={isAllSelected}
                 isCenter={false}
                 isShowAvrage={false}
+                isSimpleSearchTable={true}
                 isVScroll={false}
                 onClickDelete={() => { }}
                 order={order}
@@ -67,7 +65,8 @@ export const TableauEtablissements = ({ terme, résultats, rechercher, selectedR
                 selectedRows={selectedRows}
                 setOrder={setOrder}
                 setOrderBy={setOrderBy}
-                setSelectedRows={setSelectedRows} />
+                setSelectedRows={setSelectedRows}
+            />
             <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={PAGE_SIZE} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage} />
         </>
     );
