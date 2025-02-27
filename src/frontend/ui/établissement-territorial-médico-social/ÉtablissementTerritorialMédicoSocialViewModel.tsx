@@ -48,7 +48,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
       wording,
       établissementTerritorial.qualite
     );
-    this.blocVigieRHViewModel = new BlocVigieRHViewModel();
+    this.blocVigieRHViewModel = new BlocVigieRHViewModel(établissementTerritorial.vigieRh);
   }
 
   public get titre(): string {

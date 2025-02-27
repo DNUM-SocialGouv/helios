@@ -1,28 +1,34 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { Transcription } from "../../../commun/Transcription/Transcription";
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Title);
 
-const PyramidChart = () => {
-    const labels = ["65+", "60-65", "55-60", "50-55", "45-50", "40-45", "35-40", "30-35", "25-30", "20-25", "15-20"];
+type PyramidChartProps = Readonly<{
+    labels: string[];
+    effectifHomme: number[];
+    effectifHommeRef: number[];
+    effectifFemme: number[];
+    effectifFemmeRef: number[];
+}>;
+
+const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
     const refColor = "#929292";
 
-    const menValues = [3, 6, 10, 12, 20, 20, 20, 17, 12, 11, 20];
-    const menDataValues = [5, 8, 12, 15, 18, 20, 22, 19, 14, 20, 25];
-    const womenValues = [4, 7, 11, 14, 17, 30, 21, 18, 13, 14, 30];
+    const { wording } = useDependencies();
 
 
-    const womenDataValues = [6, 9, 13, 16, 19, 21, 23, 20, 15, 25, 23];
-
-    const menExtension = menValues.map((val, idx) => Math.max(0, val - menDataValues[idx]));
-    const womenExtension = womenValues.map((val, idx) => Math.max(0, val - womenDataValues[idx]));
+    const menExtension = effectifHommeRef.map((val, idx) => Math.max(0, val - effectifHomme[idx]));
+    const womenExtension = effectifFemmeRef.map((val, idx) => Math.max(0, val - effectifFemme[idx]));
 
     const menData: ChartData = {
         datasets: [
             {
                 label: "Men",
                 backgroundColor: "rgba(251,146,107,255)",
-                data: menDataValues,
+                data: effectifHomme,
                 yAxisID: "y"
 
             },
@@ -42,7 +48,7 @@ const PyramidChart = () => {
         datasets: [
             {
                 label: "Women",
-                data: womenDataValues,
+                data: effectifFemme,
                 backgroundColor: "rgba(226,207,88,255)",
                 yAxisID: "y"
             },
@@ -62,7 +68,7 @@ const PyramidChart = () => {
             const { ctx, scales } = chart;
             const isMenChart = chart.data.datasets[0].label === "Men";
 
-            const values = isMenChart ? menValues : womenValues;
+            const values = isMenChart ? effectifHommeRef : effectifFemmeRef;
 
             chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
                 const value = values[index];
@@ -116,25 +122,21 @@ const PyramidChart = () => {
         },
         plugins: {
             tooltip: {
-                enabled: true, // Active les tooltips
+                enabled: true,
+                position: 'nearest',
                 callbacks: {
                     label: function (context: any) {
                         const index = context.dataIndex; // Index du groupe d'âge
                         const datasetLabel = context.dataset.label;
 
                         // Vérifier si c'est un graphique des hommes ou des femmes
-                        const isMenChart = datasetLabel.toLowerCase().includes("men");
+                        const isWomenChart = datasetLabel.toLowerCase().includes("women");
 
-                        // Récupérer la valeur du référentiel
-                        const refValue = isMenChart ? menValues[index] : womenValues[index];
+                        const value = isWomenChart ? effectifFemme[index] : effectifHomme[index];
+                        const refValue = isWomenChart ? effectifFemmeRef[index] : effectifHommeRef[index];
 
-                        return `Référentiel: ${refValue}`;
-                    },
-                    labelColor: function () {
-                        return {
-                            borderColor: refColor,
-                            backgroundColor: refColor,
-                        };
+                        return [`Valeur: ${value}`,
+                        `Valeur de référence: ${refValue}`];
                     },
                 },
             },
@@ -143,7 +145,6 @@ const PyramidChart = () => {
                     // Afficher les labels uniquement pour les datasets principaux
                     return context.dataset.label === "Men" || context.dataset.label === "Women";
                 },
-                anchor: "end",
                 color: "#000",
             },
             legend: { display: false },
@@ -154,64 +155,66 @@ const PyramidChart = () => {
 
 
     return (
-        <div className="fr-grid-row" style={{ paddingRight: "50px", minHeight: "220px" }}>
-            <div className="fr-col-6">
-                <Bar
-                    // @ts-ignore
-                    data={menData}
-                    options={{
-                        ...options,
-                        scales: {
-                            ...options.scales,
-                            // @ts-ignore
-                            x: {
-                                ...options.scales.x,
-                                reverse: true,
-                                title: {
-                                    align: "center",
-                                    color: "#000",
-                                    display: true,
-                                    font: { weight: "bold" },
-                                    text: "Hommes",
+        <>
+            <div className="fr-grid-row" style={{ paddingRight: "50px", minHeight: "220px" }}>
+                <div className="fr-col-6">
+                    <Bar
+                        // @ts-ignore
+                        data={menData}
+                        options={{
+                            ...options,
+                            scales: {
+                                ...options.scales,
+                                // @ts-ignore
+                                x: {
+                                    ...options.scales.x,
+                                    reverse: true,
+                                    title: {
+                                        align: "center",
+                                        color: "#000",
+                                        display: true,
+                                        font: { weight: "bold" },
+                                        text: "Hommes",
+                                    },
                                 },
-                            },
-                            y: { ...options.scales.y, ticks: { ...options.scales.y.ticks, color: "white" } },
-                        },
-                        plugins: {
-                            ...options.plugins,
-                            datalabels: {
-                                ...options.plugins.datalabels,
-                                anchor: "start",
+                                y: { ...options.scales.y, ticks: { ...options.scales.y.ticks, color: "white" } },
                             }
-                        }
-                    }}
-                    plugins={[verticalLinePlugin]}
-                />
-            </div>
-            <div className="fr-col-6">
-                <Bar
-                    data={womenData}
-                    options={{
-                        ...options,
-                        scales: {
-                            ...options.scales,
-                            // @ts-ignore
-                            x: {
-                                ...options.scales.x,
-                                title: {
-                                    align: "center",
-                                    color: "#000",
-                                    display: true,
-                                    font: { weight: "bold" },
-                                    text: "Femmes",
+                        }}
+                        plugins={[verticalLinePlugin]}
+                    />
+                </div>
+                <div className="fr-col-6">
+                    <Bar
+                        data={womenData}
+                        options={{
+                            ...options,
+                            scales: {
+                                ...options.scales,
+                                // @ts-ignore
+                                x: {
+                                    ...options.scales.x,
+                                    title: {
+                                        align: "center",
+                                        color: "#000",
+                                        display: true,
+                                        font: { weight: "bold" },
+                                        text: "Femmes",
+                                    },
                                 },
                             },
-                        },
-                    }}
-                    plugins={[verticalLinePlugin]}
-                />
+                        }}
+                        plugins={[verticalLinePlugin]}
+                    />
+                </div>
             </div>
-        </div>
+            <Transcription
+                disabled={false}
+                entêteLibellé={wording.TRANCHE_AGE}
+                identifiants={[wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF]}
+                libellés={labels}
+                valeurs={[effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef]}
+            />
+        </>
     );
 };
 
