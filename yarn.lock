@@ -2496,20 +2496,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin-tslint@npm:^5.39.0":
-  version: 5.39.0
-  resolution: "@typescript-eslint/eslint-plugin-tslint@npm:5.39.0"
-  dependencies:
-    "@typescript-eslint/utils": 5.39.0
-    lodash: ^4.17.21
-  peerDependencies:
-    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-    tslint: ^5.0.0 || ^6.0.0
-    typescript: "*"
-  checksum: 18a9b4a105ea951286bc9bb3fbd87268718e4ea6c42c5033e3bfa7d7f07b6939a36e6c683746bb095c2b517f556d420107c6ea143e92dc5dacf9450cd5436746
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/eslint-plugin@npm:^5.39.0":
   version: 5.39.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.39.0"
@@ -6389,7 +6375,6 @@ __metadata:
     "@types/ssh2": ^0.5.52
     "@types/ssh2-sftp-client": ^7.0.1
     "@typescript-eslint/eslint-plugin": ^5.39.0
-    "@typescript-eslint/eslint-plugin-tslint": ^5.39.0
     "@typescript-eslint/parser": ^5.39.0
     basic-ftp: ^5.0.5
     bcrypt: ^5.1.1
