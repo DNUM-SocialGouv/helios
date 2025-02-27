@@ -102,7 +102,7 @@
   "dependencies": {
     "@gouvfr/dsfr": "1.13",
     "@next/bundle-analyzer": "^15.1.7",
-    "@sentry/nextjs": "7.29.0",
+    "@sentry/nextjs": "7.120.0",
     "@types/bcrypt": "^5.0.2",
     "@types/dompurify": "^3.2.0",
     "@types/joi": "^17.2.3",
