@@ -9,7 +9,6 @@ export class AjoutVigieRhContrat1738320902145 implements MigrationInterface {
           mois INT NOT NULL,
           type_contrat_code INT NOT NULL,
           effectif INT,
-          dt_creation DATE NOT NULL DEFAULT CURRENT_DATE,
           PRIMARY KEY (numero_finess, annee, mois, type_contrat_code),
           CONSTRAINT fk_contrat_type_contrat FOREIGN KEY (type_contrat_code) 
           REFERENCES vigierh_ref_type_contrat(code)

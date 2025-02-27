@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 from sqlalchemy.engine import create_engine, Engine
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -10,17 +11,24 @@ from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMappin
 from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
-def filter_profession_filiere_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
+def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, base_de_donnees: Engine) -> pd.DataFrame:
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
     numéros_finess_liste = numéros_finess_des_établissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
 
+    # Convertir 'mois' et 'quarter' en nombres entiers après gestion des flottants
+    donnees["mois"] = pd.to_numeric(donnees["mois"], errors='coerce').fillna(0).astype(int)
+    donnees["quarter"] = pd.to_numeric(donnees["quarter"], errors='coerce').fillna(0).astype(int)
+
     # Filtrer les données
     donnees_filtrées = donnees[
         (donnees["numero_finess"].astype(str).str.len() == 9) &
+        (donnees["numero_finess"].astype(str).isin(numéros_finess_liste)) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
-        (donnees["numero_finess"].astype(str).isin(numéros_finess_liste))
+        (donnees["mois"].astype(str).astype(int).between(1, 12)) &
+        (donnees["quarter"].astype(str).astype(int).between(1, 4)) &
+        (donnees["profession_code"].isin(ref_code))
     ]
 
     return donnees_filtrées
@@ -58,9 +66,10 @@ if __name__ == "__main__":
     else:
         if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
             df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
+            code_list_ref = np.array(df_ref['code'].tolist())
 
             data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
-            df_filtré = filter_profession_filiere_data(data_frame, base_de_données)
+            df_filtré = filter_profession_filiere_data(data_frame, code_list_ref, base_de_données)
 
             supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)
             supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_données, SOURCE, logger_helios)

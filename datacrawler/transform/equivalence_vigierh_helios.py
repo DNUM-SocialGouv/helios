@@ -21,15 +21,10 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
-        'profession1_code': 'profession_code',
-        'turnover': 'turnover',
-        'entrees_taux':'taux_entrees',
-        'sorties_taux':'taux_sorties',
-        'entrees_nombre':'nombre_entrees',
-        'sorties_nombre':'nombre_sorties',
-        'region_turnover':'region_turnover',
-        'nation_turnover':'nation_turnover',
-        'groupe_turnover':'groupe_turnover',
+        'quarter': 'quarter',
+        'profession_code': 'profession_code',
+        'effectif_filiere': 'effectif_filiere',
+        'effectif_etab': 'effectif_etab',
     }
     REF_PROFESSION_FILIERE = {
         'profession1_code': 'code',
@@ -41,10 +36,11 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
+        'quarter': 'quarter',
         'profession_code': 'profession_code',
         'effectif': 'effectif',
         'effectif_filiere': 'effectif_filiere',
-        'quarter': 'quarter',
+
     }
     REF_PROFESSION_GROUPE = {
         'profession2_code': 'code',
