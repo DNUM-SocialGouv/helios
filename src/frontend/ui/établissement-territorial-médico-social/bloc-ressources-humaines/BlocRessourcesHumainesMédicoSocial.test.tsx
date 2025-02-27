@@ -26,6 +26,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
   const blocVigieRhViewModel = new BlocVigieRHViewModel(
     ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
+    wording
   );
 
   describe("L’indicateur du nombre d’ETP réalisé", () => {
