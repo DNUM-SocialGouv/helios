@@ -74,7 +74,7 @@ services:
       - type: volume
         source: postgres_data
         target: /var/lib/postgresql/data
-    command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
+    command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=100"]
   postgres-test:
     image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_test_db
