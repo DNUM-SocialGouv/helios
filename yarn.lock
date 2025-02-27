@@ -6420,7 +6420,7 @@ __metadata:
     next: "npm:14"
     next-auth: "npm:^4.24.9"
     next-router-mock: "npm:^0.9.13"
-    next-usequerystate: "npm:^1.20.0"
+    nuqs: "npm:^1.20.0"
     papaparse: "npm:^5.5.2"
     pg: "npm:^8.7.3"
     prettier: "npm:^3.5.2"
@@ -8800,17 +8800,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-usequerystate@npm:^1.20.0":
-  version: 1.20.0
-  resolution: "next-usequerystate@npm:1.20.0"
-  dependencies:
-    mitt: "npm:^3.0.1"
-  peerDependencies:
-    next: ">=13.4 <14.0.2 || ^14.0.3"
-  checksum: 10/a222b77fbdc8322a56758e63469edb842b4889195c131f51753d11338fd08a04f6611df5771c9c5c42503c0038944daa84a75af50a7ed268a6e2fb8acb8f1686
-  languageName: node
-  linkType: hard
-
 "next@npm:14":
   version: 14.2.24
   resolution: "next@npm:14.2.24"
@@ -8995,6 +8984,17 @@ __metadata:
     gauge: "npm:^4.0.3"
     set-blocking: "npm:^2.0.0"
   checksum: 10/82b123677e62deb9e7472e27b92386c09e6e254ee6c8bcd720b3011013e4168bc7088e984f4fbd53cb6e12f8b4690e23e4fa6132689313e0d0dc4feea45489bb
+  languageName: node
+  linkType: hard
+
+"nuqs@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "nuqs@npm:1.20.0"
+  dependencies:
+    mitt: "npm:^3.0.1"
+  peerDependencies:
+    next: ">=13.4 <14.0.2 || ^14.0.3"
+  checksum: 10/1b308b7b74d7b79a057f01e09bd2c3814125d3879c3a919c8e7257e33272f315bc945e1293fb8b9fd725e8e19db7fe06da6060f8c2262a0302253c6d0bb94534
   languageName: node
   linkType: hard
 

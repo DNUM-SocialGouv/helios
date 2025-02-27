@@ -4,7 +4,7 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
-import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
+import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
 import { useCallback, useEffect, useState } from "react";
 
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
