@@ -6,8 +6,9 @@ import {
   couleurDuFondHistogrammeRougeClair,
   couleurDuFondHistogrammeRougeFoncé,
   couleurDuFondHistogrammeVertClair,
-  couleurDuFondHistogrammeVertFoncé,
+  couleurDuFondHistogrammeVertFoncé
 } from "../../commun/Graphique/couleursGraphique";
+import { StringFormater } from "../../commun/StringFormater";
 
 interface ActivitesSanitaireMensuelParAnnee {
   [key: number]: ActiviteSanitaireMensuel[];
@@ -38,7 +39,7 @@ export class ActivitésMensuelViewModel {
   public listeDesMois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 
 
-  constructor(private readonly activitésMensuels: ActivitesSanitaireMensuel, private wording: Wording) {
+  constructor(private readonly activitésMensuels: ActivitesSanitaireMensuel, private readonly wording: Wording) {
     this.activitésMensuellesParAnnee = this.grouperLesActivitesParAnnee();
     this.annees = Object.keys(this.activitésMensuellesParAnnee) as unknown as number[];
   }
@@ -274,5 +275,9 @@ export class ActivitésMensuelViewModel {
     return nombresSéjours.map((nombreSéjour) => {
       return nombreSéjour.y !== null ? nombreSéjour.y.toLocaleString("fr") : null;
     });
+  }
+
+  public getDateDeMiseAJour(): string {
+    return StringFormater.formatDate(this.activitésMensuels.dateDeMiseAJour);
   }
 }

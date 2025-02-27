@@ -15,7 +15,7 @@ export const ParametragePage = ({ profiles }: ParametragePageProps) => {
   const router = useRouter();
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       {profiles && (
         <>
           <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>

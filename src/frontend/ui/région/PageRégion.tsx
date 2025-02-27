@@ -34,7 +34,7 @@ export const PageRégion = ({ région }: { région: string }) => {
   }, [labelDeLaRégion])
 
   return (
-    <main className="fr-container--fluid">
+    <main className="fr-container--fluid" id="content">
       <Head>
         <title>{labelDeLaRégion}</title>
       </Head>

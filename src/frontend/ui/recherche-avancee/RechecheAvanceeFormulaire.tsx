@@ -105,12 +105,12 @@ export const RechercheAvanceeFormulaire = ({
     <div>
       <div className="fr-grid-row">
         <form className="fr-search-bar fr-col-5" id="search-540" role="search">
-          <label className="fr-label" htmlFor="recherche-avancee-input">
+          <label className="fr-label" htmlFor="search-input">
             {wording.RECHERCHE_LABEL}
           </label>
           <input
             className="fr-input"
-            id="recherche-avancee-input"
+            id="search-input"
             name="terme"
             onChange={rechercheOnChange}
             placeholder="Rechercher un numéro FINESS ou le nom d'un établissement"

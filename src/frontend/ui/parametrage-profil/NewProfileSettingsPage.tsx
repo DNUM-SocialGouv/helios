@@ -10,30 +10,30 @@ import { ProfileTable } from "./ParamatrageTable";
 import styles from "./ParametrageProfil.module.css";
 
 export const NewProfileSettingsPage = () => {
-    const { wording } = useDependencies();
-    const [profileLabel, setProfileLabel] = useState("");
+  const { wording } = useDependencies();
+  const [profileLabel, setProfileLabel] = useState("");
 
-    return (
-        <main className="fr-container">
-            <h1 className={styles["title"]}>{wording.PARAMETRAGE_NEW_PROFILE}</h1>
-            <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
-                <div className="fr-col-12 fr-col-md-3">
-                    <label className="fr-label">
-                        {wording.PROFILE_TITLE}
-                    </label>
-                </div>
-                <div className="fr-col-11 fr-col-md-3">
-                    <input
-                        className="fr-input"
-                        onChange={(event) => setProfileLabel(event.target.value)}
-                        required
-                        value={profileLabel}
-                    />
-                </div>
-            </div>
-            <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-                <ProfileTable codeValue={profileLabel} creating name={profileLabel} profileValue={DefaultProfile} />
-            </div>
-        </main >
-    );
+  return (
+    <main className="fr-container" id="content">
+      <h1 className={styles["title"]}>{wording.PARAMETRAGE_NEW_PROFILE}</h1>
+      <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
+        <div className="fr-col-12 fr-col-md-3">
+          <label className="fr-label">
+            {wording.PROFILE_TITLE}
+          </label>
+        </div>
+        <div className="fr-col-11 fr-col-md-3">
+          <input
+            className="fr-input"
+            onChange={(event) => setProfileLabel(event.target.value)}
+            required
+            value={profileLabel}
+          />
+        </div>
+      </div>
+      <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
+        <ProfileTable codeValue={profileLabel} creating name={profileLabel} profileValue={DefaultProfile} />
+      </div>
+    </main >
+  );
 };

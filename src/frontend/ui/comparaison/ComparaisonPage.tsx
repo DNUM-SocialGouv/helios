@@ -130,8 +130,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
   };
 
   return (
-    <>
-      <main className="fr-container">
+      <main className="fr-container" id="content">
         <Head>
           <title>Page de comparaison</title>
         </Head>
@@ -213,6 +212,5 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
           <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
         </InfoBulle>
       </main>
-    </>
   );
 };

@@ -1,28 +1,54 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
+import { UserContext } from "../../frontend/ui/commun/contexts/userContext";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
+import { Page404 } from "../../frontend/ui/erreurs/Page404";
+import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
+import { Order, OrderBy } from "../../frontend/ui/liste/usePageListe";
 import ListNameButton from "../../frontend/ui/user-list/ListNameButton";
 import { UserListViewModel } from "../../frontend/ui/user-list/UserListViewModel";
 
+const defaultOrder = Order.DESC.valueOf();
+const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
+
 
 type RouterProps = Readonly<{
-  list: UserListViewModel;
+  listServer: UserListViewModel;
 }>;
 
-export default function Router({ list }: RouterProps) {
+export default function Router({ listServer }: RouterProps) {
+  const userContext = useContext(UserContext);
+  const { getFavorisLists } = useFavoris();
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
   const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+  const [list, setList] = useState<UserListViewModel>();
+  const [chargement, setChargement] = useState(true);
+  const [order, setOrder] = useState(defaultOrder);
+  const [orderBy, setOrderBy] = useState(defaultOrderBy);
+
+  // Quand la liste des favoris à été changée en local on la recharge depuis le server
+  useEffect(() => {
+    setChargement(true);
+    fetch(`/api/liste/${listServer.id}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    }).then((response) => response.json())
+      .then((data) => {
+        setList(data);
+        setChargement(false);
+      });
+  }, [userContext?.favorisLists])
 
 
   useBreadcrumb([
@@ -31,33 +57,44 @@ export default function Router({ list }: RouterProps) {
       path: paths.MES_LISTES,
     },
     {
-      label: list ? list.nom : wording.LISTE_NON_TROUVÉE,
+      label: listServer ? listServer.nom : wording.LISTE_NON_TROUVÉE,
       path: "",
     },
   ]);
 
-  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(true) };
-  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => { setDisplayTable(false) };
-  const listLength = list.userListEtablissements.length;
+  const listLength = list ? list.userListEtablissements.length : 0;
+
+  // On recharge la liste des favoris dans le contexte à chaque changement d’affichage pour synchro les potentielles
+  // Actions dans d’autres onglets et synchro le nombre d’elements dans le message avec le nombre de resultat dans la vue
+  const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => {
+    setDisplayTable(true);
+    getFavorisLists();
+  };
+  const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {
+    setDisplayTable(false);
+    getFavorisLists()
+  };
+
   const selectedRowsValues = Object.values(selectedRows).flat();
   const tableMessage = `${selectedRowsValues.length} ${selectedRowsValues.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
   const vignetteMessage = `${listLength} ${listLength > 1 ? 'établissements' : 'établissement'}`;
+
   const isListEmpty = () => listLength === 0;
 
   const titleHead = <>
     <div className="fr-grid-row">
-      {!list.isFavoris ?
+      {list && !list.isFavoris ?
         <ListNameButton id={list.id} name={list.nom} /> :
-        <h1>{list.nom}</h1>
+        <h1>{list?.nom}</h1>
       }
-      {displayTable && <ListActionsButton selectedRows={selectedRowsValues} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
         <p className="fr-table__detail">{displayTable ? tableMessage : vignetteMessage}</p>
       </div>
       <div className="fr-col--right">
-        <SelecteurTableauVignette defaultCheckedButton={BoutonActif.Tableau} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
+        <SelecteurTableauVignette defaultCheckedButton={displayTable ? BoutonActif.Tableau : BoutonActif.Vignette} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
   </>;
@@ -65,13 +102,21 @@ export default function Router({ list }: RouterProps) {
   return (
     <>
       {list ? (
-        <main className="fr-container">
+        <main className="fr-container" id="content">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             {!isListEmpty() &&
               <>
                 {displayTable
-                  ? <TableauListeEtablissements list={list} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
+                  ? <TableauListeEtablissements
+                    list={list}
+                    order={order}
+                    orderBy={orderBy}
+                    selectedRows={selectedRows}
+                    setOrder={setOrder}
+                    setOrderBy={setOrderBy}
+                    setSelectedRows={setSelectedRows}
+                  />
                   : <GrilleListEtablissements list={list} />
                 }
               </>
@@ -79,12 +124,19 @@ export default function Router({ list }: RouterProps) {
           </section>
         </main>
       ) : (
-        <Spinner />
+        <>
+          {chargement ? (
+            <Spinner />
+          ) : (
+            <Page404 />
+          )}
+        </>
       )}
     </>
   );
 }
 
+// Première recherche dans le back pour afficher directement la page 404 en cas de liste inexistante
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   try {
 
@@ -100,7 +152,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       return {
         props: {
-          list: JSON.parse(JSON.stringify(list)),
+          listServer: JSON.parse(JSON.stringify(list)),
         },
       };
     } else {
