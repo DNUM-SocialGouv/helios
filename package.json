@@ -178,7 +178,7 @@
     "got": "^11.8.5"
   },
   "engines": {
-    "node": "18.20"
+    "node": "20.18"
   },
-  "packageManager": "yarn@3.2.4"
+  "packageManager": "yarn@4.6.0"
 }
