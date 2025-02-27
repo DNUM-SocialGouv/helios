@@ -25,7 +25,7 @@ export default function MentionsLégales() {
   }, [backToSearchContext])
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.TITRE_PAGE_MENTIONS_LÉGALES}</title>
       </Head>

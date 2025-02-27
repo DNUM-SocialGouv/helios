@@ -28,7 +28,7 @@ export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBu
       <HistogrammesHorizontaux
         annéesManquantes={compteDeRésultatViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
         nom={compteDeRésultatViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
-        nombreDAnnéeTotale={3}
+        nombreDAnnéeTotale={5}
         valeursDesHistogrammes={[compteDeRésultatViewModel.dépensesOuCharges(budgetEtFinance), compteDeRésultatViewModel.recettesOuProduits(budgetEtFinance)]}
       />
     </IndicateurGraphique>

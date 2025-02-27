@@ -25,7 +25,7 @@ export default function DonnéesPersonnelles() {
   }, [backToSearchContext])
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.TITRE_PAGE_DONNÉES_PERSONNELLES}</title>
       </Head>

@@ -95,7 +95,7 @@ export class WordingFr implements Wording {
   readonly VOIR_PLUS_RÉSULTATS: string = "Voir plus de résultats";
   readonly RECHERCHE_TITRE: string = "";
   readonly BACK_TO_SEARCH: string = "Retour aux résultats de la recherche";
-  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaitront ici.";
+  readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Les établissements apparaîtront ici.";
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string = "Aucun résultat ne correspond à votre recherche";
 
   // Recherche avancée
@@ -517,6 +517,8 @@ export class WordingFr implements Wording {
   readonly COMPARER: string = "Comparer";
   readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
   readonly EXPORTER: string = "Exporter";
+  readonly DANS_FAVORIS: string = "Dans les favoris";
+  readonly NON_FAVORIS: string = "Pas dans les favoris";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

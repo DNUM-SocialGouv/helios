@@ -25,7 +25,7 @@ export default function GestionDesCookies() {
   }, [backToSearchContext])
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.TITRE_PAGE_GESTION_COOKIES}</title>
       </Head>

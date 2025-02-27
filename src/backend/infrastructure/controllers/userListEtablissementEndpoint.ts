@@ -3,10 +3,10 @@ import { UserListEtablissementUseCase } from "../../métier/use-cases/userListEt
 import { dependencies } from "../dependencies";
 
 
-export async function getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number): Promise<RechercheModel[]> {
+export async function getByListIdOrderedAndPaginated(idUser: string, listId: number, order: string, orderBy: string, page: number, limit: number, forExport: boolean): Promise<RechercheModel[]> {
     try {
         const userListEtablissementUseCase = new UserListEtablissementUseCase(dependencies.userListEtablissementLoader);
-        return await userListEtablissementUseCase.getByListIdOrderedAndPaginated(idUser, listId, order, orderBy, page, limit);
+        return await userListEtablissementUseCase.getByListIdOrderedAndPaginated(idUser, listId, order, orderBy, page, limit, forExport);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;
@@ -23,10 +23,10 @@ export async function create(idUser: string, listId: number, finessNumber: strin
     }
 }
 
-export async function deleteEtablissementFromList(idUser: string, idList: number, finessNumber: string): Promise<void> {
+export async function deleteEtablissementFromList(idUser: string, idList: number, finessNumbers: string[]): Promise<void> {
     try {
         const userListEtablissementUseCase = new UserListEtablissementUseCase(dependencies.userListEtablissementLoader);
-        return await userListEtablissementUseCase.delete(idUser, idList, finessNumber);
+        return await userListEtablissementUseCase.delete(idUser, idList, finessNumbers);
     } catch (error) {
         dependencies.logger.error(error);
         throw error;

@@ -263,7 +263,7 @@ const UsersListPage = ({
   };
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -309,7 +309,7 @@ const UsersListPage = ({
                     {userData &&
                       userData.map((user: UtilisateurModel) => {
                         const roleClass = roleClasses[user.role.id] || "info";
-                     
+
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>

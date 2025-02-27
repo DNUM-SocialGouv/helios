@@ -132,7 +132,7 @@ export const PageDeRecette = () => {
   ];
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <section aria-label={wording.TITRE_LISTE_DES_ENTITÉS_JURIDIQUES} className="fr-mt-5w">
         <h1 className="fr-h3">{wording.ENTITÉS_JURIDIQUES}</h1>
         <ul className={styles["liste-entités-juridiques"] + " fr-raw-list fr-text--bold fr-raw-link"}>

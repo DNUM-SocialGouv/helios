@@ -36,7 +36,7 @@ export class TauxDeCafViewModel {
       valeur: budget.tauxDeCafNette.valeur,
     }));
     const dateMiseÀJourSource = budgetFinance && budgetFinance.length > 0 ? budgetFinance[0].tauxDeCafNette?.dateMiseÀJourSource : "";
-    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, autorisations, wording, 3);
+    return new TauxDeCafViewModel(tauxDeCaf, dateMiseÀJourSource, autorisations, wording, 5);
   }
 
   static fromBudgetFinanceEntiteJuridique(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any, wording: Wording) {

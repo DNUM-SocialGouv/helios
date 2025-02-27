@@ -433,6 +433,8 @@ export interface Wording {
   readonly COMPARER: string;
   readonly SUPPRIMER_DE_LA_LISTE: string;
   readonly EXPORTER: string;
+  readonly DANS_FAVORIS: string;
+  readonly NON_FAVORIS: string;
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;

@@ -596,8 +596,10 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
       [
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }), // 2019
-        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }), // 2020
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 5 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 4 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 3 }),
+        ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: annéeEnCours - 2 }),
       ],
       wording
     );

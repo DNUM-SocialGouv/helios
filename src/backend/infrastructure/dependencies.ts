@@ -54,7 +54,7 @@ export type Dependencies = Readonly<{
   comparaisonLoader: ComparaisonLoader;
   userListLoader: TypeOrmUserListLoader;
   userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
-  vigieRhContratLoader:VigieRhContratLoader;
+  vigieRhContratLoader: VigieRhContratLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -88,7 +88,7 @@ const createDependencies = (): Dependencies => {
     comparaisonLoader: new TypeOrmComparaisonLoader(orm),
     userListLoader: new TypeOrmUserListLoader(orm),
     userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
-    vigieRhContratLoader : new TypeOrmVigieRhContratLoader(orm)
+    vigieRhContratLoader: new TypeOrmVigieRhContratLoader(orm)
   };
 };
 
