@@ -1,7 +1,4 @@
 {
-  "plugins": [
-    "stylelint-order"
-  ],
   "rules": {
     "length-zero-no-unit": true
   }
