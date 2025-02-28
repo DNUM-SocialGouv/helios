@@ -581,7 +581,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   };
 
   public static vigierh: ÉtablissementTerritorialMédicoSocial["vigieRh"] = {
-    pyramideAges: []
+    pyramideAges: [],
+    tranchesAgesLibelles: []
   };
 
   public static crée(

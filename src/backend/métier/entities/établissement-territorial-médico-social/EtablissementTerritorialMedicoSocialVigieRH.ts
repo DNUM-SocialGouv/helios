@@ -22,6 +22,7 @@ export type ProfessionFiliere = Readonly<{
 
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
     pyramideAges: PyramideAges[];
+    tranchesAgesLibelles: string[];
     professionFiliere : ProfessionFiliere[];
 }>;
 

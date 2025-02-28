@@ -24,7 +24,9 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     tauxDeRotationDuPersonnel: 4,
   };
 
-  const blocVigieRhViewModel = new BlocVigieRHViewModel();
+  const blocVigieRhViewModel = new BlocVigieRHViewModel(
+    ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
+  );
 
   describe("L’indicateur du nombre d’ETP réalisé", () => {
     it("affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {

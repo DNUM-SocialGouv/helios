@@ -1,25 +1,18 @@
 import styles from "./ColorLabel.module.css";
 
 interface ColorLabelProps {
-    color: string;
-    label: string;
+    items: { color: string; label: string }[];
+    classContainer: string;
 }
-
-const ColorLabel: React.FC<{ items: ColorLabelProps[], classContainer:string }> = ({ items, classContainer }) => {
+export const ColorLabel = ({ classContainer, items }: ColorLabelProps ) => {
     return (
         <div className={`${classContainer} ${styles["colorLabelContainer"]}`}>
             {items.map((item, index) => (
-                <span key={index} className={styles["colorLabel"]}>
-                    <span
-                        className={styles["colorCircle"]}
-                        style={{ backgroundColor: item.color }}
-                    ></span>
+                <span className={styles["colorLabel"]} key={index} >
+                    <span className={styles["colorCircle"]} style={{ backgroundColor: item.color }}></span>
                     {item.label}
                 </span>
             ))}
         </div>
     );
 };
-
-export default ColorLabel;
-

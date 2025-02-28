@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react";
+
+import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
+import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
 import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/ContenuTauxOccupationHébergementPermanent";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
-import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
-import PyramidChart from "./GraphiquePyramide";
+import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart from "./GraphiqueLine";
-import ColorLabel from "../../../commun/ColorLabel/ColorLabel";
-import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
+import PyramidChart from "./GraphiquePyramide";
 
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -16,22 +18,42 @@ export const BlocVigieRH = ({
     blocVigieRHViewModel
 }: BlocVigieRHProps) => {
     const { wording } = useDependencies();
+    const donneesPyramides = blocVigieRHViewModel.lesDonneesPyramideAges;
+    const libelles = blocVigieRHViewModel.lesLibellesTranchesAges;
+    const annees = donneesPyramides.map((donneeAnnuel) => donneeAnnuel.annee).sort((a, b) => a - b);
+    const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
+    const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
+
+    const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
+
+    useEffect(() => {
+        setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0])
+    }, [anneeEnCours])
+
     return (
         <>
             <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
                 {blocVigieRHViewModel.lesAgesSontIlsRenseignees && blocVigieRHViewModel.lesAgesSontIlsAutorisee ? (
                     <IndicateurGraphique
-                        années={{ liste: [2023, 2024, 2025], setAnnéeEnCours: () => { } }}
+                        années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
                         contenuInfoBulle={
                             <ContenuTauxOccupationHébergementPermanent
                                 dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourPyramideDesAges}
                                 source={wording.CNSA}
                             />
                         }
-                        identifiant="activite-0"
+                        identifiant="vr-pyramide-ages"
                         nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
                     >
-                        <PyramidChart />
+                        <>
+                            {donneesAnneeEnCours?.effectifFemmeRef && donneesAnneeEnCours?.effectifHomme &&
+                                <PyramidChart effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
+                                    effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
+                                    effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
+                                    effectifHommeRef={donneesAnneeEnCours?.effectifHommeRef}
+                                    labels={libelles}
+                                />}
+                        </>
                     </IndicateurGraphique>
                 ) : <></>
                 }
@@ -58,12 +80,17 @@ export const BlocVigieRH = ({
                                 { color: "#FB926B", label: "Effectifs totaux" }
                             ]}
                         />
+   
                         <div className="fr-grid-row">
-                            <LineChart classContainer="fr-col-4 fr-mb-4w" categorieName="Nom de la catégorie" borderRight />
-                            <LineChart classContainer="fr-col-4 fr-mb-4w" categorieName="Nom de la catégorie" borderRight />
-                            <LineChart classContainer="fr-col-4 fr-mb-4w" categorieName="Nom de la catégorie" />
-                            <LineChart classContainer="fr-col-4 fr-mb-4w" categorieName="Nom de la catégorie" borderRight />
-                            <LineChart classContainer="fr-col-4 fr-mb-4w" categorieName="Nom de la catégorie" />
+                            {donneesEffectifs.map((item, index) => (
+                                <LineChart
+                                    borderRight={!( (index + 1) % 3 === 0 || index === donneesEffectifs.length - 1 )}
+                                    categorieName={item.categorie}
+                                    classContainer="fr-col-4 fr-mb-4w"
+                                    dataEffectifs={item.data}
+                                    key={item.categorie}
+                                />
+                            ))}
                         </div>
                     </>
                 </IndicateurGraphique>

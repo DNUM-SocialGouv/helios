@@ -8,13 +8,14 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
-import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
-import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
+import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
+import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
-import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereRow } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -165,12 +166,15 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       where: { numeroFinessET },
     });
 
+    const tranchesAge = await (await this.orm).getRepository(VigieRhRefTrancheAgeModel).find({
+      order: { trancheAge: "DESC" },
+    });
     const professionFiliere = await this.getProfessionFiliere(numeroFinessET)
-
-    return this.construisLesDonneesVigieRH(pyramideAges, professionFiliere)
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, professionFiliere)
   }
 
-  private async construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], professionFiliereModel: any): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[], professionFiliereModel: any): EtablissementTerritorialMedicoSocialVigieRH {
+
     const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
         annee: pyramideModel.annee,
@@ -193,8 +197,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }))
     }));
 
+    const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
+      return trancheModel.trancheAge ?? '';
+    })
+
     return {
       pyramideAges,
+      tranchesAgesLibelles,
       professionFiliere
     }
   }
@@ -209,6 +218,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
         order: { annee: "ASC", mois: "ASC" },
         where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
+        take: 36, // Limite à 36 mois
       });
 
       return {

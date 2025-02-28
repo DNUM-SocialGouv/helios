@@ -537,6 +537,10 @@ export interface Wording {
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
   readonly PYRAMIDE_DES_AGES: string;
+  readonly TRANCHE_AGE: string;
+  readonly EFFECTIF_FEMMES: string;
+  readonly EFFECTIF_FEMMES_REF: string;
+  readonly EFFECTIF_HOMMES: string;
+  readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
-
 }
