@@ -97,7 +97,26 @@ const LineChart = ({ classContainer, categorieName, borderRight = false, dataEff
             },
         },
         plugins: {
-            tooltip: { enabled: true },
+            tooltip: { 
+                enabled: true,
+                callbacks: {
+                    label: function (tooltipItem) {
+                        let index = tooltipItem.dataIndex; 
+                        let moisAnnee = dataEffectifs.dataMoisAnnee[index];
+                        
+                        const moisNoms = [
+                            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+                        ];
+                        
+                        let moisNom = moisAnnee ? moisNoms[moisAnnee.mois - 1] : "N/A";
+                        let xValue = moisAnnee ? `${moisNom} ${moisAnnee.annee}` : "N/A";
+                        let yValue = tooltipItem.raw;
+                        
+                        return ` ${xValue} : ${yValue}`;
+                    }
+                }
+            },
             legend: { display: false },
             datalabels: { display: false },
         },
