@@ -1,14 +1,14 @@
-/* eslint-disable jsx-a11y/aria-props */
+
 import { Dispatch, SetStateAction } from "react";
 
+import styles from "./Table.module.css";
+import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import styles from "./Table.module.css";
-import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 
 export type SelectedRows = Readonly<{
   [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
@@ -87,7 +87,6 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   if (order === "ASC" && headerKey === orderBy) {
     return (
       <button
-        aria-sorting="asc"
         className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
         id="table-miscellaneous-thead-sort-asc"
         onClick={() => {
@@ -101,7 +100,6 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   } else if (order === "DESC" && headerKey === orderBy) {
     return (
       <button
-        aria-sorting="desc"
         className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
         id="table-miscellaneous-thead-sort-desc"
         onClick={() => {
