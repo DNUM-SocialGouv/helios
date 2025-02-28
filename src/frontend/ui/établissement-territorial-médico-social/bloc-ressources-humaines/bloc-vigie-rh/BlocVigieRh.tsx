@@ -69,15 +69,15 @@ export const BlocVigieRH = ({
                             source={wording.CNSA}
                         />
                     }
-                    identifiant="activite-1"
+                    identifiant="vr-effectifs"
                     nomDeLIndicateur={wording.EFFECTIFS}
                 >
                     <>
                         <ColorLabel
                             classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
                             items={[
-                                { color: "#E2CF58", label: "Catégorie" },
-                                { color: "#FB926B", label: "Effectifs totaux" }
+                                { color: "#E2CF58", label: wording.VIGIE_RH_CATEGORIE },
+                                { color: "#FB926B", label: wording.EFFECTIFS_TOTAUX }
                             ]}
                         />
    

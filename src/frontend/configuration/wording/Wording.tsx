@@ -545,4 +545,6 @@ export interface Wording {
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
+  readonly EFFECTIFS_TOTAUX: string;
+  readonly VIGIE_RH_CATEGORIE: string;
 }

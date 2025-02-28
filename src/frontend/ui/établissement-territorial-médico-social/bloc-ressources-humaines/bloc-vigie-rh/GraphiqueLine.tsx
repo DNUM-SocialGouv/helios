@@ -38,7 +38,6 @@ const LineChart = ({ classContainer, categorieName, borderRight = false, dataEff
         labels,
         datasets: [
             {
-                label: " Catégorie",
                 data: dataEffectifs.dataFiliere,
                 borderColor: line1Color,
                 backgroundColor: line1Color,
@@ -47,7 +46,6 @@ const LineChart = ({ classContainer, categorieName, borderRight = false, dataEff
                 pointRadius: 0,
             },
             {
-                label: " Effectifs totaux",
                 data: dataEffectifs.dataEtab,
                 borderColor: line2Color,
                 backgroundColor: line2Color,
