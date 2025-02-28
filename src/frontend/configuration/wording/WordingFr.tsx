@@ -629,9 +629,9 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
-  readonly EFFECTIF_FEMMES_REF: string = "Valeur de référence des effectifs des femmes";
+  readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
   readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
-  readonly EFFECTIF_HOMMES_REF: string = "Valeur de référence des effectifs des hommes";
+  readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
 
 }
 
