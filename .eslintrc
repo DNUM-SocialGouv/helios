@@ -33,7 +33,7 @@
     "no-param-reassign": "error",
     "prefer-const": "error",
     "yoda": "error",
-    "@typescript-eslint/array-type": ["error", { "ArrayOption": "array" }],
+    "@typescript-eslint/array-type": ["error", { "default": "array" }],
     "@typescript-eslint/naming-convention": [
       "error",
       {
