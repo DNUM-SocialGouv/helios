@@ -1,12 +1,12 @@
 import { ReactElement, useState } from "react";
 
+import styles from "./DetailsAllocations.module.css";
 import { IEnveloppe } from "../../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
   HistogrammeHorizontalRowMultiple,
 } from "../../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRowMultiple/HistogrammeHorizontalRowMultiple";
 import { convertFloatToComma, formatNumbuerWithSpaces } from "../../AllocationRessourcesViewModel";
-import styles from "./DetailsAllocations.module.css";
 
 type ShowDetailsTitleProps = Readonly<{ for: string; children: ReactElement; direction?: string }>;
 const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: ShowDetailsTitleProps) => {
@@ -24,7 +24,6 @@ const ShowDetailsTitle = ({ for: identifiant, children, direction = "right" }: S
       }
       data-fr-opened={isOpen}
       data-testid="show-details-title"
-      icon-direction={direction}
       onClick={() => {
         setIsOpen(!isOpen);
       }}
