@@ -91,7 +91,8 @@
         "jest/require-hook": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-lowercase-title": [ "error", { "ignore": ["describe"] } ],
-        "jest/prefer-strict-equal": "off"
+        "jest/prefer-strict-equal": "off",
+        "jest/max-expects": ["warn", { "max": 10 }],
       }
     },
     {
