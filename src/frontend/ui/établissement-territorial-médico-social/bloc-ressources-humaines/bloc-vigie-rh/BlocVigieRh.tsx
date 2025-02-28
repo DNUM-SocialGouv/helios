@@ -59,6 +59,7 @@ export const BlocVigieRH = ({
                     >
                         <>
                             {donneesAnneeEnCours?.effectifFemmeRef && donneesAnneeEnCours?.effectifHomme &&
+                                donneesAnneeEnCours?.effectifFemme && donneesAnneeEnCours?.effectifHommeRef &&
                                 <PyramidChart effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
                                     effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                                     effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}

@@ -19,7 +19,6 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
 
     const { wording } = useDependencies();
 
-
     const menExtension = effectifHommeRef.map((val, idx) => Math.max(0, val - effectifHomme[idx]));
     const womenExtension = effectifFemmeRef.map((val, idx) => Math.max(0, val - effectifFemme[idx]));
 
@@ -64,9 +63,10 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
     // Custom Plugin for Vertical Lines
     const verticalLinePlugin = {
         id: "verticalLines",
-        afterDraw(chart: any) {
+        afterDraw(chart: ChartJS, _args: any, options: any) {
             const { ctx, scales } = chart;
             const isMenChart = chart.data.datasets[0].label === "Men";
+            const { effectifHommeRef, effectifFemmeRef } = options;
 
             const values = isMenChart ? effectifHommeRef : effectifFemmeRef;
 
@@ -75,7 +75,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
                 if (value === undefined) return;
 
                 // Get x-position based on reference value
-                const xScale = scales.x;
+                const xScale = scales['x'];
                 const xPos = xScale.getPixelForValue(value);
 
                 const yTop = bar.y - bar.height / 2;
@@ -148,7 +148,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
                 color: "#000",
             },
             legend: { display: false },
-            verticalLines: {},
+            verticalLines: { effectifHommeRef, effectifFemmeRef },
         },
     };
 
