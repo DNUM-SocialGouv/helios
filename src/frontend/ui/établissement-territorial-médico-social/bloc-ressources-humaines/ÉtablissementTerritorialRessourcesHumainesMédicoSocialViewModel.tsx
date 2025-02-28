@@ -94,7 +94,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
       secondPlan: couleurDuFond,
     }));
-    const listeAnnéesManquantes = annéesManquantes(années);
+    const listeAnnéesManquantes = annéesManquantes(années, 5);
 
     return (
       <HistogrammeHorizontal
@@ -103,7 +103,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
-        nombreDeLibelléTotal={3}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -127,8 +127,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
       secondPlan: couleurDuFond,
     }));
-    const listeAnnéesManquantes = annéesManquantes(années);
-
+    const listeAnnéesManquantes = annéesManquantes(années, 5);
     return (
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursDeLHistogramme}
@@ -136,7 +135,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         identifiant={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
-        nombreDeLibelléTotal={3}
+        nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
@@ -183,7 +182,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables.bind(this))
@@ -220,7 +219,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables.bind(this))
@@ -258,7 +257,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
 
     return (
       <HistogrammeVertical
-        annéesTotales={3}
+        annéesTotales={5}
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) =>
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables.bind(this))
@@ -314,7 +313,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       ? pourcentageDuTauxDAbsentéismeHorsFormation
       : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
 
-    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
+    const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes, 5);
 
     return (
       <>
@@ -336,7 +335,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
         <Transcription
-          disabled={listeAnnéesManquantes.length === 3}
+          disabled={listeAnnéesManquantes.length === 5}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}

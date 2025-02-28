@@ -6,12 +6,12 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./SearchHistory.module.css";
 
 interface SearchHistoryProps {
-    searchHistory : ResultatRechercheHistorique[];
+    searchHistory: ResultatRechercheHistorique[];
 }
 
-export const SearchHistoryPage = ({searchHistory}: SearchHistoryProps ) => {
+export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
     const { wording } = useDependencies();
- 
+
 
     const buildLink = (history: any) => {
         if (history.type === "Médico-social") {
@@ -23,7 +23,7 @@ export const SearchHistoryPage = ({searchHistory}: SearchHistoryProps ) => {
     };
 
     return (
-        <main className="fr-container">
+        <main className="fr-container" id="content">
             <h1 className={styles["title"]}>{wording.HISTORIQUE_DE_RECHERECHE_TITRE}</h1>
             {searchHistory?.length === 0 ? (<div className={"fr-mt-8w " + styles["align-text"]}>Vous n&apos;avez aucune ancienne recherche</div>) : (
                 <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>

@@ -5,6 +5,7 @@ import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherch
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import { UserListViewModel } from "../user-list/UserListViewModel";
 
 export function useFavoris() {
   const userContext = useContext(UserContext);
@@ -37,7 +38,7 @@ export function useFavoris() {
   };
 
   const updateListName = (listId: number, listName: string) => {
-     fetch(`/api/liste/${listId}`,
+    fetch(`/api/liste/${listId}`,
       {
         body: JSON.stringify({ listName }),
         headers: { "Content-Type": "application/json" },
@@ -52,26 +53,32 @@ export function useFavoris() {
 
   const deleteList = (listId: number) => {
     fetch(`/api/liste/${listId}`,
-     {
-       headers: { "Content-Type": "application/json" },
-       method: "DELETE",
-     })
-     .then(() => {
-       const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
-       userContext?.setFavorisLists(newList)
-     });
- };
+      {
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+      })
+      .then(() => {
+        const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+        userContext?.setFavorisLists(newList)
+      });
+  };
 
-  const removeFromFavorisList = (favorite: any, listId: number) => {
+  const removeFromFavorisList = async (numérosFiness: string[], listId: number) => {
     return fetch(`/api/liste/${listId}/etablissement`,
       {
-        body: JSON.stringify({ finessNumber: favorite.numéroFiness }),
+        body: JSON.stringify({ finessNumbers: numérosFiness }),
         headers: { "Content-Type": "application/json" },
         method: "DELETE",
       })
       .then((data) => {
         if (data.status === 204) {
-          userContext?.removeFromFavorisList(favorite, listId);
+          const oldList = userContext?.favorisLists.find(({ id }) => id === listId);
+          if (oldList) {
+            const userListEtablissements = oldList.userListEtablissements.filter(({ finessNumber }) => !numérosFiness.includes(finessNumber))
+            const newList: UserListViewModel = { ...oldList, userListEtablissements }
+            const newLists = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+            userContext?.setFavorisLists([...newLists, newList])
+          }
         }
       });
   };

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
@@ -12,6 +12,7 @@ import { useRecherche } from "./useRecherche";
 
 export const PageRecherche = () => {
   const { wording } = useDependencies();
+  const [displayTable, setDisplayTable] = useState(false);
 
   const {
     estCeEnAttente,
@@ -32,19 +33,19 @@ export const PageRecherche = () => {
 
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
-      rechercher(localStorage.getItem('searchItem') || '', 1);
+      rechercher(localStorage.getItem('searchItem') ?? '', 1);
       localStorage.setItem('FromBackToSearch', 'false');
     }
   }, [])
 
   return (
-    <main>
+    <main id="content">
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
       {showNotice ? <NewFeaturesNotice /> : null}
       <div className="fr-container">
-        <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} terme={terme} />
+        <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={(e) => lancerLaRecherche(e, displayTable)} rechercheOnChange={rechercheOnChange} terme={terme} />
 
         {estCeEnAttente && <RechercheEnAttente />}
 
@@ -53,9 +54,13 @@ export const PageRecherche = () => {
         {estCeQueLesRésultatsSontReçus && (
           <RésultatsDeRecherche
             chargeLesRésultatsSuivants={chargeLesRésultatsSuivants}
+            displayTable={displayTable}
             estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés()}
+            lancerLaRecherche={lancerLaRecherche}
             nombreRésultats={nombreRésultats}
+            rechercher={rechercher}
             résultats={résultats}
+            setDisplayTable={setDisplayTable}
             termeFixe={termeFixe}
           />
         )}

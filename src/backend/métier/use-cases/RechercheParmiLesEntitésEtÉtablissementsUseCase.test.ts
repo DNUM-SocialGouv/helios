@@ -25,7 +25,7 @@ describe("La recherche des entités juridiques et des établissements territoria
     const résultatsDeLaRecherche = await rechercheParmiLesEntitésEtÉtablissementsUseCase.exécute(termeDeLaRecherche, premièrePage);
 
     // THEN
-    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage);
+    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage, undefined, undefined, undefined);
     expect(mockedRechercheParTerme).toHaveBeenCalledTimes(1);
     expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>({
       nombreDeRésultats: 3,

@@ -257,6 +257,13 @@ describe("La page de d’accueil", () => {
     jest
       .spyOn(global, "fetch")
       // @ts-ignore
+      // Mock de l’appel à la liste des favoris
+      .mockResolvedValueOnce({
+        json: () =>
+          Promise.resolve({}),
+      })
+      // @ts-ignore
+      // Mock du premier appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve<RésultatDeRecherche>({
@@ -265,6 +272,7 @@ describe("La page de d’accueil", () => {
           }),
       })
       // @ts-ignore
+      // Mock du deuxieme appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve<RésultatDeRecherche>({
@@ -330,6 +338,13 @@ describe("La page de d’accueil", () => {
     jest
       .spyOn(global, "fetch")
       // @ts-ignore
+      // Mock de l’appel à la liste des favoris
+      .mockResolvedValueOnce({
+        json: () =>
+          Promise.resolve({}),
+      })
+      // @ts-ignore
+      // Mock du premier appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve<RésultatDeRecherche>({
@@ -338,6 +353,13 @@ describe("La page de d’accueil", () => {
           }),
       })
       // @ts-ignore
+      // Mock de l’appel à la liste des favoris
+      .mockResolvedValueOnce({
+        json: () =>
+          Promise.resolve({}),
+      })
+      // @ts-ignore
+      // Mock du deuxieme appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve<RésultatDeRecherche>({
@@ -411,7 +433,14 @@ describe("La page de d’accueil", () => {
 
   it("affiche une phrase explicite si le backend ne répond plus", async () => {
     // GIVEN
-    jest.spyOn(global, "fetch").mockRejectedValue("API is down");
+    jest.spyOn(global, "fetch")
+      // @ts-ignore
+      .mockResolvedValueOnce({
+        json: () =>
+          Promise.resolve({}),
+      })
+      .mockRejectedValue("API is down");
+
     renderFakeComponent(
       <SessionProvider session={mockSession}>
         <PageRecherche />

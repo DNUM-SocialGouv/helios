@@ -23,7 +23,7 @@ export default function Accessibilité() {
   }, [backToSearchContext])
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{wording.TITRE_PAGE_ACCESSIBILITÉ}</title>
       </Head>
