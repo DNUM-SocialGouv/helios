@@ -26,7 +26,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
     const showNewBadge = new Date() <= new Date('2025-09-01');
     return (
         <div>
-            <section className={styles["sous-bloc"] + " fr-accordion"}>
+            <section className={styles["sous-bloc"] + " fr-accordion"} data-testid="sous-bloc-rh-helios">
                 <h3 className="fr-accordion__title">
                     <button
                         aria-controls="accordion-indicateurs-rh-helios"
@@ -41,7 +41,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
                     <ContenuBlocRHMedicoSocialHelios établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
                 </div>
             </section>
-            <section className={styles["sous-bloc"] + " fr-accordion"}>
+            <section className={styles["sous-bloc"] + " fr-accordion"} data-testid="sous-bloc-vigie-rh">
                 <h3 className="fr-accordion__title">
                     <button
                         aria-controls="accordion-indicateurs-rh-vigierh"

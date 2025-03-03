@@ -581,7 +581,17 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   };
 
   public static vigierh: ÉtablissementTerritorialMédicoSocial["vigieRh"] = {
-    pyramideAges: [],
+    pyramideAges: [
+      {
+        annee: 2024,
+        trancheLibelle: "15-20",
+        effectif: 200,
+        effectifHomme: 20,
+        effectifFemme: 23,
+        effectifHommeRef: 11,
+        effectifFemmeRef: 18
+      }
+    ],
     tranchesAgesLibelles: []
   };
 
