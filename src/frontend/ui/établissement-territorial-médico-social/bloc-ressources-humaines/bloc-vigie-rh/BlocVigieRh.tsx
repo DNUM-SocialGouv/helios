@@ -26,6 +26,9 @@ export const BlocVigieRH = ({
 
     const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
+    const couleurCategorie = "#E2CF58"  // jaune
+    const couleurEffectifsTottaux = "#FB926B"  // orange
+
     useEffect(() => {
         setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0])
     }, [anneeEnCours])
@@ -76,16 +79,18 @@ export const BlocVigieRH = ({
                         <ColorLabel
                             classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
                             items={[
-                                { color: "#E2CF58", label: wording.VIGIE_RH_CATEGORIE },
-                                { color: "#FB926B", label: wording.EFFECTIFS_TOTAUX }
+                                { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE },
+                                { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
                             ]}
                         />
-   
+
                         <div className="fr-grid-row">
                             {donneesEffectifs.map((item, index) => (
                                 <LineChart
                                     borderRight={!( (index + 1) % 3 === 0 || index === donneesEffectifs.length - 1 )}
                                     categorieName={item.categorie}
+                                    couleurCategorie={couleurCategorie}
+                                    couleurEffectifsTottaux={couleurEffectifsTottaux}
                                     classContainer="fr-col-4 fr-mb-4w"
                                     dataEffectifs={item.data}
                                     key={item.categorie}

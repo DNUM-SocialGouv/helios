@@ -2,6 +2,8 @@ import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement
 import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
+import { Transcription } from "../../../commun/Transcription/Transcription";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Title);
 
@@ -23,32 +25,53 @@ export interface CategorieData {
 interface LineChartProps {
     classContainer: string;
     categorieName: string;
+    couleurCategorie: string;
+    couleurEffectifsTottaux: string;
     borderRight?: boolean;
     dataEffectifs: EffectifsData;
 }
 
-const LineChart = ({ classContainer, categorieName, borderRight = false, dataEffectifs}: LineChartProps) => {
+const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEffectifsTottaux, borderRight = false, dataEffectifs}: LineChartProps) => {
+
+    const { wording } = useDependencies();
+    
     const gtidColor = "#c8c8c880" // gris
-    const line1Color = "#FB926B"  // orange
-    const line2Color = "#E2CF58"  // jaune
+
+    const moisNoms = [
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
 
     const labels = new Array(36).fill(""); // Labels vides
+
+    const labelsTranscription = dataEffectifs.dataMoisAnnee.map((monthYear) => {
+        const mois = moisNoms[monthYear.mois - 1];
+        const annee = monthYear.annee;
+        return `${mois} ${annee}`;
+    });
+
+    const getCategorieName = () => {
+        if (categorieName && categorieName.length > 0) {
+          return `${categorieName.charAt(0).toUpperCase() + categorieName.slice(1)}`;
+        }
+        return "";
+      }
 
     const data = {
         labels,
         datasets: [
             {
                 data: dataEffectifs.dataFiliere,
-                borderColor: line1Color,
-                backgroundColor: line1Color,
+                borderColor: couleurCategorie,
+                backgroundColor: couleurCategorie,
                 borderWidth: 3,
                 fill: false,
                 pointRadius: 0,
             },
             {
                 data: dataEffectifs.dataEtab,
-                borderColor: line2Color,
-                backgroundColor: line2Color,
+                borderColor: couleurEffectifsTottaux,
+                backgroundColor: couleurEffectifsTottaux,
                 borderWidth: 3,
                 fill: false,
                 pointRadius: 0,
@@ -100,13 +123,7 @@ const LineChart = ({ classContainer, categorieName, borderRight = false, dataEff
                 callbacks: {
                     label: function (tooltipItem) {
                         let index = tooltipItem.dataIndex; 
-                        let moisAnnee = dataEffectifs.dataMoisAnnee[index];
-                        
-                        const moisNoms = [
-                            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-                            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-                        ];
-                        
+                        let moisAnnee = dataEffectifs.dataMoisAnnee[index];                        
                         let moisNom = moisAnnee ? moisNoms[moisAnnee.mois - 1] : "N/A";
                         let xValue = moisAnnee ? `${moisNom} ${moisAnnee.annee}` : "N/A";
                         let yValue = tooltipItem.raw;
@@ -123,11 +140,18 @@ const LineChart = ({ classContainer, categorieName, borderRight = false, dataEff
         <div className={`${classContainer} `}  >
             <div className={`${styles["chartLineDiv"]} ${borderRight ? styles["borderRight"] : ''} `}  style={{  }} >
                 <div className={`${styles["chartLineDiv"]} ${styles["chartLineHeader"]}`}>
-                    {categorieName}
+                    {getCategorieName()}
                 </div>
                 <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`} >
-                    <Line data={data} options={options} />
+                    <Line data={data} options={options}/>
                 </div>
+                <Transcription
+                        disabled={false}
+                        entêteLibellé={"Mois / Années"}
+                        identifiants={[getCategorieName(), wording.EFFECTIFS_TOTAUX ]}
+                        libellés={labelsTranscription}
+                        valeurs={[dataEffectifs.dataFiliere, dataEffectifs.dataEtab]}
+                    />
             </div>
         </div>
     );
