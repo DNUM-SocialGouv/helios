@@ -1,6 +1,7 @@
 import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliereRow } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { StringFormater } from "../../../commun/StringFormater";
 import { CategorieData } from "./GraphiqueLine";
+import { Wording } from "../../../../configuration/wording/Wording";
 
 export type DonneesVigieRh = {
     annee: number;
@@ -14,21 +15,39 @@ export class BlocVigieRHViewModel {
 
     public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
 
-    constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH) {
+    constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH, private readonly wording: Wording) {
         this.etablissementTerritorialVRMedicoSocial = etablissementTerritorialVRMedicoSocial;
     }
 
-
-    public get lesAgesSontIlsRenseignees(): boolean {
-        return true;
+    public get lesAgesNeSontIlsPasRenseignees(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
+    }
+    public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere[0]?.categorie !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere.length === 0;
     }
 
-    public get lesAgesSontIlsAutorisee(): boolean {
-        return true;
+    public get lesAgesNeSontIlsPasAutorisee(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] === 'ko'
     }
 
-    public get dateDeMiseAJourPyramideDesAges(): string {
-        return StringFormater.formatDate("2024-11-22");
+    public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere[0]?.categorie === 'ko'
+    }
+
+    public get lesDonneesVgRHPasRenseignees(): string[] {
+        const nonRenseignees = [];
+        if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
+        if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
+
+        return nonRenseignees;
+    }
+
+    public get lesDonneesVgRHPasAutorises(): string[] {
+        const nonAutorises = [];
+        if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
+        if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
+
+        return nonAutorises;
     }
 
     public get lesLibellesTranchesAges(): string[] {
@@ -37,37 +56,35 @@ export class BlocVigieRHViewModel {
 
     public get lesDonneesPyramideAges(): DonneesVigieRh[] {
         const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
-        return Object.values(
-            this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
-                const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
+        if (this.etablissementTerritorialVRMedicoSocial.pyramideAges !== null)
+            return Object.values(
+                this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
+                    const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
 
-                if (!acc[annee]) {
-                    acc[annee] = {
-                        annee,
-                        effectifHomme: Array(labels.length).fill(-1),
-                        effectifFemme: Array(labels.length).fill(-1),
-                        effectifHommeRef: Array(labels.length).fill(-1),
-                        effectifFemmeRef: Array(labels.length).fill(-1),
-                    };
-                }
+                    if (!acc[annee]) {
+                        acc[annee] = {
+                            annee,
+                            effectifHomme: Array(labels.length).fill(-1),
+                            effectifFemme: Array(labels.length).fill(-1),
+                            effectifHommeRef: Array(labels.length).fill(-1),
+                            effectifFemmeRef: Array(labels.length).fill(-1),
+                        };
+                    }
 
-                const labelIndex = labels.indexOf(trancheLibelle);
+                    const labelIndex = labels.indexOf(trancheLibelle);
 
-                acc[annee].effectifHomme[labelIndex] = effectifHomme;
-                acc[annee].effectifFemme[labelIndex] = effectifFemme;
-                acc[annee].effectifHommeRef[labelIndex] = effectifHommeRef;
-                acc[annee].effectifFemmeRef[labelIndex] = effectifFemmeRef;
-                return acc;
-            }, {})
-        );
+                    acc[annee].effectifHomme[labelIndex] = effectifHomme;
+                    acc[annee].effectifFemme[labelIndex] = effectifFemme;
+                    acc[annee].effectifHommeRef[labelIndex] = effectifHommeRef;
+                    acc[annee].effectifFemmeRef[labelIndex] = effectifFemmeRef;
+                    return acc;
+                }, {})
+            );
+        else return [];
     }
 
-    public get lesEffectifsSontIlsRenseignees(): boolean {
-        return true;
-    }
-
-    public get lesEffectifsSontIlsAutorisee(): boolean {
-        return true;
+    public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
+        return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees;
     }
 
     public get dateDeMiseAJourEffectifs(): string {
@@ -79,7 +96,7 @@ export class BlocVigieRHViewModel {
         const dataEffectifs = this.etablissementTerritorialVRMedicoSocial.professionFiliere;
 
         const transformData = (categories: { categorie: string; data: ProfessionFiliereRow[] }[]): CategorieData[] => {
-            return categories.map(({ categorie, data }) => ({
+            return categories?.map(({ categorie, data }) => ({
                 categorie,
                 data: {
                     dataFiliere: data.map(entry => entry.effectifFiliere),
@@ -89,7 +106,11 @@ export class BlocVigieRHViewModel {
             }));
         };
         
-        return transformData(dataEffectifs);
+        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere !== null)
+        {
+            return transformData(dataEffectifs);
+        }
+        else return [];
     }
 
 }

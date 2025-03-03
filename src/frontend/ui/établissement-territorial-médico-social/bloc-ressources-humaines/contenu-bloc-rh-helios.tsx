@@ -19,6 +19,18 @@ type ContenuBlocRHMedicoSocialHeliosProps = Readonly<{
     établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
 }>;
 
+const ListeIndicateursNonAutorisesOuNonRenseignes = ({
+    établissementTerritorialMédicoSocialRessourcesHumainesViewModel,
+}: ContenuBlocRHMedicoSocialHeliosProps) => {
+    if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0) {
+        return <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} />
+    } else if (établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0) {
+        return <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} />
+    } else {
+        return <></>
+    }
+}
+
 export const ContenuBlocRHMedicoSocialHelios = ({
     établissementTerritorialMédicoSocialRessourcesHumainesViewModel,
 }: ContenuBlocRHMedicoSocialHeliosProps) => {
@@ -31,9 +43,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
 
     return (
         <>
-            {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasAutorisés} /> :
-                établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} /> :
-                    <></>}
+            <ListeIndicateursNonAutorisesOuNonRenseignes établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel} />
             <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
                 {établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlRenseigné && établissementTerritorialMédicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlAutorisé ? (
                     <IndicateurGraphique

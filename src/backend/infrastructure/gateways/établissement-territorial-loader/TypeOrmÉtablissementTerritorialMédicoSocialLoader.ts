@@ -187,14 +187,16 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const professionFiliere: ProfessionFiliere[] = professionFiliereModel.map((item: ProfessionFiliere) => ({
+    const professionFiliere: ProfessionFiliere[] = professionFiliereModel
+    .filter((item: ProfessionFiliere | null) => item !== null) // Filtre les éléments null
+    .map((item: ProfessionFiliere) => ({
       categorie: item.categorie,
-      data: item.data.map(profession => ({
+      data: item.data ? item.data.map(profession => ({
         annee: profession.annee,
         mois: profession.mois,
         effectifFiliere: profession.effectifFiliere,
         effectifEtab: profession.effectifEtab,
-      }))
+      })) : []
     }));
 
     const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
@@ -220,6 +222,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
         take: 36, // Limite à 36 mois
       });
+
+      // Vérifier si professionFiliere est vide
+      if (professionFiliere.length === 0) {
+        return null;
+      }
 
       return {
         categorie: itemRef.label,

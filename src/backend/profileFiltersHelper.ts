@@ -10,7 +10,11 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
   const qualite = filterQualiteMedicoSocial(result.qualite, profil.Qualité);
-  const vigieRh = result.vigieRh;
+  /* les autorisations pour le bloc Vigie RH sont les mêmes que celles du bloc ressources humaines helios.
+      Vu que c'est tout ou rien pour les indicateurs ressources humaines , 
+      on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
+  */
+  const vigieRh = profil.ressourcesHumaines.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : { pyramideAges: [], tranchesAgesLibelles: ['ko'], professionFiliere:[{categorie: 'ko', data:[]}] };
 
   return {
     identité: identité,

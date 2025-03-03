@@ -5,6 +5,9 @@ import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
 import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/ContenuTauxOccupationHébergementPermanent";
+import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
+import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
+import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart from "./GraphiqueLine";
@@ -13,6 +16,19 @@ import PyramidChart from "./GraphiquePyramide";
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
+
+const ListeIndicateursNonAutorisesOuNonRenseignes = ({
+    blocVigieRHViewModel,
+}: BlocVigieRHProps) => {
+    if (blocVigieRHViewModel.lesDonneesVgRHPasAutorises.length !== 0) {
+        return <NotAUthorized indicateurs={blocVigieRHViewModel.lesDonneesVgRHPasAutorises} />
+    } else if (blocVigieRHViewModel.lesDonneesVgRHPasRenseignees.length !== 0) {
+        return <NoDataCallout indicateurs={blocVigieRHViewModel.lesDonneesVgRHPasRenseignees} />
+    } else {
+        return <></>
+    }
+}
+
 
 export const BlocVigieRH = ({
     blocVigieRHViewModel
@@ -33,23 +49,28 @@ export const BlocVigieRH = ({
         setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0])
     }, [anneeEnCours])
 
+    
+    if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
+        return <div>{wording.INDICATEURS_VIDES}</div>
+    }
+
     return (
         <>
+            <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
+            
             <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
-                {blocVigieRHViewModel.lesAgesSontIlsRenseignees && blocVigieRHViewModel.lesAgesSontIlsAutorisee ? (
+                {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
                     <IndicateurGraphique
                         années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
                         contenuInfoBulle={
-                            <ContenuTauxOccupationHébergementPermanent
-                                dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourPyramideDesAges}
-                                source={wording.CNSA}
-                            />
+                            <ContenuPyramideDesAges />
                         }
                         identifiant="vr-pyramide-ages"
                         nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
                     >
                         <>
                             {donneesAnneeEnCours?.effectifFemmeRef && donneesAnneeEnCours?.effectifHomme &&
+                                donneesAnneeEnCours?.effectifFemme && donneesAnneeEnCours?.effectifHommeRef &&
                                 <PyramidChart effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
                                     effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                                     effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
@@ -62,9 +83,9 @@ export const BlocVigieRH = ({
                 }
             </ul >
 
-            <SeparatorHorizontal></SeparatorHorizontal>
-
-            {blocVigieRHViewModel.lesEffectifsSontIlsRenseignees && blocVigieRHViewModel.lesEffectifsSontIlsAutorisee ? (
+            {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee  ? (
+                <>
+                <SeparatorHorizontal></SeparatorHorizontal>
                 <IndicateurGraphique
                     contenuInfoBulle={
                         <ContenuTauxOccupationHébergementPermanent
@@ -85,7 +106,7 @@ export const BlocVigieRH = ({
                         />
 
                         <div className="fr-grid-row">
-                            {donneesEffectifs.map((item, index) => (
+                            {donneesEffectifs?.map((item, index) => (
                                 <LineChart
                                     borderRight={!( (index + 1) % 3 === 0 || index === donneesEffectifs.length - 1 )}
                                     categorieName={item.categorie}
@@ -99,7 +120,7 @@ export const BlocVigieRH = ({
                         </div>
                     </>
                 </IndicateurGraphique>
-
+                </>
             ) : <></>
             }
 
