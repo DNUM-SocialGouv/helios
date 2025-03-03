@@ -1,5 +1,5 @@
 import { EtablissementTerritorialMedicoSocialVigieRH } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { StringFormater } from "../../../commun/StringFormater";
+import { Wording } from "../../../../configuration/wording/Wording";
 
 export type DonneesVigieRh = {
     annee: number;
@@ -12,21 +12,30 @@ export class BlocVigieRHViewModel {
 
     public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
 
-    constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH) {
+    constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH, private readonly wording: Wording) {
         this.etablissementTerritorialVRMedicoSocial = etablissementTerritorialVRMedicoSocial;
     }
 
-
-    public get lesAgesSontIlsRenseignees(): boolean {
-        return true;
+    public get lesAgesNeSontIlsPasRenseignees(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
     }
 
-    public get lesAgesSontIlsAutorisee(): boolean {
-        return true;
+    public get lesAgesNeSontIlsPasAutorisee(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] === 'ko'
     }
 
-    public get dateDeMiseAJourPyramideDesAges(): string {
-        return StringFormater.formatDate("2024-11-22");
+    public get lesDonneesVgRHPasRenseignees(): string[] {
+        const nonRenseignees = [];
+        if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
+
+        return nonRenseignees;
+    }
+
+    public get lesDonneesVgRHPasAutorises(): string[] {
+        const nonAutorises = [];
+        if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
+
+        return nonAutorises;
     }
 
     public get lesLibellesTranchesAges(): string[] {
@@ -35,29 +44,35 @@ export class BlocVigieRHViewModel {
 
     public get lesDonneesPyramideAges(): DonneesVigieRh[] {
         const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
-        return Object.values(
-            this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
-                const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
+        if (this.etablissementTerritorialVRMedicoSocial.pyramideAges !== null)
+            return Object.values(
+                this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
+                    const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
 
-                if (!acc[annee]) {
-                    acc[annee] = {
-                        annee,
-                        effectifHomme: Array(labels.length).fill(-1),
-                        effectifFemme: Array(labels.length).fill(-1),
-                        effectifHommeRef: Array(labels.length).fill(-1),
-                        effectifFemmeRef: Array(labels.length).fill(-1),
-                    };
-                }
+                    if (!acc[annee]) {
+                        acc[annee] = {
+                            annee,
+                            effectifHomme: Array(labels.length).fill(-1),
+                            effectifFemme: Array(labels.length).fill(-1),
+                            effectifHommeRef: Array(labels.length).fill(-1),
+                            effectifFemmeRef: Array(labels.length).fill(-1),
+                        };
+                    }
 
-                const labelIndex = labels.indexOf(trancheLibelle);
+                    const labelIndex = labels.indexOf(trancheLibelle);
 
-                acc[annee].effectifHomme[labelIndex] = effectifHomme;
-                acc[annee].effectifFemme[labelIndex] = effectifFemme;
-                acc[annee].effectifHommeRef[labelIndex] = effectifHommeRef;
-                acc[annee].effectifFemmeRef[labelIndex] = effectifFemmeRef;
-                return acc;
-            }, {})
-        );
+                    acc[annee].effectifHomme[labelIndex] = effectifHomme;
+                    acc[annee].effectifFemme[labelIndex] = effectifFemme;
+                    acc[annee].effectifHommeRef[labelIndex] = effectifHommeRef;
+                    acc[annee].effectifFemmeRef[labelIndex] = effectifFemmeRef;
+                    return acc;
+                }, {})
+            );
+        else return [];
+    }
+
+    public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
+        return this.lesAgesNeSontIlsPasRenseignees;
     }
 
 }
