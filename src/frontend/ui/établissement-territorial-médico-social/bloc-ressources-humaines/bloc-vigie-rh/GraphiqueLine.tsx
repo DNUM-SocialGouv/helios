@@ -27,11 +27,10 @@ interface LineChartProps {
     categorieName: string;
     couleurCategorie: string;
     couleurEffectifsTottaux: string;
-    borderRight?: boolean;
     dataEffectifs: EffectifsData;
 }
 
-const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEffectifsTottaux, borderRight = false, dataEffectifs}: LineChartProps) => {
+const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEffectifsTottaux, dataEffectifs}: LineChartProps) => {
 
     const { wording } = useDependencies();
     
@@ -138,7 +137,7 @@ const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEff
     };
     return (
         <div className={`${classContainer} `}  >
-            <div className={`${styles["chartLineDiv"]} ${borderRight ? styles["borderRight"] : ''} `}  style={{  }} >
+            <div className={`${styles["chartLineDiv"]}`}  style={{  }} >
                 <div className={`${styles["chartLineDiv"]} ${styles["chartLineHeader"]}`}>
                     {getCategorieName()}
                 </div>
@@ -147,7 +146,7 @@ const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEff
                 </div>
                 <Transcription
                         disabled={false}
-                        entêteLibellé={"Mois / Années"}
+                        entêteLibellé={wording.MOIS_ANNEES}
                         identifiants={[getCategorieName(), wording.EFFECTIFS_TOTAUX ]}
                         libellés={labelsTranscription}
                         valeurs={[dataEffectifs.dataFiliere, dataEffectifs.dataEtab]}

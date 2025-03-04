@@ -547,4 +547,6 @@ export interface Wording {
   readonly EFFECTIFS: string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly VIGIE_RH_CATEGORIE: string;
+  readonly MOIS_ANNEES: string;
+  
 }

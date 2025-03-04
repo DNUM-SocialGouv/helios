@@ -106,13 +106,12 @@ export const BlocVigieRH = ({
                         />
 
                         <div className="fr-grid-row">
-                            {donneesEffectifs?.map((item, index) => (
+                            {donneesEffectifs?.map((item) => (
                                 <LineChart
-                                    borderRight={!( (index + 1) % 3 === 0 || index === donneesEffectifs.length - 1 )}
                                     categorieName={item.categorie}
                                     couleurCategorie={couleurCategorie}
                                     couleurEffectifsTottaux={couleurEffectifsTottaux}
-                                    classContainer="fr-col-4 fr-mb-4w"
+                                    classContainer="fr-col-6 fr-mb-4w"
                                     dataEffectifs={item.data}
                                     key={item.categorie}
                                 />

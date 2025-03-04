@@ -635,6 +635,7 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly EFFECTIFS_TOTAUX: string = "Effectifs totaux";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly MOIS_ANNEES: string = "Mois / Années";
 
 }
 

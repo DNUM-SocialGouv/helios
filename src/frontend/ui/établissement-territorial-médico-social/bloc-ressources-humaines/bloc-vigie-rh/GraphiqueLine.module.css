@@ -9,9 +9,7 @@
 }
 .chartLineBody {
     height: 250px;
-}
-.borderRight {
-    border-right: 1px solid #DDDDDD;
+    margin: auto;
 }
 .chartLineContainer {
     width: 95%;
