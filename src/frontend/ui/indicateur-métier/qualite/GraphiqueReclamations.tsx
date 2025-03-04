@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 
 import { annéesManquantesQualite } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -16,12 +16,8 @@ type GraphiqueReclamationsProps = Readonly<{
 
 const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
-  const annees = Object.keys(data).sort().map(Number);
+  const annees = Object.keys(data).sort((a, b) => a.localeCompare(b)).map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
-
-  useEffect(() => {
-    setAnnéeEnCours(annees[annees.length - 1]);
-  }, [annees])
 
   const listeAnnéesManquantes = annéesManquantesQualite(annees, annéesTotales);
   const identifiants = ["Nombre total de réclamations concernées", "Nombre de réclamations en cours concernées", "Nombre de réclamations clôturées concernées"];
