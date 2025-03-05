@@ -44,3 +44,34 @@
         left: 75%;
     }
 }
+
+.menu {
+    border: 1px solid var(--border-default-grey);
+    /* La position est fixée dans le code au clic sur le bouton */
+    position: absolute;
+    width: 250px;
+    padding: 0 1rem;
+    z-index: 5;
+    background-color: white;
+
+    font-size: .875rem;
+    line-height: 1.5rem;
+    text-align: start;
+    color: black;
+}
+
+.listOverflowContainer {
+  overflow: scroll;
+  height: 8.5rem;
+  border: none;
+}
+
+.newListForm {
+  display: flex;
+  height: 2rem;
+  margin: 0.5rem;
+}
+
+.menu button {
+  min-width: 0 !important;
+}

@@ -1,65 +1,145 @@
-import { useRouter } from "next/router";
-import { useContext } from "react";
+import { KeyboardEvent, MouseEvent, useContext, useEffect, useRef, useState } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { UserListViewModel } from "../../user-list/UserListViewModel";
 import { UserContext } from "../contexts/userContext";
 import styles from "./StarButtonList.module.css";
 
 type StarButtonProps = Readonly<{
-    favorite: RechercheViewModel | undefined;
-    parent: string;
-    currentListId?: number;
-    rafraichitAuRetraitFavoris?: boolean;
+  favorite: RechercheViewModel | undefined;
+  parent: string;
 }>;
 
-export const StarButtonList = ({ favorite, parent, currentListId, rafraichitAuRetraitFavoris = false }: StarButtonProps) => {
-    const userContext = useContext(UserContext);
-    const router = useRouter();
-    const { addToFavorisList, removeFromFavorisList } = useFavoris();
+export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
+  const userContext = useContext(UserContext);
+  const { createFavorisList } = useFavoris();
+  const [displayPopup, setDisplayPopup] = useState<boolean>(false);
+  const [displayNewListInput, setDisplayNewListInput] = useState<boolean>(false);
+  const [newListName, setNewListName] = useState<string>("");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const componentRef = useRef<HTMLInputElement>(null);
+  const [popupX, setPopupX] = useState(0);
+  const [popupY, setPopupY] = useState(0);
 
-    // En attendant la modal, on prend la liste de favoris si aucune liste n’est passée en param
-    const processedListId = currentListId || userContext?.favorisLists.find(list => list.isFavoris)?.id;
-    // Si on ne trouve pas la liste de favoris et qu’une liste n’est pas passée en param alors on ne peut rien faire
-    if (!processedListId) {
-        return (<></>);
+  useEffect(() => {
+    // Cache la popup si on clic a l’exterieur
+    function handleClickOutside(event: MouseEvent) {
+      if (componentRef.current && !componentRef.current.contains(event.target)) {
+        setDisplayPopup(false);
+        setDisplayNewListInput(false);
+        setNewListName("");
+      }
     }
 
-    const handleFavoriteStatus = () => {
+    // Cache la popup si appui sur la touche echap
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setDisplayPopup(false);
+        setDisplayNewListInput(false);
+        setNewListName("");
+      }
 
-        if (isInFavoris() && favorite) {
-            removeFromFavorisList([favorite?.numéroFiness], processedListId).finally(() => {
-                if (rafraichitAuRetraitFavoris) {
-                    router.replace(router.asPath);
-                }
-            })
-        } else {
-            addToFavorisList(favorite, processedListId);
-        }
     }
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [componentRef]);
 
-    const isInFavoris = () => {
-        // Pour le moment il n’y a pas les modal de choix de liste.
-        // La liste courante est donc obligatoire et doit être la liste « Favoris »
-        // Quand il y aura la modale, currentListId sera optionnel et devra être géré
-
-        // On récurére la liste
-        const currentList = favorite ? userContext?.favorisLists.find(list => list.id === processedListId) : undefined;
-
-        // On regarde si l’element est dans la liste
-        if (currentList) {
-            return currentList.userListEtablissements.some(etablissement => etablissement.finessNumber === favorite?.numéroFiness);
-        }
-
-        return false;
+  const handleListCreation = () => {
+    if (newListName.trim()) {
+      createFavorisList(newListName, false);
     }
+    setDisplayNewListInput(false);
+    setNewListName("");
+  }
 
-    return (
-        <button
-            className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[parent === "tab" ? "star-tab" : parent === "titre" ? "star" : "starInEstablishment"]}
-            onClick={() => handleFavoriteStatus()}
-            title={isInFavoris() ? "Enlever cet établissement des favoris" : "Ajouter cet établissement aux favoris"}
-        />
+  const handleDisplayPopup = () => {
+    // On recupere la position du bouton etoile pour calculer la position de la popup
+    if (buttonRef.current) {
+      const popupTop = buttonRef.current.getBoundingClientRect().bottom;
+      const popupLeft = buttonRef.current.getBoundingClientRect().left;
+      setPopupX(popupLeft);
+      setPopupY(popupTop);
+    }
+    setDisplayPopup(!displayPopup);
+  }
 
-    );
+  const isInFavoris = () => {
+    const isInFav = userContext?.favorisLists.some((list) => list.userListEtablissements.some((etablissement) => etablissement.finessNumber === favorite?.numéroFiness));
+    return isInFav;
+  }
+
+  const isInFavorisList = (list: UserListViewModel): boolean => {
+    return list.userListEtablissements.some(etablissement => etablissement.finessNumber === favorite?.numéroFiness);
+  }
+
+  const sortedList = () => {
+    const list = userContext?.favorisLists.slice();
+    if (list) {
+      const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
+      const favorisList = list.splice(favorisListIndex, 1);
+      const partialSortedList = list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(b.dateCreation).getTime() - new Date(a.dateCreation).getTime());
+      return favorisList.concat(...partialSortedList);
+    }
+    return undefined;
+  }
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleListCreation();
+    }
+  };
+
+  // TODO: Ajouter le wording au niveau de la legende
+  return (
+    <>
+      <button
+        className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[parent === "tab" ? "star-tab" : parent === "titre" ? "star" : "starInEstablishment"]}
+        onClick={handleDisplayPopup}
+        ref={buttonRef}
+        title={isInFavoris() ? "Enlever cet établissement des favoris" : "Ajouter cet établissement aux favoris"}
+      />
+      {displayPopup &&
+        <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { top: popupY, left: popupX } : {}}>
+
+          <fieldset aria-labelledby="checkboxes-legend checkboxes-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer']} id="checkboxes">
+            <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
+              Mes listes
+            </legend>
+            {sortedList()?.map(list => (
+              <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
+                <div className="fr-checkbox-group">
+                  <input defaultChecked={isInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} type="checkbox" />
+                  <label className="fr-label" htmlFor={list.id + ""}>
+                    {list.nom}
+                  </label>
+                </div>
+              </div>
+            ))}
+          </fieldset>
+
+          <ul className="fr-btns-group fr-btns-group--sm">
+            <li className="fr-mt-2w">
+              {!displayNewListInput
+                ? <button className="fr-btn fr-btn--secondary" disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>+ Nouvelle liste</button>
+                :
+                <>
+                  <label className="fr-label fr-ml-1w" htmlFor="newListForm">Nouvelle liste</label>
+                  <div className={styles['newListForm']}>
+                    <input className="fr-input" id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
+                    <button className="fr-btn fr-icon-check-line fr-m-0" onClick={handleListCreation}></button>
+                  </div>
+                </>
+              }
+            </li>
+            <li><button className="fr-btn" onClick={() => setDisplayPopup(false)}>Ok</button></li>
+          </ul>
+        </div >
+      }
+    </>
+  );
 };
