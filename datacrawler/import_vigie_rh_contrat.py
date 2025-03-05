@@ -10,26 +10,26 @@ from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMappin
 from datacrawler.load.nom_des_tables import FichierSource, TABLE_CONTRAT, TABLE_REF_TYPE_CONTRAT
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
-def filter_contrat_data(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
-    numéros_finess_liste = numéros_finess_des_établissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
+def filter_contrat_data(donnees: pd.DataFrame, database: Engine) -> pd.DataFrame:
+    numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(database)
+    numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
 
     # Filtrer les données
-    donnees_filtrées = donnees[
+    donnees_filtrees = donnees[
         (donnees["numero_finess"].astype(str).str.len() == 9) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
-        (donnees["numero_finess"].astype(str).isin(numéros_finess_liste))
+        (donnees["numero_finess"].astype(str).isin(numeros_finess_liste))
     ]
 
-    return donnees_filtrées
+    return donnees_filtrees
 
 if __name__ == "__main__":
 
     # Initialisations
     logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_données = create_engine(variables_d_environnement["DATABASE_URL"])
+    base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
 
     vegie_rh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vegie_rh_data_path)
@@ -44,10 +44,10 @@ if __name__ == "__main__":
     )
 
     date_de_mise_à_jour_contrat = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_contrat)
-    traite_contract = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_contrat, base_de_données, FichierSource.VIGIE_RH_CONTRAT.value)
+    traite_contract = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_contrat, base_de_donnees, FichierSource.VIGIE_RH_CONTRAT.value)
 
     date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
-    traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_données, FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value)
+    traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_TYPE_CONTRAT.value)
 
     # Traitements des données
     if traite_contract and traite_ref:
@@ -58,14 +58,14 @@ if __name__ == "__main__":
             df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TYPE_CONTRAT.value)
 
             data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_contrat, ColumMapping.CONTRAT.value)
-            df_filtré = filter_contrat_data(data_frame, base_de_données)
+            df_filtré = filter_contrat_data(data_frame, base_de_donnees)
 
-            supprimer_donnees_existantes(TABLE_CONTRAT, base_de_données, SOURCE, logger_helios)
-            supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_CONTRAT, base_de_donnees, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_TYPE_CONTRAT, base_de_donnees, SOURCE, logger_helios)
 
             inserer_nouvelles_donnees(
                 TABLE_REF_TYPE_CONTRAT,
-                base_de_données,
+                base_de_donnees,
                 SOURCE,
                 df_ref,
                 logger_helios,
@@ -74,7 +74,7 @@ if __name__ == "__main__":
             )
             inserer_nouvelles_donnees(
                 TABLE_CONTRAT,
-                base_de_données,
+                base_de_donnees,
                 SOURCE,
                 df_filtré,
                 logger_helios,

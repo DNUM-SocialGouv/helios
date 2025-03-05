@@ -23,6 +23,10 @@
   width: 99%;
 }
 
+.print-only {
+  list-style: none;
+}
+
 @media print {
   .print-only {
     page-break-inside: avoid;

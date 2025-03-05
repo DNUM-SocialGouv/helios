@@ -13,31 +13,19 @@ export class VigieRhProfessionFiliereModel {
   @PrimaryColumn({ type: "int", name: "mois" })
   public mois!: number;
 
+  @PrimaryColumn({ type: "int", name: "profession_code" })
+  public professionCode!: number;
+
+  @Column({ type: "int", name: "quarter", nullable: false })
+  public quarter!: number;
+
   @ManyToOne(() => VigieRhRefProfessionFiliereModel, { eager: true })
   @JoinColumn({ name: "profession_code", referencedColumnName: "code" })
   public readonly profession!: VigieRhRefProfessionFiliereModel;
 
-  @Column({ type: "float", nullable: true, name: "turnover" })
-  public turnover!: number | null;
+  @Column({ type: "int", name: "effectif_filiere", nullable: true })
+  public effectifFiliere?: number;
 
-  @Column({ type: "float", nullable: true, name: "taux_entrees" })
-  public tauxEntrees!: number | null;
-
-  @Column({ type: "float", nullable: true, name: "taux_sorties" })
-  public tauxSorties!: number | null;
-
-  @Column({ type: "int", nullable: true, name: "nombre_entrees" })
-  public nombreEntrees!: number | null;
-
-  @Column({ type: "int", nullable: true, name: "nombre_sorties" })
-  public nombreSorties!: number | null;
-
-  @Column({ type: "float", nullable: true, name: "region_turnover" })
-  public regionTurnover!: number | null;
-
-  @Column({ type: "float", nullable: true, name: "nation_turnover" })
-  public nationTurnover!: number | null;
-
-  @Column({ type: "float", nullable: true, name: "groupe_turnover" })
-  public groupeTurnover!: number | null;
+  @Column({ type: "int", name: "effectif_etab", nullable: true })
+  public effectifEtab?: number;
 }

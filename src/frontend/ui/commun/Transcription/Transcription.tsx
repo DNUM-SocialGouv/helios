@@ -56,7 +56,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
                           </tr>
                         </thead>
                         <tbody>
-                          {libellés.map((libellé, index) => (
+                          {libellés?.map((libellé, index) => (
                             <tr key={libellé}>
                               <td>{libellé}</td>
                               {valeurs.map((valeur, index2) => (

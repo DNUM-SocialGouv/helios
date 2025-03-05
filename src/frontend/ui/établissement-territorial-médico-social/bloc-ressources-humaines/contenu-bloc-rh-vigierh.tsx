@@ -24,6 +24,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
     };
 
     const showNewBadge = new Date() <= new Date('2025-09-01');
+
     return (
         <div>
             <section className={styles["sous-bloc"] + " fr-accordion"} data-testid="sous-bloc-rh-helios">
