@@ -1,9 +1,9 @@
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Title, ChartOptions } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-import styles from "./GraphiqueLine.module.css";
-import { Transcription } from "../../../commun/Transcription/Transcription";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { Transcription } from "../../../commun/Transcription/Transcription";
+import styles from "./GraphiqueLine.module.css";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Title);
 
@@ -12,7 +12,7 @@ interface MonthYear {
     annee: number;
 }
 
-interface EffectifsData {
+export interface EffectifsData {
         dataFiliere: number[];
         dataEtab: number[];
         dataMoisAnnee: MonthYear[];
@@ -33,7 +33,7 @@ interface LineChartProps {
 const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEffectifsTottaux, dataEffectifs}: LineChartProps) => {
 
     const { wording } = useDependencies();
-    
+
     const gtidColor = "#c8c8c880" // gris
 
     const moisNoms = [
@@ -43,7 +43,7 @@ const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEff
 
     const labels = new Array(36).fill(""); // Labels vides
 
-    const labelsTranscription = dataEffectifs.dataMoisAnnee.map((monthYear) => {
+    const labelsTranscription = dataEffectifs.dataMoisAnnee?.map((monthYear) => {
         const mois = moisNoms[monthYear.mois - 1];
         const annee = monthYear.annee;
         return `${mois} ${annee}`;
@@ -121,11 +121,11 @@ const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEff
                 enabled: true,
                 callbacks: {
                     label: function (tooltipItem) {
-                        let index = tooltipItem.dataIndex; 
-                        let moisAnnee = dataEffectifs.dataMoisAnnee[index];                        
-                        let moisNom = moisAnnee ? moisNoms[moisAnnee.mois - 1] : "N/A";
-                        let xValue = moisAnnee ? `${moisNom} ${moisAnnee.annee}` : "N/A";
-                        let yValue = tooltipItem.raw;
+                        const index = tooltipItem.dataIndex; 
+                        const moisAnnee = dataEffectifs.dataMoisAnnee[index];                        
+                        const moisNom = moisAnnee ? moisNoms[moisAnnee.mois - 1] : "N/A";
+                        const xValue = moisAnnee ? `${moisNom} ${moisAnnee.annee}` : "N/A";
+                        const yValue = tooltipItem.raw;
                         
                         return ` ${xValue} : ${yValue}`;
                     }

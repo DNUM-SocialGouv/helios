@@ -15,7 +15,7 @@ import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_r
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
-import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereData } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -170,10 +170,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { trancheAge: "DESC" },
     });
     const professionFiliere = await this.getProfessionFiliere(numeroFinessET)
-    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, professionFiliere)
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, professionFiliere as unknown as ProfessionFiliere)
   }
 
-  private construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[], professionFiliereModel: any): EtablissementTerritorialMedicoSocialVigieRH {
+  private async construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[], professionFiliereModel: ProfessionFiliere): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
     const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
@@ -187,21 +187,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const professionFiliere: ProfessionFiliere[] = professionFiliereModel
-    .filter((item: ProfessionFiliere | null) => item !== null) // Filtre les éléments null
-    .map((item: ProfessionFiliere) => ({
-      categorie: item.categorie,
-      data: item.data ? item.data.map(profession => ({
-        annee: profession.annee,
-        mois: profession.mois,
-        effectifFiliere: profession.effectifFiliere,
-        effectifEtab: profession.effectifEtab,
-      })) : []
-    }));
-
     const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
       return trancheModel.trancheAge ?? '';
     })
+
+    const professionFiliere = await this.construisProfessionFiliere(professionFiliereModel);
 
     return {
       pyramideAges,
@@ -210,10 +200,32 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
   }
 
+  private async construisProfessionFiliere(professionFiliereModel: ProfessionFiliere): Promise<{ data: ProfessionFiliereData[]; dateDeMiseAJour: string }> {
+    const professionFiliereFiltree: ProfessionFiliereData[] = professionFiliereModel.data
+      .filter((item: ProfessionFiliereData | null) => item !== null) // Filtre les éléments null
+      .map((item: ProfessionFiliereData) => ({
+        categorie: item.categorie,
+        dataCategorie: item.dataCategorie ? item.dataCategorie.map(profession => ({
+          annee: profession.annee,
+          mois: profession.mois,
+          effectifFiliere: profession.effectifFiliere,
+          effectifEtab: profession.effectifEtab,
+        })) : []
+      }));
+
+    const dateDeMiseÀJourprofessionFiliereModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_FILIERE);
+
+    return {
+      data: professionFiliereFiltree,
+      dateDeMiseAJour: dateDeMiseÀJourprofessionFiliereModel.dernièreMiseÀJour
+    };
+  }
+
   async getProfessionFiliere(numeroFinessET: string) {
     const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
       order: { code: "ASC" }
     });
+    const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
 
     const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
 
@@ -230,11 +242,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
       return {
         categorie: itemRef.label,
-        data: professionFiliere
+        dataCategorie: professionFiliere
       }
     }))
 
-    return data
+    return {data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere}
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {

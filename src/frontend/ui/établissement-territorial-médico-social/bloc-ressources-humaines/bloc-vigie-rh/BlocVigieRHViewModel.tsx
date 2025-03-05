@@ -1,7 +1,6 @@
-import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliereRow } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { StringFormater } from "../../../commun/StringFormater";
-import { CategorieData } from "./GraphiqueLine";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere} from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
+import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
     annee: number;
@@ -23,7 +22,7 @@ export class BlocVigieRHViewModel {
         return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
     }
     public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
-        return this.etablissementTerritorialVRMedicoSocial.professionFiliere[0]?.categorie !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere.length === 0;
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere.data[0].categorie !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
     }
 
     public get lesAgesNeSontIlsPasAutorisee(): boolean {
@@ -31,7 +30,7 @@ export class BlocVigieRHViewModel {
     }
 
     public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-        return this.etablissementTerritorialVRMedicoSocial.professionFiliere[0]?.categorie === 'ko'
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere.data[0]?.categorie === 'ko'
     }
 
     public get lesDonneesVgRHPasRenseignees(): string[] {
@@ -88,29 +87,30 @@ export class BlocVigieRHViewModel {
     }
 
     public get dateDeMiseAJourEffectifs(): string {
-        return StringFormater.formatDate("2024-11-22");
+        return StringFormater.formatDate(this.etablissementTerritorialVRMedicoSocial.professionFiliere.dateDeMiseAJour);
     }
 
-
-    public get lesDonneesEffectifs(): CategorieData[] {
+    public get lesDonneesEffectifs(): ProfessionFiliere {
         const dataEffectifs = this.etablissementTerritorialVRMedicoSocial.professionFiliere;
 
-        const transformData = (categories: { categorie: string; data: ProfessionFiliereRow[] }[]): CategorieData[] => {
-            return categories?.map(({ categorie, data }) => ({
+        const transformData = (dataEffectifs: ProfessionFiliere): any => {
+            return dataEffectifs?.data?.map(({ categorie, dataCategorie }) => ({
                 categorie,
-                data: {
-                    dataFiliere: data.map(entry => entry.effectifFiliere),
-                    dataEtab: data.map(entry => entry.effectifEtab),
-                    dataMoisAnnee: data.map(({ mois, annee }) => ({ mois, annee })),
+                dataCategorie: {
+                    dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
+                    dataEtab: dataCategorie?.map(entry => entry.effectifEtab),
+                    dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
                 },
             }));
         };
         
-        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere !== null)
+        let transformedData = [];
+        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere.data !== null)
         {
-            return transformData(dataEffectifs);
+            transformedData =  transformData(dataEffectifs)
         }
-        else return [];
+
+        return {...dataEffectifs, data: transformedData}
     }
 
 }

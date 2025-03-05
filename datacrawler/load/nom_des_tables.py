@@ -67,10 +67,7 @@ class FichierSource(Enum):
     VIGIE_RH_REF_PROFESSION_FILIERE = "vigierh_ref_profession1"
     # profession_groupe
     VIGIE_RH_PROFESSION_GROUPE = "vigierh_profession2"
-    VIGIE_RH_REF_MASQUE = "vigierh_ref_masque"
     VIGIE_RH_REF_PROFESSION_GROUPE = "vigierh_ref_profession2"
-    VIGIE_RH_REF_QUALITE = "vigierh_ref_qualite"
-    VIGIE_RH_REF_REDRESSEMENT = "vigierh_ref_redressement"
     # tranches des ages
     VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
     VIGIE_RH_PYRAMIDE = "vigierh_pyramide"

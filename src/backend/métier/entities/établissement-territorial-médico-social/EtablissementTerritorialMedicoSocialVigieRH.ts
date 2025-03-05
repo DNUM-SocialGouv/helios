@@ -15,14 +15,19 @@ export type ProfessionFiliereRow = Readonly<{
     effectifEtab: number;
 }>;
 
-export type ProfessionFiliere = Readonly<{
+export type ProfessionFiliereData = Readonly<{
     categorie: string;
-    data: ProfessionFiliereRow[];
+    dataCategorie: ProfessionFiliereRow[];
+}>;
+
+export type ProfessionFiliere = Readonly<{
+    dateDeMiseAJour: string;
+    data: ProfessionFiliereData[];
 }>;
 
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
     pyramideAges: PyramideAges[];
     tranchesAgesLibelles: string[];
-    professionFiliere : ProfessionFiliere[];
+    professionFiliere : ProfessionFiliere;
 }>;
 

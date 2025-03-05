@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
-import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/ContenuTauxOccupationHébergementPermanent";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
+import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
+import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/ContenuTauxOccupationHébergementPermanent";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
-import LineChart from "./GraphiqueLine";
+import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 
 type BlocVigieRHProps = Readonly<{
@@ -106,13 +106,13 @@ export const BlocVigieRH = ({
                         />
 
                         <div className="fr-grid-row">
-                            {donneesEffectifs?.map((item) => (
+                            {donneesEffectifs.data?.map((item) => (
                                 <LineChart
                                     categorieName={item.categorie}
+                                    classContainer="fr-col-6 fr-mb-4w"
                                     couleurCategorie={couleurCategorie}
                                     couleurEffectifsTottaux={couleurEffectifsTottaux}
-                                    classContainer="fr-col-6 fr-mb-4w"
-                                    dataEffectifs={item.data}
+                                    dataEffectifs={item.dataCategorie as unknown as EffectifsData}
                                     key={item.categorie}
                                 />
                             ))}
