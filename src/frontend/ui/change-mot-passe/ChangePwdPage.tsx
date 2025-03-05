@@ -14,7 +14,8 @@ export const ChangePwdPage = () => {
         annuler,
         errorMessage,
         isLoading,
-        updated
+        updated,
+        criteriaNewPassword,
     } = useChangeMdp();
 
     return (
@@ -23,6 +24,7 @@ export const ChangePwdPage = () => {
             changePassword={changePassword}
             confirmPasswordValue={confirmPasswordValue}
             confirmPasswordValueOnChange={confirmPasswordValueOnChange}
+            criteriaNewPassword={criteriaNewPassword}
             errorMessage={errorMessage}
             isLoading={isLoading}
             oldPasswordValue={oldPasswordValue}

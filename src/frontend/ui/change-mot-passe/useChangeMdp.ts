@@ -4,6 +4,21 @@ import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 
+export type PasswordCriteria = {
+    length: boolean;
+    uppercase: boolean;
+    lowercase: boolean;
+    number: boolean;
+    specialChar: boolean;
+}
+
+const defaultCriteria: PasswordCriteria = {
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+};
 
 export function useChangeMdp() {
     const router = useRouter();
@@ -17,6 +32,17 @@ export function useChangeMdp() {
     const [validToken, setValidToken] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isChecking, setIsChecking] = useState(true);
+    const [criteriaNewPassword, setCriteriaNewPassword] = useState(defaultCriteria);
+
+    const criteria = (password: string) => {
+        return {
+            length: password.length >= 12,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%^&*]/.test(password),
+        };
+    }
 
     const { data } = useSession();
 
@@ -31,6 +57,7 @@ export function useChangeMdp() {
 
     const passwordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPasswordValue(event.target.value);
+        setCriteriaNewPassword(criteria(event.target.value))
     }
 
     const confirmPasswordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -116,6 +143,7 @@ export function useChangeMdp() {
         checkTokenService,
         errorMessage,
         updated,
-        isLoading
+        isLoading,
+        criteriaNewPassword,
     }
 }
