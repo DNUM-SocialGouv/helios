@@ -7,7 +7,8 @@ function resizeChartAtPrint() {
 }
 
 export function resizeChartOnPrint() {
-  if ("matchMedia" in window) {
+  // La fonction doit toujours être présente donc le « in » ne fonctionne pas
+  if (window.matchMedia) {
     window.matchMedia("print").addEventListener("change", function () {
       resizeChartAtPrint();
     });

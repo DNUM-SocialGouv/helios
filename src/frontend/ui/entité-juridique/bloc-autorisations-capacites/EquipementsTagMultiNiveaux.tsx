@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ReactElement } from "react";
 
 import {
-  EquipementEtablissement,
+  EquipementEtablissement as EquipementEtablissementType,
   EquipementLourds,
   Equipements,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -36,7 +36,7 @@ export const EquipementsTagMultiniveaux = ({ equipementLourds }: EquipementsProp
   );
 };
 
-const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }: EquipementEtablissement): ReactElement => {
+const EquipementEtablissement = ({ numeroFiness, nomEtablissement, equipements }: EquipementEtablissementType): ReactElement => {
   const { paths } = useDependencies();
   return (
     <li className={style["etablissement"]}>

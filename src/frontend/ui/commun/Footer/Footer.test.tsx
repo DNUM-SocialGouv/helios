@@ -20,25 +20,25 @@ describe("Le pied de page", () => {
     renderFakeComponent(<Footer />);
 
     // THEN
-    const legifrance = screen.getByRole("link", { name: `${wording.LEGIFRANCE} - ${wording.NOUVELLE_FENÊTRE}` });
+    const legifrance = screen.getByRole("link", { name: `${wording.LEGIFRANCE}` });
     expect(legifrance).toHaveAttribute("href", "https://legifrance.gouv.fr");
     expect(legifrance).toHaveAttribute("rel", "external noopener noreferrer");
     expect(legifrance).toHaveAttribute("target", "_blank");
     expect(legifrance.textContent).toBe(wording.LEGIFRANCE);
 
-    const gouvernement = screen.getByRole("link", { name: `${wording.GOUVERNEMENT} - ${wording.NOUVELLE_FENÊTRE}` });
+    const gouvernement = screen.getByRole("link", { name: `${wording.GOUVERNEMENT}` });
     expect(gouvernement).toHaveAttribute("href", "https://gouvernement.fr");
     expect(gouvernement).toHaveAttribute("rel", "external noopener noreferrer");
     expect(gouvernement).toHaveAttribute("target", "_blank");
     expect(gouvernement.textContent).toBe(wording.GOUVERNEMENT);
 
-    const servicePublic = screen.getByRole("link", { name: `${wording.SERVICE_PUBLIC} - ${wording.NOUVELLE_FENÊTRE}` });
+    const servicePublic = screen.getByRole("link", { name: `${wording.SERVICE_PUBLIC}` });
     expect(servicePublic).toHaveAttribute("href", "https://service-public.fr");
     expect(servicePublic).toHaveAttribute("rel", "external noopener noreferrer");
     expect(servicePublic).toHaveAttribute("target", "_blank");
     expect(servicePublic.textContent).toBe(wording.SERVICE_PUBLIC);
 
-    const dataGouv = screen.getByRole("link", { name: `${wording.DATA_GOUV} - ${wording.NOUVELLE_FENÊTRE}` });
+    const dataGouv = screen.getByRole("link", { name: `${wording.DATA_GOUV}` });
     expect(dataGouv).toHaveAttribute("href", "https://data.gouv.fr");
     expect(dataGouv).toHaveAttribute("rel", "external noopener noreferrer");
     expect(dataGouv).toHaveAttribute("target", "_blank");
@@ -99,7 +99,7 @@ describe("Le pied de page", () => {
     // THEN
     const licence = screen.getByText(wording.LICENCE_ETALAB);
     expect(licence).toBeInTheDocument();
-    const lienLicence = screen.getByRole("link", { name: `${wording.LICENCE_ETALAB} - ${wording.NOUVELLE_FENÊTRE}` });
+    const lienLicence = screen.getByRole("link", { name: `${wording.LICENCE_ETALAB}` });
     expect(lienLicence).toHaveAttribute("href", "https://github.com/etalab/licence-ouverte/blob/master/LO.md");
     expect(lienLicence).toHaveAttribute("rel", "external noopener noreferrer");
     expect(lienLicence).toHaveAttribute("target", "_blank");

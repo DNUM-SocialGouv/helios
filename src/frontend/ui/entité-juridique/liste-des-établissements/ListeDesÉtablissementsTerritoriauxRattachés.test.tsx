@@ -37,13 +37,13 @@ describe("affiche la liste des établissements territoriaux rattachés à l’en
     const listeDesÉtablissementsRattachés = screen.getAllByRole("listitem");
     expect(listeDesÉtablissementsRattachés).toHaveLength(établissementsTerritoriauxRattachésViewModels.nombreEtablissements);
     const établissementTerritorialMédicoSocial = within(listeDesÉtablissementsRattachés[0]).getByRole("link", {
-      name: "Établissement territorial - 0100000400 - CH NANTUA",
+      name: "ET - 0100000400 - CH NANTUA",
     });
     expect(établissementTerritorialMédicoSocial).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL}/0100000400`);
     const abréviationÉtablissementTerritorial = within(établissementTerritorialMédicoSocial).getByText("ET", { selector: "abbr" });
     expect(abréviationÉtablissementTerritorial).toHaveAttribute("title", wording.ÉTABLISSEMENT_TERRITORIAL);
     const établissementTerritorialSanitaire = within(listeDesÉtablissementsRattachés[1]).getByRole("link", {
-      name: "Établissement territorial - 5907825531 - HP VILLENEUVE DASCQ",
+      name: "ET - 5907825531 - HP VILLENEUVE DASCQ",
     });
     expect(établissementTerritorialSanitaire).toHaveAttribute("href", `${paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE}/5907825531`);
   });
