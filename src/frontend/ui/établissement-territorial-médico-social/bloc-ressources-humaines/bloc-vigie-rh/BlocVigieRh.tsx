@@ -12,6 +12,7 @@ import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
+import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -88,7 +89,7 @@ export const BlocVigieRH = ({
                 <SeparatorHorizontal></SeparatorHorizontal>
                 <IndicateurGraphique
                     contenuInfoBulle={
-                        <ContenuTauxOccupationHébergementPermanent
+                        <ContenuEffectifs
                             dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                             source={wording.CNSA}
                         />

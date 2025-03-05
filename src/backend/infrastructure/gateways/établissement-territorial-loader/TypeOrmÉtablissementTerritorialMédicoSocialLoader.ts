@@ -223,8 +223,16 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   async getProfessionFiliere(numeroFinessET: string) {
     const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
-      order: { code: "ASC" }
+      order: { label: "ASC" }
     });
+    
+    // Tri manuel en ignorant les accents
+    refProfessionFiliere.sort((a, b) => {
+      const labelA = a.label || '';
+      const labelB = b.label || '';
+      return labelA.localeCompare(labelB, 'fr', { sensitivity: 'base' });
+    });
+        
     const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
 
     const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
@@ -232,7 +240,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
         order: { annee: "ASC", mois: "ASC" },
         where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
-        take: 36, // Limite à 36 mois
+        take: 36, // Limité à 36 mois
       });
 
       // Vérifier si professionFiliere est vide
