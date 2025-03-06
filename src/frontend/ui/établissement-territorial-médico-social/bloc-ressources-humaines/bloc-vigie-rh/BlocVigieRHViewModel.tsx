@@ -22,7 +22,7 @@ export class BlocVigieRHViewModel {
         return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
     }
     public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
-        return this.etablissementTerritorialVRMedicoSocial.professionFiliere.data[0].categorie !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
     }
 
     public get lesAgesNeSontIlsPasAutorisee(): boolean {
@@ -30,7 +30,7 @@ export class BlocVigieRHViewModel {
     }
 
     public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-        return this.etablissementTerritorialVRMedicoSocial.professionFiliere.data[0]?.categorie === 'ko'
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour === 'ko'
     }
 
     public get lesDonneesVgRHPasRenseignees(): string[] {
@@ -87,7 +87,7 @@ export class BlocVigieRHViewModel {
     }
 
     public get dateDeMiseAJourEffectifs(): string {
-        return StringFormater.formatDate(this.etablissementTerritorialVRMedicoSocial.professionFiliere.dateDeMiseAJour);
+        return StringFormater.formatDate(this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour);
     }
 
     public get lesDonneesEffectifs(): ProfessionFiliere {
@@ -105,7 +105,7 @@ export class BlocVigieRHViewModel {
         };
         
         let transformedData = [];
-        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere.data !== null)
+        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data !== null)
         {
             transformedData =  transformData(dataEffectifs)
         }

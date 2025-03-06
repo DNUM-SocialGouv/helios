@@ -14,7 +14,8 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
       Vu que c'est tout ou rien pour les indicateurs ressources humaines , 
       on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
   */
-  const vigieRh = profil.ressourcesHumaines.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : { pyramideAges: [], tranchesAgesLibelles: ['ko'], professionFiliere:[{categorie: 'ko', data:[]}] };
+
+  const vigieRh = profil.ressourcesHumaines.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : { pyramideAges: [], tranchesAgesLibelles: ['ko'], professionFiliere:{ data:[], dateDeMiseAJour: 'ko' } };
 
   return {
     identité: identité,

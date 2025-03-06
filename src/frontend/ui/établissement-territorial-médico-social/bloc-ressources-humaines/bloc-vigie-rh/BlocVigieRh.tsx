@@ -6,13 +6,12 @@ import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/Indicat
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
 import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
+import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
-import { ContenuTauxOccupationHébergementPermanent } from "../../InfoBulle/ContenuTauxOccupationHébergementPermanent";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
-import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -29,7 +28,6 @@ const ListeIndicateursNonAutorisesOuNonRenseignes = ({
         return <></>
     }
 }
-
 
 export const BlocVigieRH = ({
     blocVigieRHViewModel

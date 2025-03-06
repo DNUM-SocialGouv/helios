@@ -16,7 +16,8 @@ describe("La page établissement territorial - bloc vigie rh", () => {
     const blocVigieRhEmptyViewModel = new BlocVigieRHViewModel(
         {
             pyramideAges: [],
-            tranchesAgesLibelles: []
+            tranchesAgesLibelles: [],
+            professionFiliere: { data:[], dateDeMiseAJour: '' }
         },
         wording
     );
@@ -96,8 +97,48 @@ describe("La page établissement territorial - bloc vigie rh", () => {
             const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
             expect(fermer).toBeInTheDocument();
         });
-    });
 
+
+        it("affiche l’intitulé de l’indicateur effectifs et un bouton pour accéder aux détails", () => {
+            // WHEN
+            renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+
+            // THEN
+            const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
+            expect(ressourcesHumaines).toBeInTheDocument()
+            const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
+            expect(sousBlocRhHelios).toBeInTheDocument();
+            expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
+            const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
+            const indicateur = indicateurs[2];
+            const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
+            expect(titre).toBeInTheDocument();
+            const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
+            expect(détails).toHaveAttribute("aria-controls", "nom-info-bulle-vr-effectifs");
+            expect(détails).toHaveAttribute("data-fr-opened", "false");
+        });
+
+        it('affiche le contenu de l’info bulle d"effectifs après avoir cliqué sur le bouton "détails"', () => {
+            // GIVEN
+            renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+            const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
+            expect(sousBlocRhHelios).toBeInTheDocument();
+            expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
+            const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
+            const indicateur = indicateurs[2];
+            const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
+
+            // WHEN
+            fireEvent.click(détails);
+
+            // THEN
+            expect(détails).toHaveAttribute("data-fr-opened", "true");
+            const infoBulle = within(indicateur).getByRole("dialog", { name: wording.EFFECTIFS });
+            const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
+            expect(fermer).toBeInTheDocument();
+        });
+
+    });
 
 
     it('affiche le message aucune donnée qd il pas de données vigieRH', () => {
