@@ -29,10 +29,12 @@ def est_dans_la_periode_valide(row: pd.Series) -> bool:
     # Vérifie si la ligne est dans la période valide
     if annee == annee_min and mois >= 1:  # À partir de janvier de N-2
         return True
-    elif annee > annee_min and annee < annee_actuelle:  # Entre N-2 et N
+    if annee_min < annee < annee_actuelle:  # Entre N-2 et N (simplifié avec une comparaison chaînée)
         return True
-    elif annee == annee_actuelle and mois <= mois_actuel:  # Jusqu'au mois actuel de N
+    if annee == annee_actuelle and mois <= mois_actuel:  # Jusqu'au mois actuel de N
         return True
+
+    # Si aucune condition n'est remplie, retourner False
     else:
         return False
 
