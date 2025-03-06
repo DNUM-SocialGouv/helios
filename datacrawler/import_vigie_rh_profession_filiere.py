@@ -31,7 +31,7 @@ def est_dans_la_periode_valide(row: pd.Series) -> bool:
         return True
     if annee_min < annee < annee_actuelle:  # Entre N-2 et N (simplifié avec une comparaison chaînée)
         return True
-    return annee == annee_actuelle and mois <= mois_actuel 
+    return annee == annee_actuelle and mois <= mois_actuel
 
 def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, database: Engine) -> pd.DataFrame:
     # Récupérer les numéros FINESS des établissements connus
