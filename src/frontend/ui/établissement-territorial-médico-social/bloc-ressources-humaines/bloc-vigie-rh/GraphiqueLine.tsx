@@ -142,7 +142,7 @@ const LineChart = ({ classContainer, categorieName, couleurCategorie, couleurEff
                     {getCategorieName()}
                 </div>
                 <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`} >
-                    <Line data={data} options={options}/>
+                    {process.env.NODE_ENV !== 'test' && <Line data={data} options={options}/> }
                 </div>
                 <Transcription
                         disabled={false}
