@@ -16,27 +16,22 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 def est_dans_la_periode_valide(row: pd.Series) -> bool:
     # Détermination de l'année actuelle (N) et du mois actuel
     maintenant = datetime.now()
-    annee_actuelle = maintenant.year
-    mois_actuel = maintenant.month
+    annee_actuelle: int = maintenant.year
+    mois_actuel: int = maintenant.month
 
     # Calcul de l'année N-2
-    annee_min = annee_actuelle - 2
+    annee_min: int = annee_actuelle - 2
 
     # Extraction de l'année et du mois de la ligne
-    annee = row["annee"]
-    mois = row["mois"]
+    annee: int = row["annee"]
+    mois: int = row["mois"]
 
     # Vérifie si la ligne est dans la période valide
     if annee == annee_min and mois >= 1:  # À partir de janvier de N-2
         return True
     if annee_min < annee < annee_actuelle:  # Entre N-2 et N (simplifié avec une comparaison chaînée)
         return True
-    if annee == annee_actuelle and mois <= mois_actuel:  # Jusqu'au mois actuel de N
-        return True
-
-    # Si aucune condition n'est remplie, retourner False
-    else:
-        return False
+    return annee == annee_actuelle and mois <= mois_actuel 
 
 def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, database: Engine) -> pd.DataFrame:
     # Récupérer les numéros FINESS des établissements connus
