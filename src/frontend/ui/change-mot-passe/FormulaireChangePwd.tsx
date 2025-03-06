@@ -1,7 +1,9 @@
-import { ChangeEventHandler, MouseEventHandler, FormEventHandler } from "react";
+import { ChangeEventHandler, MouseEventHandler, FormEventHandler, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./changeMdp.module.css";
+import "@gouvfr/dsfr/dist/component/form/form.min.css";
+import { PasswordCriteria } from "./useChangeMdp";
 
 type FormulaireChangeMdpProps = Readonly<{
   annuler: MouseEventHandler<HTMLButtonElement>;
@@ -15,19 +17,22 @@ type FormulaireChangeMdpProps = Readonly<{
   passwordValueOnChange: ChangeEventHandler<HTMLInputElement>;
   isLoading: boolean;
   updated: boolean;
+  criteriaNewPassword: PasswordCriteria;
 }>;
 
 
-export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue, oldPasswordValueOnChange, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange, updated }: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePassword, oldPasswordValue, oldPasswordValueOnChange, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange, updated }: FormulaireChangeMdpProps) => {
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
   const { wording } = useDependencies();
-
+  
+  const noError = Object.values(criteriaNewPassword).every((value) => value)
   return (
     <div className="fr-grid-row">
       <section className="fr-col-12 fr-mt-5w">
         <h1 className={styles["title"]}>{wording.CHANGEMENT_MOT_PASSE_TITRE}</h1>
         <p>{wording.CHANGEMENT_MOT_PASSE_DESCRIPTION}</p>
         <div className="fr-grid-row fr-mt-8w fr-ml-8w">
-          <form className="fr-col-11 fr-mt-5w" onSubmit={changePassword} >
+          <form className="fr-col-11 fr-mt-5w" onSubmit={noError ? changePassword : (e) => {e.preventDefault()}} >
             {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}
             {updated && <div className={"fr-mb-5w " + styles["success"]}> votre mot de passe a été changé avec succès</div>}
             <div className="fr-grid-row ">
@@ -40,9 +45,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                 <input
                   className="fr-input"
                   onChange={oldPasswordValueOnChange}
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                   required
-                  title={wording.INVALID_PASSWORD_MESSAGE}
                   type="password"
                   value={oldPasswordValue}
                 />
@@ -58,12 +61,29 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, oldPasswordValue,
                 <input
                   className="fr-input"
                   onChange={passwordValueOnChange}
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
+                  onFocus={() => setPasswordInputFocus(true)}
                   required
-                  title={wording.INVALID_PASSWORD_MESSAGE}
                   type="password"
                   value={passwordValue}
                 />
+                {passwordInputFocus && <div aria-live="polite" className="fr-messages-group" id="password-input-9-messages">
+                  <p className="fr-message" id="password-input-9-message">Votre mot de passe doit contenir :</p>
+                  <p className={`fr-message ${criteriaNewPassword.length ? "fr-message--valid" : "fr-message--error"}`}>
+                    12 caractères
+                  </p>
+                  <p className={`fr-message ${criteriaNewPassword.uppercase ? "fr-message--valid" : "fr-message--error"}`}>
+                    1 caractère majuscule
+                  </p>
+                  <p className={`fr-message ${criteriaNewPassword.lowercase ? "fr-message--valid" : "fr-message--error"}`}>
+                    1 caractère minuscule
+                  </p>
+                  <p className={`fr-message ${criteriaNewPassword.number ? "fr-message--valid" : "fr-message--error"}`}>
+                    1 chiffre
+                  </p>
+                  <p className={`fr-message ${criteriaNewPassword.specialChar ? "fr-message--valid" : "fr-message--error"}`}>
+                    1 caractère spécial parmi !@#$%^&*
+                  </p>
+                </div>}
               </div>
             </div>
             <div className="fr-grid-row  fr-mt-5w">
