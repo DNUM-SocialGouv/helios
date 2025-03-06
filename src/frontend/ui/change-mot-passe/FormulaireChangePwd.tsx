@@ -45,9 +45,7 @@ export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePasswo
                 <input
                   className="fr-input"
                   onChange={oldPasswordValueOnChange}
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                   required
-                  title={wording.INVALID_PASSWORD_MESSAGE}
                   type="password"
                   value={oldPasswordValue}
                 />
