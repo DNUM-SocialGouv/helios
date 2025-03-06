@@ -89,7 +89,7 @@ export const BlocVigieRH = ({
                     contenuInfoBulle={
                         <ContenuEffectifs
                             dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                            source={wording.CNSA}
+                            source={wording.VIGIE_RH}
                         />
                     }
                     identifiant="vr-effectifs"

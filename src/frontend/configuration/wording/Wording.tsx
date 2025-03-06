@@ -376,6 +376,8 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly VIGIE_RH: ReactElement;
+  
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
