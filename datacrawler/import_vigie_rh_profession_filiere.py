@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import pandas as pd
 import numpy as np
 from sqlalchemy.engine import create_engine, Engine
@@ -11,25 +12,54 @@ from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMappin
 from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
+
+def est_dans_la_periode_valide(row: pd.Series) -> bool:
+    # Détermination de l'année actuelle (N) et du mois actuel
+    maintenant = datetime.now()
+    annee_actuelle = maintenant.year
+    mois_actuel = maintenant.month
+
+    # Calcul de l'année N-2
+    annee_min = annee_actuelle - 2
+
+    # Extraction de l'année et du mois de la ligne
+    annee = row["annee"]
+    mois = row["mois"]
+
+    # Vérifie si la ligne est dans la période valide
+    if annee == annee_min and mois >= 1:  # À partir de janvier de N-2
+        return True
+    elif annee > annee_min and annee < annee_actuelle:  # Entre N-2 et N
+        return True
+    elif annee == annee_actuelle and mois <= mois_actuel:  # Jusqu'au mois actuel de N
+        return True
+    else:
+        return False
+
 def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, database: Engine) -> pd.DataFrame:
+    # Récupérer les numéros FINESS des établissements connus
     numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(database)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
-
-    year_regex = r"(19\d{2}|2\d{3})"
 
     # Convertir 'mois' et 'quarter' en nombres entiers après gestion des flottants
     donnees["mois"] = pd.to_numeric(donnees["mois"], errors='coerce').fillna(0).astype(int)
     donnees["quarter"] = pd.to_numeric(donnees["quarter"], errors='coerce').fillna(0).astype(int)
 
-    # Filtrer les données
+    # Appliquer la fonction de vérification de la période valide
+    donnees["est_valide"] = donnees.apply(est_dans_la_periode_valide, axis=1)
+
+    # Filtrer les données selon les critères demandés
     donnees_filtrees = donnees[
         (donnees["numero_finess"].astype(str).str.len() == 9) &
         (donnees["numero_finess"].astype(str).isin(numeros_finess_liste)) &
-        (donnees["annee"].astype(str).str.match(year_regex)) &
-        (donnees["mois"].astype(str).astype(int).between(1, 12)) &
-        (donnees["quarter"].astype(str).astype(int).between(1, 4)) &
+        (donnees["est_valide"]) &  # Utiliser la colonne "est_valide" pour filtrer
+        (donnees["mois"].between(1, 12)) &
+        (donnees["quarter"].between(1, 4)) &
         (donnees["profession_code"].isin(ref_code))
     ]
+
+    # Supprimer la colonne temporaire "est_valide"
+    donnees_filtrees = donnees_filtrees.drop(columns=["est_valide"])
 
     return donnees_filtrees
 

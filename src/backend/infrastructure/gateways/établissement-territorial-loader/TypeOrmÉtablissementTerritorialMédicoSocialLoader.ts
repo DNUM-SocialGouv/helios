@@ -240,7 +240,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
         order: { annee: "ASC", mois: "ASC" },
         where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
-        take: 36, // Limité à 36 mois
       });
 
       // Vérifier si professionFiliere est vide
