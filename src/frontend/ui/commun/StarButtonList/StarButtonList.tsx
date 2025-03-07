@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, useContext, useEffect, useRef, useState } from "react";
+import { KeyboardEvent as KeyboardEventReact, useContext, useEffect, useRef, useState } from "react";
 
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
@@ -24,10 +24,17 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const [popupX, setPopupX] = useState(0);
   const [popupY, setPopupY] = useState(0);
 
+  let buttonStyle = "starInEstablishment";
+  if (parent === "titre") {
+    buttonStyle = "star";
+  } else if (parent === "tab") {
+    buttonStyle = "star-tab"
+  }
+
   useEffect(() => {
     // Cache la popup si on clic a l’exterieur
     function handleClickOutside(event: MouseEvent) {
-      if (componentRef.current && !componentRef.current.contains(event.target)) {
+      if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
         setDisplayPopup(false);
         setDisplayNewListInput(false);
         setNewListName("");
@@ -84,13 +91,13 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     if (list) {
       const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
       const favorisList = list.splice(favorisListIndex, 1);
-      const partialSortedList = list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(b.dateCreation).getTime() - new Date(a.dateCreation).getTime());
-      return favorisList.concat(...partialSortedList);
+      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(b.dateCreation).getTime() - new Date(a.dateCreation).getTime());
+      return favorisList.concat(...list);
     }
     return undefined;
   }
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: KeyboardEventReact) => {
     if (event.key === 'Enter') {
       handleListCreation();
     }
@@ -99,13 +106,13 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   return (
     <>
       <button
-        className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[parent === "tab" ? "star-tab" : parent === "titre" ? "star" : "starInEstablishment"]}
+        className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[buttonStyle]}
         onClick={handleDisplayPopup}
         ref={buttonRef}
         title={isInFavoris() ? wording.ETOILE_ETAB_DANS_LISTE : wording.ETOILE_ETAB_PAS_DANS_LISTE}
       />
       {displayPopup &&
-        <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { top: popupY, left: popupX } : {}}>
+        <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { position: "fixed", top: popupY, left: popupX } : {}}>
 
           <fieldset aria-labelledby="checkboxes-legend checkboxes-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer']} id="checkboxes">
             <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
