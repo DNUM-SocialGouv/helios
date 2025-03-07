@@ -3,6 +3,7 @@ import { KeyboardEvent, MouseEvent, useContext, useEffect, useRef, useState } fr
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
+import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 import styles from "./StarButtonList.module.css";
 
@@ -13,6 +14,7 @@ type StarButtonProps = Readonly<{
 
 export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const userContext = useContext(UserContext);
+  const { wording } = useDependencies();
   const { createFavorisList } = useFavoris();
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const [displayNewListInput, setDisplayNewListInput] = useState<boolean>(false);
@@ -94,21 +96,20 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     }
   };
 
-  // TODO: Ajouter le wording au niveau de la legende
   return (
     <>
       <button
         className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[parent === "tab" ? "star-tab" : parent === "titre" ? "star" : "starInEstablishment"]}
         onClick={handleDisplayPopup}
         ref={buttonRef}
-        title={isInFavoris() ? "Enlever cet établissement des favoris" : "Ajouter cet établissement aux favoris"}
+        title={isInFavoris() ? wording.ETOILE_ETAB_DANS_LISTE : wording.ETOILE_ETAB_PAS_DANS_LISTE}
       />
       {displayPopup &&
         <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { top: popupY, left: popupX } : {}}>
 
           <fieldset aria-labelledby="checkboxes-legend checkboxes-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer']} id="checkboxes">
             <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
-              Mes listes
+              {wording.ETOILE_MES_LISTES}
             </legend>
             {sortedList()?.map(list => (
               <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
@@ -125,7 +126,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
           <ul className="fr-btns-group fr-btns-group--sm">
             <li className="fr-mt-2w">
               {!displayNewListInput
-                ? <button className="fr-btn fr-btn--secondary" disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>+ Nouvelle liste</button>
+                ? <button className="fr-btn fr-btn--secondary" disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE}</button>
                 :
                 <>
                   <label className="fr-label fr-ml-1w" htmlFor="newListForm">Nouvelle liste</label>
