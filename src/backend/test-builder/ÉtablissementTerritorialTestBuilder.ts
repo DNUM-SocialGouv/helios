@@ -867,8 +867,22 @@ export class ÉtablissementTerritorialTestBuilder {
         "effectifFemmeRef": 12,
       }
     ],
-    tranchesAgesLibelles: ['15-20']
-
+    tranchesAgesLibelles: ['15-20'],
+    professionFiliere:
+    {
+      dateDeMiseAJour: "10-10-2020",
+      data: [
+        {
+          categorie: "test",
+          dataCategorie: [{
+            annee: 2020,
+            mois: 2,
+            effectifFiliere: 20,
+            effectifEtab: 25,
+          }]
+        }
+      ]
+    }
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

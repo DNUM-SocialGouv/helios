@@ -13,8 +13,16 @@ export class AjoutVigieRhProfessionFiliere1738328763147 implements MigrationInte
           effectif_filiere INT,
           effectif_etab INT, 
           PRIMARY KEY (numero_finess, annee, mois, profession_code),
-          CONSTRAINT fk_profession_filiere_profession FOREIGN KEY (profession_code) 
-          REFERENCES vigierh_ref_profession_filiere(code)
+
+          CONSTRAINT fk_numero_finess_etablissement_territorial_vigierh_profession_filiere
+            FOREIGN KEY (numero_finess)
+            REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
+            ON DELETE CASCADE,
+
+          CONSTRAINT fk_profession_filiere_profession_code
+            FOREIGN KEY (profession_code) 
+            REFERENCES vigierh_ref_profession_filiere(code)
+            ON DELETE CASCADE
       );
     `);
 

@@ -433,6 +433,8 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
@@ -447,6 +449,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -631,7 +634,11 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
   readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
   readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
+  readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS_TOTAUX: string = "Effectifs totaux";
+  readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly MOIS_ANNEES: string = "Mois / Années";
 
 }
 

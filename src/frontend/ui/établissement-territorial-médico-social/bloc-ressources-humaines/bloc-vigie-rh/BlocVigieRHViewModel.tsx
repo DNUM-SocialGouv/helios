@@ -1,5 +1,6 @@
-import { EtablissementTerritorialMedicoSocialVigieRH } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere} from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
+import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
     annee: number;
@@ -8,6 +9,7 @@ export type DonneesVigieRh = {
     effectifHommeRef: number[];
     effectifFemmeRef: number[];
 }
+
 export class BlocVigieRHViewModel {
 
     public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
@@ -19,14 +21,22 @@ export class BlocVigieRHViewModel {
     public get lesAgesNeSontIlsPasRenseignees(): boolean {
         return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
     }
+    public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
+    }
 
     public get lesAgesNeSontIlsPasAutorisee(): boolean {
         return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] === 'ko'
     }
 
+    public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
+        return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour === 'ko'
+    }
+
     public get lesDonneesVgRHPasRenseignees(): string[] {
         const nonRenseignees = [];
         if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
+        if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
 
         return nonRenseignees;
     }
@@ -34,6 +44,7 @@ export class BlocVigieRHViewModel {
     public get lesDonneesVgRHPasAutorises(): string[] {
         const nonAutorises = [];
         if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
+        if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
 
         return nonAutorises;
     }
@@ -72,7 +83,34 @@ export class BlocVigieRHViewModel {
     }
 
     public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
-        return this.lesAgesNeSontIlsPasRenseignees;
+        return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees;
+    }
+
+    public get dateDeMiseAJourEffectifs(): string {
+        return StringFormater.formatDate(this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour);
+    }
+
+    public get lesDonneesEffectifs(): ProfessionFiliere {
+        const dataEffectifs = this.etablissementTerritorialVRMedicoSocial.professionFiliere;
+
+        const transformData = (dataEffectifs: ProfessionFiliere): any => {
+            return dataEffectifs?.data?.map(({ categorie, dataCategorie }) => ({
+                categorie,
+                dataCategorie: {
+                    dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
+                    dataEtab: dataCategorie?.map(entry => entry.effectifEtab),
+                    dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
+                },
+            }));
+        };
+        
+        let transformedData = [];
+        if (this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data !== null)
+        {
+            transformedData =  transformData(dataEffectifs)
+        }
+
+        return {...dataEffectifs, data: transformedData}
     }
 
 }

@@ -376,6 +376,8 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly VIGIE_RH: ReactElement;
+  
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
@@ -544,4 +546,9 @@ export interface Wording {
   readonly EFFECTIF_FEMMES_REF: string;
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
+  readonly EFFECTIFS: string;
+  readonly EFFECTIFS_TOTAUX: string;
+  readonly VIGIE_RH_CATEGORIE: string;
+  readonly MOIS_ANNEES: string;
+  
 }

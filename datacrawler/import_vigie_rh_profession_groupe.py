@@ -15,10 +15,10 @@ from datacrawler.load.nom_des_tables import (
 )
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
-def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, base_de_donnees: Engine) -> pd.DataFrame:
+def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, database : Engine) -> pd.DataFrame:
 
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
-    numéros_finess_liste = numéros_finess_des_établissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
+    numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(database)
+    numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
 
@@ -27,22 +27,22 @@ def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, b
     donnees["quarter"] = pd.to_numeric(donnees["quarter"], errors='coerce').fillna(0).astype(int)
 
     # Filtrer les données
-    donnees_filtrées = donnees[
+    donnees_filtrees = donnees[
         (donnees["numero_finess"].astype(str).str.len() == 9) &
-        (donnees["numero_finess"].astype(str).isin(numéros_finess_liste)) &
+        (donnees["numero_finess"].astype(str).isin(numeros_finess_liste)) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
         (donnees["mois"].astype(str).astype(int).between(1, 12)) &
         (donnees["quarter"].astype(str).astype(int).between(1, 4)) &
         (donnees["profession_code"].isin(ref_code))
     ]
 
-    return donnees_filtrées
+    return donnees_filtrees
 
 if __name__ == "__main__":
 
     # Initialisations
     logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_données = create_engine(variables_d_environnement["DATABASE_URL"])
+    base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
 
     vegie_rh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vegie_rh_data_path)
@@ -59,14 +59,14 @@ if __name__ == "__main__":
     date_de_mise_à_jour_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_groupe)
     traite_profession_groupe = verifie_si_le_fichier_est_traite(
         date_de_mise_à_jour_profession_groupe,
-        base_de_données,
+        base_de_donnees,
         FichierSource.VIGIE_RH_PROFESSION_GROUPE.value
     )
 
     date_de_mise_à_jour_ref_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_profession_groupe)
     traite_ref_profession_groupe = verifie_si_le_fichier_est_traite(
         date_de_mise_à_jour_ref_profession_groupe,
-        base_de_données,
+        base_de_donnees,
         FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value
     )
 
@@ -82,14 +82,14 @@ if __name__ == "__main__":
             code_list_ref_profession_groupe = np.array(df_ref_profession_groupe['code'].tolist())
 
             data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
-            df_filtré = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_données)
+            df_filtre = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_donnees)
 
-            supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
-            supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_donnees, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_donnees, SOURCE, logger_helios)
 
             inserer_nouvelles_donnees(
                 TABLE_REF_PROFESSION_GROUPE,
-                base_de_données,
+                base_de_donnees,
                 SOURCE,
                 df_ref_profession_groupe,
                 logger_helios,
@@ -98,9 +98,9 @@ if __name__ == "__main__":
             )
             inserer_nouvelles_donnees(
                 TABLE_PROFESSION_GROUPE,
-                base_de_données,
+                base_de_donnees,
                 SOURCE,
-                df_filtré,
+                df_filtre,
                 logger_helios,
                 FichierSource.VIGIE_RH_PROFESSION_GROUPE,
                 date_de_mise_à_jour_profession_groupe

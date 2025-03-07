@@ -20,7 +20,20 @@ export enum FichierSource {
   DIAMANT_MEN_HAPI = "men_hapi",
   SIREC = "sirec",
   SIVSS = "sivss",
-  SIICEA = "siicea"
+  SIICEA = "siicea",
+
+  // contrat
+  VIGIE_RH_CONTRAT = "vigierh_contrat",
+  VIGIE_RH_REF_TYPE_CONTRAT = "vigierh_ref_nature_contrat",
+  // profession_filiere
+  VIGIE_RH_PROFESSION_FILIERE = "vigierh_profession1",
+  VIGIE_RH_REF_PROFESSION_FILIERE = "vigierh_ref_profession1",
+  // profession_groupe
+  VIGIE_RH_PROFESSION_GROUPE = "vigierh_profession2",
+  VIGIE_RH_REF_PROFESSION_GROUPE = "vigierh_ref_profession2",
+  // tranches des ages
+  VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age",
+  VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
 }
 
 @Entity({ name: "date_mise_a_jour_fichier_source" })

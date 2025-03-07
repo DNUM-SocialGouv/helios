@@ -592,7 +592,22 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         effectifFemmeRef: 18
       }
     ],
-    tranchesAgesLibelles: []
+    tranchesAgesLibelles: [],
+    professionFiliere:
+    {
+      dateDeMiseAJour: "10-10-2020",
+      data: [
+        {
+          categorie: "test",
+          dataCategorie: [{
+            annee: 2020,
+            mois: 2,
+            effectifFiliere: 20,
+            effectifEtab: 25,
+          }]
+        }
+      ]
+    }
   };
 
   public static crée(
