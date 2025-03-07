@@ -69,7 +69,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const handleDisplayPopup = () => {
     // On recupere la position du bouton etoile pour calculer la position de la popup
     if (buttonRef.current) {
-      const popupTop = buttonRef.current.getBoundingClientRect().bottom;
+      const popupTop = buttonRef.current.getBoundingClientRect().bottom + document.documentElement.scrollTop;
       const popupLeft = buttonRef.current.getBoundingClientRect().left;
       setPopupX(popupLeft);
       setPopupY(popupTop);
@@ -112,7 +112,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
         title={isInFavoris() ? wording.ETOILE_ETAB_DANS_LISTE : wording.ETOILE_ETAB_PAS_DANS_LISTE}
       />
       {displayPopup &&
-        <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { position: "fixed", top: popupY, left: popupX } : {}}>
+        <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { top: popupY, left: popupX } : {}}>
 
           <fieldset aria-labelledby="checkboxes-legend checkboxes-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer']} id="checkboxes">
             <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
