@@ -520,8 +520,8 @@ export class WordingFr implements Wording {
   readonly NON_FAVORIS: string = "Pas dans les favoris";
 
   // Etoile des Favoris
-  readonly ETOILE_ETAB_DANS_LISTE: string = "Gérer les listes contetant cet établissement";
-  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement dans une/des listes";
+  readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE: string = "+ Nouvelle liste";
 
