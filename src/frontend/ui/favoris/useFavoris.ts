@@ -24,15 +24,16 @@ export function useFavoris() {
     return rechercheViewModel;
   };
 
-  const createFavorisList = (listName: string, isFavoris: boolean) => {
-    fetch("/api/liste",
+  const createFavorisList = async (listName: string, isFavoris: boolean) => {
+    return fetch("/api/liste",
       {
         body: JSON.stringify({ listName: listName, isFavoris: isFavoris }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })
-      .then(() => {
+      .then(response => {
         getFavorisLists();
+        return response;
       });
 
   }

@@ -66,12 +66,18 @@
   border: none;
 }
 
-.newListForm {
+.new-list-button-group {
+  margin: 0 .5rem .5rem .5rem;
+}
+.new-list-form {
   display: flex;
   height: 2rem;
-  margin: .5rem;
 }
 
 .menu button {
   min-width: 0 !important;
+}
+
+.error-message {
+  text-wrap: wrap;
 }

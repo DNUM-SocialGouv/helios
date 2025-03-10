@@ -1,11 +1,12 @@
 import { KeyboardEvent as KeyboardEventReact, useContext, useEffect, useRef, useState } from "react";
 
+import "@gouvfr/dsfr/dist/component/form/form.min.css";
+import styles from "./StarButtonList.module.css";
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
-import styles from "./StarButtonList.module.css";
 
 type StarButtonProps = Readonly<{
   favorite: RechercheViewModel | undefined;
@@ -23,6 +24,8 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const componentRef = useRef<HTMLInputElement>(null);
   const [popupX, setPopupX] = useState(0);
   const [popupY, setPopupY] = useState(0);
+  const [newListError, setNewListError] = useState(false);
+  const [newListErrorMessage, setNewListErrorMessage] = useState("");
 
   let buttonStyle = "starInEstablishment";
   if (parent === "titre") {
@@ -60,10 +63,21 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
 
   const handleListCreation = () => {
     if (newListName.trim()) {
-      createFavorisList(newListName, false);
+      createFavorisList(newListName, false)
+        .then(response => {
+          if (response.status === 201) {
+            setNewListError(false);
+            setDisplayNewListInput(false);
+            setNewListName("");
+          } else if (response.status === 403) {
+            setNewListError(true);
+            setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
+          } else {
+            setNewListError(true);
+            setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
+          }
+        });
     }
-    setDisplayNewListInput(false);
-    setNewListName("");
   }
 
   const handleDisplayPopup = () => {
@@ -135,13 +149,16 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
               {!displayNewListInput
                 ? <button className="fr-btn fr-btn--secondary" disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE}</button>
                 :
-                <>
-                  <label className="fr-label fr-ml-1w" htmlFor="newListForm">Nouvelle liste</label>
-                  <div className={styles['newListForm']}>
-                    <input className="fr-input" id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
+                <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
+                  <label className="fr-label fr-ml-1w" htmlFor="new-list-form">Nouvelle liste</label>
+                  <div className={styles['new-list-form']}>
+                    <input aria-describedby="new-list-error-message" className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
                     <button className="fr-btn fr-icon-check-line fr-m-0" onClick={handleListCreation}></button>
                   </div>
-                </>
+                  <div className="fr-messages-group">
+                    {newListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="new-list-error-message">{newListErrorMessage}</p>}
+                  </div>
+                </div>
               }
             </li>
             <li><button className="fr-btn" onClick={() => setDisplayPopup(false)}>Ok</button></li>
