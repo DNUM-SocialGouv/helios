@@ -16,7 +16,7 @@ type StarButtonProps = Readonly<{
 export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
-  const { createFavorisList } = useFavoris();
+  const { createFavorisList, getFavorisLists } = useFavoris();
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const [displayNewListInput, setDisplayNewListInput] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>("");
@@ -76,11 +76,13 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
             setNewListError(true);
             setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
           }
+          getFavorisLists();
         });
     }
   }
 
   const handleDisplayPopup = () => {
+    getFavorisLists();
     // On recupere la position du bouton etoile pour calculer la position de la popup
     if (buttonRef.current) {
       const popupTop = buttonRef.current.getBoundingClientRect().bottom + document.documentElement.scrollTop;

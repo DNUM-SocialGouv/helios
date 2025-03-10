@@ -31,10 +31,6 @@ export function useFavoris() {
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })
-      .then(response => {
-        getFavorisLists();
-        return response;
-      });
 
   }
 
