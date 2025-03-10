@@ -1,16 +1,15 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import '@testing-library/jest-dom/extend-expect';
 import { fakeFrontDependencies } from "../../../test-helpers/testHelper";
 import { ToggelMultipleBlocs } from "./ToggelMultipleBlocs";
- 
+
 const { wording } = fakeFrontDependencies;
 
 describe("ToggelMultipleBlocs Component", () => {
 
 
- 
+
   it("renders 'Tout replier' button when all statusBlocs are true", () => {
     const allTrue = jest.fn(() => true);
     const allFalse = jest.fn(() => false);

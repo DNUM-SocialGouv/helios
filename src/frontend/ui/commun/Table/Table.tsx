@@ -1,4 +1,5 @@
-/* eslint-disable jsx-a11y/aria-props */
+/* Les erreurs remontees sont lies a l’attribut « aria-sort » sur les bouton de tri. Cet attribut est impose par le dsfr pour changer l’icon du bouton */
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 import { Dispatch, SetStateAction } from "react";
 
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
@@ -87,7 +88,7 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   if (order === "ASC" && headerKey === orderBy) {
     return (
       <button
-        aria-sorting="asc"
+        aria-sort="ascending"
         className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
         id="table-miscellaneous-thead-sort-asc"
         onClick={() => {
@@ -101,7 +102,7 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   } else if (order === "DESC" && headerKey === orderBy) {
     return (
       <button
-        aria-sorting="desc"
+        aria-sort="descending"
         className="fr-btn--sort fr-btn fr-btn--sm fr-mx-1w"
         id="table-miscellaneous-thead-sort-desc"
         onClick={() => {

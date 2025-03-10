@@ -3,9 +3,9 @@ import { ReactElement, useState } from "react";
 
 import {
   AutorisationActivites,
-  AutorisationEtablissement,
-  Forme,
-  Modalite,
+  AutorisationEtablissement as AutorisationEtablissementType,
+  Forme as FormeType,
+  Modalite as ModaliteType,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
@@ -52,7 +52,7 @@ const AfficherLesEt = ({ for: identifiant }: AfficherLesEtProps) => {
   );
 };
 
-const Modalite = ({ modalité, codeActivite }: { codeActivite: string; modalité: Modalite }): ReactElement => {
+const Modalite = ({ modalité, codeActivite }: { codeActivite: string; modalité: ModaliteType }): ReactElement => {
   return (
     <li>
       <TagCliquable for={`autorisations-accordion-${codeActivite}-${modalité.code}`} texteGras={false} titre={`${modalité.libelle} [${modalité.code}]`} />
@@ -64,7 +64,7 @@ const Modalite = ({ modalité, codeActivite }: { codeActivite: string; modalité
     </li>
   );
 };
-const Forme = ({ codeModalite, forme, codeActivite }: { codeModalite: string; forme: Forme; codeActivite: string }): ReactElement => {
+const Forme = ({ codeModalite, forme, codeActivite }: { codeModalite: string; forme: FormeType; codeActivite: string }): ReactElement => {
   return (
     <li>
       <Tag label={`${forme.libelle} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
@@ -83,7 +83,7 @@ const Forme = ({ codeModalite, forme, codeActivite }: { codeModalite: string; fo
   );
 };
 
-const AutorisationEtablissement = ({ numeroFiness, nomEtablissement, autorisations }: AutorisationEtablissement): ReactElement => {
+const AutorisationEtablissement = ({ numeroFiness, nomEtablissement, autorisations }: AutorisationEtablissementType): ReactElement => {
   const { paths } = useDependencies();
   return (
     <li className={style["etablissement"]}>
