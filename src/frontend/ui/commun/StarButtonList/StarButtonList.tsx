@@ -38,18 +38,14 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     // Cache la popup si on clic a l’exterieur
     function handleClickOutside(event: MouseEvent) {
       if (componentRef.current && !componentRef.current.contains(event.target as Node)) {
-        setDisplayPopup(false);
-        setDisplayNewListInput(false);
-        setNewListName("");
+        closePopup();
       }
     }
 
     // Cache la popup si appui sur la touche echap
     function handleEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
-        setDisplayPopup(false);
-        setDisplayNewListInput(false);
-        setNewListName("");
+        closePopup();
       }
 
     }
@@ -61,6 +57,14 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     };
   }, [componentRef]);
 
+  const closePopup = () => {
+    setDisplayPopup(false);
+    setDisplayNewListInput(false);
+    setNewListName("");
+    setNewListError(false);
+    setNewListErrorMessage("");
+
+  }
   const handleListCreation = () => {
     if (newListName.trim()) {
       createFavorisList(newListName, false)
@@ -154,7 +158,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
                 <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
                   <label className="fr-label fr-ml-1w" htmlFor="new-list-form">Nouvelle liste</label>
                   <div className={styles['new-list-form']}>
-                    <input aria-describedby="new-list-error-message" className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
+                    <input aria-describedby={newListError ? "new-list-error-message" : undefined} className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
                     <button className="fr-btn fr-icon-check-line fr-m-0" onClick={handleListCreation}></button>
                   </div>
                   <div className="fr-messages-group">
@@ -163,7 +167,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
                 </div>
               }
             </li>
-            <li><button className="fr-btn" onClick={() => setDisplayPopup(false)}>Ok</button></li>
+            <li><button className="fr-btn" onClick={() => closePopup()}>Ok</button></li>
           </ul>
         </div >
       }
