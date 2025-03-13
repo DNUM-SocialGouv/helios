@@ -140,7 +140,7 @@ const ExportExcel = ({
 
   return (
     <button
-      className="fr-btn fr-btn--secondary fr-fi-download-line fr-btn--icon-left fr-mt-1w"
+      className="fr-btn fr-btn--tertiary-no-outline"
       disabled={disabled}
       name="Exporter"
       onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles)}

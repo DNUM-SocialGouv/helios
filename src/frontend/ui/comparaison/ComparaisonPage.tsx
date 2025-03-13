@@ -1,7 +1,11 @@
-import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 import { ReactChild, useContext, useEffect, useState } from "react";
 
+import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
+import styles from "./Comparaison.module.css";
+import ExportExcel from "./ExportExcel";
+import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -9,11 +13,8 @@ import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
 import { SelectedRows, Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
+import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
-import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
-import styles from "./Comparaison.module.css";
-import ExportExcel from "./ExportExcel";
-import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
   listeAnnees: number[];
@@ -130,13 +131,14 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
   };
 
   return (
-      <main className="fr-container" id="content">
-        <Head>
-          <title>Page de comparaison</title>
-        </Head>
-        <div className={styles["container"]}>
-          <div className={styles["header-container"]}>
-            <h1>{wording.COMPARAISON}</h1>
+    <main className="fr-container" id="content">
+      <Head>
+        <title>Page de comparaison</title>
+      </Head>
+      <div className={styles["container"]}>
+        <div className={styles["header-container"]}>
+          <h1>{wording.COMPARAISON}</h1>
+          <ListActionsButton selectedRows={Object.values(selectedRows).flat()}>
             <ExportExcel
               codeProfiles={codeProfiles}
               codeRegion={codeRegion}
@@ -146,71 +148,72 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
               orderBy={orderBy}
               year={String(annéeEnCours)}
             />
-          </div>
-          <div className={styles["ajout-etab-div"]}>
-            {!isShowAjoutEtab && (
-              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
-                {wording.AJOUTER_DES_ETABLISSEMENTS}
-              </button>
-            )}
-            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
+          </ListActionsButton>
+        </div>
+        <div className={styles["ajout-etab-div"]}>
+          {!isShowAjoutEtab && (
+            <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
+              {wording.AJOUTER_DES_ETABLISSEMENTS}
+            </button>
+          )}
+          {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
+        </div>
+        <div className={styles["years-container"]}>
+          <div className={styles["years-container"]}>
+            <span style={{ marginTop: "5px" }}>Année</span>
+            {listeAnnees.length > 0 && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
           </div>
           <div className={styles["years-container"]}>
-            <div className={styles["years-container"]}>
-              <span style={{ marginTop: "5px" }}>Année</span>
-              {listeAnnees.length > 0 && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
-            </div>
-            <div className={styles["years-container"]}>
-              <span style={{ marginTop: "5px" }}>Indicateurs</span>
-              <SelectionTags
-                choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-                noSelectableChoices={getAllTypes()}
-                selectedChoice={structureChoice}
-                setSelectedChoice={setStructurechoice}
-              />
-            </div>
+            <span style={{ marginTop: "5px" }}>Indicateurs</span>
+            <SelectionTags
+              choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
+              noSelectableChoices={getAllTypes()}
+              selectedChoice={structureChoice}
+              setSelectedChoice={setStructurechoice}
+            />
           </div>
-          {/* Affichage conditionnel pendant le chargement */}
-          {loading ? (
-            <div>Chargement des résultats...</div>
-          ) : (
-            <>
-              <Table
-                data={resultats}
-                forMoyenne={moyenne}
-                handleInfoBullMoyenne={setEstCeOuvertMoyenne}
-                handleSelectAll={handleSelectAll}
-                headers={tableHeaders}
-                isAllSelected={isAllSelected}
-                isCenter={true}
-                isShowAvrage={false}
-                isVScroll={true}
-                onClickDelete={onClickDelete}
-                onClickInfobull={openModal}
-                order={order}
-                orderBy={orderBy}
-                page={page || 1}
-                selectedRows={selectedRows}
-                setOrder={setOrder}
-                setOrderBy={setOrderBy}
-                setSelectedRows={setSelectedRows}
-                total={nombreRésultats}
-              />
-              <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
-            </>
-          )}
         </div>
-        <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
-          <>{contenu}</>
-        </InfoBulle>
-        <InfoBulle
-          estCeOuvert={estCeOuvertMoyenne}
-          identifiant="info-bull-comparaison-table"
-          setEstCeOuvert={setEstCeOuvertMoyenne}
-          titre="Calcul de la moyenne"
-        >
-          <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
-        </InfoBulle>
-      </main>
+        {/* Affichage conditionnel pendant le chargement */}
+        {loading ? (
+          <div>Chargement des résultats...</div>
+        ) : (
+          <>
+            <Table
+              data={resultats}
+              forMoyenne={moyenne}
+              handleInfoBullMoyenne={setEstCeOuvertMoyenne}
+              handleSelectAll={handleSelectAll}
+              headers={tableHeaders}
+              isAllSelected={isAllSelected}
+              isCenter={true}
+              isShowAvrage={false}
+              isVScroll={true}
+              onClickDelete={onClickDelete}
+              onClickInfobull={openModal}
+              order={order}
+              orderBy={orderBy}
+              page={page || 1}
+              selectedRows={selectedRows}
+              setOrder={setOrder}
+              setOrderBy={setOrderBy}
+              setSelectedRows={setSelectedRows}
+              total={nombreRésultats}
+            />
+            <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+          </>
+        )}
+      </div>
+      <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
+        <>{contenu}</>
+      </InfoBulle>
+      <InfoBulle
+        estCeOuvert={estCeOuvertMoyenne}
+        identifiant="info-bull-comparaison-table"
+        setEstCeOuvert={setEstCeOuvertMoyenne}
+        titre="Calcul de la moyenne"
+      >
+        <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
+      </InfoBulle>
+    </main>
   );
 };
