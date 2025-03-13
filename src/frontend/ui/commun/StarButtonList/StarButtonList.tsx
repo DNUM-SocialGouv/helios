@@ -1,6 +1,5 @@
 import { KeyboardEvent as KeyboardEventReact, useContext, useEffect, useRef, useState } from "react";
 
-import "@gouvfr/dsfr/dist/component/form/form.min.css";
 import styles from "./StarButtonList.module.css";
 import { useFavoris } from "../../favoris/useFavoris";
 import { RechercheViewModel } from "../../home/RechercheViewModel";

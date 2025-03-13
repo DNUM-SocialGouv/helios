@@ -1,8 +1,8 @@
-import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Script from "next/script";
+import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
@@ -13,6 +13,7 @@ import "@gouvfr/dsfr/dist/utility/icons/icons-document/icons-document.min.css";
 import "@gouvfr/dsfr/dist/utility/colors/colors.min.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
+import "@gouvfr/dsfr/dist/component/form/form.min.css";
 import "@gouvfr/dsfr/dist/component/search/search.min.css";
 import "@gouvfr/dsfr/dist/component/badge/badge.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
