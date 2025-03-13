@@ -11,10 +11,17 @@
     z-index: 5;
 }
 
+@media (max-width: 1405px) {
+    .menu {
+        right: 23px;
+    }
+}
+
 .menu>li {
     margin: 0;
     background-color: white;
     border-bottom: 1px solid var(--border-default-grey);
+    white-space: nowrap;
 }
 
 .menu>li:last-child {
