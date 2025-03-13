@@ -110,7 +110,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     if (list) {
       const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
       const favorisList = list.splice(favorisListIndex, 1);
-      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(b.dateCreation).getTime() - new Date(a.dateCreation).getTime());
+      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
       return favorisList.concat(...list);
     }
     return undefined;
