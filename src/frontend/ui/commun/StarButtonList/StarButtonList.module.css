@@ -61,8 +61,8 @@
 }
 
 .listOverflowContainer {
-  overflow: hidden scroll;
-  height: 8.5rem;
+  overflow: hidden auto;
+  max-height: 8.5rem;
   text-wrap: wrap;
   border: none;
 }
