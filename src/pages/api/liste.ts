@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 
-import { create, getAll, countLists } from "../../backend/infrastructure/controllers/userListEndpoint";
 import { authOptions } from "./auth/[...nextauth]";
+import { countLists, create, getAll } from "../../backend/infrastructure/controllers/userListEndpoint";
 
 //Nombre max de list = 10 + favoris
 const MAX_LIST = 11;
@@ -34,8 +34,8 @@ async function doCreate(request: NextApiRequest, response: NextApiResponse, idUs
   if (listCount >= MAX_LIST) {
     return response.status(403).send("Forbidden");
   }
-  create(idUser, listName, isFavoris);
-  return response.status(201).send("Created");
+  const newList = await create(idUser, listName, isFavoris);
+  return response.status(201).json(newList);
 }
 
 async function doGetAll(response: NextApiResponse, idUser: string) {

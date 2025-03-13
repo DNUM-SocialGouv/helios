@@ -15,7 +15,7 @@ type StarButtonProps = Readonly<{
 export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
-  const { createFavorisList, getFavorisLists } = useFavoris();
+  const { addToFavorisList, createFavorisList, getFavorisLists } = useFavoris();
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const [displayNewListInput, setDisplayNewListInput] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>("");
@@ -25,6 +25,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const [popupY, setPopupY] = useState(0);
   const [newListError, setNewListError] = useState(false);
   const [newListErrorMessage, setNewListErrorMessage] = useState("");
+  const [addToListError, setAddToListError] = useState(false);
 
   let buttonStyle = "starInEstablishment";
   if (parent === "titre") {
@@ -62,24 +63,39 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     setNewListName("");
     setNewListError(false);
     setNewListErrorMessage("");
+    setAddToListError(false);
 
   }
-  const handleListCreation = () => {
+  const handleListCreation = async () => {
     if (newListName.trim()) {
+      let status: number;
       createFavorisList(newListName, false)
         .then(response => {
-          if (response.status === 201) {
+          status = response.status;
+          return response.json();
+        })
+        .then(response => {
+          if (status === 201) {
+            // On save tout de suite l’etablissement dans la nouvelle liste
+            addToFavorisList(favorite, response.id)
+              .then(response => {
+                getFavorisLists();
+                if (response.status !== 200) {
+                  setAddToListError(true);
+                }
+              });
+
             setNewListError(false);
             setDisplayNewListInput(false);
             setNewListName("");
-          } else if (response.status === 403) {
+          } else if (status === 403) {
             setNewListError(true);
             setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
+            getFavorisLists();
           } else {
             setNewListError(true);
             setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
           }
-          getFavorisLists();
         });
     }
   }
@@ -133,10 +149,10 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
       {displayPopup &&
         <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(popupX > 0 && popupY > 0) ? { top: popupY, left: popupX } : {}}>
 
-          <fieldset aria-labelledby="checkboxes-legend checkboxes-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer']} id="checkboxes">
-            <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
-              {wording.ETOILE_MES_LISTES}
-            </legend>
+          <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
+            {wording.ETOILE_MES_LISTES}
+          </legend>
+          <fieldset aria-labelledby="checkboxes-legend checkboxes-error-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer'] + (addToListError ? " fr-fieldset--error" : "")} id="checkboxes" role="group">
             {sortedList()?.map(list => (
               <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
                 <div className="fr-checkbox-group">
@@ -148,6 +164,10 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
               </div>
             ))}
           </fieldset>
+          <div aria-live="assertive" className="fr-messages-group" id="checkboxes-error-messages">
+            {addToListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="checkboxes-error-message-error">{wording.ETOILE_ERREUR_MODIF_ETAB}</p>}
+          </div>
+
 
           <ul className="fr-btns-group fr-btns-group--sm">
             <li className="fr-mt-2w">

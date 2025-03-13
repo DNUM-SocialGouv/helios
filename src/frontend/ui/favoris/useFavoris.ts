@@ -92,17 +92,12 @@ export function useFavoris() {
       });
   };
 
-  const addToFavorisList = (favorite: any, listId: number) => {
-    fetch(`/api/liste/${listId}/etablissement`,
+  const addToFavorisList = async (favorite: any, listId: number) => {
+    return fetch(`/api/liste/${listId}/etablissement`,
       {
         body: JSON.stringify({ finessNumber: favorite.numéroFiness, typeEtablissement: favorite.type }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          userContext?.addToFavorisList(favorite, listId);
-        }
       });
   };
 
