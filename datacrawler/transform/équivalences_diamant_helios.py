@@ -16,6 +16,10 @@ class ColonneHelios(TypedDict):
     "Taux d'occupation des lits autorisés en accueil de jour": ColonneHelios(nom="taux_occupation_accueil_de_jour", type=float),
     "Taux d'occupation des lits autorisés en hébergement temporaire": ColonneHelios(nom="taux_occupation_en_hebergement_temporaire", type=float),
     "Taux d'occupation des places autorisées en hébergement permanent": ColonneHelios(nom="taux_occupation_en_hebergement_permanent", type=float),
+    "Taux d'occupation Externat Autres ESMS": ColonneHelios(nom="taux_occupation_externat", type=float),
+    "Taux d'occupation Semi-internat Autres ESMS": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
+    "Taux d'occupation Internat Autres ESMS": ColonneHelios(nom="taux_occupation_internat", type=float),
+    "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": ColonneHelios(nom="taux_occupation_autre", type=float),
 }
 
 colonnes_à_lire_bloc_activités_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios.keys())
