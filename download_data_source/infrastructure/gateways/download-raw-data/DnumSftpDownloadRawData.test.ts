@@ -2,9 +2,9 @@ import fs from "fs";
 import path from "path";
 import { FileInfo } from "ssh2-sftp-client";
 
-import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
 import { ClientSftp } from "./ClientSftp";
 import { DnumSftpDownloadRawData } from "./DnumSftpDownloadRawData";
+import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
 
 describe("Téléchargement des données DIAMANT via SFTP", () => {
   const fakeRépertoireDeDestination = "fake-diamant-destination";

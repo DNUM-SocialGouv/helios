@@ -1,8 +1,5 @@
 import { DataSource, LoggerOptions } from "typeorm";
 
-import { dotEnvConfig } from "../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig";
-import { NodeEnvironmentVariables } from "../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables";
-import { ConsoleLogger } from "../download_data_source/infrastructure/gateways/logger/ConsoleLogger";
 import { EntitéJuridique1652626977208 } from "./migrations/1652626977208-EntitéJuridique";
 import { ÉtablissementTerritorial1652627040870 } from "./migrations/1652627040870-ÉtablissementTerritorial";
 import { DateMiseÀJourSource1652627053530 } from "./migrations/1652627053530-DateMiseÀJourSource";
@@ -111,12 +108,15 @@ import { UserListModel } from "./models/UserListModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "./models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "./models/ÉtablissementTerritorialIdentitéModel";
+import { dotEnvConfig } from "../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig";
+import { NodeEnvironmentVariables } from "../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables";
+import { ConsoleLogger } from "../download_data_source/infrastructure/gateways/logger/ConsoleLogger";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
 const environmentVariables = new NodeEnvironmentVariables(logger);
 
-export default new DataSource({
+const datasource = new DataSource({
   entities: [
     ActivitéMédicoSocialModel,
     ActivitéSanitaireModel,
@@ -234,3 +234,5 @@ export default new DataSource({
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
 });
+
+export default datasource;
