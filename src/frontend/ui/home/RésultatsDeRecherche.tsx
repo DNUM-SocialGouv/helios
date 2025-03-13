@@ -42,18 +42,11 @@ export const RésultatsDeRecherche = ({
     lancerLaRecherche(_event, false)
   };
 
-  const etsLength = résultats ? résultats.length : 0;
-
-  const lengthMessage = `${etsLength} ${etsLength > 1 ? 'établissements' : 'établissement'}`;
-
   const isListEmpty = () => Number(nombreRésultats) === 0;
 
   const titleHead =
-    <div className="fr-grid-row fr-mt-2w">
-      <div className="fr-col">
-        <p className="fr-table__detail">{lengthMessage}</p>
-      </div>
-      <div className="fr-col--right">
+    <div className="fr-grid-row fr-mt-2w fr-grid-row--right">
+      <div className="fr-col--right fr-mb-2w">
         <SelecteurTableauVignette defaultCheckedButton={displayTable ? BoutonActif.Tableau : BoutonActif.Vignette} disabled={isListEmpty()} onChangeToGrid={activeAffichageTuile} onChangeToTable={activeAffichageTableau} />
       </div>
     </div>
