@@ -1,9 +1,8 @@
 import { ChangeEventHandler, MouseEventHandler, FormEventHandler, useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./changeMdp.module.css";
-import "@gouvfr/dsfr/dist/component/form/form.min.css";
 import { PasswordCriteria } from "./useChangeMdp";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type FormulaireChangeMdpProps = Readonly<{
   annuler: MouseEventHandler<HTMLButtonElement>;
@@ -24,7 +23,7 @@ type FormulaireChangeMdpProps = Readonly<{
 export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePassword, oldPasswordValue, oldPasswordValueOnChange, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange, updated }: FormulaireChangeMdpProps) => {
   const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
   const { wording } = useDependencies();
-  
+
   const noError = Object.values(criteriaNewPassword).every((value) => value)
   return (
     <div className="fr-grid-row">
@@ -32,7 +31,7 @@ export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePasswo
         <h1 className={styles["title"]}>{wording.CHANGEMENT_MOT_PASSE_TITRE}</h1>
         <p>{wording.CHANGEMENT_MOT_PASSE_DESCRIPTION}</p>
         <div className="fr-grid-row fr-mt-8w fr-ml-8w">
-          <form className="fr-col-11 fr-mt-5w" onSubmit={noError ? changePassword : (e) => {e.preventDefault()}} >
+          <form className="fr-col-11 fr-mt-5w" onSubmit={noError ? changePassword : (e) => { e.preventDefault() }} >
             {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}
             {updated && <div className={"fr-mb-5w " + styles["success"]}> votre mot de passe a été changé avec succès</div>}
             <div className="fr-grid-row ">

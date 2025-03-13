@@ -436,6 +436,14 @@ export interface Wording {
   readonly DANS_FAVORIS: string;
   readonly NON_FAVORIS: string;
 
+  // Etoile des Favoris
+  readonly ETOILE_ETAB_DANS_LISTE: string;
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string;
+  readonly ETOILE_MES_LISTES: string;
+  readonly ETOILE_NOUVELLE_LISTE: string;
+  readonly ETOILE_MAX_LISTE_ATTEINT: string;
+  readonly ETOILE_ERREUR_MODIF_ETAB: string;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;

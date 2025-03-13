@@ -375,8 +375,7 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
     <>
-      Nombre d’
-      <abbr title="Équivalent Temps Plein">ETP</abbr> Total réalisé
+      Nombre d’<abbr title="Équivalent Temps Plein">ETP</abbr> Total réalisé
     </>
   );
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = "Nombre d’ETP Total réalisé";
@@ -519,6 +518,14 @@ export class WordingFr implements Wording {
   readonly EXPORTER: string = "Exporter";
   readonly DANS_FAVORIS: string = "Dans les favoris";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
+
+  // Etoile des Favoris
+  readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
+  readonly ETOILE_MES_LISTES: string = "Mes listes";
+  readonly ETOILE_NOUVELLE_LISTE: string = "+ Nouvelle liste";
+  readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
+  readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
