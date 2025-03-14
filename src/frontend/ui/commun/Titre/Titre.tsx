@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 
+import styles from "./Titre.module.css";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import styles from "./Titre.module.css";
 
 type TitreProps = Readonly<{
   logo: ReactElement;
   children: ReactElement | string;
-  rechercheViewModel: RechercheViewModel | undefined;
+  rechercheViewModel: RechercheViewModel;
   downloadPDF?: any;
 }>;
 
