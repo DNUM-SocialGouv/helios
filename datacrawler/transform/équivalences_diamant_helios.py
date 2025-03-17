@@ -24,6 +24,18 @@ class ColonneHelios(TypedDict):
 
 colonnes_à_lire_bloc_activités_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios.keys())
 
+equivalences_diamant_ann_ca_ej_et_bloc_activites_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Taux d'occupation Séances CA": ColonneHelios(nom="taux_occupation_seances", type=float),
+    "Taux d'occupation Externat CA": ColonneHelios(nom="taux_occupation_externat", type=float),
+    "Taux d'occupation Semi-internat CA": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
+    "Taux d'occupation Internat CA": ColonneHelios(nom="taux_occupation_internat", type=float),
+    "Taux d'occupation Autre 1, 2 et 3 CA": ColonneHelios(nom="taux_occupation_autre", type=float),
+}
+
+colonnes_a_lire_bloc_activites_ann_ca_ej_et: List[str] = list(equivalences_diamant_ann_ca_ej_et_bloc_activites_helios.keys())
+
 index_des_activités: List[str] = [
     "annee",
     "numero_finess_etablissement_territorial",

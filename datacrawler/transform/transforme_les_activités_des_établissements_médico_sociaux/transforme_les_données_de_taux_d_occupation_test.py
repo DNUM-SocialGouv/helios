@@ -4,7 +4,7 @@ from pandas import NA
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux.transforme_les_données_de_taux_d_occupation import (
-    transforme_les_données_ann_errd_ej_et,
+    transforme_les_donnees_ann_errd_ej_et,
 )
 from datacrawler.transform.équivalences_diamant_helios import index_des_activités
 
@@ -32,7 +32,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -77,7 +77,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -115,7 +115,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = (
@@ -163,7 +163,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -208,7 +208,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         data_frame_attendu = pd.DataFrame(
@@ -246,7 +246,7 @@ class TestTransformeLesDonnéesAnnErrdEjEt:
         )
 
         # WHEN
-        données_transformées = transforme_les_données_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
+        données_transformées = transforme_les_donnees_ann_errd_ej_et(données_ann_errd_ej_et, numéros_finess_des_établissements_connus, mocked_logger)
 
         # THEN
         assert données_transformées.empty
