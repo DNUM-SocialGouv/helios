@@ -62,7 +62,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ Équivalent Temps Plein Total réalisé" });
+      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ ETP Total réalisé" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("CNSA", { selector: "abbr" });
@@ -111,7 +111,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre de Contrat à Durée Déterminée de remplacement" });
+      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre de CDD de remplacement" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -436,8 +436,8 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    ["Nombre d’ Équivalent Temps Plein Total réalisé", indiceDeLIndicateur.nombreDEtpRéalisés],
-    ["Nombre de Contrat à Durée Déterminée de remplacement", indiceDeLIndicateur.nombreDeCddDeRemplacement],
+    ["Nombre d’ ETP Total réalisé", indiceDeLIndicateur.nombreDEtpRéalisés],
+    ["Nombre de CDD de remplacement", indiceDeLIndicateur.nombreDeCddDeRemplacement],
     [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes],
     [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants],
     [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel],

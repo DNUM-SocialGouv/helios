@@ -1,9 +1,9 @@
 import fs from "fs";
 import { FileInfo } from "ssh2-sftp-client";
 
-import { getFakeDataCrawlerDependencies, fakeLogger } from "../../../testHelper";
 import { ClientSftp } from "./ClientSftp";
 import { FinessSftpDownloadRawData } from "./FinessSftpDownloadRawData";
+import { fakeLogger, getFakeDataCrawlerDependencies } from "../../../testHelper";
 
 describe("Téléchargement de FINESS via un SFTP", () => {
   const sftpPath = "fake_path";

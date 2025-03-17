@@ -11,7 +11,8 @@ export const PageCreatePwd = () => {
     confirmPasswordValueOnChange,
     annuler,
     errorMessage,
-    isLoading
+    isLoading,
+    criteriaNewPassword,
   } = useReinitialisationMdp();
 
   return (
@@ -21,6 +22,7 @@ export const PageCreatePwd = () => {
         changePassword={changePassword}
         confirmPasswordValue={confirmPasswordValue}
         confirmPasswordValueOnChange={confirmPasswordValueOnChange}
+        criteriaNewPassword={criteriaNewPassword}
         errorMessage={errorMessage}
         isLoading={isLoading}
         passwordValue={passwordValue}

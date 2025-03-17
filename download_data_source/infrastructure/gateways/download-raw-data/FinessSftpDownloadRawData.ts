@@ -2,11 +2,11 @@ import { mkdirSync, readFileSync, rmSync } from "fs";
 import { ConnectConfig } from "ssh2";
 import { FileInfo } from "ssh2-sftp-client";
 
+import { ClientSftp } from "./ClientSftp";
 import { DownloadRawData } from "../../../métier/gateways/DownloadRawData";
 import { EnvironmentVariables } from "../../../métier/gateways/EnvironmentVariables";
 import { Logger } from "../../../métier/gateways/Logger";
 import { HeliosError } from "../../HeliosError";
-import { ClientSftp } from "./ClientSftp";
 
 export class FinessSftpDownloadRawData implements DownloadRawData {
   simpleSftpPath: string;
@@ -64,11 +64,11 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     this.logger.info("[FINESS] La connexion au SFTP est ouverte.");
   }
 
-  private async downloadFichesIdentité() {   
+  private async downloadFichesIdentité() {
     const fichesIdentitéFiles = await this.clientSftp.list(this.simpleSftpPath, "*.xml.gz");
     const entitéJuridiqueFileName = "finess_cs1400101_stock_";
     const établissementTerritorialFileName = "finess_cs1400102_stock_";
- 
+
     await this.downloadFile(fichesIdentitéFiles, `${this.localPath}/simple`, this.simpleSftpPath, entitéJuridiqueFileName);
 
     await this.downloadFile(fichesIdentitéFiles, `${this.localPath}/simple`, this.simpleSftpPath, établissementTerritorialFileName);

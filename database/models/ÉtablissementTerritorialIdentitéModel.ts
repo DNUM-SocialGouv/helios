@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 
-import { DomaineÉtablissementTerritorial } from "../../download_data_source/métier/entities/DomaineÉtablissementTerritorial";
 import { CpomModel } from "./CpomModel";
 import { EntitéJuridiqueModel } from "./EntitéJuridiqueModel";
+import { DomaineÉtablissementTerritorial } from "../../download_data_source/métier/entities/DomaineÉtablissementTerritorial";
 
 @Entity({ name: "etablissement_territorial" })
 export class ÉtablissementTerritorialIdentitéModel {

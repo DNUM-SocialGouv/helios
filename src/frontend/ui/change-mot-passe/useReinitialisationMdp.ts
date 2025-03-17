@@ -4,6 +4,21 @@ import { ChangeEvent, FormEvent, MouseEvent, useContext, useState } from "react"
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from '../commun/contexts/userContext';
 
+export type PasswordCriteria = {
+    length: boolean;
+    uppercase: boolean;
+    lowercase: boolean;
+    number: boolean;
+    specialChar: boolean;
+}
+
+const defaultCriteria: PasswordCriteria = {
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    specialChar: false,
+};
 
 export function useReinitialisationMdp() {
     const router = useRouter();
@@ -14,9 +29,20 @@ export function useReinitialisationMdp() {
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [criteriaNewPassword, setCriteriaNewPassword] = useState(defaultCriteria);
 
     const { loginToken } = router.query;
 
+    const criteria = (password: string) => {
+        return {
+            length: password.length >= 12,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%^&*]/.test(password),
+        };
+    }
+    
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
         router.push("/connexion");
@@ -24,6 +50,7 @@ export function useReinitialisationMdp() {
 
     const passwordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPasswordValue(event.target.value);
+        setCriteriaNewPassword(criteria(event.target.value))
     }
 
     const confirmPasswordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +106,7 @@ export function useReinitialisationMdp() {
         confirmPasswordValueOnChange,
         annuler,
         errorMessage,
-        isLoading
+        isLoading,
+        criteriaNewPassword
     }
 }
