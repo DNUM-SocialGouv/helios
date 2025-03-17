@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
+from sqlalchemy.sql import text
 
 from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
@@ -124,7 +125,6 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
 
-
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
 
@@ -198,3 +198,9 @@ def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
   {contenu}
 </fluxfiness>"""
         )
+
+
+def compte_nombre_de_lignes(table_name: str , base_de_données: Engine) -> int:
+    with base_de_données.connect() as connexion:
+        result = connexion.execute(text(f"SELECT COUNT(*) FROM {table_name};"))
+        return result.scalar()

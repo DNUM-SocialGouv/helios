@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <horodatage>
+        <emetteur>finess</emetteur>
+        <destinataire>finess</destinataire>
+        <versionmessage>1</versionmessage>
+        <fluxnum>1300</fluxnum>
+        <datemaj>2023-02-02</datemaj>
+    </horodatage>
+    <nomenclstatutavecagr>
+        <code>01</code>
+        <libelle>Etat</libelle>
+        <libellecourt>Etat</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1110</codeagr3>
+        <libelleagr3>Etat</libelleagr3>
+        <libellecourtagr3>Etat</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>02</code>
+        <libelle>Département</libelle>
+        <libellecourt>Département</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1120</codeagr3>
+        <libelleagr3>Collectivité Territoriale</libelleagr3>
+        <libellecourtagr3>Col. Territoriale</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>03</code>
+        <libelle>Commune</libelle>
+        <libellecourt>Commune</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1120</codeagr3>
+        <libelleagr3>Collectivité Territoriale</libelleagr3>
+        <libellecourtagr3>Col. Territoriale</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>04</code>
+        <libelle>Région</libelle>
+        <libellecourt>Région</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1120</codeagr3>
+        <libelleagr3>Collectivité Territoriale</libelleagr3>
+        <libellecourtagr3>Col. Territoriale</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>05</code>
+        <libelle>Territoire d'Outre Mer</libelle>
+        <libellecourt>Territoire Outre Mer</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1120</codeagr3>
+        <libelleagr3>Collectivité Territoriale</libelleagr3>
+        <libellecourtagr3>Col. Territoriale</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>06</code>
+        <libelle>Autre Collectivité Territoriale</libelle>
+        <libellecourt>Autre Collect. Terr.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1120</codeagr3>
+        <libelleagr3>Collectivité Territoriale</libelleagr3>
+        <libellecourtagr3>Col. Territoriale</libellecourtagr3>
+        <codeagr2>1100</codeagr2>
+        <libelleagr2>Etat et Collectivités Territoriales</libelleagr2>
+        <libellecourtagr2>Etat &amp; Col.Territ.</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>07</code>
+        <libelle>Métropole ou pôle métropolitain</libelle>
+        <libellecourt>Métropole</libellecourt>
+        <datedeb>2016-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>08</code>
+        <libelle>Centre Intercommunal dAction Sociale (CIAS)</libelle>
+        <libellecourt>C.I.A.S.</libellecourt>
+        <datedeb>2019-04-22</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>10</code>
+        <libelle>Etablissement Public National d'Hospitalisation</libelle>
+        <libellecourt>Etb.Public Nat.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>11</code>
+        <libelle>Etablissement Public Départemental d'Hospitalisation</libelle>
+        <libellecourt>Etb.Pub.Départ.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>12</code>
+        <libelle>Etablissement Public Interdépartemental d'Hospitalisation</libelle>
+        <libellecourt>Etb.Pub.Intdép.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>13</code>
+        <libelle>Etablissement Public Communal d'Hospitalisation</libelle>
+        <libellecourt>Etb.Pub.Commun.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>14</code>
+        <libelle>Etablissement Public Intercommunal d'Hospitalisation</libelle>
+        <libellecourt>Etb.Pub.Intcom.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>15</code>
+        <libelle>Etablissement Public Régional d'Hospitalisation</libelle>
+        <libellecourt>Etb.Public Rég.Hosp.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>16</code>
+        <libelle>Syndicat Inter Hospitalier</libelle>
+        <libellecourt>S.I.H.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>17</code>
+        <libelle>Centre Communal d'Action Sociale</libelle>
+        <libellecourt>C.C.A.S.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>18</code>
+        <libelle>Etablissement Social et Médico-Social National</libelle>
+        <libellecourt>Etb.Social National</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>19</code>
+        <libelle>Etablissement Social et Médico-Social Départemental</libelle>
+        <libellecourt>Etb.Social Départ.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>20</code>
+        <libelle>Etablissement Social et Médico-Social Interdépartemental</libelle>
+        <libellecourt>Etb.Social Interdept</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>21</code>
+        <libelle>Etablissement Social et Médico-Social Communal</libelle>
+        <libellecourt>Etb.Social Communal</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>22</code>
+        <libelle>Etablissement Social et Médico-Social Intercommunal</libelle>
+        <libellecourt>Etb.Social Intercom.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>23</code>
+        <libelle>Etablissement Social et Médico-Social Régional</libelle>
+        <libellecourt>Etb.Social Régional</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>24</code>
+        <libelle>Office Public d'H.L.M.</libelle>
+        <libellecourt>Office Public H.L.M.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>25</code>
+        <libelle>Caisse des Ecoles</libelle>
+        <libellecourt>Caisse des Ecoles</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>26</code>
+        <libelle>Autre Etablissement Public à Caractère Administratif</libelle>
+        <libellecourt>Autre Etb. Pub. Adm</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>27</code>
+        <libelle>Etablissement Public à Caractère Industriel ou Commercial</libelle>
+        <libellecourt>Etb.Pub. Indus. Com.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1220</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Industriel et Commercial</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Indus. Com.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>28</code>
+        <libelle>Groupement d'Intérêt Public (G.I.P.)</libelle>
+        <libellecourt>G.I.P.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>29</code>
+        <libelle>Groupement de Coopération Sanitaire public</libelle>
+        <libellecourt>G.C.S. public</libellecourt>
+        <datedeb>1999-06-17</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>30</code>
+        <libelle>Groupement de Coopération Sociale ou Médico-Sociale public</libelle>
+        <libellecourt>G.C.S.M.S. public</libellecourt>
+        <datedeb>2014-02-12</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>1210</codeagr3>
+        <libelleagr3>Etablissement Public à Caractère Administratif</libelleagr3>
+        <libellecourtagr3>Etb.Pub. Administr.</libellecourtagr3>
+        <codeagr2>1200</codeagr2>
+        <libelleagr2>Etablissement Public</libelleagr2>
+        <libellecourtagr2>Etablissement Public</libellecourtagr2>
+        <codeagr1>1000</codeagr1>
+        <libelleagr1>Organismes et Etablissements Publics</libelleagr1>
+        <libellecourtagr1>Orga Etab. Publics</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>40</code>
+        <libelle>Régime Général de Sécurité Sociale</libelle>
+        <libellecourt>Rég.Gén.Sécu.Sociale</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>41</code>
+        <libelle>Régime Spécial de Sécurité Sociale</libelle>
+        <libellecourt>Rég.Spé.Sécu.Sociale</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>42</code>
+        <libelle>Institution de Prévoyance</libelle>
+        <libellecourt>Institut Prévoyance</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>43</code>
+        <libelle>Mutualité Sociale Agricole (M.S.A.)</libelle>
+        <libellecourt>Mut.Sociale Agricole</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>44</code>
+        <libelle>Régime Maladie des non Salariés non Agricole</libelle>
+        <libellecourt>Rég.Mal.n Sal.n Agr.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>45</code>
+        <libelle>Régime Vieillesse Particulier</libelle>
+        <libellecourt>Rég.Vieillesse Part.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>46</code>
+        <libelle>Autre Régime de Prévoyance Sociale</libelle>
+        <libellecourt>Autre Rég.Prév.Soc.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2110</codeagr3>
+        <libelleagr3>Organisme Gérant un Régime de Protection Sociale à Adhésion</libelleagr3>
+        <libellecourtagr3>Org.Régime Prot.Soc.</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>47</code>
+        <libelle>Société Mutualiste</libelle>
+        <libellecourt>Société Mutualiste</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2120</codeagr3>
+        <libelleagr3>Organisme  Mutualiste</libelleagr3>
+        <libellecourtagr3>Org. Mutualiste</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>48</code>
+        <libelle>Assurance Mutuelle Agricole</libelle>
+        <libellecourt>Assur. Mut. Agricole</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2120</codeagr3>
+        <libelleagr3>Organisme  Mutualiste</libelleagr3>
+        <libellecourtagr3>Org. Mutualiste</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>49</code>
+        <libelle>Autre Organisme Mutualiste</libelle>
+        <libellecourt>Autre Org.Mutualiste</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2120</codeagr3>
+        <libelleagr3>Organisme  Mutualiste</libelleagr3>
+        <libellecourtagr3>Org. Mutualiste</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>50</code>
+        <libelle>Comité d'Entreprise ou Comité d'Etablissement</libelle>
+        <libellecourt>Comité d'Entreprise</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2130</codeagr3>
+        <libelleagr3>Comité d'Entreprise et Comité d'Etablissement</libelleagr3>
+        <libellecourtagr3>Comité d'Entreprise</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>51</code>
+        <libelle>Syndicat</libelle>
+        <libellecourt>Syndicat</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2140</codeagr3>
+        <libelleagr3>Organisme Professionnel</libelleagr3>
+        <libellecourtagr3>Org. professionnel</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>52</code>
+        <libelle>Syndicat de Propriétaires</libelle>
+        <libellecourt>Synd. Propriétaires</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2150</codeagr3>
+        <libelleagr3>Syndicat de Propriétaires</libelleagr3>
+        <libellecourtagr3>Synd. Propriétaires</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>60</code>
+        <libelle>Association Loi 1901 non Reconnue d'Utilité Publique</libelle>
+        <libellecourt>Ass.L.1901 non R.U.P</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2160</codeagr3>
+        <libelleagr3>Association</libelleagr3>
+        <libellecourtagr3>Association</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>61</code>
+        <libelle>Association Loi 1901 Reconnue d'Utilité Publique</libelle>
+        <libellecourt>Ass.L.1901 R.U.P.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2160</codeagr3>
+        <libelleagr3>Association</libelleagr3>
+        <libellecourtagr3>Association</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>62</code>
+        <libelle>Association de Droit Local</libelle>
+        <libellecourt>Ass. de Droit Local</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2160</codeagr3>
+        <libelleagr3>Association</libelleagr3>
+        <libellecourtagr3>Association</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>63</code>
+        <libelle>Fondation</libelle>
+        <libellecourt>Fondation</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2170</codeagr3>
+        <libelleagr3>Fondation</libelleagr3>
+        <libellecourtagr3>Fondation</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>64</code>
+        <libelle>Congrégation</libelle>
+        <libellecourt>Congrégation</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2180</codeagr3>
+        <libelleagr3>Congrégation</libelleagr3>
+        <libellecourtagr3>Congrégation</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>65</code>
+        <libelle>Autre Organisme Privé à But non Lucratif</libelle>
+        <libellecourt>Autr.Org.Pri.non Luc</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2190</codeagr3>
+        <libelleagr3>Autre Organisme Privé à But non Lucratif</libelleagr3>
+        <libellecourtagr3>Autre Org. Privé</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>66</code>
+        <libelle>Groupement de Coopération Sociale ou Médico-Sociale privé</libelle>
+        <libellecourt>G.C.S.M.S. privé</libellecourt>
+        <datedeb>2014-02-12</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2190</codeagr3>
+        <libelleagr3>Autre Organisme Privé à But non Lucratif</libelleagr3>
+        <libellecourtagr3>Autre Org. Privé</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>70</code>
+        <libelle>Personne Physique</libelle>
+        <libellecourt>Personne Physique</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2210</codeagr3>
+        <libelleagr3>Personne Physique</libelleagr3>
+        <libellecourtagr3>Personne Physique</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>71</code>
+        <libelle>Société en Nom Collectif (S.N.C.)</libelle>
+        <libellecourt>S.N.C.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2220</codeagr3>
+        <libelleagr3>Société en Nom Collectif (S.N.C.)</libelleagr3>
+        <libellecourtagr3>Soc.en Nom Collectif</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>72</code>
+        <libelle>Société A Responsabilité Limitée (S.A.R.L.)</libelle>
+        <libellecourt>S.A.R.L.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2230</codeagr3>
+        <libelleagr3>Société A Responsabilité Limitée (S.A.R.L.)</libelleagr3>
+        <libellecourtagr3>S.A.R.L.</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>73</code>
+        <libelle>Société Anonyme (S.A.)</libelle>
+        <libellecourt>Société Anonyme</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2240</codeagr3>
+        <libelleagr3>Société Anonyme (S.A.)</libelleagr3>
+        <libellecourtagr3>Société Anonyme</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>74</code>
+        <libelle>Société Civile</libelle>
+        <libellecourt>Société Civile</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2250</codeagr3>
+        <libelleagr3>Société Civile</libelleagr3>
+        <libellecourtagr3>Société Civile</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>75</code>
+        <libelle>Autre Société</libelle>
+        <libellecourt>Autre Société</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2260</codeagr3>
+        <libelleagr3>Autre Société</libelleagr3>
+        <libellecourtagr3>Autre Société</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>76</code>
+        <libelle>Groupement d'Intérêt Economique (G.I.E.)</libelle>
+        <libellecourt>G.I.E.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2270</codeagr3>
+        <libelleagr3>Groupement Privé à Caractère Commercial</libelleagr3>
+        <libellecourtagr3>Gr.Privé.Caract.Com.</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>77</code>
+        <libelle>Autre Organisme Privé à Caractère Commercial</libelle>
+        <libellecourt>Autre Org.Priv.Com.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2280</codeagr3>
+        <libelleagr3>Autre Organisme Privé à Caractère Commercial</libelleagr3>
+        <libellecourtagr3>Autre Org.Priv.Com.</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>78</code>
+        <libelle>Entreprise Unipersonnelle Responsabilité Limitée (E.U.R.L.)</libelle>
+        <libellecourt>E.U.R.L.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2230</codeagr3>
+        <libelleagr3>Société A Responsabilité Limitée (S.A.R.L.)</libelleagr3>
+        <libellecourtagr3>S.A.R.L.</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>79</code>
+        <libelle>Société Civile de Moyens (S.C.M.)</libelle>
+        <libellecourt>S.C.M.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2250</codeagr3>
+        <libelleagr3>Société Civile</libelleagr3>
+        <libellecourtagr3>Société Civile</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>80</code>
+        <libelle>Société Interprofessionnelle Soins Ambulatoires (S.I.S.A.)</libelle>
+        <libellecourt>S.I.S.A.</libellecourt>
+        <datedeb>2012-04-03</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2250</codeagr3>
+        <libelleagr3>Société Civile</libelleagr3>
+        <libellecourtagr3>Société Civile</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>85</code>
+        <libelle>Soc. Exercice Libéral Responsabilité Limitée (S.E.L.A.R.L.)</libelle>
+        <libellecourt>S.E.L.A.R.L.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2230</codeagr3>
+        <libelleagr3>Société A Responsabilité Limitée (S.A.R.L.)</libelleagr3>
+        <libellecourtagr3>S.A.R.L.</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>86</code>
+        <libelle>Société d'Exercice Libéral à Forme Anonyme (S.E.L.A.F.A.)</libelle>
+        <libellecourt>S.E.L.A.F.A.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2240</codeagr3>
+        <libelleagr3>Société Anonyme (S.A.)</libelleagr3>
+        <libellecourtagr3>Société Anonyme</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>87</code>
+        <libelle>Société Exercice Libéral Commandite par Actions (S.E.L.C.A.)</libelle>
+        <libellecourt>S.E.L.C.A.</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2260</codeagr3>
+        <libelleagr3>Autre Société</libelleagr3>
+        <libellecourtagr3>Autre Société</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>88</code>
+        <libelle>Société Civile Professionnelle (S.C.P.)</libelle>
+        <libellecourt>S.C.P.</libellecourt>
+        <datedeb>1996-10-24</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2250</codeagr3>
+        <libelleagr3>Société Civile</libelleagr3>
+        <libellecourtagr3>Société Civile</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>89</code>
+        <libelle>Groupement de Coopération Sanitaire Privé</libelle>
+        <libellecourt>G.C.S. privé</libellecourt>
+        <datedeb>1999-06-17</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2190</codeagr3>
+        <libelleagr3>Autre Organisme Privé à But non Lucratif</libelleagr3>
+        <libellecourtagr3>Autre Org. Privé</libellecourtagr3>
+        <codeagr2>2100</codeagr2>
+        <libelleagr2>Organisme Privé à But non Lucratif</libelleagr2>
+        <libellecourtagr2>Org.Privé non Lucr.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>90</code>
+        <libelle>Organisme de Droit Etranger</libelle>
+        <libellecourt>Org. Droit Etranger</libellecourt>
+        <datedeb>1979-01-01</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>3110</codeagr3>
+        <libelleagr3>Personne Morale de Droit Etranger</libelleagr3>
+        <libellecourtagr3>Pers.Moral.Etranger</libellecourtagr3>
+        <codeagr2>3100</codeagr2>
+        <libelleagr2>Personne Morale de Droit Etranger</libelleagr2>
+        <libellecourtagr2>Pers.Moral.Etranger</libellecourtagr2>
+        <codeagr1>3000</codeagr1>
+        <libelleagr1>Personne Morale de Droit Etranger</libelleagr1>
+        <libellecourtagr1>Pers.Moral.Etranger</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>91</code>
+        <libelle>Société Exercice Libéral par Actions Simplifiée (S.E.L.A.S.)</libelle>
+        <libellecourt>S.E.L.A.S.</libellecourt>
+        <datedeb>2014-02-12</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2260</codeagr3>
+        <libelleagr3>Autre Société</libelleagr3>
+        <libellecourtagr3>Autre Société</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>93</code>
+        <libelle>Société en commandite</libelle>
+        <libellecourt>Société commandite</libellecourt>
+        <datedeb>2014-02-12</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2260</codeagr3>
+        <libelleagr3>Autre Société</libelleagr3>
+        <libellecourtagr3>Autre Société</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+    <nomenclstatutavecagr>
+        <code>95</code>
+        <libelle>Société par Actions Simplifiée (S.A.S.)</libelle>
+        <libellecourt>SAS</libellecourt>
+        <datedeb>2014-02-12</datedeb>
+        <datefin xsi:nil="true"/>
+        <codeagr3>2260</codeagr3>
+        <libelleagr3>Autre Société</libelleagr3>
+        <libellecourtagr3>Autre Société</libellecourtagr3>
+        <codeagr2>2200</codeagr2>
+        <libelleagr2>Organisme Privé à Caractère Commercial</libelleagr2>
+        <libellecourtagr2>Org. Privé Commer.</libellecourtagr2>
+        <codeagr1>2000</codeagr1>
+        <libelleagr1>Organismes Privés</libelleagr1>
+        <libellecourtagr1>Organismes Privés</libellecourtagr1>
+    </nomenclstatutavecagr>
+</fluxfiness>

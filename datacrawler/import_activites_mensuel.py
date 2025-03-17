@@ -23,7 +23,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 
 
 def filter_activites_mensuels(donnees_activites_mencumu: pd.DataFrame) -> pd.DataFrame:
-    year_regex = r"((20[012]\d{1}|19\d{2}))"
+    year_regex = r"(19\d{2}|2\d{3})"
     année_n_moins_1 = datetime.now().year
     année_de_départ = datetime.now().year - 5
     return donnees_activites_mencumu[

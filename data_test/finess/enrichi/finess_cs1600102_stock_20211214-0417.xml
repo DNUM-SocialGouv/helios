@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <horodatage>
+        <emetteur>finess</emetteur>
+        <destinataire>finess</destinataire>
+        <versionmessage>1</versionmessage>
+        <fluxnum>1460</fluxnum>
+        <datemaj>2022-08-24</datemaj>
+    </horodatage>
+    <activitesoumiseareco>
+        <noautor>012232881</noautor>
+        <idcpom>00-00-C00000</idcpom>
+        <nofinessej>970100152</nofinessej>
+        <rsej>PAS DANS LES NoFINESS CONNUS</rsej>
+        <nofinesset>970100020</nofinesset>
+        <rset>PAS DANS LES NoFINESS CONNUS</rset>
+        <dateeffetcpom>2013-12-01</dateeffetcpom>
+        <datefincpom>2018-11-30</datefincpom>
+        <codeautorarhgos>00-00-RC00000</codeautorarhgos>
+        <indicateurregional>N</indicateurregional>
+        <activite>R4</activite>
+        <libactivite>Soins palliatifs</libactivite>
+        <modalite>N1</modalite>
+        <libmodalite>Unité de soins palliatifs</libmodalite>
+        <forme>01</forme>
+        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+        <dateeffetasr>2013-12-01</dateeffetasr>
+        <capaciteautorisee>10</capaciteautorisee>
+        <regionautorisation>01</regionautorisation>
+        <etatautorisation>23</etatautorisation>
+        <libetatautorisation>Initiale</libetatautorisation>
+        <datemaj>2022-08-24</datemaj>
+    </activitesoumiseareco>
+    <activitesoumiseareco>
+        <noautor>842130070</noautor>
+        <idcpom>01-00-C00000</idcpom>
+        <nofinessej>010008407</nofinessej>
+        <rsej>CH DU HAUT BUGEY</rsej>
+        <nofinesset>010005239</nofinesset>
+        <rset>NOMINAL</rset>
+        <dateeffetcpom>2013-12-01</dateeffetcpom>
+        <datefincpom>2018-11-30</datefincpom>
+        <codeautorarhgos>01-00-RC00000</codeautorarhgos>
+        <indicateurregional>N</indicateurregional>
+        <activite>R7</activite>
+        <libactivite>Surveillance continue</libactivite>
+        <modalite>N8</modalite>
+        <libmodalite>USC polyvalente - adulte (non adossée à une unité de réanimation)</libmodalite>
+        <forme>01</forme>
+        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+        <dateeffetasr>2013-11-30</dateeffetasr>
+        <capaciteautorisee>4</capaciteautorisee>
+        <regionautorisation>84</regionautorisation>
+        <etatautorisation>23</etatautorisation>
+        <libetatautorisation>Initiale</libetatautorisation>
+        <datemaj>2021-12-14</datemaj>
+    </activitesoumiseareco>
+    <activitesoumiseareco>
+        <noautor>842130073</noautor>
+        <idcpom>01-00-C00001</idcpom>
+        <nofinessej>010008407</nofinessej>
+        <rsej>CH DU HAUT BUGEY</rsej>
+        <nofinesset>010005239</nofinesset>
+        <rset>NOMINAL</rset>
+        <dateeffetcpom>2013-12-01</dateeffetcpom>
+        <datefincpom>2018-11-30</datefincpom>
+        <codeautorarhgos>01-00-RC00001</codeautorarhgos>
+        <indicateurregional>N</indicateurregional>
+        <activite>R4</activite>
+        <libactivite>Soins palliatifs</libactivite>
+        <modalite>N4</modalite>
+        <libmodalite>Equipe mobile</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <dateeffetasr>2013-01-01</dateeffetasr>
+        <capaciteautorisee>1</capaciteautorisee>
+        <regionautorisation>84</regionautorisation>
+        <etatautorisation>23</etatautorisation>
+        <libetatautorisation>Initiale</libetatautorisation>
+        <datemaj>2021-12-14</datemaj>
+    </activitesoumiseareco>
+    <activitesoumiseareco>
+        <noautor>842130812</noautor>
+        <idcpom>01-00-C00002</idcpom>
+        <nofinessej>010008407</nofinessej>
+        <rsej>CH DU HAUT BUGEY</rsej>
+        <nofinesset>010005239</nofinesset>
+        <rset>NOMINAL</rset>
+        <dateeffetcpom>2019-04-01</dateeffetcpom>
+        <datefincpom>2023-12-31</datefincpom>
+        <codeautorarhgos>01-00-RC00002</codeautorarhgos>
+        <indicateurregional>N</indicateurregional>
+        <activite>S6</activite>
+        <libactivite>Structure spécifique d'hospitalisation</libactivite>
+        <modalite>B3</modalite>
+        <libmodalite>Clinique ouverte</libmodalite>
+        <forme>00</forme>
+        <libforme>Pas de forme</libforme>
+        <dateeffetasr xsi:nil="true"/>
+        <capaciteautorisee>0</capaciteautorisee>
+        <regionautorisation>84</regionautorisation>
+        <etatautorisation>26</etatautorisation>
+        <libetatautorisation>Suppression</libetatautorisation>
+        <datemaj>2021-12-14</datemaj>
+    </activitesoumiseareco>
+    <activitesoumiseareco>
+        <noautor>322130579</noautor>
+        <idcpom>02-00-C00000</idcpom>
+        <nofinessej>590000741</nofinessej>
+        <rsej>AVEC VALEURS MANQUANTES</rsej>
+        <nofinesset>010786259</nofinesset>
+        <rset>AVEC VALEURS MANQUANTES</rset>
+        <dateeffetcpom xsi:nil="true"/>
+        <datefincpom xsi:nil="true"/>
+        <codeautorarhgos>02-00-RC00000</codeautorarhgos>
+        <indicateurregional xsi:nil="true"/>
+        <activite>R7</activite>
+        <libactivite>Surveillance continue</libactivite>
+        <modalite>09</modalite>
+        <libmodalite>Adulte (âge &gt;=18 ans)</libmodalite>
+        <forme>01</forme>
+        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+        <dateeffetasr xsi:nil="true"/>
+        <capaciteautorisee xsi:nil="true"/>
+        <regionautorisation xsi:nil="true"/>
+        <etatautorisation xsi:nil="true"/>
+        <libetatautorisation xsi:nil="true"/>
+        <datemaj>2021-12-14</datemaj>
+    </activitesoumiseareco>
+    <activitesoumiseareco>
+        <noautor>322135175</noautor>
+        <idcpom>03-00-C00000</idcpom>
+        <nofinessej>590000741</nofinessej>
+        <rsej>AVEC ACTIVITÉ MANQUANTE</rsej>
+        <nofinesset>490019148</nofinesset>
+        <rset>AVEC ACTIVITÉ MANQUANTE</rset>
+        <dateeffetcpom>2019-01-01</dateeffetcpom>
+        <datefincpom>2024-01-01</datefincpom>
+        <codeautorarhgos>03-00-RC00000</codeautorarhgos>
+        <indicateurregional>N</indicateurregional>
+        <activite xsi:nil="true"/>
+        <libactivite>Soins intensifs</libactivite>
+        <modalite>N5</modalite>
+        <libmodalite>Unité de soins intensifs hors cardiologie</libmodalite>
+        <forme>01</forme>
+        <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+        <dateeffetasr>2019-01-01</dateeffetasr>
+        <capaciteautorisee>6</capaciteautorisee>
+        <regionautorisation>32</regionautorisation>
+        <etatautorisation>23</etatautorisation>
+        <libetatautorisation>Initiale</libetatautorisation>
+        <datemaj>2021-12-14</datemaj>
+    </activitesoumiseareco>
+</fluxfiness>

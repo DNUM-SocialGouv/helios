@@ -580,6 +580,36 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   };
 
+  public static vigierh: ÉtablissementTerritorialMédicoSocial["vigieRh"] = {
+    pyramideAges: [
+      {
+        annee: 2024,
+        trancheLibelle: "15-20",
+        effectif: 200,
+        effectifHomme: 20,
+        effectifFemme: 23,
+        effectifHommeRef: 11,
+        effectifFemmeRef: 18
+      }
+    ],
+    tranchesAgesLibelles: [],
+    professionFiliere:
+    {
+      dateDeMiseAJour: "10-10-2020",
+      data: [
+        {
+          categorie: "test",
+          dataCategorie: [{
+            annee: 2020,
+            mois: 2,
+            effectifFiliere: 20,
+            effectifEtab: 25,
+          }]
+        }
+      ]
+    }
+  };
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -591,6 +621,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
         budgetEtFinances: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.budgetEtFinances,
         qualite: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.qualite,
+        vigieRh: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
         identité: {
           ...ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ...champsSurchargés,

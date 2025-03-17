@@ -1,5 +1,6 @@
 import { ActivitesSanitaireMensuel } from "../métier/entities/ActivitesSanitaireMensuel";
 import { CadreBudgétaire } from "../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { EtablissementTerritorialMedicoSocialVigieRH } from "../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
@@ -715,7 +716,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static qualite: ÉtablissementTerritorialQualite = {
+  private static readonly qualite: ÉtablissementTerritorialQualite = {
     reclamations: [
       {
         "année": 2023,
@@ -854,6 +855,36 @@ export class ÉtablissementTerritorialTestBuilder {
     }
   }
 
+  private static readonly vigieRh: EtablissementTerritorialMedicoSocialVigieRH = {
+    pyramideAges: [
+      {
+        "annee": 2023,
+        "trancheLibelle": '15-20',
+        "effectif": 204,
+        "effectifHomme": 10,
+        "effectifFemme": 10,
+        "effectifHommeRef": 12,
+        "effectifFemmeRef": 12,
+      }
+    ],
+    tranchesAgesLibelles: ['15-20'],
+    professionFiliere:
+    {
+      dateDeMiseAJour: "10-10-2020",
+      data: [
+        {
+          categorie: "test",
+          dataCategorie: [{
+            annee: 2020,
+            mois: 2,
+            effectifFiliere: 20,
+            effectifEtab: 25,
+          }]
+        }
+      ]
+    }
+  }
+
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
     return {
       ...ÉtablissementTerritorialTestBuilder.médicoSocial,
@@ -935,6 +966,13 @@ export class ÉtablissementTerritorialTestBuilder {
     return {
       ...ÉtablissementTerritorialTestBuilder.ressourcesHumainesMédicoSocial,
       ...champsSurchargés,
+    };
+  }
+
+  public static creeUnBlocVigieRhMedicoSocial(champsSurcharges?: Partial<EtablissementTerritorialMedicoSocialVigieRH>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.vigieRh,
+      ...champsSurcharges,
     };
   }
 

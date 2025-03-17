@@ -27,7 +27,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 
 
 def filter_allocation_ressource(donnees_allocation_ressource: pd.DataFrame) -> pd.DataFrame:
-    year_regex = r"((20[012]\d{1}|19\d{2}))"
+    year_regex = r"(19\d{2}|2\d{3})"
     année_n_moins_1 = datetime.now().year - 1
     année_de_départ = datetime.now().year - 5
     return donnees_allocation_ressource[

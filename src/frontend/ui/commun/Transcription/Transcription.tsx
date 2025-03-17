@@ -15,7 +15,7 @@ type TableIndicateurProps = Readonly<{
 
 export const Transcription = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
-  if(identifiantUnique === "" && identifiants[0] === undefined) return null;
+  if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 
   const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
 
@@ -56,13 +56,13 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
                           </tr>
                         </thead>
                         <tbody>
-                          {libellés.map((libellé, index) => (
+                          {libellés?.map((libellé, index) => (
                             <tr key={libellé}>
                               <td>{libellé}</td>
                               {valeurs.map((valeur, index2) => (
                                 <td className={styles["transcriptionData"]} key={valeur[index] + index2.toString()}>
                                   {/* @ts-ignore */}
-                                  {valeur[index] === null ? wording.NON_RENSEIGNÉ : valeur[index]}
+                                  {valeur[index] ?? wording.NON_RENSEIGNÉ}
                                 </td>
                               ))}
                             </tr>

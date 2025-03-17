@@ -32,7 +32,7 @@ async function doGetOrderedAndPaginated(request: NextApiRequest, response: NextA
     if (id && order && orderBy && page && limit) {
         const list = await getByListIdOrderedAndPaginated(idUser, Number(id), String(order), String(orderBy), Number(page), Number(limit), false);
         return response.status(200).json(list);
-    } else if(id && order && orderBy && forExport) {
+    } else if (id && order && orderBy && forExport) {
         const list = await getByListIdOrderedAndPaginated(idUser, Number(id), String(order), String(orderBy), Number(page), Number(limit), true);
         return response.status(200).json(list);
     } else {

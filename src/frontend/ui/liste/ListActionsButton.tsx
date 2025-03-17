@@ -19,7 +19,7 @@ type ListActionsButtonProps = Readonly<{
     disabledExport?: boolean
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport}: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport }: ListActionsButtonProps) => {
 
     const { wording } = useDependencies();
     const router = useRouter();
@@ -37,12 +37,12 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
     }
 
     const onClickDelete = async () => {
-        if(listId && setSelectedRows) {
-        await removeFromFavorisList(listFinessNumbers, listId);
-        setSelectedRows([]);
-        setDisplayActions(false);
-        router.replace(router.asPath);
-    }
+        if (listId && setSelectedRows) {
+            await removeFromFavorisList(listFinessNumbers, listId);
+            setSelectedRows([]);
+            setDisplayActions(false);
+            router.replace(router.asPath);
+        }
     }
 
     return (
@@ -59,19 +59,19 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
                         {listId ? <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={onClickDelete}>
                             {wording.SUPPRIMER_DE_LA_LISTE}
                         </button> :
-                        <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
-                            Ajouter à mes listes
-                        </button>
+                            <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
+                                Ajouter à mes listes
+                            </button>
                         }
                     </li>
                     <li className={styles["menu-item"]}>
-                    {(listId && listName && order && orderBy) ? 
-                        <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
-                        : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
-                        {wording.EXPORTER}
-                    </button>
-                
-                    }
+                        {(listId && listName && order && orderBy) ?
+                            <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
+                            : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
+                                {wording.EXPORTER}
+                            </button>
+
+                        }
                     </li>
                 </ul>
             }

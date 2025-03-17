@@ -8,9 +8,14 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
+import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
+import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereData } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -47,8 +52,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
-    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
+    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET));
     const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel, domaineÉtablissementPrincipal);
@@ -69,7 +74,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique });
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
 
     return {
       estMonoÉtablissement: {
@@ -153,6 +158,102 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { année: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
+  }
+
+  async chargeLesDonneesVigieRH(numeroFinessET: string) {
+    const pyramideAges = await (await this.orm).getRepository(VigieRhPyramideAgesModel).find({
+      order: { annee: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const tranchesAge = await (await this.orm).getRepository(VigieRhRefTrancheAgeModel).find({
+      order: { trancheAge: "DESC" },
+    });
+    const professionFiliere = await this.getProfessionFiliere(numeroFinessET)
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, professionFiliere as unknown as ProfessionFiliere)
+  }
+
+  private async construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[], professionFiliereModel: ProfessionFiliere): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+
+    const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
+      return {
+        annee: pyramideModel.annee,
+        trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
+        effectif: pyramideModel.effectif,
+        effectifHomme: pyramideModel.effectifHomme,
+        effectifFemme: pyramideModel.effectifFemme,
+        effectifHommeRef: pyramideModel.effectifHommeRef,
+        effectifFemmeRef: pyramideModel.effectifFemmeRef,
+      }
+    })
+
+    const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
+      return trancheModel.trancheAge ?? '';
+    })
+
+    const professionFiliere = await this.construisProfessionFiliere(professionFiliereModel);
+
+    return {
+      pyramideAges,
+      tranchesAgesLibelles,
+      professionFiliere
+    }
+  }
+
+  private async construisProfessionFiliere(professionFiliereModel: ProfessionFiliere): Promise<{ data: ProfessionFiliereData[]; dateDeMiseAJour: string }> {
+    const professionFiliereFiltree: ProfessionFiliereData[] = professionFiliereModel.data
+      .filter((item: ProfessionFiliereData | null) => item !== null) // Filtre les éléments null
+      .map((item: ProfessionFiliereData) => ({
+        categorie: item.categorie,
+        dataCategorie: item.dataCategorie ? item.dataCategorie.map(profession => ({
+          annee: profession.annee,
+          mois: profession.mois,
+          effectifFiliere: profession.effectifFiliere,
+          effectifEtab: profession.effectifEtab,
+        })) : []
+      }));
+
+    const dateDeMiseÀJourprofessionFiliereModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_FILIERE);
+
+    return {
+      data: professionFiliereFiltree,
+      dateDeMiseAJour: dateDeMiseÀJourprofessionFiliereModel.dernièreMiseÀJour
+    };
+  }
+
+  async getProfessionFiliere(numeroFinessET: string) {
+    const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
+      order: { label: "ASC" }
+    });
+    
+    // Tri manuel en ignorant les accents
+    refProfessionFiliere.sort((a, b) => {
+      const labelA = a.label || '';
+      const labelB = b.label || '';
+      return labelA.localeCompare(labelB, 'fr', { sensitivity: 'base' });
+    });
+        
+    const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
+
+    const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
+
+      const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
+        order: { annee: "ASC", mois: "ASC" },
+        where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
+      });
+
+      // Vérifier si professionFiliere est vide
+      if (professionFiliere.length === 0) {
+        return null;
+      }
+
+      return {
+        categorie: itemRef.label,
+        dataCategorie: professionFiliere
+      }
+    }))
+
+    return {data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere}
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
@@ -533,15 +634,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      }
+      } else if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+      else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private constuisLevenementIndesirable(evenement: EvenementIndesirableETModel) {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -554,7 +653,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private construisInspections(inspections: InspectionsControlesETModel[], dateMisAJour: string) {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,

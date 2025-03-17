@@ -14,10 +14,6 @@
   justify-content: flex-start;
 }
 
-.liste-indicateurs>li>div:nth-child(1) {
-  min-height: 6rem;
-}
-
 .liste-indicateurs>li:nth-child(1) {
   grid-area: graph1;
 }

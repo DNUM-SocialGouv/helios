@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <structureej>
+    <nofiness>340798529</nofiness>
+    <rs>CLMN</rs>
+  </structureej>
+  <structureej>
+    <nofiness>010008407</nofiness>
+    <rs>CENTRE IMAGERIE MEDICALE LAENNEC</rs>
+  </structureej>
+  <structureej>
+    <nofiness>340020270</nofiness>
+    <rs>GCS UNITEP</rs>
+  </structureej>
+  <equipmateriellourd>
+    <nofinessej>340026764</nofinessej>
+    <rsej>PAS DANS LES NoFINESS CONNUS</rsej>
+    <eml>06201</eml>
+    <libeml>Appareil d'IRM à utilisation clinique</libeml>
+    <libcourteml>I.R.M.</libcourteml>
+    <noautor>762222949</noautor>
+    <noautorarhgos>00-00-0000</noautorarhgos>
+    <noimplarhgos>00-00-0000</noimplarhgos>
+    <dateautor>2019-06-28</dateautor>
+    <nofinesset>340026772</nofinesset>
+    <numserie>193575</numserie>
+    <marque>0000</marque>
+    <rset>PAS DANS LES NoFINESS CONNUS</rset>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <indnatlien>J</indnatlien>
+    <datemeo>2021-09-08</datemeo>
+    <datefin>2029-03-07</datefin>
+    <indrempl xsi:nil="true"/>
+    <noautorremplacement xsi:nil="true"/>
+    <indsup>N</indsup>
+    <datemaj>2022-08-24</datemaj>
+  </equipmateriellourd>
+  <equipmateriellourd>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <eml>05602</eml>
+    <libeml>Scanographe à utilisation médicale</libeml>
+    <libcourteml>Scanographe méd.</libcourteml>
+    <noautor>532212840</noautor>
+    <noautorarhgos>01-00-0000</noautorarhgos>
+    <noimplarhgos>01-00-0000</noimplarhgos>
+    <dateautor>2007-11-06</dateautor>
+    <nofinesset>010005239</nofinesset>
+    <numserie>155602</numserie>
+    <marque>0000</marque>
+    <rset>NOMINAL</rset>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <indnatlien>J</indnatlien>
+    <datemeo>2011-10-19</datemeo>
+    <datefin>2029-01-01</datefin>
+    <indrempl xsi:nil="true"/>
+    <noautorremplacement xsi:nil="true"/>
+    <indsup>N</indsup>
+    <datemaj>2022-08-24</datemaj>
+  </equipmateriellourd>
+  <equipmateriellourd>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <eml>06201</eml>
+    <libeml>Appareil d'IRM à utilisation clinique</libeml>
+    <libcourteml>I.R.M.</libcourteml>
+    <noautor>532212848</noautor>
+    <noautorarhgos>01-00-0001</noautorarhgos>
+    <noimplarhgos>01-00-0001</noimplarhgos>
+    <dateautor>2006-05-02</dateautor>
+    <nofinesset>010005239</nofinesset>
+    <numserie>1740882</numserie>
+    <marque>0000</marque>
+    <rset>NOMINAL</rset>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <indnatlien>J</indnatlien>
+    <datemeo>2009-01-20</datemeo>
+    <datefin>2027-02-16</datefin>
+    <indrempl xsi:nil="true"/>
+    <noautorremplacement xsi:nil="true"/>
+    <indsup>N</indsup>
+    <datemaj>2022-08-24</datemaj>
+  </equipmateriellourd>
+  <equipmateriellourd>
+    <nofinessej>340798529</nofinessej>
+    <rsej>AVEC VALEURS MANQUANTES</rsej>
+    <eml>05701</eml>
+    <libeml>Caméra à scintillation sans détecteur d'émission de positons</libeml>
+    <libcourteml>Cam scin sans détect</libcourteml>
+    <noautor>762215191</noautor>
+    <noautorarhgos>02-00-0000</noautorarhgos>
+    <noimplarhgos>02-00-0000</noimplarhgos>
+    <dateautor xsi:nil="true"/>
+    <nofinesset>010786259</nofinesset>
+    <numserie xsi:nil="true"/>
+    <marque>0000</marque>
+    <rset>AVEC VALEURS MANQUANTES</rset>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <indnatlien>J</indnatlien>
+    <datemeo xsi:nil="true"/>
+    <datefin xsi:nil="true"/>
+    <indrempl xsi:nil="true"/>
+    <noautorremplacement xsi:nil="true"/>
+    <indsup>N</indsup>
+    <datemaj>2022-08-24</datemaj>
+  </equipmateriellourd>
+  <equipmateriellourd>
+    <nofinessej>340020270</nofinessej>
+    <rsej>AVEC EML MANQUANT</rsej>
+    <eml xsi:nil="true"/>
+    <libeml>Tomographe à émissions</libeml>
+    <libcourteml>Tomographe émission</libcourteml>
+    <noautor>762229866</noautor>
+    <noautorarhgos>03-00-0000</noautorarhgos>
+    <noimplarhgos>03-00-0000</noimplarhgos>
+    <dateautor>2010-06-29</dateautor>
+    <nofinesset>490019148</nofinesset>
+    <numserie>10084</numserie>
+    <marque>0000</marque>
+    <rset>AVEC EML MANQUANT</rset>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <indnatlien>J</indnatlien>
+    <datemeo>2012-04-05</datemeo>
+    <datefin>2022-10-04</datefin>
+    <indrempl xsi:nil="true"/>
+    <noautorremplacement xsi:nil="true"/>
+    <indsup>N</indsup>
+    <datemaj>2022-08-24</datemaj>
+  </equipmateriellourd>
+</fluxfiness>
