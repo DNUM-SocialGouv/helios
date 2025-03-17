@@ -189,10 +189,5 @@
   "engines": {
     "node": "22.14"
   },
-<<<<<<< HEAD
-  "packageManager": "yarn@3.2.4"
-}
-=======
   "packageManager": "yarn@4.6.0"
 }
->>>>>>> develop
