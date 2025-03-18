@@ -119,9 +119,7 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
             }
         )
 
-        data_frame = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
-
-        pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
+        pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
@@ -241,9 +239,7 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
             }
         )
 
-        data_frame = pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test)
-
-        pd.testing.assert_frame_equal(data_frame, data_frame_attendu)
+        pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
         date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
             f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
@@ -273,7 +269,7 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
                 "file_active_personnes_accompagnees": [121.0, NaN],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [17.86, 18.52],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
-                "taux_occupation_externat": [1.000817111271329,1.000817111271329,],
+                 "taux_occupation_externat": [1.000817111271329,1.000817111271329,],
                 "taux_occupation_semi_internat": [NaN,NaN],
                 "taux_occupation_internat": [NaN,NaN],
                 "taux_occupation_autre": [NaN,NaN],
