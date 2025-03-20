@@ -11,10 +11,17 @@ type FavorisPopupProps = Readonly<{
   positionX: number;
   positionY: number;
   onClosePopup: () => void;
+  addOnOneListOnly?: boolean;
 }>;
 
 
-export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: FavorisPopupProps) => {
+export const FavorisPopup = ({
+  favorite,
+  positionX,
+  positionY,
+  onClosePopup = () => { },
+  addOnOneListOnly = false
+}: FavorisPopupProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
   const { addToFavorisList, removeFromFavorisList, createFavorisList, getFavorisLists } = useFavoris();
@@ -25,8 +32,9 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
   const [newListErrorMessage, setNewListErrorMessage] = useState("");
   const [addToListError, setAddToListError] = useState(false);
 
-  // Etat de selection des listes
-  let checkedLists = new Map<number, boolean>;
+  // Etat de selection des listes, une Map pour les ajout/suppression multiples, un id pour les ajout simple
+  let checkedLists: Map<number, boolean>;
+  let checkedList: number;
 
   useEffect(() => {
     // Cache la popup si on clic a l’exterieur
@@ -52,7 +60,7 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
   }, [componentRef]);
 
   const handleKeyDown = (event: KeyboardEventReact) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && displayNewListInput) {
       handleListCreation();
     }
   };
@@ -67,6 +75,9 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
   }
 
   const handleListCreation = async () => {
+    setNewListError(false);
+    setAddToListError(false);
+
     if (newListName.trim()) {
       let status = -1;
       let listId = -1;
@@ -81,18 +92,18 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
 
       if (status === 201) {
         // On save tout de suite les etablissements dans la nouvelle liste
+        let isOnError = false;
         for (const finessNumber of favorite) {
           await addToFavorisList(finessNumber, listId)
             .then(response => {
               if (response.status !== 200) {
-                setAddToListError(true);
+                isOnError = true;
               }
             });
         }
+        if (isOnError) setAddToListError(true);
         getFavorisLists();
 
-        setNewListError(false);
-        setAddToListError(false);
         setDisplayNewListInput(false);
         setNewListName("");
       } else if (status === 403) {
@@ -106,20 +117,40 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
     }
   }
 
-  const isInFavorisList = (list: UserListViewModel): boolean => {
+  const isInFavorisList = (list: UserListViewModel, finessNumber: string): boolean => {
+    return list.userListEtablissements.some(etablissement => etablissement.finessNumber === finessNumber);
+  };
+
+  // On choisit l’implementation des fonctions par rapport au cas (ajout/suppression multiples ou ajout simple)
+  let onListClick: (id: number) => void;
+  if (addOnOneListOnly) {
+    onListClick = (id) => checkedList = id;
+  } else {
+    onListClick = (id: number) => {
+      const list = checkedLists.get(id);
+      if (typeof list === "boolean") {
+        checkedLists.set(id, !list);
+      }
+    };
+
+
+  }
+  const isAnyFinessInFavorisList = (list: UserListViewModel): boolean => {
     for (const finessNumber of favorite) {
       if (list.userListEtablissements.some(etablissement => etablissement.finessNumber === finessNumber)) {
         return true;
       };
     }
     return false;
-  }
+  };
+
+
 
   const sortedList = () => {
     const list = userContext?.favorisLists.slice();
     if (list) {
-      //On génère la map des listes de favoris
-      generateFavorisMap();
+      //On génère la map des listes de favoris uniquement quand ce n’est pas un ajout simple
+      if (!addOnOneListOnly) generateFavorisMap();
       const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
       const favorisList = list.splice(favorisListIndex, 1);
       list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
@@ -133,28 +164,27 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
     const list = userContext?.favorisLists.slice();
     if (list) {
       list.forEach(userList => {
-        checkedMap.set(userList.id, isInFavorisList(userList));
+        checkedMap.set(userList.id, isAnyFinessInFavorisList(userList));
       });
     }
     checkedLists = checkedMap;
   }
 
-  const onListClick = (id: number) => {
-    const list = checkedLists.get(id);
-    if (typeof list === "boolean") {
-      checkedLists.set(id, !list);
-    }
-  }
-
   const onClickOk = async () => {
     let isOnError = false;
     setAddToListError(false);
-    const currentLists = userContext?.favorisLists;
-    if (currentLists) {
-      for (const list of currentLists) {
-        isOnError = await diffAndSaveFavorisState(list);
+    if (addOnOneListOnly) {
+      isOnError = await addOnNewFinessNumberOnList();
+    } else {
+      const currentLists = userContext?.favorisLists;
+      if (currentLists) {
+        for (const list of currentLists) {
+          const ListIsOnError = await diffAndSaveFavorisState(list);
+          if (!isOnError) isOnError = ListIsOnError;
+        }
       }
     }
+
     if (isOnError) {
       setAddToListError(true);
     } else {
@@ -165,13 +195,33 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
 
   async function diffAndSaveFavorisState(list: UserListViewModel): Promise<boolean> {
     let isOnError = false;
-    if (isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && !checkedLists.get(list.id)) { // Etablissement en favoris actuellement mais décoché -> On retire
-      const response = await removeFromFavorisList(favorite, list.id);
-      if (response.status !== 204) isOnError = true;
-    } else if (!isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
-      for (const finessNumber of favorite) {
+    for (const finessNumber of favorite) {
+      if (isInFavorisList(list, finessNumber) && typeof checkedLists.get(list.id) === "boolean" && !checkedLists.get(list.id)) { // Etablissement en favoris actuellement mais décoché -> On retire
+        const response = await removeFromFavorisList(favorite, list.id);
+        if (response.status !== 204) isOnError = true;
+      } else if (!isInFavorisList(list, finessNumber) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
         const response = await addToFavorisList(finessNumber, list.id);
         if (response.status !== 200) isOnError = true;
+
+      }
+    }
+    return isOnError;
+  }
+
+  async function addOnNewFinessNumberOnList(): Promise<boolean> {
+    let isOnError = false;
+    let selectedList;
+    const currentLists = userContext?.favorisLists;
+    if (currentLists) {
+      selectedList = currentLists.find((list) => list.id === checkedList);
+    }
+
+    if (selectedList) {
+      for (const finessNumber of favorite) {
+        if (!isInFavorisList(selectedList, finessNumber)) {
+          const response = await addToFavorisList(finessNumber, checkedList);
+          if (response.status !== 200) isOnError = true;
+        }
       }
     }
     return isOnError;
@@ -187,7 +237,7 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
         {sortedList()?.map(list => (
           <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
             <div className="fr-checkbox-group">
-              <input defaultChecked={isInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" />
+              <input defaultChecked={addOnOneListOnly ? false : isAnyFinessInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" />
               <label className="fr-label" htmlFor={list.id + ""}>
                 {list.nom}
               </label>
