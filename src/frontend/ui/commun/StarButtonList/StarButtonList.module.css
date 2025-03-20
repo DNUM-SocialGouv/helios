@@ -62,7 +62,7 @@
 
 .listOverflowContainer {
   overflow: hidden auto;
-  max-height: 8.5rem;
+  max-height: 5.5rem;
   text-wrap: wrap;
   word-wrap: anywhere;
   border: none;
