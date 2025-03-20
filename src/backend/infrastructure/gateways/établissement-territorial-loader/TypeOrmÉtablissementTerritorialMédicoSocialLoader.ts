@@ -325,11 +325,21 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.tauxRéalisationActivité,
       },
-      tauxOccupationExternat: établissementTerritorialModel.tauxOccupationExternat,
-      tauxOccupationSemiInternat: établissementTerritorialModel.tauxOccupationSemiInternat,
-      tauxOccupationInternat: établissementTerritorialModel.tauxOccupationInternat,
-      tauxOccupationAutre: établissementTerritorialModel.tauxOccupationAutre,
-      tauxOccupationSeances: établissementTerritorialModel.tauxOccupationSeances,
+      tauxOccupationExternat: {
+        value: établissementTerritorialModel.tauxOccupationExternat,
+      },
+      tauxOccupationSemiInternat: {
+        value: établissementTerritorialModel.tauxOccupationSemiInternat,
+      },
+      tauxOccupationInternat: {
+        value: établissementTerritorialModel.tauxOccupationInternat,
+      },
+      tauxOccupationAutre: {
+        value: établissementTerritorialModel.tauxOccupationAutre,
+      },
+      tauxOccupationSeances: {
+        value: établissementTerritorialModel.tauxOccupationSeances,
+      },
     }));
   }
 

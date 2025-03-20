@@ -26,7 +26,7 @@ const autorisationsMockData = {
 };
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
-  public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
+  public static readonly identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "01117 OYONNAX CEDEX",
@@ -119,7 +119,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     domaineÉtablissementPrincipal: 'Médico-social',
   };
 
-  public static activités: ÉtablissementTerritorialMédicoSocial["activités"] = [
+  public static readonly activités: ÉtablissementTerritorialMédicoSocial["activités"] = [
     {
       année: 2020,
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
@@ -150,6 +150,21 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       tauxRéalisationActivité: {
         dateMiseÀJourSource: "2021-07-07",
         value: 1.004,
+      },
+      tauxOccupationExternat: {
+        value: null,
+      },
+      tauxOccupationSemiInternat: {
+        value: null,
+      },
+      tauxOccupationInternat: {
+        value: null,
+      },
+      tauxOccupationAutre: {
+        value: null,
+      },
+      tauxOccupationSeances: {
+        value: null,
       },
     },
     {
@@ -183,6 +198,21 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 0.945,
       },
+      tauxOccupationExternat: {
+        value: null,
+      },
+      tauxOccupationSemiInternat: {
+        value: null,
+      },
+      tauxOccupationInternat: {
+        value: null,
+      },
+      tauxOccupationAutre: {
+        value: null,
+      },
+      tauxOccupationSeances: {
+        value: null,
+      },
     },
     {
       année: 2022,
@@ -215,10 +245,25 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 0.966,
       },
+      tauxOccupationExternat: {
+        value: null,
+      },
+      tauxOccupationSemiInternat: {
+        value: null,
+      },
+      tauxOccupationInternat: {
+        value: null,
+      },
+      tauxOccupationAutre: {
+        value: null,
+      },
+      tauxOccupationSeances: {
+        value: null,
+      },
     },
   ];
 
-  public static autorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"] = {
+  public static readonly autorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"] = {
     autorisations: {
       dateMiseÀJourSource: "2022-08-18",
       disciplines: [
@@ -322,7 +367,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     numéroFinessÉtablissementTerritorial: "010003598",
   };
 
-  public static budgetEtFinances: ÉtablissementTerritorialMédicoSocial["budgetEtFinances"] = [
+  public static readonly budgetEtFinances: ÉtablissementTerritorialMédicoSocial["budgetEtFinances"] = [
     {
       année: 2020,
       cadreBudgétaire: CadreBudgétaire.ERRD,
@@ -440,7 +485,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
 
   ];
 
-  public static ressourcesHumaines: ÉtablissementTerritorialMédicoSocial["ressourcesHumaines"] = [
+  public static readonly ressourcesHumaines: ÉtablissementTerritorialMédicoSocial["ressourcesHumaines"] = [
     {
       année: 2019,
       nombreDEtpRéalisés: {
@@ -542,7 +587,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ];
 
-  public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
+  public static readonly qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
     reclamations: [
       {
         numéroFinessÉtablissementTerritorial: '010005239',

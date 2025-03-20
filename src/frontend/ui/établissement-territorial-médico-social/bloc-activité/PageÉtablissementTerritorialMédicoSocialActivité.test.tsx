@@ -172,6 +172,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur1,
               },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
+              },
             },
             {
               année: 2021,
@@ -204,6 +219,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur2,
               },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
+              },
             },
             {
               année: 2022,
@@ -235,6 +265,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur3,
+              },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
               },
             },
           ],
@@ -310,6 +355,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur1,
               },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
+              },
             },
             {
               année: 2021,
@@ -342,6 +402,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur2,
               },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
+              },
             },
             {
               année: 2022,
@@ -373,6 +448,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur3,
+              },
+              tauxOccupationExternat: {
+                value: null,
+              },
+              tauxOccupationSemiInternat: {
+                value: null,
+              },
+              tauxOccupationInternat: {
+                value: null,
+              },
+              tauxOccupationAutre: {
+                value: null,
+              },
+              tauxOccupationSeances: {
+                value: null,
               },
             },
           ],
