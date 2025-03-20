@@ -2,17 +2,16 @@ import { useContext, useRef, useState } from "react";
 
 import styles from "./StarButtonList.module.css";
 import { useFavoris } from "../../favoris/useFavoris";
-import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 import { FavorisPopup } from "../FavorisPopup/FavorisPopup";
 
 type StarButtonProps = Readonly<{
-  favorite: RechercheViewModel;
+  numeroFiness: string;
   parent: string;
 }>;
 
-export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
+export const StarButtonList = ({ numeroFiness, parent }: StarButtonProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
   const { getFavorisLists } = useFavoris();
@@ -41,7 +40,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   }
 
   const isInFavoris = () => {
-    const isInFav = userContext?.favorisLists.some((list) => list.userListEtablissements.some((etablissement) => etablissement.finessNumber === favorite?.numéroFiness));
+    const isInFav = userContext?.favorisLists.some((list) => list.userListEtablissements.some((etablissement) => etablissement.finessNumber === numeroFiness));
     return isInFav;
   }
 
@@ -54,7 +53,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
         title={isInFavoris() ? wording.ETOILE_ETAB_DANS_LISTE : wording.ETOILE_ETAB_PAS_DANS_LISTE}
       />
       {displayPopup &&
-        <FavorisPopup favorite={favorite.numéroFiness} onClosePopup={() => setDisplayPopup(false)} positionX={popupX} positionY={popupY} />
+        <FavorisPopup favorite={[numeroFiness]} onClosePopup={() => setDisplayPopup(false)} positionX={popupX} positionY={popupY} />
       }
     </>
   );

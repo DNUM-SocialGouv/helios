@@ -2,14 +2,14 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 import { Dispatch, SetStateAction } from "react";
 
+import styles from "./Table.module.css";
+import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import styles from "./Table.module.css";
-import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 
 export type SelectedRows = Readonly<{
   [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
@@ -216,7 +216,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg(couleurLogo)}</span>}
                 </div>
               )}
-              {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
+              {header.key === "favori" && <StarButtonList numeroFiness={row.numéroFiness} parent="tab" />}
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"

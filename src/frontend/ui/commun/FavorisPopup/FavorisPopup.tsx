@@ -7,7 +7,7 @@ import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 
 type FavorisPopupProps = Readonly<{
-  favorite: string;
+  favorite: string[];
   positionX: number;
   positionY: number;
   onClosePopup: () => void;
@@ -68,41 +68,51 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
 
   const handleListCreation = async () => {
     if (newListName.trim()) {
-      let status: number;
-      createFavorisList(newListName, false)
+      let status = -1;
+      let listId = -1;
+      await createFavorisList(newListName, false)
         .then(response => {
           status = response.status;
           return response.json();
         })
         .then(response => {
-          if (status === 201) {
-            // On save tout de suite l’etablissement dans la nouvelle liste
-            addToFavorisList(favorite, response.id)
-              .then(response => {
-                getFavorisLists();
-                if (response.status !== 200) {
-                  setAddToListError(true);
-                }
-              });
-
-            setNewListError(false);
-            setAddToListError(false);
-            setDisplayNewListInput(false);
-            setNewListName("");
-          } else if (status === 403) {
-            setNewListError(true);
-            setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
-            getFavorisLists();
-          } else {
-            setNewListError(true);
-            setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
-          }
+          listId = response.id;
         });
+
+      if (status === 201) {
+        // On save tout de suite les etablissements dans la nouvelle liste
+        for (const finessNumber of favorite) {
+          await addToFavorisList(finessNumber, listId)
+            .then(response => {
+              if (response.status !== 200) {
+                setAddToListError(true);
+              }
+            });
+        }
+        getFavorisLists();
+
+        setNewListError(false);
+        setAddToListError(false);
+        setDisplayNewListInput(false);
+        setNewListName("");
+      } else if (status === 403) {
+        setNewListError(true);
+        setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
+        getFavorisLists();
+      } else {
+        setNewListError(true);
+        setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
+      }
     }
   }
 
   const isInFavorisList = (list: UserListViewModel): boolean => {
-    return list.userListEtablissements.some(etablissement => etablissement.finessNumber === favorite);
+    for (const finessNumber of favorite) {
+      if (list.userListEtablissements.some(etablissement => etablissement.finessNumber === finessNumber)) {
+        return true;
+      };
+    }
+    return false;
   }
 
   const sortedList = () => {
@@ -156,11 +166,13 @@ export const FavorisPopup = ({ favorite, positionX, positionY, onClosePopup }: F
   async function diffAndSaveFavorisState(list: UserListViewModel): Promise<boolean> {
     let isOnError = false;
     if (isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && !checkedLists.get(list.id)) { // Etablissement en favoris actuellement mais décoché -> On retire
-      const response = await removeFromFavorisList([favorite], list.id);
+      const response = await removeFromFavorisList(favorite, list.id);
       if (response.status !== 204) isOnError = true;
     } else if (!isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
-      const response = await addToFavorisList(favorite, list.id);
-      if (response.status !== 200) isOnError = true;
+      for (const finessNumber of favorite) {
+        const response = await addToFavorisList(finessNumber, list.id);
+        if (response.status !== 200) isOnError = true;
+      }
     }
     return isOnError;
   }
