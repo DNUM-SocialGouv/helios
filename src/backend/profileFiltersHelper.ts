@@ -197,6 +197,11 @@ const filterActiviteMedicoSocial = (activites: any, profil: any) => {
     activite.tauxOccupationHébergementTemporaire =
       profil.tauxOccupationHébergementTemporaire === "ok" ? activite.tauxOccupationHébergementTemporaire : { dateMiseÀJourSource: "", value: "" };
     activite.tauxRéalisationActivité = profil.tauxRéalisationActivité === "ok" ? activite.tauxRéalisationActivité : { dateMiseÀJourSource: "", value: "" };
+    activite.tauxOccupationExternat = profil.tauxRéalisationActivité === "ok" ? activite.tauxOccupationExternat : '';
+    activite.tauxOccupationSemiInternat = profil.tauxRéalisationActivité === "ok" ? activite.tauxOccupationSemiInternat : '';
+    activite.tauxOccupationInternat = profil.tauxRéalisationActivité === "ok" ? activite.tauxOccupationInternat : '';
+    activite.tauxOccupationAutre = profil.tauxRéalisationActivité === "ok" ? activite.tauxOccupationAutre : '';
+    activite.tauxOccupationSeances = profil.tauxRéalisationActivité === "ok" ? activite.tauxOccupationSeances : '';
   }
   return activites;
 };

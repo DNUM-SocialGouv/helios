@@ -74,6 +74,7 @@ import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -231,7 +232,8 @@ const datasource = new DataSource({
     AjoutCodeRegionDansLaRecherche1730971588532,
     AjoutRattachementRecherche1732629322484,
     AjoutListEtEtsList1736865415982,
-    MettreAJourTableActiviteMedicoSocial1741861364859
+    MettreAJourTableActiviteMedicoSocial1741861364859,
+    AjoutDesOccupationsDansLesProfils1799478704013
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

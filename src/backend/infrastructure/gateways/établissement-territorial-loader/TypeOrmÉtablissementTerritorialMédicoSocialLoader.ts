@@ -34,7 +34,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const activitésÉtablissementTerritorialActivitésModel = await this.chargeLesActivitésModel(numéroFinessÉtablissementTerritorial);
     const dateDeMiseÀJourAnnMsTdpEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
     const dateDeMiseÀJourAnnErrdEjEtModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ_ET);
-
     return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseÀJourAnnMsTdpEtModel, dateDeMiseÀJourAnnErrdEjEtModel);
   }
 
@@ -326,6 +325,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         dateMiseÀJourSource: dateDeMiseAJourAnnMsTdpEtModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.tauxRéalisationActivité,
       },
+      tauxOccupationExternat: établissementTerritorialModel.tauxOccupationExternat,
+      tauxOccupationSemiInternat: établissementTerritorialModel.tauxOccupationSemiInternat,
+      tauxOccupationInternat: établissementTerritorialModel.tauxOccupationInternat,
+      tauxOccupationAutre: établissementTerritorialModel.tauxOccupationAutre,
+      tauxOccupationSeances: établissementTerritorialModel.tauxOccupationSeances,
     }));
   }
 
