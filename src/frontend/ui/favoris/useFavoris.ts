@@ -72,10 +72,10 @@ export function useFavoris() {
       });
   };
 
-  const removeFromFavorisList = async (numérosFiness: string[], listId: number) => {
+  const removeFromFavorisList = async (numerosFiness: string[], listId: number) => {
     return fetch(`/api/liste/${listId}/etablissement`,
       {
-        body: JSON.stringify({ finessNumbers: numérosFiness }),
+        body: JSON.stringify({ finessNumbers: numerosFiness }),
         headers: { "Content-Type": "application/json" },
         method: "DELETE",
       })
@@ -83,19 +83,20 @@ export function useFavoris() {
         if (data.status === 204) {
           const oldList = userContext?.favorisLists.find(({ id }) => id === listId);
           if (oldList) {
-            const userListEtablissements = oldList.userListEtablissements.filter(({ finessNumber }) => !numérosFiness.includes(finessNumber))
+            const userListEtablissements = oldList.userListEtablissements.filter(({ finessNumber }) => !numerosFiness.includes(finessNumber))
             const newList: UserListViewModel = { ...oldList, userListEtablissements }
             const newLists = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
             userContext?.setFavorisLists([...newLists, newList])
           }
         }
+        return data;
       });
   };
 
-  const addToFavorisList = async (favorite: any, listId: number) => {
+  const addToFavorisList = async (numeroFiness: string, listId: number) => {
     return fetch(`/api/liste/${listId}/etablissement`,
       {
-        body: JSON.stringify({ finessNumber: favorite.numéroFiness, typeEtablissement: favorite.type }),
+        body: JSON.stringify({ finessNumber: numeroFiness }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       });

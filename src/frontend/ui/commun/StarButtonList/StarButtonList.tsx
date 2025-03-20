@@ -8,14 +8,14 @@ import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 
 type StarButtonProps = Readonly<{
-  favorite: RechercheViewModel | undefined;
+  favorite: RechercheViewModel;
   parent: string;
 }>;
 
 export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
-  const { addToFavorisList, createFavorisList, getFavorisLists } = useFavoris();
+  const { addToFavorisList, removeFromFavorisList, createFavorisList, getFavorisLists } = useFavoris();
   const [displayPopup, setDisplayPopup] = useState<boolean>(false);
   const [displayNewListInput, setDisplayNewListInput] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>("");
@@ -26,6 +26,9 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const [newListError, setNewListError] = useState(false);
   const [newListErrorMessage, setNewListErrorMessage] = useState("");
   const [addToListError, setAddToListError] = useState(false);
+
+  // Etat de selection des listes
+  let checkedLists = new Map<number, boolean>;
 
   let buttonStyle = "starInEstablishment";
   if (parent === "titre") {
@@ -57,6 +60,12 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     };
   }, [componentRef]);
 
+  const handleKeyDown = (event: KeyboardEventReact) => {
+    if (event.key === 'Enter') {
+      handleListCreation();
+    }
+  };
+
   const closePopup = () => {
     setDisplayPopup(false);
     setDisplayNewListInput(false);
@@ -66,6 +75,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     setAddToListError(false);
 
   }
+
   const handleListCreation = async () => {
     if (newListName.trim()) {
       let status: number;
@@ -77,7 +87,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
         .then(response => {
           if (status === 201) {
             // On save tout de suite l’etablissement dans la nouvelle liste
-            addToFavorisList(favorite, response.id)
+            addToFavorisList(favorite.numéroFiness, response.id)
               .then(response => {
                 getFavorisLists();
                 if (response.status !== 200) {
@@ -86,6 +96,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
               });
 
             setNewListError(false);
+            setAddToListError(false);
             setDisplayNewListInput(false);
             setNewListName("");
           } else if (status === 403) {
@@ -124,6 +135,8 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
   const sortedList = () => {
     const list = userContext?.favorisLists.slice();
     if (list) {
+      //On génère la map des listes de favoris
+      generateFavorisMap();
       const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
       const favorisList = list.splice(favorisListIndex, 1);
       list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
@@ -132,11 +145,52 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
     return undefined;
   }
 
-  const handleKeyDown = (event: KeyboardEventReact) => {
-    if (event.key === 'Enter') {
-      handleListCreation();
+  const generateFavorisMap = () => {
+    const checkedMap = new Map<number, boolean>();
+    const list = userContext?.favorisLists.slice();
+    if (list) {
+      list.forEach(userList => {
+        checkedMap.set(userList.id, isInFavorisList(userList));
+      });
     }
-  };
+    checkedLists = checkedMap;
+  }
+
+  const onListClick = (id: number) => {
+    const list = checkedLists.get(id);
+    if (typeof list === "boolean") {
+      checkedLists.set(id, !list);
+    }
+  }
+
+  const onClickOk = async () => {
+    let isOnError = false;
+    setAddToListError(false);
+    const currentLists = userContext?.favorisLists;
+    if (currentLists) {
+      for (const list of currentLists) {
+        isOnError = await diffAndSaveFavorisState(list);
+      }
+    }
+    if (isOnError) {
+      setAddToListError(true);
+    } else {
+      closePopup();
+    }
+    getFavorisLists();
+  }
+
+  async function diffAndSaveFavorisState(list: UserListViewModel): Promise<boolean> {
+    let isOnError = false;
+    if (isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && !checkedLists.get(list.id)) { // Etablissement en favoris actuellement mais décoché -> On retire
+      const response = await removeFromFavorisList([favorite.numéroFiness], list.id);
+      if (response.status !== 204) isOnError = true;
+    } else if (!isInFavorisList(list) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
+      const response = await addToFavorisList(favorite.numéroFiness, list.id);
+      if (response.status !== 200) isOnError = true;
+    }
+    return isOnError;
+  }
 
   return (
     <>
@@ -156,7 +210,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
             {sortedList()?.map(list => (
               <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
                 <div className="fr-checkbox-group">
-                  <input defaultChecked={isInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} type="checkbox" />
+                  <input defaultChecked={isInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" />
                   <label className="fr-label" htmlFor={list.id + ""}>
                     {list.nom}
                   </label>
@@ -186,7 +240,7 @@ export const StarButtonList = ({ favorite, parent }: StarButtonProps) => {
                 </div>
               }
             </li>
-            <li><button className="fr-btn" onClick={() => closePopup()}>Ok</button></li>
+            <li><button className="fr-btn" onClick={() => onClickOk()}>Ok</button></li>
           </ul>
         </div >
       }
