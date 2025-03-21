@@ -29,8 +29,9 @@ type ListActionsButtonProps = Readonly<{
   listName?: string;
   order?: string;
   orderBy?: string;
-  disabledExport?: boolean
-  children?: JSX.Element
+  disabledExport?: boolean;
+  children?: JSX.Element;
+  onAddToFavorisSuccess?: (listName: string) => void;
 }>;
 
 // Un export pour la page liste, pour la page comparaison et plus tard pour la page recherche avancée
@@ -45,7 +46,7 @@ const Export = ({ listId, listName, order, orderBy, disabledExport, router, chil
     </button>
 }
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport, children }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport, children, onAddToFavorisSuccess }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -125,7 +126,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
         </ul>
       }
       {displayFavorisPopup &&
-        <FavorisPopup addOnOneListOnly={true} favorite={listFinessNumbers} onClosePopup={() => setDisplayFavorisPopup(false)} positionX={popupX} positionY={popupY} />
+        <FavorisPopup addOnOneListOnly={true} favorite={listFinessNumbers} onClickOkSuccess={onAddToFavorisSuccess} onClosePopup={() => setDisplayFavorisPopup(false)} onNewListCreationSuccess={onAddToFavorisSuccess} positionX={popupX} positionY={popupY} />
       }
     </div>
   );

@@ -11,6 +11,8 @@ type FavorisPopupProps = Readonly<{
   positionX: number;
   positionY: number;
   onClosePopup: () => void;
+  onNewListCreationSuccess?: (listName: string) => void;
+  onClickOkSuccess?: (listName: string) => void;
   addOnOneListOnly?: boolean;
 }>;
 
@@ -19,7 +21,9 @@ export const FavorisPopup = ({
   favorite,
   positionX,
   positionY,
-  onClosePopup = () => { },
+  onClosePopup,
+  onNewListCreationSuccess = (_listName: string) => { },
+  onClickOkSuccess = (_listName: string) => { },
   addOnOneListOnly = false
 }: FavorisPopupProps) => {
   const userContext = useContext(UserContext);
@@ -65,6 +69,15 @@ export const FavorisPopup = ({
     }
   };
 
+  function getCheckedListName(): string {
+    const lists = userContext?.favorisLists;
+    if (lists && checkedList) {
+      const list = lists.find((list) => list.id === checkedList);
+      if (list) return list.nom;
+    }
+    return "";
+  }
+
   const closePopup = () => {
     setDisplayNewListInput(false);
     setNewListName("");
@@ -106,6 +119,9 @@ export const FavorisPopup = ({
 
         setDisplayNewListInput(false);
         setNewListName("");
+        // Dans l’ajout simple on ferme la popup à la création d’une liste car c’est un seul ajout
+        if (addOnOneListOnly) closePopup();
+        onNewListCreationSuccess(getCheckedListName());
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
@@ -189,6 +205,7 @@ export const FavorisPopup = ({
       setAddToListError(true);
     } else {
       closePopup();
+      onClickOkSuccess(getCheckedListName());
     }
     getFavorisLists();
   }

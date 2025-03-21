@@ -527,6 +527,9 @@ export class WordingFr implements Wording {
   readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
   readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";

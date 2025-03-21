@@ -444,6 +444,9 @@ export interface Wording {
   readonly ETOILE_MAX_LISTE_ATTEINT: string;
   readonly ETOILE_ERREUR_MODIF_ETAB: string;
 
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
