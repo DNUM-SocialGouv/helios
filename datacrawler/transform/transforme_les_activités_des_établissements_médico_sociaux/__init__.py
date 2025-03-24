@@ -41,4 +41,4 @@ def transforme_les_activites_des_etablissements_medico_sociaux(
     les_donnees_occupations_filtrees = les_donnees_occupations.dropna(
     subset=index_des_activités).drop_duplicates(subset=index_des_activités).set_index(index_des_activités)
     return les_donnees_occupations_filtrees.join(
-        transforme_les_donnees_ann_ms_tdp_et(donnees_ann_ms_tdp_et, numeros_finess_des_etablissements_connus, logger), how="outer", on=None, validate=None)
+        transforme_les_donnees_ann_ms_tdp_et(donnees_ann_ms_tdp_et, numeros_finess_des_etablissements_connus, logger), how="outer", on=None)
