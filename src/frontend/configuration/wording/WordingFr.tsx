@@ -192,6 +192,11 @@ export class WordingFr implements Wording {
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string =
     "Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)";
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = "Nombre de passages aux urgences";
+  readonly TAUX_OCCUPATION_EXTERNAT: string = "Taux d’occupation externat ";
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string = " Taux d’occupation semi-internat";
+  readonly TAUX_OCCUPATION_INTERNAT: string = "Taux d’occupation internat ";
+  readonly TAUX_OCCUPATION_AUTRE: string = "Taux d'occupation Autre 1, 2 et 3";
+  readonly TAUX_OCCUPATION_SEANCES: string = "Taux d'occupation séances";
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";

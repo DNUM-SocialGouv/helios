@@ -152,19 +152,19 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         value: 1.004,
       },
       tauxOccupationExternat: {
-        value: null,
+        value: 0.725,
       },
       tauxOccupationSemiInternat: {
-        value: null,
+        value: 0.952,
       },
       tauxOccupationInternat: {
-        value: null,
+        value: 0.965,
       },
       tauxOccupationAutre: {
-        value: null,
+        value: 0.495,
       },
       tauxOccupationSeances: {
-        value: null,
+        value: 0.562,
       },
     },
     {
@@ -199,19 +199,19 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         value: 0.945,
       },
       tauxOccupationExternat: {
-        value: null,
+        value: 0.526,
       },
       tauxOccupationSemiInternat: {
-        value: null,
+        value: 0.857,
       },
       tauxOccupationInternat: {
-        value: null,
+        value: 0.966,
       },
       tauxOccupationAutre: {
-        value: null,
+        value: 0.756,
       },
       tauxOccupationSeances: {
-        value: null,
+        value: 0.634,
       },
     },
     {
@@ -246,19 +246,19 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         value: 0.966,
       },
       tauxOccupationExternat: {
-        value: null,
+        value: 0.526,
       },
       tauxOccupationSemiInternat: {
-        value: null,
+        value: 0.857,
       },
       tauxOccupationInternat: {
-        value: null,
+        value: 0.966,
       },
       tauxOccupationAutre: {
-        value: null,
+        value: 0.756,
       },
       tauxOccupationSeances: {
-        value: null,
+        value: 0.634,
       },
     },
   ];

@@ -79,38 +79,36 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       <Head>
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
-      <>
-        <div className="print-content" ref={componentRef}>
-          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
-            {établissementTerritorialViewModel.titre}
-          </Titre>
+      <div className="print-content" ref={componentRef}>
+        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+          {établissementTerritorialViewModel.titre}
+        </Titre>
 
-          <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
+        <BlocIdentitéMédicoSocial établissementTerritorialIdentitéMédicoSocialViewModel={établissementTerritorialViewModel.identitéViewModel} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
+        <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
-          <BlocAutorisationEtCapacitéMédicoSocial
-            opnedBloc={statusBlocs[0]}
-            toggelBlocs={() => toggelBlocs(0)} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéMédicoSocial opnedBloc={statusBlocs[1]}
-            toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocRessourcesHumainesMédicoSocial
-            opnedBloc={statusBlocs[2]}
-            toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetEtFinancesMédicoSocial
-            opnedBloc={statusBlocs[3]}
-            toggelBlocs={() => toggelBlocs(3)} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel}
-            opnedBloc={statusBlocs[4]} toggelBlocs={() => toggelBlocs(4)} />
-        </div>
-      </>
+        <BlocAutorisationEtCapacitéMédicoSocial
+          opnedBloc={statusBlocs[0]}
+          toggelBlocs={() => toggelBlocs(0)} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéMédicoSocial opnedBloc={statusBlocs[1]}
+          toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocRessourcesHumainesMédicoSocial
+          opnedBloc={statusBlocs[2]}
+          toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetEtFinancesMédicoSocial
+          opnedBloc={statusBlocs[3]}
+          toggelBlocs={() => toggelBlocs(3)} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel}
+          opnedBloc={statusBlocs[4]} toggelBlocs={() => toggelBlocs(4)} />
+      </div>
     </main>
   );
 };
