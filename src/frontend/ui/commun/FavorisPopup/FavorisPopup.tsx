@@ -97,10 +97,15 @@ export const FavorisPopup = ({
       await createFavorisList(newListName, false)
         .then(response => {
           status = response.status;
-          return response.json();
+          if (status === 201) {
+            return response.json();
+          }
+          return null;
         })
         .then(response => {
-          listId = response.id;
+          if (response) {
+            listId = response.id;
+          }
         });
 
       if (status === 201) {
