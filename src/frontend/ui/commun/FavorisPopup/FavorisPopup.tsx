@@ -38,7 +38,7 @@ export const FavorisPopup = ({
 
   // Etat de selection des listes, une Map pour les ajout/suppression multiples, un id pour les ajout simple
   let checkedLists: Map<number, boolean>;
-  let checkedList: number;
+  const [checkedList, setCheckedList] = useState<number>(-1);
 
   useEffect(() => {
     // Cache la popup si on clic a l’exterieur
@@ -144,8 +144,12 @@ export const FavorisPopup = ({
 
   // On choisit l’implementation des fonctions par rapport au cas (ajout/suppression multiples ou ajout simple)
   let onListClick: (id: number) => void;
+  let isChecked: (id: number) => boolean;
   if (addOnOneListOnly) {
-    onListClick = (id) => checkedList = id;
+    onListClick = (id: number) => setCheckedList(id);
+    isChecked = (id: number) => {
+      return checkedList === id;
+    }
   } else {
     onListClick = (id: number) => {
       const list = checkedLists.get(id);
@@ -153,9 +157,12 @@ export const FavorisPopup = ({
         checkedLists.set(id, !list);
       }
     };
-
-
+    isChecked = (id: number) => {
+      const listcheckedStatus = checkedLists.get(id);
+      return typeof listcheckedStatus === "boolean" && listcheckedStatus;
+    }
   }
+
   const isAnyFinessInFavorisList = (list: UserListViewModel): boolean => {
     for (const finessNumber of favorite) {
       if (list.userListEtablissements.some(etablissement => etablissement.finessNumber === finessNumber)) {
@@ -195,7 +202,7 @@ export const FavorisPopup = ({
     let isOnError = false;
     setAddToListError(false);
     if (addOnOneListOnly) {
-      isOnError = await addOnNewFinessNumberOnList();
+      isOnError = await addNewFinessNumbersOnList();
     } else {
       const currentLists = userContext?.favorisLists;
       if (currentLists) {
@@ -210,7 +217,7 @@ export const FavorisPopup = ({
       setAddToListError(true);
     } else {
       closePopup();
-      onClickOkSuccess(getCheckedListName());
+      if (addOnOneListOnly) onClickOkSuccess(getCheckedListName());
     }
     getFavorisLists();
   }
@@ -230,7 +237,7 @@ export const FavorisPopup = ({
     return isOnError;
   }
 
-  async function addOnNewFinessNumberOnList(): Promise<boolean> {
+  async function addNewFinessNumbersOnList(): Promise<boolean> {
     let isOnError = false;
     let selectedList;
     const currentLists = userContext?.favorisLists;
@@ -259,7 +266,7 @@ export const FavorisPopup = ({
         {sortedList()?.map(list => (
           <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
             <div className="fr-checkbox-group">
-              <input defaultChecked={addOnOneListOnly ? false : isAnyFinessInFavorisList(list)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" />
+              <input checked={addOnOneListOnly ? isChecked(list.id) : undefined} defaultChecked={addOnOneListOnly ? undefined : isChecked(list.id)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" value={list.id} />
               <label className="fr-label" htmlFor={list.id + ""}>
                 {list.nom}
               </label>
