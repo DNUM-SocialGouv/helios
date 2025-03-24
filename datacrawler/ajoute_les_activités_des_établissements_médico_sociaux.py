@@ -40,7 +40,6 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
     donnees_ann_errd_ej_et_filtrees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_errd_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
     )
-    
     donnees_ann_ca_ej_et = lis_le_fichier_csv(
         chemin_du_fichier_ann_ca_ej_et,
         colonnes_a_lire_bloc_activites_ann_ca_ej_et,
