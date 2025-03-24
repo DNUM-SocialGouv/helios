@@ -40,8 +40,7 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
     donnees_ann_errd_ej_et_filtrees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_errd_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
     )
-    date_du_fichier_ann_errd_ej_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_errd_ej_et)
-
+    
     donnees_ann_ca_ej_et = lis_le_fichier_csv(
         chemin_du_fichier_ann_ca_ej_et,
         colonnes_a_lire_bloc_activites_ann_ca_ej_et,
@@ -51,7 +50,6 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
     donnees_ann_ca_ej_et_filtrees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_ca_ej_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
     )
-    date_du_fichier_ann_ca_ej_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ca_ej_et)
     donnees_ann_ms_tdp_et = lis_le_fichier_csv(
         chemin_du_fichier_ann_ms_tdp_et,
         colonnes_à_lire_ann_ms_tdp_et,
@@ -61,7 +59,6 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
     donnees_ann_ms_tdp_et_filtrees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_ms_tdp_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
     )
-    date_du_fichier_ann_ms_tdp_et = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ms_tdp_et)
 
     numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
 
@@ -80,9 +77,9 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
             connection,
             TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
             activites_des_etablissements_medico_sociaux,
-            [(FichierSource.DIAMANT_ANN_ERRD_EJ_ET, date_du_fichier_ann_errd_ej_et),
-             (FichierSource.DIAMANT_ANN_CA_EJ_ET, date_du_fichier_ann_ca_ej_et),
-             (FichierSource.DIAMANT_ANN_MS_TDP_ET, date_du_fichier_ann_ms_tdp_et)
+            [(FichierSource.DIAMANT_ANN_ERRD_EJ_ET, extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_errd_ej_et)),
+             (FichierSource.DIAMANT_ANN_CA_EJ_ET, extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ca_ej_et)),
+             (FichierSource.DIAMANT_ANN_MS_TDP_ET, extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_ms_tdp_et))
             ],
             logger,
         )
