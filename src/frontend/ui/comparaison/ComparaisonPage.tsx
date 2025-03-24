@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useSession } from "next-auth/react";
 import { ReactNode, useContext, useEffect, useState } from "react";
 
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
@@ -17,25 +16,21 @@ import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
 interface ComparaisonPageProps {
-  listeAnnees: number[];
   codeProfiles: string[];
   codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
 }
 
-export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
-  const { data } = useSession();
-
+export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
 
   const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
   const { wording } = useDependencies();
-  const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
-  const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage } = useComparaison();
+  const [structureChoice, setStructureChoice] = useState<string>("Médico-social");
+  const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
+  const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
-  const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
 
@@ -44,13 +39,13 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
 
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("");
-  const [deleteEt, setDeleteET] = useState(false);
+  const [deleteEt, setDeleteEt] = useState(false);
 
   const [reloadTable, setReloadTable] = useState<boolean>(false);
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + "", order, orderBy, codeRegion, codeProfiles);
+    lancerLaComparaison(annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
     setReloadTable(false);
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
@@ -117,18 +112,52 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
-      document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
       if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
     }
-    setDeleteET(!deleteEt);
+    setDeleteEt(!deleteEt);
   };
 
   const onClickAjoutEtablissement = () => {
     comparaisonContext?.setTerme("");
     setIsShowAjoutEtab(true);
   };
+
+  const results = (): ReactNode => {
+    let content;
+    if (loading) {
+      content = (<div>Chargement des résultats...</div>);
+    } else if (nombreRésultats === 0) {
+      content = (<div>Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.</div>)
+    } else {
+      content = (
+        <>
+          <Table
+            data={resultats}
+            handleSelectAll={handleSelectAll}
+            headers={tableHeaders}
+            isAllSelected={isAllSelected}
+            isCenter={true}
+            isShowAvrage={false}
+            isVScroll={true}
+            onClickDelete={onClickDelete}
+            onClickInfobull={openModal}
+            order={order}
+            orderBy={orderBy}
+            page={page || 1}
+            selectedRows={selectedRows}
+            setOrder={setOrder}
+            setOrderBy={setOrderBy}
+            setSelectedRows={setSelectedRows}
+            total={nombreRésultats}
+          />
+          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+        </>
+      )
+    }
+    return content;
+  }
 
   return (
     <main className="fr-container" id="content">
@@ -161,7 +190,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
         <div className={styles["years-container"]}>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Année</span>
-            {listeAnnees.length > 0 && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
+            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
           </div>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
@@ -169,50 +198,15 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
               choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
               noSelectableChoices={getAllTypes()}
               selectedChoice={structureChoice}
-              setSelectedChoice={setStructurechoice}
+              setSelectedChoice={setStructureChoice}
             />
           </div>
         </div>
         {/* Affichage conditionnel pendant le chargement */}
-        {loading ? (
-          <div>Chargement des résultats...</div>
-        ) : (
-          <>
-            <Table
-              data={resultats}
-              forMoyenne={moyenne}
-              handleInfoBullMoyenne={setEstCeOuvertMoyenne}
-              handleSelectAll={handleSelectAll}
-              headers={tableHeaders}
-              isAllSelected={isAllSelected}
-              isCenter={true}
-              isShowAvrage={false}
-              isVScroll={true}
-              onClickDelete={onClickDelete}
-              onClickInfobull={openModal}
-              order={order}
-              orderBy={orderBy}
-              page={page || 1}
-              selectedRows={selectedRows}
-              setOrder={setOrder}
-              setOrderBy={setOrderBy}
-              setSelectedRows={setSelectedRows}
-              total={nombreRésultats}
-            />
-            <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
-          </>
-        )}
+        {results()}
       </div>
       <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
         <>{contenu}</>
-      </InfoBulle>
-      <InfoBulle
-        estCeOuvert={estCeOuvertMoyenne}
-        identifiant="info-bull-comparaison-table"
-        setEstCeOuvert={setEstCeOuvertMoyenne}
-        titre="Calcul de la moyenne"
-      >
-        <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
       </InfoBulle>
     </main>
   );

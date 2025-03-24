@@ -20,7 +20,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
   const codeColorOfSelected = "#000091";
 
   const listFinessFromStorage = sessionStorage.getItem("listFinessNumbers");
-  const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : null;
+  const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : [];
 
   useEffect(() => {
     const scrollableDiv = document.getElementById("list-etablissements-container");
@@ -39,7 +39,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
         scrollableDiv.removeEventListener("scroll", handleScroll);
       };
     }
-    return () => {};
+    return () => { };
   }, []);
 
   const onHandleSelectEtablissement = (numFiness: string) => {
@@ -54,6 +54,16 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
     }
   };
 
+  const computeListRowClassName = (numeroFiness: string): string => {
+    let className = "";
+    if (finessNumbersListFromTable?.includes(numeroFiness)) {
+      className = styles["disabled-container"];
+    } else if (newEtablissements.includes(numeroFiness)) {
+      className = styles["selected-container"];
+    }
+    return className;
+  }
+
   return (
     <div className={styles["list-etablissements-container"]} id="list-etablissements-container">
       {resultatRechercheList && (
@@ -61,15 +71,9 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
           {resultatRechercheList.map((res) => (
             <li className={styles["etablissement-info"]} key={res.numéroFiness}>
               <div
-                className={
-                  finessNumbersListFromTable && finessNumbersListFromTable.includes(res.numéroFiness)
-                    ? styles["disabled-container"]
-                    : newEtablissements.includes(res.numéroFiness)
-                    ? styles["selected-container"]
-                    : ""
-                }
+                className={computeListRowClassName(res.numéroFiness)}
                 onClick={() => onHandleSelectEtablissement(res.numéroFiness)}
-                onKeyDown={() => {}}
+                onKeyDown={() => { }}
                 role="button"
                 style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}
                 tabIndex={0}
@@ -93,7 +97,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
                 </span>
                 <span className={styles["main-span"]}>
                   {res.numéroFiness} - {res.socialReason}
-                  {(newEtablissements.includes(res.numéroFiness) || (finessNumbersListFromTable && finessNumbersListFromTable.includes(res.numéroFiness))) && (
+                  {(newEtablissements.includes(res.numéroFiness) || (finessNumbersListFromTable?.includes(res.numéroFiness))) && (
                     <div className={styles["icon-check-fill"]}>
                       {checkFillSvg(newEtablissements.includes(res.numéroFiness) ? codeColorOfSelected : codeColorOfDisabled)}
                     </div>

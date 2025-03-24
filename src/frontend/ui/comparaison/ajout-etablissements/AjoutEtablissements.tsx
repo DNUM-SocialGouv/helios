@@ -25,7 +25,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
-  const [newEtablissements, setNewEtablissement] = useState<string[]>([]);
+  const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
 
   useEffect(() => {
     if (isAtBottom && comparaisonContext) {
@@ -100,6 +100,17 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     onClickFermer();
   };
 
+  const addButtonLabel = (): string => {
+    let label = "Ajouter";
+    const etabCount = newEtablissements.length;
+    if (etabCount === 1) {
+      label += " " + etabCount + " établissement";
+    } else if (etabCount > 1) {
+      label += " " + etabCount + " établissements";
+    }
+    return label;
+  }
+
   return (
     <div className="fr-col-12 fr-col-md-12 fr-col-lg-12" style={{ marginBottom: 20 }}>
       <div className={styles["ajout-etab-body"]} id="recherche-avancee-comparaison-modal-body">
@@ -128,7 +139,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
                 newEtablissements={newEtablissements}
                 resultatRechercheList={listData}
                 setIsAtBottom={setIsAtBottom}
-                setNewEtablissement={setNewEtablissement}
+                setNewEtablissement={setNewEtablissements}
               ></ListEtablissements>
             )}
           </div>
@@ -141,12 +152,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
             id="ajouter-etablissement-botton"
             onClick={onClickAjouter}
           >
-            Ajouter{" "}
-            {newEtablissements.length > 0
-              ? newEtablissements.length === 1
-                ? newEtablissements.length + " établissement"
-                : newEtablissements.length + " établissements"
-              : ""}
+            {addButtonLabel()}
           </button>
           {nombreRésultats > 0 && <span style={{ marginLeft: "auto", fontSize: "small", opacity: 0.5 }}>{nombreRésultats} Établissement(s)</span>}
         </div>
