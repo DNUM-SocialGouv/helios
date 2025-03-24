@@ -1,4 +1,4 @@
-import { ReactChild, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -99,7 +99,7 @@ export function useComparaison() {
   };
 
 
-  const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactChild } => {
+  const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactNode } => {
     switch (name) {
       case "realisationActivite":
         return { contenu: <ContenuTauxRéalisationActivité dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_tdbPerf)} source={wording.TDB_PERF}></ContenuTauxRéalisationActivité>, titre: wording.TAUX_RÉALISATION_ACTIVITÉ }

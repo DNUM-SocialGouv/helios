@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useSession } from "next-auth/react";
-import { ReactChild, useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 
 import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
 import styles from "./Comparaison.module.css";
@@ -36,7 +36,7 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
-  const [titre, setTitre] = useState<ReactChild>("");
+  const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
 
   const [page, setPage] = useState<number>(1);
