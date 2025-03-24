@@ -43,6 +43,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     );
   }
 
+
+  public get lesDonnéesActiviteEHPADNeSontPasRenseignées(): boolean {
+    return (
+      !this.activitéEstElleRenseignée ||
+      (!this.leTauxOccupationHébergementPermanentEstIlRenseigné &&
+        !this.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
+        !this.leTauxOccupationAccueilDeJourEstIlRenseigné &&
+        !this.leTauxRéalisationActivitéEstIlRenseigné &&
+        !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
+        !this.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
+        !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée)
+    );
+  }
   public get lesDonnéesActivitésPasRenseignees(): string[] {
     const nonRenseignee = [];
     if (!this.leTauxOccupationHébergementPermanentEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
@@ -57,6 +70,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     if (!this.leTauxOccupationInternatEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_INTERNAT);
     if (!this.leTauxOccupationAutreEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_AUTRE);
     if (!this.leTauxOccupationSeancesEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_SEANCES);
+
+    return nonRenseignee;
+  }
+
+  public get lesDonneesActivitesEHPADPasRenseignees(): string[] {
+    const nonRenseignee = [];
+    if (!this.leTauxOccupationHébergementPermanentEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
+    if (!this.leTauxOccupationHébergementTemporaireEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
+    if (!this.leTauxOccupationAccueilDeJourEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
+    if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée) nonRenseignee.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
 
     return nonRenseignee;
   }
@@ -92,7 +118,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     );
   }
 
-  public get dateDeMiseÀJourDuTauxOccupationHébergementPermanent(): string {
+  public get dateDeMiseÀJourCNSA(): string {
     return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementPermanent.dateMiseÀJourSource);
   }
 
@@ -123,10 +149,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     );
   }
 
-  public get dateDeMiseÀJourDuTauxOccupationHébergementTemporaire(): string {
-    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationHébergementTemporaire.dateMiseÀJourSource);
-  }
-
   public get leTauxOccupationAccueilDeJourEstIlRenseigné(): boolean {
     return this.lIndicateurEstIlRenseigne("tauxOccupationAccueilDeJour");
   }
@@ -152,10 +174,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         valeurs={valeurs}
       />
     );
-  }
-
-  public get dateDeMiseÀJourDuTauxOccupationAccueilDeJour(): string {
-    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationAccueilDeJour.dateMiseÀJourSource);
   }
 
   public get leTauxRéalisationActivitéEstIlRenseigné(): boolean {
@@ -481,6 +499,19 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     if (!this.leTauxOccupationSeancesEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_SEANCES);
 
     return nonAutorisés;
+  }
+
+  public get lesDonneesActivitesEHPADPasAutorisees(): string[] {
+    const nonAutorises = [];
+    if (!this.leTauxOccupationHébergementPermanentEstIlAutorisé) nonAutorises.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
+    if (!this.leTauxOccupationHébergementTemporaireEstIlAutorisé) nonAutorises.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
+    if (!this.leTauxOccupationAccueilDeJourEstIlAutorisé) nonAutorises.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
+    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorises.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorises.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorises.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorises.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+
+    return nonAutorises;
   }
 
   private construisLaCouleurDeLaBarreVerticale = (valeur: number, année: number | string): CouleurHistogramme => {
