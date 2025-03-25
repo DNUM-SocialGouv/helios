@@ -19,7 +19,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
       <h1>
         {children}
         <span className="hiddenPdf">
-          <StarButtonList favorite={rechercheViewModel} parent="titre" />
+          <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
       {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}
