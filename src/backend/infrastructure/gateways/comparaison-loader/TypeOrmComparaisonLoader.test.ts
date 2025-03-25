@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmComparaisonLoader } from "./TypeOrmComparaisonLoader";
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
@@ -13,9 +14,9 @@ import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../
 import { ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { ÉtablissementTerritorialRessourcesHumainesModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialRessourcesHumainesModelTestBuilder";
+import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { clearAllTables, getOrm } from "../../../testHelper";
-import { TypeOrmComparaisonLoader } from "./TypeOrmComparaisonLoader";
 
 describe("La comparaison des établissements médico sociaux", () => {
   const orm = getOrm();
@@ -197,7 +198,8 @@ describe("La comparaison des établissements médico sociaux", () => {
     };
 
     // WHEN
-    const comparaison = await typeOrmComparaisonLoader.compare("Médico-social", ["100000000", "100000001", "199999999"], '2022', premièrePage, "", "", false, '84', [autorisation]);
+    const params = { type: "Médico-social", numerosFiness: ["100000000", "100000001", "199999999"], annee: '2022', page: premièrePage, order: "", orderBy: "", forExport: false, codeRegion: '84' } as ParametresDeComparaison;
+    const comparaison = await typeOrmComparaisonLoader.compare(params, [autorisation]);
 
     expect(comparaison.nombreDeResultats).toBe(3);
 
