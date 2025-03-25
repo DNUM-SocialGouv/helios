@@ -106,7 +106,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
             {listId ? <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={onClickDelete}>
               {wording.SUPPRIMER_DE_LA_LISTE}
             </button>
-              : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={handleDisplayFavorisPopup}>
+              : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length < 2} onClick={handleDisplayFavorisPopup}>
                 Ajouter à mes listes
               </button>
             }
