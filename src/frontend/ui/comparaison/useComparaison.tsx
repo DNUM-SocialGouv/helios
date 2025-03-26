@@ -55,33 +55,45 @@ export function useComparaison() {
 
     let numerosFiness = [];
     try {
-      numerosFiness = listFiness ? JSON.parse(listFiness) : null;
+      numerosFiness = listFiness ? JSON.parse(listFiness) : [];
     } catch (e) {
     }
 
     const type = typeStored ?? "";
 
     setState({ ...state, loading: true });
-    fetch("/api/comparaison/compare", {
-      body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setState({
-          ...state,
-          nombreRésultats: data.nombreDeResultats,
-          lastPage: Math.ceil(data.nombreDeResultats / take),
-          résultats: construisLesRésultatsDeLaComparaison(data),
-          loading: false,
-          listeAnnees: data.listeAnnees,
-        });
+
+    if (numerosFiness && numerosFiness.length > 0) {
+      fetch("/api/comparaison/compare", {
+        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
       })
-      .catch(() => {
-        setState({ ...state, loading: false });
-      });
-  };
+        .then((response) => response.json())
+        .then((data) => {
+          setState({
+            ...state,
+            nombreRésultats: data.nombreDeResultats,
+            lastPage: Math.ceil(data.nombreDeResultats / take),
+            résultats: construisLesRésultatsDeLaComparaison(data),
+            loading: false,
+            listeAnnees: data.listeAnnees,
+          });
+        })
+        .catch(() => {
+          setState({ ...state, loading: false });
+        });
+    } else {
+      setState({
+        ...state,
+        nombreRésultats: 0,
+        lastPage: 1,
+        loading: false,
+        résultats: [],
+        listeAnnees: [],
+      })
+    }
+  }
 
 
   const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactNode } => {
