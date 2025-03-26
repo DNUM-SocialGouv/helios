@@ -508,6 +508,7 @@ export class WordingFr implements Wording {
   // Comparaison
   readonly COMPARAISON: string = "Comparaison";
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
+  readonly COMPARAISON_AUCUN_FINESS: string = "Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.";
 
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
