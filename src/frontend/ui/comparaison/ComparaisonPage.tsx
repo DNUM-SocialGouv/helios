@@ -129,7 +129,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     if (loading) {
       content = (<div>Chargement des résultats...</div>);
     } else if (nombreRésultats === 0) {
-      content = (<div>Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.</div>)
+      content = (<div className={styles['informationText']}>Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.</div>)
     } else {
       content = (
         <>
