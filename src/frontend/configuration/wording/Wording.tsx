@@ -164,6 +164,11 @@ export interface Wording {
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string;
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string;
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string;
+  readonly TAUX_OCCUPATION_EXTERNAT: string;
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string;
+  readonly TAUX_OCCUPATION_INTERNAT: string;
+  readonly TAUX_OCCUPATION_AUTRE: string;
+  readonly TAUX_OCCUPATION_SEANCES: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;

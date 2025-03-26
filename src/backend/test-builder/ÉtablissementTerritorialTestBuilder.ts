@@ -10,7 +10,7 @@ import { ÉtablissementTerritorialIdentité } from "../métier/entities/Établis
 import { ÉtablissementTerritorialQualite } from "../métier/entities/ÉtablissementTerritorialQualite";
 
 export class ÉtablissementTerritorialTestBuilder {
-  private static médicoSocial: ÉtablissementTerritorialIdentité = {
+  private static readonly médicoSocial: ÉtablissementTerritorialIdentité = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2022-02-02",
       value: "01130 NANTUA",
@@ -91,7 +91,7 @@ export class ÉtablissementTerritorialTestBuilder {
     domaineÉtablissementPrincipal: 'Médico-social',
   };
 
-  private static sanitaire: ÉtablissementTerritorialIdentité = {
+  private static readonly sanitaire: ÉtablissementTerritorialIdentité = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2022-02-02",
       value: "59650 VILLENEUVE D ASCQ",
@@ -172,7 +172,7 @@ export class ÉtablissementTerritorialTestBuilder {
     domaineÉtablissementPrincipal: 'Médico-social'
   };
 
-  private static activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
+  private static readonly activitéMédicoSocial: ÉtablissementTerritorialMédicoSocialActivité = {
     année: 2019,
     duréeMoyenneSéjourAccompagnementPersonnesSorties: {
       dateMiseÀJourSource: "2022-02-02",
@@ -203,9 +203,24 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: 80,
     },
+    tauxOccupationExternat: {
+      value: null,
+    },
+    tauxOccupationSemiInternat: {
+      value: null,
+    },
+    tauxOccupationInternat: {
+      value: null,
+    },
+    tauxOccupationAutre: {
+      value: null,
+    },
+    tauxOccupationSeances: {
+      value: null,
+    },
   };
 
-  private static activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
+  private static readonly activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {
     année: 2016,
     nombreDePassagesAuxUrgences: {
       dateMiseÀJourSource: "2022-02-02",
@@ -254,7 +269,7 @@ export class ÉtablissementTerritorialTestBuilder {
     numéroFinessÉtablissementTerritorial: "123456789",
   };
 
-  private static activitesSanitairesMensuelles: ActivitesSanitaireMensuel = {
+  private static readonly activitesSanitairesMensuelles: ActivitesSanitaireMensuel = {
     dateDeMiseAJour: "2024-11-05",
     activitesSanitaireMensuelList: [{
       année: 2023,
@@ -401,7 +416,7 @@ export class ÉtablissementTerritorialTestBuilder {
   };
 
 
-  private static autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = {
+  private static readonly autorisationMédicoSocial: ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité = {
     autorisations: {
       dateMiseÀJourSource: "2022-02-02",
       disciplines: [
@@ -443,7 +458,7 @@ export class ÉtablissementTerritorialTestBuilder {
     numéroFinessÉtablissementTerritorial: "123456789",
   };
 
-  private static autorisationSanitaire: ÉtablissementTerritorialSanitaireAutorisationEtCapacité = {
+  private static readonly autorisationSanitaire: ÉtablissementTerritorialSanitaireAutorisationEtCapacité = {
     autorisations: {
       activités: [
         {
@@ -563,7 +578,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static budgetEtFinancesErrdMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+  private static readonly budgetEtFinancesErrdMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
     année: 2019,
     cadreBudgétaire: CadreBudgétaire.ERRD,
     chargesEtProduits: {
@@ -602,7 +617,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static budgetEtFinancesCaPhMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+  private static readonly budgetEtFinancesCaPhMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
     année: 2019,
     cadreBudgétaire: CadreBudgétaire.CA_PH,
     chargesEtProduits: {
@@ -641,7 +656,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static budgetEtFinancesCaPaMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
+  private static readonly budgetEtFinancesCaPaMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {
     année: 2019,
     cadreBudgétaire: CadreBudgétaire.CA_PA,
     chargesEtProduits: {
@@ -681,7 +696,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines = {
+  private static readonly ressourcesHumainesMédicoSocial: ÉtablissementTerritorialMédicoSocialRessourcesHumaines = {
     année: 2019,
     nombreDEtpRéalisés: {
       dateMiseÀJourSource: "2022-02-02",
@@ -715,7 +730,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static qualite: ÉtablissementTerritorialQualite = {
+  private static readonly qualite: ÉtablissementTerritorialQualite = {
     reclamations: [
       {
         "année": 2023,

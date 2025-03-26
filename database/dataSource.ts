@@ -67,12 +67,14 @@ import { AjoutClassificationDansLaRecherche1728914554142 } from "./migrations/17
 import { AjoutCodeRegionDansLaRecherche1730971588532 } from "./migrations/1730971588532-AjoutCodeRegionDansLaRecherche";
 import { AjoutRattachementRecherche1732629322484 } from "./migrations/1732629322484-AjoutRattachementRecherche";
 import { AjoutListEtEtsList1736865415982 } from "./migrations/1736865415982-AjoutListEtEtsList";
+import { MettreAJourTableActiviteMedicoSocial1741861364859 } from "./migrations/1741861364859-MettreAJourTableActiviteMedicoSocial";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -230,6 +232,8 @@ const datasource = new DataSource({
     AjoutCodeRegionDansLaRecherche1730971588532,
     AjoutRattachementRecherche1732629322484,
     AjoutListEtEtsList1736865415982,
+    MettreAJourTableActiviteMedicoSocial1741861364859,
+    AjoutDesOccupationsDansLesProfils1799478704013
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

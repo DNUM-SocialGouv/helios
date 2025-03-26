@@ -56,6 +56,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, "TdB Perf", wording.TDB_PERF_TITLE],
     [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, "TdB Perf", wording.TDB_PERF_TITLE],
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
+    // [wording.TAUX_OCCUPATION_EXTERNAT, 7, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 8, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_INTERNAT, 9, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_AUTRE, 10, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_SEANCES, 11, "CNSA", wording.CNSA_TITLE],
   ])("affiche les informations l’indicateur %s", (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
@@ -63,7 +68,7 @@ describe("La page établissement territorial médico-social - bloc activité", (
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
-    expect(indicateurs).toHaveLength(7);
+    expect(indicateurs).toHaveLength(12);
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: "h3" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(indicateurs[identifiant]).getAllByText(textMatch(`${wording.miseÀJour("07/07/2021")} - Source : ${sourceOrigineAttendue}`), {
@@ -134,7 +139,12 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [3, null, 0.94, 0.96],
     [4, 340, null, 300],
     [5, 87, 90, null],
-    [6, null, 994, 990],
+    [6, null, 990, 990],
+    [7, null, 0.526, 0.248],
+    [8, null, 0.324, 0.569],
+    [9, null, 0.432, 0.481],
+    [10, null, 0.364, 0.756],
+    [11, null, 0.423, 0.675],
   ])(
     'affiche un tableau descriptif avec deux années après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
@@ -172,6 +182,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur1,
               },
+              tauxOccupationExternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationSeances: {
+                value: valeurIndicateur1,
+              },
             },
             {
               année: 2021,
@@ -204,6 +229,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur2,
               },
+              tauxOccupationExternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationSeances: {
+                value: valeurIndicateur2,
+              },
             },
             {
               année: 2022,
@@ -234,6 +274,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
               },
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur3,
+              },
+              tauxOccupationExternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationSeances: {
                 value: valeurIndicateur3,
               },
             },
@@ -273,6 +328,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [4, 340, null, null],
     [5, null, 90, null],
     [6, null, null, 990],
+    [7, null, null, 0.248],
+    [8, null, null, 0.569],
+    [9, null, null, 0.481],
+    [10, null, null, 0.756],
+    [11, null, null, 0.675],
   ])(
     'affiche un tableau descriptif avec une seule année après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
@@ -310,6 +370,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur1,
               },
+              tauxOccupationExternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur1,
+              },
+              tauxOccupationSeances: {
+                value: valeurIndicateur1,
+              },
             },
             {
               année: 2021,
@@ -342,6 +417,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
                 dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur2,
               },
+              tauxOccupationExternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationSeances: {
+                value: valeurIndicateur2,
+              },
             },
             {
               année: 2022,
@@ -372,6 +462,21 @@ describe("La page établissement territorial médico-social - bloc activité", (
               },
               tauxRéalisationActivité: {
                 dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur3,
+              },
+              tauxOccupationExternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationSemiInternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationInternat: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationAutre: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationSeances: {
                 value: valeurIndicateur3,
               },
             },
@@ -411,6 +516,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, "TdB Perf", wording.TDB_PERF_TITLE],
     [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, "TdB Perf", wording.TDB_PERF_TITLE],
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
+    // [wording.TAUX_OCCUPATION_EXTERNAT, 7, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 8, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_INTERNAT, 9, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_AUTRE, 10, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_SEANCES, 11, "CNSA", wording.CNSA_TITLE],
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
@@ -451,6 +561,11 @@ describe("La page établissement territorial médico-social - bloc activité", (
     [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
     [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
     [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
+    // [wording.TAUX_OCCUPATION_EXTERNAT, 7],
+    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 8],
+    // [wording.TAUX_OCCUPATION_INTERNAT, 9],
+    [wording.TAUX_OCCUPATION_AUTRE, 10],
+    [wording.TAUX_OCCUPATION_SEANCES, 11],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);

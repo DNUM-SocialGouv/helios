@@ -10,31 +10,31 @@ from datacrawler.transform.équivalences_diamant_helios import (
 )
 
 
-def récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_et: pd.DataFrame) -> pd.DataFrame:
-    def choisis_le_taux_de_réalisation_de_l_activité(ligne: Dict) -> float:
+def recupere_le_taux_de_realisation_des_etablissements(donnees_ann_ms_tdp_et: pd.DataFrame) -> pd.DataFrame:
+    def choisis_le_taux_de_realisation_de_l_activite(ligne: Dict) -> float:
         return (
             ligne["Taux de réalisation de l’activité CAMSP et CMPP"]
             if pd.isna(ligne["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)"])
             else ligne["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)"]
         )
 
-    taux_realisation_activite = cast(pd.Series, données_ann_ms_tdp_et.apply(choisis_le_taux_de_réalisation_de_l_activité, axis=1)).rename(
+    taux_realisation_activite = cast(pd.Series, donnees_ann_ms_tdp_et.apply(choisis_le_taux_de_realisation_de_l_activite, axis=1)).rename(
         "taux_realisation_activite"
     )
 
-    return données_ann_ms_tdp_et.join(taux_realisation_activite).drop(
+    return donnees_ann_ms_tdp_et.join(taux_realisation_activite).drop(
         columns=["Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)", "Taux de réalisation de l’activité CAMSP et CMPP"]
     )
 
 
-def transforme_les_données_ann_ms_tdp_et(
-    données_ann_ms_tdp_et: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
+def transforme_les_donnees_ann_ms_tdp_et(
+    donnees_ann_ms_tdp_et: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
-    est_dans_finess = données_ann_ms_tdp_et["Finess"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
+    est_dans_finess = donnees_ann_ms_tdp_et["Finess"].isin(numeros_finess_des_etablissements_connus["numero_finess_etablissement_territorial"])
     logger.info(f"[DIAMANT] {est_dans_finess.sum()} activités sont liées à un ET trouvé en base dans le fichier ann_ms_tdp_et")
 
     return (
-        récupère_le_taux_de_réalisation_des_établissements(données_ann_ms_tdp_et[est_dans_finess])
+        recupere_le_taux_de_realisation_des_etablissements(donnees_ann_ms_tdp_et[est_dans_finess])
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios))
         .dropna(subset=index_des_activités)
         .drop_duplicates(subset=index_des_activités)

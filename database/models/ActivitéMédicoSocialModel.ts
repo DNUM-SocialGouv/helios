@@ -34,4 +34,19 @@ export class ActivitéMédicoSocialModel {
 
   @Column({ name: "duree_moyenne_sejour_accompagnement_personnes_sorties", nullable: true, type: "float" })
   public duréeMoyenneSéjourAccompagnementPersonnesSorties!: number;
+
+  @Column({ name: "taux_occupation_externat", nullable: true, type: "float" })
+  public tauxOccupationExternat!: number;
+
+  @Column({ name: "taux_occupation_semi_internat", nullable: true, type: "float" })
+  public tauxOccupationSemiInternat!: number;
+
+  @Column({ name: "taux_occupation_internat", nullable: true, type: "float" })
+  public tauxOccupationInternat!: number;
+
+  @Column({ name: "taux_occupation_autre", nullable: true, type: "float" })
+  public tauxOccupationAutre!: number;
+
+  @Column({ name: "taux_occupation_seances", nullable: true, type: "float" })
+  public tauxOccupationSeances!: number;
 }
