@@ -20,8 +20,9 @@ export class RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase {
     capaciteSMS: CapaciteSMS[],
     orderBy: string,
     order: OrderDir,
-    page: number
+    page: number,
+    forExport: boolean
   ): Promise<RésultatDeRecherche> {
-    return await this.rechercheLoader.rechercheAvancee(terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page);
+    return await this.rechercheLoader.rechercheAvancee(terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport);
   }
 }

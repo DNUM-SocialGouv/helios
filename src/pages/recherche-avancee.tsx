@@ -111,7 +111,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       capacites,
       orderParam,
       orderByParam,
-      pageParam
+      pageParam,
+      false
     );
 
     return {

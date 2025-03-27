@@ -105,7 +105,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     capaciteSMS: CapaciteSMS[],
     orderBy: string,
     order: OrderDir,
-    page: number
+    page: number,
+    forExport: boolean
   ): Promise<RésultatDeRecherche> {
 
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
@@ -243,20 +244,20 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     if (orderBy && order) {
       requêteDeLaRecherche
         .orderBy(orderBy, order)
-        .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
-        .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else if (terme) {
       requêteDeLaRecherche
         .orderBy("is_exact", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
-        .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
-        .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
       requêteDeLaRecherche
         .orderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
+    }
+
+    if (!forExport) {
+      requêteDeLaRecherche
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     }

@@ -17,12 +17,13 @@ export async function rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
   capaciteSMS: CapaciteSMS[],
   order: OrderDir,
   orderBy: string,
-  page: number
+  page: number,
+  forExport: boolean
 ): Promise<RésultatDeRecherche> {
   try {
     const rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase = new RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase(dependencies.rechercheLoader);
 
-    return await rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.exécute(terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page);
+    return await rechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.exécute(terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport);
   } catch (error) {
     dependencies.logger.error(error);
     throw error;

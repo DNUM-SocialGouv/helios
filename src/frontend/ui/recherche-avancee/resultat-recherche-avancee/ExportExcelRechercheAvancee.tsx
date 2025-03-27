@@ -3,6 +3,18 @@
 import { useContext } from "react";
 import * as XLSX from "xlsx";
 
+import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
+import { RechercheAvanceeContext, RechercheAvanceeContextValue } from "../../commun/contexts/RechercheAvanceeContext";
+import { UserContext } from "../../commun/contexts/userContext";
+import { UserListViewModel } from "../../user-list/UserListViewModel";
+
+const orderByMap = new Map([
+  ["type", "Type"],
+  ["raison_sociale_courte", "Raison sociale"],
+  ["commune", "Commune"],
+  ["departement", "Département"],
+  ["numero_finess", "Numéro FINESS"],
+]);
 
 export function getCurrentDate() {
   const today = new Date();
@@ -13,22 +25,27 @@ export function getCurrentDate() {
   return currentDate;
 }
 
-async function getData() {
-  /*
-    return fetch("/api/comparaison/compare", {
-      body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data: ResultatDeComparaison) => {
-        return ({
-          resultat: data.resultat,
-          type
-        })
-      }
-      )
-    */
+async function getData(context: RechercheAvanceeContextValue) {
+  const { terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order } = context;
+
+  const capacites = [
+    { classification: "non_classifie", ranges: capaciteMedicoSociaux || [] },
+    { classification: "publics_en_situation_de_handicap", ranges: capaciteHandicap || [] },
+    { classification: "personnes_agees", ranges: capaciteAgees || [] },
+  ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
+
+  return fetch("/api/recherche-avancee", {
+    body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, orderBy, order, forExport: true }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then((data: RésultatDeRecherche) => {
+      return ({
+        resultats: data.résultats,
+      })
+    }
+    )
 }
 
 function getFavoris(favoris: UserListViewModel[] | undefined, numeroFiness: string): string {
@@ -37,95 +54,117 @@ function getFavoris(favoris: UserListViewModel[] | undefined, numeroFiness: stri
 }
 
 function transformData(data: any, favoris: UserListViewModel[] | undefined) {
-  return data.resultat.map((etab: ResultatSMS) => [
+  return data.resultats.map((etab: Résultat) => [
     etab.type ?? "-",
     getFavoris(favoris, etab.numéroFiness),
-    etab.socialReason ?? "-",
-    etab.numéroFiness ?? "-",
-    etab.capacite ?? "-",
-    etab.realisationActivite === 'NA' ? '' : etab.realisationActivite === null ? '-' : etab.realisationActivite,
-    etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes === null ? '-' : etab.fileActivePersonnesAccompagnes,
-    etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent === null ? '-' : etab.hebergementPermanent,
-    etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire === null ? '-' : etab.hebergementTemporaire,
-    etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour === null ? '-' : etab.acceuilDeJour,
-    etab.prestationExterne === 'NA' ? '' : etab.prestationExterne === null ? '-' : etab.prestationExterne,
-    etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel === null ? '-' : etab.rotationPersonnel,
-    etab.etpVacant === 'NA' ? '' : etab.etpVacant === null ? '-' : etab.etpVacant,
-    etab.absenteisme === 'NA' ? '' : etab.absenteisme === null ? '-' : etab.absenteisme,
-    etab.tauxCaf === 'NA' ? '' : etab.tauxCaf === null ? '-' : etab.tauxCaf,
-    etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction === null ? '-' : etab.vetusteConstruction,
-    etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal === null ? '-' : etab.roulementNetGlobal,
-    etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable === null ? '-' : etab.resultatNetComptable
+    etab.raisonSocialeCourte ?? "-",
+    etab.commune,
+    etab.département,
+    etab.numéroFiness,
+    etab.rattachement,
   ]);
 }
 
-function ExportToExcel(header: string[], headerType: (string | undefined)[],
-  headers: string[],
+function ExportToExcel(
   data: (string | number)[][],
   fileName: string,
 ) {
-  const ws = XLSX.utils.aoa_to_sheet([header,
-    headerType,
-    [""],
-    headers,
-    ...data]);
+  const ws = XLSX.utils.aoa_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
   XLSX.writeFile(wb, fileName);
 }
 
-async function generateAndExportExcel(
-  year: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
-) {
-  const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
-  const data = await getData(year, order, orderBy, codeRegion, codeProfiles)
-  const dataTransormed = transformData(data, favoris);
-  const headerYear = ["Année", year];
+function generateCriteriaData(context: RechercheAvanceeContextValue): { criteriaHeader: string[], criteriaInformation: string[] } {
+  //  terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order
+  //
+  const { terme, zoneGeoLabel, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order } = context;
 
-  const type = getType(data.type)
-  const headerType = ["Indicateurs", type];
+  const criteriaHeader = [];
+  const criteriaInformation = [];
 
-  const headers = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "FINESS",
-    `Capacité Totale au ${datesMisAjour}`,
-    "Taux de réalisation de l'activité (en %)",
-    "File active des personnes accompagnées sur la période",
-    "Taux d'occupation en hébergement permanent (en %)",
-    "Taux d'occupation en hébergement temporaire (en %)",
-    "Taux d'occupation en accueil de jour (en %)",
-    "Taux de prestations externes sur les prestations directes (en %)",
-    "Taux de rotation du personnel sur effectifs réels (en %)",
-    "Taux d'ETP vacants au 31/12 (en %)",
-    "Taux d'absentéisme (en %)",
-    "Taux de CAF (en %)",
-    "Taux de vétusté des construction (en %)",
-    "Fond de roulement net global (en €)",
-    "Résultat net comptable (en €)"
-  ];
-  ExportToExcel(headerYear,
-    headerType,
-    headers,
-    dataTransormed,
-    fileName,
-  );
+  if (terme) {
+    criteriaHeader.push("Terme");
+    criteriaInformation.push(terme);
+  }
+  if (zoneGeoLabel) {
+    criteriaHeader.push("Zone géographique");
+    criteriaInformation.push(zoneGeoLabel);
+  }
+
+  if (typeStructure) {
+    criteriaHeader.push("Type de structure");
+    criteriaInformation.push(typeStructure);
+  }
+
+  if (statutJuridiqueStructure?.length > 0) {
+    criteriaHeader.push("Status juridique");
+    criteriaInformation.push(statutJuridiqueStructure.join(', '));
+  }
+
+  if (capaciteMedicoSociaux?.length > 0) {
+    criteriaHeader.push("Capacité etablissement sociaux et Médico-sociaux");
+    criteriaInformation.push(capaciteMedicoSociaux.join(', '));
+  }
+
+  if (capaciteHandicap?.length > 0) {
+    criteriaHeader.push("Capacité etablissement public en situation de handicap");
+    criteriaInformation.push(capaciteHandicap.join(', '));
+  }
+
+  if (capaciteAgees?.length > 0) {
+    criteriaHeader.push("Capacité etablissement pour personnes agées");
+    criteriaInformation.push(capaciteAgees.join(', '));
+  }
+
+  if (orderBy) {
+    criteriaHeader.push("Tri");
+    criteriaInformation.push(orderByMap.get(orderBy) ?? "");
+  }
+
+  if (order) {
+    criteriaHeader.push("Ordre");
+    criteriaInformation.push((order === "ASC" ? "Croissant" : "Décroissant"));
+  }
+
+
+  return { criteriaHeader, criteriaInformation };
 }
 
-const ExportExcelRechercheAvancee = ({
-  year, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
-}: {
-  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
-}) => {
+async function generateAndExportExcel(context: RechercheAvanceeContextValue | undefined, favoris: UserListViewModel[] | undefined) {
+  if (context) {
+    const fileName: string = `${getCurrentDate()}_Helios_rechercheavancee.xlsx`;
+    const data = await getData(context);
+    const dataTransormed = transformData(data, favoris);
+
+    const searchHeader = ["Critères de recherche"];
+    const { criteriaHeader, criteriaInformation } = generateCriteriaData(context);
+
+    const dataHeaders = [
+      "Type d'établissement",
+      "Favoris",
+      "Raison Sociale",
+      "Ville",
+      "Département",
+      "FINESS",
+      "Rattachement(s)"
+    ];
+
+    const exportData = [searchHeader, criteriaHeader, criteriaInformation, [""], dataHeaders, ...dataTransormed];
+    ExportToExcel(exportData, fileName,);
+  }
+}
+
+const ExportExcelRechercheAvancee = ({ disabled }: { disabled: boolean }) => {
   const userContext = useContext(UserContext);
+  const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
   return (
     <button
       className="fr-btn fr-btn--tertiary-no-outline"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles)}
+      onClick={() => generateAndExportExcel(rechercheAvanceeContext, userContext?.favorisLists)}
       title="Exporter"
       type="button"
     >

@@ -13,7 +13,8 @@ export interface RechercheLoader {
     capaciteSMS: CapaciteSMS[],
     orderBy: string,
     order: OrderDir,
-    page: number
+    page: number,
+    forExport: boolean
   ): Promise<RésultatDeRecherche>;
   rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]>;
 }

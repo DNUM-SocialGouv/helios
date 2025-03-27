@@ -7,7 +7,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
-import { getOrm, clearAllTables } from "../../../testHelper";
+import { clearAllTables, getOrm } from "../../../testHelper";
 
 describe("La recherche avancée d’entités et d’établissements", () => {
   const orm = getOrm();
@@ -102,7 +102,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, departementRecherche, "C", "", [], [], "", "ASC", premièrePage);
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, communeRecherche, departementRecherche, "C", "", [], [], "", "ASC", premièrePage, false);
 
 
     //THEN
@@ -114,7 +114,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, departementRecherche, "", "D", "", [], [], "", "ASC", premièrePage);
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, departementRecherche, "", "D", "", [], [], "", "ASC", premièrePage, false);
 
 
     //THEN
@@ -126,7 +126,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, regionRecherche, "", "R", "", [], [], "", "ASC", premièrePage);
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(termeRecherche, regionRecherche, "", "R", "", [], [], "", "ASC", premièrePage, false);
 
 
     //THEN
@@ -148,7 +148,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       [],
       "",
       "ASC",
-      premièrePage
+      premièrePage,
+      false
     );
 
     //THEN
@@ -160,7 +161,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, departementRecherche, "C", "Médico-social", [], [], "", "ASC", premièrePage);
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee("", communeRecherche, departementRecherche, "C", "Médico-social", [], [], "", "ASC", premièrePage, false);
 
 
     //THEN
@@ -182,7 +183,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       [],
       "",
       "ASC",
-      premièrePage
+      premièrePage,
+      false
     );
 
     //THEN
@@ -204,7 +206,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       [],
       "",
       "ASC",
-      premièrePage
+      premièrePage,
+      false
     );
 
     //THEN
@@ -247,7 +250,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       ],
       "",
       "ASC",
-      premièrePage
+      premièrePage,
+      false
     );
 
     //THEN
@@ -272,7 +276,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       ],
       "",
       "ASC",
-      premièrePage
+      premièrePage,
+      false
     );
 
     //THEN
