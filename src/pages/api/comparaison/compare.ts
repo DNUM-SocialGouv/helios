@@ -1,7 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { comparaisonEndpoint } from "../../../backend/infrastructure/controllers/comparaisonEndpoint";
+import { getAnneesComparaisonEndpoint } from "../../../backend/infrastructure/controllers/getAnneesComparaisonEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { ParametresDeComparaison } from "../../../backend/métier/entities/ParametresDeComparaison";
+
+const emptyResponse = {
+  nombreDeResultats: 0,
+  resultat: [],
+  listAnnees: []
+};
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
@@ -14,15 +22,21 @@ export default async function handler(request: NextApiRequest, response: NextApi
     response.status(400).send("invalid type");
   }
 
-  if (numerosFiness.length === 0) {
-    return response.status(200).json({
-      nombreDeResultats: 0,
-      resultat: [],
-    }); ''
+  if (!numerosFiness || numerosFiness.length === 0) {
+    return response.status(200).json(emptyResponse);
   }
 
-  // TODO check if all numeros finess belong to the type
-  const comparaisonResult = await comparaisonEndpoint(dependencies, type, numerosFiness, annee, page, order, orderBy, forExport, codeRegion, codeProfiles);
+  const listeAnnees = await getAnneesComparaisonEndpoint(dependencies, type, numerosFiness);
+  if (!listeAnnees || listeAnnees.length === 0) {
+    return response.status(200).json(emptyResponse);
+  }
 
-  response.status(200).json(comparaisonResult);
+  let anneeARechercher = annee;
+  if (!annee || !listeAnnees.some(dbAnnee => dbAnnee + "" === annee)) {
+    anneeARechercher = listeAnnees[listeAnnees.length - 1];
+  }
+  const params = { type, numerosFiness, annee: anneeARechercher, page, order, orderBy, forExport, codeRegion } as ParametresDeComparaison;
+  const comparaisonResult = await comparaisonEndpoint(dependencies, params, codeProfiles);
+
+  response.status(200).json({ listeAnnees, ...comparaisonResult });
 }

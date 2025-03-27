@@ -1,4 +1,4 @@
-import { ReactChild, ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useDependencies } from "../contexts/useDependencies";
@@ -8,7 +8,7 @@ type InfoBulleProps = Readonly<{
   estCeOuvert: boolean;
   identifiant: string;
   setEstCeOuvert: Function;
-  titre: ReactChild;
+  titre: ReactNode;
 }>;
 
 export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {

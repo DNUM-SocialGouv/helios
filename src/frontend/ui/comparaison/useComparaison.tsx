@@ -1,9 +1,10 @@
-import { ReactChild, useState } from "react";
+import { parse } from "cookie";
+import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { StringFormater } from "../commun/StringFormater";
-import { ApiComparaisonResultat, ComparaisonViewModel, MoyenneResultatComparaison } from "../home/ComparaisonViewModel";
+import { ApiComparaisonResultat, ComparaisonViewModel } from "../home/ComparaisonViewModel";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
 import { ContenuCapacitéParActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuCapacitéParActivité";
 import { ContenuDesTauxDAbsentéismes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDesTauxDAbsentéismes";
@@ -19,87 +20,83 @@ import { ContenuTauxRéalisationActivité } from "../établissement-territorial-
 
 
 type comparaisonState = Readonly<{
-  dateDeMiseAJourCapacite: string;
   nombreRésultats: number;
   lastPage: number;
   résultats: ComparaisonViewModel[];
-  moyenne: MoyenneResultatComparaison;
   loading: boolean;
+  listeAnnees: number[];
 }>;
 
 export function useComparaison() {
   const { wording } = useDependencies();
 
+
   const take = 20;
   const [state, setState] = useState<comparaisonState>({
-    dateDeMiseAJourCapacite: '',
     nombreRésultats: 0,
     lastPage: 1,
     loading: false,
     résultats: [],
-    moyenne: {
-      capaciteMoyenne: 0,
-      realisationAcitiviteMoyenne: 0,
-      acceuilDeJourMoyenne: 0,
-      hebergementPermanentMoyenne: 0,
-      hebergementTemporaireMoyenne: 0,
-      fileActivePersonnesAccompagnesMoyenne: 0,
-      rotationPersonnelMoyenne: 0,
-      absenteismeMoyenne: 0,
-      prestationExterneMoyenne: 0,
-      etpVacantMoyenne: 0,
-      tauxCafMoyenne: 0,
-      vetusteConstructionMoyenne: 0,
-      roulementNetGlobalMoyenne: 0,
-      resultatNetComptableMoyenne: 0
-    },
+    listeAnnees: [],
   });
-
-  const lancerLaComparaison = (page: number, annee: string, order: string, orderBy: string, codeRegion: string, codeProfiles: string[]): void => {
-    const listFiness = sessionStorage.getItem("listFinessNumbers");
-    const typeStored = sessionStorage.getItem("comparaisonType");
-
-    let parsedFiness = null;
-    try {
-      parsedFiness = listFiness ? JSON.parse(listFiness) : null;
-    } catch (e) {
-      alert("Error :" + e);
-    }
-
-    const type = typeStored || undefined;
-    comparer(type, parsedFiness, annee, page, order, orderBy, codeRegion, codeProfiles);
-  };
 
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
 
-  const comparer = async (type: string = "", numerosFiness: string[] = [], annee: string, page: number = 1, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) => {
+  const lancerLaComparaison = async (annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
+    const listFiness = sessionStorage.getItem("listFinessNumbers");
+    let typeStored = sessionStorage.getItem("comparaisonType");
+    if (!typeStored) {
+      const cookies = parse(document.cookie);
+      typeStored = cookies["type"] ?? "";
+      sessionStorage.setItem("comparaisonType", typeStored);
+    }
+
+    let numerosFiness = [];
+    try {
+      numerosFiness = listFiness ? JSON.parse(listFiness) : [];
+    } catch (e) {
+    }
+
+    const type = typeStored ?? "";
+
     setState({ ...state, loading: true });
-    fetch("/api/comparaison/compare", {
-      body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setState({
-          ...state,
-          dateDeMiseAJourCapacite: data.date_mis_a_jour_capacite,
-          nombreRésultats: data.nombreDeResultats,
-          lastPage: Math.ceil(data.nombreDeResultats / take),
-          résultats: construisLesRésultatsDeLaComparaison(data),
-          moyenne: data.moyennes,
-          loading: false
-        });
+
+    if (numerosFiness && numerosFiness.length > 0) {
+      fetch("/api/comparaison/compare", {
+        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
       })
-      .catch(() => {
-        setState({ ...state, loading: false });
-      });
-  };
+        .then((response) => response.json())
+        .then((data) => {
+          setState({
+            ...state,
+            nombreRésultats: data.nombreDeResultats,
+            lastPage: Math.ceil(data.nombreDeResultats / take),
+            résultats: construisLesRésultatsDeLaComparaison(data),
+            loading: false,
+            listeAnnees: data.listeAnnees,
+          });
+        })
+        .catch(() => {
+          setState({ ...state, loading: false });
+        });
+    } else {
+      setState({
+        ...state,
+        nombreRésultats: 0,
+        lastPage: 1,
+        loading: false,
+        résultats: [],
+        listeAnnees: [],
+      })
+    }
+  }
 
 
-  const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactChild } => {
+  const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactNode } => {
     switch (name) {
       case "realisationActivite":
         return { contenu: <ContenuTauxRéalisationActivité dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_tdbPerf)} source={wording.TDB_PERF}></ContenuTauxRéalisationActivité>, titre: wording.TAUX_RÉALISATION_ACTIVITÉ }
@@ -176,12 +173,11 @@ export function useComparaison() {
   return {
     lancerLaComparaison,
     contenuModal,
-    dateDeMiseAJourCapacite: state.dateDeMiseAJourCapacite,
     nombreRésultats: state.nombreRésultats,
     resultats: state.résultats,
-    moyenne: state.moyenne,
     lastPage: state.lastPage,
     loading: state.loading,
-    NombreDeResultatsMaxParPage: take
+    NombreDeResultatsMaxParPage: take,
+    listeAnnees: state.listeAnnees
   };
 }
