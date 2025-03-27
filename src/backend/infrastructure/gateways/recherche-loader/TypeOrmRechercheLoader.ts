@@ -26,27 +26,28 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
-    
+
     const queryBuilder = (await this.orm).createQueryBuilder();
-    
+
     const requêteDeLaRecherche = queryBuilder
-    .select("recherche.numero_finess", "numero_finess")
-    .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
-    .addSelect("recherche.type", "type")
-    .addSelect("recherche.commune", "commune")
-    .addSelect("recherche.departement", "departement")
-    .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
-    .from(RechercheModel, "recherche")
-    .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
-    .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
-    .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
-    
+      .select("recherche.numero_finess", "numero_finess")
+      .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
+      .addSelect("recherche.type", "type")
+      .addSelect("recherche.commune", "commune")
+      .addSelect("recherche.departement", "departement")
+      .addSelect("CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact")
+      .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
+      .from(RechercheModel, "recherche")
+      .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
+      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
+      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
+
     const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
     if (displayTable) {
       requêteDeLaRecherche
-      .addSelect(
-        `CASE 
+        .addSelect(
+          `CASE 
           WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
           ELSE 
           CONCAT(
@@ -56,34 +57,36 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
             COUNT(CASE WHEN etablissement_territorial.domaine = 'Médico-social' THEN etablissement_territorial.numero_finess_entite_juridique END), ')'
           )
         END`,
-        "rattachement"
-      )  
-      .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
-      .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess")
-      .addGroupBy("recherche.commune")
-      .addGroupBy("recherche.type")
-      .addGroupBy("recherche.numero_finess")
-      .addGroupBy("recherche.raison_sociale_courte")
-      .addGroupBy("recherche.departement")
-      .addGroupBy("recherche.termes")
-      .addGroupBy("recherche.rattachement")
-      .addGroupBy("entite_juridique.raison_sociale_courte")
-      .orderBy("rank", "DESC")
-      .addOrderBy("type", "ASC")
-      .addOrderBy("numero_finess", "ASC")
-      .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
-      .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
+          "rattachement"
+        )
+        .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
+        .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess")
+        .addGroupBy("recherche.commune")
+        .addGroupBy("recherche.type")
+        .addGroupBy("recherche.numero_finess")
+        .addGroupBy("recherche.raison_sociale_courte")
+        .addGroupBy("recherche.departement")
+        .addGroupBy("recherche.termes")
+        .addGroupBy("recherche.rattachement")
+        .addGroupBy("entite_juridique.raison_sociale_courte")
+        .orderBy("is_exact", "DESC")
+        .addOrderBy("rank", "DESC")
+        .addOrderBy("type", "ASC")
+        .addOrderBy("numero_finess", "ASC")
+        .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
+        .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
       requêteDeLaRecherche
         .addSelect("recherche.rattachement", "rattachement")
-        .orderBy("rank", "DESC")
+        .orderBy("is_exact", "DESC")
+        .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
         .limit(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1));
     }
 
-    if(order && orderBy) {
+    if (order && orderBy) {
       requêteDeLaRecherche.orderBy(orderBy, order)
     }
 
@@ -122,7 +125,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .toLocaleUpperCase() : '';
 
     const conditions = [];
-    let parameters: any = {};
+    let parameters: any = { terme: terme };
 
     const requêteDeLaRecherche = (await this.orm)
       .createQueryBuilder()
@@ -147,9 +150,23 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         END`,
         "rattachement"
       )
-      .from(RechercheModel, "recherche")
+
+    if (terme) {
+      requêteDeLaRecherche
+        .addSelect(`CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END`, "is_exact")
+        .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
+
+      conditions.push(
+        "(recherche.termes @@ plainto_tsquery('unaccent_helios', :terme) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets))"
+      );
+      parameters.terme = terme;
+      parameters = { ...parameters, termeSansEspaces: termeSansEspaces, termeSansTirets: termeSansTirets };
+    }
+
+    requêteDeLaRecherche.from(RechercheModel, "recherche")
       .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
       .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess");
+
 
     if (zoneParam) {
       if (typeZone === "C") {
@@ -171,14 +188,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         conditions.push("recherche.code_region = :codeRegion");
         parameters = { ...parameters, codeRegion: zoneParam };
       }
-    }
-
-    if (terme) {
-      conditions.push(
-        "(recherche.termes @@ plainto_tsquery('unaccent_helios', :terme) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets))"
-      );
-      parameters.terme = terme;
-      parameters = { ...parameters, termeSansEspaces: termeSansEspaces, termeSansTirets: termeSansTirets };
     }
 
     if (type) {
@@ -209,7 +218,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         );
       capaciteSMS.forEach((capacite) => {
         const conditionsSMS = this.construireLaLogiqueCapaciteEtablissements(capacite);
-        //const conditionsSMS = this.construisLesConditionsCapacitesSMS(capacite);
         capaciteSMSConditions.push(conditionsSMS.capaciteSMSConditions);
         parameters = { ...parameters, ...conditionsSMS.parameters };
       });
@@ -229,11 +237,20 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addGroupBy("recherche.departement")
       .addGroupBy("recherche.code_region")
       .addGroupBy("recherche.rattachement")
-      .addGroupBy("entite_juridique.raison_sociale_courte");
+      .addGroupBy("entite_juridique.raison_sociale_courte")
+      .addGroupBy("recherche.termes")
 
     if (orderBy && order) {
       requêteDeLaRecherche
         .orderBy(orderBy, order)
+        .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
+        .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
+    } else if (terme) {
+      requêteDeLaRecherche
+        .orderBy("is_exact", "DESC")
+        .addOrderBy("rank", "DESC")
+        .addOrderBy("type", "ASC")
+        .addOrderBy("numero_finess", "ASC")
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     } else {
@@ -311,7 +328,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       capaciteSMSConditions = "(" + conditions.join(" OR ") + ")";
     }
     capaciteSMSConditions = conditionsBefore !== "" ? "(" + conditionsBefore + ") AND " + "(" + capaciteSMSConditions + ")" : "(" + capaciteSMSConditions + ")";
-    //parameters[`classification${indexClassification}`] = capaciteSMS.classification;
     return { capaciteSMSConditions, parameters };
   }
 
@@ -349,7 +365,11 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       parameters[`listCapaciteAgee`] = listCapaciteAgee;
     }
 
-    capaciteSMSConditions = conditions.length > 1 ? "(" + conditions.join(" OR ") + ")" : conditions.length === 1 ? conditions[0] : "";
+    if (conditions.length > 1) {
+      capaciteSMSConditions = `(${conditions.join(" OR ")})`;
+    } else if (conditions.length === 1) {
+      capaciteSMSConditions = conditions[0];
+    }
 
     return this.construisLesConditionsCapacitesSMS(capacite, capaciteSMSConditions, parameters);
   }

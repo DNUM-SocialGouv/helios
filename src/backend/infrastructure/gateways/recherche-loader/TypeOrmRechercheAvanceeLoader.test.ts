@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -7,7 +8,6 @@ import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-b
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { getOrm, clearAllTables } from "../../../testHelper";
-import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 
 describe("La recherche avancée d’entités et d’établissements", () => {
   const orm = getOrm();
