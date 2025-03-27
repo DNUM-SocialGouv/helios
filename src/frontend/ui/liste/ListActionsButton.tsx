@@ -1,9 +1,7 @@
-import { NextRouter, useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { ReactNode, useRef, useState } from "react";
 
-import ExportList from "./ExportList";
-import styles from "./ListActionsButton.module.css"
-import { Wording } from "../../configuration/wording/Wording";
+import styles from "./ListActionsButton.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FavorisPopup } from "../commun/FavorisPopup/FavorisPopup";
 import { SelectedRows } from "../commun/Table/Table";
@@ -11,16 +9,6 @@ import { useFavoris } from "../favoris/useFavoris";
 import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 
-type ExportProps = Readonly<{
-  listId?: number;
-  listName?: string;
-  order?: string;
-  orderBy?: string;
-  disabledExport?: boolean
-  children?: JSX.Element
-  router: NextRouter;
-  wording: Wording;
-}>;
 
 type ListActionsButtonProps = Readonly<{
   selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
@@ -32,21 +20,10 @@ type ListActionsButtonProps = Readonly<{
   disabledExport?: boolean;
   children?: JSX.Element;
   onAddToFavorisSuccess?: (listName: string) => void;
+  exportButton: ReactNode;
 }>;
 
-// Un export pour la page liste, pour la page comparaison et plus tard pour la page recherche avancée
-const Export = ({ listId, listName, order, orderBy, disabledExport, router, children, wording }: ExportProps) => {
-  if (listId && listName && order && orderBy) {
-    return <ExportList disabled={disabledExport} listId={listId} listName={listName} order={order} orderBy={orderBy} />
-  } else if (router.pathname === "/comparaison") {
-    return children
-  } else
-    return <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
-      {wording.EXPORTER}
-    </button>
-}
-
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listName, order, orderBy, disabledExport, children, onAddToFavorisSuccess }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -112,16 +89,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, listN
             }
           </li>
           <li className={styles["menu-item"]}>
-            <Export
-              disabledExport={disabledExport}
-              listId={listId}
-              listName={listName}
-              order={order}
-              orderBy={orderBy}
-              router={router}
-              wording={wording}>
-              {children}
-            </Export>
+            {exportButton}
           </li>
         </ul>
       }
