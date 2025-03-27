@@ -96,23 +96,33 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats);
   }
 
+  computeZoneParam(zone: string, typeZone: string) {
+    let zoneParam = "";
+    if (zone) {
+      if (typeZone === "R") {
+        zoneParam = zone;
+      } else {
+        zoneParam = zone
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/\b(?:[-'])\b/gi, " ")
+          .toLocaleUpperCase();
+      }
+    }
+    return zoneParam;
+  }
+
   async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
     const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport } = params;
 
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
-    const zoneParam = zone
-      ? typeZone === "R"
-        ? zone
-        : zone
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .replace(/\b(?:-|')\b/gi, " ")
-          .toLocaleUpperCase()
-      : "";
+
+    const zoneParam = this.computeZoneParam(zone, typeZone);
+
     const zoneDParam = typeZone === 'C' ? zoneD.normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\b(?:-|')\b/gi, " ")
+      .replace(/\b(?:[-'])\b/gi, " ")
       .toLocaleUpperCase() : '';
 
     const conditions = [];
@@ -158,27 +168,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
       .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess");
 
-
     if (zoneParam) {
-      if (typeZone === "C") {
-        // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
-        if (zoneParam === "LYON" || zoneParam === "MARSEILLE" || zoneParam === "PARIS") {
-          conditions.push("recherche.commune like :commune");
-          parameters = { ...parameters, commune: `%${zoneParam}%ARRONDISSEMENT%` };
-        } else {
-          conditions.push("recherche.commune = :commune");
-          conditions.push("recherche.departement = :departement");
-          parameters = { ...parameters, commune: zoneParam, departement: zoneDParam };
-        }
-      }
-      if (typeZone === "D") {
-        conditions.push("recherche.departement = :departement");
-        parameters = { ...parameters, departement: zoneParam };
-      }
-      if (typeZone === "R") {
-        conditions.push("recherche.code_region = :codeRegion");
-        parameters = { ...parameters, codeRegion: zoneParam };
-      }
+      parameters = this.computeZoneParamConditions(typeZone, zoneParam, conditions, parameters, zoneDParam);
     }
 
     if (type) {
@@ -255,6 +246,31 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
 
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats.count);
+
+  }
+
+  private computeZoneParamConditions(typeZone: string, zoneParam: string, conditions: any[], parameters: any, zoneDParam: string) {
+    let newParameters = parameters;
+    if (typeZone === "C") {
+      // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
+      if (zoneParam === "LYON" || zoneParam === "MARSEILLE" || zoneParam === "PARIS") {
+        conditions.push("recherche.commune like :commune");
+        newParameters = { ...newParameters, commune: `%${zoneParam}%ARRONDISSEMENT%` };
+      } else {
+        conditions.push("recherche.commune = :commune");
+        conditions.push("recherche.departement = :departement");
+        newParameters = { ...newParameters, commune: zoneParam, departement: zoneDParam };
+      }
+    }
+    if (typeZone === "D") {
+      conditions.push("recherche.departement = :departement");
+      newParameters = { ...newParameters, departement: zoneParam };
+    }
+    if (typeZone === "R") {
+      conditions.push("recherche.code_region = :codeRegion");
+      newParameters = { ...newParameters, codeRegion: zoneParam };
+    }
+    return newParameters;
   }
 
   async rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]> {
@@ -346,7 +362,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const listCapaciteHandicape = [189, 190, 198, 461, 249, 448, 188, 246, 437, 195, 194, 192, 183, 186, 255, 182, 445, 464];
     const listCapaciteAgee = [500, 209, 354];
     const conditions: string[] = [];
-    let capaciteSMSConditions = "";
     const parameters: { [key: string]: any } = {};
     if (capacite.classification === "publics_en_situation_de_handicap") {
       conditions.push(`etablissement.cat_etablissement IN (:...listCapaciteHandicape)`);
@@ -356,6 +371,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       parameters[`listCapaciteAgee`] = listCapaciteAgee;
     }
 
+    let capaciteSMSConditions = "";
     if (conditions.length > 1) {
       capaciteSMSConditions = `(${conditions.join(" OR ")})`;
     } else if (conditions.length === 1) {
