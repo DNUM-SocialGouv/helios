@@ -3,6 +3,7 @@ import { DataSource, SelectQueryBuilder } from "typeorm";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
+import { ParametreDeRechercheAvancee } from "../../../métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RechercheLoader } from "../../../métier/gateways/RechercheLoader";
 import { CapaciteSMS, OrderDir } from "../../../métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
@@ -95,19 +96,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats);
   }
 
-  async rechercheAvancee(
-    terme: string,
-    zone: string,
-    zoneD: string,
-    typeZone: string,
-    type: string,
-    statutJuridique: string[],
-    capaciteSMS: CapaciteSMS[],
-    orderBy: string,
-    order: OrderDir,
-    page: number,
-    forExport: boolean
-  ): Promise<RésultatDeRecherche> {
+  async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
+    const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport } = params;
 
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
+import { ParametreDeRechercheAvancee } from "../../backend/métier/entities/ParametresDeRechercheAvancee";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
@@ -10,6 +11,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
 
   const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport = false } = request.body;
-  const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, order, orderBy, page, forExport);
+  const params = { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport } as ParametreDeRechercheAvancee;
+  const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(dependencies, params);
   response.status(200).json(recherche);
 }
