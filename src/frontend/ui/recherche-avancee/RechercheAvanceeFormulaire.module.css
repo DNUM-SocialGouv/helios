@@ -20,6 +20,11 @@
     box-shadow: none !important;
 }
 
+.eraseAllButton {
+    text-decoration: underline;
+    background-color: white !important;
+}
+
 .applyButton {
     margin-left: auto;
 }

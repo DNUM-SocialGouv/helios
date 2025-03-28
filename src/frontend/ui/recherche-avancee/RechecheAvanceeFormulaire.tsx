@@ -30,6 +30,13 @@ export const RechercheAvanceeFormulaire = ({
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
+  const isEraseAllEnabled = rechercheAvanceeContext?.terme !== "" ||
+    rechercheAvanceeContext?.zoneGeo !== "" ||
+    rechercheAvanceeContext?.typeStructure !== "" ||
+    rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ||
+    rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+    rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+    rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
 
   useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
@@ -90,6 +97,18 @@ export const RechercheAvanceeFormulaire = ({
     }
   }
 
+  const eraseAll = () => {
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setZoneGeo("");
+    rechercheAvanceeContext?.setZoneGeoD("");
+    rechercheAvanceeContext?.setZoneGeoLabel("");
+    rechercheAvanceeContext?.setZoneGeoType("");
+    rechercheAvanceeContext?.setTerme("");
+    rechercheAvanceeContext?.setTermeFixe("");
+  }
+
   return (
     <div>
       <div className="fr-grid-row">
@@ -137,6 +156,12 @@ export const RechercheAvanceeFormulaire = ({
           >
             {getWordingCapacite()}
           </button>
+          {isEraseAllEnabled && <button
+            className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
+            onClick={eraseAll}
+          >
+            {wording.TOUT_EFFACER}
+          </button>}
         </div>
       </div>
       <div>
