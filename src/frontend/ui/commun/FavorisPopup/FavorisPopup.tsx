@@ -179,7 +179,7 @@ export const FavorisPopup = ({
     if (list) {
       //On génère la map des listes de favoris uniquement quand ce n’est pas un ajout simple
       if (!addOnOneListOnly) generateFavorisMap();
-      const favorisListIndex = list.findIndex((list) => list.nom === "Favoris");
+      const favorisListIndex = list.findIndex((list) => list.isFavoris);
       const favorisList = list.splice(favorisListIndex, 1);
       list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
       return favorisList.concat(...list);
