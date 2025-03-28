@@ -28,10 +28,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
       !this.activitéEstElleRenseignée ||
-      (!this.leTauxOccupationHébergementPermanentEstIlRenseigné &&
-        !this.leTauxOccupationHébergementTemporaireEstIlRenseigné &&
-        !this.leTauxOccupationAccueilDeJourEstIlRenseigné &&
-        !this.leTauxRéalisationActivitéEstIlRenseigné &&
+      (!this.leTauxRéalisationActivitéEstIlRenseigné &&
         !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
         !this.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
         !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée &&
@@ -58,9 +55,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   }
   public get lesDonnéesActivitésPasRenseignees(): string[] {
     const nonRenseignee = [];
-    if (!this.leTauxOccupationHébergementPermanentEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
-    if (!this.leTauxOccupationHébergementTemporaireEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
-    if (!this.leTauxOccupationAccueilDeJourEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
     if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
     if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
     if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
@@ -485,9 +479,6 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get lesDonnéesActivitésPasAutorisés(): string[] {
     const nonAutorisés = [];
-    if (!this.leTauxOccupationHébergementPermanentEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT);
-    if (!this.leTauxOccupationHébergementTemporaireEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE);
-    if (!this.leTauxOccupationAccueilDeJourEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR);
     if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
     if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
     if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
