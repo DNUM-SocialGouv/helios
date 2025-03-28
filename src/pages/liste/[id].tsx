@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, ReactNode, useContext, useEffect, useState } from "react";
 
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
@@ -11,6 +11,7 @@ import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
+import ExportList from "../../frontend/ui/liste/ExportList";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
@@ -81,13 +82,22 @@ export default function Router({ listServer }: RouterProps) {
 
   const isListEmpty = () => listLength === 0;
 
+  let exportButton: ReactNode;
+  if (list) {
+    exportButton = <ExportList disabled={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} />;
+  } else {
+    exportButton = <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
+      {wording.EXPORTER}
+    </button>;
+  }
+
   const titleHead = <>
     <div className="fr-grid-row">
       {list && !list.isFavoris ?
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable  && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} listId={list.id} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">

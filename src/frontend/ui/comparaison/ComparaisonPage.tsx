@@ -159,6 +159,22 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     return content;
   }
 
+  const exportExcel = () => {
+    let anneeExport = annéeEnCours;
+    if (!anneeExport && listeAnnees) {
+      anneeExport = listeAnnees[listeAnnees.length - 1];
+    }
+    return <ExportExcel
+      codeProfiles={codeProfiles}
+      codeRegion={codeRegion}
+      datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
+      disabled={resultats.length === 0}
+      order={order}
+      orderBy={orderBy}
+      year={String(anneeExport)}
+    />;
+  }
+
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -167,17 +183,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       <div className={styles["container"]}>
         <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <ListActionsButton selectedRows={Object.values(selectedRows).flat()}>
-            <ExportExcel
-              codeProfiles={codeProfiles}
-              codeRegion={codeRegion}
-              datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
-              disabled={resultats.length === 0}
-              order={order}
-              orderBy={orderBy}
-              year={String(annéeEnCours)}
-            />
-          </ListActionsButton>
+          <ListActionsButton exportButton={exportExcel()} selectedRows={Object.values(selectedRows).flat()} />
         </div>
         <div className={styles["ajout-etab-div"]}>
           {!isShowAjoutEtab && (

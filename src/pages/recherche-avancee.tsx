@@ -2,6 +2,7 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
+import { ParametreDeRechercheAvancee } from "../backend/métier/entities/ParametresDeRechercheAvancee";
 import { RésultatDeRecherche } from "../backend/métier/entities/RésultatDeRecherche";
 import { OrderDir } from "../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
@@ -100,18 +101,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       capaciteHandicapParam.length > 0 ||
       capaciteAgeesParam.length > 0)
   ) {
+    const params = { terme: termeParam, zone: zoneParam, zoneD: zoneDParam, typeZone: typeZoneParam, type: typeParam, statutJuridique: statutJuridiqueParam, capaciteSMS: capacites, order: orderParam, orderBy: orderByParam, page: pageParam, forExport: false } as ParametreDeRechercheAvancee;
     const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
       dependencies,
-      termeParam,
-      zoneParam,
-      zoneDParam,
-      typeZoneParam,
-      typeParam,
-      statutJuridiqueParam,
-      capacites,
-      orderParam,
-      orderByParam,
-      pageParam
+      params
     );
 
     return {
