@@ -500,18 +500,15 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   );
 
   it.each([
-    // [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, "CNSA", wording.CNSA_TITLE],
-    // [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, "CNSA", wording.CNSA_TITLE],
-    // [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 3, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
-    // [wording.TAUX_OCCUPATION_EXTERNAT, 7, "CNSA", wording.CNSA_TITLE],
-    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 8, "CNSA", wording.CNSA_TITLE],
-    // [wording.TAUX_OCCUPATION_INTERNAT, 9, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_AUTRE, 10, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_SEANCES, 11, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3, "TdB Perf", wording.TDB_PERF_TITLE],
+    // [wording.TAUX_OCCUPATION_EXTERNAT, 4, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5, "CNSA", wording.CNSA_TITLE],
+    // [wording.TAUX_OCCUPATION_INTERNAT, 6, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_AUTRE, 7, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_SEANCES, 8, "CNSA", wording.CNSA_TITLE],
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
@@ -545,21 +542,22 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   );
 
   it.each([
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 3],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 4],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 5],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 6],
-    // [wording.TAUX_OCCUPATION_EXTERNAT, 7],
-    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 8],
-    // [wording.TAUX_OCCUPATION_INTERNAT, 9],
-    [wording.TAUX_OCCUPATION_AUTRE, 10],
-    [wording.TAUX_OCCUPATION_SEANCES, 11],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3],
+    // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
+    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
+    // [wording.TAUX_OCCUPATION_INTERNAT, 6],
+    [wording.TAUX_OCCUPATION_AUTRE, 7],
+    [wording.TAUX_OCCUPATION_SEANCES, 8],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
     const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
+
     fireEvent.click(détails);
     const infoBulle = screen.getByRole("dialog", { name: titreSection });
     const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
