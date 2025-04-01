@@ -8,11 +8,17 @@ export class TypeOrmUserListLoader implements UserListLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async create(idUser: string, listName: string, isFavoris: boolean = false): Promise<UserListModel> {
-    const userListModel = new UserListModel();
-    userListModel.nom = listName;
-    userListModel.userId = idUser;
-    userListModel.isFavoris = isFavoris;
-    return (await this.orm).getRepository(UserListModel).save(userListModel);
+    return (await (await this.orm)
+      .createQueryBuilder()
+      .insert()
+      .into(UserListModel)
+      .values([
+        { nom: listName, userId: idUser, isFavoris: isFavoris },
+      ])
+      .returning(['id', 'nom', 'isFavoris', 'userId', 'dateCreation'])
+      .execute())
+      .generatedMaps[0] as UserListModel;
+
   }
   async getAll(idUser: string): Promise<UserListModel[]> {
     return await (await this.orm).getRepository(UserListModel).findBy({ userId: idUser });
