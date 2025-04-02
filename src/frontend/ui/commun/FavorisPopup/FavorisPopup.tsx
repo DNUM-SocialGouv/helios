@@ -91,10 +91,12 @@ export const FavorisPopup = ({
     setNewListError(false);
     setAddToListError(false);
 
-    if (newListName.trim()) {
+    const newListTrimmedName = newListName.trim();
+
+    if (newListTrimmedName) {
       let status = -1;
       let listId = -1;
-      await createFavorisList(newListName, false)
+      await createFavorisList(newListTrimmedName, false)
         .then(response => {
           status = response.status;
           if (status === 201) {
@@ -124,9 +126,9 @@ export const FavorisPopup = ({
 
         setDisplayNewListInput(false);
         setNewListName("");
+        onNewListCreationSuccess(newListTrimmedName);
         // Dans l’ajout simple on ferme la popup à la création d’une liste car c’est un seul ajout
         if (addOnOneListOnly) closePopup();
-        onNewListCreationSuccess(getCheckedListName());
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
@@ -217,7 +219,7 @@ export const FavorisPopup = ({
       setAddToListError(true);
     } else {
       closePopup();
-      if (addOnOneListOnly) onClickOkSuccess(getCheckedListName());
+      onClickOkSuccess(getCheckedListName());
     }
     getFavorisLists();
   }

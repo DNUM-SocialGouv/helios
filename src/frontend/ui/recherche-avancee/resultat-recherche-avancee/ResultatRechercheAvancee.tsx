@@ -45,8 +45,13 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   };
 
   const handleAddToFavorisSuccess = (listName: string): void => {
-    setFavorisListName(listName);
-    setShowAddToListSuccess(true);
+    if (listName?.trim().length > 0) {
+      setFavorisListName(listName);
+      setShowAddToListSuccess(true);
+    } else {
+      setFavorisListName("");
+      setShowAddToListSuccess(false);
+    }
   }
 
   const showAlert = Object.values(selectedRows).flat().length >= 2;
