@@ -37,7 +37,7 @@ export const FavorisPopup = ({
   const [addToListError, setAddToListError] = useState(false);
 
   // Etat de selection des listes, une Map pour les ajout/suppression multiples, un id pour les ajout simple
-  let checkedLists: Map<number, boolean>;
+  const [checkedLists, setCheckedLists] = useState<Map<number, boolean>>(new Map());
   const [checkedList, setCheckedList] = useState<number>(-1);
 
   useEffect(() => {
@@ -128,7 +128,11 @@ export const FavorisPopup = ({
         setNewListName("");
         onNewListCreationSuccess(newListTrimmedName);
         // Dans l’ajout simple on ferme la popup à la création d’une liste car c’est un seul ajout
-        if (addOnOneListOnly) closePopup();
+        if (addOnOneListOnly) {
+          closePopup();
+        } else {
+          setCheckedLists(checkedLists.set(listId, true));
+        }
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
@@ -174,8 +178,6 @@ export const FavorisPopup = ({
     return false;
   };
 
-
-
   const sortedList = () => {
     const list = userContext?.favorisLists.slice();
     if (list) {
@@ -190,14 +192,16 @@ export const FavorisPopup = ({
   }
 
   const generateFavorisMap = () => {
-    const checkedMap = new Map<number, boolean>();
-    const list = userContext?.favorisLists.slice();
-    if (list) {
-      list.forEach(userList => {
-        checkedMap.set(userList.id, isAnyFinessInFavorisList(userList));
-      });
+    if (checkedLists.size === 0) {
+      const checkedMap = new Map<number, boolean>();
+      const list = userContext?.favorisLists.slice();
+      if (list) {
+        list.forEach(userList => {
+          checkedMap.set(userList.id, isAnyFinessInFavorisList(userList));
+        });
+      }
+      setCheckedLists(checkedMap);
     }
-    checkedLists = checkedMap;
   }
 
   const onClickOk = async () => {
@@ -233,7 +237,6 @@ export const FavorisPopup = ({
       } else if (!isInFavorisList(list, finessNumber) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
         const response = await addToFavorisList(finessNumber, list.id);
         if (response.status !== 200) isOnError = true;
-
       }
     }
     return isOnError;
@@ -260,46 +263,49 @@ export const FavorisPopup = ({
 
   return (
     <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(positionX > 0 && positionY > 0) ? { top: positionY, left: positionX } : {}}>
-
-      <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-p-0 fr-text--bold" id="checkboxes-legend">
-        {wording.ETOILE_MES_LISTES}
-      </legend>
-      <fieldset aria-labelledby="checkboxes-legend checkboxes-error-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer'] + (addToListError ? " fr-fieldset--error" : "")} id="checkboxes" role="group">
-        {sortedList()?.map(list => (
-          <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
-            <div className="fr-checkbox-group">
-              <input checked={addOnOneListOnly ? isChecked(list.id) : undefined} defaultChecked={addOnOneListOnly ? undefined : isChecked(list.id)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" value={list.id} />
-              <label className="fr-label" htmlFor={list.id + ""}>
-                {list.nom}
-              </label>
+      <div className={displayNewListInput ? "fr-hidden" : ""}>
+        <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-ml-1v fr-p-0 fr-text--bold" id="checkboxes-legend">
+          {wording.ETOILE_MES_LISTES}
+        </legend>
+        <fieldset aria-labelledby="checkboxes-legend checkboxes-error-messages" className={"fr-fieldset fr-m-0 fr-p-0 " + styles['listOverflowContainer'] + (addToListError ? " fr-fieldset--error" : "")} hidden={displayNewListInput} id="checkboxes" role="group">
+          {sortedList()?.map(list => (
+            <div className="fr-fieldset__element fr-mb-1w" key={list.id}>
+              <div className="fr-checkbox-group">
+                <input checked={addOnOneListOnly ? isChecked(list.id) : undefined} defaultChecked={addOnOneListOnly ? undefined : isChecked(list.id)} id={list.id + ""} name={"checkboxe-" + list.nom} onClick={() => onListClick(list.id)} type="checkbox" value={list.id} />
+                <label className="fr-label" htmlFor={list.id + ""}>
+                  {list.nom}
+                </label>
+              </div>
             </div>
-          </div>
-        ))}
-      </fieldset>
-      <div aria-live="assertive" className="fr-messages-group" id="checkboxes-error-messages">
-        {addToListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="checkboxes-error-message-error">{wording.ETOILE_ERREUR_MODIF_ETAB}</p>}
+          ))}
+        </fieldset>
+        <div aria-live="assertive" className="fr-messages-group" id="checkboxes-error-messages">
+          {addToListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="checkboxes-error-message-error">{wording.ETOILE_ERREUR_MODIF_ETAB}</p>}
+        </div>
       </div>
 
 
-      <ul className="fr-btns-group fr-btns-group--sm">
-        <li className="fr-mt-2w">
-          {!displayNewListInput
-            ? <button className="fr-btn fr-btn--secondary" disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE}</button>
-            :
-            <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
-              <label className="fr-label fr-ml-1w" htmlFor="new-list-form">Nouvelle liste</label>
-              <div className={styles['new-list-form']}>
-                <input aria-describedby={newListError ? "new-list-error-message" : undefined} className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
-                <button className="fr-btn fr-icon-check-line fr-m-0" onClick={handleListCreation}></button>
-              </div>
-              <div className="fr-messages-group">
-                {newListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="new-list-error-message">{newListErrorMessage}</p>}
-              </div>
+      <div>
+        {!displayNewListInput
+          ? <button className={"fr-btn fr-btn--sm fr-btn--secondary fr-mt-2w fr-mb-2w " + styles['full-width-button']} disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE_BOUTON}</button>
+          :
+          <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
+            <label className="fr-label fr-text--lead fr-text--bold fr-my-1w fr-p-0" htmlFor="new-list-form">Nouvelle liste</label>
+            <input aria-describedby={newListError ? "new-list-error-message" : undefined} className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
+            <div className="fr-messages-group">
+              {newListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="new-list-error-message">{newListErrorMessage}</p>}
             </div>
-          }
-        </li>
-        <li><button className="fr-btn" onClick={() => onClickOk()}>Ok</button></li>
-      </ul>
+          </div>
+        }
+      </div>
+
+      {displayNewListInput
+        ? <ul className="fr-btns-group fr-btns-group--inline fr-btns-group--center fr-btns-group--equisized fr-p-0">
+          <li className={displayNewListInput ? "" : "fr-hidden"}><button className="fr-btn fr-btn--secondary" onClick={() => { setDisplayNewListInput(false); setNewListName("") }}>Annuler</button></li>
+          <li><button className="fr-btn" onClick={() => handleListCreation()}>Ok</button></li>
+        </ul>
+        : <button className={"fr-btn fr-mb-2w " + styles['full-width-button']} onClick={() => onClickOk()}>Ok</button>
+      }
     </div >
   );
-} 
+}
