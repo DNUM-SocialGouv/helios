@@ -10,6 +10,7 @@ import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
+import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { SelectedRows, Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ListActionsButton } from "../liste/ListActionsButton";
@@ -42,6 +43,9 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [deleteEt, setDeleteEt] = useState(false);
 
   const [reloadTable, setReloadTable] = useState<boolean>(false);
+
+  const [favorisListName, setFavorisListName] = useState<string>("");
+  const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
@@ -175,6 +179,16 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     />;
   }
 
+  const handleAddToFavorisSuccess = (listName: string): void => {
+    if (listName?.trim().length > 0) {
+      setFavorisListName(listName);
+      setShowAddToListSuccess(true);
+    } else {
+      setFavorisListName("");
+      setShowAddToListSuccess(false);
+    }
+  }
+
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -183,7 +197,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       <div className={styles["container"]}>
         <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <ListActionsButton exportButton={exportExcel()} selectedRows={Object.values(selectedRows).flat()} />
+          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={Object.values(selectedRows).flat()} />
         </div>
         <div className={styles["ajout-etab-div"]}>
           {!isShowAjoutEtab && (
@@ -193,6 +207,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           )}
           {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
         </div>
+        {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Année</span>
