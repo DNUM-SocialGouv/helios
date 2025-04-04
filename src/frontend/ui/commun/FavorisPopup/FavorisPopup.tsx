@@ -16,6 +16,7 @@ type FavorisPopupProps = Readonly<{
   addOnOneListOnly?: boolean;
 }>;
 
+export const POPUP_WIDTH = 250;
 
 export const FavorisPopup = ({
   favorite,
