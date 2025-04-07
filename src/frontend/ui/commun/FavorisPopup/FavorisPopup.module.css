@@ -21,13 +21,13 @@
   border: none;
 }
 
-.new-list-button-group {
-  margin: 0 .5rem .5rem .5rem;
+.full-width-button {
+  width: 100%;
+  justify-content: center;
 }
 
-.new-list-form {
-  display: flex;
-  height: 2rem;
+.new-list-button-group {
+  margin: 0 .5rem .5rem .5rem;
 }
 
 .menu button {

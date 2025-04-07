@@ -3,7 +3,7 @@ import { ReactNode, useRef, useState } from "react";
 
 import styles from "./ListActionsButton.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { FavorisPopup } from "../commun/FavorisPopup/FavorisPopup";
+import { FavorisPopup, POPUP_WIDTH } from "../commun/FavorisPopup/FavorisPopup";
 import { SelectedRows } from "../commun/Table/Table";
 import { useFavoris } from "../favoris/useFavoris";
 import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
@@ -59,7 +59,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
     // On recupere la position du bouton action pour calculer la position de la popup
     if (buttonRef.current) {
       const popupTop = buttonRef.current.getBoundingClientRect().bottom + document.documentElement.scrollTop;
-      const popupLeft = buttonRef.current.getBoundingClientRect().left;
+      const popupLeft = buttonRef.current.getBoundingClientRect().right - POPUP_WIDTH;
       setPopupX(popupLeft);
       setPopupY(popupTop);
     }
