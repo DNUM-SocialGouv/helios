@@ -101,12 +101,12 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setTypeStructure("")
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
     rechercheAvanceeContext?.setZoneGeoLabel("");
     rechercheAvanceeContext?.setZoneGeoType("");
     rechercheAvanceeContext?.setTerme("");
-    rechercheAvanceeContext?.setTermeFixe("");
   }
 
   return (
