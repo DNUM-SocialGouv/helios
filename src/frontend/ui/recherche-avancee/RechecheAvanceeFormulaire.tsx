@@ -157,7 +157,7 @@ export const RechercheAvanceeFormulaire = ({
           >
             {getWordingCapacite()}
           </button>
-          {isEraseAllEnabled && <button
+          {isEraseAllEnabled && !isComparaison && <button
             className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
             onClick={eraseAll}
           >
