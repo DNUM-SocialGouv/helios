@@ -101,7 +101,8 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
-    rechercheAvanceeContext?.setTypeStructure("")
+    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
     rechercheAvanceeContext?.setZoneGeoLabel("");
