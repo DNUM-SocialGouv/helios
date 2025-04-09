@@ -96,6 +96,7 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
     téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
     raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    categorisationDeLEntitéDeRattachement: profil.statut_EJ === 'ok' ? identite.categorisationDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
     domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
     // to change "télEtEmail" by "dateOuverture"
@@ -190,6 +191,7 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
     téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
     raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
+    categorisationDeLEntitéDeRattachement: profil.statut_EJ === 'ok' ? identite.categorisationDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
     estMonoÉtablissement: profil.mono_établissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
     codeRegion: identite.codeRegion,
     domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,

@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmEntitéJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
@@ -16,13 +17,13 @@ import { DateMiseÀJourFichierSourceModelTestBuilder } from "../../../../../data
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
+import { EntiteJuridiqueDeRattachement } from "../../../métier/entities/entité-juridique/EntiteJuridiqueDeRattachement";
+import { CatégorisationEnum } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueAutorisationEtCapacité } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
-import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueTestBuilder } from "../../../test-builder/EntitéJuridiqueTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
-import { TypeOrmEntitéJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 
 describe("Entité juridique loader", () => {
   const orm = getOrm();
@@ -122,7 +123,7 @@ describe("Entité juridique loader", () => {
     const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeRattachement(numéroFinessEntitéJuridique);
 
     // THEN
-    expect(entitéJuridique).toStrictEqual<EntitéJuridiqueDeRattachement>({
+    expect(entitéJuridique).toStrictEqual<EntiteJuridiqueDeRattachement>({
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: "2022-05-14",
         value: "fake raison sociale courte",
@@ -131,6 +132,10 @@ describe("Entité juridique loader", () => {
         dateMiseÀJourSource: "2022-05-14",
         value: "fake libellé statut juridique",
       },
+      categorisationDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: "2022-05-14",
+        value: CatégorisationEnum.PUBLIC,
+      }
     });
   });
 

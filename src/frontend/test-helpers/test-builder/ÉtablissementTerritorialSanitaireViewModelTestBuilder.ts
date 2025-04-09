@@ -1,3 +1,4 @@
+import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
@@ -23,7 +24,7 @@ const autorisationsMockData = {
 
 
 export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
-  public static identité: ÉtablissementTerritorialSanitaire["identité"] = {
+  public static readonly identité: ÉtablissementTerritorialSanitaire["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "01130 NANTUA",
@@ -96,6 +97,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "Société Anonyme (S.A.)",
     },
+    categorisationDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: CatégorisationEnum.PUBLIC,
+    },
     typeÉtablissement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "S",
@@ -111,7 +116,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     codeRegion: '84',
     domaineÉtablissementPrincipal: 'Médico-social',
   };
-  public static activités: ÉtablissementTerritorialSanitaire["activités"] = [
+  public static readonly activités: ÉtablissementTerritorialSanitaire["activités"] = [
     {
       année: 2017,
       nombreDePassagesAuxUrgences: {
@@ -353,7 +358,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       numéroFinessÉtablissementTerritorial: "010000040",
     },
   ];
-  public static autorisationsEtCapacités: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"] = {
+  public static readonly autorisationsEtCapacités: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"] = {
     autorisations: {
       activités: [
         {
@@ -524,7 +529,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
   };
 
-  public static qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
+  public static readonly qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
     reclamations: [{
       numéroFinessÉtablissementTerritorial: "",
       année: 2020,

@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
@@ -13,6 +14,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../databa
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
+import { EntiteJuridiqueDeRattachement } from "../../../métier/entities/entité-juridique/EntiteJuridiqueDeRattachement";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -21,9 +23,7 @@ import {
 } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
-import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
-import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 
 export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -39,7 +39,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel);
   }
 
-  async chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
+  async chargeRattachement(numéroFiness: string): Promise<EntiteJuridiqueDeRattachement> {
     const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
     const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel;
 
@@ -242,7 +242,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private construisLEntitéJuridiqueDeRattachement(
     entitéJuridiqueModel: EntitéJuridiqueModel,
     dateDeMiseAJourFichierSourceModel: DateMiseÀJourFichierSourceModel
-  ): EntitéJuridiqueDeRattachement {
+  ): EntiteJuridiqueDeRattachement {
     return {
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
@@ -252,6 +252,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
+      categorisationDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
+        value: entitéJuridiqueModel.catégorisation as CatégorisationEnum,
+      }
     };
   }
 
