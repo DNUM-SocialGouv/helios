@@ -1,3 +1,4 @@
+import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { CadreBudgétaire } from "../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
@@ -102,6 +103,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     statutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
       value: "Etablissement Public Intercommunal d’Hospitalisation",
+    },
+    categorisationDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: CatégorisationEnum.PUBLIC,
     },
     typeÉtablissement: {
       dateMiseÀJourSource: "2021-07-07",
