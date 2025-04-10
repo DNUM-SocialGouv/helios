@@ -72,6 +72,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
       <GestionnaireListeIndicateurs estEHPAD={estEHPAD} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {estEHPAD && <IndicateursOccupationEHPAD établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
+        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -136,7 +137,6 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
           {établissementTerritorialActivitéMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
         </IndicateurGraphique>
         ) : <></>}
-        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
       </ul>
     </Bloc>
   );
