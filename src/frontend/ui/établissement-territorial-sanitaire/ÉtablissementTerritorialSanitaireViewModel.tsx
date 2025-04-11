@@ -9,15 +9,15 @@ import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../entité-juridique/bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
 
-export class ÉtablissementTerritorialSanitaireViewModel {
-  private établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
-  private établissementTerritorialSanitaireActivitésViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
-  private établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
-  private etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
+export class EtablissementTerritorialSanitaireViewModel {
+  private readonly établissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
+  private readonly établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
+  private readonly établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
+  private readonly etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths, autorisations: any) {
-    this.établissementTerritorialSanitaireIdentitéViewModel = new ÉtablissementTerritorialSanitaireIdentitéViewModel(
+    this.établissementTerritorialSanitaireIdentitéViewModel = new EtablissementTerritorialSanitaireIdentiteViewModel(
       établissementTerritorial.identité,
       wording,
       paths
@@ -57,7 +57,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value;
   }
 
-  public get identitéViewModel(): ÉtablissementTerritorialSanitaireIdentitéViewModel {
+  public get identitéViewModel(): EtablissementTerritorialSanitaireIdentiteViewModel {
     return this.établissementTerritorialSanitaireIdentitéViewModel;
   }
 

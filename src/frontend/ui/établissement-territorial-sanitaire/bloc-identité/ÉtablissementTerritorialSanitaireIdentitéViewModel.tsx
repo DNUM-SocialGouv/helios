@@ -7,7 +7,7 @@ import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
+export class EtablissementTerritorialSanitaireIdentiteViewModel {
   constructor(
     private readonly établissementTerritorialSanitaireIdentité: ÉtablissementTerritorialSanitaire["identité"],
     private readonly wording: Wording,

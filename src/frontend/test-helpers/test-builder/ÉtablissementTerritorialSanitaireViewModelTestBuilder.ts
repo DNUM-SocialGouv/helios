@@ -2,7 +2,7 @@ import { CatégorisationEnum } from "../../../backend/métier/entities/entité-j
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { ÉtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 
 const autorisationsMockData = {
   budgetEtFinance: {
@@ -23,7 +23,7 @@ const autorisationsMockData = {
 };
 
 
-export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
+export class EtablissementTerritorialSanitaireViewModelTestBuilder {
   public static readonly identité: ÉtablissementTerritorialSanitaire["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
@@ -589,14 +589,14 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire["identité"]>
-  ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel(
+  ): EtablissementTerritorialSanitaireViewModel {
+    return new EtablissementTerritorialSanitaireViewModel(
       {
-        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-        autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
+        activités: EtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        autorisationsEtCapacités: EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+        qualite: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: {
-          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+          ...EtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
         budgetFinance: [],
@@ -615,16 +615,16 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"]>
-  ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel(
+  ): EtablissementTerritorialSanitaireViewModel {
+    return new EtablissementTerritorialSanitaireViewModel(
       {
-        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        activités: EtablissementTerritorialSanitaireViewModelTestBuilder.activités,
         autorisationsEtCapacités: {
-          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+          ...EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
           ...champsSurchargés,
         },
-        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
-        identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        qualite: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
+        identité: EtablissementTerritorialSanitaireViewModelTestBuilder.identité,
         budgetFinance: [],
         allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',

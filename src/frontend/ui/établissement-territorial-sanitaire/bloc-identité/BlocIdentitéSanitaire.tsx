@@ -1,12 +1,12 @@
 import styles from "./BlocIdentitéSanitaire.module.css";
-import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./ÉtablissementTerritorialSanitaireIdentitéViewModel";
+import { EtablissementTerritorialSanitaireIdentiteViewModel } from "./ÉtablissementTerritorialSanitaireIdentitéViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
 import { Sources } from "../../commun/Sources/Sources";
 
 type BlocIdentitéSanitaireProps = Readonly<{
-  établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
+  établissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
 }>;
 
 export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdentitéViewModel }: BlocIdentitéSanitaireProps) => {

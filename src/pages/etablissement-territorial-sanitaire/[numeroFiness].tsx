@@ -12,7 +12,7 @@ import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
-import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 import { ETB_SANITAIRE } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
@@ -26,7 +26,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
 
   if (!établissementTerritorial) return null;
 
-  const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
+  const établissementTerritorialSanitaireViewModel = new EtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
   const activitéMensuelleViewModel = new ActivitésMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
