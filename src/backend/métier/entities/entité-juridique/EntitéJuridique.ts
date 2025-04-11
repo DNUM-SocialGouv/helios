@@ -68,3 +68,18 @@ export enum CatégorisationEnum {
   PRIVE_LUCRATIF = "prive_lucratif",
   PERSONNE_MORALE_DROIT_ETRANGER = "personne_morale_droit_etranger",
 }
+
+export function catégorisationEnumToString(value: CatégorisationEnum): string {
+  switch (value) {
+    case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
+      return "Personne morale de droit étranger";
+    case CatégorisationEnum.PRIVE_LUCRATIF:
+      return "Privé à but lucratif";
+    case CatégorisationEnum.PRIVE_NON_LUCRATIF:
+      return "Privé à but non lucratif";
+    case CatégorisationEnum.PUBLIC:
+      return "Public";
+    default:
+      return "Catégorie inconnue";
+  }
+}

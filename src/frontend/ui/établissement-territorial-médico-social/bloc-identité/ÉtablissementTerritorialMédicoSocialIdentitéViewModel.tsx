@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ReactChild, ReactElement } from "react";
 
-import { CatégorisationEnum } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
 
-export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
+export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
   constructor(
     private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial["identité"],
     private readonly wording: Wording,
@@ -27,14 +27,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateOuvertureÉtablissementTerritorial(): string {
-    if (this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.value) {
+    if (this.établissementTerritorialIdentité.dateOuverture?.value) {
       return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.value);
     }
     return "Non renseigné"
   }
 
   public get dateDeMiseÀJourOuvertureÉtablissementTerritorial(): string {
-    if (this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource) {
+    if (this.établissementTerritorialIdentité.dateOuverture?.dateMiseÀJourSource) {
       return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource);
     }
     return "Non renseigné"
@@ -115,18 +115,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get categorisationDeLEntitéDeRattachement(): string {
-    switch (this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value) {
-      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
-        return "droit étrangé";
-      case CatégorisationEnum.PRIVE_LUCRATIF:
-        return "Privé à but lucratif";
-      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
-        return "Privé à but non lucratif";
-      case CatégorisationEnum.PUBLIC:
-        return "Public";
-      default:
-        return "Catégorie inconnue";
-    }
+    return catégorisationEnumToString(this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value);
   }
 
   public get monoÉtablissement(): string {

@@ -1,6 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
 
+import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch, trimHtml } from "../../../test-helpers/testHelper";
@@ -307,7 +308,8 @@ describe("La page établissement territorial - bloc identité", () => {
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutÉtablissement = within(indicateurs[9]).getByText(identité.statutJuridique.value);
+    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${catégorisationEnumToString(identité.categorisationDeLEntitéDeRattachement.value)}`, "s");
+    const statutÉtablissement = within(indicateurs[9]).getByText(statutMatcher);
     expect(statutÉtablissement).toBeInTheDocument();
   });
 

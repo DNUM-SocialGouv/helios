@@ -11,7 +11,7 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../frontend/ui/établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { ETB_MEDICO_SOCIAL } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
@@ -25,7 +25,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
 
   if (!établissementTerritorial) return null;
 
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
+  const établissementTerritorialViewModel = new EtablissementTerritorialMedicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (
