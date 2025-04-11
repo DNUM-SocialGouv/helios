@@ -264,7 +264,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   {profiles &&
                     profiles.map((item) => (
                       <div
-                        className={`fr-fieldset__element fr-mt-2w ${styles["boxItem"]} ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
+                        className={`fr-fieldset__element fr-mt-2w ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
                         key={item.code}
                       >
                         <div className="fr-checkbox-group">

@@ -15,12 +15,8 @@
 }
 
 .boxSelect {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.boxItem {
-  width: 30%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .float-right {
