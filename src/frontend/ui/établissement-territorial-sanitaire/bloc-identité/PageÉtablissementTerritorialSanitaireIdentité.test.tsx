@@ -3,6 +3,7 @@ import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
+import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
@@ -377,7 +378,8 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutÉtablissement = within(indicateurs[9]).getByText(identité.statutJuridique.value);
+    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${catégorisationEnumToString(identité.categorisationDeLEntitéDeRattachement.value)}`, "s");
+    const statutÉtablissement = within(indicateurs[9]).getByText(statutMatcher);
     expect(statutÉtablissement).toBeInTheDocument();
   });
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactElement } from "react";
 
+import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -11,7 +12,7 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
     private readonly établissementTerritorialSanitaireIdentité: ÉtablissementTerritorialSanitaire["identité"],
     private readonly wording: Wording,
     private readonly paths: Paths
-  ) {}
+  ) { }
 
   public get nomDeLÉtablissementTerritorial(): string {
     return this.établissementTerritorialSanitaireIdentité.raisonSociale.value;
@@ -26,16 +27,14 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
   }
 
   public get dateOuvertureÉtablissementTerritorial(): string {
-    if(this.établissementTerritorialSanitaireIdentité.dateOuverture && this.établissementTerritorialSanitaireIdentité.dateOuverture.value)
-    {
+    if (this.établissementTerritorialSanitaireIdentité.dateOuverture?.value) {
       return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.dateOuverture.value);
     }
     return "Non renseigné"
   }
 
   public get dateDeMiseÀJourOuvertureÉtablissementTerritorial(): string {
-    if(this.établissementTerritorialSanitaireIdentité.dateOuverture && this.établissementTerritorialSanitaireIdentité.dateOuverture.dateMiseÀJourSource)
-    {
+    if (this.établissementTerritorialSanitaireIdentité.dateOuverture?.dateMiseÀJourSource) {
       return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.dateOuverture.dateMiseÀJourSource);
     }
     return "Non renseigné"
@@ -113,6 +112,10 @@ export class ÉtablissementTerritorialSanitaireIdentitéViewModel {
 
   public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
     return StringFormater.formatDate(this.établissementTerritorialSanitaireIdentité.statutJuridique.dateMiseÀJourSource);
+  }
+
+  public get categorisationDeLEntitéDeRattachement(): string {
+    return catégorisationEnumToString(this.établissementTerritorialSanitaireIdentité.categorisationDeLEntitéDeRattachement.value);
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

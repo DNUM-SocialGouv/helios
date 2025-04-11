@@ -95,7 +95,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     statutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
-      value: "Société Anonyme (S.A.)",
+      value: "Societe Anonyme",
     },
     categorisationDeLEntitéDeRattachement: {
       dateMiseÀJourSource: "2021-07-07",
