@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactChild, ReactElement } from "react";
 
+import { CatégorisationEnum } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -111,6 +112,21 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
 
   public get dateDeMiseÀJourDuStatutDeLÉtablissement(): string {
     return StringFormater.formatDate(this.établissementTerritorialIdentité.statutJuridique.dateMiseÀJourSource);
+  }
+
+  public get categorisationDeLEntitéDeRattachement(): string {
+    switch (this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value) {
+      case CatégorisationEnum.PERSONNE_MORALE_DROIT_ETRANGER:
+        return "droit étrangé";
+      case CatégorisationEnum.PRIVE_LUCRATIF:
+        return "Privé à but lucratif";
+      case CatégorisationEnum.PRIVE_NON_LUCRATIF:
+        return "Privé à but non lucratif";
+      case CatégorisationEnum.PUBLIC:
+        return "Public";
+      default:
+        return "Catégorie inconnue";
+    }
   }
 
   public get monoÉtablissement(): string {

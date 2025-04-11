@@ -1,10 +1,10 @@
+import styles from "./BlocIdentitéMédicoSocial.module.css";
+import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
-import styles from "./BlocIdentitéMédicoSocial.module.css";
-import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 
 type BlocIdentitéMédicoSocialProps = Readonly<{
   établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel;
@@ -87,7 +87,10 @@ export const BlocIdentitéMédicoSocial = ({ établissementTerritorialIdentitéM
           nomDeLIndicateur={wording.STATUT_JURIDIQUE_EJ}
           source={Sources(wording.FINESS)}
         >
-          {établissementTerritorialIdentitéMédicoSocialViewModel.statutDeLÉtablissement}
+          <>
+            {établissementTerritorialIdentitéMédicoSocialViewModel.statutDeLÉtablissement}<br />
+            {établissementTerritorialIdentitéMédicoSocialViewModel.categorisationDeLEntitéDeRattachement}
+          </>
         </IndicateurIdentité>
         <IndicateurIdentité
           dateDeMiseÀJour={établissementTerritorialIdentitéMédicoSocialViewModel.dateDeMiseÀJourDuMonoÉtablissement}
