@@ -21,7 +21,7 @@ export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéM�
                     />
                 }
                 dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-7"
+                identifiant="activite-0"
                 nomDeLIndicateur={wording.TAUX_OCCUPATION_EXTERNAT}
                 source={wording.CNSA}
             >
@@ -35,7 +35,7 @@ export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéM�
                     />
                 }
                 dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-8"
+                identifiant="activite-1"
                 nomDeLIndicateur={wording.TAUX_OCCUPATION_SEMI_INTERNAT}
                 source={wording.CNSA}
             >
@@ -49,7 +49,7 @@ export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéM�
                     />
                 }
                 dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-9"
+                identifiant="activite-2"
                 nomDeLIndicateur={wording.TAUX_OCCUPATION_INTERNAT}
                 source={wording.CNSA}
             >
@@ -63,7 +63,7 @@ export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéM�
                     />
                 }
                 dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-10"
+                identifiant="activite-3"
                 nomDeLIndicateur={wording.TAUX_OCCUPATION_AUTRE}
                 source={wording.CNSA}
             >
@@ -77,7 +77,7 @@ export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéM�
                     />
                 }
                 dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-11"
+                identifiant="activite-4"
                 nomDeLIndicateur={wording.TAUX_OCCUPATION_SEANCES}
                 source={wording.CNSA}
             >
