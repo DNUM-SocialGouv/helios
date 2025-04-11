@@ -30,7 +30,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
   const activitéMensuelleViewModel = new ActivitésMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
-  
+
   return (
     <>
       {rechercheViewModel ? (
@@ -52,25 +52,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const codeRegion = session?.user.codeRegion as unknown as string;
     const codeProfiles = session?.user.codeProfiles as string[];
 
-    if (context.params && context.params["numeroFiness"]) {
+    if (context.params?.["numeroFiness"]) {
       const numeroFiness = context.params["numeroFiness"] as string;
-      const établissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
+      const etablissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
         dependencies,
         numeroFiness,
         codeRegion,
         codeProfiles
-      )) as ÉtablissementTerritorialSanitaire;
+      ));
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
-      saveSearchHistoryEndpoint(dependencies,établissementTerritorial.identité.raisonSocialeCourte.value,session?.user.idUser!,
-        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value,ETB_SANITAIRE);
-        
+      saveSearchHistoryEndpoint(dependencies, etablissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
+        etablissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_SANITAIRE);
+
       return {
         props: {
-          établissementTerritorial: JSON.parse(JSON.stringify(établissementTerritorial)),
+          établissementTerritorial: JSON.parse(JSON.stringify(etablissementTerritorial)),
           rechercheResult: rechercheResult,
-          autorisations: établissementTerritorial.autorisations
+          autorisations: etablissementTerritorial.autorisations
         },
       };
     } else {
