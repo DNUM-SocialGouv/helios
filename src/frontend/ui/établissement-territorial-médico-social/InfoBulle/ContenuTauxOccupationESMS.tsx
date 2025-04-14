@@ -15,19 +15,17 @@ export const ContenuDuTauxOccupationESMS = ({ dateDeMiseÀJour, source }: Conten
             <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
             <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
                 <p>
-                    Le taux d’occupation est un indicateur  permettant d’évaluer l’utilisation réelle des places disponibles dans un Établissement ou Service Médico-Social (ESMS). Il est couramment utilisé pour mesurer l’adéquation entre l’offre et la demande dans ces structures
+                    Le taux d’occupation est un indicateur  permettant d’évaluer l’utilisation réelle des places disponibles dans un Établissement ou Service Médico-Social (ESMS). Il est couramment utilisé pour mesurer l’adéquation entre l’offre et la demande dans ces structures.
                 </p>
             </section>
             <section aria-label={wording.FRÉQUENCE}>
                 <p>
-                    <span className="fr-text--bold">Fréquence : </span>
-                    Annuelle
+                    <span className="fr-text--bold">Fréquence : </span> Annuelle
                 </p>
             </section>
             <section aria-label={wording.MODE_DE_CALCUL}>
                 <p>
-                    <span className="fr-text--bold">Mode de calcul : </span>
-                    Calculé en divisant le nombre de journées réalisées (c’est-à-dire le nombre total de journées d’accompagnement effectuées par les bénéficiaires) et le nombre de journées théoriques (c’est-à-dire la capacité maximale théorique de l’ESMS sur une période, en fonction de son autorisation de places et de sa durée de fonctionnement)
+                    <span className="fr-text--bold">Mode de calcul : </span> Calculé en divisant le nombre de journées réalisées (c’est-à-dire le nombre total de journées d’accompagnement effectuées par les bénéficiaires) et le nombre de journées théoriques (c’est-à-dire la capacité maximale théorique de l’ESMS sur une période, en fonction de son autorisation de places et de sa durée de fonctionnement)
                 </p>
             </section>
             <section aria-label={wording.SOURCES}>
