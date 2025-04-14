@@ -72,6 +72,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
       <GestionnaireListeIndicateurs estEHPAD={estEHPAD} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {estEHPAD && <IndicateursOccupationEHPAD établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
+        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -81,7 +82,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
-            identifiant="activite-3"
+            identifiant="activite-5"
             nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
             source={wording.TDB_PERF}
           >
@@ -97,7 +98,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
-            identifiant="activite-4"
+            identifiant="activite-6"
             nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
@@ -113,7 +114,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
-            identifiant="activite-5"
+            identifiant="activite-7"
             nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
@@ -129,14 +130,13 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
             />
           }
           dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
-          identifiant="activite-6"
+          identifiant="activite-8"
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={wording.TDB_PERF}
         >
           {établissementTerritorialActivitéMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
         </IndicateurGraphique>
         ) : <></>}
-        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
       </ul>
     </Bloc>
   );

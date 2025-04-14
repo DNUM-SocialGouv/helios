@@ -52,15 +52,15 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
     // [wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT, 0, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE, 1, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR, 2, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 5, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8, "TdB Perf", wording.TDB_PERF_TITLE],
     // [wording.TAUX_OCCUPATION_EXTERNAT, 4, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_INTERNAT, 6, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_AUTRE, 7, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_SEANCES, 8, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_AUTRE, 3, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_SEANCES, 4, "CNSA", wording.CNSA_TITLE],
   ])("affiche les informations l’indicateur %s", (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     // WHEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /></SessionProvider>);
@@ -81,17 +81,17 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
     const abréviationSourceOrigine = within(indicateurs[identifiant]).getAllByText(sourceOrigineAttendue, { selector: "abbr" });
     expect(abréviationSourceOrigine[0]).toHaveAttribute("title", abréviationSourceOrigineAttendue);
     const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
-    expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-${identifiant + 3}`);
+    expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-${identifiant}`);
     expect(détails).toHaveAttribute("data-fr-opened", "false");
     const exergue = within(indicateurs[identifiant]).queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, { selector: "p" });
     expect(exergue).not.toBeInTheDocument();
   });
 
   it.each([
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0, "100,4 %", "94,5 %", "96,6 %"],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, "340", "280", "300"],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2, "87", "90", "22"],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3, (1013).toLocaleString("fr"), "994", "990"],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 5, "100,4 %", "94,5 %", "96,6 %"],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6, "340", "280", "300"],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7, "87", "90", "22"],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8, (1013).toLocaleString("fr"), "994", "990"],
   ])("affiche un tableau descriptif avec les trois années (%s)", (titreSection, identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
     // WHEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
@@ -500,15 +500,15 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   );
 
   it.each([
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2, "TdB Perf", wording.TDB_PERF_TITLE],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 5, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7, "TdB Perf", wording.TDB_PERF_TITLE],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8, "TdB Perf", wording.TDB_PERF_TITLE],
     // [wording.TAUX_OCCUPATION_EXTERNAT, 4, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5, "CNSA", wording.CNSA_TITLE],
     // [wording.TAUX_OCCUPATION_INTERNAT, 6, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_AUTRE, 7, "CNSA", wording.CNSA_TITLE],
-    [wording.TAUX_OCCUPATION_SEANCES, 8, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_AUTRE, 3, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_SEANCES, 4, "CNSA", wording.CNSA_TITLE],
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
@@ -542,15 +542,15 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   );
 
   it.each([
-    [wording.TAUX_RÉALISATION_ACTIVITÉ, 0],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 1],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 2],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 3],
+    [wording.TAUX_RÉALISATION_ACTIVITÉ, 5],
+    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6],
+    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7],
+    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES,8],
     // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
     // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
     // [wording.TAUX_OCCUPATION_INTERNAT, 6],
-    [wording.TAUX_OCCUPATION_AUTRE, 7],
-    [wording.TAUX_OCCUPATION_SEANCES, 8],
+    [wording.TAUX_OCCUPATION_AUTRE, 3],
+    [wording.TAUX_OCCUPATION_SEANCES, 4],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);

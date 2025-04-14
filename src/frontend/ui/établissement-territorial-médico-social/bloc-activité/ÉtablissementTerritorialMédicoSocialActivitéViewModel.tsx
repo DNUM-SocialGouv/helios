@@ -55,15 +55,15 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   }
   public get lesDonnéesActivitésPasRenseignees(): string[] {
     const nonRenseignee = [];
-    if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
-    if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
-    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
-    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée) nonRenseignee.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
     if (!this.leTauxOccupationExternatEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_EXTERNAT);
     if (!this.leTauxOccupationSemiInternatEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_SEMI_INTERNAT);
     if (!this.leTauxOccupationInternatEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_INTERNAT);
     if (!this.leTauxOccupationAutreEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_AUTRE);
     if (!this.leTauxOccupationSeancesEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_SEANCES);
+    if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée) nonRenseignee.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
 
     return nonRenseignee;
   }
@@ -479,15 +479,15 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   public get lesDonnéesActivitésPasAutorisés(): string[] {
     const nonAutorisés = [];
-    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
-    if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
-    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
-    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorisés.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
     if (!this.leTauxOccupationExternatEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_EXTERNAT);
     if (!this.leTauxOccupationSemiInternatEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_SEMI_INTERNAT);
     if (!this.leTauxOccupationSemiInternatEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_INTERNAT);
     if (!this.leTauxOccupationAutreEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_AUTRE);
     if (!this.leTauxOccupationSeancesEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_SEANCES);
+    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
+    if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
+    if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorisés.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
 
     return nonAutorisés;
   }
