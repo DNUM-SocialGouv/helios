@@ -80,8 +80,8 @@ function TransformeCapacities(
 ) {
   return ranges.map(range => {
     if (range.startsWith('>')) {
-      const value = range.substring(1);
-      return `${value} et plus`;
+      const value = parseInt(range.substring(1), 10);
+      return `${value + 1} et plus`;
     } else {
       return range.replace(',', '-');
     }
