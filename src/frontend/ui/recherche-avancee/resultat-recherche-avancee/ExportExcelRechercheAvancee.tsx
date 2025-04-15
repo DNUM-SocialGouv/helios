@@ -75,6 +75,39 @@ function ExportToExcel(
   XLSX.writeFile(wb, fileName);
 }
 
+function TransformeCapacities(
+  ranges: string[]
+) {
+  return ranges.map(range => {
+    if (range.startsWith('>')) {
+      const value = range.substring(1);
+      return `${value} et plus`;
+    } else {
+      return range.replace(',', '-');
+    }
+  });
+}
+
+function SortCapacities(
+  ranges: string[]
+) {
+  return ranges.sort((a, b) => {
+    // Extract the first number from each range
+    const getLowerBound = (range: string) => {
+      if (range.startsWith('>')) {
+        return parseInt(range.substring(1), 10);
+      } else {
+        return parseInt(range.split(',')[0], 10);
+      }
+    };
+
+    const lowerA = getLowerBound(a);
+    const lowerB = getLowerBound(b);
+
+    return lowerA - lowerB;
+  });
+}
+
 function generateCriteriaData(context: RechercheAvanceeContextValue): { criteriaHeader: string[], criteriaInformation: string[] } {
   //  terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order
   //
@@ -104,17 +137,17 @@ function generateCriteriaData(context: RechercheAvanceeContextValue): { criteria
 
   if (capaciteMedicoSociaux?.length > 0) {
     criteriaHeader.push("Capacité etablissement sociaux et Médico-sociaux");
-    criteriaInformation.push(capaciteMedicoSociaux.join(', '));
+    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteMedicoSociaux)).join(', '));
   }
 
   if (capaciteHandicap?.length > 0) {
     criteriaHeader.push("Capacité etablissement public en situation de handicap");
-    criteriaInformation.push(capaciteHandicap.join(', '));
+    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteHandicap)).join(', '));
   }
 
   if (capaciteAgees?.length > 0) {
     criteriaHeader.push("Capacité etablissement pour personnes agées");
-    criteriaInformation.push(capaciteAgees.join(', '));
+    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteAgees)).join(', '));
   }
 
   if (orderBy) {
