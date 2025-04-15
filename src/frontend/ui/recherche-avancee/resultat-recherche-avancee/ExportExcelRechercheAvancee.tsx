@@ -75,6 +75,19 @@ function ExportToExcel(
   XLSX.writeFile(wb, fileName);
 }
 
+function TransformeCapacities(
+  ranges: string[]
+) {
+  return ranges.map(range => {
+    if (range.startsWith('>')) {
+      const value = range.substring(1);
+      return `${value} et plus`;
+    } else {
+      return range.replace(',', '-');
+    }
+  });
+}
+
 function generateCriteriaData(context: RechercheAvanceeContextValue): { criteriaHeader: string[], criteriaInformation: string[] } {
   //  terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order
   //
@@ -104,17 +117,17 @@ function generateCriteriaData(context: RechercheAvanceeContextValue): { criteria
 
   if (capaciteMedicoSociaux?.length > 0) {
     criteriaHeader.push("Capacité etablissement sociaux et Médico-sociaux");
-    criteriaInformation.push(capaciteMedicoSociaux.join(', '));
+    criteriaInformation.push(TransformeCapacities(capaciteMedicoSociaux).join(', '));
   }
 
   if (capaciteHandicap?.length > 0) {
     criteriaHeader.push("Capacité etablissement public en situation de handicap");
-    criteriaInformation.push(capaciteHandicap.join(', '));
+    criteriaInformation.push(TransformeCapacities(capaciteHandicap).join(', '));
   }
 
   if (capaciteAgees?.length > 0) {
     criteriaHeader.push("Capacité etablissement pour personnes agées");
-    criteriaInformation.push(capaciteAgees.join(', '));
+    criteriaInformation.push(TransformeCapacities(capaciteAgees).join(', '));
   }
 
   if (orderBy) {
