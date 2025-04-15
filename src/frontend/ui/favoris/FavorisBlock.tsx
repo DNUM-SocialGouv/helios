@@ -2,12 +2,12 @@ import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import styles from "./Favoris.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import Spinner from "../commun/Spinner/Spinner";
 import { TuileEtablissement } from "../commun/TuileEtablissement/TuileEtablissement";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { UserListEtablissementViewModel } from "../user-list/UserListViewModel";
-import styles from "./Favoris.module.css";
 
 
 type FavorisBlockProps = Readonly<{
@@ -23,12 +23,12 @@ export const FavorisBlock = ({
 }: FavorisBlockProps) => {
     const { paths } = useDependencies();
     const list = favorisList.length > 4 ? favorisList.slice(0, 3) : favorisList;
-    const [listEtablissements, setLlistEtablissements] = useState<RechercheViewModel[]>([]);
+    const [listEtablissements, setlistEtablissements] = useState<RechercheViewModel[]>([]);
     const [estCeEnAttente, setestCeEnAttente] = useState(true);
 
     useEffect(() => {
         if (list.length === 0) {
-            setLlistEtablissements([]);
+            setlistEtablissements([]);
             setestCeEnAttente(false);
         }
         else
@@ -41,7 +41,7 @@ export const FavorisBlock = ({
             }).then((response) => response.json())
                 .then((data) => {
                     setestCeEnAttente(false);
-                    setLlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+                    setlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
                 });
     }, [favorisList])
 
