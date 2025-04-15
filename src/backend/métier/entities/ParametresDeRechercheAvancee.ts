@@ -1,4 +1,9 @@
-import { CapaciteSMS, OrderDir } from "../use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase"
+export type OrderDir = "ASC" | "DESC" | undefined;
+
+export type CapaciteSMS = {
+  classification: string;
+  ranges: string[];
+};
 
 export type ParametreDeRechercheAvancee = Readonly<{
   terme: string,

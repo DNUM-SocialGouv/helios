@@ -437,14 +437,14 @@ class TestLisLeFichierCsv:
             donnees_des_ressources_humaines_attendues,
         )
 
-    def test_lis_les_colonnes_demandées_du_fichier_csv_quo_san_finance(self) -> None:
+    def test_lis_les_colonnes_demandees_du_fichier_csv_quo_san_finance(self) -> None:
         # GIVEN
         file_path = get_absolute_file_path("data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_20.CSV")
         colonnes = colonnes_a_lire_bloc_budget_finance_entite_juridique
         types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
 
         # WHEN
-        donnees_des_quo_san_finance_reçues = lis_le_fichier_csv(file_path, colonnes, types_des_colonnes)
+        donnees_des_quo_san_finance_recues = lis_le_fichier_csv(file_path, colonnes, types_des_colonnes)
 
         # THEN
         donnees_des_quo_san_finance_attendues = pd.DataFrame(
@@ -474,6 +474,6 @@ class TestLisLeFichierCsv:
         )
 
         pd.testing.assert_frame_equal(
-            donnees_des_quo_san_finance_reçues,
+            donnees_des_quo_san_finance_recues,
             donnees_des_quo_san_finance_attendues,
         )

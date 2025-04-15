@@ -57,6 +57,8 @@ export function useComparaison() {
     try {
       numerosFiness = listFiness ? JSON.parse(listFiness) : [];
     } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log("e", e)
     }
 
     const type = typeStored ?? "";

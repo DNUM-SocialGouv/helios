@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 
+import { OrderDir } from "../../../../backend/métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
-import { OrderDir } from "../../../../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../../home/RechercheViewModel";

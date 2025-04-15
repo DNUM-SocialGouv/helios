@@ -3,10 +3,9 @@ import { DataSource, SelectQueryBuilder } from "typeorm";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
-import { ParametreDeRechercheAvancee } from "../../../métier/entities/ParametresDeRechercheAvancee";
+import { ParametreDeRechercheAvancee, CapaciteSMS, OrderDir } from "../../../métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RechercheLoader } from "../../../métier/gateways/RechercheLoader";
-import { CapaciteSMS, OrderDir } from "../../../métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 type RechercheTypeOrm = Readonly<{
   commune: string;

@@ -2,9 +2,8 @@ import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
-import { ParametreDeRechercheAvancee } from "../backend/métier/entities/ParametresDeRechercheAvancee";
+import { ParametreDeRechercheAvancee, OrderDir } from "../backend/métier/entities/ParametresDeRechercheAvancee";
 import { RésultatDeRecherche } from "../backend/métier/entities/RésultatDeRecherche";
-import { OrderDir } from "../backend/métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
