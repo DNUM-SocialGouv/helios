@@ -4,7 +4,7 @@ import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class LoginUseCase {
-  constructor(private utilisateurLoader: UtilisateurLoader) {}
+  constructor(private readonly utilisateurLoader: UtilisateurLoader) { }
 
   async exécute(email: string, password: string): Promise<RésultatLogin> {
     return await this.utilisateurLoader.login(email, password);
