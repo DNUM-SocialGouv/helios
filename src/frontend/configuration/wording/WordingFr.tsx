@@ -102,7 +102,7 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
   readonly STRUCTURE: string = "Structure";
-  readonly CAPACITE: string = "Capacité";
+  readonly CAPACITE: string = "Capacité MS";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
 
   // Cartographie
