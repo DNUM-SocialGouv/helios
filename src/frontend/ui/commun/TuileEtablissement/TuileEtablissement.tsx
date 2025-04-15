@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useContext } from "react";
 
+import styles from "./TuileEtablissement.module.css";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
-import styles from "./TuileEtablissement.module.css";
 
 type EstablishmentProps = Readonly<{
   rechercheViewModel: RechercheViewModel;
@@ -13,27 +13,16 @@ type EstablishmentProps = Readonly<{
 
 export const TuileEtablissement = ({
   rechercheViewModel,
-  currentListId,
 }: EstablishmentProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
-  const processedListId = currentListId || userContext?.favorisLists.find(list => list.isFavoris)?.id;
+
 
   const isInFavoris = () => {
-    // Pour le moment il n’y a pas les modal de choix de liste.
-    // La liste courante est donc obligatoire et doit être la liste « Favoris »
-    // Quand il y aura la modale, currentListId sera optionnel et devra être géré
-
-    // On récurére la liste
-    const currentList = rechercheViewModel ? userContext?.favorisLists.find(list => list.id === processedListId) : undefined;
-
-    // On regarde si l’element est dans la liste
-    if (currentList) {
-      return currentList.userListEtablissements.some(etablissement => etablissement.finessNumber === rechercheViewModel?.numéroFiness);
-    }
-
-    return false;
+    const isInFav = userContext?.favorisLists.some((list) => list.userListEtablissements.some((etablissement) => etablissement.finessNumber === rechercheViewModel.numéroFiness));
+    return isInFav;
   }
+
 
   return (
     <>
