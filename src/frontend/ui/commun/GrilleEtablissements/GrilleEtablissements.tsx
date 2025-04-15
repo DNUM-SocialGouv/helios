@@ -1,8 +1,8 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import styles from "./GrilleEtablissement.module.css";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { TuileEtablissement } from "../TuileEtablissement/TuileEtablissement";
-import styles from "./GrilleEtablissement.module.css";
 
 type GrilleEtablissementsProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
