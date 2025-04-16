@@ -1,14 +1,14 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
-import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
 import { RechercheEnAttente } from "./RechercheEnAttente";
 import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 
 export const PageRecherche = () => {
   const { wording } = useDependencies();
@@ -29,7 +29,7 @@ export const PageRecherche = () => {
     rechercher,
   } = useRecherche();
 
-  const showNotice = new Date() <= new Date('2025-03-28');
+  const showNotice = new Date() <= new Date('2025-06-13');
 
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
