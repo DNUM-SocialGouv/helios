@@ -638,5 +638,5 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
   readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La création et la gestion de listes, les indicateurs de Taux d’occupation des établissements médico-sociaux sont désormais accessibles.";
 }
