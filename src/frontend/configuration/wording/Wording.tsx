@@ -550,6 +550,5 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 }
