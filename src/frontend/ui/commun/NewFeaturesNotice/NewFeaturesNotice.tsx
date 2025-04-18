@@ -15,7 +15,6 @@ export const NewFeaturesNotice = () => {
                         <p>
                             <span className="fr-notice__title">
                                 <span className={styles["notice-badge"] + " fr-badge fr-badge--new fr-badge--no-icon"}>{wording.NOUVEAU}</span>
-                                {wording.NOUVELLES_FONCTIONNALITÉS}
                             </span>
                             <span className="fr-notice__desc">{wording.NOUVELLES_FONCTIONNALITÉS_TEXT}</span>
                             <a

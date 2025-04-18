@@ -637,6 +637,5 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La création et la gestion de listes, les indicateurs de Taux d’occupation des établissements médico-sociaux sont désormais accessibles.";
 }
