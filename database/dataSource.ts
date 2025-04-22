@@ -114,6 +114,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "./models/Établissement
 import { dotEnvConfig } from "../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig";
 import { NodeEnvironmentVariables } from "../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "../download_data_source/infrastructure/gateways/logger/ConsoleLogger";
+import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrations/1745321952709-AjoutNombreJourneeUSLDActivitesSanitaires";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -235,7 +236,8 @@ const datasource = new DataSource({
     AjoutListEtEtsList1736865415982,
     MettreAJourTableActiviteMedicoSocial1741861364859,
     AjoutDesOccupationsDansLesProfils1799478704013,
-    ClefEtrangereListEts1743596937227
+    ClefEtrangereListEts1743596937227,
+    AjoutNombreJourneeUSLDActivitesSanitaires1745321952709
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

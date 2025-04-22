@@ -5,7 +5,7 @@ from numpy import NaN
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT
 
 
-def csv_ann_ms_tdp_et_activités_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_ms_tdp_et_activités_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_ms_tdp_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
@@ -15,12 +15,12 @@ def csv_ann_ms_tdp_et_activités_builder(champs_surchargés: Optional[Dict] = No
         "Taux de réalisation de l’activité CAMSP et CMPP": 0.6789,
         "File active des personnes accompagnées sur la période": 94,
     }
-    if champs_surchargés:
-        return {**ann_ms_tdp_et, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_ms_tdp_et, **champs_surcharges}
     return ann_ms_tdp_et
 
 
-def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_men_pmsi_annuel_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     men_pmsi_annuel = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
@@ -35,23 +35,33 @@ def csv_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Di
         "Nb journées hospit complète PSY": 1.0,
         "Nb journées HTP PSY": 1.0,
     }
-    if champs_surchargés:
-        return {**men_pmsi_annuel, **champs_surchargés}
+    if champs_surcharges:
+        return {**men_pmsi_annuel, **champs_surcharges}
     return men_pmsi_annuel
 
 
-def csv_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_rpu_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_rpu = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
         "Nombre de passages aux urgences": 100.0,
     }
-    if champs_surchargés:
-        return {**ann_rpu, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_rpu, **champs_surcharges}
     return ann_rpu
 
+def csv_ann_sae_activite_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
+    ann_sae_activite = {
+        "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "Année": 2018,
+        "Nombre journées USLD": 12304.0,
+    }
+    if champs_surcharges:
+        return {**ann_sae_activite, **champs_surcharges}
+    return ann_sae_activite
 
-def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+
+def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_errd_ej_et_budget_et_finances = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2018,
@@ -64,23 +74,23 @@ def csv_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[D
         "Recettes Groupe III ERRD": 350.0,
         "MS Résultat net comptable ERRD": 50.0,
     }
-    if champs_surchargés:
-        return {**ann_errd_ej_et_budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_errd_ej_et_budget_et_finances, **champs_surcharges}
     return ann_errd_ej_et_budget_et_finances
 
 
-def csv_ann_per_errd_eprd_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_per_errd_eprd_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_per_errd_eprd_budget_et_finances = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2020,
         "Id Dépôt": 111111,
     }
-    if champs_surchargés:
-        return {**ann_per_errd_eprd_budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_per_errd_eprd_budget_et_finances, **champs_surcharges}
     return ann_per_errd_eprd_budget_et_finances
 
 
-def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, float]:
+def csv_ann_errd_ej_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, float]:
     ann_errd_ej_budget_et_finances = {
         "Année": 2020,
         "Id Dépôt": 111111,
@@ -88,14 +98,14 @@ def csv_ann_errd_ej_builder(champs_surchargés: Optional[Dict] = None) -> Dict[s
         "Taux vétusté Construction ERRD": 0.45555983373892417,
         "Fonds de roulement net global ERRD": 2206969.259999999800000000,
     }
-    if champs_surchargés:
-        return {**ann_errd_ej_budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_errd_ej_budget_et_finances, **champs_surcharges}
     return ann_errd_ej_budget_et_finances
 
 
 def csv_ann_ca_ej_et_budget_et_finances_builder(
     cadre_budgétaire: str,
-    champs_surchargés: Optional[Dict] = None,
+    champs_surcharges: Optional[Dict] = None,
 ) -> Dict[str, object]:
     ann_ca_ej_et_budget_et_finances = (
         {
@@ -132,12 +142,12 @@ def csv_ann_ca_ej_et_budget_et_finances_builder(
             "Dépenses Groupe III CA": NaN,
         }
     )
-    if champs_surchargés:
-        return {**ann_ca_ej_et_budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_ca_ej_et_budget_et_finances, **champs_surcharges}
     return ann_ca_ej_et_budget_et_finances
 
 
-def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def csv_ann_sae_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2020,
@@ -153,12 +163,12 @@ def csv_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, 
         "Nb de lits et places PSY PeC temps complet": 5.0,
         "Nb de places PSY PeC temps partiel hors ambu": 13.0,
     }
-    if champs_surchargés:
-        return {**ann_sae, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_sae, **champs_surcharges}
     return ann_sae
 
 
-def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_ms_tdp_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2019,
@@ -174,28 +184,28 @@ def csv_ann_ms_tdp_et_ressources_humaines_builder(champs_surchargés: Optional[D
         "Taux d'absentéisme pour congés spéciaux dont sans solde": 0.0,
         "Taux d'absentéisme (hors formation)": 0.2179,
     }
-    if champs_surchargés:
-        return {**ann_ms_tdp_et, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_ms_tdp_et, **champs_surcharges}
     return ann_ms_tdp_et
 
 
-def csv_ann_errd_ej_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_errd_ej_et_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_errd_ej_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2020,
         "Nombre ETP total réalisé ERRD": 172.0,
     }
-    if champs_surchargés:
-        return {**ann_errd_ej_et, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_errd_ej_et, **champs_surcharges}
     return ann_errd_ej_et
 
 
-def csv_ann_ca_ej_et_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, object]:
+def csv_ann_ca_ej_et_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, object]:
     ann_ca_ej_et = {
         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "Année": 2020,
         "Nombre ETP total réalisé CA": 156.4,
     }
-    if champs_surchargés:
-        return {**ann_ca_ej_et, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_ca_ej_et, **champs_surcharges}
     return ann_ca_ej_et

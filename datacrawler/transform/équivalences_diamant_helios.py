@@ -81,6 +81,14 @@ colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pms
 
 colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.keys())
 
+equivalences_diamant_ann_sae_activite_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre journées USLD": ColonneHelios(nom="nombre_journees_usld", type=float),
+}
+
+colonnes_à_lire_ann_sae_activite: List[str] = list(equivalences_diamant_ann_sae_activite_helios.keys())
+
 équivalences_diamant_ann_sae_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
