@@ -1,9 +1,9 @@
-import { ReactChild, ReactElement, useState } from "react";
+import { ReactNode, ReactElement, useState } from "react";
 
+import styles from "./IndicateurGraphique.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import { SelectionAnneeTags } from "../Tag/SelectionAnneeTags";
-import styles from "./IndicateurGraphique.module.css";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 
 type IndicateurProps = Readonly<{
@@ -12,7 +12,7 @@ type IndicateurProps = Readonly<{
   contenuInfoBulle: ReactElement;
   dateDeMiseÀJour: string;
   identifiant: string;
-  nomDeLIndicateur: ReactChild;
+  nomDeLIndicateur: ReactNode;
   source: ReactElement;
   prefixSelect?: string;
 }>;

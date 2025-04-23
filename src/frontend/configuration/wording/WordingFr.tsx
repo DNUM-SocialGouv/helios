@@ -638,4 +638,5 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La création, la gestion de listes et les indicateurs de taux d’occupation des établissements médico-sociaux sont désormais accessibles.";
+
 }
