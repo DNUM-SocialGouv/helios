@@ -36,6 +36,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
       .addSelect("CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact")
+      .addSelect("CASE WHEN recherche.departement ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_dep")
+      .addSelect("CASE WHEN recherche.commune ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_com")
       .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
       .from(RechercheModel, "recherche")
       .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
@@ -70,6 +72,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("recherche.rattachement")
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .orderBy("is_exact", "DESC")
+        .addOrderBy("is_exact_dep", "DESC")
+        .addOrderBy("is_exact_com", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
@@ -79,6 +83,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       requêteDeLaRecherche
         .addSelect("recherche.rattachement", "rattachement")
         .orderBy("is_exact", "DESC")
+        .addOrderBy("is_exact_dep", "DESC")
+        .addOrderBy("is_exact_com", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
@@ -154,6 +160,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     if (terme) {
       requêteDeLaRecherche
         .addSelect(`CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END`, "is_exact")
+        .addSelect("CASE WHEN recherche.departement ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_dep")
+        .addSelect("CASE WHEN recherche.commune ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_com")
         .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
 
       conditions.push(
@@ -227,6 +235,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     } else if (terme) {
       requêteDeLaRecherche
         .orderBy("is_exact", "DESC")
+        .addOrderBy("is_exact_dep", "DESC")
+        .addOrderBy("is_exact_com", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
