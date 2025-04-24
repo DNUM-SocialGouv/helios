@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
-import { WordingFr } from "../../configuration/wording/WordingFr";
-import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
-import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { WordingFr } from "../../configuration/wording/WordingFr";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
+import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";
 
 type FiltresForComparaisonProps = Readonly<{
@@ -94,23 +94,6 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
-        document.getElementById("capaciter-appliquer-botton")?.click();
-      }
-    };
-
-    // Ajouter l'écouteur d'événement pour "Enter"
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Nettoyer l'écouteur quand le modal est fermé
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [capaciteAgees, capaciteHandicap, capaciteMedicoSociaux]);
-
-  useEffect(() => {
     if (
       rechercheAvanceeContext?.capaciteAgees.length === 0 &&
       rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
@@ -153,6 +136,13 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
     if (setIsChanged) setIsChanged(true);
     // rechercheAvanceeContext?.setTypeStructure("");
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("capaciter-appliquer-botton")?.click();
+    }
+  }
 
   return (
     <dialog aria-labelledby="fr-modal-Capacite-Filtre-title" className="fr-modal" id="fr-modal-Capacite-Filtre">
@@ -200,6 +190,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-1"
                           name="checkboxe-capacite-initiale-tranche-1"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,50"
                         />
@@ -213,6 +204,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-2"
                           name="checkboxe-capacite-initiale-tranche-2"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="51,100"
                         />
@@ -226,6 +218,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-3"
                           name="checkboxe-capacite-initiale-tranche-3"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="101,150"
                         />
@@ -239,6 +232,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-4"
                           name="checkboxe-capacite-initiale-tranche-4"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="151,199"
                         />
@@ -252,6 +246,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-5"
                           name="checkboxe-capacite-initiale-tranche-5"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">199"
                         />
@@ -282,6 +277,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-1"
                           name="checkboxe-etablissements-public-tranche-1"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,30"
                         />
@@ -295,6 +291,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-2"
                           name="checkboxe-etablissements-public-tranche-2"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="31,50"
                         />
@@ -308,6 +305,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-3"
                           name="checkboxe-etablissements-public-tranche-3"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="51,100"
                         />
@@ -321,6 +319,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-4"
                           name="checkboxe-etablissements-public-tranche-4"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">100"
                         />
@@ -352,6 +351,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-1"
                           name="checkboxe-etablissements-personnes-agees-tranche-1"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,44"
                         />
@@ -365,6 +365,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-2"
                           name="checkboxe-etablissements-personnes-agees-tranche-2"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="45,80"
                         />
@@ -378,6 +379,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-3"
                           name="checkboxe-etablissements-personnes-agees-tranche-3"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="81,120"
                         />
@@ -391,6 +393,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-4"
                           name="checkboxe-etablissements-personnes-agees-tranche-4"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="121,199"
                         />
@@ -404,6 +407,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-5"
                           name="checkboxe-etablissements-personnes-agees-tranche-5"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">199"
                         />

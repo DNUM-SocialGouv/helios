@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef, KeyboardEvent } from "react";
 
+import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
-import styles from "./RechercheAvanceeFormulaire.module.css";
 
 type ZoneGeo = Readonly<{
   type: string;
@@ -141,22 +141,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     } else {
       setSuggestions([]);
     }
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
-        if (zoneGeoValue) {
-          document.getElementById("zoneGeo-appliquer-botton")?.click();
-        }
-      }
-    };
-
-    // Ajouter l'écouteur d'événement pour "Enter"
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Nettoyer l'écouteur quand le modal est fermé
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => { };
   }, [zoneGeoValue]);
 
   const changeZoneGeoValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -181,6 +166,13 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     if (setIsChanged) setIsChanged(true);
   };
 
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("zoneGeo-appliquer-botton")?.click();
+    }
+  }
+
   return (
     <dialog aria-labelledby="fr-modal-Zone-Geographique-Filtre-title" className="fr-modal" id="fr-modal-Zone-Geographique-Filtre">
       <div className="fr-container fr-container--fluid fr-container-md">
@@ -197,6 +189,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
                     id="text-input-text"
                     name="text-input-text"
                     onChange={changeZoneGeoValue}
+                    onKeyDown={(event) => onKeyDown(event)}
                     placeholder="Ville, département ou région"
                     type="text"
                     value={zoneGeoValue}
