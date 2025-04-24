@@ -155,6 +155,19 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
     rechercheAvanceeContext?.setZoneGeoLabel("");
+    setZoneGeoSelected({
+      type: "",
+      nom: "",
+      departement: {
+        code: "",
+        nom: "",
+      },
+      code: "",
+      codeRegion: "",
+      codesPostaux: [],
+      codeNum: "",
+    });
+
     if (setIsChanged) setIsChanged(true);
   };
 
