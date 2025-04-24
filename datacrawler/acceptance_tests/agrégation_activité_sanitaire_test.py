@@ -1,5 +1,6 @@
 import pandas as pd
 
+from sqlalchemy import text
 from datacrawler.agrégation_activité_sanitaire import agrège_les_activités_sanitaire_des_entités_juridiques
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.test_helpers import (
@@ -39,6 +40,7 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_journées_partielles_psy": [1.0, 2.0, 5.0],
                 "nombre_passages_urgences": [1.0, 2.0, 5.0],
                 "nombre_sejours_had": [1.0, 2.0, 5.0],
+                "nombre_journees_usld": [12345.0, 23456.0, 56789.0],
             }
         )
 
@@ -66,15 +68,17 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_journées_partielles_psy": [3.0, 5.0],
                 "nombre_passage_urgence": [3.0, 5.0],
                 "nombre_sejours_had": [3.0, 5.0],
+                "nombre_journees_usld": [35801.0, 56789.0],
             }
         )
+
         pd.testing.assert_frame_equal(agregation_activites_enregistrees, agregation_activites_attendues)
 
     def test_supprime_les_donnees_existantes_avant_de_sauvegarder_les_donnees_en_base(self) -> None:
         # GIVEN
         sauvegarde_une_entité_juridique_en_base("111111111", base_de_données_test)
         sauvegarde_un_établissement_en_base("222222222", "111111111", base_de_données_test)
-        activités_déjà_enregistrée = pd.DataFrame(
+        activites_deja_enregistree = pd.DataFrame(
             {
                 "annee": [2020],
                 "numero_finess_etablissement_territorial": ["222222222"],
@@ -82,7 +86,7 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
             }
         )
         with base_de_données_test.begin() as connection:
-            activités_déjà_enregistrée.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
+            activites_deja_enregistree.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
         agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
 
@@ -90,9 +94,13 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
         agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
 
         # THEN
+        query = text(
+            f"SELECT * FROM {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES} WHERE numero_finess_entite_juridique = :numero_finess_entite_juridique"
+            )
         agregation_activites = pd.read_sql_query(
-            f"SELECT * from {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES} " f"WHERE numero_finess_entite_juridique = '111111111'",
+            query,
             base_de_données_test,
+            params={"numero_finess_entite_juridique": '111111111'}
         )
 
         assert 1 == len(agregation_activites)
