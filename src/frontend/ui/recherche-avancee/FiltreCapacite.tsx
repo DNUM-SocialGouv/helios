@@ -15,8 +15,8 @@ type FiltresForComparaisonProps = Readonly<{
 
 export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
-  const [showToolip, setShowTooltip] = useState<boolean>(false);
-  const [showToolip2, setShowTooltip2] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [showTooltip2, setShowTooltip2] = useState<boolean>(false);
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(
     new CapaciteEtablissement("non_classifie", rechercheAvanceeContext?.capaciteMedicoSociaux || [])
@@ -134,7 +134,6 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
     if (setIsChanged) setIsChanged(true);
-    // rechercheAvanceeContext?.setTypeStructure("");
   };
 
   const onKeyDown = (event: KeyboardEvent) => {
@@ -149,7 +148,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
-            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "block" : "none" }}>
+            <div className="fr-modal__body" style={{ display: showTooltip || showTooltip2 ? "block" : "none" }}>
               <div className={`${styles["sticky"]} fr-modal__header`}>
                 <button
                   aria-controls="titre-info-bulle-etablissement"
@@ -167,12 +166,12 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
               <div className="fr-modal__content">
                 <h1 className="fr-modal__title" id="titre-info-bulle-etablissement">
                   <span aria-hidden="true" className="fr-fi-arrow-right-line fr-fi--lg"></span>
-                  {showToolip ? wording.TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP : wording.TITRE_CAPACITE_PERSONNES_AGEES}:
+                  {showTooltip ? wording.TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP : wording.TITRE_CAPACITE_PERSONNES_AGEES}:
                 </h1>
-                {showToolip ? contenuInfoBulle : contenuInfoBulleAgee}
+                {showTooltip ? contenuInfoBulle : contenuInfoBulleAgee}
               </div>
             </div>
-            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "none" : "block", height: isComparaison ? "547px" : "100%" }}>
+            <div className="fr-modal__body" style={{ display: showTooltip || showTooltip2 ? "none" : "block", height: isComparaison ? "547px" : "100%" }}>
               <div className="fr-modal__content fr-pt-5w" id="capaciter-container">
                 <div>
                   <div id="etablissement-medico-sociaux">
@@ -265,7 +264,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       id="button-info-handicap"
                       name="tooltip-info-handicap"
                       onClick={() => {
-                        setShowTooltip(!showToolip);
+                        setShowTooltip(!showTooltip);
                       }}
                       type="button"
                     ></button>
@@ -338,7 +337,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       id="button-info-agee"
                       name="tooltip-info-agee"
                       onClick={() => {
-                        setShowTooltip2(!showToolip2);
+                        setShowTooltip2(!showTooltip2);
                       }}
                       title=" "
                       type="button"

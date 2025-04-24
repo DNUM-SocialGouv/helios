@@ -26,8 +26,8 @@ type FiltresForComparaisonProps = Readonly<{
 export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
-  const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
+  const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo ?? "");
+  const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType ?? "");
   const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
@@ -83,8 +83,8 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
             // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
             if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
               elt.codeNum = "tous les arrondissements";
-            } else {
-              if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
+            } else if (elt.codesPostaux.length > 0) {
+              elt.codeNum = elt.codesPostaux[0];
             }
             return { ...elt, type: "C" };
           }))]);
@@ -112,7 +112,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
         const maRegion = data?.user.codeRegion;
         const sortedOptions =
           data?.user.role === 3 || data?.user.role === 2
-            ? sortedAlphabetically.sort((a: any, b: any) => {
+            ? sortedAlphabetically.toSorted((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
               if (estMaRegionA === estMaRegionB) return 0;
@@ -198,8 +198,8 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
                 {isLoading && <div>Loading...</div>}
                 {suggestions?.length > 0 && (
                   <ul className={styles["autocompleteList"]}>
-                    {suggestions.map((item, index) => (
-                      <li className={styles["autocompleteListItem"]} key={index}>
+                    {suggestions.map((item) => (
+                      <li className={styles["autocompleteListItem"]} key={item.codeNum ? `${item.nom} (${item.codeNum})` : item.nom}>
                         <button
                           className={styles["autocompleteListItemButton"]}
                           onClick={() => {

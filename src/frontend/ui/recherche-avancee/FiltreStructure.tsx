@@ -19,7 +19,7 @@ type FiltresForComparaisonProps = Readonly<{
 export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
+  const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure ?? "");
   const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
@@ -37,7 +37,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
   useEffect(() => {
-    setTypeSelected(rechercheAvanceeContext?.typeStructure || "");
+    setTypeSelected(rechercheAvanceeContext?.typeStructure ?? "");
     rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
       if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
         checkboxElementPublic.current.checked = true;
