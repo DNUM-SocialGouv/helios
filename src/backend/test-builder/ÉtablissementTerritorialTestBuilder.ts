@@ -226,6 +226,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: 60_000,
     },
+    nombreJourneesUsld: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: 21654,
+    },
     nombreJournéesCompletePsy: {
       dateMiseÀJourSource: "2022-02-02",
       value: 60,

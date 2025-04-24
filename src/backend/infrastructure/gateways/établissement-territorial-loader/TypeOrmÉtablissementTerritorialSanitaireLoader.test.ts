@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./TypeOrmÉtablissementTerritorialSanitaireLoader";
 import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
@@ -34,7 +35,6 @@ import {
   numéroFinessÉtablissementTerritorial,
   numéroFinessÉtablissementTerritorialSanitaire,
 } from "../../../testHelper";
-import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./TypeOrmÉtablissementTerritorialSanitaireLoader";
 
 describe("Établissement territorial sanitaire loader", () => {
   const orm = getOrm();
@@ -91,7 +91,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         })
       );
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const établissementTerritorial = await typeOrmÉtablissementTerritorialLoader.chargeIdentité(numéroFinessÉtablissementTerritorial);
@@ -114,7 +114,7 @@ describe("Établissement territorial sanitaire loader", () => {
 
     it("signale que l’établissement territorial n’a pas été trouvé quand celui-ci n’existe pas", async () => {
       // GIVEN
-      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const exception = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeIdentité("numéro-finess-non-existant");
@@ -132,7 +132,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         })
       );
-      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const exception = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeIdentité(numéroFinessÉtablissementTerritorial);
@@ -174,7 +174,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const activité = await typeOrmÉtablissementTerritorialLoader.chargeActivité(numéroFinessÉtablissementTerritorial);
@@ -250,7 +250,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numeroFinessEtablissementTerritorial: numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const activitéMensuelle = await typeOrmÉtablissementTerritorialLoader.chargeActivitéMensuel(numéroFinessÉtablissementTerritorial);
@@ -284,7 +284,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial);
@@ -359,7 +359,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { autorisations } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial);
@@ -489,7 +489,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { autresActivités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial);
@@ -619,7 +619,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { reconnaissancesContractuelles } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(
@@ -741,7 +741,7 @@ describe("Établissement territorial sanitaire loader", () => {
           numéroFinessÉtablissementTerritorial,
         }),
       ]);
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { équipementsMatérielsLourds } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial);
@@ -794,7 +794,7 @@ describe("Établissement territorial sanitaire loader", () => {
         })
       );
 
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const { capacités } = await typeOrmÉtablissementTerritorialLoader.chargeAutorisationsEtCapacités(numéroFinessÉtablissementTerritorial);
@@ -847,7 +847,7 @@ describe("Établissement territorial sanitaire loader", () => {
         }),
       ]);
 
-      const typeOrmÉtablissementTerritorialLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const qualite = await typeOrmÉtablissementTerritorialLoader.chargeQualite(numéroFinessÉtablissementTerritorial);
@@ -890,7 +890,7 @@ describe("Établissement territorial sanitaire loader", () => {
 
       await budgetEtFinancesSanitaireRepository.insert(budgetEtFinancesSanitaire);
 
-      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
 
       // WHEN
       const budgetFinance = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeBudgetFinance(numéroFinessÉtablissementTerritorialSanitaire);
@@ -970,7 +970,7 @@ describe("Établissement territorial sanitaire loader", () => {
 
 
       // WHEN
-      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmÉtablissementTerritorialSanitaireLoader(orm);
+      const typeOrmÉtablissementTerritorialSanitaireLoader = new TypeOrmEtablissementTerritorialSanitaireLoader(orm);
       const allocationRessourceEt = await typeOrmÉtablissementTerritorialSanitaireLoader.chargeAllocationRessource(numéroFinessÉtablissementTerritorialSanitaire);
 
       // THEN

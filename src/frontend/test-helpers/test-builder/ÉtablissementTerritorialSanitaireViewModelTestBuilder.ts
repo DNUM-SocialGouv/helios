@@ -114,6 +114,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
   public static activités: ÉtablissementTerritorialSanitaire["activités"] = [
     {
       année: 2017,
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10200,
+      },
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: "2021-07-07",
         value: 10,
@@ -166,6 +170,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 20,
       },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10200,
+      },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
         value: 20,
@@ -213,6 +221,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: "2021-07-07",
         value: 30,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10200,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
@@ -262,6 +274,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 40,
       },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10200,
+      },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
         value: 40,
@@ -309,6 +325,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: "2021-07-07",
         value: 5000,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10200,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",

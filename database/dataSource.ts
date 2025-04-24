@@ -69,6 +69,7 @@ import { AjoutRattachementRecherche1732629322484 } from "./migrations/1732629322
 import { AjoutListEtEtsList1736865415982 } from "./migrations/1736865415982-AjoutListEtEtsList";
 import { MettreAJourTableActiviteMedicoSocial1741861364859 } from "./migrations/1741861364859-MettreAJourTableActiviteMedicoSocial";
 import { ClefEtrangereListEts1743596937227 } from "./migrations/1743596937227-ClefEtrangereListEts";
+import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrations/1745321952709-AjoutNombreJourneeUSLDActivitesSanitaires";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -76,6 +77,7 @@ import { ModificationValeurProfil1797341938070 } from "./migrations/179734193807
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
 import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
+import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -114,7 +116,6 @@ import { ÉtablissementTerritorialIdentitéModel } from "./models/Établissement
 import { dotEnvConfig } from "../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig";
 import { NodeEnvironmentVariables } from "../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "../download_data_source/infrastructure/gateways/logger/ConsoleLogger";
-import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrations/1745321952709-AjoutNombreJourneeUSLDActivitesSanitaires";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -237,7 +238,8 @@ const datasource = new DataSource({
     MettreAJourTableActiviteMedicoSocial1741861364859,
     AjoutDesOccupationsDansLesProfils1799478704013,
     ClefEtrangereListEts1743596937227,
-    AjoutNombreJourneeUSLDActivitesSanitaires1745321952709
+    AjoutNombreJourneeUSLDActivitesSanitaires1745321952709,
+    AjoutLesJourneesUsldDansLesProfils1799501916707
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

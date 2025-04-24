@@ -129,6 +129,10 @@ const filterActiviteSanitaire = (activites: any[], profil: any) => {
         "nombreSéjoursPartielsMédecine",
         "nombreSéjoursPartielsObstétrique"
       ]
+    },
+    {
+      condition: profil.nombreJourneesUsld === "ok",
+      fields: ["nombreJourneesUsld"]
     }
   ];
   return activites.map(activite => {

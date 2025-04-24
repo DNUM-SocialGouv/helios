@@ -31,7 +31,7 @@ import { TypeOrmUserListLoader } from "./gateways/user-list-loader/TypeOrmUserLi
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
-import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -74,7 +74,7 @@ const createDependencies = (): Dependencies => {
     rechercheLoader: new TypeOrmRechercheLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
-    établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
+    établissementTerritorialSanitaireLoader: new TypeOrmEtablissementTerritorialSanitaireLoader(orm),
     favorisLoader: new TypeOrmFavorisLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
     forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),

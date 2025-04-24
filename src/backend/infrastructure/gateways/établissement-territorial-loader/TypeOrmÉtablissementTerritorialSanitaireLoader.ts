@@ -43,7 +43,7 @@ import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 import { construisActiviteMensuel } from "../entité-juridique-loader/ConstrutitActivitesMensuel";
 
-export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
+export class TypeOrmEtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
@@ -52,8 +52,9 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const dateDeMiseAJourMenPmsiAnnuelModel = (await this.chargeLaDateDeMiseÀJourModel(
       FichierSource.DIAMANT_MEN_PMSI_ANNUEL
     )) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseAJourAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
+    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel, dateDeMiseAJourAnnSaeModel);
   }
 
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
@@ -473,7 +474,8 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisActivité(
     établissementTerritorialActivitésModel: ActivitéSanitaireModel[],
     dateDeMiseAJourAnnRpuModel: DateMiseÀJourFichierSourceModel,
-    dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel
+    dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourAnnSaeModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireActivité[] {
     return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialSanitaireActivité>((établissementTerritorialModel) => ({
       année: établissementTerritorialModel.année,
@@ -520,6 +522,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       nombreSéjoursPartielsObstétrique: {
         dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnSaeModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJourneesUsld,
       },
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));
