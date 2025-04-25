@@ -15,7 +15,7 @@ import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/É
 import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
 import { TypeOrmComparaisonLoader } from "./gateways/comparaison-loader/TypeOrmComparaisonLoader";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
-import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
+import { TypeOrmEntiteJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
 import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
@@ -67,7 +67,7 @@ const createDependencies = (): Dependencies => {
   });
 
   return {
-    entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
+    entitéJuridiqueLoader: new TypeOrmEntiteJuridiqueLoader(orm),
     environmentVariables,
     logger,
     utilisateurLoader: new TypeOrmUtilisateurLoader(orm),

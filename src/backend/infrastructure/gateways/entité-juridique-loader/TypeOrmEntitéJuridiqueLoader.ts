@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
@@ -23,9 +24,8 @@ import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
-import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 
-export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
+export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée> {
@@ -68,11 +68,15 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })) as DateMiseÀJourFichierSourceModel;
 
+    const dateMisAJourSAE = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_SAE })) as DateMiseÀJourFichierSourceModel;
+
     const dateMiseAJourMenPmsi = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
+    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMisAJourSAE, dateMiseAJourMenPmsi);
   }
 
   async chargeActivitésMensuel(numeroFinessEntiteJuridique: string): Promise<ActivitesSanitaireMensuel> {
@@ -130,6 +134,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private construisEntitéJuridiqueActivites(
     activiteSanitaireEJModel: ActivitéSanitaireEntitéJuridiqueModel[],
     dateMisAJourRPU: DateMiseÀJourFichierSourceModel,
+    dateMisAJourSAE: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourMenPmsiAnnuel: DateMiseÀJourFichierSourceModel
   ): EntitéJuridiqueActivités[] {
     return activiteSanitaireEJModel.map((activite) => ({
@@ -137,6 +142,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: dateMisAJourRPU.dernièreMiseÀJour,
         value: activite.nombreDePassagesAuxUrgences,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: dateMisAJourSAE.dernièreMiseÀJour,
+        value: activite.nombreJourneesUsld,
       },
       nombreJournéesCompletesPsy: {
         dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,

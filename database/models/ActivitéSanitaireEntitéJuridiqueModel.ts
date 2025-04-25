@@ -11,6 +11,9 @@ export class ActivitéSanitaireEntitéJuridiqueModel {
   @Column({ name: "nombre_passage_urgence", nullable: true, type: "float" })
   public nombreDePassagesAuxUrgences!: number;
 
+  @Column({ name: "nombre_journees_usld", nullable: true, type: "float" })
+  public nombreJourneesUsld!: number;
+
   @Column({ name: "nombre_sejours_partiels_medecine", nullable: true, type: "float" })
   public nombreSéjoursPartielsMédecine!: number;
 

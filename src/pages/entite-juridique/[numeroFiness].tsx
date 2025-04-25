@@ -62,9 +62,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       const numeroFiness = context.params["numeroFiness"] as string;
       const entitéJuridiqueEndpoint = (await récupèreLEntitéJuridiqueEndpoint(dependencies, numeroFiness, codeRegion, codeProfiles)) as RouterProps;
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
-
-      saveSearchHistoryEndpoint(dependencies,entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value,session?.user.idUser!,
-        entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value,ETB_ENTITE_JURIDIQUE);
+      saveSearchHistoryEndpoint(dependencies, entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value, session?.user.idUser!,
+        entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value, ETB_ENTITE_JURIDIQUE);
 
       return {
         props: {
