@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database
 import { ParametreDeRechercheAvancee, CapaciteSMS, OrderDir } from "../../../métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RechercheLoader } from "../../../métier/gateways/RechercheLoader";
+import { CapaciteSMS, OrderDir } from "../../../métier/use-cases/RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase";
 
 type RechercheTypeOrm = Readonly<{
   commune: string;

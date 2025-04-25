@@ -111,7 +111,8 @@ export const Footer = () => {
               </a>
             </li>
             <li className="fr-footer__bottom-item">
-              <span className="fr-footer__bottom-link"> v1.5.7.1</span>
+              <span className="fr-footer__bottom-link"> v1.3.9</span>
+
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">
