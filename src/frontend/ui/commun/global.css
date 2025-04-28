@@ -54,17 +54,17 @@ iframe {
 
 /* Indicateurs */
 .indicateurs,
-.indicateurs > li ul:not(dialog *),
-.indicateurs > li menu:not(dialog *) {
+.indicateurs>li ul:not(dialog *),
+.indicateurs>li menu:not(dialog *) {
   list-style-type: none;
   padding: 0;
 }
 
-.indicateurs > li > ul > li > ul {
+.indicateurs>li>ul>li>ul {
   padding-left: 1rem;
 }
 
-.indicateurs > li > div:nth-child(1) {
+.indicateurs>li>div:nth-child(1) {
   margin-bottom: 1rem;
 }
 
@@ -76,13 +76,13 @@ iframe {
   padding-left: 0;
 }
 
-.autorisations > li > .niveau1 {
+.autorisations>li>.niveau1 {
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
 }
 
-.autorisations > li > .niveau1 > li .niveau2 {
+.autorisations>li>.niveau1>li .niveau2 {
   display: flex;
   flex-direction: column;
   padding-left: 0;
@@ -94,11 +94,13 @@ iframe {
     size: A4;
     margin: 10mm 0mm;
   }
+
   .print-content {
     min-width: 1200px;
     max-width: 1200px;
     padding: 0 30px;
   }
+
   .hiddenPdf {
     visibility: hidden;
   }
@@ -118,16 +120,6 @@ iframe {
 
   .fr-header__service {
     margin-bottom: 20px;
-  }
-
-  .fr-collapse:not(.fr-collapse--expanded) {
-    visibility: visible;
-  }
-
-  .fr-collapse {
-    --collapse: unset;
-    display: block !important;
-    max-height: max-content;
   }
 
   #légende-graphique-sanitaire-journées-séjours-mco,

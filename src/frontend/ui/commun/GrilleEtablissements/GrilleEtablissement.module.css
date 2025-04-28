@@ -1,0 +1,9 @@
+.tuiles {
+  list-style: none;
+}
+
+.voir-plus-de-résultats {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

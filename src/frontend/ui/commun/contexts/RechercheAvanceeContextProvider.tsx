@@ -1,4 +1,4 @@
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "next-usequerystate";
+import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 import { ReactNode, useState } from "react";
 
 import { RechercheAvanceeContext } from "./RechercheAvanceeContext";

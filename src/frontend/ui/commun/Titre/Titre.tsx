@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 
-import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { StarButton } from "../StarButton/StarButton";
 import styles from "./Titre.module.css";
+import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { StarButtonList } from "../StarButtonList/StarButtonList";
 
 type TitreProps = Readonly<{
   logo: ReactElement;
   children: ReactElement | string;
-  rechercheViewModel: RechercheViewModel | undefined;
+  rechercheViewModel: RechercheViewModel;
   downloadPDF?: any;
 }>;
 
@@ -19,7 +19,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
       <h1>
         {children}
         <span className="hiddenPdf">
-          <StarButton favorite={rechercheViewModel} parent="titre" />
+          <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
       {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}

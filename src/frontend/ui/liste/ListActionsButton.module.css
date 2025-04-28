@@ -1,0 +1,37 @@
+.button-position {
+    margin-left: auto;
+}
+
+.menu {
+    list-style-type: none;
+    border: 1px solid var(--border-default-grey);
+    position: absolute;
+    width: fit-content;
+    padding: 0;
+    z-index: 5;
+}
+
+@media (max-width: 1405px) {
+    .menu {
+        right: 23px;
+    }
+}
+
+.menu>li {
+    margin: 0;
+    background-color: white;
+    border-bottom: 1px solid var(--border-default-grey);
+    white-space: nowrap;
+}
+
+.menu>li:last-child {
+    border-bottom: none;
+}
+
+.menu>li:hover {
+    background-color: #f6f6f6;
+}
+
+.menu>li>button:hover {
+    background: none;
+}

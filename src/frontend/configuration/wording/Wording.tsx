@@ -164,6 +164,11 @@ export interface Wording {
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string;
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string;
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string;
+  readonly TAUX_OCCUPATION_EXTERNAT: string;
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string;
+  readonly TAUX_OCCUPATION_INTERNAT: string;
+  readonly TAUX_OCCUPATION_AUTRE: string;
+  readonly TAUX_OCCUPATION_SEANCES: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
@@ -423,14 +428,32 @@ export interface Wording {
   // Comparaison
   readonly COMPARAISON: string;
   readonly AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly COMPARAISON_AUCUN_FINESS: string;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
 
   // Favoris
   readonly FAVORIS_LIST: string;
-  readonly EJ_SECTION_TITLE: string;
-  readonly SANITAIRE_SECTION_TITLE: string;
-  readonly SOCIAL_SECTION_TITLE: string;
+  readonly FAVORIS_LIST_TITLE: string;
+  readonly ACTIONS: string;
+  readonly COMPARER: string;
+  readonly SUPPRIMER_DE_LA_LISTE: string;
+  readonly EXPORTER: string;
+  readonly DANS_FAVORIS: string;
+  readonly NON_FAVORIS: string;
+
+  // Etoile des Favoris
+  readonly ETOILE_ETAB_DANS_LISTE: string;
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string;
+  readonly ETOILE_MES_LISTES: string;
+  readonly ETOILE_NOUVELLE_LISTE_LABEL: string;
+  readonly ETOILE_NOUVELLE_LISTE_BOUTON: string;
+  readonly ETOILE_MAX_LISTE_ATTEINT: string;
+  readonly ETOILE_ERREUR_MODIF_ETAB: string;
+
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
@@ -445,6 +468,7 @@ export interface Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string;
   readonly CONFIRM_CHANGE_PASSWORD: string;
   readonly CONFIRM_CREATE_PASSWORD: string;
+  readonly INVALID_PASSWORD_MESSAGE: string;
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
@@ -521,8 +545,10 @@ export interface Wording {
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
 
+  //Page d’une liste d’etablissements
+  readonly LISTE_DE_FAVORIS: string;
+  readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 }

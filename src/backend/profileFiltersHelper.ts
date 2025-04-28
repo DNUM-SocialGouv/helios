@@ -104,25 +104,46 @@ const filterIdentiteSanitaire = (identite: any, profil: any) => {
   return filtredIdentite;
 }
 
-const filterActiviteSanitaire = (activites: any, profil: any) => {
-  for (const activite of activites) {
-    activite.nombreDePassagesAuxUrgences = profil.nombrePassage === "ok" ? activite.nombreDePassagesAuxUrgences : { dateMiseÀJourSource: "", value: "" };
+const filterActiviteSanitaire = (activites: any[], profil: any) => {
+  const fieldGroups = [
+    {
+      condition: profil.nombrePassage === "ok",
+      fields: ["nombreDePassagesAuxUrgences"]
+    },
+    {
+      condition: profil.nombreJournées === "ok",
+      fields: [
+        "nombreJournéesCompletePsy",
+        "nombreJournéesCompletesSsr",
+        "nombreJournéesPartiellesPsy",
+        "nombreJournéesPartielsSsr"
+      ]
+    },
+    {
+      condition: profil.nombreSéjours === "ok",
+      fields: [
+        "nombreSéjoursCompletsChirurgie",
+        "nombreSéjoursCompletsMédecine",
+        "nombreSéjoursCompletsObstétrique",
+        "nombreSéjoursPartielsChirurgie",
+        "nombreSéjoursPartielsMédecine",
+        "nombreSéjoursPartielsObstétrique"
+      ]
+    }
+  ];
+  return activites.map(activite => {
+    const filteredActivite = { ...activite };
 
-    activite.nombreJournéesCompletePsy = profil.nombreJournées === "ok" ? activite.nombreJournéesCompletePsy : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesCompletesSsr = profil.nombreJournées === "ok" ? activite.nombreJournéesCompletesSsr : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesPartiellesPsy = profil.nombreJournées === "ok" ? activite.nombreJournéesPartiellesPsy : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesPartielsSsr = profil.nombreJournées === "ok" ? activite.nombreJournéesPartielsSsr : { dateMiseÀJourSource: "", value: "" };
+    fieldGroups.forEach(({ condition, fields }) => {
+      fields.forEach(field => {
+        if (!condition) {
+          filteredActivite[field] = { dateMiseÀJourSource: "", value: "" };
+        }
+      });
+    });
 
-    activite.nombreSéjoursCompletsChirurgie = profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsChirurgie : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursCompletsMédecine = profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsMédecine : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursCompletsObstétrique =
-      profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsObstétrique : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsChirurgie = profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsChirurgie : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsMédecine = profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsMédecine : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsObstétrique =
-      profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsObstétrique : { dateMiseÀJourSource: "", value: "" };
-  }
-  return activites;
+    return filteredActivite;
+  });
 };
 const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => {
   const filtredAutorisationCapacite = {
@@ -178,27 +199,81 @@ const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
 }
 
 
-const filterActiviteMedicoSocial = (activites: any, profil: any) => {
-  for (const activite of activites) {
-    activite.duréeMoyenneSéjourAccompagnementPersonnesSorties =
-      profil.duréeMoyenneSéjourAccompagnementPersonnesSorties === "ok"
-        ? activite.duréeMoyenneSéjourAccompagnementPersonnesSorties
-        : { dateMiseÀJourSource: "", value: "" };
-    activite.fileActivePersonnesAccompagnées =
-      profil.fileActivePersonnesAccompagnées === "ok" ? activite.fileActivePersonnesAccompagnées : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreMoyenJournéesAbsencePersonnesAccompagnées =
-      profil.nombreMoyenJournéesAbsencePersonnesAccompagnées === "ok"
-        ? activite.nombreMoyenJournéesAbsencePersonnesAccompagnées
-        : { dateMiseÀJourSource: "", value: "" };
-    activite.tauxOccupationAccueilDeJour =
-      profil.tauxOccupationAccueilDeJour === "ok" ? activite.tauxOccupationAccueilDeJour : { dateMiseÀJourSource: "", value: "" };
-    activite.tauxOccupationHébergementPermanent =
-      profil.tauxOccupationHébergementPermanent === "ok" ? activite.tauxOccupationHébergementPermanent : { dateMiseÀJourSource: "", value: "" };
-    activite.tauxOccupationHébergementTemporaire =
-      profil.tauxOccupationHébergementTemporaire === "ok" ? activite.tauxOccupationHébergementTemporaire : { dateMiseÀJourSource: "", value: "" };
-    activite.tauxRéalisationActivité = profil.tauxRéalisationActivité === "ok" ? activite.tauxRéalisationActivité : { dateMiseÀJourSource: "", value: "" };
-  }
-  return activites;
+const filterActiviteMedicoSocial = (activites: any[], profil: any) => {
+  const fieldConfigurations = [
+    {
+      field: 'duréeMoyenneSéjourAccompagnementPersonnesSorties',
+      condition: profil.duréeMoyenneSéjourAccompagnementPersonnesSorties === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'fileActivePersonnesAccompagnées',
+      condition: profil.fileActivePersonnesAccompagnées === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'nombreMoyenJournéesAbsencePersonnesAccompagnées',
+      condition: profil.nombreMoyenJournéesAbsencePersonnesAccompagnées === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'tauxOccupationAccueilDeJour',
+      condition: profil.tauxOccupationAccueilDeJour === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'tauxOccupationHébergementPermanent',
+      condition: profil.tauxOccupationHébergementPermanent === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'tauxOccupationHébergementTemporaire',
+      condition: profil.tauxOccupationHébergementTemporaire === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'tauxRéalisationActivité',
+      condition: profil.tauxRéalisationActivité === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
+      field: 'tauxOccupationExternat',
+      condition: profil.tauxOccupationExternat === "ok",
+      defaultValue: { value: "" }
+    },
+    {
+      field: 'tauxOccupationSemiInternat',
+      condition: profil.tauxOccupationSemiInternat === "ok",
+      defaultValue: { value: "" }
+    },
+    {
+      field: 'tauxOccupationInternat',
+      condition: profil.tauxOccupationInternat === "ok",
+      defaultValue: { value: "" }
+    },
+    {
+      field: 'tauxOccupationAutre',
+      condition: profil.tauxOccupationAutre === "ok",
+      defaultValue: { value: "" }
+    },
+    {
+      field: 'tauxOccupationSeances',
+      condition: profil.tauxOccupationSeances === "ok",
+      defaultValue: { value: "" }
+    }
+  ];
+
+  return activites.map(activite => {
+    const filteredActivite = { ...activite };
+
+    fieldConfigurations.forEach(({ field, condition, defaultValue }) => {
+      if (!condition) {
+        filteredActivite[field] = defaultValue;
+      }
+    });
+
+    return filteredActivite;
+  });
 };
 
 const filterAutorisationCapaciteMedicoSocial = (autorisationCapacite: any, profil: any) => {

@@ -1,7 +1,9 @@
-import { ChangeEventHandler, MouseEventHandler, FormEventHandler } from "react";
+import { ChangeEventHandler, MouseEventHandler, FormEventHandler, useState } from "react";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./changeMdp.module.css";
+import { PasswordCriteria } from "./useReinitialisationMdp";
+import "@gouvfr/dsfr/dist/component/form/form.min.css";
 
 type FormulaireChangeMdpProps = Readonly<{
   annuler: MouseEventHandler<HTMLButtonElement>;
@@ -12,18 +14,21 @@ type FormulaireChangeMdpProps = Readonly<{
   passwordValue: string;
   passwordValueOnChange: ChangeEventHandler<HTMLInputElement>;
   isLoading: boolean;
+  criteriaNewPassword: PasswordCriteria;
 }>;
 
 
-export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange }: FormulaireChangeMdpProps) => {
+export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePassword, confirmPasswordValue, confirmPasswordValueOnChange, errorMessage, isLoading, passwordValue, passwordValueOnChange }: FormulaireChangeMdpProps) => {
+  const [passwordInputFocus, setPasswordInputFocus] = useState<boolean>(false);
   const { wording } = useDependencies();
+  const noError = Object.values(criteriaNewPassword).every((value) => value)
 
   return (
     <div className={styles["container"]}>
       <h1>{wording.REINITIALISATION_MOT_PASSE_TITRE}</h1>
       <p>{wording.REINITIALISATION_MOT_PASSE_DESCRIPTION}</p>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
-        <form className="fr-col-12 fr-col-md-8 fr-mt-5w" onSubmit={changePassword} >
+        <form className="fr-col-12 fr-col-md-8 fr-mt-5w" onSubmit={noError ? changePassword : (e) => { e.preventDefault() }} >
           {errorMessage && <div className={"fr-mb-5w " + styles["error"]}> {errorMessage} </div>}
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-4">
@@ -35,12 +40,29 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordVa
               <input
                 className="fr-input"
                 onChange={passwordValueOnChange}
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
+                onFocus={() => setPasswordInputFocus(true)}
                 required
-                title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
                 type="password"
                 value={passwordValue}
               />
+              {passwordInputFocus && <div aria-live="polite" className="fr-messages-group" id="password-input-9-messages">
+                <p className="fr-message" id="password-input-9-message">Votre mot de passe doit contenir :</p>
+                <p className={`fr-message ${criteriaNewPassword.length ? "fr-message--valid" : "fr-message--error"}`}>
+                  12 caractères
+                </p>
+                <p className={`fr-message ${criteriaNewPassword.uppercase ? "fr-message--valid" : "fr-message--error"}`}>
+                  1 caractère majuscule
+                </p>
+                <p className={`fr-message ${criteriaNewPassword.lowercase ? "fr-message--valid" : "fr-message--error"}`}>
+                  1 caractère minuscule
+                </p>
+                <p className={`fr-message ${criteriaNewPassword.number ? "fr-message--valid" : "fr-message--error"}`}>
+                  1 chiffre
+                </p>
+                <p className={`fr-message ${criteriaNewPassword.specialChar ? "fr-message--valid" : "fr-message--error"}`}>
+                  1 caractère spécial parmi !@#$%^&*
+                </p>
+              </div>}
             </div>
           </div>
           <div className="fr-grid-row fr-grid-row--center fr-mt-5w">
@@ -55,7 +77,7 @@ export const FormulaireChangeMdp = ({ annuler, changePassword, confirmPasswordVa
                 onChange={confirmPasswordValueOnChange}
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                 required
-                title="Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial."
+                title={wording.INVALID_PASSWORD_MESSAGE}
                 type="password"
                 value={confirmPasswordValue}
               />

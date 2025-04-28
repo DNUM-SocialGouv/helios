@@ -15,7 +15,7 @@ describe("La recherche des entités juridiques et des établissements territoria
       ],
     };
     const mockedRechercheParTerme = jest.fn().mockResolvedValueOnce(résultatDeRecherche);
-    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme, rechercheAvancee: mockedRechercheParTerme };
+    const rechercheLoader: RechercheLoader = { recherche: mockedRechercheParTerme, rechercheAvancee: mockedRechercheParTerme, rechercheParNumeroFiness: mockedRechercheParTerme };
     const termeDeLaRecherche = "terme de la recherche";
     const premièrePage = 1;
 
@@ -25,7 +25,7 @@ describe("La recherche des entités juridiques et des établissements territoria
     const résultatsDeLaRecherche = await rechercheParmiLesEntitésEtÉtablissementsUseCase.exécute(termeDeLaRecherche, premièrePage);
 
     // THEN
-    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage);
+    expect(mockedRechercheParTerme).toHaveBeenCalledWith(termeDeLaRecherche, premièrePage, undefined, undefined, undefined);
     expect(mockedRechercheParTerme).toHaveBeenCalledTimes(1);
     expect(résultatsDeLaRecherche).toStrictEqual<RésultatDeRecherche>({
       nombreDeRésultats: 3,

@@ -23,6 +23,10 @@ export default function MotPasseOublie() {
     }
   }, [backToSearchContext])
 
-  return <ChangePwdPage />;
+  return (
+    <main className="fr-container" id="content">
+      <ChangePwdPage />
+    </main>
+  );
 }
 

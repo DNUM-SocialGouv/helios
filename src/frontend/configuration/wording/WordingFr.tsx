@@ -102,7 +102,7 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
   readonly STRUCTURE: string = "Structure";
-  readonly CAPACITE: string = "Capacité";
+  readonly CAPACITE: string = "Capacité MS";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
 
   // Cartographie
@@ -192,6 +192,11 @@ export class WordingFr implements Wording {
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string =
     "Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)";
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = "Nombre de passages aux urgences";
+  readonly TAUX_OCCUPATION_EXTERNAT: string = "Taux d’occupation externat ";
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string = " Taux d’occupation semi-internat";
+  readonly TAUX_OCCUPATION_INTERNAT: string = "Taux d’occupation internat ";
+  readonly TAUX_OCCUPATION_AUTRE: string = "Taux d'occupation Autre 1, 2 et 3";
+  readonly TAUX_OCCUPATION_SEANCES: string = "Taux d'occupation séances";
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
@@ -375,8 +380,7 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string = "Ressources humaines";
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement = (
     <>
-      Nombre d’
-      <abbr title="Équivalent Temps Plein">ETP</abbr> Total réalisé
+      Nombre d’<abbr title="Équivalent Temps Plein">ETP</abbr> Total réalisé
     </>
   );
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = "Nombre d’ETP Total réalisé";
@@ -509,12 +513,29 @@ export class WordingFr implements Wording {
   // Comparaison
   readonly COMPARAISON: string = "Comparaison";
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
+  readonly COMPARAISON_AUCUN_FINESS: string = "Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.";
 
   // Favoris
-  readonly FAVORIS_LIST: string = "Liste des favoris";
-  readonly EJ_SECTION_TITLE: string = "Entités juridiques";
-  readonly SANITAIRE_SECTION_TITLE: string = "Etablissements sanitaires";
-  readonly SOCIAL_SECTION_TITLE: string = "Etablissements sociaux et médico-sociaux";
+  readonly FAVORIS_LIST: string = "Mes listes";
+  readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
+  readonly ACTIONS: string = "Actions";
+  readonly COMPARER: string = "Comparer";
+  readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
+  readonly EXPORTER: string = "Exporter";
+  readonly DANS_FAVORIS: string = "Dans les favoris";
+  readonly NON_FAVORIS: string = "Pas dans les favoris";
+
+  // Etoile des Favoris
+  readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
+  readonly ETOILE_MES_LISTES: string = "Mes listes";
+  readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
+  readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
+
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
@@ -530,6 +551,7 @@ export class WordingFr implements Wording {
   readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
   readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
   readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
+  readonly INVALID_PASSWORD_MESSAGE: string = "Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial parmi !@#$%^&* .";
 
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
@@ -610,8 +632,11 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
 
+  //Page d’une liste de favoris
+  readonly LISTE_DE_FAVORIS = "Liste de favoris";
+  readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La création, la gestion de listes et les indicateurs de taux d’occupation des établissements médico-sociaux sont désormais accessibles.";
+
 }

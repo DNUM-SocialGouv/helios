@@ -10,6 +10,7 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { SearchHistoryModel } from "../../../../../database/models/SearchHistoryModel";
+import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
@@ -118,7 +119,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.dateCreation = new Date();
       }
 
-      (await this.orm)
+      await (await this.orm)
         .getRepository(UtilisateurModel)
         .save(account)
         .then(async () => {
@@ -150,6 +151,17 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
           // eslint-disable-next-line no-console
           console.log("error", error);
         });
+
+      const user = await (await this.orm)
+        .getRepository(UtilisateurModel)
+        .findOne({ where: { email: account.email } });
+
+        const userListModel = new UserListModel();
+        userListModel.nom = 'Favoris';
+        userListModel.userId = user?.code || '';
+        userListModel.isFavoris = true;
+        if(user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("error", error);

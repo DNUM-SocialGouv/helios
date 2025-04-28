@@ -1,0 +1,20 @@
+# EditorConfig is awesome: https://editorconfig.org
+# Fichiers de configuration racine du projet
+root = true
+
+# Tous les fichiers doivent être en UTF-8 avec une fin de lgne Unix et une ligne finale vide
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+# Les fichiers javascript et typescript ont 2espaces en guise d’indentation
+[*.{js,ts,tsx}]
+indent_style = space
+indent_size = 2
+
+# Les fichiers python ont 4 espaces en guise d’indentation
+[*.py]
+indent_style = space
+indent_size = 4
+

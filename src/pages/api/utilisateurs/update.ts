@@ -1,11 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { updateUserEndpoint } from "../../../backend/infrastructure/controllers/updateUserEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
-import { getUserSessionBack } from "../../../frontend/utils/getUserSessionBack";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
@@ -19,7 +20,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (!userBeforeChange) {
       response.status(405).send("User not found");
     } else {
-      const userSession = await getUserSessionBack(request);
+      const userSession = await getServerSession(request, response, authOptions);
 
       //only "Admin national" can update it self || Admin regional cant update, delete (Admin National)
       if (

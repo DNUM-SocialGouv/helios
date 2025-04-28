@@ -1,32 +1,37 @@
 import { useContext, useEffect, useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
-import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
-import { UserContext } from "../commun/contexts/userContext";
-import { RechercheViewModel } from "../home/RechercheViewModel";
 import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { UserContext } from "../commun/contexts/userContext";
+import { UserListViewModel } from "../user-list/UserListViewModel";
 
 export const FavorisPage = () => {
-    const { wording } = useDependencies();
-    const userContext = useContext(UserContext);
+  const { wording } = useDependencies();
+  const userContext = useContext(UserContext);
 
-    const [ejFavoris, setEjFavoris] = useState<RechercheViewModel[]>([]);
-    const [sanitaireFavoris, setSanitaireFavoris] = useState<RechercheViewModel[]>([]);
-    const [socialFavoris, setSocialFavoris] = useState<RechercheViewModel[]>([]);
+  const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
 
-    useEffect(() => {
-        setEjFavoris(userContext?.favoris.filter(elt => elt.type === 'Entité juridique') || []);
-        setSanitaireFavoris(userContext?.favoris.filter(elt => elt.type === 'Sanitaire') || []);
-        setSocialFavoris(userContext?.favoris.filter(elt => elt.type === 'Médico-social') || []);
-    }, [userContext?.favoris])
+  useEffect(() => {
+    let list = userContext?.favorisLists.slice();
+    if (list) {
+      const favorisListIndex = list.findIndex((list) => list.isFavoris);
+      const favorisList = list.splice(favorisListIndex, 1);
+      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
+      list = favorisList.concat(...list);
+    }
 
-    return (
-        <main className="fr-container">
-            <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favoris?.length})</h1>
-            <FavorisBlock favorisList={ejFavoris} title={wording.EJ_SECTION_TITLE} />
-            <FavorisBlock favorisList={sanitaireFavoris} title={wording.SANITAIRE_SECTION_TITLE} />
-            <FavorisBlock favorisList={socialFavoris} title={wording.SOCIAL_SECTION_TITLE} />
-        </main>
-    );
+    setSortedFavorisList(list);
+  }, [userContext?.favorisLists])
+
+  return (
+    <main className="fr-container" id="content">
+      <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
+      {sortedFavorisList?.map((liste: UserListViewModel) => (
+        <div key={liste.id}>
+          <FavorisBlock currentListId={liste.id} favorisList={liste.userListEtablissements} title={liste.nom} />
+        </div>
+      ))}
+    </main>
+  );
 };

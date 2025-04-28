@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
+import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 import { combineProfils } from "../../../profileFiltersHelper";
@@ -35,12 +36,11 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   async listeAnnees(type: string, numerosFiness: string[]): Promise<string[]> {
     if (type === "Entité juridique") {
       return [];
-    } else {
-      if (type === "Médico-social") {
-        const generateAnnees = `SELECT generate_series(
+    } else if (type === "Médico-social") {
+      const generateAnnees = `SELECT generate_series(
           CASE 
-          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 2)::int
-          ELSE (extract(year FROM current_date) - 3)::int
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 4)::int
+          ELSE (extract(year FROM current_date) - 5)::int
       END,
       CASE
           WHEN maxannee = extract(year FROM current_date) THEN maxannee::int
@@ -56,45 +56,34 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 					Select annee from budget_et_finances_medico_social budget where budget.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
 					  ) anc ) ang
             `;
-        const generateAnneesResult = await (await this.orm).query(generateAnnees);
-        return generateAnneesResult.map((item: any) => item.annee);
-      } else {
-        return [];
-      }
+      const generateAnneesResult = await (await this.orm).query(generateAnnees);
+      return generateAnneesResult.map((item: any) => item.annee);
+    } else {
+      return [];
     }
+
   }
 
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
-    const dateMAJFiness = (await this.chargeLaDateDeMiseÀJourModel(
-      FichierSource.FINESS_CS1400105
-    )) as DateMiseÀJourFichierSourceModel;
+    const dateMAJFiness = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105);
 
-    const dateMAJTdbperf = (await this.chargeLaDateDeMiseÀJourModel(
-      FichierSource.DIAMANT_ANN_MS_TDP_ET
-    )) as DateMiseÀJourFichierSourceModel;
+    const dateMAJTdbperf = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
 
-    const dateMAJCnsa = (await this.chargeLaDateDeMiseÀJourModel(
-      FichierSource.DIAMANT_ANN_ERRD_EJ
-    )) as DateMiseÀJourFichierSourceModel;
+    const dateMAJCnsa = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ);
 
     return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
   }
 
-  async compare(type: string, numerosFiness: string[], annee: string, page: number, order: string, orderBy: string, forExport: boolean, codeRegion: string, profiles: ProfilModel[]): Promise<ResultatDeComparaison> {
-    try {
-      if (type === "Entité juridique") {
-        return await this.compareEJ();
-      } else {
-        if (type === "Médico-social") {
-          const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
-          const autorisations = combineProfils(profilesAutreRegValues);
-          return await this.compareSMS(numerosFiness, page, order, orderBy, annee, forExport, codeRegion, autorisations);
-        } else {
-          return await this.compareSAN();
-        }
-      }
-    } catch (err) {
-      throw err;
+  async compare(params: ParametresDeComparaison, profiles: ProfilModel[]): Promise<ResultatDeComparaison> {
+    const { type } = params;
+    if (type === "Entité juridique") {
+      return await this.compareEJ();
+    } else if (type === "Médico-social") {
+      const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
+      const autorisations = combineProfils(profilesAutreRegValues);
+      return await this.compareSMS(params, autorisations);
+    } else {
+      return await this.compareSAN();
     }
   }
 
@@ -106,7 +95,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return (await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: source })) as DateMiseÀJourFichierSourceModel;
   }
 
-  private async compareSMS(numerosFiness: string[], page: number, order: string, orderBy: string, annee: string, forExport: boolean, codeRegion: string, autorisations: any): Promise<ResultatDeComparaison> {
+  private async compareSMS(params: ParametresDeComparaison, autorisations: any): Promise<ResultatDeComparaison> {
+    const { numerosFiness, annee, page, order, orderBy, forExport, codeRegion } = params;
 
     const compareSMSCapacite = `(select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
         autorisation_medico_social.numero_finess_etablissement_territorial
@@ -187,12 +177,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ELSE 'NA'
     END AS capacite_total` + compareSMSQueryBody;
 
+    const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
     const paginatedCompareSMSQuery =
       order && orderBy
         ? compareSMSQuery +
-        `ORDER BY ${orderBy} ${order} ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `
+        ` ORDER BY ${orderBy} ${order} ${limitForExport} `
         : compareSMSQuery +
-        `ORDER BY numero_finess_etablissement_territorial ASC ${forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`} `;
+        ` ORDER BY numero_finess_etablissement_territorial ASC ${limitForExport} `;
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery,
       [autorisations.activités.fileActivePersonnesAccompagnées,

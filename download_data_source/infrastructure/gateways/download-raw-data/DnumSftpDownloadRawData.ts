@@ -2,11 +2,11 @@ import { mkdirSync, readFileSync, rmSync } from "fs";
 import path from "path";
 import { FileInfo } from "ssh2-sftp-client";
 
+import { ClientSftp } from "./ClientSftp";
 import { DownloadRawData } from "../../../métier/gateways/DownloadRawData";
 import { EnvironmentVariables } from "../../../métier/gateways/EnvironmentVariables";
 import { Logger } from "../../../métier/gateways/Logger";
 import { HeliosError } from "../../HeliosError";
-import { ClientSftp } from "./ClientSftp";
 
 export class DnumSftpDownloadRawData implements DownloadRawData {
   private readonly extensionDeFichierChiffré = "*.gpg";

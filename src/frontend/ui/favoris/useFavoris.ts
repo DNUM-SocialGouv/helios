@@ -1,22 +1,15 @@
-import { useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { FavorisModel } from "../../../../database/models/FavorisModel";
 import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+import { UserListViewModel } from "../user-list/UserListViewModel";
 
 export function useFavoris() {
   const userContext = useContext(UserContext);
   const { paths } = useDependencies();
-  const { data } = useSession();
-
-  const [idUser, setIdUser] = useState<string>();
-
-  useEffect(() => {
-    if (data?.user?.idUser) setIdUser(data.user.idUser);
-  }, [data?.user?.idUser]);
 
   const buildRechecheView = (favori: FavorisModel): RechercheViewModel => {
     const result: Résultat = {
@@ -31,56 +24,91 @@ export function useFavoris() {
     return rechercheViewModel;
   };
 
-  const addToFavoris = (favorite: any) => {
-    fetch("/api/favoris/add", {
-      body: JSON.stringify({
-        finessNumber: favorite.numéroFiness,
-        type: favorite.type,
-        idUser,
-        commune: favorite.commune,
-        departement: favorite.departement,
-        socialReason: favorite.socialReason,
-      }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then((data) => {
-      if (data.status === 200) {
-        userContext?.addToFavoris(favorite);
-      }
-    });
-  };
+  const createFavorisList = async (listName: string, isFavoris: boolean) => {
+    return fetch("/api/liste",
+      {
+        body: JSON.stringify({ listName: listName, isFavoris: isFavoris }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      })
 
-  const removeFromFavoris = (favorite: any) => {
-    fetch("/api/favoris/remove", {
-      body: JSON.stringify({ idUser, finessNumber: favorite.numéroFiness }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then((data) => {
-      if (data.status === 200) {
-        userContext?.removeFromFavoris(favorite);
-      }
-    });
-  };
+  }
 
-  const getAllFavoris = (idUser: string) => {
-    const params = { idUser: idUser };
-    fetch("/api/favoris/get/?" + new URLSearchParams(params).toString(), {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    })
+  const getFavorisLists = () => {
+    fetch("/api/liste",
+      {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
       .then((response) => response.json())
       .then((data) => {
-        const favorisViewModel = data.map((element: any) => {
-          return buildRechecheView(element);
-        });
-        userContext?.setFavoris(favorisViewModel);
+        userContext?.setFavorisLists(data);
+      });
+  };
+
+  const updateListName = (listId: number, listName: string) => {
+    fetch(`/api/liste/${listId}`,
+      {
+        body: JSON.stringify({ listName }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      })
+      .then((response) => response.json())
+      .then((updatedList) => {
+        const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+        userContext?.setFavorisLists([...newList, updatedList])
+      });
+  };
+
+  const deleteList = (listId: number) => {
+    fetch(`/api/liste/${listId}`,
+      {
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+      })
+      .then(() => {
+        const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+        userContext?.setFavorisLists(newList)
+      });
+  };
+
+  const removeFromFavorisList = async (numerosFiness: string[], listId: number) => {
+    return fetch(`/api/liste/${listId}/etablissement`,
+      {
+        body: JSON.stringify({ finessNumbers: numerosFiness }),
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+      })
+      .then((data) => {
+        if (data.status === 204) {
+          const oldList = userContext?.favorisLists.find(({ id }) => id === listId);
+          if (oldList) {
+            const userListEtablissements = oldList.userListEtablissements.filter(({ finessNumber }) => !numerosFiness.includes(finessNumber))
+            const newList: UserListViewModel = { ...oldList, userListEtablissements }
+            const newLists = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
+            userContext?.setFavorisLists([...newLists, newList])
+          }
+        }
+        return data;
+      });
+  };
+
+  const addToFavorisList = async (numeroFiness: string, listId: number) => {
+    return fetch(`/api/liste/${listId}/etablissement`,
+      {
+        body: JSON.stringify({ finessNumber: numeroFiness }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
       });
   };
 
   return {
-    addToFavoris,
-    removeFromFavoris,
-    getAllFavoris,
+    createFavorisList,
+    getFavorisLists,
+    removeFromFavorisList,
+    addToFavorisList,
     buildRechecheView,
+    updateListName,
+    deleteList
   };
 }

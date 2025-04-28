@@ -43,6 +43,9 @@ NUMÉRO_FINESS_ÉTABLISSEMENT = "010001261"
 NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL = "010003598"
 NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE = "010005239"
 
+CHEMIN_FICHIER_ANN_ERRD_EJ_ET = "data_test/entrée/diamant/ANN_ERRD_EJ_ET_2022_06_07.CSV"
+CHEMIN_FICHIER_ANN_CA_EJ_ET = "data_test/entrée/diamant/ANN_CA_EJ_ET_2022_09_01.CSV"
+CHEMIN_FICHIER_ANN_MS_TDP_ET = "data_test/entrée/diamant/ANN_MS_TDP_ET_2022_06_07.CSV"
 
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
     base_de_données.execute(

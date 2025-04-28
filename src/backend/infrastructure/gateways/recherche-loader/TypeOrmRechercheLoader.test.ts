@@ -1,13 +1,13 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RésultatDeRechercheTestBuilder } from "../../../test-builder/RésultatDeRechercheTestBuilder";
-import { getOrm, clearAllTables, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
-import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
+import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
 
 describe("La recherche d’entités et d’établissements", () => {
   const orm = getOrm();

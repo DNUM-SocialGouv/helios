@@ -1,0 +1,47 @@
+.star,
+.star-tab {
+  color: #000091;
+  min-width: 3rem !important;
+  background-color: transparent !important;
+  position: relative;
+}
+
+.star {
+  top: -8px;
+}
+
+.starInEstablishment {
+  color: #000091;
+  background-color: transparent !important;
+  position: relative;
+  bottom: 97%;
+  left: 88%;
+}
+
+@media (max-width: 55em) {
+  .star {
+    min-width: 3rem !important;
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    top: -8px;
+  }
+
+  .starInEstablishment {
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    bottom: 97%;
+    left: 84%;
+  }
+}
+
+@media (max-width: 40em) {
+  .starInEstablishment {
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    bottom: 97%;
+    left: 75%;
+  }
+}

@@ -4,7 +4,7 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
-import { PaginationEts } from "../../../../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/RechercheAvanceeFooter";
+import { PaginationEts } from "../../../../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 import { iPaginationData } from "../../UsersListPage";
 import styles from "./PaginationBtn.module.css";
 
@@ -49,7 +49,7 @@ const PaginationBtn = ({
           </li>
           <li>
             <button
-              className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label" 
+              className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
               disabled={page === 1}
               onClick={(e) => changePage(e, page - 1, page === 1)}
             >
@@ -113,7 +113,7 @@ const PaginationBtn = ({
           )}
           <li>
             <button
-              className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label" 
+              className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
               disabled={page === lastPage}
               onClick={(e) => changePage(e, page + 1, page === lastPage)}
             >

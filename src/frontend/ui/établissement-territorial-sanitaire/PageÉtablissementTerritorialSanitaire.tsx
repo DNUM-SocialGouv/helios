@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-sort-props */
 import Head from "next/head";
 import { useRef, useCallback, useEffect, useContext } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -78,48 +77,47 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4);
 
+
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{établissementTerritorialSanitaireViewModel.titre}</title>
       </Head>
-      <>
-        <div className="print-content" ref={componentRef}>
-          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
-            {établissementTerritorialSanitaireViewModel.titre}
-          </Titre>
-          <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
+      <div className="print-content" ref={componentRef}>
+        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+          {établissementTerritorialSanitaireViewModel.titre}
+        </Titre>
+        <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
+        <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
-          <BlocAutorisationEtCapacitéSanitaire
-            établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
-            opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel}
-            activitéMensuelleViewModel={activitéMensuelleViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
-          <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocAutorisationEtCapacitéSanitaire
+          opnedBloc={statusBlocs[0]}
+          toggelBlocs={() => toggelBlocs(0)} établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel}
+          opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
 
-          {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
-            <>
-              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL"
-                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
-              <SeparatorHorizontal></SeparatorHorizontal>
-            </>}
+        {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+          <>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+              toggelBlocs={() => toggelBlocs(2)} type="ET_PNL" />
+            <SeparatorHorizontal></SeparatorHorizontal>
+          </>}
 
-          {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
-            <>
-              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres"
-                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
-              <SeparatorHorizontal></SeparatorHorizontal>
-            </>}
+        {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+          <>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+              toggelBlocs={() => toggelBlocs(2)} type="ET_Autres" />
+            <SeparatorHorizontal></SeparatorHorizontal>
+          </>}
 
-          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
-            opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
+        <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
+          opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
 
-        </div>
-      </>
+      </div>
     </main>
   );
 };

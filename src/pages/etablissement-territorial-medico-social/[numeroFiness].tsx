@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { rechercheParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheEndpoints";
 import { récupèreLÉtablissementTerritorialMédicoSocialEndpoint } from "../../backend/infrastructure/controllers/récupèreLÉtablissementTerritorialMédicoSocialEndpoint";
+import { saveSearchHistoryEndpoint } from "../../backend/infrastructure/controllers/saveSearchHistoryEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { ÉtablissementTerritorialMédicoSocial } from "../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../backend/métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
@@ -11,6 +12,7 @@ import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../frontend/ui/établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { ETB_MEDICO_SOCIAL } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
   établissementTerritorial: ÉtablissementTerritorialMédicoSocial;
@@ -20,6 +22,7 @@ type RouterProps = Readonly<{
 
 export default function Router({ rechercheResult, établissementTerritorial, autorisations }: RouterProps) {
   const { paths, wording } = useDependencies();
+
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
@@ -53,9 +56,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
         numeroFiness,
         codeRegion,
         codeProfiles
-      )) as ÉtablissementTerritorialMédicoSocial;
+      ));
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
+
+      saveSearchHistoryEndpoint(dependencies, établissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
+        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_MEDICO_SOCIAL);
 
       return { props: { établissementTerritorial, rechercheResult: rechercheResult, autorisations: établissementTerritorial.autorisations } };
     } else {

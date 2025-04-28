@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
@@ -29,7 +30,6 @@ import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../mét
 import { ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialTestBuilder } from "../../../test-builder/ÉtablissementTerritorialTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
-import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 
 describe("Établissement territorial médico-social loader", () => {
   const orm = getOrm();

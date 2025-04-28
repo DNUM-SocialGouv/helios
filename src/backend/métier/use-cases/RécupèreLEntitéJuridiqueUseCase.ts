@@ -4,7 +4,7 @@ import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrou
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 
 export class RécupèreLEntitéJuridiqueUseCase {
-  constructor(private entitéJuridiqueLoader: EntitéJuridiqueLoader) { }
+  constructor(private readonly entitéJuridiqueLoader: EntitéJuridiqueLoader) { }
 
   async exécute(numéroFiness: string): Promise<EntitéJuridique> {
     const entitéJuridiqueIdentitéOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);

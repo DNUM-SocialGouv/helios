@@ -18,14 +18,14 @@ export const FormulaireDeRecherche = ({ lancerLaRecherche, rechercheOnChange, te
     <div className="fr-grid-row fr-grid-row--center">
       <section className={"fr-col-8 " + styles["formulaire"]}>
         <p>{wording.RECHERCHE_DESCRIPTION}</p>
-        <form action="/" className="fr-search-bar fr-search-bar--lg" id="search-2" role="search">
-          <label className="fr-label" htmlFor="search-787-input">
+        <form action="/" className="fr-search-bar fr-search-bar--lg" id="search" role="search">
+          <label className="fr-label" htmlFor="search-input">
             {wording.RECHERCHE_LABEL}
           </label>
           <input
             className="fr-input"
-            id="search-787-input"
-            name="search-787-input"
+            id="search-input"
+            name="search-input"
             onChange={rechercheOnChange}
             placeholder={wording.RECHERCHE_PLACEHOLDER}
             type="search"

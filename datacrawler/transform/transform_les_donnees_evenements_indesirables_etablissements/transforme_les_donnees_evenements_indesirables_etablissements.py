@@ -1,7 +1,6 @@
-import pandas as pd
-import numpy as np
-from datetime import datetime
 from logging import Logger
+
+import pandas as pd
 
 from datacrawler.transform.equivalences_sivss_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
@@ -9,26 +8,28 @@ from datacrawler.transform.equivalences_sivss_helios import (
     index_evenement_indesirable,
 )
 
-from datacrawler.check_downloaded_sivss_file import (
-    get_year_from_date
-)
+from datacrawler.check_downloaded_sivss_file import get_year_from_date
 
-def build_finess(row):
-    if('§' in str(row['SCC_ORGANISME_FINESS'])):
-        row['SCC_ORGANISME_FINESS'] = row['SCC_ORGANISME_FINESS'][:9]
-    if('§' in str(row['DECLARANT_ORGANISME_NUMERO_FINESS'])):
-        row['DECLARANT_ORGANISME_NUMERO_FINESS'] = row['DECLARANT_ORGANISME_NUMERO_FINESS'][:9]
-    if pd.notna(row['SCC_ORGANISME_FINESS']):
-        return row['SCC_ORGANISME_FINESS']
-    else:
-        return row['DECLARANT_ORGANISME_NUMERO_FINESS']
+
+def build_finess(row: pd.Series) -> str:
+    if "§" in str(row["SCC_ORGANISME_FINESS"]):
+        row["SCC_ORGANISME_FINESS"] = row["SCC_ORGANISME_FINESS"][:9]
+    if "§" in str(row["DECLARANT_ORGANISME_NUMERO_FINESS"]):
+        row["DECLARANT_ORGANISME_NUMERO_FINESS"] = row["DECLARANT_ORGANISME_NUMERO_FINESS"][:9]
+    if pd.notna(row["SCC_ORGANISME_FINESS"]):
+        return row["SCC_ORGANISME_FINESS"]
+    return row["DECLARANT_ORGANISME_NUMERO_FINESS"]
+
 
 def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFrame) -> pd.DataFrame:
-    year_column = donnees_evenements_indesirables['DATE_RECEPTION'].apply(get_year_from_date)
+    year_column = donnees_evenements_indesirables["DATE_RECEPTION"].apply(get_year_from_date)
     donnees_evenements_indesirables["FINESS"] = donnees_evenements_indesirables.apply(build_finess, axis=1)
     donnees_evenements_indesirables.drop(columns=["DECLARANT_ORGANISME_NUMERO_FINESS", "SCC_ORGANISME_FINESS"], inplace=True)
-    donnees_evenements_indesirables['DATE_RECEPTION'] = year_column
-    donnees_evenements_indesirables['ETAT'].replace({'Initial': 'EN_COURS', 'En gestion': 'EN_COURS', 'A qualifier': 'EN_COURS', 'A réguler': 'EN_COURS', 'A valider':'EN_COURS', 'Clôturé': 'CLOTURE' }, inplace=True)
+    donnees_evenements_indesirables["DATE_RECEPTION"] = year_column
+    donnees_evenements_indesirables["ETAT"].replace(
+        {"Initial": "EN_COURS", "En gestion": "EN_COURS", "A qualifier": "EN_COURS", "A réguler": "EN_COURS", "A valider": "EN_COURS", "Clôturé": "CLOTURE"},
+        inplace=True,
+    )
     return donnees_evenements_indesirables
 
 def transform_les_donnees_evenements_indesirables_etablissements(
@@ -44,5 +45,3 @@ def transform_les_donnees_evenements_indesirables_etablissements(
         .sort_values(by=["annee"], ascending=False)
     )
     return donnees_evenements_indesirables_transforme.set_index(index_evenement_indesirable)
-
-    

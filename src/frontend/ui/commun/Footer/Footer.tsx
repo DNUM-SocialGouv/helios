@@ -12,7 +12,7 @@ export const Footer = () => {
   const [currentModal, setCurrentModal] = useState(1);
 
   return (
-    <footer className="fr-footer fr-mt-6w">
+    <footer className="fr-footer fr-mt-6w" id="footer">
       <div className="fr-container">
         <div className="fr-footer__body">
           <div className="fr-footer__brand fr-enlarge-link">

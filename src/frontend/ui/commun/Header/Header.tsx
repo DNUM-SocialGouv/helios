@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
@@ -12,6 +12,7 @@ import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
+import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import styles from "./Header.module.css";
 
@@ -19,7 +20,9 @@ export const Header = () => {
   const { paths, wording } = useDependencies();
   const router = useRouter();
   const { data, status } = useSession();
-  const { getAllFavoris } = useFavoris();
+  const userContext = useContext(UserContext);
+  const { getFavorisLists } = useFavoris();
+
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
 
@@ -35,16 +38,60 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    if (data?.user?.idUser) {
-      getAllFavoris(data?.user?.idUser);
+    if (status === "authenticated") {
+      getFavorisLists();
     }
-  }, [data?.user?.idUser]);
+  }, [status]);
+
+  const isAuthenticated = (): boolean => {
+    return status === "authenticated";
+  }
+
+  const shouldDisplaySearchBar = (): boolean => {
+    return isAuthenticated() &&
+      router.pathname !== paths.ACCUEIL &&
+      router.pathname !== paths.CREATE_PASSWORD &&
+      router.pathname !== paths.FORGET_PASSWORD &&
+      router.pathname !== paths.CHANGE_PASSWORD &&
+      router.pathname !== paths.CONNEXION &&
+      router.pathname !== paths.SETTINGS &&
+      router.pathname !== paths.USERS_LIST &&
+      router.pathname !== paths.REINITIALISATION_PASSWORD &&
+      router.pathname !== paths.REGISTRATION &&
+      router.pathname !== paths.RECHERCHE_AVANCEE;
+  }
+
+  const shouldDisplayMenu = (): boolean => {
+    return isAuthenticated() && paths.CONNEXION !== router.pathname;
+  }
 
   return (
     <>
       <header className="fr-header">
         <div className="fr-header__body">
           <div className="fr-container">
+            <div className={"fr-skiplinks fr-sr-only " + styles["sr-only-focusable"]}>
+              <nav aria-label="Accès rapide" className="fr-container" role="navigation">
+                <ul className="fr-skiplinks__list">
+                  <li>
+                    <a className="fr-link" href="#content">Contenu</a>
+                  </li>
+                  {shouldDisplayMenu() && (
+                    <li>
+                      <a className="fr-link" href="#menu-btn">Menu</a>
+                    </li>
+                  )}
+                  {isAuthenticated() && (
+                    <li>
+                      <a className="fr-link" href="#search-input">Recherche</a>
+                    </li>
+                  )}
+                  <li>
+                    <a className="fr-link" href="#footer">Pied de page</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
             <div className="fr-header__body-row">
               <div className={styles["header-brand"] + " fr-header__brand fr-enlarge-link"}>
                 <div className="fr-header__brand-top">
@@ -93,59 +140,47 @@ export const Header = () => {
                 </div>
               </div>
               <div className="fr-header__tools">
-                {router.pathname !== paths.ACCUEIL &&
-                  router.pathname !== paths.CREATE_PASSWORD &&
-                  router.pathname !== paths.FORGET_PASSWORD &&
-                  router.pathname !== paths.CHANGE_PASSWORD &&
-                  router.pathname !== paths.CONNEXION &&
-                  router.pathname !== paths.SETTINGS &&
-                  router.pathname !== paths.ADD_PROFILE &&
-                  router.pathname !== paths.PROFILES_LIST &&
-                  router.pathname !== paths.USERS_LIST &&
-                  router.pathname !== paths.HISTORY &&
-                  router.pathname !== paths.FAVORIS &&
-                  router.pathname !== paths.REINITIALISATION_PASSWORD &&
-                  router.pathname !== paths.REGISTRATION &&
-                  router.pathname !== paths.RECHERCHE_AVANCEE && (
-                    <div className="fr-header__search fr-modal" id="modal-541">
-                      <div className="fr-container fr-container-lg--fluid">
-                        <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
-                          {wording.FERMER}
+                {shouldDisplaySearchBar() && (
+                  <div className="fr-header__search fr-modal" id="modal-541">
+                    <div className="fr-container fr-container-lg--fluid">
+                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                        {wording.FERMER}
+                      </button>
+                      <form action="/recherche" className="fr-search-bar" id="search" role="search">
+                        <label className="fr-label" htmlFor="search-input">
+                          {wording.RECHERCHE_LABEL}
+                        </label>
+                        <input
+                          className="fr-input"
+                          id="search-input"
+                          name="terme"
+                          onChange={rechercheOnChange}
+                          placeholder={wording.RECHERCHE_LABEL}
+                          type="search"
+                          value={terme}
+                        />
+                        <button
+                          className="fr-btn"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            localStorage.setItem("searchItem", terme);
+                            router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
+                          }}
+                          title="Rechercher"
+                          type="submit"
+                        >
+                          {wording.RECHERCHE_LABEL}
                         </button>
-                        <form action="/recherche" className="fr-search-bar" id="search-540" role="search">
-                          <label className="fr-label" htmlFor="search-540-input">
-                            {wording.RECHERCHE_LABEL}
-                          </label>
-                          <input
-                            className="fr-input"
-                            id="search-540-input"
-                            name="terme"
-                            onChange={rechercheOnChange}
-                            placeholder={wording.RECHERCHE_LABEL}
-                            type="search"
-                            value={terme}
-                          />
-                          <button
-                            className="fr-btn"
-                            onClick={(event) => {
-                              event.preventDefault();
-                              localStorage.setItem("searchItem", terme);
-                              router.push(paths.ACCUEIL + "?terme=" + terme, paths.ACCUEIL);
-                            }}
-                            title="Rechercher"
-                            type="submit"
-                          >
-                            {wording.RECHERCHE_LABEL}
-                          </button>
-                        </form>
-                      </div>
+                      </form>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
-              {status === "authenticated" && paths.CONNEXION !== router.pathname ? (
+              {shouldDisplayMenu() ? (
                 <div className={styles["dropdown"]}>
                   <button
                     className={"fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-menu-fill " + styles["no-border"]}
+                    id="menu-btn"
                     onClick={() => {
                       setDisplayMenu(!displayMenu);
                     }}
@@ -159,23 +194,23 @@ export const Header = () => {
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/favoris");
+                            router.push(paths.MES_LISTES);
                           }}
                         >
-                          Favoris
+                          Mes listes ({userContext?.favorisLists?.length})
                         </button>
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
                           onClick={() => {
-                            router.push("/history");
+                            router.push(paths.HISTORY);
                           }}
                         >
                           Historique
                         </button>
                       </li>
                       <hr className={styles["menu-sperator"]} />
-                      {data.user.role === 1 && (
+                      {data?.user.role === 1 && (
                         <li className={styles["menu-item"]}>
                           <button
                             onClick={() => {
@@ -186,7 +221,7 @@ export const Header = () => {
                           </button>
                         </li>
                       )}
-                      {(data.user.role === 1 || data.user.role === 2) && (
+                      {(data?.user.role === 1 || data?.user.role === 2) && (
                         <>
                           <li className={styles["menu-item"]}>
                             <button

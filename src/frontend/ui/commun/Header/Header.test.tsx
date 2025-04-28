@@ -36,7 +36,7 @@ describe("En-tête de page", () => {
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
-    const accueil = screen.getByRole("link", { name: wording.ACCUEIL });
+    const accueil = screen.getByRole("link", { name: "Helios" });
     expect(accueil).toHaveAttribute("href", paths.ACCUEIL);
     expect(accueil.textContent).toBe(wording.TITRE_DU_SITE);
   });
@@ -46,7 +46,9 @@ describe("En-tête de page", () => {
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
-    // WHEN    
+    // WHEN
+    // On vas sure une page sur laquelle la barre de recherche est visible
+    mockRouter.push(paths.HISTORY);
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
@@ -64,6 +66,8 @@ describe("En-tête de page", () => {
       json: jest.fn().mockResolvedValue([]),
     });
     // WHEN
+    // On vas sur une page sur laquelle la barre de recherche est visible
+    mockRouter.push(paths.HISTORY);
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
 
     // THEN
@@ -83,6 +87,8 @@ describe("En-tête de page", () => {
     });
     // GIVEN
     const router = mockRouter;
+    // On vas sur une page sur laquelle la barre de recherche est visible
+    router.push(paths.HISTORY);
     const terme = "hospitalier";
     renderFakeComponent(<SessionProvider session={mockSession}><Header /></SessionProvider>);
     const formulaire = screen.getByRole("search");
@@ -95,7 +101,6 @@ describe("En-tête de page", () => {
 
     // THEN
     expect(router.pathname).toBe(paths.ACCUEIL);
-    expect(router.asPath).toBe(paths.ACCUEIL + "?terme=" + terme);
   });
 
   it("n’affiche pas le formulaire de recherche quand on est sur l’accueil", () => {

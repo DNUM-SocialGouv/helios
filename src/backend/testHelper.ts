@@ -14,8 +14,13 @@ import { CapacitéAutorisationSanitaireModel } from "../../database/models/Capac
 import { CpomModel } from "../../database/models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../database/models/EntitéJuridiqueModel";
+import { InstitutionModel } from "../../database/models/InstitutionModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../database/models/RessourcesHumainesMédicoSocialModel";
+import { RoleModel } from "../../database/models/RoleModel";
+import { UserListEtablissementModel } from "../../database/models/UserListEtablissementModel";
+import { UserListModel } from "../../database/models/UserListModel";
+import { UtilisateurModel } from "../../database/models/UtilisateurModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { typeOrmOrm } from "./infrastructure/gateways/orm/typeOrmOrm";
@@ -69,6 +74,11 @@ export const clearAllTables = async (orm: DataSource) => {
   await orm.createQueryBuilder().delete().from(BudgetEtFinancesSanitaireModel).execute();
   await orm.createQueryBuilder().delete().from(RessourcesHumainesMédicoSocialModel).execute();
   await orm.createQueryBuilder().delete().from(CapacitesSanitaireEntiteJuridiqueModel).execute();
+  await orm.createQueryBuilder().delete().from(UserListModel).execute();
+  await orm.createQueryBuilder().delete().from(UserListEtablissementModel).execute();
+  await orm.createQueryBuilder().delete().from(UtilisateurModel).execute();
+  await orm.createQueryBuilder().delete().from(InstitutionModel).execute();
+  await orm.createQueryBuilder().delete().from(RoleModel).execute();
 };
 
 export const numéroFinessEntitéJuridique = "010018407";

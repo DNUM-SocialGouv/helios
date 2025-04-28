@@ -2,7 +2,7 @@ import { ProfilModel, ProfileValue } from "../../../../database/models/ProfilMod
 import { ProfileLoader } from "../gateways/ProfileLoader";
 
 export class ProfilesUseCase {
-  constructor(private profileLoader: ProfileLoader) { }
+  constructor(private readonly profileLoader: ProfileLoader) { }
 
   async getAllProfiles(): Promise<ProfilModel[]> {
     return await this.profileLoader.getAllProfiles();

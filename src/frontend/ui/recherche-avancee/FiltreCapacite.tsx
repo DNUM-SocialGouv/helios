@@ -262,7 +262,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                   </div>
                   <div id="etablissement-public-handicap" style={{ marginTop: "20px" }}>
                     <h6 style={{ margin: "0" }}>{wording.ETABLISSEMENT_PUBLIC_HANDICAP}</h6>
-                    <label className="fr-label" htmlFor="statut">
+                    <label className={"fr-label " + styles["label-capacite"]} htmlFor="statut">
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
@@ -331,7 +331,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                   </div>
                   <div id="etablissement-personnes-agees" style={{ marginTop: "20px" }}>
                     <h6 style={{ margin: "0" }}>{wording.ETABLISSEMENT_PERSONNE_AGEES}</h6>
-                    <label className="fr-label" htmlFor="statut">
+                    <label className={"fr-label " + styles["label-capacite"]} htmlFor="statut">
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button

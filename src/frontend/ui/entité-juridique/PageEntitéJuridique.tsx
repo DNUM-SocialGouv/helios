@@ -74,34 +74,32 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
 
   return (
-    <main className="fr-container">
+    <main className="fr-container" id="content">
       <Head>
         <title>{entitéJuridiqueViewModel.titre}</title>
       </Head>
-      <>
-        <div className="print-content" ref={componentRef}>
-          <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
-            {entitéJuridiqueViewModel.titre}
-          </Titre>
-          <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
-          <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
+      <div className="print-content" ref={componentRef}>
+        <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
+        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+          {entitéJuridiqueViewModel.titre}
+        </Titre>
+        <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
+        <ListeDesÉtablissementsTerritoriauxRattachés ETRattachés={établissementsTerritoriauxRattachésViewModels} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
+        <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
-          <BlocAutorisationsCapacites
-            entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
-            opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
-            entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-            toggelBlocs={() => toggelBlocs(2)} type="EJ" />
+        <BlocAutorisationsCapacites
+          entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
+          opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+          entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+          toggelBlocs={() => toggelBlocs(2)} type="EJ" />
 
-        </div>
-      </>
+      </div>
     </main>
   );
 };

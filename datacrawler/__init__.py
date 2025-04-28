@@ -8,7 +8,7 @@ from sqlalchemy.engine import Connection
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
 
-NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES = 3
+NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES = 5
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES = 5
 
 
@@ -34,7 +34,8 @@ def filtre_les_données_sur_les_n_dernières_années(données_brutes: pd.DataFra
     année_de_départ = datetime.now().year - nombre_d_années
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n_moins_1)]
 
-def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(données_brutes: pd.DataFrame, nombre_d_années: int, logger: Logger) -> pd.DataFrame:
-    année_n = datetime.now().year 
+
+def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(données_brutes: pd.DataFrame, nombre_d_années: int) -> pd.DataFrame:
+    année_n = datetime.now().year
     année_de_départ = datetime.now().year - nombre_d_années + 1
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
