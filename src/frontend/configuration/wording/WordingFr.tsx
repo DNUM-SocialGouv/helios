@@ -217,6 +217,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = "Hospitalisation Complète PSY";
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
+  readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
 

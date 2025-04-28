@@ -1,17 +1,17 @@
 import { ReactElement } from "react";
 
+import { EtablissementTerritorialSanitaireActiviteViewModel } from "./bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
+import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
+import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
+import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteSanitaireViewModel";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../entité-juridique/bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
-import { ÉtablissementTerritorialSanitaireActivitéViewModel } from "./bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
-import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
-import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
-import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteSanitaireViewModel";
 
 export class ÉtablissementTerritorialSanitaireViewModel {
   private établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
-  private établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
+  private établissementTerritorialSanitaireActivitésViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
   private établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   private etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
       wording,
       paths
     );
-    this.établissementTerritorialSanitaireActivitésViewModel = new ÉtablissementTerritorialSanitaireActivitéViewModel(
+    this.établissementTerritorialSanitaireActivitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(
       établissementTerritorial.activités,
       wording
     );
@@ -61,7 +61,7 @@ export class ÉtablissementTerritorialSanitaireViewModel {
     return this.établissementTerritorialSanitaireIdentitéViewModel;
   }
 
-  public get activitésViewModel(): ÉtablissementTerritorialSanitaireActivitéViewModel {
+  public get activitésViewModel(): EtablissementTerritorialSanitaireActiviteViewModel {
     return this.établissementTerritorialSanitaireActivitésViewModel;
   }
 

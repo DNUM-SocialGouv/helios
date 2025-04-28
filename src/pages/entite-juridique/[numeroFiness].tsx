@@ -11,7 +11,7 @@ import { EntitéJuridiqueNonTrouvée } from "../../backend/métier/entities/Enti
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { EntitéJuridiqueViewModel } from "../../frontend/ui/entité-juridique/EntitéJuridiqueViewModel";
+import { EntiteJuridiqueViewModel } from "../../frontend/ui/entité-juridique/EntitéJuridiqueViewModel";
 import { EtablissementsTerritoriauxRattachésViewModel } from "../../frontend/ui/entité-juridique/liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { PageEntitéJuridique } from "../../frontend/ui/entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
@@ -31,7 +31,7 @@ export default function Router({ rechercheResult, entitéJuridique, établisseme
 
   if (!établissementsTerritoriauxRattachés || !entitéJuridique) return null;
 
-  const entitéJuridiqueViewModel = new EntitéJuridiqueViewModel(entitéJuridique, wording, autorisations);
+  const entitéJuridiqueViewModel = new EntiteJuridiqueViewModel(entitéJuridique, wording, autorisations);
   const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(entitéJuridique.activitésMensuels, wording);
   const établissementsTerritoriauxRattachéesViewModel = new EtablissementsTerritoriauxRattachésViewModel(établissementsTerritoriauxRattachés, wording);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);

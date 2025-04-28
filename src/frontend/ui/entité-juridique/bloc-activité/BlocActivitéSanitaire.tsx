@@ -1,5 +1,5 @@
 import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
-import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
+import { EntiteJuridiqueActivitesViewModel } from "./EntitéJuridiqueActivitésViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -8,10 +8,11 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHAD";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
+import { GraphiqueNombreDeJourneesUsld } from "../../indicateur-métier/nombre-journees-usld/GraphiqueNombreDeJourneesUsld";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 
 type BlocActivitéSanitaireProps = Readonly<{
-  entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
+  entitéJuridiqueActivitéViewModel: EntiteJuridiqueActivitesViewModel;
   entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
@@ -58,6 +59,14 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, ent
           <GraphiqueNombrePassageUrgence
             estEntitéJuridique={true}
             nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
+          />
+        ) : (
+          <></>
+        )}
+        {entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlAutorise && entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlRenseigne() ? (
+          <GraphiqueNombreDeJourneesUsld
+            estEntitéJuridique={true}
+            nombreDeJourneesUsldViewModel={entitéJuridiqueActivitéViewModel.nombreDeJourneesUsldViewModel}
           />
         ) : (
           <></>

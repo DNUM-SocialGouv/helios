@@ -27,6 +27,26 @@ export class AjoutLesJourneesUsldDansLesProfils1799501916707 implements Migratio
             true
         );
 
+        UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb), 
+            '{autreRegion,profilEJ,activités}', 
+            COALESCE(profil_value->'autreRegion'->'profilEJ'->'activités', '{}'::jsonb) || jsonb_build_object(
+                'nombreJourneesUsld', 'ok'
+            ),
+            true
+        );
+
+        UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb), 
+            '{institution,profilEJ,activités}', 
+            COALESCE(profil_value->'autreRegion'->'profilEJ'->'activités', '{}'::jsonb) || jsonb_build_object(
+                'nombreJourneesUsld', 'ok'
+            ),
+            true
+        );
+
     `);
     }
 

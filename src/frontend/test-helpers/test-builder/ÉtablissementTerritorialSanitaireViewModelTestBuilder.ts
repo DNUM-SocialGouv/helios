@@ -116,7 +116,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       année: 2017,
       nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
-        value: 10200,
+        value: 10,
       },
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: "2021-07-07",
@@ -172,7 +172,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       },
       nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
-        value: 10200,
+        value: 20,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
@@ -224,7 +224,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       },
       nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
-        value: 10200,
+        value: 30,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
@@ -276,7 +276,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       },
       nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
-        value: 10200,
+        value: 40,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
@@ -328,7 +328,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       },
       nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
-        value: 10200,
+        value: 5000,
       },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",

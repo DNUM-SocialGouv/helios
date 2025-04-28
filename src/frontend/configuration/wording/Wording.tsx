@@ -189,6 +189,7 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string;
   readonly HOSPITALISATION_COMPLÈTE_PSY: string;
   readonly NOMBRE_DE_HAD: string;
+  readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
 

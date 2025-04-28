@@ -4,19 +4,22 @@ import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivit�
 import { GraphiqueNombreHADViewModel } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHADViewModel";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { ActivitesPsySSR, NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
+import { NombreDeJourneesUsldViewModel } from "../../indicateur-métier/nombre-journees-usld/NombreDeJourneesUsldViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
-export class EntitéJuridiqueActivitésViewModel {
+export class EntiteJuridiqueActivitesViewModel {
   public nombreDePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   public nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   public nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   public nombreHADViewModel: GraphiqueNombreHADViewModel;
+  public nombreDeJourneesUsldViewModel: NombreDeJourneesUsldViewModel;
 
   constructor(private readonly entitéJuridiqueActivités: EntitéJuridiqueActivités[], private wording: Wording) {
     this.nombreDePassageAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(entitéJuridiqueActivités, this.wording);
     this.nombreJourneesPsySSRViewModel = this.createNombreJourneesPsySSRViewModel();
     this.nombreHADViewModel = this.createNombreDeHADViewModel();
+    this.nombreDeJourneesUsldViewModel = this.createNombreDeJourneesUsldViewModel();
   }
 
   private createNombreJourneesPsySSRViewModel() {
@@ -54,13 +57,25 @@ export class EntitéJuridiqueActivitésViewModel {
     return new GraphiqueNombreHADViewModel(indicateurNombreHAD);
   }
 
+  private createNombreDeJourneesUsldViewModel() {
+    const indicateurNombreJourneesUsld: IndicateurActivité[] = this.entitéJuridiqueActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreJourneesUsld.dateMiseÀJourSource,
+        value: activité.nombreJourneesUsld.value,
+      };
+    });
+    return new NombreDeJourneesUsldViewModel(indicateurNombreJourneesUsld, this.wording);
+  }
+
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
       !this.activitéEstElleRenseignée ||
       (!this.nombrePassageUrgenceEstIlRenseigné() &&
         !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
         !this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
-        !this.nombreHADEstIlRenseigné())
+        !this.nombreHADEstIlRenseigné() &&
+        !this.nombreJourneesUsldEstIlRenseigne())
     );
   }
 
@@ -70,6 +85,7 @@ export class EntitéJuridiqueActivitésViewModel {
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreHADEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_HAD);
     if (!this.nombrePassageUrgenceEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    if (!this.nombreJourneesUsldEstIlAutorise) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNEES_USLD);
     return nonAutorisés;
   }
 
@@ -79,6 +95,7 @@ export class EntitéJuridiqueActivitésViewModel {
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés) nonRenseignees.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreHADEstIlRenseigné()) nonRenseignees.push(this.wording.NOMBRE_DE_HAD);
     if (!this.nombrePassageUrgenceEstIlRenseigné()) nonRenseignees.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    if (!this.nombreJourneesUsldEstIlRenseigne()) nonRenseignees.push(this.wording.NOMBRE_DE_JOURNEES_USLD);
     return nonRenseignees;
   }
 
@@ -97,11 +114,21 @@ export class EntitéJuridiqueActivitésViewModel {
     );
   }
 
+  public nombreJourneesUsldEstIlRenseigne(): boolean {
+    return this.entitéJuridiqueActivités.some(
+      (activité: EntitéJuridiqueActivités) => activité.nombreJourneesUsld.value !== null && activité.nombreJourneesUsld.value !== undefined
+    );
+  }
+
   public get nombrePassageUrgenceEstIlAutorisé(): boolean {
     return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreDePassagesAuxUrgences.dateMiseÀJourSource !== "");
   }
 
   public get nombreHADEstIlAutorisé(): boolean {
     return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreSéjoursHad.dateMiseÀJourSource !== "");
+  }
+
+  public get nombreJourneesUsldEstIlAutorise(): boolean {
+    return this.entitéJuridiqueActivités.some((activité: EntitéJuridiqueActivités) => activité.nombreJourneesUsld.dateMiseÀJourSource !== "");
   }
 }

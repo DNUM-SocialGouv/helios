@@ -2,11 +2,11 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
 import { Sources } from "../../commun/Sources/Sources";
-import { EntitéJuridiqueViewModel } from "../EntitéJuridiqueViewModel";
+import { EntiteJuridiqueViewModel } from "../EntitéJuridiqueViewModel";
 import styles from "./BlocIdentité.module.css";
 
 type BlocIdentitéProps = Readonly<{
-  entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
+  entitéJuridiqueViewModel: EntiteJuridiqueViewModel;
 }>;
 
 export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps) => {
@@ -22,7 +22,7 @@ export const BlocIdentité = ({ entitéJuridiqueViewModel }: BlocIdentitéProps)
         >
           {entitéJuridiqueViewModel.nomDeLEntitéJuridique}
         </IndicateurIdentité>
-        
+
         <IndicateurIdentité
           dateDeMiseÀJour={entitéJuridiqueViewModel.dateDeMiseÀJourOuvertureEntitéJuridique}
           nomDeLIndicateur={wording.DATE_D_OUVERTURE}
