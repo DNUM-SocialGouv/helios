@@ -11,7 +11,7 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
-import { SelectedRows, Table } from "../commun/Table/Table";
+import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
@@ -25,7 +25,7 @@ interface ComparaisonPageProps {
 export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
 
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("Médico-social");
   const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
@@ -99,14 +99,23 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setEstCeOuvert(true);
   };
 
-  const isAllSelected = resultats.length > 0 && selectedRows[page] && selectedRows[page].length === resultats.length;
+  let isAllSelected = true;
+  for (const etablissement of resultats) {
+    if (!selectedRows.has(etablissement.numéroFiness)) {
+      isAllSelected = false;
+      break;
+    }
+  };
+
 
   const handleSelectAll = () => {
+    const newSelected = new Map(selectedRows);
     if (isAllSelected) {
-      setSelectedRows({ ...selectedRows, [page]: [] });
+      resultats.forEach((etablissement) => newSelected.delete(etablissement.numéroFiness));
     } else {
-      setSelectedRows({ ...selectedRows, [page]: resultats });
+      resultats.forEach((etablissement) => newSelected.set(etablissement.numéroFiness, etablissement.type));
     }
+    setSelectedRows(newSelected);
   };
 
   const onClickDelete = (numeroFinessASupprimer: string) => {
@@ -149,7 +158,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
             onClickInfobull={openModal}
             order={order}
             orderBy={orderBy}
-            page={page || 1}
             selectedRows={selectedRows}
             setOrder={setOrder}
             setOrderBy={setOrderBy}
@@ -197,7 +205,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       <div className={styles["container"]}>
         <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={Object.values(selectedRows).flat()} />
+          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
         </div>
         <div className={styles["ajout-etab-div"]}>
           {!isShowAjoutEtab && (

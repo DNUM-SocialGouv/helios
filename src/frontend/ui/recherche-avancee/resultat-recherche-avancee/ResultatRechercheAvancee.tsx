@@ -5,7 +5,7 @@ import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
 import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { SuccessAlert } from "../../commun/SuccessAlert/SuccessAlert";
-import { SelectedRows, Table } from "../../commun/Table/Table";
+import { Table } from "../../commun/Table/Table";
 import { AlerteComparaison } from "../../comparaison/alerte-comparaison/AlerteComparaison";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 
@@ -29,19 +29,28 @@ type ResultatRechercheAvanceeProps = Readonly<{
 
 export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
   const { wording } = useDependencies();
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
-  const isAllSelected = data.length > 0 && selectedRows[page] && selectedRows[page].length === data.length;
+  let isAllSelected = true;
+  for (const etablissement of data) {
+    if (!selectedRows.has(etablissement.numéroFiness)) {
+      isAllSelected = false;
+      break;
+    }
+  };
+
 
   const handleSelectAll = () => {
+    const newSelection = new Map(selectedRows);
     if (isAllSelected) {
-      setSelectedRows({ ...selectedRows, [page]: [] });
+      data.forEach((etablissement) => newSelection.delete(etablissement.numéroFiness));
     } else {
-      setSelectedRows({ ...selectedRows, [page]: data });
+      data.forEach((etablissement) => newSelection.set(etablissement.numéroFiness, etablissement.type));
     }
+    setSelectedRows(newSelection);
   };
 
   const handleAddToFavorisSuccess = (listName: string): void => {
@@ -54,7 +63,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     }
   }
 
-  const showAlert = Object.values(selectedRows).flat().length >= 2;
+  const showAlert = selectedRows.size >= 2;
 
 
   return (
@@ -73,7 +82,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         onClickDelete={() => { }}
         order={rechercheAvanceeContext?.order ?? ""}
         orderBy={rechercheAvanceeContext?.orderBy ?? ""}
-        page={page}
         selectedRows={selectedRows}
         setOrder={rechercheAvanceeContext?.setOrder || (() => { })}
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}

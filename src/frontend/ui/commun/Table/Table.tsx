@@ -12,10 +12,6 @@ import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établisseme
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
 
-export type SelectedRows = Readonly<{
-  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-}>;
-
 interface Header {
   label: string;
   key: string;
@@ -31,8 +27,8 @@ interface DataTableProps {
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
-  selectedRows?: SelectedRows;
-  setSelectedRows?: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
+  selectedRows?: Map<string, string>;
+  setSelectedRows?: Dispatch<SetStateAction<Readonly<Map<string, string>>>>;
   order: string;
   orderBy: string;
   setOrder: (order: string) => void;
@@ -41,7 +37,6 @@ interface DataTableProps {
   isCenter: boolean;
   isVScroll: boolean;
   onClickInfobull?: (name: string) => void;
-  page: number;
   handleSelectAll?: () => void;
   isAllSelected?: boolean;
   onClickDelete: (finessNumber: string) => void;
@@ -64,14 +59,13 @@ interface TableHeaderProps {
 
 interface TableBodyProps {
   headers: Header[];
-  selectedRows?: SelectedRows;
+  selectedRows?: Map<string, string>;
   data: RechercheViewModel[] | ComparaisonViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
-  page: number;
   onClickDelete: (finessNumber: string) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
@@ -170,24 +164,18 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 };
 
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
-  const selectedMap = new Map();
-  if (selectedRows) {
-    selectedRows[page]?.forEach(element => {
-      selectedMap.set(element.numéroFiness, true);
-    });
-  }
-  const router = useRouter()
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
+
   const couleurLogo = "#000000"; // Logos en noir
   return (
     <tbody>
       {data.map((row, rowIndex) => (
-        <tr aria-selected={selectedMap.get(row.numéroFiness)} data-row-key={row.numéroFiness} id={`table-selectable-row-key-${row.numéroFiness}`} key={row.numéroFiness}>
+        <tr aria-selected={selectedRows?.has(row.numéroFiness)} data-row-key={row.numéroFiness} id={`table-selectable-row-key-${row.numéroFiness}`} key={row.numéroFiness}>
           {isSimpleSearchTable ? null :
             <th className="fr-cell--fixed" scope="row">
               <div className="fr-checkbox-group fr-checkbox-group--sm">
                 <input
-                  checked={!!selectedMap.get(row.numéroFiness)}
+                  checked={selectedRows?.has(row.numéroFiness)}
                   id={`table-select-checkbox-7748--${rowIndex}`}
                   name="row-select"
                   onChange={() => handleSelectRow(row)}
@@ -199,7 +187,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               </div>
             </th>}
           {headers.map((header) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' && router.pathname === '/comparaison' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedRows?.has(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
@@ -255,18 +243,19 @@ export const Table = ({
   onClickInfobull,
   handleSelectAll,
   isAllSelected,
-  page,
   onClickDelete,
   handleInfoBullMoyenne,
   isSimpleSearchTable,
 }: DataTableProps) => {
   const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
     if (selectedRows && setSelectedRows) {
-      if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
-        setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
+      const newSelected = new Map(selectedRows);
+      if (selectedRows.has(row.numéroFiness)) {
+        newSelected.delete(row.numéroFiness);
       } else {
-        selectedRows[page] ? setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) : setSelectedRows({ ...selectedRows, [page]: [row] });
+        newSelected.set(row.numéroFiness, row.type);
       }
+      setSelectedRows(newSelected);
     }
   };
 
@@ -298,7 +287,6 @@ export const Table = ({
                 isShowAvrage={isShowAvrage}
                 isSimpleSearchTable={isSimpleSearchTable}
                 onClickDelete={onClickDelete}
-                page={page}
                 selectedRows={selectedRows}
                 total={total}
               />
