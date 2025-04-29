@@ -40,7 +40,6 @@ def ajoute_les_activites_des_etablissements_sanitaires(
     donnees_men_pmsi_annuel_filtre_sur_les_5_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(
         donnees_men_pmsi_annuel, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
     )
-    date_du_fichier_men_pmsi_annuel = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_men_pmsi_annuel)
 
     donnees_ann_rpu = lis_le_fichier_csv(
         chemin_du_fichier_ann_rpu,
@@ -51,7 +50,6 @@ def ajoute_les_activites_des_etablissements_sanitaires(
     donnees_ann_rpu_filtre_sur_les_5_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_rpu, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
     )
-    date_du_fichier_ann_rpu = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_rpu)
     donnees_ann_sae_activite = lis_le_fichier_csv(
         chemin_du_fichier_ann_sae,
         colonnes_à_lire_ann_sae_activite,
@@ -61,7 +59,6 @@ def ajoute_les_activites_des_etablissements_sanitaires(
     donnees_ann_sae_activite_filtre_sur_les_5_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_sae_activite, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
     )
-    date_du_fichier_ann_sae = extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_sae)
     numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
 
     activites_des_etablissements_sanitaires = transforme_les_activites_des_etablissements_sanitaires(
@@ -71,6 +68,11 @@ def ajoute_les_activites_des_etablissements_sanitaires(
         numeros_finess_des_etablissements_connus,
         logger,
     )
+    dates_mise_a_jour_fichiers = {
+        'date_du_fichier_ann_sae' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_sae),
+        'date_du_fichier_ann_rpu' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_rpu),
+        'date_du_fichier_men_pmsi_annuel' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_men_pmsi_annuel)
+    }
 
     with base_de_donnees.begin() as connection:
         écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
@@ -79,9 +81,9 @@ def ajoute_les_activites_des_etablissements_sanitaires(
             connection,
             TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
             activites_des_etablissements_sanitaires,
-            [(FichierSource.DIAMANT_MEN_PMSI_ANNUEL, date_du_fichier_men_pmsi_annuel),
-             (FichierSource.DIAMANT_ANN_RPU, date_du_fichier_ann_rpu),
-             (FichierSource.DIAMANT_ANN_SAE, date_du_fichier_ann_sae)
+            [(FichierSource.DIAMANT_MEN_PMSI_ANNUEL, dates_mise_a_jour_fichiers['date_du_fichier_men_pmsi_annuel']),
+             (FichierSource.DIAMANT_ANN_RPU, dates_mise_a_jour_fichiers['date_du_fichier_ann_rpu']),
+             (FichierSource.DIAMANT_ANN_SAE, dates_mise_a_jour_fichiers['date_du_fichier_ann_sae'])
              ],
             logger,
         )

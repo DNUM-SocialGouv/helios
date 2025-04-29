@@ -1,7 +1,7 @@
 import pandas as pd
 
 from sqlalchemy import text
-from datacrawler.agrégation_activité_sanitaire import agrège_les_activités_sanitaire_des_entités_juridiques
+from datacrawler.agrégation_activité_sanitaire import agrege_les_activites_sanitaire_des_entites_juridiques
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES
 from datacrawler.test_helpers import (
     base_de_données_test,
@@ -48,7 +48,7 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
             activites.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
         # WHEN
-        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
+        agrege_les_activites_sanitaire_des_entites_juridiques(base_de_données_test, mocked_logger)
 
         # THEN
         agregation_activites_enregistrees = pd.read_sql_table(TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES, base_de_données_test)
@@ -88,10 +88,10 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
         with base_de_données_test.begin() as connection:
             activites_deja_enregistree.to_sql(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, connection, if_exists="append", index=False)
 
-        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
+        agrege_les_activites_sanitaire_des_entites_juridiques(base_de_données_test, mocked_logger)
 
         # WHEN
-        agrège_les_activités_sanitaire_des_entités_juridiques(base_de_données_test, mocked_logger)
+        agrege_les_activites_sanitaire_des_entites_juridiques(base_de_données_test, mocked_logger)
 
         # THEN
         query = text(
