@@ -42,6 +42,10 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     }
   };
 
+  // On disable le linter pour la ligne suivante,
+  // « nombreRésultats » est de type string dans le navigateur donc la syntaxe « === » n’est pas possible et renvoie toujours « false »
+  // eslint-disable-next-line eqeqeq
+  const isAllResultsSelected = () => selectedRows.size == nombreRésultats;
 
   const handleSelectAll = () => {
     const newSelection = new Map(selectedRows);
@@ -70,7 +74,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     <>
       {showAlert && <AlerteComparaison />}
       {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
-      <TableHeaderRechercheAvancee onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
+      <TableHeaderRechercheAvancee isAllResultsSelected={isAllResultsSelected} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
       <Table
         data={data}
         handleSelectAll={handleSelectAll}

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 
 import styles from "./ListActionsButton.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -17,9 +17,10 @@ type ListActionsButtonProps = Readonly<{
   children?: JSX.Element;
   onAddToFavorisSuccess?: (listName: string) => void;
   exportButton: ReactNode;
+  fullSelectButton?: ReactNode;
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -87,11 +88,18 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
           <li className={styles["menu-item"]}>
             {exportButton}
           </li>
+          {fullSelectButton
+            ? <li className={styles["menu-item"]}>
+              {fullSelectButton}
+            </li>
+            : <></>
+          }
         </ul>
       }
-      {displayFavorisPopup &&
+      {
+        displayFavorisPopup &&
         <FavorisPopup addOnOneListOnly={true} favorite={listFinessNumbers} onClickOkSuccess={onAddToFavorisSuccess} onClosePopup={() => setDisplayFavorisPopup(false)} onNewListCreationSuccess={onAddToFavorisSuccess} positionX={popupX} positionY={popupY} />
       }
-    </div>
+    </div >
   );
 };

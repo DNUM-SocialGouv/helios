@@ -623,6 +623,9 @@ export class WordingFr implements Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string = "Tout sélectionner";
+  readonly TOUT_DESELECTIONNER: string = "Tout désélectionner";
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";

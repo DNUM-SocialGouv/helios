@@ -1,14 +1,20 @@
+import { Dispatch, SetStateAction } from "react";
+
 import ExportExcelRechercheAvancee from "./ExportExcelRechercheAvancee";
+import ToutSelectionnerRechercheAvancee from "./ToutSelectionnerRechercheAvancee";
 import { ListActionsButton } from "../../liste/ListActionsButton";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
   selectedRows: Map<string, string>;
   onAddToFavorisSuccess?: (ListName: string) => void;
+  setSelectedRows: Dispatch<SetStateAction<Readonly<Map<string, string>>>>;
+  isAllResultsSelected: () => boolean;
 }>;
 
-export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSuccess }: TableHeaderRechercheAvanceeProps) => {
+export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSuccess, isAllResultsSelected, setSelectedRows }: TableHeaderRechercheAvanceeProps) => {
 
-  const exportButton = <ExportExcelRechercheAvancee disabled={false} />
+  const exportButton = <ExportExcelRechercheAvancee disabled={false} />;
+  const fullSelectButton = <ToutSelectionnerRechercheAvancee isAllResultsSelected={isAllResultsSelected} setSelectedRows={setSelectedRows} />
 
   return (
     <div className="fr-table__header fr-grid-row">
@@ -16,7 +22,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSucces
         <p className="fr-table__detail">{`${selectedRows.size} ${selectedRows.size > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`}</p>
       </div>
       <div className="fr-col--right fr-mb-1w">
-        <ListActionsButton exportButton={exportButton} onAddToFavorisSuccess={onAddToFavorisSuccess} selectedRows={selectedRows} />
+        <ListActionsButton exportButton={exportButton} fullSelectButton={fullSelectButton} onAddToFavorisSuccess={onAddToFavorisSuccess} selectedRows={selectedRows} />
       </div>
     </div>
   );
