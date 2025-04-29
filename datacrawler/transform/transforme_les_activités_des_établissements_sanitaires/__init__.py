@@ -15,7 +15,11 @@ from datacrawler.transform.transforme_les_activités_des_établissements_sanitai
 
 
 def transforme_les_activites_des_etablissements_sanitaires(
-    donnees_men_pmsi_annuel: pd.DataFrame, donnees_ann_rpu: pd.DataFrame, donnees_ann_sae_activite: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame, logger: Logger
+    donnees_men_pmsi_annuel: pd.DataFrame, 
+    donnees_ann_rpu: pd.DataFrame, 
+    donnees_ann_sae_activite: pd.DataFrame, 
+    numeros_finess_des_etablissements_connus: pd.DataFrame,
+    logger: Logger
 ) -> pd.DataFrame:
     return transforme_les_données_men_pmsi_annuel(donnees_men_pmsi_annuel, numeros_finess_des_etablissements_connus, logger).join(
         transforme_les_données_ann_rpu(donnees_ann_rpu, numeros_finess_des_etablissements_connus, logger), how="outer"

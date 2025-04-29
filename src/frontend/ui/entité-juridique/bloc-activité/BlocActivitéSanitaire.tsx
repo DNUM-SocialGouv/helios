@@ -55,18 +55,18 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, ent
         ) : (
           <></>
         )}
-        {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlAutorisé && entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() ? (
-          <GraphiqueNombrePassageUrgence
-            estEntitéJuridique={true}
-            nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
-          />
-        ) : (
-          <></>
-        )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlAutorise && entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlRenseigne() ? (
           <GraphiqueNombreDeJourneesUsld
             estEntitéJuridique={true}
             nombreDeJourneesUsldViewModel={entitéJuridiqueActivitéViewModel.nombreDeJourneesUsldViewModel}
+          />
+        ) : (
+          <></>
+        )}
+        {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlAutorisé && entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() ? (
+          <GraphiqueNombrePassageUrgence
+            estEntitéJuridique={true}
+            nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
           />
         ) : (
           <></>

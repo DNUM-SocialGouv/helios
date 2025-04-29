@@ -117,7 +117,7 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
         # WHEN
         ajoute_les_activites_des_etablissements_sanitaires(chemin_du_fichier_men_pmsi_annuel,
                                                            chemin_du_fichier_ann_rpu,
-                                                           chemin_du_fichier_ann_sae, 
+                                                           chemin_du_fichier_ann_sae,
                                                            base_de_données_test,
                                                            mocked_logger)
 
