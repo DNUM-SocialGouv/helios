@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
+import { UserContext } from "../../commun/contexts/userContext";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvanceeFormulaire";
 import styles from "../Comparaison.module.css";
 import { ListEtablissements } from "./ListEtablissements";
 import { useRechercheAvanceeComparaison } from "./useRechercheAvanceeComparaison";
+import { UserListViewModel } from "../../user-list/UserListViewModel";
 import type { Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
@@ -21,11 +23,28 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [currentPageData, setCurrentPageData] = useState<RechercheViewModel[]>([]);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const comparaisonContext = useContext(ComparaisonContext);
+  const userContext = useContext(UserContext);
   const [prevPage, setPrevPage] = useState<number>(1);
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
+
+
+
+  const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
+
+  useEffect(() => {
+    let list = userContext?.favorisLists.slice();
+    if (list) {
+      const favorisListIndex = list.findIndex((list) => list.isFavoris);
+      const favorisList = list.splice(favorisListIndex, 1);
+      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
+      list = favorisList.concat(...list);
+    }
+
+    setSortedFavorisList(list);
+  }, [userContext?.favorisLists])
 
   useEffect(() => {
     if (isAtBottom && comparaisonContext) {
@@ -126,7 +145,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           <div className={`${styles["titreComposentSpan"]}`} id="modal-body-composents-title">
             <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS}</span>
           </div>
-          <div id="modal-body-composents" style={{ marginTop: "10px" }}>
+          <div id="modal-body-composents" style={{ marginTop: "10px", marginBottom: "20px" }}>
             <RechercheAvanceeFormulaire
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
@@ -142,6 +161,21 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
                 setNewEtablissement={setNewEtablissements}
               ></ListEtablissements>
             )}
+          </div>
+          <div className={`${styles["titreComposentSpan"]}`} id="list-selector-composents-title" >
+            <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE}</span>
+            <div className="fr-select-group">
+              <select aria-describedby="select-error-desc-error"
+                className={"fr-select fr-icon-arrow-down-s-fill " + styles["ListeSelecteur"]} id="select-error"
+                name="select-error">
+                <option selected value=""> Mes listes</option>
+                {sortedFavorisList?.map((liste: UserListViewModel) => (
+                  <option key={liste.id}>
+                    {liste.nom} ({liste.userListEtablissements.length})
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
         <div className="fr-modal__footer" style={{ display: "flex", alignItems: "center" }}>
