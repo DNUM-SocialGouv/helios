@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 
 import { TableFooter } from "./resultat-recherche-avancee-footer/TableFooter";
 import { TableHeaderRechercheAvancee } from "./TableHeaderRechercheAvancee";
@@ -25,11 +25,12 @@ type ResultatRechercheAvanceeProps = Readonly<{
   setPage: ((page: number, shallow?: boolean) => void) | undefined;
   lastPage: number;
   page: number;
+  selectedRows: Map<string, string>;
+  setSelectedRows: Dispatch<SetStateAction<Map<string, string>>>;
 }>;
 
-export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage }: ResultatRechercheAvanceeProps) => {
+export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage, selectedRows, setSelectedRows }: ResultatRechercheAvanceeProps) => {
   const { wording } = useDependencies();
-  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
@@ -68,7 +69,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   }
 
   const showAlert = selectedRows.size >= 2;
-
 
   return (
     <>
