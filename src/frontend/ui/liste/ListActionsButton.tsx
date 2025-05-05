@@ -40,6 +40,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
     const firstType = selectedRows[0].type;
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     sessionStorage.setItem("comparaisonType", firstType);
+    sessionStorage.setItem("selectedLists", "[]");
     document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
     document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
     router.push("/comparaison");

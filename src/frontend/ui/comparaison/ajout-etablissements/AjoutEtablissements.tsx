@@ -9,7 +9,7 @@ import styles from "../Comparaison.module.css";
 import { ListEtablissements } from "./ListEtablissements";
 import { useRechercheAvanceeComparaison } from "./useRechercheAvanceeComparaison";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
-import type { Dispatch, SetStateAction } from "react";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
@@ -30,9 +30,10 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
 
-
-
   const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
+  const listFinessFromStorage = sessionStorage.getItem("listFinessNumbers");
+  const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : [];
+  const [selectedListId, setSelectedListId] = useState<string>();
 
   useEffect(() => {
     let list = userContext?.favorisLists.slice();
@@ -111,8 +112,12 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
 
   const onClickAjouter = () => {
     const stringListOfTable = sessionStorage.getItem("listFinessNumbers");
+    const stringSelectedLists = sessionStorage.getItem("selectedLists");
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
+    const arrayListOfLists = stringSelectedLists ? JSON.parse(stringSelectedLists) : [];
+    const ListOfSelectdLists = [...arrayListOfLists, selectedListId ?? ''];
+    sessionStorage.setItem("selectedLists", JSON.stringify(ListOfSelectdLists));
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
     document.cookie = `list=${encodeURIComponent(JSON.stringify(listToCompare))}; path=/`;
     setReloadTable(true);
@@ -129,6 +134,30 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     }
     return label;
   }
+
+  const toggleFinessInSelection = (
+    currentSelection: string[],
+    finess: string
+  ): string[] => {
+    return currentSelection.includes(finess)
+      ? currentSelection.filter((item) => item !== finess)
+      : [...currentSelection, finess];
+  };
+
+  const handleOnChangeListe = (event: ChangeEvent<HTMLSelectElement>) => {
+    setNewEtablissements([]);
+    const listeFinessNumbers = event.target.value.split(',');
+    setSelectedListId(listeFinessNumbers.pop());
+
+    listeFinessNumbers.forEach((numFiness: string) => {
+      const isAlreadyInTable = finessNumbersListFromTable.includes(numFiness);
+      if (!isAlreadyInTable) {
+        setNewEtablissements((prevSelected) =>
+          toggleFinessInSelection(prevSelected, numFiness)
+        );
+      }
+    });
+  };
 
   return (
     <div className="fr-col-12 fr-col-md-12 fr-col-lg-12" style={{ marginBottom: 20 }}>
@@ -165,12 +194,16 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           <div className={`${styles["titreComposentSpan"]}`} id="list-selector-composents-title" >
             <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE}</span>
             <div className="fr-select-group">
-              <select aria-describedby="select-error-desc-error"
-                className={"fr-select fr-icon-arrow-down-s-fill " + styles["ListeSelecteur"]} id="select-error"
-                name="select-error">
+              <select
+                className={"fr-select fr-icon-arrow-down-s-fill " + styles["ListeSelecteur"]}
+                onChange={handleOnChangeListe}>
                 <option selected value=""> Mes listes</option>
                 {sortedFavorisList?.map((liste: UserListViewModel) => (
-                  <option key={liste.id}>
+                  <option
+                    disabled={JSON.parse(sessionStorage.getItem("selectedLists") ?? "[]").includes(liste.id + '')}
+                    key={liste.id}
+                    value={liste.userListEtablissements.map(user => user.finessNumber).concat([liste.id + ''])}
+                  >
                     {liste.nom} ({liste.userListEtablissements.length})
                   </option>
                 ))}
