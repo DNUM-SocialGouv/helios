@@ -1,5 +1,6 @@
 /* Les erreurs remontees sont lies a l’attribut « aria-sort » sur les bouton de tri. Cet attribut est impose par le dsfr pour changer l’icon du bouton */
 /* eslint-disable jsx-a11y/role-supports-aria-props */
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 
 import styles from "./Table.module.css";
@@ -176,7 +177,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
       selectedMap.set(element.numéroFiness, true);
     });
   }
-
+  const router = useRouter()
   const couleurLogo = "#000000"; // Logos en noir
   return (
     <tbody>
@@ -198,7 +199,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               </div>
             </th>}
           {headers.map((header) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' && router.pathname === '/comparaison' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
