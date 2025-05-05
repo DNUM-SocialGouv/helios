@@ -37,6 +37,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
     const StructureTypes = [...new Set(selectedRows.values())];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     sessionStorage.setItem("comparaisonType", JSON.stringify(StructureTypes));
+    sessionStorage.setItem("selectedLists", "[]");
     router.push("/comparaison");
   }
 

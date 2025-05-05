@@ -132,3 +132,7 @@
   color: #161616A3;
   margin-top: 1rem;
 }
+
+.selectedList {
+  color: #808080;
+}
