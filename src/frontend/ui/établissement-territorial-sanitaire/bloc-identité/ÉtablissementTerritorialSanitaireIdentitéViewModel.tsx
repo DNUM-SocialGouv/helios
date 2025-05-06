@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
 export class EtablissementTerritorialSanitaireIdentiteViewModel {
   constructor(
@@ -116,6 +117,10 @@ export class EtablissementTerritorialSanitaireIdentiteViewModel {
 
   public get categorisationDeLEntitéDeRattachement(): string {
     return catégorisationEnumToString(this.établissementTerritorialSanitaireIdentité.categorisationDeLEntitéDeRattachement.value);
+  }
+
+  public get labelCategorisationDeLEntiteDeRattachement(): string {
+    return new CatégorisationViewModel(this.établissementTerritorialSanitaireIdentité.categorisationDeLEntitéDeRattachement.value, this.wording).catégorisationWording ?? "";
   }
 
   private valeurOuNonRenseigné(valeur: string): string {

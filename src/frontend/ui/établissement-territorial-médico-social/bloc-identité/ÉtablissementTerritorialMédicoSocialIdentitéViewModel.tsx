@@ -6,6 +6,7 @@ import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/mét
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
 export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
   constructor(
@@ -117,6 +118,11 @@ export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
   public get categorisationDeLEntitéDeRattachement(): string {
     return catégorisationEnumToString(this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value);
   }
+
+  public get labelCategorisationDeLEntiteDeRattachement(): string {
+    return new CatégorisationViewModel(this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value, this.wording).catégorisationWording ?? "";
+  }
+
 
   public get monoÉtablissement(): string {
     return this.établissementTerritorialIdentité.estMonoÉtablissement.value ? this.wording.OUI : this.wording.NON;

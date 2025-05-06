@@ -87,7 +87,7 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
         >
           <>
             {établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}<br />
-            {établissementTerritorialSanitaireIdentitéViewModel.categorisationDeLEntitéDeRattachement}
+            {établissementTerritorialSanitaireIdentitéViewModel.labelCategorisationDeLEntiteDeRattachement}
           </>
         </IndicateurIdentité>
       </ul>

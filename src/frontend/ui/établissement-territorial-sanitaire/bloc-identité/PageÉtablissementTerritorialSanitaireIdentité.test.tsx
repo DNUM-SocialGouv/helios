@@ -9,6 +9,7 @@ import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { StringFormater } from "../../commun/StringFormater";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 
@@ -378,7 +379,8 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${catégorisationEnumToString(identité.categorisationDeLEntitéDeRattachement.value)}`, "s");
+    const labelCategorisation = new CatégorisationViewModel(identité.categorisationDeLEntitéDeRattachement.value, wording).catégorisationWording;
+    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${labelCategorisation}`, "s");
     const statutÉtablissement = within(indicateurs[9]).getByText(statutMatcher);
     expect(statutÉtablissement).toBeInTheDocument();
   });
