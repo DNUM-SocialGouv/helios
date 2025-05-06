@@ -2,6 +2,7 @@ import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
+import { Breadcrumb } from "./Breadcrumb";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import PageDAccueil from "../../../../pages";
@@ -20,7 +21,6 @@ import { PageRégion } from "../../région/PageRégion";
 import { régions } from "../../région/régions";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { PageÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
-import { Breadcrumb } from "./Breadcrumb";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;

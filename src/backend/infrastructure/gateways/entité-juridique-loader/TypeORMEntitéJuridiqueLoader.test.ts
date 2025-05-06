@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmEntiteJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
@@ -22,7 +23,6 @@ import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJu
 import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueTestBuilder } from "../../../test-builder/EntitéJuridiqueTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
-import { TypeOrmEntitéJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 
 describe("Entité juridique loader", () => {
   const orm = getOrm();
@@ -72,7 +72,7 @@ describe("Entité juridique loader", () => {
           fichier: FichierSource.FINESS_CS1400101,
         }),
       ]);
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       // WHEN
       const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeIdentité(numéroFinessEntitéJuridique);
@@ -92,7 +92,7 @@ describe("Entité juridique loader", () => {
       // GIVEN
       const fakeNuméroFiness = "123456789";
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: fakeNuméroFiness }));
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       // WHEN
       const exception = await typeOrmEntitéJuridiqueLoader.chargeIdentité(numéroFinessEntitéJuridique);
@@ -116,7 +116,7 @@ describe("Entité juridique loader", () => {
         fichier: FichierSource.FINESS_CS1400101,
       }),
     ]);
-    const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+    const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
     // WHEN
     const entitéJuridique = await typeOrmEntitéJuridiqueLoader.chargeRattachement(numéroFinessEntitéJuridique);
@@ -153,6 +153,7 @@ describe("Entité juridique loader", () => {
       activites.nombreSéjoursPartielsObstétrique = 10;
       activites.nombreDePassagesAuxUrgences = 11;
       activites.nombreSéjoursHad = 12;
+      activites.nombreJourneesUsld = 12345;
 
       await entitéJuridiqueActivitésRepository.insert(activites);
       await dateMiseÀJourFichierSourceRepository.insert([
@@ -161,12 +162,16 @@ describe("Entité juridique loader", () => {
           fichier: FichierSource.DIAMANT_ANN_RPU,
         }),
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2023-02-02",
+          fichier: FichierSource.DIAMANT_ANN_SAE,
+        }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: "2023-01-01",
           fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL,
-        }),
+        })
       ]);
 
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       // WHEN
       const entitéJuridiqueActivités = await typeOrmEntitéJuridiqueLoader.chargeActivités(numéroFinessEntitéJuridique);
@@ -223,6 +228,10 @@ describe("Entité juridique loader", () => {
             dateMiseÀJourSource: "2023-01-01",
             value: 12,
           },
+          nombreJourneesUsld: {
+            dateMiseÀJourSource: "2023-02-02",
+            value: 12345,
+          },
         },
       ]);
     });
@@ -233,7 +242,7 @@ describe("Entité juridique loader", () => {
       // GIVEN
       await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }));
 
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       const activiteMensuel = new ActivitéSanitaireMensuelEntiteJuridiqueModel();
       activiteMensuel.année = 2023;
@@ -299,7 +308,7 @@ describe("Entité juridique loader", () => {
 
       await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
 
-      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       // WHEN
       const budgetFinance = await typeOrmEntitéJuridiqueLoader.chargeBudgetFinance(numéroFinessEntitéJuridique);
@@ -381,7 +390,7 @@ describe("Entité juridique loader", () => {
           numéroFinessEntitéJuridique,
         }),
       ]);
-      const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+      const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
       // WHEN
       const { capacités } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
@@ -443,7 +452,7 @@ describe("Entité juridique loader", () => {
         });
 
         // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
         const { autorisationsSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
@@ -493,7 +502,7 @@ describe("Entité juridique loader", () => {
         });
 
         // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
         const { autresActivitesSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
@@ -548,7 +557,7 @@ describe("Entité juridique loader", () => {
         });
 
         // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
         const { reconnaissanceContractuellesSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
@@ -603,7 +612,7 @@ describe("Entité juridique loader", () => {
         });
 
         // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
         const { equipementMaterielLourdSanitaire } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
 
         // THEN
@@ -643,7 +652,7 @@ describe("Entité juridique loader", () => {
         );
 
         // WHEN
-        const entiteJuridiqueLoader = new TypeOrmEntitéJuridiqueLoader(orm);
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
         const allocationRessourceEj = await entiteJuridiqueLoader.chargeAllocationRessource(numéroFinessEntitéJuridique);
 
         // THEN

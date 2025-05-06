@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react";
 
+import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
+import { NombreDeJournneesPsySsrHistogrammes } from "./NombreDeJournneePsySsrHistogrammes";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
-import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
-import { NombreDeJournneesPsySsrHistogrammes } from "./NombreDeJournneePsySsrHistogrammes";
 
 type GraphiquePsySSRProps = Readonly<{
   nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;

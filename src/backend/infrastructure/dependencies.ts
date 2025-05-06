@@ -15,7 +15,7 @@ import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/É
 import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
 import { TypeOrmComparaisonLoader } from "./gateways/comparaison-loader/TypeOrmComparaisonLoader";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
-import { TypeOrmEntitéJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
+import { TypeOrmEntiteJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
 import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
@@ -31,7 +31,7 @@ import { TypeOrmUserListLoader } from "./gateways/user-list-loader/TypeOrmUserLi
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
-import { TypeOrmÉtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -67,14 +67,14 @@ const createDependencies = (): Dependencies => {
   });
 
   return {
-    entitéJuridiqueLoader: new TypeOrmEntitéJuridiqueLoader(orm),
+    entitéJuridiqueLoader: new TypeOrmEntiteJuridiqueLoader(orm),
     environmentVariables,
     logger,
     utilisateurLoader: new TypeOrmUtilisateurLoader(orm),
     rechercheLoader: new TypeOrmRechercheLoader(orm),
     établissementTerritorialMédicoSocialLoader: new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm),
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
-    établissementTerritorialSanitaireLoader: new TypeOrmÉtablissementTerritorialSanitaireLoader(orm),
+    établissementTerritorialSanitaireLoader: new TypeOrmEtablissementTerritorialSanitaireLoader(orm),
     favorisLoader: new TypeOrmFavorisLoader(orm),
     changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
     forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),

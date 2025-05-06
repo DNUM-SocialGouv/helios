@@ -4,7 +4,10 @@ export type EntitéJuridiqueActivités = {
     dateMiseÀJourSource: string;
     value: number | null;
   };
-
+  nombreJourneesUsld: {
+    dateMiseÀJourSource: string;
+    value: number | null;
+  };
   nombreJournéesCompletesPsy: {
     dateMiseÀJourSource: string;
     value: number | null;

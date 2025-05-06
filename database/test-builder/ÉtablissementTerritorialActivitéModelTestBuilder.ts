@@ -22,6 +22,7 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéSanitaireModel.année = champsSurchargés?.année || 2019;
     activitéSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || "210987665";
     activitéSanitaireModel.nombreDePassagesAuxUrgences = champsSurchargés?.nombreDePassagesAuxUrgences || 60_000;
+    activitéSanitaireModel.nombreJourneesUsld = champsSurchargés?.nombreJourneesUsld || 21654;
     activitéSanitaireModel.nombreSéjoursPartielsMédecine = champsSurchargés?.nombreSéjoursPartielsMédecine || 60;
     activitéSanitaireModel.nombreSéjoursPartielsObstétrique = champsSurchargés?.nombreSéjoursPartielsObstétrique || 60;
     activitéSanitaireModel.nombreSéjoursPartielsChirurgie = champsSurchargés?.nombreSéjoursPartielsChirurgie || 60;

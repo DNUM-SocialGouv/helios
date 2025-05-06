@@ -1,19 +1,19 @@
 import { screen, fireEvent } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
+import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
+import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
+import { EntiteJuridiqueActivitesViewModel } from "./EntitéJuridiqueActivitésViewModel";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
-import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
-import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("Bloc Activité Sanitaire", () => {
   it("affiche le GraphiqueNombrePassageUrgence", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
+    const viewModel = new EntiteJuridiqueActivitesViewModel(
       [
         mock<EntitéJuridiqueActivités>({
           année: 2020,
@@ -46,7 +46,7 @@ describe("Bloc Activité Sanitaire", () => {
 
   it("affiche le GraphiquePsySSR", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
+    const viewModel = new EntiteJuridiqueActivitesViewModel(
       [
         mock<EntitéJuridiqueActivités>({
           année: annéeEnCours - 1,
@@ -87,7 +87,7 @@ describe("Bloc Activité Sanitaire", () => {
 
   it("affiche le filtre annuel/mensuel", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
+    const viewModel = new EntiteJuridiqueActivitesViewModel(
       [
         mock<EntitéJuridiqueActivités>({
           année: annéeEnCours - 1,
@@ -138,7 +138,7 @@ describe("Bloc Activité Sanitaire", () => {
 
   it("affiche le GraphiqueNombreDeSejourMCO", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
+    const viewModel = new EntiteJuridiqueActivitesViewModel(
       [
         mock<EntitéJuridiqueActivités>({
           année: annéeEnCours - 1,
@@ -191,7 +191,7 @@ describe("Bloc Activité Sanitaire", () => {
 
   it("affiche  l'indicateur HAD si il y a des donnees", () => {
     // GIVEN
-    const viewModel = new EntitéJuridiqueActivitésViewModel(
+    const viewModel = new EntiteJuridiqueActivitesViewModel(
       [
         mock<EntitéJuridiqueActivités>({
           année: annéeEnCours - 1,

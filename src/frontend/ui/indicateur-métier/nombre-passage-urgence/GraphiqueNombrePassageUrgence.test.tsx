@@ -1,9 +1,9 @@
 import { screen, within } from "@testing-library/react";
 
-import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueNombrePassageUrgence } from "./GraphiqueNombrePassageUrgence";
 import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
 
@@ -41,7 +41,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-2`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-3`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 
