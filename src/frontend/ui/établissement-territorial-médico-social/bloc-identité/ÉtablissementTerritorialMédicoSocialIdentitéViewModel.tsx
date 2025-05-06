@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactChild, ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
@@ -132,7 +132,7 @@ export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
     return StringFormater.formatDate(this.établissementTerritorialIdentité.estMonoÉtablissement.dateMiseÀJourSource);
   }
 
-  public get principalOuSecondaire(): ReactChild {
+  public get principalOuSecondaire(): ReactNode {
     const domaine = this.établissementTerritorialIdentité.domaineÉtablissementPrincipal === "Médico-social" ? this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL : this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE;
     const lienVersLETMS = `${domaine}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
     const libelle = `${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
