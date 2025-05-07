@@ -1,6 +1,5 @@
 /* Les erreurs remontees sont lies a l’attribut « aria-sort » sur les bouton de tri. Cet attribut est impose par le dsfr pour changer l’icon du bouton */
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 
 import styles from "./Table.module.css";
