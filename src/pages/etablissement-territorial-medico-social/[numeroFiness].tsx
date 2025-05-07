@@ -11,7 +11,7 @@ import { useDependencies } from "../../frontend/ui/commun/contexts/useDependenci
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../frontend/ui/établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../../frontend/ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { ETB_MEDICO_SOCIAL } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
@@ -25,7 +25,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
 
   if (!établissementTerritorial) return null;
 
-  const établissementTerritorialViewModel = new ÉtablissementTerritorialMédicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
+  const établissementTerritorialViewModel = new EtablissementTerritorialMedicoSocialViewModel(établissementTerritorial, wording, paths, autorisations);
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 
   return (
@@ -48,10 +48,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const codeRegion = session?.user.codeRegion as unknown as string;
     const codeProfiles = session?.user.codeProfiles as string[];
 
-    if (context.params && context.params["numeroFiness"]) {
+    if (context.params?.["numeroFiness"]) {
       const numeroFiness = context.params["numeroFiness"] as string;
 
-      const établissementTerritorial = (await récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
+      const etablissementTerritorial = (await récupèreLÉtablissementTerritorialMédicoSocialEndpoint(
         dependencies,
         numeroFiness,
         codeRegion,
@@ -60,10 +60,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
-      saveSearchHistoryEndpoint(dependencies, établissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
-        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_MEDICO_SOCIAL);
+      saveSearchHistoryEndpoint(dependencies, etablissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
+        etablissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_MEDICO_SOCIAL);
 
-      return { props: { établissementTerritorial, rechercheResult: rechercheResult, autorisations: établissementTerritorial.autorisations } };
+      return { props: { établissementTerritorial: etablissementTerritorial, rechercheResult: rechercheResult, autorisations: etablissementTerritorial.autorisations } };
     } else {
       return { notFound: true };
     }

@@ -3,7 +3,7 @@ import { mock } from "jest-mock-extended";
 
 import { CapacitéSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueCapacitésParActivité } from "./GraphiqueCapacitésParActivité";
 import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
@@ -13,7 +13,7 @@ const { wording } = fakeFrontDependencies;
 describe("GraphiqueCapacitésParActivité", () => {
   let graphiqueTest: GraphiqueTest;
   const graphiqueCapacitésViewModel = new GraphiqueCapacitésParActivitéViewModel(
-    ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.capacités,
+    EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités.capacités,
     wording
   );
 

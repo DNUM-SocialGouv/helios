@@ -18,10 +18,10 @@ import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocA
 import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
 import BlocQualite from "./bloc-qualite/BlocQualite";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
-import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel;
+  établissementTerritorialSanitaireViewModel: EtablissementTerritorialSanitaireViewModel;
   activitéMensuelleViewModel: ActivitésMensuelViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;

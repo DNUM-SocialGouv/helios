@@ -4,14 +4,14 @@ import { mock } from "jest-mock-extended";
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
 import { EtablissementTerritorialSanitaireActiviteViewModel } from "./ÉtablissementTerritorialSanitaireActivitéViewModel";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
 
 describe("La page établissement territorial sanitaire - bloc activité", () => {
-  const activitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
+  const activitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(EtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
 
   it.each([
     [wording.NOMBRE_DE_SÉJOUR_MCO, 0, "PMSI", wording.PMSI_TITLE],
