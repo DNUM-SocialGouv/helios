@@ -88,7 +88,7 @@ export interface Wording {
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
-
+  readonly TOUT_EFFACER: string;
   // Cartographie
   readonly CARTOGRAPHIE: string;
   readonly OFFRE_SANTÉ_PAR_REGION: string;

@@ -30,6 +30,13 @@ export const RechercheAvanceeFormulaire = ({
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
+  const isEraseAllEnabled = rechercheAvanceeContext?.terme !== "" ||
+    rechercheAvanceeContext?.zoneGeo !== "" ||
+    rechercheAvanceeContext?.typeStructure !== "" ||
+    rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ||
+    rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+    rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+    rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
 
   useEffect(() => {
     const structureType = rechercheAvanceeContext?.typeStructure ?? "";
@@ -90,6 +97,26 @@ export const RechercheAvanceeFormulaire = ({
     }
   }
 
+  const eraseAll = () => {
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
+    rechercheAvanceeContext?.setZoneGeo("");
+    rechercheAvanceeContext?.setZoneGeoD("");
+    rechercheAvanceeContext?.setZoneGeoLabel("");
+    rechercheAvanceeContext?.setZoneGeoType("");
+    rechercheAvanceeContext?.setTerme("");
+  }
+
+  const buttonZoneGeoClicked = rechercheAvanceeContext?.zoneGeo !== "" ? styles["filtre-button_clicked"] : "";
+  const buttonStructureClicked = rechercheAvanceeContext?.typeStructure !== "" ||
+  rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonCapaciteClicked =  rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+  rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+  rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
+
   return (
     <div>
       <div className="fr-grid-row">
@@ -116,14 +143,14 @@ export const RechercheAvanceeFormulaire = ({
         <div className={styles["criteresRechercheButtons"]}>
           <button
             aria-controls="fr-modal-Zone-Geographique-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonZoneGeoClicked}`}
             data-fr-opened="false"
           >
             {getWordingGeo()}
           </button>
           <button
             aria-controls="fr-modal-Structure-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
             data-fr-opened="false"
             disabled={isComparaison}
           >
@@ -131,12 +158,18 @@ export const RechercheAvanceeFormulaire = ({
           </button>
           <button
             aria-controls="fr-modal-Capacite-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
             data-fr-opened="false"
             disabled={disableCapaciter}
           >
             {getWordingCapacite()}
           </button>
+          {isEraseAllEnabled && !isComparaison && <button
+            className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
+            onClick={eraseAll}
+          >
+            {wording.TOUT_EFFACER}
+          </button>}
         </div>
       </div>
       <div>

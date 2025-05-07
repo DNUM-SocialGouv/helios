@@ -80,7 +80,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
-      setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+      setTerme: (value) => setSearchParams((prevParams) => ({ ...prevParams, terme: value })),
       setTermeFixe,
       setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
       setOrder: (value) => updateSearchParams({ order: value }),

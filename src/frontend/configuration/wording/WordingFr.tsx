@@ -104,6 +104,7 @@ export class WordingFr implements Wording {
   readonly STRUCTURE: string = "Structure";
   readonly CAPACITE: string = "Capacité MS";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
+  readonly TOUT_EFFACER: string = "Tout effacer";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
