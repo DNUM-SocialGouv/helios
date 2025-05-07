@@ -41,6 +41,7 @@ function getActiviteJuridique(): EntitéJuridiqueActivités {
     nombreSéjoursPartielsMédecine: { dateMiseÀJourSource: "dateMajPartMed", value: 10 },
     nombreSéjoursPartielsObstétrique: { dateMiseÀJourSource: "dateMajPartObst", value: 11 },
     nombreSéjoursHad: { dateMiseÀJourSource: "dateMajHad", value: 12 },
+    nombreJourneesUsld: { dateMiseÀJourSource: "dateMajJourUsld", value: 13 },
   };
 }
 
@@ -158,6 +159,7 @@ function getActiviteProfile() {
     nombreJournées: "ok",
     nombrePassage: "ok",
     nombreSéjoursHad: "ok",
+    nombreJourneesUsld: "ok",
   }
 }
 
@@ -397,6 +399,25 @@ describe("Filtre des informations d’activité des etablissement juridique par 
     let entiteJuridiqueResult = getFullEntiteJuridique();
     const profile = getFullProfile();
     profile.activités.nombreSéjoursHad = "Ko";
+
+    // When
+    entiteJuridiqueResult = filterEntiteJuridique(entiteJuridiqueResult, profile);
+
+    // Then
+    expect(entiteJuridiqueResult.activités).toEqual([expectedActivity]);
+  });
+
+  it("retire les info de sejour Usld si il n’y a pas les droits", () => {
+    // Given
+    const rawActivity = getActiviteJuridique();
+    const expectedActivity = {
+      ...rawActivity,
+      nombreJourneesUsld: { dateMiseÀJourSource: "", value: "" },
+    }
+
+    let entiteJuridiqueResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.activités.nombreJourneesUsld = "Ko";
 
     // When
     entiteJuridiqueResult = filterEntiteJuridique(entiteJuridiqueResult, profile);

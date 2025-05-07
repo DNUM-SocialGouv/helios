@@ -11,7 +11,7 @@ import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activit
 const { wording } = fakeFrontDependencies;
 
 describe("La page établissement territorial sanitaire - bloc activité", () => {
-  const activitésViewModel = new ÉtablissementTerritorialSanitaireActivitéViewModel(EtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
+  const activitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(EtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
 
   it.each([
     [wording.NOMBRE_DE_SÉJOUR_MCO, 0, "PMSI", wording.PMSI_TITLE],

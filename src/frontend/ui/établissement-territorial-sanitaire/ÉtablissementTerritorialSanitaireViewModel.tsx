@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { EtablissementTerritorialSanitaireActiviteViewModel } from "./bloc-activité/ÉtablissementTerritorialSanitaireActivitéViewModel";
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
-import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
+import { EtablissementTerritorialSanitaireIdentiteViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
 import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteSanitaireViewModel";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
@@ -11,7 +11,7 @@ import { EntitéJuridiqueBudgetFinanceViewModel } from "../entité-juridique/blo
 
 export class EtablissementTerritorialSanitaireViewModel {
   private readonly établissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
-  private readonly établissementTerritorialSanitaireActivitésViewModel: ÉtablissementTerritorialSanitaireActivitéViewModel;
+  private readonly établissementTerritorialSanitaireActivitésViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
   private readonly établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   private readonly etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;

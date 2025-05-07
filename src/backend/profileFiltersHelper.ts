@@ -399,6 +399,10 @@ const filterActiviteEJ = (activites: any, profil: any) => {
       ]
     },
     {
+      condition: profil.nombreSéjoursHad === "ok",
+      fields: ["nombreSéjoursHad"]
+    },
+    {
       condition: profil.nombreJourneesUsld === "ok",
       fields: ["nombreJourneesUsld"]
     }

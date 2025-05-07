@@ -53,6 +53,7 @@ function getActiviteSanitaire(): ÉtablissementTerritorialSanitaireActivité {
     nombreSéjoursPartielsChirurgie: { dateMiseÀJourSource: "dateMajNbSejPartChir", value: 9 },
     nombreSéjoursPartielsMédecine: { dateMiseÀJourSource: "dateMajNbJourPartMed", value: 10 },
     nombreSéjoursPartielsObstétrique: { dateMiseÀJourSource: "dateMajNbSejPartObs", value: 11 },
+    nombreJourneesUsld: { dateMiseÀJourSource: "dateMajNbJourUsld", value: 11 },
     numéroFinessÉtablissementTerritorial: "numFinessActiv",
   };
 }
@@ -193,6 +194,7 @@ function getActiviteProfile() {
     nombrePassage: "ok",
     nombreJournées: "ok",
     nombreSéjours: "ok",
+    nombreJourneesUsld: "ok",
   }
 }
 
@@ -556,6 +558,25 @@ describe("Filtre des informations d’activité des etablissement medico-sociaux
     let etabMedicoSocialResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.activités.nombreSéjours = "Ko";
+
+    // When
+    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+
+    // Then
+    expect(etabMedicoSocialResult.activités).toEqual([expectedActivity]);
+  });
+
+  it("retire les info sur le nombre de sejour USLD s’il n’y a pas les droits", () => {
+    // Given
+    const rawActivity = getActiviteSanitaire();
+    const expectedActivity = {
+      ...rawActivity,
+      nombreJourneesUsld: { dateMiseÀJourSource: "", value: "" },
+    }
+
+    let etabMedicoSocialResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.activités.nombreJourneesUsld = "Ko";
 
     // When
     etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
