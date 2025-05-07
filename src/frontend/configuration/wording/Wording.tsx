@@ -539,6 +539,9 @@ export interface Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string;
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string;
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string;
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string;
+  readonly TOUT_DESELECTIONNER: string;
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
