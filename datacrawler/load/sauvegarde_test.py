@@ -8,7 +8,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
     FichierSource,
 )
-from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
+from datacrawler.load.sauvegarde import mets_a_jour_la_date_de_mise_a_jour_du_fichier_source, sauvegarde
 from datacrawler.test_helpers import (
     base_de_données_test,
     sauvegarde_un_établissement_en_base,
@@ -113,7 +113,7 @@ class TestSauvegarde:
 
         # WHEN
         with base_de_données_test.connect() as connection:
-            mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, nouvelle_date_de_mise_a_jour, fichier_source)
+            mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, nouvelle_date_de_mise_a_jour, fichier_source)
 
         # THEN
         date_sauvee = base_de_données_test.execute(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{fichier_source.value}'""")

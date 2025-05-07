@@ -23,6 +23,9 @@ TABLE_RESSOURCE_ALLOCATION_EJ = "allocation_ressource_ej"
 TABLE_RESSOURCE_ALLOCATION_ET = "allocation_ressource_et"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
+TABLE_ENTITES_JURIDIQUES = "entite_juridique"
+
+CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = 'numero_finess_entite_juridique'
 
 
 class FichierSource(Enum):

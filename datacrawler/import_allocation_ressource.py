@@ -10,7 +10,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import (
-    récupère_les_numéros_finess_des_entites_juridiques_de_la_base,
+    recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
     récupère_les_numéros_finess_des_établissements_de_la_base,
 )
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
@@ -46,7 +46,7 @@ def check_downloaded_men_hapi_file(chemin_local_du_fichier_men_hapi_param: str) 
 def import_allocation_ressource(
     donnees_allocation_ressource_filtrees_param: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_hapi_param: str, logger: Logger
 ) -> None:
-    numéros_finess_des_entites_juridiques_connues = récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données)
+    numéros_finess_des_entites_juridiques_connues = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
     numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
 
     transform_donnees_allocation_ressource = transforme_les_donnees_allocation_ressource_ej(

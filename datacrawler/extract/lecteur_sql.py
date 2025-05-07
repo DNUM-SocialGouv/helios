@@ -16,10 +16,10 @@ def récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donné
     )
 
 
-def récupère_les_numéros_finess_des_entites_juridiques_de_la_base(base_de_données: Engine) -> pd.DataFrame:
+def recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_donnees: Engine) -> pd.DataFrame:
     return pd.read_sql_query(  # type: ignore
         "SELECT numero_finess_entite_juridique FROM entite_juridique",
-        base_de_données,
+        base_de_donnees,
     )
 
 
