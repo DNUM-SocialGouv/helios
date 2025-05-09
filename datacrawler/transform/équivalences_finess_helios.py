@@ -143,42 +143,24 @@ index_des_reconnaissances_contractuelles: List[str] = [
 
 XPATH_FINESS_CS1400101 = "./structureej"
 type_des_colonnes_finess_cs1400101 = {
-    "categetab": str,
-    "codeape": str,
-    "codepays": str,
-    "codepostal": str,
-    "commune": str,
-    "compldistrib": str,
-    "complrs": str,
-    "compvoie": str,
     "datecrea": str,
     "datefermeture": str,
-    "datemaj": str,
-    "datemodifsiren": str,
     "departement": str,
-    "libcategetab": str,
     "libcommune": str,
-    "libcourtcategetab": str,
-    "libcourtstatutjuridique": str,
     "libdepartement": str,
-    "libellepays": str,
     "libstatutjuridique": str,
-    "lieuditbp": str,
     "ligneacheminement": str,
     "nofiness": str,
     "numvoie": str, 
-    "originemodifsiren": str,
-    "qualifcreation": str,
     "rs": str,
     "rslongue": str,
     "siren": str,
     "statutjuridique": str,
-    "telecopie": str,
     "telephone": str,
-    "typefermeture": str,
     "typvoie": str,
     "voie": str,
 }
+colonnes_a_garder_finess_cs1400101 = list(type_des_colonnes_finess_cs1400101.keys())
 equivalences_finess_cs1400101_helios = {
     "ligneacheminement": "adresse_acheminement",
     "numvoie": "adresse_numero_voie",
@@ -196,3 +178,11 @@ equivalences_finess_cs1400101_helios = {
      # "code_region": "code_region", à revoir
       # "code_region": "categorisation", à revoir
 }
+
+XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
+type_des_colonnes_finess_cs1400107 = {
+    "code": str,
+    "codeagr2": str,
+    "codeagr1": str
+}
+colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
