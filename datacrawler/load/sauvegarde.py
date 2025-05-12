@@ -18,26 +18,23 @@ def mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(base_de_donnees: Connec
     )
 
 def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle) -> None:
-    connection.execute(f"DELETE FROM {table} where {cle_primaire} IN ({liste_cle});")
+    connection.execute(f"DELETE FROM {table} where {cle_primaire} IN {liste_cle};")
 
 
-def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donnees: DataFrame, column_mapping: dict ) -> None:
-    # Colonnes dans le DataFrame et leurs équivalents en base
-    df_columns = list(column_mapping.keys())
-    db_columns = [column_mapping[col] for col in df_columns]
-    cle_primaire_db = column_mapping[cle_primaire]
+def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donnees: DataFrame) -> None:
+    donnees = donnees.reset_index()
+    db_columns = donnees.columns
 
     columns = ", ".join(db_columns)
-    placeholders = ", ".join(["?"] * len(db_columns))
-    update_str = ", ".join([
-        f"{col}=excluded.{col}" for df_col, col in zip(df_columns, db_columns) if df_col != cle_primaire
-    ])
+    placeholders = ", ".join(["%s"] * len(db_columns))
+    update_str = ", ".join([f"{col}=excluded.{col}" for col in db_columns if col != cle_primaire])
 
     sql = f"""INSERT INTO {table} ({columns})
-            VALUES ('{placeholders}')
-            ON CONFLICT ({cle_primaire_db}) DO UPDATE SET
+            VALUES ({placeholders})
+            ON CONFLICT ({cle_primaire}) DO UPDATE SET
             {update_str};"""
 
+    donnees= donnees.fillna('')
     for _, row in donnees.iterrows():
-        values = [row[col] for col in df_columns]
+        values = [row[col] for col in db_columns]
         base_de_donnees.execute(sql, values)

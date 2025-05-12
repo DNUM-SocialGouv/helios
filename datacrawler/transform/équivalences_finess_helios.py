@@ -170,14 +170,18 @@ equivalences_finess_cs1400101_helios = {
     "libdepartement": "departement",
     "libstatutjuridique": "libelle_statut_juridique",
     "nofiness": "numero_finess_entite_juridique",
-    # "rslongue": "raison_sociale", à revoir
+    "rslongue": "raison_sociale", 
     "rs": "raison_sociale_courte",
     "siren": "siren",
     "telephone": "telephone",
     "datecrea": "date_ouverture",
-     # "code_region": "code_region", à revoir
-      # "code_region": "categorisation", à revoir
+    "ref_code_region": "code_region",
+    "categorisation": "categorisation"
 }
+
+index_des_entitees_juridiques : List[str] = [
+    "numero_finess_entite_juridique"
+]
 
 XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
 type_des_colonnes_finess_cs1400107 = {

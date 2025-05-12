@@ -1,11 +1,17 @@
 import pandas as pd
-from datacrawler.transform.équivalences_finess_helios import colonnes_a_garder_finess_cs1400101, colonnes_a_garder_finess_cs1400107
+from datacrawler.transform.équivalences_finess_helios import (
+    colonnes_a_garder_finess_cs1400101,
+    colonnes_a_garder_finess_cs1400107,
+    equivalences_finess_cs1400101_helios,
+    index_des_entitees_juridiques
+)
+
 
 CATEGORISATION = {
-    "1000": "Public",
-    "2100": "Privé non lucratif",
-    "2200": "Privé lucratif",
-    "3000": "Personne morale de droit étranger",
+    "1000": "public",
+    "2100": "prive_non_lucratif",
+    "2200": "prive_lucratif",
+    "3000": "personne_morale_droit_etranger",
     "UNKNOWN": ""
 }
 
@@ -22,7 +28,7 @@ def extrais_les_entites_juridiques_recemment_fermees(
     sauvegardes = entite_juridiques_sauvegardees['numero_finess_entite_juridique']
     # Filtrer les objets à supprimer
     objets_a_supprimer = entite_juridiques_sauvegardees[~sauvegardes.isin(nouveaux)]
-    return objets_a_supprimer.reset_index(drop=True)
+    return tuple(objets_a_supprimer['numero_finess_entite_juridique'])
 
 def categoriser(statut_niv1, statut_niv2):
     if statut_niv1 == "1000":
@@ -47,7 +53,33 @@ def associe_la_categorisation(entites_juridiques_ouvertes: pd.DataFrame, categor
         axis=1
     )
     return fusion
+def get_outre_mer_departement(departement_code: str) -> str:
+    # Dictionary to map department codes
+    mapping = {
+        '9A': '971',
+        '9B': '972',
+        '9C': '973',
+        '9D': '974',
+        '9F': '976'
+    }
+    # Return the mapped value or the original code
+    return mapping.get(departement_code, departement_code)
+
+def associe_le_code_region(entites_juridiques: pd.DataFrame, referentiel: pd.DataFrame) -> pd.DataFrame:
+    entites_juridiques['departement'] = entites_juridiques['departement'].apply(get_outre_mer_departement)
+    referentiel = referentiel.rename(columns={'ref_code_dep': 'departement'})
+    fusion = pd.merge(entites_juridiques, referentiel, on='departement', how='left')
+    return fusion
 
 def transform_les_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.DataFrame:
-    entites_juridiques_filtrees = entites_juridiques.drop(columns=['statutJuridiqueNiv2', 'statutJuridiqueNiv1'])
-    return entites_juridiques_filtrees
+    entites_juridiques['rslongue'] = entites_juridiques['rslongue'].where(
+        entites_juridiques['rslongue'].notna() & (entites_juridiques['rslongue'] != ''), entites_juridiques['rs'])
+    entites_juridiques_filtrees = entites_juridiques.drop(
+        columns=['statutjuridique','statutJuridiqueNiv2', 'statutJuridiqueNiv1', 'departement', 'datefermeture'])
+    return (
+        entites_juridiques_filtrees
+        .rename(columns=equivalences_finess_cs1400101_helios)
+        .dropna(subset=index_des_entitees_juridiques)
+        .drop_duplicates(subset=index_des_entitees_juridiques)
+        .set_index(index_des_entitees_juridiques)
+    )

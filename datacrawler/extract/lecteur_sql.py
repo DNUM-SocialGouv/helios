@@ -22,6 +22,11 @@ def recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_donnee
         base_de_donnees,
     )
 
+def recupere_le_ref_institution_region_de_la_base(base_de_donnees: Engine) -> pd.DataFrame:
+    return pd.read_sql_query(  # type: ignore
+        "SELECT ref_code_dep, ref_code_region FROM referentiel_departement_region",
+        base_de_donnees,
+    )
 
 def récupère_les_activités_sanitaires_de_la_base(base_de_données: Engine) -> pd.DataFrame:
     return pd.read_sql_table(
