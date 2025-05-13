@@ -39,6 +39,8 @@ from datacrawler.transform.équivalences_finess_helios import (
 base_de_données_test = create_engine("postgresql://helios:h3li0s@localhost:5433/helios")
 mocked_logger = MagicMock()
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
+NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2 = "020000873"
+NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_3 = "980600019"
 NUMÉRO_FINESS_ÉTABLISSEMENT = "010001261"
 NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL = "010003598"
 NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE = "010005239"

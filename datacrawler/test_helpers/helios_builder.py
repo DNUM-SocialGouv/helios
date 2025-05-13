@@ -6,7 +6,7 @@ from numpy import NaN
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
 
 
-def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_men_pmsi_annuel_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     men_pmsi_annuel = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -21,23 +21,23 @@ def helios_men_pmsi_annuel_builder(champs_surchargés: Optional[Dict] = None) ->
         "nombre_journees_complete_psy": 1.0,
         "nombre_journées_partielles_psy": 1.0,
     }
-    if champs_surchargés:
-        return {**men_pmsi_annuel, **champs_surchargés}
+    if champs_surcharges:
+        return {**men_pmsi_annuel, **champs_surcharges}
     return men_pmsi_annuel
 
 
-def helios_ann_rpu_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_rpu_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_rpu = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
         "nombre_passages_urgences": 100.0,
     }
-    if champs_surchargés:
-        return {**ann_rpu, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_rpu, **champs_surcharges}
     return ann_rpu
 
 
-def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -50,12 +50,12 @@ def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surchargés: Optiona
         "recettes_groupe_iii": 350.0,
         "resultat_net_comptable": 50.0,
     }
-    if champs_surchargés:
-        return {**budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
 
 
-def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2020,
@@ -72,12 +72,12 @@ def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surchargés: Optional[
         "produits": NaN,
         "charges": NaN,
     }
-    if champs_surchargés:
-        return {**budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
 
 
-def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_errd_ej_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "taux_de_caf": 0.071600138178413528,
         "taux_de_vetuste_construction": 0.45555983373892417,
@@ -85,12 +85,12 @@ def helios_ann_errd_ej_budget_et_finances_builder(champs_surchargés: Optional[D
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2020,
     }
-    if champs_surchargés:
-        return {**budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
 
 
-def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_activité_sanitaire_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     activité = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2018,
@@ -107,12 +107,12 @@ def helios_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None
         "nombre_passages_urgences": 100.0,
         "nombre_sejours_had": 200.0,
     }
-    if champs_surchargés:
-        return {**activité, **champs_surchargés}
+    if champs_surcharges:
+        return {**activité, **champs_surcharges}
     return activité
 
 
-def helios_autorisation_médico_social_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_autorisation_médico_social_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     autorisation = {
         "activite": "21",
         "capacite_autorisee_totale": 3,
@@ -129,12 +129,12 @@ def helios_autorisation_médico_social_builder(champs_surchargés: Optional[Dict
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
     }
 
-    if champs_surchargés:
-        return {**autorisation, **champs_surchargés}
+    if champs_surcharges:
+        return {**autorisation, **champs_surcharges}
     return autorisation
 
 
-def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_autorisation_sanitaire_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     autorisation = {
         "code_activite": "50",
         "code_forme": "02",
@@ -149,23 +149,23 @@ def helios_autorisation_sanitaire_builder(champs_surchargés: Optional[Dict] = N
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     }
 
-    if champs_surchargés:
-        return {**autorisation, **champs_surchargés}
+    if champs_surcharges:
+        return {**autorisation, **champs_surcharges}
     return autorisation
 
 
-def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_date_d_entrée_en_vigueur_du_cpom_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     date_d_entrée_du_cpom = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
         "date_d_entree_en_vigueur": date(2022, 1, 1),
     }
 
-    if champs_surchargés:
-        return {**date_d_entrée_du_cpom, **champs_surchargés}
+    if champs_surcharges:
+        return {**date_d_entrée_du_cpom, **champs_surcharges}
     return date_d_entrée_du_cpom
 
 
-def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_équipement_matériel_lourd_sanitaire_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     équipement_matériel_lourd = {
         "code_equipement_materiel_lourd": "05701",
         "date_autorisation": date(2022, 1, 1),
@@ -177,12 +177,12 @@ def helios_équipement_matériel_lourd_sanitaire_builder(champs_surchargés: Opt
         "date_ouverture": None,
     }
 
-    if champs_surchargés:
-        return {**équipement_matériel_lourd, **champs_surchargés}
+    if champs_surcharges:
+        return {**équipement_matériel_lourd, **champs_surcharges}
     return équipement_matériel_lourd
 
 
-def helios_autre_activité_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_autre_activité_sanitaire_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     autre_activité = {
         "code_activite": "A0",
         "code_forme": "15",
@@ -196,12 +196,12 @@ def helios_autre_activité_sanitaire_builder(champs_surchargés: Optional[Dict] 
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     }
 
-    if champs_surchargés:
-        return {**autre_activité, **champs_surchargés}
+    if champs_surcharges:
+        return {**autre_activité, **champs_surcharges}
     return autre_activité
 
 
-def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     reconnaissance_contractuelle = {
         "capacite_autorisee": 5,
         "code_activite": "R7",
@@ -218,12 +218,12 @@ def helios_reconnaissance_contractuelle_sanitaire_builder(champs_surchargés: Op
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
     }
 
-    if champs_surchargés:
-        return {**reconnaissance_contractuelle, **champs_surchargés}
+    if champs_surcharges:
+        return {**reconnaissance_contractuelle, **champs_surcharges}
     return reconnaissance_contractuelle
 
 
-def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ann_sae_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae = {
         "nombre_lits_chirurgie": 26,
         "nombre_lits_médecine": 62,
@@ -239,12 +239,12 @@ def helios_ann_sae_builder(champs_surchargés: Optional[Dict] = None) -> Dict[st
         "nombre_places_psy_partiel": 5,
         "annee": 2023,
     }
-    if champs_surchargés:
-        return {**ann_sae, **champs_surchargés}
+    if champs_surcharges:
+        return {**ann_sae, **champs_surcharges}
     return ann_sae
 
 
-def helios_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ressources_humaines = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "annee": 2019,
@@ -261,12 +261,12 @@ def helios_ressources_humaines_builder(champs_surchargés: Optional[Dict] = None
         "taux_absenteisme_hors_formation": 0.2179,
         "nombre_etp_realises": 172.0,
     }
-    if champs_surchargés:
-        return {**ressources_humaines, **champs_surchargés}
+    if champs_surcharges:
+        return {**ressources_humaines, **champs_surcharges}
     return ressources_humaines
 
 
-def helios_quo_san_finance_budget_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
         "annee": 2018,
@@ -289,6 +289,28 @@ def helios_quo_san_finance_budget_builder(champs_surchargés: Optional[Dict] = N
         "taux_de_caf_nette_san": 0.01,
         "ratio_dependance_financiere": 0.10,
     }
-    if champs_surchargés:
-        return {**budget_et_finances, **champs_surchargés}
+    if champs_surcharges:
+        return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
+
+def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    entite_juridique = {
+        "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "adresse_acheminement" : "01220 DIVONNE LES BAINS",
+        "adresse_numero_voie": "240",
+        "adresse_type_voie": "R",
+        "adresse_voie": "GUY DE MAUPASSANT",
+        "commune": "DIVONNE LES BAINS",
+        "departement": "AIN",
+        "libelle_statut_juridique": "Etb.Social Communal",
+        "raison_sociale": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
+        "raison_sociale_courte": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
+        "siren": "260214644",
+        "telephone": "0450201235",
+        "date_ouverture": "2009-01-01",
+        "code_region": "84",
+        "categorisation": "public",
+    }
+    if champs_surcharges:
+        return {**entite_juridique, **champs_surcharges}
+    return entite_juridique
