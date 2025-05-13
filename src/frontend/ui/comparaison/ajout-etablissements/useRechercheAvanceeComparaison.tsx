@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext, useState } from "react";
 
-import { OrderDir } from "../../../../backend/métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -24,7 +23,6 @@ export function useRechercheAvanceeComparaison() {
   const pageInitiale = 1;
   const statutsJuridiquesDefaultValue: string[] = [];
   const take = 20;
-  // const lastPage = data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1;
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {
     return data.résultats.map((résultat: Résultat) => new RechercheViewModel(résultat, paths));
@@ -60,8 +58,6 @@ export function useRechercheAvanceeComparaison() {
         AttribuesDefaults.etablissementMedicoSocial,
         statutsJuridiquesDefaultValue,
         capacites,
-        "",
-        "ASC",
         comparaisonContext?.page
       );
     } else {
@@ -84,11 +80,8 @@ export function useRechercheAvanceeComparaison() {
     type: string,
     statutJuridique: string[],
     capaciteSMS: CapaciteEtablissement[] | undefined,
-    orderBy: string | undefined,
-    order: OrderDir,
     page: number | undefined
   ) => {
-    rechercheParamValidator(terme, zone, zoneD, typeZone, capaciteSMS, orderBy, order, page);
     fetch("/api/recherche-avancee", {
       body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
@@ -113,26 +106,6 @@ export function useRechercheAvanceeComparaison() {
           estCeQueLeBackendNeRépondPas: true,
         });
       });
-  };
-
-  const rechercheParamValidator = (
-    terme: string | undefined,
-    zone: string | undefined,
-    zoneD: string | undefined,
-    typeZone: string | undefined,
-    capaciteSMS: CapaciteEtablissement[] | undefined,
-    orderBy: string | undefined,
-    order: OrderDir,
-    page: number | undefined
-  ) => {
-    terme ?? "";
-    zone ?? "";
-    zoneD ?? "";
-    typeZone ?? "";
-    capaciteSMS ?? [];
-    page ?? pageInitiale;
-    orderBy ?? "numéroFiness";
-    order ?? "ASC";
   };
 
   const lancerRechercheRequisParamValidator = () => {
