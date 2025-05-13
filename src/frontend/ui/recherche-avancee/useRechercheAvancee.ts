@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
@@ -18,6 +19,7 @@ type RechercheAvanceeState = Readonly<{
 }>;
 
 export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
+  const router = useRouter();
   const { paths } = useDependencies();
   const { getFavorisLists } = useFavoris();
   const take = 20;
@@ -64,6 +66,8 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
   const lancerLaRecherche = (): void => {
     rechercheAvanceeContext?.setTermeFixe(rechercheAvanceeContext?.terme);
     rechercheAvanceeContext?.setTypeStructure(rechercheAvanceeContext.typeStructure);
+    // On retire l'ancre présente dans l'url et qui pose soucis avec le rechargement de la page
+    router.replace(router.asPath.split("#")[0]);
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
