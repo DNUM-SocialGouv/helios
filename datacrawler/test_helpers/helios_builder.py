@@ -302,3 +302,25 @@ def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = No
     if champs_surcharges:
         return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
+
+def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str]:
+    entite_juridique = {
+        "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "adresse_acheminement" : "01220 DIVONNE LES BAINS",
+        "adresse_numero_voie": "240",
+        "adresse_type_voie": "R",
+        "adresse_voie": "GUY DE MAUPASSANT",
+        "commune": "DIVONNE LES BAINS",
+        "departement": "AIN",
+        "libelle_statut_juridique": "Etb.Social Communal",
+        "raison_sociale": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
+        "raison_sociale_courte": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
+        "siren": "260214644",
+        "telephone": "0450201235",
+        "date_ouverture": "2009-01-01",
+        "code_region": "84",
+        "categorisation": "public",
+    }
+    if champs_surcharges:
+        return {**entite_juridique, **champs_surcharges}
+    return entite_juridique

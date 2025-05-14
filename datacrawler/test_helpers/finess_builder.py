@@ -2,10 +2,32 @@ from typing import Dict, Optional
 
 from numpy import NaN
 
-from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT
+from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
 
+def xml_contenu_finess_cs1400101_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1400101 = {
+        "datecrea": "2009-01-01",
+        "datefermeture": NaN,
+        "departement": "01",
+        "libcommune": "DIVONNE LES BAINS",
+        "libdepartement": "AIN",
+        "libstatutjuridique": "Etb.Social Communal",
+        "ligneacheminement": "01220 DIVONNE LES BAINS",
+        "nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "numvoie": "240", 
+        "rs": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
+        "rslongue": "MAISON DE RETRAITE RESIDENCE DES ANCIENS - DIVONNE-LES-BAINS",
+        "siren": "260214644",
+        "statutjuridique": "21",
+        "telephone": "0450201235",
+        "typvoie": "R",
+        "voie": "GUY DE MAUPASSANT",
+    }
+    if champs_surcharges:
+        return {**finess_cs1400101, **champs_surcharges}
+    return finess_cs1400101
 
-def xml_contenu_finess_cs1400103_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def xml_contenu_finess_cs1400103_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1400103 = {
         "nofinessej": 310781406,
         "rsej": "CHU TOULOUSE",
@@ -39,12 +61,12 @@ def xml_contenu_finess_cs1400103_builder(champs_surchargés: Optional[Dict] = No
         "datemajact": "2022-08-24",
         "datemajsite": "2022-08-24",
     }
-    if champs_surchargés:
-        return {**finess_cs1400103, **champs_surchargés}
+    if champs_surcharges:
+        return {**finess_cs1400103, **champs_surcharges}
     return finess_cs1400103
 
 
-def xml_contenu_finess_cs1400104_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def xml_contenu_finess_cs1400104_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1400104 = {
         "nofinessej": 310781406,
         "rsej": "CHU TOULOUSE",
@@ -69,12 +91,12 @@ def xml_contenu_finess_cs1400104_builder(champs_surchargés: Optional[Dict] = No
         "indsup": "N",
         "datemaj": "2022-08-24",
     }
-    if champs_surchargés:
-        return {**finess_cs1400104, **champs_surchargés}
+    if champs_surcharges:
+        return {**finess_cs1400104, **champs_surcharges}
     return finess_cs1400104
 
 
-def xml_contenu_finess_cs1400105_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def xml_contenu_finess_cs1400105_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1400105 = {
         "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "de": "924",
@@ -108,12 +130,12 @@ def xml_contenu_finess_cs1400105_builder(champs_surchargés: Optional[Dict] = No
         "datemajaut": "2012-05-03",
         "datemajinst": "2009-06-29",
     }
-    if champs_surchargés:
-        return {**finess_cs1400105, **champs_surchargés}
+    if champs_surcharges:
+        return {**finess_cs1400105, **champs_surcharges}
     return finess_cs1400105
 
 
-def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def xml_contenu_finess_cs1600101_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1600101 = {
         "noautor": 242202733,
         "nofinessej": 370000028,
@@ -140,12 +162,12 @@ def xml_contenu_finess_cs1600101_builder(champs_surchargés: Optional[Dict] = No
         "datelimvisite": NaN,
         "datemaj": "2022-08-24",
     }
-    if champs_surchargés:
-        return {**finess_cs1600101, **champs_surchargés}
+    if champs_surcharges:
+        return {**finess_cs1600101, **champs_surcharges}
     return finess_cs1600101
 
 
-def xml_contenu_finess_cs1600102_builder(champs_surchargés: Optional[Dict] = None) -> Dict[str, str | object]:
+def xml_contenu_finess_cs1600102_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1600102 = {
         "noautor": 112234367,
         "idcpom": "07-00-C00000",
@@ -170,6 +192,6 @@ def xml_contenu_finess_cs1600102_builder(champs_surchargés: Optional[Dict] = No
         "libetatautorisation": "Initiale",
         "datemaj": "2022-08-24",
     }
-    if champs_surchargés:
-        return {**finess_cs1600102, **champs_surchargés}
+    if champs_surcharges:
+        return {**finess_cs1600102, **champs_surcharges}
     return finess_cs1600102

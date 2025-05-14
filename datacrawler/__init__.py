@@ -6,7 +6,7 @@ import pandas as pd
 from sqlalchemy.engine import Connection
 
 from datacrawler.load.nom_des_tables import FichierSource
-from datacrawler.load.sauvegarde import mets_à_jour_la_date_de_mise_à_jour_du_fichier_source, sauvegarde
+from datacrawler.load.sauvegarde import mets_a_jour_la_date_de_mise_a_jour_du_fichier_source, sauvegarde
 
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES = 5
 NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES = 5
@@ -25,7 +25,7 @@ def écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
     logger.info(f"[{fournisseur}] Ancien-nes {nom_de_la_donnée} supprimé-es")
     sauvegarde(connection, table, données)
     for fichier, date_de_mise_à_jour in fichiers_mis_à_jour:
-        mets_à_jour_la_date_de_mise_à_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
+        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
     logger.info(f"[{fournisseur}] {données.shape[0]} {nom_de_la_donnée} sauvegardé-es")
 
 
