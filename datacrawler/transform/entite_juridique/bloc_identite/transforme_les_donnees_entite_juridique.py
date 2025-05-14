@@ -32,7 +32,7 @@ def extrais_les_entites_juridiques_recemment_fermees(
     objets_a_supprimer = entite_juridiques_sauvegardees[~sauvegardes.isin(nouveaux)]
     return tuple(objets_a_supprimer['numero_finess_entite_juridique'])
 
-def categoriser(statut_niv1, statut_niv2):
+def categoriser(statut_niv1: str, statut_niv2: str) -> str:
     if statut_niv1 == "1000":
         return CATEGORISATION["1000"]
     if statut_niv1 == "3000":

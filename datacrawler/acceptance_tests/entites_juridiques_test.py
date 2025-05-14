@@ -9,7 +9,7 @@ from datacrawler.import_les_entites_juridiques import import_entites_juridiques
 from datacrawler.test_helpers.helios_builder import helios_entite_juridique_builder
 
 class TestSauvegardeLesEntitesJuridiques:
-    def test_import_entites_juridiques(self, tmp_path) -> None:
+    def test_import_entites_juridiques(self, tmp_path: str) -> None:
         # GIVEN - Create test XML files
         ej_xml = tmp_path / "finess_cs1400101_stock_20211214-0333.xml.xml"
         ej_xml.write_text("""<?xml version="1.0" encoding="UTF-8"?>
