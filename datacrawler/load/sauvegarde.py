@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from pandas import DataFrame
 from sqlalchemy.engine import Connection
 from datacrawler.load.nom_des_tables import TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
@@ -15,7 +17,7 @@ def mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(base_de_donnees: Connec
             SET derniere_mise_a_jour = '{date_de_mise_a_jour}';"""
     )
 
-def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle) -> None:
+def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle: Tuple[str, ...]) -> None:
     if not liste_cle:
         return  # Skip if empty list
     connection.execute(f"DELETE FROM {table} where {cle_primaire} IN {liste_cle};")

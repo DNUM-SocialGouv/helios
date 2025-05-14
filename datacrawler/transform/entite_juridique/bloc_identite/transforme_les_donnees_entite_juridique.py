@@ -1,4 +1,6 @@
+from typing import Tuple
 import pandas as pd
+
 from datacrawler.transform.équivalences_finess_helios import (
     colonnes_a_garder_finess_cs1400101,
     colonnes_a_garder_finess_cs1400107,
@@ -23,7 +25,7 @@ def conserve_les_entites_juridiques_ouvertes(
 def extrais_les_entites_juridiques_recemment_fermees(
     entites_juridiques_ouvertes: pd.DataFrame,
     entite_juridiques_sauvegardees: pd.DataFrame
-    ) -> pd.DataFrame:
+    ) -> Tuple[str, ...]:
     nouveaux = entites_juridiques_ouvertes['nofiness']
     sauvegardes = entite_juridiques_sauvegardees['numero_finess_entite_juridique']
     # Filtrer les objets à supprimer

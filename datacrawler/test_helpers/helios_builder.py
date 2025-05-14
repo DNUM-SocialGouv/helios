@@ -293,7 +293,7 @@ def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = No
         return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
 
-def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str]:
     entite_juridique = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
         "adresse_acheminement" : "01220 DIVONNE LES BAINS",
