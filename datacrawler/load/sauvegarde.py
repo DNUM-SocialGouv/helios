@@ -18,6 +18,8 @@ def mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(base_de_donnees: Connec
     )
 
 def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle) -> None:
+    if not liste_cle:
+        return  # Skip if empty list
     connection.execute(f"DELETE FROM {table} where {cle_primaire} IN {liste_cle};")
 
 

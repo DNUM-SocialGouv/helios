@@ -35,8 +35,6 @@ class TestTransformeLesDonneesEntiteJuridique:
         entites_juridiques_ouvertes_attendues = pd.DataFrame([xml_contenu_finess_cs1400101_builder(),
                                                  xml_contenu_finess_cs1400101_builder({"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2})])
         entites_juridiques_ouvertes = conserve_les_entites_juridiques_ouvertes(donnees_finess_cs1400101)
-        print(entites_juridiques_ouvertes)
-        print(entites_juridiques_ouvertes_attendues)
         pd.testing.assert_frame_equal(entites_juridiques_ouvertes, entites_juridiques_ouvertes_attendues, check_dtype=False)
 
     def test_associe_la_categorisation(self) -> None:
