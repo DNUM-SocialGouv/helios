@@ -1,3 +1,4 @@
+from pathlib import Path
 import pandas as pd
 
 from datacrawler.load.nom_des_tables import TABLE_ENTITES_JURIDIQUES
@@ -9,9 +10,9 @@ from datacrawler.import_les_entites_juridiques import import_entites_juridiques
 from datacrawler.test_helpers.helios_builder import helios_entite_juridique_builder
 
 class TestSauvegardeLesEntitesJuridiques:
-    def test_import_entites_juridiques(self, tmp_path: str) -> None:
+    def test_import_entites_juridiques(self, tmp_path: Path) -> None:
         # GIVEN - Create test XML files
-        ej_xml = tmp_path / "finess_cs1400101_stock_20211214-0333.xml.xml"
+        ej_xml = tmp_path / "finess_cs1400101_stock_20211214-0333.xml"
         ej_xml.write_text("""<?xml version="1.0" encoding="UTF-8"?>
 <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <structureej>
