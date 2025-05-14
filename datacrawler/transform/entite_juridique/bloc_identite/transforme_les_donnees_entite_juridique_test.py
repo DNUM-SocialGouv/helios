@@ -21,7 +21,7 @@ class TestTransformeLesDonneesEntiteJuridique:
         donnees_finess_cs1400101 = pd.DataFrame([xml_contenu_finess_cs1400101_builder(),
                                                  xml_contenu_finess_cs1400101_builder({"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2})])
         entite_juridiques_sauvegardees = pd.DataFrame([helios_entite_juridique_builder(),
-                                                       helios_entite_juridique_builder({"numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2}), 
+                                                       helios_entite_juridique_builder({"numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2}),
                                                        helios_entite_juridique_builder({"numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_3})])
         entites_juridiques_a_supprimer_attendues = NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_3
         entites_juridiques_a_supprimer = extrais_les_entites_juridiques_recemment_fermees(donnees_finess_cs1400101, entite_juridiques_sauvegardees)
@@ -93,4 +93,3 @@ class TestTransformeLesDonneesEntiteJuridique:
                                       entites_juridiques_categorisees_attendues,
                                       check_index_type=False,
                                       check_dtype=False)
-

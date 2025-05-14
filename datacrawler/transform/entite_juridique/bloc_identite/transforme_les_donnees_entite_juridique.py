@@ -33,11 +33,11 @@ def extrais_les_entites_juridiques_recemment_fermees(
 def categoriser(statut_niv1, statut_niv2):
     if statut_niv1 == "1000":
         return CATEGORISATION["1000"]
-    elif statut_niv1 == "3000":
+    if statut_niv1 == "3000":
         return CATEGORISATION["3000"]
-    elif statut_niv2 == "2100":
+    if statut_niv2 == "2100":
         return CATEGORISATION["2100"]
-    elif statut_niv2 == "2200":
+    if statut_niv2 == "2200":
         return CATEGORISATION["2200"]
     return CATEGORISATION["UNKNOWN"]
 

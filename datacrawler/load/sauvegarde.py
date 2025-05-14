@@ -1,5 +1,3 @@
-from logging import Logger
-
 from pandas import DataFrame
 from sqlalchemy.engine import Connection
 from datacrawler.load.nom_des_tables import TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
