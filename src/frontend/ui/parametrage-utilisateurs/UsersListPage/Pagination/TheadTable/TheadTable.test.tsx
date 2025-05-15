@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react";
 
-import { renderFakeComponent } from "../../../../../test-helpers/testHelper";
 import TheadTable from "./TheadTable";
+import { renderFakeComponent } from "../../../../../test-helpers/testHelper";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -26,19 +26,19 @@ describe("En-tête du tableau", () => {
             orderBy: "nom",
             sortDir: "DESC",
             total: 20,
-            setKey: () => function () {},
-            setInstitutionId: () => function () {},
-            setLastPage: () => function () {},
-            setPage: () => function () {},
-            setProfileId: () => function () {},
-            setRoleId: () => function () {},
-            setUserData: () => function () {},
-            setItemsPerPage: () => function () {},
-            setEtatId: () => function () {},
-            getUsersAndRefresh: () => function () {},
-            setOrderBy: () => function () {},
-            setSortDir: () => function () {},
-            setTotal: () => function () {},
+            setKey: () => new Promise(function () { }),
+            setInstitutionId: () => new Promise(function () { }),
+            setLastPage: () => function () { },
+            setPage: () => new Promise(function () { }),
+            setProfileId: () => new Promise(function () { }),
+            setRoleId: () => new Promise(function () { }),
+            setUserData: () => function () { },
+            setItemsPerPage: () => new Promise(function () { }),
+            setEtatId: () => new Promise(function () { }),
+            getUsersAndRefresh: () => new Promise(function () { }),
+            setOrderBy: () => new Promise(function () { }),
+            setSortDir: () => new Promise(function () { }),
+            setTotal: () => function () { },
           }}
         />
       </table>

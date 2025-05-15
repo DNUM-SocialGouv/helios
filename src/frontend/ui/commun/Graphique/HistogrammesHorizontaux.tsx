@@ -3,11 +3,11 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
+import styles from "./HistogrammeHorizontaux.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
-import styles from "./HistogrammeHorizontaux.module.css";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 
@@ -98,11 +98,13 @@ export class HistogrammeData {
   }
 
   private get labelsColor(): string[] {
-    const isLabelsError = this.visibleStacks
-      .map((stack) => stack.isError as boolean[])
-      .reduce((isLabelInError, isErrorStack) => {
-        return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
-      });
+    const stackErrors = this.visibleStacks
+      .map((stack) => stack.isError as boolean[]);
+    const defaultArraySize = stackErrors[0].length;
+
+    const isLabelsError = stackErrors.reduce((isLabelInError, isErrorStack) => {
+      return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
+    }, Array(defaultArraySize).fill(false));
     return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
 

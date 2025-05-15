@@ -1,15 +1,11 @@
 import Link from "next/link";
 import React from "react";
 
+import styles from './BtnRetourRecherche.module.css';
 import { BackToSearchContext, BackToSearchContextValue } from "../contexts/BackToSearchContext";
 import { useDependencies } from "../contexts/useDependencies";
-import styles from './BtnRetourRecherche.module.css';
 
-
-type BtnRetourRechercheProps = Readonly<{
-}>;
-
-export const BtnRetourRecherche = ({ }: BtnRetourRechercheProps) => {
+export const BtnRetourRecherche = () => {
   const { wording } = useDependencies();
   const backToSearchContext = React.useContext(BackToSearchContext) as BackToSearchContextValue;
 

@@ -7,13 +7,13 @@ import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
 import { useCallback, useEffect, useState } from "react";
 
+import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
-import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
 import PaginationBtn from "./Pagination/PaginationBtn/PaginationBtn";
 import TheadTable from "./Pagination/TheadTable/TheadTable";
@@ -48,19 +48,19 @@ export interface iPaginationData {
   orderBy: string;
   sortDir: string;
   total: number;
-  setKey: (key: string) => void;
-  setInstitutionId: (institutionId: number) => void;
+  setKey: (key: string) => Promise<URLSearchParams>;
+  setInstitutionId: (institutionId: number) => Promise<URLSearchParams>;
   setLastPage: (lastPage: number) => void;
-  setPage: (page: number) => void;
-  setProfileId: (profileId: string) => void;
-  setRoleId: (roleId: number) => void;
+  setPage: (page: number) => Promise<URLSearchParams>;
+  setProfileId: (profileId: string) => Promise<URLSearchParams>;
+  setRoleId: (roleId: number) => Promise<URLSearchParams>;
   setTotal: (total: number) => void;
   setUserData: (userData: UtilisateurModel[]) => void;
-  setItemsPerPage: (itemsPerPage: number) => void;
-  setEtatId: (etatId: string) => void;
-  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => void;
-  setOrderBy: (orderBy: string) => void;
-  setSortDir: (sortDir: string) => void;
+  setItemsPerPage: (itemsPerPage: number) => Promise<URLSearchParams>;
+  setEtatId: (etatId: string) => Promise<URLSearchParams>;
+  getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => Promise<void>;
+  setOrderBy: (orderBy: string) => Promise<URLSearchParams>;
+  setSortDir: (sortDir: string) => Promise<URLSearchParams>;
 }
 
 export interface IQueryParams {
@@ -221,7 +221,7 @@ const UsersListPage = ({
     institutions: institutions,
     keyWord: key,
     key: key,
-    page: page as number,
+    page: page,
     profileId: profileId,
     profiles: profiles,
     roleId: roleId,
