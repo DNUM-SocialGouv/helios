@@ -12,7 +12,7 @@ from datacrawler import (
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
 from datacrawler.transform.transforme_les_activités_des_établissements_médico_sociaux import transforme_les_activites_des_etablissements_medico_sociaux
@@ -59,7 +59,7 @@ def ajoute_les_activites_des_etablissements_medico_sociaux(
         donnees_ann_ms_tdp_et, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_MÉDICO_SOCIALES
     )
 
-    numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
+    numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
 
     activites_des_etablissements_medico_sociaux = transforme_les_activites_des_etablissements_medico_sociaux(
         donnees_ann_errd_ej_et_filtrees,

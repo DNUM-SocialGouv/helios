@@ -7,7 +7,7 @@ from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mis
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_qualite
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_qualite
 from datacrawler.load.nom_des_tables import TABLES_DES_INSPECTIONS_ET_CONTROLES, FichierSource
 from datacrawler.transform.transform_les_donnees_inspections.transforme_les_donnees_inspections import (
@@ -23,7 +23,7 @@ from datacrawler.transform.equivalence_siicea_helios import (
 def import_inspections_controles(chemin_local_du_fichier_siicea_param: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_siicea_helios)
     donnees_inspections_controles = lis_le_fichier_csv(chemin_local_du_fichier_siicea_param, colonnes_a_lire_bloc_qualite_inspections, types_des_colonnes)
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    numéros_finess_des_établissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
     transform_donnees_inspections_controles = transform_les_donnees_inspections_etablissements(
         donnees_inspections_controles, numéros_finess_des_établissements_connus, logger
     )

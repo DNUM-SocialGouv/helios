@@ -9,7 +9,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
-    récupère_les_numéros_finess_des_établissements_de_la_base,
+    recupere_les_numeros_finess_des_etablissements_de_la_base,
 )
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import (
@@ -34,7 +34,7 @@ def ajoute_le_bloc_budget_et_finances_des_entite_juridiques(chemin_du_fichier_qu
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_quo_san_finance_buget_finance_helios)
     donnees_quo_san_finance = lis_le_fichier_csv(chemin_du_fichier_quo_san_finance, colonnes_a_lire_bloc_budget_finance_entite_juridique, types_des_colonnes)
     numéros_finess_des_entites_juridiques_connues = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
-    numéros_finess_des_etablissements_territoriaux_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    numéros_finess_des_etablissements_territoriaux_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
 
     transform_donnees_quo_san_finance = transform_les_donnees_budget_finance_entite_juridique(
         donnees_quo_san_finance, numéros_finess_des_entites_juridiques_connues

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.test_helpers import (
     base_de_données_test,
     sauvegarde_un_établissement_en_base,
@@ -19,7 +19,7 @@ class TestTrouveLesFinessDesEtablissementsEnBase:
         sauvegarde_un_établissement_en_base("098765432", "123456789", base_de_données_test)
 
         # WHEN
-        données = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données_test)
+        données = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données_test)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -37,7 +37,7 @@ class TestTrouveLesFinessDesEtablissementsEnBase:
         sauvegarde_un_établissement_en_base("098765432", "123456789", base_de_données_test)
 
         # WHEN
-        données = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données_test, entite_juridique=True)
+        données = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données_test, entite_juridique=True)
 
         # THEN
         pd.testing.assert_frame_equal(

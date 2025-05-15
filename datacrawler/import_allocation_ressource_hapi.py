@@ -11,7 +11,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_csv import lis_le_fichier_hapi_csv
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
-    récupère_les_numéros_finess_des_établissements_de_la_base,
+    recupere_les_numeros_finess_des_etablissements_de_la_base,
 )
 from datacrawler.load.nom_des_tables import TABLE_RESSOURCE_ALLOCATION_EJ, TABLE_RESSOURCE_ALLOCATION_ET, FichierSource
 from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import (
@@ -39,7 +39,7 @@ def import_allocation_ressource(fichiers_param: List[str], men_hapi_data_path_pa
         donnees_allocation_ressource, recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données), logger
     )
     transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
-        donnees_allocation_ressource, récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données), logger
+        donnees_allocation_ressource, recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données), logger
     )
     chemin_local_du_dernier_fichier_men_hapi = os.path.join(men_hapi_data_path_param, sorted(fichiers_param, reverse=True)[0])
     date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_hapi(chemin_local_du_dernier_fichier_men_hapi)
