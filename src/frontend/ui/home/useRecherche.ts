@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
+import { RechercheViewModel } from "./RechercheViewModel";
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useFavoris } from "../favoris/useFavoris";
-import { RechercheViewModel } from "./RechercheViewModel";
 
 type RechercheState = Readonly<{
   estCeEnAttente: boolean;
@@ -53,18 +53,19 @@ export function useRecherche() {
 
   const lancerLaRecherche = (event: MouseEvent | ChangeEvent<HTMLInputElement>, displayTable: boolean) => {
     getFavorisLists();
-    if(event) event.preventDefault();
+    if (event) event.preventDefault();
     setState({
       ...state,
       estCeEnAttente: true,
       estCeQueLesRésultatsSontReçus: false,
     });
     localStorage.setItem('searchItem', state.terme);
-    if(!displayTable) {
-    rechercher(state.terme, pageInitiale);
-  } else {
-    rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
-  }
+    localStorage.setItem('displayTable', displayTable ? 'true' : 'false');
+    if (!displayTable) {
+      rechercher(state.terme, pageInitiale);
+    } else {
+      rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
+    }
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +75,7 @@ export function useRecherche() {
     });
   };
 
-  const rechercher = (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => { 
+  const rechercher = (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
     fetch("/api/recherche", {
       body: JSON.stringify({ page, terme, order, orderBy, displayTable }),
       headers: { "Content-Type": "application/json" },
@@ -150,5 +151,8 @@ export function useRecherche() {
     terme: state.terme,
     termeFixe: state.termeFixe,
     rechercher,
+    pageInitiale,
+    defaultOrder,
+    defaultOrderBy
   };
 }

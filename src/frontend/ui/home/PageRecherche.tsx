@@ -27,14 +27,26 @@ export const PageRecherche = () => {
     terme,
     termeFixe,
     rechercher,
+    pageInitiale,
+    defaultOrder,
+    defaultOrderBy
   } = useRecherche();
 
   const showNotice = new Date() <= new Date('2025-06-13');
 
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
-      rechercher(localStorage.getItem('searchItem') ?? '', 1);
+      const storedDisplayTable = (localStorage.getItem('displayTable') ?? 'false') === 'true';
+      setDisplayTable(storedDisplayTable);
       localStorage.setItem('FromBackToSearch', 'false');
+      const terme = localStorage.getItem('searchItem') ?? '';
+
+      if (!displayTable) {
+        rechercher(terme, pageInitiale);
+      } else {
+        rechercher(terme, pageInitiale, defaultOrder, defaultOrderBy, storedDisplayTable)
+      }
+
     }
   }, [])
 
