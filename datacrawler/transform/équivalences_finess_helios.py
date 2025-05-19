@@ -241,7 +241,7 @@ equivalences_finess_cs1400102_helios = {
     "libmft": "libelle_du_mode_tarification",
     "ref_code_region": "code_region",
     "dateouv": "date_ouverture",
-    # "classification" : "classification"
+    "classification" : "classification"
 }
 
 colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())

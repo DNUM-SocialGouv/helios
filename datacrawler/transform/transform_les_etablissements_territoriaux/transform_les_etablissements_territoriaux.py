@@ -15,12 +15,23 @@ def categoriser(categorie: str) -> str:
         return "Sanitaire"
     return "Médico-social"
 
+def classifier(value: str) -> str:
+    if value in [189, 190, 198, 461, 249, 448, 188, 246, 437, 195, 194, 192, 183, 186, 255, 182, 445, 464]:
+        return 'publics_en_situation_de_handicap'
+    if value in [500, 209, 354]:
+        return 'personnes_agees'
+    return 'non_classifie'
+
 def associe_le_domaine(etablissements_territoriaux_ouverts: pd.DataFrame, categories:pd.DataFrame) -> pd.DataFrame:
     categories_filtrees = categories[colonnes_a_garder_finess_cs1500106]
     categories_filtrees = categories_filtrees.rename(columns={'code': 'categetab'})
     fusion = pd.merge(etablissements_territoriaux_ouverts, categories_filtrees, on='categetab', how='left')
     fusion["domaine"] = fusion["domaine"].apply(categoriser)
     return fusion
+
+def associe_la_classification(etablissements_territoriaux_ouverts: pd.DataFrame) -> pd.DataFrame:
+    etablissements_territoriaux_ouverts['classification'] = etablissements_territoriaux_ouverts['categetab'].apply(classifier)
+    return etablissements_territoriaux_ouverts
 
 def conserve_les_etablissements_territoriaux_ouverts(
     etablissements_territoriaux_flux_finess: pd.DataFrame,
