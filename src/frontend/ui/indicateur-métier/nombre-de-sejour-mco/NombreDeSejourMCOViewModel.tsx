@@ -1,3 +1,4 @@
+import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 import { Wording } from "../../../configuration/wording/Wording";
 import {
   couleurDuFondHistogrammeBleuClair,
@@ -8,7 +9,6 @@ import {
   couleurDuFondHistogrammeVertFoncé,
 } from "../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../commun/StringFormater";
-import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 
 type IndicateurDesSejoursMCO = Readonly<{
   nombreSéjoursCompletsMédecine: { x: number; y: number | null | '' }[];

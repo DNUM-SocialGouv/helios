@@ -8,7 +8,6 @@ import { UserContext } from "../../frontend/ui/commun/contexts/userContext";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
 import ExportList from "../../frontend/ui/liste/ExportList";
@@ -32,7 +31,7 @@ export default function Router({ listServer }: RouterProps) {
   const { getFavorisLists } = useFavoris();
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const [list, setList] = useState<UserListViewModel>();
   const [chargement, setChargement] = useState(true);
   const [order, setOrder] = useState(defaultOrder);
@@ -76,8 +75,7 @@ export default function Router({ listServer }: RouterProps) {
     getFavorisLists()
   };
 
-  const selectedRowsValues = Object.values(selectedRows).flat();
-  const tableMessage = `${selectedRowsValues.length} ${selectedRowsValues.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
+  const tableMessage = `${selectedRows.size} ${selectedRows.size > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
   const vignetteMessage = `${listLength} ${listLength > 1 ? 'établissements' : 'établissement'}`;
 
   const isListEmpty = () => listLength === 0;
@@ -97,7 +95,7 @@ export default function Router({ listServer }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} listId={list.id} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">

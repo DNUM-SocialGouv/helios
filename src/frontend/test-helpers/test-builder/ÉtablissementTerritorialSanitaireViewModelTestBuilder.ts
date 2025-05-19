@@ -1,7 +1,8 @@
+import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { ÉtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "../../ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 
 const autorisationsMockData = {
   budgetEtFinance: {
@@ -22,8 +23,8 @@ const autorisationsMockData = {
 };
 
 
-export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
-  public static identité: ÉtablissementTerritorialSanitaire["identité"] = {
+export class EtablissementTerritorialSanitaireViewModelTestBuilder {
+  public static readonly identité: ÉtablissementTerritorialSanitaire["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "01130 NANTUA",
@@ -94,7 +95,11 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
     statutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
-      value: "Société Anonyme (S.A.)",
+      value: "Societe Anonyme",
+    },
+    categorisationDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: CatégorisationEnum.PUBLIC,
     },
     typeÉtablissement: {
       dateMiseÀJourSource: "2021-07-07",
@@ -111,9 +116,13 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     codeRegion: '84',
     domaineÉtablissementPrincipal: 'Médico-social',
   };
-  public static activités: ÉtablissementTerritorialSanitaire["activités"] = [
+  public static readonly activités: ÉtablissementTerritorialSanitaire["activités"] = [
     {
       année: 2017,
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10,
+      },
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: "2021-07-07",
         value: 10,
@@ -166,6 +175,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 20,
       },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 20,
+      },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
         value: 20,
@@ -211,6 +224,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     {
       année: 2019,
       nombreDePassagesAuxUrgences: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 30,
+      },
+      nombreJourneesUsld: {
         dateMiseÀJourSource: "2021-07-07",
         value: 30,
       },
@@ -262,6 +279,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 40,
       },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 40,
+      },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
         value: 40,
@@ -310,6 +331,10 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 5000,
       },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 5000,
+      },
       nombreJournéesCompletePsy: {
         dateMiseÀJourSource: "2021-07-07",
         value: 5000,
@@ -353,7 +378,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
       numéroFinessÉtablissementTerritorial: "010000040",
     },
   ];
-  public static autorisationsEtCapacités: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"] = {
+  public static readonly autorisationsEtCapacités: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"] = {
     autorisations: {
       activités: [
         {
@@ -524,7 +549,7 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     },
   };
 
-  public static qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
+  public static readonly qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
     reclamations: [{
       numéroFinessÉtablissementTerritorial: "",
       année: 2020,
@@ -564,14 +589,14 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire["identité"]>
-  ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel(
+  ): EtablissementTerritorialSanitaireViewModel {
+    return new EtablissementTerritorialSanitaireViewModel(
       {
-        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
-        autorisationsEtCapacités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
-        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
+        activités: EtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        autorisationsEtCapacités: EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+        qualite: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
         identité: {
-          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+          ...EtablissementTerritorialSanitaireViewModelTestBuilder.identité,
           ...champsSurchargés,
         },
         budgetFinance: [],
@@ -590,16 +615,16 @@ export class ÉtablissementTerritorialSanitaireViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"]>
-  ): ÉtablissementTerritorialSanitaireViewModel {
-    return new ÉtablissementTerritorialSanitaireViewModel(
+  ): EtablissementTerritorialSanitaireViewModel {
+    return new EtablissementTerritorialSanitaireViewModel(
       {
-        activités: ÉtablissementTerritorialSanitaireViewModelTestBuilder.activités,
+        activités: EtablissementTerritorialSanitaireViewModelTestBuilder.activités,
         autorisationsEtCapacités: {
-          ...ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+          ...EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
           ...champsSurchargés,
         },
-        qualite: ÉtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
-        identité: ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité,
+        qualite: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite,
+        identité: EtablissementTerritorialSanitaireViewModelTestBuilder.identité,
         budgetFinance: [],
         allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',

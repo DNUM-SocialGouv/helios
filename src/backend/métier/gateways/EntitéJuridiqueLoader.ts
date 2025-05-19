@@ -1,15 +1,15 @@
 import { ActivitesSanitaireMensuel } from "../entities/ActivitesSanitaireMensuel";
 import { AllocationRessource } from "../entities/AllocationRessource";
+import { EntiteJuridiqueDeRattachement } from "../entities/entité-juridique/EntiteJuridiqueDeRattachement";
 import { EntitéJuridiqueIdentité } from "../entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacitéLoader } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
-import { EntitéJuridiqueDeRattachement } from "../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 
 export interface EntitéJuridiqueLoader {
   chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée>;
-  chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement>;
+  chargeRattachement(numéroFiness: string): Promise<EntiteJuridiqueDeRattachement>;
   chargeRattachementCategorieEstPriveNonLucratif(numéroFiness: string): Promise<boolean>;
 
   chargeActivités(numéroFiness: string): Promise<EntitéJuridiqueActivités[]>;

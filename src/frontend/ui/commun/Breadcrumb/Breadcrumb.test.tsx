@@ -2,6 +2,7 @@ import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
+import { Breadcrumb } from "./Breadcrumb";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import PageDAccueil from "../../../../pages";
@@ -11,7 +12,7 @@ import MentionsLégales from "../../../../pages/mentions-legales";
 import { EntitéJuridiqueViewModelTestBuilder } from "../../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
@@ -20,7 +21,6 @@ import { PageRégion } from "../../région/PageRégion";
 import { régions } from "../../région/régions";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { PageÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
-import { Breadcrumb } from "./Breadcrumb";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
@@ -151,7 +151,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
 
   it("affiche le chemin jusqu’à la page établissement territorial sanitaire", () => {
     // GIVEN
-    const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
+    const établissementTerritorialSanitaireViewModel = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
     const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"

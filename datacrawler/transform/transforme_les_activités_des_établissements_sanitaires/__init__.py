@@ -9,10 +9,20 @@ from datacrawler.transform.transforme_les_activités_des_établissements_sanitai
     transforme_les_données_men_pmsi_annuel,
 )
 
+from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires.transforme_les_donnees_du_nombre_de_journees_usld import (
+    transforme_les_donnees_usld,
+)
 
-def transforme_les_activités_des_établissements_sanitaires(
-    données_men_pmsi_annuel: pd.DataFrame, données_ann_rpu: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
+
+def transforme_les_activites_des_etablissements_sanitaires(
+    donnees_men_pmsi_annuel: pd.DataFrame,
+    donnees_ann_rpu: pd.DataFrame,
+    donnees_ann_sae_activite: pd.DataFrame,
+    numeros_finess_des_etablissements_connus: pd.DataFrame,
+    logger: Logger
 ) -> pd.DataFrame:
-    return transforme_les_données_men_pmsi_annuel(données_men_pmsi_annuel, numéros_finess_des_établissements_connus, logger).join(
-        transforme_les_données_ann_rpu(données_ann_rpu, numéros_finess_des_établissements_connus, logger), how="outer"
+    return transforme_les_données_men_pmsi_annuel(donnees_men_pmsi_annuel, numeros_finess_des_etablissements_connus, logger).join(
+        transforme_les_données_ann_rpu(donnees_ann_rpu, numeros_finess_des_etablissements_connus, logger), how="outer"
+    ).join(
+        transforme_les_donnees_usld(donnees_ann_sae_activite, numeros_finess_des_etablissements_connus, logger), how="outer"
     )

@@ -1,10 +1,11 @@
+import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { CadreBudgétaire } from "../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
 const autorisationsMockData = {
@@ -102,6 +103,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     statutJuridique: {
       dateMiseÀJourSource: "2021-07-07",
       value: "Etablissement Public Intercommunal d’Hospitalisation",
+    },
+    categorisationDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: CatégorisationEnum.PUBLIC,
     },
     typeÉtablissement: {
       dateMiseÀJourSource: "2021-07-07",
@@ -629,8 +634,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial["identité"]>
-  ): ÉtablissementTerritorialMédicoSocialViewModel {
-    return new ÉtablissementTerritorialMédicoSocialViewModel(
+  ): EtablissementTerritorialMedicoSocialViewModel {
+    return new EtablissementTerritorialMedicoSocialViewModel(
       {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,

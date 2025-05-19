@@ -1,6 +1,6 @@
 import { CatégorisationEnum, EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../../configuration/wording/Wording";
-import { EntitéJuridiqueViewModel } from "../../ui/entité-juridique/EntitéJuridiqueViewModel";
+import { EntiteJuridiqueViewModel } from "../../ui/entité-juridique/EntitéJuridiqueViewModel";
 
 
 const autorisationsMockData = {
@@ -89,8 +89,8 @@ export class EntitéJuridiqueViewModelTestBuilder {
     }
   };
 
-  public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntitéJuridiqueViewModel {
-    return new EntitéJuridiqueViewModel(
+  public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntiteJuridiqueViewModel {
+    return new EntiteJuridiqueViewModel(
       {
         ...EntitéJuridiqueViewModelTestBuilder.entitéJuridique,
         ...champsSurchargés,

@@ -104,6 +104,7 @@ export class WordingFr implements Wording {
   readonly STRUCTURE: string = "Structure";
   readonly CAPACITE: string = "Capacité MS";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
+  readonly TOUT_EFFACER: string = "Tout effacer";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
@@ -217,6 +218,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = "Hospitalisation Complète PSY";
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
+  readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
 
@@ -621,6 +623,9 @@ export class WordingFr implements Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string = "Tout sélectionner";
+  readonly TOUT_DESELECTIONNER: string = "Tout désélectionner";
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";

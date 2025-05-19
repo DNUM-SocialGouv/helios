@@ -4,10 +4,11 @@ import { SessionProvider } from "next-auth/react";
 
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { StringFormater } from "../../commun/StringFormater";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
 
@@ -28,8 +29,8 @@ const mockSession = {
 };
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);
-const établissementTerritorialSanitaireViewModel = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
-const identité = ÉtablissementTerritorialSanitaireViewModelTestBuilder.identité;
+const établissementTerritorialSanitaireViewModel = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
+const identité = EtablissementTerritorialSanitaireViewModelTestBuilder.identité;
 
 describe("La page établissement territorial sanitaire - bloc identité", () => {
   it("affiche le titre dans l’onglet", () => {
@@ -377,14 +378,16 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutÉtablissement = within(indicateurs[9]).getByText(identité.statutJuridique.value);
+    const labelCategorisation = new CatégorisationViewModel(identité.categorisationDeLEntitéDeRattachement.value, wording).catégorisationWording;
+    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${labelCategorisation}`, "s");
+    const statutÉtablissement = within(indicateurs[9]).getByText(statutMatcher);
     expect(statutÉtablissement).toBeInTheDocument();
   });
 
   describe('affiche "non renseigné" quand une valeur est vide', () => {
     it("pour le téléphone", () => {
       // GIVEN
-      const établissementTerritorialSansTéléphone = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+      const établissementTerritorialSansTéléphone = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
         téléphone: {
           dateMiseÀJourSource: "2022-05-14",
           value: "",
@@ -414,7 +417,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
     it("pour l’e-mail", () => {
       // GIVEN
-      const établissementTerritorialSansEMail = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+      const établissementTerritorialSansEMail = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
         courriel: {
           dateMiseÀJourSource: "2022-05-14",
           value: "",
@@ -445,7 +448,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche l’adresse incomplète lorsqu’il manque des champs d’adresse", () => {
     // GIVEN
-    const établissementTerritorialSansAdresseVoie = ÉtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
+    const établissementTerritorialSansAdresseVoie = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths, {
       adresseVoie: {
         dateMiseÀJourSource: "2022-05-14",
         value: "",

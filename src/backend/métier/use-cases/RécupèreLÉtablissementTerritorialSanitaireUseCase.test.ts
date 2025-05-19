@@ -1,13 +1,14 @@
 import { mock } from "jest-mock-extended";
 
+import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from "./RécupèreLÉtablissementTerritorialSanitaireUseCase";
 import { ÉtablissementTerritorialTestBuilder } from "../../test-builder/ÉtablissementTerritorialTestBuilder";
 import { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../testHelper";
-import { EntitéJuridiqueDeRattachement } from "../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
+import { EntiteJuridiqueDeRattachement } from "../entities/entité-juridique/EntiteJuridiqueDeRattachement";
+import { CatégorisationEnum } from "../entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialSanitaire } from "../entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { ÉtablissementTerritorialSanitaireLoader } from "../gateways/ÉtablissementTerritorialSanitaireLoader";
-import { RécupèreLÉtablissementTerritorialSanitaireUseCase } from "./RécupèreLÉtablissementTerritorialSanitaireUseCase";
 
 describe("La récupération d’un établissement territorial sanitaire", () => {
   it("récupère la fiche identité de l’établissement territorial sanitaire", async () => {
@@ -23,7 +24,7 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
       },
     });
     const mockedChargeParNuméroFiness = jest.fn().mockResolvedValueOnce(fakeFicheIdentitéÉtablissementTerritorial);
-    const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
+    const entitéJuridiqueDeRattachement: EntiteJuridiqueDeRattachement = {
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: "2022-05-14",
         value: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
@@ -32,6 +33,10 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
         dateMiseÀJourSource: "2022-05-14",
         value: "Société Anonyme (S.A.)",
       },
+      categorisationDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: "2022-05-14",
+        value: CatégorisationEnum.PUBLIC,
+      }
     };
     const mockedChargeLEntitéJuridiqueDeRattachement = jest.fn().mockResolvedValueOnce(entitéJuridiqueDeRattachement);
     const mockedÉtablissementTerritorialLoader: ÉtablissementTerritorialSanitaireLoader = {
