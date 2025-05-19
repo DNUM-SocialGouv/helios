@@ -27,6 +27,36 @@ def xml_contenu_finess_cs1400101_builder(champs_surcharges: Optional[Dict] = Non
         return {**finess_cs1400101, **champs_surcharges}
     return finess_cs1400101
 
+def xml_contenu_finess_cs1400102_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_cs1400102 = {
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "nofinessej": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
+        "rs": "CH DU HAUT BUGEY - GEOVREISSET",
+        "rslongue": "CH DU HAUT BUGEY - GEOVREISSET",
+        "numvoie":  "240",
+        "typvoie": "R",
+        "voie": "GUY DE MAUPASSANT",
+        "departement": "01",
+        "libcommune": "DIVONNE LES BAINS",
+        "libdepartement": "AIN",
+        "dateouv": "2009-01-01",
+        "datefermeture": NaN,
+        "ligneacheminement": "01220 DIVONNE LES BAINS",
+        "categetab": "355",
+        "codemft": "03",
+        "courriel": "test@test.fr",
+        "libcategetab": "Centre Hospitalier (C.H.)",
+        "libcourtcategetab": "C.H.",
+        "libmft": "ARS établissements Publics de santé dotation globale",
+        "nofinessppal": NaN,
+        "siret": "5483216f6",
+        "typeet": "P",
+        "telephone": "0450201235",
+    }
+    if champs_surcharges:
+        return {**finess_cs1400102, **champs_surcharges}
+    return finess_cs1400102
+
 def xml_contenu_finess_cs1400103_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     finess_cs1400103 = {
         "nofinessej": 310781406,
