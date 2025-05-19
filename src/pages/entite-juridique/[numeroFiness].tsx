@@ -65,6 +65,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       saveSearchHistoryEndpoint(dependencies, entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value, session?.user.idUser!,
         entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value, ETB_ENTITE_JURIDIQUE);
 
+      saveSearchHistoryEndpoint(dependencies,entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value,session?.user.idUser!,
+        entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value,ETB_ENTITE_JURIDIQUE);
+
       return {
         props: {
           entitéJuridique: entitéJuridiqueEndpoint.entitéJuridique,
