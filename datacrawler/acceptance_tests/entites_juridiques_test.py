@@ -4,12 +4,15 @@ import pandas as pd
 from datacrawler.load.nom_des_tables import TABLE_ENTITES_JURIDIQUES
 from datacrawler.test_helpers import (
     base_de_données_test,
-    mocked_logger
+    mocked_logger,
+    supprime_les_données_des_tables
 )
 from datacrawler.import_les_entites_juridiques import import_entites_juridiques
 from datacrawler.test_helpers.helios_builder import helios_entite_juridique_builder
 
 class TestSauvegardeLesEntitesJuridiques:
+    def setup_method(self) -> None:
+        supprime_les_données_des_tables(base_de_données_test)
     def test_import_entites_juridiques(self, tmp_path: Path) -> None:
         # GIVEN - Create test XML files
         ej_xml = tmp_path / "finess_cs1400101_stock_20211214-0333.xml"
