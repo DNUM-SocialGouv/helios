@@ -140,3 +140,10 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_modalite",
     "code_forme",
 ]
+
+XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
+type_des_colonnes_categories_finess = {
+    "code": str,
+    "libelle": str,
+    "libellecourt": str
+}
