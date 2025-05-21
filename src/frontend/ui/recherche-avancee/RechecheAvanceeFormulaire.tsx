@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEf
 import { FiltreCapacite } from "./FiltreCapacite";
 import { FiltreStructure } from "./FiltreStructure";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
-import { AttribuesDefaults } from "./model/Attribues";
+import { AttribuesDefaults, typeStructureTranscodage } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -47,22 +47,15 @@ export const RechercheAvanceeFormulaire = ({
   }, [rechercheAvanceeContext?.typeStructure]);
 
   const getWordingGeo = (): string => {
-    return rechercheAvanceeContext?.zoneGeoLabel ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
+    return rechercheAvanceeContext?.zoneGeoLabel?.trim() ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
   }
 
   const getWordingStructure = (): string => {
     let structureWording = wording.STRUCTURE;
-    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.entiteJuridque)) {
-      structureWording += " : Etablissements Juridiques";
-    }
-    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
-      structureWording += " : Etablissements Sanitaires";
-    }
-    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-      structureWording += " : Etablissements SMS";
-    }
-    if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
-      structureWording += ", +" + rechercheAvanceeContext.statutJuridiqueStructure.length;
+    const totalSelected = (rechercheAvanceeContext?.typeStructure.length ?? 0) + (rechercheAvanceeContext?.statutJuridiqueStructure.length ?? 0);
+    if (totalSelected > 0 && rechercheAvanceeContext?.typeStructure) {
+      structureWording += ` : ${typeStructureTranscodage[rechercheAvanceeContext?.typeStructure[0]]}`;
+      if (totalSelected > 1) structureWording += ", +" + (totalSelected - 1);
     }
     return structureWording;
   }
