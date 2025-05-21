@@ -29,18 +29,17 @@ export const RechercheAvanceeFormulaire = ({
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
-  const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
   const isEraseAllEnabled = rechercheAvanceeContext?.terme !== "" ||
     rechercheAvanceeContext?.zoneGeo !== "" ||
-    rechercheAvanceeContext?.typeStructure !== "" ||
+    rechercheAvanceeContext?.typeStructure.length !== 0 ||
     rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ||
     rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
 
   useEffect(() => {
-    const structureType = rechercheAvanceeContext?.typeStructure ?? "";
-    if (listTypes.includes(structureType, 0)) {
+    const structureType = rechercheAvanceeContext?.typeStructure || [];
+    if (!structureType.includes(AttribuesDefaults.etablissementMedicoSocial)) {
       setDisableCapaciter(true);
     } else {
       setDisableCapaciter(false);
@@ -53,13 +52,13 @@ export const RechercheAvanceeFormulaire = ({
 
   const getWordingStructure = (): string => {
     let structureWording = wording.STRUCTURE;
-    if (AttribuesDefaults.entiteJuridque === rechercheAvanceeContext?.typeStructure) {
+    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.entiteJuridque)) {
       structureWording += " : Etablissements Juridiques";
     }
-    if (AttribuesDefaults.etablissementSanitaire === rechercheAvanceeContext?.typeStructure) {
+    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
       structureWording += " : Etablissements Sanitaires";
     }
-    if (AttribuesDefaults.etablissementMedicoSocial === rechercheAvanceeContext?.typeStructure) {
+    if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
       structureWording += " : Etablissements SMS";
     }
     if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
@@ -101,7 +100,7 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
-    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setTypeStructure([]);
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
@@ -111,11 +110,11 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const buttonZoneGeoClicked = rechercheAvanceeContext?.zoneGeo !== "" ? styles["filtre-button_clicked"] : "";
-  const buttonStructureClicked = rechercheAvanceeContext?.typeStructure !== "" ||
-  rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ? styles["filtre-button_clicked"] : "";
-  const buttonCapaciteClicked =  rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
-  rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
-  rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonStructureClicked = rechercheAvanceeContext?.typeStructure.length !== 0 ||
+    rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonCapaciteClicked = rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+    rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+    rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
 
   return (
     <div>
