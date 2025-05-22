@@ -94,6 +94,7 @@ import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMé
 import { BudgetEtFinancesSanitaireModel } from "./models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "./models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
+import { CategoriesFinessModel } from "./models/CategoriesFinessModel";
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
@@ -159,6 +160,7 @@ const datasource = new DataSource({
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
+    CategoriesFinessModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
