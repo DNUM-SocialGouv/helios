@@ -55,7 +55,7 @@ export function useRechercheAvanceeComparaison() {
         comparaisonContext?.zoneGeo,
         comparaisonContext?.zoneGeoD,
         comparaisonContext?.zoneGeoType,
-        AttribuesDefaults.etablissementMedicoSocial,
+        [AttribuesDefaults.etablissementMedicoSocial],
         statutsJuridiquesDefaultValue,
         capacites,
         comparaisonContext?.page
@@ -77,7 +77,7 @@ export function useRechercheAvanceeComparaison() {
     zone: string | undefined,
     zoneD: string | undefined,
     typeZone: string | undefined,
-    type: string,
+    type: string[],
     statutJuridique: string[],
     capaciteSMS: CapaciteEtablissement[] | undefined,
     page: number | undefined

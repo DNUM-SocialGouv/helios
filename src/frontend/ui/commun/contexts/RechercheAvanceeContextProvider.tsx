@@ -14,7 +14,7 @@ interface SearchParams {
   zoneGeoD?: string;
   zoneGeoType?: string;
   zoneGeoLabel?: string;
-  typeStructure?: string;
+  typeStructure?: string[];
   statutJuridiqueStructure?: string[];
   order?: string;
   orderBy?: string;
@@ -35,7 +35,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       zoneGeoD: parseAsString.withDefault(""),
       zoneGeoType: parseAsString.withDefault(""),
       zoneGeoLabel: parseAsString.withDefault(""),
-      typeStructure: parseAsString.withDefault(""),
+      typeStructure: parseAsArrayOf(parseAsString).withDefault([]),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault([]),
       order: parseAsString.withDefault(""),
       orderBy: parseAsString.withDefault(""),
