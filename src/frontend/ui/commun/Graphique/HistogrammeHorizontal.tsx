@@ -8,11 +8,11 @@ type HistogrammeHorizontalProps = {
   valeurs: number[];
   libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
-  ratioLargeurSurHauteur?: number;
   entêteLibellé: string;
   identifiant: string;
   libellésDeValeursManquantes: number[];
   nombreDeLibelléTotal: number;
+  cacheLesValeursBasse?: boolean;
 };
 
 export const HistogrammeHorizontal = ({
@@ -23,6 +23,7 @@ export const HistogrammeHorizontal = ({
   identifiant,
   libellésDeValeursManquantes,
   nombreDeLibelléTotal = 3,
+  cacheLesValeursBasse
 }: HistogrammeHorizontalProps): ReactElement => {
   const valeursDesHistogrammes: HistogrammeData[] = [
     new HistogrammeData(
@@ -43,6 +44,7 @@ export const HistogrammeHorizontal = ({
   return (
     <HistogrammesHorizontaux
       annéesManquantes={libellésDeValeursManquantes}
+      cacheLesValeursBasse={cacheLesValeursBasse}
       epaisseur="FIN"
       identifiant={identifiant}
       nom={entêteLibellé}

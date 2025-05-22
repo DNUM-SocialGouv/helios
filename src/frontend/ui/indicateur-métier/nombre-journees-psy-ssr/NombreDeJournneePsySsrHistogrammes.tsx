@@ -2,11 +2,11 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { ChangeEvent, useEffect, useState } from "react";
 
+import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeMensuelFilters } from "../../commun/Graphique/HistogrammeMensuelFilters";
 import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
   nombreDeJourneePsySsrViewModel: NombreDeJourneesPsySSRViewModel;
@@ -44,6 +44,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
       {selectedFrequency === wording.ANNUEL ?
         <HistogrammeVerticalABandes
           annéesTotales={nombreDeJourneePsySsrViewModel.NOMBRE_ANNEES}
+          cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
           data={nombreDeJourneePsySsrViewModel.histogrammeDataSet}
           grapheMensuel={false}
@@ -56,6 +57,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
         :
         <HistogrammeVerticalABandes
           annéesTotales={12}
+          cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
           data={activitéMensuelleViewModel.getHistogrammePsySsrDataSet(annéeEnCours, selectedActivity)}
           grapheMensuel={true}
