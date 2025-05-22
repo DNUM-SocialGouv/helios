@@ -1,20 +1,14 @@
 import fs from "fs";
 import XLSX from "xlsx";
 
+import { ExportToExcel, getCurrentDate, getSelectedInstitution, getSelectedProfile, getSelectedRole } from "./ExportExcel";
 import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
-import { ExportToExcel, getCurrentDate, getSelectedInstitution, getSelectedProfile, getSelectedRole } from "./ExportExcel";
 
 const createDirectory = (path: string) => {
   try {
     fs.mkdirSync(path, { recursive: true });
-    //console.log(`Directory "${path}" created successfully.`);
   } catch (err) {
-    if (err.code === "EEXIST") {
-      //console.log(`Directory "${path}" already exists.`);
-    } else {
-      // console.error(`Error creating directory "${path}":`, err);
-    }
   }
 };
 

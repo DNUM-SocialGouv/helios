@@ -36,7 +36,6 @@
 
   border: 1px solid var(--border-default-grey);
   width: 200px;
-  position: absolute;
   z-index: 10;
 }
 
@@ -84,6 +83,7 @@
 }
 
 .sr-only-focusable {}
+
 .sr-only-focusable:focus-within {
   background-color: white;
   z-index: 1;
