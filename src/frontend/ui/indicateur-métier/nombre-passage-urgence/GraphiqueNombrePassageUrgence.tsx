@@ -26,6 +26,7 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
       source={wording.RPU}
     >
       <HistogrammeHorizontal
+        cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombrePassageAuxUrgencesViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
