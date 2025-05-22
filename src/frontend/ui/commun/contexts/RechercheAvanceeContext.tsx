@@ -8,7 +8,7 @@ export interface RechercheAvanceeContextValue {
   zoneGeoD: string;
   zoneGeoType: string;
   zoneGeoLabel: string;
-  typeStructure: string;
+  typeStructure: string[];
   statutJuridiqueStructure: string[];
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
@@ -22,7 +22,7 @@ export interface RechercheAvanceeContextValue {
   setZoneGeoD: (zoneGeoD: string) => void;
   setZoneGeoType: (zoneGeo: string) => void;
   setZoneGeoLabel: (zoneGeo: string) => void;
-  setTypeStructure: (typeStructure: string) => void;
+  setTypeStructure: (typeStructure: string[]) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;

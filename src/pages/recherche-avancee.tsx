@@ -87,10 +87,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   const zoneParam = String(zone);
   const zoneDParam = String(zoneD);
   const typeZoneParam = String(typeZone);
-  const typeParam = String(type);
   const orderParam = String(order) as OrderDir;
   const orderByParam = String(orderBy);
 
+  const typeParam = type.length > 0 && typeof type === "string" ? type.split(",") : [];
   const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
   const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
   const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];
@@ -107,7 +107,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     (termeParam ||
       zoneParam ||
       statutJuridiqueParam.length > 0 ||
-      typeParam ||
+      typeParam.length > 0 ||
       capaciteMedicoSociauxParam.length > 0 ||
       capaciteHandicapParam.length > 0 ||
       capaciteAgeesParam.length > 0)
