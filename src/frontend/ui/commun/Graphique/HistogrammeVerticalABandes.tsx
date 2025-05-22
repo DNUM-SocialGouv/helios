@@ -2,6 +2,7 @@ import { ChartOptions } from "chart.js";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { couleurDelAbscisse } from "./couleursGraphique";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
@@ -9,10 +10,9 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
-import { couleurDelAbscisse } from "./couleursGraphique";
 
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },
@@ -27,6 +27,10 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
           bottom: -2,
         },
         formatter: (value) => {
+          const valueNumber = value.y as number;
+          if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= 5) {
+            return "1 à 5";
+          }
           return value.y;
         },
         font: {
@@ -77,7 +81,8 @@ export function HistogrammeVerticalABandes(props: {
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
   annéesTotales: number;
-  grapheMensuel: boolean
+  grapheMensuel: boolean;
+  cacheLesValeursBasse?: boolean;
 }) {
   const { wording } = useDependencies();
 
@@ -93,7 +98,7 @@ export function HistogrammeVerticalABandes(props: {
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
+          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording, props.cacheLesValeursBasse)} />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}

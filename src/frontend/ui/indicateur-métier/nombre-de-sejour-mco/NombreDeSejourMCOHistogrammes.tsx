@@ -2,11 +2,11 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { ChangeEvent, useEffect, useState } from "react";
 
+import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeMensuelFilters } from "../../commun/Graphique/HistogrammeMensuelFilters";
 import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
@@ -44,6 +44,7 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
       {selectedFrequency === wording.ANNUEL ?
         <HistogrammeVerticalABandes
           annéesTotales={nombreDeSejourMCOViewModel.NOMBRE_ANNEES}
+          cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
           data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()}
           grapheMensuel={false}
@@ -56,6 +57,7 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
         :
         <HistogrammeVerticalABandes
           annéesTotales={12}
+          cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
           data={activitéMensuelleViewModel.getHistogrammeDataSet(annéeEnCours, selectedActivity)}
           grapheMensuel={true}
