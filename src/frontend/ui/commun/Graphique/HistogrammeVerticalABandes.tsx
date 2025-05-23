@@ -64,14 +64,9 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
   };
 }
 
-export function HistogrammeVerticalABandes(props: {
+export function HistogrammeVerticalABandes(props: Readonly<{
   data: {
-    datasets: (
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-    )[];
+    datasets: { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }[];
     labels: (string | number)[];
   };
   id: string;
@@ -83,15 +78,15 @@ export function HistogrammeVerticalABandes(props: {
   annéesTotales: number;
   grapheMensuel: boolean;
   cacheLesValeursBasse?: boolean;
-}) {
+}>) {
   const { wording } = useDependencies();
 
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
-  const [indexPremierMoisNonRenseigne, setindexPremierMoisNonRenseigne] = useState(props.valeurs.length)
+  const [indexPremierMoisNonRenseigne, setIndexPremierMoisNonRenseigne] = useState(props.valeurs.length)
 
   useEffect(() => {
-    setindexPremierMoisNonRenseigne(props.valeurs[0].length);
+    setIndexPremierMoisNonRenseigne(props.valeurs[0].length);
   }, [props.valeurs])
 
   return (

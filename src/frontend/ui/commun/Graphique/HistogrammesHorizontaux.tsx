@@ -66,9 +66,9 @@ export class HistogrammeData {
   constructor(
     public nom: string,
     public labels: string[],
-    private totals: number[],
-    private stacks: Stack[],
-    private valueFormatter: (value: number) => string = (value) => value?.toString()
+    private readonly totals: number[],
+    private readonly stacks: Stack[],
+    private readonly valueFormatter: (value: number) => string = (value) => value?.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
     this.setDefaultErrorStatut();
@@ -216,7 +216,7 @@ export const HistogrammesHorizontaux = ({
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, cacheLesValeursBasse);
 
   function transcriptionTitles(): string[] {
-    return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat() as string[];
+    return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat();
   }
 
   function getTranscriptionValeurs() {
@@ -278,12 +278,12 @@ function LegendeHistogrammes({
   color,
   toggleStackVisibility,
   areStacksVisible,
-}: {
+}: Readonly<{
   legend: string[];
   color: string[];
   toggleStackVisibility: (index: number, isVisible: boolean) => void;
   areStacksVisible: boolean[];
-}) {
+}>) {
   return (
     <div aria-hidden="true" className="fr-checkbox-group " style={{ display: "flex", marginLeft: "2rem", marginBottom: "2rem" }}>
       {legend.map((légende, index) => (
