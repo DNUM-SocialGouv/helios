@@ -89,6 +89,21 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     setIndexPremierMoisNonRenseigne(props.valeurs[0].length);
   }, [props.valeurs])
 
+  let valeursTranscription = props.valeurs;
+  if (props.cacheLesValeursBasse) {
+    valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
+      if (valeur) {
+        const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+        if (numValue > 0 && numValue <= 5) {
+          return "1 à 5";
+        }
+      }
+      return valeur;
+    })
+    )
+      ;
+  }
+
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
@@ -104,7 +119,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
         identifiants={props.identifiants}
         libellés={props.libellés}
-        valeurs={props.valeurs}
+        valeurs={valeursTranscription}
       />
     </>
   );
