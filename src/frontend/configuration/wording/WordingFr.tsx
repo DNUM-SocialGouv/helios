@@ -642,6 +642,5 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La création, la gestion de listes et les indicateurs de taux d’occupation des établissements médico-sociaux sont désormais accessibles.";
-
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "L’indicateur Nombre de journées en USLD est disponible, réinitialisation des champs de recherche et sélection de l’ensemble des résultats de la recherche avancée sont accessibles.";
 }
