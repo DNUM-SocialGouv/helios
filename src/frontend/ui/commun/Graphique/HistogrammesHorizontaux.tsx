@@ -220,7 +220,18 @@ export const HistogrammesHorizontaux = ({
   }
 
   function getTranscriptionValeurs() {
-    return histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
+    let valeurs = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
+    if (cacheLesValeursBasse) {
+      valeurs = valeurs.map((valeurs) => valeurs.map((valeur) => {
+        const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+        if (numValue > 0 && numValue <= 5) {
+          return "1 à 5";
+        }
+        return valeur;
+      })
+      )
+    }
+    return valeurs;
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
