@@ -1,9 +1,11 @@
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { FiltreCapacite } from "./FiltreCapacite";
+import { FiltreCategoriesFiness } from "./FiltreCategoriesFiness";
 import { FiltreStructure } from "./FiltreStructure";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import { AttribuesDefaults, typeStructureTranscodage } from "./model/Attribues";
+import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -16,6 +18,8 @@ type RechercheAvanceeFormulaireProps = Readonly<{
   setIsChangedZG?: Dispatch<SetStateAction<boolean>>;
   setIsChangedCapacite?: Dispatch<SetStateAction<boolean>>;
   setIsChangedStructure?: Dispatch<SetStateAction<boolean>>;
+  setIsChangedCategories?: Dispatch<SetStateAction<boolean>>;
+  categoriesViewModel: CategoriesFinessViewModel[]
 }>;
 
 export const RechercheAvanceeFormulaire = ({
@@ -25,6 +29,8 @@ export const RechercheAvanceeFormulaire = ({
   setIsChangedZG,
   setIsChangedStructure,
   setIsChangedCapacite,
+  setIsChangedCategories,
+  categoriesViewModel
 }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
@@ -58,6 +64,11 @@ export const RechercheAvanceeFormulaire = ({
       if (totalSelected > 1) structureWording += ", +" + (totalSelected - 1);
     }
     return structureWording;
+  }
+
+  const getWordingCategories = (): string => {
+    const categoriesWording = wording.CATEGORIES_FINESS;
+    return categoriesWording;
   }
 
   const getWordingCapacite = () => {
@@ -149,6 +160,14 @@ export const RechercheAvanceeFormulaire = ({
             {getWordingStructure()}
           </button>
           <button
+            aria-controls="fr-modal-Categories-Filtre"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
+            data-fr-opened="false"
+            disabled={isComparaison}
+          >
+            {getWordingCategories()}
+          </button>
+          <button
             aria-controls="fr-modal-Capacite-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
             data-fr-opened="false"
@@ -167,6 +186,7 @@ export const RechercheAvanceeFormulaire = ({
       <div>
         <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} />
         <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
+        <FiltreCategoriesFiness categoriesViewModel={categoriesViewModel} isComparaison={isComparaison} setIsChanged={setIsChangedCategories} />
         <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />
       </div>
     </div>

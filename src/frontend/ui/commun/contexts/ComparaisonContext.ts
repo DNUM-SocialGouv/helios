@@ -9,6 +9,7 @@ export interface ComparaisonContextValue {
   zoneGeoType: string;
   zoneGeoLabel: string;
   typeStructure: string[];
+  categories: string[];
   statutJuridiqueStructure: string[];
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
@@ -23,6 +24,7 @@ export interface ComparaisonContextValue {
   setZoneGeoType: (zoneGeo: string) => void;
   setZoneGeoLabel: (zoneGeo: string) => void;
   setTypeStructure: (typeStructure: string[]) => void;
+  setCategories: (categories: string[]) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;

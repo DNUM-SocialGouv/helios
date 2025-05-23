@@ -1,6 +1,8 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { useState } from "react";
 
+import { CategoriesFinessModel } from "../../database/models/CategoriesFinessModel";
+import { getFinessCategoriesEndpoint } from "../backend/infrastructure/controllers/getFinessCategoriesEndpoint";
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
 import { OrderDir, ParametreDeRechercheAvancee } from "../backend/métier/entities/ParametresDeRechercheAvancee";
@@ -8,6 +10,7 @@ import { RésultatDeRecherche } from "../backend/métier/entities/RésultatDeRec
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { RechercheEnAttente } from "../frontend/ui/home/RechercheEnAttente";
+import { CategoriesFinessViewModel } from "../frontend/ui/recherche-avancee/model/CategoriesFinessViewModel";
 import { PasResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/PasResultatRechercheAvancee";
 import { RechercheAvanceeFormulaire } from "../frontend/ui/recherche-avancee/RechecheAvanceeFormulaire";
 import { ResultatRechercheAvancee } from "../frontend/ui/recherche-avancee/resultat-recherche-avancee/ResultatRechercheAvancee";
@@ -18,7 +21,9 @@ export interface ExtendedResultatDeRecherche extends RésultatDeRecherche {
   laRechercheEtendueEstLancee: boolean;
 }
 
-export default function RechercheAvancee(props: Readonly<ExtendedResultatDeRecherche>) {
+type RouterProps = Readonly<{ rechercheProps: Readonly<ExtendedResultatDeRecherche>, categories: CategoriesFinessModel[] | null }>;
+
+export default function RechercheAvancee(props: RouterProps) {
   const { wording } = useDependencies();
 
   const {
@@ -32,7 +37,7 @@ export default function RechercheAvancee(props: Readonly<ExtendedResultatDeReche
     page,
     lastPage,
     setPage,
-  } = useRechercheAvancee(props);
+  } = useRechercheAvancee(props.rechercheProps);
 
   useBreadcrumb([
     {
@@ -52,20 +57,31 @@ export default function RechercheAvancee(props: Readonly<ExtendedResultatDeReche
     setSelectedRows(new Map<string, string>);
   }
 
+  const categoriesViewModel = props.categories?.map((categorie) => new CategoriesFinessViewModel(categorie));
+
+
   return (
     <main className="fr-container" id="content">
-      <RechercheAvanceeFormulaire isComparaison={false} lancerLaRecherche={resetSelectionEtLanceLaRecherche} rechercheOnChange={rechercheOnChange} setIsChangedCapacite={resetSelectionOnChange} setIsChangedStructure={resetSelectionOnChange} setIsChangedZG={resetSelectionOnChange} />
+      <RechercheAvanceeFormulaire
+        categoriesViewModel={categoriesViewModel ?? []}
+        isComparaison={false}
+        lancerLaRecherche={resetSelectionEtLanceLaRecherche}
+        rechercheOnChange={rechercheOnChange}
+        setIsChangedCapacite={resetSelectionOnChange}
+        setIsChangedStructure={resetSelectionOnChange}
+        setIsChangedZG={resetSelectionOnChange}
+      />
       {estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && <PasResultatRechercheAvancee />}
       {nombreRésultats > 0 && !estCeEnAttente && (
         <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page ?? 1} selectedRows={selectedRows} setPage={setPage} setSelectedRows={setSelectedRows} />
       )}
-      {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}{" "}
+      {!estCeQueLaRechercheEstLancee && !props.rechercheProps.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}{" "}
       {estCeEnAttente && <RechercheEnAttente />}
     </main>
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<ExtendedResultatDeRecherche>> {
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   const {
     query: {
       terme = "",
@@ -102,6 +118,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     { classification: "personnes_agees", ranges: capaciteAgeesParam },
   ].filter((capacite) => capacite.ranges.length > 0);
 
+  const categories = await getFinessCategoriesEndpoint(dependencies);
+
   if (
     pageParam &&
     (termeParam ||
@@ -120,17 +138,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
     return {
       props: {
-        ...recherche,
-        laRechercheEtendueEstLancee: true,
+        rechercheProps: {
+          ...recherche,
+          laRechercheEtendueEstLancee: true,
+        },
+        categories: JSON.parse(JSON.stringify(categories))
       },
     };
   } else {
     return {
       props: {
-        nombreDeRésultats: 0,
-        résultats: [],
-        laRechercheEtendueEstLancee: false,
-      },
+        rechercheProps: {
+          nombreDeRésultats: 0,
+          résultats: [],
+          laRechercheEtendueEstLancee: false,
+        },
+        categories: JSON.parse(JSON.stringify(categories))
+      }
     };
   }
 }
