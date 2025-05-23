@@ -39,6 +39,7 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.zoneGeo !== "" ||
     rechercheAvanceeContext?.typeStructure.length !== 0 ||
     rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ||
+    rechercheAvanceeContext?.categories.length !== 0 ||
     rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
@@ -106,6 +107,7 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
     rechercheAvanceeContext?.setTypeStructure([]);
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
+    rechercheAvanceeContext?.setCategories([]);
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
     rechercheAvanceeContext?.setZoneGeoLabel("");

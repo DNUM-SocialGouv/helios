@@ -91,6 +91,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       page = 1,
       statuts = [],
       type = "",
+      categories = [],
       capacite_medico_sociaux: capaciteMedicoSociaux = [],
       capacite_handicap: capaciteHandicap = [],
       capacite_agees: capaciteAgees = [],
@@ -108,6 +109,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
   const typeParam = type.length > 0 && typeof type === "string" ? type.split(",") : [];
   const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
+  const categoriesParam = categories.length > 0 && typeof categories === "string" ? categories.split(",") : [];
   const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
   const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];
   const capaciteAgeesParam = capaciteAgees.length > 0 && typeof capaciteAgees === "string" ? capaciteAgees.split(";") : [];
@@ -118,7 +120,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     { classification: "personnes_agees", ranges: capaciteAgeesParam },
   ].filter((capacite) => capacite.ranges.length > 0);
 
-  const categories = await getFinessCategoriesEndpoint(dependencies);
+  const categoriesFiness = await getFinessCategoriesEndpoint(dependencies);
 
   if (
     pageParam &&
@@ -126,11 +128,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       zoneParam ||
       statutJuridiqueParam.length > 0 ||
       typeParam.length > 0 ||
+      categories.length > 0 ||
       capaciteMedicoSociauxParam.length > 0 ||
       capaciteHandicapParam.length > 0 ||
       capaciteAgeesParam.length > 0)
   ) {
-    const params = { terme: termeParam, zone: zoneParam, zoneD: zoneDParam, typeZone: typeZoneParam, type: typeParam, statutJuridique: statutJuridiqueParam, capaciteSMS: capacites, order: orderParam, orderBy: orderByParam, page: pageParam, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeParam, zone: zoneParam, zoneD: zoneDParam, typeZone: typeZoneParam, type: typeParam, statutJuridique: statutJuridiqueParam, categories: categoriesParam, capaciteSMS: capacites, order: orderParam, orderBy: orderByParam, page: pageParam, forExport: false } as ParametreDeRechercheAvancee;
     const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
       dependencies,
       params
@@ -142,7 +145,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           ...recherche,
           laRechercheEtendueEstLancee: true,
         },
-        categories: JSON.parse(JSON.stringify(categories))
+        categories: JSON.parse(JSON.stringify(categoriesFiness))
       },
     };
   } else {
@@ -153,7 +156,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
           résultats: [],
           laRechercheEtendueEstLancee: false,
         },
-        categories: JSON.parse(JSON.stringify(categories))
+        categories: JSON.parse(JSON.stringify(categoriesFiness))
       }
     };
   }

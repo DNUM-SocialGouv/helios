@@ -12,6 +12,7 @@ export type ParametreDeRechercheAvancee = Readonly<{
   typeZone: string,
   type: string[],
   statutJuridique: string[],
+  categories: string[],
   capaciteSMS: CapaciteSMS[],
   order: OrderDir,
   orderBy: string,

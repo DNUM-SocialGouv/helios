@@ -11,7 +11,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       commune,
       departement,
       code_region,
-      '' AS rattachement
+      '' AS rattachement,
+      '' AS categorie
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -23,7 +24,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       commune,
       departement,
       code_region,
-      numero_finess_entite_juridique AS rattachement
+      numero_finess_entite_juridique AS rattachement,
+      cat_etablissement AS categorie
     FROM etablissement_territorial;`,
   name: "recherche",
 })
