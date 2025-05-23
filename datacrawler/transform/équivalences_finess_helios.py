@@ -140,3 +140,21 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_modalite",
     "code_forme",
 ]
+
+XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
+type_des_colonnes_categories_finess = {
+    "code": str,
+    "libelle": str,
+    "libellecourt": str
+}
+equivalences_finess_cs1500106_helios = {
+    "code": "code",
+    "libelle": "libelle",
+    "libellecourt": "libelle_court"
+}
+
+index_des_categories: List[str] = [
+    "code"
+]
+
+colonnes_a_garder_categories_finess= list(type_des_colonnes_categories_finess.keys())
