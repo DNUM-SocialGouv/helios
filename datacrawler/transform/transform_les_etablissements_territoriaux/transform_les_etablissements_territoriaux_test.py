@@ -37,8 +37,8 @@ class TestTransformeLesDonneesEtablissementTerritorial:
         etablissements_territoriaux_attendus = pd.DataFrame([ {
         "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
         "nofinessej": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-        "rs": "CH DU HAUT BUGEY GEOVREISSET",
-        "rslongue": "CH DU HAUT BUGEY GEOVREISSET",
+        "rs": "CH DU HAUT BUGEY - GEOVREISSET",
+        "rslongue": "CH DU HAUT BUGEY - GEOVREISSET",
         "numvoie":  "240",
         "typvoie": "R",
         "voie": "GUY DE MAUPASSANT",
