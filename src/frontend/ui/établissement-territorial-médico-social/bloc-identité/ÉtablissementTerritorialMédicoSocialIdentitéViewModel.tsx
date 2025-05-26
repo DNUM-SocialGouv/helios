@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { ReactChild, ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
+import { catégorisationEnumToString } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 import { StringFormater } from "../../commun/StringFormater";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
-export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
+export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
   constructor(
     private readonly établissementTerritorialIdentité: ÉtablissementTerritorialMédicoSocial["identité"],
     private readonly wording: Wording,
@@ -26,14 +28,14 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
   }
 
   public get dateOuvertureÉtablissementTerritorial(): string {
-    if (this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.value) {
+    if (this.établissementTerritorialIdentité.dateOuverture?.value) {
       return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.value);
     }
     return "Non renseigné"
   }
 
   public get dateDeMiseÀJourOuvertureÉtablissementTerritorial(): string {
-    if (this.établissementTerritorialIdentité.dateOuverture && this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource) {
+    if (this.établissementTerritorialIdentité.dateOuverture?.dateMiseÀJourSource) {
       return StringFormater.formatDate(this.établissementTerritorialIdentité.dateOuverture.dateMiseÀJourSource);
     }
     return "Non renseigné"
@@ -113,6 +115,15 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     return StringFormater.formatDate(this.établissementTerritorialIdentité.statutJuridique.dateMiseÀJourSource);
   }
 
+  public get categorisationDeLEntitéDeRattachement(): string {
+    return catégorisationEnumToString(this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value);
+  }
+
+  public get labelCategorisationDeLEntiteDeRattachement(): string {
+    return new CatégorisationViewModel(this.établissementTerritorialIdentité.categorisationDeLEntitéDeRattachement.value, this.wording).catégorisationWording ?? "";
+  }
+
+
   public get monoÉtablissement(): string {
     return this.établissementTerritorialIdentité.estMonoÉtablissement.value ? this.wording.OUI : this.wording.NON;
   }
@@ -121,7 +132,7 @@ export class ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
     return StringFormater.formatDate(this.établissementTerritorialIdentité.estMonoÉtablissement.dateMiseÀJourSource);
   }
 
-  public get principalOuSecondaire(): ReactChild {
+  public get principalOuSecondaire(): ReactNode {
     const domaine = this.établissementTerritorialIdentité.domaineÉtablissementPrincipal === "Médico-social" ? this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL : this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE;
     const lienVersLETMS = `${domaine}/${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;
     const libelle = `${this.établissementTerritorialIdentité.numéroFinessÉtablissementPrincipal.value}`;

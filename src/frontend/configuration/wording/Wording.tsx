@@ -88,7 +88,7 @@ export interface Wording {
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
-
+  readonly TOUT_EFFACER: string;
   // Cartographie
   readonly CARTOGRAPHIE: string;
   readonly OFFRE_SANTÉ_PAR_REGION: string;
@@ -189,6 +189,7 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string;
   readonly HOSPITALISATION_COMPLÈTE_PSY: string;
   readonly NOMBRE_DE_HAD: string;
+  readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
 
@@ -538,6 +539,9 @@ export interface Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string;
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string;
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string;
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string;
+  readonly TOUT_DESELECTIONNER: string;
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;

@@ -36,6 +36,15 @@ def helios_ann_rpu_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str
         return {**ann_rpu, **champs_surcharges}
     return ann_rpu
 
+def helios_ann_sae_activite_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    ann_sae_activite = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2018,
+        "nombre_journees_usld": 12304.0,
+    }
+    if champs_surcharges:
+        return {**ann_sae_activite, **champs_surcharges}
+    return ann_sae_activite
 
 def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
@@ -105,6 +114,7 @@ def helios_activité_sanitaire_builder(champs_surcharges: Optional[Dict] = None)
         "nombre_journees_complete_psy": 1.0,
         "nombre_journées_partielles_psy": 1.0,
         "nombre_passages_urgences": 100.0,
+        "nombre_journees_usld": 100.0,
         "nombre_sejours_had": 200.0,
     }
     if champs_surcharges:

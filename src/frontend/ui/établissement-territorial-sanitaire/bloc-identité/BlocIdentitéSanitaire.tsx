@@ -1,12 +1,12 @@
+import styles from "./BlocIdentitéSanitaire.module.css";
+import { EtablissementTerritorialSanitaireIdentiteViewModel } from "./ÉtablissementTerritorialSanitaireIdentitéViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurIdentité } from "../../commun/IndicateurIdentité/IndicateurIdentité";
 import { Sources } from "../../commun/Sources/Sources";
-import styles from "./BlocIdentitéSanitaire.module.css";
-import { ÉtablissementTerritorialSanitaireIdentitéViewModel } from "./ÉtablissementTerritorialSanitaireIdentitéViewModel";
 
 type BlocIdentitéSanitaireProps = Readonly<{
-  établissementTerritorialSanitaireIdentitéViewModel: ÉtablissementTerritorialSanitaireIdentitéViewModel;
+  établissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
 }>;
 
 export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdentitéViewModel }: BlocIdentitéSanitaireProps) => {
@@ -85,7 +85,10 @@ export const BlocIdentitéSanitaire = ({ établissementTerritorialSanitaireIdent
           nomDeLIndicateur={wording.STATUT_JURIDIQUE_EJ}
           source={Sources(wording.FINESS)}
         >
-          {établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}
+          <>
+            {établissementTerritorialSanitaireIdentitéViewModel.statutDeLÉtablissement}<br />
+            {établissementTerritorialSanitaireIdentitéViewModel.labelCategorisationDeLEntiteDeRattachement}
+          </>
         </IndicateurIdentité>
       </ul>
     </Bloc>

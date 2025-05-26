@@ -9,7 +9,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
-  const qualite = filterQualiteMedicoSocial(result.qualite, profil.Qualité);
+  const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
 
   return {
     identité: identité,
@@ -58,7 +58,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const activités = filterActiviteSanitaire(result.activités, profil.activités);
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
 
-  const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
+  const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   return {
@@ -75,33 +75,56 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
 };
 
 const filterIdentiteSanitaire = (identite: any, profil: any) => {
-  const filtredIdentite = {
-    adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
-    adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
-    adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
-    adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-    catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : '',
-    courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
-    dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
-    libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : { 'dateMiseÀJourSource': '', value: '' },
-    raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
-    raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
-    siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
-    typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
-    raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
-    statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-    codeRegion: identite.codeRegion,
-    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
-    // to change "télEtEmail" by "dateOuverture"
-    dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+  if (profil.adresse !== 'ok') {
+    identite.adresseAcheminement = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseNuméroVoie = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseTypeVoie = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseVoie = { 'dateMiseÀJourSource': '', value: '' };
   }
-  return filtredIdentite;
+
+  if (profil.catégorieÉtablissement !== 'ok') {
+    identite.catégorieÉtablissement = { 'dateMiseÀJourSource': '', value: '' };
+    identite.libelléCatégorieÉtablissement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  if (profil.modeTarification !== 'ok') {
+    identite.codeModeTarification = '';
+    identite.libelléModeTarification = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.dateDEntréeEnVigueurDuCpom = profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.EJ_rattachement !== 'ok') {
+    identite.numéroFinessEntitéJuridique = { 'dateMiseÀJourSource': '', value: '' };
+    identite.raisonSocialeDeLEntitéDeRattachement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  if (profil.ET_principal_secondaire !== 'ok') {
+    identite.numéroFinessÉtablissementPrincipal = { 'dateMiseÀJourSource': '', value: '' };
+    identite.typeÉtablissement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.numéroFinessÉtablissementTerritorial = profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.nom !== 'ok') {
+    identite.raisonSociale = { 'dateMiseÀJourSource': '', value: '' };
+    identite.raisonSocialeCourte = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.siret = profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.statut_EJ !== 'ok') {
+    identite.statutJuridique = { 'dateMiseÀJourSource': '', value: '' };
+    identite.categorisationDeLEntitéDeRattachement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  // to change "télEtEmail" by "dateOuverture"
+  if (profil.télEtEmail !== 'ok') {
+    identite.dateOuverture = { 'dateMiseÀJourSource': '', value: '' };
+    identite.téléphone = { 'dateMiseÀJourSource': '', value: '' };
+    identite.courriel = { 'dateMiseÀJourSource': '', value: '' };
+  }
+  return identite;
 }
 
 const filterActiviteSanitaire = (activites: any[], profil: any) => {
@@ -129,6 +152,10 @@ const filterActiviteSanitaire = (activites: any[], profil: any) => {
         "nombreSéjoursPartielsMédecine",
         "nombreSéjoursPartielsObstétrique"
       ]
+    },
+    {
+      condition: profil.nombreJourneesUsld === "ok",
+      fields: ["nombreJourneesUsld"]
     }
   ];
   return activites.map(activite => {
@@ -145,6 +172,7 @@ const filterActiviteSanitaire = (activites: any[], profil: any) => {
     return filteredActivite;
   });
 };
+
 const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => {
   const filtredAutorisationCapacite = {
     autorisations: profil.autorisationsActivités === "ok" ? autorisationCapacite.autorisations : { dateMiseÀJourSource: "", activités: [] },
@@ -159,7 +187,7 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
   return filtredAutorisationCapacite;
 };
 
-const filterQualiteSanitaire = (qualite: any, profil: any) => {
+const filterQualiteSanitaireEtMS = (qualite: any, profil: any) => {
   const filtredQualite = {
     reclamations: profil.DonnéesSirec === "ok" ? qualite.reclamations : [{ details: [] }],
     evenementsIndesirables: profil.DonnéesSivss === "ok" ? qualite.evenementsIndesirables : [],
@@ -169,33 +197,56 @@ const filterQualiteSanitaire = (qualite: any, profil: any) => {
 };
 
 const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
-  const filtredIdentite = {
-    adresseAcheminement: profil.adresse === 'ok' ? identite.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
-    adresseNuméroVoie: profil.adresse === 'ok' ? identite.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
-    adresseTypeVoie: profil.adresse === 'ok' ? identite.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
-    adresseVoie: profil.adresse === 'ok' ? identite.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
-    catégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    codeModeTarification: profil.modeTarification === 'ok' ? identite.codeModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-    courriel: profil.télEtEmail === 'ok' ? identite.courriel : { 'dateMiseÀJourSource': '', value: '' },
-    dateDEntréeEnVigueurDuCpom: profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' },
-    libelléCatégorieÉtablissement: profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    libelléModeTarification: profil.modeTarification === 'ok' ? identite.libelléModeTarification : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessEntitéJuridique: profil.EJ_rattachement === 'ok' ? identite.numéroFinessEntitéJuridique : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessÉtablissementPrincipal: profil.ET_principal_secondaire === 'ok' ? identite.numéroFinessÉtablissementPrincipal : { 'dateMiseÀJourSource': '', value: '' },
-    numéroFinessÉtablissementTerritorial: profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : '',
-    raisonSociale: profil.nom === 'ok' ? identite.raisonSociale : { 'dateMiseÀJourSource': '', value: '' },
-    raisonSocialeCourte: profil.nom === 'ok' ? identite.raisonSocialeCourte : { 'dateMiseÀJourSource': '', value: '' },
-    siret: profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' },
-    typeÉtablissement: profil.ET_principal_secondaire === 'ok' ? identite.typeÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    téléphone: profil.télEtEmail === 'ok' ? identite.téléphone : { 'dateMiseÀJourSource': '', value: '' },
-    raisonSocialeDeLEntitéDeRattachement: profil.EJ_rattachement === 'ok' ? identite.raisonSocialeDeLEntitéDeRattachement : { 'dateMiseÀJourSource': '', value: '' },
-    statutJuridique: profil.statut_EJ === 'ok' ? identite.statutJuridique : { 'dateMiseÀJourSource': '', value: '' },
-    estMonoÉtablissement: profil.mono_établissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' },
-    codeRegion: identite.codeRegion,
-    domaineÉtablissementPrincipal: identite.domaineÉtablissementPrincipal,
-    dateOuverture: profil.télEtEmail === 'ok' ? identite.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+  if (profil.adresse !== 'ok') {
+    identite.adresseAcheminement = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseNuméroVoie = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseTypeVoie = { 'dateMiseÀJourSource': '', value: '' };
+    identite.adresseVoie = { 'dateMiseÀJourSource': '', value: '' };
   }
-  return filtredIdentite;
+
+  identite.catégorieÉtablissement = profil.catégorieÉtablissement === 'ok' ? identite.catégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.modeTarification !== 'ok') {
+    identite.codeModeTarification = { 'dateMiseÀJourSource': '', value: '' };
+    identite.libelléModeTarification = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  if (profil.télEtEmail !== 'ok') {
+    identite.courriel = { 'dateMiseÀJourSource': '', value: '' };
+    identite.téléphone = { 'dateMiseÀJourSource': '', value: '' };
+    identite.dateOuverture = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.dateDEntréeEnVigueurDuCpom = profil.dateDEntréeEnVigueurDuCpom === 'ok' ? identite.dateDEntréeEnVigueurDuCpom : { 'dateMiseÀJourSource': '', value: '' };
+
+  identite.libelléCatégorieÉtablissement = profil.catégorieÉtablissement === 'ok' ? identite.libelléCatégorieÉtablissement : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.EJ_rattachement !== 'ok') {
+    identite.numéroFinessEntitéJuridique = { 'dateMiseÀJourSource': '', value: '' };
+    identite.raisonSocialeDeLEntitéDeRattachement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  if (profil.ET_principal_secondaire !== 'ok') {
+    identite.numéroFinessÉtablissementPrincipal = { 'dateMiseÀJourSource': '', value: '' };
+    identite.typeÉtablissement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.numéroFinessÉtablissementTerritorial = profil.numéroFiness === 'ok' ? identite.numéroFinessÉtablissementTerritorial : '';
+
+  if (profil.nom !== 'ok') {
+    identite.raisonSociale = { 'dateMiseÀJourSource': '', value: '' };
+    identite.raisonSocialeCourte = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.siret = profil.siret === 'ok' ? identite.siret : { 'dateMiseÀJourSource': '', value: '' };
+
+  if (profil.statut_EJ !== 'ok') {
+    identite.statutJuridique = { 'dateMiseÀJourSource': '', value: '' };
+    identite.categorisationDeLEntitéDeRattachement = { 'dateMiseÀJourSource': '', value: '' };
+  }
+
+  identite.estMonoÉtablissement = profil.mono_établissement === 'ok' ? identite.estMonoÉtablissement : { 'dateMiseÀJourSource': '', value: '' };
+  return identite;
 }
 
 
@@ -287,16 +338,21 @@ const filterAutorisationCapaciteMedicoSocial = (autorisationCapacite: any, profi
 
 const filterBudgetFinanceMedicoSocial = (budgetFinances: any, profil: any) => {
   for (const budgetFinance of budgetFinances) {
-    budgetFinance.cadreBudgétaire = profil.compteRésultats === "ok" ? budgetFinance.cadreBudgétaire : "";
-    budgetFinance.chargesEtProduits = profil.compteRésultats === "ok" ? budgetFinance.chargesEtProduits : { dateMiseÀJourSource: "" };
-    budgetFinance.recettesEtDépenses = profil.compteRésultats === "ok" ? budgetFinance.recettesEtDépenses : { dateMiseÀJourSource: "" };
-    budgetFinance.contributionAuxFraisDeSiège =
-      profil.contributionAuxFraisDeSiège === "ok" ? budgetFinance.contributionAuxFraisDeSiège : { dateMiseÀJourSource: "", valeur: "" };
+    if (profil.compteRésultats !== "ok") {
+      budgetFinance.cadreBudgétaire = "";
+      budgetFinance.chargesEtProduits = { dateMiseÀJourSource: "" };
+      budgetFinance.recettesEtDépenses = { dateMiseÀJourSource: "" };
+    }
+
+    budgetFinance.contributionAuxFraisDeSiège = profil.contributionAuxFraisDeSiège === "ok" ? budgetFinance.contributionAuxFraisDeSiège : { dateMiseÀJourSource: "", valeur: "" };
+
     budgetFinance.fondsDeRoulement = profil.fondsDeRoulement === "ok" ? budgetFinance.fondsDeRoulement : { dateMiseÀJourSource: "", valeur: "" };
+
     budgetFinance.résultatNetComptable = profil.résultatNetComptable === "ok" ? budgetFinance.résultatNetComptable : { dateMiseÀJourSource: "", valeur: "" };
+
     budgetFinance.tauxDeCafNette = profil.tauxDeCafNette === "ok" ? budgetFinance.tauxDeCafNette : { dateMiseÀJourSource: "", valeur: "" };
-    budgetFinance.tauxDeVétustéConstruction =
-      profil.tauxDeVétustéConstruction === "ok" ? budgetFinance.tauxDeVétustéConstruction : { dateMiseÀJourSource: "", valeur: "" };
+
+    budgetFinance.tauxDeVétustéConstruction = profil.tauxDeVétustéConstruction === "ok" ? budgetFinance.tauxDeVétustéConstruction : { dateMiseÀJourSource: "", valeur: "" };
   }
   return budgetFinances;
 };
@@ -316,33 +372,56 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
   return ressourcesHumaines;
 };
 
-const filterQualiteMedicoSocial = (qualite: any, profil: any) => {
-  const filtredQualite = {
-    reclamations: profil.DonnéesSirec === "ok" ? qualite.reclamations : [{ details: [] }],
-    evenementsIndesirables: profil.DonnéesSivss === "ok" ? qualite.evenementsIndesirables : [],
-    inspectionsEtControles: profil.DonnéesSiicea === "ok" ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
-  };
-  return filtredQualite;
-};
-
 const filterActiviteEJ = (activites: any, profil: any) => {
-  for (const activite of activites) {
-    activite.nombreSéjoursCompletsChirurgie = profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsChirurgie : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursCompletsMédecine = profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsMédecine : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursCompletsObstétrique =
-      profil.nombreSéjours === "ok" ? activite.nombreSéjoursCompletsObstétrique : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsChirurgie = profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsChirurgie : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsMédecine = profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsMédecine : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursPartielsObstétrique =
-      profil.nombreSéjours === "ok" ? activite.nombreSéjoursPartielsObstétrique : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesCompletesPsy = profil.nombreJournées === "ok" ? activite.nombreJournéesCompletesPsy : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesCompletesSsr = profil.nombreJournées === "ok" ? activite.nombreJournéesCompletesSsr : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesPartiellesPsy = profil.nombreJournées === "ok" ? activite.nombreJournéesPartiellesPsy : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreJournéesPartiellesSsr = profil.nombreJournées === "ok" ? activite.nombreJournéesPartiellesSsr : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreDePassagesAuxUrgences = profil.nombrePassage === "ok" ? activite.nombreDePassagesAuxUrgences : { dateMiseÀJourSource: "", value: "" };
-    activite.nombreSéjoursHad = profil.nombreSéjoursHad === "ok" ? activite.nombreSéjoursHad : { dateMiseÀJourSource: "", value: "" };
-  }
-  return activites;
+  const fieldGroups = [
+    {
+      condition: profil.nombrePassage === "ok",
+      fields: ["nombreDePassagesAuxUrgences"]
+    },
+    {
+      condition: profil.nombreJournées === "ok",
+      fields: [
+        "nombreJournéesCompletesPsy",
+        "nombreJournéesCompletesSsr",
+        "nombreJournéesPartiellesPsy",
+        "nombreJournéesPartiellesSsr"
+      ]
+    },
+    {
+      condition: profil.nombreSéjours === "ok",
+      fields: [
+        "nombreSéjoursCompletsChirurgie",
+        "nombreSéjoursCompletsMédecine",
+        "nombreSéjoursCompletsObstétrique",
+        "nombreSéjoursPartielsChirurgie",
+        "nombreSéjoursPartielsMédecine",
+        "nombreSéjoursPartielsObstétrique"
+      ]
+    },
+    {
+      condition: profil.nombreSéjoursHad === "ok",
+      fields: ["nombreSéjoursHad"]
+    },
+    {
+      condition: profil.nombreJourneesUsld === "ok",
+      fields: ["nombreJourneesUsld"]
+    }
+  ];
+
+  return activites.map((activite: any) => {
+    const filteredActivite = { ...activite };
+
+    fieldGroups.forEach(({ condition, fields }) => {
+      fields.forEach(field => {
+        if (!condition) {
+          filteredActivite[field] = { dateMiseÀJourSource: "", value: "" };
+        }
+      });
+    });
+
+    return filteredActivite;
+  });
+
 };
 
 const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any) => {
@@ -367,40 +446,42 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
 const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
 
   for (const budget of budgetFinance) {
-    budget.depensesTitreIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIGlobal : "";
-    budget.depensesTitreIIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIIGlobal : "";
-    budget.depensesTitreIIIGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIIIGlobal : "";
-    budget.depensesTitreIVGlobal = profil.compteRésultats === "ok" ? budget.depensesTitreIVGlobal : "";
-    budget.totalDepensesGlobal = profil.compteRésultats === "ok" ? budget.totalDepensesGlobal : "";
+    if (profil.compteRésultats !== "ok") {
+      budget.depensesTitreIGlobal = "";
+      budget.depensesTitreIIGlobal = "";
+      budget.depensesTitreIIIGlobal = "";
+      budget.depensesTitreIVGlobal = "";
+      budget.totalDepensesGlobal = "";
 
-    budget.recettesTitreIGlobal = profil.compteRésultats === "ok" ? budget.recettesTitreIGlobal : "";
-    budget.recettesTitreIIGlobal = profil.compteRésultats === "ok" ? budget.recettesTitreIIGlobal : "";
-    budget.recettesTitreIIIGlobal = profil.compteRésultats === "ok" ? budget.recettesTitreIIIGlobal : "";
-    budget.recettesTitreIVGlobal = profil.compteRésultats === "ok" ? budget.recettesTitreIVGlobal : "";
-    budget.totalRecettesGlobal = profil.compteRésultats === "ok" ? budget.totalRecettesGlobal : "";
+      budget.recettesTitreIGlobal = "";
+      budget.recettesTitreIIGlobal = "";
+      budget.recettesTitreIIIGlobal = "";
+      budget.recettesTitreIVGlobal = "";
+      budget.totalRecettesGlobal = "";
 
-    budget.depensesTitreIPrincipales = profil.compteRésultats === "ok" ? budget.depensesTitreIPrincipales : "";
-    budget.depensesTitreIIPrincipales = profil.compteRésultats === "ok" ? budget.depensesTitreIIPrincipales : "";
-    budget.depensesTitreIIIPrincipales = profil.compteRésultats === "ok" ? budget.depensesTitreIIIPrincipales : "";
-    budget.depensesTitreIVPrincipales = profil.compteRésultats === "ok" ? budget.depensesTitreIVPrincipales : "";
-    budget.totalDepensesPrincipales = profil.compteRésultats === "ok" ? budget.totalDepensesPrincipales : "";
+      budget.depensesTitreIPrincipales = "";
+      budget.depensesTitreIIPrincipales = "";
+      budget.depensesTitreIIIPrincipales = "";
+      budget.depensesTitreIVPrincipales = "";
+      budget.totalDepensesPrincipales = "";
 
-    budget.recettesTitreIPrincipales = profil.compteRésultats === "ok" ? budget.recettesTitreIPrincipales : "";
-    budget.recettesTitreIIPrincipales = profil.compteRésultats === "ok" ? budget.recettesTitreIIPrincipales : "";
-    budget.recettesTitreIIIPrincipales = profil.compteRésultats === "ok" ? budget.recettesTitreIIIPrincipales : "";
-    budget.totalRecettesPrincipales = profil.compteRésultats === "ok" ? budget.totalRecettesPrincipales : "";
+      budget.recettesTitreIPrincipales = "";
+      budget.recettesTitreIIPrincipales = "";
+      budget.recettesTitreIIIPrincipales = "";
+      budget.totalRecettesPrincipales = "";
 
-    budget.depensesTitreIAnnexe = profil.compteRésultats === "ok" ? budget.depensesTitreIAnnexe : "";
-    budget.depensesTitreIIAnnexe = profil.compteRésultats === "ok" ? budget.depensesTitreIIAnnexe : "";
-    budget.depensesTitreIIIAnnexe = profil.compteRésultats === "ok" ? budget.depensesTitreIIIAnnexe : "";
-    budget.depensesTitreIVAnnexe = profil.compteRésultats === "ok" ? budget.depensesTitreIVAnnexe : "";
-    budget.totalDepensesAnnexe = profil.compteRésultats === "ok" ? budget.totalDepensesAnnexe : "";
+      budget.depensesTitreIAnnexe = "";
+      budget.depensesTitreIIAnnexe = "";
+      budget.depensesTitreIIIAnnexe = "";
+      budget.depensesTitreIVAnnexe = "";
+      budget.totalDepensesAnnexe = "";
 
-    budget.recettesTitreIAnnexe = profil.compteRésultats === "ok" ? budget.recettesTitreIAnnexe : "";
-    budget.recettesTitreIIAnnexe = profil.compteRésultats === "ok" ? budget.recettesTitreIIAnnexe : "";
-    budget.recettesTitreIIIAnnexe = profil.compteRésultats === "ok" ? budget.recettesTitreIIIAnnexe : "";
-    budget.recettesTitreIVAnnexe = profil.compteRésultats === "ok" ? budget.recettesTitreIVAnnexe : "";
-    budget.totalRecettesAnnexe = profil.compteRésultats === "ok" ? budget.totalRecettesAnnexe : "";
+      budget.recettesTitreIAnnexe = "";
+      budget.recettesTitreIIAnnexe = "";
+      budget.recettesTitreIIIAnnexe = "";
+      budget.recettesTitreIVAnnexe = "";
+      budget.totalRecettesAnnexe = "";
+    }
 
     budget.resultatNetComptable = profil.résultatNetComptable === "ok" ? budget.resultatNetComptable : "";
     budget.ratioDependanceFinanciere = profil.ratioDépendanceFinancière === "ok" ? budget.ratioDependanceFinanciere : "";
@@ -417,7 +498,7 @@ const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: Allocati
       alrSub.enveloppe = profil.allocationDeRessources === "ok" ? alrSub.enveloppe : "";
       alrSub.sousEnveloppe = profil.allocationDeRessources === "ok" ? alrSub.sousEnveloppe : "";
       alrSub.modeDeDélégation = profil.allocationDeRessources === "ok" ? alrSub.modeDeDélégation : "";
-      {/*  @ts-ignore */ }
+      /*  @ts-ignore */
       alrSub.montantNotifié = profil.allocationDeRessources === "ok" ? alrSub.montantNotifié : "";
     }
   }

@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEf
 import { FiltreCapacite } from "./FiltreCapacite";
 import { FiltreStructure } from "./FiltreStructure";
 import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
-import { AttribuesDefaults } from "./model/Attribues";
+import { AttribuesDefaults, typeStructureTranscodage } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -29,11 +29,17 @@ export const RechercheAvanceeFormulaire = ({
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
-  const listTypes = [AttribuesDefaults.entiteJuridque, AttribuesDefaults.etablissementSanitaire];
+  const isEraseAllEnabled = rechercheAvanceeContext?.terme !== "" ||
+    rechercheAvanceeContext?.zoneGeo !== "" ||
+    rechercheAvanceeContext?.typeStructure.length !== 0 ||
+    rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ||
+    rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+    rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+    rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
 
   useEffect(() => {
-    const structureType = rechercheAvanceeContext?.typeStructure ?? "";
-    if (listTypes.includes(structureType, 0)) {
+    const structureType = rechercheAvanceeContext?.typeStructure || [];
+    if (!structureType.includes(AttribuesDefaults.etablissementMedicoSocial)) {
       setDisableCapaciter(true);
     } else {
       setDisableCapaciter(false);
@@ -41,22 +47,15 @@ export const RechercheAvanceeFormulaire = ({
   }, [rechercheAvanceeContext?.typeStructure]);
 
   const getWordingGeo = (): string => {
-    return rechercheAvanceeContext?.zoneGeoLabel ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
+    return rechercheAvanceeContext?.zoneGeoLabel?.trim() ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
   }
 
   const getWordingStructure = (): string => {
     let structureWording = wording.STRUCTURE;
-    if (AttribuesDefaults.entiteJuridque === rechercheAvanceeContext?.typeStructure) {
-      structureWording += " : Etablissements Juridiques";
-    }
-    if (AttribuesDefaults.etablissementSanitaire === rechercheAvanceeContext?.typeStructure) {
-      structureWording += " : Etablissements Sanitaires";
-    }
-    if (AttribuesDefaults.etablissementMedicoSocial === rechercheAvanceeContext?.typeStructure) {
-      structureWording += " : Etablissements SMS";
-    }
-    if (rechercheAvanceeContext?.statutJuridiqueStructure && rechercheAvanceeContext?.statutJuridiqueStructure.length > 0) {
-      structureWording += ", +" + rechercheAvanceeContext.statutJuridiqueStructure.length;
+    const totalSelected = (rechercheAvanceeContext?.typeStructure.length ?? 0) + (rechercheAvanceeContext?.statutJuridiqueStructure.length ?? 0);
+    if (totalSelected > 0 && rechercheAvanceeContext?.typeStructure) {
+      structureWording += ` : ${typeStructureTranscodage[rechercheAvanceeContext?.typeStructure[0]]}`;
+      if (totalSelected > 1) structureWording += ", +" + (totalSelected - 1);
     }
     return structureWording;
   }
@@ -90,6 +89,26 @@ export const RechercheAvanceeFormulaire = ({
     }
   }
 
+  const eraseAll = () => {
+    rechercheAvanceeContext?.setCapaciteAgees([]);
+    rechercheAvanceeContext?.setCapaciteHandicap([]);
+    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
+    rechercheAvanceeContext?.setTypeStructure([]);
+    rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
+    rechercheAvanceeContext?.setZoneGeo("");
+    rechercheAvanceeContext?.setZoneGeoD("");
+    rechercheAvanceeContext?.setZoneGeoLabel("");
+    rechercheAvanceeContext?.setZoneGeoType("");
+    rechercheAvanceeContext?.setTerme("");
+  }
+
+  const buttonZoneGeoClicked = rechercheAvanceeContext?.zoneGeo !== "" ? styles["filtre-button_clicked"] : "";
+  const buttonStructureClicked = rechercheAvanceeContext?.typeStructure.length !== 0 ||
+    rechercheAvanceeContext?.statutJuridiqueStructure.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonCapaciteClicked = rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
+    rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
+    rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
+
   return (
     <div>
       <div className="fr-grid-row">
@@ -116,14 +135,14 @@ export const RechercheAvanceeFormulaire = ({
         <div className={styles["criteresRechercheButtons"]}>
           <button
             aria-controls="fr-modal-Zone-Geographique-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonZoneGeoClicked}`}
             data-fr-opened="false"
           >
             {getWordingGeo()}
           </button>
           <button
             aria-controls="fr-modal-Structure-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
             data-fr-opened="false"
             disabled={isComparaison}
           >
@@ -131,12 +150,18 @@ export const RechercheAvanceeFormulaire = ({
           </button>
           <button
             aria-controls="fr-modal-Capacite-Filtre"
-            className="fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
             data-fr-opened="false"
             disabled={disableCapaciter}
           >
             {getWordingCapacite()}
           </button>
+          {isEraseAllEnabled && !isComparaison && <button
+            className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
+            onClick={eraseAll}
+          >
+            {wording.TOUT_EFFACER}
+          </button>}
         </div>
       </div>
       <div>

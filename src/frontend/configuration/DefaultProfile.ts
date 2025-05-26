@@ -13,7 +13,8 @@ export const DefaultProfile = {
                 "nombrePassage": "ok",
                 "nombreSéjours": "ok",
                 "nombreJournées": "ok",
-                "nombreSéjoursHad": "ok"
+                "nombreSéjoursHad": "ok",
+                "nombreJourneesUsld": "ok"
             },
             "budgetEtFinance": {
                 "tauxDeCafNette": "ok",
@@ -50,7 +51,8 @@ export const DefaultProfile = {
             "activités": {
                 "nombrePassage": "ok",
                 "nombreSéjours": "ok",
-                "nombreJournées": "ok"
+                "nombreJournées": "ok",
+                "nombreJourneesUsld": "ok"
             },
             "budgetEtFinance": {
                 "tauxDeCafNette": "ok",
@@ -94,7 +96,12 @@ export const DefaultProfile = {
                 "tauxOccupationHébergementPermanent": "no",
                 "tauxOccupationHébergementTemporaire": "no",
                 "nombreMoyenJournéesAbsencePersonnesAccompagnées": "no",
-                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "no"
+                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "no",
+                'tauxOccupationExternat': 'no',
+                'tauxOccupationSemiInternat': 'no',
+                'tauxOccupationInternat': 'no',
+                'tauxOccupationAutre': 'no',
+                'tauxOccupationSeances': 'no'
             },
             "budgetEtFinances": {
                 "tauxDeCafNette": "no",
@@ -132,7 +139,8 @@ export const DefaultProfile = {
                 "nombrePassage": "ok",
                 "nombreSéjours": "ok",
                 "nombreJournées": "ok",
-                "nombreSéjoursHad": "ok"
+                "nombreSéjoursHad": "ok",
+                "nombreJourneesUsld": "ok"
             },
             "budgetEtFinance": {
                 "tauxDeCafNette": "ok",
@@ -169,7 +177,8 @@ export const DefaultProfile = {
             "activités": {
                 "nombrePassage": "ok",
                 "nombreSéjours": "ok",
-                "nombreJournées": "ok"
+                "nombreJournées": "ok",
+                "nombreJourneesUsld": "ok"
             },
             "budgetEtFinance": {
                 "tauxDeCafNette": "ok",
@@ -213,7 +222,12 @@ export const DefaultProfile = {
                 "tauxOccupationHébergementPermanent": "ok",
                 "tauxOccupationHébergementTemporaire": "ok",
                 "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
-                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
+                "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok",
+                'tauxOccupationExternat': 'ok',
+                'tauxOccupationSemiInternat': 'ok',
+                'tauxOccupationInternat': 'ok',
+                'tauxOccupationAutre': 'ok',
+                'tauxOccupationSeances': 'ok'
             },
             "budgetEtFinances": {
                 "tauxDeCafNette": "ok",

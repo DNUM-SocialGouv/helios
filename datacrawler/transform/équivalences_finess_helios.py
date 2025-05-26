@@ -257,3 +257,19 @@ type_des_colonnes_finess_cs1500106 = {
     "domaine": str
 }
 colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
+type_des_colonnes_categories_finess = {
+    "code": str,
+    "libelle": str,
+    "libellecourt": str
+}
+equivalences_finess_cs1500106_helios = {
+    "code": "code",
+    "libelle": "libelle",
+    "libellecourt": "libelle_court"
+}
+
+index_des_categories: List[str] = [
+    "code"
+]
+
+colonnes_a_garder_categories_finess= list(type_des_colonnes_categories_finess.keys())

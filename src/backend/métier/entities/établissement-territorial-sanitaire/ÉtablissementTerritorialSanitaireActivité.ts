@@ -20,6 +20,10 @@ export type ÉtablissementTerritorialSanitaireActivité = Readonly<{
     dateMiseÀJourSource: string;
     value: number | null | '';
   };
+  nombreJourneesUsld: {
+    dateMiseÀJourSource: string;
+    value: number | null | '';
+  };
   nombreSéjoursCompletsChirurgie: {
     dateMiseÀJourSource: string;
     value: number | null | '';

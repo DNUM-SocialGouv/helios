@@ -125,9 +125,9 @@ function generateCriteriaData(context: RechercheAvanceeContextValue): { criteria
     criteriaInformation.push(zoneGeoLabel);
   }
 
-  if (typeStructure) {
+  if (typeStructure?.length > 0) {
     criteriaHeader.push("Type de structure");
-    criteriaInformation.push(typeStructure);
+    criteriaInformation.push(typeStructure.join(', '));
   }
 
   if (statutJuridiqueStructure?.length > 0) {

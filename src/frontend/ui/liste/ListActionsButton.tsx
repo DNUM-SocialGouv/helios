@@ -1,18 +1,14 @@
 import { useRouter } from "next/router";
-import { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 
 import styles from "./ListActionsButton.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FavorisPopup, POPUP_WIDTH } from "../commun/FavorisPopup/FavorisPopup";
-import { SelectedRows } from "../commun/Table/Table";
 import { useFavoris } from "../favoris/useFavoris";
-import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
-import { RechercheViewModel } from "../home/RechercheViewModel";
-
 
 type ListActionsButtonProps = Readonly<{
-  selectedRows: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-  setSelectedRows?: React.Dispatch<React.SetStateAction<SelectedRows>>
+  selectedRows: Map<string, string>;
+  setSelectedRows?: React.Dispatch<React.SetStateAction<Map<string, string>>>;
   listId?: number;
   listName?: string;
   order?: string;
@@ -21,15 +17,16 @@ type ListActionsButtonProps = Readonly<{
   children?: JSX.Element;
   onAddToFavorisSuccess?: (listName: string) => void;
   exportButton: ReactNode;
+  fullSelectButton?: ReactNode;
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
   const { getFavorisLists, removeFromFavorisList } = useFavoris()
   const [displayActions, setDisplayActions] = useState<boolean>(false);
-  const listFinessNumbers = selectedRows.map((row) => row.numéroFiness);
+  const listFinessNumbers = selectedRows.keys().toArray();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [popupX, setPopupX] = useState(0);
   const [popupY, setPopupY] = useState(0);
@@ -37,7 +34,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
-    const firstType = selectedRows[0].type;
+    const firstType = selectedRows.values().next().value;
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     sessionStorage.setItem("comparaisonType", firstType);
     document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
@@ -48,7 +45,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
   const onClickDelete = async () => {
     if (listId && setSelectedRows) {
       await removeFromFavorisList(listFinessNumbers, listId);
-      setSelectedRows([]);
+      setSelectedRows(new Map());
       setDisplayActions(false);
       router.replace(router.asPath);
     }
@@ -74,16 +71,16 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
         <ul className={styles["menu"]}>
           {router.pathname !== "/comparaison" ?
             <li className={styles["menu-item"]}>
-              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length < 2 || selectedRows.some((row) => row.type !== "Médico-social")} onClick={lancerComparaison}>
+              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2 || selectedRows.values().some((type) => type !== "Médico-social")} onClick={lancerComparaison}>
                 {wording.COMPARER}
               </button>
             </li>
             : null}
           <li className={styles["menu-item"]}>
-            {listId ? <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length === 0} onClick={onClickDelete}>
+            {listId ? <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size === 0} onClick={onClickDelete}>
               {wording.SUPPRIMER_DE_LA_LISTE}
             </button>
-              : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.length < 2} onClick={handleDisplayFavorisPopup}>
+              : <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2} onClick={handleDisplayFavorisPopup}>
                 Ajouter à mes listes
               </button>
             }
@@ -91,11 +88,18 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
           <li className={styles["menu-item"]}>
             {exportButton}
           </li>
+          {fullSelectButton
+            ? <li className={styles["menu-item"]}>
+              {fullSelectButton}
+            </li>
+            : <></>
+          }
         </ul>
       }
-      {displayFavorisPopup &&
+      {
+        displayFavorisPopup &&
         <FavorisPopup addOnOneListOnly={true} favorite={listFinessNumbers} onClickOkSuccess={onAddToFavorisSuccess} onClosePopup={() => setDisplayFavorisPopup(false)} onNewListCreationSuccess={onAddToFavorisSuccess} positionX={popupX} positionY={popupY} />
       }
-    </div>
+    </div >
   );
 };

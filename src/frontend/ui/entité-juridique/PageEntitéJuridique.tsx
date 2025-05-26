@@ -16,13 +16,13 @@ import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
 import { Catégorisation } from "./catégorisation/Catégorisation";
-import { EntitéJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
+import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
 
 type EntitéJuridiqueProps = Readonly<{
-  entitéJuridiqueViewModel: EntitéJuridiqueViewModel;
+  entitéJuridiqueViewModel: EntiteJuridiqueViewModel;
   entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
   rechercheViewModel: RechercheViewModel;

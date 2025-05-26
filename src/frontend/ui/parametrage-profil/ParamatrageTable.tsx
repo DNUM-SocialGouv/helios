@@ -1,12 +1,12 @@
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-import { ProfileValue } from "../../../../database/models/ProfilModel";
-import { useDependencies } from "../commun/contexts/useDependencies";
 import DeleteProfileModal from "./DeleteProfileModal";
 import { ProfileTabContent } from "./ProfileTabContent";
 import { useParametrage } from "./useParametrage";
+import { ProfileValue } from "../../../../database/models/ProfilModel";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 
 type ProfileTableProps = Readonly<{
@@ -78,7 +78,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
   return (
     <div>
       <div className="fr-tabs">
-        <ul aria-label="profiles-tab" className="fr-tabs__list" role="tablist">
+        <ul aria-label="profiles-tab" className="fr-tabs__list" role="tablist"> {/* NOSONAR L’erreur sur le « role » affecte a un element non interactif est lie au dsfr et ne peut etre change*/}
           <li role="presentation">
             <button aria-controls="tabpanel-EJ" aria-selected="true" className="fr-tabs__tab fr-tabs__tab--icon-left" id="tabpanel-404" role="tab">
               {wording.PARAMETRAGE_EJ_TAB}

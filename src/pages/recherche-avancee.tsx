@@ -1,8 +1,9 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import { useState } from "react";
 
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
-import { ParametreDeRechercheAvancee, OrderDir } from "../backend/métier/entities/ParametresDeRechercheAvancee";
+import { OrderDir, ParametreDeRechercheAvancee } from "../backend/métier/entities/ParametresDeRechercheAvancee";
 import { RésultatDeRecherche } from "../backend/métier/entities/RésultatDeRecherche";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
@@ -40,12 +41,23 @@ export default function RechercheAvancee(props: Readonly<ExtendedResultatDeReche
     },
   ]);
 
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
+
+  const resetSelectionEtLanceLaRecherche = () => {
+    setSelectedRows(new Map<string, string>);
+    lancerLaRecherche();
+  }
+
+  const resetSelectionOnChange = () => {
+    setSelectedRows(new Map<string, string>);
+  }
+
   return (
     <main className="fr-container" id="content">
-      <RechercheAvanceeFormulaire isComparaison={false} lancerLaRecherche={lancerLaRecherche} rechercheOnChange={rechercheOnChange} />
+      <RechercheAvanceeFormulaire isComparaison={false} lancerLaRecherche={resetSelectionEtLanceLaRecherche} rechercheOnChange={rechercheOnChange} setIsChangedCapacite={resetSelectionOnChange} setIsChangedStructure={resetSelectionOnChange} setIsChangedZG={resetSelectionOnChange} />
       {estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && <PasResultatRechercheAvancee />}
       {nombreRésultats > 0 && !estCeEnAttente && (
-        <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page ?? 1} setPage={setPage} />
+        <ResultatRechercheAvancee data={resultats} lastPage={lastPage} nombreRésultats={nombreRésultats} page={page ?? 1} selectedRows={selectedRows} setPage={setPage} setSelectedRows={setSelectedRows} />
       )}
       {!estCeQueLaRechercheEstLancee && !props.laRechercheEtendueEstLancee && !estCeEnAttente && <ResultatRecherchePlaceholderText />}{" "}
       {estCeEnAttente && <RechercheEnAttente />}
@@ -75,10 +87,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
   const zoneParam = String(zone);
   const zoneDParam = String(zoneD);
   const typeZoneParam = String(typeZone);
-  const typeParam = String(type);
   const orderParam = String(order) as OrderDir;
   const orderByParam = String(orderBy);
 
+  const typeParam = type.length > 0 && typeof type === "string" ? type.split(",") : [];
   const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
   const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
   const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];
@@ -95,7 +107,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     (termeParam ||
       zoneParam ||
       statutJuridiqueParam.length > 0 ||
-      typeParam ||
+      typeParam.length > 0 ||
       capaciteMedicoSociauxParam.length > 0 ||
       capaciteHandicapParam.length > 0 ||
       capaciteAgeesParam.length > 0)

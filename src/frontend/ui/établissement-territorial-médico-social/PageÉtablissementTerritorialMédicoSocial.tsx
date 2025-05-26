@@ -18,10 +18,10 @@ import { BlocIdentitéMédicoSocial } from "./bloc-identité/BlocIdentitéMédic
 import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialViewModel: ÉtablissementTerritorialMédicoSocialViewModel;
+  établissementTerritorialViewModel: EtablissementTerritorialMedicoSocialViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
 

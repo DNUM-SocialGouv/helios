@@ -14,7 +14,7 @@ interface SearchParams {
   zoneGeoD?: string;
   zoneGeoType?: string;
   zoneGeoLabel?: string;
-  typeStructure?: string;
+  typeStructure?: string[];
   statutJuridiqueStructure?: string[];
   order?: string;
   orderBy?: string;
@@ -35,7 +35,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       zoneGeoD: parseAsString.withDefault(""),
       zoneGeoType: parseAsString.withDefault(""),
       zoneGeoLabel: parseAsString.withDefault(""),
-      typeStructure: parseAsString.withDefault(""),
+      typeStructure: parseAsArrayOf(parseAsString).withDefault([]),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault([]),
       order: parseAsString.withDefault(""),
       orderBy: parseAsString.withDefault(""),
@@ -61,7 +61,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
 
   const [termeFixe, setTermeFixe] = useState("");
 
-  const updateSearchParams = async (newParams: Partial<SearchParams>) => {
+  const updateSearchParams = (newParams: Partial<SearchParams>) => {
     setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
   };
 
@@ -80,9 +80,9 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
-      setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+      setTerme: (value) => { setSearchParams((prevParams) => ({ ...prevParams, terme: value })) },
       setTermeFixe,
-      setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
+      setPage: (value, shallow) => { setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }) },
       setOrder: (value) => updateSearchParams({ order: value }),
       setOrderBy: (value) => updateSearchParams({ orderBy: value })
     }}>

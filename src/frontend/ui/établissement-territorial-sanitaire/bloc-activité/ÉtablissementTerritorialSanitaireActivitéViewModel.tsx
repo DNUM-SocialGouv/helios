@@ -4,17 +4,20 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
+import { NombreDeJourneesUsldViewModel } from "../../indicateur-métier/nombre-journees-usld/NombreDeJourneesUsldViewModel";
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
-export class ÉtablissementTerritorialSanitaireActivitéViewModel {
+export class EtablissementTerritorialSanitaireActiviteViewModel {
   // @ts-ignore
   nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+  nombreDeJourneesUsldViewModel: NombreDeJourneesUsldViewModel;
   wording: Wording;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
     this.createNombrePassageUrgenceViewModel(wording);
+    this.nombreDeJourneesUsldViewModel = this.createNombreDeJourneesUsldViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);
     this.wording = wording;
@@ -31,12 +34,24 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
     this.nombreDePassagesAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
   }
 
+  private createNombreDeJourneesUsldViewModel() {
+    const indicateurNombreJourneesUsld: IndicateurActivité[] = this.établissementTerritorialSanitaireActivités.map((activité) => {
+      return {
+        année: activité.année,
+        dateMiseÀJourSource: activité.nombreJourneesUsld.dateMiseÀJourSource,
+        value: activité.nombreJourneesUsld.value,
+      };
+    });
+    return new NombreDeJourneesUsldViewModel(indicateurNombreJourneesUsld, this.wording);
+  }
+
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
       !this.activitéEstElleRenseignée ||
       (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
         !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
-        !this.nombreDePassagesAuxUrgencesEstIlRenseigné)
+        !this.nombreDePassagesAuxUrgencesEstIlRenseigné &&
+        !this.nombreDeJourneesUsldEstIlRenseigne)
     );
   }
 
@@ -45,6 +60,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
     if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés) nonRenseignes.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés) nonRenseignes.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreDePassagesAuxUrgencesEstIlRenseigné) nonRenseignes.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    if (!this.nombreDeJourneesUsldEstIlRenseigne) nonRenseignes.push(this.wording.NOMBRE_DE_JOURNEES_USLD)
 
     return nonRenseignes;
   }
@@ -59,6 +75,14 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
 
   public get nombreDePassagesAuxUrgencesEstIlAutorisé(): boolean {
     return this.lIndicateurEstIlAutorisé("nombreDePassagesAuxUrgences");
+  }
+
+  public get nombreDeJourneesUsldEstIlRenseigne(): boolean {
+    return this.lIndicateurEstIlRenseigné("nombreJourneesUsld");
+  }
+
+  public get nombreDeJourneesUsldEstIlAutorise(): boolean {
+    return this.lIndicateurEstIlAutorisé("nombreJourneesUsld");
   }
 
   private lIndicateurEstIlRenseigné(
@@ -78,6 +102,7 @@ export class ÉtablissementTerritorialSanitaireActivitéViewModel {
     if (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés) nonAutorisés.push(this.wording.NOMBRE_DE_SÉJOUR_MCO);
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreDePassagesAuxUrgencesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
+    if (!this.nombreDeJourneesUsldEstIlAutorise) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNEES_USLD)
 
     return nonAutorisés;
   }

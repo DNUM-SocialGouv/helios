@@ -92,11 +92,14 @@ export class HistogrammeWithToggleData {
   }
 
   private get labelsColor(): string[] {
-    const isLabelsError = this.visibleStacks
-      .map((stack) => stack.isError as boolean[])
-      .reduce((isLabelInError, isErrorStack) => {
-        return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
-      });
+    const stackErrors = this.visibleStacks
+      .map((stack) => stack.isError as boolean[]);
+    const defaultArraySize = stackErrors[0].length;
+
+    const isLabelsError = stackErrors.reduce((isLabelInError, isErrorStack) => {
+      return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
+    }, Array(defaultArraySize).fill(false));
+
     return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
 

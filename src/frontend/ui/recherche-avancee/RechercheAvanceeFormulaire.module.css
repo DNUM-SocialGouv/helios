@@ -16,8 +16,17 @@
     margin-top: 1rem;
 }
 
+.filtre-button_clicked {
+    background-color: #ededed;
+}
+
 .eraseButton {
     box-shadow: none !important;
+}
+
+.eraseAllButton {
+    text-decoration: underline;
+    background-color: white !important;
 }
 
 .applyButton {
