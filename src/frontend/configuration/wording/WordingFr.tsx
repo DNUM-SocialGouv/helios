@@ -103,6 +103,7 @@ export class WordingFr implements Wording {
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
   readonly STRUCTURE: string = "Structure";
   readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
+  readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
   readonly CAPACITE: string = "Capacité MS";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
   readonly TOUT_EFFACER: string = "Tout effacer";

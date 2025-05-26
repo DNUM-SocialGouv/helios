@@ -85,6 +85,7 @@ export interface Wording {
   readonly ZONE_GEOGRAPHIQUE: string;
   readonly STRUCTURE: string;
   readonly CATEGORIES_FINESS: string;
+  readonly CATEGORIES_FINESS_TITLE: string;
   readonly CAPACITE: string;
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;

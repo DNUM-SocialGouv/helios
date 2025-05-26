@@ -67,11 +67,9 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
                     <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
                         <div className="fr-modal__body">
                             <div className="fr-modal__content fr-pt-5w">
-                                <div id="type">
-                                    <label className="fr-label" htmlFor="type">
-                                        {wording.CATEGORIES_FINESS}
-                                    </label>
-                                </div>
+                                <label className="fr-label fr-mb-1w">
+                                    {wording.CATEGORIES_FINESS_TITLE}
+                                </label>
                                 <form className="fr-search-bar fr-mb-1w" role="search">
                                     <input
                                         className="fr-input"
@@ -91,12 +89,12 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
                                         type="button">
                                     </button>
                                 </form>
-                                <ListeRiche
+                                {terme !== "" && <ListeRiche
                                     listSuggestions={filtredCategories}
                                     noDataMessage={filtredCategories.length === 0 && terme !== ""}
                                     selectedElements={categoriesSelected}
                                     setSelectedElements={setCategoriesSelected}
-                                />
+                                />}
                             </div>
                             <div className="fr-modal__footer">
                                 <button
