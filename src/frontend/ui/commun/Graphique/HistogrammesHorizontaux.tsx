@@ -214,6 +214,7 @@ export const HistogrammesHorizontaux = ({
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, cacheLesValeursBasse);
+  let hasSomeValuesToHide = false;
 
   function transcriptionTitles(): string[] {
     return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat();
@@ -225,6 +226,7 @@ export const HistogrammesHorizontaux = ({
       valeurs = valeurs.map((valeurs) => valeurs.map((valeur) => {
         const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
         if (numValue > 0 && numValue <= 5) {
+          hasSomeValuesToHide = true;
           return "1 à 5";
         }
         return valeur;
@@ -260,6 +262,7 @@ export const HistogrammesHorizontaux = ({
         />
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {hasSomeValuesToHide && <MiseEnExergue>{`${wording.VALEURS_INFERIEUR_A_5_CACHÉS}`}</MiseEnExergue>}
 
       <Transcription
         disabled={aucuneDonnées}

@@ -90,18 +90,19 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   }, [props.valeurs])
 
   let valeursTranscription = props.valeurs;
+  let hasSomeValuesToHide = false;
   if (props.cacheLesValeursBasse) {
     valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
       if (valeur) {
         const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
         if (numValue > 0 && numValue <= 5) {
+          hasSomeValuesToHide = true;
           return "1 à 5";
         }
       }
       return valeur;
     })
-    )
-      ;
+    );
   }
 
   return (
@@ -114,6 +115,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       {props.grapheMensuel && indexPremierMoisNonRenseigne < 12 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[indexPremierMoisNonRenseigne]}`}</MiseEnExergue>}
+      {hasSomeValuesToHide && <MiseEnExergue>{`${wording.VALEURS_INFERIEUR_A_5_CACHÉS}`}</MiseEnExergue>}
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}

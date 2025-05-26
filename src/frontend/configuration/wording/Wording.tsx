@@ -127,6 +127,7 @@ export interface Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
+  readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
