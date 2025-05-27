@@ -5,13 +5,14 @@ import { Bar } from "react-chartjs-2";
 
 import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
 import styles from "./HistogrammeHorizontaux.module.css";
+import { Wording } from "../../../configuration/wording/Wording";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 
-function useChartData(charts: HistogrammeData[], cacheLesValeursBasse?: boolean) {
+function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeursBasse?: boolean) {
   const [chartsData, setChartsData] = useState(charts);
   useEffect(() => setChartsData(charts), charts);
 
@@ -19,7 +20,7 @@ function useChartData(charts: HistogrammeData[], cacheLesValeursBasse?: boolean)
 
   const hideLowValueFormatter = (value: number, _context: Context): any => {
     if (cacheLesValeursBasse && value > 0 && value <= 5) {
-      return "1 à 5";
+      return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
     }
     return value;
   };
@@ -213,7 +214,7 @@ export const HistogrammesHorizontaux = ({
   cacheLesValeursBasse
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
-  const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, cacheLesValeursBasse);
+  const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, wording, cacheLesValeursBasse);
   let hasSomeValuesToHide = false;
 
   function transcriptionTitles(): string[] {
@@ -227,7 +228,7 @@ export const HistogrammesHorizontaux = ({
         const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
         if (numValue > 0 && numValue <= 5) {
           hasSomeValuesToHide = true;
-          return "1 à 5";
+          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
         }
         return valeur;
       })

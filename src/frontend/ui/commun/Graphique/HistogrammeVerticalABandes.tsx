@@ -29,7 +29,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
         formatter: (value) => {
           const valueNumber = value.y as number;
           if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= 5) {
-            return "1 à 5";
+            return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
           }
           return value.y;
         },
@@ -97,7 +97,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
         const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
         if (numValue > 0 && numValue <= 5) {
           hasSomeValuesToHide = true;
-          return "1 à 5";
+          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
         }
       }
       return valeur;
