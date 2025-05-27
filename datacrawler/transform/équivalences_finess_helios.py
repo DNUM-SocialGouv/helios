@@ -145,12 +145,14 @@ XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
 type_des_colonnes_categories_finess = {
     "code": str,
     "libelle": str,
-    "libellecourt": str
+    "libellecourt": str,
+    "domaine": str
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
     "libelle": "libelle",
-    "libellecourt": "libelle_court"
+    "libellecourt": "libelle_court",
+    "domaine": "domaine"
 }
 
 index_des_categories: List[str] = [
