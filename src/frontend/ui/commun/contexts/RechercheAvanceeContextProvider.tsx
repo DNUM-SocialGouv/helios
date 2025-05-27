@@ -15,6 +15,7 @@ interface SearchParams {
   zoneGeoType?: string;
   zoneGeoLabel?: string;
   typeStructure?: string[];
+  categories?: string[];
   statutJuridiqueStructure?: string[];
   order?: string;
   orderBy?: string;
@@ -37,6 +38,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       zoneGeoLabel: parseAsString.withDefault(""),
       typeStructure: parseAsArrayOf(parseAsString).withDefault([]),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault([]),
+      categories: parseAsArrayOf(parseAsString).withDefault([]),
       order: parseAsString.withDefault(""),
       orderBy: parseAsString.withDefault(""),
       capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault([]),
@@ -77,6 +79,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setZoneGeoLabel: (value) => updateSearchParams({ zoneGeoLabel: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
+      setCategories: (value) => updateSearchParams({ categories: value, page: initialPage }),
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),

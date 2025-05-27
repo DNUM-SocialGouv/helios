@@ -128,6 +128,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           </div>
           <div id="modal-body-composents" style={{ marginTop: "10px" }}>
             <RechercheAvanceeFormulaire
+              categoriesViewModel={[]}
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
               rechercheOnChange={rechercheOnChange}

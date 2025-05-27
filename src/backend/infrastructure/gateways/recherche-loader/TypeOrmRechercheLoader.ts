@@ -118,7 +118,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   }
 
   async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
-    const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport } = params;
+    const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, orderBy, order, page, forExport } = params;
+
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
 
@@ -205,7 +206,10 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (capaciteSMS.length !== 0) {
       await this.ajouteFiltreCapaciteSMS(requêteDeLaRecherche, capaciteSMS, conditions, parameters);
+    }
 
+    if (categories.length !== 0) {
+      parameters = this.ajouteFiltreCategories(categories, conditions, parameters);
     }
 
     if (conditions.length > 0) requêteDeLaRecherche.where(conditions.join(" AND "), parameters);
@@ -296,6 +300,11 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     });
 
     conditions.push(caps.length === 1 ? caps[0] : `(${caps.join(" OR ")})`);
+  }
+
+  private ajouteFiltreCategories(categories: string[], conditions: string[], parameters: any) {
+    conditions.push("recherche.categorie IN (:...categories)");
+    return { ...parameters, categories: categories };
   }
 
   async rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]> {

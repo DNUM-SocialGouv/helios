@@ -261,7 +261,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
               <div className="fr-modal__footer">
                 <button
                   className={"fr-btn fr-btn--secondary " + styles["eraseButton"]}
-                  disabled={!typeSelected || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
+                  disabled={!typeSelected || typeSelected.length === 0 || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
                   onClick={effacerButton}
                 >
                   Effacer
@@ -269,7 +269,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                 <button
                   aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
-                  disabled={!typeSelected || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
+                  disabled={!typeSelected || typeSelected.length === 0 || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
                   id="structure-appliquer-botton"
                   onClick={appliquerButton}
                 >

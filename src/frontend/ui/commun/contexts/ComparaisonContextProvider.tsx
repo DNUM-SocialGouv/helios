@@ -16,6 +16,7 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
   const [zoneGeoLabel, setZoneGeoLabel] = useState<string>("");
   const [typeStructure, setTypeStructure] = useState<string[]>([]);
   const [statutJuridiqueStructure, setStatutJuridiqueStructure] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<string[]>([]);
   const [capaciteHandicap, setCapaciteHandicap] = useState<string[]>([]);
   const [capaciteAgees, setCapaciteAgees] = useState<string[]>([]);
@@ -41,6 +42,8 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
         setZoneGeoLabel,
         typeStructure,
         setTypeStructure,
+        categories,
+        setCategories,
         statutJuridiqueStructure,
         setStatutJuridiqueStructure,
         capaciteMedicoSociaux,
