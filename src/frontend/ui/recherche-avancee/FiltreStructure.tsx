@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
-import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -10,6 +9,7 @@ import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-d
 import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
 import { AttribuesDefaults } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
@@ -17,10 +17,10 @@ type FiltresForComparaisonProps = Readonly<{
 }>;
 
 export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
-  const wording = new WordingFr();
+  const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [typeSelected, setTypeSelected] = useState<string[]>(rechercheAvanceeContext?.typeStructure || []);
-  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
+  const [typeSelected, setTypeSelected] = useState<string[]>(rechercheAvanceeContext?.typeStructure ?? []);
+  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure ?? []);
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
@@ -30,7 +30,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
   useEffect(() => {
-    if (changedCapacite && !isComparaison) {
+    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial) && !isComparaison) {
       setTypeSelected([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
       rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
     }
@@ -54,6 +54,27 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
       }
     });
   }, [rechercheAvanceeContext?.typeStructure]);
+
+
+  useEffect(() => {
+    if (rechercheAvanceeContext?.categoriesDomaines.includes(AttribuesDefaults.etablissementSanitaire)) {
+      if (!rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
+        rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementSanitaire]);
+      }
+    } else if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
+      const filtredStructures = rechercheAvanceeContext?.typeStructure.filter(item => item !== AttribuesDefaults.etablissementSanitaire)
+      rechercheAvanceeContext?.setTypeStructure(filtredStructures);
+    }
+
+    if (rechercheAvanceeContext?.categoriesDomaines.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+      if (!rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+        rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
+      }
+    } else if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+      const filtredStructures = rechercheAvanceeContext?.typeStructure.filter(item => item !== AttribuesDefaults.etablissementMedicoSocial)
+      rechercheAvanceeContext?.setTypeStructure(filtredStructures);
+    }
+  }, [rechercheAvanceeContext?.categoriesDomaines]);
 
   useEffect(() => {
     if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {

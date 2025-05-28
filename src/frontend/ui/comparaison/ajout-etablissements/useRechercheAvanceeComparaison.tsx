@@ -57,6 +57,7 @@ export function useRechercheAvanceeComparaison() {
         comparaisonContext?.zoneGeoType,
         [AttribuesDefaults.etablissementMedicoSocial],
         statutsJuridiquesDefaultValue,
+        comparaisonContext?.categories,
         capacites,
         comparaisonContext?.page
       );
@@ -79,11 +80,12 @@ export function useRechercheAvanceeComparaison() {
     typeZone: string | undefined,
     type: string[],
     statutJuridique: string[],
+    categories: string[] | undefined,
     capaciteSMS: CapaciteEtablissement[] | undefined,
     page: number | undefined
   ) => {
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })

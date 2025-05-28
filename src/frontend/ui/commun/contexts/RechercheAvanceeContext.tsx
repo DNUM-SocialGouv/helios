@@ -11,6 +11,8 @@ export interface RechercheAvanceeContextValue {
   typeStructure: string[];
   statutJuridiqueStructure: string[];
   categories: string[];
+  categoriesDomaines: string[];
+  categoriesLibellesCourt: string[];
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
@@ -26,6 +28,8 @@ export interface RechercheAvanceeContextValue {
   setTypeStructure: (typeStructure: string[]) => void;
   setStatutJuridiqueStructure: (statutJuridiqueStructure: string[]) => void;
   setCategories: (categories: string[]) => void;
+  setCategoriesDomaines: (domaines: string[]) => void;
+  setCategoriesLibellesCourt: (libelle: string[]) => void;
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;
   setCapaciteAgees: (capaciteAgees: string[]) => void;

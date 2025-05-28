@@ -1,11 +1,13 @@
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
+import { AttribuesDefaults } from "./model/Attribues";
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { ListeRiche } from "../commun/ListeRiche/ListeRiche";
+
 
 type FiltresForComparaisonProps = Readonly<{
     isComparaison: boolean;
@@ -17,13 +19,31 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
     const { wording } = useDependencies();
 
     const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-    const [categoriesSelected, setCategoriesSelected] = useState<string[]>(rechercheAvanceeContext?.categories || []);
+
+    const [categoriesSelectedList, setCategoriesSelectedList] = useState<CategoriesFinessViewModel[]>([]);
+
     const [filtredCategories, setFiltredCategories] = useState<CategoriesFinessViewModel[]>([]);
+
     const [terme, setTerme] = useState<string>("");
 
     useEffect(() => {
         filtrerLesCategories();
     }, [terme])
+
+    useEffect(() => {
+        if (rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.entiteJuridque) {
+            setCategoriesSelectedList([]);
+            rechercheAvanceeContext?.setCategories([]);
+            rechercheAvanceeContext?.setCategoriesDomaines([]);
+            rechercheAvanceeContext?.setCategoriesLibellesCourt([]);
+        }
+        if (rechercheAvanceeContext?.categories.length === 0) {
+            setCategoriesSelectedList([]);
+            setFiltredCategories([]);
+            setTerme("");
+        }
+    }, [rechercheAvanceeContext?.typeStructure, rechercheAvanceeContext?.categories])
+
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setTerme(event.target.value);
@@ -47,14 +67,19 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
 
     const mettreAJourCriteresDeRecherche = () => {
         if (rechercheAvanceeContext) {
-            rechercheAvanceeContext?.setCategories(categoriesSelected);
+            rechercheAvanceeContext?.setCategories(categoriesSelectedList.map((categorie => { return categorie.categorieCode })));
+            rechercheAvanceeContext?.setCategoriesDomaines(categoriesSelectedList.map((categorie => { return categorie.categorieDomaine })))
+            rechercheAvanceeContext?.setCategoriesLibellesCourt(categoriesSelectedList.map((categorie => { return categorie.categorieLibelleCourt })));
+            setTerme("");
             if (setIsChanged) setIsChanged(true);
         }
     }
 
     const effacerLaSelection = () => {
         rechercheAvanceeContext?.setCategories([]);
-        setCategoriesSelected([]);
+        rechercheAvanceeContext?.setCategoriesDomaines([]);
+        rechercheAvanceeContext?.setCategoriesLibellesCourt([]);
+        setCategoriesSelectedList([]);
         setFiltredCategories([]);
         setTerme("");
         if (setIsChanged) setIsChanged(true);
@@ -89,17 +114,17 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
                                         type="button">
                                     </button>
                                 </form>
-                                {terme !== "" && <ListeRiche
-                                    listSuggestions={filtredCategories}
+                                <ListeRiche
+                                    listSuggestions={terme !== "" ? filtredCategories : categoriesSelectedList}
                                     noDataMessage={filtredCategories.length === 0 && terme !== ""}
-                                    selectedElements={categoriesSelected}
-                                    setSelectedElements={setCategoriesSelected}
-                                />}
+                                    selectedElements={categoriesSelectedList}
+                                    setSelectedElements={setCategoriesSelectedList}
+                                />
                             </div>
                             <div className="fr-modal__footer">
                                 <button
                                     className={"fr-btn fr-btn--secondary " + styles["eraseButton"]}
-                                    disabled={categoriesSelected.length === 0}
+                                    disabled={categoriesSelectedList.length === 0}
                                     onClick={effacerLaSelection}
                                 >
                                     Effacer
@@ -107,11 +132,11 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
                                 <button
                                     aria-controls="fr-modal-Categories-Filtre"
                                     className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
-                                    disabled={categoriesSelected.length === 0}
+                                    disabled={categoriesSelectedList.length === 0}
                                     id="categories-appliquer-botton"
                                     onClick={mettreAJourCriteresDeRecherche}
                                 >
-                                    Appliquer {categoriesSelected.length === 0 ? 'X' : categoriesSelected.length} catégorie(s)
+                                    Appliquer {categoriesSelectedList.length === 0 ? 'X' : categoriesSelectedList.length} catégorie(s)
                                 </button>
                             </div>
                         </div>

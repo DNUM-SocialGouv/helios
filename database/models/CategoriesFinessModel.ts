@@ -11,4 +11,7 @@ export class CategoriesFinessModel {
     @Column({ name: "libelle_court", type: "varchar" })
     public libelleCourt!: string;
 
+    @Column({ name: "domaine", type: "varchar" })
+    public domaine!: string;
+
 }

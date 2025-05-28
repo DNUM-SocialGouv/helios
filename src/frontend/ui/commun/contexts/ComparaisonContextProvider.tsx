@@ -17,6 +17,8 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
   const [typeStructure, setTypeStructure] = useState<string[]>([]);
   const [statutJuridiqueStructure, setStatutJuridiqueStructure] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const [categoriesDomaines, setCategoriesDomaines] = useState<string[]>([]);
+  const [categoriesLibellesCourt, setCategoriesLibellesCourt] = useState<string[]>([]);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<string[]>([]);
   const [capaciteHandicap, setCapaciteHandicap] = useState<string[]>([]);
   const [capaciteAgees, setCapaciteAgees] = useState<string[]>([]);
@@ -44,6 +46,10 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
         setTypeStructure,
         categories,
         setCategories,
+        categoriesDomaines,
+        setCategoriesDomaines,
+        categoriesLibellesCourt,
+        setCategoriesLibellesCourt,
         statutJuridiqueStructure,
         setStatutJuridiqueStructure,
         capaciteMedicoSociaux,

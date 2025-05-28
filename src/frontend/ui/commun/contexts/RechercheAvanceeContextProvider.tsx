@@ -62,6 +62,8 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   );
 
   const [termeFixe, setTermeFixe] = useState("");
+  const [categoriesDomaines, setCategoriesDomaines] = useState<string[]>([]);
+  const [categoriesLibellesCourt, setCategoriesLibellesCourt] = useState<string[]>([]);
 
   const updateSearchParams = (newParams: Partial<SearchParams>) => {
     setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
@@ -73,6 +75,10 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     <RechercheAvanceeContext.Provider value={{
       ...searchParams,
       termeFixe,
+      categoriesDomaines,
+      setCategoriesDomaines,
+      categoriesLibellesCourt,
+      setCategoriesLibellesCourt,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
       setZoneGeoD: (value) => updateSearchParams({ zoneGeoD: value, page: initialPage }),
       setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
