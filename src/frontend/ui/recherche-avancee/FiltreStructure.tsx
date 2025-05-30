@@ -100,9 +100,6 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
         checkboxElementPriveNL.current.checked = true;
       }
     }
-    rechercheAvanceeContext?.setCapaciteAgees([]);
-    rechercheAvanceeContext?.setCapaciteHandicap([]);
-    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
   }
 
 

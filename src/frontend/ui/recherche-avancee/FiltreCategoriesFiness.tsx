@@ -42,7 +42,7 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
             setFiltredCategories([]);
             setTerme("");
         }
-    }, [rechercheAvanceeContext?.typeStructure, rechercheAvanceeContext?.categories])
+    }, [rechercheAvanceeContext?.typeStructure])
 
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
