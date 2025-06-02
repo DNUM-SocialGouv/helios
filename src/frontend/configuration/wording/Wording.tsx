@@ -433,6 +433,7 @@ export interface Wording {
   readonly AJOUTER_DES_ETABLISSEMENTS: string;
   readonly COMPARAISON_AUCUN_FINESS: string;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
 
   // Favoris
