@@ -12,7 +12,7 @@ from datacrawler import (
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES, FichierSource
 from datacrawler.transform.transforme_les_activités_des_établissements_sanitaires import transforme_les_activites_des_etablissements_sanitaires
@@ -59,7 +59,7 @@ def ajoute_les_activites_des_etablissements_sanitaires(
     donnees_ann_sae_activite_filtre_sur_les_5_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(
         donnees_ann_sae_activite, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
     )
-    numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
+    numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
 
     activites_des_etablissements_sanitaires = transforme_les_activites_des_etablissements_sanitaires(
         donnees_men_pmsi_annuel_filtre_sur_les_5_dernieres_annees,

@@ -4,7 +4,7 @@ from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base, récupère_les_capacités_sanitaires_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base, récupère_les_capacités_sanitaires_de_la_base
 from datacrawler.load.nom_des_tables import TABLES_DES_CAPACITÉS_DES_ENTITES_JURIDIQUES
 from datacrawler.transform.entite_juridique.bloc_autorisations_capacités.agrège_les_capacités_dans_les_entites_juridiques import (
     agrège_les_capacités_dans_les_entites_juridiques,
@@ -13,7 +13,7 @@ from datacrawler.transform.entite_juridique.bloc_autorisations_capacités.agrèg
 
 def agrège_les_capacités_sanitaire_des_entités_juridiques(base_de_données: Engine, logger: Logger) -> None:
     capacités_sanitaire = récupère_les_capacités_sanitaires_de_la_base(base_de_données)
-    finess = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données, entite_juridique=True)
+    finess = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données, entite_juridique=True)
     capacités_avec_entités_juridiques = pd.merge(capacités_sanitaire, finess, on="numero_finess_etablissement_territorial")
 
     agrégation_capacités = agrège_les_capacités_dans_les_entites_juridiques(capacités_avec_entités_juridiques)
