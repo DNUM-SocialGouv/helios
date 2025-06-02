@@ -6,8 +6,8 @@ import { CategoriesFinessViewModel } from "../../recherche-avancee/model/Categor
 
 type listeRicheProps = {
     listSuggestions?: CategoriesFinessViewModel[];
-    selectedElements: string[];
-    setSelectedElements: Dispatch<SetStateAction<string[]>>;
+    selectedElements: CategoriesFinessViewModel[];
+    setSelectedElements: Dispatch<SetStateAction<CategoriesFinessViewModel[]>>;
     noDataMessage: boolean;
 };
 
@@ -15,19 +15,19 @@ export const ListeRiche = ({ listSuggestions, selectedElements, setSelectedEleme
     const codeColorOfDisabled = "#808080";
     const codeColorOfSelected = "#000091";
 
-    const onSelectElement = (code: string) => {
+    const onSelectElement = (suggestion: CategoriesFinessViewModel) => {
         setSelectedElements((prevSelected) => {
-            if (prevSelected.includes(code)) {
-                return prevSelected.filter((categorieCode) => categorieCode !== code);
+            if (prevSelected.some(category => category.categorieCode === suggestion.categorieCode)) {
+                return prevSelected.filter((category) => category.categorieCode !== suggestion.categorieCode);
             } else {
-                return [...prevSelected, code];
+                return [...prevSelected, suggestion];
             }
         });
     };
 
     const computeListRowClassName = (code: string): string => {
         let className = "";
-        if (selectedElements.includes(code)) {
+        if (selectedElements.some(category => category.categorieCode === code)) {
             className = styles["selected-container"];
         }
         return className;
@@ -41,7 +41,7 @@ export const ListeRiche = ({ listSuggestions, selectedElements, setSelectedEleme
                         <li className={styles["etablissement-info"]} key={suggestion.categorieCode}>
                             <div
                                 className={computeListRowClassName(suggestion.categorieCode)}
-                                onClick={() => onSelectElement(suggestion.categorieCode)}
+                                onClick={() => onSelectElement(suggestion)}
                                 onKeyDown={() => { }}
                                 role="button"
                                 style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}
@@ -49,9 +49,9 @@ export const ListeRiche = ({ listSuggestions, selectedElements, setSelectedEleme
                             >
                                 <span className={styles["main-span"]}>
                                     {suggestion.categorieCode} - {suggestion.categorieLibelleCourt} - {suggestion.categorieLibelle}
-                                    {selectedElements.includes(suggestion.categorieCode) && (
+                                    {selectedElements.some(category => category.categorieCode === suggestion.categorieCode) && (
                                         <div className={styles["icon-check-fill"]}>
-                                            {checkFillSvg(selectedElements.includes(suggestion.categorieCode) ? codeColorOfSelected : codeColorOfDisabled)}
+                                            {checkFillSvg(selectedElements.some(category => category.categorieCode === suggestion.categorieCode) ? codeColorOfSelected : codeColorOfDisabled)}
                                         </div>
                                     )}
                                 </span>

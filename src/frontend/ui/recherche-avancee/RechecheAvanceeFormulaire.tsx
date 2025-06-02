@@ -68,7 +68,11 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const getWordingCategories = (): string => {
-    const categoriesWording = wording.CATEGORIES_FINESS;
+    let categoriesWording = wording.CATEGORIES_FINESS;
+    if (rechercheAvanceeContext?.categories && rechercheAvanceeContext?.categories.length > 0) {
+      categoriesWording += ` : ${rechercheAvanceeContext?.categoriesLibellesCourt[0]}`;
+      if (rechercheAvanceeContext?.categories.length > 1) categoriesWording += ", +" + (rechercheAvanceeContext?.categories.length - 1);
+    }
     return categoriesWording;
   }
 
@@ -108,6 +112,8 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setTypeStructure([]);
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
     rechercheAvanceeContext?.setCategories([]);
+    rechercheAvanceeContext?.setCategoriesDomaines([]);
+    rechercheAvanceeContext?.setCategoriesLibellesCourt([]);
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
     rechercheAvanceeContext?.setZoneGeoLabel("");
@@ -121,6 +127,7 @@ export const RechercheAvanceeFormulaire = ({
   const buttonCapaciteClicked = rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonCategorieClicked = rechercheAvanceeContext?.categories.length !== 0 ? styles["filtre-button_clicked"] : "";
 
   return (
     <div>
@@ -163,9 +170,9 @@ export const RechercheAvanceeFormulaire = ({
           </button>
           <button
             aria-controls="fr-modal-Categories-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCategorieClicked}`}
             data-fr-opened="false"
-            disabled={isComparaison}
+            disabled={rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.entiteJuridque}
           >
             {getWordingCategories()}
           </button>

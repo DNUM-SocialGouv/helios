@@ -15,6 +15,10 @@ export class CategoriesFinessViewModel {
         return this.categorie?.libelleCourt ?? "";
     }
 
+    public get categorieDomaine(): string {
+        return this.categorie?.domaine ?? "";
+    }
+
     public get categorieLibelleRecherche(): string {
         return this.categorie?.libelle.replaceAll('.', '').toLowerCase() ?? "";
     }

@@ -90,7 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       typeZone = "",
       page = 1,
       statuts = [],
-      type = "",
+      type = [],
       categories = [],
       capacite_medico_sociaux: capaciteMedicoSociaux = [],
       capacite_handicap: capaciteHandicap = [],

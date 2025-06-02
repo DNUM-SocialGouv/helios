@@ -260,12 +260,14 @@ colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.key
 type_des_colonnes_categories_finess = {
     "code": str,
     "libelle": str,
-    "libellecourt": str
+    "libellecourt": str,
+    "domaine": str
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
     "libelle": "libelle",
-    "libellecourt": "libelle_court"
+    "libellecourt": "libelle_court",
+    "domaine": "domaine"
 }
 
 index_des_categories: List[str] = [
