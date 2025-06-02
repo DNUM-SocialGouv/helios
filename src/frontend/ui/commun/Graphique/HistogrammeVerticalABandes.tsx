@@ -11,6 +11,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
+const MIN_VALUE = 5;
 
 function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
   return {
@@ -28,7 +29,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
         },
         formatter: (value) => {
           const valueNumber = value.y as number;
-          if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= 5) {
+          if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= MIN_VALUE) {
             return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
           }
           return value.y;
@@ -95,7 +96,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
       if (valeur) {
         const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
-        if (numValue > 0 && numValue <= 5) {
+        if (numValue > 0 && numValue <= MIN_VALUE) {
           hasSomeValuesToHide = true;
           return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
         }

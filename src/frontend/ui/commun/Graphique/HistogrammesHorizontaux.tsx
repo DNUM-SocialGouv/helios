@@ -11,6 +11,7 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
+const MIN_VALUE = 5;
 
 function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeursBasse?: boolean) {
   const [chartsData, setChartsData] = useState(charts);
@@ -19,7 +20,7 @@ function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeu
 
 
   const hideLowValueFormatter = (value: number, _context: Context): any => {
-    if (cacheLesValeursBasse && value > 0 && value <= 5) {
+    if (cacheLesValeursBasse && value > 0 && value <= MIN_VALUE) {
       return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
     }
     return value;
@@ -221,20 +222,17 @@ export const HistogrammesHorizontaux = ({
     return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat();
   }
 
-  function getTranscriptionValeurs() {
-    let valeurs = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
-    if (cacheLesValeursBasse) {
-      valeurs = valeurs.map((valeurs) => valeurs.map((valeur) => {
-        const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
-        if (numValue > 0 && numValue <= 5) {
-          hasSomeValuesToHide = true;
-          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
-        }
-        return valeur;
-      })
-      )
-    }
-    return valeurs;
+  let valeursTranscription = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
+  if (cacheLesValeursBasse) {
+    valeursTranscription = valeursTranscription.map((valeurs) => valeurs.map((valeur) => {
+      const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+      if (numValue > 0 && numValue <= MIN_VALUE) {
+        hasSomeValuesToHide = true;
+        return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+      }
+      return valeur;
+    })
+    )
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
@@ -271,7 +269,7 @@ export const HistogrammesHorizontaux = ({
         identifiantUnique={identifiant}
         identifiants={transcriptionTitles()}
         libellés={histogrammes[0].labels}
-        valeurs={getTranscriptionValeurs()}
+        valeurs={valeursTranscription}
       />
     </>
   );
