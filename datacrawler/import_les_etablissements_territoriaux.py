@@ -18,12 +18,8 @@ from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichie
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.load.sauvegarde import mets_a_jour_la_date_de_mise_a_jour_du_fichier_source, supprime, mets_a_jour
 from datacrawler.load.nom_des_tables import TABLE_ETABLISSEMENTS_TERRITORIAUX, CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX, TABLES_DES_CPOM
-from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees_entite_juridique import(
-    associe_le_code_region,
-)
 from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import(
     associe_le_domaine,
-    associe_la_classification,
     conserve_les_etablissements_territoriaux_ouverts,
     extrais_les_etablissements_territoriaux_recemment_fermes,
     transform_les_etablissements_territoriaux
@@ -44,26 +40,21 @@ def import_etablissements_territoriaux(chemin_local_du_fichier_et: str,
                                        chemin_du_fichier_ann_ms_tdp_et: str,
                                        base_de_donnees: Engine,
                                        logger: Logger) -> None:
-     # Regrouper les variables liées à la lecture des fichiers
-    chemin_fichiers = {
-        'et': chemin_local_du_fichier_et,
-        'categorie': chemin_local_du_fichier_categorie,
-        'ann_ms_tdp_et': chemin_du_fichier_ann_ms_tdp_et
-    }
+  
      # Lecture et traitement des données
     donnees = {
         'etablissements': lis_le_fichier_xml(
-            chemin_fichiers['et'],
+            chemin_local_du_fichier_et,
             XPATH_FINESS_CS1400102,
             type_des_colonnes_finess_cs1400102,
         ),
         'categories': lis_le_fichier_xml(
-            chemin_fichiers['categorie'],
+            chemin_local_du_fichier_categorie,
             XPATH_FINESS_CS1500106,
             type_des_colonnes_finess_cs1500106,
         ),
         'ann_ms_tdp_et': lis_le_fichier_csv(
-            chemin_fichiers['ann_ms_tdp_et'],
+            chemin_du_fichier_ann_ms_tdp_et,
             colonnes_à_lire_ann_ms_tdp_et_cpom,
             extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios),
         )
@@ -76,10 +67,8 @@ def import_etablissements_territoriaux(chemin_local_du_fichier_et: str,
                                                             recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees))
     logger.info(f"[FINESS] {len(etablissements_territoriaux_a_supprimer)} établissements territoriaux sont fermés.")
     etablissements_territoriaux_categorises = associe_le_domaine(etablissements_territoriaux_ouverts, donnees['categories'])
-    etablissements_territoriaux_classifies = associe_la_classification(etablissements_territoriaux_categorises)
     referentiel_dep_region = recupere_le_ref_institution_region_de_la_base(base_de_donnees)
-    etablissements_territoriaux_avec_code_region = associe_le_code_region(etablissements_territoriaux_classifies, referentiel_dep_region)
-    etablissements_territoriaux_transformes = transform_les_etablissements_territoriaux(etablissements_territoriaux_avec_code_region)
+    etablissements_territoriaux_transformes = transform_les_etablissements_territoriaux(etablissements_territoriaux_categorises, referentiel_dep_region)
     date_du_fichier_et = extrais_la_date_du_nom_de_fichier_finess(chemin_local_du_fichier_et)
     logger.info(f"[FINESS] Date de mise à jour des fichiers FINESS des établissements territoriaux  : {date_du_fichier_et}")
     logger.info("[DIAMANT] Récupère les dates d'entrée en vigueur du CPOM des établissements médico-sociaux")
