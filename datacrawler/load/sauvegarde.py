@@ -17,10 +17,14 @@ def mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(base_de_donnees: Connec
             SET derniere_mise_a_jour = '{date_de_mise_a_jour}';"""
     )
 
+
 def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle: Tuple[str, ...]) -> None:
     if not liste_cle:
         return  # Skip if empty list
-    connection.execute(f"DELETE FROM {table} where {cle_primaire} IN {liste_cle};")
+
+    placeholders = ','.join(["%s"] * len(liste_cle))
+    sql = f"DELETE FROM {table} WHERE {cle_primaire} IN ({placeholders})"
+    connection.execute(sql, liste_cle)
 
 
 def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donnees: DataFrame) -> None:
