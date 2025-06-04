@@ -40,8 +40,6 @@ def import_etablissements_territoriaux(chemin_local_du_fichier_et: str,
                                        chemin_du_fichier_ann_ms_tdp_et: str,
                                        base_de_donnees: Engine,
                                        logger: Logger) -> None:
-  
-     # Lecture et traitement des données
     donnees = {
         'etablissements': lis_le_fichier_xml(
             chemin_local_du_fichier_et,
