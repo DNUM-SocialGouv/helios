@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext } from "react";
 
 import { FiltreCapacite } from "./FiltreCapacite";
 import { FiltreCategoriesFiness } from "./FiltreCategoriesFiness";
@@ -34,7 +34,6 @@ export const RechercheAvanceeFormulaire = ({
 }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [disableCapaciter, setDisableCapaciter] = useState<boolean>(false);
   const isEraseAllEnabled = rechercheAvanceeContext?.terme !== "" ||
     rechercheAvanceeContext?.zoneGeo !== "" ||
     rechercheAvanceeContext?.typeStructure.length !== 0 ||
@@ -43,15 +42,6 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
-
-  useEffect(() => {
-    const structureType = rechercheAvanceeContext?.typeStructure || [];
-    if (!structureType.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-      setDisableCapaciter(true);
-    } else {
-      setDisableCapaciter(false);
-    }
-  }, [rechercheAvanceeContext?.typeStructure]);
 
   const getWordingGeo = (): string => {
     return rechercheAvanceeContext?.zoneGeoLabel?.trim() ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
@@ -161,29 +151,28 @@ export const RechercheAvanceeFormulaire = ({
             {getWordingGeo()}
           </button>
           <button
-            aria-controls="fr-modal-Structure-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
-            data-fr-opened="false"
-            disabled={isComparaison}
-          >
-            {getWordingStructure()}
-          </button>
-          <button
             aria-controls="fr-modal-Categories-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCategorieClicked}`}
             data-fr-opened="false"
-            disabled={rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.entiteJuridque}
+            disabled={rechercheAvanceeContext?.typeStructure.length !== 0}
           >
             {getWordingCategories()}
           </button>
           <button
+            aria-controls="fr-modal-Structure-Filtre"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
+            data-fr-opened="false"
+            disabled={isComparaison || rechercheAvanceeContext?.categoriesDomaines.length !== 0}
+          >
+            {getWordingStructure()}
+          </button>
+          {(rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.etablissementMedicoSocial) && <button
             aria-controls="fr-modal-Capacite-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
             data-fr-opened="false"
-            disabled={disableCapaciter}
           >
             {getWordingCapacite()}
-          </button>
+          </button>}
           {isEraseAllEnabled && !isComparaison && <button
             className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
             onClick={eraseAll}
@@ -194,8 +183,8 @@ export const RechercheAvanceeFormulaire = ({
       </div>
       <div>
         <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} />
-        <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
         <FiltreCategoriesFiness categoriesViewModel={categoriesViewModel} isComparaison={isComparaison} setIsChanged={setIsChangedCategories} />
+        <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
         <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
-import { AttribuesDefaults } from "./model/Attribues";
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
@@ -29,21 +28,6 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
     useEffect(() => {
         filtrerLesCategories();
     }, [terme])
-
-    useEffect(() => {
-        if (rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.entiteJuridque) {
-            setCategoriesSelectedList([]);
-            rechercheAvanceeContext?.setCategories([]);
-            rechercheAvanceeContext?.setCategoriesDomaines([]);
-            rechercheAvanceeContext?.setCategoriesLibellesCourt([]);
-        }
-        if (rechercheAvanceeContext?.categories.length === 0) {
-            setCategoriesSelectedList([]);
-            setFiltredCategories([]);
-            setTerme("");
-        }
-    }, [rechercheAvanceeContext?.typeStructure])
-
 
     const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setTerme(event.target.value);

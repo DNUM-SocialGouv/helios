@@ -55,27 +55,6 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     });
   }, [rechercheAvanceeContext?.typeStructure]);
 
-
-  useEffect(() => {
-    if (rechercheAvanceeContext?.categoriesDomaines.includes(AttribuesDefaults.etablissementSanitaire)) {
-      if (!rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
-        rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementSanitaire]);
-      }
-    } else if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire)) {
-      const filtredStructures = rechercheAvanceeContext?.typeStructure.filter(item => item !== AttribuesDefaults.etablissementSanitaire)
-      rechercheAvanceeContext?.setTypeStructure(filtredStructures);
-    }
-
-    if (rechercheAvanceeContext?.categoriesDomaines.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-      if (!rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-        rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
-      }
-    } else if (rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-      const filtredStructures = rechercheAvanceeContext?.typeStructure.filter(item => item !== AttribuesDefaults.etablissementMedicoSocial)
-      rechercheAvanceeContext?.setTypeStructure(filtredStructures);
-    }
-  }, [rechercheAvanceeContext?.categoriesDomaines]);
-
   useEffect(() => {
     if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
       emptyStatutJuridiqueCheckboxs();
