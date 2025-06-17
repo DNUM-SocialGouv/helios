@@ -6,7 +6,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 
 
 async function getData(context: RechercheAvanceeContextValue) {
-  const { terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order } = context;
+  const { terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, categories, orderBy, order } = context;
 
   const capacites = [
     { classification: "non_classifie", ranges: capaciteMedicoSociaux || [] },
@@ -15,7 +15,7 @@ async function getData(context: RechercheAvanceeContextValue) {
   ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
 
   return fetch("/api/recherche-avancee", {
-    body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, orderBy, order, forExport: true }),
+    body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, categories, orderBy, order, forExport: true }),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   })
