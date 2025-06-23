@@ -105,6 +105,7 @@ export class WordingFr implements Wording {
   readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
   readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
   readonly CAPACITE: string = "Capacité MS";
+  readonly ACTIVITE_SAN: string = "Activité (SAN)";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
   readonly TOUT_EFFACER: string = "Tout effacer";
 
@@ -630,6 +631,13 @@ export class WordingFr implements Wording {
   // Bouton de selection de tous les rechercheNombreRésultats
   readonly TOUT_SELECTIONNER: string = "Tout sélectionner";
   readonly TOUT_DESELECTIONNER: string = "Tout désélectionner";
+  // Filtre Activité SAN
+  readonly FA_MCO: string = "Médecine Chirurgie Obstétrique";
+  readonly FA_PSY: string = "Psychiatrie";
+  readonly FA_SSR: string = "Soins de Suite et de Réadaptation";
+  readonly FA_USLD: string = "Unité de Soins Longue Durée";
+  readonly FA_SEJOURS_ANN: string = "(nombre de séjours - annuel)";
+  readonly FA_JOURS_ANN: string = "(nombre de jours - annuel)";
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";

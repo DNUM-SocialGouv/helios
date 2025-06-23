@@ -16,6 +16,10 @@ export interface RechercheAvanceeContextValue {
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
+  activiteMco: string[];
+  activitePsy: string[];
+  activiteSsr: string[];
+  activiteUsld: string[];
   order: string;
   orderBy: string;
   setTerme: (terme: string) => void;
@@ -33,6 +37,10 @@ export interface RechercheAvanceeContextValue {
   setCapaciteMedicoSociaux: (capaciteMedicoSociaux: string[]) => void;
   setCapaciteHandicap: (capaciteHandicap: string[]) => void;
   setCapaciteAgees: (capaciteAgees: string[]) => void;
+  setActiviteMco: (activiteMco: string[]) => void;
+  setActivitePsy: (activitePsy: string[]) => void;
+  setActiviteSsr: (activiteSsr: string[]) => void;
+  setActiviteUsld: (activiteUsld: string[]) => void;
   setOrder: (order: string) => void;
   setOrderBy: (orderBy: string) => void;
 }

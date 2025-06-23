@@ -67,6 +67,7 @@ export default function RechercheAvancee(props: RouterProps) {
         isComparaison={false}
         lancerLaRecherche={resetSelectionEtLanceLaRecherche}
         rechercheOnChange={rechercheOnChange}
+        setIsChangedActivite={resetSelectionOnChange}
         setIsChangedCapacite={resetSelectionOnChange}
         setIsChangedStructure={resetSelectionOnChange}
         setIsChangedZG={resetSelectionOnChange}

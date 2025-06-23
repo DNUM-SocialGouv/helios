@@ -1,5 +1,6 @@
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext } from "react";
 
+import { FiltreActiviteSanitaire } from "./FiltreActiviteSanitaire";
 import { FiltreCapacite } from "./FiltreCapacite";
 import { FiltreCategoriesFiness } from "./FiltreCategoriesFiness";
 import { FiltreStructure } from "./FiltreStructure";
@@ -19,6 +20,7 @@ type RechercheAvanceeFormulaireProps = Readonly<{
   setIsChangedCapacite?: Dispatch<SetStateAction<boolean>>;
   setIsChangedStructure?: Dispatch<SetStateAction<boolean>>;
   setIsChangedCategories?: Dispatch<SetStateAction<boolean>>;
+  setIsChangedActivite?: Dispatch<SetStateAction<boolean>>;
   categoriesViewModel: CategoriesFinessViewModel[]
 }>;
 
@@ -29,6 +31,7 @@ export const RechercheAvanceeFormulaire = ({
   setIsChangedZG,
   setIsChangedStructure,
   setIsChangedCapacite,
+  setIsChangedActivite,
   setIsChangedCategories,
   categoriesViewModel
 }: RechercheAvanceeFormulaireProps) => {
@@ -75,7 +78,7 @@ export const RechercheAvanceeFormulaire = ({
         ...rechercheAvanceeContext.capaciteAgees,
       ];
       if (allCapacities.length > 0) {
-        capaciterWording += " : " + ajusteementLibelleCapacite(allCapacities[0]);
+        capaciterWording += " : " + ajusteementLibelle(allCapacities[0]);
         if (allCapacities.length > 1) {
           capaciterWording += ", +" + (allCapacities.length - 1);
         }
@@ -84,7 +87,26 @@ export const RechercheAvanceeFormulaire = ({
     return capaciterWording;
   };
 
-  const ajusteementLibelleCapacite = (str: string): string => {
+  const getWordingActivite = () => {
+    let activiteWording = wording.ACTIVITE_SAN;
+    if (rechercheAvanceeContext?.activiteMco || rechercheAvanceeContext?.activitePsy || rechercheAvanceeContext?.activiteSsr || rechercheAvanceeContext?.activiteUsld) {
+      const allActivities = [
+        ...rechercheAvanceeContext.activiteMco,
+        ...rechercheAvanceeContext.activitePsy,
+        ...rechercheAvanceeContext.activiteSsr,
+        ...rechercheAvanceeContext.activiteUsld,
+      ];
+      if (allActivities.length > 0) {
+        activiteWording += " : " + ajusteementLibelle(allActivities[0]);
+        if (allActivities.length > 1) {
+          activiteWording += ", +" + (allActivities.length - 1);
+        }
+      }
+    }
+    return activiteWording;
+  }
+
+  const ajusteementLibelle = (str: string): string => {
     return str.includes(">") ? +str.replace(">", "") + 1 + " et plus" : str.replace(",", "-");
   };
 
@@ -104,6 +126,10 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setCategories([]);
     rechercheAvanceeContext?.setCategoriesDomaines([]);
     rechercheAvanceeContext?.setCategoriesLibellesCourt([]);
+    rechercheAvanceeContext?.setActiviteMco([]);
+    rechercheAvanceeContext?.setActivitePsy([]);
+    rechercheAvanceeContext?.setActiviteSsr([]);
+    rechercheAvanceeContext?.setActiviteUsld([]);
     rechercheAvanceeContext?.setZoneGeo("");
     rechercheAvanceeContext?.setZoneGeoD("");
     rechercheAvanceeContext?.setZoneGeoLabel("");
@@ -118,6 +144,11 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0 ? styles["filtre-button_clicked"] : "";
   const buttonCategorieClicked = rechercheAvanceeContext?.categories.length !== 0 ? styles["filtre-button_clicked"] : "";
+  const buttonActiviteClicked = rechercheAvanceeContext?.activiteMco.length !== 0 ||
+    rechercheAvanceeContext?.activitePsy.length !== 0 ||
+    rechercheAvanceeContext?.activiteSsr.length !== 0 ||
+    rechercheAvanceeContext?.activiteUsld.length !== 0
+    ? styles["filtre-button_clicked"] : "";
 
   return (
     <div>
@@ -166,12 +197,19 @@ export const RechercheAvanceeFormulaire = ({
           >
             {getWordingStructure()}
           </button>
-          {(rechercheAvanceeContext?.typeStructure.length === 1 && rechercheAvanceeContext?.typeStructure[0] === AttribuesDefaults.etablissementMedicoSocial) && <button
+          {rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial) && <button
             aria-controls="fr-modal-Capacite-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
             data-fr-opened="false"
           >
             {getWordingCapacite()}
+          </button>}
+          {rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementSanitaire) && <button
+            aria-controls="fr-modal-activite-Filtre"
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonActiviteClicked}`}
+            data-fr-opened="false"
+          >
+            {getWordingActivite()}
           </button>}
           {isEraseAllEnabled && !isComparaison && <button
             className={"fr-btn fr-btn--tertiary-no-outline " + styles["eraseAllButton"]}
@@ -186,6 +224,7 @@ export const RechercheAvanceeFormulaire = ({
         <FiltreCategoriesFiness categoriesViewModel={categoriesViewModel} isComparaison={isComparaison} setIsChanged={setIsChangedCategories} />
         <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
         <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />
+        <FiltreActiviteSanitaire isComparaison={isComparaison} setIsChanged={setIsChangedActivite} />
       </div>
     </div>
   );

@@ -22,6 +22,10 @@ interface SearchParams {
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
+  activiteMco: string[];
+  activitePsy: string[];
+  activiteSsr: string[];
+  activiteUsld: string[];
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
@@ -44,6 +48,10 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault([]),
       capaciteHandicap: parseAsArrayOf(parseAsString, ";").withDefault([]),
       capaciteAgees: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteMco: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activitePsy: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteSsr: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteUsld: parseAsArrayOf(parseAsString, ";").withDefault([]),
     },
     {
       urlKeys: {
@@ -89,6 +97,10 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
+      setActiviteMco: (value) => updateSearchParams({ activiteMco: value, page: initialPage }),
+      setActivitePsy: (value) => updateSearchParams({ activitePsy: value, page: initialPage }),
+      setActiviteSsr: (value) => updateSearchParams({ activiteSsr: value, page: initialPage }),
+      setActiviteUsld: (value) => updateSearchParams({ activiteUsld: value, page: initialPage }),
       setTerme: (value) => { setSearchParams((prevParams) => ({ ...prevParams, terme: value })) },
       setTermeFixe,
       setPage: (value, shallow) => { setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }) },
