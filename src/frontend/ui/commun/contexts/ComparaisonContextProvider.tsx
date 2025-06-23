@@ -22,6 +22,10 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<string[]>([]);
   const [capaciteHandicap, setCapaciteHandicap] = useState<string[]>([]);
   const [capaciteAgees, setCapaciteAgees] = useState<string[]>([]);
+  const [activiteMco, setActiviteMco] = useState<string[]>([]);
+  const [activitePsy, setActivitePsy] = useState<string[]>([]);
+  const [activiteSsr, setActiviteSsr] = useState<string[]>([]);
+  const [activiteUsld, setActiviteUsld] = useState<string[]>([]);
   const [order, setOrder] = useState<string>("");
   const [orderBy, setOrderBy] = useState<string>("");
 
@@ -58,6 +62,14 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
         setCapaciteHandicap,
         capaciteAgees,
         setCapaciteAgees,
+        activiteMco,
+        setActiviteMco,
+        activitePsy,
+        setActivitePsy,
+        activiteSsr,
+        setActiviteSsr,
+        activiteUsld,
+        setActiviteUsld,
         order,
         setOrder,
         orderBy,

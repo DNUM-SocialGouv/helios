@@ -87,6 +87,7 @@ export interface Wording {
   readonly CATEGORIES_FINESS: string;
   readonly CATEGORIES_FINESS_TITLE: string;
   readonly CAPACITE: string;
+  readonly ACTIVITE_SAN: string;
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
@@ -546,6 +547,11 @@ export interface Wording {
   // Bouton de selection de tous les rechercheNombreRésultats
   readonly TOUT_SELECTIONNER: string;
   readonly TOUT_DESELECTIONNER: string;
+  // Filtre Activité SAN
+  readonly FA_MCO: string;
+  readonly FA_PSY: string;
+  readonly FA_SSR: string;
+  readonly FA_USLD: string;
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
