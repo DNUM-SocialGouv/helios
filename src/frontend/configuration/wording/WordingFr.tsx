@@ -646,6 +646,7 @@ export class WordingFr implements Wording {
 A venir : la comparaison des établissements sanitaires et entités juridiques.`;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string = "A partir d'une liste existante";
   readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
   readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
 
