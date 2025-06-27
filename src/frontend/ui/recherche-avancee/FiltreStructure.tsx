@@ -29,6 +29,12 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||
     (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
+  const changedActivite =
+    (rechercheAvanceeContext?.activiteMco && rechercheAvanceeContext?.activiteMco.length > 0) ||
+    (rechercheAvanceeContext?.activitePsy && rechercheAvanceeContext?.activitePsy.length > 0) ||
+    (rechercheAvanceeContext?.activiteSsr && rechercheAvanceeContext?.activiteSsr.length > 0) ||
+    (rechercheAvanceeContext?.activiteUsld && rechercheAvanceeContext?.activiteUsld.length > 0);
+
   useEffect(() => {
     if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial) && !isComparaison) {
       setTypeSelected([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
@@ -122,6 +128,13 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
         rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
         rechercheAvanceeContext?.setCapaciteHandicap([]);
         rechercheAvanceeContext?.setCapaciteAgees([]);
+      }
+      if (!typeSelected.includes(AttribuesDefaults.etablissementSanitaire) && changedActivite) {
+        rechercheAvanceeContext?.setActiviteMco([]);
+        rechercheAvanceeContext?.setActivitePsy([]);
+        rechercheAvanceeContext?.setActiviteSsr([]);
+        rechercheAvanceeContext?.setActiviteUsld([]);
+
       }
       if (setIsChanged) setIsChanged(true);
     }

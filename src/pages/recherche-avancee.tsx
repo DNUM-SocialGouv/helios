@@ -83,37 +83,32 @@ export default function RechercheAvancee(props: RouterProps) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
-  const {
-    query: {
-      terme = "",
-      zone = "",
-      zoneD = "",
-      typeZone = "",
-      page = 1,
-      statuts = [],
-      type = [],
-      categories = [],
-      capacite_medico_sociaux: capaciteMedicoSociaux = [],
-      capacite_handicap: capaciteHandicap = [],
-      capacite_agees: capaciteAgees = [],
-      order = "ASC",
-      order_by: orderBy = "",
-    },
-  } = context;
-  const pageParam = Number(page);
-  const termeParam = String(terme);
-  const zoneParam = String(zone);
-  const zoneDParam = String(zoneD);
-  const typeZoneParam = String(typeZone);
-  const orderParam = String(order) as OrderDir;
-  const orderByParam = String(orderBy);
+  const { query } = context;
 
-  const typeParam = type.length > 0 && typeof type === "string" ? type.split(",") : [];
-  const statutJuridiqueParam = statuts.length > 0 && typeof statuts === "string" ? statuts.split(",") : [];
-  const categoriesParam = categories.length > 0 && typeof categories === "string" ? categories.split(",") : [];
-  const capaciteMedicoSociauxParam = capaciteMedicoSociaux.length > 0 && typeof capaciteMedicoSociaux === "string" ? capaciteMedicoSociaux.split(";") : [];
-  const capaciteHandicapParam = capaciteHandicap.length > 0 && typeof capaciteHandicap === "string" ? capaciteHandicap.split(";") : [];
-  const capaciteAgeesParam = capaciteAgees.length > 0 && typeof capaciteAgees === "string" ? capaciteAgees.split(";") : [];
+  const pageParam = Number(query['page'] || 1);
+  const termeParam = String(query['terme'] || "");
+  const zoneParam = String(query['zone'] ?? "");
+  const zoneDParam = String(query['zoneD'] ?? "");
+  const typeZoneParam = String(query['typeZone'] ?? "");
+  const orderParam = String(query['order'] ?? "ASC") as OrderDir;
+  const orderByParam = String(query['order_by'] ?? "");
+
+
+  const transformArrayParam = (param: any, delimiter = ",") =>
+    param && typeof param === "string" && param.length > 0 ? param.split(delimiter) : [];
+
+  const typeParam = transformArrayParam(query['type']);
+  const statutJuridiqueParam = transformArrayParam(query['statuts']);
+  const categoriesParam = transformArrayParam(query['categories']);
+
+  const capaciteMedicoSociauxParam = transformArrayParam(query['capacite_medico_sociaux'], ";");
+  const capaciteHandicapParam = transformArrayParam(query['capacite_handicap'], ";");
+  const capaciteAgeesParam = transformArrayParam(query['capacite_agees'], ";");
+
+  const activiteMcoParam = transformArrayParam(query['activiteMco'], ";");
+  const activitePsyParam = transformArrayParam(query['activitePsy'], ";");
+  const activiteSsrParam = transformArrayParam(query['activiteSsr'], ";");
+  const activiteUsldParam = transformArrayParam(query['activiteUsld'], ";");
 
   const capacites = [
     { classification: "non_classifie", ranges: capaciteMedicoSociauxParam },
@@ -121,20 +116,31 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     { classification: "personnes_agees", ranges: capaciteAgeesParam },
   ].filter((capacite) => capacite.ranges.length > 0);
 
+  const activites = [
+    { classification: "mco", ranges: activiteMcoParam },
+    { classification: "psy", ranges: activitePsyParam },
+    { classification: "ssr", ranges: activiteSsrParam },
+    { classification: "usld", ranges: activiteUsldParam },
+  ].filter((activite) => activite.ranges.length > 0);
+
   const categoriesFiness = await getFinessCategoriesEndpoint(dependencies);
 
-  if (
-    pageParam &&
+  const shouldPerformSearch = pageParam &&
     (termeParam ||
       zoneParam ||
       statutJuridiqueParam.length > 0 ||
       typeParam.length > 0 ||
-      categories.length > 0 ||
+      categoriesParam.length > 0 ||
       capaciteMedicoSociauxParam.length > 0 ||
       capaciteHandicapParam.length > 0 ||
-      capaciteAgeesParam.length > 0)
-  ) {
-    const params = { terme: termeParam, zone: zoneParam, zoneD: zoneDParam, typeZone: typeZoneParam, type: typeParam, statutJuridique: statutJuridiqueParam, categories: categoriesParam, capaciteSMS: capacites, order: orderParam, orderBy: orderByParam, page: pageParam, forExport: false } as ParametreDeRechercheAvancee;
+      capaciteAgeesParam.length > 0 ||
+      activiteMcoParam.length > 0 ||
+      activitePsyParam.length > 0 ||
+      activiteSsrParam.length > 0 ||
+      activiteUsldParam.length > 0)
+
+  if (shouldPerformSearch) {
+    const params = { terme: termeParam, zone: zoneParam, zoneD: zoneDParam, typeZone: typeZoneParam, type: typeParam, statutJuridique: statutJuridiqueParam, categories: categoriesParam, capaciteSMS: capacites, activiteSAN: activites, order: orderParam, orderBy: orderByParam, page: pageParam, forExport: false } as ParametreDeRechercheAvancee;
     const recherche = await rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint(
       dependencies,
       params
