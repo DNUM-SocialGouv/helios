@@ -32,7 +32,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
     const contenuInfoBulle = (
         <>
             <span>
-                Le nombre de séjours annuel MCO correspond à la somme des hospitalisations partielle et complète de la dernière année complète disponible.
+                Le nombre de séjours annuel MCO, PSY et SSR correspondent à la somme des hospitalisations partielle et complète de la dernière année complète disponible.
                 <br />
                 <br />
                 Source: PMSI, SAE
