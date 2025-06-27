@@ -1,11 +1,15 @@
 from pathlib import Path
+from datetime import date
+
 import pandas as pd
 
-from datacrawler.load.nom_des_tables import TABLE_ETABLISSEMENTS_TERRITORIAUX, TABLE_ENTITES_JURIDIQUES
+from datacrawler.load.nom_des_tables import TABLE_ETABLISSEMENTS_TERRITORIAUX, TABLE_ENTITES_JURIDIQUES, TABLES_DES_CPOM
 from datacrawler.test_helpers import (
     base_de_données_test,
     mocked_logger,
-    supprime_les_données_des_tables
+    supprime_les_données_des_tables,
+    CHEMIN_FICHIER_ANN_MS_TDP_ET,
+    NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
 )
 from datacrawler.import_les_etablissements_territoriaux import import_etablissements_territoriaux
 from datacrawler.test_helpers.helios_builder import (
@@ -22,7 +26,7 @@ class TestSauvegardeLesEtablissementsTerritoriaux:
         et_xml.write_text("""<?xml version="1.0" encoding="UTF-8"?>
 <fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
      <structureet>
-        <nofinesset>010005239</nofinesset>
+        <nofinesset>010003598</nofinesset>
         <nofinessej>010008407</nofinessej>
         <rs>MAISON DE RETRAITE - DIVONNE-LES-BAINS</rs>
         <rslongue>MAISON DE RETRAITE - DIVONNE-LES-BAINS</rslongue>
@@ -127,13 +131,35 @@ class TestSauvegardeLesEtablissementsTerritoriaux:
         import_etablissements_territoriaux(
             str(et_xml),
             str(cat_xml),
+            CHEMIN_FICHIER_ANN_MS_TDP_ET,
             base_de_données_test,
             mocked_logger
         )
         # THEN
-        etablissements_territoriaux_attendus = pd.DataFrame([helios_etablissement_territorial_builder()])
+        etablissements_territoriaux_attendus = pd.DataFrame([
+            helios_etablissement_territorial_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})
+            ])
         etablissements_territoriaux_sauvegardes = pd.read_sql(TABLE_ETABLISSEMENTS_TERRITORIAUX, base_de_données_test)
         etablissements_territoriaux_sauvegardes = etablissements_territoriaux_sauvegardes.drop('termes_de_recherche', axis=1)
         pd.testing.assert_frame_equal(etablissements_territoriaux_attendus.sort_index(axis=1),
                                       etablissements_territoriaux_sauvegardes.sort_index(axis=1),
                                       check_dtype=False)
+        cpom_attendus = pd.DataFrame(
+            {
+                "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL],
+                "date_d_entree_en_vigueur": [
+                    date(2012, 3, 21),
+                ],
+            },
+        )
+
+        cpoms_enregistres = pd.read_sql(
+            TABLES_DES_CPOM,
+            base_de_données_test,
+            parse_dates={
+                "date_d_entree_en_vigueur": {"format": "%y-%m-%d"},
+            },
+        )
+        print(cpoms_enregistres)
+
+        pd.testing.assert_frame_equal(cpoms_enregistres, cpom_attendus)
