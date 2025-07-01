@@ -34,7 +34,7 @@ export const ListeRiche = ({ listSuggestions, selectedElements, setSelectedEleme
     }
 
     return (
-        <div className={styles["list-etablissements-container"]} id="list-etablissements-container">
+        <div className={styles["list-etablissements-container"]} id="liste-riche-categories-container">
             {listSuggestions && (
                 <ul className={styles["list-etablissements"]}>
                     {listSuggestions.map((suggestion) => (
