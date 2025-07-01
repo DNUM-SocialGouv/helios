@@ -4,6 +4,7 @@ import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/ent
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { ActiviteSanitaire } from "../../recherche-avancee/model/ActiviteSanitaire";
 import { AttribuesDefaults } from "../../recherche-avancee/model/Attribues";
 import { CapaciteEtablissement } from "../../recherche-avancee/model/CapaciteEtablissement";
 
@@ -44,6 +45,14 @@ export function useRechercheAvanceeComparaison() {
         { classification: "publics_en_situation_de_handicap", ranges: comparaisonContext?.capaciteHandicap || [] },
         { classification: "personnes_agees", ranges: comparaisonContext?.capaciteAgees || [] },
       ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
+
+      const activites = [
+        { classification: "mco", ranges: comparaisonContext?.activiteMco || [] },
+        { classification: "psy", ranges: comparaisonContext?.activitePsy || [] },
+        { classification: "ssr", ranges: comparaisonContext?.activiteSsr || [] },
+        { classification: "usld", ranges: comparaisonContext?.activiteUsld || [] },
+      ].filter((activite) => activite.ranges && activite.ranges.length > 0);
+
       setState({
         ...state,
         estCeEnAttente: true,
@@ -59,6 +68,7 @@ export function useRechercheAvanceeComparaison() {
         statutsJuridiquesDefaultValue,
         comparaisonContext?.categories,
         capacites,
+        activites,
         comparaisonContext?.page
       );
     } else {
@@ -82,10 +92,11 @@ export function useRechercheAvanceeComparaison() {
     statutJuridique: string[],
     categories: string[] | undefined,
     capaciteSMS: CapaciteEtablissement[] | undefined,
+    activiteSAN: ActiviteSanitaire[] | undefined,
     page: number | undefined
   ) => {
     fetch("/api/recherche-avancee", {
-      body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS }),
+      body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN }),
       headers: { "Content-Type": "application/json" },
       method: "POST",
     })
