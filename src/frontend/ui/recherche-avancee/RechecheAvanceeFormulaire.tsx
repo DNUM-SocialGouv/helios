@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext } from "react";
+import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useState } from "react";
 
 import { FiltreActiviteSanitaire } from "./FiltreActiviteSanitaire";
 import { FiltreCapacite } from "./FiltreCapacite";
@@ -45,6 +45,9 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.capaciteAgees.length !== 0 ||
     rechercheAvanceeContext?.capaciteHandicap.length !== 0 ||
     rechercheAvanceeContext?.capaciteMedicoSociaux.length !== 0;
+
+  const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo ?? "");
+  const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType ?? "");
 
   const getWordingGeo = (): string => {
     return rechercheAvanceeContext?.zoneGeoLabel?.trim() ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
@@ -135,6 +138,8 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setZoneGeoLabel("");
     rechercheAvanceeContext?.setZoneGeoType("");
     rechercheAvanceeContext?.setTerme("");
+    setZoneGeoValue("");
+    setZoneGeoType("");
   }
 
   const buttonZoneGeoClicked = rechercheAvanceeContext?.zoneGeo !== "" ? styles["filtre-button_clicked"] : "";
@@ -220,7 +225,7 @@ export const RechercheAvanceeFormulaire = ({
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} />
+        <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} setZoneGeoType={setZoneGeoType} setZoneGeoValue={setZoneGeoValue} zoneGeoType={zoneGeoType} zoneGeoValue={zoneGeoValue} />
         <FiltreCategoriesFiness categoriesViewModel={categoriesViewModel} isComparaison={isComparaison} setIsChanged={setIsChangedCategories} />
         <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
         <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />

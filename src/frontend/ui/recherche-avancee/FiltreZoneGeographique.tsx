@@ -21,13 +21,16 @@ type ZoneGeo = Readonly<{
 type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
   setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
+  zoneGeoValue: string;
+  setZoneGeoValue: Dispatch<SetStateAction<string>>;
+  zoneGeoType: string;
+  setZoneGeoType: Dispatch<SetStateAction<string>>
 }>;
 
-export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
+export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoValue, setZoneGeoValue, zoneGeoType, setZoneGeoType }: FiltresForComparaisonProps) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo ?? "");
-  const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType ?? "");
+
   const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
