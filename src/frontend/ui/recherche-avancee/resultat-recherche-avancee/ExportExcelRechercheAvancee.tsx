@@ -26,7 +26,7 @@ export function getCurrentDate() {
 }
 
 async function getData(context: RechercheAvanceeContextValue) {
-  const { terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, categories, orderBy, order } = context;
+  const { terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, activiteMco, activitePsy, activiteSsr, activiteUsld, categories, orderBy, order } = context;
 
   const capacites = [
     { classification: "non_classifie", ranges: capaciteMedicoSociaux || [] },
@@ -34,8 +34,15 @@ async function getData(context: RechercheAvanceeContextValue) {
     { classification: "personnes_agees", ranges: capaciteAgees || [] },
   ].filter((capacite) => capacite.ranges && capacite.ranges.length > 0);
 
+  const activites = [
+    { classification: "mco", ranges: activiteMco || [] },
+    { classification: "psy", ranges: activitePsy || [] },
+    { classification: "ssr", ranges: activiteSsr || [] },
+    { classification: "usld", ranges: activiteUsld || [] },
+  ].filter((activite) => activite.ranges && activite.ranges.length > 0);
+
   return fetch("/api/recherche-avancee", {
-    body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, categories, orderBy, order, forExport: true }),
+    body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, activiteSAN: activites, categories, orderBy, order, forExport: true }),
     headers: { "Content-Type": "application/json" },
     method: "POST",
   })
