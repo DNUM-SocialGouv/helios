@@ -176,14 +176,14 @@ export const RechercheAvanceeFormulaire = ({
         <div className={styles["criteresRechercheButtons"]}>
           <button
             aria-controls="fr-modal-Zone-Geographique-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonZoneGeoClicked}`}
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonZoneGeoClicked}`}
             data-fr-opened="false"
           >
             {getWordingGeo()}
           </button>
           <button
             aria-controls="fr-modal-Categories-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCategorieClicked}`}
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonCategorieClicked}`}
             data-fr-opened="false"
             disabled={rechercheAvanceeContext?.typeStructure.length !== 0}
           >
@@ -191,7 +191,7 @@ export const RechercheAvanceeFormulaire = ({
           </button>
           <button
             aria-controls="fr-modal-Structure-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonStructureClicked}`}
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonStructureClicked}`}
             data-fr-opened="false"
             disabled={isComparaison || rechercheAvanceeContext?.categoriesDomaines.length !== 0}
           >
@@ -199,7 +199,7 @@ export const RechercheAvanceeFormulaire = ({
           </button>
           {rechercheAvanceeContext?.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial) && <button
             aria-controls="fr-modal-Capacite-Filtre"
-            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary ${buttonCapaciteClicked}`}
+            className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonCapaciteClicked}`}
             data-fr-opened="false"
           >
             {getWordingCapacite()}
