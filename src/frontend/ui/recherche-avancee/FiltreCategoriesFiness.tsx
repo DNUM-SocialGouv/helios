@@ -101,6 +101,7 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
                                 <ListeRiche
                                     listSuggestions={terme !== "" ? filtredCategories : categoriesSelectedList}
                                     noDataMessage={filtredCategories.length === 0 && terme !== ""}
+                                    onKeyDown={onKeyDown}
                                     selectedElements={categoriesSelectedList}
                                     setSelectedElements={setCategoriesSelectedList}
                                 />
