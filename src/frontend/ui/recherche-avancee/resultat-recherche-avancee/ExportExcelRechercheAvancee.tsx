@@ -7,6 +7,7 @@ import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/ent
 import { RechercheAvanceeContext, RechercheAvanceeContextValue } from "../../commun/contexts/RechercheAvanceeContext";
 import { UserContext } from "../../commun/contexts/userContext";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
+import { CategoriesFinessViewModel } from "../model/CategoriesFinessViewModel";
 
 const orderByMap = new Map([
   ["type", "Type"],
@@ -82,7 +83,7 @@ function ExportToExcel(
   XLSX.writeFile(wb, fileName);
 }
 
-function TransformeCapacities(
+function TransformeCapacitiesetActivites(
   ranges: string[]
 ) {
   return ranges.map(range => {
@@ -95,7 +96,7 @@ function TransformeCapacities(
   });
 }
 
-function SortCapacities(
+function SortRanges(
   ranges: string[]
 ) {
   return ranges.sort((a, b) => {
@@ -115,70 +116,105 @@ function SortCapacities(
   });
 }
 
-function generateCriteriaData(context: RechercheAvanceeContextValue): { criteriaHeader: string[], criteriaInformation: string[] } {
-  //  terme, zoneGeo, zoneGeoD, zoneGeoType, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order
-  //
-  const { terme, zoneGeoLabel, typeStructure, statutJuridiqueStructure, capaciteMedicoSociaux, capaciteHandicap, capaciteAgees, orderBy, order } = context;
+function TransformeCategories(categoriesFiness: CategoriesFinessViewModel[], categories: string[]) {
+  const codeToLabelMap = new Map(categoriesFiness.map(cat => [cat.categorieCode, cat.categorieLibelleCourt]));
+  return categories.map(code => codeToLabelMap.get(code));
+}
+
+function generateCriteriaData(context: RechercheAvanceeContextValue, categoriesFiness: CategoriesFinessViewModel[]): { criteriaHeader: string[], criteriaInformation: string[] } {
+  const { terme,
+    zoneGeoLabel,
+    typeStructure,
+    statutJuridiqueStructure,
+    categories,
+    capaciteMedicoSociaux,
+    capaciteHandicap,
+    capaciteAgees,
+    activiteMco,
+    activitePsy,
+    activiteSsr,
+    activiteUsld,
+    orderBy,
+    order
+  } = context;
 
   const criteriaHeader = [];
   const criteriaInformation = [];
 
-  if (terme) {
-    criteriaHeader.push("Terme");
-    criteriaInformation.push(terme);
-  }
-  if (zoneGeoLabel) {
-    criteriaHeader.push("Zone géographique");
-    criteriaInformation.push(zoneGeoLabel);
-  }
+  const addSimpleCriteria = (value: any, header: string) => {
+    if (value) {
+      criteriaHeader.push(header);
+      criteriaInformation.push(value);
+    }
+  };
 
-  if (typeStructure?.length > 0) {
-    criteriaHeader.push("Type de structure");
-    criteriaInformation.push(typeStructure.join(', '));
-  }
+  const addArrayCriteria = (values: any[], header: string) => {
+    if (values?.length > 0) {
+      criteriaHeader.push(header);
+      criteriaInformation.push(values.join(', '));
+    }
+  };
 
-  if (statutJuridiqueStructure?.length > 0) {
-    criteriaHeader.push("Status juridique");
-    criteriaInformation.push(statutJuridiqueStructure.join(', '));
+  addSimpleCriteria(terme, "Terme");
+  addSimpleCriteria(zoneGeoLabel, "Zone géographique");
+  addArrayCriteria(typeStructure, "Type de structure");
+  addArrayCriteria(statutJuridiqueStructure, "Status juridique");
+
+  if (categories?.length > 0) {
+    criteriaHeader.push("Catégorie FINESS");
+    criteriaInformation.push(TransformeCategories(categoriesFiness, categories).join(', '));
   }
 
   if (capaciteMedicoSociaux?.length > 0) {
     criteriaHeader.push("Capacité etablissement sociaux et Médico-sociaux");
-    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteMedicoSociaux)).join(', '));
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(capaciteMedicoSociaux)).join(', '));
   }
 
   if (capaciteHandicap?.length > 0) {
     criteriaHeader.push("Capacité etablissement public en situation de handicap");
-    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteHandicap)).join(', '));
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(capaciteHandicap)).join(', '));
   }
 
   if (capaciteAgees?.length > 0) {
     criteriaHeader.push("Capacité etablissement pour personnes agées");
-    criteriaInformation.push(TransformeCapacities(SortCapacities(capaciteAgees)).join(', '));
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(capaciteAgees)).join(', '));
   }
 
-  if (orderBy) {
+  if (activiteMco?.length > 0) {
+    criteriaHeader.push("Activité MCO");
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(activiteMco)).join(', '));
+  }
+  if (activitePsy?.length > 0) {
+    criteriaHeader.push("Activité PSY");
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(activitePsy)).join(', '));
+  }
+  if (activiteSsr?.length > 0) {
+    criteriaHeader.push("Activité SSR");
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(activiteSsr)).join(', '));
+  }
+  if (activiteUsld?.length > 0) {
+    criteriaHeader.push("Activité USLD");
+    criteriaInformation.push(TransformeCapacitiesetActivites(SortRanges(activiteUsld)).join(', '));
+  }
+
+  if (orderBy && order) {
     criteriaHeader.push("Tri");
     criteriaInformation.push(orderByMap.get(orderBy) ?? "");
-  }
-
-  if (order) {
     criteriaHeader.push("Ordre");
     criteriaInformation.push((order === "ASC" ? "Croissant" : "Décroissant"));
   }
 
-
   return { criteriaHeader, criteriaInformation };
 }
 
-async function generateAndExportExcel(context: RechercheAvanceeContextValue | undefined, favoris: UserListViewModel[] | undefined) {
+async function generateAndExportExcel(context: RechercheAvanceeContextValue | undefined, favoris: UserListViewModel[] | undefined, categories: CategoriesFinessViewModel[]) {
   if (context) {
     const fileName: string = `${getCurrentDate()}_Helios_rechercheavancee.xlsx`;
     const data = await getData(context);
     const dataTransormed = transformData(data, favoris);
 
     const searchHeader = ["Critères de recherche"];
-    const { criteriaHeader, criteriaInformation } = generateCriteriaData(context);
+    const { criteriaHeader, criteriaInformation } = generateCriteriaData(context, categories);
 
     const dataHeaders = [
       "Type d'établissement",
@@ -195,7 +231,9 @@ async function generateAndExportExcel(context: RechercheAvanceeContextValue | un
   }
 }
 
-const ExportExcelRechercheAvancee = ({ disabled }: { disabled: boolean }) => {
+const ExportExcelRechercheAvancee = ({ disabled, categories }: {
+  disabled: boolean, categories: CategoriesFinessViewModel[]
+}) => {
   const userContext = useContext(UserContext);
   const rechercheAvanceeContext = useContext(RechercheAvanceeContext);
 
@@ -204,7 +242,7 @@ const ExportExcelRechercheAvancee = ({ disabled }: { disabled: boolean }) => {
       className="fr-btn fr-btn--tertiary-no-outline"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(rechercheAvanceeContext, userContext?.favorisLists)}
+      onClick={() => generateAndExportExcel(rechercheAvanceeContext, userContext?.favorisLists, categories)}
       title="Exporter"
       type="button"
     >
