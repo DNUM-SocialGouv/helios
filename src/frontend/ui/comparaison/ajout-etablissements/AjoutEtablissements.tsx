@@ -137,6 +137,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
               setIsChangedActivite={setIsChangedActivite}
               setIsChangedCapacite={setIsChangedCapacite}
               setIsChangedZG={setIsChangedZG}
+              setSelectedRows={() => { }}
             ></RechercheAvanceeFormulaire>
             {listData && listData?.length > 0 && (
               <ListEtablissements
