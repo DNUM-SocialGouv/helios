@@ -63,11 +63,13 @@ export class RechercheViewModel {
   };
 
   public construisLeLien = (isSimpleSearch: boolean | undefined): string => {
+    const searchItem = localStorage.getItem('searchItem') ?? ""
+
     if (this.recherche.type === "Médico-social") {
-      return this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + localStorage.getItem('searchItem') : "");
+      return this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
     } else if (this.recherche.type === "Sanitaire") {
-      return this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + localStorage.getItem('searchItem') : "");
+      return this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
     }
-    return this.paths.ENTITÉ_JURIDIQUE + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + localStorage.getItem('searchItem') : "");
+    return this.paths.ENTITÉ_JURIDIQUE + "/" + this.recherche.numéroFiness + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
   };
 }
