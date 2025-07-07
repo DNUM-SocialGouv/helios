@@ -69,8 +69,10 @@ export default function RechercheAvancee(props: RouterProps) {
         rechercheOnChange={rechercheOnChange}
         setIsChangedActivite={resetSelectionOnChange}
         setIsChangedCapacite={resetSelectionOnChange}
+        setIsChangedCategories={resetSelectionOnChange}
         setIsChangedStructure={resetSelectionOnChange}
         setIsChangedZG={resetSelectionOnChange}
+        setSelectedRows={setSelectedRows}
       />
       {estCeQueLesRésultatsSontReçus && Number(nombreRésultats) === 0 && !estCeEnAttente && <PasResultatRechercheAvancee />}
       {nombreRésultats > 0 && !estCeEnAttente && (

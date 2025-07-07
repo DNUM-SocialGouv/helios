@@ -21,7 +21,8 @@ type RechercheAvanceeFormulaireProps = Readonly<{
   setIsChangedStructure?: Dispatch<SetStateAction<boolean>>;
   setIsChangedCategories?: Dispatch<SetStateAction<boolean>>;
   setIsChangedActivite?: Dispatch<SetStateAction<boolean>>;
-  categoriesViewModel: CategoriesFinessViewModel[]
+  categoriesViewModel: CategoriesFinessViewModel[];
+  setSelectedRows: Dispatch<SetStateAction<Map<string, string>>>;
 }>;
 
 export const RechercheAvanceeFormulaire = ({
@@ -33,7 +34,8 @@ export const RechercheAvanceeFormulaire = ({
   setIsChangedCapacite,
   setIsChangedActivite,
   setIsChangedCategories,
-  categoriesViewModel
+  categoriesViewModel,
+  setSelectedRows
 }: RechercheAvanceeFormulaireProps) => {
   const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
@@ -140,6 +142,7 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setTerme("");
     setZoneGeoValue("");
     setZoneGeoType("");
+    setSelectedRows(new Map<string, string>);
   }
 
   const buttonZoneGeoClicked = rechercheAvanceeContext?.zoneGeo !== "" ? styles["filtre-button_clicked"] : "";
