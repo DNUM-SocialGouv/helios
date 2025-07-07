@@ -9,6 +9,7 @@ type GrilleEtablissementsProps = Readonly<{
   chargeLesRésultatsSuivants: () => void;
   résultats: RechercheViewModel[];
   currentListId?: number;
+  isSimpleSearch?: boolean
 }>;
 
 export const GrilleEtablissements = ({
@@ -16,6 +17,7 @@ export const GrilleEtablissements = ({
   chargeLesRésultatsSuivants,
   résultats,
   currentListId,
+  isSimpleSearch
 }: GrilleEtablissementsProps) => {
   const { wording } = useDependencies();
 
@@ -24,7 +26,7 @@ export const GrilleEtablissements = ({
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
         {résultats.map((rechercheViewModel, index) => (
           <li className="fr-col-3" key={rechercheViewModel.numéroFiness + index}>
-            <TuileEtablissement currentListId={currentListId} rechercheViewModel={rechercheViewModel} />
+            <TuileEtablissement currentListId={currentListId} isSimpleSearch={isSimpleSearch} rechercheViewModel={rechercheViewModel} />
           </li>
         ))}
       </ul>

@@ -3,7 +3,6 @@ import { getSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 
 import { getAll } from "../backend/infrastructure/controllers/userListEndpoint";
-import { BackToSearchContext, BackToSearchContextValue } from "../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { UserContext } from "../frontend/ui/commun/contexts/userContext";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
@@ -17,7 +16,6 @@ type RouterProps = Readonly<{
 export default function Router({ favoris }: RouterProps) {
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
-    const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
 
     useBreadcrumb([
@@ -28,12 +26,8 @@ export default function Router({ favoris }: RouterProps) {
     ]);
 
     useEffect(() => {
-        if (backToSearchContext) {
-            backToSearchContext.setIsInfoPage(false);
-            localStorage.clear();
-        }
         userContext?.setFavorisLists(favoris);
-    }, [backToSearchContext])
+    }, [])
 
     return <FavorisPage />;
 }

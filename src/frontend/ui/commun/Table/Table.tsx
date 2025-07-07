@@ -122,13 +122,14 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     );
 };
 
-const construisLeLien = (type: string, finess: string): string => {
+const construisLeLien = (type: string, finess: string, isSimpleSearch: boolean | undefined): string => {
+  const searchItem = localStorage.getItem('searchItem') ?? ""
   if (type === "Médico-social") {
-    return "/etablissement-territorial-medico-social/" + finess;
+    return "/etablissement-territorial-medico-social/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   } else if (type === "Sanitaire") {
-    return "/etablissement-territorial-sanitaire/" + finess;
+    return "/etablissement-territorial-sanitaire/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   }
-  return "/entite-juridique/" + finess;
+  return "/entite-juridique/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
 };
 
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter, isSimpleSearchTable }: TableHeaderProps) => {
@@ -208,7 +209,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"
-                  href={construisLeLien(row["type"], row["numéroFiness"])}
+                  href={construisLeLien(row["type"], row["numéroFiness"], isSimpleSearchTable)}
                   rel="noreferrer"
                   target="_blank"
                 >

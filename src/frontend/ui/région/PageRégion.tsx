@@ -1,18 +1,16 @@
 import Head from "next/head";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
+import { régions, outreMerRegionsList } from "./régions";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { BandeauCookies } from "../home/Bandeau/BandeauCookies";
 import { GroupeOutreMerBoutonRegions } from "../home/Cartographie/GroupeOutreMerButtonRegions";
-import { régions, outreMerRegionsList } from "./régions";
 
 export const PageRégion = ({ région }: { région: string }) => {
   const labelDeLaRégion = régions[région].label;
   const [arsRegions, setArsRegions] = useState(outreMerRegionsList);
   const { wording } = useDependencies();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -20,13 +18,6 @@ export const PageRégion = ({ région }: { région: string }) => {
       path: labelDeLaRégion !== 'France métropolitaine' ? "/region/outre-mer" : "",
     },
   ]);
-
-  useEffect(() => {
-    if (backToSearchContext) {
-      backToSearchContext.setIsInfoPage(false);
-      localStorage.clear();
-    }
-  }, [backToSearchContext])
 
   useEffect(() => {
     const filtredList = outreMerRegionsList.filter((region) => region.label !== labelDeLaRégion);
