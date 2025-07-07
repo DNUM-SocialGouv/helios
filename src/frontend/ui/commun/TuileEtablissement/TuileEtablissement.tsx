@@ -9,10 +9,12 @@ import { UserContext } from "../contexts/userContext";
 type EstablishmentProps = Readonly<{
   rechercheViewModel: RechercheViewModel;
   currentListId?: number;
+  isSimpleSearch?: boolean
 }>;
 
 export const TuileEtablissement = ({
   rechercheViewModel,
+  isSimpleSearch
 }: EstablishmentProps) => {
   const userContext = useContext(UserContext);
   const { wording } = useDependencies();
@@ -30,7 +32,7 @@ export const TuileEtablissement = ({
         <div className="fr-tile__body fr-enlarge-link">
           <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
-              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien()} rel="noreferrer">
+              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien(isSimpleSearch)} rel="noreferrer">
                 {rechercheViewModel.titre}
               </a>
             </h2>

@@ -5,20 +5,19 @@ import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import React, { FormEvent, useState } from "react";
 
+import styles from "./EditUser.module.css";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../utils/dateUtils";
-import { BackToSearchContext, BackToSearchContextValue } from "../../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../commun/hooks/useBreadcrumb";
 import ConfirmDeleteModalEditPage from "../UsersListPage/ConfirmDeleteModal/ConfirmDeleteModalEditPage";
-import styles from "./EditUser.module.css";
 
 type UsersListPageProps = Readonly<{
   user: UtilisateurModel;
@@ -29,8 +28,6 @@ type UsersListPageProps = Readonly<{
 
 export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageProps) => {
   const { data } = useSession();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
-
   const searchParams = useSearchParams();
 
   const [firstname, setFirstname] = useState(user.prenom);
@@ -102,13 +99,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       path: "",
     },
   ]);
-
-  useEffect(() => {
-    if (backToSearchContext) {
-      backToSearchContext.setIsInfoPage(false);
-      localStorage.clear();
-    }
-  }, [backToSearchContext])
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
