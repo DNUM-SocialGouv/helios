@@ -125,11 +125,11 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
 const construisLeLien = (type: string, finess: string, isSimpleSearch: boolean | undefined): string => {
   const searchItem = localStorage.getItem('searchItem') ?? ""
   if (type === "Médico-social") {
-    return "/etablissement-territorial-medico-social/" + finess + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
+    return "/etablissement-territorial-medico-social/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   } else if (type === "Sanitaire") {
-    return "/etablissement-territorial-sanitaire/" + finess + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
+    return "/etablissement-territorial-sanitaire/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   }
-  return "/entite-juridique/" + finess + (isSimpleSearch ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
+  return "/entite-juridique/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
 };
 
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter, isSimpleSearchTable }: TableHeaderProps) => {
