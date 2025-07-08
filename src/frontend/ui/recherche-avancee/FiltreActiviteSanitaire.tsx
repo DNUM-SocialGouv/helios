@@ -204,7 +204,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="0,14000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-mco-tranche-1">0-14000</label>
+                                                <label htmlFor="checkboxe-activite-mco-tranche-1">0 - 14 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -217,7 +217,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="14001,24000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-mco-tranche-2">14001-24000</label>
+                                                <label htmlFor="checkboxe-activite-mco-tranche-2">14 001 - 24 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -230,7 +230,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="24001,36000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-mco-tranche-3">24001-36000</label>
+                                                <label htmlFor="checkboxe-activite-mco-tranche-3">24 001 - 36 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -243,7 +243,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="36001,65000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-mco-tranche-4">36001-65000</label>
+                                                <label htmlFor="checkboxe-activite-mco-tranche-4">36 001 - 65 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -256,7 +256,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value=">65000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-mco-tranche-5">65001 et plus</label>
+                                                <label htmlFor="checkboxe-activite-mco-tranche-5">65 001 et plus</label>
                                             </div>
                                         </div>
                                     </div>
@@ -277,7 +277,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="0,30000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-psy-tranche-1">0-30000</label>
+                                                <label htmlFor="checkboxe-activite-psy-tranche-1">0 - 30 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -290,7 +290,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="30001,50000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-psy-tranche-2">30001-50000</label>
+                                                <label htmlFor="checkboxe-activite-psy-tranche-2">30 001 - 50 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -303,7 +303,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="50001,80000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-psy-tranche-3">50001-80000</label>
+                                                <label htmlFor="checkboxe-activite-psy-tranche-3">50 001 - 80 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -316,7 +316,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="80001,120000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-psy-tranche-4">80001-120000</label>
+                                                <label htmlFor="checkboxe-activite-psy-tranche-4">80 001 - 120 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -329,7 +329,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value=">120000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-psy-tranche-5">120001 et plus</label>
+                                                <label htmlFor="checkboxe-activite-psy-tranche-5">120 001 et plus</label>
                                             </div>
                                         </div>
                                     </div>
@@ -350,7 +350,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="0,16000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-ssr-tranche-1">0-16000</label>
+                                                <label htmlFor="checkboxe-activite-ssr-tranche-1">0 - 16 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -363,7 +363,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="16001,27000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-ssr-tranche-2">16001-27000</label>
+                                                <label htmlFor="checkboxe-activite-ssr-tranche-2">16 001 - 27 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -376,7 +376,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="27001,37000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-ssr-tranche-3">27001-37000</label>
+                                                <label htmlFor="checkboxe-activite-ssr-tranche-3">27 001 - 37 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -389,7 +389,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="37001,57000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-ssr-tranche-4">37001-57000</label>
+                                                <label htmlFor="checkboxe-activite-ssr-tranche-4">37 001 - 57 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -402,7 +402,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value=">57000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-ssr-tranche-5">57001 et plus</label>
+                                                <label htmlFor="checkboxe-activite-ssr-tranche-5">57 001 et plus</label>
                                             </div>
                                         </div>
                                     </div>
@@ -423,7 +423,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="0,10000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-usld-tranche-1">0-10000</label>
+                                                <label htmlFor="checkboxe-activite-usld-tranche-1">0 - 10 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -436,7 +436,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="10001,16000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-usld-tranche-2">10001-16000</label>
+                                                <label htmlFor="checkboxe-activite-usld-tranche-2">10 001 - 16 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -449,7 +449,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="16001,23000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-usld-tranche-3">16001-23000</label>
+                                                <label htmlFor="checkboxe-activite-usld-tranche-3">16 001 - 23 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -462,7 +462,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value="23001,33000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-usld-tranche-4">23001-33000</label>
+                                                <label htmlFor="checkboxe-activite-usld-tranche-4">23 001 - 33 000</label>
                                             </div>
                                             <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                                                 <input
@@ -475,7 +475,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
                                                     type="checkbox"
                                                     value=">33000"
                                                 />
-                                                <label htmlFor="checkboxe-activite-usld-tranche-5">33001 et plus</label>
+                                                <label htmlFor="checkboxe-activite-usld-tranche-5">33 001 et plus</label>
                                             </div>
                                         </div>
                                     </div>
