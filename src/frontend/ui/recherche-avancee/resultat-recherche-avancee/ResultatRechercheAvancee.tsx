@@ -6,7 +6,6 @@ import { RechercheAvanceeContext } from "../../commun/contexts/RechercheAvanceeC
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { SuccessAlert } from "../../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../../commun/Table/Table";
-import { AlerteComparaison } from "../../comparaison/alerte-comparaison/AlerteComparaison";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { CategoriesFinessViewModel } from "../model/CategoriesFinessViewModel";
 
@@ -70,11 +69,8 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     }
   }
 
-  const showAlert = selectedRows.size >= 2;
-
   return (
     <>
-      {showAlert && <AlerteComparaison />}
       {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
       <TableHeaderRechercheAvancee categories={categories} isAllResultsSelected={isAllResultsSelected} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
       <Table
