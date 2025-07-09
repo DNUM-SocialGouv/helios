@@ -34,11 +34,11 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
-    const firstType = selectedRows.values().next().value;
+    const StructureTypes = [...new Set(selectedRows.values())];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
-    sessionStorage.setItem("comparaisonType", firstType);
+    sessionStorage.setItem("comparaisonType", JSON.stringify(StructureTypes));
     document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
-    document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
+    document.cookie = `type=${encodeURIComponent(JSON.stringify(StructureTypes))}; path=/`;
     router.push("/comparaison");
   }
 

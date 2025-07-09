@@ -61,7 +61,12 @@ export function useComparaison() {
       console.log("e", e)
     }
 
-    const type = typeStored ?? "";
+    let type = '';
+    if (typeStored.includes("Médico-social"))
+      type = "Médico-social";
+    else if (typeStored.includes("Sanitaire"))
+      type = "Sanitaire";
+    else type = "Entités Juridiques";
 
     setState({ ...state, loading: true });
 

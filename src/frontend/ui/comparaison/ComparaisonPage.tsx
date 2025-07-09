@@ -27,7 +27,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
-  const [structureChoice, setStructureChoice] = useState<string>("Médico-social");
+  const [structureChoice, setStructureChoice] = useState<string>("");
   const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
@@ -47,21 +47,26 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
+  const [comparedTypes, setComparedTypes] = useState<string[]>([]);
+
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
     lancerLaComparaison(annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
     setReloadTable(false);
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
 
-  const getAllTypes = () => {
-    const result: string[] = [];
-    resultats.forEach((element) => {
-      if (!result.includes(element.type)) {
-        result.push(element.type);
-      }
-    });
-    return result;
-  };
+  useEffect(() => {
+    const typeStored = sessionStorage.getItem("comparaisonType");
+    setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
+  }, [])
+
+  useEffect(() => {
+    if (comparedTypes.includes("Médico-social"))
+      setStructureChoice("Médico-social");
+    else if (comparedTypes.includes("Sanitaire"))
+      setStructureChoice("Sanitaire");
+    else setStructureChoice("Entités Juridiques");
+  }, [comparedTypes])
 
   const tableHeaders = [
     { label: "", key: "delete", nomComplet: "" },
@@ -225,7 +230,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
             <SelectionTags
               choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-              noSelectableChoices={getAllTypes()}
+              noSelectableChoices={comparedTypes}
               selectedChoice={structureChoice}
               setSelectedChoice={setStructureChoice}
             />
