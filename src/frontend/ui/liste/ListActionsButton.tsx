@@ -71,7 +71,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
         <ul className={styles["menu"]}>
           {router.pathname !== "/comparaison" ?
             <li className={styles["menu-item"]}>
-              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2 || selectedRows.values().some((type) => type !== "Médico-social")} onClick={lancerComparaison}>
+              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2} onClick={lancerComparaison}>
                 {wording.COMPARER}
               </button>
             </li>
