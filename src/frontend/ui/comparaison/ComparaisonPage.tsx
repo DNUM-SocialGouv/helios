@@ -51,9 +51,11 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
-    setReloadTable(false);
-  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
+    if (structureChoice !== "") {
+      lancerLaComparaison(structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
+      setReloadTable(false);
+    }
+  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable, structureChoice]);
 
   useEffect(() => {
     const typeStored = sessionStorage.getItem("comparaisonType");
@@ -61,11 +63,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   }, [])
 
   useEffect(() => {
-    if (comparedTypes.includes("Médico-social"))
-      setStructureChoice("Médico-social");
-    else if (comparedTypes.includes("Sanitaire"))
-      setStructureChoice("Sanitaire");
-    else setStructureChoice("Entités Juridiques");
+    if (comparedTypes.length !== 0) {
+      if (comparedTypes.includes("Médico-social"))
+        setStructureChoice("Médico-social");
+      else if (comparedTypes.includes("Sanitaire"))
+        setStructureChoice("Sanitaire");
+      else setStructureChoice("Entité Juridique");
+    }
   }, [comparedTypes])
 
   const tableHeaders = [
@@ -229,7 +233,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
             <SelectionTags
-              choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
+              choices={["Sanitaire", "Médico-social", "Entité juridique"]}
               noSelectableChoices={comparedTypes}
               selectedChoice={structureChoice}
               setSelectedChoice={setStructureChoice}

@@ -97,7 +97,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
-    document.cookie = `list=${encodeURIComponent(JSON.stringify(listToCompare))}; path=/`;
     setReloadTable(true);
     onClickFermer();
   };

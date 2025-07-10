@@ -29,12 +29,14 @@ export const SelectionTags = ({
   const getlogoByEtsType = (choice: string): JSX.Element | string => {
     if (choice === "Sanitaire") return LogoEtablissementTerritorialSanitaireSvg(logoCodeCouleur(choice));
     if (choice === "Médico-social") return LogoEtablissementTerritorialMedicoSociauxSvg(logoCodeCouleur(choice));
-    if (choice === "Entités Juridiques") return LogoEntiteJuridiqueSvg(logoCodeCouleur(choice));
+    if (choice === "Entité juridique") return LogoEntiteJuridiqueSvg(logoCodeCouleur(choice));
     return "";
   };
 
   const choiceLibelle = (choice: string) => {
-    return choice === "Médico-social" ? "Social et Médico-social" : choice;
+    if (choice === "Médico-social") return "Social et Médico-social";
+    if (choice === "Entité juridique") return "Entités Juridiques";
+    return choice;
   };
 
   return (
