@@ -27,6 +27,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [isChangedActivite, setIsChangedActivite] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
+  const [newStructures, setNewStructures] = useState<string[]>([]);
 
   useEffect(() => {
     if (isAtBottom && comparaisonContext) {
@@ -94,9 +95,13 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
 
   const onClickAjouter = () => {
     const stringListOfTable = sessionStorage.getItem("listFinessNumbers");
+    const comparedTypes = sessionStorage.getItem("comparaisonType");
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
+    const arrayComparedTypes = comparedTypes ? JSON.parse(comparedTypes) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
+    const newComparedTypes = [...new Set([...arrayComparedTypes, ...newStructures])];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
+    sessionStorage.setItem("comparaisonType", JSON.stringify(newComparedTypes));
     setReloadTable(true);
     onClickFermer();
   };
@@ -141,9 +146,11 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
             {listData && listData?.length > 0 && (
               <ListEtablissements
                 newEtablissements={newEtablissements}
+                newStructures={newStructures}
                 resultatRechercheList={listData}
                 setIsAtBottom={setIsAtBottom}
                 setNewEtablissement={setNewEtablissements}
+                setNewStructures={setNewStructures}
               ></ListEtablissements>
             )}
           </div>

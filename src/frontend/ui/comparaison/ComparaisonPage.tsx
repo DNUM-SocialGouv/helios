@@ -60,7 +60,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   useEffect(() => {
     const typeStored = sessionStorage.getItem("comparaisonType");
     setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
-  }, [])
+  }, [reloadTable])
 
   useEffect(() => {
     if (comparedTypes.length !== 0) {

@@ -12,9 +12,11 @@ type listEtablissementsProps = {
   setIsAtBottom: Dispatch<SetStateAction<boolean>>;
   newEtablissements: string[];
   setNewEtablissement: Dispatch<SetStateAction<string[]>>;
+  newStructures: string[];
+  setNewStructures: Dispatch<SetStateAction<string[]>>;
 };
 
-export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEtablissements, setNewEtablissement }: listEtablissementsProps) => {
+export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEtablissements, setNewEtablissement, newStructures, setNewStructures }: listEtablissementsProps) => {
   const codeColorOfDisabled = "#808080";
   const codeColorOfBlack = "#3a3a3a";
   const codeColorOfSelected = "#000091";
@@ -42,15 +44,22 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
     return () => { };
   }, []);
 
-  const onHandleSelectEtablissement = (numFiness: string) => {
-    if (!finessNumbersListFromTable.includes(numFiness)) {
-      setNewEtablissement((prevSelected) => {
-        if (prevSelected.includes(numFiness)) {
-          return prevSelected.filter((finess) => finess !== numFiness);
-        } else {
-          return [...prevSelected, numFiness];
+  const onHandleSelectEtablissement = (etablissement: RechercheViewModel) => {
+    if (!finessNumbersListFromTable.includes(etablissement.numéroFiness)) {
+      let selectedEtablissement = [...newEtablissements];
+      let selectedStructures = [...newStructures];
+      if (selectedEtablissement.includes(etablissement.numéroFiness)) {
+        selectedEtablissement = selectedEtablissement.filter((finess) => finess !== etablissement.numéroFiness);
+        if (selectedStructures.filter((value) => value === etablissement.type).length === 1) {
+          selectedStructures = selectedStructures.filter((type) => type !== etablissement.type);
         }
-      });
+      } else {
+        selectedEtablissement.push(etablissement.numéroFiness);
+        selectedStructures.push(etablissement.type)
+      }
+
+      setNewEtablissement(selectedEtablissement);
+      setNewStructures(selectedStructures);
     }
   };
 
@@ -72,7 +81,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
             <li className={styles["etablissement-info"]} key={res.numéroFiness}>
               <div
                 className={computeListRowClassName(res.numéroFiness)}
-                onClick={() => onHandleSelectEtablissement(res.numéroFiness)}
+                onClick={() => onHandleSelectEtablissement(res)}
                 onKeyDown={() => { }}
                 role="button"
                 style={{ display: "flex", marginTop: "5px", marginBottom: "5px" }}
