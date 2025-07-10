@@ -13,6 +13,8 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
+import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
@@ -60,7 +62,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   useEffect(() => {
     const typeStored = sessionStorage.getItem("comparaisonType");
     setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
-  }, [reloadTable])
+  }, [reloadTable, deleteEt])
 
   useEffect(() => {
     if (comparedTypes.length !== 0) {
@@ -127,16 +129,24 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (numeroFinessASupprimer: string) => {
+  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
+    const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
-    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
+    }
+    if (resultats.filter((value) => value.type === etablissementASupprimer.type).length === 1) {
+      // supprimer la structure associée
+      const typeStoredArray: string[] = typeStored ? JSON.parse(typeStored) : [];
+      const indexStructureToDelete = typeStoredArray.indexOf(etablissementASupprimer.type);
+      typeStoredArray.splice(indexStructureToDelete, 1);
+      sessionStorage.setItem("comparaisonType", JSON.stringify(typeStoredArray));
     }
     setDeleteEt(!deleteEt);
   };
