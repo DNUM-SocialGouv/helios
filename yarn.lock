@@ -6609,6 +6609,7 @@ __metadata:
     react: "npm:18.3.1"
     react-chartjs-2: "npm:^4.2.0"
     react-dom: "npm:18.3.1"
+    react-emojis: "npm:^1.0.6"
     react-to-print: "npm:^2.15.1"
     ssh2: "npm:^1.9.0"
     ssh2-sftp-client: "npm:^8.0.0"
@@ -10164,6 +10165,16 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10/3f4b73a3aa083091173b29812b10394dd06f4ac06aff410b74702cfb3aa29d7b0ced208aab92d5272919b612e5cda21aeb1d54191848cf6e46e9e354f3541f81
+  languageName: node
+  linkType: hard
+
+"react-emojis@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "react-emojis@npm:1.0.6"
+  peerDependencies:
+    react: ^16.8.6
+    react-dom: ^16.8.6
+  checksum: 10/bccda8f36b7a3d604d879b71438e11e21172b99ea6f3e37a5b5dd6f9ff61fa5605299ca04dadd9b99124488b46b86d428179bfe316bf919d4b730ffe849c15b3
   languageName: node
   linkType: hard
 
