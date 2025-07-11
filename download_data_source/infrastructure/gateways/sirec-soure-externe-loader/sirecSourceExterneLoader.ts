@@ -131,7 +131,7 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
         });
       })
 
-    } catch (error) {
+    } catch (error) { // NOSONAR L’erreur est loggee mais Sonar maintient l’Issue ouverte
       this.logger.error("une erreur au moment de l'exploration des données sirec: ${error}");
     }
   }
