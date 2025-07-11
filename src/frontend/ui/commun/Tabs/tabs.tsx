@@ -1,8 +1,8 @@
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
-import { ReactChild } from "react";
+import { ReactNode } from "react";
 
 
-export const Tabs = ({ labels, children, }: { labels: { text: string, tabId: string }[], children: ReactChild[] }) => {
+export const Tabs = ({ labels, children, }: { labels: { text: string, tabId: string }[], children: ReactNode[] }) => {
   return (
     <div className="fr-tabs">
       <ul className="fr-tabs__list" role="tablist"> {/* NOSONAR L’erreur sur le « role » affecte a un element non interactif est lie au dsfr et ne peut etre change*/}

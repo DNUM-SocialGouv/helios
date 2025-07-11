@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { ReactChild, useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 
 import styles from "./ListItem.module.css";
 
 type ListItemProps = Readonly<{
   hasFocus?: boolean;
-  label: ReactChild;
+  label: ReactNode;
   lien: string;
-  logo?: ReactChild;
+  logo?: ReactNode;
 }>;
 
 export const ListItem = ({ label, lien, logo, hasFocus }: ListItemProps) => {

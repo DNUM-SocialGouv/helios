@@ -1,7 +1,7 @@
-import { ReactChild } from "react";
+import { ReactNode } from "react";
 
 export type Breadcrumb = Readonly<{
-  label: ReactChild;
+  label: ReactNode;
   path: string;
 }>[];
 
