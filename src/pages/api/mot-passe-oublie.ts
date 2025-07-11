@@ -37,7 +37,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       return response.status(200).json({ info })
     }
     return response.status(400).json({ err: 'Email not sent' })
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return response.status(500)
   }
 

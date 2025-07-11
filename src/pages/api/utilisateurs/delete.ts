@@ -37,7 +37,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       const recherche = await deleteUserEndpoint(dependencies, userCode);
       return response.status(200).json(recherche);
     }
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return response.status(500);
   }
 };

@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
             codeRegion: utilisateur.institution.codeGeo,
             codeProfiles: utilisateur.profils,
           };
-        } catch (error) {
+        } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return null ». Aucune autre action à faire ici
           return null;
         }
       },

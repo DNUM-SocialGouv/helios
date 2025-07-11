@@ -6,10 +6,7 @@ import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
 
 const createDirectory = (path: string) => {
-  try {
-    fs.mkdirSync(path, { recursive: true });
-  } catch (err) {
-  }
+  fs.mkdirSync(path, { recursive: true });
 };
 
 describe("ExportToExcel function", () => {

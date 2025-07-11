@@ -46,7 +46,8 @@ export class ActivitésMensuelViewModel {
 
   private grouperLesActivitesParAnnee(): ActivitesSanitaireMensuelParAnnee {
     return this.activitésMensuels.activitesSanitaireMensuelList.reduce((grouped, activite) => {
-      (grouped[activite["année"]] = grouped[activite["année"]] || []).push(activite);
+      grouped[activite["année"]] = grouped[activite["année"]] || [];
+      grouped[activite["année"]].push(activite);
       return grouped;
     }, {} as ActivitesSanitaireMensuelParAnnee);
   }
