@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactChild } from "react";
+import { ReactNode } from "react";
 import "@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.min.css";
 
 import { useDependencies } from "../contexts/useDependencies";
@@ -13,7 +13,7 @@ export const Breadcrumb = () => {
 
   const HomeAndBreadcrumb = [
     {
-      label: wording.ACCUEIL as ReactChild,
+      label: wording.ACCUEIL as ReactNode,
       path: "/",
     },
   ].concat(breadcrumb);
