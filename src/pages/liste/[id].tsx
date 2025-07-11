@@ -166,7 +166,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     } else {
       return { notFound: true };
     }
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return { notFound: true };
   }
 }
