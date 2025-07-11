@@ -32,7 +32,7 @@ export const PageRecherche = () => {
     defaultOrderBy
   } = useRecherche();
 
-  const showNotice = new Date() <= new Date('2025-06-13');
+  const showNotice = new Date() <= new Date('2025-09-30');
 
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
