@@ -2,9 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import erreur from "./erreur.svg";
 import styles from "./Erreurs.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const Page500 = () => {
   const { paths, wording } = useDependencies();
