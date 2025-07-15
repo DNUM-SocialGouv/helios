@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
 
+import styles from "./SelectionAnneeTag.module.css";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
-import styles from "./SelectionAnneeTag.module.css";
 
 export const SelectionTags = ({
   choices,
@@ -23,18 +23,20 @@ export const SelectionTags = ({
   const logoCodeCouleur = (choice: string): string => {
     const codeColorOfDisabled = "#808080";
     const codeColorOfSelected = "#000091";
-    return choice !== choiceLibelle(selectedChoice) ? codeColorOfDisabled : codeColorOfSelected;
+    return !noSelectableChoices.includes(choice) ? codeColorOfDisabled : codeColorOfSelected;
   };
 
   const getlogoByEtsType = (choice: string): JSX.Element | string => {
     if (choice === "Sanitaire") return LogoEtablissementTerritorialSanitaireSvg(logoCodeCouleur(choice));
-    if (choice === "Social et Médico-social") return LogoEtablissementTerritorialMedicoSociauxSvg(logoCodeCouleur(choice));
-    if (choice === "Entités Juridiques") return LogoEntiteJuridiqueSvg(logoCodeCouleur(choice));
+    if (choice === "Médico-social") return LogoEtablissementTerritorialMedicoSociauxSvg(logoCodeCouleur(choice));
+    if (choice === "Entité juridique") return LogoEntiteJuridiqueSvg(logoCodeCouleur(choice));
     return "";
   };
 
   const choiceLibelle = (choice: string) => {
-    return choice === "Médico-social" ? "Social et Médico-social" : choice;
+    if (choice === "Médico-social") return "Social et Médico-social";
+    if (choice === "Entité juridique") return "Entités Juridiques";
+    return choice;
   };
 
   return (
@@ -47,7 +49,7 @@ export const SelectionTags = ({
             key={index}
             onClick={() => handleChoiceClick(choice)}
           >
-            <span className={styles["logo-container"]}>{getlogoByEtsType(choiceLibelle(choice))}</span>
+            <span className={styles["logo-container"]}>{getlogoByEtsType(choice)}</span>
             {choiceLibelle(choice)}
           </button>
         </li>

@@ -38,7 +38,7 @@ interface DataTableProps {
   onClickInfobull?: (name: string) => void;
   handleSelectAll?: () => void;
   isAllSelected?: boolean;
-  onClickDelete: (finessNumber: string) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -65,7 +65,7 @@ interface TableBodyProps {
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
-  onClickDelete: (finessNumber: string) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -196,7 +196,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   aria-controls="fr-modal-2"
                   className="fr-icon-delete-line fr-cell--center"
                   data-fr-opened="false"
-                  onClick={() => onClickDelete(row["numéroFiness"])}
+                  onClick={() => onClickDelete(row)}
                   title="Supprimer"
                   type="button"
                 />
