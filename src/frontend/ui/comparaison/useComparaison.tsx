@@ -3,7 +3,7 @@ import { ReactNode, useState } from "react";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { StringFormater } from "../commun/StringFormater";
-import { ApiComparaisonResultat, ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
 import { ContenuCapacitéParActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuCapacitéParActivité";
 import { ContenuDesTauxDAbsentéismes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDesTauxDAbsentéismes";
@@ -21,7 +21,7 @@ import { ContenuTauxRéalisationActivité } from "../établissement-territorial-
 type comparaisonState = Readonly<{
   nombreRésultats: number;
   lastPage: number;
-  résultats: ComparaisonViewModel[];
+  résultats: ComparaisonSMSViewModel[] | ComparaisonEJViewModel[];
   loading: boolean;
   listeAnnees: number[];
 }>;
@@ -39,8 +39,12 @@ export function useComparaison() {
     listeAnnees: [],
   });
 
-  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
-    return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
+  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat, type: string): (ComparaisonSMSViewModel[] | ComparaisonEJViewModel[]) => {
+    if (type === 'Médico-social')
+      return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
+    else if (type === 'Entité juridique')
+      return data.resultat.map((resultat) => new ComparaisonEJViewModel(resultat as ResultatComparaisonEJ));
+    else return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
   };
 
   const lancerLaComparaison = async (type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
@@ -67,7 +71,7 @@ export function useComparaison() {
             ...state,
             nombreRésultats: data.nombreDeResultats,
             lastPage: Math.ceil(data.nombreDeResultats / take),
-            résultats: construisLesRésultatsDeLaComparaison(data),
+            résultats: construisLesRésultatsDeLaComparaison(data, type),
             loading: false,
             listeAnnees: data.listeAnnees,
           });
@@ -162,9 +166,68 @@ export function useComparaison() {
     }
   }
 
+  const tableHeaders = (datesMisAjour: DatesMisAjourSources, structure: string) => {
+    if (structure === 'Médico-social')
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
+        {
+          label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+          nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+          key: "capacite",
+          info: true,
+          sort: true,
+          orderBy: "capacite_total",
+        },
+        { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
+        { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
+        { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+        { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+        { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+        { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
+        { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
+        { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
+        { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+        { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
+        { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
+        { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
+      ]
+    else if (structure === 'Entité juridique') {
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
+        { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
+        { label: "Compte de résultat - Charges  (Budgets principaux)", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", sort: true, orderBy: "total_depenses_principales" },
+        { label: "Compte de résultat - Charges  (Budgets Annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
+        { label: "Compte de résultat - Produits (Budgets principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", sort: true, orderBy: "total_recettes_principales" },
+        { label: "Compte de résultat - Produits (Budgets Annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", sort: true, orderBy: "total_recettes_global - total_recettes_principales " },
+        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", sort: true, orderBy: "resultat_net_comptable_san" },
+        { label: "Taux de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", sort: true, orderBy: "taux_de_caf_nette_san" },
+        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", sort: true, orderBy: "ratio_dependance_financiere" },
+      ]
+    }
+    else
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+      ]
+  };
+
   return {
     lancerLaComparaison,
     contenuModal,
+    tableHeaders,
     nombreRésultats: state.nombreRésultats,
     resultats: state.résultats,
     lastPage: state.lastPage,

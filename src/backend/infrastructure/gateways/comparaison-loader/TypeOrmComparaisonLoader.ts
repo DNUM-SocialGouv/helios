@@ -308,6 +308,19 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     return number !== null ? this.makeNumberArrondi(number * 100, chiffre) : number;
   }
 
+  private roundExpression(value1: any, value2: any, num: number): number | null {
+    const numericValue1 = value1 !== null ? Number(value1) : null;
+    const numericValue2 = value2 !== null ? Number(value2) : null;
+    if (numericValue1 !== null && !isNaN(numericValue1) && numericValue2 !== null && !isNaN(numericValue2)) {
+      // If numericValue is a valid number, return the rounded number
+      if (num === 0) return Math.round(numericValue1) - Math.round(numericValue2)
+      return (Math.round(numericValue1 * (10 * num)) / (10 * num)) - (Math.round(numericValue2 * (10 * num)) / (10 * num))
+    } else {
+      // If it's not a valid number, return null
+      return null;
+    }
+  }
+
   private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
     return resultats.map((resultat: ComparaisonSMSTypeOrm): ResultatSMS => {
       return {
@@ -345,9 +358,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         statutJuridique: resultat.statut_juridique,
         rattachements: resultat.departement,
         chargesPrincipaux: this.makeNumberArrondi(resultat.total_depenses_principales, 0),
-        chargesGlobal: this.makeNumberArrondi(resultat.total_depenses_global, 0),
+        chargesAnnexes: this.roundExpression(resultat.total_depenses_global, resultat.total_depenses_principales, 0),
         produitsPrincipaux: this.makeNumberArrondi(resultat.total_recettes_principales, 0),
-        produitsGlobal: this.makeNumberArrondi(resultat.total_recettes_global, 0),
+        produitsAnnexes: this.roundExpression(resultat.total_recettes_global, resultat.total_recettes_principales, 0),
         resultatNetComptable: resultat.resultat_net_comptable_san,
         tauxCaf: resultat.taux_de_caf_nette_san,
         ratioDependanceFinanciere: resultat.ratio_dependance_financiere,

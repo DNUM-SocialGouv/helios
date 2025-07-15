@@ -1,4 +1,4 @@
-export type ResultatComparaison = Readonly<{
+export type ResultatComparaisonSMS = Readonly<{
   numéroFiness: string;
   socialReason: string;
   type: string;
@@ -19,6 +19,25 @@ export type ResultatComparaison = Readonly<{
   commune: string;
   departement: string;
 }>;
+
+export type ResultatComparaisonEJ = Readonly<{
+  numéroFiness: string;
+  socialReason: string;
+  commune: string;
+  departement: string;
+  type: string;
+  statutJuridique: string;
+  rattachements: string;
+  chargesPrincipaux: number | null;
+  chargesAnnexes: number | null;
+  produitsPrincipaux: number | null;
+  produitsAnnexes: number | null;
+  resultatNetComptable: number | null;
+  tauxCaf: number | null;
+  ratioDependanceFinanciere: number | null;
+}>;
+
+export type ResultatComparaison = ResultatComparaisonSMS | ResultatComparaisonEJ;
 
 export type MoyenneResultatComparaison = {
   capaciteMoyenne: number;
@@ -43,8 +62,8 @@ export type ApiComparaisonResultat = Readonly<{
   resultat: ResultatComparaison[];
 }>;
 
-export class ComparaisonViewModel {
-  constructor(private readonly comparaison: ResultatComparaison) { }
+export class ComparaisonSMSViewModel {
+  constructor(private readonly comparaison: ResultatComparaisonSMS) { }
 
   public get numéroFiness(): string {
     return this.comparaison.numéroFiness;
@@ -136,3 +155,96 @@ export class ComparaisonViewModel {
   }
 }
 
+
+
+export class ComparaisonEJViewModel {
+  constructor(private readonly comparaison: ResultatComparaisonEJ) { }
+
+  public get numéroFiness(): string {
+    return this.comparaison.numéroFiness;
+  }
+
+  public get socialReason(): string {
+    return this.comparaison.socialReason;
+  }
+
+  public get type(): string {
+    return this.comparaison.type;
+  }
+
+  public get rattachements(): string {
+    return this.comparaison.rattachements;
+  }
+
+  public get statutJuridique(): string {
+    return this.comparaison.statutJuridique;
+  }
+
+  public get resultatNetComptable(): string {
+    return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get tauxCaf(): string | null {
+    return this.comparaison.tauxCaf ? this.comparaison.tauxCaf + "%" : null;
+  }
+
+  public get ratioDependanceFinanciere(): string | null {
+    return this.comparaison.ratioDependanceFinanciere !== null ? this.comparaison.ratioDependanceFinanciere + "%" : null;
+  }
+
+  public get chargesPrincipaux(): string | null {
+    return this.comparaison.chargesPrincipaux ? this.comparaison.chargesPrincipaux
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get produitsPrincipaux(): string | null {
+    return this.comparaison.produitsPrincipaux ? this.comparaison.produitsPrincipaux.toLocaleString("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get chargesAnnexes(): string | null {
+    return this.comparaison.chargesAnnexes ? this.comparaison.chargesAnnexes
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get produitsAnnexes(): string | null {
+    return this.comparaison.produitsAnnexes ? this.comparaison.produitsAnnexes
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get commune(): string {
+    return this.comparaison.commune;
+
+  }
+
+  public get departement(): string {
+    return this.comparaison.departement;
+  }
+
+
+}
