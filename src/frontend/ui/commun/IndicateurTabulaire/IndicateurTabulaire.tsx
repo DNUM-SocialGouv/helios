@@ -1,6 +1,6 @@
+import styles from "./IndicateurTabulaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import styles from "./IndicateurTabulaire.module.css";
 
 export type IndicateurTabulaireProps = Readonly<{
   annéesManquantes: number[];

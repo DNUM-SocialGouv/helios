@@ -1,3 +1,5 @@
+import styles from "./BlocAutorisationEtCapacitéSanitaire.module.css";
+import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -10,8 +12,6 @@ import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
 import { ContenuAutresActivités } from "../InfoBulle/ContenuAutresActivités";
 import { ContenuReconnaissancesContractuelles } from "../InfoBulle/ContenuReconnaissancesContractuelles";
 import { ContenuÉquipementsMatérielsLourds } from "../InfoBulle/ContenuÉquipementsMatérielsLourds";
-import styles from "./BlocAutorisationEtCapacitéSanitaire.module.css";
-import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
   établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;

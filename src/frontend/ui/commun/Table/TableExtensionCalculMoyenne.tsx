@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
+import styles from "./Table.module.css";
 import { moyenneInitialValues } from "../../comparaison/model/data";
 import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
-import styles from "./Table.module.css";
 
 interface TableExtensionCalculMoyenneProps {
   dataSource?: MoyenneResultatComparaison;

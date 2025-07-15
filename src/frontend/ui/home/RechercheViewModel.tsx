@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 
+import LogoEntitéJuridiqueNoir from "./logo-entité-juridique-noir.svg";
 import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { Paths } from "../../configuration/Paths";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
-import LogoEntitéJuridiqueNoir from "./logo-entité-juridique-noir.svg";
 
 export class RechercheViewModel {
   constructor(private readonly recherche: Résultat, private readonly paths: Paths) { }

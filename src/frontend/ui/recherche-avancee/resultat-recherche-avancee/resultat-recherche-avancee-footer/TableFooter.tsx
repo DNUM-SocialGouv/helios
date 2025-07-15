@@ -1,5 +1,5 @@
-import PaginationBtn from "../../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn";
 import styles from "./RechercheAvanceeFooter.module.css";
+import PaginationBtn from "../../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn";
 
 export type PaginationEts = {
   lastPage: number;

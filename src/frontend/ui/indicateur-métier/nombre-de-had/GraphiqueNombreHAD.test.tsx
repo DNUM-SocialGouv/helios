@@ -1,9 +1,9 @@
 import { screen, within } from "@testing-library/react";
 
-import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { GraphiqueNombreHAD } from "./GraphiqueNombreHAD";
 import { GraphiqueNombreHADViewModel } from "./GraphiqueNombreHADViewModel";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
 

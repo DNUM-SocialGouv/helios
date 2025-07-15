@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 
+import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereViewModel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammeVertical } from "../../../commun/Graphique/HistogrammeVertical";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
-import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereViewModel";
 
 type RationDependanceFinanciereProps = Readonly<{
   ratioDependanceFinanciereViewModel: RatioDependanceFinanciereViewModel;

@@ -1,8 +1,8 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/transcription/transcription.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
-import { useDependencies } from "../contexts/useDependencies";
 import styles from "./Transcription.module.css";
+import { useDependencies } from "../contexts/useDependencies";
 
 type TableIndicateurProps = Readonly<{
   disabled?: boolean;

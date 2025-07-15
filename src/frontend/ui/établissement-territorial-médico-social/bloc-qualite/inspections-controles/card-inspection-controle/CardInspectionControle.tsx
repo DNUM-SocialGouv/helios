@@ -1,9 +1,9 @@
 import { ReactElement, memo, useCallback } from "react";
 
+import styles from "./CardInspectionControle.module.css";
 import { Inspection } from "../../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { convertDateDDMMYYYY } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
-import styles from "./CardInspectionControle.module.css";
 
 type CardInspectionControleProps = {
   data: Inspection;

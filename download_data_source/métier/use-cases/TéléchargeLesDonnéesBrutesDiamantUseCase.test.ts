@@ -1,5 +1,5 @@
-import { getFakeDataCrawlerDependencies } from "../../testHelper";
 import { TéléchargeLesDonnéesBrutesDiamantUseCase } from "./TéléchargeLesDonnéesBrutesDiamantUseCase";
+import { getFakeDataCrawlerDependencies } from "../../testHelper";
 
 describe("Récupération des fichiers sources de DIAMANT en local", () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();

@@ -1,9 +1,9 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
+import styles from "./SearchHistory.module.css";
 import { ResultatRechercheHistorique } from "../../../backend/métier/entities/ResultatHistorique";
 import { formatDateAndHours } from "../../utils/dateUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import styles from "./SearchHistory.module.css";
 
 interface SearchHistoryProps {
     searchHistory: ResultatRechercheHistorique[];

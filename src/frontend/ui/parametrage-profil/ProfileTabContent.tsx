@@ -1,5 +1,5 @@
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./ParametrageProfil.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type ProfileTabCobntentProps = Readonly<{
     idTabPanel: string;

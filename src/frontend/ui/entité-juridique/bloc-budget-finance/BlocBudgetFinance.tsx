@@ -1,3 +1,8 @@
+import { AllocationRessources } from "./allocation-ressources/AllocationRessources";
+import styles from "./BlocBudgetFinance.module.css";
+import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
+import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -5,11 +10,6 @@ import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptable";
 import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
-import { AllocationRessources } from "./allocation-ressources/AllocationRessources";
-import styles from "./BlocBudgetFinance.module.css";
-import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
-import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
-import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
 
 type BlocBudgetFinanceProps = Readonly<{
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;

@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./TypeOrmÉtablissementTerritorialRattachéLoader";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -7,7 +8,6 @@ import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialRattaché } from "../../../métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique } from "../../../testHelper";
-import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./TypeOrmÉtablissementTerritorialRattachéLoader";
 
 describe("Établissement territorial rattaché loader", () => {
   const orm = getOrm();

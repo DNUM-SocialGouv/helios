@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import { RegistrationForm } from "./RegistrationForm";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const RegistrationPage = () => {
   const { wording } = useDependencies();

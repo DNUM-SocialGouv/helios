@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
 
+import styles from "./SelectionAnneeTag.module.css";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
-import styles from "./SelectionAnneeTag.module.css";
 
 export const SelectionTags = ({
   choices,

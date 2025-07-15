@@ -1,9 +1,9 @@
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
-import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { ProfileTable } from "./ParamatrageTable";
 import styles from "./ParametrageProfil.module.css";
+import { ProfileValue } from "../../../../database/models/ProfilModel";
 
 type ParametrageProfilPageProps = Readonly<{
   value: ProfileValue;
