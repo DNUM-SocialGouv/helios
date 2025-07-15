@@ -7,9 +7,9 @@ export type ResultatEJ = Readonly<{
   statutJuridique: string;
   rattachements: string;
   chargesPrincipaux: number | null | string;
-  chargesGlobal: number | null | string;
+  chargesAnnexes: number | null | string;
   produitsPrincipaux: number | null | string;
-  produitsGlobal: number | null | string;
+  produitsAnnexes: number | null | string;
   resultatNetComptable: number | null | string;
   tauxCaf: number | null | string;
   ratioDependanceFinanciere: number | null | string;
