@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
-import { DatesMisAjourSources, ResultatDeComparaison, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 import { combineProfils } from "../../../profileFiltersHelper";
 
@@ -29,14 +29,28 @@ type ComparaisonSMSTypeOrm = Readonly<{
   capacite_total: number | 'NA';
 }>;
 
+type ComparaisonEJTypeOrm = Readonly<{
+  numero_finess: string;
+  raison_sociale_courte: string;
+  type: string;
+  commune: string;
+  departement: string;
+  statut_juridique: string;
+  resultat_net_comptable_san: number | 'NA';
+  taux_de_caf_nette_san: number | 'NA';
+  ratio_dependance_financiere: number | 'NA';
+  total_depenses_global: number | 'NA';
+  total_recettes_global: number | 'NA';
+  total_depenses_principales: number | 'NA';
+  total_recettes_principales: number | 'NA';
+}>;
+
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 20;
 
   async listeAnnees(type: string, numerosFiness: string[]): Promise<string[]> {
     if (type === "Entité juridique") {
-      return [];
-    } else if (type === "Médico-social") {
       const generateAnnees = `SELECT generate_series(
           CASE 
           WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 4)::int
@@ -58,6 +72,23 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
             `;
       const generateAnneesResult = await (await this.orm).query(generateAnnees);
       return generateAnneesResult.map((item: any) => item.annee);
+    } else if (type === "Médico-social") {
+      const generateAnnees = `SELECT generate_series(
+          CASE 
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 4)::int
+          ELSE (extract(year FROM current_date) - 5)::int
+      END,
+      CASE
+          WHEN maxannee = extract(year FROM current_date) THEN maxannee::int
+          ELSE (extract(year FROM current_date) - 1)::int
+      END
+      ) annee
+				FROM (
+					SELECT max(annee) maxannee FROM (
+					Select annee from budget_et_finances_entite_juridique bg where bg.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+			) anc ) ang`;
+      const generateAnneesResult = await (await this.orm).query(generateAnnees);
+      return generateAnneesResult.map((item: any) => item.annee);
     } else {
       return [];
     }
@@ -77,7 +108,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   async compare(params: ParametresDeComparaison, profiles: ProfilModel[]): Promise<ResultatDeComparaison> {
     const { type } = params;
     if (type === "Entité juridique") {
-      return await this.compareEJ();
+      return await this.compareEJ(params);
     } else if (type === "Médico-social") {
       const profilesAutreRegValues = profiles.map((profile) => profile?.value.autreRegion.profilMédicoSocial)
       const autorisations = combineProfils(profilesAutreRegValues);
@@ -87,8 +118,54 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     }
   }
 
-  private async compareEJ(): Promise<ResultatDeComparaison> {
-    return { nombreDeResultats: 0, resultat: [] };
+  private async compareEJ(params: ParametresDeComparaison): Promise<ResultatDeComparaison> {
+    const { numerosFiness, annee, page, order, orderBy, forExport } = params;
+
+    const compareEjQueryBody = ` from recherche ej
+    LEFT JOIN budget_et_finances_entite_juridique bg
+    on ej.numero_finess = bg.numero_finess_entite_juridique and bg.annee = ${annee}
+    where ej.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
+
+    const compareEjQuery = `Select ej.numero_finess,
+    ej.raison_sociale_courte,
+    ej.commune,
+    ej.departement,
+    ej.code_region,
+    ej.type,
+    ej.statut_juridique,
+    bg.resultat_net_comptable_san,
+    bg.taux_de_caf_nette_san,
+    CASE
+        WHEN bg.depenses_titre_i_global IS NULL AND bg.depenses_titre_ii_global IS NULL AND bg.depenses_titre_iii_global IS NULL AND bg.depenses_titre_iv_global IS NULL THEN NULL
+        ELSE COALESCE(bg.depenses_titre_i_global, 0)  + COALESCE(bg.depenses_titre_ii_global, 0) + COALESCE(bg.depenses_titre_iii_global, 0) + COALESCE(bg.depenses_titre_iv_global, 0)
+    END AS total_depenses_global,
+     CASE
+        WHEN bg.recettes_titre_i_global IS NULL AND bg.recettes_titre_ii_global IS NULL AND bg.recettes_titre_iii_global IS NULL AND bg.recettes_titre_iv_global IS NULL THEN NULL
+        ELSE COALESCE(bg.recettes_titre_i_global, 0)  + COALESCE(bg.recettes_titre_ii_global, 0) + COALESCE(bg.recettes_titre_iii_global, 0) + COALESCE(bg.recettes_titre_iv_global, 0) 
+    END AS total_recettes_global, 
+     CASE
+        WHEN bg.depenses_titre_i_h IS NULL AND bg.depenses_titre_ii_h IS NULL AND bg.depenses_titre_iii_h IS NULL AND bg.depenses_titre_iv_h IS NULL THEN NULL
+        ELSE COALESCE(bg.depenses_titre_i_h, 0)  + COALESCE(bg.depenses_titre_ii_h, 0) + COALESCE(bg.depenses_titre_iii_h, 0) + COALESCE(bg.depenses_titre_iv_h, 0) 
+    END AS total_depenses_principales,
+     CASE
+        WHEN bg.recettes_titre_i_h IS NULL AND bg.recettes_titre_ii_h IS NULL AND bg.recettes_titre_iii_h IS NULL THEN NULL
+        ELSE COALESCE(bg.recettes_titre_i_h, 0)  + COALESCE(bg.recettes_titre_ii_h, 0) + COALESCE(bg.recettes_titre_iii_h, 0)
+    END AS total_recettes_principales,
+    bg.ratio_dependance_financiere` + compareEjQueryBody;
+
+    const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
+    const paginatedCompareEJQuery =
+      order && orderBy
+        ? compareEjQuery +
+        ` ORDER BY ${orderBy} ${order} ${limitForExport} `
+        : compareEjQuery +
+        ` ORDER BY numero_finess ASC ${limitForExport} `;
+
+    const compareEJQueryResult = await (await this.orm).query(paginatedCompareEJQuery);
+    return {
+      nombreDeResultats: numerosFiness.length,
+      resultat: this.contruitResultatEJ(compareEJQueryResult),
+    };
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
@@ -253,6 +330,27 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         vetusteConstruction: resultat.taux_de_vetuste_construction === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_vetuste_construction, 1),
         roulementNetGlobal: resultat.fonds_de_roulement === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
         resultatNetComptable: resultat.resultat_net_comptable === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
+      };
+    });
+  }
+
+  private contruitResultatEJ(resultats: ComparaisonEJTypeOrm[]): ResultatEJ[] {
+    return resultats.map((resultat: ComparaisonEJTypeOrm): ResultatEJ => {
+      return {
+        numéroFiness: resultat.numero_finess,
+        socialReason: resultat.raison_sociale_courte,
+        type: resultat.type,
+        commune: resultat.commune,
+        departement: resultat.departement,
+        statutJuridique: resultat.statut_juridique,
+        rattachements: resultat.departement,
+        chargesPrincipaux: this.makeNumberArrondi(resultat.total_depenses_principales, 0),
+        chargesGlobal: this.makeNumberArrondi(resultat.total_depenses_global, 0),
+        produitsPrincipaux: this.makeNumberArrondi(resultat.total_recettes_principales, 0),
+        produitsGlobal: this.makeNumberArrondi(resultat.total_recettes_global, 0),
+        resultatNetComptable: resultat.resultat_net_comptable_san,
+        tauxCaf: resultat.taux_de_caf_nette_san,
+        ratioDependanceFinanciere: resultat.ratio_dependance_financiere,
       };
     });
   }
