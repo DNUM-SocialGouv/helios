@@ -552,12 +552,6 @@ export interface Wording {
   readonly FA_PSY: string;
   readonly FA_SSR: string;
   readonly FA_USLD: string;
-  //Comparaison
-  //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
-  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
-  readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
 
   //Page d’une liste d’etablissements
   readonly LISTE_DE_FAVORIS: string;
