@@ -1,9 +1,18 @@
 export type ResultatEJ = Readonly<{
-  commune: string;
-  département: string;
   numéroFiness: string;
-  raisonSocialeCourte: string;
+  socialReason: string;
+  commune: string;
+  departement: string;
   type: string;
+  statutJuridique: string;
+  rattachements: string;
+  chargesPrincipaux: number | null | string;
+  chargesGlobal: number | null | string;
+  produitsPrincipaux: number | null | string;
+  produitsGlobal: number | null | string;
+  resultatNetComptable: number | null | string;
+  tauxCaf: number | null | string;
+  ratioDependanceFinanciere: number | null | string;
 }>;
 
 export type ResultatSMS = Readonly<{
