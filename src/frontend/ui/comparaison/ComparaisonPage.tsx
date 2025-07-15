@@ -13,6 +13,8 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
+import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
@@ -27,7 +29,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
-  const [structureChoice, setStructureChoice] = useState<string>("Médico-social");
+  const [structureChoice, setStructureChoice] = useState<string>("");
   const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
@@ -47,21 +49,30 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
+  const [comparedTypes, setComparedTypes] = useState<string[]>([]);
+
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
-    lancerLaComparaison(annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
-    setReloadTable(false);
-  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
+    if (structureChoice !== "") {
+      lancerLaComparaison(structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
+      setReloadTable(false);
+    }
+  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable, structureChoice]);
 
-  const getAllTypes = () => {
-    const result: string[] = [];
-    resultats.forEach((element) => {
-      if (!result.includes(element.type)) {
-        result.push(element.type);
-      }
-    });
-    return result;
-  };
+  useEffect(() => {
+    const typeStored = sessionStorage.getItem("comparaisonType");
+    setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
+  }, [reloadTable, deleteEt])
+
+  useEffect(() => {
+    if (comparedTypes.length !== 0) {
+      if (comparedTypes.includes("Médico-social"))
+        setStructureChoice("Médico-social");
+      else if (comparedTypes.includes("Sanitaire"))
+        setStructureChoice("Sanitaire");
+      else setStructureChoice("Entité Juridique");
+    }
+  }, [comparedTypes])
 
   const tableHeaders = [
     { label: "", key: "delete", nomComplet: "" },
@@ -118,16 +129,24 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (numeroFinessASupprimer: string) => {
+  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
+    const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
-    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
       if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
         setPage(page - 1);
       }
+    }
+    if (resultats.filter((value) => value.type === etablissementASupprimer.type).length === 1) {
+      // supprimer la structure associée
+      const typeStoredArray: string[] = typeStored ? JSON.parse(typeStored) : [];
+      const indexStructureToDelete = typeStoredArray.indexOf(etablissementASupprimer.type);
+      typeStoredArray.splice(indexStructureToDelete, 1);
+      sessionStorage.setItem("comparaisonType", JSON.stringify(typeStoredArray));
     }
     setDeleteEt(!deleteEt);
   };
@@ -224,8 +243,8 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
             <SelectionTags
-              choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-              noSelectableChoices={getAllTypes()}
+              choices={["Sanitaire", "Médico-social", "Entité juridique"]}
+              noSelectableChoices={comparedTypes}
               selectedChoice={structureChoice}
               setSelectedChoice={setStructureChoice}
             />

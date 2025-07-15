@@ -1,4 +1,3 @@
-import { parse } from "cookie";
 import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
@@ -44,15 +43,8 @@ export function useComparaison() {
     return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
   };
 
-  const lancerLaComparaison = async (annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
+  const lancerLaComparaison = async (type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
-    let typeStored = sessionStorage.getItem("comparaisonType");
-    if (!typeStored) {
-      const cookies = parse(document.cookie);
-      typeStored = cookies["type"] ?? "";
-      sessionStorage.setItem("comparaisonType", typeStored);
-    }
-
     let numerosFiness = [];
     try {
       numerosFiness = listFiness ? JSON.parse(listFiness) : [];
@@ -60,8 +52,6 @@ export function useComparaison() {
       // eslint-disable-next-line no-console
       console.log("e", e)
     }
-
-    const type = typeStored ?? "";
 
     setState({ ...state, loading: true });
 
