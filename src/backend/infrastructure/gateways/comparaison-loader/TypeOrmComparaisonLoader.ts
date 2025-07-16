@@ -36,13 +36,14 @@ type ComparaisonEJTypeOrm = Readonly<{
   commune: string;
   departement: string;
   statut_juridique: string;
-  resultat_net_comptable_san: number | 'NA';
-  taux_de_caf_nette_san: number | 'NA';
-  ratio_dependance_financiere: number | 'NA';
-  total_depenses_global: number | 'NA';
-  total_recettes_global: number | 'NA';
-  total_depenses_principales: number | 'NA';
-  total_recettes_principales: number | 'NA';
+  rattachement: string;
+  resultat_net_comptable_san: number;
+  taux_de_caf_nette_san: number;
+  ratio_dependance_financiere: number;
+  total_depenses_global: number;
+  total_recettes_global: number;
+  total_depenses_principales: number;
+  total_recettes_principales: number;
 }>;
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
@@ -124,7 +125,34 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     const compareEjQueryBody = ` from recherche ej
     LEFT JOIN budget_et_finances_entite_juridique bg
     on ej.numero_finess = bg.numero_finess_entite_juridique and bg.annee = ${annee}
-    where ej.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
+    LEFT JOIN etablissement_territorial et 
+    on ej.numero_finess = et.numero_finess_entite_juridique
+    where ej.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})
+    group by ej.numero_finess, ej.raison_sociale_courte,
+    ej.commune,
+    ej.departement,
+    ej.code_region,
+    ej.type,
+    ej.statut_juridique,
+    bg.resultat_net_comptable_san,
+    bg.taux_de_caf_nette_san,
+    bg.depenses_titre_i_global,
+    bg.depenses_titre_ii_global,
+    bg.depenses_titre_iii_global,
+    bg.depenses_titre_iv_global,
+    bg.recettes_titre_i_global, 
+    bg.recettes_titre_ii_global, 
+    bg.recettes_titre_iii_global, 
+    bg.recettes_titre_iv_global,
+    bg.depenses_titre_i_h,
+    bg.depenses_titre_i_h,
+    bg.depenses_titre_ii_h,
+    bg.depenses_titre_iii_h,
+    bg.depenses_titre_iv_h,
+    bg.recettes_titre_i_h,
+    bg.recettes_titre_ii_h,
+    bg.recettes_titre_iii_h,
+    bg.ratio_dependance_financiere`
 
     const compareEjQuery = `Select ej.numero_finess,
     ej.raison_sociale_courte,
@@ -133,6 +161,12 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ej.code_region,
     ej.type,
     ej.statut_juridique,
+    CONCAT(
+            'Sanitaire (', 
+            COUNT(CASE WHEN et.domaine = 'Sanitaire' THEN et.numero_finess_entite_juridique END),
+            '), SMS (',
+            COUNT(CASE WHEN et.domaine = 'Médico-social' THEN et.numero_finess_entite_juridique END), ')'
+          ) AS rattachement,
     bg.resultat_net_comptable_san,
     bg.taux_de_caf_nette_san,
     CASE
@@ -356,7 +390,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         commune: resultat.commune,
         departement: resultat.departement,
         statutJuridique: resultat.statut_juridique,
-        rattachements: resultat.departement,
+        rattachements: resultat.rattachement,
         chargesPrincipaux: this.makeNumberArrondi(resultat.total_depenses_principales, 0),
         chargesAnnexes: this.roundExpression(resultat.total_depenses_global, resultat.total_depenses_principales, 0),
         produitsPrincipaux: this.makeNumberArrondi(resultat.total_recettes_principales, 0),
