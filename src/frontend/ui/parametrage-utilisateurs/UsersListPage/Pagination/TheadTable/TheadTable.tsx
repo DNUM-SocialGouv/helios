@@ -2,8 +2,8 @@
 
 import { memo, useCallback } from "react";
 
-import { iPaginationData } from "../../UsersListPage";
 import styles from "./TheadTable.module.css";
+import { iPaginationData } from "../../UsersListPage";
 
 type TheadTableProps = Readonly<{
   paginationData: iPaginationData;

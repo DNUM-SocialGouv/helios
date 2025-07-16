@@ -1,10 +1,10 @@
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import { useRouter } from "next/router";
 
+import styles from "./Parametrage.module.css";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { formatDateAndHours } from "../../utils/dateUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import styles from "./Parametrage.module.css";
 
 type ParametragePageProps = Readonly<{
   profiles: ProfilModel[];

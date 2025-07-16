@@ -1,8 +1,8 @@
+import InspectionsControlesTagMultiNiveaux from "./InspectionsControlesTagMultiNiveaux";
 import { InspectionControleDataTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuInspectionsControles } from "../../InfoBulle/ContenuInspectionsControles";
-import InspectionsControlesTagMultiNiveaux from "./InspectionsControlesTagMultiNiveaux";
 
 type GraphiqueInspectionsControlesProps = Readonly<{
   data: InspectionControleDataTheme[];

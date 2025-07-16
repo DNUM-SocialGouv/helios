@@ -1,10 +1,10 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
+import { BlocBudgetEtFinancesMédicoSocial } from "./BlocBudgetEtFinancesMédicoSocial";
+import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
-import { BlocBudgetEtFinancesMédicoSocial } from "./BlocBudgetEtFinancesMédicoSocial";
-import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
 const { wording } = fakeFrontDependencies;
 

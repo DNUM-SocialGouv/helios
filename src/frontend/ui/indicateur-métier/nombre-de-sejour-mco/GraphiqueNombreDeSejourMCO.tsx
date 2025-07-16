@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react";
 
+import { NombreDeSejourMCOHistogrammes } from "./NombreDeSejourMCOHistogrammes";
+import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { ContenuNombreDeSéjourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
-import { NombreDeSejourMCOHistogrammes } from "./NombreDeSejourMCOHistogrammes";
-import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 
 
 type GraphiqueNombreDeSejourMCOProps = Readonly<{

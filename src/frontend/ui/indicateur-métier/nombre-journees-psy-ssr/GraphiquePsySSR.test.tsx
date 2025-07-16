@@ -1,11 +1,11 @@
 import { within } from "@testing-library/react";
 
+import { GraphiquePsySSR } from "./GraphiquePsySSR";
+import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { GraphiquePsySSR } from "./GraphiquePsySSR";
-import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
 
 const { wording } = fakeFrontDependencies;
 const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {

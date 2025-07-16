@@ -1,8 +1,3 @@
-import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
-import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
-import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
-import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
-import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 import { EntitéJuridique } from "./EntitéJuridique";
 import {
   Autorisation,
@@ -15,6 +10,11 @@ import {
   Forme,
   Modalite,
 } from "./EntitéJuridiqueAutorisationEtCapacité";
+import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
+import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
+import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
 
 class AutorisationsFactory {
   static createFromAutorisationsSanitaire(autorisationsSanitaire: AutorisationSanitaireModel[]): AutorisationActivites[] {

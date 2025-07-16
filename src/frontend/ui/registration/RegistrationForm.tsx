@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
+import styles from "./Registration.module.css";
 import { Institution } from "../../../backend/métier/entities/Utilisateur/Institution";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import styles from "./Registration.module.css";
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 

@@ -1,7 +1,7 @@
 import { ChangeEventHandler, MouseEventHandler, FormEventHandler } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./MdpOublie.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type FormulaireMdpOublieProps = Readonly<{
   annuler: MouseEventHandler<HTMLButtonElement>;

@@ -1,8 +1,8 @@
+import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from "./RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase";
 import { numéroFinessEntitéJuridique } from "../../testHelper";
 import { DomaineÉtablissementTerritorial } from "../entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialRattaché } from "../entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { ÉtablissementTerritorialRattachéLoader } from "../gateways/ÉtablissementTerritorialRattachéLoader";
-import { RécupèreLesÉtablissementsTerritoriauxRattachésUseCase } from "./RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase";
 
 describe("La récupération des établissements territoriaux rattachés à une entité juridique", () => {
   it("récupère la liste des établissements territoriaux", async () => {

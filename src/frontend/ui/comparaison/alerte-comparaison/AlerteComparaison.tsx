@@ -1,5 +1,5 @@
-import { useDependencies } from "../../commun/contexts/useDependencies";
 import styles from "./AlerteComparaison.module.css";
+import { useDependencies } from "../../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 export const AlerteComparaison = () => {

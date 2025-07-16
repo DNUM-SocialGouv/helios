@@ -1,10 +1,10 @@
 import Image from "next/image";
 
-import { useDependencies } from "../../commun/contexts/useDependencies";
-import carteFrance from "./carte-france.svg";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
+import carteFrance from "./carte-france.svg";
 import styles from "./Cartographie.module.css";
 import { GroupeBoutonRegions } from "./GroupeBoutonRegions";
+import { useDependencies } from "../../commun/contexts/useDependencies";
 
 export const Cartographie = () => {
   const { wording } = useDependencies();

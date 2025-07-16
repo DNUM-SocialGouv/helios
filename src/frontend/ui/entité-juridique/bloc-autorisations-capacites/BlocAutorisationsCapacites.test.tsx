@@ -1,6 +1,8 @@
 import { screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
+import { BlocAutorisationsCapacites } from "./BlocAutorisationsCapacites";
+import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 import {
   AutorisationsActivités,
   AutresActivités,
@@ -9,8 +11,6 @@ import {
   ReconnaissanceContractuelleActivités,
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-import { BlocAutorisationsCapacites } from "./BlocAutorisationsCapacites";
-import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 
 const { wording } = fakeFrontDependencies;
 

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import styles from "./evenementsIndesirables.module.css";
+import { EvenementsIndesirablesTagMultiNiveaux } from "./EvenementsIndesirablesTagMultiNiveaux";
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { annéesManquantesQualite } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
@@ -7,8 +9,6 @@ import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/Indicat
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { HistogrammeHorizontalRow } from "../../../indicateur-métier/qualite/ReclamationsParAnnee/HistogrammeHorizontalRow/HistogrammeHorizontalRow";
 import { ContenuEvenementsIndesirables } from "../../InfoBulle/ContenuEvenementsIndesirables";
-import styles from "./evenementsIndesirables.module.css";
-import { EvenementsIndesirablesTagMultiNiveaux } from "./EvenementsIndesirablesTagMultiNiveaux";
 
 type GraphiqueEvenementsIndesirablesProps = Readonly<{
   data: { [key: number]: EvenementsIndesirables[] };

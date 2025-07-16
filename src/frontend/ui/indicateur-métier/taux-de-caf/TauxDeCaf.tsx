@@ -1,8 +1,8 @@
-import { useDependencies } from "../../commun/contexts/useDependencies";
-import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuTauxDeCaf } from "./ContenuTauxDeCaf";
 import { ContenuTauxDeCafEJ } from "./ContenuTauxDeCafEJ";
 import { TauxDeCafViewModel } from "./TauxDeCafViewModel";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 
 export const TauxDeCaf = ({ tauxDeCafViewModel, isEntiteJuridique = false }: { tauxDeCafViewModel: TauxDeCafViewModel; isEntiteJuridique?: boolean }) => {
   const { wording } = useDependencies();
