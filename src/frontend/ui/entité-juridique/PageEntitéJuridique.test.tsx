@@ -83,7 +83,7 @@ describe("La page Entité Juridique", () => {
     expect(titre).toBeInTheDocument();
   });
 
-  it("affiche le bouton pour imprimer", () => {
+  it("affiche le bouton d’action", () => {
     const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
@@ -101,8 +101,8 @@ describe("La page Entité Juridique", () => {
     );
 
     // THEN
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-    expect(imprimer).toHaveAttribute("type", "button");
+    const actions = screen.getByRole("button", { name: wording.ACTIONS });
+    expect(actions).toHaveAttribute("type", "button");
   });
 
   it("affiche la categorisation", () => {
