@@ -39,6 +39,8 @@ export function useComparaison() {
     listeAnnees: [],
   });
 
+  const [topEnveloppes, setTopEnveloppes] = useState<string[]>([]);
+
   const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat, type: string): (ComparaisonSMSViewModel[] | ComparaisonEJViewModel[]) => {
     if (type === 'Médico-social')
       return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
@@ -56,7 +58,8 @@ export function useComparaison() {
       // eslint-disable-next-line no-console
       console.log("e", e)
     }
-
+    const enveloppes = await getTopEnveloppes(annee);
+    setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
 
     if (numerosFiness && numerosFiness.length > 0) {
@@ -90,6 +93,31 @@ export function useComparaison() {
       })
     }
   }
+
+  const getTopEnveloppes = async (annee: string): Promise<string[]> => {
+    const savedEnveloppesString = sessionStorage.getItem('topEnveloppe');
+    const savedEnveloppesDateString = sessionStorage.getItem('dateTopEnveloppe');
+    const today = new Date().toISOString().slice(0, 10);
+
+    if (savedEnveloppesString === null || savedEnveloppesDateString !== today) {
+      try {
+        const response = await fetch("/api/comparaison/getTopEnveloppes", {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        });
+        const data = await response.json();
+        sessionStorage.setItem('topEnveloppe', JSON.stringify(data))
+        sessionStorage.setItem('dateTopEnveloppe', today)
+        return data[annee] as string[] || [];
+      } catch {
+        return [];
+      }
+    } else {
+      const savedEnveloppes = JSON.parse(savedEnveloppesString) as Record<string, string[]>;
+      return savedEnveloppes[annee] as string[] || [];
+    }
+  };
+
 
 
   const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactNode } => {
@@ -212,6 +240,10 @@ export function useComparaison() {
         { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", sort: true, orderBy: "resultat_net_comptable_san" },
         { label: "Taux de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", sort: true, orderBy: "taux_de_caf_nette_san" },
         { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: topEnveloppes[0], sort: true, orderBy: topEnveloppes[0] },
+        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: topEnveloppes[1], sort: true, orderBy: topEnveloppes[1] },
+        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: topEnveloppes[2], sort: true, orderBy: topEnveloppes[2] },
+
       ]
     }
     else
@@ -233,6 +265,6 @@ export function useComparaison() {
     lastPage: state.lastPage,
     loading: state.loading,
     NombreDeResultatsMaxParPage: take,
-    listeAnnees: state.listeAnnees
+    listeAnnees: state.listeAnnees,
   };
 }
