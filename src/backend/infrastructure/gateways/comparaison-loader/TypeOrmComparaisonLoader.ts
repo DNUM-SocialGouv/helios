@@ -46,6 +46,10 @@ type ComparaisonEJTypeOrm = Readonly<{
   total_recettes_principales: number;
 }>;
 
+type EnveloppesResult = {
+  [annee: number]: string[];
+};
+
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
   private readonly NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE = 20;
@@ -96,6 +100,35 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   }
 
+  async getTopEnveloppes(): Promise<EnveloppesResult> {
+    const query = `SELECT y.annee, c.enveloppe, c.total_value
+                    FROM 
+                        (SELECT DISTINCT annee FROM allocation_ressource_ej) y
+                    CROSS JOIN LATERAL (
+                        SELECT 
+                            t.enveloppe,
+                            SUM(t.montant) AS total_value
+                        FROM allocation_ressource_ej t
+                        WHERE t.annee = y.annee
+                        GROUP BY t.enveloppe
+                        ORDER BY total_value DESC
+                        LIMIT 3
+                    ) c
+                    ORDER BY y.annee, c.total_value DESC`;
+    const queryResult = await (await this.orm).query(query);
+    const result: EnveloppesResult = {};
+
+    queryResult.forEach((item: any) => {
+      if (!result[item.annee]) {
+        result[item.annee] = [];
+      }
+      if (!result[item.annee].includes(item.enveloppe)) {
+        result[item.annee].push(item.enveloppe);
+      }
+    });
+    return result;
+  }
+
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     const dateMAJFiness = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105);
 
@@ -134,8 +167,6 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ej.code_region,
     ej.type,
     ej.statut_juridique,
-    bg.resultat_net_comptable_san,
-    bg.taux_de_caf_nette_san,
     bg.depenses_titre_i_global,
     bg.depenses_titre_ii_global,
     bg.depenses_titre_iii_global,
@@ -152,6 +183,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     bg.recettes_titre_i_h,
     bg.recettes_titre_ii_h,
     bg.recettes_titre_iii_h,
+    bg.resultat_net_comptable_san,
+    bg.taux_de_caf_nette_san,
     bg.ratio_dependance_financiere`
 
     const compareEjQuery = `Select ej.numero_finess,
@@ -389,15 +422,15 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
-        statutJuridique: resultat.statut_juridique,
-        rattachements: resultat.rattachement,
-        chargesPrincipaux: this.makeNumberArrondi(resultat.total_depenses_principales, 0),
-        chargesAnnexes: this.roundExpression(resultat.total_depenses_global, resultat.total_depenses_principales, 0),
-        produitsPrincipaux: this.makeNumberArrondi(resultat.total_recettes_principales, 0),
-        produitsAnnexes: this.roundExpression(resultat.total_recettes_global, resultat.total_recettes_principales, 0),
-        resultatNetComptable: resultat.resultat_net_comptable_san,
-        tauxCaf: resultat.taux_de_caf_nette_san,
-        ratioDependanceFinanciere: resultat.ratio_dependance_financiere,
+        statutJuridique: resultat.type === "Entité juridique" ? resultat.statut_juridique : '',
+        rattachements: resultat.type === "Entité juridique" ? resultat.rattachement : '',
+        chargesPrincipaux: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.total_depenses_principales, 0) : '',
+        chargesAnnexes: resultat.type === "Entité juridique" ? this.roundExpression(resultat.total_depenses_global, resultat.total_depenses_principales, 0) : '',
+        produitsPrincipaux: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.total_recettes_principales, 0) : '',
+        produitsAnnexes: resultat.type === "Entité juridique" ? this.roundExpression(resultat.total_recettes_global, resultat.total_recettes_principales, 0) : '',
+        resultatNetComptable: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
+        tauxCaf: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
+        ratioDependanceFinanciere: resultat.type === "Entité juridique" ? resultat.ratio_dependance_financiere : '',
       };
     });
   }
