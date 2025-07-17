@@ -8,6 +8,7 @@ import { SuccessAlert } from "../../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../../commun/Table/Table";
 import { AlerteComparaison } from "../../comparaison/alerte-comparaison/AlerteComparaison";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { CategoriesFinessViewModel } from "../model/CategoriesFinessViewModel";
 
 const tableHeaders = [
   { label: "", nomComplet: "", key: "etsLogo", orderBy: "type", sort: true },
@@ -27,9 +28,10 @@ type ResultatRechercheAvanceeProps = Readonly<{
   page: number;
   selectedRows: Map<string, string>;
   setSelectedRows: Dispatch<SetStateAction<Map<string, string>>>;
+  categories: CategoriesFinessViewModel[]
 }>;
 
-export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage, selectedRows, setSelectedRows }: ResultatRechercheAvanceeProps) => {
+export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage, lastPage, selectedRows, setSelectedRows, categories }: ResultatRechercheAvanceeProps) => {
   const { wording } = useDependencies();
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
@@ -74,7 +76,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
     <>
       {showAlert && <AlerteComparaison />}
       {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
-      <TableHeaderRechercheAvancee isAllResultsSelected={isAllResultsSelected} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
+      <TableHeaderRechercheAvancee categories={categories} isAllResultsSelected={isAllResultsSelected} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
       <Table
         data={data}
         handleSelectAll={handleSelectAll}

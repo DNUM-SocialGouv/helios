@@ -2,6 +2,7 @@ import { ChartOptions } from "chart.js";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { couleurDelAbscisse } from "./couleursGraphique";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
@@ -9,10 +10,10 @@ import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
-import { couleurDelAbscisse } from "./couleursGraphique";
 
+const MIN_VALUE = 5;
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },
@@ -27,6 +28,10 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
           bottom: -2,
         },
         formatter: (value) => {
+          const valueNumber = value.y as number;
+          if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= MIN_VALUE) {
+            return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+          }
           return value.y;
         },
         font: {
@@ -60,14 +65,9 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
   };
 }
 
-export function HistogrammeVerticalABandes(props: {
+export function HistogrammeVerticalABandes(props: Readonly<{
   data: {
-    datasets: (
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-      | { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }
-    )[];
+    datasets: { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }[];
     labels: (string | number)[];
   };
   id: string;
@@ -77,34 +77,52 @@ export function HistogrammeVerticalABandes(props: {
   idDeLaLégende: string;
   créeLeLibelléDuTooltip: Function;
   annéesTotales: number;
-  grapheMensuel: boolean
-}) {
+  grapheMensuel: boolean;
+  cacheLesValeursBasse?: boolean;
+}>) {
   const { wording } = useDependencies();
 
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
-  const [indexPremierMoisNonRenseigne, setindexPremierMoisNonRenseigne] = useState(props.valeurs.length)
+  const [indexPremierMoisNonRenseigne, setIndexPremierMoisNonRenseigne] = useState(props.valeurs.length)
 
   useEffect(() => {
-    setindexPremierMoisNonRenseigne(props.valeurs[0].length);
+    setIndexPremierMoisNonRenseigne(props.valeurs[0].length);
   }, [props.valeurs])
+
+  let valeursTranscription = props.valeurs;
+  let hasSomeValuesToHide = false;
+  if (props.cacheLesValeursBasse) {
+    valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
+      if (valeur) {
+        const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+        if (numValue > 0 && numValue <= MIN_VALUE) {
+          hasSomeValuesToHide = true;
+          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+        }
+      }
+      return valeur;
+    })
+    );
+  }
 
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording)} />
+          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording, props.cacheLesValeursBasse)} />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
       {props.grapheMensuel && indexPremierMoisNonRenseigne < 12 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL} ${props.libellés[indexPremierMoisNonRenseigne]}`}</MiseEnExergue>}
+      {hasSomeValuesToHide && <MiseEnExergue>{`${wording.VALEURS_INFERIEUR_A_5_CACHÉS}`}</MiseEnExergue>}
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
         identifiants={props.identifiants}
         libellés={props.libellés}
-        valeurs={props.valeurs}
+        valeurs={valeursTranscription}
       />
     </>
   );

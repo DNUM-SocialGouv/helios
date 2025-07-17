@@ -53,7 +53,7 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
   const enlèveLaPoliceGrasseDuLibelléDeLégende = (élément: Element) => {
     élément.classList.remove("fr-text--bold");
   };
-  const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ && indexDeLArcSurvolé !== indexDeLArcSurvolé;
+  const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ && isNaN(indexDeLArcSurvolé);
   const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ;
 
   return {

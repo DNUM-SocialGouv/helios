@@ -1,5 +1,5 @@
-import { getFakeDataCrawlerDependencies } from "../../testHelper";
 import { TéléchargeLesDonnéesBrutesDeFinessUseCase } from "./TéléchargeLesDonnéesBrutesDeFinessUseCase";
+import { getFakeDataCrawlerDependencies } from "../../testHelper";
 
 describe("Récupération des sources de données FINESS en local", () => {
   const fakeDataCrawlerDependencies = getFakeDataCrawlerDependencies();

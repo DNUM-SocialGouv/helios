@@ -1,9 +1,10 @@
 import { DataSource, SelectQueryBuilder } from "typeorm";
 
+import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
-import { ParametreDeRechercheAvancee, CapaciteSMS, OrderDir } from "../../../métier/entities/ParametresDeRechercheAvancee";
+import { ParametreDeRechercheAvancee, CapaciteSMS, OrderDir, ActiviteSAN } from "../../../métier/entities/ParametresDeRechercheAvancee";
 import { Résultat, RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RechercheLoader } from "../../../métier/gateways/RechercheLoader";
 
@@ -118,7 +119,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   }
 
   async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
-    const { terme, zone, zoneD, typeZone, type, statutJuridique, capaciteSMS, orderBy, order, page, forExport } = params;
+    const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport } = params;
 
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
     const termeSansTirets = terme.replaceAll(/-/g, " ");
@@ -175,87 +176,219 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
       .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess");
 
-    if (zoneParam) {
-      parameters = this.computeZoneParamConditions(typeZone, zoneParam, conditions, parameters, zoneDParam);
-    }
 
-    if (type) {
-      conditions.push("recherche.type = :type");
-      parameters = { ...parameters, type: type };
-    }
 
-    if (statutJuridique.length > 0) {
-      conditions.push("(recherche.statut_juridique IN (:...statutJuridique) OR recherche.statut_juridique = '')");
-      parameters = { ...parameters, statutJuridique: statutJuridique };
-    }
 
-    const CapaciteSMS = (await this.orm)
-      .createQueryBuilder()
-      .select("ams.numero_finess_etablissement_territorial", "numero_finess_etablissement_territorial")
-      .addSelect("SUM(ams.capacite_installee_totale)", "capacite_installee_totale")
-      .from(AutorisationMédicoSocialModel, "ams")
-      .groupBy("ams.numero_finess_etablissement_territorial");
+    let capaciteQuery = requêteDeLaRecherche.clone();
+    let capaciteParams = { ...parameters };
+    const capaciteConditions: any[] = [];
+    capaciteConditions.push(...conditions);
+    let activiteQuery = requêteDeLaRecherche.clone();
+    let activiteParams = { ...parameters };
+    const activiteConditions: any[] = [];
+    activiteConditions.push(...conditions);
+    const standardQuery = requêteDeLaRecherche.clone();
+    let standardParams = { ...parameters };
+    const standardConditions: any[] = [];
+    standardConditions.push(...conditions);
+
+    let nombreDeRésultats;
+    let nombreDeRésultatsStandard;
+    let nombreDeRésultatsCapacite;
+    let nombreDeRésultatsActivite;
+    let finalQuery;
+
+
+    if (capaciteSMS.length === 0 && activiteSAN.length === 0) {
+      if (zoneParam) {
+        standardParams = this.computeZoneParamConditions(typeZone, zoneParam, standardConditions, standardParams, zoneDParam);
+      }
+      if (type.length > 0) {
+        standardParams = this.computeStructureParamConditions(statutJuridique, type, capaciteSMS, activiteSAN, standardConditions, standardParams);
+      }
+
+      if (categories.length !== 0) {
+        standardParams = this.ajouteFiltreCategories(categories, standardConditions, standardParams);
+      }
+      if (standardConditions.length > 0) standardQuery.where(standardConditions.join(" AND "), standardParams);
+
+      nombreDeRésultatsStandard = await standardQuery.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
+
+      standardQuery
+        .addGroupBy("recherche.commune")
+        .addGroupBy("recherche.type")
+        .addGroupBy("recherche.statut_juridique")
+        .addGroupBy("recherche.numero_finess")
+        .addGroupBy("recherche.raison_sociale_courte")
+        .addGroupBy("recherche.departement")
+        .addGroupBy("recherche.code_region")
+        .addGroupBy("recherche.rattachement")
+        .addGroupBy("entite_juridique.raison_sociale_courte")
+        .addGroupBy("recherche.termes")
+    }
 
     if (capaciteSMS.length !== 0) {
-      const capaciteSMSConditions: string[] = [];
-      requêteDeLaRecherche
-        .innerJoin(`(${CapaciteSMS.getQuery()})`, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
-        .innerJoin(
-          ÉtablissementTerritorialIdentitéModel,
-          "etablissement",
-          "capacite_sms.numero_finess_etablissement_territorial = etablissement.numéroFinessÉtablissementTerritorial"
-        );
-      capaciteSMS.forEach((capacite) => {
-        const conditionsSMS = this.construireLaLogiqueCapaciteEtablissements(capacite);
-        capaciteSMSConditions.push(conditionsSMS.capaciteSMSConditions);
-        parameters = { ...parameters, ...conditionsSMS.parameters };
-      });
-      conditions.push(capaciteSMS.length === 1 ? capaciteSMSConditions[0] : "(" + capaciteSMSConditions.join(" OR ") + ")");
+      if (zoneParam) {
+        capaciteParams = this.computeZoneParamConditions(typeZone, zoneParam, capaciteConditions, capaciteParams, zoneDParam);
+      }
+      capaciteQuery = await this.ajouteFiltreCapaciteSMS(capaciteQuery, capaciteSMS, capaciteConditions, capaciteParams);
+
+      if (capaciteConditions.length > 0) capaciteQuery.where(capaciteConditions.join(" AND "), capaciteParams);
+      nombreDeRésultatsCapacite = await capaciteQuery.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
+      capaciteQuery
+        .addGroupBy("recherche.commune")
+        .addGroupBy("recherche.type")
+        .addGroupBy("recherche.statut_juridique")
+        .addGroupBy("recherche.numero_finess")
+        .addGroupBy("recherche.raison_sociale_courte")
+        .addGroupBy("recherche.departement")
+        .addGroupBy("recherche.code_region")
+        .addGroupBy("recherche.rattachement")
+        .addGroupBy("entite_juridique.raison_sociale_courte")
+        .addGroupBy("recherche.termes")
     }
 
-    if (conditions.length > 0) requêteDeLaRecherche.where(conditions.join(" AND "), parameters);
+    if (activiteSAN.length !== 0) {
+      if (zoneParam) {
+        activiteParams = this.computeZoneParamConditions(typeZone, zoneParam, activiteConditions, activiteParams, zoneDParam);
+      }
 
-    const nombreDeRésultats = await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
+      activiteQuery = await this.ajouteFiltreActiviteSAN(activiteQuery, activiteSAN, activiteConditions, activiteParams);
+      if (activiteConditions.length > 0) activiteQuery.where(activiteConditions.join(" AND "), activiteParams);
+      nombreDeRésultatsActivite = await activiteQuery.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
+      activiteQuery
+        .addGroupBy("recherche.commune")
+        .addGroupBy("recherche.type")
+        .addGroupBy("recherche.statut_juridique")
+        .addGroupBy("recherche.numero_finess")
+        .addGroupBy("recherche.raison_sociale_courte")
+        .addGroupBy("recherche.departement")
+        .addGroupBy("recherche.code_region")
+        .addGroupBy("recherche.rattachement")
+        .addGroupBy("entite_juridique.raison_sociale_courte")
+        .addGroupBy("recherche.termes")
+    }
 
-    requêteDeLaRecherche
-      .addGroupBy("recherche.commune")
-      .addGroupBy("recherche.type")
-      .addGroupBy("recherche.statut_juridique")
-      .addGroupBy("recherche.numero_finess")
-      .addGroupBy("recherche.raison_sociale_courte")
-      .addGroupBy("recherche.departement")
-      .addGroupBy("recherche.code_region")
-      .addGroupBy("recherche.rattachement")
-      .addGroupBy("entite_juridique.raison_sociale_courte")
-      .addGroupBy("recherche.termes")
 
-    if (orderBy && order) {
-      requêteDeLaRecherche
-        .orderBy(orderBy, order)
-    } else if (terme) {
-      requêteDeLaRecherche
-        .orderBy("is_exact", "DESC")
-        .addOrderBy("is_exact_dep", "DESC")
-        .addOrderBy("is_exact_com", "DESC")
-        .addOrderBy("rank", "DESC")
-        .addOrderBy("type", "ASC")
-        .addOrderBy("numero_finess", "ASC")
+    if (capaciteSMS.length === 0 && activiteSAN.length === 0) {
+      finalQuery = standardQuery;
+      nombreDeRésultats = nombreDeRésultatsStandard.count;
     } else {
-      requêteDeLaRecherche
-        .orderBy("type", "ASC")
-        .addOrderBy("numero_finess", "ASC")
+      const hasCapacite = capaciteSMS.length !== 0;
+      const hasActivite = activiteSAN.length !== 0;
+      const structureToHandle = (capaciteSMS.length !== 0 && activiteSAN.length === 0 && type.length > 1) || (activiteSAN.length !== 0 && capaciteSMS.length === 0 && type.length > 1) || (capaciteSMS.length !== 0 && activiteSAN.length && type.length > 2);
+
+      if (structureToHandle) {
+        if (zoneParam) {
+          standardParams = this.computeZoneParamConditions(typeZone, zoneParam, standardConditions, standardParams, zoneDParam);
+        }
+        if (type.length > 0) {
+          standardParams = this.computeStructureParamConditions(statutJuridique, type, capaciteSMS, activiteSAN, standardConditions, standardParams);
+        }
+        if (standardConditions.length > 0) standardQuery.where(standardConditions.join(" AND "), standardParams);
+
+
+        nombreDeRésultatsStandard = await standardQuery.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne();
+
+        standardQuery
+          .addGroupBy("recherche.commune")
+          .addGroupBy("recherche.type")
+          .addGroupBy("recherche.statut_juridique")
+          .addGroupBy("recherche.numero_finess")
+          .addGroupBy("recherche.raison_sociale_courte")
+          .addGroupBy("recherche.departement")
+          .addGroupBy("recherche.code_region")
+          .addGroupBy("recherche.rattachement")
+          .addGroupBy("entite_juridique.raison_sociale_courte")
+          .addGroupBy("recherche.termes")
+
+
+        finalQuery = standardQuery;
+        nombreDeRésultats = Number(nombreDeRésultatsStandard.count);
+
+        if (hasCapacite) {
+          finalQuery = (await this.orm)
+            .createQueryBuilder()
+            .select()
+            .from(`(${finalQuery.getQuery()} UNION ALL ${capaciteQuery.getQuery()})`, 'union_table')
+            .setParameters({ ...finalQuery.getParameters(), ...capaciteQuery.getParameters() });
+          nombreDeRésultats += Number(nombreDeRésultatsCapacite.count);
+        }
+        if (hasActivite) {
+          finalQuery = (await this.orm)
+            .createQueryBuilder()
+            .select()
+            .from(`(${finalQuery.getQuery()} UNION ALL ${activiteQuery.getQuery()})`, 'union_table')
+            .setParameters({ ...finalQuery.getParameters(), ...activiteQuery.getParameters() });
+          nombreDeRésultats += Number(nombreDeRésultatsActivite.count);
+
+        }
+      }
+      else if (hasCapacite && hasActivite) {
+        finalQuery = (await this.orm)
+          .createQueryBuilder()
+          .select()
+          .from(`(${activiteQuery.getQuery()} UNION ALL ${capaciteQuery.getQuery()})`, 'union_table')
+          .setParameters({ ...activiteQuery.getParameters(), ...capaciteQuery.getParameters() });
+
+        nombreDeRésultats = Number(nombreDeRésultatsActivite.count) + Number(nombreDeRésultatsCapacite.count);
+      } else {
+        finalQuery = hasCapacite ? capaciteQuery : activiteQuery;
+        nombreDeRésultats = hasCapacite ? nombreDeRésultatsCapacite.count : nombreDeRésultatsActivite.count;
+
+      }
     }
+    this.ajouteTri(finalQuery, orderBy, order, terme);
 
     if (!forExport) {
-      requêteDeLaRecherche
+      finalQuery
         .limit(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE)
         .offset(this.NOMBRE_DE_RÉSULTATS_RECHERCHE_AVANCEE__MAX_PAR_PAGE * (page - 1));
     }
+    const rechercheModelRésultats = await finalQuery.getRawMany<RechercheTypeOrm>();
 
-    const rechercheModelRésultats = await requêteDeLaRecherche.getRawMany<RechercheTypeOrm>();
+    return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats);
 
-    return this.construisLesRésultatsDeLaRecherche(rechercheModelRésultats, nombreDeRésultats.count);
+  }
 
+  private computeStructureParamConditions(statutJuridique: string[], type: string[], capaciteSMS: any[], activiteSAN: any[], conditions: any[], parameters: any) {
+    let newParameters = parameters;
+    if (capaciteSMS.length > 0) {
+      const index = type.indexOf('Médico-social', 0);
+      if (index > -1) {
+        type.splice(index, 1);
+      }
+    }
+    if (activiteSAN.length > 0) {
+      const index = type.indexOf('Sanitaire', 0);
+      if (index > -1) {
+        type.splice(index, 1);
+      }
+    }
+
+    if (statutJuridique.length > 0) {
+      if (type.length === 1) {
+        //seulement des EJs
+        conditions.push("(recherche.statut_juridique IN (:...statutJuridique) OR recherche.statut_juridique = '')");
+        conditions.push("(recherche.type IN (:...type) OR recherche.type = '')");
+        newParameters = { ...parameters, statutJuridique: statutJuridique, type: type };
+      } else {
+        const filtredTypes = type.filter((t) => t !== 'Entité juridique');
+        const typeConditions: string[] = ["(recherche.statut_juridique IN (:...statutJuridique) OR recherche.statut_juridique = '')"];
+        newParameters = { ...parameters, statutJuridique: statutJuridique };
+
+        filtredTypes.forEach((filtredType, index) => {
+          typeConditions.push(`recherche.type = :${index}`);
+          newParameters[`${index}`] = filtredType;
+        });
+        conditions.push(filtredTypes.length === 0 ? typeConditions[0] : "(" + typeConditions.join(" OR ") + ")");
+      }
+
+    } else if (type.length > 0) {
+      conditions.push("(recherche.type IN (:...type) OR recherche.type = '')");
+      newParameters = { ...parameters, type: type };
+    }
+    return newParameters;
   }
 
   private computeZoneParamConditions(typeZone: string, zoneParam: string, conditions: any[], parameters: any, zoneDParam: string) {
@@ -280,6 +413,154 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       newParameters = { ...newParameters, codeRegion: zoneParam };
     }
     return newParameters;
+  }
+
+  private ajouteTri(query: any, orderBy?: string, order?: "ASC" | "DESC", terme?: string) {
+    if (orderBy && order) {
+      query.orderBy(orderBy, order);
+    } else if (terme) {
+      query.orderBy("is_exact", "DESC")
+        .addOrderBy("is_exact_dep", "DESC")
+        .addOrderBy("is_exact_com", "DESC")
+        .addOrderBy("rank", "DESC")
+        .addOrderBy("type", "ASC")
+        .addOrderBy("numero_finess", "ASC");
+    } else {
+      query.orderBy("type", "ASC")
+        .addOrderBy("numero_finess", "ASC");
+    }
+  }
+
+  private async ajouteFiltreCapaciteSMS(query: any, capaciteSMS: any[], conditions: string[], parameters: any) {
+
+    const subQuery = (await this.orm)
+      .createQueryBuilder()
+      .select("ams.numero_finess_etablissement_territorial", "numero_finess_etablissement_territorial")
+      .addSelect("SUM(ams.capacite_installee_totale)", "capacite_installee_totale")
+      .from(AutorisationMédicoSocialModel, "ams")
+      .groupBy("ams.numero_finess_etablissement_territorial");
+
+    query.innerJoin(`(${subQuery.getQuery()})`, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
+      .innerJoin(ÉtablissementTerritorialIdentitéModel, "etablissementMS", "capacite_sms.numero_finess_etablissement_territorial = etablissementMS.numéroFinessÉtablissementTerritorial")
+      .where("etablissementMS.domaine = 'Médico-social' ");
+
+    const caps = capaciteSMS.map(c => {
+      const logique = this.construireLaLogiqueCapaciteEtablissements(c);
+      Object.assign(parameters, logique.parameters);
+      return logique.capaciteSMSConditions;
+    });
+
+    conditions.push(caps.length === 1 ? caps[0] : `(${caps.join(" OR ")})`);
+    if (conditions.length > 0) query.where(conditions.join(" AND "), parameters);
+    return query;
+  }
+
+  private async ajouteFiltreActiviteSAN(query: any, activiteSAN: ActiviteSAN[], conditions: string[], parameters: any) {
+    const subQuery = (await this.orm)
+      .createQueryBuilder()
+      .select("as.numero_finess_etablissement_territorial", "numero_finess_etablissement_territorial")
+      .addSelect("COALESCE(nombre_sejours_partiels_medecine, 0) + COALESCE(nombre_sejours_partiels_obstetrique, 0) + COALESCE(nombre_sejours_partiels_chirurgie, 0) + COALESCE(nombre_sejours_complets_medecine, 0) + COALESCE(nombre_sejours_complets_obstetrique, 0) + COALESCE(nombre_sejours_complets_chirurgie, 0)", "activite_mco")
+      .addSelect("COALESCE(nombre_journees_complete_psy, 0) +  COALESCE(nombre_journées_partielles_psy, 0)", "activite_psy")
+      .addSelect("COALESCE(nombre_journees_completes_ssr, 0) +  COALESCE(nombre_journees_partiels_ssr, 0)", "activite_ssr")
+      .addSelect("as.nombre_journees_usld", "activite_usld")
+      .addSelect("as.nombre_sejours_partiels_medecine", "nombre_sejours_partiels_medecine")
+      .addSelect("as.nombre_sejours_partiels_obstetrique", "nombre_sejours_partiels_obstetrique")
+      .addSelect("as.nombre_sejours_partiels_chirurgie", "nombre_sejours_partiels_chirurgie")
+      .addSelect("as.nombre_sejours_complets_medecine", "nombre_sejours_complets_medecine")
+      .addSelect("as.nombre_sejours_complets_obstetrique", "nombre_sejours_complets_obstetrique")
+      .addSelect("as.nombre_sejours_complets_chirurgie", "nombre_sejours_complets_chirurgie")
+      .addSelect("as.nombre_journees_complete_psy", "nombre_journees_complete_psy")
+      .addSelect("as.nombre_journées_partielles_psy", "nombre_journées_partielles_psy")
+      .addSelect("as.nombre_journees_completes_ssr", "nombre_journees_completes_ssr")
+      .addSelect("as.nombre_journees_partiels_ssr", "nombre_journees_partiels_ssr")
+      .from(ActivitéSanitaireModel, "as")
+      .where("as.annee = (SELECT MAX(annee) FROM activite_sanitaire)")
+
+    query.innerJoin(`(${subQuery.getQuery()})`, "activite_san", "recherche.numero_finess = activite_san.numero_finess_etablissement_territorial")
+      .innerJoin(ÉtablissementTerritorialIdentitéModel, "etablissement", "activite_san.numero_finess_etablissement_territorial = etablissement.numéroFinessÉtablissementTerritorial");
+    const { activitesSanConditions } = this.construisLesConditionsActiviteSan(activiteSAN, parameters)
+    conditions.push(activitesSanConditions);
+    if (conditions.length > 0) query.where(conditions.join(" AND "), parameters);
+    return query;
+  }
+
+  private construisLesConditionsActiviteSan(activiteSan: ActiviteSAN[], parameters: { [key: string]: any }): any {
+    const conditions: string[] = [];
+
+    const nullConditionMco = " AND NOT (nombre_sejours_partiels_medecine IS NULL AND nombre_sejours_partiels_obstetrique IS NULL AND nombre_sejours_partiels_chirurgie IS NULL AND nombre_sejours_complets_medecine IS NULL AND nombre_sejours_complets_obstetrique IS NULL AND nombre_sejours_complets_chirurgie IS NULL)";
+    const nullConditionPsy = " AND NOT (nombre_journees_complete_psy IS NULL AND nombre_journées_partielles_psy IS NULL)";
+    const nullConditionSsr = " AND NOT (nombre_journees_completes_ssr IS NULL AND nombre_journees_partiels_ssr IS NULL)";
+    activiteSan.forEach((activite) => {
+      switch (activite.classification) {
+        case "mco":
+          conditions.push(this.construisConditionActiviteSan(
+            'activite_san.activite_mco',
+            activite.ranges,
+            parameters,
+            nullConditionMco
+          ).conditions);
+          break;
+        case "psy":
+          conditions.push(this.construisConditionActiviteSan(
+            'activite_san.activite_psy',
+            activite.ranges,
+            parameters,
+            nullConditionPsy
+          ).conditions);
+          break;
+        case "ssr":
+          conditions.push(this.construisConditionActiviteSan(
+            'activite_san.activite_ssr',
+            activite.ranges,
+            parameters,
+            nullConditionSsr
+          ).conditions);
+          break;
+        default:
+          conditions.push(this.construisConditionActiviteSan(
+            'activite_san.activite_usld',
+            activite.ranges,
+            parameters,
+            ''
+          ).conditions);
+      }
+    });
+
+    let activitesSanConditions = "";
+    if (conditions.length > 1) {
+      activitesSanConditions = `(${conditions.join(" OR ")})`;
+    } else if (conditions.length === 1) {
+      activitesSanConditions = conditions[0];
+    }
+    return { activitesSanConditions: activitesSanConditions };
+  }
+
+  private construisConditionActiviteSan(classification: string, ranges: string[], parameters: { [key: string]: any }, nullCondition: string): any {
+    const conditions: string[] = [];
+    let activiteSanConditions = "";
+    ranges.forEach((range, index) => {
+      if (range.includes(">")) {
+        conditions.push(`${classification} > :range${classification}${index}`);
+        parameters[`range${classification}${index}`] = range.substring(1);
+      } else {
+        const limits = range.split(",");
+        conditions.push(
+          `${classification} BETWEEN :min${classification}${index} AND :max${classification}${index}`
+        );
+        parameters[`min${classification}${index}`] = limits[0];
+        parameters[`max${classification}${index}`] = limits[1];
+      }
+    });
+    if (ranges.length === 1) activiteSanConditions = conditions[0] + nullCondition;
+    else {
+      activiteSanConditions = "(" + conditions.join(" OR ") + nullCondition + ")";
+    }
+    return { conditions: activiteSanConditions, parameters };
+  }
+
+  private ajouteFiltreCategories(categories: string[], conditions: string[], parameters: any) {
+    conditions.push("recherche.categorie IN (:...categories)");
+    return { ...parameters, categories: categories };
   }
 
   async rechercheParNumeroFiness(finessNumber: string[]): Promise<Résultat[]> {
@@ -373,10 +654,10 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const conditions: string[] = [];
     const parameters: { [key: string]: any } = {};
     if (capacite.classification === "publics_en_situation_de_handicap") {
-      conditions.push(`etablissement.cat_etablissement IN (:...listCapaciteHandicape)`);
+      conditions.push(`etablissementMS.cat_etablissement IN (:...listCapaciteHandicape)`);
       parameters[`listCapaciteHandicape`] = listCapaciteHandicape;
     } else if (capacite.classification === "personnes_agees") {
-      conditions.push(`etablissement.cat_etablissement IN (:...listCapaciteAgee)`);
+      conditions.push(`etablissementMS.cat_etablissement IN (:...listCapaciteAgee)`);
       parameters[`listCapaciteAgee`] = listCapaciteAgee;
     }
 

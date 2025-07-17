@@ -193,7 +193,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="1,50"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-1">1-50</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-1">1 - 50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -207,7 +207,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="51,100"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-2">51-100</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-2">51 - 100</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -221,7 +221,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="101,150"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-3">101-150</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-3">101 - 150</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -235,7 +235,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="151,199"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-4">151-199</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-4">151 - 199</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-4"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -280,7 +280,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="1,30"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-1">1-30</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-1">1 - 30</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -294,7 +294,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="31,50"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-2">31-50</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-2">31 - 50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -308,7 +308,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="51,100"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-3">51-100</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-3">51 - 100</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -354,7 +354,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="1,44"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1-44</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1 - 44</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -368,7 +368,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="45,80"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-2">45-80</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-2">45 - 80</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -382,7 +382,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="81,120"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-3">81-120</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-3">81 - 120</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -396,7 +396,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           type="checkbox"
                           value="121,199"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-4">121-199</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-4">121 - 199</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-4"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>

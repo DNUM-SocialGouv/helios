@@ -84,7 +84,10 @@ export interface Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string;
   readonly ZONE_GEOGRAPHIQUE: string;
   readonly STRUCTURE: string;
+  readonly CATEGORIES_FINESS: string;
+  readonly CATEGORIES_FINESS_TITLE: string;
   readonly CAPACITE: string;
+  readonly ACTIVITE_SAN: string;
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
@@ -125,6 +128,8 @@ export interface Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
+  readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
+  readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string;
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
@@ -542,6 +547,11 @@ export interface Wording {
   // Bouton de selection de tous les rechercheNombreRésultats
   readonly TOUT_SELECTIONNER: string;
   readonly TOUT_DESELECTIONNER: string;
+  // Filtre Activité SAN
+  readonly FA_MCO: string;
+  readonly FA_PSY: string;
+  readonly FA_SSR: string;
+  readonly FA_USLD: string;
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
@@ -555,4 +565,5 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 
+import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialRattaché } from "../../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { Wording } from "../../../configuration/wording/Wording";
-import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 
 export class EtablissementsTerritoriauxRattachésViewModel {
   private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
@@ -67,8 +67,16 @@ export class EtablissementsTerritoriauxRattachésViewModel {
 
   private metLeFocusSurLePremierETSupplémentaire() {
     this.plusDETSanitaire
-      ? (this.établissementSanitaires[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true)
-      : (this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true);
+      ? (this.metLeFocusSurSanitaire())
+      : (this.metLeFocusSurMedicauxSociaux());
+  }
+
+  private metLeFocusSurSanitaire() {
+    this.établissementSanitaires[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true;
+  }
+
+  private metLeFocusSurMedicauxSociaux() {
+    this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true;
   }
 
   private établissementsPaginés(établissements: ÉtablissementTerritorialRattachéViewModel[]) {

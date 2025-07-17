@@ -1,7 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 
-import { Wording } from "../configuration/wording/Wording";
 import { textMatch } from "./testHelper";
+import { Wording } from "../configuration/wording/Wording";
 
 /*
  * Class utilitaire pour faciliter les tests des blocs de graphiques avec React Testing Library

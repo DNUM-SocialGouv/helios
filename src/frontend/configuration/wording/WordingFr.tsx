@@ -102,7 +102,10 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
   readonly STRUCTURE: string = "Structure";
-  readonly CAPACITE: string = "Capacité MS";
+  readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
+  readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
+  readonly CAPACITE: string = "Capacité (MS)";
+  readonly ACTIVITE_SAN: string = "Activité (SAN)";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
   readonly TOUT_EFFACER: string = "Tout effacer";
 
@@ -148,6 +151,8 @@ export class WordingFr implements Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
+  readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
+  readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string = "1 à 5";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
@@ -626,6 +631,13 @@ export class WordingFr implements Wording {
   // Bouton de selection de tous les rechercheNombreRésultats
   readonly TOUT_SELECTIONNER: string = "Tout sélectionner";
   readonly TOUT_DESELECTIONNER: string = "Tout désélectionner";
+  // Filtre Activité SAN
+  readonly FA_MCO: string = "Médecine Chirurgie Obstétrique";
+  readonly FA_PSY: string = "Psychiatrie";
+  readonly FA_SSR: string = "Soins de Suite et de Réadaptation";
+  readonly FA_USLD: string = "Unité de Soins Longue Durée";
+  readonly FA_SEJOURS_ANN: string = "(nombre de séjours - annuel)";
+  readonly FA_JOURS_ANN: string = "(nombre de jours - annuel)";
   //Comparaison
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
@@ -642,5 +654,7 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "L’indicateur Nombre de journées en USLD est disponible, réinitialisation des champs de recherche et sélection de l’ensemble des résultats de la recherche avancée sont accessibles.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche avancée évolue!";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = "Ajout du filtre Catégorie FINESS et du filtre Activité sanitaire.";
+
 }

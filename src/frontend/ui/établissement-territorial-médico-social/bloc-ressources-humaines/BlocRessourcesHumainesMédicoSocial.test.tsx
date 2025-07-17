@@ -1,10 +1,10 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
+import { BlocRessourcesHumainesMédicoSocial } from "./BlocRessourcesHumainesMédicoSocial";
+import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
-import { BlocRessourcesHumainesMédicoSocial } from "./BlocRessourcesHumainesMédicoSocial";
-import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 
 const { wording } = fakeFrontDependencies;
 

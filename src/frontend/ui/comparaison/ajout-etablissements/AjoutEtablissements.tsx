@@ -24,6 +24,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [prevPage, setPrevPage] = useState<number>(1);
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
+  const [isChangedActivite, setIsChangedActivite] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
 
@@ -56,12 +57,13 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
 
   // detect filtre(s) changes to update results
   useEffect(() => {
-    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme) {
+    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite) {
       comparaisonContext?.setPage(1);
       setPrevPage(1);
       if (isChangedZG || isChangedCapacite) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
+        setIsChangedActivite(false);
         setReload(true);
       }
     }
@@ -128,11 +130,14 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           </div>
           <div id="modal-body-composents" style={{ marginTop: "10px" }}>
             <RechercheAvanceeFormulaire
+              categoriesViewModel={[]}
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
               rechercheOnChange={rechercheOnChange}
+              setIsChangedActivite={setIsChangedActivite}
               setIsChangedCapacite={setIsChangedCapacite}
               setIsChangedZG={setIsChangedZG}
+              setSelectedRows={() => { }}
             ></RechercheAvanceeFormulaire>
             {listData && listData?.length > 0 && (
               <ListEtablissements

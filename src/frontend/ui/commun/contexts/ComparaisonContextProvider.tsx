@@ -14,11 +14,18 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
   const [zoneGeoD, setZoneGeoD] = useState<string>("");
   const [zoneGeoType, setZoneGeoType] = useState<string>("");
   const [zoneGeoLabel, setZoneGeoLabel] = useState<string>("");
-  const [typeStructure, setTypeStructure] = useState<string>("");
+  const [typeStructure, setTypeStructure] = useState<string[]>([]);
   const [statutJuridiqueStructure, setStatutJuridiqueStructure] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categoriesDomaines, setCategoriesDomaines] = useState<string[]>([]);
+  const [categoriesLibellesCourt, setCategoriesLibellesCourt] = useState<string[]>([]);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<string[]>([]);
   const [capaciteHandicap, setCapaciteHandicap] = useState<string[]>([]);
   const [capaciteAgees, setCapaciteAgees] = useState<string[]>([]);
+  const [activiteMco, setActiviteMco] = useState<string[]>([]);
+  const [activitePsy, setActivitePsy] = useState<string[]>([]);
+  const [activiteSsr, setActiviteSsr] = useState<string[]>([]);
+  const [activiteUsld, setActiviteUsld] = useState<string[]>([]);
   const [order, setOrder] = useState<string>("");
   const [orderBy, setOrderBy] = useState<string>("");
 
@@ -41,6 +48,12 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
         setZoneGeoLabel,
         typeStructure,
         setTypeStructure,
+        categories,
+        setCategories,
+        categoriesDomaines,
+        setCategoriesDomaines,
+        categoriesLibellesCourt,
+        setCategoriesLibellesCourt,
         statutJuridiqueStructure,
         setStatutJuridiqueStructure,
         capaciteMedicoSociaux,
@@ -49,6 +62,14 @@ export const ComparaisonContextProvider = ({ children }: ComparaisonProviderProp
         setCapaciteHandicap,
         capaciteAgees,
         setCapaciteAgees,
+        activiteMco,
+        setActiviteMco,
+        activitePsy,
+        setActivitePsy,
+        activiteSsr,
+        setActiviteSsr,
+        activiteUsld,
+        setActiviteUsld,
         order,
         setOrder,
         orderBy,

@@ -1,9 +1,9 @@
 import { screen } from "@testing-library/react";
 
-import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
-import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { BlocBudgetFinance } from "./BlocBudgetFinance";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
 

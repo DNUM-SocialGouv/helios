@@ -66,7 +66,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
   return (
     <div className={styles["button-position"]}>
-      <button className={displayActions ? "fr-btn fr-btn--icon-right fr-icon-arrow-down-s-line fr-btn--secondary" : "fr-btn fr-btn--icon-right fr-icon-arrow-up-s-line fr-btn--secondary"} onClick={() => setDisplayActions(!displayActions)} ref={buttonRef}> {wording.ACTIONS} </button>
+      <button className={displayActions ? "fr-btn fr-btn--icon-right fr-icon-arrow-down-s-line fr-btn--secondary fr-mt-1w" : "fr-btn fr-btn--icon-right fr-icon-arrow-up-s-line fr-btn--secondary fr-mt-1w"} onClick={() => setDisplayActions(!displayActions)} ref={buttonRef}> {wording.ACTIONS} </button>
       {displayActions &&
         <ul className={styles["menu"]}>
           {router.pathname !== "/comparaison" ?

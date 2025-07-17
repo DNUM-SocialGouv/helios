@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Recherche.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 
 

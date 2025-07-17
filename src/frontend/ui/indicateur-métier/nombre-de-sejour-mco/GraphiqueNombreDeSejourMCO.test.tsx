@@ -1,12 +1,12 @@
 import { within } from "@testing-library/react";
 
+import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
+import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
+import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
-import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
-import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 
 const { wording } = fakeFrontDependencies;
 const activitesMCO: ActivitéMCO[] = [

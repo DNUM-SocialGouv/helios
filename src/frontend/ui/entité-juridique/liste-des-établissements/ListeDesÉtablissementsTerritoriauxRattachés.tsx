@@ -1,14 +1,14 @@
 import { useState } from "react";
 
+import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
+import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
+import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
 import { Badge } from "../../commun/Badge/Badge";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { ListItem } from "../../commun/ListItem/ListItem";
-import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
-import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
-import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 
 type ETRattachésProps = Readonly<{
   ETRattachés: EtablissementsTerritoriauxRattachésViewModel;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Emoji from 'react-emojis';
 
 import styles from "./NewFeaturesNotice.module.css";
 import { useDependencies } from "../contexts/useDependencies";
@@ -17,6 +18,9 @@ export const NewFeaturesNotice = () => {
                                 <span className={styles["notice-badge"] + " fr-badge fr-badge--new fr-badge--no-icon"}>{wording.NOUVEAU}</span>
                             </span>
                             <span className="fr-notice__desc">{wording.NOUVELLES_FONCTIONNALITÉS_TEXT}</span>
+                            <Emoji emoji="partying-face" />
+                            <span className="fr-notice__desc">{wording.NOUVELLES_FONCTIONNALITÉS_TEXT_2}</span>
+
                             <a
                                 href="https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x"
                                 rel="external noopener noreferrer"

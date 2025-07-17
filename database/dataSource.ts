@@ -70,6 +70,9 @@ import { AjoutListEtEtsList1736865415982 } from "./migrations/1736865415982-Ajou
 import { MettreAJourTableActiviteMedicoSocial1741861364859 } from "./migrations/1741861364859-MettreAJourTableActiviteMedicoSocial";
 import { ClefEtrangereListEts1743596937227 } from "./migrations/1743596937227-ClefEtrangereListEts";
 import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrations/1745321952709-AjoutNombreJourneeUSLDActivitesSanitaires";
+import { ReferentielCategoriesFiness1747831401347 } from "./migrations/1747831401347-ReferentielCategoriesFiness";
+import { AjoutCategorieRecherche1748009262073 } from "./migrations/1748009262073-AjoutCategorieRecherche";
+import { AjoutLaColonneDomaineAuReferentielCategories1748332500947 } from "./migrations/1748332500947-ajoutLaColonneDomaineAuReferentielCategories";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -93,6 +96,7 @@ import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMé
 import { BudgetEtFinancesSanitaireModel } from "./models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "./models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
+import { CategoriesFinessModel } from "./models/CategoriesFinessModel";
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
@@ -158,6 +162,7 @@ const datasource = new DataSource({
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
+    CategoriesFinessModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -239,7 +244,10 @@ const datasource = new DataSource({
     AjoutDesOccupationsDansLesProfils1799478704013,
     ClefEtrangereListEts1743596937227,
     AjoutNombreJourneeUSLDActivitesSanitaires1745321952709,
-    AjoutLesJourneesUsldDansLesProfils1799501916707
+    AjoutLesJourneesUsldDansLesProfils1799501916707,
+    ReferentielCategoriesFiness1747831401347,
+    AjoutCategorieRecherche1748009262073,
+    AjoutLaColonneDomaineAuReferentielCategories1748332500947
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

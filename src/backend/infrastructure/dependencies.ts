@@ -32,6 +32,8 @@ import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmU
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
 import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
+import { CategoriesFinessLoader } from "../métier/gateways/CategoriesFinessLoader";
+import { TypeOrmCategoriesFinessLoader } from "./gateways/categories-finess-loader/TypeOrmCategoriesFinessLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -52,6 +54,7 @@ export type Dependencies = Readonly<{
   comparaisonLoader: ComparaisonLoader;
   userListLoader: TypeOrmUserListLoader;
   userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
+  categoriesFinessLoader: CategoriesFinessLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -85,6 +88,7 @@ const createDependencies = (): Dependencies => {
     comparaisonLoader: new TypeOrmComparaisonLoader(orm),
     userListLoader: new TypeOrmUserListLoader(orm),
     userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
+    categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm)
   };
 };
 

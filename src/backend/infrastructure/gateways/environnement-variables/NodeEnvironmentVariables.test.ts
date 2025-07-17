@@ -1,5 +1,5 @@
-import { fakeLogger } from "../../../testHelper";
 import { NodeEnvironmentVariables } from "./NodeEnvironmentVariables";
+import { fakeLogger } from "../../../testHelper";
 
 describe("Gestion des variables d’environnement", () => {
   it("retourne la valeur de DATABASE_URL du .env", () => {

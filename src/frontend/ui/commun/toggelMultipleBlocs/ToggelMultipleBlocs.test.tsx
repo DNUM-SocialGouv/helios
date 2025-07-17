@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 
-import { fakeFrontDependencies } from "../../../test-helpers/testHelper";
 import { ToggelMultipleBlocs } from "./ToggelMultipleBlocs";
+import { fakeFrontDependencies } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
 

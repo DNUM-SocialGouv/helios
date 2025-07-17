@@ -1,6 +1,6 @@
 /* Les erreurs remontees sont lies a l’attribut « aria-sort » sur les bouton de tri. Cet attribut est impose par le dsfr pour changer l’icon du bouton */
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import styles from "./Table.module.css";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
@@ -122,13 +122,13 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     );
 };
 
-const construisLeLien = (type: string, finess: string): string => {
+const construisLeLien = (type: string, finess: string, isSimpleSearch: boolean | undefined, searchItem: string): string => {
   if (type === "Médico-social") {
-    return "/etablissement-territorial-medico-social/" + finess;
+    return "/etablissement-territorial-medico-social/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   } else if (type === "Sanitaire") {
-    return "/etablissement-territorial-sanitaire/" + finess;
+    return "/etablissement-territorial-sanitaire/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   }
-  return "/entite-juridique/" + finess;
+  return "/entite-juridique/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
 };
 
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter, isSimpleSearchTable }: TableHeaderProps) => {
@@ -164,6 +164,10 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 
 
 const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
+  const [searchItem, setSearchItem] = useState("");
+  useEffect(() => {
+    setSearchItem(localStorage.getItem('searchItem') ?? "")
+  }, []);
 
   const couleurLogo = "#000000"; // Logos en noir
   return (
@@ -208,7 +212,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"
-                  href={construisLeLien(row["type"], row["numéroFiness"])}
+                  href={construisLeLien(row["type"], row["numéroFiness"], isSimpleSearchTable, searchItem)}
                   rel="noreferrer"
                   target="_blank"
                 >

@@ -6,7 +6,7 @@ from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mis
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_sql import (
     récupère_les_activités_sanitaires_mensuels_de_la_base,
-    récupère_les_numéros_finess_des_établissements_de_la_base,
+    recupere_les_numeros_finess_des_etablissements_de_la_base,
 )
 from datacrawler.load.nom_des_tables import TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ
 from datacrawler.transform.entite_juridique.bloc_activités.agrège_les_activités_dans_les_entites_juridiques import (
@@ -16,7 +16,7 @@ from datacrawler.transform.entite_juridique.bloc_activités.agrège_les_activit�
 
 def import_activites_mensuel_entite_juridique(base_de_données: Engine, logger: Logger) -> None:
     activités_sanitaires_mensuels = récupère_les_activités_sanitaires_mensuels_de_la_base(base_de_données)
-    finess = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données, entite_juridique=True)
+    finess = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données, entite_juridique=True)
     activités_avec_entités_juridiques = pd.merge(activités_sanitaires_mensuels, finess, on="numero_finess_etablissement_territorial")
 
     agrégation_activités_mensuel = agrège_les_activités_mensuels_dans_les_entites_juridiques(activités_avec_entités_juridiques)

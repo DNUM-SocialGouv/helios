@@ -135,7 +135,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
         if (!annees.includes(event.annee)) annees.push(event.annee)
       }
     }
-    return annees.sort();
+    return annees.toSorted((anneeA, anneeB) => anneeA - anneeB);
   }
 
 }

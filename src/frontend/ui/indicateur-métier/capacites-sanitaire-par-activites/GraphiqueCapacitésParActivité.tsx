@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammesHorizontaux } from "../../commun/Graphique/HistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
-import { GraphiqueCapacitésParActivitéViewModel } from "./GraphiqueCapacitésParActivitéViewModel";
 
 type GraphiqueCapacitésParActivitéProps = Readonly<{
   graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;

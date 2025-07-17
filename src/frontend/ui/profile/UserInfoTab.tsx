@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./Profile.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 
 export const UserInfoTab = () => {

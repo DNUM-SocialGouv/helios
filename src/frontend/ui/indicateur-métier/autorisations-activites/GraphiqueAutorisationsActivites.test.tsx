@@ -1,6 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
+import { GraphiqueAutorisationsActivites } from "./GraphiqueAutorisationsActivites";
 import {
   AutorisationsActivités,
   AutresActivités,
@@ -10,7 +11,6 @@ import {
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "../../entité-juridique/bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
-import { GraphiqueAutorisationsActivites } from "./GraphiqueAutorisationsActivites";
 
 const { wording } = fakeFrontDependencies;
 

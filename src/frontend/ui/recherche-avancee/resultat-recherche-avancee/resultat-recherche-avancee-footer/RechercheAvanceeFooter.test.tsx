@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import PaginationBtn from '../../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
 import styles from './RechercheAvanceeFooter.module.css';
 import { TableFooter } from './TableFooter';
+import PaginationBtn from '../../../parametrage-utilisateurs/UsersListPage/Pagination/PaginationBtn/PaginationBtn';
 
 describe('PaginationBtn Component', () => {
     const setPage = jest.fn();

@@ -1,10 +1,12 @@
 import { Repository } from "typeorm";
 
 import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
+import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
+import { ÉtablissementTerritorialActivitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialActivitéModelTestBuilder";
 import { ÉtablissementTerritorialAutorisationModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialAutorisationModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { ParametreDeRechercheAvancee } from "../../../métier/entities/ParametresDeRechercheAvancee";
@@ -15,6 +17,8 @@ describe("La recherche avancée d’entités et d’établissements", () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let autorisationMédicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
+  let activiteSanitaireModelRepository: Repository<ActivitéSanitaireModel>;
+
 
   const premièrePage = 1;
 
@@ -28,6 +32,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     établissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     autorisationMédicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
+    activiteSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
     await clearAllTables(await orm);
     await entitéJuridiqueRepository.insert([
       EntitéJuridiqueModelTestBuilder.crée({
@@ -103,7 +108,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "", statutJuridique: [], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: [], statutJuridique: [], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
 
@@ -116,7 +121,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: departementRecherche, zoneD: "", typeZone: "D", type: "", statutJuridique: [], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: departementRecherche, zoneD: "", typeZone: "D", type: [], statutJuridique: [], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
 
@@ -129,7 +134,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: regionRecherche, zoneD: "", typeZone: "R", type: "", statutJuridique: [], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: regionRecherche, zoneD: "", typeZone: "R", type: [], statutJuridique: [], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
 
@@ -137,12 +142,25 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     expect(rechercheAvancee.nombreDeRésultats).toBe("3");
   });
 
+  it("par terme de recherche, région et catégories", async () => {
+    // GIVEN
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+    // WHEN
+    const params = { terme: termeRecherche, zone: regionRecherche, zoneD: "", typeZone: "R", type: [], statutJuridique: [], categories: ['189', '500'], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
+
+
+    //THEN
+    expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+  });
+
   it("par terme de recherche, commune et structure", async () => {
     // GIVEN
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "Médico-social", statutJuridique: [], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: ["Médico-social"], statutJuridique: [], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
@@ -154,7 +172,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "Médico-social", statutJuridique: [], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: ["Médico-social"], statutJuridique: [], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
 
@@ -167,7 +185,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "Entité juridique", statutJuridique: ["prive_lucratif"], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: ["Entité juridique"], statutJuridique: ["prive_lucratif"], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
@@ -179,7 +197,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const params = { terme: termeRecherche, zone: "", zoneD: "", typeZone: "", type: "Entité juridique", statutJuridique: ["prive_lucratif"], capaciteSMS: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: "", zoneD: "", typeZone: "", type: ["Entité juridique"], statutJuridique: ["prive_lucratif"], categories: [], capaciteSMS: [], activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
@@ -213,7 +231,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       { classification: "publics_en_situation_de_handicap", ranges: ["1,30", ">100"] },
       { classification: "non_classifie", ranges: ["1,50", ">199"] },
     ];
-    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "", statutJuridique: [], capaciteSMS, orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: [], statutJuridique: [], categories: [], capaciteSMS, activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
@@ -229,10 +247,64 @@ describe("La recherche avancée d’entités et d’établissements", () => {
       { classification: "publics_en_situation_de_handicap", ranges: ["1,30", ">100"] },
       { classification: "non_classifie", ranges: ["1,50", ">199"] },
     ];
-    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: "", statutJuridique: [], capaciteSMS, orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const params = { terme: termeRecherche, zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: [], statutJuridique: [], categories: [], capaciteSMS, activiteSAN: [], orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
     expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+  });
+
+  it("par commune, structure  et activité", async () => {
+    // GIVEN
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+    const activiteSan = [
+      { classification: "psy", ranges: ["30001,50000", "50001,80000"] },
+      { classification: "usld", ranges: ["33000"] },
+    ];
+
+    await activiteSanitaireModelRepository.insert([
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+        année: 2023,
+        nombreJournéesCompletePsy: 120,
+        nombreJournéesPartiellesPsy: 30000,
+        numéroFinessÉtablissementTerritorial: "199999999"
+      }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({
+        année: 2023,
+        nombreJournéesCompletePsy: 15,
+        nombreJournéesPartiellesPsy: 50000,
+        nombreJourneesUsld: 34000,
+        numéroFinessÉtablissementTerritorial: "100000001"
+      }),
+    ]);
+
+    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: ['Sanitaire', 'Entité juridique'], statutJuridique: ['public', 'prive_lucratif', 'prive'], categories: [], capaciteSMS: [], activiteSAN: activiteSan, orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
+
+    //THEN
+    expect(rechercheAvancee.nombreDeRésultats).toBe(3);
+  });
+
+  it("par structure, capacité  et activité", async () => {
+    // GIVEN
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+    // WHEN
+    const capaciteSMS = [
+      { classification: "publics_en_situation_de_handicap", ranges: ["1,30", ">100"] },
+      { classification: "non_classifie", ranges: ["1,50", ">199"] },
+    ];
+
+    const activiteSan = [
+      { classification: "psy", ranges: ["30001,50000", "50001,80000"] },
+      { classification: "usld", ranges: ["33000"] },
+    ];
+
+    const params = { terme: "", zone: communeRecherche, zoneD: departementRecherche, typeZone: "C", type: ['Sanitaire', 'Médico-social'], statutJuridique: [], categories: [], capaciteSMS, activiteSAN: activiteSan, orderBy: "", order: "ASC", page: premièrePage, forExport: false } as ParametreDeRechercheAvancee;
+    const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
+
+    //THEN
+    expect(rechercheAvancee.nombreDeRésultats).toBe(4);
   });
 });

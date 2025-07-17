@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useMemo, useState } from "react";
 
+import styles from "./evenementsIndesirables.module.css";
 import { EvenementsIndesirables } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
@@ -7,7 +8,6 @@ import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../.
 import { StringFormater } from "../../../commun/StringFormater";
 import { Tag, TagCliquable } from "../../../commun/Tag";
 import { TagWithLink } from "../../../commun/Tag/TagWithLink";
-import styles from "./evenementsIndesirables.module.css";
 
 export type TagMultiNiveauxProps = {
   evenementsIndesirablesAssociesAuxSoins: EvenementsIndesirables;
@@ -38,7 +38,8 @@ type EventByNature = {
 
 const groupByEventsNature = (events: any[]): any => {
   return events.reduce((grouped, event) => {
-    (grouped[event["nature"]] = grouped[event["nature"]] || []).push(event);
+    grouped[event["nature"]] = grouped[event["nature"]] || [];
+    grouped[event["nature"]].push(event);
     return grouped;
   }, {});
 };

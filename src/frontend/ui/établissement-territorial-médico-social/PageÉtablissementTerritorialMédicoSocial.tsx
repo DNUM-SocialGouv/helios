@@ -1,9 +1,8 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect, useContext } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
-import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -27,7 +26,6 @@ type ÉtablissementTerritorialProps = Readonly<{
 
 export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel, établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -67,10 +65,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       onBeforeGetContentResolve.current();
     }
   }, [onBeforeGetContentResolve.current]);
-  useEffect(() => {
-    if (backToSearchContext)
-      backToSearchContext.setIsInfoPage(true);
-  }, [backToSearchContext])
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
 

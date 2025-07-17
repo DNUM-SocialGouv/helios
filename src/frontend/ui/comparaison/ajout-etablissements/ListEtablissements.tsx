@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 
+import { checkFillSvg } from "../../commun/ListeRiche/checkFillSvg";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg as LogoÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import styles from "../Comparaison.module.css";
-import { checkFillSvg } from "../model/data";
 
 type listEtablissementsProps = {
   resultatRechercheList?: RechercheViewModel[];

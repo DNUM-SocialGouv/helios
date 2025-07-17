@@ -1,11 +1,11 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
 import { ChangeEvent, MouseEvent } from "react";
 
+import { RechercheViewModel } from "./RechercheViewModel";
+import { TableauEtablissements } from "./TableauEtablissements";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { GrilleEtablissements } from "../commun/GrilleEtablissements/GrilleEtablissements";
 import { BoutonActif, SelecteurTableauVignette } from "../commun/SelecteurTableauVignette/SelecteurTableauVignette";
-import { RechercheViewModel } from "./RechercheViewModel";
-import { TableauEtablissements } from "./TableauEtablissements";
 
 type RésultatsDeRechercheProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
@@ -65,7 +65,7 @@ export const RésultatsDeRecherche = ({
           {titleHead}
           {displayTable
             ? <TableauEtablissements displayTable={displayTable} nombreRésultats={nombreRésultats} rechercher={rechercher} résultats={résultats} terme={termeFixe} />
-            : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés} résultats={résultats} />
+            : <GrilleEtablissements chargeLesRésultatsSuivants={chargeLesRésultatsSuivants} estCeQueLesRésultatsSontTousAffichés={estCeQueLesRésultatsSontTousAffichés} isSimpleSearch={true} résultats={résultats} />
           }
         </>
       }

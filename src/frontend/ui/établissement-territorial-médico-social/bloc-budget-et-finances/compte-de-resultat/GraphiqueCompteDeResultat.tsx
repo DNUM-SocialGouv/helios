@@ -1,10 +1,10 @@
 import { useState } from "react";
 
+import { CompteDeResultatViewModel } from "./CompteDeResultatViewModel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammesHorizontaux } from "../../../commun/Graphique/HistogrammesHorizontaux";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuCompteDeRésultat } from "../../InfoBulle/ContenuCompteDeRésultat";
-import { CompteDeResultatViewModel } from "./CompteDeResultatViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
   compteDeRésultatViewModel: CompteDeResultatViewModel;

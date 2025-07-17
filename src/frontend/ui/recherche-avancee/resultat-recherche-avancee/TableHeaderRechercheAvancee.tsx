@@ -3,17 +3,19 @@ import { Dispatch, SetStateAction } from "react";
 import ExportExcelRechercheAvancee from "./ExportExcelRechercheAvancee";
 import ToutSelectionnerRechercheAvancee from "./ToutSelectionnerRechercheAvancee";
 import { ListActionsButton } from "../../liste/ListActionsButton";
+import { CategoriesFinessViewModel } from "../model/CategoriesFinessViewModel";
 
 type TableHeaderRechercheAvanceeProps = Readonly<{
   selectedRows: Map<string, string>;
   onAddToFavorisSuccess?: (ListName: string) => void;
   setSelectedRows: Dispatch<SetStateAction<Readonly<Map<string, string>>>>;
   isAllResultsSelected: () => boolean;
+  categories: CategoriesFinessViewModel[];
 }>;
 
-export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSuccess, isAllResultsSelected, setSelectedRows }: TableHeaderRechercheAvanceeProps) => {
+export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSuccess, isAllResultsSelected, setSelectedRows, categories }: TableHeaderRechercheAvanceeProps) => {
 
-  const exportButton = <ExportExcelRechercheAvancee disabled={false} />;
+  const exportButton = <ExportExcelRechercheAvancee categories={categories} disabled={false} />;
   const fullSelectButton = <ToutSelectionnerRechercheAvancee isAllResultsSelected={isAllResultsSelected} setSelectedRows={setSelectedRows} />
 
   return (

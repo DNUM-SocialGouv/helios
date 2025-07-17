@@ -1,8 +1,8 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
+import { BlocAutorisationEtCapacitéMédicoSocial } from "./BlocAutorisationEtCapacitéMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
-import { BlocAutorisationEtCapacitéMédicoSocial } from "./BlocAutorisationEtCapacitéMédicoSocial";
 
 const { paths, wording } = fakeFrontDependencies;
 

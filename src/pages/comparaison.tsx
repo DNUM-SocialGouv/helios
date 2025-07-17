@@ -2,12 +2,10 @@
 
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { useContext, useEffect } from "react";
 
 import { getDatesMiseAjourSourcesEndpoint } from "../backend/infrastructure/controllers/getDatesMiseAjourSources";
 import { dependencies } from "../backend/infrastructure/dependencies";
 import { DatesMisAjourSources } from "../backend/métier/entities/ResultatDeComparaison";
-import { BackToSearchContext, BackToSearchContextValue } from "../frontend/ui/commun/contexts/BackToSearchContext";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { ComparaisonPage } from "../frontend/ui/comparaison/ComparaisonPage";
@@ -17,14 +15,6 @@ type RouterProps = Readonly<{ datesMisAjour: DatesMisAjourSources, codeProfiles:
 
 export default function Router({ codeProfiles, codeRegion, datesMisAjour }: RouterProps) {
   const { wording } = useDependencies();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
-
-  useEffect(() => {
-    if (backToSearchContext) {
-      backToSearchContext.setIsInfoPage(false);
-      localStorage.clear();
-    }
-  }, [backToSearchContext])
 
   useBreadcrumb([
     {

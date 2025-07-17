@@ -2,8 +2,8 @@ import { fireEvent, screen, within } from "@testing-library/react";
 import { SessionProvider } from 'next-auth/react';
 import mockRouter from "next-router-mock";
 
-import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { Header } from "./Header";
+import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;

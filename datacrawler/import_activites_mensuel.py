@@ -7,7 +7,7 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 
@@ -52,7 +52,7 @@ def check_downloaded_men_pmsi_mencumu_file(chemin_local_du_fichier_men_pmsi_menc
 def import_activites_mensuels(
     donnees_activites_mensuel_filtrees: pd.DataFrame, base_de_données: Engine, chemin_local_du_fichier_men_pmsi_mencumu_param: str, logger: Logger
 ) -> None:
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    numéros_finess_des_établissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
 
     transform_donnees_activites_mensuel = transforme_les_donnees_activites_mensuels(
         donnees_activites_mensuel_filtrees, numéros_finess_des_établissements_connus, logger

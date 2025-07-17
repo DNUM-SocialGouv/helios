@@ -1,12 +1,12 @@
 import { memo, useState } from "react";
 
+import { ContenuReclamations } from "./ContenuReclamations";
+import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
 import { annéesManquantesQualite } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../commun/Transcription/Transcription";
-import { ContenuReclamations } from "./ContenuReclamations";
-import ReclamationsParAnnee from "./ReclamationsParAnnee/ReclamationsParAnnee";
 
 type GraphiqueReclamationsProps = Readonly<{
   data: any;
