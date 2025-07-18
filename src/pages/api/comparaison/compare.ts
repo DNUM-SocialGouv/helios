@@ -16,7 +16,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     response.status(405).send("Method not allowed");
   }
 
-  const { type, numerosFiness, annee, page, order, orderBy, forExport, codeRegion, codeProfiles } = request.body;
+  const { type, numerosFiness, annee, page, order, orderBy, forExport, codeRegion, codeProfiles, enveloppe1, enveloppe2, enveloppe3 } = request.body;
 
   if (type !== "Médico-social" && type !== "Sanitaire" && type !== "Entité juridique") {
     response.status(400).send("invalid type");
@@ -35,7 +35,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   if (!annee || !listeAnnees.some(dbAnnee => dbAnnee + "" === annee)) {
     anneeARechercher = listeAnnees[listeAnnees.length - 1];
   }
-  const params = { type, numerosFiness, annee: anneeARechercher, page, order, orderBy, forExport, codeRegion } as ParametresDeComparaison;
+  const params = { type, numerosFiness, annee: anneeARechercher, page, order, orderBy, forExport, codeRegion, enveloppe1, enveloppe2, enveloppe3 } as ParametresDeComparaison;
   const comparaisonResult = await comparaisonEndpoint(dependencies, params, codeProfiles);
 
   response.status(200).json({ listeAnnees, ...comparaisonResult });

@@ -13,6 +13,9 @@ export type ResultatEJ = Readonly<{
   resultatNetComptable: number | null | string;
   tauxCaf: number | null | string;
   ratioDependanceFinanciere: number | null | string;
+  enveloppe1: number | null | string;
+  enveloppe2: number | null | string;
+  enveloppe3: number | null | string;
 }>;
 
 export type ResultatSMS = Readonly<{
