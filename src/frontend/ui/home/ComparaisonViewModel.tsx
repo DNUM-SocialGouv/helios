@@ -28,13 +28,16 @@ export type ResultatComparaisonEJ = Readonly<{
   type: string;
   statutJuridique: string;
   rattachements: string;
-  chargesPrincipaux: number | null;
-  chargesAnnexes: number | null;
-  produitsPrincipaux: number | null;
-  produitsAnnexes: number | null;
-  resultatNetComptable: number | null;
-  tauxCaf: number | null;
-  ratioDependanceFinanciere: number | null;
+  chargesPrincipaux: number | null | string;
+  chargesAnnexes: number | null | string;
+  produitsPrincipaux: number | null | string;
+  produitsAnnexes: number | null | string;
+  resultatNetComptable: number | null | string;
+  tauxCaf: number | null | string;
+  ratioDependanceFinanciere: number | null | string;
+  enveloppe1: number | null | string;
+  enveloppe2: number | null | string;
+  enveloppe3: number | null | string;
 }>;
 
 export type ResultatComparaison = ResultatComparaisonSMS | ResultatComparaisonEJ;
@@ -181,8 +184,10 @@ export class ComparaisonEJViewModel {
   }
 
   public get resultatNetComptable(): string {
+    if (this.comparaison.resultatNetComptable === '') return ''
     return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable
       .toLocaleString("fr-FR", {
+
         style: "currency",
         currency: "EUR",
       })
@@ -191,14 +196,17 @@ export class ComparaisonEJViewModel {
   }
 
   public get tauxCaf(): string | null {
+    if (this.comparaison.tauxCaf === '') return ''
     return this.comparaison.tauxCaf ? this.comparaison.tauxCaf + "%" : null;
   }
 
   public get ratioDependanceFinanciere(): string | null {
+    if (this.comparaison.ratioDependanceFinanciere === '') return ''
     return this.comparaison.ratioDependanceFinanciere !== null ? this.comparaison.ratioDependanceFinanciere + "%" : null;
   }
 
   public get chargesPrincipaux(): string | null {
+    if (this.comparaison.chargesPrincipaux === '') return ''
     return this.comparaison.chargesPrincipaux ? this.comparaison.chargesPrincipaux
       .toLocaleString("fr-FR", {
         style: "currency",
@@ -209,6 +217,7 @@ export class ComparaisonEJViewModel {
   }
 
   public get produitsPrincipaux(): string | null {
+    if (this.comparaison.produitsPrincipaux === '') return ''
     return this.comparaison.produitsPrincipaux ? this.comparaison.produitsPrincipaux.toLocaleString("fr-FR", {
       style: "currency",
       currency: "EUR",
@@ -218,6 +227,7 @@ export class ComparaisonEJViewModel {
   }
 
   public get chargesAnnexes(): string | null {
+    if (this.comparaison.chargesAnnexes === '') return ''
     return this.comparaison.chargesAnnexes ? this.comparaison.chargesAnnexes
       .toLocaleString("fr-FR", {
         style: "currency",
@@ -228,7 +238,41 @@ export class ComparaisonEJViewModel {
   }
 
   public get produitsAnnexes(): string | null {
-    return this.comparaison.produitsAnnexes ? this.comparaison.produitsAnnexes
+    if (this.comparaison.produitsAnnexes === '') return ''
+    return this.comparaison.produitsAnnexes ? this.comparaison.produitsAnnexes === '' ? '' : this.comparaison.produitsAnnexes
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get enveloppe1(): string | null {
+    if (this.comparaison.enveloppe1 === '') return ''
+    return this.comparaison.enveloppe1 ? this.comparaison.enveloppe1
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get enveloppe2(): string | null {
+    if (this.comparaison.enveloppe2 === '') return ''
+    return this.comparaison.enveloppe2 ? this.comparaison.enveloppe2
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get enveloppe3(): string | null {
+    if (this.comparaison.enveloppe3 === '') return ''
+    return this.comparaison.enveloppe3 ? this.comparaison.enveloppe3
       .toLocaleString("fr-FR", {
         style: "currency",
         currency: "EUR",

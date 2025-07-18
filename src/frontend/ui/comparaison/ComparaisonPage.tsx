@@ -30,7 +30,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
-  const { lancerLaComparaison, contenuModal, tableHeaders, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
+  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
@@ -50,11 +50,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
   const [comparedTypes, setComparedTypes] = useState<string[]>([]);
+  const [comparedFiness, setComparedFiness] = useState<string[]>([]);
+
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
     if (structureChoice !== "") {
-      lancerLaComparaison(structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
+      lancerLaComparaison(comparedFiness, structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
       setReloadTable(false);
     }
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable, structureChoice]);
@@ -73,6 +75,19 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       else setStructureChoice("Entité juridique");
     }
   }, [comparedTypes])
+
+  useEffect(() => {
+    if (structureChoice !== "") {
+      const fetchData = async () => {
+        const finessStored = sessionStorage.getItem("listFinessNumbers");
+        setComparedFiness(finessStored ? JSON.parse(finessStored) : []);
+
+        const annees = await getListAnnees(structureChoice, finessStored ? JSON.parse(finessStored) : []);
+        setAnnéeEnCours(annees[annees.length - 1]);
+      };
+      fetchData();
+    }
+  }, [structureChoice])
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {

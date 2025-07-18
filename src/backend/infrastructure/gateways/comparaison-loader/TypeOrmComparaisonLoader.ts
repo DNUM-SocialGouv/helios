@@ -44,6 +44,9 @@ type ComparaisonEJTypeOrm = Readonly<{
   total_recettes_global: number;
   total_depenses_principales: number;
   total_recettes_principales: number;
+  enveloppe_1: number;
+  enveloppe_2: number;
+  enveloppe_3: number;
 }>;
 
 type EnveloppesResult = {
@@ -153,13 +156,33 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   }
 
   private async compareEJ(params: ParametresDeComparaison): Promise<ResultatDeComparaison> {
-    const { numerosFiness, annee, page, order, orderBy, forExport } = params;
+    const { numerosFiness, annee, page, order, orderBy, forExport, enveloppe1, enveloppe2, enveloppe3 } = params;
+    const compareEnveloppe1 = `(select SUM(public.allocation_ressource_ej.montant) as enveloppe_1,
+        allocation_ressource_ej.numero_finess_entite_juridique
+        FROM allocation_ressource_ej
+        where annee = ${annee} and enveloppe = '${enveloppe1}'
+        GROUP BY allocation_ressource_ej.numero_finess_entite_juridique) ar1`;
+
+    const compareEnveloppe2 = `(select SUM(public.allocation_ressource_ej.montant) as enveloppe_2,
+        allocation_ressource_ej.numero_finess_entite_juridique
+        FROM allocation_ressource_ej
+        where annee = ${annee} and enveloppe = '${enveloppe2}'
+        GROUP BY allocation_ressource_ej.numero_finess_entite_juridique) ar2`;
+
+    const compareEnveloppe3 = `(select SUM(public.allocation_ressource_ej.montant) as enveloppe_3,
+        allocation_ressource_ej.numero_finess_entite_juridique
+        FROM allocation_ressource_ej
+        where annee = ${annee} and enveloppe = '${enveloppe3}'
+        GROUP BY allocation_ressource_ej.numero_finess_entite_juridique) ar3`;
 
     const compareEjQueryBody = ` from recherche ej
     LEFT JOIN budget_et_finances_entite_juridique bg
     on ej.numero_finess = bg.numero_finess_entite_juridique and bg.annee = ${annee}
     LEFT JOIN etablissement_territorial et 
     on ej.numero_finess = et.numero_finess_entite_juridique
+    LEFT JOIN ${compareEnveloppe1} on ej.numero_finess  = ar1.numero_finess_entite_juridique
+    LEFT JOIN ${compareEnveloppe2} on ej.numero_finess  = ar2.numero_finess_entite_juridique
+    LEFT JOIN ${compareEnveloppe3} on ej.numero_finess  = ar3.numero_finess_entite_juridique
     where ej.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})
     group by ej.numero_finess, ej.raison_sociale_courte,
     ej.commune,
@@ -185,7 +208,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     bg.recettes_titre_iii_h,
     bg.resultat_net_comptable_san,
     bg.taux_de_caf_nette_san,
-    bg.ratio_dependance_financiere`
+    bg.ratio_dependance_financiere,
+    ar1.enveloppe_1,
+    ar2.enveloppe_2,
+    ar3.enveloppe_3`
 
     const compareEjQuery = `Select ej.numero_finess,
     ej.raison_sociale_courte,
@@ -202,6 +228,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
           ) AS rattachement,
     bg.resultat_net_comptable_san,
     bg.taux_de_caf_nette_san,
+    enveloppe_1,
+    enveloppe_2,
+    enveloppe_3,
     CASE
         WHEN bg.depenses_titre_i_global IS NULL AND bg.depenses_titre_ii_global IS NULL AND bg.depenses_titre_iii_global IS NULL AND bg.depenses_titre_iv_global IS NULL THEN NULL
         ELSE COALESCE(bg.depenses_titre_i_global, 0)  + COALESCE(bg.depenses_titre_ii_global, 0) + COALESCE(bg.depenses_titre_iii_global, 0) + COALESCE(bg.depenses_titre_iv_global, 0)
@@ -431,6 +460,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         resultatNetComptable: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
         tauxCaf: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
         ratioDependanceFinanciere: resultat.type === "Entité juridique" ? resultat.ratio_dependance_financiere : '',
+        enveloppe1: resultat.type === "Entité juridique" ? resultat.enveloppe_1 : '',
+        enveloppe2: resultat.type === "Entité juridique" ? resultat.enveloppe_2 : '',
+        enveloppe3: resultat.type === "Entité juridique" ? resultat.enveloppe_3 : '',
       };
     });
   }

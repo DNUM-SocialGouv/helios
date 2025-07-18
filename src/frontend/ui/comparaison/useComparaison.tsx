@@ -49,22 +49,14 @@ export function useComparaison() {
     else return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
   };
 
-  const lancerLaComparaison = async (type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
-    const listFiness = sessionStorage.getItem("listFinessNumbers");
-    let numerosFiness = [];
-    try {
-      numerosFiness = listFiness ? JSON.parse(listFiness) : [];
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log("e", e)
-    }
+  const lancerLaComparaison = async (numerosFiness: string[], type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
     const enveloppes = await getTopEnveloppes(annee);
     setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
 
     if (numerosFiness && numerosFiness.length > 0) {
       fetch("/api/comparaison/compare", {
-        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
+        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, enveloppe1: enveloppes[0], enveloppe2: enveloppes[1], enveloppe3: enveloppes[2], codeProfiles }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })
@@ -92,6 +84,18 @@ export function useComparaison() {
         listeAnnees: [],
       })
     }
+  }
+
+  const getListAnnees = async (type: string, numeroFiness: string[]): Promise<number[]> => {
+    const params = new URLSearchParams();
+    params.set('type', type);
+    numeroFiness.forEach(finess => params.append('numeroFiness', finess));
+    const response = await fetch(`/api/comparaison/getListAnnees?${params.toString()}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    });
+    const listAnnees = await response.json();
+    return listAnnees;
   }
 
   const getTopEnveloppes = async (annee: string): Promise<string[]> => {
@@ -240,10 +244,9 @@ export function useComparaison() {
         { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", sort: true, orderBy: "resultat_net_comptable_san" },
         { label: "Taux de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", sort: true, orderBy: "taux_de_caf_nette_san" },
         { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", sort: true, orderBy: "ratio_dependance_financiere" },
-        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: topEnveloppes[0], sort: true, orderBy: topEnveloppes[0] },
-        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: topEnveloppes[1], sort: true, orderBy: topEnveloppes[1] },
-        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: topEnveloppes[2], sort: true, orderBy: topEnveloppes[2] },
-
+        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: 'enveloppe1', sort: true, orderBy: "enveloppe_1" },
+        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: 'enveloppe2', sort: true, orderBy: "enveloppe_2" },
+        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: 'enveloppe3', sort: true, orderBy: "enveloppe_3" },
       ]
     }
     else
@@ -266,5 +269,6 @@ export function useComparaison() {
     loading: state.loading,
     NombreDeResultatsMaxParPage: take,
     listeAnnees: state.listeAnnees,
+    getListAnnees
   };
 }
