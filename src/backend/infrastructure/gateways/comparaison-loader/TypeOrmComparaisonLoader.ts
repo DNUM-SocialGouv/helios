@@ -223,7 +223,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     ar2.enveloppe_2,
     ar3.enveloppe_3`
 
-    const compareEjQuery = `Select ej.numero_finess,
+    const compareEjQuery = `SELECT *
+    FROM ( Select ej.numero_finess,
     ej.raison_sociale_courte,
     ej.commune,
     ej.departement,
@@ -257,7 +258,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         WHEN bg.recettes_titre_i_h IS NULL AND bg.recettes_titre_ii_h IS NULL AND bg.recettes_titre_iii_h IS NULL THEN NULL
         ELSE COALESCE(bg.recettes_titre_i_h, 0)  + COALESCE(bg.recettes_titre_ii_h, 0) + COALESCE(bg.recettes_titre_iii_h, 0)
     END AS total_recettes_principales,
-    bg.ratio_dependance_financiere` + compareEjQueryBody;
+    bg.ratio_dependance_financiere ${compareEjQueryBody} ) as subquery`;
 
     const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
     const paginatedCompareEJQuery =
@@ -272,6 +273,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
             WHEN 'Sanitaire' THEN 3
             ELSE 4
   END, numero_finess ASC  ${limitForExport} `;
+
+    console.log('paginatedCompareEJQuery!!!!!!!!!!!!!!!!!!!', paginatedCompareEJQuery)
 
     const compareEJQueryResult = await (await this.orm).query(paginatedCompareEJQuery);
     return {
