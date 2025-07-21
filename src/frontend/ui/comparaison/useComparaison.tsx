@@ -237,7 +237,7 @@ export function useComparaison() {
     if (structure === 'Médico-social')
       return [
         { label: "", key: "delete", nomComplet: "" },
-        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
@@ -266,7 +266,7 @@ export function useComparaison() {
     else if (structure === 'Entité juridique') {
       return [
         { label: "", key: "delete", nomComplet: "" },
-        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
@@ -287,7 +287,7 @@ export function useComparaison() {
     else
       return [
         { label: "", key: "delete", nomComplet: "" },
-        { label: "", key: "etsLogo", nomComplet: "", sort: true },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
