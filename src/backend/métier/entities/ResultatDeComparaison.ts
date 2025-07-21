@@ -10,8 +10,8 @@ export type ResultatEJ = Readonly<{
   chargesAnnexes: number | null | string;
   produitsPrincipaux: number | null | string;
   produitsAnnexes: number | null | string;
-  resultatNetComptable: number | null | string;
-  tauxCaf: number | null | string;
+  resultatNetComptableEj: number | null | string;
+  tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
@@ -57,4 +57,6 @@ export type DatesMisAjourSources = {
   date_mis_a_jour_finess: string;
   date_mis_a_jour_tdbPerf: string;
   date_mis_a_jour_cnsa: string;
+  date_mis_a_jour_ancre: string;
+  date_mis_a_jour_hapi: string;
 };

@@ -139,7 +139,17 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     const dateMAJCnsa = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ);
 
-    return { date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "", date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "", date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "" }
+    const dateMAJAncre = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_QUO_SAN_FINANCE);
+
+    const dateMAJHapi = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_HAPI);
+
+    return {
+      date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "",
+      date_mis_a_jour_tdbPerf: dateMAJTdbperf.dernièreMiseÀJour || "",
+      date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "",
+      date_mis_a_jour_ancre: dateMAJAncre.dernièreMiseÀJour || "",
+      date_mis_a_jour_hapi: dateMAJHapi.dernièreMiseÀJour || "",
+    }
   }
 
   async compare(params: ParametresDeComparaison, profiles: ProfilModel[]): Promise<ResultatDeComparaison> {
@@ -457,8 +467,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         chargesAnnexes: resultat.type === "Entité juridique" ? this.roundExpression(resultat.total_depenses_global, resultat.total_depenses_principales, 0) : '',
         produitsPrincipaux: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.total_recettes_principales, 0) : '',
         produitsAnnexes: resultat.type === "Entité juridique" ? this.roundExpression(resultat.total_recettes_global, resultat.total_recettes_principales, 0) : '',
-        resultatNetComptable: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
-        tauxCaf: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
+        resultatNetComptableEj: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
+        tauxCafEj: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
         ratioDependanceFinanciere: resultat.type === "Entité juridique" ? resultat.ratio_dependance_financiere : '',
         enveloppe1: resultat.type === "Entité juridique" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Entité juridique" ? resultat.enveloppe_2 : '',

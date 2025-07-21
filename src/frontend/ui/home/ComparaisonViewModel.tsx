@@ -32,8 +32,8 @@ export type ResultatComparaisonEJ = Readonly<{
   chargesAnnexes: number | null | string;
   produitsPrincipaux: number | null | string;
   produitsAnnexes: number | null | string;
-  resultatNetComptable: number | null | string;
-  tauxCaf: number | null | string;
+  resultatNetComptableEj: number | null | string;
+  tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
@@ -183,11 +183,10 @@ export class ComparaisonEJViewModel {
     return this.comparaison.statutJuridique;
   }
 
-  public get resultatNetComptable(): string {
-    if (this.comparaison.resultatNetComptable === '') return ''
-    return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable
+  public get resultatNetComptableEj(): string {
+    if (this.comparaison.resultatNetComptableEj === '') return ''
+    return this.comparaison.resultatNetComptableEj ? this.comparaison.resultatNetComptableEj
       .toLocaleString("fr-FR", {
-
         style: "currency",
         currency: "EUR",
       })
@@ -195,9 +194,9 @@ export class ComparaisonEJViewModel {
       : "-";
   }
 
-  public get tauxCaf(): string | null {
-    if (this.comparaison.tauxCaf === '') return ''
-    return this.comparaison.tauxCaf ? this.comparaison.tauxCaf + "%" : null;
+  public get tauxCafEj(): string | null {
+    if (this.comparaison.tauxCafEj === '') return ''
+    return this.comparaison.tauxCafEj ? this.comparaison.tauxCafEj + "%" : null;
   }
 
   public get ratioDependanceFinanciere(): string | null {

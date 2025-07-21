@@ -3,8 +3,13 @@ import { ReactNode, useState } from "react";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { StringFormater } from "../commun/StringFormater";
+import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
+import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
+import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
 import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
+import { ContenuRésultatNetComptableEJ } from "../indicateur-métier/resultat-net-comptable/ContenuRésultatNetComptableEJ";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
+import { ContenuTauxDeCafEJ } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCafEJ";
 import { ContenuCapacitéParActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuCapacitéParActivité";
 import { ContenuDesTauxDAbsentéismes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDesTauxDAbsentéismes";
 import { ContenuDePrestationsExternes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDuTauxDePrestationsExternes";
@@ -193,6 +198,36 @@ export function useComparaison() {
           contenu: <ContenuCapacitéParActivité dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_finess)} source={wording.FINESS} />,
           titre: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
         };
+      case "chargesPrincipaux":
+      case "chargesAnnexes":
+      case "produitsPrincipaux":
+      case "produitsAnnexes":
+        return {
+          contenu: <ContenuCompteDeRésultatEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.COMPTE_DE_RÉSULTAT_CF,
+        };
+      case "resultatNetComptableEj":
+        return {
+          contenu: <ContenuRésultatNetComptableEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.RÉSULTAT_NET_COMPTABLE,
+        };
+      case "tauxCafEj":
+        return {
+          contenu: <ContenuTauxDeCafEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.TAUX_DE_CAF,
+        };
+      case "ratioDependanceFinanciere":
+        return {
+          contenu: <ContenuRatioDependanceFinancière dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.RATIO_DEPENDANCE_FINANCIERE,
+        };
+      case "enveloppe1":
+      case "enveloppe2":
+      case "enveloppe3":
+        return {
+          contenu: <ContenuAllocationRessourcesEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
+          titre: wording.ALLOCATION_DE_RESSOURCES,
+        };
       default:
         return { contenu: "Aucun contenue à afficher pour l'instant", titre: "Bonjour" };
     }
@@ -237,16 +272,16 @@ export function useComparaison() {
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
         { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
         { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
-        { label: "Compte de résultat - Charges  (Budgets principaux)", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", sort: true, orderBy: "total_depenses_principales" },
-        { label: "Compte de résultat - Charges  (Budgets Annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
-        { label: "Compte de résultat - Produits (Budgets principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", sort: true, orderBy: "total_recettes_principales" },
-        { label: "Compte de résultat - Produits (Budgets Annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", sort: true, orderBy: "total_recettes_global - total_recettes_principales " },
-        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", sort: true, orderBy: "resultat_net_comptable_san" },
-        { label: "Taux de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", sort: true, orderBy: "taux_de_caf_nette_san" },
-        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", sort: true, orderBy: "ratio_dependance_financiere" },
-        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: 'enveloppe1', sort: true, orderBy: "enveloppe_1" },
-        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: 'enveloppe2', sort: true, orderBy: "enveloppe_2" },
-        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: 'enveloppe3', sort: true, orderBy: "enveloppe_3" },
+        { label: "Compte de résultat - Charges  (Budgets principaux)", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", info: true, sort: true, orderBy: "total_depenses_principales" },
+        { label: "Compte de résultat - Charges  (Budgets Annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", info: true, sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
+        { label: "Compte de résultat - Produits (Budgets principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", info: true, sort: true, orderBy: "total_recettes_principales" },
+        { label: "Compte de résultat - Produits (Budgets Annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", info: true, sort: true, orderBy: "total_recettes_global - total_recettes_principales " },
+        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptableEj", info: true, sort: true, orderBy: "resultat_net_comptable_san" },
+        { label: "Taux de CAF", nomComplet: "Taux de CAF", key: "tauxCafEj", info: true, sort: true, orderBy: "taux_de_caf_nette_san" },
+        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
     }
     else
