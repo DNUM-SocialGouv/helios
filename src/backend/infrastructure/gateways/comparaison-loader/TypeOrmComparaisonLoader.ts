@@ -265,7 +265,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         ? compareEjQuery +
         ` ORDER BY ${orderBy} ${order} ${limitForExport} `
         : compareEjQuery +
-        ` ORDER BY numero_finess ASC ${limitForExport} `;
+        ` ORDER BY
+          CASE type
+            WHEN 'Entité juridique' THEN 1
+            WHEN 'Médico-social' THEN 2
+            WHEN 'Sanitaire' THEN 3
+            ELSE 4
+  END, numero_finess ASC  ${limitForExport} `;
 
     const compareEJQueryResult = await (await this.orm).query(paginatedCompareEJQuery);
     return {
