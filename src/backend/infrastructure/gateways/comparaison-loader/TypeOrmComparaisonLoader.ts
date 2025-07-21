@@ -8,9 +8,9 @@ import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 import { combineProfils } from "../../../profileFiltersHelper";
 
 type ComparaisonSMSTypeOrm = Readonly<{
-  numero_finess_etablissement_territorial: string;
+  numero_finess: string;
   raison_sociale_courte: string;
-  domaine: string;
+  type: string;
   commune: string;
   departement: string;
   taux_realisation_activite: number | 'NA';
@@ -274,8 +274,6 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
             ELSE 4
   END, numero_finess ASC  ${limitForExport} `;
 
-    console.log('paginatedCompareEJQuery!!!!!!!!!!!!!!!!!!!', paginatedCompareEJQuery)
-
     const compareEJQueryResult = await (await this.orm).query(paginatedCompareEJQuery);
     return {
       nombreDeResultats: numerosFiness.length,
@@ -295,23 +293,23 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         FROM autorisation_medico_social
         GROUP BY autorisation_medico_social.numero_finess_etablissement_territorial) cp`;
 
-    const compareSMSQueryBody = ` from etablissement_territorial et 
+    const compareSMSQueryBody = ` from recherche et 
     LEFT JOIN activite_medico_social ac
-    on et.numero_finess_etablissement_territorial = ac.numero_finess_etablissement_territorial and ac.annee = ${annee}
+    on et.numero_finess = ac.numero_finess_etablissement_territorial and ac.annee = ${annee}
     LEFT JOIN budget_et_finances_medico_social bg
-    on et.numero_finess_etablissement_territorial = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
+    on et.numero_finess = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
     LEFT JOIN ressources_humaines_medico_social rh
-    on et.numero_finess_etablissement_territorial = rh.numero_finess_etablissement_territorial and rh.annee = ${annee}
+    on et.numero_finess = rh.numero_finess_etablissement_territorial and rh.annee = ${annee}
     LEFT JOIN ${compareSMSCapacite}
-    on et.numero_finess_etablissement_territorial = cp.numero_finess_etablissement_territorial
-    where et.numero_finess_etablissement_territorial IN(${numerosFiness.map((finess) => "'" + finess + "'")})`;
+    on et.numero_finess = cp.numero_finess_etablissement_territorial
+    where et.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`;
 
-    const compareSMSQuery = `Select et.numero_finess_etablissement_territorial,
+    const compareSMSQuery = `Select et.numero_finess,
     et.raison_sociale_courte,
-    et.domaine,
     et.commune,
     et.departement,
     et.code_region,
+    et.type,
     CASE
           WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $1 = 'ok' THEN CAST(ac.file_active_personnes_accompagnees AS TEXT)
     ELSE 'NA'
@@ -375,7 +373,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         ? compareSMSQuery +
         ` ORDER BY ${orderBy} ${order} ${limitForExport} `
         : compareSMSQuery +
-        ` ORDER BY numero_finess_etablissement_territorial ASC ${limitForExport} `;
+        ` ORDER BY
+          CASE type
+            WHEN 'Médico-social' THEN 1
+            WHEN 'Entité juridique' THEN 2
+            WHEN 'Sanitaire' THEN 3
+            ELSE 4
+  END, numero_finess ASC  ${limitForExport} `;
 
     const compareSMSQueryResult = await (await this.orm).query(paginatedCompareSMSQuery,
       [autorisations.activités.fileActivePersonnesAccompagnées,
@@ -439,25 +443,25 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   private contruitResultatSMS(resultats: ComparaisonSMSTypeOrm[]): ResultatSMS[] {
     return resultats.map((resultat: ComparaisonSMSTypeOrm): ResultatSMS => {
       return {
-        numéroFiness: resultat.numero_finess_etablissement_territorial,
+        numéroFiness: resultat.numero_finess,
         socialReason: resultat.raison_sociale_courte,
-        type: resultat.domaine,
+        type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
-        capacite: resultat.capacite_total ? Number(resultat.capacite_total) : null,
-        realisationActivite: resultat.taux_realisation_activite === 'NA' ? 'NA' : this.transformInRate(resultat.taux_realisation_activite, 1),
-        acceuilDeJour: resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
-        hebergementPermanent: resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
-        hebergementTemporaire: resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
-        fileActivePersonnesAccompagnes: resultat.file_active_personnes_accompagnees ? Number(resultat.file_active_personnes_accompagnees) : null,
-        rotationPersonnel: resultat.taux_rotation_personnel === 'NA' ? 'NA' : this.transformInRate(resultat.taux_rotation_personnel, 1),
-        absenteisme: resultat.taux_absenteisme_hors_formation === 'NA' ? 'NA' : this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
-        prestationExterne: resultat.taux_prestation_externes === 'NA' ? 'NA' : this.transformInRate(resultat.taux_prestation_externes, 1),
-        etpVacant: resultat.taux_etp_vacants === 'NA' ? 'NA' : this.transformInRate(resultat.taux_etp_vacants, 1),
-        tauxCaf: resultat.taux_de_caf === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_caf, 1),
-        vetusteConstruction: resultat.taux_de_vetuste_construction === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_vetuste_construction, 1),
-        roulementNetGlobal: resultat.fonds_de_roulement === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
-        resultatNetComptable: resultat.resultat_net_comptable === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
+        capacite: resultat.type !== "Médico-social" ? '' : resultat.capacite_total ? Number(resultat.capacite_total) : null,
+        realisationActivite: resultat.type !== "Médico-social" ? '' : resultat.taux_realisation_activite === 'NA' ? 'NA' : this.transformInRate(resultat.taux_realisation_activite, 1),
+        acceuilDeJour: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
+        hebergementPermanent: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
+        hebergementTemporaire: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
+        fileActivePersonnesAccompagnes: resultat.type !== "Médico-social" ? '' : resultat.file_active_personnes_accompagnees ? Number(resultat.file_active_personnes_accompagnees) : null,
+        rotationPersonnel: resultat.type !== "Médico-social" ? '' : resultat.taux_rotation_personnel === 'NA' ? 'NA' : this.transformInRate(resultat.taux_rotation_personnel, 1),
+        absenteisme: resultat.type !== "Médico-social" ? '' : resultat.taux_absenteisme_hors_formation === 'NA' ? 'NA' : this.transformInRate(resultat.taux_absenteisme_hors_formation, 1),
+        prestationExterne: resultat.type !== "Médico-social" ? '' : resultat.taux_prestation_externes === 'NA' ? 'NA' : this.transformInRate(resultat.taux_prestation_externes, 1),
+        etpVacant: resultat.type !== "Médico-social" ? '' : resultat.taux_etp_vacants === 'NA' ? 'NA' : this.transformInRate(resultat.taux_etp_vacants, 1),
+        tauxCaf: resultat.type !== "Médico-social" ? '' : resultat.taux_de_caf === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_caf, 1),
+        vetusteConstruction: resultat.type !== "Médico-social" ? '' : resultat.taux_de_vetuste_construction === 'NA' ? 'NA' : this.transformInRate(resultat.taux_de_vetuste_construction, 1),
+        roulementNetGlobal: resultat.type !== "Médico-social" ? '' : resultat.fonds_de_roulement === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.fonds_de_roulement, 0),
+        resultatNetComptable: resultat.type !== "Médico-social" ? '' : resultat.resultat_net_comptable === 'NA' ? 'NA' : this.makeNumberArrondi(resultat.resultat_net_comptable, 0),
       };
     });
   }
