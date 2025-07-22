@@ -16,15 +16,17 @@ import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
 import { ComparaisonEJViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
+import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
 interface ComparaisonPageProps {
   codeProfiles: string[];
   codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
+  categories: CategoriesFinessViewModel[];
 }
 
-export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
+export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
@@ -218,7 +220,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
               {wording.AJOUTER_DES_ETABLISSEMENTS}
             </button>
           )}
-          {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
+          {isShowAjoutEtab && <AjoutEtablissements categories={categories} setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable} />}
         </div>
         {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>

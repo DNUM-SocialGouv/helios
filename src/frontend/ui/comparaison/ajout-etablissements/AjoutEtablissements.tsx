@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { CategoriesFinessViewModel } from "../../recherche-avancee/model/CategoriesFinessViewModel";
 import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvanceeFormulaire";
 import styles from "../Comparaison.module.css";
 import { ListEtablissements } from "./ListEtablissements";
@@ -12,9 +13,10 @@ import type { Dispatch, SetStateAction } from "react";
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
   setReloadTable: Dispatch<SetStateAction<boolean>>;
+  categories: CategoriesFinessViewModel[];
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, categories }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -134,7 +136,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           </div>
           <div id="modal-body-composents" style={{ marginTop: "10px" }}>
             <RechercheAvanceeFormulaire
-              categoriesViewModel={[]}
+              categoriesViewModel={categories}
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
               rechercheOnChange={rechercheOnChange}
@@ -142,7 +144,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
               setIsChangedCapacite={setIsChangedCapacite}
               setIsChangedZG={setIsChangedZG}
               setSelectedRows={() => { }}
-            ></RechercheAvanceeFormulaire>
+            />
             {listData && listData?.length > 0 && (
               <ListEtablissements
                 newEtablissements={newEtablissements}
