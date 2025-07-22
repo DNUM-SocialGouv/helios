@@ -22,7 +22,7 @@ export class ComparaisonEtablissementsUseCase {
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     return await this.comparaisonLoader.getDatesMisAJourSourcesComparaison();
   }
-  async getTopEnveloppes() {
+  async getTopEnveloppes(): Promise<Record<string, string[]>> {
     return await this.comparaisonLoader.getTopEnveloppes();
   }
 

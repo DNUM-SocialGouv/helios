@@ -193,7 +193,14 @@ export class ComparaisonEJViewModel {
   }
 
   public get statutJuridique(): string {
-    return this.comparaison.statutJuridique;
+    switch (this.comparaison.statutJuridique) {
+      case "prive_lucratif":
+        return "PRIVÉ LUCRATIF";
+      case "prive_non_lucratif":
+        return "PRIVÉ NON LUCRATIF";
+      default:
+        return "PUBLIC";
+    }
   }
 
   public get resultatNetComptableEj(): string {
