@@ -15,13 +15,10 @@ export const ActionsButton = ({ finess, typeEtab, downloadPDF }: ActionsButtonPr
   const { wording } = useDependencies();
   const router = useRouter();
   const [displayActions, setDisplayActions] = useState<boolean>(false);
-  const listFinessNumbers = { finess };
 
   const lancerComparaison = () => {
-    sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
-    sessionStorage.setItem("comparaisonType", typeEtab);
-    document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
-    document.cookie = `type=${encodeURIComponent(typeEtab)}; path=/`;
+    sessionStorage.setItem("listFinessNumbers", JSON.stringify([finess]));
+    sessionStorage.setItem("comparaisonType", JSON.stringify([typeEtab]));
     router.push("/comparaison");
   }
 
@@ -31,7 +28,7 @@ export const ActionsButton = ({ finess, typeEtab, downloadPDF }: ActionsButtonPr
       {displayActions &&
         <ul className={styles["menu"]}>
           <li className={styles["menu-item"]}>
-            <button className="fr-btn fr-btn--tertiary-no-outline" disabled onClick={lancerComparaison}>
+            <button className="fr-btn fr-btn--tertiary-no-outline" onClick={lancerComparaison}>
               {wording.COMPARER}
             </button>
           </li>
