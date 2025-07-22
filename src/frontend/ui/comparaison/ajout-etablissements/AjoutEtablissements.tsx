@@ -27,6 +27,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, catego
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
   const [isChangedActivite, setIsChangedActivite] = useState<boolean>(false);
+  const [isChangedStructure, setIsChangedStructure] = useState<boolean>(false);
+  const [isChangedCategories, setIsChangedCategories] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
   const [newStructures, setNewStructures] = useState<string[]>([]);
@@ -60,17 +62,19 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, catego
 
   // detect filtre(s) changes to update results
   useEffect(() => {
-    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite) {
+    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite || isChangedCategories || isChangedStructure) {
       comparaisonContext?.setPage(1);
       setPrevPage(1);
-      if (isChangedZG || isChangedCapacite) {
+      if (isChangedZG || isChangedCapacite || isChangedActivite || isChangedCategories || isChangedStructure) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
         setIsChangedActivite(false);
+        setIsChangedCategories(false);
+        setIsChangedStructure(false);
         setReload(true);
       }
     }
-  }, [isChangedZG, isChangedCapacite, comparaisonContext?.terme]);
+  }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
 
   // check if lits are equals or not
   const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
@@ -142,6 +146,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, catego
               rechercheOnChange={rechercheOnChange}
               setIsChangedActivite={setIsChangedActivite}
               setIsChangedCapacite={setIsChangedCapacite}
+              setIsChangedCategories={setIsChangedCategories}
+              setIsChangedStructure={setIsChangedStructure}
               setIsChangedZG={setIsChangedZG}
               setSelectedRows={() => { }}
             />
