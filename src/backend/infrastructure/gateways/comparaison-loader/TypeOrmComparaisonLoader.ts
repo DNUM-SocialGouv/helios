@@ -465,7 +465,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe2} on et.numero_finess  = ar2.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe3} on et.numero_finess  = ar3.numero_finess_etablissement_territorial
-    `
+    where et.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
+
     const compareEtSanQuery = `Select et.numero_finess,
     et.raison_sociale_courte,
     et.commune,
@@ -514,12 +515,12 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
           END, numero_finess ASC  ${limitForExport} `;
 
     const compareEtSanQueryResult = await (await this.orm).query(paginatedCompareETSanQuery);
+
     return {
       nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatEtSan(compareEtSanQueryResult)
     };
   }
-
 
   private makeNumberArrondi(value: any, num: number): number | null {
     // Convert value to a number and check if it's a valid number

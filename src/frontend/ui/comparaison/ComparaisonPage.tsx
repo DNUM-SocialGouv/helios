@@ -13,7 +13,7 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { ComparaisonEJViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
+import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
@@ -81,7 +81,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       const fetchData = async () => {
         const finessStored = sessionStorage.getItem("listFinessNumbers");
         setComparedFiness(finessStored ? JSON.parse(finessStored) : []);
-
         const annees = await getListAnnees(structureChoice, finessStored ? JSON.parse(finessStored) : []);
         setAnnéeEnCours(annees[annees.length - 1]);
       };
@@ -115,7 +114,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel) => {
+  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];

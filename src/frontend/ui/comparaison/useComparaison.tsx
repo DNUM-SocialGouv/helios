@@ -6,7 +6,7 @@ import { StringFormater } from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
-import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
+import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSAN, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
 import { ContenuRésultatNetComptableEJ } from "../indicateur-métier/resultat-net-comptable/ContenuRésultatNetComptableEJ";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
 import { ContenuTauxDeCafEJ } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCafEJ";
@@ -26,7 +26,7 @@ import { ContenuTauxRéalisationActivité } from "../établissement-territorial-
 type comparaisonState = Readonly<{
   nombreRésultats: number;
   lastPage: number;
-  résultats: ComparaisonSMSViewModel[] | ComparaisonEJViewModel[];
+  résultats: ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
   loading: boolean;
   listeAnnees: number[];
 }>;
@@ -46,19 +46,18 @@ export function useComparaison() {
 
   const [topEnveloppes, setTopEnveloppes] = useState<string[]>([]);
 
-  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat, type: string): (ComparaisonSMSViewModel[] | ComparaisonEJViewModel[]) => {
+  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat, type: string): (ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[]) => {
     if (type === 'Médico-social')
       return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
     else if (type === 'Entité juridique')
       return data.resultat.map((resultat) => new ComparaisonEJViewModel(resultat as ResultatComparaisonEJ));
-    else return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
+    else return data.resultat.map((resultat) => new ComparaisonSANViewModel(resultat as ResultatComparaisonSAN));
   };
 
   const lancerLaComparaison = async (numerosFiness: string[], type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
     const enveloppes = await getTopEnveloppes(annee);
     setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
-
     if (numerosFiness && numerosFiness.length > 0) {
       fetch("/api/comparaison/compare", {
         body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, enveloppe1: enveloppes[0], enveloppe2: enveloppes[1], enveloppe3: enveloppes[2], codeProfiles }),
@@ -291,6 +290,17 @@ export function useComparaison() {
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        { label: "Nb de séjours Médecine -Total Hospt", nomComplet: "Nb de séjours Médecine -Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de séjours Chirurgie -Total Hospt", nomComplet: "Nb de séjours Chirurgie -Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de séjours Obstétrique -Total Hospt", nomComplet: "Nb de séjours Obstétrique -Total Hospt", key: "totalHosptObstetrique", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de  journées Psychiatrie - Total Hospt", nomComplet: "Nb de  journées Psychiatrie - Total Hospt", key: "totalHosptPsy", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de journées  SSR- Total Hospt", nomComplet: "Nb de journées  SSR- Total Hospt", key: "totalHosptSsr", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de passage aux urgences", nomComplet: "Nb de passage aux urgences", key: "passagesUrgences", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: "Nb de journées USLD", nomComplet: "Nb de journées USLD", key: "journeesUsld", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: topEnveloppes[0], nomComplet: topEnveloppes[0], key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: topEnveloppes[1], nomComplet: topEnveloppes[1], key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: topEnveloppes[2], nomComplet: topEnveloppes[2], key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
   };
 
