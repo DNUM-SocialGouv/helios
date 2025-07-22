@@ -168,14 +168,15 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     const dateMAJFiness = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105);
-
     const dateMAJTdbperf = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
-
     const dateMAJCnsa = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ);
 
     const dateMAJAncre = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_QUO_SAN_FINANCE);
-
     const dateMAJHapi = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_HAPI);
+
+    const dateMAJPmsi = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_PMSI_ANNUEL);
+    const dateMAJRpu = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_RPU);
+    const dateMAJSae = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE);
 
     return {
       date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "",
@@ -183,6 +184,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "",
       date_mis_a_jour_ancre: dateMAJAncre.dernièreMiseÀJour || "",
       date_mis_a_jour_hapi: dateMAJHapi.dernièreMiseÀJour || "",
+      date_mis_a_jour_pmsi: dateMAJPmsi.dernièreMiseÀJour || "",
+      date_mis_a_jour_rpu: dateMAJRpu.dernièreMiseÀJour || "",
+      date_mis_a_jour_sae: dateMAJSae.dernièreMiseÀJour || "",
     }
   }
 

@@ -7,6 +7,9 @@ import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
 import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSAN, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
+import { ContenuNombreHAD } from "../indicateur-métier/nombre-de-had/ContenuNombreHAD";
+import { ContenuNombreDeJourneesUsld } from "../indicateur-métier/nombre-journees-usld/ContenuNombreDeJourneesUsld";
+import { ContenuNombreDePassagesAuxUrgences } from "../indicateur-métier/nombre-passage-urgence/ContenuNombreDePassagesAuxUrgences";
 import { ContenuRésultatNetComptableEJ } from "../indicateur-métier/resultat-net-comptable/ContenuRésultatNetComptableEJ";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
 import { ContenuTauxDeCafEJ } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCafEJ";
@@ -21,6 +24,8 @@ import { ContenuFondDeRoulementNetGlobal } from "../établissement-territorial-m
 import { ContenuRésultatNetComptable } from "../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeVétustéConstruction";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
+import { ContenuNombreDeJournéesPSYetSSR } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
+import { ContenuNombreDeSéjourMCO } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 
 
 type comparaisonState = Readonly<{
@@ -219,6 +224,34 @@ export function useComparaison() {
         return {
           contenu: <ContenuRatioDependanceFinancière dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
           titre: wording.RATIO_DEPENDANCE_FINANCIERE,
+        };
+      case "totalHosptMedecine":
+      case "totalHosptChirurgie":
+      case "totalHosptObstetrique":
+        return {
+          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_SÉJOUR_MCO,
+        };
+      case "totalHosptPsy":
+      case "totalHosptSsr":
+        return {
+          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR,
+        };
+      case "passagesUrgences":
+        return {
+          contenu: <ContenuNombreDePassagesAuxUrgences dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_rpu)} source={wording.RPU} />,
+          titre: wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+        };
+      case "sejoursHad":
+        return {
+          contenu: <ContenuNombreHAD dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_HAD,
+        };
+      case "journeesUsld":
+        return {
+          contenu: <ContenuNombreDeJourneesUsld dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_sae)} estEntitéJuridique={false} source={wording.SAE} />,
+          titre: wording.NOMBRE_DE_JOURNEES_USLD,
         };
       case "enveloppe1":
       case "enveloppe2":

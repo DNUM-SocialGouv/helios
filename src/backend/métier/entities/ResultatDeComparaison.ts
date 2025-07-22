@@ -69,4 +69,7 @@ export type DatesMisAjourSources = {
   date_mis_a_jour_cnsa: string;
   date_mis_a_jour_ancre: string;
   date_mis_a_jour_hapi: string;
+  date_mis_a_jour_pmsi: string;
+  date_mis_a_jour_rpu: string;
+  date_mis_a_jour_sae: string;
 };
