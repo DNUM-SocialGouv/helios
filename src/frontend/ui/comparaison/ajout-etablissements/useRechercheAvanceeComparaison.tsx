@@ -5,7 +5,6 @@ import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { ActiviteSanitaire } from "../../recherche-avancee/model/ActiviteSanitaire";
-import { AttribuesDefaults } from "../../recherche-avancee/model/Attribues";
 import { CapaciteEtablissement } from "../../recherche-avancee/model/CapaciteEtablissement";
 
 type RechercheAvanceeState = Readonly<{
@@ -64,7 +63,7 @@ export function useRechercheAvanceeComparaison() {
         comparaisonContext?.zoneGeo,
         comparaisonContext?.zoneGeoD,
         comparaisonContext?.zoneGeoType,
-        [AttribuesDefaults.etablissementMedicoSocial],
+        comparaisonContext?.typeStructure,
         statutsJuridiquesDefaultValue,
         comparaisonContext?.categories,
         capacites,
@@ -88,7 +87,7 @@ export function useRechercheAvanceeComparaison() {
     zone: string | undefined,
     zoneD: string | undefined,
     typeZone: string | undefined,
-    type: string[],
+    type: string[] | undefined,
     statutJuridique: string[],
     categories: string[] | undefined,
     capaciteSMS: CapaciteEtablissement[] | undefined,
