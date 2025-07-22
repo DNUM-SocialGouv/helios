@@ -39,18 +39,28 @@ export type ResultatSMS = Readonly<{
   roulementNetGlobal: number | null | string;
   resultatNetComptable: number | null | string;
 }>;
-
-export type ResultatES = Readonly<{
-  commune: string;
-  département: string;
+export type ResultatSAN = Readonly<{
   numéroFiness: string;
-  raisonSocialeCourte: string;
+  socialReason: string;
+  commune: string;
+  departement: string;
   type: string;
+  totalHosptMedecine: number | null | string;
+  totalHosptObstetrique: number | null | string;
+  totalHosptChirurgie: number | null | string;
+  totalHosptSsr: number | null | string;
+  totalHosptPsy: number | null | string;
+  passagesUrgences: number | null | string;
+  sejoursHad: number | null | string;
+  journeesUsld: number | null | string;
+  enveloppe1: number | null | string;
+  enveloppe2: number | null | string;
+  enveloppe3: number | null | string;
 }>;
 
 export type ResultatDeComparaison = {
   nombreDeResultats: number;
-  resultat: ResultatEJ[] | ResultatSMS[] | ResultatES[];
+  resultat: ResultatEJ[] | ResultatSMS[] | ResultatSAN[];
 };
 
 export type DatesMisAjourSources = {
