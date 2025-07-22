@@ -13,7 +13,7 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { ComparaisonEJViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
@@ -30,7 +30,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
-  const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
+  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
   const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
@@ -50,11 +50,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
   const [comparedTypes, setComparedTypes] = useState<string[]>([]);
+  const [comparedFiness, setComparedFiness] = useState<string[]>([]);
+
 
   // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
   useEffect(() => {
     if (structureChoice !== "") {
-      lancerLaComparaison(structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
+      lancerLaComparaison(comparedFiness, structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
       setReloadTable(false);
     }
   }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable, structureChoice]);
@@ -70,38 +72,22 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
         setStructureChoice("Médico-social");
       else if (comparedTypes.includes("Sanitaire"))
         setStructureChoice("Sanitaire");
-      else setStructureChoice("Entité Juridique");
+      else setStructureChoice("Entité juridique");
     }
   }, [comparedTypes])
 
-  const tableHeaders = [
-    { label: "", key: "delete", nomComplet: "" },
-    { label: "", key: "etsLogo", nomComplet: "", sort: true },
-    { label: "", key: "favori", nomComplet: "" },
-    { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
-    { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
-    {
-      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      key: "capacite",
-      info: true,
-      sort: true,
-      orderBy: "capacite_total",
-    },
-    { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
-    { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
-    { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
-    { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
-    { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
-    { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
-    { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
-    { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
-  ];
+  useEffect(() => {
+    if (structureChoice !== "") {
+      const fetchData = async () => {
+        const finessStored = sessionStorage.getItem("listFinessNumbers");
+        setComparedFiness(finessStored ? JSON.parse(finessStored) : []);
+
+        const annees = await getListAnnees(structureChoice, finessStored ? JSON.parse(finessStored) : []);
+        setAnnéeEnCours(annees[annees.length - 1]);
+      };
+      fetchData();
+    }
+  }, [structureChoice])
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
@@ -129,7 +115,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonViewModel) => {
+  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
@@ -168,7 +154,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           <Table
             data={resultats}
             handleSelectAll={handleSelectAll}
-            headers={tableHeaders}
+            headers={tableHeaders(datesMisAjour, structureChoice)}
             isAllSelected={isAllSelected}
             isCenter={true}
             isShowAvrage={false}

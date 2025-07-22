@@ -5,5 +5,6 @@ import { DatesMisAjourSources, ResultatDeComparaison } from "../entities/Resulta
 export interface ComparaisonLoader {
   listeAnnees(type: string, numerosFiness: string[]): Promise<string[]>;
   getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources>;
+  getTopEnveloppes(): Promise<Record<string, string[]>>;
   compare(params: ParametresDeComparaison, codeProfiles: ProfilModel[]): Promise<ResultatDeComparaison>;
 }

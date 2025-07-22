@@ -7,4 +7,7 @@ export type ParametresDeComparaison = Readonly<{
   orderBy: string;
   forExport: boolean;
   codeRegion: string;
+  enveloppe1: string;
+  enveloppe2: string;
+  enveloppe3: string;
 }>
