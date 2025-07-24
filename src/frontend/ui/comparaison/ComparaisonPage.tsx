@@ -58,6 +58,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   });
 
   const [triggerCompare, setTriggerCompare] = useState<number>(0);
+  const [deleteEt, setDeleteEt] = useState(false);
 
   useEffect(() => {
     if (structureChoice !== "") {
@@ -75,13 +76,11 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           orderBy: "",
           page: 1,
         });
-
         setTriggerCompare(Date.now());
       };
-
       resetParams();
     }
-  }, [structureChoice]);
+  }, [structureChoice, deleteEt]);
 
   useEffect(() => {
     if (
@@ -139,7 +138,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       ...prev,
       comparedFiness: numerosFiness,
     }));
-    setTriggerCompare(Date.now());
   };
 
   useEffect(() => {
@@ -197,7 +195,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           page: prev.page - 1
         }));
       }
-      handleFinessChange(listFinessArray);
+      setParams(prev => ({
+        ...prev,
+        comparedFiness: listFinessArray,
+      }));
     }
     if (resultats.filter((value) => value.type === etablissementASupprimer.type).length === 1) {
       // supprimer la structure associée
@@ -206,7 +207,12 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       typeStoredArray.splice(indexStructureToDelete, 1);
       sessionStorage.setItem("comparaisonType", JSON.stringify(typeStoredArray));
       setComparedTypes(typeStoredArray);
+    } else {
+      // relancer la comparaison soit par le changement de structure, soit par la suppression d'un Et
+      // bug lié au lancement au double appel de la comparaison à la suppression d'un et
+      setDeleteEt(!deleteEt);
     }
+
   };
 
   const onClickAjoutEtablissement = () => {
@@ -290,7 +296,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
               {wording.AJOUTER_DES_ETABLISSEMENTS}
             </button>
           )}
-          {isShowAjoutEtab && <AjoutEtablissements handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab}></AjoutEtablissements>}
+          {isShowAjoutEtab && <AjoutEtablissements handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} setTriggerCompare={setTriggerCompare}></AjoutEtablissements>}
         </div>
         {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>
