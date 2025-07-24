@@ -127,7 +127,9 @@ export function useRechercheAvanceeComparaison() {
       comparaisonContext?.capaciteHandicap.length === 0 &&
       comparaisonContext?.capaciteMedicoSociaux.length === 0 &&
       comparaisonContext?.zoneGeo === "" &&
-      comparaisonContext?.zoneGeoD === ""
+      comparaisonContext?.zoneGeoD === "" &&
+      comparaisonContext?.categories.length === 0 &&
+      comparaisonContext?.typeStructure.length === 0
     ) {
       return false;
     }
