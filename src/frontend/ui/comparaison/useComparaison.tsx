@@ -60,7 +60,7 @@ export function useComparaison() {
   };
 
   const lancerLaComparaison = async (numerosFiness: string[], type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
-    const enveloppes = await getTopEnveloppes(annee);
+    const enveloppes = await getTopEnveloppes(annee, type);
     setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
     if (numerosFiness && numerosFiness.length > 0) {
@@ -107,27 +107,46 @@ export function useComparaison() {
     return listAnnees;
   }
 
-  const getTopEnveloppes = async (annee: string): Promise<string[]> => {
-    const savedEnveloppesString = sessionStorage.getItem('topEnveloppe');
+  const getTopEnveloppes = async (annee: string, type: string): Promise<string[]> => {
+    const savedEnveloppesEjString = sessionStorage.getItem('topEnveloppeEj');
+    const savedEnveloppesSanString = sessionStorage.getItem('topEnveloppeSan');
     const savedEnveloppesDateString = sessionStorage.getItem('dateTopEnveloppe');
     const today = new Date().toISOString().slice(0, 10);
 
-    if (savedEnveloppesString === null || savedEnveloppesDateString !== today) {
+    if (savedEnveloppesEjString === null || savedEnveloppesSanString === null || savedEnveloppesDateString !== today) {
       try {
         const response = await fetch("/api/comparaison/getTopEnveloppes", {
           headers: { "Content-Type": "application/json" },
           method: "GET",
         });
         const data = await response.json();
-        sessionStorage.setItem('topEnveloppe', JSON.stringify(data))
+        sessionStorage.setItem('topEnveloppeEj', JSON.stringify(data.topEnveloppesEj))
+        sessionStorage.setItem('topEnveloppeSan', JSON.stringify(data.topEnveloppesSan))
         sessionStorage.setItem('dateTopEnveloppe', today)
-        return data[annee] as string[] || [];
+        if (type === 'Sanitaire') {
+          return data.topEnveloppesSan[annee] as string[] || [];
+        }
+        else if (type === 'Entité juridique') {
+          return data.topEnveloppesEj[annee] as string[] || [];
+        }
+        else {
+          return []
+        }
       } catch {
         return [];
       }
     } else {
-      const savedEnveloppes = JSON.parse(savedEnveloppesString) as Record<string, string[]>;
-      return savedEnveloppes[annee] as string[] || [];
+      if (type === 'Sanitaire') {
+        const savedEnveloppes = JSON.parse(savedEnveloppesSanString) as Record<string, string[]>;
+        return savedEnveloppes[annee] as string[] || [];
+      }
+      else if (type === 'Entité juridique') {
+        const savedEnveloppes = JSON.parse(savedEnveloppesEjString) as Record<string, string[]>;
+        return savedEnveloppes[annee] as string[] || [];
+      }
+      else {
+        return []
+      }
     }
   };
 

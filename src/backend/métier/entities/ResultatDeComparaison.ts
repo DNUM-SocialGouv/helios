@@ -73,3 +73,13 @@ export type DatesMisAjourSources = {
   date_mis_a_jour_rpu: string;
   date_mis_a_jour_sae: string;
 };
+
+export type Enveloppes = {
+  [annee: number]: string[]
+};
+
+export type EnveloppesResult = {
+  topEnveloppesEj: Enveloppes;
+  topEnveloppesSan: Enveloppes;
+};
+

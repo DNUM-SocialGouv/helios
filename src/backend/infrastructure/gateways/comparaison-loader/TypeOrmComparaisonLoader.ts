@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
-import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { DatesMisAjourSources, Enveloppes, EnveloppesResult, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 import { combineProfils } from "../../../profileFiltersHelper";
 
@@ -67,10 +67,6 @@ type ComparaisonSANTypeOrm = Readonly<{
   enveloppe_2: number;
   enveloppe_3: number;
 }>;
-
-type EnveloppesResult = {
-  [annee: number]: string[];
-};
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -138,7 +134,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   }
 
   async getTopEnveloppes(): Promise<EnveloppesResult> {
-    const query = `SELECT y.annee, c.enveloppe, c.total_value
+    const queryEj = `SELECT y.annee, c.enveloppe, c.total_value
                     FROM 
                         (SELECT DISTINCT annee FROM allocation_ressource_ej) y
                     CROSS JOIN LATERAL (
@@ -152,18 +148,48 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
                         LIMIT 3
                     ) c
                     ORDER BY y.annee, c.total_value DESC`;
-    const queryResult = await (await this.orm).query(query);
-    const result: EnveloppesResult = {};
+    const queryEtSan = `SELECT y.annee, c.enveloppe, c.total_value
+                    FROM 
+                        (SELECT DISTINCT annee FROM allocation_ressource_et) y
+                    CROSS JOIN LATERAL (
+                        SELECT 
+                            t.enveloppe,
+                            SUM(t.montant) AS total_value
+                        FROM allocation_ressource_et t
+                        WHERE t.annee = y.annee
+                        GROUP BY t.enveloppe
+                        ORDER BY total_value DESC
+                        LIMIT 3
+                    ) c
+                    ORDER BY y.annee, c.total_value DESC`;
+    const queryResultEj = await (await this.orm).query(queryEj);
+    const queryResultEtSan = await (await this.orm).query(queryEtSan);
 
-    queryResult.forEach((item: any) => {
-      if (!result[item.annee]) {
-        result[item.annee] = [];
+    const resultEj: Enveloppes = {};
+    const resultSan: Enveloppes = {};
+
+    queryResultEj.forEach((item: any) => {
+      if (!resultEj[item.annee]) {
+        resultEj[item.annee] = [];
       }
-      if (!result[item.annee].includes(item.enveloppe)) {
-        result[item.annee].push(item.enveloppe);
+      if (!resultEj[item.annee].includes(item.enveloppe)) {
+        resultEj[item.annee].push(item.enveloppe);
       }
     });
-    return result;
+
+    queryResultEtSan.forEach((item: any) => {
+      if (!resultSan[item.annee]) {
+        resultSan[item.annee] = [];
+      }
+      if (!resultSan[item.annee].includes(item.enveloppe)) {
+        resultSan[item.annee].push(item.enveloppe);
+      }
+    });
+
+    return {
+      topEnveloppesEj: resultEj,
+      topEnveloppesSan: resultSan
+    };
   }
 
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
