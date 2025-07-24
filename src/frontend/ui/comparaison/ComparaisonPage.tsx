@@ -296,7 +296,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
         <div className={styles["years-container"]}>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Année</span>
-            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={handleYearChange} />}
+            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags anneeEnCours={params.annéeEnCours} annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={handleYearChange} />}
           </div>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
