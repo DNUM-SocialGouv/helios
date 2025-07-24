@@ -201,7 +201,7 @@ export const RechercheAvanceeFormulaire = ({
             aria-controls="fr-modal-Structure-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonStructureClicked}`}
             data-fr-opened="false"
-            disabled={isComparaison || rechercheAvanceeContext?.categoriesDomaines.length !== 0}
+            disabled={rechercheAvanceeContext?.categoriesDomaines.length !== 0}
           >
             {getWordingStructure()}
           </button>

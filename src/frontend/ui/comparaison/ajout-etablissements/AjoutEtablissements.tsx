@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { WordingFr } from "../../../configuration/wording/WordingFr";
 import { ComparaisonContext } from "../../commun/contexts/ComparaisonContext";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { CategoriesFinessViewModel } from "../../recherche-avancee/model/CategoriesFinessViewModel";
 import { RechercheAvanceeFormulaire } from "../../recherche-avancee/RechecheAvanceeFormulaire";
 import styles from "../Comparaison.module.css";
 import { ListEtablissements } from "./ListEtablissements";
@@ -12,9 +13,10 @@ import type { Dispatch, SetStateAction } from "react";
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
   setReloadTable: Dispatch<SetStateAction<boolean>>;
+  categories: CategoriesFinessViewModel[];
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, categories }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -25,6 +27,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
   const [isChangedCapacite, setIsChangedCapacite] = useState<boolean>(false);
   const [isChangedZG, setIsChangedZG] = useState<boolean>(false);
   const [isChangedActivite, setIsChangedActivite] = useState<boolean>(false);
+  const [isChangedStructure, setIsChangedStructure] = useState<boolean>(false);
+  const [isChangedCategories, setIsChangedCategories] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
   const [newStructures, setNewStructures] = useState<string[]>([]);
@@ -58,17 +62,19 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
 
   // detect filtre(s) changes to update results
   useEffect(() => {
-    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite) {
+    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite || isChangedCategories || isChangedStructure) {
       comparaisonContext?.setPage(1);
       setPrevPage(1);
-      if (isChangedZG || isChangedCapacite) {
+      if (isChangedZG || isChangedCapacite || isChangedActivite || isChangedCategories || isChangedStructure) {
         setIsChangedCapacite(false);
         setIsChangedZG(false);
         setIsChangedActivite(false);
+        setIsChangedCategories(false);
+        setIsChangedStructure(false);
         setReload(true);
       }
     }
-  }, [isChangedZG, isChangedCapacite, comparaisonContext?.terme]);
+  }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
 
   // check if lits are equals or not
   const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
@@ -85,10 +91,20 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     comparaisonContext?.setCapaciteAgees([]);
     comparaisonContext?.setCapaciteHandicap([]);
     comparaisonContext?.setCapaciteMedicoSociaux([]);
+    comparaisonContext?.setActiviteMco([]);
+    comparaisonContext?.setActivitePsy([]);
+    comparaisonContext?.setActiviteSsr([]);
+    comparaisonContext?.setActiviteUsld([]);
     comparaisonContext?.setZoneGeo("");
     comparaisonContext?.setZoneGeoD("");
     comparaisonContext?.setZoneGeoLabel("");
     comparaisonContext?.setZoneGeoType("");
+    comparaisonContext?.setTerme("");
+    comparaisonContext?.setCategories([]);
+    comparaisonContext?.setCategoriesDomaines([]);
+    comparaisonContext?.setCategoriesLibellesCourt([]);
+    comparaisonContext?.setTypeStructure([]);
+    comparaisonContext?.setStatutJuridiqueStructure([]);
     setPrevPage(1);
     setIsShowAjoutEtab(false);
   };
@@ -134,15 +150,17 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
           </div>
           <div id="modal-body-composents" style={{ marginTop: "10px" }}>
             <RechercheAvanceeFormulaire
-              categoriesViewModel={[]}
+              categoriesViewModel={categories}
               isComparaison={true}
               lancerLaRecherche={lancerLaRecherche}
               rechercheOnChange={rechercheOnChange}
               setIsChangedActivite={setIsChangedActivite}
               setIsChangedCapacite={setIsChangedCapacite}
+              setIsChangedCategories={setIsChangedCategories}
+              setIsChangedStructure={setIsChangedStructure}
               setIsChangedZG={setIsChangedZG}
               setSelectedRows={() => { }}
-            ></RechercheAvanceeFormulaire>
+            />
             {listData && listData?.length > 0 && (
               <ListEtablissements
                 newEtablissements={newEtablissements}
