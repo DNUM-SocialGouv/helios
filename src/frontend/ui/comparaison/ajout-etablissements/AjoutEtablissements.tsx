@@ -11,10 +11,11 @@ import type { Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
-  setReloadTable: Dispatch<SetStateAction<boolean>>;
+  setComparedTypes: Dispatch<SetStateAction<string[]>>;
+  handleFinessChange: (numerosFiness: string[]) => void;
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, handleFinessChange }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -102,7 +103,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable }: Ajou
     const newComparedTypes = [...new Set([...arrayComparedTypes, ...newStructures])];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
     sessionStorage.setItem("comparaisonType", JSON.stringify(newComparedTypes));
-    setReloadTable(true);
+    setComparedTypes(newComparedTypes);
+    handleFinessChange(listToCompare);
     onClickFermer();
   };
 
