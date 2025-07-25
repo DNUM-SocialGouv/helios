@@ -1,6 +1,6 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { ParametresDeComparaison } from "../entities/ParametresDeComparaison";
-import { DatesMisAjourSources, ResultatDeComparaison } from "../entities/ResultatDeComparaison";
+import { DatesMisAjourSources, EnveloppesResult, ResultatDeComparaison } from "../entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../gateways/ComparaisonLoader";
 
 export class ComparaisonEtablissementsUseCase {
@@ -22,7 +22,7 @@ export class ComparaisonEtablissementsUseCase {
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     return await this.comparaisonLoader.getDatesMisAJourSourcesComparaison();
   }
-  async getTopEnveloppes(): Promise<Record<string, string[]>> {
+  async getTopEnveloppes(): Promise<EnveloppesResult> {
     return await this.comparaisonLoader.getTopEnveloppes();
   }
 

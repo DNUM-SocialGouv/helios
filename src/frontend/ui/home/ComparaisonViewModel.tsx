@@ -40,7 +40,26 @@ export type ResultatComparaisonEJ = Readonly<{
   enveloppe3: number | null | string;
 }>;
 
-export type ResultatComparaison = ResultatComparaisonSMS | ResultatComparaisonEJ;
+export type ResultatComparaisonSAN = Readonly<{
+  numéroFiness: string;
+  socialReason: string;
+  commune: string;
+  departement: string;
+  type: string;
+  totalHosptMedecine: number | null | string;
+  totalHosptObstetrique: number | null | string;
+  totalHosptChirurgie: number | null | string;
+  totalHosptSsr: number | null | string;
+  totalHosptPsy: number | null | string;
+  passagesUrgences: number | null | string;
+  sejoursHad: number | null | string;
+  journeesUsld: number | null | string;
+  enveloppe1: number | null | string;
+  enveloppe2: number | null | string;
+  enveloppe3: number | null | string;
+}>;
+
+export type ResultatComparaison = ResultatComparaisonSMS | ResultatComparaisonEJ | ResultatComparaisonSAN;
 
 export type MoyenneResultatComparaison = {
   capaciteMoyenne: number;
@@ -171,8 +190,103 @@ export class ComparaisonSMSViewModel {
   }
 }
 
+export class ComparaisonSANViewModel {
+  constructor(private readonly comparaison: ResultatComparaisonSAN) { }
 
+  public get numéroFiness(): string {
+    return this.comparaison.numéroFiness;
+  }
 
+  public get socialReason(): string {
+    return this.comparaison.socialReason;
+  }
+
+  public get type(): string {
+    return this.comparaison.type;
+  }
+
+  public get commune(): string {
+    return this.comparaison.commune;
+
+  }
+
+  public get departement(): string {
+    return this.comparaison.departement;
+  }
+
+  public get totalHosptMedecine(): number | string | null {
+    if (this.comparaison.totalHosptMedecine === '') return ''
+    return this.comparaison.totalHosptMedecine;
+  }
+
+  public get totalHosptObstetrique(): number | string | null {
+    if (this.comparaison.totalHosptObstetrique === '') return ''
+    return this.comparaison.totalHosptObstetrique;
+  }
+
+  public get totalHosptChirurgie(): number | string | null {
+    if (this.comparaison.totalHosptChirurgie === '') return ''
+    return this.comparaison.totalHosptChirurgie;
+  }
+
+  public get totalHosptSsr(): number | string | null {
+    if (this.comparaison.totalHosptSsr === '') return ''
+    return this.comparaison.totalHosptSsr;
+  }
+
+  public get totalHosptPsy(): number | string | null {
+    if (this.comparaison.totalHosptPsy === '') return ''
+    return this.comparaison.totalHosptPsy;
+  }
+
+  public get passagesUrgences(): number | string | null {
+    if (this.comparaison.passagesUrgences === '') return ''
+    return this.comparaison.passagesUrgences;
+  }
+
+  public get sejoursHad(): number | string | null {
+    if (this.comparaison.sejoursHad === '') return ''
+    return this.comparaison.sejoursHad;
+  }
+
+  public get journeesUsld(): number | string | null {
+    if (this.comparaison.journeesUsld === '') return ''
+    return this.comparaison.journeesUsld;
+  }
+
+  public get enveloppe1(): string | null {
+    if (this.comparaison.enveloppe1 === '') return ''
+    return this.comparaison.enveloppe1 ? this.comparaison.enveloppe1
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get enveloppe2(): string | null {
+    if (this.comparaison.enveloppe2 === '') return ''
+    return this.comparaison.enveloppe2 ? this.comparaison.enveloppe2
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+
+  public get enveloppe3(): string | null {
+    if (this.comparaison.enveloppe3 === '') return ''
+    return this.comparaison.enveloppe3 ? this.comparaison.enveloppe3
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
+  }
+}
 export class ComparaisonEJViewModel {
   constructor(private readonly comparaison: ResultatComparaisonEJ) { }
 
@@ -198,8 +312,10 @@ export class ComparaisonEJViewModel {
         return "PRIVÉ LUCRATIF";
       case "prive_non_lucratif":
         return "PRIVÉ NON LUCRATIF";
-      default:
+      case "public":
         return "PUBLIC";
+      default:
+        return "";
     }
   }
 

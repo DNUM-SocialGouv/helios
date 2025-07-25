@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
-import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
+import { DatesMisAjourSources, Enveloppes, EnveloppesResult, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
 import { combineProfils } from "../../../profileFiltersHelper";
 
@@ -49,9 +49,24 @@ type ComparaisonEJTypeOrm = Readonly<{
   enveloppe_3: number;
 }>;
 
-type EnveloppesResult = {
-  [annee: number]: string[];
-};
+type ComparaisonSANTypeOrm = Readonly<{
+  numero_finess: string;
+  raison_sociale_courte: string;
+  type: string;
+  commune: string;
+  departement: string;
+  total_hospt_medecine: number;
+  total_hospt_obstetrique: number;
+  total_hospt_chirurgie: number;
+  total_hospt_ssr: number;
+  total_hospt_psy: number;
+  nombre_passages_urgences: number;
+  nombre_sejours_had: number;
+  nombre_journees_usld: number;
+  enveloppe_1: number;
+  enveloppe_2: number;
+  enveloppe_3: number;
+}>;
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -98,13 +113,28 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       const generateAnneesResult = await (await this.orm).query(generateAnnees);
       return generateAnneesResult.map((item: any) => item.annee);
     } else {
-      return [];
+      const generateAnnees = `SELECT generate_series(
+          CASE 
+          WHEN maxannee = extract(year FROM current_date) THEN (maxannee - 4)::int
+          ELSE (extract(year FROM current_date) - 5)::int
+      END,
+      CASE
+          WHEN maxannee = extract(year FROM current_date) THEN maxannee::int
+          ELSE (extract(year FROM current_date) - 1)::int
+      END
+      ) annee
+				FROM (
+					SELECT max(annee) maxannee FROM (
+					Select annee from activite_sanitaire bg where bg.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+			) anc ) ang`;
+      const generateAnneesResult = await (await this.orm).query(generateAnnees);
+      return generateAnneesResult.map((item: any) => item.annee);
     }
 
   }
 
   async getTopEnveloppes(): Promise<EnveloppesResult> {
-    const query = `SELECT y.annee, c.enveloppe, c.total_value
+    const queryEj = `SELECT y.annee, c.enveloppe, c.total_value
                     FROM 
                         (SELECT DISTINCT annee FROM allocation_ressource_ej) y
                     CROSS JOIN LATERAL (
@@ -118,30 +148,61 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
                         LIMIT 3
                     ) c
                     ORDER BY y.annee, c.total_value DESC`;
-    const queryResult = await (await this.orm).query(query);
-    const result: EnveloppesResult = {};
+    const queryEtSan = `SELECT y.annee, c.enveloppe, c.total_value
+                    FROM 
+                        (SELECT DISTINCT annee FROM allocation_ressource_et) y
+                    CROSS JOIN LATERAL (
+                        SELECT 
+                            t.enveloppe,
+                            SUM(t.montant) AS total_value
+                        FROM allocation_ressource_et t
+                        WHERE t.annee = y.annee
+                        GROUP BY t.enveloppe
+                        ORDER BY total_value DESC
+                        LIMIT 3
+                    ) c
+                    ORDER BY y.annee, c.total_value DESC`;
+    const queryResultEj = await (await this.orm).query(queryEj);
+    const queryResultEtSan = await (await this.orm).query(queryEtSan);
 
-    queryResult.forEach((item: any) => {
-      if (!result[item.annee]) {
-        result[item.annee] = [];
+    const resultEj: Enveloppes = {};
+    const resultSan: Enveloppes = {};
+
+    queryResultEj.forEach((item: any) => {
+      if (!resultEj[item.annee]) {
+        resultEj[item.annee] = [];
       }
-      if (!result[item.annee].includes(item.enveloppe)) {
-        result[item.annee].push(item.enveloppe);
+      if (!resultEj[item.annee].includes(item.enveloppe)) {
+        resultEj[item.annee].push(item.enveloppe);
       }
     });
-    return result;
+
+    queryResultEtSan.forEach((item: any) => {
+      if (!resultSan[item.annee]) {
+        resultSan[item.annee] = [];
+      }
+      if (!resultSan[item.annee].includes(item.enveloppe)) {
+        resultSan[item.annee].push(item.enveloppe);
+      }
+    });
+
+    return {
+      topEnveloppesEj: resultEj,
+      topEnveloppesSan: resultSan
+    };
   }
 
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     const dateMAJFiness = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105);
-
     const dateMAJTdbperf = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
-
     const dateMAJCnsa = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_ERRD_EJ);
 
     const dateMAJAncre = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_QUO_SAN_FINANCE);
-
     const dateMAJHapi = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_HAPI);
+
+    const dateMAJPmsi = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_MEN_PMSI_ANNUEL);
+    const dateMAJRpu = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_RPU);
+    const dateMAJSae = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE);
 
     return {
       date_mis_a_jour_finess: dateMAJFiness.dernièreMiseÀJour || "",
@@ -149,6 +210,9 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       date_mis_a_jour_cnsa: dateMAJCnsa.dernièreMiseÀJour || "",
       date_mis_a_jour_ancre: dateMAJAncre.dernièreMiseÀJour || "",
       date_mis_a_jour_hapi: dateMAJHapi.dernièreMiseÀJour || "",
+      date_mis_a_jour_pmsi: dateMAJPmsi.dernièreMiseÀJour || "",
+      date_mis_a_jour_rpu: dateMAJRpu.dernièreMiseÀJour || "",
+      date_mis_a_jour_sae: dateMAJSae.dernièreMiseÀJour || "",
     }
   }
 
@@ -161,7 +225,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       const autorisations = combineProfils(profilesAutreRegValues);
       return await this.compareSMS(params, autorisations);
     } else {
-      return await this.compareSAN();
+      return await this.compareSAN(params);
     }
   }
 
@@ -405,8 +469,87 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     };
   }
 
-  private async compareSAN(): Promise<ResultatDeComparaison> {
-    return { nombreDeResultats: 0, resultat: [] };
+  private async compareSAN(params: ParametresDeComparaison): Promise<ResultatDeComparaison> {
+    const { numerosFiness, annee, page, order, orderBy, forExport, enveloppe1, enveloppe2, enveloppe3 } = params;
+    const compareEnveloppe1 = `(select SUM(public.allocation_ressource_et.montant) as enveloppe_1,
+        allocation_ressource_et.numero_finess_etablissement_territorial
+        FROM allocation_ressource_et
+        where annee = ${annee} and enveloppe = '${enveloppe1}'
+        GROUP BY allocation_ressource_et.numero_finess_etablissement_territorial) ar1`;
+
+    const compareEnveloppe2 = `(select SUM(public.allocation_ressource_et.montant) as enveloppe_2,
+        allocation_ressource_et.numero_finess_etablissement_territorial
+        FROM allocation_ressource_et
+        where annee = ${annee} and enveloppe = '${enveloppe2}'
+        GROUP BY allocation_ressource_et.numero_finess_etablissement_territorial) ar2`;
+
+    const compareEnveloppe3 = `(select SUM(public.allocation_ressource_et.montant) as enveloppe_3,
+        allocation_ressource_et.numero_finess_etablissement_territorial
+        FROM allocation_ressource_et
+        where annee = ${annee} and enveloppe = '${enveloppe3}'
+        GROUP BY allocation_ressource_et.numero_finess_etablissement_territorial) ar3`;
+
+    const compareEtSanQueryBody = ` from recherche et
+    LEFT JOIN activite_sanitaire acs
+    on et.numero_finess = acs.numero_finess_etablissement_territorial and acs.annee = ${annee}
+    LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
+    LEFT JOIN ${compareEnveloppe2} on et.numero_finess  = ar2.numero_finess_etablissement_territorial
+    LEFT JOIN ${compareEnveloppe3} on et.numero_finess  = ar3.numero_finess_etablissement_territorial
+    where et.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
+
+    const compareEtSanQuery = `Select et.numero_finess,
+    et.raison_sociale_courte,
+    et.commune,
+    et.departement,
+    et.code_region,
+    et.type,
+    CASE
+        WHEN acs.nombre_sejours_partiels_medecine IS NULL AND acs.nombre_sejours_complets_medecine IS NULL THEN NULL
+        ELSE COALESCE(acs.nombre_sejours_partiels_medecine , 0)  + COALESCE(acs.nombre_sejours_complets_medecine , 0)
+    END AS total_hospt_medecine,
+    CASE
+        WHEN acs.nombre_sejours_partiels_obstetrique IS NULL AND acs.nombre_sejours_complets_obstetrique IS NULL THEN NULL
+        ELSE COALESCE(acs.nombre_sejours_partiels_obstetrique , 0)  + COALESCE(acs.nombre_sejours_complets_obstetrique , 0)
+    END AS total_hospt_obstetrique,
+    CASE
+        WHEN acs.nombre_sejours_partiels_chirurgie IS NULL AND acs.nombre_sejours_complets_chirurgie IS NULL THEN NULL
+        ELSE COALESCE(acs.nombre_sejours_partiels_chirurgie , 0)  + COALESCE(acs.nombre_sejours_complets_chirurgie , 0)
+    END AS total_hospt_chirurgie,
+    CASE
+        WHEN acs.nombre_journees_completes_ssr IS NULL AND acs.nombre_journees_partiels_ssr IS NULL THEN NULL
+        ELSE COALESCE(acs.nombre_journees_completes_ssr , 0)  + COALESCE(acs.nombre_journees_partiels_ssr , 0)
+    END AS total_hospt_ssr,
+     CASE
+        WHEN acs.nombre_journees_complete_psy IS NULL AND acs.nombre_journees_complete_psy IS NULL THEN NULL
+        ELSE COALESCE(acs.nombre_journees_complete_psy , 0)  + COALESCE(acs.nombre_journees_complete_psy , 0)
+    END AS total_hospt_psy,
+    acs.nombre_passages_urgences,
+    acs.nombre_sejours_had,
+    acs.nombre_journees_usld,
+    enveloppe_1,
+    enveloppe_2,
+    enveloppe_3 ${compareEtSanQueryBody}`;
+
+    const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
+    const paginatedCompareETSanQuery =
+      order && orderBy
+        ? compareEtSanQuery +
+        ` ORDER BY ${orderBy} ${order} ${limitForExport} `
+        : compareEtSanQuery +
+        ` ORDER BY
+          CASE type
+            WHEN 'Sanitaire' THEN 1
+            WHEN 'Médico-social' THEN 2
+            WHEN 'Entité juridique' THEN 3 
+            ELSE 4
+          END, numero_finess ASC  ${limitForExport} `;
+
+    const compareEtSanQueryResult = await (await this.orm).query(paginatedCompareETSanQuery);
+
+    return {
+      nombreDeResultats: numerosFiness.length,
+      resultat: this.contruitResultatEtSan(compareEtSanQueryResult)
+    };
   }
 
   private makeNumberArrondi(value: any, num: number): number | null {
@@ -486,6 +629,29 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
         enveloppe1: resultat.type === "Entité juridique" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Entité juridique" ? resultat.enveloppe_2 : '',
         enveloppe3: resultat.type === "Entité juridique" ? resultat.enveloppe_3 : '',
+      };
+    });
+  }
+
+  private contruitResultatEtSan(resultats: ComparaisonSANTypeOrm[]): ResultatSAN[] {
+    return resultats.map((resultat: ComparaisonSANTypeOrm): ResultatSAN => {
+      return {
+        numéroFiness: resultat.numero_finess,
+        socialReason: resultat.raison_sociale_courte,
+        type: resultat.type,
+        commune: resultat.commune,
+        departement: resultat.departement,
+        totalHosptMedecine: resultat.type === "Sanitaire" ? resultat.total_hospt_medecine : '',
+        totalHosptObstetrique: resultat.type === "Sanitaire" ? resultat.total_hospt_obstetrique : '',
+        totalHosptChirurgie: resultat.type === "Sanitaire" ? resultat.total_hospt_chirurgie : '',
+        totalHosptSsr: resultat.type === "Sanitaire" ? resultat.total_hospt_ssr : '',
+        totalHosptPsy: resultat.type === "Sanitaire" ? resultat.total_hospt_psy : '',
+        passagesUrgences: resultat.type === "Sanitaire" ? resultat.nombre_passages_urgences : '',
+        sejoursHad: resultat.type === "Sanitaire" ? resultat.nombre_sejours_had : '',
+        journeesUsld: resultat.type === "Sanitaire" ? resultat.nombre_journees_usld : '',
+        enveloppe1: resultat.type === "Sanitaire" ? resultat.enveloppe_1 : '',
+        enveloppe2: resultat.type === "Sanitaire" ? resultat.enveloppe_2 : '',
+        enveloppe3: resultat.type === "Sanitaire" ? resultat.enveloppe_3 : ''
       };
     });
   }
