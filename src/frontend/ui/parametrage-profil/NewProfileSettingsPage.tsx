@@ -4,10 +4,10 @@ import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import { useState } from "react";
 
 // TODO get Default Profile from database
-import { DefaultProfile } from "../../configuration/DefaultProfile";
-import { useDependencies } from "../commun/contexts/useDependencies";
 import { ProfileTable } from "./ParamatrageTable";
 import styles from "./ParametrageProfil.module.css";
+import { DefaultProfile } from "../../configuration/DefaultProfile";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const NewProfileSettingsPage = () => {
   const { wording } = useDependencies();

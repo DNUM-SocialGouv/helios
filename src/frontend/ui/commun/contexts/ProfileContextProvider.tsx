@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 
-import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { ProfileContext } from "./ProfilContext";
+import { ProfilModel } from "../../../../../database/models/ProfilModel";
 
 type ProfileProviderProps = Readonly<{
     children: ReactNode;

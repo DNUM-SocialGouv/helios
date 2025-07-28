@@ -559,4 +559,5 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

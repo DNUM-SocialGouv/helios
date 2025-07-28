@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
+import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
 import {
   AllocationValeursAvecMotif,
   DataRowEntitéJuridiqueAllocationRessources,
@@ -14,7 +15,6 @@ import { DonutNoCenterText, couleurDesArcsDuDonut, getRandomBlueShade } from "..
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
-import { DetailsAllocations } from "./allocation-ressources/SousEnveloppes/DetailsAllocations";
 
 
 export function convertFloatToComma(number: number) {

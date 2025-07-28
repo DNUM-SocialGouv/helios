@@ -51,6 +51,10 @@ export const RechercheAvanceeFormulaire = ({
   const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo ?? "");
   const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType ?? "");
 
+  const [categoriesSelectedList, setCategoriesSelectedList] = useState<CategoriesFinessViewModel[]>([]);
+  const [termeCategories, setTermeCategories] = useState<string>("");
+
+
   const getWordingGeo = (): string => {
     return rechercheAvanceeContext?.zoneGeoLabel?.trim() ? rechercheAvanceeContext.zoneGeoLabel : wording.ZONE_GEOGRAPHIQUE;
   }
@@ -142,6 +146,8 @@ export const RechercheAvanceeFormulaire = ({
     rechercheAvanceeContext?.setTerme("");
     setZoneGeoValue("");
     setZoneGeoType("");
+    setCategoriesSelectedList([]);
+    setTermeCategories("");
     setSelectedRows(new Map<string, string>);
   }
 
@@ -228,8 +234,23 @@ export const RechercheAvanceeFormulaire = ({
         </div>
       </div>
       <div>
-        <FiltreZoneGeographique isComparaison={isComparaison} setIsChanged={setIsChangedZG} setZoneGeoType={setZoneGeoType} setZoneGeoValue={setZoneGeoValue} zoneGeoType={zoneGeoType} zoneGeoValue={zoneGeoValue} />
-        <FiltreCategoriesFiness categoriesViewModel={categoriesViewModel} isComparaison={isComparaison} setIsChanged={setIsChangedCategories} />
+        <FiltreZoneGeographique
+          isComparaison={isComparaison}
+          setIsChanged={setIsChangedZG}
+          setZoneGeoType={setZoneGeoType}
+          setZoneGeoValue={setZoneGeoValue}
+          zoneGeoType={zoneGeoType}
+          zoneGeoValue={zoneGeoValue}
+        />
+        <FiltreCategoriesFiness
+          categoriesSelectedList={categoriesSelectedList}
+          categoriesViewModel={categoriesViewModel}
+          isComparaison={isComparaison}
+          setCategoriesSelectedList={setCategoriesSelectedList}
+          setIsChanged={setIsChangedCategories}
+          setTerme={setTermeCategories}
+          terme={termeCategories}
+        />
         <FiltreStructure isComparaison={isComparaison} setIsChanged={setIsChangedStructure} />
         <FiltreCapacite isComparaison={isComparaison} setIsChanged={setIsChangedCapacite} />
         <FiltreActiviteSanitaire isComparaison={isComparaison} setIsChanged={setIsChangedActivite} />

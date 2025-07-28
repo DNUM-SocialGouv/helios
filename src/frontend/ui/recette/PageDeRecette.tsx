@@ -1,11 +1,11 @@
 import Image from "next/image";
 
+import styles from "./PageDeRecette.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { ListItem } from "../commun/ListItem/ListItem";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
 import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
-import styles from "./PageDeRecette.module.css";
 
 export const PageDeRecette = () => {
   const { paths, wording } = useDependencies();

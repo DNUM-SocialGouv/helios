@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactElement } from "react";
 
+import style from "./EquipementsTagMultiNiveaux.module.css";
 import {
   EquipementEtablissement as EquipementEtablissementType,
   EquipementLourds,
@@ -8,7 +9,6 @@ import {
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable } from "../../commun/Tag";
-import style from "./EquipementsTagMultiNiveaux.module.css";
 
 export type EquipementsProps = {
   equipementLourds: EquipementLourds[];

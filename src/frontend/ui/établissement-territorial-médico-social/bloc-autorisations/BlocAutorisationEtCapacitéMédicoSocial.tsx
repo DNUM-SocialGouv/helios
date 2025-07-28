@@ -1,3 +1,5 @@
+import styles from "./BlocAutorisationEtCapacitéMédicoSocial.module.css";
+import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -7,8 +9,6 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
 import { ContenuCapacitéParActivité } from "../InfoBulle/ContenuCapacitéParActivité";
-import styles from "./BlocAutorisationEtCapacitéMédicoSocial.module.css";
-import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
   établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;

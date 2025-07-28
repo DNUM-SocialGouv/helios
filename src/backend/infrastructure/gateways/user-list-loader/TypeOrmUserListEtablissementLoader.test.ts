@@ -1,12 +1,12 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmUserListEtablissementLoader } from "./TypeOrmUserListEtablissementLoader";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UserListEtablissementModel } from "../../../../../database/models/UserListEtablissementModel";
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { clearAllTables, getOrm } from "../../../testHelper";
-import { TypeOrmUserListEtablissementLoader } from "./TypeOrmUserListEtablissementLoader";
 
 describe("La recherche des etablissements dans une liste", () => {
     const orm = getOrm();

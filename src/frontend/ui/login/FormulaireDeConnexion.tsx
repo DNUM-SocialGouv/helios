@@ -1,11 +1,11 @@
-import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import React, { useState, FormEvent, useContext } from "react";
 
+import styles from "./Connexion.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
-import styles from "./Connexion.module.css";
 
 export const FormulaireDeConnexion = () => {
   const { wording } = useDependencies();

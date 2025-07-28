@@ -1,10 +1,10 @@
-import { ReactChild } from "react";
+import { ReactNode } from "react";
 import "@gouvfr/dsfr/dist/component/highlight/highlight.min.css";
 
 import styles from "./MiseEnExergue.module.css";
 
 type MiseEnExergueProps = Readonly<{
-  children: ReactChild;
+  children: ReactNode;
 }>;
 
 export const MiseEnExergue = ({ children }: MiseEnExergueProps) => {

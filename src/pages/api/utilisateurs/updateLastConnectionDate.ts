@@ -16,7 +16,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     } else {
       return response.status(401).json({ status: false });
     }
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return response.status(500);
   }
 }

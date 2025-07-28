@@ -647,6 +647,7 @@ export class WordingFr implements Wording {
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "L’indicateur Nombre de journées en USLD est disponible, réinitialisation des champs de recherche et sélection de l’ensemble des résultats de la recherche avancée sont accessibles.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche avancée évolue!";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = "Ajout du filtre Catégorie FINESS et du filtre Activité sanitaire.";
 
 }

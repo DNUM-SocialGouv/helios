@@ -2,12 +2,12 @@ import { fireEvent, screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import React from "react";
 
+import { ResultatNetComptable } from "./ResultatNetComptable";
+import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../../entité-juridique/bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
-import { ResultatNetComptable } from "./ResultatNetComptable";
-import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 
 const { wording } = fakeFrontDependencies;
 

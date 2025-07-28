@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -129,6 +129,7 @@
     "react": "18.3.1",
     "react-chartjs-2": "^4.2.0",
     "react-dom": "18.3.1",
+    "react-emojis": "^1.0.6",
     "react-to-print": "^2.15.1",
     "ssh2": "^1.9.0",
     "ssh2-sftp-client": "^8.0.0",

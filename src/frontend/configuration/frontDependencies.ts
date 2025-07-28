@@ -2,9 +2,9 @@ import * as Sentry from "@sentry/nextjs";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { FEATURE_NAME, isFeatureEnabled } from "../utils/featureToggle";
 import { BreadcrumbHandler } from "./BreadcrumbHandler";
 import { Paths } from "./Paths";
+import { FEATURE_NAME, isFeatureEnabled } from "../utils/featureToggle";
 import { Wording } from "./wording/Wording";
 import { WordingFr } from "./wording/WordingFr";
 

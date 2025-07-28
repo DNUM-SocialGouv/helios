@@ -1,9 +1,9 @@
 import { memo } from "react";
 
-import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammeHorizontalRow } from "./HistogrammeHorizontalRow/HistogrammeHorizontalRow";
 import { NombreTotaleReclamation } from "./NombreTotaleReclamation/NombreTotaleReclamation";
 import styles from "./ReclamationParAnnee.module.css";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 
 interface rowReclamation {
   motif: string;

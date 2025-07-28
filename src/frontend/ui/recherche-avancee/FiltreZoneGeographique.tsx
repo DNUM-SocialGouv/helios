@@ -30,7 +30,6 @@ type FiltresForComparaisonProps = Readonly<{
 export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoValue, setZoneGeoValue, zoneGeoType, setZoneGeoType }: FiltresForComparaisonProps) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-
   const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
+import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
 import { CadreBudgétaire } from "../../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -17,7 +18,6 @@ import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical"
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { StringFormater } from "../../commun/StringFormater";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
-import { CompteDeResultatViewModel } from "./compte-de-resultat/CompteDeResultatViewModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
   private readonly seuilMinimalDuTauxDeVétustéConstruction = 0;

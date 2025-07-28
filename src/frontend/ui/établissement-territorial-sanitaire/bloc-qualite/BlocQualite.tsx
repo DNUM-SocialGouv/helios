@@ -1,5 +1,6 @@
 import { memo } from "react";
 
+import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
 import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -9,7 +10,6 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
 import { GraphiqueEvenementsIndesirables } from "../../établissement-territorial-médico-social/bloc-qualite/evenements-indesirables/GraphiqueEvenementsIndesirables";
 import { GraphiqueInspectionsControles } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/GraphiqueInspectionsControles";
-import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
 
 type BlocQualitéProps = Readonly<{
   etablissementTerritorialQualiteSanitairelViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;

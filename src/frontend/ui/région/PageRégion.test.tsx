@@ -1,8 +1,8 @@
 import { screen } from "@testing-library/react";
 
-import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 import { PageRégion } from "./PageRégion";
 import { régions } from "./régions";
+import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
 

@@ -125,7 +125,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   const pageDetails =
     (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
-  let rolesF = roles;
+  let rolesF;
   if (data?.user?.role === 1) {
     rolesF = roles;
   } else {

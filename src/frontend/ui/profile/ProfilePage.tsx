@@ -1,9 +1,9 @@
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 
+import { UserInfoTab } from "./UserInfoTab";
 import { ChangePwdPage } from "../change-mot-passe/ChangePwdPage";
 import { TabContent } from "../commun/Tabs/tabContent";
 import { Tabs } from "../commun/Tabs/tabs";
-import { UserInfoTab } from "./UserInfoTab";
 
 export const ProfilePage = () => {
 

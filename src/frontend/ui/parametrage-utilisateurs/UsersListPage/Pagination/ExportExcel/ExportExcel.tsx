@@ -2,13 +2,13 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { memo } from "react";
 import * as XLSX from "xlsx";
 
+import styles from "./ExportExcel.module.css";
 import { InstitutionModel } from "../../../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../../../utils/dateUtils";
 import { IQueryParams, getUserStatus } from "../../UsersListPage";
-import styles from "./ExportExcel.module.css";
 
 export function getCurrentDate() {
   const today = new Date();

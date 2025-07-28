@@ -1,10 +1,10 @@
-import { ReactChild } from "react";
+import { ReactNode } from "react";
 
 import "@gouvfr/dsfr/dist/component/accordion/accordion.min.css";
 import styles from "./Bloc.module.css";
 
 type BlocProps = Readonly<{
-  children?: ReactChild | ReactChild[];
+  children?: ReactNode | ReactNode[];
   isMain?: boolean;
   titre: string;
   isExpandable?: boolean;
@@ -26,7 +26,7 @@ export const Bloc = ({ children, isMain = false, titre, isExpandable = true, opn
             aria-controls={contentId}
             aria-expanded={opnedBloc}
             className={"fr-accordion__btn " + styles["titre-button-bloc"] + " " + classeDuTitre}
-            onClick={() => {if(toggelBlocs) {toggelBlocs()}} }
+            onClick={() => { if (toggelBlocs) { toggelBlocs() } }}
           >
             {titre}
           </button>

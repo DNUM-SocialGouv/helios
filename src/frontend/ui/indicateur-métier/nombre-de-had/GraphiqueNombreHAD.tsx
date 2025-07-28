@@ -1,8 +1,8 @@
+import { ContenuNombreHAD } from "./ContenuNombreHAD";
+import { GraphiqueNombreHADViewModel } from "./GraphiqueNombreHADViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuNombreHAD } from "./ContenuNombreHAD";
-import { GraphiqueNombreHADViewModel } from "./GraphiqueNombreHADViewModel";
 
 type GraphiqueNombreHADProps = Readonly<{
   nombreHADViewModel: GraphiqueNombreHADViewModel;

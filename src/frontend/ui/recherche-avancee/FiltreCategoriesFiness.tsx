@@ -11,19 +11,20 @@ import { ListeRiche } from "../commun/ListeRiche/ListeRiche";
 type FiltresForComparaisonProps = Readonly<{
     isComparaison: boolean;
     setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
-    categoriesViewModel: CategoriesFinessViewModel[]
+    categoriesViewModel: CategoriesFinessViewModel[];
+    categoriesSelectedList: CategoriesFinessViewModel[];
+    setCategoriesSelectedList: Dispatch<SetStateAction<CategoriesFinessViewModel[]>>
+    terme: string;
+    setTerme: Dispatch<SetStateAction<string>>
 }>;
 
-export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categoriesViewModel }: FiltresForComparaisonProps) => {
+export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categoriesViewModel, categoriesSelectedList, setCategoriesSelectedList, terme, setTerme }: FiltresForComparaisonProps) => {
     const { wording } = useDependencies();
 
     const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
 
-    const [categoriesSelectedList, setCategoriesSelectedList] = useState<CategoriesFinessViewModel[]>([]);
-
     const [filtredCategories, setFiltredCategories] = useState<CategoriesFinessViewModel[]>([]);
 
-    const [terme, setTerme] = useState<string>("");
 
     useEffect(() => {
         filtrerLesCategories();
