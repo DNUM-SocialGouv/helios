@@ -1,11 +1,18 @@
-import { parse } from "cookie";
 import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { StringFormater } from "../commun/StringFormater";
-import { ApiComparaisonResultat, ComparaisonViewModel } from "../home/ComparaisonViewModel";
+import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
+import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
+import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
+import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSAN, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
+import { ContenuNombreHAD } from "../indicateur-métier/nombre-de-had/ContenuNombreHAD";
+import { ContenuNombreDeJourneesUsld } from "../indicateur-métier/nombre-journees-usld/ContenuNombreDeJourneesUsld";
+import { ContenuNombreDePassagesAuxUrgences } from "../indicateur-métier/nombre-passage-urgence/ContenuNombreDePassagesAuxUrgences";
+import { ContenuRésultatNetComptableEJ } from "../indicateur-métier/resultat-net-comptable/ContenuRésultatNetComptableEJ";
 import { ContenuTauxDeCaf } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCaf";
+import { ContenuTauxDeCafEJ } from "../indicateur-métier/taux-de-caf/ContenuTauxDeCafEJ";
 import { ContenuCapacitéParActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuCapacitéParActivité";
 import { ContenuDesTauxDAbsentéismes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDesTauxDAbsentéismes";
 import { ContenuDePrestationsExternes } from "../établissement-territorial-médico-social/InfoBulle/ContenuDuTauxDePrestationsExternes";
@@ -17,12 +24,14 @@ import { ContenuFondDeRoulementNetGlobal } from "../établissement-territorial-m
 import { ContenuRésultatNetComptable } from "../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeVétustéConstruction";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
+import { ContenuNombreDeJournéesPSYetSSR } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
+import { ContenuNombreDeSéjourMCO } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 
 
 type comparaisonState = Readonly<{
   nombreRésultats: number;
   lastPage: number;
-  résultats: ComparaisonViewModel[];
+  résultats: ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
   loading: boolean;
   listeAnnees: number[];
 }>;
@@ -40,34 +49,23 @@ export function useComparaison() {
     listeAnnees: [],
   });
 
-  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat): ComparaisonViewModel[] => {
-    return data.resultat.map((resultat) => new ComparaisonViewModel(resultat));
+  const [topEnveloppes, setTopEnveloppes] = useState<string[]>([]);
+
+  const construisLesRésultatsDeLaComparaison = (data: ApiComparaisonResultat, type: string): (ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[]) => {
+    if (type === 'Médico-social')
+      return data.resultat.map((resultat) => new ComparaisonSMSViewModel(resultat as ResultatComparaisonSMS));
+    else if (type === 'Entité juridique')
+      return data.resultat.map((resultat) => new ComparaisonEJViewModel(resultat as ResultatComparaisonEJ));
+    else return data.resultat.map((resultat) => new ComparaisonSANViewModel(resultat as ResultatComparaisonSAN));
   };
 
-  const lancerLaComparaison = async (annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
-    const listFiness = sessionStorage.getItem("listFinessNumbers");
-    let typeStored = sessionStorage.getItem("comparaisonType");
-    if (!typeStored) {
-      const cookies = parse(document.cookie);
-      typeStored = cookies["type"] ?? "";
-      sessionStorage.setItem("comparaisonType", typeStored);
-    }
-
-    let numerosFiness = [];
-    try {
-      numerosFiness = listFiness ? JSON.parse(listFiness) : [];
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log("e", e)
-    }
-
-    const type = typeStored ?? "";
-
+  const lancerLaComparaison = async (numerosFiness: string[], type: string, annee: string, codeRegion: string, codeProfiles: string[], order: string = "", orderBy: string = "", page: number = 1): Promise<void> => {
+    const enveloppes = await getTopEnveloppes(annee, type);
+    setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
-
     if (numerosFiness && numerosFiness.length > 0) {
       fetch("/api/comparaison/compare", {
-        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, codeProfiles }),
+        body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, enveloppe1: enveloppes[0], enveloppe2: enveloppes[1], enveloppe3: enveloppes[2], codeProfiles }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })
@@ -77,7 +75,7 @@ export function useComparaison() {
             ...state,
             nombreRésultats: data.nombreDeResultats,
             lastPage: Math.ceil(data.nombreDeResultats / take),
-            résultats: construisLesRésultatsDeLaComparaison(data),
+            résultats: construisLesRésultatsDeLaComparaison(data, type),
             loading: false,
             listeAnnees: data.listeAnnees,
           });
@@ -96,6 +94,62 @@ export function useComparaison() {
       })
     }
   }
+
+  const getListAnnees = async (type: string, numeroFiness: string[]): Promise<number[]> => {
+    const params = new URLSearchParams();
+    params.set('type', type);
+    numeroFiness.forEach(finess => params.append('numeroFiness', finess));
+    const response = await fetch(`/api/comparaison/getListAnnees?${params.toString()}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    });
+    const listAnnees = await response.json();
+    return listAnnees;
+  }
+
+  const getTopEnveloppes = async (annee: string, type: string): Promise<string[]> => {
+    const savedEnveloppesEjString = sessionStorage.getItem('topEnveloppeEj');
+    const savedEnveloppesSanString = sessionStorage.getItem('topEnveloppeSan');
+    const savedEnveloppesDateString = sessionStorage.getItem('dateTopEnveloppe');
+    const today = new Date().toISOString().slice(0, 10);
+
+    if (savedEnveloppesEjString === null || savedEnveloppesSanString === null || savedEnveloppesDateString !== today) {
+      try {
+        const response = await fetch("/api/comparaison/getTopEnveloppes", {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        });
+        const data = await response.json();
+        sessionStorage.setItem('topEnveloppeEj', JSON.stringify(data.topEnveloppesEj))
+        sessionStorage.setItem('topEnveloppeSan', JSON.stringify(data.topEnveloppesSan))
+        sessionStorage.setItem('dateTopEnveloppe', today)
+        if (type === 'Sanitaire') {
+          return data.topEnveloppesSan[annee] as string[] || [];
+        }
+        else if (type === 'Entité juridique') {
+          return data.topEnveloppesEj[annee] as string[] || [];
+        }
+        else {
+          return []
+        }
+      } catch {
+        return [];
+      }
+    } else {
+      if (type === 'Sanitaire') {
+        const savedEnveloppes = JSON.parse(savedEnveloppesSanString) as Record<string, string[]>;
+        return savedEnveloppes[annee] as string[] || [];
+      }
+      else if (type === 'Entité juridique') {
+        const savedEnveloppes = JSON.parse(savedEnveloppesEjString) as Record<string, string[]>;
+        return savedEnveloppes[annee] as string[] || [];
+      }
+      else {
+        return []
+      }
+    }
+  };
+
 
 
   const contenuModal = (name: string, dates: DatesMisAjourSources): { contenu: any; titre: ReactNode } => {
@@ -167,19 +221,152 @@ export function useComparaison() {
           contenu: <ContenuCapacitéParActivité dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_finess)} source={wording.FINESS} />,
           titre: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS,
         };
+      case "chargesPrincipaux":
+      case "chargesAnnexes":
+      case "produitsPrincipaux":
+      case "produitsAnnexes":
+        return {
+          contenu: <ContenuCompteDeRésultatEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.COMPTE_DE_RÉSULTAT_CF,
+        };
+      case "resultatNetComptableEj":
+        return {
+          contenu: <ContenuRésultatNetComptableEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.RÉSULTAT_NET_COMPTABLE,
+        };
+      case "tauxCafEj":
+        return {
+          contenu: <ContenuTauxDeCafEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.TAUX_DE_CAF,
+        };
+      case "ratioDependanceFinanciere":
+        return {
+          contenu: <ContenuRatioDependanceFinancière dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.RATIO_DEPENDANCE_FINANCIERE,
+        };
+      case "totalHosptMedecine":
+      case "totalHosptChirurgie":
+      case "totalHosptObstetrique":
+        return {
+          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_SÉJOUR_MCO,
+        };
+      case "totalHosptPsy":
+      case "totalHosptSsr":
+        return {
+          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR,
+        };
+      case "passagesUrgences":
+        return {
+          contenu: <ContenuNombreDePassagesAuxUrgences dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_rpu)} source={wording.RPU} />,
+          titre: wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
+        };
+      case "sejoursHad":
+        return {
+          contenu: <ContenuNombreHAD dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} source={wording.PMSI} />,
+          titre: wording.NOMBRE_DE_HAD,
+        };
+      case "journeesUsld":
+        return {
+          contenu: <ContenuNombreDeJourneesUsld dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_sae)} estEntitéJuridique={false} source={wording.SAE} />,
+          titre: wording.NOMBRE_DE_JOURNEES_USLD,
+        };
+      case "enveloppe1":
+      case "enveloppe2":
+      case "enveloppe3":
+        return {
+          contenu: <ContenuAllocationRessourcesEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
+          titre: wording.ALLOCATION_DE_RESSOURCES,
+        };
       default:
         return { contenu: "Aucun contenue à afficher pour l'instant", titre: "Bonjour" };
     }
   }
 
+  const tableHeaders = (datesMisAjour: DatesMisAjourSources, structure: string) => {
+    if (structure === 'Médico-social')
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        {
+          label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+          nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
+          key: "capacite",
+          info: true,
+          sort: true,
+          orderBy: "capacite_total",
+        },
+        { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
+        { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
+        { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
+        { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
+        { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+        { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
+        { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
+        { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
+        { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
+        { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
+        { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
+        { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
+        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
+      ]
+    else if (structure === 'Entité juridique') {
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
+        { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
+        { label: "Cpte résultat - Charges (principaux) ", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", info: true, sort: true, orderBy: "total_depenses_principales" },
+        { label: " Cpte résultat - Charges (annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", info: true, sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
+        { label: "Cpte résultat - Produits (principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", info: true, sort: true, orderBy: "total_recettes_principales" },
+        { label: "Cpte résultat - Produits (annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", info: true, sort: true, orderBy: "total_recettes_global - total_recettes_principales " },
+        { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptableEj", info: true, sort: true, orderBy: "resultat_net_comptable_san" },
+        { label: "Tx CAF", nomComplet: "Taux de CAF", key: "tauxCafEj", info: true, sort: true, orderBy: "taux_de_caf_nette_san" },
+        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+      ]
+    }
+    else
+      return [
+        { label: "", key: "delete", nomComplet: "" },
+        { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
+        { label: "", key: "favori", nomComplet: "" },
+        { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        { label: "Nb séjours Médecine -Total Hospt", nomComplet: "Nb de séjours Médecine -Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "total_hospt_medecine" },
+        { label: "Nb séjours Chirurgie -Total Hospt", nomComplet: "Nb de séjours Chirurgie -Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "total_hospt_chirurgie" },
+        { label: "Nb séjours Obstétrique -Total Hospt", nomComplet: "Nb de séjours Obstétrique -Total Hospt", key: "totalHosptObstetrique", info: true, sort: true, orderBy: "total_hospt_obstetrique" },
+        { label: "Nb journées Psychiatrie - Total Hospt", nomComplet: "Nb de  journées Psychiatrie - Total Hospt", key: "totalHosptPsy", info: true, sort: true, orderBy: "total_hospt_ssr" },
+        { label: "Nb journées  SSR- Total Hospt", nomComplet: "Nb de journées  SSR- Total Hospt", key: "totalHosptSsr", info: true, sort: true, orderBy: "total_hospt_psy" },
+        { label: "Nb de passage aux urgences", nomComplet: "Nb de passage aux urgences", key: "passagesUrgences", info: true, sort: true, orderBy: "nombre_passages_urgences" },
+        { label: "Nb séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "nombre_sejours_had" },
+        { label: "Nb journées USLD", nomComplet: "Nb de journées USLD", key: "journeesUsld", info: true, sort: true, orderBy: "nombre_journees_usld" },
+        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
+        { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+      ]
+  };
+
   return {
     lancerLaComparaison,
     contenuModal,
+    tableHeaders,
     nombreRésultats: state.nombreRésultats,
     resultats: state.résultats,
     lastPage: state.lastPage,
     loading: state.loading,
     NombreDeResultatsMaxParPage: take,
-    listeAnnees: state.listeAnnees
+    listeAnnees: state.listeAnnees,
+    getListAnnees
   };
 }

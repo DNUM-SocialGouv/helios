@@ -77,7 +77,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     expect(titre).toBeInTheDocument();
   });
 
-  it("affiche le bouton pour imprimer", () => {
+  it("affiche le bouton d’action", () => {
     const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
@@ -94,8 +94,8 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
     );
 
     // THEN
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-    expect(imprimer).toHaveAttribute("type", "button");
+    const actions = screen.getByRole("button", { name: wording.ACTIONS });
+    expect(actions).toHaveAttribute("type", "button");
   });
 
   it("affiche le nom de l’établissement", () => {

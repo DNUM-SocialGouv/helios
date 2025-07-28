@@ -2,7 +2,6 @@ import Head from "next/head";
 import { useRef, useCallback, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 
-import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
@@ -72,7 +71,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
       </Head>
       <div className="print-content" ref={componentRef}>
         <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={handlePrint} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
           {entitéJuridiqueViewModel.titre}
         </Titre>
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />

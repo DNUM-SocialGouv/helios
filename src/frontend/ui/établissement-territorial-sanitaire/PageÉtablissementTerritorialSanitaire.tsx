@@ -1,8 +1,7 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
-import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -77,7 +76,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
         <title>{établissementTerritorialSanitaireViewModel.titre}</title>
       </Head>
       <div className="print-content" ref={componentRef}>
-        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={handlePrint} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
           {établissementTerritorialSanitaireViewModel.titre}
         </Titre>
         <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
@@ -111,6 +110,6 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
 
       </div>
-    </main>
+    </main >
   );
 };

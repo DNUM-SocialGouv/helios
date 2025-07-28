@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 
 import styles from "./Titre.module.css";
+import { ActionsButton } from "../../etablissement/ActionsButton";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
 
@@ -8,7 +9,7 @@ type TitreProps = Readonly<{
   logo: ReactElement;
   children: ReactElement | string;
   rechercheViewModel: RechercheViewModel;
-  downloadPDF?: any;
+  downloadPDF: () => void;
 }>;
 
 export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: TitreProps) => {
@@ -22,7 +23,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
           <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
-      {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}
-    </div>
+      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} finess={rechercheViewModel.numéroFiness} typeEtab={rechercheViewModel.type} /></div>
+    </div >
   );
 };
