@@ -12,11 +12,13 @@ import type { Dispatch, SetStateAction } from "react";
 
 type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
-  setReloadTable: Dispatch<SetStateAction<boolean>>;
+  setComparedTypes: Dispatch<SetStateAction<string[]>>;
+  handleFinessChange: (numerosFiness: string[]) => void;
+  setTriggerCompare: Dispatch<SetStateAction<number>>;
   categories: CategoriesFinessViewModel[];
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, categories }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, handleFinessChange, setTriggerCompare, categories }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -115,10 +117,18 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setReloadTable, catego
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
     const arrayComparedTypes = comparedTypes ? JSON.parse(comparedTypes) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
-    const newComparedTypes = [...new Set([...arrayComparedTypes, ...newStructures])];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
-    sessionStorage.setItem("comparaisonType", JSON.stringify(newComparedTypes));
-    setReloadTable(true);
+    handleFinessChange(listToCompare);
+    const missingInOld = newStructures.filter(item => !arrayComparedTypes.includes(item));
+    // relancer la comparaison soit par le changement de structure, soit par l'ajout d'un Et
+    // bug lié au lancement au double appel de la comparaison à l'ajout d'un et
+    if (missingInOld.length > 0) {
+      const newComparedTypes = [...new Set([...arrayComparedTypes, ...newStructures])];
+      sessionStorage.setItem("comparaisonType", JSON.stringify(newComparedTypes));
+      setComparedTypes(newComparedTypes);
+    } else {
+      setTriggerCompare(Date.now());
+    }
     onClickFermer();
   };
 

@@ -13,7 +13,7 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { ComparaisonEJViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
+import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
@@ -33,40 +33,119 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
   const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
-  const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
 
-  const [page, setPage] = useState<number>(1);
   const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
-
-  const [order, setOrder] = useState("");
-  const [orderBy, setOrderBy] = useState("");
-  const [deleteEt, setDeleteEt] = useState(false);
-
-  const [reloadTable, setReloadTable] = useState<boolean>(false);
 
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
   const [comparedTypes, setComparedTypes] = useState<string[]>([]);
-  const [comparedFiness, setComparedFiness] = useState<string[]>([]);
 
+  const [params, setParams] = useState<{
+    annéeEnCours: number;
+    order: string;
+    orderBy: string;
+    page: number;
+    comparedFiness: string[];
+  }>({
+    annéeEnCours: listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0,
+    order: "",
+    orderBy: "",
+    page: 1,
+    comparedFiness: [],
+  });
 
-  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
+  const [triggerCompare, setTriggerCompare] = useState<number>(0);
+  const [deleteEt, setDeleteEt] = useState(false);
+
   useEffect(() => {
     if (structureChoice !== "") {
-      lancerLaComparaison(comparedFiness, structureChoice, annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
-      setReloadTable(false);
+      const resetParams = async () => {
+        const finessStored = sessionStorage.getItem("listFinessNumbers");
+        const finessList = finessStored ? JSON.parse(finessStored) : [];
+
+        const annees = await getListAnnees(structureChoice, finessList);
+        const latestYear = annees[annees.length - 1];
+
+        setParams({
+          comparedFiness: finessList,
+          annéeEnCours: latestYear,
+          order: "",
+          orderBy: "",
+          page: 1,
+        });
+        setTriggerCompare(Date.now());
+      };
+      resetParams();
     }
-  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable, structureChoice]);
+  }, [structureChoice, deleteEt]);
+
+  useEffect(() => {
+    if (
+      structureChoice !== "" &&
+      params.annéeEnCours &&
+      params.comparedFiness.length > 0
+    ) {
+      lancerLaComparaison(
+        params.comparedFiness,
+        structureChoice,
+        params.annéeEnCours.toString(),
+        codeRegion,
+        codeProfiles,
+        params.order,
+        params.orderBy,
+        params.page
+      );
+    }
+  }, [triggerCompare]);
+
+  const handleOrderChange = (order: string) => {
+    setParams(prev => ({
+      ...prev,
+      order,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleOrderByChange = (orderBy: string) => {
+    setParams(prev => ({
+      ...prev,
+      orderBy,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setParams(prev => ({
+      ...prev,
+      page: newPage,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleYearChange = (newYear: number) => {
+    setParams(prev => ({
+      ...prev,
+      annéeEnCours: newYear,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleFinessChange = (numerosFiness: string[]) => {
+    setParams(prev => ({
+      ...prev,
+      comparedFiness: numerosFiness,
+    }));
+  };
 
   useEffect(() => {
     const typeStored = sessionStorage.getItem("comparaisonType");
     setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
-  }, [reloadTable, deleteEt])
+  }, [])
 
   useEffect(() => {
     if (comparedTypes.length !== 0) {
@@ -77,19 +156,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       else setStructureChoice("Entité juridique");
     }
   }, [comparedTypes])
-
-  useEffect(() => {
-    if (structureChoice !== "") {
-      const fetchData = async () => {
-        const finessStored = sessionStorage.getItem("listFinessNumbers");
-        setComparedFiness(finessStored ? JSON.parse(finessStored) : []);
-
-        const annees = await getListAnnees(structureChoice, finessStored ? JSON.parse(finessStored) : []);
-        setAnnéeEnCours(annees[annees.length - 1]);
-      };
-      fetchData();
-    }
-  }, [structureChoice])
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
@@ -117,7 +183,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel) => {
+  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
@@ -125,9 +191,16 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
-      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
-        setPage(page - 1);
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && params.page !== 1) {
+        setParams(prev => ({
+          ...prev,
+          page: prev.page - 1
+        }));
       }
+      setParams(prev => ({
+        ...prev,
+        comparedFiness: listFinessArray,
+      }));
     }
     if (resultats.filter((value) => value.type === etablissementASupprimer.type).length === 1) {
       // supprimer la structure associée
@@ -135,8 +208,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       const indexStructureToDelete = typeStoredArray.indexOf(etablissementASupprimer.type);
       typeStoredArray.splice(indexStructureToDelete, 1);
       sessionStorage.setItem("comparaisonType", JSON.stringify(typeStoredArray));
+      setComparedTypes(typeStoredArray);
+    } else {
+      // relancer la comparaison soit par le changement de structure, soit par la suppression d'un Et
+      // bug lié au lancement au double appel de la comparaison à la suppression d'un et
+      setDeleteEt(!deleteEt);
     }
-    setDeleteEt(!deleteEt);
+
   };
 
   const onClickAjoutEtablissement = () => {
@@ -163,15 +241,15 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
             isVScroll={true}
             onClickDelete={onClickDelete}
             onClickInfobull={openModal}
-            order={order}
-            orderBy={orderBy}
+            order={params.order}
+            orderBy={params.orderBy}
             selectedRows={selectedRows}
-            setOrder={setOrder}
-            setOrderBy={setOrderBy}
+            setOrder={handleOrderChange}
+            setOrderBy={handleOrderByChange}
             setSelectedRows={setSelectedRows}
             total={nombreRésultats}
           />
-          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={params.page || 1} setPage={handlePageChange || (() => { })} />
         </>
       )
     }
@@ -179,7 +257,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   }
 
   const exportExcel = () => {
-    let anneeExport = annéeEnCours;
+    let anneeExport = params.annéeEnCours;
     if (!anneeExport && listeAnnees) {
       anneeExport = listeAnnees[listeAnnees.length - 1];
     }
@@ -188,8 +266,8 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       codeRegion={codeRegion}
       datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
       disabled={resultats.length === 0}
-      order={order}
-      orderBy={orderBy}
+      order={params.order}
+      orderBy={params.orderBy}
       year={String(anneeExport)}
     />;
   }
@@ -220,13 +298,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
               {wording.AJOUTER_DES_ETABLISSEMENTS}
             </button>
           )}
-          {isShowAjoutEtab && <AjoutEtablissements categories={categories} setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable} />}
+          {isShowAjoutEtab && <AjoutEtablissements categories={categories} handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} setTriggerCompare={setTriggerCompare}></AjoutEtablissements>}
         </div>
         {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Année</span>
-            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
+            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags anneeEnCours={params.annéeEnCours} annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={handleYearChange} />}
           </div>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
