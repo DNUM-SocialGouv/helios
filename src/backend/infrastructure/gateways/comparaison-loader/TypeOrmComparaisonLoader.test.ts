@@ -2,7 +2,10 @@ import { Repository } from "typeorm";
 
 import { TypeOrmComparaisonLoader } from "./TypeOrmComparaisonLoader";
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
+import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
+import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
+import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
@@ -18,7 +21,7 @@ import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeC
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { clearAllTables, getOrm } from "../../../testHelper";
 
-describe("La comparaison des établissements médico sociaux", () => {
+describe("La comparaison des établissements", () => {
   const orm = getOrm();
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
@@ -26,8 +29,49 @@ describe("La comparaison des établissements médico sociaux", () => {
   let budgetEtFinancesMedicoSocialModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
   let activiteeMedicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>;
   let autorisationMedicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
+  let activiteSanitaireRepository: Repository<ActivitéSanitaireModel>;
+  let allocationRessourceETRepository: Repository<AllocationRessourceETModel>;
+  let budgetEtFinancesEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
 
   const premièrePage = 1;
+
+  const autorisation = new ProfilModel();
+  autorisation.value = {
+    institution: { profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {} },
+    autreRegion: {
+      profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {
+        "activités": {
+          "tauxRéalisationActivité": "ok",
+          "tauxOccupationAccueilDeJour": "ok",
+          "fileActivePersonnesAccompagnées": "ok",
+          "tauxOccupationHébergementPermanent": "ok",
+          "tauxOccupationHébergementTemporaire": "ok",
+          "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
+          "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
+        },
+        "budgetEtFinances": {
+          "tauxDeCafNette": "ok",
+          "compteRésultats": "ok",
+          "fondsDeRoulement": "ok",
+          "résultatNetComptable": "ok",
+          "tauxDeVétustéConstruction": "ok",
+          "contributionAuxFraisDeSiège": "ok"
+        },
+        "ressourcesHumaines": {
+          "tauxDEtpVacants": "ok",
+          "tauxDAbsentéisme": "ok",
+          "nombreDEtpRéalisés": "ok",
+          "nombreDeCddDeRemplacement": "ok",
+          "tauxDePrestationsExternes": "ok",
+          "tauxDeRotationDuPersonnel": "ok"
+        },
+        "autorisationsEtCapacités": {
+          "capacités": "ok",
+          "autorisations": "ok"
+        }
+      }
+    }
+  };
 
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
@@ -36,6 +80,9 @@ describe("La comparaison des établissements médico sociaux", () => {
     budgetEtFinancesMedicoSocialModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
     activiteeMedicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
     autorisationMedicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
+    activiteSanitaireRepository = (await orm).getRepository(ActivitéSanitaireModel);
+    allocationRessourceETRepository = (await orm).getRepository(AllocationRessourceETModel);
+    budgetEtFinancesEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
   });
 
   beforeEach(async () => {
@@ -150,52 +197,96 @@ describe("La comparaison des établissements médico sociaux", () => {
       ÉtablissementTerritorialActivitéModelTestBuilder.créeMédicoSocial({ année: 2021, numéroFinessÉtablissementTerritorial: "100000001" }),
       ÉtablissementTerritorialActivitéModelTestBuilder.créeMédicoSocial({ année: 2022, numéroFinessÉtablissementTerritorial: "199999999" }),
     ]);
+
+
+    await établissementTerritorialRepository.insert([
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+        numéroFinessEntitéJuridique: "000000000",
+        numéroFinessÉtablissementTerritorial: "200000000",
+        raisonSociale: `établissement territorial SAN 1`,
+        raisonSocialeCourte: `établissement territorial SAN 1`,
+      }),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+        numéroFinessEntitéJuridique: "000000000",
+        numéroFinessÉtablissementTerritorial: "200000001",
+        raisonSociale: `établissement territorial SAN 2`,
+        raisonSocialeCourte: `établissement territorial SAN 2`,
+      }),
+      ÉtablissementTerritorialIdentitéModelTestBuilder.créeSanitaire({
+        numéroFinessEntitéJuridique: "000000000",
+        numéroFinessÉtablissementTerritorial: "299999999",
+        raisonSociale: `établissement territorial SAN 3`,
+        raisonSocialeCourte: `établissement territorial SAN 3`,
+      }),
+    ]);
+
+    await activiteSanitaireRepository.insert([
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2022, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2023, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial: "200000001" }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2022, numéroFinessÉtablissementTerritorial: "200000001" }),
+      ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2023, numéroFinessÉtablissementTerritorial: "200000001" }),
+    ]);
+
+    await allocationRessourceETRepository.insert([
+      ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeAllocationRessourceSanitaire({
+        année: 2022,
+        numeroFinessEtablissementTerritorial: "200000000",
+      }),
+      ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeAllocationRessourceSanitaire({
+        année: 2022,
+        numeroFinessEtablissementTerritorial: "200000000",
+        enveloppe: "MIGAC",
+        montant: 2000
+      }),
+      ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeAllocationRessourceSanitaire({
+        année: 2022,
+        numeroFinessEtablissementTerritorial: "200000000",
+        enveloppe: "Forfaits"
+      }),
+      ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeAllocationRessourceSanitaire({
+        année: 2022,
+        numeroFinessEtablissementTerritorial: "200000001",
+      }),
+      ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeAllocationRessourceSanitaire({
+        année: 2022,
+        numeroFinessEtablissementTerritorial: "200000001",
+        enveloppe: "MIGAC"
+      }),
+    ]);
+
+    const budgetFinanceEntiteJuridique = new BudgetEtFinancesEntiteJuridiqueModel();
+    budgetFinanceEntiteJuridique.numéroFinessEntitéJuridique = "000000000";
+    budgetFinanceEntiteJuridique.année = 2022;
+    budgetFinanceEntiteJuridique.depensesTitreIGlobal = -100;
+    budgetFinanceEntiteJuridique.depensesTitreIIGlobal = -200;
+    budgetFinanceEntiteJuridique.depensesTitreIIIGlobal = -300;
+    budgetFinanceEntiteJuridique.depensesTitreIVGlobal = -400;
+    budgetFinanceEntiteJuridique.recettesTitreIGlobal = 100;
+    budgetFinanceEntiteJuridique.recettesTitreIIGlobal = 200;
+    budgetFinanceEntiteJuridique.recettesTitreIIIGlobal = 300;
+    budgetFinanceEntiteJuridique.recettesTitreIVGlobal = 400;
+    budgetFinanceEntiteJuridique.depensesTitreIH = -10;
+    budgetFinanceEntiteJuridique.depensesTitreIIH = -20;
+    budgetFinanceEntiteJuridique.depensesTitreIIIH = -30;
+    budgetFinanceEntiteJuridique.depensesTitreIVH = -40;
+    budgetFinanceEntiteJuridique.recettesTitreIH = 10;
+    budgetFinanceEntiteJuridique.recettesTitreIIH = 20;
+    budgetFinanceEntiteJuridique.recettesTitreIIIH = 30;
+    budgetFinanceEntiteJuridique.resultatNetComptableSan = 0.1;
+    budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
+    budgetFinanceEntiteJuridique.ratioDependanceFinanciere = 0.3;
+
+    await budgetEtFinancesEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
   });
 
   afterAll(async () => {
     await (await orm).destroy();
   });
 
-  it("retourne le nombre des résultats, les moyennes et les résultats triés par numéro FINESS", async () => {
+  it("la comparaison des établissements médico sociaux", async () => {
     const typeOrmComparaisonLoader = new TypeOrmComparaisonLoader(orm);
-
-    const autorisation = new ProfilModel();
-    autorisation.value = {
-      institution: { profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {} },
-      autreRegion: {
-        profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {
-          "activités": {
-            "tauxRéalisationActivité": "ok",
-            "tauxOccupationAccueilDeJour": "ok",
-            "fileActivePersonnesAccompagnées": "ok",
-            "tauxOccupationHébergementPermanent": "ok",
-            "tauxOccupationHébergementTemporaire": "ok",
-            "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
-            "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
-          },
-          "budgetEtFinances": {
-            "tauxDeCafNette": "ok",
-            "compteRésultats": "ok",
-            "fondsDeRoulement": "ok",
-            "résultatNetComptable": "ok",
-            "tauxDeVétustéConstruction": "ok",
-            "contributionAuxFraisDeSiège": "ok"
-          },
-          "ressourcesHumaines": {
-            "tauxDEtpVacants": "ok",
-            "tauxDAbsentéisme": "ok",
-            "nombreDEtpRéalisés": "ok",
-            "nombreDeCddDeRemplacement": "ok",
-            "tauxDePrestationsExternes": "ok",
-            "tauxDeRotationDuPersonnel": "ok"
-          },
-          "autorisationsEtCapacités": {
-            "capacités": "ok",
-            "autorisations": "ok"
-          }
-        }
-      }
-    };
 
     // WHEN
     const params = { type: "Médico-social", numerosFiness: ["100000000", "100000001", "199999999"], annee: '2022', page: premièrePage, order: "", orderBy: "", forExport: false, codeRegion: '84' } as ParametresDeComparaison;
@@ -269,4 +360,243 @@ describe("La comparaison des établissements médico sociaux", () => {
       },
     ]);
   });
+
+
+  it("la comparaison des établissements sanitaires", async () => {
+    const typeOrmComparaisonLoader = new TypeOrmComparaisonLoader(orm);
+
+    const autorisation = new ProfilModel();
+    autorisation.value = {
+      institution: { profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {} },
+      autreRegion: {
+        profilEJ: {}, profilETSanitaire: {}, profilMédicoSocial: {
+          "activités": {
+            "tauxRéalisationActivité": "ok",
+            "tauxOccupationAccueilDeJour": "ok",
+            "fileActivePersonnesAccompagnées": "ok",
+            "tauxOccupationHébergementPermanent": "ok",
+            "tauxOccupationHébergementTemporaire": "ok",
+            "nombreMoyenJournéesAbsencePersonnesAccompagnées": "ok",
+            "duréeMoyenneSéjourAccompagnementPersonnesSorties": "ok"
+          },
+          "budgetEtFinances": {
+            "tauxDeCafNette": "ok",
+            "compteRésultats": "ok",
+            "fondsDeRoulement": "ok",
+            "résultatNetComptable": "ok",
+            "tauxDeVétustéConstruction": "ok",
+            "contributionAuxFraisDeSiège": "ok"
+          },
+          "ressourcesHumaines": {
+            "tauxDEtpVacants": "ok",
+            "tauxDAbsentéisme": "ok",
+            "nombreDEtpRéalisés": "ok",
+            "nombreDeCddDeRemplacement": "ok",
+            "tauxDePrestationsExternes": "ok",
+            "tauxDeRotationDuPersonnel": "ok"
+          },
+          "autorisationsEtCapacités": {
+            "capacités": "ok",
+            "autorisations": "ok"
+          }
+        }
+      }
+    };
+
+    // WHEN
+    const params = {
+      type: "Sanitaire",
+      numerosFiness: ["000000000", "200000000", "200000001", "299999999"],
+      annee: '2022',
+      page: premièrePage,
+      order: "",
+      orderBy: "",
+      forExport: false,
+      codeRegion: '84',
+      enveloppe1: 'FIR',
+      enveloppe2: 'MIGAC',
+      enveloppe3: 'Forfaits'
+    } as ParametresDeComparaison;
+    const comparaison = await typeOrmComparaisonLoader.compare(params, [autorisation]);
+
+    expect(comparaison.nombreDeResultats).toBe(4);
+
+    expect(comparaison.resultat).toStrictEqual([
+      {
+        numéroFiness: "200000000",
+        socialReason: "établissement territorial SAN 1",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        totalHosptMedecine: 120,
+        totalHosptObstetrique: 120,
+        totalHosptChirurgie: 120,
+        totalHosptSsr: 120,
+        totalHosptPsy: 120,
+        passagesUrgences: 60000,
+        sejoursHad: 60,
+        journeesUsld: 21654,
+        enveloppe1: 3300,
+        enveloppe2: 2000,
+        enveloppe3: 3300
+      },
+      {
+        numéroFiness: "200000001",
+        socialReason: "établissement territorial SAN 2",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        totalHosptMedecine: 120,
+        totalHosptObstetrique: 120,
+        totalHosptChirurgie: 120,
+        totalHosptSsr: 120,
+        totalHosptPsy: 120,
+        passagesUrgences: 60000,
+        sejoursHad: 60,
+        journeesUsld: 21654,
+        enveloppe1: 3300,
+        enveloppe2: 3300,
+        enveloppe3: null
+      },
+      {
+        numéroFiness: "299999999",
+        socialReason: "établissement territorial SAN 3",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        totalHosptMedecine: null,
+        totalHosptObstetrique: null,
+        totalHosptChirurgie: null,
+        totalHosptSsr: null,
+        totalHosptPsy: null,
+        passagesUrgences: null,
+        sejoursHad: null,
+        journeesUsld: null,
+        enveloppe1: null,
+        enveloppe2: null,
+        enveloppe3: null
+      },
+      {
+        numéroFiness: "000000000",
+        socialReason: "entité juridique",
+        type: "Entité juridique",
+        commune: "OYONNAX",
+        departement: "AIN",
+        totalHosptMedecine: '',
+        totalHosptObstetrique: '',
+        totalHosptChirurgie: '',
+        totalHosptSsr: '',
+        totalHosptPsy: '',
+        passagesUrgences: '',
+        sejoursHad: '',
+        journeesUsld: '',
+        enveloppe1: '',
+        enveloppe2: '',
+        enveloppe3: ''
+      },
+    ]);
+  });
+
+  it("la comparaison des entité juridiques", async () => {
+    const typeOrmComparaisonLoader = new TypeOrmComparaisonLoader(orm);
+
+    // WHEN
+    const params = {
+      type: "Entité juridique",
+      numerosFiness: ["000000000", "200000000", "200000001", "299999999"],
+      annee: '2022',
+      page: premièrePage,
+      order: "",
+      orderBy: "",
+      forExport: false,
+      codeRegion: '84',
+      enveloppe1: 'FIR',
+      enveloppe2: 'MIGAC',
+      enveloppe3: 'Forfaits'
+    } as ParametresDeComparaison;
+    const comparaison = await typeOrmComparaisonLoader.compare(params, [autorisation]);
+
+    expect(comparaison.nombreDeResultats).toBe(4);
+
+    expect(comparaison.resultat).toStrictEqual([
+      {
+        numéroFiness: "000000000",
+        socialReason: "entité juridique",
+        type: "Entité juridique",
+        commune: "OYONNAX",
+        departement: "AIN",
+        statutJuridique: 'public',
+        rattachements: 'Sanitaire (3), SMS (3)',
+        chargesPrincipaux: -100,
+        chargesAnnexes: -900,
+        produitsPrincipaux: 60,
+        produitsAnnexes: 940,
+        resultatNetComptableEj: 0.1,
+        tauxCafEj: 0.2,
+        ratioDependanceFinanciere: 0.3,
+        enveloppe1: null,
+        enveloppe2: null,
+        enveloppe3: null,
+      },
+      {
+        numéroFiness: "200000000",
+        socialReason: "établissement territorial SAN 1",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        statutJuridique: '',
+        rattachements: '',
+        chargesPrincipaux: '',
+        chargesAnnexes: '',
+        produitsPrincipaux: '',
+        produitsAnnexes: '',
+        resultatNetComptableEj: '',
+        tauxCafEj: '',
+        ratioDependanceFinanciere: '',
+        enveloppe1: '',
+        enveloppe2: '',
+        enveloppe3: ''
+      },
+      {
+        numéroFiness: "200000001",
+        socialReason: "établissement territorial SAN 2",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        statutJuridique: '',
+        rattachements: '',
+        chargesPrincipaux: '',
+        chargesAnnexes: '',
+        produitsPrincipaux: '',
+        produitsAnnexes: '',
+        resultatNetComptableEj: '',
+        tauxCafEj: '',
+        ratioDependanceFinanciere: '',
+        enveloppe1: '',
+        enveloppe2: '',
+        enveloppe3: ''
+      },
+      {
+        numéroFiness: "299999999",
+        socialReason: "établissement territorial SAN 3",
+        type: "Sanitaire",
+        commune: "VILLENEUVE D ASCQ",
+        departement: "NORD",
+        statutJuridique: '',
+        rattachements: '',
+        chargesPrincipaux: '',
+        chargesAnnexes: '',
+        produitsPrincipaux: '',
+        produitsAnnexes: '',
+        resultatNetComptableEj: '',
+        tauxCafEj: '',
+        ratioDependanceFinanciere: '',
+        enveloppe1: '',
+        enveloppe2: '',
+        enveloppe3: ''
+      },
+    ]);
+  });
 });
+
+

@@ -1,4 +1,5 @@
 import { CadreBudgétaire } from "../../src/backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { AllocationRessourceETModel } from "../models/AllocationRessourceETModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../models/BudgetEtFinancesMédicoSocialModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
@@ -61,5 +62,19 @@ export class ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder {
       budgetEtFinancesMédicoSocialModel.cadreBudgétaire = CadreBudgétaire.CA_PA;
     }
     return budgetEtFinancesMédicoSocialModel;
+  }
+
+  public static créeAllocationRessourceSanitaire(
+    champsSurchargés?: Partial<AllocationRessourceETModel>
+  ): AllocationRessourceETModel {
+    const allocationRessourceModel = new AllocationRessourceETModel();
+    allocationRessourceModel.année = champsSurchargés?.année || 2022;
+    allocationRessourceModel.enveloppe = champsSurchargés?.enveloppe || "FIR";
+    allocationRessourceModel.sousEnveloppe = champsSurchargés?.sousEnveloppe || "Sanitaire";
+    allocationRessourceModel.modeDelegation = champsSurchargés?.modeDelegation || "Intervention (Ex. cour.)";
+    allocationRessourceModel.montant = champsSurchargés?.montant || 3300;
+    allocationRessourceModel.numeroFinessEtablissementTerritorial = champsSurchargés?.numeroFinessEtablissementTerritorial || "210987665";
+
+    return allocationRessourceModel;
   }
 }
