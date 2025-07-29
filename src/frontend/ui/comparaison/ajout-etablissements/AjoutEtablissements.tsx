@@ -239,7 +239,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
                 <option selected value=""> Mes listes</option>
                 {sortedFavorisList?.map((liste: UserListViewModel) => (
                   <option
-                    disabled={JSON.parse(sessionStorage.getItem("selectedLists") ?? "[]").includes(liste.id + '')}
                     key={liste.id}
                     value={liste.userListEtablissements.map(user => user.finessNumber).concat([liste.id + ''])}
                   >
