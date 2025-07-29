@@ -41,7 +41,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
   const listFinessFromStorage = sessionStorage.getItem("listFinessNumbers");
   const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : [];
-  const [selectedListId, setSelectedListId] = useState<string>();
 
   useEffect(() => {
     let list = userContext?.favorisLists.slice();
@@ -134,13 +133,9 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   const onClickAjouter = () => {
     const stringListOfTable = sessionStorage.getItem("listFinessNumbers");
     const comparedTypes = sessionStorage.getItem("comparaisonType");
-    const stringSelectedLists = sessionStorage.getItem("selectedLists");
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
     const arrayComparedTypes = comparedTypes ? JSON.parse(comparedTypes) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
-    const arrayListOfLists = stringSelectedLists ? JSON.parse(stringSelectedLists) : [];
-    const ListOfSelectdLists = [...arrayListOfLists, selectedListId ?? ''];
-    sessionStorage.setItem("selectedLists", JSON.stringify(ListOfSelectdLists));
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
     handleFinessChange(listToCompare);
     const missingInOld = newStructures.filter(item => !arrayComparedTypes.includes(item));
@@ -179,7 +174,6 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   const handleOnChangeListe = (event: ChangeEvent<HTMLSelectElement>) => {
     setNewEtablissements([]);
     const listeFinessNumbers = event.target.value.split(',');
-    setSelectedListId(listeFinessNumbers.pop());
 
     listeFinessNumbers.forEach((numFiness: string) => {
       const isAlreadyInTable = finessNumbersListFromTable.includes(numFiness);
@@ -240,7 +234,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
                 {sortedFavorisList?.map((liste: UserListViewModel) => (
                   <option
                     key={liste.id}
-                    value={liste.userListEtablissements.map(user => user.finessNumber).concat([liste.id + ''])}
+                    value={liste.userListEtablissements.map(user => user.finessNumber)}
                   >
                     {liste.nom} ({liste.userListEtablissements.length})
                   </option>
