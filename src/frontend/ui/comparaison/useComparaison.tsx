@@ -107,6 +107,17 @@ export function useComparaison() {
     return listAnnees;
   }
 
+  const getcomparedTypes = async (numeroFiness: string[]): Promise<string[]> => {
+    const params = new URLSearchParams();
+    numeroFiness.forEach(finess => params.append('numeroFiness', finess));
+    const response = await fetch(`/api/comparaison/getTypesFromFiness?${params.toString()}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    });
+    const comparedTypes = await response.json();
+    return comparedTypes;
+  }
+
   const getTopEnveloppes = async (annee: string, type: string): Promise<string[]> => {
     const savedEnveloppesEjString = sessionStorage.getItem('topEnveloppeEj');
     const savedEnveloppesSanString = sessionStorage.getItem('topEnveloppeSan');
@@ -366,6 +377,7 @@ export function useComparaison() {
     loading: state.loading,
     NombreDeResultatsMaxParPage: take,
     listeAnnees: state.listeAnnees,
-    getListAnnees
+    getListAnnees,
+    getcomparedTypes
   };
 }

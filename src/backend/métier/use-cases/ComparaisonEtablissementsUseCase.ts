@@ -22,8 +22,13 @@ export class ComparaisonEtablissementsUseCase {
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     return await this.comparaisonLoader.getDatesMisAJourSourcesComparaison();
   }
+
   async getTopEnveloppes(): Promise<EnveloppesResult> {
     return await this.comparaisonLoader.getTopEnveloppes();
+  }
+
+  async getTypesFromFiness(numerosFiness: string[]): Promise<string[]> {
+    return await this.comparaisonLoader.getTypesFromFiness(numerosFiness);
   }
 
 }

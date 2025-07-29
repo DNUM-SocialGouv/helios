@@ -16,11 +16,11 @@ type AjoutEtablissementsProps = {
   setIsShowAjoutEtab: Dispatch<SetStateAction<boolean>>;
   setComparedTypes: Dispatch<SetStateAction<string[]>>;
   handleFinessChange: (numerosFiness: string[]) => void;
-  setTriggerCompare: Dispatch<SetStateAction<number>>;
   categories: CategoriesFinessViewModel[];
+  getcomparedTypes: (numerosFiness: string[]) => Promise<string[]>;
 };
 
-export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, handleFinessChange, setTriggerCompare, categories }: AjoutEtablissementsProps) => {
+export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, handleFinessChange, getcomparedTypes, categories }: AjoutEtablissementsProps) => {
   const { lancerLaRecherche, rechercheOnChange, resultats, lastPage, nombreRésultats } = useRechercheAvanceeComparaison();
   const wording = new WordingFr();
   const [listData, setListData] = useState<RechercheViewModel[]>([]);
@@ -130,24 +130,14 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
     setIsShowAjoutEtab(false);
   };
 
-  const onClickAjouter = () => {
+  const onClickAjouter = async () => {
     const stringListOfTable = sessionStorage.getItem("listFinessNumbers");
-    const comparedTypes = sessionStorage.getItem("comparaisonType");
     const arrayListOfTable = stringListOfTable ? JSON.parse(stringListOfTable) : [];
-    const arrayComparedTypes = comparedTypes ? JSON.parse(comparedTypes) : [];
     const listToCompare = [...arrayListOfTable, ...newEtablissements];
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listToCompare));
     handleFinessChange(listToCompare);
-    const missingInOld = newStructures.filter(item => !arrayComparedTypes.includes(item));
-    // relancer la comparaison soit par le changement de structure, soit par l'ajout d'un Et
-    // bug lié au lancement au double appel de la comparaison à l'ajout d'un et
-    if (missingInOld.length > 0) {
-      const newComparedTypes = [...new Set([...arrayComparedTypes, ...newStructures])];
-      sessionStorage.setItem("comparaisonType", JSON.stringify(newComparedTypes));
-      setComparedTypes(newComparedTypes);
-    } else {
-      setTriggerCompare(Date.now());
-    }
+    const typesSelected = await getcomparedTypes(listToCompare)
+    setComparedTypes(typesSelected);
     onClickFermer();
   };
 

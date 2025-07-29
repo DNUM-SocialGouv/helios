@@ -21,9 +21,8 @@ function getType(type: string | undefined) {
   else return type;
 }
 
-async function getComparaisonData(annee: string, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) {
+async function getComparaisonData(annee: string, type: string, order = "", orderBy = "", codeRegion: string, codeProfiles: string[]) {
   const listFiness = sessionStorage.getItem("listFinessNumbers");
-  const typeStored = sessionStorage.getItem("comparaisonType");
 
   let parsedFiness = null;
   try {
@@ -31,8 +30,6 @@ async function getComparaisonData(annee: string, order = "", orderBy = "", codeR
   } catch (e) {
     alert("Error :" + e);
   }
-
-  const type = typeStored || undefined;
 
   return fetch("/api/comparaison/compare", {
     body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles }),
@@ -93,10 +90,10 @@ function ExportToExcel(header: string[], headerType: (string | undefined)[],
 }
 
 async function generateAndExportExcel(
-  year: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
+  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 ) {
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
-  const data = await getComparaisonData(year, order, orderBy, codeRegion, codeProfiles)
+  const data = await getComparaisonData(year, structure, order, orderBy, codeRegion, codeProfiles)
   const dataTransormed = transformData(data, favoris);
   const headerYear = ["Année", year];
 
@@ -132,9 +129,9 @@ async function generateAndExportExcel(
 }
 
 const ExportExcel = ({
-  year, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
+  year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
 }: {
-  year: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
+  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
 }) => {
   const userContext = useContext(UserContext);
 
@@ -143,7 +140,7 @@ const ExportExcel = ({
       className="fr-btn fr-btn--tertiary-no-outline"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles)}
+      onClick={() => generateAndExportExcel(year, type, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles)}
       title="Exporter"
       type="button"
     >

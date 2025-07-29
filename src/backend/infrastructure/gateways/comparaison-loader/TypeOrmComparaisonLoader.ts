@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
+import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { ParametresDeComparaison } from "../../../métier/entities/ParametresDeComparaison";
 import { DatesMisAjourSources, Enveloppes, EnveloppesResult, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../métier/entities/ResultatDeComparaison";
 import { ComparaisonLoader } from "../../../métier/gateways/ComparaisonLoader";
@@ -192,6 +193,17 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     };
   }
 
+  async getTypesFromFiness(numerosFiness: string[]): Promise<string[]> {
+    const queryBuilder = (await this.orm).createQueryBuilder();
+    const searchTypesQuery = queryBuilder
+      .select("recherche.type", "type")
+      .distinct(true)
+      .from(RechercheModel, "recherche")
+      .where("recherche.numero_finess IN(:...finess)", { finess: numerosFiness })
+    const searchTypesQueryResult = await searchTypesQuery.getRawMany<{ type: string }>();
+    return searchTypesQueryResult.map((item: any) => item.type);
+  }
+
   async getDatesMisAJourSourcesComparaison(): Promise<DatesMisAjourSources> {
     const dateMAJFiness = await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105);
     const dateMAJTdbperf = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
@@ -351,7 +363,6 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
   private async compareSMS(params: ParametresDeComparaison, autorisations: any): Promise<ResultatDeComparaison> {
     const { numerosFiness, annee, page, order, orderBy, forExport, codeRegion } = params;
-
     const compareSMSCapacite = `(select SUM(public.autorisation_medico_social.capacite_installee_totale) as capacite_total,
         autorisation_medico_social.numero_finess_etablissement_territorial
         FROM autorisation_medico_social
