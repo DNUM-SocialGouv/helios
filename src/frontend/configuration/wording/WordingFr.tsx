@@ -104,8 +104,8 @@ export class WordingFr implements Wording {
   readonly STRUCTURE: string = "Structure";
   readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
   readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
-  readonly CAPACITE: string = "Capacité (MS)";
-  readonly ACTIVITE_SAN: string = "Activité (SAN)";
+  readonly CAPACITE: string = "Capacité MS";
+  readonly ACTIVITE_SAN: string = "Activité SAN";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
   readonly TOUT_EFFACER: string = "Tout effacer";
 
