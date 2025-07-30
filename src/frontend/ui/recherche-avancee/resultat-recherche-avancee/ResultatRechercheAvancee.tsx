@@ -70,7 +70,7 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
   }
 
   return (
-    <>
+    <div className="fr-mt-4w">
       {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
       <TableHeaderRechercheAvancee categories={categories} isAllResultsSelected={isAllResultsSelected} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />
       <Table
@@ -89,6 +89,6 @@ export const ResultatRechercheAvancee = ({ data, nombreRésultats, page, setPage
         setOrderBy={rechercheAvanceeContext?.setOrderBy || (() => { })}
         setSelectedRows={setSelectedRows} />
       <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={20} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
-    </>
+    </div>
   );
 };
