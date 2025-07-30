@@ -23,7 +23,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
           <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
-      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} finess={rechercheViewModel.numéroFiness} typeEtab={rechercheViewModel.type} /></div>
+      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} finess={rechercheViewModel.numéroFiness} /></div>
     </div >
   );
 };

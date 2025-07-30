@@ -6,11 +6,10 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 
 type ActionsButtonProps = Readonly<{
   finess: string;
-  typeEtab: string;
   downloadPDF: () => void;
 }>;
 
-export const ActionsButton = ({ finess, typeEtab, downloadPDF }: ActionsButtonProps) => {
+export const ActionsButton = ({ finess, downloadPDF }: ActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -18,7 +17,6 @@ export const ActionsButton = ({ finess, typeEtab, downloadPDF }: ActionsButtonPr
 
   const lancerComparaison = () => {
     sessionStorage.setItem("listFinessNumbers", JSON.stringify([finess]));
-    sessionStorage.setItem("comparaisonType", JSON.stringify([typeEtab]));
     router.push("/comparaison");
   }
 
