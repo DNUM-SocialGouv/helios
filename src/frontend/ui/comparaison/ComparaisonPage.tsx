@@ -32,7 +32,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
-  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
+  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
@@ -60,7 +60,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   });
 
   const [triggerCompare, setTriggerCompare] = useState<number>(0);
-  const [deleteEt, setDeleteEt] = useState(false);
 
   useEffect(() => {
     if (structureChoice !== "") {
@@ -82,7 +81,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       };
       resetParams();
     }
-  }, [structureChoice, deleteEt]);
+  }, [structureChoice, comparedTypes]);
 
   useEffect(() => {
     if (
@@ -143,8 +142,12 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   };
 
   useEffect(() => {
-    const typeStored = sessionStorage.getItem("comparaisonType");
-    setComparedTypes(typeStored ? JSON.parse(typeStored) : [])
+    async function getSelectedTypesForCompare() {
+      const listFinessNumbers = sessionStorage.getItem("listFinessNumbers");
+      const typesSelected = await getcomparedTypes(listFinessNumbers ? JSON.parse(listFinessNumbers) : [])
+      setComparedTypes(typesSelected)
+    }
+    getSelectedTypesForCompare();
   }, [])
 
   useEffect(() => {
@@ -183,9 +186,8 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
+  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
-    const typeStored = sessionStorage.getItem("comparaisonType");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
     const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
     if (indexElementToDelete > -1) {
@@ -202,19 +204,8 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
         comparedFiness: listFinessArray,
       }));
     }
-    if (resultats.filter((value) => value.type === etablissementASupprimer.type).length === 1) {
-      // supprimer la structure associée
-      const typeStoredArray: string[] = typeStored ? JSON.parse(typeStored) : [];
-      const indexStructureToDelete = typeStoredArray.indexOf(etablissementASupprimer.type);
-      typeStoredArray.splice(indexStructureToDelete, 1);
-      sessionStorage.setItem("comparaisonType", JSON.stringify(typeStoredArray));
-      setComparedTypes(typeStoredArray);
-    } else {
-      // relancer la comparaison soit par le changement de structure, soit par la suppression d'un Et
-      // bug lié au lancement au double appel de la comparaison à la suppression d'un et
-      setDeleteEt(!deleteEt);
-    }
-
+    const typesSelected = await getcomparedTypes(listFinessArray)
+    setComparedTypes(typesSelected);
   };
 
   const onClickAjoutEtablissement = () => {
@@ -268,6 +259,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       disabled={resultats.length === 0}
       order={params.order}
       orderBy={params.orderBy}
+      type={structureChoice}
       year={String(anneeExport)}
     />;
   }
@@ -298,7 +290,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
               {wording.AJOUTER_DES_ETABLISSEMENTS}
             </button>
           )}
-          {isShowAjoutEtab && <AjoutEtablissements categories={categories} handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} setTriggerCompare={setTriggerCompare}></AjoutEtablissements>}
+          {isShowAjoutEtab && <AjoutEtablissements categories={categories} getcomparedTypes={getcomparedTypes} handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} ></AjoutEtablissements>}
         </div>
         {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>

@@ -26,4 +26,8 @@ export class ComparaisonEtablissementsUseCase {
     return await this.comparaisonLoader.getTopEnveloppes();
   }
 
+  async getTypesFromFiness(numerosFiness: string[]): Promise<string[]> {
+    return await this.comparaisonLoader.getTypesFromFiness(numerosFiness);
+  }
+
 }
