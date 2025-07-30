@@ -54,6 +54,7 @@ type ComparaisonEJTypeOrm = Readonly<{
   total_recettes_global: number;
   total_depenses_principales: number;
   total_recettes_principales: number;
+  nombre_sejours_had: number;
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
@@ -73,7 +74,6 @@ type ComparaisonSANTypeOrm = Readonly<{
   total_hospt_ssr: number;
   total_hospt_psy: number;
   nombre_passages_urgences: number;
-  nombre_sejours_had: number;
   nombre_journees_usld: number;
   enveloppe_1: number;
   enveloppe_2: number;
@@ -271,6 +271,8 @@ FROM (
     const compareEjQueryBody = ` from recherche ej
     LEFT JOIN budget_et_finances_entite_juridique bg
     on ej.numero_finess = bg.numero_finess_entite_juridique and bg.annee = ${annee}
+    LEFT JOIN activite_sanitaire_entite_juridique acs
+    on ej.numero_finess = acs.numero_finess_entite_juridique and acs.annee = ${annee}
     LEFT JOIN etablissement_territorial et 
     on ej.numero_finess = et.numero_finess_entite_juridique
     LEFT JOIN ${compareEnveloppe1} on ej.numero_finess  = ar1.numero_finess_entite_juridique
@@ -304,6 +306,7 @@ FROM (
     bg.resultat_net_comptable_san,
     bg.taux_de_caf_nette_san,
     bg.ratio_dependance_financiere,
+    acs.nombre_sejours_had,
     ar1.enveloppe_1,
     ar2.enveloppe_2,
     ar3.enveloppe_3`
@@ -345,7 +348,7 @@ FROM (
         WHEN bg.recettes_titre_i_h IS NULL AND bg.recettes_titre_ii_h IS NULL AND bg.recettes_titre_iii_h IS NULL THEN NULL
         ELSE COALESCE(bg.recettes_titre_i_h, 0)  + COALESCE(bg.recettes_titre_ii_h, 0) + COALESCE(bg.recettes_titre_iii_h, 0)
     END AS total_recettes_principales,
-    bg.ratio_dependance_financiere ${compareEjQueryBody} ) as subquery`;
+    bg.ratio_dependance_financiere, acs.nombre_sejours_had ${compareEjQueryBody} ) as subquery`;
 
     const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
     const paginatedCompareEJQuery =
@@ -569,7 +572,6 @@ FROM (
         ELSE COALESCE(acs.nombre_journees_complete_psy , 0)  + COALESCE(acs.nombre_journees_complete_psy , 0)
     END AS total_hospt_psy,
     acs.nombre_passages_urgences,
-    acs.nombre_sejours_had,
     acs.nombre_journees_usld,
     enveloppe_1,
     enveloppe_2,
@@ -678,6 +680,7 @@ FROM (
         resultatNetComptableEj: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
         tauxCafEj: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
         ratioDependanceFinanciere: resultat.type === "Entité juridique" ? resultat.ratio_dependance_financiere : '',
+        sejoursHad: resultat.type === "Entité juridique" ? resultat.nombre_sejours_had : '',
         enveloppe1: resultat.type === "Entité juridique" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Entité juridique" ? resultat.enveloppe_2 : '',
         enveloppe3: resultat.type === "Entité juridique" ? resultat.enveloppe_3 : '',
@@ -700,7 +703,6 @@ FROM (
         totalHosptSsr: resultat.type === "Sanitaire" ? resultat.total_hospt_ssr : '',
         totalHosptPsy: resultat.type === "Sanitaire" ? resultat.total_hospt_psy : '',
         passagesUrgences: resultat.type === "Sanitaire" ? resultat.nombre_passages_urgences : '',
-        sejoursHad: resultat.type === "Sanitaire" ? resultat.nombre_sejours_had : '',
         journeesUsld: resultat.type === "Sanitaire" ? resultat.nombre_journees_usld : '',
         enveloppe1: resultat.type === "Sanitaire" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Sanitaire" ? resultat.enveloppe_2 : '',
