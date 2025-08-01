@@ -5,11 +5,13 @@ import { dependencies } from "../../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     try {
-        let numeroFiness = request.query["numeroFiness"] as string[] || [];
-        if (!Array.isArray(numeroFiness)) {
-            numeroFiness = [numeroFiness];
+        const { numeroFiness } = request.body;
+
+        if (numeroFiness.length > 30000) {
+            return response.status(405).send("Authorized limit exceeded");
         }
-        if (request.method !== "GET") {
+
+        if (request.method !== "POST") {
             return response.status(405).send("Method not allowed");
         }
         const recherche = await getTypesFromFinessEndpoint(dependencies, numeroFiness);

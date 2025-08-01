@@ -4,9 +4,11 @@ import { Order, OrderBy } from './usePageListe';
 import { useDependencies } from '../commun/contexts/useDependencies';
 import Spinner from '../commun/Spinner/Spinner';
 import { Table } from '../commun/Table/Table';
+import { AlerteComparaison } from '../comparaison/alerte-comparaison/AlerteComparaison';
 import { RechercheViewModel } from '../home/RechercheViewModel';
 import { TableFooter } from '../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter';
 import { UserListViewModel } from '../user-list/UserListViewModel';
+
 
 const PAGE_SIZE = 20;
 const defaultOrder = Order.DESC.valueOf();
@@ -93,6 +95,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
       {loading
         ? <Spinner />
         : <>
+          {selectedRows.size > 30000 && <AlerteComparaison />}
           <Table
             data={dataOnPage}
             handleSelectAll={handleSelectAll}

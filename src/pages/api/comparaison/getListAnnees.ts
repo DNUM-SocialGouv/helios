@@ -5,16 +5,14 @@ import { dependencies } from "../../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
-    const type = request.query["type"] as string;
-    let numeroFiness = request.query["numeroFiness"] as string[] || [];
+    const { numeroFiness, type } = request.body;
 
-    // Dans le cas d’une comparaison lancée depuis une page etablissement il n’y a qu’un finess et on ne reçoit donc pas d’Array. On crée donc un array.
-    if (!Array.isArray(numeroFiness)) {
-      numeroFiness = [numeroFiness];
+    if (request.method !== "POST") {
+      return response.status(405).send("Method not allowed");
     }
 
-    if (request.method !== "GET") {
-      return response.status(405).send("Method not allowed");
+    if (numeroFiness.length > 30000) {
+      return response.status(405).send("Authorized limit exceeded");
     }
     const recherche = await getAnneesComparaisonEndpoint(dependencies, type, numeroFiness);
     return response.status(200).json(recherche);
