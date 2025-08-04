@@ -12,7 +12,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       departement,
       code_region,
       '' AS rattachement,
-      '' AS categorie
+      '' AS categorie,
+      '' As libelle_catgeorie
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -25,7 +26,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       departement,
       code_region,
       numero_finess_entite_juridique AS rattachement,
-      cat_etablissement AS categorie
+      cat_etablissement AS categorie,
+      libelle_court_categorie_etablissement As libelle_catgeorie
     FROM etablissement_territorial;`,
   name: "recherche",
 })
@@ -56,4 +58,10 @@ export class RechercheModel {
 
   @ViewColumn({ name: "rattachement" })
   public rattachement!: string;
+
+  @ViewColumn({ name: "libelle_categorie" })
+  public libelleCatgeorie!: string;
+
+  @ViewColumn({ name: "categorie" })
+  public categorie!: string;
 }

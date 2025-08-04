@@ -33,6 +33,10 @@ export class RechercheViewModel {
     return this.recherche.rattachement;
   }
 
+  public get categorie(): string {
+    return this.recherche.categorie;
+  }
+
   public get titre(): ReactElement {
     return (
       <>

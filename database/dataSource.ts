@@ -73,6 +73,7 @@ import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrat
 import { ReferentielCategoriesFiness1747831401347 } from "./migrations/1747831401347-ReferentielCategoriesFiness";
 import { AjoutCategorieRecherche1748009262073 } from "./migrations/1748009262073-AjoutCategorieRecherche";
 import { AjoutLaColonneDomaineAuReferentielCategories1748332500947 } from "./migrations/1748332500947-ajoutLaColonneDomaineAuReferentielCategories";
+import { AjoutLibelleCategorieALaRecherche1754309418981 } from "./migrations/1754309418981-AjoutLibelleCategorieALaRecherche";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -247,7 +248,8 @@ const datasource = new DataSource({
     AjoutLesJourneesUsldDansLesProfils1799501916707,
     ReferentielCategoriesFiness1747831401347,
     AjoutCategorieRecherche1748009262073,
-    AjoutLaColonneDomaineAuReferentielCategories1748332500947
+    AjoutLaColonneDomaineAuReferentielCategories1748332500947,
+    AjoutLibelleCategorieALaRecherche1754309418981
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

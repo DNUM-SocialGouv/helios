@@ -16,6 +16,8 @@ type RechercheTypeOrm = Readonly<{
   raison_sociale_courte: string;
   type: string;
   rattachement: string;
+  libelleCategorie: string;
+  codeCategorie: string;
 }>;
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
@@ -144,6 +146,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.departement", "departement")
       .addSelect("recherche.code_region", "code_region")
       .addSelect("recherche.statut_juridique", "statutJuridique")
+      .addSelect("recherche.categorie", "codeCategorie")
+      .addSelect("recherche.libelle_categorie", "libelleCategorie")
       .addSelect(
         `CASE 
           WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
@@ -175,8 +179,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     requêteDeLaRecherche.from(RechercheModel, "recherche")
       .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
       .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess");
-
-
 
 
     let capaciteQuery = requêteDeLaRecherche.clone();
@@ -225,6 +227,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("recherche.rattachement")
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .addGroupBy("recherche.termes")
+        .addGroupBy("recherche.categorie")
+        .addGroupBy("recherche.libelle_categorie")
     }
 
     if (capaciteSMS.length !== 0) {
@@ -246,6 +250,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("recherche.rattachement")
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .addGroupBy("recherche.termes")
+        .addGroupBy("recherche.categorie")
+        .addGroupBy("recherche.libelle_categorie")
     }
 
     if (activiteSAN.length !== 0) {
@@ -267,6 +273,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("recherche.rattachement")
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .addGroupBy("recherche.termes")
+        .addGroupBy("recherche.categorie")
+        .addGroupBy("recherche.libelle_categorie")
     }
 
 
@@ -301,6 +309,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           .addGroupBy("recherche.rattachement")
           .addGroupBy("entite_juridique.raison_sociale_courte")
           .addGroupBy("recherche.termes")
+          .addGroupBy("recherche.categorie")
+          .addGroupBy("recherche.libelle_categorie")
 
 
         finalQuery = standardQuery;
@@ -643,6 +653,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           raisonSocialeCourte: rechercheRésultat.raison_sociale_courte,
           type: rechercheRésultat.type,
           rattachement: rechercheRésultat.rattachement,
+          categorie: rechercheRésultat.codeCategorie + '-' + rechercheRésultat.libelleCategorie
         };
       }),
     };
