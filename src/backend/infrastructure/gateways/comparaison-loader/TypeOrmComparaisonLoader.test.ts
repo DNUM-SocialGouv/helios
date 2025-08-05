@@ -298,6 +298,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "100000000",
         socialReason: "établissement territorial MS 1",
+        categorie: '159-C.H.',
         type: "Médico-social",
         capacite: 40,
         commune: "NANTUA",
@@ -319,6 +320,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "100000001",
         socialReason: "établissement territorial MS 2",
+        categorie: '159-C.H.',
         type: "Médico-social",
         capacite: null,
         commune: "NANTUA",
@@ -340,6 +342,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "199999999",
         socialReason: "établissement territorial MS 3",
+        categorie: '159-C.H.',
         type: "Médico-social",
         capacite: null,
         commune: "NANTUA",
@@ -425,6 +428,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "200000000",
         socialReason: "établissement territorial SAN 1",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
@@ -443,6 +447,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "200000001",
         socialReason: "établissement territorial SAN 2",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
@@ -461,6 +466,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "299999999",
         socialReason: "établissement territorial SAN 3",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
@@ -479,6 +485,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "000000000",
         socialReason: "entité juridique",
+        categorie: '-',
         type: "Entité juridique",
         commune: "OYONNAX",
         departement: "AIN",
@@ -522,6 +529,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "000000000",
         socialReason: "entité juridique",
+        categorie: '-',
         type: "Entité juridique",
         commune: "OYONNAX",
         departement: "AIN",
@@ -541,6 +549,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "200000000",
         socialReason: "établissement territorial SAN 1",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
@@ -560,6 +569,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "200000001",
         socialReason: "établissement territorial SAN 2",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
@@ -579,6 +589,7 @@ describe("La comparaison des établissements", () => {
       {
         numéroFiness: "299999999",
         socialReason: "établissement territorial SAN 3",
+        categorie: '365-C.H.',
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
