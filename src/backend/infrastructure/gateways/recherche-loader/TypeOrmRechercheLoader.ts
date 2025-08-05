@@ -16,8 +16,8 @@ type RechercheTypeOrm = Readonly<{
   raison_sociale_courte: string;
   type: string;
   rattachement: string;
-  libelleCategorie: string;
-  codeCategorie: string;
+  libelle_categorie: string;
+  code_categorie: string;
 }>;
 
 export class TypeOrmRechercheLoader implements RechercheLoader {
@@ -35,6 +35,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const requêteDeLaRecherche = queryBuilder
       .select("recherche.numero_finess", "numero_finess")
       .addSelect("recherche.raison_sociale_courte", "raison_sociale_courte")
+      .addSelect("recherche.categorie", "code_categorie")
+      .addSelect("recherche.libelle_categorie", "libelle_categorie")
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
@@ -74,6 +76,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("recherche.termes")
         .addGroupBy("recherche.rattachement")
         .addGroupBy("entite_juridique.raison_sociale_courte")
+        .addGroupBy("recherche.categorie")
+        .addGroupBy("recherche.libelle_categorie")
         .orderBy("is_exact", "DESC")
         .addOrderBy("is_exact_dep", "DESC")
         .addOrderBy("is_exact_com", "DESC")
@@ -146,8 +150,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.departement", "departement")
       .addSelect("recherche.code_region", "code_region")
       .addSelect("recherche.statut_juridique", "statutJuridique")
-      .addSelect("recherche.categorie", "codeCategorie")
-      .addSelect("recherche.libelle_categorie", "libelleCategorie")
+      .addSelect("recherche.categorie", "code_categorie")
+      .addSelect("recherche.libelle_categorie", "libelle_categorie")
       .addSelect(
         `CASE 
           WHEN recherche.type != 'Entité juridique' THEN CONCAT('EJ', ' - ', recherche.rattachement, ' - ', entite_juridique.raison_sociale_courte)
@@ -653,7 +657,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
           raisonSocialeCourte: rechercheRésultat.raison_sociale_courte,
           type: rechercheRésultat.type,
           rattachement: rechercheRésultat.rattachement,
-          categorie: rechercheRésultat.codeCategorie + '-' + rechercheRésultat.libelleCategorie
+          categorie: rechercheRésultat.code_categorie + '-' + rechercheRésultat.libelle_categorie
         };
       }),
     };

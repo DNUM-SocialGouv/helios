@@ -89,6 +89,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
         rattachement: "010008407",
+        categorie: '-'
       },
       {
         commune: "SAINT-BRIEUC",
@@ -97,6 +98,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
         rattachement: "010008407",
+        categorie: '-'
       },
       {
         commune: "SAINT-BRIEUC",
@@ -105,6 +107,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
         rattachement: "",
+        categorie: '-'
       },
     ];
     // @ts-ignore
@@ -476,6 +479,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
         rattachement: "010008407",
+        categorie: '-'
+
       },
       {
         commune: "SAINT-BRIEUC",
@@ -484,6 +489,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
         rattachement: "010008407",
+        categorie: '-'
+
       },
       {
         commune: "SAINT-BRIEUC",
@@ -492,6 +499,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
         rattachement: "",
+        categorie: '-'
+
       },
     ];
     // @ts-ignore
