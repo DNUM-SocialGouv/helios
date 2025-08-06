@@ -13,6 +13,7 @@ const tableHeaders = [
   { label: "", nomComplet: "", key: "etsLogo", orderBy: "type", sort: true },
   { label: "", nomComplet: "", key: "favori" },
   { label: "Raison Sociale", nomComplet: "", key: "socialReason", orderBy: "raison_sociale_courte", sort: true },
+  { label: "Cat. FINESS", nomComplet: "", key: "categorie", orderBy: "libelle_categorie", sort: true },
   { label: "Commune", nomComplet: "", key: "commune", sort: true },
   { label: "Département", nomComplet: "", key: "departement", sort: true },
   { label: "N°FINESS", nomComplet: "", key: "numéroFiness", orderBy: "numero_finess", sort: true },

@@ -1,6 +1,7 @@
 export type ResultatEJ = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   commune: string;
   departement: string;
   type: string;
@@ -21,6 +22,7 @@ export type ResultatEJ = Readonly<{
 export type ResultatSMS = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   commune: string;
   departement: string;
   type: string;
@@ -42,6 +44,7 @@ export type ResultatSMS = Readonly<{
 export type ResultatSAN = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   commune: string;
   departement: string;
   type: string;

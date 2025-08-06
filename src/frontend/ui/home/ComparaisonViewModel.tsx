@@ -1,6 +1,7 @@
 export type ResultatComparaisonSMS = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   type: string;
   capacite: number;
   realisationActivite: number | string;
@@ -23,6 +24,7 @@ export type ResultatComparaisonSMS = Readonly<{
 export type ResultatComparaisonEJ = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   commune: string;
   departement: string;
   type: string;
@@ -43,6 +45,7 @@ export type ResultatComparaisonEJ = Readonly<{
 export type ResultatComparaisonSAN = Readonly<{
   numéroFiness: string;
   socialReason: string;
+  categorie: string;
   commune: string;
   departement: string;
   type: string;
@@ -93,6 +96,10 @@ export class ComparaisonSMSViewModel {
 
   public get socialReason(): string {
     return this.comparaison.socialReason;
+  }
+
+  public get categorie(): string {
+    return this.comparaison.categorie;
   }
 
   public get type(): string {
@@ -201,6 +208,10 @@ export class ComparaisonSANViewModel {
     return this.comparaison.socialReason;
   }
 
+  public get categorie(): string {
+    return this.comparaison.categorie;
+  }
+
   public get type(): string {
     return this.comparaison.type;
   }
@@ -296,6 +307,10 @@ export class ComparaisonEJViewModel {
 
   public get socialReason(): string {
     return this.comparaison.socialReason;
+  }
+
+  public get categorie(): string {
+    return this.comparaison.categorie;
   }
 
   public get type(): string {

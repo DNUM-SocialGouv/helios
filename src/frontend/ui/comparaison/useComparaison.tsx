@@ -302,6 +302,7 @@ export function useComparaison() {
         { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "Cat. FINESS", nomComplet: "Cat. FINESS", key: "categorie", sort: true, orderBy: "libelle_categorie" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
         {
           label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
@@ -331,6 +332,7 @@ export function useComparaison() {
         { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "Cat. FINESS", nomComplet: "Cat. FINESS", key: "categorie", sort: true, orderBy: "libelle_categorie" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
         { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
         { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
@@ -352,6 +354,7 @@ export function useComparaison() {
         { label: "", key: "etsLogo", nomComplet: "", sort: true, orderBy: "type" },
         { label: "", key: "favori", nomComplet: "" },
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
+        { label: "Cat. FINESS", nomComplet: "Cat. FINESS", key: "categorie", sort: true, orderBy: "libelle_categorie" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
         { label: "Nb séjours Médecine -Total Hospt", nomComplet: "Nb de séjours Médecine -Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "total_hospt_medecine" },
         { label: "Nb séjours Chirurgie -Total Hospt", nomComplet: "Nb de séjours Chirurgie -Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "total_hospt_chirurgie" },

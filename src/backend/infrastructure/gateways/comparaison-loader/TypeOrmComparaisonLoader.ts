@@ -11,6 +11,8 @@ import { combineProfils } from "../../../profileFiltersHelper";
 type ComparaisonSMSTypeOrm = Readonly<{
   numero_finess: string;
   raison_sociale_courte: string;
+  code_categorie: string;
+  libelle_categorie: string;
   type: string;
   commune: string;
   departement: string;
@@ -33,6 +35,8 @@ type ComparaisonSMSTypeOrm = Readonly<{
 type ComparaisonEJTypeOrm = Readonly<{
   numero_finess: string;
   raison_sociale_courte: string;
+  code_categorie: string;
+  libelle_categorie: string;
   type: string;
   commune: string;
   departement: string;
@@ -53,6 +57,8 @@ type ComparaisonEJTypeOrm = Readonly<{
 type ComparaisonSANTypeOrm = Readonly<{
   numero_finess: string;
   raison_sociale_courte: string;
+  code_categorie: string;
+  libelle_categorie: string;
   type: string;
   commune: string;
   departement: string;
@@ -271,6 +277,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     LEFT JOIN ${compareEnveloppe3} on ej.numero_finess  = ar3.numero_finess_entite_juridique
     where ej.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})
     group by ej.numero_finess, ej.raison_sociale_courte,
+    ej.categorie,
+    ej.libelle_categorie,
     ej.commune,
     ej.departement,
     ej.code_region,
@@ -302,6 +310,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
     const compareEjQuery = `SELECT *
     FROM ( Select ej.numero_finess,
     ej.raison_sociale_courte,
+    ej.categorie as code_categorie,
+    ej.libelle_categorie,
     ej.commune,
     ej.departement,
     ej.code_region,
@@ -381,6 +391,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     const compareSMSQuery = `Select et.numero_finess,
     et.raison_sociale_courte,
+    et.categorie as code_categorie,
+    et.libelle_categorie,
     et.commune,
     et.departement,
     et.code_region,
@@ -473,7 +485,6 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       autorisations.autorisationsEtCapacités.capacités
       ]
     );
-
     return {
       nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatSMS(compareSMSQueryResult),
@@ -510,6 +521,8 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 
     const compareEtSanQuery = `Select et.numero_finess,
     et.raison_sociale_courte,
+    et.categorie as code_categorie,
+    et.libelle_categorie,
     et.commune,
     et.departement,
     et.code_region,
@@ -599,6 +612,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       return {
         numéroFiness: resultat.numero_finess,
         socialReason: resultat.raison_sociale_courte,
+        categorie: resultat.code_categorie + '-' + resultat.libelle_categorie,
         type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
@@ -625,6 +639,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       return {
         numéroFiness: resultat.numero_finess,
         socialReason: resultat.raison_sociale_courte,
+        categorie: resultat.code_categorie + '-' + resultat.libelle_categorie,
         type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
@@ -649,6 +664,7 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
       return {
         numéroFiness: resultat.numero_finess,
         socialReason: resultat.raison_sociale_courte,
+        categorie: resultat.code_categorie + '-' + resultat.libelle_categorie,
         type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
