@@ -521,7 +521,8 @@ export class WordingFr implements Wording {
   readonly COMPARAISON: string = "Comparaison";
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
   readonly COMPARAISON_AUCUN_FINESS: string = "Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.";
-
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = "Votre sélection comprend plus de 30 000 établissements. Réduisez votre sélection pour lancer la comparaison.";
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
   readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";

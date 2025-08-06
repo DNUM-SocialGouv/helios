@@ -96,27 +96,25 @@ export function useComparaison() {
   }
 
   const getListAnnees = async (type: string, numeroFiness: string[]): Promise<number[]> => {
-    const params = new URLSearchParams();
-    params.set('type', type);
-    numeroFiness.forEach(finess => params.append('numeroFiness', finess));
-    const response = await fetch(`/api/comparaison/getListAnnees?${params.toString()}`, {
+    const response = await fetch(`/api/comparaison/getListAnnees`, {
       headers: { "Content-Type": "application/json" },
-      method: "GET",
+      method: "POST",
+      body: JSON.stringify({ numeroFiness, type }),
     });
     const listAnnees = await response.json();
     return listAnnees;
   }
 
   const getcomparedTypes = async (numeroFiness: string[]): Promise<string[]> => {
-    const params = new URLSearchParams();
-    numeroFiness.forEach(finess => params.append('numeroFiness', finess));
-    const response = await fetch(`/api/comparaison/getTypesFromFiness?${params.toString()}`, {
+    const response = await fetch('/api/comparaison/getTypesFromFiness', {
       headers: { "Content-Type": "application/json" },
-      method: "GET",
+      method: "POST",
+      body: JSON.stringify({ numeroFiness }),
     });
-    const comparedTypes = await response.json();
-    return comparedTypes;
-  }
+
+    return response.json();
+  };
+
 
   const getTopEnveloppes = async (annee: string, type: string): Promise<string[]> => {
     const savedEnveloppesEjString = sessionStorage.getItem('topEnveloppeEj');

@@ -91,15 +91,10 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
           ELSE (extract(year FROM current_date) - 1)::int
       END
       ) annee
-				FROM (
+FROM (
 					SELECT max(annee) maxannee FROM (
-					Select annee from activite_medico_social ac where ac.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
-					UNION
-					Select annee from ressources_humaines_medico_social rh where rh.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
-					UNION
-					Select annee from budget_et_finances_medico_social budget where budget.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
-					  ) anc ) ang
-            `;
+					Select annee from budget_et_finances_entite_juridique bg where bg.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+			) anc ) ang`;
       const generateAnneesResult = await (await this.orm).query(generateAnnees);
       return generateAnneesResult.map((item: any) => item.annee);
     } else if (type === "Médico-social") {
@@ -113,10 +108,11 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
           ELSE (extract(year FROM current_date) - 1)::int
       END
       ) annee
-				FROM (
+       			FROM (
 					SELECT max(annee) maxannee FROM (
-					Select annee from budget_et_finances_entite_juridique bg where bg.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
-			) anc ) ang`;
+					Select annee from budget_et_finances_medico_social budget where budget.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+					  ) anc ) ang
+				`;
       const generateAnneesResult = await (await this.orm).query(generateAnnees);
       return generateAnneesResult.map((item: any) => item.annee);
     } else {

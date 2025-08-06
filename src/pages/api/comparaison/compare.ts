@@ -22,6 +22,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     response.status(400).send("invalid type");
   }
 
+  if (numerosFiness.length > 30000) {
+    return response.status(405).send("Authorized limit exceeded");
+  }
+
   if (!numerosFiness || numerosFiness.length === 0) {
     return response.status(200).json(emptyResponse);
   }
