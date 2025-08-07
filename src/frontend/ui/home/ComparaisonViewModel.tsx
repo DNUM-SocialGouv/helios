@@ -6,6 +6,11 @@ export type ResultatComparaisonSMS = Readonly<{
   capacite: number;
   realisationActivite: number | string;
   acceuilDeJour: number | string;
+  externat: number | null | string;
+  semiInternat: number | null | string;
+  internat: number | null | string;
+  autres: number | null | string;
+  seances: number | null | string;
   hebergementPermanent: number | string;
   hebergementTemporaire: number | string;
   fileActivePersonnesAccompagnes: number | string;
@@ -145,6 +150,27 @@ export class ComparaisonSMSViewModel {
     return this.comparaison.absenteisme !== null ? this.comparaison.absenteisme === 'NA' ? 'Consultation non autorisée' : this.comparaison.absenteisme + "%" : null;
   }
 
+  public get externat(): string | null {
+    if (this.comparaison.externat === '') return ''
+    return this.comparaison.externat !== null ? this.comparaison.externat === 'NA' ? 'Consultation non autorisée' : this.comparaison.externat + "%" : null;
+  }
+
+  public get internat(): string | null {
+    if (this.comparaison.internat === '') return ''
+    return this.comparaison.internat !== null ? this.comparaison.internat === 'NA' ? 'Consultation non autorisée' : this.comparaison.internat + "%" : null;
+  }
+  public get semiInternat(): string | null {
+    if (this.comparaison.semiInternat === '') return ''
+    return this.comparaison.semiInternat !== null ? this.comparaison.semiInternat === 'NA' ? 'Consultation non autorisée' : this.comparaison.semiInternat + "%" : null;
+  }
+  public get autres(): string | null {
+    if (this.comparaison.autres === '') return ''
+    return this.comparaison.autres !== null ? this.comparaison.autres === 'NA' ? 'Consultation non autorisée' : this.comparaison.autres + "%" : null;
+  }
+  public get seances(): string | null {
+    if (this.comparaison.seances === '') return ''
+    return this.comparaison.seances !== null ? this.comparaison.seances === 'NA' ? 'Consultation non autorisée' : this.comparaison.seances + "%" : null;
+  }
   public get prestationExterne(): string | null {
     if (this.comparaison.prestationExterne === '') return ''
     return this.comparaison.prestationExterne !== null ? this.comparaison.prestationExterne === 'NA' ? 'Consultation non autorisée' : this.comparaison.prestationExterne + "%" : null;

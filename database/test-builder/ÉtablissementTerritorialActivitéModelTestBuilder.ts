@@ -8,6 +8,11 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéMédicoSocialModel.année = champsSurchargés?.année || 2019;
     activitéMédicoSocialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || "590782553";
     activitéMédicoSocialModel.tauxOccupationAccueilDeJour = champsSurchargés?.tauxOccupationAccueilDeJour || 80;
+    activitéMédicoSocialModel.tauxOccupationExternat = champsSurchargés?.tauxOccupationExternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationInternat = champsSurchargés?.tauxOccupationInternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationSemiInternat = champsSurchargés?.tauxOccupationSemiInternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationAutre = champsSurchargés?.tauxOccupationAutre || 0.8;
+    activitéMédicoSocialModel.tauxOccupationSeances = champsSurchargés?.tauxOccupationSeances || 0.8;
     activitéMédicoSocialModel.tauxOccupationHébergementTemporaire = champsSurchargés?.tauxOccupationHébergementTemporaire || 80;
     activitéMédicoSocialModel.tauxOccupationHébergementPermanent = champsSurchargés?.tauxOccupationHébergementPermanent || 80;
     activitéMédicoSocialModel.tauxRéalisationActivité = champsSurchargés?.tauxRéalisationActivité || 80;
