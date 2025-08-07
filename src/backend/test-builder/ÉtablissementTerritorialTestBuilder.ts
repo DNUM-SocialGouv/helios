@@ -204,19 +204,19 @@ export class ÉtablissementTerritorialTestBuilder {
       value: 80,
     },
     tauxOccupationExternat: {
-      value: null,
+      value: 0.8,
     },
     tauxOccupationSemiInternat: {
-      value: null,
+      value: 0.8,
     },
     tauxOccupationInternat: {
-      value: null,
+      value: 0.8,
     },
     tauxOccupationAutre: {
-      value: null,
+      value: 0.8,
     },
     tauxOccupationSeances: {
-      value: null,
+      value: 0.8,
     },
   };
 
