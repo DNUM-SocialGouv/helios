@@ -21,6 +21,11 @@ type ComparaisonSMSTypeOrm = Readonly<{
   taux_occupation_en_hebergement_permanent: number | 'NA';
   taux_occupation_en_hebergement_temporaire: number | 'NA';
   taux_occupation_accueil_de_jour: number | 'NA';
+  taux_occupation_externat: number | 'NA';
+  taux_occupation_semi_internat: number | 'NA';
+  taux_occupation_internat: number | 'NA';
+  taux_occupation_autres: number | 'NA';
+  taux_occupation_seances: number | 'NA';
   taux_de_caf: number | 'NA';
   taux_de_vetuste_construction: number | 'NA';
   fonds_de_roulement: number | 'NA';
@@ -414,6 +419,26 @@ FROM (
     ELSE 'NA'
     END AS taux_occupation_accueil_de_jour,
     CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_externat AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_externat,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_semi_internat AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_semi_internat,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_internat AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_internat,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_autre AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_autres,
+    CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_seances AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_seances,
+    CASE
           WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN CAST(bg.taux_de_caf AS TEXT)
     ELSE 'NA'
     END AS taux_de_caf,
@@ -615,6 +640,11 @@ FROM (
         capacite: resultat.type !== "Médico-social" ? '' : resultat.capacite_total ? Number(resultat.capacite_total) : null,
         realisationActivite: resultat.type !== "Médico-social" ? '' : resultat.taux_realisation_activite === 'NA' ? 'NA' : this.transformInRate(resultat.taux_realisation_activite, 1),
         acceuilDeJour: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_accueil_de_jour === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_accueil_de_jour, 1),
+        externat: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_externat === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_externat, 1),
+        semiInternat: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_semi_internat === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_semi_internat, 1),
+        internat: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_internat === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_internat, 1),
+        autres: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_autres === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_autres, 1),
+        seances: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_seances === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_seances, 1),
         hebergementPermanent: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
         hebergementTemporaire: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
         fileActivePersonnesAccompagnes: resultat.type !== "Médico-social" ? '' : resultat.file_active_personnes_accompagnees ? Number(resultat.file_active_personnes_accompagnees) : null,

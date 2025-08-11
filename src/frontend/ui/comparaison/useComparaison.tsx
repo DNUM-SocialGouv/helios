@@ -23,6 +23,7 @@ import { ContenuFileActivePersonnesAccompagnées } from "../établissement-terri
 import { ContenuFondDeRoulementNetGlobal } from "../établissement-territorial-médico-social/InfoBulle/ContenuFondDeRoulementNetGlobal";
 import { ContenuRésultatNetComptable } from "../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeVétustéConstruction";
+import { ContenuDuTauxOccupationESMS } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxOccupationESMS";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
 import { ContenuNombreDeJournéesPSYetSSR } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { ContenuNombreDeSéjourMCO } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
@@ -185,6 +186,15 @@ export function useComparaison() {
           contenu: <ContenuDuTauxOccupation dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA}></ContenuDuTauxOccupation>,
           titre: wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR,
         };
+      case "externat":
+      case "semiInternat":
+      case "internat":
+      case "autres":
+      case "seances":
+        return {
+          contenu: <ContenuDuTauxOccupationESMS dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA} />,
+          titre: getTitreModalESMS(name),
+        };
       case "prestationExterne":
         return {
           contenu: <ContenuDePrestationsExternes dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_tdbPerf)} source={wording.TDB_PERF}></ContenuDePrestationsExternes>,
@@ -293,6 +303,21 @@ export function useComparaison() {
     }
   }
 
+  const getTitreModalESMS = (name: string) => {
+    switch (name) {
+      case "externat":
+        return wording.TAUX_OCCUPATION_EXTERNAT;
+      case "semiInternat":
+        return wording.TAUX_OCCUPATION_SEMI_INTERNAT;
+      case "internat":
+        return wording.TAUX_OCCUPATION_INTERNAT;
+      case "autres":
+        return wording.TAUX_OCCUPATION_AUTRE;
+      default:
+        return wording.TAUX_OCCUPATION_SEANCES
+    }
+  }
+
   const tableHeaders = (datesMisAjour: DatesMisAjourSources, structure: string) => {
     if (structure === 'Médico-social')
       return [
@@ -315,6 +340,11 @@ export function useComparaison() {
         { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
         { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
         { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
+        { label: "TO Externat", nomComplet: "Taux d’occupation externat", key: "externat", info: true, sort: true, orderBy: "taux_occupation_externat" },
+        { label: "TO Semi internat", nomComplet: "Taux d’occupation semi-internat", key: "semiInternat", info: true, sort: true, orderBy: "taux_occupation_semi_internat" },
+        { label: "TO Internat", nomComplet: "Taux d’occupation internat", key: "internat", info: true, sort: true, orderBy: "taux_occupation_internat" },
+        { label: "TO Autre 1, 2 et 3", nomComplet: "TTaux d’occupation autre 1, 2 et 3", key: "autres", info: true, sort: true, orderBy: "taux_occupation_autres" },
+        { label: "TO Séances", nomComplet: "Taux d'occupation Séances", key: "seances", info: true, sort: true, orderBy: "taux_occupation_seances" },
         { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
         { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
         { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },

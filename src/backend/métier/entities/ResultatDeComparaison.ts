@@ -29,6 +29,11 @@ export type ResultatSMS = Readonly<{
   capacite: number | null | string;
   realisationActivite: number | null | string;
   acceuilDeJour: number | null | string;
+  externat: number | null | string;
+  semiInternat: number | null | string;
+  internat: number | null | string;
+  autres: number | null | string;
+  seances: number | null | string;
   hebergementPermanent: number | null | string;
   hebergementTemporaire: number | null | string;
   fileActivePersonnesAccompagnes: number | null | string;
