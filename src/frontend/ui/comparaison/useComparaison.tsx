@@ -410,6 +410,7 @@ export function useComparaison() {
     NombreDeResultatsMaxParPage: take,
     listeAnnees: state.listeAnnees,
     getListAnnees,
-    getcomparedTypes
+    getcomparedTypes,
+    getTopEnveloppes
   };
 }
