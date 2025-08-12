@@ -392,7 +392,6 @@ export function useComparaison() {
         { label: "Nb de passage aux urgences", nomComplet: "Nb de passage aux urgences", key: "passagesUrgences", info: true, sort: true, orderBy: "nombre_passages_urgences" },
         { label: "Nb séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "nombre_sejours_had" },
         { label: "Nb journées USLD", nomComplet: "Nb de journées USLD", key: "journeesUsld", info: true, sort: true, orderBy: "nombre_journees_usld" },
-        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
         { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
         { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
         { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
