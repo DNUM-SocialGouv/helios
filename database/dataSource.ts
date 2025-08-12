@@ -74,6 +74,7 @@ import { ReferentielCategoriesFiness1747831401347 } from "./migrations/174783140
 import { AjoutCategorieRecherche1748009262073 } from "./migrations/1748009262073-AjoutCategorieRecherche";
 import { AjoutLaColonneDomaineAuReferentielCategories1748332500947 } from "./migrations/1748332500947-ajoutLaColonneDomaineAuReferentielCategories";
 import { AjoutLibelleCategorieALaRecherche1754309418981 } from "./migrations/1754309418981-AjoutLibelleCategorieALaRecherche";
+import { AjoutNomenclatureAMM1755003914846 } from "./migrations/1755003914846-ajoutNomenclatureAMM";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -249,7 +250,8 @@ const datasource = new DataSource({
     ReferentielCategoriesFiness1747831401347,
     AjoutCategorieRecherche1748009262073,
     AjoutLaColonneDomaineAuReferentielCategories1748332500947,
-    AjoutLibelleCategorieALaRecherche1754309418981
+    AjoutLibelleCategorieALaRecherche1754309418981,
+    AjoutNomenclatureAMM1755003914846
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
