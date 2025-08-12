@@ -295,7 +295,7 @@ export function useComparaison() {
       case "enveloppe2":
       case "enveloppe3":
         return {
-          contenu: <ContenuAllocationRessourcesEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
+          contenu: <ContenuAllocationRessourcesEJ comparaison={true} dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
           titre: wording.ALLOCATION_DE_RESSOURCES,
         };
       default:

@@ -5,15 +5,19 @@ import { useDependencies } from "../../../commun/contexts/useDependencies";
 type ContenuAllocationRessourcesEJProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
+  comparaison: boolean;
 }>;
 
-export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source }: ContenuAllocationRessourcesEJProps) => {
+export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source, comparaison }: ContenuAllocationRessourcesEJProps) => {
   const { wording } = useDependencies();
 
   return (
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
+        {comparaison && <p>
+          Pour la campagne et le type d’établissement sélectionnés, cette enveloppe fait partie des 3 premières enveloppes attribuées.
+        </p>}
         <p>
           L’application HAPI « Autres champs » outille le processus de gestion et d’attribution des ressources liées aux enveloppes MIGAC, DAF, USLD, Forfait et
           FMESPP d’une part, et, le pilotage et l’ordonnancement des dépenses du fonds d’intervention régional (FIR) d’autre part.
