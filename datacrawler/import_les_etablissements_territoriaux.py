@@ -1,5 +1,4 @@
 import os
-import xml.etree.ElementTree as ET
 
 from logging import Logger
 
@@ -13,7 +12,7 @@ from datacrawler.extract.lecteur_xml import (
 )
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1400102,
+    XML_TAG_FINESS_CS1400102,
     XPATH_FINESS_CS1500106,
     colonnes_finess_cs1400102,
     type_des_colonnes_finess_cs1400102,
@@ -54,13 +53,6 @@ from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 
 
-def getValueOrNone(elmt: (ET.Element | None)) -> str | None:
-    if elmt is None:
-        return None
-    else:
-        return elmt.text
-
-
 def import_etablissements_territoriaux(
     chemin_local_du_fichier_et: str,
     chemin_local_du_fichier_categorie: str,
@@ -72,7 +64,7 @@ def import_etablissements_territoriaux(
         "etablissements": lis_le_fichier_xml_en_stream(
             logger,
             chemin_local_du_fichier_et,
-            XPATH_FINESS_CS1400102,
+            XML_TAG_FINESS_CS1400102,
             colonnes_finess_cs1400102,
             type_des_colonnes_finess_cs1400102,
         ),

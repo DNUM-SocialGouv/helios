@@ -151,7 +151,7 @@ type_des_colonnes_finess_cs1400101 = {
     "libstatutjuridique": str,
     "ligneacheminement": str,
     "nofiness": str,
-    "numvoie": str, 
+    "numvoie": str,
     "rs": str,
     "rslongue": str,
     "siren": str,
@@ -170,13 +170,13 @@ equivalences_finess_cs1400101_helios = {
     "libdepartement": "departement",
     "libstatutjuridique": "libelle_statut_juridique",
     "nofiness": "numero_finess_entite_juridique",
-    "rslongue": "raison_sociale", 
+    "rslongue": "raison_sociale",
     "rs": "raison_sociale_courte",
     "siren": "siren",
     "telephone": "telephone",
     "datecrea": "date_ouverture",
     "ref_code_region": "code_region",
-    "categorisation": "categorisation"
+    "categorisation": "categorisation",
 }
 
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
@@ -185,7 +185,7 @@ XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
 type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
 colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
 
-XPATH_FINESS_CS1400102 = "./structureet"
+XML_TAG_FINESS_CS1400102 = "structureet"
 colonnes_finess_cs1400102 = [
     "nofinesset",
     "nofinessej",
@@ -210,8 +210,8 @@ colonnes_finess_cs1400102 = [
     "libmft",
     "dateouv",
     "datefermeture",
-    "indcaduc"
-    ]
+    "indcaduc",
+]
 type_des_colonnes_finess_cs1400102 = {
     "nofinesset": str,
     "nofinessej": str,
