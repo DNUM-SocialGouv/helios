@@ -23,7 +23,7 @@ def lis_le_fichier_xml_en_stream(
     start = time.perf_counter()
 
     data = []
-    data_object = {}
+    data_object: Dict[str, str | None] = {}
     # On lit le fichiers xml en stream avec écoute des event concernant les balises de début (start) et les balises de fin (end)
     for event, elem in ET.iterparse(chemin_du_fichier, events=("start", "end")):
         # Quand un event de début du tag global de l’objet recherché est lancé, on crée un objet vide
