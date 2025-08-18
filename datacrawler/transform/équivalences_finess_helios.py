@@ -179,19 +179,65 @@ equivalences_finess_cs1400101_helios = {
     "categorisation": "categorisation"
 }
 
-index_des_entitees_juridiques : List[str] = [
-    "numero_finess_entite_juridique"
-]
+index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
 
 XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
-type_des_colonnes_finess_cs1400107 = {
-    "code": str,
-    "codeagr2": str,
-    "codeagr1": str
-}
+type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
 colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
 
 XPATH_FINESS_CS1400102 = "./structureet"
+colonnes_finess_cs1400102 = [
+        "nofinesset",
+        "nofinessej",
+        "rs",
+        "rslongue",
+        "complrs",
+        "compldistrib",
+        "numvoie",
+        "typvoie",
+        "voie",
+        "compvoie",
+        "lieuditbp",
+        "commune",
+        "libcommune",
+        "departement",
+        "libdepartement",
+        "codepostal",
+        "ligneacheminement",
+        "codepays",
+        "libellepays",
+        "telephone",
+        "telecopie",
+        "courriel",
+        "categetab",
+        "libcategetab",
+        "libcourtcategetab",
+        "categagretab",
+        "libcategagretab",
+        "libcourtcategagretab",
+        "typeet",
+        "nofinessppal",
+        "natureet",
+        "siret",
+        "datemodifsiret",
+        "originemodifsiret",
+        "codeape",
+        "codemft",
+        "libmft",
+        "libcourtmft",
+        "codesph",
+        "libsph",
+        "libcourtsph",
+        "dateouv",
+        "datelimite",
+        "indcaduc",
+        "typefermeture",
+        "datefermeture",
+        "dateautor",
+        "datemaj",
+        "numuai",
+        "test",
+    ]
 type_des_colonnes_finess_cs1400102 = {
     "nofinesset": str,
     "nofinessej": str,
@@ -241,37 +287,32 @@ equivalences_finess_cs1400102_helios = {
     "libmft": "libelle_du_mode_tarification",
     "ref_code_region": "code_region",
     "dateouv": "date_ouverture",
-    "classification" : "classification"
+    "classification": "classification",
 }
 
 colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())
 
 
-index_des_etablissements_territorriaux : List[str] = [
+index_des_etablissements_territorriaux: List[str] = [
     "numero_finess_etablissement_territorial"
 ]
 
 XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
-type_des_colonnes_finess_cs1500106 = {
-    "code": str,
-    "domaine": str
-}
+type_des_colonnes_finess_cs1500106 = {"code": str, "domaine": str}
 colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
 type_des_colonnes_categories_finess = {
     "code": str,
     "libelle": str,
     "libellecourt": str,
-    "domaine": str
+    "domaine": str,
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
     "libelle": "libelle",
     "libellecourt": "libelle_court",
-    "domaine": "domaine"
+    "domaine": "domaine",
 }
 
-index_des_categories: List[str] = [
-    "code"
-]
+index_des_categories: List[str] = ["code"]
 
-colonnes_a_garder_categories_finess= list(type_des_colonnes_categories_finess.keys())
+colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())
