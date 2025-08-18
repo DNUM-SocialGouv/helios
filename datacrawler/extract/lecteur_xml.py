@@ -24,19 +24,22 @@ def lis_le_fichier_xml_en_stream(
 
     data = []
     data_object: Dict[str, str | None] = {}
+    is_in_data_tag = False
     # On lit le fichiers xml en stream avec écoute des event concernant les balises de début (start) et les balises de fin (end)
     for event, elem in ET.iterparse(chemin_du_fichier, events=("start", "end")):
         # Quand un event de début du tag global de l’objet recherché est lancé, on crée un objet vide
         if event == "start" and elem.tag == xml_tag:
+            is_in_data_tag = True
             data_object = {}
 
         # Quand un évent de fin de tag global de l’objet recherché est lancé, on enregistre l’objet et on clear la Ram
-        if event == "end" and elem.tag == xml_tag:
+        if event == "end" and is_in_data_tag and elem.tag == xml_tag:
             data.append(data_object)
             elem.clear()
+            is_in_data_tag = False
 
         # Quand un évent de fin d’un des champs attendu est lancé, on met à jour l’objet en cours de construction
-        if event == "end" and elem.tag in colonnes:
+        if event == "end" and is_in_data_tag and elem.tag in colonnes:
             data_object[elem.tag] = get_value_or_none(elem)
 
     elapsed = time.perf_counter() - start
