@@ -34,6 +34,7 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, activit
       contenuInfoBulle={
         <ContenuNombreDeSéjourMCO
           dateDeMiseÀJour={dateDeMiseAJour()}
+          estComparaison={false}
           estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />

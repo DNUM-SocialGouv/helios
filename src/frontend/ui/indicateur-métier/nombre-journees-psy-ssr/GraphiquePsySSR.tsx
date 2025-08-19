@@ -36,6 +36,7 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
       contenuInfoBulle={
         <ContenuNombreDeJournéesPSYetSSR
           dateDeMiseÀJour={dateDeMiseAJour()}
+          estComparaison={false}
           estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
