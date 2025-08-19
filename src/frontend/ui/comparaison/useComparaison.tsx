@@ -267,13 +267,13 @@ export function useComparaison() {
       case "totalHosptChirurgie":
       case "totalHosptObstetrique":
         return {
-          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estComparaison={true} estEntitéJuridique={false} source={wording.PMSI} />,
           titre: wording.NOMBRE_DE_SÉJOUR_MCO,
         };
       case "totalHosptPsy":
       case "totalHosptSsr":
         return {
-          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estComparaison={true} estEntitéJuridique={false} source={wording.PMSI} />,
           titre: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR,
         };
       case "passagesUrgences":
