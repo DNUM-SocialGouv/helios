@@ -36,6 +36,8 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   const [isChangedCategories, setIsChangedCategories] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [newEtablissements, setNewEtablissements] = useState<string[]>([]);
+  const [newEtablissementsList, setNewEtablissementsList] = useState<string[]>([]);
+  const [newEtablissementsRecherche, setNewEtablissementsRecherche] = useState<string[]>([]);
   const [newStructures, setNewStructures] = useState<string[]>([]);
 
   const [sortedFavorisList, setSortedFavorisList] = useState(userContext?.favorisLists);
@@ -96,6 +98,10 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
       }
     }
   }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
+
+  useEffect(() => {
+    setNewEtablissements([...new Set([...newEtablissementsList, ...newEtablissementsRecherche])])
+  }, [newEtablissementsList, newEtablissementsRecherche])
 
   // check if lits are equals or not
   const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
@@ -162,13 +168,12 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   };
 
   const handleOnChangeListe = (event: ChangeEvent<HTMLSelectElement>) => {
-    setNewEtablissements([]);
+    setNewEtablissementsList([]);
     const listeFinessNumbers = event.target.value.split(',');
-
     listeFinessNumbers.forEach((numFiness: string) => {
       const isAlreadyInTable = finessNumbersListFromTable.includes(numFiness);
       if (!isAlreadyInTable) {
-        setNewEtablissements((prevSelected) =>
+        setNewEtablissementsList((prevSelected) =>
           toggleFinessInSelection(prevSelected, numFiness)
         );
       }
@@ -209,7 +214,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
                 newStructures={newStructures}
                 resultatRechercheList={listData}
                 setIsAtBottom={setIsAtBottom}
-                setNewEtablissement={setNewEtablissements}
+                setNewEtablissement={setNewEtablissementsRecherche}
                 setNewStructures={setNewStructures}
               ></ListEtablissements>
             )}
