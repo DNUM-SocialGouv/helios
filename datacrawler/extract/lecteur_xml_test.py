@@ -1,11 +1,16 @@
 import os
 import shutil
 from pathlib import Path
+from typing import Dict
 
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
+from datacrawler.dependencies.logger.logger import crée_le_logger
+from datacrawler.extract.lecteur_xml import (
+    lis_le_fichier_xml,
+    lis_le_fichier_xml_en_stream,
+)
 from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
     XPATH_FINESS_CS1400103,
@@ -22,10 +27,13 @@ from datacrawler.transform.équivalences_finess_helios import (
 
 
 class TestLisLeFichierXml:
+    logger = crée_le_logger()
     répertoire_des_fichiers: str = "./fake_flux_finess"
 
     def setup_method(self) -> None:
-        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(parents=True, exist_ok=True)
+        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(
+            parents=True, exist_ok=True
+        )
 
     def teardown_method(self) -> None:
         shutil.rmtree(self.répertoire_des_fichiers)
@@ -72,7 +80,9 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400105
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -87,25 +97,27 @@ class TestLisLeFichierXml:
                     "libta": ["Hospitalisation Complète"],
                     "libcourtta": ["Hospit. Complète"],
                     "client": ["020"],
-                    "libclient": ["Toutes Déficiences Physiques (Sans autre indication)"],
+                    "libclient": [
+                        "Toutes Déficiences Physiques (Sans autre indication)"
+                    ],
                     "libcourtclient": ["Toutes Déf.Physiques"],
                     "sourceinfo": ["S"],
                     "libsourceinfo": ["Inspection"],
                     "capinstot": [3],
-                    "capinstm": [NaN],
-                    "capinstf": [NaN],
-                    "capinsthab": [NaN],
-                    "ageminiinst": [NaN],
-                    "agemaxiinst": [NaN],
+                    "capinstm": [nan],
+                    "capinstf": [nan],
+                    "capinsthab": [nan],
+                    "ageminiinst": [nan],
+                    "agemaxiinst": [nan],
                     "indsupinst": ["O"],
                     "datederinst": ["2009-01-01"],
                     "datepremautor": ["2006-03-29"],
                     "capautot": [3],
-                    "capautm": [NaN],
-                    "capautf": [NaN],
+                    "capautm": [nan],
+                    "capautf": [nan],
                     "capauthab": [3],
-                    "ageminiaut": [NaN],
-                    "agemaxiaut": [NaN],
+                    "ageminiaut": [nan],
+                    "agemaxiaut": [nan],
                     "indsupaut": ["O"],
                     "dateautor": ["2006-03-29"],
                     "datemajaut": ["2012-05-03"],
@@ -137,7 +149,7 @@ class TestLisLeFichierXml:
             données_lues,
             pd.DataFrame(
                 {
-                    "echappe": ["670014604", NaN],
+                    "echappe": ["670014604", nan],
                 }
             ),
         )
@@ -183,7 +195,9 @@ class TestLisLeFichierXml:
         )
         xpath = XPATH_FINESS_CS1400105
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -203,20 +217,20 @@ class TestLisLeFichierXml:
                     "sourceinfo": ["S"],
                     "libsourceinfo": ["Inspection"],
                     "capinstot": [3],
-                    "capinstm": [NaN],
-                    "capinstf": [NaN],
-                    "capinsthab": [NaN],
-                    "ageminiinst": [NaN],
-                    "agemaxiinst": [NaN],
+                    "capinstm": [nan],
+                    "capinstf": [nan],
+                    "capinsthab": [nan],
+                    "ageminiinst": [nan],
+                    "agemaxiinst": [nan],
                     "indsupinst": ["O"],
                     "datederinst": ["2009-01-01"],
                     "datepremautor": ["2006-03-29"],
                     "capautot": [3],
-                    "capautm": [NaN],
-                    "capautf": [NaN],
+                    "capautm": [nan],
+                    "capautf": [nan],
                     "capauthab": [3],
-                    "ageminiaut": [NaN],
-                    "agemaxiaut": [NaN],
+                    "ageminiaut": [nan],
+                    "agemaxiaut": [nan],
                     "indsupaut": ["O"],
                     "dateautor": ["2006-03-29"],
                     "datemajaut": ["2012-05-03"],
@@ -301,7 +315,9 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400103
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400103)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400103
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -323,19 +339,19 @@ class TestLisLeFichierXml:
                         "nofinesset": "310019351",
                         "rset": "HOPITAL LARREY CHU TOULOUSE",
                         "noligautor": 1757,
-                        "noligautoranc": NaN,
+                        "noligautoranc": nan,
                         "noautorarhgos": "00-00-000",
                         "noimplarhgos": "00-00-000",
-                        "noancautact": NaN,
-                        "noancauteml": NaN,
-                        "sectpsy": NaN,
-                        "libsectpsy": NaN,
+                        "noancautact": nan,
+                        "noancauteml": nan,
+                        "sectpsy": nan,
+                        "libsectpsy": nan,
                         "datemeo": "2005-03-22",
                         "datefin": "2027-09-23",
-                        "datelimite": NaN,
+                        "datelimite": nan,
                         "indcaduc": "N",
-                        "daterenouv": NaN,
-                        "indrenouv": NaN,
+                        "daterenouv": nan,
+                        "indrenouv": nan,
                         "indsupact": "N",
                         "indsupsite": "N",
                         "datemajact": "2022-08-24",
@@ -356,19 +372,19 @@ class TestLisLeFichierXml:
                         "nofinesset": "310026083",
                         "rset": "CL RIVE GAUCHE TOULOUSE",
                         "noligautor": 1758,
-                        "noligautoranc": NaN,
+                        "noligautoranc": nan,
                         "noautorarhgos": "01-00-000",
                         "noimplarhgos": "01-00-000",
-                        "noancautact": NaN,
-                        "noancauteml": NaN,
-                        "sectpsy": NaN,
-                        "libsectpsy": NaN,
+                        "noancautact": nan,
+                        "noancauteml": nan,
+                        "sectpsy": nan,
+                        "libsectpsy": nan,
                         "datemeo": "1999-11-02",
                         "datefin": "2027-04-30",
-                        "datelimite": NaN,
+                        "datelimite": nan,
                         "indcaduc": "N",
-                        "daterenouv": NaN,
-                        "indrenouv": NaN,
+                        "daterenouv": nan,
+                        "indrenouv": nan,
                         "indsupact": "N",
                         "indsupsite": "N",
                         "datemajact": "2022-08-24",
@@ -435,7 +451,9 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1400104
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400104)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400104
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -453,16 +471,16 @@ class TestLisLeFichierXml:
                         "noimplarhgos": "02-00-000",
                         "dateautor": "2004-11-02",
                         "nofinesset": "310783055",
-                        "numserie": NaN,
+                        "numserie": nan,
                         "marque": 0,
                         "rset": "HOPITAL DE RANGUEIL CHU TOULOUSE",
-                        "datelimite": NaN,
+                        "datelimite": nan,
                         "indcaduc": "N",
                         "indnatlien": "J",
                         "datemeo": "2006-11-08",
                         "datefin": "2028-05-29",
-                        "indrempl": NaN,
-                        "noautorremplacement": NaN,
+                        "indrempl": nan,
+                        "noautorremplacement": nan,
                         "indsup": "N",
                         "datemaj": "2022-08-24",
                     },
@@ -477,16 +495,16 @@ class TestLisLeFichierXml:
                         "noimplarhgos": "03-00-000",
                         "dateautor": "2004-11-02",
                         "nofinesset": "310019351",
-                        "numserie": NaN,
+                        "numserie": nan,
                         "marque": 0,
                         "rset": "HOPITAL LARREY CHU TOULOUSE",
-                        "datelimite": NaN,
+                        "datelimite": nan,
                         "indcaduc": "N",
                         "indnatlien": "J",
                         "datemeo": "2006-09-15",
                         "datefin": "2023-03-13",
-                        "indrempl": NaN,
-                        "noautorremplacement": NaN,
+                        "indrempl": nan,
+                        "noautorremplacement": nan,
                         "indsup": "N",
                         "datemaj": "2022-08-24",
                     },
@@ -556,7 +574,9 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1600101
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600101)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600101
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -584,9 +604,9 @@ class TestLisLeFichierXml:
                         "resultatvisite": "C",
                         "datefin": "2026-06-26",
                         "datemeo": "2006-06-26",
-                        "datelimitemeo": NaN,
+                        "datelimitemeo": nan,
                         "datelimitedepot": "2025-10-26",
-                        "datelimvisite": NaN,
+                        "datelimvisite": nan,
                         "datemaj": "2022-08-24",
                     },
                     {
@@ -606,13 +626,13 @@ class TestLisLeFichierXml:
                         "nodecision": "2012-OSMS-006",
                         "etatautorisation": 7,
                         "libetatautorisation": "Renouvellement sur décision DGARS",
-                        "datevisite": NaN,
-                        "resultatvisite": NaN,
+                        "datevisite": nan,
+                        "resultatvisite": nan,
                         "datefin": "2022-02-01",
                         "datemeo": "2012-02-02",
-                        "datelimitemeo": NaN,
+                        "datelimitemeo": nan,
                         "datelimitedepot": "2021-07-01",
-                        "datelimvisite": NaN,
+                        "datelimvisite": nan,
                         "datemaj": "2022-08-24",
                     },
                 ]
@@ -676,7 +696,9 @@ class TestLisLeFichierXml:
         xpath = XPATH_FINESS_CS1600102
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600102)
+        données_lues = lis_le_fichier_xml(
+            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600102
+        )
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -733,4 +755,172 @@ class TestLisLeFichierXml:
                     },
                 ]
             ),
+        )
+
+    def test_lit_un_fichiers_complexe_en_stream(self) -> None:
+        # GIVEN
+        chemin_du_fichier = f"{self.répertoire_des_fichiers}/test_complexe.xml"
+        crée_le_fichier_xml(
+            chemin_du_fichier,
+            """
+                <parent>
+                    <integer>1</integer>
+                    <float>1</float>
+                    <string>1</string>
+                </parent>
+                <parent>
+                    <integer>2</integer>
+                    <float>2</float>
+                    <string>2</string>
+                </parent>
+                <parent>
+                    <integer>3</integer>
+                    <float>3</float>
+                    <string>3</string>
+                </parent>
+                <parent>
+                    <integer>4</integer>
+                    <float>4</float>
+                    <string>4</string>
+                </parent>
+            """,
+        )
+        xml_tag = "parent"
+        type_de_la_colonne: Dict = {
+            "integer": int,
+            "float": float,
+            "string": "string",
+        }
+        dataframe_attendue = pd.DataFrame(
+            [
+                {"integer": 1, "float": 1, "string": "1"},
+                {"integer": 2, "float": 2, "string": "2"},
+                {"integer": 3, "float": 3, "string": "3"},
+                {"integer": 4, "float": 4, "string": "4"},
+            ]
+        )
+        dataframe_attendue = dataframe_attendue.astype(type_de_la_colonne, copy=False)
+
+        # WHEN
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            list(type_de_la_colonne.keys()),
+            type_de_la_colonne,
+        )
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données_lues,
+            dataframe_attendue,
+        )
+
+    def test_respecte_le_typage_configure_en_stream(self) -> None:
+        # GIVEN
+        chemin_du_fichier = f"{self.répertoire_des_fichiers}/test_typage.xml"
+        crée_le_fichier_xml(
+            chemin_du_fichier,
+            """
+                <alltype>
+                    <integer>0123456789</integer>
+                    <float>01.23456789</float>
+                    <string>0123456789</string>
+                </alltype>
+            """,
+        )
+        xml_tag = "alltype"
+        type_colonnes: Dict = {"integer": int, "float": float, "string": "string"}
+        dataframe_attendue = pd.DataFrame(
+            [{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}]
+        )
+        dataframe_attendue = dataframe_attendue.astype(type_colonnes, copy=False)
+
+        # WHEN
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            list(type_colonnes.keys()),
+            type_colonnes,
+        )
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données_lues,
+            dataframe_attendue,
+        )
+
+    def test_traite_les_valeurs_manquantes_en_stream(self) -> None:
+        # GIVEN
+        chemin_du_fichier = f"{self.répertoire_des_fichiers}/test_manquant.xml"
+        crée_le_fichier_xml(
+            chemin_du_fichier,
+            """
+            <parent>
+                <echappe>670014604</echappe>
+            </parent>
+            <parent>
+                <echappe xsi:nil="true" />
+            </parent>""",
+        )
+        xml_tag = "parent"
+        type_de_la_colonne: Dict = {"echappe": "string"}
+        dataframe_attendue = pd.DataFrame(
+            {
+                "echappe": ["670014604", None],
+            }
+        ).astype(type_de_la_colonne, copy=False)
+
+        # WHEN
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            list(type_de_la_colonne.keys()),
+            type_de_la_colonne,
+        )
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données_lues,
+            dataframe_attendue,
+        )
+
+    def test_traite_les_valeurs_dans_le_parent_uniquement_en_stream(self) -> None:
+        # GIVEN
+        chemin_du_fichier = (
+            f"{self.répertoire_des_fichiers}/test_colonne_hors_parent.xml"
+        )
+        crée_le_fichier_xml(
+            chemin_du_fichier,
+            """
+            <child>before</child>
+            <parent>
+                <child>into</child>
+            </parent>
+            <child>after</child>
+            """,
+        )
+        xml_tag = "parent"
+        type_de_la_colonne: Dict = {"child": "string"}
+        dataframe_attendue = pd.DataFrame(
+            {
+                "child": ["into"],
+            }
+        ).astype(type_de_la_colonne, copy=False)
+
+        # WHEN
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            list(type_de_la_colonne.keys()),
+            type_de_la_colonne,
+        )
+
+        # THEN
+        pd.testing.assert_frame_equal(
+            données_lues,
+            dataframe_attendue,
         )

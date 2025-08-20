@@ -151,7 +151,7 @@ type_des_colonnes_finess_cs1400101 = {
     "libstatutjuridique": str,
     "ligneacheminement": str,
     "nofiness": str,
-    "numvoie": str, 
+    "numvoie": str,
     "rs": str,
     "rslongue": str,
     "siren": str,
@@ -170,52 +170,72 @@ equivalences_finess_cs1400101_helios = {
     "libdepartement": "departement",
     "libstatutjuridique": "libelle_statut_juridique",
     "nofiness": "numero_finess_entite_juridique",
-    "rslongue": "raison_sociale", 
+    "rslongue": "raison_sociale",
     "rs": "raison_sociale_courte",
     "siren": "siren",
     "telephone": "telephone",
     "datecrea": "date_ouverture",
     "ref_code_region": "code_region",
-    "categorisation": "categorisation"
+    "categorisation": "categorisation",
 }
 
-index_des_entitees_juridiques : List[str] = [
-    "numero_finess_entite_juridique"
-]
+index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
 
 XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
-type_des_colonnes_finess_cs1400107 = {
-    "code": str,
-    "codeagr2": str,
-    "codeagr1": str
-}
+type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
 colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
 
-XPATH_FINESS_CS1400102 = "./structureet"
+XML_TAG_FINESS_CS1400102 = "structureet"
+colonnes_finess_cs1400102 = [
+    "nofinesset",
+    "nofinessej",
+    "rs",
+    "rslongue",
+    "numvoie",
+    "typvoie",
+    "voie",
+    "libcommune",
+    "departement",
+    "libdepartement",
+    "ligneacheminement",
+    "telephone",
+    "courriel",
+    "categetab",
+    "libcategetab",
+    "libcourtcategetab",
+    "typeet",
+    "nofinessppal",
+    "siret",
+    "codemft",
+    "libmft",
+    "dateouv",
+    "datefermeture",
+    "indcaduc",
+]
 type_des_colonnes_finess_cs1400102 = {
-    "nofinesset": str,
-    "nofinessej": str,
-    "rs": str,
-    "rslongue": str,
-    "numvoie": str,
-    "typvoie": str,
-    "voie": str,
-    "libcommune": str,
-    "departement": str,
-    "libdepartement": str,
-    "dateouv": str,
-    "datefermeture": str,
-    "ligneacheminement": str,
-    "categetab": str,
-    "codemft": str,
-    "courriel": str,
-    "libcategetab": str,
-    "libcourtcategetab": str,
-    "libmft": str,
-    "nofinessppal": str,
-    "siret": str,
-    "typeet": str,
-    "telephone": str,
+    "nofinesset": "string",
+    "nofinessej": "string",
+    "rs": "string",
+    "rslongue": "string",
+    "numvoie": "string",
+    "typvoie": "string",
+    "voie": "string",
+    "libcommune": "string",
+    "departement": "string",
+    "libdepartement": "string",
+    "dateouv": "string",
+    "datefermeture": "string",
+    "ligneacheminement": "string",
+    "categetab": "string",
+    "codemft": "string",
+    "courriel": "string",
+    "libcategetab": "string",
+    "libcourtcategetab": "string",
+    "libmft": "string",
+    "nofinessppal": "string",
+    "siret": "string",
+    "typeet": "string",
+    "telephone": "string",
 }
 equivalences_finess_cs1400102_helios = {
     "ligneacheminement": "adresse_acheminement",
@@ -241,37 +261,32 @@ equivalences_finess_cs1400102_helios = {
     "libmft": "libelle_du_mode_tarification",
     "ref_code_region": "code_region",
     "dateouv": "date_ouverture",
-    "classification" : "classification"
+    "classification": "classification",
 }
 
 colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())
 
 
-index_des_etablissements_territorriaux : List[str] = [
+index_des_etablissements_territorriaux: List[str] = [
     "numero_finess_etablissement_territorial"
 ]
 
 XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
-type_des_colonnes_finess_cs1500106 = {
-    "code": str,
-    "domaine": str
-}
+type_des_colonnes_finess_cs1500106 = {"code": str, "domaine": str}
 colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
 type_des_colonnes_categories_finess = {
     "code": str,
     "libelle": str,
     "libellecourt": str,
-    "domaine": str
+    "domaine": str,
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
     "libelle": "libelle",
     "libellecourt": "libelle_court",
-    "domaine": "domaine"
+    "domaine": "domaine",
 }
 
-index_des_categories: List[str] = [
-    "code"
-]
+index_des_categories: List[str] = ["code"]
 
-colonnes_a_garder_categories_finess= list(type_des_colonnes_categories_finess.keys())
+colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())

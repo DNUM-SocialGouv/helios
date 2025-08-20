@@ -6,23 +6,40 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
+from datacrawler.extract.lecteur_xml import (
+    lis_le_fichier_xml,
+    lis_le_fichier_xml_en_stream,
+)
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400102, XPATH_FINESS_CS1500106, type_des_colonnes_finess_cs1400102, type_des_colonnes_finess_cs1500106
+from datacrawler.transform.équivalences_finess_helios import (
+    XML_TAG_FINESS_CS1400102,
+    XPATH_FINESS_CS1500106,
+    colonnes_finess_cs1400102,
+    type_des_colonnes_finess_cs1400102,
+    type_des_colonnes_finess_cs1500106,
+)
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_etablissements_de_la_base,
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
-    recupere_le_ref_institution_region_de_la_base
+    recupere_le_ref_institution_region_de_la_base,
 )
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier_diamant
-from datacrawler.load.sauvegarde import mets_a_jour_la_date_de_mise_a_jour_du_fichier_source, supprime, mets_a_jour
-from datacrawler.load.nom_des_tables import TABLE_ETABLISSEMENTS_TERRITORIAUX, CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX, TABLES_DES_CPOM
-from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import(
+from datacrawler.load.sauvegarde import (
+    mets_a_jour_la_date_de_mise_a_jour_du_fichier_source,
+    supprime,
+    mets_a_jour,
+)
+from datacrawler.load.nom_des_tables import (
+    TABLE_ETABLISSEMENTS_TERRITORIAUX,
+    CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX,
+    TABLES_DES_CPOM,
+)
+from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import (
     associe_le_domaine,
     conserve_les_etablissements_territoriaux_ouverts,
     extrais_les_etablissements_territoriaux_recemment_fermes,
-    transform_les_etablissements_territoriaux
+    transform_les_etablissements_territoriaux,
 )
 from datacrawler.transform.transforme_les_dates_d_entree_en_vigueur_des_cpom.transforme_les_dates_d_entree_en_vigueur_des_cpom import (
     transforme_les_dates_d_entree_en_vigueur_des_cpom,
@@ -35,27 +52,34 @@ from datacrawler.transform.équivalences_diamant_helios import (
 from datacrawler.load.nom_des_tables import FichierSource
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 
-def import_etablissements_territoriaux(chemin_local_du_fichier_et: str,
-                                       chemin_local_du_fichier_categorie: str,
-                                       chemin_du_fichier_ann_ms_tdp_et: str,
-                                       base_de_donnees: Engine,
-                                       logger: Logger) -> None:
+
+def import_etablissements_territoriaux(
+    chemin_local_du_fichier_et: str,
+    chemin_local_du_fichier_categorie: str,
+    chemin_du_fichier_ann_ms_tdp_et: str,
+    base_de_donnees: Engine,
+    logger: Logger,
+) -> None:
     donnees = {
-        'etablissements': lis_le_fichier_xml(
+        "etablissements": lis_le_fichier_xml_en_stream(
+            logger,
             chemin_local_du_fichier_et,
-            XPATH_FINESS_CS1400102,
+            XML_TAG_FINESS_CS1400102,
+            colonnes_finess_cs1400102,
             type_des_colonnes_finess_cs1400102,
         ),
-        'categories': lis_le_fichier_xml(
+        "categories": lis_le_fichier_xml(
             chemin_local_du_fichier_categorie,
             XPATH_FINESS_CS1500106,
             type_des_colonnes_finess_cs1500106,
         ),
-        'ann_ms_tdp_et': lis_le_fichier_csv(
+        "ann_ms_tdp_et": lis_le_fichier_csv(
             chemin_du_fichier_ann_ms_tdp_et,
             colonnes_à_lire_ann_ms_tdp_et_cpom,
-            extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_ann_ms_tdp_et_cpom_helios),
-        )
+            extrais_l_equivalence_des_types_des_colonnes(
+                équivalences_diamant_ann_ms_tdp_et_cpom_helios
+            ),
+        ),
     }
     logger.info(f"[FINESS] {donnees['etablissements'].shape[0]} établissements territoriaux récupérés depuis FINESS.")
     etablissements_territoriaux_ouverts = conserve_les_etablissements_territoriaux_ouverts(donnees['etablissements'],
@@ -96,20 +120,33 @@ def import_etablissements_territoriaux(chemin_local_du_fichier_et: str,
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-    repertoire_des_fichiers = os.path.join(variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "simple")
-    repertoire_des_fichiers_nomenclature = os.path.join(variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "nomenclature")
+    repertoire_des_fichiers = os.path.join(
+        variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "simple"
+    )
+    repertoire_des_fichiers_nomenclature = os.path.join(
+        variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "nomenclature"
+    )
     fichiers = os.listdir(repertoire_des_fichiers)
     fichiers_nomenclature = os.listdir(repertoire_des_fichiers_nomenclature)
-    chemin_local_du_fichier_cs1400102 = os.path.join(repertoire_des_fichiers, trouve_le_nom_du_fichier(fichiers, "finess_cs1400102", logger_helios))
-    chemin_local_du_fichier_cs1500106 = os.path.join(repertoire_des_fichiers_nomenclature,
-                                                     trouve_le_nom_du_fichier(fichiers_nomenclature, "finess_cs1500106_stock_", logger_helios)
-                                                     )
+    chemin_local_du_fichier_cs1400102 = os.path.join(
+        repertoire_des_fichiers,
+        trouve_le_nom_du_fichier(fichiers, "finess_cs1400102", logger_helios),
+    )
+    chemin_local_du_fichier_cs1500106 = os.path.join(
+        repertoire_des_fichiers_nomenclature,
+        trouve_le_nom_du_fichier(
+            fichiers_nomenclature, "finess_cs1500106_stock_", logger_helios
+        ),
+    )
     fichiers = os.listdir(variables_d_environnement["DIAMANT_DATA_PATH"])
     chemin_local_du_fichier_ann_ms_tdp_et = os.path.join(
-        variables_d_environnement["DIAMANT_DATA_PATH"], trouve_le_nom_du_fichier_diamant(fichiers, "ANN_MS_TDP_ET", logger_helios)
+        variables_d_environnement["DIAMANT_DATA_PATH"],
+        trouve_le_nom_du_fichier_diamant(fichiers, "ANN_MS_TDP_ET", logger_helios),
     )
-    import_etablissements_territoriaux(chemin_local_du_fichier_cs1400102,
-                                       chemin_local_du_fichier_cs1500106,
-                                       chemin_local_du_fichier_ann_ms_tdp_et,
-                                       base_de_donnees_helios,
-                                       logger_helios)
+    import_etablissements_territoriaux(
+        chemin_local_du_fichier_cs1400102,
+        chemin_local_du_fichier_cs1500106,
+        chemin_local_du_fichier_ann_ms_tdp_et,
+        base_de_donnees_helios,
+        logger_helios,
+    )
