@@ -308,7 +308,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif);
-    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.addPercentToValues([tauxDAbsentéismeHorsFormation])[0];
+    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.formatCenterText(StringFormater.transformInRate(tauxDAbsentéismeHorsFormation));
     const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
       ? pourcentageDuTauxDAbsentéismeHorsFormation
       : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
@@ -365,42 +365,42 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   ): [{ valeur: number; motif: string }[], number] {
     const valeursAvecMotif = [];
 
-    const tauxDAbsentéismeHorsFormation = StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.horsFormation || 0);
+    const tauxDAbsentéismeHorsFormation = tauxDAbsentéismesDeLAnnéeEnCours.horsFormation ?? 0;
 
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number,
       });
     }
 

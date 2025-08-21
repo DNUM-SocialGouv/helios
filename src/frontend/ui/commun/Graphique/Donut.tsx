@@ -6,9 +6,9 @@ import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogra
 import styles from "./Donut.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonut";
 
-ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegendeDonut(), ChartDataLabels);
+ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), ChartDataLabels);
 
-export function Donut(props: {
+export function Donut(props: Readonly<{
   valeurs: number[];
   libellés: string[];
   couleursDuDoughnut: CouleurHistogramme[];
@@ -16,7 +16,7 @@ export function Donut(props: {
   texteCentral: string;
   total: number;
   idDeLaLégende: string;
-}): JSX.Element {
+}>): JSX.Element {
   const data: ChartData<"doughnut", number[], string> = {
     datasets: [
       {
@@ -104,6 +104,8 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
         indexDeLArcSurvolé = AUCUN_ARC_SURVOLÉ;
       }
     },
+    // The displayed total is saved to recalculate the labels
+    valuesTotal: totalDesValeurs,
     plugins: {
       datalabels: {
         align: "center",
@@ -112,14 +114,16 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
           const dataset = context.dataset;
           const value = dataset.data[context.dataIndex];
           // @ts-ignore
-          return value > 0.1 * totalDesValeurs;
+          return value > 0.1 * context.chart.config.options.valuesTotal;
         },
         font: {
           family: "Marianne",
           size: 16,
           weight: 700,
         },
-        formatter: (value: number): string => value.toLocaleString("fr") + " %",
+        formatter: (value: number, context: any): string => {
+          return Math.round((value * 100.0 / context.chart.config.options.valuesTotal)).toLocaleString("fr") + " %";
+        },
       },
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },

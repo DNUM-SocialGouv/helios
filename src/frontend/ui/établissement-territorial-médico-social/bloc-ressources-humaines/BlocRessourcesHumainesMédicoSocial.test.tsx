@@ -385,23 +385,23 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       const motifsEtValeurs = [
         {
           motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE,
-          valeur: "0,5 %",
+          valeur: "0,005 %",
         },
         {
           motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE,
-          valeur: "1,8 %",
+          valeur: "0,018 %",
         },
         {
           motif: wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE,
-          valeur: "4,3 %",
+          valeur: "0,043 %",
         },
         {
           motif: wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ,
-          valeur: "9,1 %",
+          valeur: "0,091 %",
         },
         {
           motif: wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX,
-          valeur: "11,6 %",
+          valeur: "0,116 %",
         },
       ];
       const tbody = within(tableau).getAllByRole("rowgroup")[1];

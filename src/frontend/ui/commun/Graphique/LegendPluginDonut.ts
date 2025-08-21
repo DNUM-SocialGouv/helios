@@ -21,7 +21,7 @@ export function construisLePluginDeLaLegendeDonut() {
     const handleCheckboxChange = () => {
       chart.toggleDataVisibility(libellé.index);
       // @ts-ignore
-      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
+      const currentSum = chart.config.options.valuesTotal;
       let sum;
       if (chart.getDataVisibility(libellé.index)) {
         // @ts-ignore
@@ -31,7 +31,9 @@ export function construisLePluginDeLaLegendeDonut() {
         sum = currentSum - chart.data.datasets[0].data[libellé.index]
       }
       // @ts-ignore
-      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
+      // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
+      chart.config.options.valuesTotal = sum;
       chart.update();
     }
 
