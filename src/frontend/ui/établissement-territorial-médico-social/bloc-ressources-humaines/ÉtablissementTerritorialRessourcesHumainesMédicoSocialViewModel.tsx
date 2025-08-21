@@ -307,6 +307,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       }
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
+    const valeursDesTauxDAbsentéismesFormatted = valeursDesTauxDAbsentéismes.map((taux) => StringFormater.transformInRate(taux));
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif);
     const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.formatCenterText(StringFormater.transformInRate(tauxDAbsentéismeHorsFormation));
     const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
@@ -339,7 +340,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
-          valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismes)]}
+          valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismesFormatted)]}
         />
       </>
     );
