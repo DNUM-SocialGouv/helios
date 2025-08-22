@@ -14,6 +14,7 @@ export type ResultatEJ = Readonly<{
   resultatNetComptableEj: number | null | string;
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
+  sejoursHad: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -59,7 +60,6 @@ export type ResultatSAN = Readonly<{
   totalHosptSsr: number | null | string;
   totalHosptPsy: number | null | string;
   passagesUrgences: number | null | string;
-  sejoursHad: number | null | string;
   journeesUsld: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;

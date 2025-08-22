@@ -42,6 +42,7 @@ export type ResultatComparaisonEJ = Readonly<{
   resultatNetComptableEj: number | null | string;
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
+  sejoursHad: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -60,7 +61,6 @@ export type ResultatComparaisonSAN = Readonly<{
   totalHosptSsr: number | null | string;
   totalHosptPsy: number | null | string;
   passagesUrgences: number | null | string;
-  sejoursHad: number | null | string;
   journeesUsld: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
@@ -281,11 +281,6 @@ export class ComparaisonSANViewModel {
     return this.comparaison.passagesUrgences;
   }
 
-  public get sejoursHad(): number | string | null {
-    if (this.comparaison.sejoursHad === '') return ''
-    return this.comparaison.sejoursHad;
-  }
-
   public get journeesUsld(): number | string | null {
     if (this.comparaison.journeesUsld === '') return ''
     return this.comparaison.journeesUsld;
@@ -379,6 +374,11 @@ export class ComparaisonEJViewModel {
   public get ratioDependanceFinanciere(): string | null {
     if (this.comparaison.ratioDependanceFinanciere === '') return ''
     return this.comparaison.ratioDependanceFinanciere !== null ? this.comparaison.ratioDependanceFinanciere + "%" : null;
+  }
+
+  public get sejoursHad(): number | string | null {
+    if (this.comparaison.sejoursHad === '') return ''
+    return this.comparaison.sejoursHad;
   }
 
   public get chargesPrincipaux(): string | null {
