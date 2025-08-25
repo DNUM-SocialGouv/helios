@@ -20,18 +20,15 @@ export function construisLePluginDeLaLegendeDonut() {
 
     const handleCheckboxChange = () => {
       chart.toggleDataVisibility(libellé.index);
-      // @ts-ignore
-      const currentSum = chart.config.options.valuesTotal;
-      let sum;
-      if (chart.getDataVisibility(libellé.index)) {
-        // @ts-ignore
-        sum = currentSum + chart.data.datasets[0].data[libellé.index]
-      } else {
-        // @ts-ignore
-        sum = currentSum - chart.data.datasets[0].data[libellé.index]
-      }
+      let sum = 0;
+      chart.data.datasets[0].data.forEach((element: any, index: number) => {
+        if (chart.getDataVisibility(index)) {
+          sum += element;
+        }
+      })
       // @ts-ignore
       chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
+
       // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
       chart.config.options.valuesTotal = sum;
       chart.update();
@@ -58,10 +55,7 @@ export function construisLePluginDeLaLegendeDonut() {
       const légende = document.getElementById(options.containerID);
 
       if (!légende) return;
-
-      while (légende.firstChild) {
-        légende.firstChild.remove();
-      }
+      légende.innerHTML = "";
 
       // @ts-ignore
       const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
