@@ -165,7 +165,8 @@ const datasource = new DataSource({
     ActivitéSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
-    CategoriesFinessModel
+    CategoriesFinessModel,
+    AutorisationSanitaireModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,

@@ -80,6 +80,7 @@ function getAutorisationCapaciteSanitaire(): ÉtablissementTerritorialSanitaireA
   return {
     numéroFinessÉtablissementTerritorial: "numFinAutCapSani",
     autorisations: { dateMiseÀJourSource: "dateMajAutor", activités: [{ libellé: "libAuto", code: "codeAuto", modalités: [] }] },
+    autorisationsAmm: { dateMiseAJourSource: "dateMajAutor", activites: [] },
     autresActivités: { dateMiseÀJourSource: "dateMajAutreAct", activités: [{ libellé: "libAutreAct", code: "codeAutreAct", modalités: [] }] },
     capacités: [{ année: 2025, dateMiseÀJourSource: "dateMajCap", nombreDeLitsEnChirurgie: 1, nombreDeLitsEnMédecine: 2, nombreDeLitsEnObstétrique: 3, nombreDeLitsEnSsr: 4, nombreDeLitsEnUsld: 5, nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 6, nombreDePlacesEnChirurgie: 7, nombreDePlacesEnMédecine: 8, nombreDePlacesEnObstétrique: 9, nombreDePlacesEnPsyHospitalisationPartielle: 10, nombreDePlacesEnSsr: 11 }],
     équipementsMatérielsLourds: { dateMiseÀJourSource: "dateMajEquipMatLour", équipements: [{ libellé: "libEquipLourd", code: "codeEquipLourd", autorisations: [] }] },

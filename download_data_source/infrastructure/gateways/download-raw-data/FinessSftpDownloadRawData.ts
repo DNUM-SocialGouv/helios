@@ -119,6 +119,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
   private async downloadFile(files: FileInfo[], localPath: string, remotePath: string, fileName: string) {
     const orderedFiles = files.filter((file: FileInfo) => file.name.includes(fileName)).sort(this.sortByLastDate);
+
     if (orderedFiles.length === 0) return;
 
     await this.clientSftp.fastGet(

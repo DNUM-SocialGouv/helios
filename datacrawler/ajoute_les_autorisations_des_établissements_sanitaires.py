@@ -250,7 +250,6 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     répertoire_des_fichiers_finess = os.path.join(variables_d_environnement["FINESS_SFTP_LOCAL_PATH"], "finess", "enrichi")
-    logger_helios.info(f"répertoire_des_fichiers_finess : {répertoire_des_fichiers_finess}")
     répertoire_des_fichiers_diamant = os.path.join(variables_d_environnement["DIAMANT_DATA_PATH"])
     fichiers_finess = os.listdir(répertoire_des_fichiers_finess)
     chemin_local_du_fichier_des_autorisations = os.path.join(

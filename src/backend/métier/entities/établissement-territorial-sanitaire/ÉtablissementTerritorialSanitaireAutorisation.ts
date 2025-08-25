@@ -1,3 +1,4 @@
+
 export type AutorisationSanitaire = Readonly<{
   dateDAutorisation: string | null;
   dateDeFin: string | null;
@@ -87,6 +88,11 @@ export type ÉquipementMatérielLourd = Readonly<{
   autorisations: AutorisationÉquipementMatérielLourd[];
 }>;
 
+export type AutorisationsAMMSanitaire = Readonly<{
+  libellé: string;
+  code: string;
+}>;
+
 export type CapacitéSanitaire = Readonly<{
   année: number;
   dateMiseÀJourSource: string;
@@ -108,6 +114,10 @@ export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly
   autorisations: {
     activités: AutorisationSanitaireActivité[];
     dateMiseÀJourSource: string;
+  };
+  autorisationsAmm: {
+    activites: AutorisationsAMMSanitaire[];
+    dateMiseAJourSource: string;
   };
   autresActivités: {
     activités: AutreActivitéSanitaireActivité[];
