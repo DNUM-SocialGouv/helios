@@ -291,9 +291,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     if (!annéeEnCours) return this.pasDeTauxDAbsentéisme;
 
     const tauxDAbsentéismesDeLAnnéeEnCours = this.trouveLesTauxDAbsentéismesDeLAnnée(annéeEnCours);
-    const [valeursAvecMotif, tauxDAbsentéismeHorsFormation] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
+    const [valeursAvecMotif] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];
+    let tauxDAbsentéismeCalcule = 0;
     valeursAvecMotif.forEach((tauxDAbsentéisme) => {
       if (!this.leTauxDAbsentéismeDUnMotifEstIlDansLesBornesAcceptables(tauxDAbsentéisme.valeur)) {
         couleursDuDoughnut.push({
@@ -305,14 +306,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuTauxDAbsentéisme(tauxDAbsentéisme.motif));
         couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(tauxDAbsentéisme.motif));
       }
+      tauxDAbsentéismeCalcule += tauxDAbsentéisme.valeur;
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
     const valeursDesTauxDAbsentéismesFormatted = valeursDesTauxDAbsentéismes.map((taux) => StringFormater.transformInRate(taux));
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif);
-    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.formatCenterText(StringFormater.transformInRate(tauxDAbsentéismeHorsFormation));
-    const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
-      ? pourcentageDuTauxDAbsentéismeHorsFormation
-      : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
+    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.formatCenterText(StringFormater.transformInRate(tauxDAbsentéismeCalcule));
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes, 5);
 
@@ -320,17 +319,15 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       <>
         {this.wording.TAUX_D_ABSENTÉISME_HORS_FORMATION(
           pourcentageDuTauxDAbsentéismeHorsFormation,
-          !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation),
-          this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
+          !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeCalcule),
+          this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeCalcule)
         )}
-        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
+        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeCalcule) && (
           <Donut
             couleursDuDoughnut={couleursDuDoughnut}
             couleursLibelle={couleursDesLibelles}
             idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
             libellés={motifsDesTauxDAbsentéismes}
-            texteCentral={texteCentral}
-            total={tauxDAbsentéismeHorsFormation}
             valeurs={valeursDesTauxDAbsentéismes}
           />
         )}

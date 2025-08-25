@@ -20,17 +20,6 @@ export function construisLePluginDeLaLegendeDonut() {
 
     const handleCheckboxChange = () => {
       chart.toggleDataVisibility(libellé.index);
-      let sum = 0;
-      chart.data.datasets[0].data.forEach((element: any, index: number) => {
-        if (chart.getDataVisibility(index)) {
-          sum += element;
-        }
-      })
-      // @ts-ignore
-      chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
-
-      // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
-      chart.config.options.valuesTotal = sum;
       chart.update();
     }
 
@@ -51,6 +40,20 @@ export function construisLePluginDeLaLegendeDonut() {
   }
 
   return {
+    beforeUpdate(chart: ChartJS) {
+      // Calcul du total des absence selectionnees
+      let sum = 0;
+      chart.data.datasets[0].data.forEach((element: any, index: number) => {
+        if (chart.getDataVisibility(index)) {
+          sum += element;
+        }
+      })
+      // @ts-ignore
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
+
+      // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
+      chart.config.options.valuesTotal = sum;
+    },
     afterUpdate(chart: ChartJS, _args: Object, options: any) {
       const légende = document.getElementById(options.containerID);
 

@@ -13,8 +13,6 @@ export function Donut(props: Readonly<{
   libellés: string[];
   couleursDuDoughnut: CouleurHistogramme[];
   couleursLibelle: string[];
-  texteCentral: string;
-  total: number;
   idDeLaLégende: string;
 }>): JSX.Element {
   const data: ChartData<"doughnut", number[], string> = {
@@ -35,14 +33,14 @@ export function Donut(props: Readonly<{
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
+        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>
   );
 }
 
-function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<"doughnut"> {
+function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnut"> {
   const AUCUN_ARC_SURVOLÉ = -1;
   let indexDeLArcSurvolé = AUCUN_ARC_SURVOLÉ;
 
@@ -65,7 +63,7 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
       center: {
         color: couleurDelAbscisse,
         fontStyle: "Marianne",
-        text: texteCentral,
+        text: "N/A",
       },
     },
     onHover: (_event: ChartEvent, elements: ActiveElement[], chart: ChartJS) => {
@@ -105,7 +103,6 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
       }
     },
     // The displayed total is saved to recalculate the labels
-    valuesTotal: totalDesValeurs,
     plugins: {
       datalabels: {
         align: "center",
