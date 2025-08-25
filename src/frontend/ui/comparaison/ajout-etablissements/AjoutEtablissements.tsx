@@ -168,16 +168,20 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   };
 
   const handleOnChangeListe = (event: ChangeEvent<HTMLSelectElement>) => {
-    setNewEtablissementsList([]);
-    const listeFinessNumbers = event.target.value.split(',');
-    listeFinessNumbers.forEach((numFiness: string) => {
-      const isAlreadyInTable = finessNumbersListFromTable.includes(numFiness);
-      if (!isAlreadyInTable) {
-        setNewEtablissementsList((prevSelected) =>
-          toggleFinessInSelection(prevSelected, numFiness)
-        );
-      }
-    });
+    if (event.target.value !== "") {
+      setNewEtablissementsList([]);
+      const listeFinessNumbers = event.target.value.split(',');
+      listeFinessNumbers.forEach((numFiness: string) => {
+        const isAlreadyInTable = finessNumbersListFromTable.includes(numFiness);
+        if (!isAlreadyInTable) {
+          setNewEtablissementsList((prevSelected) =>
+            toggleFinessInSelection(prevSelected, numFiness)
+          );
+        }
+      });
+    } else {
+      setNewEtablissementsList([]);
+    }
   };
 
   return (
@@ -211,6 +215,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
             {listData && listData?.length > 0 && (
               <ListEtablissements
                 newEtablissements={newEtablissements}
+                newEtablissementsRecherche={newEtablissementsRecherche}
                 newStructures={newStructures}
                 resultatRechercheList={listData}
                 setIsAtBottom={setIsAtBottom}
