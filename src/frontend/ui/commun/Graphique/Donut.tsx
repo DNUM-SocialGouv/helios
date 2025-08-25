@@ -103,6 +103,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnu
       }
     },
     // The displayed total is saved to recalculate the labels
+    valuesTotal: 0,
     plugins: {
       datalabels: {
         align: "center",
