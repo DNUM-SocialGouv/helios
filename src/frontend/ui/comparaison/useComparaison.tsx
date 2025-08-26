@@ -107,13 +107,18 @@ export function useComparaison() {
   }
 
   const getcomparedTypes = async (numeroFiness: string[]): Promise<string[]> => {
-    const response = await fetch('/api/comparaison/getTypesFromFiness', {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({ numeroFiness }),
-    });
+    if (numeroFiness.length > 0) {
+      const response = await fetch('/api/comparaison/getTypesFromFiness', {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ numeroFiness }),
+      });
 
-    return response.json();
+      return response.json();
+    } else {
+      return [];
+    }
+
   };
 
 
