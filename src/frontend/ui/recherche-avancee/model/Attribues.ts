@@ -17,7 +17,7 @@ export const AttribuesDefaults: Attribues = {
 }
 
 export const typeStructureTranscodage: Record<string, string> = {
-  "Entité juridique": "Étab Juridiques",
-  "Médico-social": "Étab SMS",
-  "Sanitaire": "Étab Sanitaires"
+  "Entité juridique": "Etab Juridiques",
+  "Médico-social": "Etab SMS",
+  "Sanitaire": "Etab Sanitaires"
 };
