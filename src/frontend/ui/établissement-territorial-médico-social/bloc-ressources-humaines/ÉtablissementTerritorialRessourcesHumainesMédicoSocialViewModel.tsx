@@ -291,9 +291,10 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     if (!annéeEnCours) return this.pasDeTauxDAbsentéisme;
 
     const tauxDAbsentéismesDeLAnnéeEnCours = this.trouveLesTauxDAbsentéismesDeLAnnée(annéeEnCours);
-    const [valeursAvecMotif, tauxDAbsentéismeHorsFormation] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
+    const [valeursAvecMotif] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];
+    let tauxDAbsentéismeCalcule = 0;
     valeursAvecMotif.forEach((tauxDAbsentéisme) => {
       if (!this.leTauxDAbsentéismeDUnMotifEstIlDansLesBornesAcceptables(tauxDAbsentéisme.valeur)) {
         couleursDuDoughnut.push({
@@ -305,13 +306,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         couleursDuDoughnut.push(this.associeLaCouleurDeLArcAuMotifDuTauxDAbsentéisme(tauxDAbsentéisme.motif));
         couleursDesLibelles.push(this.associeLaCouleurDuLibelléAuMotifDAbsentéisme(tauxDAbsentéisme.motif));
       }
+      tauxDAbsentéismeCalcule += tauxDAbsentéisme.valeur;
     });
     const valeursDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.valeur);
+    const valeursDesTauxDAbsentéismesFormatted = valeursDesTauxDAbsentéismes.map((taux) => StringFormater.transformInRate(taux));
     const motifsDesTauxDAbsentéismes = valeursAvecMotif.map((tauxDAbsentéisme) => tauxDAbsentéisme.motif);
-    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.addPercentToValues([tauxDAbsentéismeHorsFormation])[0];
-    const texteCentral = this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation)
-      ? pourcentageDuTauxDAbsentéismeHorsFormation
-      : `! ${pourcentageDuTauxDAbsentéismeHorsFormation}`;
+    const pourcentageDuTauxDAbsentéismeHorsFormation = StringFormater.formatCenterText(StringFormater.transformInRate(tauxDAbsentéismeCalcule));
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes, 5);
 
@@ -319,17 +319,15 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       <>
         {this.wording.TAUX_D_ABSENTÉISME_HORS_FORMATION(
           pourcentageDuTauxDAbsentéismeHorsFormation,
-          !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeHorsFormation),
-          this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation)
+          !this.leTauxDAbsentéismeHorsFormationEstIlDansLesBornesAcceptables(tauxDAbsentéismeCalcule),
+          this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeCalcule)
         )}
-        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeHorsFormation) && (
+        {!this.leTauxDAbsentéismeHorsFormationEstIlNul(tauxDAbsentéismeCalcule) && (
           <Donut
             couleursDuDoughnut={couleursDuDoughnut}
             couleursLibelle={couleursDesLibelles}
             idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
             libellés={motifsDesTauxDAbsentéismes}
-            texteCentral={texteCentral}
-            total={tauxDAbsentéismeHorsFormation}
             valeurs={valeursDesTauxDAbsentéismes}
           />
         )}
@@ -339,7 +337,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
-          valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismes)]}
+          valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismesFormatted)]}
         />
       </>
     );
@@ -365,42 +363,42 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   ): [{ valeur: number; motif: string }[], number] {
     const valeursAvecMotif = [];
 
-    const tauxDAbsentéismeHorsFormation = StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.horsFormation || 0);
+    const tauxDAbsentéismeHorsFormation = tauxDAbsentéismesDeLAnnéeEnCours.horsFormation ?? 0;
 
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_COURTE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieCourteDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_MOYENNE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieMoyenneDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_DE_LONGUE_DURÉE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaladieLongueDurée as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourAccidentMaladieProfessionnelle as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_MATERNITÉ_PATERNITÉ,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourMaternitéPaternité as number,
       });
     }
     if (this.leTauxEstIlRenseigné(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux)) {
       valeursAvecMotif.push({
         motif: this.wording.TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX,
-        valeur: StringFormater.transformInRate(tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number),
+        valeur: tauxDAbsentéismesDeLAnnéeEnCours.pourCongésSpéciaux as number,
       });
     }
 

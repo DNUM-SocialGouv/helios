@@ -6,17 +6,15 @@ import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogra
 import styles from "./Donut.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonut";
 
-ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), construisLePluginDeLaLegendeDonut(), ChartDataLabels);
+ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), ChartDataLabels);
 
-export function Donut(props: {
+export function Donut(props: Readonly<{
   valeurs: number[];
   libellés: string[];
   couleursDuDoughnut: CouleurHistogramme[];
   couleursLibelle: string[];
-  texteCentral: string;
-  total: number;
   idDeLaLégende: string;
-}): JSX.Element {
+}>): JSX.Element {
   const data: ChartData<"doughnut", number[], string> = {
     datasets: [
       {
@@ -35,14 +33,14 @@ export function Donut(props: {
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.texteCentral, props.total, props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
+        <Doughnut data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>
   );
 }
 
-function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number, idDeLaLégende: string): ChartOptions<"doughnut"> {
+function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnut"> {
   const AUCUN_ARC_SURVOLÉ = -1;
   let indexDeLArcSurvolé = AUCUN_ARC_SURVOLÉ;
 
@@ -65,7 +63,7 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
       center: {
         color: couleurDelAbscisse,
         fontStyle: "Marianne",
-        text: texteCentral,
+        text: "N/A",
       },
     },
     onHover: (_event: ChartEvent, elements: ActiveElement[], chart: ChartJS) => {
@@ -104,6 +102,8 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
         indexDeLArcSurvolé = AUCUN_ARC_SURVOLÉ;
       }
     },
+    // The displayed total is saved to recalculate the labels
+    valuesTotal: 0,
     plugins: {
       datalabels: {
         align: "center",
@@ -112,14 +112,16 @@ function optionsDiagrammeDoughnut(texteCentral: string, totalDesValeurs: number,
           const dataset = context.dataset;
           const value = dataset.data[context.dataIndex];
           // @ts-ignore
-          return value > 0.1 * totalDesValeurs;
+          return value > 0.1 * context.chart.config.options.valuesTotal;
         },
         font: {
           family: "Marianne",
           size: 16,
           weight: 700,
         },
-        formatter: (value: number): string => value.toLocaleString("fr") + " %",
+        formatter: (value: number, context: any): string => {
+          return Math.round((value * 100.0 / context.chart.config.options.valuesTotal)).toLocaleString("fr") + " %";
+        },
       },
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
