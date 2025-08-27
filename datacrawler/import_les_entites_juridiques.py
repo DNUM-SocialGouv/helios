@@ -4,8 +4,8 @@ from logging import Logger
 from sqlalchemy.engine import Engine, create_engine
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
-from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400101, XPATH_FINESS_CS1500107, type_des_colonnes_finess_cs1400101, type_des_colonnes_finess_cs1400107
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml, lis_le_fichier_xml_en_stream
+from datacrawler.transform.équivalences_finess_helios import XML_TAG_FINESS_CS1400101, XPATH_FINESS_CS1500107, type_des_colonnes_finess_cs1400101, type_des_colonnes_finess_cs1400107, colonnes_a_garder_finess_cs1400101
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
     recupere_le_ref_institution_region_de_la_base
@@ -24,9 +24,11 @@ from datacrawler.load.nom_des_tables import FichierSource
 
 
 def import_entites_juridiques(chemin_local_du_fichier_ej: str, chemin_local_du_fichier_categorie: str, base_de_donnees: Engine, logger: Logger) -> None:
-    entites_juridiques_flux_finess = lis_le_fichier_xml(
+    entites_juridiques_flux_finess = lis_le_fichier_xml_en_stream(
+        logger,
         chemin_local_du_fichier_ej,
-        XPATH_FINESS_CS1400101,
+        XML_TAG_FINESS_CS1400101,
+        colonnes_a_garder_finess_cs1400101,
         type_des_colonnes_finess_cs1400101,
     )
     logger.info(f"[FINESS] {entites_juridiques_flux_finess.shape[0]} entités juridiques récupérées depuis FINESS.")

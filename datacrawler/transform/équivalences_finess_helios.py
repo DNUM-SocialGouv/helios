@@ -173,24 +173,24 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_forme",
 ]
 
-XPATH_FINESS_CS1400101 = "./structureej"
+XML_TAG_FINESS_CS1400101 = "structureej"
 type_des_colonnes_finess_cs1400101 = {
-    "datecrea": str,
-    "datefermeture": str,
-    "departement": str,
-    "libcommune": str,
-    "libdepartement": str,
-    "libstatutjuridique": str,
-    "ligneacheminement": str,
-    "nofiness": str,
-    "numvoie": str,
-    "rs": str,
-    "rslongue": str,
-    "siren": str,
-    "statutjuridique": str,
-    "telephone": str,
-    "typvoie": str,
-    "voie": str,
+    "datecrea": "string",
+    "datefermeture": "string",
+    "departement": "string",
+    "libcommune": "string",
+    "libdepartement": "string",
+    "libstatutjuridique": "string",
+    "ligneacheminement": "string",
+    "nofiness": "string",
+    "numvoie": "string",
+    "rs": "string",
+    "rslongue": "string",
+    "siren": "string",
+    "statutjuridique": "string",
+    "telephone": "string",
+    "typvoie": "string",
+    "voie": "string",
 }
 colonnes_a_garder_finess_cs1400101 = list(type_des_colonnes_finess_cs1400101.keys())
 equivalences_finess_cs1400101_helios = {
