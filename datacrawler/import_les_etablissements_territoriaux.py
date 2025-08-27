@@ -7,16 +7,16 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_xml import (
-    lis_le_fichier_xml,
     lis_le_fichier_xml_en_stream,
 )
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400102,
-    XPATH_FINESS_CS1500106,
+    XML_TAG_FINESS_CS1500106,
     colonnes_finess_cs1400102,
     type_des_colonnes_finess_cs1400102,
     type_des_colonnes_finess_cs1500106,
+    colonnes_a_garder_finess_cs1500106,
 )
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_etablissements_de_la_base,
@@ -68,9 +68,11 @@ def import_etablissements_territoriaux(
             colonnes_finess_cs1400102,
             type_des_colonnes_finess_cs1400102,
         ),
-        "categories": lis_le_fichier_xml(
+        "categories": lis_le_fichier_xml_en_stream(
+            logger,
             chemin_local_du_fichier_categorie,
-            XPATH_FINESS_CS1500106,
+            XML_TAG_FINESS_CS1500106,
+            colonnes_a_garder_finess_cs1500106,
             type_des_colonnes_finess_cs1500106,
         ),
         "ann_ms_tdp_et": lis_le_fichier_csv(
