@@ -303,14 +303,14 @@ index_des_etablissements_territorriaux: List[str] = [
     "numero_finess_etablissement_territorial"
 ]
 
-XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
-type_des_colonnes_finess_cs1500106 = {"code": str, "domaine": str}
+XML_TAG_FINESS_CS1500106 = "nomenclcategorieETavecagr"
+type_des_colonnes_finess_cs1500106 = {"code": "string", "domaine": "string"}
 colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
 type_des_colonnes_categories_finess = {
-    "code": str,
-    "libelle": str,
-    "libellecourt": str,
-    "domaine": str,
+    "code": "string",
+    "libelle": "string",
+    "libellecourt": "string",
+    "domaine": "string",
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
