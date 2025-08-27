@@ -4,8 +4,8 @@ from logging import Logger
 from sqlalchemy.engine import Engine, create_engine
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml, lis_le_fichier_xml_en_stream
-from datacrawler.transform.équivalences_finess_helios import XML_TAG_FINESS_CS1400101, XPATH_FINESS_CS1500107, type_des_colonnes_finess_cs1400101, type_des_colonnes_finess_cs1400107, colonnes_a_garder_finess_cs1400101
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
+from datacrawler.transform.équivalences_finess_helios import XML_TAG_FINESS_CS1400101, XML_TAG_FINESS_CS1500107, type_des_colonnes_finess_cs1400101, type_des_colonnes_finess_cs1500107, colonnes_a_garder_finess_cs1400101, colonnes_a_garder_finess_cs1500107
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
     recupere_le_ref_institution_region_de_la_base
@@ -37,10 +37,12 @@ def import_entites_juridiques(chemin_local_du_fichier_ej: str, chemin_local_du_f
     entite_juridiques_sauvegardees = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_donnees)
     entites_juridiques_a_supprimer = extrais_les_entites_juridiques_recemment_fermees(entites_juridiques_ouvertes, entite_juridiques_sauvegardees)
     logger.info(f"[FINESS] {len(entites_juridiques_a_supprimer)} entités juridiques sont fermées.")
-    niveaux_statuts_juridiques_finess = lis_le_fichier_xml(
+    niveaux_statuts_juridiques_finess = lis_le_fichier_xml_en_stream(
+        logger,
         chemin_local_du_fichier_categorie,
-        XPATH_FINESS_CS1500107,
-        type_des_colonnes_finess_cs1400107,
+        XML_TAG_FINESS_CS1500107,
+        colonnes_a_garder_finess_cs1500107,
+        type_des_colonnes_finess_cs1500107,
     )
     logger.info(f"[FINESS] {niveaux_statuts_juridiques_finess.shape[0]} statuts juridiques récupérées depuis FINESS.")
     entites_juridique_categorisees = associe_la_categorisation(entites_juridiques_ouvertes, niveaux_statuts_juridiques_finess)

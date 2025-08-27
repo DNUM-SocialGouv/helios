@@ -213,9 +213,13 @@ equivalences_finess_cs1400101_helios = {
 
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
 
-XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
-type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
-colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
+XML_TAG_FINESS_CS1500107 = "nomenclstatutavecagr"
+type_des_colonnes_finess_cs1500107 = {
+    "code": "string",
+    "codeagr2": "string",
+    "codeagr1": "string",
+}
+colonnes_a_garder_finess_cs1500107 = list(type_des_colonnes_finess_cs1500107.keys())
 
 XML_TAG_FINESS_CS1400102 = "structureet"
 colonnes_finess_cs1400102 = [
