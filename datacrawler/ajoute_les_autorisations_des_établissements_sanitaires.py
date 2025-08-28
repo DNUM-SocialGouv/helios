@@ -242,7 +242,13 @@ def ajoute_les_autorisations_amm(
             logger,
         )
 
-def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(logger: Logger, chemin_du_fichier: str, xpath: str, colonnes: List, types_des_colonnes: Dict) -> FichierDeDonnées:
+def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
+        logger: Logger,
+        chemin_du_fichier: str,
+        xpath: str,
+        colonnes: List,
+        types_des_colonnes: Dict
+) -> FichierDeDonnées:
     données_des_autorisations = lis_le_fichier_xml_en_stream(
         logger,
         chemin_du_fichier,
