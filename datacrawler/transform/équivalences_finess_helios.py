@@ -62,6 +62,7 @@ index_des_autorisations_sanitaires: List[str] = [
     "code_forme",
 ]
 
+XML_TAG_FINESS_CS1400104 = "equipmateriellourd"
 équivalences_finess_cs1400104_helios = {
     "dateautor": "date_autorisation",
     "datefin": "date_fin",
@@ -72,10 +73,9 @@ index_des_autorisations_sanitaires: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1400104 = list(équivalences_finess_cs1400104_helios.keys())
-XPATH_FINESS_CS1400104 = "./equipmateriellourd"
 type_des_colonnes_finess_cs1400104 = {
-    "nofinesset": str,
-    "eml": str,
+    "nofinesset": "string",
+    "eml": "string",
 }
 
 index_des_équipements_matériels_lourds: List[str] = [

@@ -13,14 +13,15 @@ from datacrawler.extract.lecteur_xml import (
 )
 from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1400104,
     XML_TAG_FINESS_CS1400103,
+    XML_TAG_FINESS_CS1400104,
     XML_TAG_FINESS_CS1400105,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
     colonnes_à_garder_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
+    colonnes_à_garder_finess_cs1400104,
     type_des_colonnes_finess_cs1400105,
     colonnes_à_garder_finess_cs1400105,
     type_des_colonnes_finess_cs1600101,
@@ -270,59 +271,33 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipmateriellourd>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
+                <dateautor>2004-11-02</dateautor>
+                <datefin>2028-05-29</datefin>
+                <datemeo>2006-11-08</datemeo>
                 <eml>05701</eml>
                 <libeml>Caméra à scintillation sans détecteur d'émission de positons</libeml>
-                <libcourteml>Cam scin sans détect</libcourteml>
-                <noautor>762218998</noautor>
                 <noautorarhgos>02-00-000</noautorarhgos>
-                <noimplarhgos>02-00-000</noimplarhgos>
-                <dateautor>2004-11-02</dateautor>
                 <nofinesset>310783055</nofinesset>
-                <numserie xsi:nil="true"/>
-                <marque>0000</marque>
-                <rset>HOPITAL DE RANGUEIL CHU TOULOUSE</rset>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <indnatlien>J</indnatlien>
-                <datemeo>2006-11-08</datemeo>
-                <datefin>2028-05-29</datefin>
-                <indrempl xsi:nil="true"/>
-                <noautorremplacement xsi:nil="true"/>
-                <indsup>N</indsup>
-                <datemaj>2022-08-24</datemaj>
             </equipmateriellourd>
             <equipmateriellourd>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
+                <dateautor>2004-11-02</dateautor>
+                <datefin>2023-03-13</datefin>
+                <datemeo>2006-09-15</datemeo>
                 <eml>05602</eml>
                 <libeml>Scanographe à utilisation médicale</libeml>
-                <libcourteml>Scanographe méd.</libcourteml>
-                <noautor>762227966</noautor>
                 <noautorarhgos>03-00-000</noautorarhgos>
-                <noimplarhgos>03-00-000</noimplarhgos>
-                <dateautor>2004-11-02</dateautor>
                 <nofinesset>310019351</nofinesset>
-                <numserie xsi:nil="true"/>
-                <marque>0000</marque>
-                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <indnatlien>J</indnatlien>
-                <datemeo>2006-09-15</datemeo>
-                <datefin>2023-03-13</datefin>
-                <indrempl xsi:nil="true"/>
-                <noautorremplacement xsi:nil="true"/>
-                <indsup>N</indsup>
-                <datemaj>2022-08-24</datemaj>
             </equipmateriellourd>""",
         )
-        xpath = XPATH_FINESS_CS1400104
+        xml_tag = XML_TAG_FINESS_CS1400104
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400104
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400104,
+            type_des_colonnes_finess_cs1400104,
         )
 
         # THEN
@@ -331,55 +306,26 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
+                        "dateautor": "2004-11-02",
+                        "datefin": "2028-05-29",
+                        "datemeo": "2006-11-08",
                         "eml": "05701",
                         "libeml": "Caméra à scintillation sans détecteur d'émission de positons",
-                        "libcourteml": "Cam scin sans détect",
-                        "noautor": 762218998,
                         "noautorarhgos": "02-00-000",
-                        "noimplarhgos": "02-00-000",
-                        "dateautor": "2004-11-02",
                         "nofinesset": "310783055",
-                        "numserie": nan,
-                        "marque": 0,
-                        "rset": "HOPITAL DE RANGUEIL CHU TOULOUSE",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "indnatlien": "J",
-                        "datemeo": "2006-11-08",
-                        "datefin": "2028-05-29",
-                        "indrempl": nan,
-                        "noautorremplacement": nan,
-                        "indsup": "N",
-                        "datemaj": "2022-08-24",
                     },
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
+                        "dateautor": "2004-11-02",
+                        "datefin": "2023-03-13",
+                        "datemeo": "2006-09-15",
                         "eml": "05602",
                         "libeml": "Scanographe à utilisation médicale",
-                        "libcourteml": "Scanographe méd.",
-                        "noautor": 762227966,
                         "noautorarhgos": "03-00-000",
-                        "noimplarhgos": "03-00-000",
-                        "dateautor": "2004-11-02",
                         "nofinesset": "310019351",
-                        "numserie": nan,
-                        "marque": 0,
-                        "rset": "HOPITAL LARREY CHU TOULOUSE",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "indnatlien": "J",
-                        "datemeo": "2006-09-15",
-                        "datefin": "2023-03-13",
-                        "indrempl": nan,
-                        "noautorremplacement": nan,
-                        "indsup": "N",
-                        "datemaj": "2022-08-24",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1600101(self) -> None:
