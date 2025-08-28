@@ -13,84 +13,153 @@ import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
+import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
+import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
 interface ComparaisonPageProps {
   codeProfiles: string[];
   codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
+  categories: CategoriesFinessViewModel[];
 }
 
-export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
+export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
-  const [structureChoice, setStructureChoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, contenuModal, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
-  const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0);
+  const [structureChoice, setStructureChoice] = useState<string>("");
+  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
 
-  const [page, setPage] = useState<number>(1);
   const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
-
-  const [order, setOrder] = useState("");
-  const [orderBy, setOrderBy] = useState("");
-  const [deleteEt, setDeleteEt] = useState(false);
-
-  const [reloadTable, setReloadTable] = useState<boolean>(false);
 
   const [favorisListName, setFavorisListName] = useState<string>("");
   const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
-  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
-  useEffect(() => {
-    lancerLaComparaison(annéeEnCours + "", codeRegion, codeProfiles, order, orderBy, page);
-    setReloadTable(false);
-  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
+  const [comparedTypes, setComparedTypes] = useState<string[]>([]);
 
-  const getAllTypes = () => {
-    const result: string[] = [];
-    resultats.forEach((element) => {
-      if (!result.includes(element.type)) {
-        result.push(element.type);
-      }
-    });
-    return result;
+  const [params, setParams] = useState<{
+    annéeEnCours: number;
+    order: string;
+    orderBy: string;
+    page: number;
+    comparedFiness: string[];
+  }>({
+    annéeEnCours: listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0,
+    order: "",
+    orderBy: "",
+    page: 1,
+    comparedFiness: [],
+  });
+
+  const [triggerCompare, setTriggerCompare] = useState<number>(0);
+
+  useEffect(() => {
+    const finessStored = sessionStorage.getItem("listFinessNumbers");
+    const finessList = finessStored ? JSON.parse(finessStored) : [];
+    if (finessList.length === 0) {
+      setTriggerCompare(Date.now());
+    }
+    if (structureChoice !== "" && finessList.length > 0) {
+      const resetParams = async () => {
+        const annees = await getListAnnees(structureChoice, finessList);
+        const latestYear = annees[annees.length - 1];
+
+        setParams({
+          comparedFiness: finessList,
+          annéeEnCours: latestYear,
+          order: "",
+          orderBy: "",
+          page: 1,
+        });
+        setTriggerCompare(Date.now());
+      };
+      resetParams();
+    }
+  }, [structureChoice, comparedTypes]);
+
+  useEffect(() => {
+    if (
+      structureChoice !== "" &&
+      params.annéeEnCours
+    ) {
+      lancerLaComparaison(
+        params.comparedFiness,
+        structureChoice,
+        params.annéeEnCours.toString(),
+        codeRegion,
+        codeProfiles,
+        params.order,
+        params.orderBy,
+        params.page
+      );
+    }
+  }, [triggerCompare]);
+
+  const handleOrderChange = (order: string) => {
+    setParams(prev => ({
+      ...prev,
+      order,
+    }));
+    setTriggerCompare(Date.now());
   };
 
-  const tableHeaders = [
-    { label: "", key: "delete", nomComplet: "" },
-    { label: "", key: "etsLogo", nomComplet: "", sort: true },
-    { label: "", key: "favori", nomComplet: "" },
-    { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
-    { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
-    {
-      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      key: "capacite",
-      info: true,
-      sort: true,
-      orderBy: "capacite_total",
-    },
-    { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
-    { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
-    { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
-    { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
-    { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
-    { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
-    { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
-    { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
-  ];
+  const handleOrderByChange = (orderBy: string) => {
+    setParams(prev => ({
+      ...prev,
+      orderBy,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setParams(prev => ({
+      ...prev,
+      page: newPage,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleYearChange = (newYear: number) => {
+    setParams(prev => ({
+      ...prev,
+      annéeEnCours: newYear,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleFinessChange = (numerosFiness: string[]) => {
+    setParams(prev => ({
+      ...prev,
+      comparedFiness: numerosFiness,
+    }));
+  };
+
+  useEffect(() => {
+    async function getSelectedTypesForCompare() {
+      const listFinessNumbers = sessionStorage.getItem("listFinessNumbers");
+      const typesSelected = await getcomparedTypes(listFinessNumbers ? JSON.parse(listFinessNumbers) : [])
+      setComparedTypes(typesSelected)
+    }
+    getSelectedTypesForCompare();
+  }, [])
+
+  useEffect(() => {
+    if (comparedTypes.length !== 0) {
+      if (comparedTypes.includes("Médico-social"))
+        setStructureChoice("Médico-social");
+      else if (comparedTypes.includes("Sanitaire"))
+        setStructureChoice("Sanitaire");
+      else setStructureChoice("Entité juridique");
+    }
+  }, [comparedTypes])
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
@@ -118,18 +187,26 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = (numeroFinessASupprimer: string) => {
+  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
-    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
-      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
-        setPage(page - 1);
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && params.page !== 1) {
+        setParams(prev => ({
+          ...prev,
+          page: prev.page - 1
+        }));
       }
+      setParams(prev => ({
+        ...prev,
+        comparedFiness: listFinessArray,
+      }));
     }
-    setDeleteEt(!deleteEt);
+    const typesSelected = await getcomparedTypes(listFinessArray)
+    setComparedTypes(typesSelected);
   };
 
   const onClickAjoutEtablissement = () => {
@@ -149,22 +226,22 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
           <Table
             data={resultats}
             handleSelectAll={handleSelectAll}
-            headers={tableHeaders}
+            headers={tableHeaders(datesMisAjour, structureChoice)}
             isAllSelected={isAllSelected}
             isCenter={true}
             isShowAvrage={false}
             isVScroll={true}
             onClickDelete={onClickDelete}
             onClickInfobull={openModal}
-            order={order}
-            orderBy={orderBy}
+            order={params.order}
+            orderBy={params.orderBy}
             selectedRows={selectedRows}
-            setOrder={setOrder}
-            setOrderBy={setOrderBy}
+            setOrder={handleOrderChange}
+            setOrderBy={handleOrderByChange}
             setSelectedRows={setSelectedRows}
             total={nombreRésultats}
           />
-          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
+          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={params.page || 1} setPage={handlePageChange || (() => { })} />
         </>
       )
     }
@@ -172,7 +249,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
   }
 
   const exportExcel = () => {
-    let anneeExport = annéeEnCours;
+    let anneeExport = params.annéeEnCours;
     if (!anneeExport && listeAnnees) {
       anneeExport = listeAnnees[listeAnnees.length - 1];
     }
@@ -181,8 +258,9 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
       codeRegion={codeRegion}
       datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
       disabled={resultats.length === 0}
-      order={order}
-      orderBy={orderBy}
+      order={params.order}
+      orderBy={params.orderBy}
+      type={structureChoice}
       year={String(anneeExport)}
     />;
   }
@@ -213,19 +291,19 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion }: Com
               {wording.AJOUTER_DES_ETABLISSEMENTS}
             </button>
           )}
-          {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
+          {isShowAjoutEtab && <AjoutEtablissements categories={categories} getcomparedTypes={getcomparedTypes} handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} ></AjoutEtablissements>}
         </div>
         {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
         <div className={styles["years-container"]}>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Année</span>
-            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
+            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags anneeEnCours={params.annéeEnCours} annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={handleYearChange} />}
           </div>
           <div className={styles["years-container"]}>
             <span style={{ marginTop: "5px" }}>Indicateurs</span>
             <SelectionTags
-              choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-              noSelectableChoices={getAllTypes()}
+              choices={["Sanitaire", "Médico-social", "Entité juridique"]}
+              noSelectableChoices={comparedTypes}
               selectedChoice={structureChoice}
               setSelectedChoice={setStructureChoice}
             />

@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.6.4",
+  "version": "1.6.7.1",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -121,7 +121,7 @@
     "dotenv-defaults": "^5.0.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "next": "14",
+    "next": "14.2.30",
     "next-auth": "^4.24.9",
     "nuqs": "^1.20.0",
     "papaparse": "^5.5.2",

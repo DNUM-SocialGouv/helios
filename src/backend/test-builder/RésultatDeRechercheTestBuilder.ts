@@ -8,6 +8,8 @@ export class RésultatDeRechercheTestBuilder {
     raisonSocialeCourte: "CH DU HAUT BUGEY",
     type: "Entité juridique",
     rattachement: "",
+    categorie: '-'
+
   };
   private static résultatDeRechercheÉtablissementMédicoSocial: Résultat = {
     commune: "NANTUA",
@@ -16,6 +18,7 @@ export class RésultatDeRechercheTestBuilder {
     raisonSocialeCourte: "CH NANTUA",
     type: "Médico-social",
     rattachement: "010018407",
+    categorie: '159-C.H.'
   };
   private static résultatDeRechercheÉtablissementSanitaire: Résultat = {
     commune: "VILLENEUVE D ASCQ",
@@ -24,6 +27,7 @@ export class RésultatDeRechercheTestBuilder {
     raisonSocialeCourte: "HP VILLENEUVE DASCQ",
     type: "Sanitaire",
     rattachement: "010018407",
+    categorie: '365-C.H.'
   };
 
   public static créeUnRésultatDeRechercheEntité(champsSurchargés?: Partial<Résultat>): Résultat {

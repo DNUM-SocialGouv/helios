@@ -60,22 +60,24 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const getWordingStructure = (): string => {
-    let structureWording = wording.STRUCTURE;
+    let structureWording = '';
     const totalSelected = (rechercheAvanceeContext?.typeStructure.length ?? 0) + (rechercheAvanceeContext?.statutJuridiqueStructure.length ?? 0);
     if (totalSelected > 0 && rechercheAvanceeContext?.typeStructure) {
-      structureWording += ` : ${typeStructureTranscodage[rechercheAvanceeContext?.typeStructure[0]]}`;
+      structureWording += `${typeStructureTranscodage[rechercheAvanceeContext?.typeStructure[0]]}`;
       if (totalSelected > 1) structureWording += ", +" + (totalSelected - 1);
-    }
-    return structureWording;
+      return structureWording;
+    } else return wording.STRUCTURE;
+
   }
 
   const getWordingCategories = (): string => {
-    let categoriesWording = wording.CATEGORIES_FINESS;
+    let categoriesWording = '';
     if (rechercheAvanceeContext?.categories && rechercheAvanceeContext?.categories.length > 0) {
-      categoriesWording += ` : ${rechercheAvanceeContext?.categoriesLibellesCourt[0]}`;
+      categoriesWording += `${rechercheAvanceeContext?.categoriesLibellesCourt[0]}`;
       if (rechercheAvanceeContext?.categories.length > 1) categoriesWording += ", +" + (rechercheAvanceeContext?.categories.length - 1);
+      return categoriesWording;
     }
-    return categoriesWording;
+    else return wording.CATEGORIES_FINESS
   }
 
   const getWordingCapacite = () => {
@@ -207,7 +209,7 @@ export const RechercheAvanceeFormulaire = ({
             aria-controls="fr-modal-Structure-Filtre"
             className={`fr-btn fr-btn--icon-right fr-icon-arrow-down-s-fill fr-btn--secondary fr-mr-1w ${buttonStructureClicked}`}
             data-fr-opened="false"
-            disabled={isComparaison || rechercheAvanceeContext?.categoriesDomaines.length !== 0}
+            disabled={rechercheAvanceeContext?.categories.length !== 0}
           >
             {getWordingStructure()}
           </button>

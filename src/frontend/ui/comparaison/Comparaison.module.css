@@ -13,6 +13,16 @@
 .titreComposentSpan {
   font-size: larger;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.ListeSelecteur {
+  color: var(--text-action-high-blue-france) !important;
+  background-color: white !important;
+  box-shadow: inset 0 0 0 1px var(--border-action-high-blue-france) !important;
+  border-radius: 0 !important;
+  margin-left: 20px
 }
 
 .logo-container {
@@ -121,4 +131,8 @@
   padding-top: 2rem;
   color: #161616A3;
   margin-top: 1rem;
+}
+
+.selectedList {
+  color: #808080;
 }

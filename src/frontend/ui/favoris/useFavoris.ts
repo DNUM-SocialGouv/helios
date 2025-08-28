@@ -19,6 +19,7 @@ export function useFavoris() {
       raisonSocialeCourte: favori.socialReason,
       type: favori.type,
       rattachement: "",
+      categorie: ''
     };
     const rechercheViewModel = new RechercheViewModel(result, paths);
     return rechercheViewModel;

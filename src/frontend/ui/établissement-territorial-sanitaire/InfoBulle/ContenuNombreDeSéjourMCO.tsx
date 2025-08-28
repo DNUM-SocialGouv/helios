@@ -6,14 +6,16 @@ type ContenuDuNombreDeSéjourMCOProps = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
   estEntitéJuridique: boolean;
+  estComparaison: boolean;
 }>;
 
-export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source, estEntitéJuridique = false }: ContenuDuNombreDeSéjourMCOProps) => {
+export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source, estEntitéJuridique = false, estComparaison }: ContenuDuNombreDeSéjourMCOProps) => {
   const { wording } = useDependencies();
   return (
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
+        {estComparaison && <p> Total hospitalisation: complète + partielle</p>}
         <p>Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge ambulatoires.</p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>

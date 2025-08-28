@@ -34,11 +34,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
-    const firstType = selectedRows.values().next().value;
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
-    sessionStorage.setItem("comparaisonType", firstType);
-    document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessNumbers))}; path=/`;
-    document.cookie = `type=${encodeURIComponent(firstType)}; path=/`;
     router.push("/comparaison");
   }
 
@@ -71,7 +67,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
         <ul className={styles["menu"]}>
           {router.pathname !== "/comparaison" ?
             <li className={styles["menu-item"]}>
-              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2 || selectedRows.values().some((type) => type !== "Médico-social")} onClick={lancerComparaison}>
+              <button className="fr-btn fr-btn--tertiary-no-outline" disabled={selectedRows.size < 2 || selectedRows.size > 30000} onClick={lancerComparaison}>
                 {wording.COMPARER}
               </button>
             </li>

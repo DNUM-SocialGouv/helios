@@ -9,6 +9,7 @@ import { RechercheViewModel } from '../home/RechercheViewModel';
 import { TableFooter } from '../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter';
 import { UserListViewModel } from '../user-list/UserListViewModel';
 
+
 const PAGE_SIZE = 20;
 const defaultOrder = Order.DESC.valueOf();
 const defaultOrderBy = OrderBy.DATE_CREATION.valueOf();
@@ -49,8 +50,6 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
     }
   };
 
-
-  const showAlert = selectedRows.size > 1;
   useEffect(() => {
     setLoading(true);
     const queryParams = new URLSearchParams({
@@ -96,7 +95,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
       {loading
         ? <Spinner />
         : <>
-          {showAlert && <AlerteComparaison />}
+          {selectedRows.size > 30000 && <AlerteComparaison />}
           <Table
             data={dataOnPage}
             handleSelectAll={handleSelectAll}

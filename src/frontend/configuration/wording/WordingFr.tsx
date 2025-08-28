@@ -104,8 +104,8 @@ export class WordingFr implements Wording {
   readonly STRUCTURE: string = "Structure";
   readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
   readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
-  readonly CAPACITE: string = "Capacité (MS)";
-  readonly ACTIVITE_SAN: string = "Activité (SAN)";
+  readonly CAPACITE: string = "Capacité MS";
+  readonly ACTIVITE_SAN: string = "Activité SAN";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
   readonly TOUT_EFFACER: string = "Tout effacer";
 
@@ -521,7 +521,8 @@ export class WordingFr implements Wording {
   readonly COMPARAISON: string = "Comparaison";
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
   readonly COMPARAISON_AUCUN_FINESS: string = "Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.";
-
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = "Votre sélection comprend plus de 30 000 établissements. Réduisez votre sélection pour lancer la comparaison.";
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
   readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
@@ -639,22 +640,16 @@ export class WordingFr implements Wording {
   readonly FA_SEJOURS_ANN: string = "(nombre de séjours - annuel)";
   readonly FA_JOURS_ANN: string = "(nombre de jours - annuel)";
   //Comparaison
-  //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = `Actuellement, vous ne pouvez sélectionner que des établissements médico-sociaux, pour réaliser une comparaison.
-
-A venir : la comparaison des établissements sanitaires et entités juridiques.`;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
-  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
-  readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string = "A partir d'une liste existante";
 
   //Page d’une liste de favoris
   readonly LISTE_DE_FAVORIS = "Liste de favoris";
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche avancée évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = "Ajout du filtre Catégorie FINESS et du filtre Activité sanitaire.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
 
 }

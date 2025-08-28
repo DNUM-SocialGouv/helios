@@ -436,7 +436,11 @@ export interface Wording {
   readonly AJOUTER_DES_ETABLISSEMENTS: string;
   readonly COMPARAISON_AUCUN_FINESS: string;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
+  //--Alert-comparaison
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
 
   // Favoris
   readonly FAVORIS_LIST: string;
@@ -552,12 +556,6 @@ export interface Wording {
   readonly FA_PSY: string;
   readonly FA_SSR: string;
   readonly FA_USLD: string;
-  //Comparaison
-  //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
-  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
-  readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
 
   //Page d’une liste d’etablissements
   readonly LISTE_DE_FAVORIS: string;

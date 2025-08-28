@@ -36,13 +36,9 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     (rechercheAvanceeContext?.activiteUsld && rechercheAvanceeContext?.activiteUsld.length > 0);
 
   useEffect(() => {
-    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial) && !isComparaison) {
+    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
       setTypeSelected([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
       rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
-    }
-    if (isComparaison) {
-      setTypeSelected([AttribuesDefaults.etablissementMedicoSocial]);
-      rechercheAvanceeContext?.setTypeStructure([AttribuesDefaults.etablissementMedicoSocial]);
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
