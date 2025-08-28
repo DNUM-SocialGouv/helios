@@ -118,18 +118,18 @@ equivalences_finess_amm_arhgos_helios = {
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_a_garder_finess_amm_arhgos = list(equivalences_finess_amm_arhgos_helios.keys())
-XPATH_FINESS_AMM_ARHGOS= "./activiteamm"
+XML_TAG_FINESS_AMM_ARHGOS = "activiteamm"
 type_des_colonnes_amm_arhgos = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "mention": str,
-    "pts": str,
-    "declaration": str,
-    "codeautorarhgos": str,
-    "dateautor": str,
-    "datefin": str,
-    "datemeo": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "mention": "string",
+    "pts": "string",
+    "declaration": "string",
+    "codeautorarhgos": "string",
+    "dateautor": "string",
+    "datefin": "string",
+    "datemeo": "string",
 }
 
 index_autorisations_amm_sanitaires: List[str] = [

@@ -12,7 +12,7 @@ from datacrawler.extract import FichierDeDonnées
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant, extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml, lis_le_fichier_xml_en_stream
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier, trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
@@ -48,7 +48,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400103,
     XML_TAG_FINESS_CS1400104,
     XML_TAG_FINESS_CS1600101,
-    XPATH_FINESS_AMM_ARHGOS,
+    XML_TAG_FINESS_AMM_ARHGOS,
     XML_TAG_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
     colonnes_à_garder_finess_cs1400103,
@@ -59,6 +59,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     type_des_colonnes_finess_cs1600102,
     colonnes_à_garder_finess_cs1600102,
     type_des_colonnes_amm_arhgos,
+    colonnes_a_garder_finess_amm_arhgos,
 )
 
 
@@ -225,8 +226,12 @@ def ajoute_les_autorisations_amm(
     chemin_du_fichier_amm_arhgos: str, numéros_finess_des_établissements_connus: pd.DataFrame, base_de_données: Engine, logger: Logger
 ) -> None:
     logger.info("[FINESS] Récupère les autorisations des établissements sanitaires")
-    donnees_des_autorisations = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
-        chemin_du_fichier_amm_arhgos, XPATH_FINESS_AMM_ARHGOS, type_des_colonnes_amm_arhgos
+    donnees_des_autorisations = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
+        logger,
+        chemin_du_fichier_amm_arhgos,
+        XML_TAG_FINESS_AMM_ARHGOS,
+        colonnes_a_garder_finess_amm_arhgos,
+        type_des_colonnes_amm_arhgos,
     )
     logger.info(f"[FINESS] {donnees_des_autorisations.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_amm_arhgos}.")
 
@@ -245,12 +250,9 @@ def ajoute_les_autorisations_amm(
             logger,
         )
 
+
 def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
-        logger: Logger,
-        chemin_du_fichier: str,
-        xpath: str,
-        colonnes: List,
-        types_des_colonnes: Dict
+    logger: Logger, chemin_du_fichier: str, xpath: str, colonnes: List, types_des_colonnes: Dict
 ) -> FichierDeDonnées:
     données_des_autorisations = lis_le_fichier_xml_en_stream(
         logger,
@@ -261,16 +263,6 @@ def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
     )
     date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)
     return FichierDeDonnées(données_des_autorisations, date_du_fichier_des_autorisations)
-
-def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(chemin_du_fichier: str, xpath: str, types_des_colonnes: Dict) -> FichierDeDonnées:
-    données_des_autorisations = lis_le_fichier_xml(
-        chemin_du_fichier,
-        xpath,
-        types_des_colonnes,
-    )
-    date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)
-    return FichierDeDonnées(données_des_autorisations, date_du_fichier_des_autorisations)
-
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
