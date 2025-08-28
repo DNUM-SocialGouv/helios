@@ -1,7 +1,7 @@
 import { ViewColumn, ViewEntity } from "typeorm";
 
 @ViewEntity({
-  expression: `CREATE OR REPLACE VIEW recherche AS
+      expression: `CREATE OR REPLACE VIEW recherche AS
     SELECT
       numero_finess_entite_juridique AS numero_finess,
       raison_sociale_courte,
@@ -12,8 +12,12 @@ import { ViewColumn, ViewEntity } from "typeorm";
       departement,
       code_region,
       '' AS rattachement,
+<<<<<<< HEAD
       '' AS categorie,
       '' As libelle_catgeorie
+=======
+      '' AS categorie
+>>>>>>> master
     FROM entite_juridique
     UNION ALL
     SELECT
@@ -29,39 +33,39 @@ import { ViewColumn, ViewEntity } from "typeorm";
       cat_etablissement AS categorie,
       libelle_court_categorie_etablissement As libelle_catgeorie
     FROM etablissement_territorial;`,
-  name: "recherche",
+      name: "recherche",
 })
 export class RechercheModel {
-  @ViewColumn({ name: "commune" })
-  public commune!: string;
+      @ViewColumn({ name: "commune" })
+      public commune!: string;
 
-  @ViewColumn({ name: "departement" })
-  public département!: string;
+      @ViewColumn({ name: "departement" })
+      public département!: string;
 
-  @ViewColumn({ name: "code_region" })
-  public codeRegion!: string;
+      @ViewColumn({ name: "code_region" })
+      public codeRegion!: string;
 
-  @ViewColumn({ name: "numero_finess" })
-  public numeroFiness!: string;
+      @ViewColumn({ name: "numero_finess" })
+      public numeroFiness!: string;
 
-  @ViewColumn({ name: "raison_sociale_courte" })
-  public raisonSocialeCourte!: string;
+      @ViewColumn({ name: "raison_sociale_courte" })
+      public raisonSocialeCourte!: string;
 
-  @ViewColumn({ name: "type" })
-  public type!: string;
+      @ViewColumn({ name: "type" })
+      public type!: string;
 
-  @ViewColumn({ name: "statut_juridique" })
-  public statut_juridique!: string;
+      @ViewColumn({ name: "statut_juridique" })
+      public statut_juridique!: string;
 
-  @ViewColumn({ name: "classification" })
-  public classification!: string;
+      @ViewColumn({ name: "classification" })
+      public classification!: string;
 
-  @ViewColumn({ name: "rattachement" })
-  public rattachement!: string;
+      @ViewColumn({ name: "rattachement" })
+      public rattachement!: string;
 
-  @ViewColumn({ name: "libelle_categorie" })
-  public libelleCatgeorie!: string;
+      @ViewColumn({ name: "libelle_categorie" })
+      public libelleCatgeorie!: string;
 
-  @ViewColumn({ name: "categorie" })
-  public categorie!: string;
+      @ViewColumn({ name: "categorie" })
+      public categorie!: string;
 }
