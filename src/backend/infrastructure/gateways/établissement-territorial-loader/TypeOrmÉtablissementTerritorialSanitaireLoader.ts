@@ -744,8 +744,8 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   private construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireDeclaration {
     return {
-      code: autorisationAmmModel.code_pratique_therapeutique_specifique,
-      libelle: autorisationAmmModel.libelle_pratique_therapeutique_specifique,
+      code: autorisationAmmModel.code_declaration,
+      libelle: autorisationAmmModel.libelle_declaration,
       codeAutorisationArhgos: autorisationAmmModel.code_autorisation_arhgos,
       dateFin: autorisationAmmModel.date_fin,
       dateAutorisation: autorisationAmmModel.date_autorisation,

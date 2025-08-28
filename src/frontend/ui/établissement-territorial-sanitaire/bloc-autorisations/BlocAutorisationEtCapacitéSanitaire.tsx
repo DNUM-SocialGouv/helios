@@ -46,27 +46,14 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
-            identifiant="autorisations-sanitaire"
-            nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
-          >
-            {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
-          </IndicateurGraphique>
-        )}
-        {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesAutorisées && (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuAutorisations
-                dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-amm-sanitaire"
             nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
-            {établissementTerritorialSanitaireAutorisationsViewModel.autorisationsAmm}
+            <>
+              {établissementTerritorialSanitaireAutorisationsViewModel.autorisationsAmm}
+              {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
+            </>
           </IndicateurGraphique>
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesAutorisées && (
