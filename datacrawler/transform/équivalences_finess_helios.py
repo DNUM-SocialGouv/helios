@@ -84,6 +84,7 @@ index_des_équipements_matériels_lourds: List[str] = [
     "numero_autorisation_arhgos",
 ]
 
+XML_TAG_FINESS_CS1600101 = "autreactivite"
 équivalences_finess_cs1600101_helios = {
     "activite": "code_activite",
     "datedecision": "date_autorisation",
@@ -97,12 +98,11 @@ index_des_équipements_matériels_lourds: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600101 = list(équivalences_finess_cs1600101_helios.keys())
-XPATH_FINESS_CS1600101 = "./autreactivite"
 type_des_colonnes_finess_cs1600101 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
 
 equivalences_finess_amm_arhgos_helios = {

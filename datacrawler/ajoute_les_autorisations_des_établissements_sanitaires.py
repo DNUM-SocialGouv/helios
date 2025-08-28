@@ -47,7 +47,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
 from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400103,
     XML_TAG_FINESS_CS1400104,
-    XPATH_FINESS_CS1600101,
+    XML_TAG_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     XPATH_FINESS_AMM_ARHGOS,
     type_des_colonnes_finess_cs1400103,
@@ -55,6 +55,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     type_des_colonnes_finess_cs1400104,
     colonnes_à_garder_finess_cs1400104,
     type_des_colonnes_finess_cs1600101,
+    colonnes_à_garder_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
     type_des_colonnes_amm_arhgos
 )
@@ -137,9 +138,11 @@ def ajoute_les_autres_activités(
     chemin_du_fichier_finess_cs1600101: str, numéros_finess_des_établissements_connus: pd.DataFrame, base_de_données: Engine, logger: Logger
 ) -> None:
     logger.info("[FINESS] Récupère les autres activités des établissements sanitaires")
-    données_des_autres_activités = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
+    données_des_autres_activités = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
+        logger,
         chemin_du_fichier_finess_cs1600101,
-        XPATH_FINESS_CS1600101,
+        XML_TAG_FINESS_CS1600101,
+        colonnes_à_garder_finess_cs1600101,
         type_des_colonnes_finess_cs1600101,
     )
     logger.info(f"[FINESS] {données_des_autres_activités.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1600101}.")

@@ -16,7 +16,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400103,
     XML_TAG_FINESS_CS1400104,
     XML_TAG_FINESS_CS1400105,
-    XPATH_FINESS_CS1600101,
+    XML_TAG_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
     colonnes_à_garder_finess_cs1400103,
@@ -25,6 +25,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     type_des_colonnes_finess_cs1400105,
     colonnes_à_garder_finess_cs1400105,
     type_des_colonnes_finess_cs1600101,
+    colonnes_à_garder_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
 )
 
@@ -335,63 +336,67 @@ class TestLisLeFichierXml:
             chemin_du_fichier,
             """
             <autreactivite>
+                <activite>A0</activite>
+                <datedecision>2006-06-26</datedecision>
+                <datefin>2026-06-26</datefin>
+                <datemeo>2006-06-26</datemeo>
+                <forme>01</forme>
+                <libactivite>Installation de chirurgie esthétique</libactivite>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <libmodalite>Pas de modalité</libmodalite>
+                <modalite>00</modalite>
+                <nofinesset>370000051</nofinesset>
                 <noautor>242202733</noautor>
                 <nofinessej>370000028</nofinessej>
                 <rsej>SA. CLINIQUE JEANNE D'ARC</rsej>
-                <nofinesset>370000051</nofinesset>
                 <rset>CLINIQUE JEANNE D'ARC - ST BENOIT</rset>
                 <codeautorarhgos>04-00-000</codeautorarhgos>
-                <activite>A0</activite>
-                <libactivite>Installation de chirurgie esthétique</libactivite>
-                <modalite>00</modalite>
-                <libmodalite>Pas de modalité</libmodalite>
-                <forme>01</forme>
-                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <datedecision>2006-06-26</datedecision>
                 <nodecision>0000</nodecision>
                 <etatautorisation>6</etatautorisation>
                 <libetatautorisation>Renouvellement tacite</libetatautorisation>
                 <datevisite>2006-06-26</datevisite>
                 <resultatvisite>C</resultatvisite>
-                <datefin>2026-06-26</datefin>
-                <datemeo>2006-06-26</datemeo>
                 <datelimitemeo xsi:nil="true"/>
                 <datelimitedepot>2025-10-26</datelimitedepot>
                 <datelimvisite xsi:nil="true"/>
                 <datemaj>2022-08-24</datemaj>
             </autreactivite>
             <autreactivite>
+                <activite>A5</activite>
+                <datedecision>2012-02-02</datedecision>
+                <datefin>2022-02-01</datefin>
+                <datemeo>2012-02-02</datemeo>
+                <forme>21</forme>
+                <libactivite>Prélèvement d'organes</libactivite>
+                <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
+                <libmodalite>Multi-organes</libmodalite>
+                <modalite>31</modalite>
+                <nofinesset>410000020</nofinesset>
                 <noautor>242202799</noautor>
                 <nofinessej>410000087</nofinessej>
                 <rsej>CH BLOIS  SIMONE VEIL</rsej>
-                <nofinesset>410000020</nofinesset>
                 <rset>CH BLOIS SIMONE VEIL</rset>
                 <codeautorarhgos>05-00-000</codeautorarhgos>
-                <activite>A5</activite>
-                <libactivite>Prélèvement d'organes</libactivite>
-                <modalite>31</modalite>
-                <libmodalite>Multi-organes</libmodalite>
-                <forme>21</forme>
-                <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
-                <datedecision>2012-02-02</datedecision>
                 <nodecision>2012-OSMS-006</nodecision>
                 <etatautorisation>7</etatautorisation>
                 <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
                 <datevisite xsi:nil="true"/>
                 <resultatvisite xsi:nil="true"/>
-                <datefin>2022-02-01</datefin>
-                <datemeo>2012-02-02</datemeo>
                 <datelimitemeo xsi:nil="true"/>
                 <datelimitedepot>2021-07-01</datelimitedepot>
                 <datelimvisite xsi:nil="true"/>
                 <datemaj>2022-08-24</datemaj>
             </autreactivite>""",
         )
-        xpath = XPATH_FINESS_CS1600101
+        xml_tag = XML_TAG_FINESS_CS1600101
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600101
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1600101,
+            type_des_colonnes_finess_cs1600101,
         )
 
         # THEN
@@ -400,59 +405,32 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "noautor": 242202733,
-                        "nofinessej": 370000028,
-                        "rsej": "SA. CLINIQUE JEANNE D'ARC",
-                        "nofinesset": "370000051",
-                        "rset": "CLINIQUE JEANNE D'ARC - ST BENOIT",
-                        "codeautorarhgos": "04-00-000",
                         "activite": "A0",
-                        "libactivite": "Installation de chirurgie esthétique",
-                        "modalite": "00",
-                        "libmodalite": "Pas de modalité",
-                        "forme": "01",
-                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
                         "datedecision": "2006-06-26",
-                        "nodecision": "0000",
-                        "etatautorisation": 6,
-                        "libetatautorisation": "Renouvellement tacite",
-                        "datevisite": "2006-06-26",
-                        "resultatvisite": "C",
                         "datefin": "2026-06-26",
                         "datemeo": "2006-06-26",
-                        "datelimitemeo": nan,
-                        "datelimitedepot": "2025-10-26",
-                        "datelimvisite": nan,
-                        "datemaj": "2022-08-24",
+                        "forme": "01",
+                        "libactivite": "Installation de chirurgie esthétique",
+                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+                        "libmodalite": "Pas de modalité",
+                        "modalite": "00",
+                        "nofinesset": "370000051",
                     },
                     {
-                        "noautor": 242202799,
-                        "nofinessej": 410000087,
-                        "rsej": "CH BLOIS  SIMONE VEIL",
-                        "nofinesset": "410000020",
-                        "rset": "CH BLOIS SIMONE VEIL",
-                        "codeautorarhgos": "05-00-000",
                         "activite": "A5",
-                        "libactivite": "Prélèvement d'organes",
-                        "modalite": "31",
-                        "libmodalite": "Multi-organes",
-                        "forme": "21",
-                        "libforme": "Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)",
                         "datedecision": "2012-02-02",
-                        "nodecision": "2012-OSMS-006",
-                        "etatautorisation": 7,
-                        "libetatautorisation": "Renouvellement sur décision DGARS",
-                        "datevisite": nan,
-                        "resultatvisite": nan,
                         "datefin": "2022-02-01",
                         "datemeo": "2012-02-02",
-                        "datelimitemeo": nan,
-                        "datelimitedepot": "2021-07-01",
-                        "datelimvisite": nan,
-                        "datemaj": "2022-08-24",
+                        "forme": "21",
+                        "libactivite": "Prélèvement d'organes",
+                        "libforme": "Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)",
+                        "libmodalite": "Multi-organes",
+                        "modalite": "31",
+                        "nofinesset": "410000020",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1600102(self) -> None:
