@@ -32,6 +32,7 @@ index_des_autorisations_médico_sociaux: List[str] = [
     "clientele",
 ]
 
+XML_TAG_FINESS_CS1400103 = "activiteoffresoin"
 équivalences_finess_cs1400103_helios = {
     "activite": "code_activite",
     "dateautor": "date_autorisation",
@@ -46,13 +47,14 @@ index_des_autorisations_médico_sociaux: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1400103 = list(équivalences_finess_cs1400103_helios.keys())
-XPATH_FINESS_CS1400103 = "./activiteoffresoin"
+
 type_des_colonnes_finess_cs1400103 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
+
 index_des_autorisations_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
     "code_activite",

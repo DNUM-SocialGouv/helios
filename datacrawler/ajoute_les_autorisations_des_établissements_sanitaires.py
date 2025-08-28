@@ -1,6 +1,6 @@
 import os
 from logging import Logger
-from typing import Dict
+from typing import Dict, List
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -12,7 +12,7 @@ from datacrawler.extract import FichierDeDonnées
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant, extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml, lis_le_fichier_xml_en_stream
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier, trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import (
     TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES,
@@ -45,12 +45,13 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_diamant_ann_sae_helios,
 )
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1400103,
+    XML_TAG_FINESS_CS1400103,
     XPATH_FINESS_CS1400104,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     XPATH_FINESS_AMM_ARHGOS,
     type_des_colonnes_finess_cs1400103,
+    colonnes_à_garder_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
     type_des_colonnes_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
@@ -81,8 +82,8 @@ def ajoute_les_autorisations(
     chemin_du_fichier_finess_cs1400103: str, numéros_finess_des_établissements_connus: pd.DataFrame, base_de_données: Engine, logger: Logger
 ) -> None:
     logger.info("[FINESS] Récupère les autorisations des établissements sanitaires")
-    données_des_autorisations = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(
-        chemin_du_fichier_finess_cs1400103, XPATH_FINESS_CS1400103, type_des_colonnes_finess_cs1400103
+    données_des_autorisations = lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(
+        logger, chemin_du_fichier_finess_cs1400103, XML_TAG_FINESS_CS1400103, colonnes_à_garder_finess_cs1400103, type_des_colonnes_finess_cs1400103
     )
     logger.info(f"[FINESS] {données_des_autorisations.données.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier_finess_cs1400103}.")
 
@@ -234,6 +235,17 @@ def ajoute_les_autorisations_amm(
             [(FichierSource.FINESS_AMM_ARGHOS, donnees_des_autorisations.dateDeMiseÀJour)],
             logger,
         )
+
+def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour_en_stream(logger: Logger, chemin_du_fichier: str, xpath: str, colonnes: List, types_des_colonnes: Dict) -> FichierDeDonnées:
+    données_des_autorisations = lis_le_fichier_xml_en_stream(
+        logger,
+        chemin_du_fichier,
+        xpath,
+        colonnes,
+        types_des_colonnes,
+    )
+    date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)
+    return FichierDeDonnées(données_des_autorisations, date_du_fichier_des_autorisations)
 
 def lis_le_fichier_xml_et_extrais_la_date_de_mise_à_jour(chemin_du_fichier: str, xpath: str, types_des_colonnes: Dict) -> FichierDeDonnées:
     données_des_autorisations = lis_le_fichier_xml(

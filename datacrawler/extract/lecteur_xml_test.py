@@ -13,12 +13,13 @@ from datacrawler.extract.lecteur_xml import (
 )
 from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1400103,
     XPATH_FINESS_CS1400104,
+    XML_TAG_FINESS_CS1400103,
     XML_TAG_FINESS_CS1400105,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
+    colonnes_à_garder_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
     type_des_colonnes_finess_cs1400105,
     colonnes_à_garder_finess_cs1400105,
@@ -189,78 +190,42 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activiteoffresoin>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
                 <activite>16</activite>
-                <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
-                <modalite>40</modalite>
-                <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
-                <forme>00</forme>
-                <libforme>Pas de forme</libforme>
-                <noautor>762201955</noautor>
                 <dateautor>2004-11-02</dateautor>
-                <indnatlien>J</indnatlien>
-                <nofinesset>310019351</nofinesset>
-                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-                <noligautor>1757</noligautor>
-                <noligautoranc xsi:nil="true"/>
-                <noautorarhgos>00-00-000</noautorarhgos>
-                <noimplarhgos>00-00-000</noimplarhgos>
-                <noancautact xsi:nil="true"/>
-                <noancauteml xsi:nil="true"/>
-                <sectpsy xsi:nil="true"/>
-                <libsectpsy xsi:nil="true"/>
-                <datemeo>2005-03-22</datemeo>
                 <datefin>2027-09-23</datefin>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <daterenouv xsi:nil="true"/>
-                <indrenouv xsi:nil="true"/>
-                <indsupact>N</indsupact>
-                <indsupsite>N</indsupsite>
-                <datemajact>2022-08-24</datemajact>
-                <datemajsite>2022-08-24</datemajsite>
+                <datemeo>2005-03-22</datemeo>
+                <forme>00</forme>
+                <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+                <libforme>Pas de forme</libforme>
+                <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
+                <modalite>40</modalite>
+                <noautorarhgos>00-00-000</noautorarhgos>
+                <nofinesset>310019351</nofinesset>
             </activiteoffresoin>
             <activiteoffresoin>
-                <nofinessej>310026075</nofinessej>
-                <rsej>SARL ST CYPRIEN RIVE GAUCHE</rsej>
                 <activite>02</activite>
-                <libactivite>Chirurgie</libactivite>
-                <modalite>00</modalite>
-                <libmodalite>Pas de modalité</libmodalite>
-                <forme>01</forme>
-                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <noautor>762201956</noautor>
                 <dateautor>1998-07-07</dateautor>
-                <indnatlien>J</indnatlien>
-                <nofinesset>310026083</nofinesset>
-                <rset>CL RIVE GAUCHE TOULOUSE</rset>
-                <noligautor>1758</noligautor>
-                <noligautoranc xsi:nil="true"/>
-                <noautorarhgos>01-00-000</noautorarhgos>
-                <noimplarhgos>01-00-000</noimplarhgos>
-                <noancautact xsi:nil="true"/>
-                <noancauteml xsi:nil="true"/>
-                <sectpsy xsi:nil="true"/>
-                <libsectpsy xsi:nil="true"/>
-                <datemeo>1999-11-02</datemeo>
                 <datefin>2027-04-30</datefin>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <daterenouv xsi:nil="true"/>
-                <indrenouv xsi:nil="true"/>
-                <indsupact>N</indsupact>
-                <indsupsite>N</indsupsite>
-                <datemajact>2022-08-24</datemajact>
-                <datemajsite>2022-08-24</datemajsite>
+                <datemeo>1999-11-02</datemeo>
+                <forme>01</forme>
+                <libactivite>Chirurgie</libactivite>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <libmodalite>Pas de modalité</libmodalite>
+                <modalite>00</modalite>
+                <noautorarhgos>01-00-000</noautorarhgos>
+                <nofinesset>310026083</nofinesset>
             </activiteoffresoin>
             """,
         )
-        xpath = XPATH_FINESS_CS1400103
+        xml_path = XML_TAG_FINESS_CS1400103
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400103
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_path,
+            colonnes_à_garder_finess_cs1400103,
+            type_des_colonnes_finess_cs1400103,
         )
 
         # THEN
@@ -269,73 +234,34 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
                         "activite": "16",
-                        "libactivite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "modalite": "40",
-                        "libmodalite": "Hémodialyse en centre pour adultes",
-                        "forme": "00",
-                        "libforme": "Pas de forme",
-                        "noautor": 762201955,
                         "dateautor": "2004-11-02",
-                        "indnatlien": "J",
-                        "nofinesset": "310019351",
-                        "rset": "HOPITAL LARREY CHU TOULOUSE",
-                        "noligautor": 1757,
-                        "noligautoranc": nan,
-                        "noautorarhgos": "00-00-000",
-                        "noimplarhgos": "00-00-000",
-                        "noancautact": nan,
-                        "noancauteml": nan,
-                        "sectpsy": nan,
-                        "libsectpsy": nan,
-                        "datemeo": "2005-03-22",
                         "datefin": "2027-09-23",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "daterenouv": nan,
-                        "indrenouv": nan,
-                        "indsupact": "N",
-                        "indsupsite": "N",
-                        "datemajact": "2022-08-24",
-                        "datemajsite": "2022-08-24",
+                        "datemeo": "2005-03-22",
+                        "forme": "00",
+                        "libactivite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "libforme": "Pas de forme",
+                        "libmodalite": "Hémodialyse en centre pour adultes",
+                        "modalite": "40",
+                        "noautorarhgos": "00-00-000",
+                        "nofinesset": "310019351",
                     },
                     {
-                        "nofinessej": 310026075,
-                        "rsej": "SARL ST CYPRIEN RIVE GAUCHE",
                         "activite": "02",
-                        "libactivite": "Chirurgie",
-                        "modalite": "00",
-                        "libmodalite": "Pas de modalité",
-                        "forme": "01",
-                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "noautor": 762201956,
                         "dateautor": "1998-07-07",
-                        "indnatlien": "J",
-                        "nofinesset": "310026083",
-                        "rset": "CL RIVE GAUCHE TOULOUSE",
-                        "noligautor": 1758,
-                        "noligautoranc": nan,
-                        "noautorarhgos": "01-00-000",
-                        "noimplarhgos": "01-00-000",
-                        "noancautact": nan,
-                        "noancauteml": nan,
-                        "sectpsy": nan,
-                        "libsectpsy": nan,
-                        "datemeo": "1999-11-02",
                         "datefin": "2027-04-30",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "daterenouv": nan,
-                        "indrenouv": nan,
-                        "indsupact": "N",
-                        "indsupsite": "N",
-                        "datemajact": "2022-08-24",
-                        "datemajsite": "2022-08-24",
+                        "datemeo": "1999-11-02",
+                        "forme": "01",
+                        "libactivite": "Chirurgie",
+                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+                        "libmodalite": "Pas de modalité",
+                        "modalite": "00",
+                        "noautorarhgos": "01-00-000",
+                        "nofinesset": "310026083",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400104(self) -> None:
