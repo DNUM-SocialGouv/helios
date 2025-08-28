@@ -649,7 +649,7 @@ export class WordingFr implements Wording {
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche avancée évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = "Ajout du filtre Catégorie FINESS et du filtre Activité sanitaire.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
 
 }
