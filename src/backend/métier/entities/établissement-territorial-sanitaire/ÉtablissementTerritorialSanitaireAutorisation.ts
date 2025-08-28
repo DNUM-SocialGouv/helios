@@ -89,8 +89,36 @@ export type ÉquipementMatérielLourd = Readonly<{
 }>;
 
 export type AutorisationsAMMSanitaire = Readonly<{
-  libellé: string;
+  libelle: string;
   code: string;
+  modalites: AutorisationsAMMSanitaireModalite[];
+}>;
+
+export type AutorisationsAMMSanitaireModalite = Readonly<{
+  libelle: string;
+  code: string;
+  mentions: AutorisationsAMMSanitaireMention[];
+}>;
+
+export type AutorisationsAMMSanitaireMention = Readonly<{
+  libelle: string;
+  code: string;
+  pratiques: AutorisationsAMMSanitairePratique[];
+}>;
+
+export type AutorisationsAMMSanitairePratique = Readonly<{
+  libelle: string;
+  code: string;
+  declarations: AutorisationsAMMSanitaireDeclaration[];
+}>;
+
+export type AutorisationsAMMSanitaireDeclaration = Readonly<{
+  libelle: string;
+  code: string;
+  codeAutorisationArhgos: string;
+  dateFin: string | null;
+  dateAutorisation: string | null;
+  dateMiseEnOeuvre: string | null;
 }>;
 
 export type CapacitéSanitaire = Readonly<{
@@ -132,4 +160,23 @@ export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly
     activités: ReconnaissanceContractuelleSanitaireActivité[];
     dateMiseÀJourSource: string;
   };
+}>;
+
+
+export type AutorisationsAMMMQueryResult = Readonly<{
+  code_activite: string;
+  libelle_activite: string;
+  code_modalite: string;
+  libelle_modalite: string;
+  code_mention: string;
+  libelle_mention: string;
+  code_pratique_therapeutique_specifique: string;
+  libelle_pratique_therapeutique_specifique: string;
+  code_declaration: string;
+  libelle_declaration: string;
+  code_autorisation_arhgos: string;
+  date_autorisation: string | null;
+  date_fin: string | null;
+  date_mise_en_oeuvre: string | null;
+  numero_finess_etablissement_territorial: string;
 }>;

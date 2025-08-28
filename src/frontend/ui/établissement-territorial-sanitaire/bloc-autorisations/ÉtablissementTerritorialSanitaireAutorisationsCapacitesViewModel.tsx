@@ -312,6 +312,83 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
     );
   }
 
+  public get autorisationsAmm(): ReactElement {
+    const autorisationsAmmSanitaires = this.établissementTerritorialSanitaireAutorisations.autorisationsAmm;
+
+    return (
+      <ul aria-label="autorisation_amm" className={`${stylesBlocAutorisationsEtCapacités["liste-activités"]}`}>
+        {autorisationsAmmSanitaires.activites.map((activite) => (
+          <li key={`"autorisation_amm-${activite.code}`}>
+            <TagCliquable for={`autorisation_amm-accordion-${activite.code}`} titre={`${activite.libelle} [${activite.code}]`} />
+            <ul className="fr-collapse niveau1" id={`autorisation_amm-accordion-${activite.code}`}>
+              {activite.modalites.map((modalite) => (
+                <li key={`modalité-${modalite.code}`}>
+                  <TagCliquable
+                    for={`autorisation_amm-accordion-${activite.code}-${modalite.code}`}
+                    texteGras={false}
+                    titre={`${modalite.libelle} [${modalite.code}]`}
+                  />
+                  <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}`}>
+                    {modalite.mentions.map((mention) => (
+                      <li key={`mention-${mention.code}`}>
+                        <TagCliquable
+                          for={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}
+                          texteGras={false}
+                          titre={`${mention.libelle} [${mention.code}]`}
+                        />
+                        <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}>
+                          {mention.pratiques.map((pratique) => (
+                            <li key={`pratique-${pratique.code}`}>
+                              <TagCliquable
+                                for={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}-${pratique.code}`}
+                                texteGras={false}
+                                titre={`${pratique.libelle} [${pratique.code}]`}
+                              />
+                              <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}-${pratique.code}`}>
+                                {pratique.declarations.map((declaration) => {
+                                  return (
+                                    <li key={`declaration-${declaration.code}`}>
+                                      <TagGroup label="autorisation_amm">
+                                        <Tag label={`${declaration.libelle} [${declaration.code}]`} size={TAG_SIZE.SM} withArrow />
+                                        <Tag
+                                          label={`${this.wording.NUMÉRO_ARHGOS} : ${declaration.codeAutorisationArhgos ? declaration.codeAutorisationArhgos : "N/A"}`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${declaration.dateMiseEnOeuvre ? StringFormater.formatDate(declaration.dateMiseEnOeuvre) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_DE_FIN} : ${declaration.dateFin ? StringFormater.formatDate(declaration.dateFin) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_D_AUTORISATION} : ${declaration.dateAutorisation ? StringFormater.formatDate(declaration.dateAutorisation) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                      </TagGroup>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   public get dateDeMiseÀJourDesÉquipementsMatérielsLourds(): string {
     return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds.dateMiseÀJourSource);
   }
