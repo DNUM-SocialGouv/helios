@@ -3,7 +3,7 @@ import pandas as pd
 
 from datacrawler.transform.équivalences_finess_helios import (
     colonnes_a_garder_finess_cs1400101,
-    colonnes_a_garder_finess_cs1400107,
+    colonnes_a_garder_finess_cs1500107,
     equivalences_finess_cs1400101_helios,
     index_des_entitees_juridiques
 )
@@ -45,7 +45,7 @@ def categoriser(statut_niv1: str, statut_niv2: str) -> str:
 
 def associe_la_categorisation(entites_juridiques_ouvertes: pd.DataFrame, categories:pd.DataFrame) -> pd.DataFrame:
     entites_juridiques_filtrees = entites_juridiques_ouvertes[colonnes_a_garder_finess_cs1400101]
-    categories_filtrees = categories[colonnes_a_garder_finess_cs1400107]
+    categories_filtrees = categories[colonnes_a_garder_finess_cs1500107]
     categories_filtrees = categories_filtrees.rename(columns={'code': 'statutjuridique'})
     categories_filtrees = categories_filtrees.rename(columns={'codeagr1': 'statutJuridiqueNiv1'})
     categories_filtrees = categories_filtrees.rename(columns={'codeagr2': 'statutJuridiqueNiv2'})

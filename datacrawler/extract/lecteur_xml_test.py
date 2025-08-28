@@ -7,22 +7,24 @@ import pandas as pd
 from numpy import nan
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
-from datacrawler.extract.lecteur_xml import (
-    lis_le_fichier_xml,
-    lis_le_fichier_xml_en_stream,
-)
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
 from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1400103,
-    XPATH_FINESS_CS1400104,
-    XPATH_FINESS_CS1400105,
-    XPATH_FINESS_CS1600101,
-    XPATH_FINESS_CS1600102,
+    XML_TAG_FINESS_CS1400103,
+    XML_TAG_FINESS_CS1400104,
+    XML_TAG_FINESS_CS1400105,
+    XML_TAG_FINESS_CS1600101,
+    XML_TAG_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
+    colonnes_à_garder_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
+    colonnes_à_garder_finess_cs1400104,
     type_des_colonnes_finess_cs1400105,
+    colonnes_à_garder_finess_cs1400105,
     type_des_colonnes_finess_cs1600101,
+    colonnes_à_garder_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
+    colonnes_à_garder_finess_cs1600102,
 )
 
 
@@ -31,9 +33,7 @@ class TestLisLeFichierXml:
     répertoire_des_fichiers: str = "./fake_flux_finess"
 
     def setup_method(self) -> None:
-        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(
-            parents=True, exist_ok=True
-        )
+        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(parents=True, exist_ok=True)
 
     def teardown_method(self) -> None:
         shutil.rmtree(self.répertoire_des_fichiers)
@@ -44,86 +44,56 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-                <nofinesset>070020804</nofinesset>
-                <de>023</de>
-                <libde>Stérilisation</libde>
-                <libcourtde>Stérilisation</libcourtde>
                 <ta>03</ta>
-                <libta>Hospitalisation Complète</libta>
-                <libcourtta>Hospit. Complète</libcourtta>
-                <client>020</client>
-                <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
-                <libcourtclient>Toutes Déf.Physiques</libcourtclient>
-                <sourceinfo>S</sourceinfo>
-                <libsourceinfo>Inspection</libsourceinfo>
-                <capinstot>3</capinstot>
-                <capinstm xsi:nil="true"/>
-                <capinstf xsi:nil="true"/>
-                <capinsthab xsi:nil="true"/>
-                <ageminiinst xsi:nil="true"/>
-                <agemaxiinst xsi:nil="true"/>
-                <indsupinst>O</indsupinst>
-                <datederinst>2009-01-01</datederinst>
-                <datepremautor>2006-03-29</datepremautor>
                 <capautot>3</capautot>
-                <capautm xsi:nil="true"/>
-                <capautf xsi:nil="true"/>
-                <capauthab>3</capauthab>
-                <ageminiaut xsi:nil="true"/>
-                <agemaxiaut xsi:nil="true"/>
-                <indsupaut>O</indsupaut>
+                <capinstot>3</capinstot>
+                <client>020</client>
                 <dateautor>2006-03-29</dateautor>
+                <datederinst>2009-01-01</datederinst>
                 <datemajaut>2012-05-03</datemajaut>
-                <datemajinst>2009-06-29</datemajinst>
+                <de>023</de>
+                <indsupinst>O</indsupinst>
+                <indsupaut>O</indsupaut>
+                <libta>Hospitalisation Complète</libta>
+                <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
+                <libde>Stérilisation</libde>
+                <nofinesset>070020804</nofinesset>
             </equipementsocial>""",
         )
-        xpath = XPATH_FINESS_CS1400105
+        xml_tag = XML_TAG_FINESS_CS1400105
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400105,
+            type_des_colonnes_finess_cs1400105,
         )
 
         # THEN
+        # On ne check pas le Dtype des colonnes car le lecteur fournis des string[python] et non des str (Object)
         pd.testing.assert_frame_equal(
             données_lues,
             pd.DataFrame(
                 {
-                    "nofinesset": ["070020804"],
-                    "de": ["023"],
-                    "libde": ["Stérilisation"],
-                    "libcourtde": ["Stérilisation"],
                     "ta": ["03"],
-                    "libta": ["Hospitalisation Complète"],
-                    "libcourtta": ["Hospit. Complète"],
+                    "capautot": ["3"],
+                    "capinstot": ["3"],
                     "client": ["020"],
-                    "libclient": [
-                        "Toutes Déficiences Physiques (Sans autre indication)"
-                    ],
-                    "libcourtclient": ["Toutes Déf.Physiques"],
-                    "sourceinfo": ["S"],
-                    "libsourceinfo": ["Inspection"],
-                    "capinstot": [3],
-                    "capinstm": [nan],
-                    "capinstf": [nan],
-                    "capinsthab": [nan],
-                    "ageminiinst": [nan],
-                    "agemaxiinst": [nan],
-                    "indsupinst": ["O"],
-                    "datederinst": ["2009-01-01"],
-                    "datepremautor": ["2006-03-29"],
-                    "capautot": [3],
-                    "capautm": [nan],
-                    "capautf": [nan],
-                    "capauthab": [3],
-                    "ageminiaut": [nan],
-                    "agemaxiaut": [nan],
-                    "indsupaut": ["O"],
                     "dateautor": ["2006-03-29"],
+                    "datederinst": ["2009-01-01"],
                     "datemajaut": ["2012-05-03"],
-                    "datemajinst": ["2009-06-29"],
+                    "de": ["023"],
+                    "indsupinst": ["O"],
+                    "indsupaut": ["O"],
+                    "libta": ["Hospitalisation Complète"],
+                    "libclient": ["Toutes Déficiences Physiques (Sans autre indication)"],
+                    "libde": ["Stérilisation"],
+                    "nofinesset": ["070020804"],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_traite_les_valeurs_manquantes(self) -> None:
@@ -138,11 +108,11 @@ class TestLisLeFichierXml:
                 <echappe xsi:nil="true" />
             </parent>""",
         )
-        xpath = "./parent"
-        type_de_la_colonne = {"echappe": str}
+        xml_tag = "parent"
+        type_de_la_colonne = {"echappe": "string"}
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_de_la_colonne)
+        données_lues = lis_le_fichier_xml_en_stream(self.logger, chemin_du_fichier, xml_tag, list(type_de_la_colonne.keys()), type_de_la_colonne)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -152,6 +122,7 @@ class TestLisLeFichierXml:
                     "echappe": ["670014604", nan],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400105(self) -> None:
@@ -160,43 +131,30 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-                <nofinesset>070020804</nofinesset>
-                <de>924</de>
-                <libde>Accueil pour Personnes Âgées</libde>
-                <libcourtde>Acc. Personnes Âgées</libcourtde>
                 <ta>21</ta>
-                <libta>Accueil de Jour</libta>
-                <libcourtta>Accueil de Jour</libcourtta>
-                <client>436</client>
-                <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
-                <libcourtclient>Alzheimer, mal appar</libcourtclient>
-                <sourceinfo>S</sourceinfo>
-                <libsourceinfo>Inspection</libsourceinfo>
-                <capinstot>3</capinstot>
-                <capinstm xsi:nil="true"/>
-                <capinstf xsi:nil="true"/>
-                <capinsthab xsi:nil="true"/>
-                <ageminiinst xsi:nil="true"/>
-                <agemaxiinst xsi:nil="true"/>
-                <indsupinst>O</indsupinst>
-                <datederinst>2009-01-01</datederinst>
-                <datepremautor>2006-03-29</datepremautor>
                 <capautot>3</capautot>
-                <capautm xsi:nil="true"/>
-                <capautf xsi:nil="true"/>
-                <capauthab>3</capauthab>
-                <ageminiaut xsi:nil="true"/>
-                <agemaxiaut xsi:nil="true"/>
-                <indsupaut>O</indsupaut>
+                <capinstot>3</capinstot>
+                <client>436</client>
                 <dateautor>2006-03-29</dateautor>
+                <datederinst>2009-01-01</datederinst>
                 <datemajaut>2012-05-03</datemajaut>
-                <datemajinst>2009-06-29</datemajinst>
+                <de>924</de>
+                <indsupinst>O</indsupinst>
+                <indsupaut>O</indsupaut>
+                <libta>Accueil de Jour</libta>
+                <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
+                <libde>Accueil pour Personnes Âgées</libde>
+                <nofinesset>070020804</nofinesset>
             </equipementsocial>""",
         )
-        xpath = XPATH_FINESS_CS1400105
+        xml_tag = XML_TAG_FINESS_CS1400105
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400105,
+            type_des_colonnes_finess_cs1400105,
         )
 
         # THEN
@@ -204,39 +162,23 @@ class TestLisLeFichierXml:
             données_lues,
             pd.DataFrame(
                 {
-                    "nofinesset": ["070020804"],
-                    "de": ["924"],
-                    "libde": ["Accueil pour Personnes Âgées"],
-                    "libcourtde": ["Acc. Personnes Âgées"],
                     "ta": ["21"],
-                    "libta": ["Accueil de Jour"],
-                    "libcourtta": ["Accueil de Jour"],
+                    "capautot": ["3"],
+                    "capinstot": ["3"],
                     "client": ["436"],
-                    "libclient": ["Personnes Alzheimer ou maladies apparentées"],
-                    "libcourtclient": ["Alzheimer, mal appar"],
-                    "sourceinfo": ["S"],
-                    "libsourceinfo": ["Inspection"],
-                    "capinstot": [3],
-                    "capinstm": [nan],
-                    "capinstf": [nan],
-                    "capinsthab": [nan],
-                    "ageminiinst": [nan],
-                    "agemaxiinst": [nan],
-                    "indsupinst": ["O"],
-                    "datederinst": ["2009-01-01"],
-                    "datepremautor": ["2006-03-29"],
-                    "capautot": [3],
-                    "capautm": [nan],
-                    "capautf": [nan],
-                    "capauthab": [3],
-                    "ageminiaut": [nan],
-                    "agemaxiaut": [nan],
-                    "indsupaut": ["O"],
                     "dateautor": ["2006-03-29"],
+                    "datederinst": ["2009-01-01"],
                     "datemajaut": ["2012-05-03"],
-                    "datemajinst": ["2009-06-29"],
+                    "de": ["924"],
+                    "indsupinst": ["O"],
+                    "indsupaut": ["O"],
+                    "libta": ["Accueil de Jour"],
+                    "libclient": ["Personnes Alzheimer ou maladies apparentées"],
+                    "libde": ["Accueil pour Personnes Âgées"],
+                    "nofinesset": ["070020804"],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400103(self) -> None:
@@ -245,78 +187,42 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activiteoffresoin>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
                 <activite>16</activite>
-                <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
-                <modalite>40</modalite>
-                <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
-                <forme>00</forme>
-                <libforme>Pas de forme</libforme>
-                <noautor>762201955</noautor>
                 <dateautor>2004-11-02</dateautor>
-                <indnatlien>J</indnatlien>
-                <nofinesset>310019351</nofinesset>
-                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-                <noligautor>1757</noligautor>
-                <noligautoranc xsi:nil="true"/>
-                <noautorarhgos>00-00-000</noautorarhgos>
-                <noimplarhgos>00-00-000</noimplarhgos>
-                <noancautact xsi:nil="true"/>
-                <noancauteml xsi:nil="true"/>
-                <sectpsy xsi:nil="true"/>
-                <libsectpsy xsi:nil="true"/>
-                <datemeo>2005-03-22</datemeo>
                 <datefin>2027-09-23</datefin>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <daterenouv xsi:nil="true"/>
-                <indrenouv xsi:nil="true"/>
-                <indsupact>N</indsupact>
-                <indsupsite>N</indsupsite>
-                <datemajact>2022-08-24</datemajact>
-                <datemajsite>2022-08-24</datemajsite>
+                <datemeo>2005-03-22</datemeo>
+                <forme>00</forme>
+                <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+                <libforme>Pas de forme</libforme>
+                <libmodalite>Hémodialyse en centre pour adultes</libmodalite>
+                <modalite>40</modalite>
+                <noautorarhgos>00-00-000</noautorarhgos>
+                <nofinesset>310019351</nofinesset>
             </activiteoffresoin>
             <activiteoffresoin>
-                <nofinessej>310026075</nofinessej>
-                <rsej>SARL ST CYPRIEN RIVE GAUCHE</rsej>
                 <activite>02</activite>
-                <libactivite>Chirurgie</libactivite>
-                <modalite>00</modalite>
-                <libmodalite>Pas de modalité</libmodalite>
-                <forme>01</forme>
-                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <noautor>762201956</noautor>
                 <dateautor>1998-07-07</dateautor>
-                <indnatlien>J</indnatlien>
-                <nofinesset>310026083</nofinesset>
-                <rset>CL RIVE GAUCHE TOULOUSE</rset>
-                <noligautor>1758</noligautor>
-                <noligautoranc xsi:nil="true"/>
-                <noautorarhgos>01-00-000</noautorarhgos>
-                <noimplarhgos>01-00-000</noimplarhgos>
-                <noancautact xsi:nil="true"/>
-                <noancauteml xsi:nil="true"/>
-                <sectpsy xsi:nil="true"/>
-                <libsectpsy xsi:nil="true"/>
-                <datemeo>1999-11-02</datemeo>
                 <datefin>2027-04-30</datefin>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <daterenouv xsi:nil="true"/>
-                <indrenouv xsi:nil="true"/>
-                <indsupact>N</indsupact>
-                <indsupsite>N</indsupsite>
-                <datemajact>2022-08-24</datemajact>
-                <datemajsite>2022-08-24</datemajsite>
+                <datemeo>1999-11-02</datemeo>
+                <forme>01</forme>
+                <libactivite>Chirurgie</libactivite>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <libmodalite>Pas de modalité</libmodalite>
+                <modalite>00</modalite>
+                <noautorarhgos>01-00-000</noautorarhgos>
+                <nofinesset>310026083</nofinesset>
             </activiteoffresoin>
             """,
         )
-        xpath = XPATH_FINESS_CS1400103
+        xml_path = XML_TAG_FINESS_CS1400103
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400103
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_path,
+            colonnes_à_garder_finess_cs1400103,
+            type_des_colonnes_finess_cs1400103,
         )
 
         # THEN
@@ -325,73 +231,34 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
                         "activite": "16",
-                        "libactivite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
-                        "modalite": "40",
-                        "libmodalite": "Hémodialyse en centre pour adultes",
-                        "forme": "00",
-                        "libforme": "Pas de forme",
-                        "noautor": 762201955,
                         "dateautor": "2004-11-02",
-                        "indnatlien": "J",
-                        "nofinesset": "310019351",
-                        "rset": "HOPITAL LARREY CHU TOULOUSE",
-                        "noligautor": 1757,
-                        "noligautoranc": nan,
-                        "noautorarhgos": "00-00-000",
-                        "noimplarhgos": "00-00-000",
-                        "noancautact": nan,
-                        "noancauteml": nan,
-                        "sectpsy": nan,
-                        "libsectpsy": nan,
-                        "datemeo": "2005-03-22",
                         "datefin": "2027-09-23",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "daterenouv": nan,
-                        "indrenouv": nan,
-                        "indsupact": "N",
-                        "indsupsite": "N",
-                        "datemajact": "2022-08-24",
-                        "datemajsite": "2022-08-24",
+                        "datemeo": "2005-03-22",
+                        "forme": "00",
+                        "libactivite": "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
+                        "libforme": "Pas de forme",
+                        "libmodalite": "Hémodialyse en centre pour adultes",
+                        "modalite": "40",
+                        "noautorarhgos": "00-00-000",
+                        "nofinesset": "310019351",
                     },
                     {
-                        "nofinessej": 310026075,
-                        "rsej": "SARL ST CYPRIEN RIVE GAUCHE",
                         "activite": "02",
-                        "libactivite": "Chirurgie",
-                        "modalite": "00",
-                        "libmodalite": "Pas de modalité",
-                        "forme": "01",
-                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "noautor": 762201956,
                         "dateautor": "1998-07-07",
-                        "indnatlien": "J",
-                        "nofinesset": "310026083",
-                        "rset": "CL RIVE GAUCHE TOULOUSE",
-                        "noligautor": 1758,
-                        "noligautoranc": nan,
-                        "noautorarhgos": "01-00-000",
-                        "noimplarhgos": "01-00-000",
-                        "noancautact": nan,
-                        "noancauteml": nan,
-                        "sectpsy": nan,
-                        "libsectpsy": nan,
-                        "datemeo": "1999-11-02",
                         "datefin": "2027-04-30",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "daterenouv": nan,
-                        "indrenouv": nan,
-                        "indsupact": "N",
-                        "indsupsite": "N",
-                        "datemajact": "2022-08-24",
-                        "datemajsite": "2022-08-24",
+                        "datemeo": "1999-11-02",
+                        "forme": "01",
+                        "libactivite": "Chirurgie",
+                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+                        "libmodalite": "Pas de modalité",
+                        "modalite": "00",
+                        "noautorarhgos": "01-00-000",
+                        "nofinesset": "310026083",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400104(self) -> None:
@@ -400,59 +267,33 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipmateriellourd>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
+                <dateautor>2004-11-02</dateautor>
+                <datefin>2028-05-29</datefin>
+                <datemeo>2006-11-08</datemeo>
                 <eml>05701</eml>
                 <libeml>Caméra à scintillation sans détecteur d'émission de positons</libeml>
-                <libcourteml>Cam scin sans détect</libcourteml>
-                <noautor>762218998</noautor>
                 <noautorarhgos>02-00-000</noautorarhgos>
-                <noimplarhgos>02-00-000</noimplarhgos>
-                <dateautor>2004-11-02</dateautor>
                 <nofinesset>310783055</nofinesset>
-                <numserie xsi:nil="true"/>
-                <marque>0000</marque>
-                <rset>HOPITAL DE RANGUEIL CHU TOULOUSE</rset>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <indnatlien>J</indnatlien>
-                <datemeo>2006-11-08</datemeo>
-                <datefin>2028-05-29</datefin>
-                <indrempl xsi:nil="true"/>
-                <noautorremplacement xsi:nil="true"/>
-                <indsup>N</indsup>
-                <datemaj>2022-08-24</datemaj>
             </equipmateriellourd>
             <equipmateriellourd>
-                <nofinessej>310781406</nofinessej>
-                <rsej>CHU TOULOUSE</rsej>
+                <dateautor>2004-11-02</dateautor>
+                <datefin>2023-03-13</datefin>
+                <datemeo>2006-09-15</datemeo>
                 <eml>05602</eml>
                 <libeml>Scanographe à utilisation médicale</libeml>
-                <libcourteml>Scanographe méd.</libcourteml>
-                <noautor>762227966</noautor>
                 <noautorarhgos>03-00-000</noautorarhgos>
-                <noimplarhgos>03-00-000</noimplarhgos>
-                <dateautor>2004-11-02</dateautor>
                 <nofinesset>310019351</nofinesset>
-                <numserie xsi:nil="true"/>
-                <marque>0000</marque>
-                <rset>HOPITAL LARREY CHU TOULOUSE</rset>
-                <datelimite xsi:nil="true"/>
-                <indcaduc>N</indcaduc>
-                <indnatlien>J</indnatlien>
-                <datemeo>2006-09-15</datemeo>
-                <datefin>2023-03-13</datefin>
-                <indrempl xsi:nil="true"/>
-                <noautorremplacement xsi:nil="true"/>
-                <indsup>N</indsup>
-                <datemaj>2022-08-24</datemaj>
             </equipmateriellourd>""",
         )
-        xpath = XPATH_FINESS_CS1400104
+        xml_tag = XML_TAG_FINESS_CS1400104
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400104
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400104,
+            type_des_colonnes_finess_cs1400104,
         )
 
         # THEN
@@ -461,55 +302,26 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
+                        "dateautor": "2004-11-02",
+                        "datefin": "2028-05-29",
+                        "datemeo": "2006-11-08",
                         "eml": "05701",
                         "libeml": "Caméra à scintillation sans détecteur d'émission de positons",
-                        "libcourteml": "Cam scin sans détect",
-                        "noautor": 762218998,
                         "noautorarhgos": "02-00-000",
-                        "noimplarhgos": "02-00-000",
-                        "dateautor": "2004-11-02",
                         "nofinesset": "310783055",
-                        "numserie": nan,
-                        "marque": 0,
-                        "rset": "HOPITAL DE RANGUEIL CHU TOULOUSE",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "indnatlien": "J",
-                        "datemeo": "2006-11-08",
-                        "datefin": "2028-05-29",
-                        "indrempl": nan,
-                        "noautorremplacement": nan,
-                        "indsup": "N",
-                        "datemaj": "2022-08-24",
                     },
                     {
-                        "nofinessej": 310781406,
-                        "rsej": "CHU TOULOUSE",
+                        "dateautor": "2004-11-02",
+                        "datefin": "2023-03-13",
+                        "datemeo": "2006-09-15",
                         "eml": "05602",
                         "libeml": "Scanographe à utilisation médicale",
-                        "libcourteml": "Scanographe méd.",
-                        "noautor": 762227966,
                         "noautorarhgos": "03-00-000",
-                        "noimplarhgos": "03-00-000",
-                        "dateautor": "2004-11-02",
                         "nofinesset": "310019351",
-                        "numserie": nan,
-                        "marque": 0,
-                        "rset": "HOPITAL LARREY CHU TOULOUSE",
-                        "datelimite": nan,
-                        "indcaduc": "N",
-                        "indnatlien": "J",
-                        "datemeo": "2006-09-15",
-                        "datefin": "2023-03-13",
-                        "indrempl": nan,
-                        "noautorremplacement": nan,
-                        "indsup": "N",
-                        "datemaj": "2022-08-24",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1600101(self) -> None:
@@ -519,63 +331,67 @@ class TestLisLeFichierXml:
             chemin_du_fichier,
             """
             <autreactivite>
+                <activite>A0</activite>
+                <datedecision>2006-06-26</datedecision>
+                <datefin>2026-06-26</datefin>
+                <datemeo>2006-06-26</datemeo>
+                <forme>01</forme>
+                <libactivite>Installation de chirurgie esthétique</libactivite>
+                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+                <libmodalite>Pas de modalité</libmodalite>
+                <modalite>00</modalite>
+                <nofinesset>370000051</nofinesset>
                 <noautor>242202733</noautor>
                 <nofinessej>370000028</nofinessej>
                 <rsej>SA. CLINIQUE JEANNE D'ARC</rsej>
-                <nofinesset>370000051</nofinesset>
                 <rset>CLINIQUE JEANNE D'ARC - ST BENOIT</rset>
                 <codeautorarhgos>04-00-000</codeautorarhgos>
-                <activite>A0</activite>
-                <libactivite>Installation de chirurgie esthétique</libactivite>
-                <modalite>00</modalite>
-                <libmodalite>Pas de modalité</libmodalite>
-                <forme>01</forme>
-                <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <datedecision>2006-06-26</datedecision>
                 <nodecision>0000</nodecision>
                 <etatautorisation>6</etatautorisation>
                 <libetatautorisation>Renouvellement tacite</libetatautorisation>
                 <datevisite>2006-06-26</datevisite>
                 <resultatvisite>C</resultatvisite>
-                <datefin>2026-06-26</datefin>
-                <datemeo>2006-06-26</datemeo>
                 <datelimitemeo xsi:nil="true"/>
                 <datelimitedepot>2025-10-26</datelimitedepot>
                 <datelimvisite xsi:nil="true"/>
                 <datemaj>2022-08-24</datemaj>
             </autreactivite>
             <autreactivite>
+                <activite>A5</activite>
+                <datedecision>2012-02-02</datedecision>
+                <datefin>2022-02-01</datefin>
+                <datemeo>2012-02-02</datemeo>
+                <forme>21</forme>
+                <libactivite>Prélèvement d'organes</libactivite>
+                <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
+                <libmodalite>Multi-organes</libmodalite>
+                <modalite>31</modalite>
+                <nofinesset>410000020</nofinesset>
                 <noautor>242202799</noautor>
                 <nofinessej>410000087</nofinessej>
                 <rsej>CH BLOIS  SIMONE VEIL</rsej>
-                <nofinesset>410000020</nofinesset>
                 <rset>CH BLOIS SIMONE VEIL</rset>
                 <codeautorarhgos>05-00-000</codeautorarhgos>
-                <activite>A5</activite>
-                <libactivite>Prélèvement d'organes</libactivite>
-                <modalite>31</modalite>
-                <libmodalite>Multi-organes</libmodalite>
-                <forme>21</forme>
-                <libforme>Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)</libforme>
-                <datedecision>2012-02-02</datedecision>
                 <nodecision>2012-OSMS-006</nodecision>
                 <etatautorisation>7</etatautorisation>
                 <libetatautorisation>Renouvellement sur décision DGARS</libetatautorisation>
                 <datevisite xsi:nil="true"/>
                 <resultatvisite xsi:nil="true"/>
-                <datefin>2022-02-01</datefin>
-                <datemeo>2012-02-02</datemeo>
                 <datelimitemeo xsi:nil="true"/>
                 <datelimitedepot>2021-07-01</datelimitedepot>
                 <datelimvisite xsi:nil="true"/>
                 <datemaj>2022-08-24</datemaj>
             </autreactivite>""",
         )
-        xpath = XPATH_FINESS_CS1600101
+        xml_tag = XML_TAG_FINESS_CS1600101
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600101
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1600101,
+            type_des_colonnes_finess_cs1600101,
         )
 
         # THEN
@@ -584,59 +400,32 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "noautor": 242202733,
-                        "nofinessej": 370000028,
-                        "rsej": "SA. CLINIQUE JEANNE D'ARC",
-                        "nofinesset": "370000051",
-                        "rset": "CLINIQUE JEANNE D'ARC - ST BENOIT",
-                        "codeautorarhgos": "04-00-000",
                         "activite": "A0",
-                        "libactivite": "Installation de chirurgie esthétique",
-                        "modalite": "00",
-                        "libmodalite": "Pas de modalité",
-                        "forme": "01",
-                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
                         "datedecision": "2006-06-26",
-                        "nodecision": "0000",
-                        "etatautorisation": 6,
-                        "libetatautorisation": "Renouvellement tacite",
-                        "datevisite": "2006-06-26",
-                        "resultatvisite": "C",
                         "datefin": "2026-06-26",
                         "datemeo": "2006-06-26",
-                        "datelimitemeo": nan,
-                        "datelimitedepot": "2025-10-26",
-                        "datelimvisite": nan,
-                        "datemaj": "2022-08-24",
+                        "forme": "01",
+                        "libactivite": "Installation de chirurgie esthétique",
+                        "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
+                        "libmodalite": "Pas de modalité",
+                        "modalite": "00",
+                        "nofinesset": "370000051",
                     },
                     {
-                        "noautor": 242202799,
-                        "nofinessej": 410000087,
-                        "rsej": "CH BLOIS  SIMONE VEIL",
-                        "nofinesset": "410000020",
-                        "rset": "CH BLOIS SIMONE VEIL",
-                        "codeautorarhgos": "05-00-000",
                         "activite": "A5",
-                        "libactivite": "Prélèvement d'organes",
-                        "modalite": "31",
-                        "libmodalite": "Multi-organes",
-                        "forme": "21",
-                        "libforme": "Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)",
                         "datedecision": "2012-02-02",
-                        "nodecision": "2012-OSMS-006",
-                        "etatautorisation": 7,
-                        "libetatautorisation": "Renouvellement sur décision DGARS",
-                        "datevisite": nan,
-                        "resultatvisite": nan,
                         "datefin": "2022-02-01",
                         "datemeo": "2012-02-02",
-                        "datelimitemeo": nan,
-                        "datelimitedepot": "2021-07-01",
-                        "datelimvisite": nan,
-                        "datemaj": "2022-08-24",
+                        "forme": "21",
+                        "libactivite": "Prélèvement d'organes",
+                        "libforme": "Personne décédée assistée par ventilation mécanique et conservant une fonction hémodynamique (mort encéphalique)",
+                        "libmodalite": "Multi-organes",
+                        "modalite": "31",
+                        "nofinesset": "410000020",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1600102(self) -> None:
@@ -645,59 +434,63 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activitesoumiseareco>
-                <noautor>112234367</noautor>
-                <idcpom>06-00-C0000</idcpom>
-                <nofinessej>950110015</nofinessej>
-                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-                <nofinesset>950000307</nofinesset>
-                <rset>CH VICTOR DUPOUY</rset>
+                <activite>R4</activite>
+                <capaciteautorisee>16</capaciteautorisee>
+                <codeautorarhgos>06-00-RC0000</codeautorarhgos>
+                <dateeffetasr>2017-12-30</dateeffetasr>
                 <dateeffetcpom>2017-12-30</dateeffetcpom>
                 <datefincpom>2022-12-29</datefincpom>
-                <codeautorarhgos>06-00-RC0000</codeautorarhgos>
-                <indicateurregional>N</indicateurregional>
-                <activite>R4</activite>
-                <libactivite>Soins palliatifs</libactivite>
-                <modalite>N2</modalite>
-                <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
                 <forme>01</forme>
+                <idcpom>06-00-C0000</idcpom>
+                <libactivite>Soins palliatifs</libactivite>
                 <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <dateeffetasr>2017-12-30</dateeffetasr>
-                <capaciteautorisee>16</capaciteautorisee>
+                <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
+                <modalite>N2</modalite>
+                <nofinesset>950000307</nofinesset>
+                <noautor>112234367</noautor>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <rset>CH VICTOR DUPOUY</rset>
+                <indicateurregional>N</indicateurregional>
                 <regionautorisation>11</regionautorisation>
                 <etatautorisation>23</etatautorisation>
                 <libetatautorisation>Initiale</libetatautorisation>
                 <datemaj>2022-08-24</datemaj>
             </activitesoumiseareco>
             <activitesoumiseareco>
-                <noautor>112234368</noautor>
-                <idcpom>06-00-C0000</idcpom>
-                <nofinessej>950110015</nofinessej>
-                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-                <nofinesset>950000307</nofinesset>
-                <rset>CH VICTOR DUPOUY</rset>
+                <activite>03</activite>
+                <capaciteautorisee>12</capaciteautorisee>
+                <codeautorarhgos>11-11-RC61199</codeautorarhgos>
+                <dateeffetasr>2017-12-30</dateeffetasr>
                 <dateeffetcpom>2017-12-30</dateeffetcpom>
                 <datefincpom>2022-12-29</datefincpom>
-                <codeautorarhgos>11-11-RC61199</codeautorarhgos>
-                <indicateurregional>N</indicateurregional>
-                <activite>03</activite>
-                <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
-                <modalite>02</modalite>
-                <libmodalite>Néonatologie sans soins intensifs</libmodalite>
                 <forme>01</forme>
+                <idcpom>06-00-C0000</idcpom>
+                <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
                 <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <dateeffetasr>2017-12-30</dateeffetasr>
-                <capaciteautorisee>12</capaciteautorisee>
+                <libmodalite>Néonatologie sans soins intensifs</libmodalite>
+                <modalite>02</modalite>
+                <nofinesset>950000307</nofinesset>
+                <noautor>112234368</noautor>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <rset>CH VICTOR DUPOUY</rset>
+                <indicateurregional>N</indicateurregional>
                 <regionautorisation>11</regionautorisation>
                 <etatautorisation>23</etatautorisation>
                 <libetatautorisation>Initiale</libetatautorisation>
                 <datemaj>2022-08-24</datemaj>
             </activitesoumiseareco>""",
         )
-        xpath = XPATH_FINESS_CS1600102
+        xml_tag = XML_TAG_FINESS_CS1600102
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600102
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1600102,
+            type_des_colonnes_finess_cs1600102,
         )
 
         # THEN
@@ -706,55 +499,38 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "noautor": 112234367,
-                        "idcpom": "06-00-C0000",
-                        "nofinessej": 950110015,
-                        "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
-                        "nofinesset": "950000307",
-                        "rset": "CH VICTOR DUPOUY",
+                        "activite": "R4",
+                        "capaciteautorisee": "16",
+                        "codeautorarhgos": "06-00-RC0000",
+                        "dateeffetasr": "2017-12-30",
                         "dateeffetcpom": "2017-12-30",
                         "datefincpom": "2022-12-29",
-                        "codeautorarhgos": "06-00-RC0000",
-                        "indicateurregional": "N",
-                        "activite": "R4",
-                        "libactivite": "Soins palliatifs",
-                        "modalite": "N2",
-                        "libmodalite": "Lits identifiés  (Médecine) - adulte",
                         "forme": "01",
+                        "idcpom": "06-00-C0000",
+                        "libactivite": "Soins palliatifs",
                         "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "dateeffetasr": "2017-12-30",
-                        "capaciteautorisee": 16,
-                        "regionautorisation": 11,
-                        "etatautorisation": 23,
-                        "libetatautorisation": "Initiale",
-                        "datemaj": "2022-08-24",
+                        "libmodalite": "Lits identifiés  (Médecine) - adulte",
+                        "modalite": "N2",
+                        "nofinesset": "950000307",
                     },
                     {
-                        "noautor": 112234368,
-                        "idcpom": "06-00-C0000",
-                        "nofinessej": 950110015,
-                        "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
-                        "nofinesset": "950000307",
-                        "rset": "CH VICTOR DUPOUY",
+                        "activite": "03",
+                        "capaciteautorisee": "12",
+                        "codeautorarhgos": "11-11-RC61199",
+                        "dateeffetasr": "2017-12-30",
                         "dateeffetcpom": "2017-12-30",
                         "datefincpom": "2022-12-29",
-                        "codeautorarhgos": "11-11-RC61199",
-                        "indicateurregional": "N",
-                        "activite": "03",
-                        "libactivite": "Gynécologie, obstétrique, néonatologie, réanimation néonatale",
-                        "modalite": "02",
-                        "libmodalite": "Néonatologie sans soins intensifs",
                         "forme": "01",
+                        "idcpom": "06-00-C0000",
+                        "libactivite": "Gynécologie, obstétrique, néonatologie, réanimation néonatale",
                         "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "dateeffetasr": "2017-12-30",
-                        "capaciteautorisee": 12,
-                        "regionautorisation": 11,
-                        "etatautorisation": 23,
-                        "libetatautorisation": "Initiale",
-                        "datemaj": "2022-08-24",
+                        "libmodalite": "Néonatologie sans soins intensifs",
+                        "modalite": "02",
+                        "nofinesset": "950000307",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lit_un_fichiers_complexe_en_stream(self) -> None:
@@ -831,9 +607,7 @@ class TestLisLeFichierXml:
         )
         xml_tag = "alltype"
         type_colonnes: Dict = {"integer": int, "float": float, "string": "string"}
-        dataframe_attendue = pd.DataFrame(
-            [{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}]
-        )
+        dataframe_attendue = pd.DataFrame([{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}])
         dataframe_attendue = dataframe_attendue.astype(type_colonnes, copy=False)
 
         # WHEN
@@ -889,9 +663,7 @@ class TestLisLeFichierXml:
 
     def test_traite_les_valeurs_dans_le_parent_uniquement_en_stream(self) -> None:
         # GIVEN
-        chemin_du_fichier = (
-            f"{self.répertoire_des_fichiers}/test_colonne_hors_parent.xml"
-        )
+        chemin_du_fichier = f"{self.répertoire_des_fichiers}/test_colonne_hors_parent.xml"
         crée_le_fichier_xml(
             chemin_du_fichier,
             """
