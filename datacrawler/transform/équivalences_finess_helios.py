@@ -144,6 +144,7 @@ index_des_autres_activités_sanitaires: List[str] = [
     "code_forme",
 ]
 
+XML_TAG_FINESS_CS1600102 = "activitesoumiseareco"
 équivalences_finess_cs1600102_helios = {
     "activite": "code_activite",
     "capaciteautorisee": "capacite_autorisee",
@@ -160,12 +161,11 @@ index_des_autres_activités_sanitaires: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600102 = list(équivalences_finess_cs1600102_helios.keys())
-XPATH_FINESS_CS1600102 = "./activitesoumiseareco"
 type_des_colonnes_finess_cs1600102 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
 
 index_des_reconnaissances_contractuelles: List[str] = [

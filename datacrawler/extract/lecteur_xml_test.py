@@ -17,7 +17,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400104,
     XML_TAG_FINESS_CS1400105,
     XML_TAG_FINESS_CS1600101,
-    XPATH_FINESS_CS1600102,
+    XML_TAG_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
     colonnes_à_garder_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
@@ -27,6 +27,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     type_des_colonnes_finess_cs1600101,
     colonnes_à_garder_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
+    colonnes_à_garder_finess_cs1600102,
 )
 
 
@@ -439,59 +440,63 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<activitesoumiseareco>
-                <noautor>112234367</noautor>
-                <idcpom>06-00-C0000</idcpom>
-                <nofinessej>950110015</nofinessej>
-                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-                <nofinesset>950000307</nofinesset>
-                <rset>CH VICTOR DUPOUY</rset>
+                <activite>R4</activite>
+                <capaciteautorisee>16</capaciteautorisee>
+                <codeautorarhgos>06-00-RC0000</codeautorarhgos>
+                <dateeffetasr>2017-12-30</dateeffetasr>
                 <dateeffetcpom>2017-12-30</dateeffetcpom>
                 <datefincpom>2022-12-29</datefincpom>
-                <codeautorarhgos>06-00-RC0000</codeautorarhgos>
-                <indicateurregional>N</indicateurregional>
-                <activite>R4</activite>
-                <libactivite>Soins palliatifs</libactivite>
-                <modalite>N2</modalite>
-                <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
                 <forme>01</forme>
+                <idcpom>06-00-C0000</idcpom>
+                <libactivite>Soins palliatifs</libactivite>
                 <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <dateeffetasr>2017-12-30</dateeffetasr>
-                <capaciteautorisee>16</capaciteautorisee>
+                <libmodalite>Lits identifiés  (Médecine) - adulte</libmodalite>
+                <modalite>N2</modalite>
+                <nofinesset>950000307</nofinesset>
+                <noautor>112234367</noautor>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <rset>CH VICTOR DUPOUY</rset>
+                <indicateurregional>N</indicateurregional>
                 <regionautorisation>11</regionautorisation>
                 <etatautorisation>23</etatautorisation>
                 <libetatautorisation>Initiale</libetatautorisation>
                 <datemaj>2022-08-24</datemaj>
             </activitesoumiseareco>
             <activitesoumiseareco>
-                <noautor>112234368</noautor>
-                <idcpom>06-00-C0000</idcpom>
-                <nofinessej>950110015</nofinessej>
-                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
-                <nofinesset>950000307</nofinesset>
-                <rset>CH VICTOR DUPOUY</rset>
+                <activite>03</activite>
+                <capaciteautorisee>12</capaciteautorisee>
+                <codeautorarhgos>11-11-RC61199</codeautorarhgos>
+                <dateeffetasr>2017-12-30</dateeffetasr>
                 <dateeffetcpom>2017-12-30</dateeffetcpom>
                 <datefincpom>2022-12-29</datefincpom>
-                <codeautorarhgos>11-11-RC61199</codeautorarhgos>
-                <indicateurregional>N</indicateurregional>
-                <activite>03</activite>
-                <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
-                <modalite>02</modalite>
-                <libmodalite>Néonatologie sans soins intensifs</libmodalite>
                 <forme>01</forme>
+                <idcpom>06-00-C0000</idcpom>
+                <libactivite>Gynécologie, obstétrique, néonatologie, réanimation néonatale</libactivite>
                 <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
-                <dateeffetasr>2017-12-30</dateeffetasr>
-                <capaciteautorisee>12</capaciteautorisee>
+                <libmodalite>Néonatologie sans soins intensifs</libmodalite>
+                <modalite>02</modalite>
+                <nofinesset>950000307</nofinesset>
+                <noautor>112234368</noautor>
+                <nofinessej>950110015</nofinessej>
+                <rsej>CH  VICTOR  DUPOUY  ARGENTEUIL</rsej>
+                <rset>CH VICTOR DUPOUY</rset>
+                <indicateurregional>N</indicateurregional>
                 <regionautorisation>11</regionautorisation>
                 <etatautorisation>23</etatautorisation>
                 <libetatautorisation>Initiale</libetatautorisation>
                 <datemaj>2022-08-24</datemaj>
             </activitesoumiseareco>""",
         )
-        xpath = XPATH_FINESS_CS1600102
+        xml_tag = XML_TAG_FINESS_CS1600102
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1600102
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1600102,
+            type_des_colonnes_finess_cs1600102,
         )
 
         # THEN
@@ -500,55 +505,38 @@ class TestLisLeFichierXml:
             pd.DataFrame(
                 [
                     {
-                        "noautor": 112234367,
-                        "idcpom": "06-00-C0000",
-                        "nofinessej": 950110015,
-                        "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
-                        "nofinesset": "950000307",
-                        "rset": "CH VICTOR DUPOUY",
+                        "activite": "R4",
+                        "capaciteautorisee": "16",
+                        "codeautorarhgos": "06-00-RC0000",
+                        "dateeffetasr": "2017-12-30",
                         "dateeffetcpom": "2017-12-30",
                         "datefincpom": "2022-12-29",
-                        "codeautorarhgos": "06-00-RC0000",
-                        "indicateurregional": "N",
-                        "activite": "R4",
-                        "libactivite": "Soins palliatifs",
-                        "modalite": "N2",
-                        "libmodalite": "Lits identifiés  (Médecine) - adulte",
                         "forme": "01",
+                        "idcpom": "06-00-C0000",
+                        "libactivite": "Soins palliatifs",
                         "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "dateeffetasr": "2017-12-30",
-                        "capaciteautorisee": 16,
-                        "regionautorisation": 11,
-                        "etatautorisation": 23,
-                        "libetatautorisation": "Initiale",
-                        "datemaj": "2022-08-24",
+                        "libmodalite": "Lits identifiés  (Médecine) - adulte",
+                        "modalite": "N2",
+                        "nofinesset": "950000307",
                     },
                     {
-                        "noautor": 112234368,
-                        "idcpom": "06-00-C0000",
-                        "nofinessej": 950110015,
-                        "rsej": "CH  VICTOR  DUPOUY  ARGENTEUIL",
-                        "nofinesset": "950000307",
-                        "rset": "CH VICTOR DUPOUY",
+                        "activite": "03",
+                        "capaciteautorisee": "12",
+                        "codeautorarhgos": "11-11-RC61199",
+                        "dateeffetasr": "2017-12-30",
                         "dateeffetcpom": "2017-12-30",
                         "datefincpom": "2022-12-29",
-                        "codeautorarhgos": "11-11-RC61199",
-                        "indicateurregional": "N",
-                        "activite": "03",
-                        "libactivite": "Gynécologie, obstétrique, néonatologie, réanimation néonatale",
-                        "modalite": "02",
-                        "libmodalite": "Néonatologie sans soins intensifs",
                         "forme": "01",
+                        "idcpom": "06-00-C0000",
+                        "libactivite": "Gynécologie, obstétrique, néonatologie, réanimation néonatale",
                         "libforme": "Hospitalisation complète (24 heures consécutives ou plus)",
-                        "dateeffetasr": "2017-12-30",
-                        "capaciteautorisee": 12,
-                        "regionautorisation": 11,
-                        "etatautorisation": 23,
-                        "libetatautorisation": "Initiale",
-                        "datemaj": "2022-08-24",
+                        "libmodalite": "Néonatologie sans soins intensifs",
+                        "modalite": "02",
+                        "nofinesset": "950000307",
                     },
                 ]
             ),
+            check_dtype=False,
         )
 
     def test_lit_un_fichiers_complexe_en_stream(self) -> None:
