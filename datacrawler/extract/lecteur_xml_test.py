@@ -15,12 +15,13 @@ from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
     XPATH_FINESS_CS1400103,
     XPATH_FINESS_CS1400104,
-    XPATH_FINESS_CS1400105,
+    XML_TAG_FINESS_CS1400105,
     XPATH_FINESS_CS1600101,
     XPATH_FINESS_CS1600102,
     type_des_colonnes_finess_cs1400103,
     type_des_colonnes_finess_cs1400104,
     type_des_colonnes_finess_cs1400105,
+    colonnes_à_garder_finess_cs1400105,
     type_des_colonnes_finess_cs1600101,
     type_des_colonnes_finess_cs1600102,
 )
@@ -44,86 +45,58 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-                <nofinesset>070020804</nofinesset>
-                <de>023</de>
-                <libde>Stérilisation</libde>
-                <libcourtde>Stérilisation</libcourtde>
                 <ta>03</ta>
-                <libta>Hospitalisation Complète</libta>
-                <libcourtta>Hospit. Complète</libcourtta>
-                <client>020</client>
-                <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
-                <libcourtclient>Toutes Déf.Physiques</libcourtclient>
-                <sourceinfo>S</sourceinfo>
-                <libsourceinfo>Inspection</libsourceinfo>
-                <capinstot>3</capinstot>
-                <capinstm xsi:nil="true"/>
-                <capinstf xsi:nil="true"/>
-                <capinsthab xsi:nil="true"/>
-                <ageminiinst xsi:nil="true"/>
-                <agemaxiinst xsi:nil="true"/>
-                <indsupinst>O</indsupinst>
-                <datederinst>2009-01-01</datederinst>
-                <datepremautor>2006-03-29</datepremautor>
                 <capautot>3</capautot>
-                <capautm xsi:nil="true"/>
-                <capautf xsi:nil="true"/>
-                <capauthab>3</capauthab>
-                <ageminiaut xsi:nil="true"/>
-                <agemaxiaut xsi:nil="true"/>
-                <indsupaut>O</indsupaut>
+                <capinstot>3</capinstot>
+                <client>020</client>
                 <dateautor>2006-03-29</dateautor>
+                <datederinst>2009-01-01</datederinst>
                 <datemajaut>2012-05-03</datemajaut>
-                <datemajinst>2009-06-29</datemajinst>
+                <de>023</de>
+                <indsupinst>O</indsupinst>
+                <indsupaut>O</indsupaut>
+                <libta>Hospitalisation Complète</libta>
+                <libclient>Toutes Déficiences Physiques (Sans autre indication)</libclient>
+                <libde>Stérilisation</libde>
+                <nofinesset>070020804</nofinesset>
             </equipementsocial>""",
         )
-        xpath = XPATH_FINESS_CS1400105
+        xml_tag = XML_TAG_FINESS_CS1400105
 
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400105,
+            type_des_colonnes_finess_cs1400105,
         )
 
         # THEN
+        # On ne check pas le Dtype des colonnes car le lecteur fournis des string[python] et non des str (Object)
         pd.testing.assert_frame_equal(
             données_lues,
             pd.DataFrame(
                 {
-                    "nofinesset": ["070020804"],
-                    "de": ["023"],
-                    "libde": ["Stérilisation"],
-                    "libcourtde": ["Stérilisation"],
                     "ta": ["03"],
-                    "libta": ["Hospitalisation Complète"],
-                    "libcourtta": ["Hospit. Complète"],
+                    "capautot": ["3"],
+                    "capinstot": ["3"],
                     "client": ["020"],
+                    "dateautor": ["2006-03-29"],
+                    "datederinst": ["2009-01-01"],
+                    "datemajaut": ["2012-05-03"],
+                    "de": ["023"],
+                    "indsupinst": ["O"],
+                    "indsupaut": ["O"],
+                    "libta": ["Hospitalisation Complète"],
                     "libclient": [
                         "Toutes Déficiences Physiques (Sans autre indication)"
                     ],
-                    "libcourtclient": ["Toutes Déf.Physiques"],
-                    "sourceinfo": ["S"],
-                    "libsourceinfo": ["Inspection"],
-                    "capinstot": [3],
-                    "capinstm": [nan],
-                    "capinstf": [nan],
-                    "capinsthab": [nan],
-                    "ageminiinst": [nan],
-                    "agemaxiinst": [nan],
-                    "indsupinst": ["O"],
-                    "datederinst": ["2009-01-01"],
-                    "datepremautor": ["2006-03-29"],
-                    "capautot": [3],
-                    "capautm": [nan],
-                    "capautf": [nan],
-                    "capauthab": [3],
-                    "ageminiaut": [nan],
-                    "agemaxiaut": [nan],
-                    "indsupaut": ["O"],
-                    "dateautor": ["2006-03-29"],
-                    "datemajaut": ["2012-05-03"],
-                    "datemajinst": ["2009-06-29"],
+                    "libde": ["Stérilisation"],
+                    "nofinesset": ["070020804"],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_traite_les_valeurs_manquantes(self) -> None:
@@ -160,43 +133,30 @@ class TestLisLeFichierXml:
         crée_le_fichier_xml(
             chemin_du_fichier,
             """<equipementsocial>
-                <nofinesset>070020804</nofinesset>
-                <de>924</de>
-                <libde>Accueil pour Personnes Âgées</libde>
-                <libcourtde>Acc. Personnes Âgées</libcourtde>
                 <ta>21</ta>
-                <libta>Accueil de Jour</libta>
-                <libcourtta>Accueil de Jour</libcourtta>
-                <client>436</client>
-                <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
-                <libcourtclient>Alzheimer, mal appar</libcourtclient>
-                <sourceinfo>S</sourceinfo>
-                <libsourceinfo>Inspection</libsourceinfo>
-                <capinstot>3</capinstot>
-                <capinstm xsi:nil="true"/>
-                <capinstf xsi:nil="true"/>
-                <capinsthab xsi:nil="true"/>
-                <ageminiinst xsi:nil="true"/>
-                <agemaxiinst xsi:nil="true"/>
-                <indsupinst>O</indsupinst>
-                <datederinst>2009-01-01</datederinst>
-                <datepremautor>2006-03-29</datepremautor>
                 <capautot>3</capautot>
-                <capautm xsi:nil="true"/>
-                <capautf xsi:nil="true"/>
-                <capauthab>3</capauthab>
-                <ageminiaut xsi:nil="true"/>
-                <agemaxiaut xsi:nil="true"/>
-                <indsupaut>O</indsupaut>
+                <capinstot>3</capinstot>
+                <client>436</client>
                 <dateautor>2006-03-29</dateautor>
+                <datederinst>2009-01-01</datederinst>
                 <datemajaut>2012-05-03</datemajaut>
-                <datemajinst>2009-06-29</datemajinst>
+                <de>924</de>
+                <indsupinst>O</indsupinst>
+                <indsupaut>O</indsupaut>
+                <libta>Accueil de Jour</libta>
+                <libclient>Personnes Alzheimer ou maladies apparentées</libclient>
+                <libde>Accueil pour Personnes Âgées</libde>
+                <nofinesset>070020804</nofinesset>
             </equipementsocial>""",
         )
-        xpath = XPATH_FINESS_CS1400105
+        xml_tag = XML_TAG_FINESS_CS1400105
         # WHEN
-        données_lues = lis_le_fichier_xml(
-            chemin_du_fichier, xpath, type_des_colonnes_finess_cs1400105
+        données_lues = lis_le_fichier_xml_en_stream(
+            self.logger,
+            chemin_du_fichier,
+            xml_tag,
+            colonnes_à_garder_finess_cs1400105,
+            type_des_colonnes_finess_cs1400105,
         )
 
         # THEN
@@ -204,39 +164,23 @@ class TestLisLeFichierXml:
             données_lues,
             pd.DataFrame(
                 {
-                    "nofinesset": ["070020804"],
-                    "de": ["924"],
-                    "libde": ["Accueil pour Personnes Âgées"],
-                    "libcourtde": ["Acc. Personnes Âgées"],
                     "ta": ["21"],
-                    "libta": ["Accueil de Jour"],
-                    "libcourtta": ["Accueil de Jour"],
+                    "capautot": ["3"],
+                    "capinstot": ["3"],
                     "client": ["436"],
-                    "libclient": ["Personnes Alzheimer ou maladies apparentées"],
-                    "libcourtclient": ["Alzheimer, mal appar"],
-                    "sourceinfo": ["S"],
-                    "libsourceinfo": ["Inspection"],
-                    "capinstot": [3],
-                    "capinstm": [nan],
-                    "capinstf": [nan],
-                    "capinsthab": [nan],
-                    "ageminiinst": [nan],
-                    "agemaxiinst": [nan],
-                    "indsupinst": ["O"],
-                    "datederinst": ["2009-01-01"],
-                    "datepremautor": ["2006-03-29"],
-                    "capautot": [3],
-                    "capautm": [nan],
-                    "capautf": [nan],
-                    "capauthab": [3],
-                    "ageminiaut": [nan],
-                    "agemaxiaut": [nan],
-                    "indsupaut": ["O"],
                     "dateautor": ["2006-03-29"],
+                    "datederinst": ["2009-01-01"],
                     "datemajaut": ["2012-05-03"],
-                    "datemajinst": ["2009-06-29"],
+                    "de": ["924"],
+                    "indsupinst": ["O"],
+                    "indsupaut": ["O"],
+                    "libta": ["Accueil de Jour"],
+                    "libclient": ["Personnes Alzheimer ou maladies apparentées"],
+                    "libde": ["Accueil pour Personnes Âgées"],
+                    "nofinesset": ["070020804"],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400103(self) -> None:
