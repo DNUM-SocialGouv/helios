@@ -7,10 +7,7 @@ import pandas as pd
 from numpy import nan
 
 from datacrawler.dependencies.logger.logger import crée_le_logger
-from datacrawler.extract.lecteur_xml import (
-    lis_le_fichier_xml,
-    lis_le_fichier_xml_en_stream,
-)
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
 from datacrawler.test_helpers import crée_le_fichier_xml
 from datacrawler.transform.équivalences_finess_helios import (
     XML_TAG_FINESS_CS1400103,
@@ -36,9 +33,7 @@ class TestLisLeFichierXml:
     répertoire_des_fichiers: str = "./fake_flux_finess"
 
     def setup_method(self) -> None:
-        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(
-            parents=True, exist_ok=True
-        )
+        Path(os.path.join(self.répertoire_des_fichiers, "enrichi")).mkdir(parents=True, exist_ok=True)
 
     def teardown_method(self) -> None:
         shutil.rmtree(self.répertoire_des_fichiers)
@@ -93,9 +88,7 @@ class TestLisLeFichierXml:
                     "indsupinst": ["O"],
                     "indsupaut": ["O"],
                     "libta": ["Hospitalisation Complète"],
-                    "libclient": [
-                        "Toutes Déficiences Physiques (Sans autre indication)"
-                    ],
+                    "libclient": ["Toutes Déficiences Physiques (Sans autre indication)"],
                     "libde": ["Stérilisation"],
                     "nofinesset": ["070020804"],
                 }
@@ -115,11 +108,11 @@ class TestLisLeFichierXml:
                 <echappe xsi:nil="true" />
             </parent>""",
         )
-        xpath = "./parent"
-        type_de_la_colonne = {"echappe": str}
+        xml_tag = "parent"
+        type_de_la_colonne = {"echappe": "string"}
 
         # WHEN
-        données_lues = lis_le_fichier_xml(chemin_du_fichier, xpath, type_de_la_colonne)
+        données_lues = lis_le_fichier_xml_en_stream(self.logger, chemin_du_fichier, xml_tag, list(type_de_la_colonne.keys()), type_de_la_colonne)
 
         # THEN
         pd.testing.assert_frame_equal(
@@ -129,6 +122,7 @@ class TestLisLeFichierXml:
                     "echappe": ["670014604", nan],
                 }
             ),
+            check_dtype=False,
         )
 
     def test_lis_les_données_du_fichier_finess_cs1400105(self) -> None:
@@ -613,9 +607,7 @@ class TestLisLeFichierXml:
         )
         xml_tag = "alltype"
         type_colonnes: Dict = {"integer": int, "float": float, "string": "string"}
-        dataframe_attendue = pd.DataFrame(
-            [{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}]
-        )
+        dataframe_attendue = pd.DataFrame([{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}])
         dataframe_attendue = dataframe_attendue.astype(type_colonnes, copy=False)
 
         # WHEN
@@ -671,9 +663,7 @@ class TestLisLeFichierXml:
 
     def test_traite_les_valeurs_dans_le_parent_uniquement_en_stream(self) -> None:
         # GIVEN
-        chemin_du_fichier = (
-            f"{self.répertoire_des_fichiers}/test_colonne_hors_parent.xml"
-        )
+        chemin_du_fichier = f"{self.répertoire_des_fichiers}/test_colonne_hors_parent.xml"
         crée_le_fichier_xml(
             chemin_du_fichier,
             """
