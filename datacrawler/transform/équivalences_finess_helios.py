@@ -1,5 +1,6 @@
 from typing import List
 
+XML_TAG_FINESS_CS1400105 = "equipementsocial"
 équivalences_finess_cs1400105_helios = {
     "ta": "activite",
     "capautot": "capacite_autorisee_totale",
@@ -18,12 +19,11 @@ from typing import List
 }
 colonnes_à_garder_finess_cs1400105 = list(équivalences_finess_cs1400105_helios.keys())
 type_des_colonnes_finess_cs1400105 = {
-    "nofinesset": str,
-    "de": str,
-    "ta": str,
-    "client": str,
+    "nofinesset": "string",
+    "de": "string",
+    "ta": "string",
+    "client": "string",
 }
-XPATH_FINESS_CS1400105 = "./equipementsocial"
 
 index_des_autorisations_médico_sociaux: List[str] = [
     "numero_finess_etablissement_territorial",
