@@ -44,15 +44,16 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
     codesPostaux: [],
     codeNum: "",
   });
+  const [debounceTimeoutId, setDebounceTimeoutId] = useState<NodeJS.Timeout>();
 
   const requestCounterRef = useRef(0);
 
   // Debounce function to control the rate of API calls
   const debounce = (func: any, delay: number) => {
-    let timeout: any;
     return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), delay);
+      clearTimeout(debounceTimeoutId);
+      const timeout = setTimeout(() => func(...args), delay);
+      setDebounceTimeoutId(timeout);
     };
   };
 
