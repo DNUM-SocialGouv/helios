@@ -261,6 +261,8 @@ export class ActivitesMensuelViewModel {
     return [
       this.wording.HOSPITALISATION_PARTIELLE_SSR,
       this.wording.HOSPITALISATION_COMPLÈTE_SSR,
+      this.wording.HOSPITALISATION_PARTIELLE_PSY,
+      this.wording.HOSPITALISATION_COMPLÈTE_PSY,
     ];
   }
 
@@ -269,6 +271,8 @@ export class ActivitesMensuelViewModel {
     return [
       this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesSsr),
       this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesSsr),
+      this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesPsy),
+      this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesPsy),
     ];
   }
 
