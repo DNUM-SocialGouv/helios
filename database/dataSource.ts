@@ -83,8 +83,8 @@ import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migration
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
 import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
 import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
-import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -160,8 +160,8 @@ const datasource = new DataSource({
     InspectionsControlesETModel,
     AllocationRessourceModel,
     AllocationRessourceETModel,
-    ActivitéSanitaireMensuelModel,
-    ActivitéSanitaireMensuelEntiteJuridiqueModel,
+    ActiviteSanitaireMensuelModel,
+    ActiviteSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
     CategoriesFinessModel

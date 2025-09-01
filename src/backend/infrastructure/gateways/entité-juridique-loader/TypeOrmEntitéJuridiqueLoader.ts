@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -82,7 +82,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
   async chargeActivitésMensuel(numeroFinessEntiteJuridique: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelEntiteJuridiqueModel)
+      .getRepository(ActiviteSanitaireMensuelEntiteJuridiqueModel)
       .createQueryBuilder("activite_sanitaire_mensuel_entite_juridique")
       .where("numero_finess_entite_juridique = :finess", { finess: numeroFinessEntiteJuridique })
       .orderBy('annee', 'ASC')

@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -60,7 +60,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelModel)
+      .getRepository(ActiviteSanitaireMensuelModel)
       .createQueryBuilder("activite_sanitaire_mensuel")
       .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
       .orderBy('annee', 'ASC')

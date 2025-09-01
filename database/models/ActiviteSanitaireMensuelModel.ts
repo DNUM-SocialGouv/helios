@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({ name: "activite_sanitaire_mensuel" })
-export class ActivitéSanitaireMensuelModel {
+export class ActiviteSanitaireMensuelModel {
   @PrimaryColumn({ name: "annee", type: "int" })
   public année!: number;
 
