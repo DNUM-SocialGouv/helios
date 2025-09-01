@@ -6,11 +6,11 @@ import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewMod
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeMensuelFilters } from "../../commun/Graphique/HistogrammeMensuelFilters";
 import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVerticalABandes";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
   nombreDeJourneePsySsrViewModel: NombreDeJourneesPsySSRViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   selectedFrequency: string;
   onFrequencyChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }>;

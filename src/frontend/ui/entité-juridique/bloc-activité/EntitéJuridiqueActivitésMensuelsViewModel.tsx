@@ -30,7 +30,7 @@ type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null | "" }[];
 }>;
 
-export class ActivitésMensuelViewModel {
+export class ActivitesMensuelViewModel {
   public activitésMensuellesParAnnee: ActivitesSanitaireMensuelParAnnee;
   public annees: number[];
   readonly identifiantDeLaLégendeDesSéjoursMensuelMCO = "légende-graphique-sanitaire-journées-séjours-mensuels-mco";

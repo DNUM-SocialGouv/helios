@@ -9,7 +9,7 @@ import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipl
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
-import { ActivitésMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
@@ -21,7 +21,7 @@ import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-étab
 
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntiteJuridiqueViewModel;
-  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
