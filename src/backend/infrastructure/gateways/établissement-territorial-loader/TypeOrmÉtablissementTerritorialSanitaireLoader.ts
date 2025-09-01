@@ -83,6 +83,8 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
         nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+        nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
+        nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
       }
     })
 

@@ -26,7 +26,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
     setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
   }, [selectedFrequency])
 
-  const activitesPsySsr = [wording.SSR];
+  const activitesPsySsr = [wording.SSR, wording.PSYCHIATRIE];
 
   return (
     <>

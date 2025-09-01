@@ -171,7 +171,7 @@ export class ActivitésMensuelViewModel {
     this.activitésMensuellesParAnnee[annee].forEach((activité: ActiviteSanitaireMensuel) => {
       nombreDeJournées.nombreJournéesComplètesPsy.push({
         x: activité.mois,
-        y: 0,
+        y: activité.nombreJournéesComplètesPsy,
       });
       nombreDeJournées.nombreJournéesComplètesSsr.push({
         x: activité.mois,
@@ -179,7 +179,7 @@ export class ActivitésMensuelViewModel {
       });
       nombreDeJournées.nombreJournéesPartiellesPsy.push({
         x: activité.mois,
-        y: 0,
+        y: activité.nombreJournéesPartiellesPsy,
       });
       nombreDeJournées.nombreJournéesPartiellesSsr.push({
         x: activité.mois,
