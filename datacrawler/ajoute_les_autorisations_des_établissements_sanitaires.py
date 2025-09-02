@@ -211,7 +211,6 @@ def ajoute_les_capacités(
             [(FichierSource.DIAMANT_ANN_SAE, données_des_capacités.dateDeMiseÀJour)],
             logger,
         )
-        
 def ajoute_les_autorisations_amm(
     chemin_du_fichier_amm_arhgos: str, numéros_finess_des_établissements_connus: pd.DataFrame, base_de_données: Engine, logger: Logger
 ) -> None:
