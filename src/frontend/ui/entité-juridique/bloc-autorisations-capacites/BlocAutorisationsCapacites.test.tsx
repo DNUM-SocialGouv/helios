@@ -4,6 +4,7 @@ import { mock } from "jest-mock-extended";
 import { BlocAutorisationsCapacites } from "./BlocAutorisationsCapacites";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 import {
+  AutorisationActivitesAmm,
   AutorisationsActivités,
   AutresActivités,
   CapacitéSanitaireEntitéJuridique,
@@ -21,6 +22,7 @@ describe("Bloc Autorisation et activités", () => {
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
       mock<AutorisationsActivités>({ autorisations: [] }),
+      mock<AutorisationActivitesAmm>({ autorisations: [] }),
       mock<AutresActivités>({ autorisations: [] }),
       mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
       mock<EquipementsMateriauxLourdsActivités>({ autorisations: [] }),
@@ -91,6 +93,7 @@ describe("Bloc Autorisation et activités", () => {
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
+      { autorisations: [], dateMiseÀJourSource: "" },
       wording
     );
 
@@ -110,6 +113,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },

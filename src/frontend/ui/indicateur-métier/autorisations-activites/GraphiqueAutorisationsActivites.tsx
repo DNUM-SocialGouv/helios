@@ -1,15 +1,16 @@
-import { AutorisationsActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
+import { AutorisationActivitesAmm, AutorisationsActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
-import { AutorisationsTagMultiNiveaux } from "../../entité-juridique/bloc-autorisations-capacites/AutorisationsTagMultiNiveaux";
+import { AutorisationsAmmTagMultiNiveaux, AutorisationsTagMultiNiveaux } from "../../entité-juridique/bloc-autorisations-capacites/AutorisationsTagMultiNiveaux";
 import { ContenuAutorisations } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuAutorisations";
 
 type GraphiqueAutorisationsActivitesProps = Readonly<{
   entiteJuridiqueAutorisations: AutorisationsActivités;
+  entiteJuridiqueAutorisationsAmm: AutorisationActivitesAmm;
 }>;
 
-export const GraphiqueAutorisationsActivites = ({ entiteJuridiqueAutorisations }: GraphiqueAutorisationsActivitesProps) => {
+export const GraphiqueAutorisationsActivites = ({ entiteJuridiqueAutorisations, entiteJuridiqueAutorisationsAmm }: GraphiqueAutorisationsActivitesProps) => {
   const { wording } = useDependencies();
   return (
     <IndicateurGraphique
@@ -25,7 +26,10 @@ export const GraphiqueAutorisationsActivites = ({ entiteJuridiqueAutorisations }
       nomDeLIndicateur={wording.AUTORISATIONS_ACTIVITES}
       source={Sources(wording.FINESS, wording.ARHGOS)}
     >
-      <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} />
+      <>
+        <AutorisationsAmmTagMultiNiveaux activites={entiteJuridiqueAutorisationsAmm.autorisations} />
+        <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} />
+      </>
     </IndicateurGraphique>
   );
 };

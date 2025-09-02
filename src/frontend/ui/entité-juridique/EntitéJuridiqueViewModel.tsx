@@ -29,6 +29,7 @@ export class EntiteJuridiqueViewModel {
     this.entitéJuridiqueAutorisationsCapacitesViewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       entitéJuridique.autorisationsEtCapacites.capacités,
       entitéJuridique.autorisationsEtCapacites.autorisationsActivités,
+      entitéJuridique.autorisationsEtCapacites.autorisationsAmmSanitaire,
       entitéJuridique.autorisationsEtCapacites.autresActivités,
       entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités,
       entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités,

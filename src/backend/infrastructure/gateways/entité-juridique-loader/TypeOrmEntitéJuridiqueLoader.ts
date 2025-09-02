@@ -23,6 +23,7 @@ import {
 } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
+import { AutorisationsAMMMEJQueryResult } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
 
 export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
@@ -341,7 +342,9 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseAJourFinessAMMArhgosModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_AMM_ARHGOS)) as DateMiseÀJourFichierSourceModel;
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
+    const autorisationsAmmSanitaire = await this.chargeLesAutorisationsAmm(numéroFinessEntitéJuridique);
     const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
     const reconnaissanceContractuellesSanitaire = await this.chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique);
     const equipementMaterielLourdsSanitaire = await this.chargeLesEquipementsMaterielLourdsSanitaire(numéroFinessEntitéJuridique);
@@ -349,6 +352,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
+      autorisationsAmmSanitaire: { autorisations: autorisationsAmmSanitaire, dateMiseAJourSource: dateDeMiseAJourFinessAMMArhgosModel.dernièreMiseÀJour },
       autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       reconnaissanceContractuellesSanitaire: {
         autorisations: reconnaissanceContractuellesSanitaire,
@@ -396,6 +400,38 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       .leftJoinAndSelect("equipement_materiel_lourd_sanitaire.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
+  }
+
+  private async chargeLesAutorisationsAmm(numeoFinessEntiteJuridique: string): Promise<AutorisationsAMMMEJQueryResult[]> {
+    return (await this.orm).query(`
+      SELECT
+        autorisation_sanitaire_amm.code_activite,
+        ref.libelle_activite, 
+        autorisation_sanitaire_amm.code_modalite,
+        ref.libelle_modalite,
+        autorisation_sanitaire_amm.code_mention,
+        ref.libelle_mention,
+        autorisation_sanitaire_amm.code_pratique AS code_pratique_therapeutique_specifique,
+        ref.libelle_pratique_therapeutique_specifique,
+        autorisation_sanitaire_amm.code_declaration,
+        ref.libelle_declaration,
+        autorisation_sanitaire_amm.code_autorisation_arhgos,
+        autorisation_sanitaire_amm.date_autorisation,
+        autorisation_sanitaire_amm.date_fin,
+        autorisation_sanitaire_amm.date_mise_en_oeuvre,
+        autorisation_sanitaire_amm.numero_finess_etablissement_territorial,
+        etablissement_territorial.raison_sociale_courte
+      FROM autorisation_sanitaire_amm
+      JOIN referentiel_nomenclature_amm ref
+        ON autorisation_sanitaire_amm.code_activite = ref.code_activite
+      AND autorisation_sanitaire_amm.code_modalite = ref.code_modalite
+      AND autorisation_sanitaire_amm.code_mention = ref.code_mention
+      AND autorisation_sanitaire_amm.code_pratique = ref.code_pratique_therapeutique_specifique
+      AND autorisation_sanitaire_amm.code_declaration = ref.code_declaration
+      Left Join etablissement_territorial
+      on autorisation_sanitaire_amm.numero_finess_etablissement_territorial = etablissement_territorial.numero_finess_etablissement_territorial
+      where numero_finess_entite_juridique = '${numeoFinessEntiteJuridique}'`
+    )
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {

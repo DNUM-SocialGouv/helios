@@ -429,6 +429,8 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
   const filtredAutorisationCapacite = {
     autorisationsActivités:
       profil.autorisationsActivités === "ok" ? autorisationsEtCapacites.autorisationsActivités : { dateMiseÀJourSource: "", autorisations: [] },
+    autorisationsAmmSanitaire:
+      profil.autorisationsActivités === "ok" ? autorisationsEtCapacites.autorisationsAmmSanitaire : { dateMiseÀJourSource: "", autorisations: [] },
     autresActivités: profil.autresActivités === "ok" ? autorisationsEtCapacites.autresActivités : { dateMiseÀJourSource: "", autorisations: [] },
     reconnaissanceContractuelleActivités:
       profil.reconnaissanceContractuelleActivités === "ok"

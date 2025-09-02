@@ -180,3 +180,22 @@ export type AutorisationsAMMMQueryResult = Readonly<{
   date_mise_en_oeuvre: string | null;
   numero_finess_etablissement_territorial: string;
 }>;
+
+export type AutorisationsAMMMEJQueryResult = Readonly<{
+  code_activite: string;
+  libelle_activite: string;
+  code_modalite: string;
+  libelle_modalite: string;
+  code_mention: string;
+  libelle_mention: string;
+  code_pratique_therapeutique_specifique: string;
+  libelle_pratique_therapeutique_specifique: string;
+  code_declaration: string;
+  libelle_declaration: string;
+  code_autorisation_arhgos: string;
+  date_autorisation: string | null;
+  date_fin: string | null;
+  date_mise_en_oeuvre: string | null;
+  numero_finess_etablissement_territorial: string;
+  raison_sociale_courte: string;
+}>;

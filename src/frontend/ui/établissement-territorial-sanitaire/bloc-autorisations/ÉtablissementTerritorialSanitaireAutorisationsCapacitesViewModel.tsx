@@ -338,13 +338,6 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                         />
                         <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}>
                           {mention.pratiques.map((pratique) => (
-                            // <li key={`pratique-${pratique.code}`}>
-                            //   <TagCliquable
-                            //     for={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}-${pratique.code}`}
-                            //     texteGras={false}
-                            //     titre={`${pratique.libelle} [${pratique.code}]`}
-                            //   />
-                            //   <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}-${pratique.code}`}>
                             pratique.declarations.map((declaration) => {
                               return (
                                 <li key={`pratique-${pratique.code}-declaration-${declaration.code}`}>
@@ -378,8 +371,6 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                                 </li>
                               );
                             })
-                            //   </ul>
-                            // </li>
                           ))}
                         </ul>
                       </li>
