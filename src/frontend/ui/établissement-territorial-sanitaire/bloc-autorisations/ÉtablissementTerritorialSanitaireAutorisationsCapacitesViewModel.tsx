@@ -104,7 +104,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
   }
 
   public get lesAutorisationsSontEllesRenseignées(): boolean {
-    return this.établissementTerritorialSanitaireAutorisations.autorisations.activités.length !== 0;
+    return this.établissementTerritorialSanitaireAutorisations.autorisations.activités.length !== 0 || this.établissementTerritorialSanitaireAutorisations.autorisationsAmm.activites.length !== 0;
   }
 
   public get lesAutorisationsSontEllesAutorisées(): boolean {

@@ -80,7 +80,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   }
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {
-    return !(this.autorisationsActivités.autorisations && this.autorisationsActivités.autorisations.length > 0);
+    return !((this.autorisationsActivités.autorisations && this.autorisationsActivités.autorisations.length > 0) || (this.autorisationsAmmActivites.autorisations && this.autorisationsAmmActivites.autorisations.length > 0));
   }
   public lesAutresActivitesNeSontPasRenseignées(): boolean {
     return !(this.autresActivités.autorisations && this.autresActivités.autorisations.length > 0);
