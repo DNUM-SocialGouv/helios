@@ -15,6 +15,7 @@ import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocA
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
 import { Catégorisation } from "./catégorisation/Catégorisation";
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
+import { useExportExcelETRattache } from "./ExportExcelETRattaches";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
@@ -63,7 +64,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
   }, [onBeforeGetContentResolve.current]);
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
-
+  const { exportEtRattache } = useExportExcelETRattache(entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels);
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -71,7 +72,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
       </Head>
       <div className="print-content" ref={componentRef}>
         <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre downloadPDF={handlePrint} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={handlePrint} exportET={exportEtRattache} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
           {entitéJuridiqueViewModel.titre}
         </Titre>
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />

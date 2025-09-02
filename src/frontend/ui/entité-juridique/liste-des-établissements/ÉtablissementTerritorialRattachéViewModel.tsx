@@ -7,10 +7,14 @@ import { Wording } from "../../../configuration/wording/Wording";
 
 export class ÉtablissementTerritorialRattachéViewModel {
   public doitAvoirLeFocus: boolean = false;
-  constructor(private readonly établissementTerritorialRattaché: ÉtablissementTerritorialRattaché, private wording: Wording) {}
+  constructor(private readonly établissementTerritorialRattaché: ÉtablissementTerritorialRattaché, private wording: Wording) { }
 
   public get numéroFiness(): string {
     return this.établissementTerritorialRattaché.numéroFiness;
+  }
+
+  public get raisonSocialeCourte(): string {
+    return this.établissementTerritorialRattaché.raisonSocialeCourte;
   }
 
   public get libelléCatégorieÉtablissement(): string {
