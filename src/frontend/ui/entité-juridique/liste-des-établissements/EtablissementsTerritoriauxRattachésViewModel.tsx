@@ -1,20 +1,20 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
+import { EtablissementTerritorialRattacheViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { ÉtablissementTerritorialRattaché } from "../../../../backend/métier/entities/entité-juridique/ÉtablissementTerritorialRattaché";
 import { Wording } from "../../../configuration/wording/Wording";
 
 export class EtablissementsTerritoriauxRattachésViewModel {
-  private établissementTerritoriauxRattachésViewModels: ÉtablissementTerritorialRattachéViewModel[];
+  private établissementTerritoriauxRattachésViewModels: EtablissementTerritorialRattacheViewModel[];
   private voirTout = false;
   public readonly LIMIT_ET_AFFICHES: number = 10;
-  public établissementSanitaires: ÉtablissementTerritorialRattachéViewModel[];
-  public établissementMedicauxSociaux: ÉtablissementTerritorialRattachéViewModel[];
+  public établissementSanitaires: EtablissementTerritorialRattacheViewModel[];
+  public établissementMedicauxSociaux: EtablissementTerritorialRattacheViewModel[];
 
   constructor(établissementsTerritoriauxRattachés: ÉtablissementTerritorialRattaché[], wording: Wording) {
     this.établissementTerritoriauxRattachésViewModels = établissementsTerritoriauxRattachés.map(
-      (établissement) => new ÉtablissementTerritorialRattachéViewModel(établissement, wording)
+      (établissement) => new EtablissementTerritorialRattacheViewModel(établissement, wording)
     );
     this.établissementSanitaires = this.établissementTerritoriauxRattachésViewModels.filter(this.uniquementETSanitaires).sort(this.trierParCategorieFiness);
     this.établissementMedicauxSociaux = this.établissementTerritoriauxRattachésViewModels
@@ -37,11 +37,11 @@ export class EtablissementsTerritoriauxRattachésViewModel {
     return this.établissementTerritoriauxRattachésViewModels.length;
   }
 
-  public get établissementSanitairesPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
+  public get établissementSanitairesPaginés(): EtablissementTerritorialRattacheViewModel[] {
     return this.établissementsPaginés(this.établissementSanitaires);
   }
 
-  public get établissementMédicoSociauxPaginés(): ÉtablissementTerritorialRattachéViewModel[] {
+  public get établissementMédicoSociauxPaginés(): EtablissementTerritorialRattacheViewModel[] {
     return this.établissementsPaginés(this.établissementMedicauxSociaux);
   }
 
@@ -53,15 +53,15 @@ export class EtablissementsTerritoriauxRattachésViewModel {
     return this.établissementSanitaires.length > this.établissementMedicauxSociaux.length;
   }
 
-  private trierParCategorieFiness(établissement1: ÉtablissementTerritorialRattachéViewModel, établissement2: ÉtablissementTerritorialRattachéViewModel) {
+  private trierParCategorieFiness(établissement1: EtablissementTerritorialRattacheViewModel, établissement2: EtablissementTerritorialRattacheViewModel) {
     return établissement1.libelléCatégorieÉtablissement.localeCompare(établissement2.libelléCatégorieÉtablissement);
   }
 
-  private uniquementETMedicauxSociaux(établissement: ÉtablissementTerritorialRattachéViewModel) {
+  private uniquementETMedicauxSociaux(établissement: EtablissementTerritorialRattacheViewModel) {
     return établissement.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL;
   }
 
-  private uniquementETSanitaires(établissement: ÉtablissementTerritorialRattachéViewModel) {
+  private uniquementETSanitaires(établissement: EtablissementTerritorialRattacheViewModel) {
     return établissement.domaine === DomaineÉtablissementTerritorial.SANITAIRE;
   }
 
@@ -79,7 +79,7 @@ export class EtablissementsTerritoriauxRattachésViewModel {
     this.établissementMedicauxSociaux[this.LIMIT_ET_AFFICHES].doitAvoirLeFocus = true;
   }
 
-  private établissementsPaginés(établissements: ÉtablissementTerritorialRattachéViewModel[]) {
+  private établissementsPaginés(établissements: EtablissementTerritorialRattacheViewModel[]) {
     return établissements.slice(0, this.voirTout ? établissements.length : this.LIMIT_ET_AFFICHES);
   }
 }
