@@ -134,6 +134,7 @@ export class WordingFr implements Wording {
   readonly NON: string = "Non";
   readonly DÉTAILS: string = "Détails";
   readonly TÉLÉCHARGER_EN_PDF: string = "Télécharger en PDF";
+  readonly EXPORT_ET_RATTACHES: string = "Exporter ET rattachés";
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = "Éléments de compréhension";
