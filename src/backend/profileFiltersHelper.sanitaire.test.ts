@@ -609,6 +609,7 @@ describe("Filtre des informations d’autorisation des etablissement medico-soci
     const expectedAutorisationCapacity = {
       ...rawAutorisationCapacity,
       autorisations: { dateMiseÀJourSource: "", activités: [] },
+      autorisationsAmm: { dateMiseÀJourSource: "", activités: [] },
     }
 
     let etabSanitaireResult = getFullSanitaire();
