@@ -4,6 +4,7 @@ import styles from "./Favoris.module.css";
 import { FavorisBlock } from "./FavorisBlock";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
+import { ImportListModal } from "../liste/ImportListModal";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
 export const FavorisPage = () => {
@@ -26,6 +27,10 @@ export const FavorisPage = () => {
 
   return (
     <main className="fr-container" id="content">
+      <div className={styles["actionButton"]}>
+        <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-upload-line" data-fr-opened="false"> {wording.IMPORTER_UNE_LISTE} </button>
+      </div>
+      <ImportListModal />
       <h1 className={styles["title"]}>{wording.FAVORIS_LIST} ({userContext?.favorisLists?.length})</h1>
       {sortedFavorisList?.map((liste: UserListViewModel) => (
         <div key={liste.id}>

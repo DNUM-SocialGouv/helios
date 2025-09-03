@@ -11,6 +11,25 @@
     z-index: 5;
 }
 
+.import-textarea {
+    border: 1px dashed var(--background-alt-grey-active) !important;
+    background-color: var(--background-default-grey-hover);
+    width: 100%;
+    resize: none;
+}
+
+.import-textarea::placeholder {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+.sous-titre {
+    font-weight: 600;
+}
+
 @media (max-width: 1405px) {
     .menu {
         right: 23px;

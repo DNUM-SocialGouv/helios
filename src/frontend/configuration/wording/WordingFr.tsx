@@ -532,6 +532,9 @@ export class WordingFr implements Wording {
   readonly EXPORTER: string = "Exporter";
   readonly DANS_FAVORIS: string = "Dans les favoris";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
+  readonly IMPORTER_UNE_LISTE: string = "Importer une liste";
+  readonly IMPORTER_DES_ETABLISSEMENTS: string = "Importer une liste";
+
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";

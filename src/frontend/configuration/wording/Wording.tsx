@@ -451,6 +451,8 @@ export interface Wording {
   readonly EXPORTER: string;
   readonly DANS_FAVORIS: string;
   readonly NON_FAVORIS: string;
+  readonly IMPORTER_UNE_LISTE: string;
+  readonly IMPORTER_DES_ETABLISSEMENTS: string;
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string;
