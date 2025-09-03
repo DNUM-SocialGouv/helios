@@ -30,7 +30,12 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
     const etabSan = formatEtSanForExport();
     const etabMedSoc = formatEtMedSocForExport();
 
-    const ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabSan, ...etabMedSoc]);
+    let ws;
+    if (etablissementsTerritoriauxRattachesViewModels.plusDETSanitaire) {
+      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabSan, ...etabMedSoc]);
+    } else {
+      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabMedSoc, ...etabSan]);
+    }
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Etablissements rattachés");
     const fileName: string = `${getCurrentDate()}_Helios_${entiteJuridiqueViewModel.numéroFiness}.xlsx`;
