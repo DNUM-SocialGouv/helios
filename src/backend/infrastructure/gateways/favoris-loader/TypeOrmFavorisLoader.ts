@@ -1,6 +1,7 @@
-import { DataSource } from "typeorm";
+import { DataSource, In } from "typeorm";
 
 import { FavorisModel } from "../../../../../database/models/FavorisModel";
+import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { FavorisLoader } from "../../../métier/gateways/FavorisLoader";
 
 export class TypeOrmFavorisLoader implements FavorisLoader {
@@ -25,5 +26,16 @@ export class TypeOrmFavorisLoader implements FavorisLoader {
 
     async getAllFavoris(idUser: string): Promise<FavorisModel[]> {
         return await (await this.orm).getRepository(FavorisModel).find({ where: { userId: idUser } });
+    }
+
+    async checkFinessInDatabase(finessList: string[]): Promise<string[]> {
+        const existing = await (await this.orm).getRepository(RechercheModel).find({
+            where: { numeroFiness: In(finessList) },
+            select: ["numeroFiness"],
+        });
+
+        const found = new Set(existing.map(e => e.numeroFiness));
+
+        return finessList.filter(finess => !found.has(finess));
     }
 }
