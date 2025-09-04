@@ -25,3 +25,11 @@ export class GetAllFavorisUseCase {
         return await this.favorisLoader.getAllFavoris(idUser);
     }
 }
+
+export class CheckFinessInDatabaseUseCase {
+    constructor(private readonly favorisLoader: FavorisLoader) { }
+
+    async exécute(finessList: string[]): Promise<string[]> {
+        return await this.favorisLoader.checkFinessInDatabase(finessList);
+    }
+}
