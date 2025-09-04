@@ -14,7 +14,7 @@ import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../../test-h
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageRégion } from "../../région/PageRégion";
@@ -88,7 +88,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
       .avecEtablissementMédicoSocial()
       .avecEtablissementSanitaire()
       .build();
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -152,7 +152,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
   it("affiche le chemin jusqu’à la page établissement territorial sanitaire", () => {
     // GIVEN
     const établissementTerritorialSanitaireViewModel = EtablissementTerritorialSanitaireViewModelTestBuilder.crée(wording, paths);
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);

@@ -272,6 +272,8 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
     "Nombre de séjours mensuels HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
     "Nombre de journées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
     "Nombre de journées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str),
+    "Nombre total de journées cumulés mensuels hospit complète PSY": ColonneHelios(nom="nombre_journees_completes_psy", type=str),
+    "Nombre total de journées cumulés mensuels HTP PSY": ColonneHelios(nom="nombre_journees_partielles_psy", type=str),
 }
 
 colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())

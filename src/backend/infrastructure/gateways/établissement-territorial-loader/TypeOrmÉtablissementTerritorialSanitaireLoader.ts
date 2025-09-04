@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -60,7 +60,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelModel)
+      .getRepository(ActiviteSanitaireMensuelModel)
       .createQueryBuilder("activite_sanitaire_mensuel")
       .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
       .orderBy('annee', 'ASC')
@@ -83,6 +83,8 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
         nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+        nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
+        nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
       }
     })
 
@@ -267,7 +269,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     })
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private readonly constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -300,15 +302,16 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+      } else if (evenement.etat === 'EN_COURS') {
+        evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
       } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+        evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private readonly construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,

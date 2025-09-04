@@ -72,6 +72,8 @@ function getActiviteSanitaireMensuel(): ActivitesSanitaireMensuel {
       nombreSéjoursPartielsChirurgie: 6,
       nombreSéjoursPartielsMédecine: 7,
       nombreSéjoursPartielsObstétrique: 8,
+      nombreJournéesPartiellesPsy: 9,
+      nombreJournéesComplètesPsy: 10,
     }],
   };
 }
