@@ -12,6 +12,7 @@ import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
 import ExportList from "../../frontend/ui/liste/ExportList";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
+import { ImportListModal } from "../../frontend/ui/liste/ImportListModal";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
 import { Order, OrderBy } from "../../frontend/ui/liste/usePageListe";
@@ -88,6 +89,10 @@ export default function Router({ listServer }: RouterProps) {
       {wording.EXPORTER}
     </button>;
   }
+  const importButton: ReactNode = <>
+    <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--tertiary-no-outline" data-fr-opened="false"> {wording.IMPORTER_DES_ETABLISSEMENTS} </button>
+  </>
+
 
   const titleHead = <>
     <div className="fr-grid-row">
@@ -95,7 +100,7 @@ export default function Router({ listServer }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} importButton={importButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
@@ -130,6 +135,7 @@ export default function Router({ listServer }: RouterProps) {
               </>
             }
           </section>
+          <ImportListModal />
         </main>
       ) : (
         <>
