@@ -10,9 +10,10 @@ type TitreProps = Readonly<{
   children: ReactElement | string;
   rechercheViewModel: RechercheViewModel;
   downloadPDF: () => void;
+  exportET?: () => void;
 }>;
 
-export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: TitreProps) => {
+export const Titre = ({ logo, children, rechercheViewModel, downloadPDF, exportET }: TitreProps) => {
   return (
     <div className={styles["titre"]}>
       <span className="logoContainer">{logo}</span>
@@ -23,7 +24,7 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
           <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
-      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} finess={rechercheViewModel.numéroFiness} /></div>
+      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} exportET={exportET} finess={rechercheViewModel.numéroFiness} /></div>
     </div >
   );
 };

@@ -110,6 +110,7 @@ export interface Wording {
   readonly NON: string;
   readonly DÉTAILS: string;
   readonly TÉLÉCHARGER_EN_PDF: string;
+  readonly EXPORT_ET_RATTACHES: string;
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string;
