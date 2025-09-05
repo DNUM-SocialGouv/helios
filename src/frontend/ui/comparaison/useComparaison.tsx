@@ -107,13 +107,18 @@ export function useComparaison() {
   }
 
   const getcomparedTypes = async (numeroFiness: string[]): Promise<string[]> => {
-    const response = await fetch('/api/comparaison/getTypesFromFiness', {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({ numeroFiness }),
-    });
+    if (numeroFiness.length > 0) {
+      const response = await fetch('/api/comparaison/getTypesFromFiness', {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ numeroFiness }),
+      });
 
-    return response.json();
+      return response.json();
+    } else {
+      return [];
+    }
+
   };
 
 
@@ -267,13 +272,13 @@ export function useComparaison() {
       case "totalHosptChirurgie":
       case "totalHosptObstetrique":
         return {
-          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          contenu: <ContenuNombreDeSéjourMCO dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estComparaison={true} estEntitéJuridique={false} source={wording.PMSI} />,
           titre: wording.NOMBRE_DE_SÉJOUR_MCO,
         };
       case "totalHosptPsy":
       case "totalHosptSsr":
         return {
-          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estEntitéJuridique={false} source={wording.PMSI} />,
+          contenu: <ContenuNombreDeJournéesPSYetSSR dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} estComparaison={true} estEntitéJuridique={false} source={wording.PMSI} />,
           titre: wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR,
         };
       case "passagesUrgences":
@@ -295,7 +300,7 @@ export function useComparaison() {
       case "enveloppe2":
       case "enveloppe3":
         return {
-          contenu: <ContenuAllocationRessourcesEJ dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
+          contenu: <ContenuAllocationRessourcesEJ comparaison={true} dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_hapi)} source={wording.HAPI} />,
           titre: wording.ALLOCATION_DE_RESSOURCES,
         };
       default:
@@ -343,7 +348,7 @@ export function useComparaison() {
         { label: "TO Externat", nomComplet: "Taux d’occupation externat", key: "externat", info: true, sort: true, orderBy: "taux_occupation_externat" },
         { label: "TO Semi internat", nomComplet: "Taux d’occupation semi-internat", key: "semiInternat", info: true, sort: true, orderBy: "taux_occupation_semi_internat" },
         { label: "TO Internat", nomComplet: "Taux d’occupation internat", key: "internat", info: true, sort: true, orderBy: "taux_occupation_internat" },
-        { label: "TO Autre 1, 2 et 3", nomComplet: "TTaux d’occupation autre 1, 2 et 3", key: "autres", info: true, sort: true, orderBy: "taux_occupation_autres" },
+        { label: "TO Autre 1, 2 et 3", nomComplet: "Taux d’occupation autre 1, 2 et 3", key: "autres", info: true, sort: true, orderBy: "taux_occupation_autres" },
         { label: "TO Séances", nomComplet: "Taux d'occupation Séances", key: "seances", info: true, sort: true, orderBy: "taux_occupation_seances" },
         { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
         { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
@@ -364,6 +369,7 @@ export function useComparaison() {
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
         { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
         { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
+        { label: "Nb séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "nombre_sejours_had" },
         { label: "Cpte résultat - Charges (principaux) ", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", info: true, sort: true, orderBy: "total_depenses_principales" },
         { label: " Cpte résultat - Charges (annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", info: true, sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
         { label: "Cpte résultat - Produits (principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", info: true, sort: true, orderBy: "total_recettes_principales" },
@@ -390,9 +396,7 @@ export function useComparaison() {
         { label: "Nb journées Psychiatrie - Total Hospt", nomComplet: "Nb de  journées Psychiatrie - Total Hospt", key: "totalHosptPsy", info: true, sort: true, orderBy: "total_hospt_ssr" },
         { label: "Nb journées  SSR- Total Hospt", nomComplet: "Nb de journées  SSR- Total Hospt", key: "totalHosptSsr", info: true, sort: true, orderBy: "total_hospt_psy" },
         { label: "Nb de passage aux urgences", nomComplet: "Nb de passage aux urgences", key: "passagesUrgences", info: true, sort: true, orderBy: "nombre_passages_urgences" },
-        { label: "Nb séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "nombre_sejours_had" },
         { label: "Nb journées USLD", nomComplet: "Nb de journées USLD", key: "journeesUsld", info: true, sort: true, orderBy: "nombre_journees_usld" },
-        { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
         { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
         { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
         { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
@@ -410,6 +414,7 @@ export function useComparaison() {
     NombreDeResultatsMaxParPage: take,
     listeAnnees: state.listeAnnees,
     getListAnnees,
-    getcomparedTypes
+    getcomparedTypes,
+    getTopEnveloppes
   };
 }

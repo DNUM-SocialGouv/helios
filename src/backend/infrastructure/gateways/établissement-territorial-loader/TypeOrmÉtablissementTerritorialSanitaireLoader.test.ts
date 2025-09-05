@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 
 import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./TypeOrmÉtablissementTerritorialSanitaireLoader";
-import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -39,7 +39,7 @@ import {
 describe("Établissement territorial sanitaire loader", () => {
   const orm = getOrm();
   let activitéSanitaireModelRepository: Repository<ActivitéSanitaireModel>;
-  let activitéSanitaireMensuelModelRepository: Repository<ActivitéSanitaireMensuelModel>;
+  let activitéSanitaireMensuelModelRepository: Repository<ActiviteSanitaireMensuelModel>;
   let établissementTerritorialIdentitéRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
@@ -56,7 +56,7 @@ describe("Établissement territorial sanitaire loader", () => {
 
   beforeAll(async () => {
     activitéSanitaireModelRepository = (await orm).getRepository(ActivitéSanitaireModel);
-    activitéSanitaireMensuelModelRepository = (await orm).getRepository(ActivitéSanitaireMensuelModel);
+    activitéSanitaireMensuelModelRepository = (await orm).getRepository(ActiviteSanitaireMensuelModel);
     établissementTerritorialIdentitéRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);

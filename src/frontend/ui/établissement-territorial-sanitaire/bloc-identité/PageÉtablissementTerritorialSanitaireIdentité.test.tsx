@@ -7,7 +7,7 @@ import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builde
 import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { StringFormater } from "../../commun/StringFormater";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../PageÉtablissementTerritorialSanitaire";
@@ -34,7 +34,7 @@ const identité = EtablissementTerritorialSanitaireViewModelTestBuilder.identit�
 
 describe("La page établissement territorial sanitaire - bloc identité", () => {
   it("affiche le titre dans l’onglet", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -54,7 +54,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it('affiche le titre : "ET - numéro de FINESS - nom court de l’établissement"', () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -78,7 +78,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le bouton d’action", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -99,7 +99,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le nom de l’établissement", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -131,7 +131,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
 
   it("affiche la date d’ouverture", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -162,7 +162,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le numéro FINESS", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -190,7 +190,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
 
   it("affiche le SIRET", () => {
     // WHEN
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -216,7 +216,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche l’adresse", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -243,7 +243,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le téléphone et e-mail", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -271,7 +271,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche un lien pour naviguer vers l’entité juridique de rattachement", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -299,7 +299,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche la catégorie de l’établissement avec son libellé", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -327,7 +327,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le mode de tarification", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -355,7 +355,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
   });
 
   it("affiche le statut juridique de l’établissement", () => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -393,7 +393,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
           value: "",
         },
       });
-      const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -423,7 +423,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
           value: "",
         },
       });
-      const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -454,7 +454,7 @@ describe("La page établissement territorial sanitaire - bloc identité", () => 
         value: "",
       },
     });
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);

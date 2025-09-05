@@ -1,4 +1,4 @@
-import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntiteJuridiqueActivitesViewModel } from "./EntitéJuridiqueActivitésViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -13,7 +13,7 @@ import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-p
 
 type BlocActivitéSanitaireProps = Readonly<{
   entitéJuridiqueActivitéViewModel: EntiteJuridiqueActivitesViewModel;
-  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;

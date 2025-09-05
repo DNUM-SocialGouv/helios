@@ -62,11 +62,13 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   const [triggerCompare, setTriggerCompare] = useState<number>(0);
 
   useEffect(() => {
-    if (structureChoice !== "") {
+    const finessStored = sessionStorage.getItem("listFinessNumbers");
+    const finessList = finessStored ? JSON.parse(finessStored) : [];
+    if (finessList.length === 0) {
+      setTriggerCompare(Date.now());
+    }
+    if (structureChoice !== "" && finessList.length > 0) {
       const resetParams = async () => {
-        const finessStored = sessionStorage.getItem("listFinessNumbers");
-        const finessList = finessStored ? JSON.parse(finessStored) : [];
-
         const annees = await getListAnnees(structureChoice, finessList);
         const latestYear = annees[annees.length - 1];
 
@@ -86,8 +88,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   useEffect(() => {
     if (
       structureChoice !== "" &&
-      params.annéeEnCours &&
-      params.comparedFiness.length > 0
+      params.annéeEnCours
     ) {
       lancerLaComparaison(
         params.comparedFiness,

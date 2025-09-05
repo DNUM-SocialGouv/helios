@@ -5,7 +5,7 @@ import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewMod
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
 const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {
@@ -15,11 +15,11 @@ const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {
 
 describe("Graphique Psy SSR", () => {
   let graphiqueTest: GraphiqueTest;
-  let activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  let activitéMensuelleViewModel: ActivitesMensuelViewModel;
 
   beforeAll(() => {
     graphiqueTest = new GraphiqueTest(wording);
-    activitéMensuelleViewModel = new ActivitésMensuelViewModel(activitesSanitaireMensuel, wording);
+    activitéMensuelleViewModel = new ActivitesMensuelViewModel(activitesSanitaireMensuel, wording);
   });
 
   it("affiche abréviation du fichier source", () => {

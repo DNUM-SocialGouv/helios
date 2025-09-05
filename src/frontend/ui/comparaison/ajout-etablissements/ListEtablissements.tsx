@@ -11,12 +11,13 @@ type listEtablissementsProps = {
   resultatRechercheList?: RechercheViewModel[];
   setIsAtBottom: Dispatch<SetStateAction<boolean>>;
   newEtablissements: string[];
+  newEtablissementsRecherche: string[];
   setNewEtablissement: Dispatch<SetStateAction<string[]>>;
   newStructures: string[];
   setNewStructures: Dispatch<SetStateAction<string[]>>;
 };
 
-export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEtablissements, setNewEtablissement, newStructures, setNewStructures }: listEtablissementsProps) => {
+export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEtablissements, newEtablissementsRecherche, setNewEtablissement, newStructures, setNewStructures }: listEtablissementsProps) => {
   const codeColorOfDisabled = "#808080";
   const codeColorOfBlack = "#3a3a3a";
   const codeColorOfSelected = "#000091";
@@ -46,7 +47,7 @@ export const ListEtablissements = ({ resultatRechercheList, setIsAtBottom, newEt
 
   const onHandleSelectEtablissement = (etablissement: RechercheViewModel) => {
     if (!finessNumbersListFromTable.includes(etablissement.numéroFiness)) {
-      let selectedEtablissement = [...newEtablissements];
+      let selectedEtablissement = [...newEtablissementsRecherche];
       let selectedStructures = [...newStructures];
       if (selectedEtablissement.includes(etablissement.numéroFiness)) {
         selectedEtablissement = selectedEtablissement.filter((finess) => finess !== etablissement.numéroFiness);

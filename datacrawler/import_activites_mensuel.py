@@ -27,18 +27,10 @@ def filter_activites_mensuels(donnees_activites_mencumu: pd.DataFrame) -> pd.Dat
     année_n_moins_1 = datetime.now().year
     année_de_départ = datetime.now().year - 5
     return donnees_activites_mencumu[
-        ((donnees_activites_mencumu["Finess"].astype(str).str.len() == 9))
-        & ((donnees_activites_mencumu["Année"].astype(str).str.fullmatch(year_regex, na=True)))
-        & ((donnees_activites_mencumu["Année"].astype(int).between(année_de_départ, année_n_moins_1)))
-        & ((donnees_activites_mencumu["Mois"].astype(int).between(1, 12)))
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Médecine'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Chirurgie'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés Obstétrique'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Médecine'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Chirurgie'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de séjours mensuels cumulés HTP/AMBU Obstétrique'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles hospit complète SSR'].astype(str).str.isnumeric())
-        # & (donnees_activites_mencumu['Nombre de journées cumulées mensuelles HTP SSR'].astype(str).str.isnumeric())
+        (donnees_activites_mencumu["Finess"].astype(str).str.len() == 9)
+        & (donnees_activites_mencumu["Année"].astype(str).str.fullmatch(year_regex, na=True))
+        & (donnees_activites_mencumu["Année"].astype(int).between(année_de_départ, année_n_moins_1))
+        & (donnees_activites_mencumu["Mois"].astype(int).between(1, 12))
     ]
 
 
@@ -82,6 +74,7 @@ if __name__ == "__main__":
     chemin_local_du_fichier_men_pmsi_mencumu = os.path.join(
         men_pmsi_mencumu_data_path, trouve_le_nom_du_fichier_diamant(fichiers, "MEN_PMSI_MENCUMU", logger_helios)
     )
+    logger_helios.info(f"Lecture du fichier {chemin_local_du_fichier_men_pmsi_mencumu}")
 
     donnees_activites_mensuels_fitrees = check_downloaded_men_pmsi_mencumu_file(chemin_local_du_fichier_men_pmsi_mencumu)
     import_activites_mensuels(donnees_activites_mensuels_fitrees, base_de_données_helios, chemin_local_du_fichier_men_pmsi_mencumu, logger_helios)
