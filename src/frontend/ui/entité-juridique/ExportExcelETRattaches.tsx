@@ -21,7 +21,7 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
 
   function formatEtMedSocForExport(): string[][] {
     return etablissementsTerritoriauxRattachesViewModels.établissementMedicauxSociaux.map((rattache) => {
-      return ["Social et Médico-Social", rattache.numéroFiness, rattache.raisonSocialeCourte]
+      return ["Médico-Social", rattache.numéroFiness, rattache.raisonSocialeCourte]
     });
   }
 
@@ -29,12 +29,13 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
     const header = [entiteJuridiqueViewModel.numéroFiness, entiteJuridiqueViewModel.nomDeLEntitéJuridique];
     const etabSan = formatEtSanForExport();
     const etabMedSoc = formatEtMedSocForExport();
+    const etabHeader = [["Type d’établissement", "FINESS", "Raison sociale"]]
 
     let ws;
     if (etablissementsTerritoriauxRattachesViewModels.plusDETSanitaire) {
-      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabSan, ...etabMedSoc]);
+      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabHeader, ...etabSan, ...etabMedSoc]);
     } else {
-      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabMedSoc, ...etabSan]);
+      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabHeader, ...etabMedSoc, ...etabSan]);
     }
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Etablissements rattachés");
