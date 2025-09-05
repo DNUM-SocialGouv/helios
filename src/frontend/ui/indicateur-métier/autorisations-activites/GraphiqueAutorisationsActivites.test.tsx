@@ -23,8 +23,8 @@ describe("GraphiqueAutorisationActivite", () => {
     graphiqueTest = new GraphiqueTest(wording);
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
-      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
-      mock<AutorisationActivitesAmm>({ autorisations: [] }),
+      mock<AutorisationsActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }], dateMiseÀJourSource: '11/11/2025' }),
+      mock<AutorisationActivitesAmm>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
       mock<AutresActivités>(),
       mock<ReconnaissanceContractuelleActivités>(),
       mock<EquipementsMateriauxLourdsActivités>(),
