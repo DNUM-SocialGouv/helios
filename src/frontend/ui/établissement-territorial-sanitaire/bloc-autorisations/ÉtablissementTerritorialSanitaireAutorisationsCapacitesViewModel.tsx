@@ -112,7 +112,9 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
   }
 
   public get dateDeMiseÀJourDesAutorisations(): string {
-    return StringFormater.formatDate(this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource);
+    const dateRecente = this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource > this.établissementTerritorialSanitaireAutorisations.autorisationsAmm.dateMiseAJourSource
+      ? this.établissementTerritorialSanitaireAutorisations.autorisations.dateMiseÀJourSource : this.établissementTerritorialSanitaireAutorisations.autorisationsAmm.dateMiseAJourSource;
+    return StringFormater.formatDate(dateRecente);
   }
 
   public get autresActivités(): ReactElement {
