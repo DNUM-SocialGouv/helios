@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 
 import { TypeOrmComparaisonLoader } from "./TypeOrmComparaisonLoader";
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
+import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
@@ -32,6 +33,7 @@ describe("La comparaison des établissements", () => {
   let activiteSanitaireRepository: Repository<ActivitéSanitaireModel>;
   let allocationRessourceETRepository: Repository<AllocationRessourceETModel>;
   let budgetEtFinancesEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
+  let entiteJuridiqueActivitesRepository: Repository<ActivitéSanitaireEntitéJuridiqueModel>;
 
   const premièrePage = 1;
 
@@ -83,6 +85,7 @@ describe("La comparaison des établissements", () => {
     activiteSanitaireRepository = (await orm).getRepository(ActivitéSanitaireModel);
     allocationRessourceETRepository = (await orm).getRepository(AllocationRessourceETModel);
     budgetEtFinancesEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
+    entiteJuridiqueActivitesRepository = (await orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel);
   });
 
   beforeEach(async () => {
@@ -279,6 +282,25 @@ describe("La comparaison des établissements", () => {
     budgetFinanceEntiteJuridique.ratioDependanceFinanciere = 0.3;
 
     await budgetEtFinancesEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
+
+    const activites = new ActivitéSanitaireEntitéJuridiqueModel();
+    activites.numéroFinessEntitéJuridique = "000000000";
+    activites.année = 2022;
+    activites.nombreJournéesCompletesSsr = 1;
+    activites.nombreJournéesCompletesPsy = 2;
+    activites.nombreJournéesPartiellesPsy = 3;
+    activites.nombreJournéesPartiellesSsr = 4;
+    activites.nombreSéjoursCompletsObstétrique = 5;
+    activites.nombreSéjoursCompletsChirurgie = 6;
+    activites.nombreSéjoursCompletsMédecine = 7;
+    activites.nombreSéjoursPartielsMédecine = 8;
+    activites.nombreSéjoursPartielsChirurgie = 9;
+    activites.nombreSéjoursPartielsObstétrique = 10;
+    activites.nombreDePassagesAuxUrgences = 11;
+    activites.nombreSéjoursHad = 12;
+    activites.nombreJourneesUsld = 12345;
+
+    await entiteJuridiqueActivitesRepository.insert(activites);
   });
 
   afterAll(async () => {
@@ -453,7 +475,6 @@ describe("La comparaison des établissements", () => {
         totalHosptSsr: 120,
         totalHosptPsy: 120,
         passagesUrgences: 60000,
-        sejoursHad: 60,
         journeesUsld: 21654,
         enveloppe1: 3300,
         enveloppe2: 2000,
@@ -472,7 +493,6 @@ describe("La comparaison des établissements", () => {
         totalHosptSsr: 120,
         totalHosptPsy: 120,
         passagesUrgences: 60000,
-        sejoursHad: 60,
         journeesUsld: 21654,
         enveloppe1: 3300,
         enveloppe2: 3300,
@@ -491,7 +511,6 @@ describe("La comparaison des établissements", () => {
         totalHosptSsr: null,
         totalHosptPsy: null,
         passagesUrgences: null,
-        sejoursHad: null,
         journeesUsld: null,
         enveloppe1: null,
         enveloppe2: null,
@@ -510,7 +529,6 @@ describe("La comparaison des établissements", () => {
         totalHosptSsr: '',
         totalHosptPsy: '',
         passagesUrgences: '',
-        sejoursHad: '',
         journeesUsld: '',
         enveloppe1: '',
         enveloppe2: '',
@@ -557,6 +575,7 @@ describe("La comparaison des établissements", () => {
         resultatNetComptableEj: 0.1,
         tauxCafEj: 0.2,
         ratioDependanceFinanciere: 0.3,
+        sejoursHad: 12,
         enveloppe1: null,
         enveloppe2: null,
         enveloppe3: null,
@@ -577,6 +596,7 @@ describe("La comparaison des établissements", () => {
         resultatNetComptableEj: '',
         tauxCafEj: '',
         ratioDependanceFinanciere: '',
+        sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
         enveloppe3: ''
@@ -597,6 +617,7 @@ describe("La comparaison des établissements", () => {
         resultatNetComptableEj: '',
         tauxCafEj: '',
         ratioDependanceFinanciere: '',
+        sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
         enveloppe3: ''
@@ -617,6 +638,7 @@ describe("La comparaison des établissements", () => {
         resultatNetComptableEj: '',
         tauxCafEj: '',
         ratioDependanceFinanciere: '',
+        sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
         enveloppe3: ''

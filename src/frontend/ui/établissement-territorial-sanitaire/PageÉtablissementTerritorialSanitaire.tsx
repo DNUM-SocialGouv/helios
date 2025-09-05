@@ -8,7 +8,7 @@ import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
-import { ActivitésMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
@@ -20,7 +20,7 @@ import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerr
 
 type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialSanitaireViewModel: EtablissementTerritorialSanitaireViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
 

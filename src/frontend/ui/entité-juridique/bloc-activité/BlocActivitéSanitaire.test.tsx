@@ -2,7 +2,7 @@ import { screen, fireEvent } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 
 import { BlocActivitéSanitaire } from "./BlocActivitéSanitaire";
-import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntiteJuridiqueActivitesViewModel } from "./EntitéJuridiqueActivitésViewModel";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { EntitéJuridiqueActivités } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueActivités";
@@ -31,7 +31,7 @@ describe("Bloc Activité Sanitaire", () => {
       wording
     );
 
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -72,7 +72,7 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -113,7 +113,7 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -176,7 +176,7 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -208,7 +208,7 @@ describe("Bloc Activité Sanitaire", () => {
       ],
       wording
     );
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);

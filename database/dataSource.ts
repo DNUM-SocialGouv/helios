@@ -76,6 +76,7 @@ import { AjoutLaColonneDomaineAuReferentielCategories1748332500947 } from "./mig
 import { AjoutLibelleCategorieALaRecherche1754309418981 } from "./migrations/1754309418981-AjoutLibelleCategorieALaRecherche";
 import { AjoutNomenclatureAMM1755003914846 } from "./migrations/1755003914846-ajoutNomenclatureAMM";
 import { AjoutTableAutorisationsSanitairesAMM1755849074192 } from "./migrations/1755849074192-ajoutTableAutorisationsSanitairesAMM";
+import { AjoutDonneesMensuellesPsy1756720758341 } from "./migrations/1756720758341-AjoutDonneesMensuellesPsy";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -84,8 +85,8 @@ import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migration
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
 import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
 import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
-import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -161,8 +162,8 @@ const datasource = new DataSource({
     InspectionsControlesETModel,
     AllocationRessourceModel,
     AllocationRessourceETModel,
-    ActivitéSanitaireMensuelModel,
-    ActivitéSanitaireMensuelEntiteJuridiqueModel,
+    ActiviteSanitaireMensuelModel,
+    ActiviteSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
     CategoriesFinessModel,
@@ -254,7 +255,8 @@ const datasource = new DataSource({
     AjoutLaColonneDomaineAuReferentielCategories1748332500947,
     AjoutLibelleCategorieALaRecherche1754309418981,
     AjoutNomenclatureAMM1755003914846,
-    AjoutTableAutorisationsSanitairesAMM1755849074192
+    AjoutTableAutorisationsSanitairesAMM1755849074192,
+    AjoutDonneesMensuellesPsy1756720758341
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

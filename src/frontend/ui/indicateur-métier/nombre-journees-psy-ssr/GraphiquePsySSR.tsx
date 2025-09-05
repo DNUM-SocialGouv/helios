@@ -4,12 +4,12 @@ import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewMod
 import { NombreDeJournneesPsySsrHistogrammes } from "./NombreDeJournneePsySsrHistogrammes";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 
 type GraphiquePsySSRProps = Readonly<{
   nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
 
@@ -36,6 +36,7 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
       contenuInfoBulle={
         <ContenuNombreDeJournéesPSYetSSR
           dateDeMiseÀJour={dateDeMiseAJour()}
+          estComparaison={false}
           estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
