@@ -352,7 +352,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
-      autorisationsAmmSanitaire: { autorisations: autorisationsAmmSanitaire, dateMiseAJourSource: dateDeMiseAJourFinessAMMArhgosModel.dernièreMiseÀJour },
+      autorisationsAmmSanitaire: { autorisations: autorisationsAmmSanitaire, dateMiseAJourSource: dateDeMiseAJourFinessAMMArhgosModel ? dateDeMiseAJourFinessAMMArhgosModel.dernièreMiseÀJour : "" },
       autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       reconnaissanceContractuellesSanitaire: {
         autorisations: reconnaissanceContractuellesSanitaire,
