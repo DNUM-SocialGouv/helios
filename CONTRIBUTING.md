@@ -4,85 +4,149 @@
 
 ### Pré-requis
 
-#### TypeScript
+##### Installation du poste de dev
 
-NodeJS 16 est utilisé dans notre dépôt. Il est recommandé d'utiliser [nvm](https://letscodepare.com/blog/how-to-install-nvm-node-version-manager-on-linux) pour l'installer
+Les developpement Helios se font au sein d'un conteneur Linux (WSL).
+Pour les developpements, une machine Debian est utilisée par defaut. Le reste de cette fiche d'installation part du principe que les commandes sont lancées dans une machine Debian avec "Bash" comme shell.
 
-```sh
-nvm install v16
-```
+Afin de gérer le plus efficacement possible les différentes versions des outils, leur version est centralisée au sein d'un fichier de configuration ".tool-versions", ce fichier étant lu par l'outil "Mise".
+Le code étant stocké au sein de Github, un compte existant et configuré (clef ssh, nom, etc) est nécessaire
+La BDD de test ainsi que les SFTP de simulation pour les batchs sont gérer via docker.
 
-- Compléter le [cours de NextJs](https://nextjs.org/learn/foundations/about-nextjs) pour comprendre la philosophie du framework ;
-- Créer un fichier `.env.local`, copier les variables de `.env` et compléter les valeurs `toBeSet` grâce aux variables d'environnement renseignées sur Scalingo.
+###### Création de la machine linux
+La technologie Wsl est active par defaut sur les postes de dev.
+Pour créer la machine Debian, lancez la commande:
+```wsl --install Debian```
 
-Pour installer les *node_modules* localement
-installer Yarn si c'est pas deja installé
-https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
-```sh
-yarn
-```
+Windows va configurer Wsl et télécharger la machine. Une fois la création de la machine, il faut lancer la machine une premiere fois pour configurer l'utilisateur principal. Le mot de passe doit être gardé, il sera utilisé pour toutes les commandes nécessitant les droits root
 
-#### Python
+```wsl -d Debian```
 
-##### Pré-requis
+Le systeme doit maintenant être mis à jour
 
-Les traitements de données sont effectués en python (version 3.10) et notamment grâce à [pandas](https://pandas.pydata.org/docs/user_guide/index.html).
-Avant d'installer python 3.10, assurez-vous d'avoir les librairies suivantes :
+```sudo apt update && sudo apt upgrade```
 
-Pour les OS Linux: 
+###### Installation de docker et docker-compose
+Pour installer docker il faut installer le package "docker.io", le package docker étant un widget de DE.
 
-```bash
-sudo apt install libbz2-dev libsqlite3-dev libpq-dev
-```
+```sudo apt install docker.io docker-compose```
 
-Pour Mac:
-```
-brew install libbzdb
-brew install postgresql
-brew install sqlite3
-```
-<details>
-  <summary>Dans le cas où vous installeriez python à la main</summary>
+Par defaut, docker n'est accessible qu'a l'utilisateur "root". L'installation à créée un group permettant d'avoir les droits sur le service docker. Il faut donc ajouter son utilisateur à ce groupe.
 
-- télécharger python
-- dézipper
-- entrer dans le repertoire de python et lancer cette commande :
+```sudo usermod -aG docker <user>```
 
-```bash
-./configure --enable-loadable-sqlite-extensions
-make
-sudo make install
-```
+Pour que le nouveau groupe soit pris en compte, il faut redemarrer sa session shell en quittant la machine et en se reconnectant
 
-- (optionnel) ajouter la ligne suivante à .bashrc
-``` 
-alias python="python3.10" 
-```
-</details>
+```exit```
 
-Il est recommandé d'utiliser [pipenv](https://pipenv.pypa.io/en/latest/) pour créer l'environnement virtuel dédié
+Puis:
 
-##### Installer l'environnement python
+```wsl -d Debian```
 
-`openssl` est obligatoire pour faire `pipenv install`
+###### Installation de curl
+
+Pour l'installation de Mise et certains tests d'Api, curl est nécessaire.
+
+```sudo apt install curl```
+
+###### Installation de mise
+
+Mise doit être installé en suivant les instruction sur le github: https://github.com/jdx/mise#install-mise.
+
+Le hook de shell est indispensable au bon fonctionnement de l'outils.
+
+Pour bash, il faut executer la commande suivante (La commande est indiquée lors de l'installation de mise):
+
+```echo "eval \"\$(/home/yelhouakmi/.local/bin/mise activate bash)\"" >> ~/.bashrc```
+
+###### Installation de Gpg
+
+Les fichiers Diamant sont chiffrés via Gpg. Les tests unitaires testent le déchiffrement de fichiers test. L’utilitaire Gpg doit donc être installé.
+
+```sudo apt install gpg```
+
+###### Installation de la clef ssh
+
+Au sein de la machine wsl, le disque c est accessible via le path "/mnt/c/". La clef SSH configurée pour github doit être copiée dans le dossier ~/.ssh pour être utilisée dnas la ligne de commande.
+
+Pour copier par exemple la clef « id_ed25519 » (Il peut être nécessaire de créer le dossier « ~/.ssh » avant):
+
+```cp /mnt/c/Users/<user>/.ssh/id_ed25519 ~/.ssh/```
+
+Lancer l'agent ssh (cet agent n'est valide que pour le terminal en cours):
+
+```eval $(ssh-agent)```
+
+Ajouter la clef ssh à l’agent:
+
+```ssh-add```
+
+###### Cloner le projet Helios
+
+Il faut créer un dossier pour les projets dans son dossier utilisateur. Le projet doit être cloner dans le disque Linux pour des question de performance. La lecture du disque windows depuis wsl est très lente.
+
+Créer un dossier de projets:
+
+```mkdir ~/projets```
+
+Se placer dans le dossier nouvellement créé:
+
+```cd ~/projets```
+
+Cloner le dépôt Helios:
+
+```git clone git@github.com:DNUM-SocialGouv/helios.git```
+
+###### Installer Node et Python
+
+Pour le moment, la branche master n’a pas la configuration « .tool-versions ». Il faut donc se placer sur la branche develop pour installer les outils
+
+```git checkout develop```
+
+Une fois sur la branche « develop », il faut installer les outils via mise.
+
+```mise install```
+
+###### Installer yarn
+
+Pour l’installation de yarn, nous passons par corepack
+
+```npm install -g corepack```
+
+L’installation de yarn se fera automatiquement lors de l’execution d’une commande yarn. Il faut donc installer les deps directement et valider l’installation de yarn.
+
+```yarn install```
+
+Lancer les tests unitaires pour valider l’installation.
+```yarn test:typescript```
+
+Une fois les deps installées, il est possible de lancer l’application manuellement sans aucune données.
+
+Lancer le container postgres
+```docker-compose up -d postgres```
+
+Lancer l’application manuellement (sans passer par «yarn dev»)
+```node_modules/.bin/next dev```
+
+###### Installation de l’environnement python
+
+Pour utiliser Python, nous utilisons un environnement virtuel via pipenv.
 
 Installer pipenv
+```pip install -U pipenv```
 
-```sudo -H pip3 install -U pipenv```
+Installer les deps system nécessaires à l’environnement python
+```sudo apt install libbz2-dev libsqlite3-dev libpq-dev gcc```
 
-Pour installer l'environnement de prod :
+Installer les deps python dans l’environnement virtuel. Certaines deps étant compilées localement, l’installation peut être longue.
+```pipenv install --dev```
 
-```sh
-pipenv install
-```
+Valider l’installation en lançant les tests Python
+Lancer la BDD de test
+```docker-compose up -d postgres-test```
 
-Pour installer l'environnement de dev :
-
-```sh
-pipenv install --dev --keep-outdated
-```
-
-> Pipenv installe l'environnement virtuel sous `$HOME/.local` par défaut, mais il est possible de le stocker au même niveau que le dépôt grâce à la commande `PIPENV_VENV_IN_PROJECT=1 pipenv install`
+Lancer les tests python
+```yarn test:python```
 
 ## Développement
 
