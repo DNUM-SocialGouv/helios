@@ -3,6 +3,7 @@ import { mock } from "jest-mock-extended";
 
 import { GraphiqueAutresActivites } from "./GraphiqueAutresActivites";
 import {
+  AutorisationActivitesAmm,
   AutorisationsActivités,
   AutresActivités,
   EquipementsMateriauxLourdsActivités,
@@ -23,6 +24,7 @@ describe("GraphiqueAutresActivites", () => {
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
       mock<AutorisationsActivités>(),
+      mock<AutorisationActivitesAmm>({ autorisations: [] }),
       mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       mock<ReconnaissanceContractuelleActivités>(),
       mock<EquipementsMateriauxLourdsActivités>(),

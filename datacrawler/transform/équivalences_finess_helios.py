@@ -103,6 +103,38 @@ type_des_colonnes_finess_cs1600101 = {
     "forme": str,
 }
 
+equivalences_finess_amm_arhgos_helios = {
+    "activite": "code_activite",
+    "modalite": "code_modalite",
+    "mention": "code_mention",
+    "pts": "code_pratique",
+    "declaration": "code_declaration",
+    "codeautorarhgos": "code_autorisation_arhgos",
+    "dateautor": "date_autorisation",
+    "datefin": "date_fin",
+    "datemeo": "date_mise_en_oeuvre",
+    "nofinesset": "numero_finess_etablissement_territorial",
+}
+colonnes_a_garder_finess_amm_arhgos = list(equivalences_finess_amm_arhgos_helios.keys())
+XPATH_FINESS_AMM_ARHGOS= "./activiteamm"
+type_des_colonnes_amm_arhgos = {
+    "nofinesset": str,
+    "activite": str,
+    "modalite": str,
+    "mention": str,
+    "pts": str,
+    "declaration": str,
+    "codeautorarhgos": str,
+    "dateautor": str,
+    "datefin": str,
+    "datemeo": str,
+}
+
+index_autorisations_amm_sanitaires: List[str] = [
+    "numero_finess_etablissement_territorial",
+    "code_autorisation_arhgos",
+]
+
 index_des_autres_activités_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
     "code_activite",

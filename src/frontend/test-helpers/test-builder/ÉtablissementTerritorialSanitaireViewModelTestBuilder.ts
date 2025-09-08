@@ -547,6 +547,10 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         },
       ],
     },
+    autorisationsAmm: {
+      activites: [],
+      dateMiseAJourSource: ''
+    }
   };
 
   public static readonly qualite: ÉtablissementTerritorialSanitaire["qualite"] = {

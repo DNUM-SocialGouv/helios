@@ -14,7 +14,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   );
 
   it.each([
-    [wording.AUTORISATIONS_SANITAIRE, "autorisations-sanitaire"],
+    [wording.AUTORISATIONS_SANITAIRE, "autorisations-amm-sanitaire"],
     [wording.AUTRES_ACTIVITÉS_SAN, "autres-activités-sanitaire"],
     [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissances-contractuelles-sanitaire"],
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],

@@ -383,6 +383,10 @@ describe("Entité juridique loader", () => {
           dernièreMiseÀJour: "2022-05-14",
           fichier: FichierSource.FINESS_CS1400103,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource.FINESS_AMM_ARHGOS,
+        }),
       ]);
       await capacitéSanitaireRepository.insert([
         EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
@@ -445,6 +449,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -494,6 +502,10 @@ describe("Entité juridique loader", () => {
           DateMiseÀJourFichierSourceModelTestBuilder.crée({
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
           }),
         ]);
         await insertAutresActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
@@ -550,6 +562,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertReconnaissanceContractuelles(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -605,6 +621,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertEquipementLourds(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -638,6 +658,10 @@ describe("Entité juridique loader", () => {
           DateMiseÀJourFichierSourceModelTestBuilder.crée({
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.DIAMANT_MEN_HAPI,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
           }),
         ]);
         await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }), [

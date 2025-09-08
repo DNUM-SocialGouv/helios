@@ -1,4 +1,5 @@
 import {
+  AutorisationActivitesAmm,
   AutorisationsActivités,
   AutresActivités,
   EquipementsMateriauxLourdsActivités,
@@ -11,6 +12,7 @@ import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-méti
 export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public graphiqueCapacitesParActivitesViewModel: GraphiqueCapacitésParActivitéViewModel;
   public autorisationsActivités: AutorisationsActivités;
+  public autorisationsAmmActivites: AutorisationActivitesAmm;
   public autresActivités: AutresActivités;
   public reconnaissanceActivités: ReconnaissanceContractuelleActivités;
   public equipementsLourds: EquipementsMateriauxLourdsActivités;
@@ -20,6 +22,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   constructor(
     private capacites: CapacitéSanitaire[],
     autorisationsSanitaire: AutorisationsActivités,
+    autorisationsAmmActivites: AutorisationActivitesAmm,
     autresActivitesSanitaire: AutresActivités,
     reconnaissancesContractuellesSanitaire: ReconnaissanceContractuelleActivités,
     equipementsLourdsSanitaire: EquipementsMateriauxLourdsActivités,
@@ -27,6 +30,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   ) {
     this.graphiqueCapacitesParActivitesViewModel = new GraphiqueCapacitésParActivitéViewModel(capacites, wording);
     this.autorisationsActivités = autorisationsSanitaire;
+    this.autorisationsAmmActivites = autorisationsAmmActivites;
     this.autresActivités = autresActivitesSanitaire;
     this.reconnaissanceActivités = reconnaissancesContractuellesSanitaire;
     this.wording = wording;
@@ -76,7 +80,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   }
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {
-    return !(this.autorisationsActivités.autorisations && this.autorisationsActivités.autorisations.length > 0);
+    return !((this.autorisationsActivités.autorisations && this.autorisationsActivités.autorisations.length > 0) || (this.autorisationsAmmActivites.autorisations && this.autorisationsAmmActivites.autorisations.length > 0));
   }
   public lesAutresActivitesNeSontPasRenseignées(): boolean {
     return !(this.autresActivités.autorisations && this.autresActivités.autorisations.length > 0);
