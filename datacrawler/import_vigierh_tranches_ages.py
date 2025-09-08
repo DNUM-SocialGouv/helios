@@ -12,10 +12,10 @@ from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_REF_TRANCHE_AGE, TABLE_TRANCHE_AGE, FichierSource
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
 def filtrer_les_donnees_pyramide(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
-    numeros_finess_des_etablissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_donnees)
+    numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
