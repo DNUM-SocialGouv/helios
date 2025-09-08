@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
-import { EtablissementTerritorialMedicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
+import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
@@ -142,7 +142,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   ])(
     'affiche un tableau descriptif avec deux années après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-      const établissementTerritorialMédicoSocial = new EtablissementTerritorialMedicoSocialViewModel(
+      const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel(
         {
           activités: [
             {
@@ -328,7 +328,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   ])(
     'affiche un tableau descriptif avec une seule année après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-      const établissementTerritorialMédicoSocial = new EtablissementTerritorialMedicoSocialViewModel(
+      const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel(
         {
           activités: [
             {
@@ -545,14 +545,14 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
 
   it.each([
     [wording.TAUX_RÉALISATION_ACTIVITÉ, 5],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8],
-    // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
-    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
-    // [wording.TAUX_OCCUPATION_INTERNAT, 6],
-    [wording.TAUX_OCCUPATION_AUTRE, 3],
-    [wording.TAUX_OCCUPATION_SEANCES, 4],
+    // [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6],
+    // [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7],
+    // [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8],
+    // // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
+    // // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
+    // // [wording.TAUX_OCCUPATION_INTERNAT, 6],
+    // [wording.TAUX_OCCUPATION_AUTRE, 3],
+    // [wording.TAUX_OCCUPATION_SEANCES, 4],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);

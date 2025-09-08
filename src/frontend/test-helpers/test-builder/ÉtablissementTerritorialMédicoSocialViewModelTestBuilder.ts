@@ -5,7 +5,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../..
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { EtablissementTerritorialMedicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
 const autorisationsMockData = {
@@ -664,8 +664,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial["identité"]>
-  ): EtablissementTerritorialMedicoSocialViewModel {
-    return new EtablissementTerritorialMedicoSocialViewModel(
+  ): ÉtablissementTerritorialMédicoSocialViewModel {
+    return new ÉtablissementTerritorialMédicoSocialViewModel(
       {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,

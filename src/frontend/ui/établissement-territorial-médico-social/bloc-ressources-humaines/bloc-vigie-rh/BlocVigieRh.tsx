@@ -48,7 +48,7 @@ export const BlocVigieRH = ({
         setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0])
     }, [anneeEnCours])
 
-    
+
     if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
         return <div>{wording.INDICATEURS_VIDES}</div>
     }
@@ -56,7 +56,7 @@ export const BlocVigieRH = ({
     return (
         <>
             <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
-            
+
             <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
                 {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
                     <IndicateurGraphique
@@ -66,6 +66,7 @@ export const BlocVigieRH = ({
                         }
                         identifiant="vr-pyramide-ages"
                         nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
+                        source={wording.VIGIE_RH}
                     >
                         <>
                             {donneesAnneeEnCours?.effectifFemmeRef && donneesAnneeEnCours?.effectifHomme &&
@@ -82,42 +83,43 @@ export const BlocVigieRH = ({
                 }
             </ul >
 
-            {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee  ? (
+            {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
                 <>
-                <SeparatorHorizontal></SeparatorHorizontal>
-                <IndicateurGraphique
-                    contenuInfoBulle={
-                        <ContenuEffectifs
-                            dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                            source={wording.VIGIE_RH}
-                        />
-                    }
-                    identifiant="vr-effectifs"
-                    nomDeLIndicateur={wording.EFFECTIFS}
-                >
-                    <>
-                        <ColorLabel
-                            classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
-                            items={[
-                                { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE },
-                                { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
-                            ]}
-                        />
+                    <SeparatorHorizontal></SeparatorHorizontal>
+                    <IndicateurGraphique
+                        contenuInfoBulle={
+                            <ContenuEffectifs
+                                dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                                source={wording.VIGIE_RH}
+                            />
+                        }
+                        identifiant="vr-effectifs"
+                        nomDeLIndicateur={wording.EFFECTIFS}
+                        source={wording.VIGIE_RH}
+                    >
+                        <>
+                            <ColorLabel
+                                classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+                                items={[
+                                    { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE },
+                                    { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
+                                ]}
+                            />
 
-                        <div className="fr-grid-row">
-                            {donneesEffectifs.data?.map((item) => (
-                                <LineChart
-                                    categorieName={item.categorie}
-                                    classContainer="fr-col-6 fr-mb-4w"
-                                    couleurCategorie={couleurCategorie}
-                                    couleurEffectifsTottaux={couleurEffectifsTottaux}
-                                    dataEffectifs={item.dataCategorie as unknown as EffectifsData}
-                                    key={item.categorie}
-                                />
-                            ))}
-                        </div>
-                    </>
-                </IndicateurGraphique>
+                            <div className="fr-grid-row">
+                                {donneesEffectifs.data?.map((item) => (
+                                    <LineChart
+                                        categorieName={item.categorie}
+                                        classContainer="fr-col-6 fr-mb-4w"
+                                        couleurCategorie={couleurCategorie}
+                                        couleurEffectifsTottaux={couleurEffectifsTottaux}
+                                        dataEffectifs={item.dataCategorie as unknown as EffectifsData}
+                                        key={item.categorie}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    </IndicateurGraphique>
                 </>
             ) : <></>
             }
