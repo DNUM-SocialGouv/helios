@@ -1,14 +1,14 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
-import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 import { Cartographie } from "./Cartographie/Cartographie";
 import { FormulaireDeRecherche } from "./FormulaireDeRecherche";
 import { RechercheCassée } from "./RechercheCassée";
 import { RechercheEnAttente } from "./RechercheEnAttente";
 import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 
 export const PageRecherche = () => {
   const { wording } = useDependencies();
@@ -27,14 +27,26 @@ export const PageRecherche = () => {
     terme,
     termeFixe,
     rechercher,
+    pageInitiale,
+    defaultOrder,
+    defaultOrderBy
   } = useRecherche();
 
-  const showNotice = new Date() <= new Date('2025-03-28');
+  const showNotice = new Date() <= new Date('2025-09-30');
 
   useEffect(() => {
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
-      rechercher(localStorage.getItem('searchItem') ?? '', 1);
+      const storedDisplayTable = (localStorage.getItem('displayTable') ?? 'false') === 'true';
+      setDisplayTable(storedDisplayTable);
       localStorage.setItem('FromBackToSearch', 'false');
+      const terme = localStorage.getItem('searchItem') ?? '';
+
+      if (!displayTable) {
+        rechercher(terme, pageInitiale);
+      } else {
+        rechercher(terme, pageInitiale, defaultOrder, defaultOrderBy, storedDisplayTable)
+      }
+
     }
   }, [])
 

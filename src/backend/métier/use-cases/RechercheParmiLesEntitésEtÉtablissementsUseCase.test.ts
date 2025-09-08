@@ -1,7 +1,7 @@
+import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from "./RechercheParmiLesEntitésEtÉtablissementsUseCase";
 import { RésultatDeRechercheTestBuilder } from "../../test-builder/RésultatDeRechercheTestBuilder";
 import { RésultatDeRecherche } from "../entities/RésultatDeRecherche";
 import { RechercheLoader } from "../gateways/RechercheLoader";
-import { RechercheParmiLesEntitésEtÉtablissementsUseCase } from "./RechercheParmiLesEntitésEtÉtablissementsUseCase";
 
 describe("La recherche des entités juridiques et des établissements territoriaux", () => {
   it("retourne les résultats de la recherche", async () => {
@@ -37,6 +37,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
           rattachement: "",
+          categorie: '-'
         },
         {
           commune: "NANTUA",
@@ -45,6 +46,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           raisonSocialeCourte: "CH NANTUA",
           type: "Médico-social",
           rattachement: "010018407",
+          categorie: '159-C.H.'
         },
         {
           commune: "VILLENEUVE D ASCQ",
@@ -53,6 +55,7 @@ describe("La recherche des entités juridiques et des établissements territoria
           raisonSocialeCourte: "HP VILLENEUVE DASCQ",
           type: "Sanitaire",
           rattachement: "010018407",
+          categorie: '365-C.H.'
         },
       ],
     });

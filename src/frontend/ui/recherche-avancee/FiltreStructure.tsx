@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
-import { WordingFr } from "../../configuration/wording/WordingFr";
 import { Badge } from "../commun/Badge/Badge";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -10,6 +9,7 @@ import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-d
 import LogoEntitéJuridiqueNoir from "../home/logo-entité-juridique-noir.svg";
 import { AttribuesDefaults } from "./model/Attribues";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
@@ -17,10 +17,10 @@ type FiltresForComparaisonProps = Readonly<{
 }>;
 
 export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
-  const wording = new WordingFr();
+  const { wording } = useDependencies();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [typeSelected, setTypeSelected] = useState(rechercheAvanceeContext?.typeStructure || "");
-  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure || []);
+  const [typeSelected, setTypeSelected] = useState<string[]>(rechercheAvanceeContext?.typeStructure ?? []);
+  const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure ?? []);
   const checkboxElementPublic = useRef<any>();
   const checkboxElementPriveL = useRef<any>();
   const checkboxElementPriveNL = useRef<any>();
@@ -29,32 +29,21 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||
     (rechercheAvanceeContext?.capaciteMedicoSociaux && rechercheAvanceeContext?.capaciteMedicoSociaux.length > 0);
 
+  const changedActivite =
+    (rechercheAvanceeContext?.activiteMco && rechercheAvanceeContext?.activiteMco.length > 0) ||
+    (rechercheAvanceeContext?.activitePsy && rechercheAvanceeContext?.activitePsy.length > 0) ||
+    (rechercheAvanceeContext?.activiteSsr && rechercheAvanceeContext?.activiteSsr.length > 0) ||
+    (rechercheAvanceeContext?.activiteUsld && rechercheAvanceeContext?.activiteUsld.length > 0);
+
   useEffect(() => {
-    if (changedCapacite || isComparaison) {
-      setTypeSelected(AttribuesDefaults.etablissementMedicoSocial);
-      rechercheAvanceeContext?.setTypeStructure(AttribuesDefaults.etablissementMedicoSocial);
+    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+      setTypeSelected([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
+      rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
-        document.getElementById("structure-appliquer-botton")?.click();
-      }
-    };
-
-    // Ajouter l'écouteur d'événement pour "Enter"
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Nettoyer l'écouteur quand le modal est fermé
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [typeSelected]);
-
-  useEffect(() => {
-    setTypeSelected(rechercheAvanceeContext?.typeStructure || "");
+    setTypeSelected(rechercheAvanceeContext?.typeStructure || []);
     rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
       if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
         checkboxElementPublic.current.checked = true;
@@ -68,8 +57,22 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     });
   }, [rechercheAvanceeContext?.typeStructure]);
 
+  useEffect(() => {
+    if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
+      emptyStatutJuridiqueCheckboxs();
+    }
+  }, [typeSelected])
+
   function onChangeType(value: any): void {
-    setTypeSelected((prec) => (value === prec ? null : value));
+    if (typeSelected.length > 0 && typeSelected.findIndex((attr) => value === attr) !== -1) {
+      typeSelected.splice(
+        typeSelected.findIndex((attr) => value === attr),
+        1
+      );
+      setTypeSelected([...typeSelected]);
+    } else {
+      setTypeSelected([...typeSelected, value]);
+    }
     if (value === AttribuesDefaults.entiteJuridque) {
       setStatutJuridiqueSelected([AttribuesDefaults.statutPublic, AttribuesDefaults.statutPriveLucratif, AttribuesDefaults.statutPriveNonLucratif]);
       if (checkboxElementPublic && checkboxElementPriveL && checkboxElementPriveNL) {
@@ -77,15 +80,11 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
         checkboxElementPriveL.current.checked = true;
         checkboxElementPriveNL.current.checked = true;
       }
-    } else {
-      emptyStatutJuridiqueCheckboxs();
     }
-    rechercheAvanceeContext?.setCapaciteAgees([]);
-    rechercheAvanceeContext?.setCapaciteHandicap([]);
-    rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
   }
 
-  function onChangeStatutJuridique(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
+
+  function onChangeCheckboxMultiChoice(value: string, statut: string[], setStatut: Dispatch<SetStateAction<string[]>>): any {
     if (statut.length > 0 && statut.findIndex((attr) => value === attr) !== -1) {
       statut.splice(
         statut.findIndex((attr) => value === attr),
@@ -98,9 +97,9 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   }
 
   const effacerButton = () => {
-    setTypeSelected("");
+    setTypeSelected([]);
     emptyStatutJuridiqueCheckboxs();
-    rechercheAvanceeContext?.setTypeStructure("");
+    rechercheAvanceeContext?.setTypeStructure([]);
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
     if (setIsChanged) setIsChanged(true);
   };
@@ -115,20 +114,34 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   }
 
   const appliquerButton = () => {
-    if (typeSelected !== AttribuesDefaults.entiteJuridque) {
+    if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
       emptyStatutJuridiqueCheckboxs();
     }
     if (rechercheAvanceeContext) {
       rechercheAvanceeContext?.setTypeStructure(typeSelected);
       rechercheAvanceeContext?.setStatutJuridiqueStructure(statutJuridiqueSelected);
-      if (typeSelected !== AttribuesDefaults.etablissementMedicoSocial && changedCapacite) {
+      if (!typeSelected.includes(AttribuesDefaults.etablissementMedicoSocial) && changedCapacite) {
         rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
         rechercheAvanceeContext?.setCapaciteHandicap([]);
         rechercheAvanceeContext?.setCapaciteAgees([]);
       }
+      if (!typeSelected.includes(AttribuesDefaults.etablissementSanitaire) && changedActivite) {
+        rechercheAvanceeContext?.setActiviteMco([]);
+        rechercheAvanceeContext?.setActivitePsy([]);
+        rechercheAvanceeContext?.setActiviteSsr([]);
+        rechercheAvanceeContext?.setActiviteUsld([]);
+
+      }
       if (setIsChanged) setIsChanged(true);
     }
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("structure-appliquer-botton")?.click();
+    }
+  }
 
   return (
     <dialog aria-labelledby="fr-modal-Structure-Filtre-title" className="fr-modal" id="fr-modal-Structure-Filtre">
@@ -145,10 +158,11 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-ej"
-                        checked={typeSelected === AttribuesDefaults.entiteJuridque}
+                        checked={typeSelected.includes(AttribuesDefaults.entiteJuridque)}
                         id="checkboxe-ej"
                         name="checkboxe-ej"
                         onChange={() => onChangeType(AttribuesDefaults.entiteJuridque)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         type="checkbox"
                         value={AttribuesDefaults.entiteJuridque}
                       />
@@ -161,10 +175,11 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-es"
-                        checked={typeSelected === AttribuesDefaults.etablissementSanitaire}
+                        checked={typeSelected.includes(AttribuesDefaults.etablissementSanitaire)}
                         id="checkboxe-es"
                         name="checkboxe-es"
                         onChange={() => onChangeType(AttribuesDefaults.etablissementSanitaire)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         type="checkbox"
                         value={AttribuesDefaults.etablissementSanitaire}
                       />
@@ -177,10 +192,11 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                     <div className={`${styles["checkElement"]} fr-checkbox-group`}>
                       <input
                         aria-describedby="checkboxe-esms"
-                        checked={typeSelected === AttribuesDefaults.etablissementMedicoSocial}
+                        checked={typeSelected.includes(AttribuesDefaults.etablissementMedicoSocial)}
                         id="checkboxe-esms"
                         name="checkboxe-esms"
                         onChange={() => onChangeType(AttribuesDefaults.etablissementMedicoSocial)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         type="checkbox"
                         value={AttribuesDefaults.etablissementMedicoSocial}
                       />
@@ -192,7 +208,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                     </div>
                   </div>
                 </div>
-                <div id="statut-juridique" style={{ display: typeSelected === AttribuesDefaults.entiteJuridque ? "unset" : "none" }}>
+                <div id="statut-juridique" style={{ display: typeSelected.includes(AttribuesDefaults.entiteJuridque) ? "unset" : "none" }}>
                   <label className="fr-label" htmlFor="statut">
                     Statut juridique
                   </label>
@@ -202,7 +218,8 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         aria-describedby="checkboxe-sj-public"
                         id="checkboxe-sj-public"
                         name="checkboxe-sj-public"
-                        onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onChange={(e) => onChangeCheckboxMultiChoice(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         ref={checkboxElementPublic}
                         type="checkbox"
                         value={AttribuesDefaults.statutPublic}
@@ -217,7 +234,8 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         aria-describedby="checkboxe-sj-prive-lucratif"
                         id="checkboxe-sj-prive-lucratif"
                         name="checkboxe-sj-prive-lucratif"
-                        onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onChange={(e) => onChangeCheckboxMultiChoice(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         ref={checkboxElementPriveL}
                         type="checkbox"
                         value={AttribuesDefaults.statutPriveLucratif}
@@ -232,7 +250,8 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         aria-describedby="checkboxe-sj-prive-non-lucratif"
                         id="checkboxe-sj-prive-non-lucratif"
                         name="checkboxe-sj-prive-non-lucratif"
-                        onChange={(e) => onChangeStatutJuridique(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onChange={(e) => onChangeCheckboxMultiChoice(e.target.value, statutJuridiqueSelected, setStatutJuridiqueSelected)}
+                        onKeyDown={(event) => onKeyDown(event)}
                         ref={checkboxElementPriveNL}
                         type="checkbox"
                         value={AttribuesDefaults.statutPriveNonLucratif}
@@ -248,7 +267,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
               <div className="fr-modal__footer">
                 <button
                   className={"fr-btn fr-btn--secondary " + styles["eraseButton"]}
-                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
+                  disabled={!typeSelected || typeSelected.length === 0 || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
                   onClick={effacerButton}
                 >
                   Effacer
@@ -256,7 +275,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                 <button
                   aria-controls="fr-modal-Structure-Filtre"
                   className={"fr-btn fr-btn--secondary " + styles["applyButton"]}
-                  disabled={!typeSelected || (typeSelected === AttribuesDefaults.entiteJuridque && statutJuridiqueSelected.length < 1)}
+                  disabled={!typeSelected || typeSelected.length === 0 || (typeSelected.includes(AttribuesDefaults.entiteJuridque) && statutJuridiqueSelected.length < 1)}
                   id="structure-appliquer-botton"
                   onClick={appliquerButton}
                 >

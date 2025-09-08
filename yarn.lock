@@ -1321,10 +1321,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/env@npm:14.2.24"
-  checksum: 10/e1edf34c5fc8b2ba31636fb62404d0e9f9f1a2746a45ab226271ccd4c06e6f85eaff5e6e52d864b0ced144b5f5355b4b8c016d054ad5b71e4d5230d3c58dce4a
+"@next/env@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/env@npm:14.2.30"
+  checksum: 10/0c3b7733b280ef065dd6c1d7ff77174418da4dcdab16712714863da9b91113257e33d12dc743fe90c43bfef831fb1e373de16c40aebcdfa5bd29252cdd234a33
   languageName: node
   linkType: hard
 
@@ -1337,65 +1337,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-darwin-arm64@npm:14.2.24"
+"@next/swc-darwin-arm64@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-darwin-arm64@npm:14.2.30"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-darwin-x64@npm:14.2.24"
+"@next/swc-darwin-x64@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-darwin-x64@npm:14.2.30"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-linux-arm64-gnu@npm:14.2.24"
+"@next/swc-linux-arm64-gnu@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-linux-arm64-gnu@npm:14.2.30"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-linux-arm64-musl@npm:14.2.24"
+"@next/swc-linux-arm64-musl@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-linux-arm64-musl@npm:14.2.30"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-linux-x64-gnu@npm:14.2.24"
+"@next/swc-linux-x64-gnu@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-linux-x64-gnu@npm:14.2.30"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-linux-x64-musl@npm:14.2.24"
+"@next/swc-linux-x64-musl@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-linux-x64-musl@npm:14.2.30"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-win32-arm64-msvc@npm:14.2.24"
+"@next/swc-win32-arm64-msvc@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-win32-arm64-msvc@npm:14.2.30"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-win32-ia32-msvc@npm:14.2.24"
+"@next/swc-win32-ia32-msvc@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-win32-ia32-msvc@npm:14.2.30"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:14.2.24":
-  version: 14.2.24
-  resolution: "@next/swc-win32-x64-msvc@npm:14.2.24"
+"@next/swc-win32-x64-msvc@npm:14.2.30":
+  version: 14.2.30
+  resolution: "@next/swc-win32-x64-msvc@npm:14.2.30"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -6599,7 +6599,7 @@ __metadata:
     jest-mock-extended: "npm:^3.0.7"
     joi: "npm:^17.13.3"
     jsonwebtoken: "npm:^9.0.2"
-    next: "npm:14"
+    next: "npm:14.2.30"
     next-auth: "npm:^4.24.9"
     next-router-mock: "npm:^0.9.13"
     nuqs: "npm:^1.20.0"
@@ -6609,6 +6609,7 @@ __metadata:
     react: "npm:18.3.1"
     react-chartjs-2: "npm:^4.2.0"
     react-dom: "npm:18.3.1"
+    react-emojis: "npm:^1.0.6"
     react-to-print: "npm:^2.15.1"
     ssh2: "npm:^1.9.0"
     ssh2-sftp-client: "npm:^8.0.0"
@@ -9011,20 +9012,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:14":
-  version: 14.2.24
-  resolution: "next@npm:14.2.24"
+"next@npm:14.2.30":
+  version: 14.2.30
+  resolution: "next@npm:14.2.30"
   dependencies:
-    "@next/env": "npm:14.2.24"
-    "@next/swc-darwin-arm64": "npm:14.2.24"
-    "@next/swc-darwin-x64": "npm:14.2.24"
-    "@next/swc-linux-arm64-gnu": "npm:14.2.24"
-    "@next/swc-linux-arm64-musl": "npm:14.2.24"
-    "@next/swc-linux-x64-gnu": "npm:14.2.24"
-    "@next/swc-linux-x64-musl": "npm:14.2.24"
-    "@next/swc-win32-arm64-msvc": "npm:14.2.24"
-    "@next/swc-win32-ia32-msvc": "npm:14.2.24"
-    "@next/swc-win32-x64-msvc": "npm:14.2.24"
+    "@next/env": "npm:14.2.30"
+    "@next/swc-darwin-arm64": "npm:14.2.30"
+    "@next/swc-darwin-x64": "npm:14.2.30"
+    "@next/swc-linux-arm64-gnu": "npm:14.2.30"
+    "@next/swc-linux-arm64-musl": "npm:14.2.30"
+    "@next/swc-linux-x64-gnu": "npm:14.2.30"
+    "@next/swc-linux-x64-musl": "npm:14.2.30"
+    "@next/swc-win32-arm64-msvc": "npm:14.2.30"
+    "@next/swc-win32-ia32-msvc": "npm:14.2.30"
+    "@next/swc-win32-x64-msvc": "npm:14.2.30"
     "@swc/helpers": "npm:0.5.5"
     busboy: "npm:1.6.0"
     caniuse-lite: "npm:^1.0.30001579"
@@ -9065,7 +9066,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10/103d1eed8fd75385af3624e6195441f08e90aad81d61b9bf7d573686f5ce922fddaa99aafebc3dd1f407b66ddda69aba773317308b731070f8dd5739c9648ecd
+  checksum: 10/9cdf409c169a0c3acb70d66ae9c93b2e7adf4f4190230fca001c8802f46cac2179a8f75ce56a49d9e15354d7ae3bbef148a263833cab8fe7c5da9908f6e72e86
   languageName: node
   linkType: hard
 
@@ -10164,6 +10165,16 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10/3f4b73a3aa083091173b29812b10394dd06f4ac06aff410b74702cfb3aa29d7b0ced208aab92d5272919b612e5cda21aeb1d54191848cf6e46e9e354f3541f81
+  languageName: node
+  linkType: hard
+
+"react-emojis@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "react-emojis@npm:1.0.6"
+  peerDependencies:
+    react: ^16.8.6
+    react-dom: ^16.8.6
+  checksum: 10/bccda8f36b7a3d604d879b71438e11e21172b99ea6f3e37a5b5dd6f9ff61fa5605299ca04dadd9b99124488b46b86d428179bfe316bf919d4b730ffe849c15b3
   languageName: node
   linkType: hard
 

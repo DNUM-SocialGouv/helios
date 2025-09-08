@@ -1,9 +1,12 @@
-import { Bloc } from "../../commun/Bloc/Bloc";
-import { useDependencies } from "../../commun/contexts/useDependencies";
+
 import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import { ContenuBlocRHMedicoSocialHelios } from "./contenu-bloc-rh-helios";
 import { ContenuBlocRHMedicoSocialVigieRH } from "./contenu-bloc-rh-vigierh";
+
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
+import { Bloc } from "../../commun/Bloc/Bloc";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+
 
 type BlocRessourcesHumainesMédicoSocialProps = Readonly<{
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;

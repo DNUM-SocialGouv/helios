@@ -1,8 +1,8 @@
+import { ContenuNombreDePassagesAuxUrgences } from "./ContenuNombreDePassagesAuxUrgences";
+import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ContenuNombreDePassagesAuxUrgences } from "./ContenuNombreDePassagesAuxUrgences";
-import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
 
 type GraphiqueNombrePassageUrgenceProps = Readonly<{
   nombrePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
@@ -21,11 +21,12 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
         />
       }
       dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
-      identifiant="activite-2"
+      identifiant="activite-3"
       nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
       source={wording.RPU}
     >
       <HistogrammeHorizontal
+        cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombrePassageAuxUrgencesViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}

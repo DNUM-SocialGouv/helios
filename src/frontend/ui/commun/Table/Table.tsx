@@ -1,19 +1,15 @@
 /* Les erreurs remontees sont lies a l’attribut « aria-sort » sur les bouton de tri. Cet attribut est impose par le dsfr pour changer l’icon du bouton */
 /* eslint-disable jsx-a11y/role-supports-aria-props */
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
+import styles from "./Table.module.css";
+import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
-import { ComparaisonViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
+import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import styles from "./Table.module.css";
-import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
-
-export type SelectedRows = Readonly<{
-  [page: number]: RechercheViewModel[] | ComparaisonViewModel[] | (RechercheViewModel | ComparaisonViewModel)[];
-}>;
 
 interface Header {
   label: string;
@@ -27,11 +23,11 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: RechercheViewModel[] | ComparaisonViewModel[];
+  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
-  selectedRows?: SelectedRows;
-  setSelectedRows?: Dispatch<SetStateAction<Readonly<SelectedRows>>>;
+  selectedRows?: Map<string, string>;
+  setSelectedRows?: Dispatch<SetStateAction<Readonly<Map<string, string>>>>;
   order: string;
   orderBy: string;
   setOrder: (order: string) => void;
@@ -40,10 +36,9 @@ interface DataTableProps {
   isCenter: boolean;
   isVScroll: boolean;
   onClickInfobull?: (name: string) => void;
-  page: number;
   handleSelectAll?: () => void;
   isAllSelected?: boolean;
-  onClickDelete: (finessNumber: string) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -63,15 +58,14 @@ interface TableHeaderProps {
 
 interface TableBodyProps {
   headers: Header[];
-  selectedRows?: SelectedRows;
-  data: RechercheViewModel[] | ComparaisonViewModel[];
+  selectedRows?: Map<string, string>;
+  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
-  page: number;
-  onClickDelete: (finessNumber: string) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -128,13 +122,13 @@ const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
     );
 };
 
-const construisLeLien = (type: string, finess: string): string => {
+const construisLeLien = (type: string, finess: string, isSimpleSearch: boolean | undefined, searchItem: string): string => {
   if (type === "Médico-social") {
-    return "/etablissement-territorial-medico-social/" + finess;
+    return "/etablissement-territorial-medico-social/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   } else if (type === "Sanitaire") {
-    return "/etablissement-territorial-sanitaire/" + finess;
+    return "/etablissement-territorial-sanitaire/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");;
   }
-  return "/entite-juridique/" + finess;
+  return "/entite-juridique/" + finess + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
 };
 
 const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInfobull, handleSelectAll, isAllSelected, isCenter, isSimpleSearchTable }: TableHeaderProps) => {
@@ -169,24 +163,22 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 };
 
 
-const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, page, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
-  const selectedMap = new Map();
-  if (selectedRows) {
-    selectedRows[page]?.forEach(element => {
-      selectedMap.set(element.numéroFiness, true);
-    });
-  }
+const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
+  const [searchItem, setSearchItem] = useState("");
+  useEffect(() => {
+    setSearchItem(localStorage.getItem('searchItem') ?? "")
+  }, []);
 
   const couleurLogo = "#000000"; // Logos en noir
   return (
     <tbody>
       {data.map((row, rowIndex) => (
-        <tr aria-selected={selectedMap.get(row.numéroFiness)} data-row-key={row.numéroFiness} id={`table-selectable-row-key-${row.numéroFiness}`} key={row.numéroFiness}>
+        <tr aria-selected={selectedRows?.has(row.numéroFiness)} data-row-key={row.numéroFiness} id={`table-selectable-row-key-${row.numéroFiness}`} key={row.numéroFiness}>
           {isSimpleSearchTable ? null :
             <th className="fr-cell--fixed" scope="row">
               <div className="fr-checkbox-group fr-checkbox-group--sm">
                 <input
-                  checked={!!selectedMap.get(row.numéroFiness)}
+                  checked={selectedRows?.has(row.numéroFiness)}
                   id={`table-select-checkbox-7748--${rowIndex}`}
                   name="row-select"
                   onChange={() => handleSelectRow(row)}
@@ -198,13 +190,13 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
               </div>
             </th>}
           {headers.map((header) => (
-            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedMap.get(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
+            <td className={`${isCenter || header.key === "favori" ? "fr-cell--center" : styles["cell-container"]} ${header.key === 'socialReason' ? "fr-cell--fixed" : ''} ${(row as any)[header.key] === 'Consultation non autorisée' ? styles["cell-not-authorized"] : ''}  ${selectedRows?.has(row.numéroFiness) ? styles["selected-row"] : ""}`} key={row.numéroFiness + "" + header.key}>
               {header.key === "delete" && (
                 <button
                   aria-controls="fr-modal-2"
                   className="fr-icon-delete-line fr-cell--center"
                   data-fr-opened="false"
-                  onClick={() => onClickDelete(row["numéroFiness"])}
+                  onClick={() => onClickDelete(row)}
                   title="Supprimer"
                   type="button"
                 />
@@ -216,11 +208,11 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   {row["type"] === "Entité juridique" && <span className={styles["logo-container"]}>{LogoEntiteJuridiqueSvg(couleurLogo)}</span>}
                 </div>
               )}
-              {header.key === "favori" && <StarButtonList favorite={row as RechercheViewModel} parent="tab" />}
+              {header.key === "favori" && <StarButtonList numeroFiness={row.numéroFiness} parent="tab" />}
               {header.key === "socialReason" && (
                 <a
                   className="fr-tile__link"
-                  href={construisLeLien(row["type"], row["numéroFiness"])}
+                  href={construisLeLien(row["type"], row["numéroFiness"], isSimpleSearchTable, searchItem)}
                   rel="noreferrer"
                   target="_blank"
                 >
@@ -254,18 +246,19 @@ export const Table = ({
   onClickInfobull,
   handleSelectAll,
   isAllSelected,
-  page,
   onClickDelete,
   handleInfoBullMoyenne,
   isSimpleSearchTable,
 }: DataTableProps) => {
-  const handleSelectRow = (row: RechercheViewModel | ComparaisonViewModel) => {
+  const handleSelectRow = (row: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     if (selectedRows && setSelectedRows) {
-      if (selectedRows[page]?.find((item) => row.numéroFiness === item.numéroFiness)) {
-        setSelectedRows({ ...selectedRows, [page]: selectedRows[page].filter((item) => item.numéroFiness !== row.numéroFiness) });
+      const newSelected = new Map(selectedRows);
+      if (selectedRows.has(row.numéroFiness)) {
+        newSelected.delete(row.numéroFiness);
       } else {
-        selectedRows[page] ? setSelectedRows({ ...selectedRows, [page]: [...selectedRows[page], row] }) : setSelectedRows({ ...selectedRows, [page]: [row] });
+        newSelected.set(row.numéroFiness, row.type);
       }
+      setSelectedRows(newSelected);
     }
   };
 
@@ -297,7 +290,6 @@ export const Table = ({
                 isShowAvrage={isShowAvrage}
                 isSimpleSearchTable={isSimpleSearchTable}
                 onClickDelete={onClickDelete}
-                page={page}
                 selectedRows={selectedRows}
                 total={total}
               />

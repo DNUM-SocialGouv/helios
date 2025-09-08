@@ -30,7 +30,7 @@ type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesPartiellesSsr: { x: number; y: number | null | "" }[];
 }>;
 
-export class ActivitésMensuelViewModel {
+export class ActivitesMensuelViewModel {
   public activitésMensuellesParAnnee: ActivitesSanitaireMensuelParAnnee;
   public annees: number[];
   readonly identifiantDeLaLégendeDesSéjoursMensuelMCO = "légende-graphique-sanitaire-journées-séjours-mensuels-mco";
@@ -46,7 +46,8 @@ export class ActivitésMensuelViewModel {
 
   private grouperLesActivitesParAnnee(): ActivitesSanitaireMensuelParAnnee {
     return this.activitésMensuels.activitesSanitaireMensuelList.reduce((grouped, activite) => {
-      (grouped[activite["année"]] = grouped[activite["année"]] || []).push(activite);
+      grouped[activite["année"]] = grouped[activite["année"]] || [];
+      grouped[activite["année"]].push(activite);
       return grouped;
     }, {} as ActivitesSanitaireMensuelParAnnee);
   }
@@ -170,7 +171,7 @@ export class ActivitésMensuelViewModel {
     this.activitésMensuellesParAnnee[annee].forEach((activité: ActiviteSanitaireMensuel) => {
       nombreDeJournées.nombreJournéesComplètesPsy.push({
         x: activité.mois,
-        y: 0,
+        y: activité.nombreJournéesComplètesPsy,
       });
       nombreDeJournées.nombreJournéesComplètesSsr.push({
         x: activité.mois,
@@ -178,7 +179,7 @@ export class ActivitésMensuelViewModel {
       });
       nombreDeJournées.nombreJournéesPartiellesPsy.push({
         x: activité.mois,
-        y: 0,
+        y: activité.nombreJournéesPartiellesPsy,
       });
       nombreDeJournées.nombreJournéesPartiellesSsr.push({
         x: activité.mois,
@@ -260,6 +261,8 @@ export class ActivitésMensuelViewModel {
     return [
       this.wording.HOSPITALISATION_PARTIELLE_SSR,
       this.wording.HOSPITALISATION_COMPLÈTE_SSR,
+      this.wording.HOSPITALISATION_PARTIELLE_PSY,
+      this.wording.HOSPITALISATION_COMPLÈTE_PSY,
     ];
   }
 
@@ -268,6 +271,8 @@ export class ActivitésMensuelViewModel {
     return [
       this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesSsr),
       this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesSsr),
+      this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesPartiellesPsy),
+      this.valeursDesNombresDeSéjours(nombreDeJournées.nombreJournéesComplètesPsy),
     ];
   }
 

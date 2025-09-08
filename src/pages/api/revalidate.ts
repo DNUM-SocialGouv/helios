@@ -24,7 +24,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       await response.revalidate(paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + request.query["numero-finess"]);
       return response.json({ revalidated: true });
     }
-  } catch (err) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return response.status(500).send("[Helios] L’invalidation de la page ne s’est pas déroulée correctement.");
   }
 }

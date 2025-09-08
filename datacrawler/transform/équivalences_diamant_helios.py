@@ -16,9 +16,25 @@ class ColonneHelios(TypedDict):
     "Taux d'occupation des lits autorisés en accueil de jour": ColonneHelios(nom="taux_occupation_accueil_de_jour", type=float),
     "Taux d'occupation des lits autorisés en hébergement temporaire": ColonneHelios(nom="taux_occupation_en_hebergement_temporaire", type=float),
     "Taux d'occupation des places autorisées en hébergement permanent": ColonneHelios(nom="taux_occupation_en_hebergement_permanent", type=float),
+    "Taux d'occupation Externat Autres ESMS": ColonneHelios(nom="taux_occupation_externat", type=float),
+    "Taux d'occupation Semi-internat Autres ESMS": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
+    "Taux d'occupation Internat Autres ESMS": ColonneHelios(nom="taux_occupation_internat", type=float),
+    "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": ColonneHelios(nom="taux_occupation_autre", type=float),
 }
 
 colonnes_à_lire_bloc_activités_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios.keys())
+
+equivalences_diamant_ann_ca_ej_et_bloc_activites_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Taux d'occupation Séances CA": ColonneHelios(nom="taux_occupation_seances", type=float),
+    "Taux d'occupation Externat CA": ColonneHelios(nom="taux_occupation_externat", type=float),
+    "Taux d'occupation Semi-internat CA": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
+    "Taux d'occupation Internat CA": ColonneHelios(nom="taux_occupation_internat", type=float),
+    "Taux d'occupation Autre 1, 2 et 3 CA": ColonneHelios(nom="taux_occupation_autre", type=float),
+}
+
+colonnes_a_lire_bloc_activites_ann_ca_ej_et: List[str] = list(equivalences_diamant_ann_ca_ej_et_bloc_activites_helios.keys())
 
 index_des_activités: List[str] = [
     "annee",
@@ -64,6 +80,14 @@ colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pms
 }
 
 colonnes_à_lire_ann_rpu: List[str] = list(équivalences_diamant_ann_rpu_helios.keys())
+
+equivalences_diamant_ann_sae_activite_helios: ÉquivalencesDiamantHelios = {
+    "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre journées USLD": ColonneHelios(nom="nombre_journees_usld", type=float),
+}
+
+colonnes_à_lire_ann_sae_activite: List[str] = list(equivalences_diamant_ann_sae_activite_helios.keys())
 
 équivalences_diamant_ann_sae_helios: ÉquivalencesDiamantHelios = {
     "Finess": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
@@ -248,6 +272,8 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
     "Nombre de séjours mensuels HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
     "Nombre de journées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
     "Nombre de journées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str),
+    "Nombre total de journées cumulés mensuels hospit complète PSY": ColonneHelios(nom="nombre_journees_completes_psy", type=str),
+    "Nombre total de journées cumulés mensuels HTP PSY": ColonneHelios(nom="nombre_journees_partielles_psy", type=str),
 }
 
 colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())

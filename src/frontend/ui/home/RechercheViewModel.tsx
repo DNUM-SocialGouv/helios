@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 
+import LogoEntitéJuridiqueNoir from "./logo-entité-juridique-noir.svg";
 import { Résultat } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { Paths } from "../../configuration/Paths";
 import LogoÉtablissementTerritorialMédicoSocial from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-médico-social-noir.svg";
 import LogoÉtablissementTerritorialSanitaire from "../entité-juridique/liste-des-établissements/logo-établissement-territorial-sanitaire-noir.svg";
-import LogoEntitéJuridiqueNoir from "./logo-entité-juridique-noir.svg";
 
 export class RechercheViewModel {
-  constructor(private readonly recherche: Résultat, private readonly paths: Paths) {}
+  constructor(private readonly recherche: Résultat, private readonly paths: Paths) { }
 
   public get numéroFiness(): string {
     return this.recherche.numéroFiness;
@@ -31,6 +31,10 @@ export class RechercheViewModel {
 
   public get rattachement(): string {
     return this.recherche.rattachement;
+  }
+
+  public get categorie(): string {
+    return this.recherche.categorie;
   }
 
   public get titre(): ReactElement {
@@ -62,12 +66,14 @@ export class RechercheViewModel {
     return LogoEntitéJuridiqueNoir;
   };
 
-  public construisLeLien = (): string => {
+  public construisLeLien = (isSimpleSearch: boolean | undefined): string => {
+    const searchItem = localStorage.getItem('searchItem') ?? ""
+
     if (this.recherche.type === "Médico-social") {
-      return this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + this.recherche.numéroFiness;
+      return this.paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + this.recherche.numéroFiness + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
     } else if (this.recherche.type === "Sanitaire") {
-      return this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + this.recherche.numéroFiness;
+      return this.paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + this.recherche.numéroFiness + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
     }
-    return this.paths.ENTITÉ_JURIDIQUE + "/" + this.recherche.numéroFiness;
+    return this.paths.ENTITÉ_JURIDIQUE + "/" + this.recherche.numéroFiness + (isSimpleSearch && searchItem ? "?termeSimple=" + encodeURIComponent(searchItem) : "");
   };
 }

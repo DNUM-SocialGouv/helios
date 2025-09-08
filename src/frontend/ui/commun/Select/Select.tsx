@@ -1,10 +1,10 @@
-import { ChangeEventHandler, ReactChild } from "react";
+import { ChangeEventHandler, ReactNode } from "react";
 
 import styles from "./Select.module.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 type SelectProps = Readonly<{
-  label: ReactChild;
+  label: ReactNode;
   onChange: ChangeEventHandler<HTMLSelectElement>;
   options: (number | string)[];
   id?: string;

@@ -1,17 +1,19 @@
 import { ReactElement } from "react";
 
+import styles from "./Titre.module.css";
+import { ActionsButton } from "../../etablissement/ActionsButton";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
-import styles from "./Titre.module.css";
 
 type TitreProps = Readonly<{
   logo: ReactElement;
   children: ReactElement | string;
-  rechercheViewModel: RechercheViewModel | undefined;
-  downloadPDF?: any;
+  rechercheViewModel: RechercheViewModel;
+  downloadPDF: () => void;
+  exportET?: () => void;
 }>;
 
-export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: TitreProps) => {
+export const Titre = ({ logo, children, rechercheViewModel, downloadPDF, exportET }: TitreProps) => {
   return (
     <div className={styles["titre"]}>
       <span className="logoContainer">{logo}</span>
@@ -19,10 +21,10 @@ export const Titre = ({ logo, children, rechercheViewModel, downloadPDF }: Titre
       <h1>
         {children}
         <span className="hiddenPdf">
-          <StarButtonList favorite={rechercheViewModel} parent="titre" />
+          <StarButtonList numeroFiness={rechercheViewModel.numéroFiness} parent="titre" />
         </span>
       </h1>
-      {downloadPDF && <div className="hiddenPdf">{downloadPDF}</div>}
-    </div>
+      <div className="hiddenPdf"><ActionsButton downloadPDF={downloadPDF} exportET={exportET} finess={rechercheViewModel.numéroFiness} /></div>
+    </div >
   );
 };

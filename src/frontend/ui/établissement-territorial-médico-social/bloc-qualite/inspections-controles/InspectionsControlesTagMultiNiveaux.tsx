@@ -1,10 +1,10 @@
 import { ReactElement, useState, memo } from "react";
 
+import CardInspectionControle from "./card-inspection-controle/CardInspectionControle";
+import styles from "./InspectionsControlesTagMultiNiveaux.module.css";
 import { Inspection, InspectionControleDataTheme } from "../../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { TagCliquable } from "../../../commun/Tag";
-import CardInspectionControle from "./card-inspection-controle/CardInspectionControle";
-import styles from "./InspectionsControlesTagMultiNiveaux.module.css";
 
 export const InspectionsControlesRow = ({ row, libelleTheme }: { row: Inspection[]; libelleTheme: string }): ReactElement => {
   const { wording } = useDependencies();

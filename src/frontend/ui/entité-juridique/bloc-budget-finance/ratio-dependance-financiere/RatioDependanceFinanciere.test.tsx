@@ -2,11 +2,11 @@ import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import React from "react";
 
+import { RatioDependanceFinanciere } from "./RatioDependanceFinanciere";
+import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereViewModel";
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { GraphiqueTest } from "../../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../../test-helpers/testHelper";
-import { RatioDependanceFinanciere } from "./RatioDependanceFinanciere";
-import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereViewModel";
 
 const { wording } = fakeFrontDependencies;
 

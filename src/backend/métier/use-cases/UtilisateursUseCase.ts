@@ -2,7 +2,7 @@ import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class UtilisateursUseCase {
-  constructor(private utilisateurLoader: UtilisateurLoader) { }
+  constructor(private readonly utilisateurLoader: UtilisateurLoader) { }
 
   async getUsersListPaginated(
     key: string,

@@ -9,7 +9,7 @@ import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-help
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
 import { StringFormater } from "../commun/StringFormater";
 import { RechercheViewModel } from "../home/RechercheViewModel";
-import { ActivitésMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";
 
 const { wording, paths } = fakeFrontDependencies;
@@ -37,7 +37,7 @@ const rechercheViewModel = new RechercheViewModel(result, paths);
 describe("La page Entité Juridique", () => {
 
   it("affiche le titre court dans l’onglet", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -59,7 +59,7 @@ describe("La page Entité Juridique", () => {
   });
 
   it('affiche le titre : "EJ - numéro de FINESS - nom court de l’entité juridique"', () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -83,8 +83,8 @@ describe("La page Entité Juridique", () => {
     expect(titre).toBeInTheDocument();
   });
 
-  it("affiche le bouton pour imprimer", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+  it("affiche le bouton d’action", () => {
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -101,12 +101,12 @@ describe("La page Entité Juridique", () => {
     );
 
     // THEN
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-    expect(imprimer).toHaveAttribute("type", "button");
+    const actions = screen.getByRole("button", { name: wording.ACTIONS });
+    expect(actions).toHaveAttribute("type", "button");
   });
 
   it("affiche la categorisation", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -129,7 +129,7 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc activité", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -152,7 +152,7 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc budget et finance", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -175,7 +175,7 @@ describe("La page Entité Juridique", () => {
   });
 
   it("affiche le bloc autorisation et capacité", () => {
-    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -199,7 +199,7 @@ describe("La page Entité Juridique", () => {
 
   describe("affiche le bloc identité de l’entité juridique", () => {
     it("affiche le nom de l’établissement", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -231,7 +231,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche la date d’ouverture", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -264,7 +264,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche le numéro FINESS", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -294,7 +294,7 @@ describe("La page Entité Juridique", () => {
 
     it("affiche le SIREN", () => {
       // WHEN
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -322,7 +322,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche l’adresse", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -351,7 +351,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche le téléphone", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -380,7 +380,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche le statut de l’établissement", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -417,7 +417,7 @@ describe("La page Entité Juridique", () => {
           value: "",
         },
       });
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -442,7 +442,7 @@ describe("La page Entité Juridique", () => {
     });
 
     it("affiche l’adresse incomplète lorsqu’il manque des champs d’adresse", () => {
-      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const entitéJuridiqueActivitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);

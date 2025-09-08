@@ -84,11 +84,14 @@ export interface Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string;
   readonly ZONE_GEOGRAPHIQUE: string;
   readonly STRUCTURE: string;
+  readonly CATEGORIES_FINESS: string;
+  readonly CATEGORIES_FINESS_TITLE: string;
   readonly CAPACITE: string;
+  readonly ACTIVITE_SAN: string;
   readonly RECHERCHE_AVANCEE_TEXT: string;
   readonly RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
   readonly AUCUN_RESULTAT_RECHERCHE_AVANCEE_TEXT: string;
-
+  readonly TOUT_EFFACER: string;
   // Cartographie
   readonly CARTOGRAPHIE: string;
   readonly OFFRE_SANTÉ_PAR_REGION: string;
@@ -107,6 +110,7 @@ export interface Wording {
   readonly NON: string;
   readonly DÉTAILS: string;
   readonly TÉLÉCHARGER_EN_PDF: string;
+  readonly EXPORT_ET_RATTACHES: string;
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string;
@@ -125,6 +129,8 @@ export interface Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
+  readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
+  readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string;
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
@@ -164,6 +170,11 @@ export interface Wording {
   readonly NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES: string;
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string;
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string;
+  readonly TAUX_OCCUPATION_EXTERNAT: string;
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string;
+  readonly TAUX_OCCUPATION_INTERNAT: string;
+  readonly TAUX_OCCUPATION_AUTRE: string;
+  readonly TAUX_OCCUPATION_SEANCES: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
@@ -184,6 +195,7 @@ export interface Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string;
   readonly HOSPITALISATION_COMPLÈTE_PSY: string;
   readonly NOMBRE_DE_HAD: string;
+  readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
 
@@ -377,7 +389,7 @@ export interface Wording {
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
   readonly VIGIE_RH: ReactElement;
-  
+
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
@@ -425,8 +437,13 @@ export interface Wording {
   // Comparaison
   readonly COMPARAISON: string;
   readonly AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly COMPARAISON_AUCUN_FINESS: string;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
+  //--Alert-comparaison
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
 
   // Favoris
   readonly FAVORIS_LIST: string;
@@ -442,9 +459,13 @@ export interface Wording {
   readonly ETOILE_ETAB_DANS_LISTE: string;
   readonly ETOILE_ETAB_PAS_DANS_LISTE: string;
   readonly ETOILE_MES_LISTES: string;
-  readonly ETOILE_NOUVELLE_LISTE: string;
+  readonly ETOILE_NOUVELLE_LISTE_LABEL: string;
+  readonly ETOILE_NOUVELLE_LISTE_BOUTON: string;
   readonly ETOILE_MAX_LISTE_ATTEINT: string;
   readonly ETOILE_ERREUR_MODIF_ETAB: string;
+
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
@@ -530,19 +551,20 @@ export interface Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string;
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string;
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string;
-  //Comparaison
-  //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
-  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string;
-  readonly INFOBULLE_MOYENNE_UTILISATEURS: string;
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string;
+  readonly TOUT_DESELECTIONNER: string;
+  // Filtre Activité SAN
+  readonly FA_MCO: string;
+  readonly FA_PSY: string;
+  readonly FA_SSR: string;
+  readonly FA_USLD: string;
 
   //Page d’une liste d’etablissements
   readonly LISTE_DE_FAVORIS: string;
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
 
   //Vigie RH
@@ -558,5 +580,6 @@ export interface Wording {
   readonly EFFECTIFS_TOTAUX: string;
   readonly VIGIE_RH_CATEGORIE: string;
   readonly MOIS_ANNEES: string;
-  
+
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

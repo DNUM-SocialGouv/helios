@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -43,7 +43,7 @@ import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../../métier/
 import { ÉtablissementTerritorialSanitaireLoader } from "../../../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
 import { construisActiviteMensuel } from "../entité-juridique-loader/ConstrutitActivitesMensuel";
 
-export class TypeOrmÉtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
+export class TypeOrmEtablissementTerritorialSanitaireLoader implements ÉtablissementTerritorialSanitaireLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeActivité(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialSanitaireActivité[]> {
@@ -52,14 +52,15 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     const dateDeMiseAJourMenPmsiAnnuelModel = (await this.chargeLaDateDeMiseÀJourModel(
       FichierSource.DIAMANT_MEN_PMSI_ANNUEL
     )) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseAJourAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel);
+    return this.construisActivité(activitésÉtablissementTerritorialActivitésModel, dateDeMiseAJourAnnRpuModel, dateDeMiseAJourMenPmsiAnnuelModel, dateDeMiseAJourAnnSaeModel);
   }
 
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelModel)
+      .getRepository(ActiviteSanitaireMensuelModel)
       .createQueryBuilder("activite_sanitaire_mensuel")
       .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
       .orderBy('annee', 'ASC')
@@ -82,6 +83,8 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
         nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
         nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+        nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
+        nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
       }
     })
 
@@ -266,7 +269,7 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
     })
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private readonly constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -299,15 +302,16 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+      } else if (evenement.etat === 'EN_COURS') {
+        evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
       } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+        evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private readonly construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,
@@ -473,7 +477,8 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
   private construisActivité(
     établissementTerritorialActivitésModel: ActivitéSanitaireModel[],
     dateDeMiseAJourAnnRpuModel: DateMiseÀJourFichierSourceModel,
-    dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel
+    dateDeMiseAJourMenPmsiAnnuelModel: DateMiseÀJourFichierSourceModel,
+    dateDeMiseAJourAnnSaeModel: DateMiseÀJourFichierSourceModel
   ): ÉtablissementTerritorialSanitaireActivité[] {
     return établissementTerritorialActivitésModel.map<ÉtablissementTerritorialSanitaireActivité>((établissementTerritorialModel) => ({
       année: établissementTerritorialModel.année,
@@ -520,6 +525,10 @@ export class TypeOrmÉtablissementTerritorialSanitaireLoader implements Établis
       nombreSéjoursPartielsObstétrique: {
         dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.nombreSéjoursPartielsObstétrique,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnSaeModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.nombreJourneesUsld,
       },
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));

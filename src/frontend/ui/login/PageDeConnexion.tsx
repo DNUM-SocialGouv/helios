@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import { FormulaireDeConnexion } from "./FormulaireDeConnexion";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const PageDeConnexion = () => {
   const { wording } = useDependencies();

@@ -1,5 +1,5 @@
-import { Badge } from "../../commun/Badge/Badge";
 import { CatégorisationViewModel } from "./CatégorisationViewModel";
+import { Badge } from "../../commun/Badge/Badge";
 
 type CatégorisationProps = { catégorisationViewModel: CatégorisationViewModel };
 

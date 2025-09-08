@@ -1,11 +1,11 @@
-import { ReactChild, ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 import { useDependencies } from "../contexts/useDependencies";
 
 type IndicateurProps = Readonly<{
-  children: ReactChild;
+  children: ReactNode;
   dateDeMiseÀJour: string;
-  nomDeLIndicateur: ReactChild;
+  nomDeLIndicateur: ReactNode;
   source: ReactElement;
 }>;
 

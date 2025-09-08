@@ -1,3 +1,5 @@
+import { ActivitesMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
+import { EntiteJuridiqueActivitesViewModel } from "./EntitéJuridiqueActivitésViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -6,19 +8,20 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { GraphiqueNombreHAD } from "../../indicateur-métier/nombre-de-had/GraphiqueNombreHAD";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
+import { GraphiqueNombreDeJourneesUsld } from "../../indicateur-métier/nombre-journees-usld/GraphiqueNombreDeJourneesUsld";
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
-import { ActivitésMensuelViewModel } from "./EntitéJuridiqueActivitésMensuelsViewModel";
-import { EntitéJuridiqueActivitésViewModel } from "./EntitéJuridiqueActivitésViewModel";
 
 type BlocActivitéSanitaireProps = Readonly<{
-  entitéJuridiqueActivitéViewModel: EntitéJuridiqueActivitésViewModel;
-  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
+  entitéJuridiqueActivitéViewModel: EntiteJuridiqueActivitesViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
 export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, entitéJuridiqueActivitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
+
+
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
@@ -49,6 +52,14 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, ent
         )}
         {entitéJuridiqueActivitéViewModel.nombreHADEstIlAutorisé && entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() ? (
           <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />
+        ) : (
+          <></>
+        )}
+        {entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlAutorise && entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlRenseigne() ? (
+          <GraphiqueNombreDeJourneesUsld
+            estEntitéJuridique={true}
+            nombreDeJourneesUsldViewModel={entitéJuridiqueActivitéViewModel.nombreDeJourneesUsldViewModel}
+          />
         ) : (
           <></>
         )}

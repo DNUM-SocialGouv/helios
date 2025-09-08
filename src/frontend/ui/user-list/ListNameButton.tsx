@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { KeyboardEvent, useState } from "react";
 
+import ConfirmDeleteListModal from "./DeleteListModal";
+import styles from "./ListNameButton.module.css"
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useOutsideClick } from "../commun/hooks/useOutsideClick";
 import { useFavoris } from "../favoris/useFavoris";
-import ConfirmDeleteListModal from "./DeleteListModal";
-import styles from "./ListNameButton.module.css"
 
 const ListNameButton = ({ id, name }: { id: number, name: string }) => {
     const [displayMenu, setDisplayMenu] = useState(false);

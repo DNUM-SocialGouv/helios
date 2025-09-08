@@ -140,3 +140,153 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_modalite",
     "code_forme",
 ]
+
+XPATH_FINESS_CS1400101 = "./structureej"
+type_des_colonnes_finess_cs1400101 = {
+    "datecrea": str,
+    "datefermeture": str,
+    "departement": str,
+    "libcommune": str,
+    "libdepartement": str,
+    "libstatutjuridique": str,
+    "ligneacheminement": str,
+    "nofiness": str,
+    "numvoie": str,
+    "rs": str,
+    "rslongue": str,
+    "siren": str,
+    "statutjuridique": str,
+    "telephone": str,
+    "typvoie": str,
+    "voie": str,
+}
+colonnes_a_garder_finess_cs1400101 = list(type_des_colonnes_finess_cs1400101.keys())
+equivalences_finess_cs1400101_helios = {
+    "ligneacheminement": "adresse_acheminement",
+    "numvoie": "adresse_numero_voie",
+    "typvoie": "adresse_type_voie",
+    "voie": "adresse_voie",
+    "libcommune": "commune",
+    "libdepartement": "departement",
+    "libstatutjuridique": "libelle_statut_juridique",
+    "nofiness": "numero_finess_entite_juridique",
+    "rslongue": "raison_sociale",
+    "rs": "raison_sociale_courte",
+    "siren": "siren",
+    "telephone": "telephone",
+    "datecrea": "date_ouverture",
+    "ref_code_region": "code_region",
+    "categorisation": "categorisation",
+}
+
+index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
+
+XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
+type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
+colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
+
+XML_TAG_FINESS_CS1400102 = "structureet"
+colonnes_finess_cs1400102 = [
+    "nofinesset",
+    "nofinessej",
+    "rs",
+    "rslongue",
+    "numvoie",
+    "typvoie",
+    "voie",
+    "libcommune",
+    "departement",
+    "libdepartement",
+    "ligneacheminement",
+    "telephone",
+    "courriel",
+    "categetab",
+    "libcategetab",
+    "libcourtcategetab",
+    "typeet",
+    "nofinessppal",
+    "siret",
+    "codemft",
+    "libmft",
+    "dateouv",
+    "datefermeture",
+    "indcaduc",
+]
+type_des_colonnes_finess_cs1400102 = {
+    "nofinesset": "string",
+    "nofinessej": "string",
+    "rs": "string",
+    "rslongue": "string",
+    "numvoie": "string",
+    "typvoie": "string",
+    "voie": "string",
+    "libcommune": "string",
+    "departement": "string",
+    "libdepartement": "string",
+    "dateouv": "string",
+    "datefermeture": "string",
+    "ligneacheminement": "string",
+    "categetab": "string",
+    "codemft": "string",
+    "courriel": "string",
+    "libcategetab": "string",
+    "libcourtcategetab": "string",
+    "libmft": "string",
+    "nofinessppal": "string",
+    "siret": "string",
+    "typeet": "string",
+    "telephone": "string",
+}
+equivalences_finess_cs1400102_helios = {
+    "ligneacheminement": "adresse_acheminement",
+    "numvoie": "adresse_numero_voie",
+    "typvoie": "adresse_type_voie",
+    "voie": "adresse_voie",
+    "categetab": "cat_etablissement",
+    "courriel": "courriel",
+    "libcategetab": "libelle_categorie_etablissement",
+    "nofinessej": "numero_finess_entite_juridique",
+    "nofinesset": "numero_finess_etablissement_territorial",
+    "nofinessppal": "numero_finess_etablissement_principal",
+    "rslongue": "raison_sociale",
+    "typeet": "type_etablissement",
+    "telephone": "telephone",
+    "domaine": "domaine",
+    "rs": "raison_sociale_courte",
+    "libcommune": "commune",
+    "libdepartement": "departement",
+    "libcourtcategetab": "libelle_court_categorie_etablissement",
+    "codemft": "code_mode_tarification",
+    "siret": "siret",
+    "libmft": "libelle_du_mode_tarification",
+    "ref_code_region": "code_region",
+    "dateouv": "date_ouverture",
+    "classification": "classification",
+}
+
+colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())
+
+
+index_des_etablissements_territorriaux: List[str] = [
+    "numero_finess_etablissement_territorial"
+]
+
+XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
+type_des_colonnes_finess_cs1500106 = {"code": str, "domaine": str}
+colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
+type_des_colonnes_categories_finess = {
+    "code": str,
+    "libelle": str,
+    "libellecourt": str,
+    "domaine": str,
+}
+equivalences_finess_cs1500106_helios = {
+    "code": "code",
+    "libelle": "libelle",
+    "libellecourt": "libelle_court",
+    "domaine": "domaine",
+}
+
+index_des_categories: List[str] = ["code"]
+
+colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())

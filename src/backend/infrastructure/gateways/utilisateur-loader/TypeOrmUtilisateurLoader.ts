@@ -38,7 +38,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     if (user) {
       user.lastConnectionDate = new Date();
       return (await this.orm)
@@ -57,7 +57,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email });
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     // if user is not addmin
     if (user && ![1, 2].includes(parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
@@ -156,11 +156,11 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         .getRepository(UtilisateurModel)
         .findOne({ where: { email: account.email } });
 
-        const userListModel = new UserListModel();
-        userListModel.nom = 'Favoris';
-        userListModel.userId = user?.code || '';
-        userListModel.isFavoris = true;
-        if(user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+      const userListModel = new UserListModel();
+      userListModel.nom = 'Favoris';
+      userListModel.userId = user?.code || '';
+      userListModel.isFavoris = true;
+      if (user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
 
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -346,36 +346,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
-  async reactivateUser(/*userCode: string*/): Promise<string | void> {
-    try {
-      /*
-      const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
-
-      if (user) {
-        // await (await this.orm).getRepository(UtilisateurModel).remove(user);
-
-        user.deletedDate = null;
-
-        (await this.orm)
-          .getRepository(UtilisateurModel)
-          .save(user as UtilisateurModel)
-          .then(async () => {
-            return user;
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log("error", error);
-          });
-
-        return "User deleted successfully";
-      } else {
-        return "User not found";
-      }
-      */
-      return "reactivateUser";
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log("error", error);
-    }
+  async reactivateUser(_userCode: string): Promise<string | void> {
+    return "reactivateUser";
   }
 }

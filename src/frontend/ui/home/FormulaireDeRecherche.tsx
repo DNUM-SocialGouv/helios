@@ -1,8 +1,8 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import { BouttonRechercheAvancee } from "./BouttonRechercheAvancee";
 import styles from "./Recherche.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type FormulaireDeRechercheProps = Readonly<{
   lancerLaRecherche: MouseEventHandler<HTMLButtonElement>;

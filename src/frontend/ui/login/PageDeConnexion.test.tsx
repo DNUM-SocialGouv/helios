@@ -1,7 +1,7 @@
 import { screen, within } from "@testing-library/react";
 
-import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 import { PageDeConnexion } from "./PageDeConnexion";
+import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 
 jest.mock("next/router", () => require("next-router-mock"));
 

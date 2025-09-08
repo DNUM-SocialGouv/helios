@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef, KeyboardEvent } from "react";
 
+import styles from "./RechercheAvanceeFormulaire.module.css";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
-import styles from "./RechercheAvanceeFormulaire.module.css";
 
 type ZoneGeo = Readonly<{
   type: string;
@@ -21,13 +21,15 @@ type ZoneGeo = Readonly<{
 type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
   setIsChanged: Dispatch<SetStateAction<boolean>> | undefined;
+  zoneGeoValue: string;
+  setZoneGeoValue: Dispatch<SetStateAction<string>>;
+  zoneGeoType: string;
+  setZoneGeoType: Dispatch<SetStateAction<string>>
 }>;
 
-export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
+export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoValue, setZoneGeoValue, zoneGeoType, setZoneGeoType }: FiltresForComparaisonProps) => {
   const { data } = useSession();
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
-  const [zoneGeoValue, setZoneGeoValue] = useState(rechercheAvanceeContext?.zoneGeo || "");
-  const [zoneGeoType, setZoneGeoType] = useState(rechercheAvanceeContext?.zoneGeoType || "");
   const [suggestions, setSuggestions] = useState<ZoneGeo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [zoneGeoSelected, setZoneGeoSelected] = useState<ZoneGeo>({
@@ -42,15 +44,16 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     codesPostaux: [],
     codeNum: "",
   });
+  const [debounceTimeoutId, setDebounceTimeoutId] = useState<NodeJS.Timeout>();
 
   const requestCounterRef = useRef(0);
 
   // Debounce function to control the rate of API calls
   const debounce = (func: any, delay: number) => {
-    let timeout: any;
     return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), delay);
+      clearTimeout(debounceTimeoutId);
+      const timeout = setTimeout(() => func(...args), delay);
+      setDebounceTimeoutId(timeout);
     };
   };
 
@@ -83,8 +86,8 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
             // Afficher toute la ville pour les villes avec arrondissements: Paris, Marseille et Lyon
             if (elt.nom === "Marseille" || elt.nom === "Paris" || elt.nom === "Lyon") {
               elt.codeNum = "tous les arrondissements";
-            } else {
-              if (elt.codesPostaux.length > 0) elt.codeNum = elt.codesPostaux[0];
+            } else if (elt.codesPostaux.length > 0) {
+              elt.codeNum = elt.codesPostaux[0];
             }
             return { ...elt, type: "C" };
           }))]);
@@ -112,7 +115,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
         const maRegion = data?.user.codeRegion;
         const sortedOptions =
           data?.user.role === 3 || data?.user.role === 2
-            ? sortedAlphabetically.sort((a: any, b: any) => {
+            ? sortedAlphabetically.toSorted((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
               if (estMaRegionA === estMaRegionB) return 0;
@@ -141,22 +144,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     } else {
       setSuggestions([]);
     }
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
-        if (zoneGeoValue) {
-          document.getElementById("zoneGeo-appliquer-botton")?.click();
-        }
-      }
-    };
-
-    // Ajouter l'écouteur d'événement pour "Enter"
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Nettoyer l'écouteur quand le modal est fermé
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => { };
   }, [zoneGeoValue]);
 
   const changeZoneGeoValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -170,6 +158,19 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     rechercheAvanceeContext?.setZoneGeoType("");
     setSuggestions([]);
     rechercheAvanceeContext?.setZoneGeoLabel("");
+    setZoneGeoSelected({
+      type: "",
+      nom: "",
+      departement: {
+        code: "",
+        nom: "",
+      },
+      code: "",
+      codeRegion: "",
+      codesPostaux: [],
+      codeNum: "",
+    });
+
     if (setIsChanged) setIsChanged(true);
   };
 
@@ -180,6 +181,13 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
     rechercheAvanceeContext?.setZoneGeoLabel(zoneGeoSelected.codeNum ? `${zoneGeoSelected.nom} (${zoneGeoSelected.codeNum})` : zoneGeoSelected.nom);
     if (setIsChanged) setIsChanged(true);
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("zoneGeo-appliquer-botton")?.click();
+    }
+  }
 
   return (
     <dialog aria-labelledby="fr-modal-Zone-Geographique-Filtre-title" className="fr-modal" id="fr-modal-Zone-Geographique-Filtre">
@@ -197,6 +205,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
                     id="text-input-text"
                     name="text-input-text"
                     onChange={changeZoneGeoValue}
+                    onKeyDown={(event) => onKeyDown(event)}
                     placeholder="Ville, département ou région"
                     type="text"
                     value={zoneGeoValue}
@@ -205,8 +214,8 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged }: FiltresF
                 {isLoading && <div>Loading...</div>}
                 {suggestions?.length > 0 && (
                   <ul className={styles["autocompleteList"]}>
-                    {suggestions.map((item, index) => (
-                      <li className={styles["autocompleteListItem"]} key={index}>
+                    {suggestions.map((item) => (
+                      <li className={styles["autocompleteListItem"]} key={item.codeNum ? `${item.nom} (${item.codeNum})` : item.nom}>
                         <button
                           className={styles["autocompleteListItemButton"]}
                           onClick={() => {

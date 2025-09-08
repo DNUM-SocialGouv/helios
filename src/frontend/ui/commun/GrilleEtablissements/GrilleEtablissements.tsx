@@ -1,14 +1,15 @@
 import "@gouvfr/dsfr/dist/component/tile/tile.min.css";
+import styles from "./GrilleEtablissement.module.css";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { useDependencies } from "../contexts/useDependencies";
 import { TuileEtablissement } from "../TuileEtablissement/TuileEtablissement";
-import styles from "./GrilleEtablissement.module.css";
 
 type GrilleEtablissementsProps = Readonly<{
   estCeQueLesRésultatsSontTousAffichés: boolean;
   chargeLesRésultatsSuivants: () => void;
   résultats: RechercheViewModel[];
   currentListId?: number;
+  isSimpleSearch?: boolean
 }>;
 
 export const GrilleEtablissements = ({
@@ -16,6 +17,7 @@ export const GrilleEtablissements = ({
   chargeLesRésultatsSuivants,
   résultats,
   currentListId,
+  isSimpleSearch
 }: GrilleEtablissementsProps) => {
   const { wording } = useDependencies();
 
@@ -24,7 +26,7 @@ export const GrilleEtablissements = ({
       <ul className={"fr-grid-row fr-grid-row--gutters " + styles["tuiles"]}>
         {résultats.map((rechercheViewModel, index) => (
           <li className="fr-col-3" key={rechercheViewModel.numéroFiness + index}>
-            <TuileEtablissement currentListId={currentListId} rechercheViewModel={rechercheViewModel} />
+            <TuileEtablissement currentListId={currentListId} isSimpleSearch={isSimpleSearch} rechercheViewModel={rechercheViewModel} />
           </li>
         ))}
       </ul>

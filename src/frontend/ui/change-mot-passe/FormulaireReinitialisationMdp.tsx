@@ -1,8 +1,8 @@
 import { ChangeEventHandler, MouseEventHandler, FormEventHandler, useState } from "react";
 
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./changeMdp.module.css";
 import { PasswordCriteria } from "./useReinitialisationMdp";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/form/form.min.css";
 
 type FormulaireChangeMdpProps = Readonly<{

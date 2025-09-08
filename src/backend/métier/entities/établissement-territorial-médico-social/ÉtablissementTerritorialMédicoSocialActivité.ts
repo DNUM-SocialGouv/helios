@@ -29,4 +29,19 @@ export type ÉtablissementTerritorialMédicoSocialActivité = Readonly<{
     dateMiseÀJourSource: string;
     value: number | null | string;
   }>;
+  tauxOccupationExternat: Readonly<{
+    value: number | null | string;
+  }>;
+  tauxOccupationSemiInternat: Readonly<{
+    value: number | null | string;
+  }>;
+  tauxOccupationInternat: Readonly<{
+    value: number | null | string;
+  }>;
+  tauxOccupationAutre: Readonly<{
+    value: number | null | string;
+  }>;
+  tauxOccupationSeances: Readonly<{
+    value: number | null | string;
+  }>;
 }>;

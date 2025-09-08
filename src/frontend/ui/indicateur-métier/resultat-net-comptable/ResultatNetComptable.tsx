@@ -1,11 +1,11 @@
 import React from "react";
 
+import { ContenuRésultatNetComptableEJ } from "./ContenuRésultatNetComptableEJ";
+import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { IndicateurTabulaire } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
 import { ContenuRésultatNetComptable } from "../../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
-import { ContenuRésultatNetComptableEJ } from "./ContenuRésultatNetComptableEJ";
-import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 
 type BlocBudgetFinanceProps = Readonly<{
   resultatNetComptableViewModel: ResultatNetComptableViewModel;

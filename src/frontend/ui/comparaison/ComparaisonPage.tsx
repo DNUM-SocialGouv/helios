@@ -1,96 +1,165 @@
-import { useSession } from "next-auth/react";
 import Head from "next/head";
-import { ReactChild, useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 
+import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
+import styles from "./Comparaison.module.css";
+import ExportExcel from "./ExportExcel";
+import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { StringFormater } from "../commun/StringFormater";
-import { SelectedRows, Table } from "../commun/Table/Table";
+import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
+import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
+import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
+import { RechercheViewModel } from "../home/RechercheViewModel";
+import { ListActionsButton } from "../liste/ListActionsButton";
+import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
-import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements";
-import styles from "./Comparaison.module.css";
-import ExportExcel from "./ExportExcel";
-import { useComparaison } from "./useComparaison";
 
 interface ComparaisonPageProps {
-  listeAnnees: number[];
   codeProfiles: string[];
   codeRegion: string;
   datesMisAjour: DatesMisAjourSources;
+  categories: CategoriesFinessViewModel[];
 }
 
-export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, codeRegion }: ComparaisonPageProps) => {
-  const { data } = useSession();
-
+export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
 
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>([]);
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
-  const [annéeEnCours, setAnnéeEnCours] = useState(listeAnnees[listeAnnees.length - 1]);
-  const [structureChoice, setStructurechoice] = useState<string>("Médico-social");
-  const { lancerLaComparaison, contenuModal, resultats, moyenne, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage } = useComparaison();
+  const [structureChoice, setStructureChoice] = useState<string>("");
+  const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
-  const [estCeOuvertMoyenne, setEstCeOuvertMoyenne] = useState<boolean>(false);
-  const [titre, setTitre] = useState<ReactChild>("");
+  const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
 
-  const [page, setPage] = useState<number>(1);
   const [isShowAjoutEtab, setIsShowAjoutEtab] = useState<boolean>(false);
 
-  const [order, setOrder] = useState("");
-  const [orderBy, setOrderBy] = useState("");
-  const [deleteEt, setDeleteET] = useState(false);
+  const [favorisListName, setFavorisListName] = useState<string>("");
+  const [showAddToListSuccess, setShowAddToListSuccess] = useState<boolean>(false);
 
-  const [reloadTable, setReloadTable] = useState<boolean>(false);
+  const [comparedTypes, setComparedTypes] = useState<string[]>([]);
 
-  // lancer la comparaison en changeant l'année ou la page, en lanceant un tri ou une suppression
+  const [params, setParams] = useState<{
+    annéeEnCours: number;
+    order: string;
+    orderBy: string;
+    page: number;
+    comparedFiness: string[];
+  }>({
+    annéeEnCours: listeAnnees ? listeAnnees[listeAnnees.length - 1] : 0,
+    order: "",
+    orderBy: "",
+    page: 1,
+    comparedFiness: [],
+  });
+
+  const [triggerCompare, setTriggerCompare] = useState<number>(0);
+
   useEffect(() => {
-    lancerLaComparaison(page, annéeEnCours + "", order, orderBy, codeRegion, codeProfiles);
-    setReloadTable(false);
-  }, [page, annéeEnCours, order, orderBy, deleteEt, reloadTable]);
+    const finessStored = sessionStorage.getItem("listFinessNumbers");
+    const finessList = finessStored ? JSON.parse(finessStored) : [];
+    if (finessList.length === 0) {
+      setTriggerCompare(Date.now());
+    }
+    if (structureChoice !== "" && finessList.length > 0) {
+      const resetParams = async () => {
+        const annees = await getListAnnees(structureChoice, finessList);
+        const latestYear = annees[annees.length - 1];
 
-  const getAllTypes = () => {
-    const result: string[] = [];
-    resultats.forEach((element) => {
-      if (!result.includes(element.type)) {
-        result.push(element.type);
-      }
-    });
-    return result;
+        setParams({
+          comparedFiness: finessList,
+          annéeEnCours: latestYear,
+          order: "",
+          orderBy: "",
+          page: 1,
+        });
+        setTriggerCompare(Date.now());
+      };
+      resetParams();
+    }
+  }, [structureChoice, comparedTypes]);
+
+  useEffect(() => {
+    if (
+      structureChoice !== "" &&
+      params.annéeEnCours
+    ) {
+      lancerLaComparaison(
+        params.comparedFiness,
+        structureChoice,
+        params.annéeEnCours.toString(),
+        codeRegion,
+        codeProfiles,
+        params.order,
+        params.orderBy,
+        params.page
+      );
+    }
+  }, [triggerCompare]);
+
+  const handleOrderChange = (order: string) => {
+    setParams(prev => ({
+      ...prev,
+      order,
+    }));
+    setTriggerCompare(Date.now());
   };
 
-  const tableHeaders = [
-    { label: "", key: "delete", nomComplet: "" },
-    { label: "", key: "etsLogo", nomComplet: "", sort: true },
-    { label: "", key: "favori", nomComplet: "" },
-    { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
-    { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess_etablissement_territorial" },
-    {
-      label: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      nomComplet: `Capacité Totale au ` + StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess),
-      key: "capacite",
-      info: true,
-      sort: true,
-      orderBy: "capacite_total",
-    },
-    { label: "Tx de réalisation de l’activité ", nomComplet: "Taux de réalisation de l’activité ", key: "realisationActivite", info: true, sort: true, orderBy: "taux_realisation_activite" },
-    { label: "File active des personnes accompagnées sur la période", nomComplet: "File active des personnes accompagnées sur la période", key: "fileActivePersonnesAccompagnes", info: true, sort: true, orderBy: "file_active_personnes_accompagnees" },
-    { label: "TO HP", key: "hebergementPermanent", nomComplet: "Taux d’occupation en hébergement permanent", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_permanent" },
-    { label: "TO HT", nomComplet: "Taux d’occupation en hébergement temporaire", key: "hebergementTemporaire", info: true, sort: true, orderBy: "taux_occupation_en_hebergement_temporaire" },
-    { label: "TO AJ", nomComplet: "Taux d’occupation en accueil de jour", key: "acceuilDeJour", info: true, sort: true, orderBy: "taux_occupation_accueil_de_jour" },
-    { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
-    { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
-    { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
-    { label: "Tx d'absentéisme", nomComplet: "Taux d'absentéisme", key: "absenteisme", info: true, sort: true, orderBy: "taux_absenteisme_hors_formation" },
-    { label: "Tx de CAF", nomComplet: "Taux de CAF", key: "tauxCaf", info: true, sort: true, orderBy: "taux_de_caf" },
-    { label: "Tx de vétusté de construction", nomComplet: "Taux de vétusté de construction", key: "vetusteConstruction", info: true, sort: true, orderBy: "taux_de_vetuste_construction" },
-    { label: "FRNG", nomComplet: "Fond de roulement net global", key: "roulementNetGlobal", info: true, sort: true, orderBy: "fonds_de_roulement" },
-    { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptable", info: true, sort: true, orderBy: "resultat_net_comptable" },
-  ];
+  const handleOrderByChange = (orderBy: string) => {
+    setParams(prev => ({
+      ...prev,
+      orderBy,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setParams(prev => ({
+      ...prev,
+      page: newPage,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleYearChange = (newYear: number) => {
+    setParams(prev => ({
+      ...prev,
+      annéeEnCours: newYear,
+    }));
+    setTriggerCompare(Date.now());
+  };
+
+  const handleFinessChange = (numerosFiness: string[]) => {
+    setParams(prev => ({
+      ...prev,
+      comparedFiness: numerosFiness,
+    }));
+  };
+
+  useEffect(() => {
+    async function getSelectedTypesForCompare() {
+      const listFinessNumbers = sessionStorage.getItem("listFinessNumbers");
+      const typesSelected = await getcomparedTypes(listFinessNumbers ? JSON.parse(listFinessNumbers) : [])
+      setComparedTypes(typesSelected)
+    }
+    getSelectedTypesForCompare();
+  }, [])
+
+  useEffect(() => {
+    if (comparedTypes.length !== 0) {
+      if (comparedTypes.includes("Médico-social"))
+        setStructureChoice("Médico-social");
+      else if (comparedTypes.includes("Sanitaire"))
+        setStructureChoice("Sanitaire");
+      else setStructureChoice("Entité juridique");
+    }
+  }, [comparedTypes])
 
   // Ovrir la Pop-up d'info des icones de tableau
   const openModal = (header: string) => {
@@ -99,29 +168,45 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
     setEstCeOuvert(true);
   };
 
-  const isAllSelected = resultats.length > 0 && selectedRows[page] && selectedRows[page].length === resultats.length;
-
-  const handleSelectAll = () => {
-    if (isAllSelected) {
-      setSelectedRows({ ...selectedRows, [page]: [] });
-    } else {
-      setSelectedRows({ ...selectedRows, [page]: resultats });
+  let isAllSelected = true;
+  for (const etablissement of resultats) {
+    if (!selectedRows.has(etablissement.numéroFiness)) {
+      isAllSelected = false;
+      break;
     }
   };
 
-  const onClickDelete = (numeroFinessASupprimer: string) => {
+
+  const handleSelectAll = () => {
+    const newSelected = new Map(selectedRows);
+    if (isAllSelected) {
+      resultats.forEach((etablissement) => newSelected.delete(etablissement.numéroFiness));
+    } else {
+      resultats.forEach((etablissement) => newSelected.set(etablissement.numéroFiness, etablissement.type));
+    }
+    setSelectedRows(newSelected);
+  };
+
+  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
-    const indexElementToDelete = listFinessArray.indexOf(numeroFinessASupprimer);
+    const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
     if (indexElementToDelete > -1) {
       listFinessArray.splice(indexElementToDelete, 1);
       sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessArray));
-      document.cookie = `list=${encodeURIComponent(JSON.stringify(listFinessArray))}; path=/`;
-      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && page !== 1) {
-        setPage(page - 1);
+      if (lastPage > Math.ceil(listFinessArray.length / NombreDeResultatsMaxParPage) && params.page !== 1) {
+        setParams(prev => ({
+          ...prev,
+          page: prev.page - 1
+        }));
       }
+      setParams(prev => ({
+        ...prev,
+        comparedFiness: listFinessArray,
+      }));
     }
-    setDeleteET(!deleteEt);
+    const typesSelected = await getcomparedTypes(listFinessArray)
+    setComparedTypes(typesSelected);
   };
 
   const onClickAjoutEtablissement = () => {
@@ -129,88 +214,107 @@ export const ComparaisonPage = ({ listeAnnees, datesMisAjour, codeProfiles, code
     setIsShowAjoutEtab(true);
   };
 
+  const results = (): ReactNode => {
+    let content;
+    if (loading) {
+      content = (<div>Chargement des résultats...</div>);
+    } else if (nombreRésultats === 0) {
+      content = (<div className={styles['informationText']}>{wording.COMPARAISON_AUCUN_FINESS}</div>)
+    } else {
+      content = (
+        <>
+          <Table
+            data={resultats}
+            handleSelectAll={handleSelectAll}
+            headers={tableHeaders(datesMisAjour, structureChoice)}
+            isAllSelected={isAllSelected}
+            isCenter={true}
+            isShowAvrage={false}
+            isVScroll={true}
+            onClickDelete={onClickDelete}
+            onClickInfobull={openModal}
+            order={params.order}
+            orderBy={params.orderBy}
+            selectedRows={selectedRows}
+            setOrder={handleOrderChange}
+            setOrderBy={handleOrderByChange}
+            setSelectedRows={setSelectedRows}
+            total={nombreRésultats}
+          />
+          <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={params.page || 1} setPage={handlePageChange || (() => { })} />
+        </>
+      )
+    }
+    return content;
+  }
+
+  const exportExcel = () => {
+    let anneeExport = params.annéeEnCours;
+    if (!anneeExport && listeAnnees) {
+      anneeExport = listeAnnees[listeAnnees.length - 1];
+    }
+    return <ExportExcel
+      codeProfiles={codeProfiles}
+      codeRegion={codeRegion}
+      datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
+      disabled={resultats.length === 0}
+      order={params.order}
+      orderBy={params.orderBy}
+      type={structureChoice}
+      year={String(anneeExport)}
+    />;
+  }
+
+  const handleAddToFavorisSuccess = (listName: string): void => {
+    if (listName?.trim().length > 0) {
+      setFavorisListName(listName);
+      setShowAddToListSuccess(true);
+    } else {
+      setFavorisListName("");
+      setShowAddToListSuccess(false);
+    }
+  }
+
   return (
-      <main className="fr-container" id="content">
-        <Head>
-          <title>Page de comparaison</title>
-        </Head>
-        <div className={styles["container"]}>
-          <div className={styles["header-container"]}>
-            <h1>{wording.COMPARAISON}</h1>
-            <ExportExcel
-              codeProfiles={codeProfiles}
-              codeRegion={codeRegion}
-              datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
-              disabled={resultats.length === 0}
-              order={order}
-              orderBy={orderBy}
-              year={String(annéeEnCours)}
-            />
-          </div>
-          <div className={styles["ajout-etab-div"]}>
-            {!isShowAjoutEtab && (
-              <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
-                {wording.AJOUTER_DES_ETABLISSEMENTS}
-              </button>
-            )}
-            {isShowAjoutEtab && <AjoutEtablissements setIsShowAjoutEtab={setIsShowAjoutEtab} setReloadTable={setReloadTable}></AjoutEtablissements>}
+    <main className="fr-container" id="content">
+      <Head>
+        <title>Page de comparaison</title>
+      </Head>
+      <div className={styles["container"]}>
+        <div className={styles["header-container"]}>
+          <h1>{wording.COMPARAISON}</h1>
+          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
+        </div>
+        <div className={styles["ajout-etab-div"]}>
+          {!isShowAjoutEtab && (
+            <button className={`${styles["button-add-etab"]} fr-btn fr-btn--secondary`} onClick={onClickAjoutEtablissement}>
+              {wording.AJOUTER_DES_ETABLISSEMENTS}
+            </button>
+          )}
+          {isShowAjoutEtab && <AjoutEtablissements categories={categories} getcomparedTypes={getcomparedTypes} handleFinessChange={handleFinessChange} setComparedTypes={setComparedTypes} setIsShowAjoutEtab={setIsShowAjoutEtab} ></AjoutEtablissements>}
+        </div>
+        {showAddToListSuccess && <SuccessAlert message={wording.LIST_ACTION_FAVORIS_SUCCESS_MESSAGE(favorisListName)} />}
+        <div className={styles["years-container"]}>
+          <div className={styles["years-container"]}>
+            <span style={{ marginTop: "5px" }}>Année</span>
+            {(listeAnnees && listeAnnees.length > 0) && <SelectionAnneeTags anneeEnCours={params.annéeEnCours} annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={handleYearChange} />}
           </div>
           <div className={styles["years-container"]}>
-            <div className={styles["years-container"]}>
-              <span style={{ marginTop: "5px" }}>Année</span>
-              {listeAnnees.length > 0 && <SelectionAnneeTags annees={listeAnnees} id="capacite-sanitaire" setAnnéeEnCours={setAnnéeEnCours} />}
-            </div>
-            <div className={styles["years-container"]}>
-              <span style={{ marginTop: "5px" }}>Indicateurs</span>
-              <SelectionTags
-                choices={["Sanitaire", "Médico-social", "Entités Juridiques"]}
-                noSelectableChoices={getAllTypes()}
-                selectedChoice={structureChoice}
-                setSelectedChoice={setStructurechoice}
-              />
-            </div>
+            <span style={{ marginTop: "5px" }}>Indicateurs</span>
+            <SelectionTags
+              choices={["Sanitaire", "Médico-social", "Entité juridique"]}
+              noSelectableChoices={comparedTypes}
+              selectedChoice={structureChoice}
+              setSelectedChoice={setStructureChoice}
+            />
           </div>
-          {/* Affichage conditionnel pendant le chargement */}
-          {loading ? (
-            <div>Chargement des résultats...</div>
-          ) : (
-            <>
-              <Table
-                data={resultats}
-                forMoyenne={moyenne}
-                handleInfoBullMoyenne={setEstCeOuvertMoyenne}
-                handleSelectAll={handleSelectAll}
-                headers={tableHeaders}
-                isAllSelected={isAllSelected}
-                isCenter={true}
-                isShowAvrage={false}
-                isVScroll={true}
-                onClickDelete={onClickDelete}
-                onClickInfobull={openModal}
-                order={order}
-                orderBy={orderBy}
-                page={page || 1}
-                selectedRows={selectedRows}
-                setOrder={setOrder}
-                setOrderBy={setOrderBy}
-                setSelectedRows={setSelectedRows}
-                total={nombreRésultats}
-              />
-              <TableFooter lastPage={lastPage} nombreDeResultatsMaxParPage={NombreDeResultatsMaxParPage} nombreRésultats={nombreRésultats} page={page || 1} setPage={setPage || (() => { })} />
-            </>
-          )}
         </div>
-        <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
-          <>{contenu}</>
-        </InfoBulle>
-        <InfoBulle
-          estCeOuvert={estCeOuvertMoyenne}
-          identifiant="info-bull-comparaison-table"
-          setEstCeOuvert={setEstCeOuvertMoyenne}
-          titre="Calcul de la moyenne"
-        >
-          <>{data?.user.role === 3 || data?.user.role === 2 ? wording.INFOBULLE_MOYENNE_UTILISATEURS : wording.INFOBULLE_MOYENNE_ADMIN_NATIONAL}</>
-        </InfoBulle>
-      </main>
+        {/* Affichage conditionnel pendant le chargement */}
+        {results()}
+      </div>
+      <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
+        <>{contenu}</>
+      </InfoBulle>
+    </main>
   );
 };

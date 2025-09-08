@@ -1,4 +1,4 @@
-import { ActivitéSanitaireMensuelModel } from "../models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "../models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireModel } from "../models/ActivitéSanitaireModel";
 
@@ -8,6 +8,11 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéMédicoSocialModel.année = champsSurchargés?.année || 2019;
     activitéMédicoSocialModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || "590782553";
     activitéMédicoSocialModel.tauxOccupationAccueilDeJour = champsSurchargés?.tauxOccupationAccueilDeJour || 80;
+    activitéMédicoSocialModel.tauxOccupationExternat = champsSurchargés?.tauxOccupationExternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationInternat = champsSurchargés?.tauxOccupationInternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationSemiInternat = champsSurchargés?.tauxOccupationSemiInternat || 0.8;
+    activitéMédicoSocialModel.tauxOccupationAutre = champsSurchargés?.tauxOccupationAutre || 0.8;
+    activitéMédicoSocialModel.tauxOccupationSeances = champsSurchargés?.tauxOccupationSeances || 0.8;
     activitéMédicoSocialModel.tauxOccupationHébergementTemporaire = champsSurchargés?.tauxOccupationHébergementTemporaire || 80;
     activitéMédicoSocialModel.tauxOccupationHébergementPermanent = champsSurchargés?.tauxOccupationHébergementPermanent || 80;
     activitéMédicoSocialModel.tauxRéalisationActivité = champsSurchargés?.tauxRéalisationActivité || 80;
@@ -22,6 +27,7 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéSanitaireModel.année = champsSurchargés?.année || 2019;
     activitéSanitaireModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || "210987665";
     activitéSanitaireModel.nombreDePassagesAuxUrgences = champsSurchargés?.nombreDePassagesAuxUrgences || 60_000;
+    activitéSanitaireModel.nombreJourneesUsld = champsSurchargés?.nombreJourneesUsld || 21654;
     activitéSanitaireModel.nombreSéjoursPartielsMédecine = champsSurchargés?.nombreSéjoursPartielsMédecine || 60;
     activitéSanitaireModel.nombreSéjoursPartielsObstétrique = champsSurchargés?.nombreSéjoursPartielsObstétrique || 60;
     activitéSanitaireModel.nombreSéjoursPartielsChirurgie = champsSurchargés?.nombreSéjoursPartielsChirurgie || 60;
@@ -36,8 +42,8 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     return activitéSanitaireModel;
   }
 
-  public static créeSanitaireMensuel(champsSurchargés?: Partial<ActivitéSanitaireMensuelModel>): ActivitéSanitaireMensuelModel {
-    const activitéSanitaireModel = new ActivitéSanitaireMensuelModel();
+  public static créeSanitaireMensuel(champsSurchargés?: Partial<ActiviteSanitaireMensuelModel>): ActiviteSanitaireMensuelModel {
+    const activitéSanitaireModel = new ActiviteSanitaireMensuelModel();
     activitéSanitaireModel.année = champsSurchargés?.année || 2022;
     activitéSanitaireModel.mois = champsSurchargés?.mois || 1;
     activitéSanitaireModel.numeroFinessEtablissementTerritorial = champsSurchargés?.numeroFinessEtablissementTerritorial || "210987665";

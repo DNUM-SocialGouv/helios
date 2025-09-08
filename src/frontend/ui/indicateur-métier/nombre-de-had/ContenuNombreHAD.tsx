@@ -22,7 +22,7 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
       <section aria-label={wording.FRÉQUENCE}>
         <p>
           <span className="fr-text--bold">Fréquence : </span>
-          Mensuelle
+          Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>

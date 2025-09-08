@@ -1,15 +1,15 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
-import { ÉtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
-import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { BlocAutorisationEtCapacitéSanitaire } from "./BlocAutorisationEtCapacitéSanitaire";
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
+import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
+import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 
 const { paths, wording } = fakeFrontDependencies;
 
 describe("La page établissement territorial sanitaire - bloc autorisation et capacité", () => {
   const autorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
-    ÉtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
+    EtablissementTerritorialSanitaireViewModelTestBuilder.autorisationsEtCapacités,
     wording
   );
 
@@ -171,7 +171,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   it.each([
     {
       indicateurAffiché: wording.AUTORISATIONS_SANITAIRE,
-      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
+      viewModel: EtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autresActivités: {
           activités: [],
           dateMiseÀJourSource: "2022-08-29",
@@ -206,7 +206,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     },
     {
       indicateurAffiché: wording.AUTRES_ACTIVITÉS_SAN,
-      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
+      viewModel: EtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
           dateMiseÀJourSource: "2022-08-29",
@@ -240,7 +240,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     },
     {
       indicateurAffiché: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE,
-      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
+      viewModel: EtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
           dateMiseÀJourSource: "2022-08-29",
@@ -261,7 +261,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     },
     {
       indicateurAffiché: wording.RECONNAISSANCES_CONTRACTUELLES,
-      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
+      viewModel: EtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
           dateMiseÀJourSource: "2022-08-29",
@@ -295,7 +295,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     },
     {
       indicateurAffiché: wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS,
-      viewModel: ÉtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
+      viewModel: EtablissementTerritorialSanitaireViewModelTestBuilder.créeAvecAutorisationsEtCapacités(wording, paths, {
         autorisations: {
           activités: [],
           dateMiseÀJourSource: "2022-08-29",

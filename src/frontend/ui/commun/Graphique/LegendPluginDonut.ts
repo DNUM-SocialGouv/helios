@@ -4,7 +4,7 @@ import { StringFormater } from "../StringFormater";
 
 
 export function construisLePluginDeLaLegendeDonut() {
-  function créeLeLibelléPourLaLégende(chart: ChartJS, libellé: any): HTMLLIElement {
+  function créeLeLibelléPourLaLégende(deselectedMap: Map<string, boolean>, chart: ChartJS, libellé: any): HTMLLIElement {
 
     const conteneur = document.createElement("li");
 
@@ -19,19 +19,11 @@ export function construisLePluginDeLaLegendeDonut() {
     libelléCaseÀCocher.htmlFor = libellé.text;
 
     const handleCheckboxChange = () => {
-      chart.toggleDataVisibility(libellé.index);
-      // @ts-ignore
-      const currentSum = StringFormater.removePercent(chart.config.options.elements.center.text);
-      let sum;
       if (chart.getDataVisibility(libellé.index)) {
-        // @ts-ignore
-        sum = currentSum + chart.data.datasets[0].data[libellé.index]
+        deselectedMap.set(libellé.text, true);
       } else {
-        // @ts-ignore
-        sum = currentSum - chart.data.datasets[0].data[libellé.index]
+        deselectedMap.set(libellé.text, false);
       }
-      // @ts-ignore
-      chart.config.options.elements.center.text = StringFormater.formatCenterText(sum.toFixed(1));
       chart.update();
     }
 
@@ -51,21 +43,48 @@ export function construisLePluginDeLaLegendeDonut() {
     return conteneur;
   }
 
+  function handleSelection(deselectedMap: Map<string, boolean>, chart: ChartJS, label: string, index: number) {
+    const deselected = deselectedMap.get(label);
+    const visible = chart.getDataVisibility(index);
+    //Si la ligne est déselectionnée et que la valeur est visible, on la rend invisible
+    //Si la ligne est sélectionnée et que la valeur est invisible, on la rend visible
+    if ((deselected && visible) || (!deselected && !visible)) {
+      chart.toggleDataVisibility(index);
+    }
+  }
+
   return {
+    deselectedMap: new Map<string, boolean>(),
+    beforeUpdate(chart: ChartJS) {
+      // On gère les items non selectionnes
+      chart.data.labels?.forEach((label, index) => {
+        handleSelection(this.deselectedMap, chart, label as string, index);
+      });
+
+      // Calcul du total des absence selectionnees
+      let sum = 0;
+      chart.data.datasets[0].data.forEach((element: any, index: number) => {
+        if (chart.getDataVisibility(index)) {
+          sum += element;
+        }
+      })
+      // @ts-ignore
+      chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
+
+      // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
+      chart.config.options.valuesTotal = sum;
+    },
     afterUpdate(chart: ChartJS, _args: Object, options: any) {
       const légende = document.getElementById(options.containerID);
 
       if (!légende) return;
-
-      while (légende.firstChild) {
-        légende.firstChild.remove();
-      }
+      légende.innerHTML = "";
 
       // @ts-ignore
       const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende?.forEach((libellé) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
+      libellésDeLaLégende?.forEach((libelle) => {
+        const libelléDeLégende = créeLeLibelléPourLaLégende(this.deselectedMap, chart, libelle);
         légende.appendChild(libelléDeLégende);
       });
     },

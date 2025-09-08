@@ -7,7 +7,7 @@ from sqlalchemy.engine import Engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
@@ -27,7 +27,7 @@ def ajoute_les_autorisations_des_établissements_médico_sociaux(chemin_du_fichi
     logger.info(f"[FINESS] {données_des_autorisations.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier}")
     date_du_fichier_des_autorisations = extrais_la_date_du_nom_de_fichier_finess(chemin_du_fichier)
 
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    numéros_finess_des_établissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
 
     autorisations_des_établissements_médico_sociaux = transforme_les_autorisations_des_établissements_médico_sociaux(
         données_des_autorisations,

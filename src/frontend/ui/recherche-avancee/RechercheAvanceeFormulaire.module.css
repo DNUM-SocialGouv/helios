@@ -16,8 +16,17 @@
     margin-top: 1rem;
 }
 
+.filtre-button_clicked {
+    background-color: #ededed;
+}
+
 .eraseButton {
     box-shadow: none !important;
+}
+
+.eraseAllButton {
+    text-decoration: underline;
+    background-color: white !important;
 }
 
 .applyButton {
@@ -69,4 +78,8 @@
     width: 16px;
     margin-bottom: 3px;
     color: var(--blue-france-sun-113-625);
+}
+
+.label-capacite {
+    display: inline;
 }

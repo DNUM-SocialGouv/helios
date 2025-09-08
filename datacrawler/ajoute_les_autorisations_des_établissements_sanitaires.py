@@ -11,7 +11,7 @@ from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract import FichierDeDonnées
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_diamant, extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
-from datacrawler.extract.lecteur_sql import récupère_les_numéros_finess_des_établissements_de_la_base
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier, trouve_le_nom_du_fichier_diamant
 from datacrawler.load.nom_des_tables import (
@@ -63,7 +63,7 @@ def ajoute_les_autorisations_des_établissements_sanitaires(
     base_de_données: Engine,
     logger: Logger,
 ) -> None:
-    numéros_finess_des_établissements_connus = récupère_les_numéros_finess_des_établissements_de_la_base(base_de_données)
+    numéros_finess_des_établissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
     ajoute_les_autorisations(chemin_du_fichier_finess_cs1400103, numéros_finess_des_établissements_connus, base_de_données, logger)
     ajoute_les_équipements_matériels_lourds(chemin_du_fichier_finess_cs1400104, numéros_finess_des_établissements_connus, base_de_données, logger)
     ajoute_les_autres_activités(chemin_du_fichier_finess_cs1600101, numéros_finess_des_établissements_connus, base_de_données, logger)

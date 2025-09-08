@@ -1,11 +1,11 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../../database/test-builder/ÉtablissementTerritorialIdentitéModelTestBuilder";
 import { clearAllTables, getOrm } from "../../../testHelper";
-import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 
 describe("La recherche d’entités et d’établissements par numéro finess", () => {
   const orm = getOrm();

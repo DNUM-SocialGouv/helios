@@ -32,7 +32,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const users = await getUsersListPaginatedEndpoint(dependencies, key, page, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
 
     return response.status(200).json(users);
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return response.status(500);
   }
 };

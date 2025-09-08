@@ -1,3 +1,5 @@
+import { AllocationRessourcesViewModel } from "./AllocationRessourcesViewModel";
+import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 import { IAllocationRessources } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -7,8 +9,6 @@ import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux"
 import { StringFormater } from "../../commun/StringFormater";
 import { ResultatNetComptableViewModel } from "../../indicateur-métier/resultat-net-comptable/ResultatNetComptableViewModel";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
-import { AllocationRessourcesViewModel } from "./AllocationRessourcesViewModel";
-import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 
 type Itype = 'EJ' | 'ET_PNL' | 'ET_Autres';
 

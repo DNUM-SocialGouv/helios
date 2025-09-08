@@ -12,7 +12,14 @@ export class TypeOrmUserListLoader implements UserListLoader {
     userListModel.nom = listName;
     userListModel.userId = idUser;
     userListModel.isFavoris = isFavoris;
-    return (await this.orm).getRepository(UserListModel).save(userListModel);
+
+    const insertResult = await (await this.orm)
+      .createQueryBuilder()
+      .insert()
+      .into(UserListModel)
+      .values(userListModel)
+      .execute();
+    return { ...userListModel, ...insertResult.generatedMaps[0] };
   }
   async getAll(idUser: string): Promise<UserListModel[]> {
     return await (await this.orm).getRepository(UserListModel).findBy({ userId: idUser });

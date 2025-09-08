@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 
+import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -7,7 +8,6 @@ import { ÉtablissementTerritorialIdentitéModelTestBuilder } from "../../../../
 import { RésultatDeRecherche } from "../../../métier/entities/RésultatDeRecherche";
 import { RésultatDeRechercheTestBuilder } from "../../../test-builder/RésultatDeRechercheTestBuilder";
 import { clearAllTables, getOrm, numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../../testHelper";
-import { TypeOrmRechercheLoader } from "./TypeOrmRechercheLoader";
 
 describe("La recherche d’entités et d’établissements", () => {
   const orm = getOrm();
@@ -110,21 +110,25 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: `${raisonSocialeEJ} ${termeRecherché} - entité juridique très pertinente`,
           type: "Médico-social",
           rattachement: "000000001",
+          categorie: '159-C.H.'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000000",
           raisonSocialeCourte: `${raisonSocialeEJ} - entité juridique très pertinente`,
           rattachement: "",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000001",
           raisonSocialeCourte: `${termeRecherché} - entité juridique pertinente`,
           rattachement: "",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000002",
           raisonSocialeCourte: `${termeRecherché} - entité juridique pertinente`,
           rattachement: "",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "NANTUA",
@@ -132,6 +136,8 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: `${termeRecherché} - établissement territorial médico-social pertinent`,
           type: "Médico-social",
           rattachement: "000000000",
+          categorie: '159-C.H.'
+
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "VILLENEUVE D ASCQ",
@@ -140,6 +146,7 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: "Sanitaire",
           rattachement: "000000000",
+          categorie: '365-C.H.'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           commune: "VILLENEUVE D ASCQ",
@@ -148,6 +155,7 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: `${termeRecherché} - établissement territorial sanitaire pertinent`,
           type: "Sanitaire",
           rattachement: "000000001",
+          categorie: '365-C.H.'
         }),
       ],
     });
@@ -190,50 +198,62 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "000000000",
           raisonSocialeCourte: "hopital entité juridique 000000000",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "101010101",
           raisonSocialeCourte: "hopital entité juridique 101010101",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "110110110",
           raisonSocialeCourte: "hopital entité juridique 110110110",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "111111111",
           raisonSocialeCourte: "hopital entité juridique 111111111",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "222222222",
           raisonSocialeCourte: "hopital entité juridique 222222222",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "333333333",
           raisonSocialeCourte: "hopital entité juridique 333333333",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "444444444",
           raisonSocialeCourte: "hopital entité juridique 444444444",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "555555555",
           raisonSocialeCourte: "hopital entité juridique 555555555",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "666666666",
           raisonSocialeCourte: "hopital entité juridique 666666666",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "777777777",
           raisonSocialeCourte: "hopital entité juridique 777777777",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "888888888",
           raisonSocialeCourte: "hopital entité juridique 888888888",
+          categorie: '-'
         }),
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: "999999999",
           raisonSocialeCourte: "hopital entité juridique 999999999",
+          categorie: '-'
         }),
       ],
     });
@@ -259,6 +279,7 @@ describe("La recherche d’entités et d’établissements", () => {
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
         rattachement: "",
+        categorie: '-'
       },
     ]);
   });
@@ -283,6 +304,7 @@ describe("La recherche d’entités et d’établissements", () => {
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
         rattachement: "",
+        categorie: '-'
       },
     ]);
   });
@@ -301,7 +323,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique, categorie: '-' }),
       ]);
     });
 
@@ -324,7 +346,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-C.H.' }),
       ]);
     });
 
@@ -370,6 +392,7 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: "CENTRE HOSPITALIER DU HAUT BUGEY",
           type: "Entité juridique",
           rattachement: "",
+          categorie: '-'
         },
       ]);
     });
@@ -394,7 +417,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-C.H.' }),
       ]);
     });
 
@@ -411,7 +434,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: numéroFinessEntitéJuridique, categorie: '-' }),
       ]);
     });
 
@@ -431,6 +454,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "RÉSIDENCE LE PARC DU MANOIR",
+          categorie: '-'
         }),
       ]);
     });
@@ -451,6 +475,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "EHPAD SAINT-TRIVIER-DE-COURTES",
+          categorie: '-'
         }),
       ]);
     });
@@ -471,6 +496,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "SAAD DOMITYS L'ARBRE D'OR",
+          categorie: '-'
         }),
       ]);
     });
@@ -494,6 +520,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
           numéroFiness: numéroFinessEntitéJuridique,
           raisonSocialeCourte: "CH ST JEAN",
+          categorie: '-'
         }),
       ]);
     });
@@ -520,6 +547,7 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
           rattachement: "",
+          categorie: '-'
         },
       ]);
     });
@@ -547,6 +575,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({
           département: "PUY-DE-DOME",
           numéroFiness: numéroFinessÉtablissementTerritorial,
+          categorie: '365-C.H.'
         }),
       ]);
     });
@@ -573,6 +602,7 @@ describe("La recherche d’entités et d’établissements", () => {
           raisonSocialeCourte: "CH DU HAUT BUGEY",
           type: "Entité juridique",
           rattachement: "",
+          categorie: '-'
         },
       ]);
     });
@@ -600,6 +630,7 @@ describe("La recherche d’entités et d’établissements", () => {
         RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({
           commune: "SAINT-JOUAN-DE-L'ISLE",
           numéroFiness: numéroFinessÉtablissementTerritorial,
+          categorie: '365-C.H.'
         }),
       ]);
     });
@@ -626,7 +657,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-C.H.' }),
       ]);
     });
 
@@ -650,7 +681,7 @@ describe("La recherche d’entités et d’établissements", () => {
       // THEN
       expect(recherche.nombreDeRésultats).toBe(1);
       expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial }),
+        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-Soins suite réadap' }),
       ]);
     });
   });
@@ -690,50 +721,62 @@ describe("La recherche d’entités et d’établissements", () => {
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000000",
             raisonSocialeCourte: "hopital 000000000",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000001",
             raisonSocialeCourte: "hopital 000000001",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000002",
             raisonSocialeCourte: "hopital 000000002",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000003",
             raisonSocialeCourte: "hopital 000000003",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000004",
             raisonSocialeCourte: "hopital 000000004",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000005",
             raisonSocialeCourte: "hopital 000000005",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000006",
             raisonSocialeCourte: "hopital 000000006",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000007",
             raisonSocialeCourte: "hopital 000000007",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000008",
             raisonSocialeCourte: "hopital 000000008",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000009",
             raisonSocialeCourte: "hopital 000000009",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000010",
             raisonSocialeCourte: "hopital 000000010",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000011",
             raisonSocialeCourte: "hopital 000000011",
+            categorie: '-'
           }),
         ],
       });
@@ -754,14 +797,17 @@ describe("La recherche d’entités et d’établissements", () => {
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000012",
             raisonSocialeCourte: "hopital 000000012",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000013",
             raisonSocialeCourte: "hopital 000000013",
+            categorie: '-'
           }),
           RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({
             numéroFiness: "000000014",
             raisonSocialeCourte: "hopital 000000014",
+            categorie: '-'
           }),
         ],
       });

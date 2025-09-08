@@ -1,3 +1,7 @@
+import styles from "./BlocActivitéMédicoSocial.module.css";
+import { IndicateursOccupationESMS } from "./IndicateursOccupationESMS";
+import { IndicateursOccupationEHPAD } from "./IndicateursOccupationsEHPAD";
+import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./ÉtablissementTerritorialMédicoSocialActivitéViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -7,81 +11,68 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from "../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties";
 import { ContenuFileActivePersonnesAccompagnées } from "../InfoBulle/ContenuFileActivePersonnesAccompagnées";
 import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from "../InfoBulle/ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées";
-import { ContenuTauxOccupationAccueilDeJour } from "../InfoBulle/ContenuTauxOccupationAccueilDeJour";
-import { ContenuTauxOccupationHébergementPermanent } from "../InfoBulle/ContenuTauxOccupationHébergementPermanent";
-import { ContenuTauxOccupationHébergementTemporaire } from "../InfoBulle/ContenuTauxOccupationHébergementTemporaire";
 import { ContenuTauxRéalisationActivité } from "../InfoBulle/ContenuTauxRéalisationActivité";
-import styles from "./BlocActivitéMédicoSocial.module.css";
-import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./ÉtablissementTerritorialMédicoSocialActivitéViewModel";
 
 type BlocActivitéMédicoSocialProps = Readonly<{
+  categorie: string;
   établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéMédicoSocialViewModel, opnedBloc, toggelBlocs  }: BlocActivitéMédicoSocialProps) => {
+type GestionnaireListeIndicateursProps = Readonly<{
+  estEHPAD: boolean;
+  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+}>;
+
+type ListeIndicateursNonAutorisesOuNonRenseignesProps = Readonly<{
+  notAuthorizedData: string[];
+  missingData: string[];
+}>;
+
+const ListeIndicateursNonAutorisesOuNonRenseignes = ({
+  notAuthorizedData, missingData,
+}: ListeIndicateursNonAutorisesOuNonRenseignesProps) => {
+  if (notAuthorizedData.length !== 0) {
+    return <NotAUthorized indicateurs={notAuthorizedData} />;
+  } else if (missingData.length !== 0) {
+    return <NoDataCallout indicateurs={missingData} />;
+  } else {
+    return <></>;
+  }
+}
+
+const GestionnaireListeIndicateurs = ({
+  estEHPAD, établissementTerritorialActivitéMédicoSocialViewModel,
+}: GestionnaireListeIndicateursProps) => {
+  const donnees = estEHPAD
+    ? {
+      donneesNonAutorisees: établissementTerritorialActivitéMédicoSocialViewModel.lesDonneesActivitesEHPADPasAutorisees,
+      donneesNonRenseignees: établissementTerritorialActivitéMédicoSocialViewModel.lesDonneesActivitesEHPADPasRenseignees
+    }
+    : {
+      donneesNonAutorisees: établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés,
+      donneesNonRenseignees: établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees
+    };
+
+  return <ListeIndicateursNonAutorisesOuNonRenseignes missingData={donnees.donneesNonRenseignees} notAuthorizedData={donnees.donneesNonAutorisees} />;
+
+}
+
+export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritorialActivitéMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies();
+  const estEHPAD = categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes";
 
   if (établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc  opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}>
-      {établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasAutorisés} /> :
-        établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialActivitéMédicoSocialViewModel.lesDonnéesActivitésPasRenseignees} /> :
-          <></>}
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}>
+      <GestionnaireListeIndicateurs estEHPAD={estEHPAD} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxOccupationHébergementPermanent
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementPermanent}
-            identifiant="activite-0"
-            nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanent}
-          </IndicateurGraphique>
-        ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxOccupationHébergementTemporaire
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationHébergementTemporaire}
-            identifiant="activite-1"
-            nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
-          </IndicateurGraphique>
-        ) : <></>}
-
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxOccupationAccueilDeJour
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationAccueilDeJour}
-            identifiant="activite-2"
-            nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJour}
-          </IndicateurGraphique>
-        ) : <></>}
+        {estEHPAD && <IndicateursOccupationEHPAD établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
+        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -91,7 +82,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
-            identifiant="activite-3"
+            identifiant="activite-5"
             nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
             source={wording.TDB_PERF}
           >
@@ -107,7 +98,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaFileActivePersonnesAccompagnées}
-            identifiant="activite-4"
+            identifiant="activite-6"
             nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
@@ -123,7 +114,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
               />
             }
             dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuNombreMoyenJournéesAbsencePersonnesAccompagnées}
-            identifiant="activite-5"
+            identifiant="activite-7"
             nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
@@ -139,7 +130,7 @@ export const BlocActivitéMédicoSocial = ({ établissementTerritorialActivitéM
             />
           }
           dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDeLaDuréeMoyenneSéjourAccompagnementPersonnesSorties}
-          identifiant="activite-6"
+          identifiant="activite-8"
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={wording.TDB_PERF}
         >

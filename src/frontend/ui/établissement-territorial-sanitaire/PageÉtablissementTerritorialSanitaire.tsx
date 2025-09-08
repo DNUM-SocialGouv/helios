@@ -1,17 +1,14 @@
-/* eslint-disable react/jsx-sort-props */
 import Head from "next/head";
-import { useRef, useCallback, useEffect, useContext } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
-import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
-import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
-import { ActivitésMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
@@ -19,17 +16,16 @@ import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocA
 import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
 import BlocQualite from "./bloc-qualite/BlocQualite";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
-import { ÉtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
-  établissementTerritorialSanitaireViewModel: ÉtablissementTerritorialSanitaireViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  établissementTerritorialSanitaireViewModel: EtablissementTerritorialSanitaireViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
 
 export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, établissementTerritorialSanitaireViewModel, activitéMensuelleViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -71,10 +67,6 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
     }
   }, [onBeforeGetContentResolve.current]);
 
-  useEffect(() => {
-    if (backToSearchContext)
-      backToSearchContext.setIsInfoPage(true);
-  }, [backToSearchContext])
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
 
@@ -83,43 +75,41 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
       <Head>
         <title>{établissementTerritorialSanitaireViewModel.titre}</title>
       </Head>
-      <>
-        <div className="print-content" ref={componentRef}>
-          <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
-            {établissementTerritorialSanitaireViewModel.titre}
-          </Titre>
-          <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
+      <div className="print-content" ref={componentRef}>
+        <Titre downloadPDF={handlePrint} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+          {établissementTerritorialSanitaireViewModel.titre}
+        </Titre>
+        <BlocIdentitéSanitaire établissementTerritorialSanitaireIdentitéViewModel={établissementTerritorialSanitaireViewModel.identitéViewModel} />
 
-          <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
+        <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
-          <BlocAutorisationEtCapacitéSanitaire
-            établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
-            opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
-          />
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <BlocActivitéSanitaire établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel}
-            activitéMensuelleViewModel={activitéMensuelleViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
-          <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocAutorisationEtCapacitéSanitaire
+          opnedBloc={statusBlocs[0]}
+          toggelBlocs={() => toggelBlocs(0)} établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
+        />
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel}
+          opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+        <SeparatorHorizontal></SeparatorHorizontal>
 
-          {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
-            <>
-              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_PNL"
-                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
-              <SeparatorHorizontal></SeparatorHorizontal>
-            </>}
+        {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+          <>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+              toggelBlocs={() => toggelBlocs(2)} type="ET_PNL" />
+            <SeparatorHorizontal></SeparatorHorizontal>
+          </>}
 
-          {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
-            <>
-              <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} type="ET_Autres"
-                opnedBloc={statusBlocs[2]} toggelBlocs={() => toggelBlocs(2)} />
-              <SeparatorHorizontal></SeparatorHorizontal>
-            </>}
+        {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
+          <>
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
+              toggelBlocs={() => toggelBlocs(2)} type="ET_Autres" />
+            <SeparatorHorizontal></SeparatorHorizontal>
+          </>}
 
-          <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
-            opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
+        <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
+          opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
 
-        </div>
-      </>
-    </main>
+      </div>
+    </main >
   );
 };

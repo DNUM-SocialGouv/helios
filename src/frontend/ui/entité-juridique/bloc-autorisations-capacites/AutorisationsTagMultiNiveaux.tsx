@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 
+import style from "./AutorisationsTagMultiNiveaux.module.css";
 import {
   AutorisationActivites,
   AutorisationEtablissement as AutorisationEtablissementType,
@@ -9,7 +10,6 @@ import {
 } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
-import style from "./AutorisationsTagMultiNiveaux.module.css";
 
 export type TagMultiNiveauxProps = {
   activites: AutorisationActivites[];

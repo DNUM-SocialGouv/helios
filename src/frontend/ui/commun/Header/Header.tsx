@@ -1,20 +1,20 @@
-import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
 import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import styles from "./Header.module.css";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
 import { useDependencies } from "../contexts/useDependencies";
 import { UserContext } from "../contexts/userContext";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import styles from "./Header.module.css";
 
 export const Header = () => {
   const { paths, wording } = useDependencies();
@@ -163,7 +163,7 @@ export const Header = () => {
                           className="fr-btn"
                           onClick={(event) => {
                             event.preventDefault();
-                            localStorage.setItem("searchItem", terme);
+                            localStorage.setItem("searchItem", encodeURIComponent(terme));
                             router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
                           }}
                           title="Rechercher"

@@ -1,5 +1,6 @@
 import { mock } from "jest-mock-extended";
 
+import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
@@ -12,7 +13,6 @@ import {
 } from "../entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
-import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
 
 describe("La récupération d’une entité juridique", () => {
   let entiteJuridiqueLoaderMock: EntitéJuridiqueLoader;

@@ -7,13 +7,20 @@ type listeAnneesTagsProps = {
   annees: string[] | number[];
   id?: string;
   prefix?: string;
+  anneeEnCours?: number
 };
 
 
 
-export function SelectionAnneeTags({ setAnnéeEnCours, annees, id, prefix }: listeAnneesTagsProps) {
+export function SelectionAnneeTags({ setAnnéeEnCours, annees, id, prefix, anneeEnCours }: listeAnneesTagsProps) {
   let anneesTriees = annees.sort((année1, année2) => (année1 as number) - (année2 as number));
   const [selectedIndex, setSelectedIndex] = useState(annees.length - 1);
+
+  const isItActive = (index: number, annee: string | number) => {
+    if (anneeEnCours)
+      return anneeEnCours === annee as number
+    else return index === selectedIndex
+  }
 
   if (prefix && prefix.length > 0) {
     anneesTriees = annees.map(item => prefix + ' ' + item)
@@ -25,7 +32,7 @@ export function SelectionAnneeTags({ setAnnéeEnCours, annees, id, prefix }: lis
         {anneesTriees.map((annee, index) => (
           <li data-testid="groupe-annees" key={index}>
             <button
-              className={`fr-tag ${selectedIndex === index ? styles["tag-active"] : ""}`}
+              className={`fr-tag ${isItActive(index, annee) ? styles["tag-active"] : ""}`}
               onClick={() => {
                 setSelectedIndex(index);
                 if (prefix && prefix.length > 0) {

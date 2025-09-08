@@ -1,9 +1,9 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { memo, useCallback } from "react";
 
+import styles from "./AdvancedFilter.module.css";
 import { iPaginationData } from "../../../UsersListPage";
 import KeyWordFilter from "../KeyWordFilter/KeyWordFilter";
-import styles from "./AdvancedFilter.module.css";
 
 type KeyWordFilterProps = Readonly<{
   paginationData: iPaginationData;

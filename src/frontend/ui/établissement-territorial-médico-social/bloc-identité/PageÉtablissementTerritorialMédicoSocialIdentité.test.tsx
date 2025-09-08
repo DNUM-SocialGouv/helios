@@ -5,6 +5,7 @@ import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builde
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch, trimHtml } from "../../../test-helpers/testHelper";
 import { StringFormater } from "../../commun/StringFormater";
+import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
 
@@ -63,7 +64,7 @@ describe("La page établissement territorial - bloc identité", () => {
     expect(titre).toBeInTheDocument();
   });
 
-  it("affiche le bouton pour imprimer", () => {
+  it("affiche le bouton d’action", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
@@ -75,8 +76,8 @@ describe("La page établissement territorial - bloc identité", () => {
     );
 
     // THEN
-    const imprimer = screen.getByRole("button", { name: wording.TÉLÉCHARGER_EN_PDF });
-    expect(imprimer).toHaveAttribute("type", "button");
+    const actions = screen.getByRole("button", { name: wording.ACTIONS });
+    expect(actions).toHaveAttribute("type", "button");
   });
 
   it("affiche le nom de l’établissement", () => {
@@ -307,7 +308,9 @@ describe("La page établissement territorial - bloc identité", () => {
       { selector: "p" }
     );
     expect(libelléStatutÉtablissement).toBeInTheDocument();
-    const statutÉtablissement = within(indicateurs[9]).getByText(identité.statutJuridique.value);
+    const labelCategorisation = new CatégorisationViewModel(identité.categorisationDeLEntitéDeRattachement.value, wording).catégorisationWording;
+    const statutMatcher = new RegExp(`${identité.statutJuridique.value}.*${labelCategorisation}`, "s");
+    const statutÉtablissement = within(indicateurs[9]).getByText(statutMatcher);
     expect(statutÉtablissement).toBeInTheDocument();
   });
 

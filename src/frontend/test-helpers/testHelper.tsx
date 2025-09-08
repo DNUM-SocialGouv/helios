@@ -1,5 +1,5 @@
 import { render, RenderResult } from "@testing-library/react";
-import { ReactChild, ReactElement } from "react";
+import { ReactNode, ReactElement } from "react";
 
 import { BreadcrumbHandler } from "../configuration/BreadcrumbHandler";
 import { FrontDependencies } from "../configuration/frontDependencies";
@@ -15,7 +15,7 @@ jest.mock("next/head", () => ({
   default: ({ children }: { children: ReactElement[] }) => children,
 }));
 
-export const renderFakeComponent = (component: ReactChild): RenderResult => {
+export const renderFakeComponent = (component: ReactNode): RenderResult => {
   return render(<DependenciesProvider>{component}</DependenciesProvider>);
 };
 
@@ -54,7 +54,7 @@ export const htmlNodeAndReactElementMatcher = (wording: ReactElement) => (_: str
 
 export const textMatch =
   (wording: string) =>
-  (_: string, element?: Element | null): boolean => {
-    return element?.textContent === wording;
-  };
+    (_: string, element?: Element | null): boolean => {
+      return element?.textContent === wording;
+    };
 export const annéeEnCours = new Date().getFullYear();

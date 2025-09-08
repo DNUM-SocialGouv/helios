@@ -1,3 +1,4 @@
+import styles from "./BlocBudgetEtFinancesMédicoSocial.module.css";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -9,7 +10,6 @@ import { ContenuFondDeRoulementNetGlobal } from "../InfoBulle/ContenuFondDeRoule
 import { ContenuMontantDeLaContributionAuxFraisDeSiège } from "../InfoBulle/ContenuMontantDeLaContributionAuxFraisDeSiège";
 import { ContenuRésultatNetComptable } from "../InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../InfoBulle/ContenuTauxDeVétustéConstruction";
-import styles from "./BlocBudgetEtFinancesMédicoSocial.module.css";
 import { GraphiqueCompteDeResultat } from "./compte-de-resultat/GraphiqueCompteDeResultat";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 

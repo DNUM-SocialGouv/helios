@@ -9,10 +9,10 @@ import { ÉtablissementTerritorialSanitaire } from "../../backend/métier/entiti
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../backend/métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
-import { ÉtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
+import { EtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
 import { ETB_SANITAIRE } from "../../frontend/utils/constantes";
 
 type RouterProps = Readonly<{
@@ -26,11 +26,11 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
 
   if (!établissementTerritorial) return null;
 
-  const établissementTerritorialSanitaireViewModel = new ÉtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
-  const activitéMensuelleViewModel = new ActivitésMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
+  const établissementTerritorialSanitaireViewModel = new EtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
+  const activitéMensuelleViewModel = new ActivitesMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
-  
+
   return (
     <>
       {rechercheViewModel ? (
@@ -52,25 +52,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const codeRegion = session?.user.codeRegion as unknown as string;
     const codeProfiles = session?.user.codeProfiles as string[];
 
-    if (context.params && context.params["numeroFiness"]) {
+    if (context.params?.["numeroFiness"]) {
       const numeroFiness = context.params["numeroFiness"] as string;
-      const établissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
+      const etablissementTerritorial = (await récupèreLÉtablissementTerritorialSanitaireEndpoint(
         dependencies,
         numeroFiness,
         codeRegion,
         codeProfiles
-      )) as ÉtablissementTerritorialSanitaire;
+      ));
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
-      saveSearchHistoryEndpoint(dependencies,établissementTerritorial.identité.raisonSocialeCourte.value,session?.user.idUser!,
-        établissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value,ETB_SANITAIRE);
-        
+      saveSearchHistoryEndpoint(dependencies, etablissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
+        etablissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_SANITAIRE);
+
       return {
         props: {
-          établissementTerritorial: JSON.parse(JSON.stringify(établissementTerritorial)),
+          établissementTerritorial: JSON.parse(JSON.stringify(etablissementTerritorial)),
           rechercheResult: rechercheResult,
-          autorisations: établissementTerritorial.autorisations
+          autorisations: etablissementTerritorial.autorisations
         },
       };
     } else {

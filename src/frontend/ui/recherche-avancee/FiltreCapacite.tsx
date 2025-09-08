@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
-import { WordingFr } from "../../configuration/wording/WordingFr";
-import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
-import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { WordingFr } from "../../configuration/wording/WordingFr";
+import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
+import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";
 
 type FiltresForComparaisonProps = Readonly<{
@@ -15,8 +15,8 @@ type FiltresForComparaisonProps = Readonly<{
 
 export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForComparaisonProps) => {
   const wording = new WordingFr();
-  const [showToolip, setShowTooltip] = useState<boolean>(false);
-  const [showToolip2, setShowTooltip2] = useState<boolean>(false);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [showTooltip2, setShowTooltip2] = useState<boolean>(false);
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [capaciteMedicoSociaux, setCapaciteMedicoSociaux] = useState<CapaciteEtablissement>(
     new CapaciteEtablissement("non_classifie", rechercheAvanceeContext?.capaciteMedicoSociaux || [])
@@ -94,23 +94,6 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Empêcher l'envoi du formulaire ou autres comportements
-        document.getElementById("capaciter-appliquer-botton")?.click();
-      }
-    };
-
-    // Ajouter l'écouteur d'événement pour "Enter"
-    document.addEventListener("keydown", handleKeyDown);
-
-    // Nettoyer l'écouteur quand le modal est fermé
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [capaciteAgees, capaciteHandicap, capaciteMedicoSociaux]);
-
-  useEffect(() => {
     if (
       rechercheAvanceeContext?.capaciteAgees.length === 0 &&
       rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
@@ -151,15 +134,21 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteAgees([]);
     if (setIsChanged) setIsChanged(true);
-    // rechercheAvanceeContext?.setTypeStructure("");
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("capaciter-appliquer-botton")?.click();
+    }
+  }
 
   return (
     <dialog aria-labelledby="fr-modal-Capacite-Filtre-title" className="fr-modal" id="fr-modal-Capacite-Filtre">
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
           <div className="fr-col-12 fr-col-md-8 fr-col-lg-6">
-            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "block" : "none" }}>
+            <div className="fr-modal__body" style={{ display: showTooltip || showTooltip2 ? "block" : "none" }}>
               <div className={`${styles["sticky"]} fr-modal__header`}>
                 <button
                   aria-controls="titre-info-bulle-etablissement"
@@ -177,12 +166,12 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
               <div className="fr-modal__content">
                 <h1 className="fr-modal__title" id="titre-info-bulle-etablissement">
                   <span aria-hidden="true" className="fr-fi-arrow-right-line fr-fi--lg"></span>
-                  {showToolip ? wording.TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP : wording.TITRE_CAPACITE_PERSONNES_AGEES}:
+                  {showTooltip ? wording.TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP : wording.TITRE_CAPACITE_PERSONNES_AGEES}:
                 </h1>
-                {showToolip ? contenuInfoBulle : contenuInfoBulleAgee}
+                {showTooltip ? contenuInfoBulle : contenuInfoBulleAgee}
               </div>
             </div>
-            <div className="fr-modal__body" style={{ display: showToolip || showToolip2 ? "none" : "block", height: isComparaison ? "547px" : "100%" }}>
+            <div className="fr-modal__body" style={{ display: showTooltip || showTooltip2 ? "none" : "block", height: isComparaison ? "547px" : "100%" }}>
               <div className="fr-modal__content fr-pt-5w" id="capaciter-container">
                 <div>
                   <div id="etablissement-medico-sociaux">
@@ -200,10 +189,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-1"
                           name="checkboxe-capacite-initiale-tranche-1"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,50"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-1">1-50</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-1">1 - 50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -213,10 +203,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-2"
                           name="checkboxe-capacite-initiale-tranche-2"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="51,100"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-2">51-100</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-2">51 - 100</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -226,10 +217,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-3"
                           name="checkboxe-capacite-initiale-tranche-3"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="101,150"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-3">101-150</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-3">101 - 150</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -239,10 +231,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-4"
                           name="checkboxe-capacite-initiale-tranche-4"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="151,199"
                         />
-                        <label htmlFor="checkboxe-capacite-initiale-tranche-4">151-199</label>
+                        <label htmlFor="checkboxe-capacite-initiale-tranche-4">151 - 199</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-capacite-initiale-tranche-4"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -252,6 +245,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-capacite-initiale-tranche-5"
                           name="checkboxe-capacite-initiale-tranche-5"
                           onChange={(e) => onchange(e.target.value, "non_classifie")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">199"
                         />
@@ -262,7 +256,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                   </div>
                   <div id="etablissement-public-handicap" style={{ marginTop: "20px" }}>
                     <h6 style={{ margin: "0" }}>{wording.ETABLISSEMENT_PUBLIC_HANDICAP}</h6>
-                    <label className="fr-label" htmlFor="statut">
+                    <label className={"fr-label " + styles["label-capacite"]} htmlFor="statut">
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
@@ -270,7 +264,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       id="button-info-handicap"
                       name="tooltip-info-handicap"
                       onClick={() => {
-                        setShowTooltip(!showToolip);
+                        setShowTooltip(!showTooltip);
                       }}
                       type="button"
                     ></button>
@@ -282,10 +276,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-1"
                           name="checkboxe-etablissements-public-tranche-1"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,30"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-1">1-30</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-1">1 - 30</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -295,10 +290,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-2"
                           name="checkboxe-etablissements-public-tranche-2"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="31,50"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-2">31-50</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-2">31 - 50</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -308,10 +304,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-3"
                           name="checkboxe-etablissements-public-tranche-3"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="51,100"
                         />
-                        <label htmlFor="checkboxe-etablissements-public-tranche-3">51-100</label>
+                        <label htmlFor="checkboxe-etablissements-public-tranche-3">51 - 100</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-public-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -321,6 +318,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-public-tranche-4"
                           name="checkboxe-etablissements-public-tranche-4"
                           onChange={(e) => onchange(e.target.value, "publics_en_situation_de_handicap")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">100"
                         />
@@ -331,7 +329,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                   </div>
                   <div id="etablissement-personnes-agees" style={{ marginTop: "20px" }}>
                     <h6 style={{ margin: "0" }}>{wording.ETABLISSEMENT_PERSONNE_AGEES}</h6>
-                    <label className="fr-label" htmlFor="statut">
+                    <label className={"fr-label " + styles["label-capacite"]} htmlFor="statut">
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
@@ -339,7 +337,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       id="button-info-agee"
                       name="tooltip-info-agee"
                       onClick={() => {
-                        setShowTooltip2(!showToolip2);
+                        setShowTooltip2(!showTooltip2);
                       }}
                       title=" "
                       type="button"
@@ -352,10 +350,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-1"
                           name="checkboxe-etablissements-personnes-agees-tranche-1"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="1,44"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1-44</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-1">1 - 44</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-1"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -365,10 +364,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-2"
                           name="checkboxe-etablissements-personnes-agees-tranche-2"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="45,80"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-2">45-80</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-2">45 - 80</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-2"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -378,10 +378,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-3"
                           name="checkboxe-etablissements-personnes-agees-tranche-3"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="81,120"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-3">81-120</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-3">81 - 120</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-3"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -391,10 +392,11 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-4"
                           name="checkboxe-etablissements-personnes-agees-tranche-4"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value="121,199"
                         />
-                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-4">121-199</label>
+                        <label htmlFor="checkboxe-etablissements-personnes-agees-tranche-4">121 - 199</label>
                         <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-etablissements-personnes-agees-tranche-4"></div>
                       </div>
                       <div className={`${styles["checkElement"]} fr-checkbox-group`}>
@@ -404,6 +406,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                           id="checkboxe-etablissements-personnes-agees-tranche-5"
                           name="checkboxe-etablissements-personnes-agees-tranche-5"
                           onChange={(e) => onchange(e.target.value, "personnes_agees")}
+                          onKeyDown={(event) => onKeyDown(event)}
                           type="checkbox"
                           value=">199"
                         />

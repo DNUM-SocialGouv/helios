@@ -2,11 +2,11 @@ import { fireEvent, screen, waitForElementToBeRemoved, within } from "@testing-l
 import { SessionProvider } from "next-auth/react";
 import mockRouter from "next-router-mock";
 
+import { PageRecherche } from "./PageRecherche";
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
 import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from "../../test-helpers/testHelper";
 import { régions } from "../région/régions";
-import { PageRecherche } from "./PageRecherche";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -89,6 +89,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
         rattachement: "010008407",
+        categorie: '-'
       },
       {
         commune: "SAINT-BRIEUC",
@@ -97,6 +98,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
         rattachement: "010008407",
+        categorie: '-'
       },
       {
         commune: "SAINT-BRIEUC",
@@ -105,6 +107,7 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
         rattachement: "",
+        categorie: '-'
       },
     ];
     // @ts-ignore
@@ -143,11 +146,11 @@ describe("La page de d’accueil", () => {
     const titreTuile = within(tuiles[0]).getByRole("heading", { level: 2, name: "010003598 - CH SAINT BRIEUC" });
     expect(titreTuile).toBeInTheDocument();
     const lienMédicoSocial = within(tuiles[0]).getByRole("link", { name: "010003598 - CH SAINT BRIEUC" });
-    expect(lienMédicoSocial).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + résultats[0].numéroFiness);
+    expect(lienMédicoSocial).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + résultats[0].numéroFiness + "?termeSimple=" + terme);
     const lienSanitaire = within(tuiles[1]).getByRole("link", { name: "010005239 - CH HAUT BUGEY" });
-    expect(lienSanitaire).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + résultats[1].numéroFiness);
+    expect(lienSanitaire).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + résultats[1].numéroFiness + "?termeSimple=" + terme);
     const lienEntitéJuridique = within(tuiles[2]).getByRole("link", { name: "010008407 - CH VILLENEUVE DASCQ" });
-    expect(lienEntitéJuridique).toHaveAttribute("href", paths.ENTITÉ_JURIDIQUE + "/" + résultats[2].numéroFiness);
+    expect(lienEntitéJuridique).toHaveAttribute("href", paths.ENTITÉ_JURIDIQUE + "/" + résultats[2].numéroFiness + "?termeSimple=" + terme);
     const départementCommuneTuile = within(tuiles[0]).getByText("côtes d’armor, saint-brieuc", { selector: "p" });
     expect(départementCommuneTuile).toBeInTheDocument();
   });
@@ -476,6 +479,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH SAINT BRIEUC",
         type: "Médico-social",
         rattachement: "010008407",
+        categorie: '-'
+
       },
       {
         commune: "SAINT-BRIEUC",
@@ -484,6 +489,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH HAUT BUGEY",
         type: "Sanitaire",
         rattachement: "010008407",
+        categorie: '-'
+
       },
       {
         commune: "SAINT-BRIEUC",
@@ -492,6 +499,8 @@ describe("La page de d’accueil", () => {
         raisonSocialeCourte: "CH VILLENEUVE DASCQ",
         type: "Entité Juridique",
         rattachement: "",
+        categorie: '-'
+
       },
     ];
     // @ts-ignore
@@ -525,11 +534,11 @@ describe("La page de d’accueil", () => {
     const titreTuile = within(tuiles[0]).getByRole("heading", { level: 2, name: "010003598 - CH SAINT BRIEUC" });
     expect(titreTuile).toBeInTheDocument();
     const lienMédicoSocial = within(tuiles[0]).getByRole("link", { name: "010003598 - CH SAINT BRIEUC" });
-    expect(lienMédicoSocial).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + résultats[0].numéroFiness);
+    expect(lienMédicoSocial).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL + "/" + résultats[0].numéroFiness + "?termeSimple=" + terme);
     const lienSanitaire = within(tuiles[1]).getByRole("link", { name: "010005239 - CH HAUT BUGEY" });
-    expect(lienSanitaire).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + résultats[1].numéroFiness);
+    expect(lienSanitaire).toHaveAttribute("href", paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + résultats[1].numéroFiness + "?termeSimple=" + terme);
     const lienEntitéJuridique = within(tuiles[2]).getByRole("link", { name: "010008407 - CH VILLENEUVE DASCQ" });
-    expect(lienEntitéJuridique).toHaveAttribute("href", paths.ENTITÉ_JURIDIQUE + "/" + résultats[2].numéroFiness);
+    expect(lienEntitéJuridique).toHaveAttribute("href", paths.ENTITÉ_JURIDIQUE + "/" + résultats[2].numéroFiness + "?termeSimple=" + terme);
     const départementCommuneTuile = within(tuiles[0]).getByText("côtes d’armor, saint-brieuc", { selector: "p" });
     expect(départementCommuneTuile).toBeInTheDocument();
   });

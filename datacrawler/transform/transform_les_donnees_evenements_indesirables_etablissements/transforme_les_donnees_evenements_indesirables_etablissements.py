@@ -32,7 +32,6 @@ def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFra
     )
     return donnees_evenements_indesirables
 
-
 def transform_les_donnees_evenements_indesirables_etablissements(
     donnees_evenements_indesirables: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:

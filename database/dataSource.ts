@@ -67,6 +67,14 @@ import { AjoutClassificationDansLaRecherche1728914554142 } from "./migrations/17
 import { AjoutCodeRegionDansLaRecherche1730971588532 } from "./migrations/1730971588532-AjoutCodeRegionDansLaRecherche";
 import { AjoutRattachementRecherche1732629322484 } from "./migrations/1732629322484-AjoutRattachementRecherche";
 import { AjoutListEtEtsList1736865415982 } from "./migrations/1736865415982-AjoutListEtEtsList";
+import { MettreAJourTableActiviteMedicoSocial1741861364859 } from "./migrations/1741861364859-MettreAJourTableActiviteMedicoSocial";
+import { ClefEtrangereListEts1743596937227 } from "./migrations/1743596937227-ClefEtrangereListEts";
+import { AjoutNombreJourneeUSLDActivitesSanitaires1745321952709 } from "./migrations/1745321952709-AjoutNombreJourneeUSLDActivitesSanitaires";
+import { ReferentielCategoriesFiness1747831401347 } from "./migrations/1747831401347-ReferentielCategoriesFiness";
+import { AjoutCategorieRecherche1748009262073 } from "./migrations/1748009262073-AjoutCategorieRecherche";
+import { AjoutLaColonneDomaineAuReferentielCategories1748332500947 } from "./migrations/1748332500947-ajoutLaColonneDomaineAuReferentielCategories";
+import { AjoutLibelleCategorieALaRecherche1754309418981 } from "./migrations/1754309418981-AjoutLibelleCategorieALaRecherche";
+import { AjoutDonneesMensuellesPsy1756720758341 } from "./migrations/1756720758341-AjoutDonneesMensuellesPsy"
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -86,8 +94,10 @@ import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/refer
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
 import { AjoutReferentielTrancheAge1739874041081 } from "./migrations/vigie_rh/referentiels/1739874041081-ajoutReferentielTrancheAge";
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
-import { ActivitéSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
+import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
+import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "./models/ActivitéSanitaireEntitéJuridiqueModel";
 import { ActivitéSanitaireModel } from "./models/ActivitéSanitaireModel";
@@ -101,6 +111,7 @@ import { BudgetEtFinancesMédicoSocialModel } from "./models/BudgetEtFinancesMé
 import { BudgetEtFinancesSanitaireModel } from "./models/BudgetEtFinancesSanitaireModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "./models/CapacitesSanitaireEntiteJuridiqueModel";
 import { CapacitéAutorisationSanitaireModel } from "./models/CapacitéAutorisationSanitaireModel";
+import { CategoriesFinessModel } from "./models/CategoriesFinessModel";
 import { CpomModel } from "./models/CpomModel";
 import { DateMiseÀJourFichierSourceModel } from "./models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "./models/EntitéJuridiqueModel";
@@ -173,8 +184,8 @@ const datasource = new DataSource({
     InspectionsControlesETModel,
     AllocationRessourceModel,
     AllocationRessourceETModel,
-    ActivitéSanitaireMensuelModel,
-    ActivitéSanitaireMensuelEntiteJuridiqueModel,
+    ActiviteSanitaireMensuelModel,
+    ActiviteSanitaireMensuelEntiteJuridiqueModel,
     UserListModel,
     UserListEtablissementModel,
     VigieRhRefProfessionFiliereModel,
@@ -187,7 +198,8 @@ const datasource = new DataSource({
     VigieRhProfessionFiliereModel,
     VigieRhProfessionGroupeModel,
     VigieRhRefTrancheAgeModel,
-    VigieRhPyramideAgesModel
+    VigieRhPyramideAgesModel,
+    CategoriesFinessModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -277,7 +289,17 @@ const datasource = new DataSource({
     AjoutReferentielTrancheAge1739874041081,
     AjoutEnumFichierDateMiseAjour1739804255435,
     AjoutTableVigieRhPyramide1739979832918,
-    AjoutEnumFichierDateMiseAjourReferentiel1739960328134
+    AjoutEnumFichierDateMiseAjourReferentiel1739960328134,
+    MettreAJourTableActiviteMedicoSocial1741861364859,
+    AjoutDesOccupationsDansLesProfils1799478704013,
+    ClefEtrangereListEts1743596937227,
+    AjoutNombreJourneeUSLDActivitesSanitaires1745321952709,
+    AjoutLesJourneesUsldDansLesProfils1799501916707,
+    ReferentielCategoriesFiness1747831401347,
+    AjoutCategorieRecherche1748009262073,
+    AjoutLaColonneDomaineAuReferentielCategories1748332500947,
+    AjoutLibelleCategorieALaRecherche1754309418981,
+    AjoutDonneesMensuellesPsy1756720758341
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

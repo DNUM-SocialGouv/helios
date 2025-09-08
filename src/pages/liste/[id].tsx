@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
 import { getSession } from "next-auth/react";
-import { ChangeEventHandler, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, ReactNode, useContext, useEffect, useState } from "react";
 
 import { getById } from "../../backend/infrastructure/controllers/userListEndpoint";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
@@ -8,9 +8,9 @@ import { UserContext } from "../../frontend/ui/commun/contexts/userContext";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/SelecteurTableauVignette/SelecteurTableauVignette";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { SelectedRows } from "../../frontend/ui/commun/Table/Table";
 import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
+import ExportList from "../../frontend/ui/liste/ExportList";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ListActionsButton } from "../../frontend/ui/liste/ListActionsButton";
 import { TableauListeEtablissements } from "../../frontend/ui/liste/TableauListeEtablissements";
@@ -31,7 +31,7 @@ export default function Router({ listServer }: RouterProps) {
   const { getFavorisLists } = useFavoris();
   const { paths, wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(true);
-  const [selectedRows, setSelectedRows] = useState<SelectedRows>({ 1: [] });
+  const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const [list, setList] = useState<UserListViewModel>();
   const [chargement, setChargement] = useState(true);
   const [order, setOrder] = useState(defaultOrder);
@@ -75,11 +75,19 @@ export default function Router({ listServer }: RouterProps) {
     getFavorisLists()
   };
 
-  const selectedRowsValues = Object.values(selectedRows).flat();
-  const tableMessage = `${selectedRowsValues.length} ${selectedRowsValues.length > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
+  const tableMessage = `${selectedRows.size} ${selectedRows.size > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;
   const vignetteMessage = `${listLength} ${listLength > 1 ? 'établissements' : 'établissement'}`;
 
   const isListEmpty = () => listLength === 0;
+
+  let exportButton: ReactNode;
+  if (list) {
+    exportButton = <ExportList disabled={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} />;
+  } else {
+    exportButton = <button className="fr-btn fr-btn--tertiary-no-outline" disabled={true}>
+      {wording.EXPORTER}
+    </button>;
+  }
 
   const titleHead = <>
     <div className="fr-grid-row">
@@ -87,7 +95,7 @@ export default function Router({ listServer }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} listId={list.id} listName={list.nom} order={order} orderBy={orderBy} selectedRows={selectedRowsValues} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
@@ -158,7 +166,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     } else {
       return { notFound: true };
     }
-  } catch (error) {
+  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
     return { notFound: true };
   }
 }

@@ -1,10 +1,11 @@
+import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { CadreBudgétaire } from "../../../backend/métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialBudgetEtFinances";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
 const autorisationsMockData = {
@@ -26,7 +27,7 @@ const autorisationsMockData = {
 };
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
-  public static identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
+  public static readonly identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "01117 OYONNAX CEDEX",
@@ -103,6 +104,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       dateMiseÀJourSource: "2021-07-07",
       value: "Etablissement Public Intercommunal d’Hospitalisation",
     },
+    categorisationDeLEntitéDeRattachement: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: CatégorisationEnum.PUBLIC,
+    },
     typeÉtablissement: {
       dateMiseÀJourSource: "2021-07-07",
       value: "S",
@@ -119,7 +124,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     domaineÉtablissementPrincipal: 'Médico-social',
   };
 
-  public static activités: ÉtablissementTerritorialMédicoSocial["activités"] = [
+  public static readonly activités: ÉtablissementTerritorialMédicoSocial["activités"] = [
     {
       année: 2020,
       duréeMoyenneSéjourAccompagnementPersonnesSorties: {
@@ -150,6 +155,21 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       tauxRéalisationActivité: {
         dateMiseÀJourSource: "2021-07-07",
         value: 1.004,
+      },
+      tauxOccupationExternat: {
+        value: 0.725,
+      },
+      tauxOccupationSemiInternat: {
+        value: 0.952,
+      },
+      tauxOccupationInternat: {
+        value: 0.965,
+      },
+      tauxOccupationAutre: {
+        value: 0.495,
+      },
+      tauxOccupationSeances: {
+        value: 0.562,
       },
     },
     {
@@ -183,6 +203,21 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 0.945,
       },
+      tauxOccupationExternat: {
+        value: 0.526,
+      },
+      tauxOccupationSemiInternat: {
+        value: 0.857,
+      },
+      tauxOccupationInternat: {
+        value: 0.966,
+      },
+      tauxOccupationAutre: {
+        value: 0.756,
+      },
+      tauxOccupationSeances: {
+        value: 0.634,
+      },
     },
     {
       année: 2022,
@@ -215,10 +250,25 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 0.966,
       },
+      tauxOccupationExternat: {
+        value: 0.526,
+      },
+      tauxOccupationSemiInternat: {
+        value: 0.857,
+      },
+      tauxOccupationInternat: {
+        value: 0.966,
+      },
+      tauxOccupationAutre: {
+        value: 0.756,
+      },
+      tauxOccupationSeances: {
+        value: 0.634,
+      },
     },
   ];
 
-  public static autorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"] = {
+  public static readonly autorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"] = {
     autorisations: {
       dateMiseÀJourSource: "2022-08-18",
       disciplines: [
@@ -322,7 +372,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     numéroFinessÉtablissementTerritorial: "010003598",
   };
 
-  public static budgetEtFinances: ÉtablissementTerritorialMédicoSocial["budgetEtFinances"] = [
+  public static readonly budgetEtFinances: ÉtablissementTerritorialMédicoSocial["budgetEtFinances"] = [
     {
       année: 2020,
       cadreBudgétaire: CadreBudgétaire.ERRD,
@@ -440,7 +490,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
 
   ];
 
-  public static ressourcesHumaines: ÉtablissementTerritorialMédicoSocial["ressourcesHumaines"] = [
+  public static readonly ressourcesHumaines: ÉtablissementTerritorialMédicoSocial["ressourcesHumaines"] = [
     {
       année: 2019,
       nombreDEtpRéalisés: {
@@ -542,7 +592,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     },
   ];
 
-  public static qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
+  public static readonly qualite: ÉtablissementTerritorialMédicoSocial["qualite"] = {
     reclamations: [
       {
         numéroFinessÉtablissementTerritorial: '010005239',
@@ -614,8 +664,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial["identité"]>
-  ): ÉtablissementTerritorialMédicoSocialViewModel {
-    return new ÉtablissementTerritorialMédicoSocialViewModel(
+  ): EtablissementTerritorialMedicoSocialViewModel {
+    return new EtablissementTerritorialMedicoSocialViewModel(
       {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,

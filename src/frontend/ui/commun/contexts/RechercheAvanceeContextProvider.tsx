@@ -14,13 +14,18 @@ interface SearchParams {
   zoneGeoD?: string;
   zoneGeoType?: string;
   zoneGeoLabel?: string;
-  typeStructure?: string;
+  typeStructure?: string[];
+  categories?: string[];
   statutJuridiqueStructure?: string[];
   order?: string;
   orderBy?: string;
   capaciteMedicoSociaux: string[];
   capaciteHandicap: string[];
   capaciteAgees: string[];
+  activiteMco: string[];
+  activitePsy: string[];
+  activiteSsr: string[];
+  activiteUsld: string[];
 }
 
 export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceeProviderProps) => {
@@ -35,13 +40,18 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       zoneGeoD: parseAsString.withDefault(""),
       zoneGeoType: parseAsString.withDefault(""),
       zoneGeoLabel: parseAsString.withDefault(""),
-      typeStructure: parseAsString.withDefault(""),
+      typeStructure: parseAsArrayOf(parseAsString).withDefault([]),
       statutJuridiqueStructure: parseAsArrayOf(parseAsString).withDefault([]),
+      categories: parseAsArrayOf(parseAsString).withDefault([]),
       order: parseAsString.withDefault(""),
       orderBy: parseAsString.withDefault(""),
       capaciteMedicoSociaux: parseAsArrayOf(parseAsString, ";").withDefault([]),
       capaciteHandicap: parseAsArrayOf(parseAsString, ";").withDefault([]),
       capaciteAgees: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteMco: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activitePsy: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteSsr: parseAsArrayOf(parseAsString, ";").withDefault([]),
+      activiteUsld: parseAsArrayOf(parseAsString, ";").withDefault([]),
     },
     {
       urlKeys: {
@@ -60,8 +70,10 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   );
 
   const [termeFixe, setTermeFixe] = useState("");
+  const [categoriesDomaines, setCategoriesDomaines] = useState<string[]>([]);
+  const [categoriesLibellesCourt, setCategoriesLibellesCourt] = useState<string[]>([]);
 
-  const updateSearchParams = async (newParams: Partial<SearchParams>) => {
+  const updateSearchParams = (newParams: Partial<SearchParams>) => {
     setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
   };
 
@@ -71,18 +83,27 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
     <RechercheAvanceeContext.Provider value={{
       ...searchParams,
       termeFixe,
+      categoriesDomaines,
+      setCategoriesDomaines,
+      categoriesLibellesCourt,
+      setCategoriesLibellesCourt,
       setZoneGeo: (value) => updateSearchParams({ zoneGeo: value, page: initialPage }),
       setZoneGeoD: (value) => updateSearchParams({ zoneGeoD: value, page: initialPage }),
       setZoneGeoType: (value) => updateSearchParams({ zoneGeoType: value, page: initialPage }),
       setZoneGeoLabel: (value) => updateSearchParams({ zoneGeoLabel: value, page: initialPage }),
       setTypeStructure: (value) => updateSearchParams({ typeStructure: value, page: initialPage }),
       setStatutJuridiqueStructure: (value) => updateSearchParams({ statutJuridiqueStructure: value, page: initialPage }),
+      setCategories: (value) => updateSearchParams({ categories: value, page: initialPage }),
       setCapaciteMedicoSociaux: (value) => updateSearchParams({ capaciteMedicoSociaux: value, page: initialPage }),
       setCapaciteHandicap: (value) => updateSearchParams({ capaciteHandicap: value, page: initialPage }),
       setCapaciteAgees: (value) => updateSearchParams({ capaciteAgees: value, page: initialPage }),
-      setTerme: (value) => setSearchParams({ ...searchParams, terme: value }),
+      setActiviteMco: (value) => updateSearchParams({ activiteMco: value, page: initialPage }),
+      setActivitePsy: (value) => updateSearchParams({ activitePsy: value, page: initialPage }),
+      setActiviteSsr: (value) => updateSearchParams({ activiteSsr: value, page: initialPage }),
+      setActiviteUsld: (value) => updateSearchParams({ activiteUsld: value, page: initialPage }),
+      setTerme: (value) => { setSearchParams((prevParams) => ({ ...prevParams, terme: value })) },
       setTermeFixe,
-      setPage: (value, shallow) => setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }),
+      setPage: (value, shallow) => { setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }) },
       setOrder: (value) => updateSearchParams({ order: value }),
       setOrderBy: (value) => updateSearchParams({ orderBy: value })
     }}>

@@ -39,6 +39,11 @@ TABLE_REF_MASQUE = "vigierh_ref_masque"
 TABLE_REF_PROFESSION_GROUPE = "vigierh_ref_profession_groupe"
 TABLE_REF_QUALITE = "vigierh_ref_qualite"
 TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
+TABLE_ENTITES_JURIDIQUES = "entite_juridique"
+TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
+CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = 'numero_finess_entite_juridique'
+CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX = 'numero_finess_etablissement_territorial'
+TABLE_REF_CATEGORIES = "referentiel_categories"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
@@ -51,6 +56,7 @@ class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ = "ann_errd_ej"
     DIAMANT_QUO_SAN_FINANCE = "quo_san_finance"
     DIAMANT_MEN_HAPI = "men_hapi"
+    FINESS_CS1400101 = "finess_cs1400101"
     FINESS_CS1400103 = "finess_cs1400103"
     FINESS_CS1400104 = "finess_cs1400104"
     FINESS_CS1400105 = "finess_cs1400105"

@@ -1,18 +1,18 @@
 import { ReactElement } from "react";
 
-import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
-import { Paths } from "../../configuration/Paths";
-import { Wording } from "../../configuration/wording/Wording";
 import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./bloc-activité/ÉtablissementTerritorialMédicoSocialActivitéViewModel";
 import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./bloc-autorisations/ÉtablissementTerritorialMédicoSocialAutorisationsViewModel";
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
-import { ÉtablissementTerritorialMédicoSocialIdentitéViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
+import { EtablissementTerritorialMedicoSocialIdentiteViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteMédicoSocialViewModel";
 import { BlocVigieRHViewModel } from "./bloc-ressources-humaines/bloc-vigie-rh/BlocVigieRHViewModel";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
+import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
+import { Paths } from "../../configuration/Paths";
+import { Wording } from "../../configuration/wording/Wording";
 
 export class ÉtablissementTerritorialMédicoSocialViewModel {
-  private établissementTerritorialIdentitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialIdentitéViewModel;
+  private établissementTerritorialIdentitéMédicoSocialViewModel: EtablissementTerritorialMedicoSocialIdentiteViewModel;
   private établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
   private établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
   private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
@@ -22,7 +22,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
   public autorisations: any;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths, autorisations: any) {
-    this.établissementTerritorialIdentitéMédicoSocialViewModel = new ÉtablissementTerritorialMédicoSocialIdentitéViewModel(
+    this.établissementTerritorialIdentitéMédicoSocialViewModel = new EtablissementTerritorialMedicoSocialIdentiteViewModel(
       établissementTerritorial.identité,
       wording,
       paths
@@ -74,7 +74,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModel {
     return `${this.établissementTerritorial.identité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`;
   }
 
-  public get identitéViewModel(): ÉtablissementTerritorialMédicoSocialIdentitéViewModel {
+  public get identitéViewModel(): EtablissementTerritorialMedicoSocialIdentiteViewModel {
     return this.établissementTerritorialIdentitéMédicoSocialViewModel;
   }
 

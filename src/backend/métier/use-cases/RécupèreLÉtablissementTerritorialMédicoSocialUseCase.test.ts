@@ -1,14 +1,15 @@
 import { mock } from "jest-mock-extended";
 
+import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from "./RécupèreLÉtablissementTerritorialMédicoSocialUseCase";
 import { ÉtablissementTerritorialTestBuilder } from "../../test-builder/ÉtablissementTerritorialTestBuilder";
 import { numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial } from "../../testHelper";
-import { EntitéJuridiqueDeRattachement } from "../entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
+import { EntiteJuridiqueDeRattachement } from "../entities/entité-juridique/EntiteJuridiqueDeRattachement";
+import { CatégorisationEnum } from "../entities/entité-juridique/EntitéJuridique";
 import { MonoÉtablissement } from "../entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocial } from "../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../gateways/ÉtablissementTerritorialMédicoSocialLoader";
-import { RécupèreLÉtablissementTerritorialMédicoSocialUseCase } from "./RécupèreLÉtablissementTerritorialMédicoSocialUseCase";
 
 describe("La récupération d’un établissement territorial médico-social", () => {
   it("récupère la fiche identité de l’établissement territorial médico-social", async () => {
@@ -23,7 +24,7 @@ describe("La récupération d’un établissement territorial médico-social", (
         value: numéroFinessÉtablissementTerritorial,
       },
     });
-    const entitéJuridiqueDeRattachement: EntitéJuridiqueDeRattachement = {
+    const entitéJuridiqueDeRattachement: EntiteJuridiqueDeRattachement = {
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: "2021-07-07",
         value: "HOPITAL PRIVE DE VILLENEUVE DASCQ",
@@ -32,6 +33,10 @@ describe("La récupération d’un établissement territorial médico-social", (
         dateMiseÀJourSource: "2021-07-07",
         value: "Société Anonyme (S.A.)",
       },
+      categorisationDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: CatégorisationEnum.PUBLIC,
+      }
     };
     const fakeEstUnMonoÉtablissement: MonoÉtablissement = {
       estMonoÉtablissement: {

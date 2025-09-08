@@ -2,7 +2,7 @@ import { ÉtablissementTerritorialRattaché } from "../entities/entité-juridiqu
 import { ÉtablissementTerritorialRattachéLoader } from "../gateways/ÉtablissementTerritorialRattachéLoader";
 
 export class RécupèreLesÉtablissementsTerritoriauxRattachésUseCase {
-  constructor(private établissementTerritorialLoader: ÉtablissementTerritorialRattachéLoader) {}
+  constructor(private readonly établissementTerritorialLoader: ÉtablissementTerritorialRattachéLoader) { }
 
   public async exécute(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialRattaché[]> {
     return this.établissementTerritorialLoader.chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique);

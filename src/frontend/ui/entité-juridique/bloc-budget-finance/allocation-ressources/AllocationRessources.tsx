@@ -16,7 +16,7 @@ export function AllocationRessources({ allocationRessourcesViewModel }: BlocAllo
   return (
     <IndicateurGraphique
       années={{ liste: allocationRessourcesViewModel.lesAnnéesEffectivesDuAllocationRessources(), setAnnéeEnCours }}
-      contenuInfoBulle={<ContenuAllocationRessourcesEJ dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour} source={wording.HAPI} />}
+      contenuInfoBulle={<ContenuAllocationRessourcesEJ comparaison={false} dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour} source={wording.HAPI} />}
       dateDeMiseÀJour={allocationRessourcesViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-allocation-de-resources"
       nomDeLIndicateur={<>{wording.ALLOCATION_DE_RESSOURCES}</>}

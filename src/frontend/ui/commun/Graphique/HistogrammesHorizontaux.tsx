@@ -3,30 +3,46 @@ import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
+import styles from "./HistogrammeHorizontaux.module.css";
+import { Wording } from "../../../configuration/wording/Wording";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
-import styles from "./HistogrammeHorizontaux.module.css";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
+const MIN_VALUE = 5;
 
-function useChartData(charts: HistogrammeData[]) {
+function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeursBasse?: boolean) {
   const [chartsData, setChartsData] = useState(charts);
   useEffect(() => setChartsData(charts), charts);
 
 
+
+  const hideLowValueFormatter = (value: number, _context: Context): any => {
+    if (cacheLesValeursBasse && value > 0 && value <= MIN_VALUE) {
+      return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+    }
+    return value;
+  };
+
   return {
-    histogrammes: chartsData.map((chartData) => ({
-      transcriptionTitles: chartData.transcriptionTitles,
-      chartData: chartData.chartData,
-      optionsHistogramme: chartData.optionsHistogramme,
-      legendColors: chartData.legendColors,
-      labels: chartData.labels,
-      transcriptionsValeurs: chartData.transcriptionValeurs,
-      nom: chartData.nom,
-      areStacksVisible: chartData.areStacksVisible,
-    })),
+    histogrammes: chartsData.map((chartData) => {
+      const inputOptions = chartData.optionsHistogramme;
+      inputOptions.plugins.datalabels.formatter = hideLowValueFormatter;
+
+      return ({
+        transcriptionTitles: chartData.transcriptionTitles,
+        chartData: chartData.chartData,
+        optionsHistogramme: cacheLesValeursBasse ? inputOptions : chartData.optionsHistogramme,
+        legendColors: chartData.legendColors,
+        labels: chartData.labels,
+        transcriptionsValeurs: chartData.transcriptionValeurs,
+        nom: chartData.nom,
+        areStacksVisible: chartData.areStacksVisible,
+      })
+    }
+    ),
     toggleStackVisibility: (stackIndex: number, isVisible: boolean) => {
       setChartsData((chartsData): HistogrammeData[] => {
         chartsData.forEach((chart) => chart.toggleStack(stackIndex, isVisible));
@@ -52,9 +68,9 @@ export class HistogrammeData {
   constructor(
     public nom: string,
     public labels: string[],
-    private totals: number[],
-    private stacks: Stack[],
-    private valueFormatter: (value: number) => string = (value) => value?.toString()
+    private readonly totals: number[],
+    private readonly stacks: Stack[],
+    private readonly valueFormatter: (value: number) => string = (value) => value?.toString()
   ) {
     this.areStacksVisible = this.makeAllStacksVisible(stacks);
     this.setDefaultErrorStatut();
@@ -98,11 +114,13 @@ export class HistogrammeData {
   }
 
   private get labelsColor(): string[] {
-    const isLabelsError = this.visibleStacks
-      .map((stack) => stack.isError as boolean[])
-      .reduce((isLabelInError, isErrorStack) => {
-        return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
-      });
+    const stackErrors = this.visibleStacks
+      .map((stack) => stack.isError as boolean[]);
+    const defaultArraySize = stackErrors[0].length;
+
+    const isLabelsError = stackErrors.reduce((isLabelInError, isErrorStack) => {
+      return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
+    }, Array(defaultArraySize).fill(false));
     return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
 
@@ -184,6 +202,7 @@ type HistogrammeHorizontalNewProps = {
   légende?: string[];
   epaisseur?: "FIN" | "EPAIS";
   identifiant?: string;
+  cacheLesValeursBasse?: boolean;
 };
 export const HistogrammesHorizontaux = ({
   nom,
@@ -193,16 +212,27 @@ export const HistogrammesHorizontaux = ({
   légende,
   identifiant,
   epaisseur = "EPAIS",
+  cacheLesValeursBasse
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
-  const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes);
+  const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, wording, cacheLesValeursBasse);
+  let hasSomeValuesToHide = false;
 
   function transcriptionTitles(): string[] {
-    return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat() as string[];
+    return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat();
   }
 
-  function getTranscriptionValeurs() {
-    return histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
+  let valeursTranscription = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
+  if (cacheLesValeursBasse) {
+    valeursTranscription = valeursTranscription.map((valeurs) => valeurs.map((valeur) => {
+      const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+      if (numValue > 0 && numValue <= MIN_VALUE) {
+        hasSomeValuesToHide = true;
+        return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+      }
+      return valeur;
+    })
+    )
   }
 
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
@@ -231,6 +261,7 @@ export const HistogrammesHorizontaux = ({
         />
       )}
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {hasSomeValuesToHide && <MiseEnExergue>{`${wording.VALEURS_INFERIEUR_A_5_CACHÉS}`}</MiseEnExergue>}
 
       <Transcription
         disabled={aucuneDonnées}
@@ -238,7 +269,7 @@ export const HistogrammesHorizontaux = ({
         identifiantUnique={identifiant}
         identifiants={transcriptionTitles()}
         libellés={histogrammes[0].labels}
-        valeurs={getTranscriptionValeurs()}
+        valeurs={valeursTranscription}
       />
     </>
   );
@@ -249,12 +280,12 @@ function LegendeHistogrammes({
   color,
   toggleStackVisibility,
   areStacksVisible,
-}: {
+}: Readonly<{
   legend: string[];
   color: string[];
   toggleStackVisibility: (index: number, isVisible: boolean) => void;
   areStacksVisible: boolean[];
-}) {
+}>) {
   return (
     <div aria-hidden="true" className="fr-checkbox-group " style={{ display: "flex", marginLeft: "2rem", marginBottom: "2rem" }}>
       {legend.map((légende, index) => (

@@ -1,85 +1,47 @@
-.star, .star-tab {
-    color: #000091;
-    min-width: 3rem !important;
-    background-color: transparent !important;
-    position: relative;
+.star,
+.star-tab {
+  color: #000091;
+  min-width: 3rem !important;
+  background-color: transparent !important;
+  position: relative;
 }
 
 .star {
-    top: -8px;
+  top: -8px;
 }
 
 .starInEstablishment {
+  color: #000091;
+  background-color: transparent !important;
+  position: relative;
+  bottom: 97%;
+  left: 88%;
+}
+
+@media (max-width: 55em) {
+  .star {
+    min-width: 3rem !important;
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    top: -8px;
+  }
+
+  .starInEstablishment {
     color: #000091;
     background-color: transparent !important;
     position: relative;
     bottom: 97%;
-    left: 88%;
-}
-
-@media (max-width: 55em) {
-    .star {
-        min-width: 3rem !important;
-        color: #000091;
-        background-color: transparent !important;
-        position: relative;
-        top: -8px;
-    }
-
-    .starInEstablishment {
-        color: #000091;
-        background-color: transparent !important;
-        position: relative;
-        bottom: 97%;
-        left: 84%;
-    }
+    left: 84%;
+  }
 }
 
 @media (max-width: 40em) {
-    .starInEstablishment {
-        color: #000091;
-        background-color: transparent !important;
-        position: relative;
-        bottom: 97%;
-        left: 75%;
-    }
-}
-
-.menu {
-    border: 1px solid var(--border-default-grey);
-    /* La position est fixée dans le code au clic sur le bouton */
-    position: absolute;
-    width: 250px;
-    padding: 0 1rem;
-    z-index: 5;
-    background-color: white;
-
-    font-size: .875rem;
-    line-height: 1.5rem;
-    text-align: start;
-    color: black;
-}
-
-.listOverflowContainer {
-  overflow: hidden auto;
-  max-height: 8.5rem;
-  text-wrap: wrap;
-  word-wrap: anywhere;
-  border: none;
-}
-
-.new-list-button-group {
-  margin: 0 .5rem .5rem .5rem;
-}
-.new-list-form {
-  display: flex;
-  height: 2rem;
-}
-
-.menu button {
-  min-width: 0 !important;
-}
-
-.error-message {
-  text-wrap: wrap;
+  .starInEstablishment {
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    bottom: 97%;
+    left: 75%;
+  }
 }

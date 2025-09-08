@@ -5,12 +5,12 @@ import { Bar } from "react-chartjs-2";
 
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
+import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
-import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
 
 export function HistogrammeVertical(props: {
   valeurs: number[];

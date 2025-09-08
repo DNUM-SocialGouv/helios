@@ -1,9 +1,7 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect, useContext } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 
-import { BtnDownloadPDF } from "../commun/BtnDownloadPDF/BtnDownloadPDF";
-import { BackToSearchContext, BackToSearchContextValue } from "../commun/contexts/BackToSearchContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -27,7 +25,6 @@ type ÉtablissementTerritorialProps = Readonly<{
 
 export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel, établissementTerritorialViewModel }: ÉtablissementTerritorialProps) => {
   const { paths } = useDependencies();
-  const backToSearchContext = useContext(BackToSearchContext) as BackToSearchContextValue;
 
   useBreadcrumb([
     {
@@ -67,10 +64,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       onBeforeGetContentResolve.current();
     }
   }, [onBeforeGetContentResolve.current]);
-  useEffect(() => {
-    if (backToSearchContext)
-      backToSearchContext.setIsInfoPage(true);
-  }, [backToSearchContext])
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 
@@ -80,7 +73,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
       <div className="print-content" ref={componentRef}>
-        <Titre downloadPDF={<BtnDownloadPDF handlePrint={handlePrint} />} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={handlePrint} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
           {établissementTerritorialViewModel.titre}
         </Titre>
 
@@ -93,7 +86,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           toggelBlocs={() => toggelBlocs(0)} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
         />
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéMédicoSocial opnedBloc={statusBlocs[1]}
+        <BlocActivitéMédicoSocial categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement} opnedBloc={statusBlocs[1]}
           toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocRessourcesHumainesMédicoSocial

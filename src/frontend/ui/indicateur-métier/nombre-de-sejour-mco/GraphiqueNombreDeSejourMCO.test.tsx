@@ -1,12 +1,12 @@
 import { within } from "@testing-library/react";
 
-import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
-import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
-import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
+import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
+import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
+import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
 const activitesMCO: ActivitéMCO[] = [
@@ -46,12 +46,12 @@ const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {
 describe("Graphique Nombre de Sejour MCO", () => {
   let viewModel: NombreDeSejourMCOViewModel;
   let graphiqueTest: GraphiqueTest;
-  let activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  let activitéMensuelleViewModel: ActivitesMensuelViewModel;
 
   beforeAll(() => {
     // GIVEN
     viewModel = new NombreDeSejourMCOViewModel(activitesMCO, wording);
-    activitéMensuelleViewModel = new ActivitésMensuelViewModel(activitesSanitaireMensuel, wording)
+    activitéMensuelleViewModel = new ActivitesMensuelViewModel(activitesSanitaireMensuel, wording)
     graphiqueTest = new GraphiqueTest(wording);
   });
 

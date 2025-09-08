@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -13,6 +14,7 @@ import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../databa
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
+import { EntiteJuridiqueDeRattachement } from "../../../métier/entities/entité-juridique/EntiteJuridiqueDeRattachement";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -21,11 +23,9 @@ import {
 } from "../../../métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { EntitéJuridiqueNonTrouvée } from "../../../métier/entities/EntitéJuridiqueNonTrouvée";
-import { EntitéJuridiqueDeRattachement } from "../../../métier/entities/établissement-territorial-médico-social/EntitéJuridiqueDeRattachement";
 import { EntitéJuridiqueLoader } from "../../../métier/gateways/EntitéJuridiqueLoader";
-import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 
-export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
+export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeIdentité(numéroFiness: string): Promise<EntitéJuridiqueIdentité | EntitéJuridiqueNonTrouvée> {
@@ -39,7 +39,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
     return this.construisLEntitéJuridique(entitéJuridiqueIdentitéModel, dateDeMiseAJourFichierSourceModel);
   }
 
-  async chargeRattachement(numéroFiness: string): Promise<EntitéJuridiqueDeRattachement> {
+  async chargeRattachement(numéroFiness: string): Promise<EntiteJuridiqueDeRattachement> {
     const entitéJuridiqueModel = (await this.chargeLIdentitéModel(numéroFiness)) as EntitéJuridiqueModel;
     const dateDeMiseAJourFichierSourceModel = (await this.chargeLaDateDeMiseÀJourFinessCs1400101Model()) as DateMiseÀJourFichierSourceModel;
 
@@ -68,17 +68,21 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.DIAMANT_ANN_RPU })) as DateMiseÀJourFichierSourceModel;
 
+    const dateMisAJourSAE = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_ANN_SAE })) as DateMiseÀJourFichierSourceModel;
+
     const dateMiseAJourMenPmsi = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.DIAMANT_MEN_PMSI_ANNUEL })) as DateMiseÀJourFichierSourceModel;
 
-    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMiseAJourMenPmsi);
+    return this.construisEntitéJuridiqueActivites(activiteSanitareEJModel, dateMisAJourRPU, dateMisAJourSAE, dateMiseAJourMenPmsi);
   }
 
   async chargeActivitésMensuel(numeroFinessEntiteJuridique: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelEntiteJuridiqueModel)
+      .getRepository(ActiviteSanitaireMensuelEntiteJuridiqueModel)
       .createQueryBuilder("activite_sanitaire_mensuel_entite_juridique")
       .where("numero_finess_entite_juridique = :finess", { finess: numeroFinessEntiteJuridique })
       .orderBy('annee', 'ASC')
@@ -101,6 +105,9 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
         nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+        nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
+        nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
+
       }
     })
 
@@ -130,6 +137,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private construisEntitéJuridiqueActivites(
     activiteSanitaireEJModel: ActivitéSanitaireEntitéJuridiqueModel[],
     dateMisAJourRPU: DateMiseÀJourFichierSourceModel,
+    dateMisAJourSAE: DateMiseÀJourFichierSourceModel,
     dateDeMiseAJourMenPmsiAnnuel: DateMiseÀJourFichierSourceModel
   ): EntitéJuridiqueActivités[] {
     return activiteSanitaireEJModel.map((activite) => ({
@@ -137,6 +145,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
       nombreDePassagesAuxUrgences: {
         dateMiseÀJourSource: dateMisAJourRPU.dernièreMiseÀJour,
         value: activite.nombreDePassagesAuxUrgences,
+      },
+      nombreJourneesUsld: {
+        dateMiseÀJourSource: dateMisAJourSAE.dernièreMiseÀJour,
+        value: activite.nombreJourneesUsld,
       },
       nombreJournéesCompletesPsy: {
         dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuel.dernièreMiseÀJour,
@@ -242,7 +254,7 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
   private construisLEntitéJuridiqueDeRattachement(
     entitéJuridiqueModel: EntitéJuridiqueModel,
     dateDeMiseAJourFichierSourceModel: DateMiseÀJourFichierSourceModel
-  ): EntitéJuridiqueDeRattachement {
+  ): EntiteJuridiqueDeRattachement {
     return {
       raisonSocialeDeLEntitéDeRattachement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
@@ -252,6 +264,10 @@ export class TypeOrmEntitéJuridiqueLoader implements EntitéJuridiqueLoader {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.libelléStatutJuridique,
       },
+      categorisationDeLEntitéDeRattachement: {
+        dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
+        value: entitéJuridiqueModel.catégorisation as CatégorisationEnum,
+      }
     };
   }
 

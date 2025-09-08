@@ -5,6 +5,7 @@ export type Résultat = Readonly<{
   raisonSocialeCourte: string;
   type: string;
   rattachement: string;
+  categorie: string;
 }>;
 
 export type RésultatDeRecherche = Readonly<{

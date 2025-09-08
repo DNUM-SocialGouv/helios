@@ -102,8 +102,12 @@ export class WordingFr implements Wording {
   readonly RECHERCHE_AVANCEE_LABEL: string = "Recherche Avancée";
   readonly ZONE_GEOGRAPHIQUE: string = "Zone géographique";
   readonly STRUCTURE: string = "Structure";
-  readonly CAPACITE: string = "Capacité";
+  readonly CATEGORIES_FINESS: string = "Catégorie FINESS";
+  readonly CATEGORIES_FINESS_TITLE: string = "Catégories d'établissement";
+  readonly CAPACITE: string = "Capacité MS";
+  readonly ACTIVITE_SAN: string = "Activité SAN";
   readonly RECHERCHE_AVANCEE_TEXT: string = "Sélectionnez des indicateurs et recherchez.";
+  readonly TOUT_EFFACER: string = "Tout effacer";
 
   // Cartographie
   readonly CARTOGRAPHIE: string = "Cartographie";
@@ -130,6 +134,7 @@ export class WordingFr implements Wording {
   readonly NON: string = "Non";
   readonly DÉTAILS: string = "Détails";
   readonly TÉLÉCHARGER_EN_PDF: string = "Télécharger en PDF";
+  readonly EXPORT_ET_RATTACHES: string = "Exporter les ET rattachés";
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = "Éléments de compréhension";
@@ -147,6 +152,8 @@ export class WordingFr implements Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
+  readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
+  readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string = "1 à 5";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
@@ -192,6 +199,11 @@ export class WordingFr implements Wording {
   readonly DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES: string =
     "Durée moyenne de séjour/d’accompagnement des personnes sorties définitivement au cours de l’année (en nombre de jours)";
   readonly NOMBRE_DE_PASSAGES_AUX_URGENCES: string = "Nombre de passages aux urgences";
+  readonly TAUX_OCCUPATION_EXTERNAT: string = "Taux d’occupation externat ";
+  readonly TAUX_OCCUPATION_SEMI_INTERNAT: string = " Taux d’occupation semi-internat";
+  readonly TAUX_OCCUPATION_INTERNAT: string = "Taux d’occupation internat ";
+  readonly TAUX_OCCUPATION_AUTRE: string = "Taux d'occupation Autre 1, 2 et 3";
+  readonly TAUX_OCCUPATION_SEANCES: string = "Taux d'occupation séances";
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
@@ -212,6 +224,7 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_PARTIELLE_PSY: string = "Hospitalisation Partielle PSY";
   readonly HOSPITALISATION_COMPLÈTE_PSY: string = "Hospitalisation Complète PSY";
   readonly NOMBRE_DE_HAD: string = "Nombre de Séjours HAD";
+  readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
 
@@ -511,7 +524,9 @@ export class WordingFr implements Wording {
   // Comparaison
   readonly COMPARAISON: string = "Comparaison";
   readonly AJOUTER_DES_ETABLISSEMENTS: string = "+ Ajouter des établissements";
-
+  readonly COMPARAISON_AUCUN_FINESS: string = "Veuillez ajouter des établissements dans la sélection de la comparaison depuis la recherche.";
+  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
+  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = "Votre sélection comprend plus de 30 000 établissements. Réduisez votre sélection pour lancer la comparaison.";
   // Favoris
   readonly FAVORIS_LIST: string = "Mes listes";
   readonly FAVORIS_LIST_TITLE: string = "Liste de favoris";
@@ -526,9 +541,13 @@ export class WordingFr implements Wording {
   readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
   readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
   readonly ETOILE_MES_LISTES: string = "Mes listes";
-  readonly ETOILE_NOUVELLE_LISTE: string = "+ Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
   readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
+
+  // Nouveau Favoris
+  readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
@@ -614,16 +633,20 @@ export class WordingFr implements Wording {
   readonly CAPACITE_INSTALLEE_EN_PLACE: string = "(capacité installée en places)";
   readonly TITRE_CAPACITE_PERSONNES_SITUATION_HANDICAP: string = "Détails liés aux Etablissements pour public en situation de handicap";
   readonly TITRE_CAPACITE_PERSONNES_AGEES: string = "Détails liés aux Etablissements pour personnes âgées";
+  // Bouton de selection de tous les rechercheNombreRésultats
+  readonly TOUT_SELECTIONNER: string = "Tout sélectionner";
+  readonly TOUT_DESELECTIONNER: string = "Tout désélectionner";
+  // Filtre Activité SAN
+  readonly FA_MCO: string = "Médecine Chirurgie Obstétrique";
+  readonly FA_PSY: string = "Psychiatrie";
+  readonly FA_SSR: string = "Soins de Suite et de Réadaptation";
+  readonly FA_USLD: string = "Unité de Soins Longue Durée";
+  readonly FA_SEJOURS_ANN: string = "(nombre de séjours - annuel)";
+  readonly FA_JOURS_ANN: string = "(nombre de jours - annuel)";
   //Comparaison
-  //--Alert-comparaison
-  readonly ALERTE_TYPE_DIFFERENT_TITRE: string = "Message d'information";
-  readonly ALERTE_TYPE_DIFFERENT_CORPS: string = `Actuellement, vous ne pouvez sélectionner que des établissements médico-sociaux, pour réaliser une comparaison.
-
-A venir : la comparaison des établissements sanitaires et entités juridiques.`;
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
-  readonly INFOBULLE_MOYENNE_ADMIN_NATIONAL: string = "Les données non renseignées sont exclues du calcul de la moyenne.";
-  readonly INFOBULLE_MOYENNE_UTILISATEURS: string = "Les données non renseignées sont exclues du calcul de la moyenne ainsi que les données des établissements hors de votre région.";
+  readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string = "A partir d'une liste existante";
 
   //Page d’une liste de favoris
   readonly LISTE_DE_FAVORIS = "Liste de favoris";
@@ -631,7 +654,6 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
   readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La recherche multicritère et la fonctionnalité de comparaison pour les établissements médico-sociaux sont désormais accessibles.";
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
@@ -646,6 +668,8 @@ A venir : la comparaison des établissements sanitaires et entités juridiques.`
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
   readonly MOIS_ANNEES: string = "Mois / Années";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
 
 }
 
