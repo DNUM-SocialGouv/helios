@@ -93,6 +93,8 @@
     "updateVigieRhProfessionGroupe:local": "pipenv run populate_vigie_rh_profession_groupe",
     "updateTranchesDesAges": "python -m datacrawler.import_vigierh_tranches_ages",
     "updateTranchesDesAges:local": "pipenv run populate_tranches_ages",
+    "updateMouvementsRH": "python -m datacrawler.import_vigie_rh_mouvements",
+    "updateMouvementsRH:local": "pipenv run populate_mouvements_vigierh",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",

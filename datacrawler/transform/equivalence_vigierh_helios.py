@@ -1,4 +1,6 @@
 from enum import Enum
+from typing import List
+
 
 SOURCE = 'VigieRh'
 
@@ -61,3 +63,16 @@ class ColumMapping(Enum):
         'effectif_homme_ref': 'effectif_homme_ref',
         'effectif_femme_ref': 'effectif_femme_ref'
     }
+    # mouvements rh
+    MOUVEMENTS_RH = {
+        'finess_et': 'numero_finess_etablissement_territorial',
+        'year': 'annee',
+        'nouveaux_contrats': 'nouveaux_contrats',
+        'nouveaux_contrats_ref': 'nouveaux_contrats_ref',
+        'fins_contrats': 'fins_contrats',
+        'fins_contrats_ref': 'fins_contrats_ref',
+        'taux_rotation': 'taux_rotation',
+        'taux_rotation_ref': 'taux_rotation_ref'
+    }
+
+index_des_mouvements_rh_annuel: List[str] = ["numero_finess_etablissement_territorial", "annee"]
