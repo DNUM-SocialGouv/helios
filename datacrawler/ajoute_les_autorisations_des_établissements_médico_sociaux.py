@@ -8,20 +8,22 @@ from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mis
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_finess
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, FichierSource
 from datacrawler.transform.transforme_les_autorisations_et_capacités_des_établissements_médico_sociaux import (
     transforme_les_autorisations_des_établissements_médico_sociaux,
 )
-from datacrawler.transform.équivalences_finess_helios import XPATH_FINESS_CS1400105, type_des_colonnes_finess_cs1400105
+from datacrawler.transform.équivalences_finess_helios import XML_TAG_FINESS_CS1400105, type_des_colonnes_finess_cs1400105, colonnes_à_garder_finess_cs1400105
 
 
 def ajoute_les_autorisations_des_établissements_médico_sociaux(chemin_du_fichier: str, base_de_données: Engine, logger: Logger) -> None:
     logger.info("[FINESS] Récupère les autorisations des établissements médico-sociaux")
-    données_des_autorisations = lis_le_fichier_xml(
+    données_des_autorisations = lis_le_fichier_xml_en_stream(
+        logger,
         chemin_du_fichier,
-        XPATH_FINESS_CS1400105,
+        XML_TAG_FINESS_CS1400105,
+        colonnes_à_garder_finess_cs1400105,
         type_des_colonnes_finess_cs1400105,
     )
     logger.info(f"[FINESS] {données_des_autorisations.shape[0]} lignes trouvées dans le fichier {chemin_du_fichier}")

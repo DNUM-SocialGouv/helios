@@ -1,5 +1,6 @@
 from typing import List
 
+XML_TAG_FINESS_CS1400105 = "equipementsocial"
 équivalences_finess_cs1400105_helios = {
     "ta": "activite",
     "capautot": "capacite_autorisee_totale",
@@ -18,12 +19,11 @@ from typing import List
 }
 colonnes_à_garder_finess_cs1400105 = list(équivalences_finess_cs1400105_helios.keys())
 type_des_colonnes_finess_cs1400105 = {
-    "nofinesset": str,
-    "de": str,
-    "ta": str,
-    "client": str,
+    "nofinesset": "string",
+    "de": "string",
+    "ta": "string",
+    "client": "string",
 }
-XPATH_FINESS_CS1400105 = "./equipementsocial"
 
 index_des_autorisations_médico_sociaux: List[str] = [
     "numero_finess_etablissement_territorial",
@@ -32,6 +32,7 @@ index_des_autorisations_médico_sociaux: List[str] = [
     "clientele",
 ]
 
+XML_TAG_FINESS_CS1400103 = "activiteoffresoin"
 équivalences_finess_cs1400103_helios = {
     "activite": "code_activite",
     "dateautor": "date_autorisation",
@@ -46,13 +47,14 @@ index_des_autorisations_médico_sociaux: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1400103 = list(équivalences_finess_cs1400103_helios.keys())
-XPATH_FINESS_CS1400103 = "./activiteoffresoin"
+
 type_des_colonnes_finess_cs1400103 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
+
 index_des_autorisations_sanitaires: List[str] = [
     "numero_finess_etablissement_territorial",
     "code_activite",
@@ -60,6 +62,7 @@ index_des_autorisations_sanitaires: List[str] = [
     "code_forme",
 ]
 
+XML_TAG_FINESS_CS1400104 = "equipmateriellourd"
 équivalences_finess_cs1400104_helios = {
     "dateautor": "date_autorisation",
     "datefin": "date_fin",
@@ -70,10 +73,9 @@ index_des_autorisations_sanitaires: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1400104 = list(équivalences_finess_cs1400104_helios.keys())
-XPATH_FINESS_CS1400104 = "./equipmateriellourd"
 type_des_colonnes_finess_cs1400104 = {
-    "nofinesset": str,
-    "eml": str,
+    "nofinesset": "string",
+    "eml": "string",
 }
 
 index_des_équipements_matériels_lourds: List[str] = [
@@ -82,6 +84,7 @@ index_des_équipements_matériels_lourds: List[str] = [
     "numero_autorisation_arhgos",
 ]
 
+XML_TAG_FINESS_CS1600101 = "autreactivite"
 équivalences_finess_cs1600101_helios = {
     "activite": "code_activite",
     "datedecision": "date_autorisation",
@@ -95,12 +98,11 @@ index_des_équipements_matériels_lourds: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600101 = list(équivalences_finess_cs1600101_helios.keys())
-XPATH_FINESS_CS1600101 = "./autreactivite"
 type_des_colonnes_finess_cs1600101 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
 
 equivalences_finess_amm_arhgos_helios = {
@@ -116,18 +118,18 @@ equivalences_finess_amm_arhgos_helios = {
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_a_garder_finess_amm_arhgos = list(equivalences_finess_amm_arhgos_helios.keys())
-XPATH_FINESS_AMM_ARHGOS= "./activiteamm"
+XML_TAG_FINESS_AMM_ARHGOS = "activiteamm"
 type_des_colonnes_amm_arhgos = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "mention": str,
-    "pts": str,
-    "declaration": str,
-    "codeautorarhgos": str,
-    "dateautor": str,
-    "datefin": str,
-    "datemeo": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "mention": "string",
+    "pts": "string",
+    "declaration": "string",
+    "codeautorarhgos": "string",
+    "dateautor": "string",
+    "datefin": "string",
+    "datemeo": "string",
 }
 
 index_autorisations_amm_sanitaires: List[str] = [
@@ -142,6 +144,7 @@ index_des_autres_activités_sanitaires: List[str] = [
     "code_forme",
 ]
 
+XML_TAG_FINESS_CS1600102 = "activitesoumiseareco"
 équivalences_finess_cs1600102_helios = {
     "activite": "code_activite",
     "capaciteautorisee": "capacite_autorisee",
@@ -158,12 +161,11 @@ index_des_autres_activités_sanitaires: List[str] = [
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_à_garder_finess_cs1600102 = list(équivalences_finess_cs1600102_helios.keys())
-XPATH_FINESS_CS1600102 = "./activitesoumiseareco"
 type_des_colonnes_finess_cs1600102 = {
-    "nofinesset": str,
-    "activite": str,
-    "modalite": str,
-    "forme": str,
+    "nofinesset": "string",
+    "activite": "string",
+    "modalite": "string",
+    "forme": "string",
 }
 
 index_des_reconnaissances_contractuelles: List[str] = [
@@ -173,24 +175,24 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_forme",
 ]
 
-XPATH_FINESS_CS1400101 = "./structureej"
+XML_TAG_FINESS_CS1400101 = "structureej"
 type_des_colonnes_finess_cs1400101 = {
-    "datecrea": str,
-    "datefermeture": str,
-    "departement": str,
-    "libcommune": str,
-    "libdepartement": str,
-    "libstatutjuridique": str,
-    "ligneacheminement": str,
-    "nofiness": str,
-    "numvoie": str,
-    "rs": str,
-    "rslongue": str,
-    "siren": str,
-    "statutjuridique": str,
-    "telephone": str,
-    "typvoie": str,
-    "voie": str,
+    "datecrea": "string",
+    "datefermeture": "string",
+    "departement": "string",
+    "libcommune": "string",
+    "libdepartement": "string",
+    "libstatutjuridique": "string",
+    "ligneacheminement": "string",
+    "nofiness": "string",
+    "numvoie": "string",
+    "rs": "string",
+    "rslongue": "string",
+    "siren": "string",
+    "statutjuridique": "string",
+    "telephone": "string",
+    "typvoie": "string",
+    "voie": "string",
 }
 colonnes_a_garder_finess_cs1400101 = list(type_des_colonnes_finess_cs1400101.keys())
 equivalences_finess_cs1400101_helios = {
@@ -213,9 +215,13 @@ equivalences_finess_cs1400101_helios = {
 
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
 
-XPATH_FINESS_CS1500107 = "./nomenclstatutavecagr"
-type_des_colonnes_finess_cs1400107 = {"code": str, "codeagr2": str, "codeagr1": str}
-colonnes_a_garder_finess_cs1400107 = list(type_des_colonnes_finess_cs1400107.keys())
+XML_TAG_FINESS_CS1500107 = "nomenclstatutavecagr"
+type_des_colonnes_finess_cs1500107 = {
+    "code": "string",
+    "codeagr2": "string",
+    "codeagr1": "string",
+}
+colonnes_a_garder_finess_cs1500107 = list(type_des_colonnes_finess_cs1500107.keys())
 
 XML_TAG_FINESS_CS1400102 = "structureet"
 colonnes_finess_cs1400102 = [
@@ -303,14 +309,14 @@ index_des_etablissements_territorriaux: List[str] = [
     "numero_finess_etablissement_territorial"
 ]
 
-XPATH_FINESS_CS1500106 = "./nomenclcategorieETavecagr"
-type_des_colonnes_finess_cs1500106 = {"code": str, "domaine": str}
+XML_TAG_FINESS_CS1500106 = "nomenclcategorieETavecagr"
+type_des_colonnes_finess_cs1500106 = {"code": "string", "domaine": "string"}
 colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
 type_des_colonnes_categories_finess = {
-    "code": str,
-    "libelle": str,
-    "libellecourt": str,
-    "domaine": str,
+    "code": "string",
+    "libelle": "string",
+    "libellecourt": "string",
+    "domaine": "string",
 }
 equivalences_finess_cs1500106_helios = {
     "code": "code",
