@@ -191,8 +191,22 @@ export const Header = () => {
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
+                        <div className={styles["user-name"]}>{data?.user.firstname} {data?.user.name}</div>
+                        <div className={styles["user-email"]}>{data?.user.email}</div>
                       <li className={styles["menu-item"]}>
                         <button
+                          className="fr-btn--icon-left fr-icon-account-line"
+                          onClick={() => {
+                            router.push("/mon-compte");
+                          }}
+                        >
+                          Mon compte
+                        </button>
+                      </li>
+                      <hr className={styles["menu-sperator"]} />
+                      <li className={styles["menu-item"]}>
+                        <button
+                          className="fr-btn--icon-left fr-icon-menu-fill"
                           onClick={() => {
                             router.push(paths.MES_LISTES);
                           }}
@@ -202,6 +216,7 @@ export const Header = () => {
                       </li>
                       <li className={styles["menu-item"]}>
                         <button
+                          className="fr-btn--icon-left fr-icon-time-line"
                           onClick={() => {
                             router.push(paths.HISTORY);
                           }}
@@ -213,6 +228,7 @@ export const Header = () => {
                       {data?.user.role === 1 && (
                         <li className={styles["menu-item"]}>
                           <button
+                            className="fr-btn--icon-left fr-icon-settings-5-line"
                             onClick={() => {
                               router.push(paths.PROFILES_LIST);
                             }}
@@ -225,6 +241,7 @@ export const Header = () => {
                         <>
                           <li className={styles["menu-item"]}>
                             <button
+                              className="fr-btn--icon-left fr-icon-user-setting-line"
                               onClick={() => {
                                 router.push(paths.USERS_LIST);
                               }}
@@ -237,11 +254,12 @@ export const Header = () => {
                       )}
                       <li className={styles["menu-item"]}>
                         <button
+                          className="fr-btn--icon-left fr-icon-question-line"
                           onClick={() => {
-                            router.push("/mon-compte");
+                            router.push("/aide");
                           }}
                         >
-                          Mon compte
+                          Aide en ligne
                         </button>
                       </li>
                       <hr className={styles["menu-sperator"]} />

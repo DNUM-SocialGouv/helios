@@ -35,7 +35,7 @@
   padding: 0;
 
   border: 1px solid var(--border-default-grey);
-  width: 200px;
+  min-width: 250px;
   z-index: 10;
 }
 
@@ -95,4 +95,22 @@
   left: 0;
   white-space: normal;
   width: auto;
+}
+
+.user-name{
+  font-weight: bold;
+  font-size: 1em;
+  padding: 0px;
+  margin: 0px;
+  margin-left: 5px;
+  height: 1rem;
+}
+
+.user-email{
+  color: gray;
+  font-size: 0.8em;
+  padding: 0px;
+  margin-left: 5px;  
+  margin-bottom: 5px;
+  height: 1rem;
 }
