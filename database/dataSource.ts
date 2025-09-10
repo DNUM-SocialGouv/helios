@@ -139,6 +139,7 @@ import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/Vigie
 import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
+import { VigieRhDepartsEmbauchesModel } from "./models/vigie_rh/VigieRHDepartsEmbauchesModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 import { VigieRhPyramideAgesModel } from "./models/vigie_rh/VigieRHPyramideAgeModel";
@@ -200,6 +201,7 @@ const datasource = new DataSource({
     VigieRhProfessionGroupeModel,
     VigieRhRefTrancheAgeModel,
     VigieRhPyramideAgesModel,
+    VigieRhDepartsEmbauchesModel,
     CategoriesFinessModel
   ],
   logger: "debug",

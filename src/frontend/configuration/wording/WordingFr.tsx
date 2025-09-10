@@ -667,6 +667,10 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_TOTAUX: string = "Effectifs totaux";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
+  readonly DEPARTS: string = "Départs";
+  readonly EMBAUCHES: string = "Embauches";
+
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";

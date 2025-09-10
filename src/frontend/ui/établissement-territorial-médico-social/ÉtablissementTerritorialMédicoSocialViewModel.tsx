@@ -11,7 +11,7 @@ import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 
-export class ÉtablissementTerritorialMédicoSocialViewModel {
+export class EtablissementTerritorialMedicoSocialViewModel {
   private établissementTerritorialIdentitéMédicoSocialViewModel: EtablissementTerritorialMedicoSocialIdentiteViewModel;
   private établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
   private établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;

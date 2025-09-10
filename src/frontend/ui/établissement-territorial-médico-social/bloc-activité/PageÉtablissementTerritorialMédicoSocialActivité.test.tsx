@@ -6,7 +6,7 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../ÉtablissementTerritorialMédicoSocialViewModel";
 
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
@@ -142,7 +142,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   ])(
     'affiche un tableau descriptif avec deux années après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-      const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel(
+      const établissementTerritorialMédicoSocial = new EtablissementTerritorialMedicoSocialViewModel(
         {
           activités: [
             {
@@ -291,7 +291,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] } },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },
@@ -328,7 +328,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
   ])(
     'affiche un tableau descriptif avec une seule année après un clic sur "Afficher la transcription"',
     (identifiant, valeurIndicateur1, valeurIndicateur2, valeurIndicateur3) => {
-      const établissementTerritorialMédicoSocial = new ÉtablissementTerritorialMédicoSocialViewModel(
+      const établissementTerritorialMédicoSocial = new EtablissementTerritorialMedicoSocialViewModel(
         {
           activités: [
             {
@@ -477,7 +477,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] } },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },

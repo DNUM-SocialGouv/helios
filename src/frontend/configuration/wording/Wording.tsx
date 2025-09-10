@@ -580,6 +580,10 @@ export interface Wording {
   readonly EFFECTIFS_TOTAUX: string;
   readonly VIGIE_RH_CATEGORIE: string;
   readonly MOIS_ANNEES: string;
+  readonly DEPARTS_EMBAUCHES: string;
+  readonly DEPARTS: string;
+  readonly EMBAUCHES: string;
+
 
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }
