@@ -191,8 +191,10 @@ export const Header = () => {
                   </button>
                   {displayMenu ? (
                     <ul className={styles["menu"]}>
+                      <li>
                         <div className={styles["user-name"]}>{data?.user.firstname} {data?.user.name}</div>
                         <div className={styles["user-email"]}>{data?.user.email}</div>
+                      </li>
                       <li className={styles["menu-item"]}>
                         <button
                           className="fr-btn--icon-left fr-icon-account-line"
@@ -252,16 +254,6 @@ export const Header = () => {
                           <hr className={styles["menu-sperator"]} />
                         </>
                       )}
-                      <li className={styles["menu-item"]}>
-                        <button
-                          className="fr-btn--icon-left fr-icon-question-line"
-                          onClick={() => {
-                            router.push("/aide");
-                          }}
-                        >
-                          Aide en ligne
-                        </button>
-                      </li>
                       <hr className={styles["menu-sperator"]} />
                       <li className={styles["menu-item"]}>
                         <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={logOut}>
