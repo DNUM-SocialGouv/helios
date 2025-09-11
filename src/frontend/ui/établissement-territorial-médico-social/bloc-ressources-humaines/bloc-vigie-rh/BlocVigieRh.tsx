@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
@@ -41,7 +40,6 @@ export const BlocVigieRH = ({
 
     const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
-    const couleurCategorie = "#E2CF58"  // jaune
     const couleurEffectifsTottaux = "#FB926B"  // orange
 
     useEffect(() => {
@@ -98,25 +96,23 @@ export const BlocVigieRH = ({
                         source={wording.VIGIE_RH}
                     >
                         <>
-                            <ColorLabel
-                                classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
-                                items={[
-                                    { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE },
-                                    { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
-                                ]}
-                            />
-
-                            <div className="fr-grid-row">
-                                {donneesEffectifs.data?.map((item) => (
-                                    <LineChart
-                                        categorieName={item.categorie}
-                                        classContainer="fr-col-6 fr-mb-4w"
-                                        couleurCategorie={couleurCategorie}
-                                        couleurEffectifsTottaux={couleurEffectifsTottaux}
-                                        dataEffectifs={item.dataCategorie as unknown as EffectifsData}
-                                        key={item.categorie}
-                                    />
-                                ))}
+                           <div className="fr-grid-row">
+                                {(() => {
+                                    const items = donneesEffectifs.data ?? [];
+                                    if (!items.length) return null;
+                                    const base = items[0].dataCategorie as unknown as EffectifsData;
+                                    return (
+                                    <>
+                                        <LineChart
+                                            classContainer="fr-col-6 fr-mb-4w"
+                                            couleurEffectifsTottaux={couleurEffectifsTottaux}
+                                            dataEffectifs={base}
+                                            multiCategories={items as Array<{ categorie: string; dataCategorie: EffectifsData }>}
+                                            // couleursFilieres={["#3B82F6", "#10B981", "#8B5CF6", "#EF4444"]} // optionnel
+                                        />
+                                    </>
+                                    );
+                                })()}
                             </div>
                         </>
                     </IndicateurGraphique>
