@@ -583,7 +583,8 @@ export interface Wording {
   readonly DEPARTS_EMBAUCHES: string;
   readonly DEPARTS: string;
   readonly EMBAUCHES: string;
-
+  readonly DEPARTS_REF: string;
+  readonly EMBAUCHES_REF: string;
 
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

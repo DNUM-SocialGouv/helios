@@ -7,7 +7,8 @@ import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import {
   couleurDuFondHistogrammeOrangeClair,
-  couleurDuFondHistogrammeJaune
+  couleurDuFondHistogrammeJaune,
+  couleurDesTraitsRefHistogramme
 } from "../../../commun/Graphique/couleursGraphique";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -24,8 +25,69 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
   const libelles = donneesDepartsEmbauches.map((donnee) => donnee.annee);
   const donneesDeparts = donneesDepartsEmbauches.map((donnee) => -Math.abs(donnee.depart));
   const donneesEmbauches = donneesDepartsEmbauches.map((donnee) => donnee.embauche);
+  const donneesDepartsRef = donneesDepartsEmbauches.map((donnee) => -Math.abs(donnee.departRef));
+  const donneesEmbauchesRef = donneesDepartsEmbauches.map((donnee) => donnee.embaucheRef);
 
-  const dataTest = {
+  const donneesDepartsExtension = donneesDepartsRef.map((val, idx) => - Math.max(0, donneesDeparts[idx] - val));
+  const donneesEmbauchesExtension = donneesEmbauchesRef.map((val, idx) => Math.max(0, val - donneesEmbauches[idx]));
+
+  const valeursNegativesRefPlugin = {
+    id: "valeursNegativesRef",
+    afterDraw(chart: ChartJS, _args: any, options: any) {
+      const { ctx, scales } = chart;
+      const { donneesDepartsRef } = options;
+      const values = donneesDepartsRef;
+      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+        const value = values[index];
+        if (value === undefined) return;
+
+        const yScale = scales['y'];
+        const yPos = yScale.getPixelForValue(value);
+
+        const xLeft = bar.x - bar.width / 2;
+        const xRight = bar.x + bar.width / 2;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(xLeft, yPos);
+        ctx.lineTo(xRight, yPos);
+        ctx.strokeStyle = couleurDesTraitsRefHistogramme;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      });
+    },
+  };
+
+  const valeursPositivesRefPlugin = {
+    id: "valeursPositivesRef",
+    afterDraw(chart: ChartJS, _args: any, options: any) {
+      const { ctx, scales } = chart;
+      const { donneesEmbauchesRef } = options;
+      const values = donneesEmbauchesRef;
+      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+        const value = values[index];
+        if (value === undefined) return;
+
+        const yScale = scales['y'];
+        const yPos = yScale.getPixelForValue(value);
+
+        const xLeft = bar.x - bar.width / 2;
+        const xRight = bar.x + bar.width / 2;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(xLeft, yPos);
+        ctx.lineTo(xRight, yPos);
+        ctx.strokeStyle = couleurDesTraitsRefHistogramme;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      });
+    },
+  };
+
+  const dataSet = {
     labels: libelles,
     datasets: [
       {
@@ -40,6 +102,18 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
         backgroundColor: couleurDuFondHistogrammeOrangeClair,
         stack: "combined",
       },
+      {
+        label: "embauches-extension",
+        data: donneesEmbauchesExtension,
+        backgroundColor: "rgba(255,249,235,255)",
+        stack: "combined",
+      },
+      {
+        label: "depart-extension",
+        data: donneesDepartsExtension,
+        backgroundColor: "rgba(255,249,235,255)",
+        stack: "combined",
+      },
     ],
   };
 
@@ -48,19 +122,32 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
     plugins: {
       datalabels: {
         color: "#000",
+        display: (context: any) => {
+          // Afficher les labels uniquement pour les datasets principaux
+          return context.dataset.label === wording.DEPARTS || context.dataset.label === wording.EMBAUCHES;
+        },
         formatter: (value: number) => {
           return Math.abs(value)
         },
       },
       tooltip: {
         callbacks: {
-          label: (context: any) => {
-            const value = context.raw;
-            return context.dataset.label + ": " + Math.abs(value);
+          label: function (context: any) {
+            const index = context.dataIndex;
+            const datasetLabel = context.dataset.label;
+            const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
+
+            const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
+            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
+
+            return [`Valeur: ${Math.abs(value)}`,
+            `Valeur de référence: ${Math.abs(refValue)}`];
           },
         },
       },
       legend: { display: false },
+      valeursPositivesRef: { donneesEmbauchesRef },
+      valeursNegativesRef: { donneesDepartsRef },
     },
     scales: {
       x: {
@@ -70,8 +157,17 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
       y: {
         stacked: true,
         beginAtZero: true,
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: {
+          drawTicks: false,
+          color: (context: any) =>
+            context.tick.value === 0 ? "black" : "transparent",
+          lineWidth: (context: any) =>
+            context.tick.value === 0 ? 2 : 0,
+        },
         ticks: {
+          display: false,
+        },
+        border: {
           display: false,
         },
       },
@@ -80,7 +176,7 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
 
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
-      <Bar data={dataTest} options={options} />
+      <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
@@ -91,9 +187,9 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
       <Transcription
         disabled={false}
         entêteLibellé={wording.ANNÉE}
-        identifiants={[wording.DEPARTS, wording.EMBAUCHES]}
+        identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
         libellés={libelles}
-        valeurs={[donneesDeparts, donneesEmbauches]}
+        valeurs={[donneesDeparts.map(Math.abs), donneesDepartsRef.map(Math.abs), donneesEmbauches, donneesEmbauchesRef]}
       />
     </div>
   );
