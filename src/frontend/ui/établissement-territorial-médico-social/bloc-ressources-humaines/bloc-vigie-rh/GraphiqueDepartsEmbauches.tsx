@@ -8,7 +8,9 @@ import { useDependencies } from "../../../commun/contexts/useDependencies";
 import {
   couleurDuFondHistogrammeOrangeClair,
   couleurDuFondHistogrammeJaune,
-  couleurDesTraitsRefHistogramme
+  couleurDesTraitsRefHistogramme,
+  couleurExtensionHistogrammeJaune,
+  couleurExtensionHistogrammeOrangeClair
 } from "../../../commun/Graphique/couleursGraphique";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -105,13 +107,13 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
       {
         label: "embauches-extension",
         data: donneesEmbauchesExtension,
-        backgroundColor: "rgba(255,249,235,255)",
+        backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
       },
       {
         label: "depart-extension",
         data: donneesDepartsExtension,
-        backgroundColor: "rgba(255,249,235,255)",
+        backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
       },
     ],
@@ -153,6 +155,15 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
       x: {
         stacked: true,
         grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        ticks: {
+          color: '#000',
+          font: function (context: any) {
+            if (context.tick.label === new Date().getFullYear()) {
+              return { weight: 'bold' };
+            }
+            return {};
+          }
+        }
       },
       y: {
         stacked: true,
@@ -180,8 +191,10 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
-          { color: couleurDuFondHistogrammeJaune, label: wording.EMBAUCHES },
-          { color: couleurDuFondHistogrammeOrangeClair, label: wording.DEPARTS }
+          { color: couleurDuFondHistogrammeJaune, label: wording.EMBAUCHES, circle: true },
+          { color: couleurDuFondHistogrammeOrangeClair, label: wording.DEPARTS, circle: true },
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+
         ]}
       />
       <Transcription

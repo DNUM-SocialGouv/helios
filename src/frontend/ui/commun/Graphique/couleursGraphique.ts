@@ -36,6 +36,8 @@ export const couleurDuSeuil = "#18753C";
 // Les Graphiques Vigie RH
 export const couleurDuFondHistogrammeOrangeClair = "#FB926B";
 export const couleurDuFondHistogrammeJaune = "#E2CF58";
+export const couleurExtensionHistogrammeOrangeClair = "rgba(255, 242, 210, 255)";
+export const couleurExtensionHistogrammeJaune = "rgba(255,249,235,255)";
 export const couleurDesTraitsRefHistogramme = "#929292";
 
 export type TaillePoliceTick = "bold" | "normal";

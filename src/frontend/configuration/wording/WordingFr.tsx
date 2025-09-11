@@ -672,6 +672,7 @@ export class WordingFr implements Wording {
   readonly EMBAUCHES: string = "Embauches";
   readonly DEPARTS_REF: string = "Moyenne des départs";
   readonly EMBAUCHES_REF: string = "Moyenne des embauches";
+  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
 
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";

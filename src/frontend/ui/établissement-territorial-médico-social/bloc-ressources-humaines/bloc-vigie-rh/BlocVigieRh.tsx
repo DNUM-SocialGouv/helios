@@ -117,8 +117,8 @@ export const BlocVigieRH = ({
               <ColorLabel
                 classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
                 items={[
-                  { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE },
-                  { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
+                  { color: couleurCategorie, label: wording.VIGIE_RH_CATEGORIE, circle: true },
+                  { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX, circle: true }
                 ]}
               />
 
