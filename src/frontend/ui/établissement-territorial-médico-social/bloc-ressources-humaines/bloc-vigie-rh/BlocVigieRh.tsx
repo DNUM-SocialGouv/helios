@@ -11,6 +11,7 @@ import styles from "../BlocRessourcesHumainesMédicoSocial.module.css"
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
+import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 
 type BlocVigieRHProps = Readonly<{
     blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -99,16 +100,17 @@ export const BlocVigieRH = ({
                            <div className="fr-grid-row">
                                 {(() => {
                                     const items = donneesEffectifs.data ?? [];
+                                    const dataEffectifs = items[0].dataCategorie as unknown as EffectifsData;
+                                    const multiCategories = items as ProfessionFiliereData[];
                                     if (!items.length) return null;
-                                    const base = items[0].dataCategorie as unknown as EffectifsData; // axe temps + totaux
                                     return (
                                     <>
                                         <LineChart
                                             classContainer="fr-col-6 fr-mb-4w"
                                             couleurEffectifsTotaux={couleurEffectifsTotaux}
                                             couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                                            dataEffectifs={base}
-                                            multiCategories={items as Array<{ categorie: string; dataCategorie: EffectifsData }>}
+                                            dataEffectifs={dataEffectifs}
+                                            multiCategories={ multiCategories }
                                         />
                                     </>
                                     );

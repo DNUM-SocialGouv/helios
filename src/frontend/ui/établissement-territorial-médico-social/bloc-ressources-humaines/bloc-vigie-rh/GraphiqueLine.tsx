@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
+import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
@@ -28,7 +29,7 @@ interface LineChartProps {
   classContainer: string;
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
-  multiCategories: Array<{ categorie: string; dataCategorie: EffectifsData }>;
+  multiCategories: ProfessionFiliereData[];
   couleursFilieres?: string[];
 }
 
