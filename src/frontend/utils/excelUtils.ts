@@ -1,4 +1,4 @@
-import { Worksheet, Workbook } from "exceljs";
+import { Workbook, Worksheet } from "exceljs";
 
 
 export function getIntervalCellulesNonVideDansColonne(sheet: Worksheet, colonne: number) {
@@ -6,7 +6,7 @@ export function getIntervalCellulesNonVideDansColonne(sheet: Worksheet, colonne:
   let derniereLigne: number | null = null;
 
   sheet.getColumn(colonne).eachCell({ includeEmpty: false }, (_cellule, ligne) => {
-    if (premiereLigne === null) premiereLigne = ligne;
+    premiereLigne ??= ligne;
     derniereLigne = ligne;
   });
   return (premiereLigne && derniereLigne) ? { premiereLigne, derniereLigne } : null;
@@ -14,7 +14,7 @@ export function getIntervalCellulesNonVideDansColonne(sheet: Worksheet, colonne:
 }
 
 
-export function ecrireLignesDansSheet(lignes: (string | Number)[][], sheetComparaison: Worksheet) {
+export function ecrireLignesDansSheet(lignes: (string | number)[][], sheetComparaison: Worksheet) {
   lignes.forEach((valeursLignes, positionLigne) => {
     valeursLignes.forEach((valeur, positionColonne) => {
       sheetComparaison.getCell(1 + positionLigne, 1 + positionColonne).value = valeur as any;
@@ -22,13 +22,25 @@ export function ecrireLignesDansSheet(lignes: (string | Number)[][], sheetCompar
   });
 }
 
+export async function telechargerWorkbook(workbook: Workbook, nomFichier: string) {
+  const hasDOM =
+    typeof window !== "undefined" &&
+    typeof document !== "undefined" &&
+    typeof URL !== "undefined" &&
+    typeof URL.createObjectURL === "function";
 
+  // Dans un environnement Node/Jest -> Ecrire dans un fichier
+  if (!hasDOM) {
+    await workbook.xlsx.writeFile(nomFichier);
+    return;
+  }
 
-export async function telechargerWorkbookEnTantQueFichier(workbook: Workbook, nomFichier: string) {
+  // Dans le navigateur -> Télécharger le fichier
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
+
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = nomFichier;
@@ -37,4 +49,3 @@ export async function telechargerWorkbookEnTantQueFichier(workbook: Workbook, no
   URL.revokeObjectURL(link.href);
   document.body.removeChild(link);
 }
-

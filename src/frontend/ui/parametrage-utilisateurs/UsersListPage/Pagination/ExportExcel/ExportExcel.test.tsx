@@ -1,9 +1,10 @@
+import { Workbook } from "exceljs";
 import fs from "fs";
-import XLSX from "xlsx";
 
 import { ExportToExcel, getCurrentDate, getSelectedInstitution, getSelectedProfile, getSelectedRole } from "./ExportExcel";
 import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
+
 
 const createDirectory = (path: string) => {
   fs.mkdirSync(path, { recursive: true });
@@ -17,7 +18,7 @@ describe("ExportToExcel function", () => {
     expect(true).toBe(true);
   });
 
-  it("should generate an Excel file with provided headers and data", () => {
+  it("should generate an Excel file with provided headers and data", async () => {
     // Données de test
     const headers = ["Nom", "Prénom", "Email", "Institution", "Rôle", "Autorisation", "Date de création", "Date de dernière connexion", "Statut"];
     const data = [
@@ -26,19 +27,41 @@ describe("ExportToExcel function", () => {
     ];
 
     // Appel de la fonction ExportToExcel avec les données de test
+    const cheminSortie = "jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx";
     const headerRecherche = [`Recherche : `];
-    ExportToExcel(headerRecherche, headers, data, "jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx");
+    await ExportToExcel(headerRecherche, headers, data, cheminSortie);
 
     // Vérification si le fichier Excel a été correctement créé
-    expect(fs.existsSync("jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx")).toBeTruthy();
+    expect(fs.existsSync(cheminSortie)).toBeTruthy();
 
-    // Lecture du fichier Excel
-    const workbook = XLSX.readFile("jestGeneratedFiles/Users/Helios_liste_utilisateurs.xlsx");
-    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const dataFromExcel = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const expected: (string | number)[][] = [headerRecherche, [""], headers, ...data];
 
-    // Vérification des données dans le fichier Excel
-    expect(dataFromExcel).toEqual([headerRecherche, [""], headers, ...data]);
+    const workbook = new Workbook();
+    await workbook.xlsx.readFile(cheminSortie);
+    const sheet = workbook.worksheets[0];
+
+    const N = headers.length;
+
+    const actual = sheet
+      .getSheetValues()
+      .slice(1, 1 + expected.length)
+      //Transformer le tableau 2D en un tableau simple
+      .map((lignes: any) => {
+        // eslint-disable-next-line jest/no-conditional-in-test
+        const ligne = Array.isArray(lignes) ? lignes.slice(1, 1 + N) : [];
+        while (ligne.length < N) ligne.push("");
+        // eslint-disable-next-line jest/no-conditional-in-test
+        return ligne.map(valeur => (valeur ?? ""));
+      });
+
+    expect(actual).toEqual(
+      //Transformer le tableau 2D en un tableau simple
+      expected.map(lignes => {
+        const ligne = lignes.slice(0, N);
+        while (ligne.length < N) ligne.push("");
+        return ligne;
+      })
+    );
   });
 });
 

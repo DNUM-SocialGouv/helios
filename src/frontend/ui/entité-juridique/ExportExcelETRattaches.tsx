@@ -1,7 +1,8 @@
-import * as XLSX from "xlsx";
+import { Workbook } from "exceljs";
 
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
+import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
 
 export function getCurrentDate() {
   const today = new Date();
@@ -31,16 +32,15 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
     const etabMedSoc = formatEtMedSocForExport();
     const etabHeader = [["Type d’établissement", "FINESS", "Raison sociale"]]
 
-    let ws;
+    const workbook = new Workbook();
+    const sheet = workbook.addWorksheet("Etablissements rattachés");
     if (etablissementsTerritoriauxRattachesViewModels.plusDETSanitaire) {
-      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabHeader, ...etabSan, ...etabMedSoc]);
+      ecrireLignesDansSheet([header, [""], ...etabHeader, ...etabSan, ...etabMedSoc], sheet);
     } else {
-      ws = XLSX.utils.aoa_to_sheet([header, [""], ...etabHeader, ...etabMedSoc, ...etabSan]);
+      ecrireLignesDansSheet([header, [""], ...etabHeader, ...etabMedSoc, ...etabSan], sheet);
     }
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Etablissements rattachés");
     const fileName: string = `${getCurrentDate()}_Helios_${entiteJuridiqueViewModel.numéroFiness}.xlsx`;
-    XLSX.writeFile(wb, fileName);
+    telechargerWorkbook(workbook, fileName);
   }
 
   return { exportEtRattache }

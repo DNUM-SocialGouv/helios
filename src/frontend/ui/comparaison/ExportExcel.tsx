@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
-import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbookEnTantQueFichier } from "../../utils/excelUtils";
+import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
 import { UserContext } from "../commun/contexts/userContext";
 import { StringFormater } from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
@@ -125,7 +125,7 @@ export async function ExportToExcel(
   header: string[],
   headerType: (string | undefined)[],
   headers: string[],
-  data: (string | Number)[][],
+  data: (string | number)[][],
   fileName: string,
   datesMaj: DatesMisAjourSources,
   nomFichierTemplate: string
@@ -142,9 +142,9 @@ export async function ExportToExcel(
   if (!sheetComparaison) throw new Error("Feuille comparaison introuvable dans le template");
   if (!sheetLisezMoi) throw new Error("Feuille LisezMoi introuvable dans le template");
 
-  const lignes: (string | Number)[][] = [
+  const lignes: (string | number)[][] = [
     header,
-    headerType as (string | Number)[],
+    headerType as (string | number)[],
     [""],
     headers,
     ...data,
@@ -153,15 +153,14 @@ export async function ExportToExcel(
 
   ecrireLignesDansSheet(lignes, sheetComparaison);
   remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
-  telechargerWorkbookEnTantQueFichier(workbook, fileName);
-
+  telechargerWorkbook(workbook, fileName);
 }
 
 
 function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Worksheet, datesMaj: DatesMisAjourSources, colonne: number) {
-  const dernierLigneNonVide = getIntervalCellulesNonVideDansColonne(sheetLisezMoi, 2)?.derniereLigne ?? 0;
+  const dernierLigneNonVide = getIntervalCellulesNonVideDansColonne(sheetLisezMoi, colonne)?.derniereLigne ?? 0;
 
-  for (let ligne = 2; ligne <= dernierLigneNonVide; ligne++) {
+  for (let ligne = 1; ligne <= dernierLigneNonVide; ligne++) {
     const placeholder = sheetLisezMoi.getCell(ligne, colonne).text.trim(); //Placeholder est la valeur fictive mise dans le template pour positionner les dates de MAJ
     if (placeholder in datesMaj) {
       const cle = placeholder as keyof DatesMisAjourSources;
