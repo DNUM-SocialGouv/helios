@@ -9,7 +9,6 @@ import { DatesMisAjourSources } from "../../../backend/métier/entities/Resultat
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
-import { StringFormater } from "../commun/StringFormater";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
@@ -256,7 +255,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     return <ExportExcel
       codeProfiles={codeProfiles}
       codeRegion={codeRegion}
-      datesMisAjour={StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}
+      datesMisAjour={datesMisAjour}
       disabled={resultats.length === 0}
       order={params.order}
       orderBy={params.orderBy}

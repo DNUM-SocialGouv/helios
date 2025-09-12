@@ -1,11 +1,11 @@
-
-
+import ExcelJS from "exceljs";
 import { useContext } from "react";
-import * as XLSX from "xlsx";
 
 import { useComparaison } from "./useComparaison";
-import { ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbookEnTantQueFichier } from "../../utils/excelUtils";
 import { UserContext } from "../commun/contexts/userContext";
+import { StringFormater } from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
 
@@ -120,23 +120,58 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
   ])
 }
 
-function ExportToExcel(header: string[], headerType: (string | undefined)[],
+
+export async function ExportToExcel(
+  header: string[],
+  headerType: (string | undefined)[],
   headers: string[],
   data: (string | Number)[][],
   fileName: string,
+  datesMaj: DatesMisAjourSources,
+  nomFichierTemplate: string
 ) {
-  const ws = XLSX.utils.aoa_to_sheet([header,
-    headerType,
+  const response = await fetch(`/templates/${nomFichierTemplate}`);
+  const arrayBuffer = await response.arrayBuffer();
+
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(arrayBuffer);
+
+  const sheetComparaison = workbook.getWorksheet(1);
+  const sheetLisezMoi = workbook.getWorksheet(2);
+
+  if (!sheetComparaison) throw new Error("Feuille comparaison introuvable dans le template");
+  if (!sheetLisezMoi) throw new Error("Feuille LisezMoi introuvable dans le template");
+
+  const lignes: (string | Number)[][] = [
+    header,
+    headerType as (string | Number)[],
     [""],
     headers,
-    ...data]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
-  XLSX.writeFile(wb, fileName);
+    ...data,
+  ];
+
+
+  ecrireLignesDansSheet(lignes, sheetComparaison);
+  remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
+  telechargerWorkbookEnTantQueFichier(workbook, fileName);
+
+}
+
+
+function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Worksheet, datesMaj: DatesMisAjourSources, colonne: number) {
+  const dernierLigneNonVide = getIntervalCellulesNonVideDansColonne(sheetLisezMoi, 2)?.derniereLigne ?? 0;
+
+  for (let ligne = 2; ligne <= dernierLigneNonVide; ligne++) {
+    const placeholder = sheetLisezMoi.getCell(ligne, colonne).text.trim(); //Placeholder est la valeur fictive mise dans le template pour positionner les dates de MAJ
+    if (placeholder in datesMaj) {
+      const cle = placeholder as keyof DatesMisAjourSources;
+      sheetLisezMoi.getCell(ligne, colonne).value = StringFormater.formatDate(datesMaj[cle]);
+    }
+  }
 }
 
 async function generateAndExportExcel(
-  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any
+  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any
 ) {
 
 
@@ -178,7 +213,7 @@ async function generateAndExportExcel(
     "Raison Sociale",
     "Cat. FINESS",
     "FINESS",
-    `Capacité Totale au ${datesMisAjour}`,
+    `Capacité Totale au ${StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}`,
     "Taux de réalisation de l'activité (en %)",
     "File active des personnes accompagnées sur la période",
     "Taux d'occupation en hébergement permanent (en %)",
@@ -216,18 +251,40 @@ async function generateAndExportExcel(
     `Allocation de ressources: ${enveloppes[1]}`,
     `Allocation de ressources: ${enveloppes[2]}`
   ];
+
+  let headers: string[];
+  let nomFichierTemplate: string;
+  switch (type) {
+    case 'Entité juridique':
+      headers = headersEJ;
+      nomFichierTemplate = "template_comparaison_EJ.xlsx"
+      break;
+    case 'Social et Médico-Social':
+      headers = headersMS;
+      nomFichierTemplate = "template_comparaison_MS.xlsx"
+      break;
+    case 'Sanitaire':
+      headers = headersSAN;
+      nomFichierTemplate = "template_comparaison_SAN.xlsx"
+      break;
+    default:
+      throw new Error("Illegal state: type d'établissement non identifié");
+  }
+
   ExportToExcel(headerYear,
     headerType,
-    type === 'Entité juridique' ? headersEJ : type === 'Social et Médico-Social' ? headersMS : headersSAN,
+    headers,
     dataTransormed,
     fileName,
+    datesMisAjour,
+    nomFichierTemplate
   );
 }
 
 const ExportExcel = ({
   year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
 }: {
-  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
+  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[]
 }) => {
   const userContext = useContext(UserContext);
   const { getTopEnveloppes } = useComparaison();
