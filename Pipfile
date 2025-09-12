@@ -60,6 +60,7 @@ populate_vigie_rh_profession_filiere = 'python -m datacrawler.import_vigie_rh_pr
 populate_vigie_rh_profession_groupe = 'python -m datacrawler.import_vigie_rh_profession_groupe'
 populate_tranches_ages = 'python -m datacrawler.import_vigierh_tranches_ages'
 populate_mouvements_vigierh = 'python -m datacrawler.import_vigie_rh_mouvements'
+populate_mouvements_vigierh_trimestriels = 'python -m datacrawler.import_vigie_rh_mouvements_trimestriels'
 populate_les_entites_juridiques = 'python -m datacrawler.import_les_entites_juridiques'
 populate_les_etablissements_territoriaux = 'python -m datacrawler.import_les_etablissements_territoriaux'
 populate_ref_categories = 'python -m datacrawler.import_ref_categories'

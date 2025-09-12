@@ -41,6 +41,7 @@ TABLE_REF_QUALITE = "vigierh_ref_qualite"
 TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
 # mouvements rh
 TABLE_VIGIE_RH_MOUVEMENTS_RH = "vigierh_mouvements"
+TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS = "vigierh_mouvements_trimestriel"
 
 TABLE_ENTITES_JURIDIQUES = "entite_juridique"
 TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
@@ -82,3 +83,4 @@ class FichierSource(Enum):
     VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
     # mouvements rh
     VIGIE_RH_MOUVEMENTS_RH = "vigierh_etablissement_annuel"
+    VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL = "vigierh_etablissement_trimestriel"
