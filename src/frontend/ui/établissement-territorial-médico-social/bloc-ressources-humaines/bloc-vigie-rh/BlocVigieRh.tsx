@@ -40,7 +40,7 @@ export const BlocVigieRH = ({
 
     const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
-    const couleurEffectifsTottaux = "#FB926B"  // orange
+    const couleurEffectifsTotaux = "#FB8E68"  // orange
 
     useEffect(() => {
         setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0])
@@ -100,15 +100,15 @@ export const BlocVigieRH = ({
                                 {(() => {
                                     const items = donneesEffectifs.data ?? [];
                                     if (!items.length) return null;
-                                    const base = items[0].dataCategorie as unknown as EffectifsData;
+                                    const base = items[0].dataCategorie as unknown as EffectifsData; // axe temps + totaux
                                     return (
                                     <>
                                         <LineChart
                                             classContainer="fr-col-6 fr-mb-4w"
-                                            couleurEffectifsTottaux={couleurEffectifsTottaux}
+                                            couleurEffectifsTotaux={couleurEffectifsTotaux}
+                                            couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
                                             dataEffectifs={base}
                                             multiCategories={items as Array<{ categorie: string; dataCategorie: EffectifsData }>}
-                                            // couleursFilieres={["#3B82F6", "#10B981", "#8B5CF6", "#EF4444"]} // optionnel
                                         />
                                     </>
                                     );

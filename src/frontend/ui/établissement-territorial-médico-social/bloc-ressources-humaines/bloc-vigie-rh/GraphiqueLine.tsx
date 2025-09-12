@@ -26,13 +26,13 @@ export interface CategorieData {
 
 interface LineChartProps {
   classContainer: string;
-  couleurEffectifsTottaux: string;
+  couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
   multiCategories: Array<{ categorie: string; dataCategorie: EffectifsData }>;
   couleursFilieres?: string[];
 }
 
-    const LineChart = ({ classContainer, couleurEffectifsTottaux, dataEffectifs, multiCategories, couleursFilieres }: LineChartProps) => {
+    const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres }: LineChartProps) => {
 
     const { wording } = useDependencies();
 
@@ -65,8 +65,8 @@ interface LineChartProps {
             {
             label: wording.EFFECTIFS_TOTAUX,
             data: dataEffectifs.dataEtab,
-            borderColor: couleurEffectifsTottaux,
-            backgroundColor: couleurEffectifsTottaux,
+            borderColor: couleurEffectifsTotaux,
+            backgroundColor: couleurEffectifsTotaux,
             borderWidth: 3,
             fill: false,
             pointRadius: 0,
@@ -88,7 +88,7 @@ interface LineChartProps {
         return { labels, datasets };
     }, [
         multiCategories, visibleCats, labels,
-        dataEffectifs, couleurEffectifsTottaux, couleursFilieres, wording.EFFECTIFS_TOTAUX
+        dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX
     ]);
 
     const options: ChartOptions<"line"> = {
@@ -169,7 +169,7 @@ interface LineChartProps {
                     <ColorLabel
                         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
                         items={[
-                            { color: couleurEffectifsTottaux, label: wording.EFFECTIFS_TOTAUX }
+                            { color: couleurEffectifsTotaux, label: wording.EFFECTIFS_TOTAUX }
                         ]}
                     />
                     <div className="fr-mt-2w fr-ml-1w fr-mb-1w" style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
