@@ -34,7 +34,7 @@ def filtrer_les_donnees_mouvements_rh(donnees: pd.DataFrame, base_de_donnees: En
     return donnees_mouvements_rh_trimestrielles_filtrees_sur_les_3_dernieres_annees.set_index(index_des_mouvements_rh_trimestriel)
 
 
-def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
     date_du_fichier_vigierh_donnees_mouvements_rh = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     fichier_traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_mouvements_rh,
                                                       base_de_donnees,
@@ -67,4 +67,4 @@ if __name__ == "__main__":
         vigierh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value, logger_helios))
 
-    import_donnees_mouvements_rh(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
+    import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
