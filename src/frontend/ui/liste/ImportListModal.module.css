@@ -41,3 +41,12 @@
   overflow-y: scroll;
   height: 16rem;
 }
+
+.full-width-button {
+  width: 100%;
+  justify-content: center;
+}
+
+.new-list-button-group {
+  margin: 0 .5rem .5rem .5rem;
+}

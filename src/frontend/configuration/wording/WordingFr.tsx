@@ -549,7 +549,13 @@ export class WordingFr implements Wording {
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
 
   // Import d'une liste de finess dans une liste de Favoris
-  readonly IMPORT_LIST_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie`;
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie`;
+  readonly IMPORT_LIST_SELECTOR: string = "Importer dans une nouvelle liste ou une liste existante";
+  readonly IMPORT_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly IMPORT_SUCCESS_TITLE: string = "Succès";
+  readonly IMPORT_SUCESS_MESSAGE: string = "Les modifications ont bien été enregistrées";
+  readonly IMPORT_LIST_ERREUR_IMPORT: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

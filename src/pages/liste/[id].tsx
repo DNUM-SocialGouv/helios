@@ -37,6 +37,7 @@ export default function Router({ listServer }: RouterProps) {
   const [chargement, setChargement] = useState(true);
   const [order, setOrder] = useState(defaultOrder);
   const [orderBy, setOrderBy] = useState(defaultOrderBy);
+  const [displaySucessMessage, setDisplaySucessMessage] = useState<boolean>(false);
 
   // Quand la liste des favoris à été changée en local on la recharge depuis le server
   useEffect(() => {
@@ -89,9 +90,11 @@ export default function Router({ listServer }: RouterProps) {
       {wording.EXPORTER}
     </button>;
   }
-  const importButton: ReactNode = <>
-    <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--tertiary-no-outline" data-fr-opened="false"> {wording.IMPORTER_DES_ETABLISSEMENTS} </button>
-  </>
+  const importButton: ReactNode = <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--tertiary-no-outline" data-fr-opened="false"> {wording.IMPORTER_DES_ETABLISSEMENTS} </button>
+
+  const onSucess = () => {
+    setDisplaySucessMessage(true);
+  }
 
 
   const titleHead = <>
@@ -118,6 +121,12 @@ export default function Router({ listServer }: RouterProps) {
         <main className="fr-container" id="content">
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
+            {displaySucessMessage &&
+              <div className="fr-alert fr-alert--success fr-alert--sm">
+                <h3 className="fr-alert__title">{wording.IMPORT_SUCCESS_TITLE}</h3>
+                <p>{wording.IMPORT_SUCESS_MESSAGE}</p>
+              </div>
+            }
             {!isListEmpty() &&
               <>
                 {displayTable
@@ -135,7 +144,7 @@ export default function Router({ listServer }: RouterProps) {
               </>
             }
           </section>
-          <ImportListModal />
+          <ImportListModal listId={listServer.id} onSuccess={onSucess} />
         </main>
       ) : (
         <>
