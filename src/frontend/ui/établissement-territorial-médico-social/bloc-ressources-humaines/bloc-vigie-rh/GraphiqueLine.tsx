@@ -58,9 +58,9 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         data: dataEffectifs.dataEtab,
         borderColor: couleurEffectifsTotaux,
         backgroundColor: couleurEffectifsTotaux,
-        borderWidth: 3,
+        borderWidth: 2,
         fill: false,
-        pointRadius: 0,
+        pointRadius: 1,
       },
     ];
     (multiCategories ?? []).forEach((c, id) => {
@@ -73,7 +73,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         backgroundColor: color,
         borderWidth: 2,
         fill: false,
-        pointRadius: 0,
+        pointRadius: 1,
       });
     });
     return { labels, datasets };
