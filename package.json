@@ -53,6 +53,7 @@
     "updateBudgetEtFinancesMedicoSocial:local": "pipenv run populate_budget_et_finances_medico_social",
     "updateBudgetEtFinancesEntiteJuridique": "python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques",
     "updateBudgetEtFinancesEntiteJuridique:local": "pipenv run populate_budget_et_finances_entite_juridique",
+    "updateRessourcesHumainesEntiteJuridique:local": "pipenv run populate_ressoures_humaines_entite_juridique",
     "updateRessourcesHumainesMedicoSocial": "python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux",
     "updateRessourcesHumainesMedicoSocial:local": "pipenv run populate_ressoures_humaines_medico_social",
     "updateActivitéSanitaireEntitéJuridique": "python -m datacrawler.agrégation_activité_sanitaire",
