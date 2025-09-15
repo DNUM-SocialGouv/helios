@@ -35,7 +35,7 @@
   padding: 0;
 
   border: 1px solid var(--border-default-grey);
-  width: 200px;
+  min-width: 250px;
   z-index: 10;
 }
 
@@ -49,7 +49,7 @@
   background-color: white;
 }
 
-.menu>li:hover {
+.menu>li:not(:first-child):hover {
   background-color: lightgray;
 }
 
@@ -95,4 +95,19 @@
   left: 0;
   white-space: normal;
   width: auto;
+}
+
+.user-name{
+  font-weight: bold;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  height: 1rem;
+}
+
+.user-email{
+  color: gray;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;  
+  margin-bottom: 0.25rem;
+  height: 1rem;
 }
