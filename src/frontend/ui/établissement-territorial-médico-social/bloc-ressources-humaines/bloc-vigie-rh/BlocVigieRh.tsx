@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import GraphiqueDepartEmbauches from "./GraphiqueDepartsEmbauches";
+import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";

@@ -198,6 +198,7 @@ export interface Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
+  readonly TRIMESTRIEL: string;
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;

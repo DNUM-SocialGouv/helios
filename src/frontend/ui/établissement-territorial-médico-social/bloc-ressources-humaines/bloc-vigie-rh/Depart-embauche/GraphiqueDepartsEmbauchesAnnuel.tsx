@@ -2,25 +2,25 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Titl
 import { Bar } from "react-chartjs-2";
 
 
-import { DepartEmbauche } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
-import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
+import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
   couleurDuFondHistogrammeOrangeClair,
   couleurDuFondHistogrammeJaune,
   couleurDesTraitsRefHistogramme,
   couleurExtensionHistogrammeJaune,
   couleurExtensionHistogrammeOrangeClair
-} from "../../../commun/Graphique/couleursGraphique";
-import { Transcription } from "../../../commun/Transcription/Transcription";
+} from "../../../../commun/Graphique/couleursGraphique";
+import { Transcription } from "../../../../commun/Transcription/Transcription";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-type GraphiqueDepartEmbauchesProps = Readonly<{
+type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
   donneesDepartsEmbauches: DepartEmbauche[]
 }>;
 
-const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEmbauchesProps) => {
+const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
@@ -208,4 +208,4 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
   );
 };
 
-export default GraphiqueDepartEmbauches;
+export default GraphiqueDepartEmbauchesAnnuel;
