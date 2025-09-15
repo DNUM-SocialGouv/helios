@@ -65,8 +65,8 @@ export const Header = () => {
     return isAuthenticated() && paths.CONNEXION !== router.pathname;
   }
 
-  const handleMenuAction = (callBack?: () => void) => {
-    callBack?.();
+  const handleMenuAction = (callBack: () => void) => {
+    callBack();
     setDisplayMenu(false);
   };
 
