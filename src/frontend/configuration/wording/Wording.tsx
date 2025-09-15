@@ -466,6 +466,9 @@ export interface Wording {
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
 
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_ERROR_MESSAGE: (nbError: number) => string;
+
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
   readonly MOT_PASSE_OUBLIE_LABEL: string;
