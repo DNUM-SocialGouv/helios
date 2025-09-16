@@ -377,6 +377,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly ATIH_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -392,6 +393,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly ATIH: ReactElement;
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;

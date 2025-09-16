@@ -4,7 +4,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
-import { ContenuDuNombreDEtpRéalisé } from "../../établissement-territorial-médico-social/InfoBulle/ContenuDuNombreDEtpRéalisé";
+import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
 
 
 
@@ -26,18 +26,18 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
       }
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {true /*TODO: Condition d'affichage et infobulle correcte*/ ? (
+        {true /*TODO: Condition d'affichage*/ ? (
           <IndicateurGraphique
             contenuInfoBulle={
-              <ContenuDuNombreDEtpRéalisé
+              <ContenuDuNombreDEtpPm
                 dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPm}
-                source={Sources(wording.ANCRE)}
+                source={Sources(wording.ATIH)}
               />
             }
             dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPm}
             identifiant="ressources-humaines-nombre-etp-réalisé"
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PM}
-            source={Sources(wording.ANCRE)}
+            source={Sources(wording.ATIH)}
           >
             {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPm}
           </IndicateurGraphique>
