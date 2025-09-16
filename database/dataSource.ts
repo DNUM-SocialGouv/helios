@@ -114,6 +114,7 @@ import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
+import { RessourcesHumainesEntiteJuridiqueModel } from "./models/RessourcesHumainesEntiteJuridiqueModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
@@ -150,6 +151,7 @@ const datasource = new DataSource({
     ÉtablissementTerritorialIdentitéModel,
     RechercheModel,
     ReconnaissanceContractuelleSanitaireModel,
+    RessourcesHumainesEntiteJuridiqueModel,
     RessourcesHumainesMédicoSocialModel,
     ActivitéSanitaireEntitéJuridiqueModel,
     UtilisateurModel,

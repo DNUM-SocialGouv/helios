@@ -392,6 +392,8 @@ export class WordingFr implements Wording {
     </>
   );
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = "Nombre d’ETP Total réalisé";
+  readonly NOMBRE_D_ETP_PM: string = "Nombre d’ETP PM"
+  readonly NOMBRE_D_ETP_PNM: string = "Nombre d’ETP PNM"
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string = "Taux de rotation du personnel sur effectifs réels";
   readonly TAUX_D_ABSENTÉISME: string = "Taux d’absentéisme";
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement = (
@@ -411,6 +413,7 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = "Pour congés spéciaux dont les congés sans solde (hors congés payés)";
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
+  readonly JOURS_ABSENTEISMES_PM: string = "Jour d’absentéisme PM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -420,6 +423,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = "Nombre de CDD de remplacement";
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string = "Taux d’ETP vacants au 31/12";
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string = "Taux de prestations externes sur les prestations directes";
+  readonly DEPENSES_INTERIM_PM: string = "Dépenses d’intérim PM"
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = "Établissement territorial";
