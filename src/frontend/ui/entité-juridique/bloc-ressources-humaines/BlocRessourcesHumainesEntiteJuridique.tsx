@@ -4,6 +4,7 @@ import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
 
@@ -24,11 +25,12 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
   return (
     <Bloc isMain={false} opnedBloc={openedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs}>
       {
-        //TODO: Gérer les autorisation 
+        entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? 
+        <NoDataCallout indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees}/> : <></>
       }
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {true /*TODO: Condition d'affichage*/ ? (
+        {entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPmEstIlRenseigne ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuNombreDEtpPm
