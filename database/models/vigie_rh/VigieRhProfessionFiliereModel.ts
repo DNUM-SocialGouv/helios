@@ -16,9 +16,6 @@ export class VigieRhProfessionFiliereModel {
   @PrimaryColumn({ type: "int", name: "profession_code" })
   public professionCode!: number;
 
-  @Column({ type: "int", name: "quarter", nullable: false })
-  public quarter!: number;
-
   @ManyToOne(() => VigieRhRefProfessionFiliereModel, { eager: true })
   @JoinColumn({ name: "profession_code", referencedColumnName: "code" })
   public readonly profession!: VigieRhRefProfessionFiliereModel;

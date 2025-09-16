@@ -40,25 +40,25 @@ class TestImportVigiePprofessionFiliere:
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PROFESSION_FILIERE.value, mocked_logger)
         )
-        assert chemin_local_du_fichier_profession_filiere == 'data_test/entrée/vigie_rh/vigierh_profession1_2025_02_13.parquet'
+        assert chemin_local_du_fichier_profession_filiere == 'data_test/entrée/vigie_rh/vigierh_profession1_2025_09_05.parquet'
 
         chemin_local_du_fichier_ref = os.path.join(
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value, mocked_logger)
         )
-        assert chemin_local_du_fichier_ref == 'data_test/entrée/vigie_rh/vigierh_ref_profession1_2025_02_13.parquet'
+        assert chemin_local_du_fichier_ref == 'data_test/entrée/vigie_rh/vigierh_ref_profession1_2025_09_05.parquet'
 
         date_de_mise_à_jour_profession_filiere = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
-        assert date_de_mise_à_jour_profession_filiere == '2025-02-13'
+        assert date_de_mise_à_jour_profession_filiere == '2025-09-05'
 
         date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
-        assert date_de_mise_à_jour_ref == '2025-02-13'
+        assert date_de_mise_à_jour_ref == '2025-09-05'
 
         # Traitements des données
         df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
         code_list_ref = np.array(df_ref['code'].tolist())
 
-        assert df_ref.shape[0] == 5
+        assert df_ref.shape[0] == 4
 
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
         df_filtré = filter_profession_filiere_data(data_frame, code_list_ref, base_de_données_test).head(200)
@@ -79,7 +79,7 @@ class TestImportVigiePprofessionFiliere:
             FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
             date_de_mise_à_jour_ref
         )
-        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test) == 5
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test) == 4
 
         inserer_nouvelles_donnees(
             TABLE_PROFESSION_FILIERE,

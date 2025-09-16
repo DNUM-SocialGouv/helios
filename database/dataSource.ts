@@ -87,6 +87,7 @@ import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh
 import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_rh/1739804255435-AjoutEnumFichierDateMiseAjour";
 import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrations/vigie_rh/1739960328134-AjoutEnumFichierDateMiseAjourReferentiel";
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
+import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./migrations/vigie_rh/1758014111419-SuppressionQuarterDeVigieRhProfessionFiliere";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -279,6 +280,7 @@ const datasource = new DataSource({
     AjoutListEtEtsList1736865415982,
     AjoutVigieRhContrat1738320902145,
     AjoutVigieRhProfessionFiliere1738328763147,
+    SuppressionQuarterDeVigieRhProfessionFiliere1758014111419,
     AjoutVigieRhProfessionGroupe1738328796095,
     AjoutReferentielTypeContrat1738227384991,
     AjoutReferentielProfessionFiliere1738328597314,

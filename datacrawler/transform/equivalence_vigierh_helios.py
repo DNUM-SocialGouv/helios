@@ -21,9 +21,8 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
-        'quarter': 'quarter',
-        'profession_code': 'profession_code',
-        'effectif_filiere': 'effectif_filiere',
+        'profession1_code': 'profession_code',
+        'effectif': 'effectif_filiere',
         'effectif_etab': 'effectif_etab',
     }
     REF_PROFESSION_FILIERE = {
