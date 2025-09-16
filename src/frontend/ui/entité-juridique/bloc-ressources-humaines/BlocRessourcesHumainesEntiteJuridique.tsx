@@ -2,6 +2,7 @@ import styles from "./BlocRessourcesHumainesEntiteJuridique.module.css"
 import { EntiteJuridiqueRessourcesHumainesViewModel } from "./EntiteJuridiqueRessourcesHumainesViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
+import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
@@ -11,16 +12,17 @@ import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
 type BlocRessourcesHumainesProps = Readonly<{
   entiteJuridiqueRessourcesHumainesViewModel: EntiteJuridiqueRessourcesHumainesViewModel;
   openedBloc?: boolean;
-  toggelBlocs?: () => void;
+  toggleBlocs?: () => void;
 }>;
 
-export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessourcesHumainesViewModel, openedBloc, toggelBlocs }: BlocRessourcesHumainesProps) => {
+export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessourcesHumainesViewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
   const { wording } = useDependencies();
 
-  //TODO: Gérer le cas de bloc vide
-
+  if (entiteJuridiqueRessourcesHumainesViewModel.lesDonneesRessourcesHumainesNeSontPasRenseigner) {
+    return <BlocIndicateurVide opnedBloc={openedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs} />;
+  }
   return (
-    <Bloc isMain={false} opnedBloc={openedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
+    <Bloc isMain={false} opnedBloc={openedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs}>
       {
         //TODO: Gérer les autorisation 
       }
