@@ -92,7 +92,9 @@ export const BlocVigieRH = ({
             nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
             source={wording.VIGIE_RH}
           >
-            <GraphiqueDepartEmbauches donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
+            <GraphiqueDepartEmbauches
+              donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
+              donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
             />
           </IndicateurGraphique>
         ) : <></>

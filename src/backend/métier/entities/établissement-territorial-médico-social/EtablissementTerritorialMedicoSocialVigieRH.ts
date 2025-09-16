@@ -33,9 +33,19 @@ export type DepartEmbauche = Readonly<{
   embaucheRef: number;
 }>;
 
+export type DepartEmbaucheTrimestriel = Readonly<{
+  annee: number;
+  trimestre: number;
+  depart: number;
+  departRef: number;
+  embauche: number;
+  embaucheRef: number;
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   pyramideAges: PyramideAges[];
   departsEmbauches: DepartEmbauche[];
+  departsEmbauchesTrimestriels: DepartEmbaucheTrimestriel[];
   tranchesAgesLibelles: string[];
   professionFiliere: ProfessionFiliere;
 }>;

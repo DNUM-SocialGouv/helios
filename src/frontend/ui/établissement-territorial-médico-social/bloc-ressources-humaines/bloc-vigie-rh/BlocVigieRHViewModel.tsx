@@ -10,6 +10,14 @@ export type DonneesVigieRh = {
   effectifFemmeRef: number[];
 }
 
+export type DepartEmbaucheTrimestrielViewModel = {
+  trimestre: string;
+  depart: number;
+  departRef: number;
+  embauche: number;
+  embaucheRef: number;
+}
+
 export class BlocVigieRHViewModel {
 
   public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
@@ -114,6 +122,18 @@ export class BlocVigieRHViewModel {
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
     return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
+  }
+
+  public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map((donnee) => {
+      return {
+        trimestre: donnee.annee + '-T' + donnee.trimestre,
+        depart: donnee.depart,
+        departRef: donnee.departRef,
+        embauche: donnee.embauche,
+        embaucheRef: donnee.embaucheRef
+      }
+    });
   }
 
 }

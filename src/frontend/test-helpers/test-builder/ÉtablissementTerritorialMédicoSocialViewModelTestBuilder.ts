@@ -658,7 +658,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         }
       ]
     },
-    departsEmbauches: []
+    departsEmbauches: [],
+    departsEmbauchesTrimestriels: []
   };
 
   public static crée(

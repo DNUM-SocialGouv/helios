@@ -4,13 +4,16 @@ import { useState, ChangeEvent } from "react";
 import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { FrequencyFilter } from "../FrequencyFilter";
+import GraphiqueDepartEmbauchesTrimestriel from "./GraphiqueDepartEmbauchesTrimestriel";
 import GraphiqueDepartEmbauchesAnnuel from "./GraphiqueDepartsEmbauchesAnnuel";
+import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueDepartEmbauchesProps = Readonly<{
-  donneesDepartsEmbauches: DepartEmbauche[]
+  donneesDepartsEmbauches: DepartEmbauche[],
+  donneesDepartsEmbauchesTrimestriels: DepartEmbaucheTrimestrielViewModel[]
 }>;
 
-const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEmbauchesProps) => {
+const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
 
   const { wording } = useDependencies();
 
@@ -33,7 +36,7 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches }: GraphiqueDepartEm
           donneesDepartsEmbauches={donneesDepartsEmbauches}
         />
         :
-        <div> graphique Trimestriel</div>
+        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} />
       }
     </div>
   );
