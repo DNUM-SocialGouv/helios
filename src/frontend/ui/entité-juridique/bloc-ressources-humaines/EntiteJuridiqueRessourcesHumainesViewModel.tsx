@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { EntiteJuridiqueRessourcesHumaines } from "../../../../backend/métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";
-import { estCeLAnnéePassée } from "../../../utils/dateUtils";
+import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { StringFormater } from "../../commun/StringFormater";
@@ -28,8 +28,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
       secondPlan: couleurDuFond
     }));
-    //TODO: compléter les années manquantes
-    const anneesManquantes: number[] = [];
+    const anneesManquantes: number[] = annéesManquantes(annees, 5);
     return (
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
@@ -46,7 +45,6 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   private extraireLesValeursNombreesDesIndicateurs(indicateur: IndicateurAvecNombre): [number[], string[]] {
     const valeurs: number[] = [];
     const annees: string[] = [];
-    //TODO: Remplacer les valeurs fictives 
     this.ressourcesHumainesEntiteJuridique.forEach((donneeRessourceHumaineEntiteJuridique: EntiteJuridiqueRessourcesHumaines) => {
       const valeur = donneeRessourceHumaineEntiteJuridique[indicateur].valeur;
       if (valeur !== null && valeur !== "") {
