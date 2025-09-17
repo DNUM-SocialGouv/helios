@@ -5,6 +5,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
+import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
 
@@ -25,12 +26,14 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
   return (
     <Bloc isMain={false} opnedBloc={openedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs}>
       {
+        entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees.length !==0 ?
+          <NotAUthorized indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees}/>:
         entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? 
-        <NoDataCallout indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees}/> : <></>
+          <NoDataCallout indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees}/> : <></>
       }
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPmEstIlRenseigne ? (
+        {entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPmEstIlRenseigne && entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPmEstIlAutorise ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuDuNombreDEtpPm

@@ -1,19 +1,19 @@
 export type EntiteJuridiqueRessourcesHumaines = Readonly<{
   annee: number;
-  nombreEtpPm: Readonly<{
+  nombreEtpPm: {
     dateMiseAJourSource: string;
     valeur: number | null | "";
-  }>;
-  nombreEtpPnm: Readonly<{
+  };
+  nombreEtpPnm: {
     dateMiseAJourSource: string;
     valeur: number | null | "";
-  }>;
-  depensesInterimPm: Readonly<{
+  };
+  depensesInterimPm: {
     dateMiseAJourSource: string;
     valeur: number | null | "";
-  }>;
-  joursAbsenteismePm: Readonly<{
+  };
+  joursAbsenteismePm: {
     dateMiseAJourSource: string;
     valeur: number | null | "";
-  }>;
+  };
 }>;

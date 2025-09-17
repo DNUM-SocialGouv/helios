@@ -22,32 +22,6 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       && !this.depensesInterimPmSontEllesRenseignees
       && !this.joursAbsenteismePmSontIlsRenseignes;
   }
-
-  public get lesDonnéesRHPasRenseignees(): (string | ReactElement)[] {
-    const nonRenseignees = [];
-    if (!this.nombreDEtpPmEstIlRenseigne) nonRenseignees.push(this.wording.NOMBRE_D_ETP_PM);
-    if (!this.nombreDEtpPnmEstIlRenseigne) nonRenseignees.push(this.wording.NOMBRE_D_ETP_PNM);
-    if (!this.depensesInterimPmSontEllesRenseignees) nonRenseignees.push(this.wording.DEPENSES_INTERIM_PM);
-    if (!this.joursAbsenteismePmSontIlsRenseignes) nonRenseignees.push(this.wording.JOURS_ABSENTEISME_PM);
-    return nonRenseignees;
-  }
-
-  public get nombreDEtpPmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
-  }
-  public get nombreDEtpPnmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
-  }
-  public get depensesInterimPmSontEllesRenseignees(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
-  }
-  public get joursAbsenteismePmSontIlsRenseignes(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null);
-  }
-  public get dateMiseAJourNombreEtpPm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPm.dateMiseAJourSource);
-  }
-
   public get nombreEtpPm(): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("nombreEtpPm");
     const couleursHistogramme = annees.map((annee) => ({
@@ -79,6 +53,60 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       }
     });
     return [valeurs, annees]
+  }
+
+  public get lesDonnéesRHPasRenseignees(): (string | ReactElement)[] {
+    const nonRenseignees = [];
+    if (!this.nombreDEtpPmEstIlRenseigne) nonRenseignees.push(this.wording.NOMBRE_D_ETP_PM);
+    if (!this.nombreDEtpPnmEstIlRenseigne) nonRenseignees.push(this.wording.NOMBRE_D_ETP_PNM);
+    if (!this.depensesInterimPmSontEllesRenseignees) nonRenseignees.push(this.wording.DEPENSES_INTERIM_PM);
+    if (!this.joursAbsenteismePmSontIlsRenseignes) nonRenseignees.push(this.wording.JOURS_ABSENTEISME_PM);
+    return nonRenseignees;
+  }
+
+  public get lesDonnéesRHPasAutorisees(): (string | ReactElement)[] {
+    const nonAutorisees = [];
+    if (!this.nombreDEtpPmEstIlAutorise) nonAutorisees.push(this.wording.NOMBRE_D_ETP_PM);
+    if (!this.nombreDEtpPnmEstIlAutorise) nonAutorisees.push(this.wording.NOMBRE_D_ETP_PNM);
+    if (!this.depensesInterimPmSontEllesAutorisees) nonAutorisees.push(this.wording.DEPENSES_INTERIM_PM);
+    if (!this.joursAbsenteismePmSontIlsAutorises) nonAutorisees.push(this.wording.JOURS_ABSENTEISME_PM);
+    return nonAutorisees;
+  }
+
+  public get nombreDEtpPmEstIlRenseigne(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
+  }
+
+  public get nombreDEtpPmEstIlAutorise(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== '');
+  }
+
+  public get nombreDEtpPnmEstIlRenseigne(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
+  }
+
+  public get nombreDEtpPnmEstIlAutorise(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== '');
+  }
+
+  public get depensesInterimPmSontEllesRenseignees(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
+  }
+
+  public get depensesInterimPmSontEllesAutorisees(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== '');
+  }
+
+  public get joursAbsenteismePmSontIlsRenseignes(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null);
+  }
+
+  public get joursAbsenteismePmSontIlsAutorises(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== '');
+  }
+
+  public get dateMiseAJourNombreEtpPm(): string {
+    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPm.dateMiseAJourSource);
   }
 
 }

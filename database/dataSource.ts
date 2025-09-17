@@ -78,6 +78,7 @@ import { AjoutNomenclatureAMM1755003914846 } from "./migrations/1755003914846-aj
 import { AjoutTableAutorisationsSanitairesAMM1755849074192 } from "./migrations/1755849074192-ajoutTableAutorisationsSanitairesAMM";
 import { AjoutDonneesMensuellesPsy1756720758341 } from "./migrations/1756720758341-AjoutDonneesMensuellesPsy";
 import { AjoutTableRessourcesHumainesEJ1757946729822 } from "./migrations/1757946729822-AjoutTableRessourcesHumainesEJ";
+import { ModificationValeurProfilAjoutBlocRhEj1758098318274 } from "./migrations/1758098318274-ModificationValeurProfilAjoutBlocRhEj";
 import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -260,7 +261,8 @@ const datasource = new DataSource({
     AjoutNomenclatureAMM1755003914846,
     AjoutTableAutorisationsSanitairesAMM1755849074192,
     AjoutDonneesMensuellesPsy1756720758341,
-    AjoutTableRessourcesHumainesEJ1757946729822
+    AjoutTableRessourcesHumainesEJ1757946729822,
+    ModificationValeurProfilAjoutBlocRhEj1758098318274
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
