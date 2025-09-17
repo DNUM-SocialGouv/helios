@@ -3,8 +3,8 @@ import pandas as pd
 from datacrawler import filtre_les_données_sur_les_n_dernières_années
 from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
-    index_du_bloc_ressources_humaines,
-    equivalences_diamant_quo_san_ressources_humaines_helios
+    index_du_bloc_ressources_humaines_ej,
+    equivalences_diamant_quo_san_ressources_humaines_helios_ej
 )
 
 NOMBRE_D_ANNEES_RESSOURCES_HUMAINE = 5
@@ -18,9 +18,9 @@ def transform_les_donnees_ressources_humaines_entite_juridique(
 )
     return (
         donnees_dernieres_5_annees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios))
-        .drop_duplicates(subset=index_du_bloc_ressources_humaines)
-        .set_index(index_du_bloc_ressources_humaines)
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios_ej))
+        .drop_duplicates(subset=index_du_bloc_ressources_humaines_ej)
+        .set_index(index_du_bloc_ressources_humaines_ej)
     )
 
 

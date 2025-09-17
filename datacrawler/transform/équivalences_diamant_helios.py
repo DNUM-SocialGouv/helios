@@ -237,7 +237,7 @@ colonnes_a_lire_bloc_budget_finance_entite_juridique: List[str] = list(équivale
 index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_entite_juridique", "annee"]
 index_du_bloc_budget_et_finances_etablissement_territorial: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
-equivalences_diamant_quo_san_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
+equivalences_diamant_quo_san_ressources_humaines_helios_ej: ÉquivalencesDiamantHelios = {
     "Finess EJ": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
     "Finess ET": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Année": ColonneHelios(nom="annee", type=int),
@@ -247,8 +247,8 @@ equivalences_diamant_quo_san_ressources_humaines_helios: ÉquivalencesDiamantHel
     "Jours d'absentéisme PM" : ColonneHelios(nom="jours_absenteisme_pm",type=float)
 }
 
-colonnes_a_lire_bloc_ressources_humaines_entite_juridique: List[str] = list(equivalences_diamant_quo_san_ressources_humaines_helios.keys())
-index_du_bloc_ressources_humaines :  List[str] = ["numero_finess_entite_juridique","annee"]
+colonnes_a_lire_bloc_ressources_humaines_entite_juridique: List[str] = list(equivalences_diamant_quo_san_ressources_humaines_helios_ej.keys())
+index_du_bloc_ressources_humaines_ej :  List[str] = ["numero_finess_entite_juridique","annee"]
 
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
     "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
