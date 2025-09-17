@@ -4,6 +4,7 @@ import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { MOIS } from "../../../../utils/constantes";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
@@ -43,9 +44,6 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
 
   // Visibilité par filière (toutes visibles au chargement)
   const [visibleCats, setVisibleCats] = useState<Record<string, boolean>>(() => Object.fromEntries((multiCategories ?? []).map((c) => [c.categorie, true])));
-
-  // Libellés mois (pour tooltip + transcription)
-  const MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
   // Axe X : on laisse des labels vides (l’année s’affiche via le callback quand mois === 1)
   const labels = useMemo(() => new Array(dataEffectifs.dataMoisAnnee?.length ?? 0).fill(""), [dataEffectifs.dataMoisAnnee?.length]);

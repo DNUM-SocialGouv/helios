@@ -1,0 +1,62 @@
+/* Carte visuelle */
+.card {
+  border: 1px solid #E5E5F4;
+  border-radius: 12px;
+  max-width: 360px;
+}
+
+/* Badge titre gris */
+.badge {
+  background: #EEEEEE;
+  color: #161616;
+  display: inline-block;
+  border-radius: 12px;
+  width: 140px;
+  height: 35px;
+  padding-left: 13px;
+  padding-top: 6px;
+}
+
+/* Ligne flèche + valeur */
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+/* Flèche bleue DSFR */
+.arrow {
+  color: var(--text-action-high-blue-france); /* DSFR blue */
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Valeur en gros */
+.value {
+  margin-top: 8px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Libellé sous la valeur */
+.unit {
+  margin-top: 6px;
+  color: #666;
+}
+
+/* Variation bleu DSFR */
+.variation {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.variationValue {
+  font-weight: bold;
+  color: var(--text-action-high-blue-france)
+}
+
+/* Texte atténué (cas stable ou fallback) */
+.muted {
+  color: #666;
+}
