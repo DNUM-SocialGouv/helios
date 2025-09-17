@@ -1,5 +1,6 @@
 import { ActivitesSanitaireMensuel } from "./métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource } from "./métier/entities/AllocationRessource";
+import { EntiteJuridiqueRessourcesHumaines } from "./métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { CatégorisationEnum, EntitéJuridique, EntitéJuridiqueIdentité } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "./métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacité } from "./métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -135,6 +136,19 @@ function getAllocationRessource(): AllocationRessource {
   }
 }
 
+function getRessourcesHumaines():EntiteJuridiqueRessourcesHumaines[] {
+  const ressourcesHumainesEJ : EntiteJuridiqueRessourcesHumaines[] = [];
+  const ressourcesHumaines : EntiteJuridiqueRessourcesHumaines = {
+    annee:2025,
+    nombreEtpPm:{dateMiseAJourSource:"22/01/2025",valeur:100},
+    nombreEtpPnm:{dateMiseAJourSource:"22/01/2025",valeur:120},
+    depensesInterimPm:{dateMiseAJourSource:"22/01/2025",valeur:230},
+    joursAbsenteismePm:{dateMiseAJourSource:"22/01/2025",valeur:41},
+  }
+  ressourcesHumainesEJ.push(ressourcesHumaines);
+  return ressourcesHumainesEJ;
+}
+
 function getFullEntiteJuridique(): EntitéJuridique {
   return {
     ...getIdentiteJuridique(),
@@ -143,6 +157,7 @@ function getFullEntiteJuridique(): EntitéJuridique {
     budgetFinance: [getBudgetFinanceJuridique()],
     autorisationsEtCapacites: getAutorisationCapaciteJuridique(),
     allocationRessource: getAllocationRessource(),
+    ressourcesHumaines: getRessourcesHumaines()
   }
 }
 
@@ -186,12 +201,23 @@ function getBudgetFinanceProfile() {
   }
 }
 
+
+function getRessourcesHumainesProfile() {
+  return {
+    nombreEtpPm: "ok",
+    nombreEtpPnm: "ok",
+    depensesInterimPm: "ok",
+    joursAbsenteismePm: "ok"
+  }
+}
+
 function getFullProfile() {
   return {
     identité: getIdentityProfile(),
     activités: getActiviteProfile(),
     autorisationsEtCapacités: getAutorisationCapaciteProfile(),
     budgetEtFinance: getBudgetFinanceProfile(),
+    ressourcesHumaines: getRessourcesHumainesProfile()
   }
 }
 

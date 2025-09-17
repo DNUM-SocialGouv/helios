@@ -87,7 +87,14 @@ export class EntitéJuridiqueViewModelTestBuilder {
     activitésMensuels: {
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
-    }
+    },
+    ressourcesHumaines: [{
+      annee: 2025,
+      nombreEtpPm: { dateMiseAJourSource: "22/01/2025", valeur: 100 },
+      nombreEtpPnm: { dateMiseAJourSource: "21/01/2025", valeur: 120 },
+      depensesInterimPm: { dateMiseAJourSource: "23/01/2025", valeur: 230 },
+      joursAbsenteismePm: { dateMiseAJourSource: "24/01/2025", valeur: 41 },
+    }]
   };
 
   public static crée(wording: Wording, champsSurchargés?: Partial<EntitéJuridique>): EntiteJuridiqueViewModel {
