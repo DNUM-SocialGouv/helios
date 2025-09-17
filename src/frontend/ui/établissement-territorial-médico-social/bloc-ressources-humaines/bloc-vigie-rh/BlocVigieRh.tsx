@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -13,6 +14,7 @@ import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { MOIS } from "../../../../utils/constantes";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -157,17 +159,55 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
           >
             <div className="fr-grid-row">
               {(() => {
+                // --- Données effectifs ---
                 const items = donneesEffectifs.data ?? [];
-                const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
-                if (!items.length) return null;
+                if (!items.length) {
+                  return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
+                }
+                const multiCategories = items as ProfessionFiliereData[];
+                const dataEffectifs: EffectifsData = buildTotalsFromCategories(multiCategories);
+
+                // --- Données iso-période (même mois N-1) à partir des totaux ---
+                const mois = dataEffectifs.dataMoisAnnee ?? [];
+                const totaux = dataEffectifs.dataEtab ?? [];
+                if (!mois.length || !totaux.length) {
+                  return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
+                }
+
+                // dernier point valide
+                let last = totaux.length - 1;
+                while (last >= 0 && (totaux[last] === null || Number.isNaN(totaux[last] as any))) last--;
+                if (last < 0) {
+                  return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
+                }
+
+                const courant = Number(totaux[last]) || 0;
+                const ref = mois[last]; // { mois, annee }
+
+                // recherche de l’iso-période (même mois, année-1)
+                const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
+                if (isoIdx < 0) {
+                  return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
+                }
+                const precedent = Number(totaux[isoIdx]) || 0;
+                const comparaisonLabel = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+
                 return (
-                  <LineChart
-                    classContainer="fr-col-6 fr-mb-4w"
-                    couleurEffectifsTotaux={couleurEffectifsTotaux}
-                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                    dataEffectifs={dataEffectifs}
-                    multiCategories={items}
-                  />
+                  <>
+                    {/* Colonne graphique */}
+                    <LineChart
+                      classContainer="fr-col-6 fr-mb-4w"
+                      couleurEffectifsTotaux={couleurEffectifsTotaux}
+                      couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                      dataEffectifs={dataEffectifs}
+                      multiCategories={multiCategories}
+                    />
+
+                    {/* Colonne carte indicateur */}
+                    <div className="fr-col-6">
+                      <CarteIndicateurEffectif comparaisonLabel={comparaisonLabel} currentValue={courant} previousValue={precedent} />
+                    </div>
+                  </>
                 );
               })()}
             </div>
