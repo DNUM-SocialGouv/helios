@@ -73,7 +73,7 @@ class ColumMapping(Enum):
         'fins_contrats_ref': 'fins_contrats_ref',
         'taux_rotation': 'taux_rotation',
         'taux_rotation_ref': 'taux_rotation_ref'
-    }   
+    }
     MOUVEMENTS_RH_TRIMESTRIEL = {
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',

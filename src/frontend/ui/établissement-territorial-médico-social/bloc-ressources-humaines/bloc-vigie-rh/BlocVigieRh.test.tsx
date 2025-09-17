@@ -112,7 +112,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[2];
+      const indicateur = indicateurs[3];
       const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
@@ -127,7 +127,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[2];
+      const indicateur = indicateurs[3];
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
