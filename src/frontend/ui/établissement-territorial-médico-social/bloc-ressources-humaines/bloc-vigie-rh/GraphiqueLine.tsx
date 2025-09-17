@@ -173,11 +173,11 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
               return (
                 <div className="fr-checkbox-group" key={c.categorie} style={{ display: "flex", alignItems: "center" }}>
                   <input
-                    id={id as unknown as string}
-                    type="checkbox"
                     checked={!!visibleCats[c.categorie]}
+                    id={id as unknown as string}                    
                     onChange={() => setVisibleCats((prev) => ({ ...prev, [c.categorie]: !prev[c.categorie] }))}
                     style={{ marginRight: 6 }}
+                    type="checkbox"
                   />
                   <label
                     className={styles["filieres_effectifs"]}
