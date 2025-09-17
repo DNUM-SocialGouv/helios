@@ -188,10 +188,10 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
                       aria-hidden
                       style={{
                         display: "inline-block",
-                        width: 12,
-                        height: 12,
+                        width: '.8rem',
+                        height: '.8rem',
                         marginRight: 6,
-                        borderRadius: 2,
+                        borderRadius: '50%',
                         backgroundColor: color,
                       }}
                     />
