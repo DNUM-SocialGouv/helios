@@ -58,6 +58,13 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
   // Petite utilité pour l’affichage des libellés des filières
   const capitalize = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
+  const getSerie = (c: ProfessionFiliereData): number[] => {
+    const dc: any = (c as any)?.dataCategorie;
+    if (!dc) return [];
+    if (Array.isArray(dc)) return dc.map((r: any) => Number(r?.effectifFiliere ?? r?.effectif ?? 0));
+    return Array.isArray(dc.dataFiliere) ? dc.dataFiliere : [];
+  };
+
   // Données du graphique : 1 dataset “totaux” + les datasets des filières visibles
   const data = useMemo(() => {
     const datasets: any[] = [
@@ -77,7 +84,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
       datasets.push({
         label: capitalize(c.categorie),
-        data: c.dataCategorie.dataFiliere,
+        data: getSerie(c),
         borderColor: color,
         backgroundColor: color,
         borderWidth: 2,
@@ -208,7 +215,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
           entêteLibellé={wording.MOIS_ANNEES}
           identifiants={[wording.EFFECTIFS_TOTAUX, ...(multiCategories ?? []).map((c) => capitalize(c.categorie))]}
           libellés={labelsTranscription}
-          valeurs={[dataEffectifs.dataEtab, ...(multiCategories ?? []).map((c) => c.dataCategorie.dataFiliere)]}
+          valeurs={[dataEffectifs.dataEtab, ...(multiCategories ?? []).map(getSerie)]}
         />
       </div>
     </div>

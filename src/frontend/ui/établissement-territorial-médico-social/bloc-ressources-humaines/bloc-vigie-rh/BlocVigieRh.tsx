@@ -50,36 +50,46 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   // --- helper : aligne sur (année, mois) et somme les filières ---
   function buildTotalsFromCategories(categories: ProfessionFiliereData[]): EffectifsData {
     type MonthYear = { mois: number; annee: number };
-
     const sumByKey = new Map<string, number>();
     const monthByKey = new Map<string, MonthYear>();
 
     for (const cat of categories) {
-      const moisAnnees = cat?.dataCategorie?.dataMoisAnnee ?? [];
-      const valeurs = cat?.dataCategorie?.dataFiliere ?? [];
+      const dc: any = (cat as any)?.dataCategorie;
+      if (!dc) continue;
 
-      const n = Math.min(moisAnnees.length, valeurs.length);
-      for (let i = 0; i < n; i++) {
-        const m = moisAnnees[i];
-        const v = Number(valeurs[i]) || 0;
-        const key = `${m.annee}-${String(m.mois).padStart(2, "0")}`;
-
-        monthByKey.set(key, m);
-        sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
+      if (Array.isArray(dc)) {
+        // format tableau: [{ annee, mois, effectifFiliere/effectif }]
+        for (const row of dc) {
+          const annee = Number(row?.annee);
+          const mois = Number(row?.mois);
+          if (!annee || !mois) continue;
+          const key = `${annee}-${String(mois).padStart(2, "0")}`;
+          monthByKey.set(key, { annee, mois });
+          const v = Number(row?.effectifFiliere ?? row?.effectif ?? 0);
+          sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
+        }
+      } else {
+        // format objet: { dataMoisAnnee: [], dataFiliere: [] }
+        const moisAnnees = dc?.dataMoisAnnee ?? [];
+        const valeurs = dc?.dataFiliere ?? [];
+        const n = Math.min(moisAnnees.length, valeurs.length);
+        for (let i = 0; i < n; i++) {
+          const m = moisAnnees[i];
+          const v = Number(valeurs[i]) || 0;
+          const key = `${m.annee}-${String(m.mois).padStart(2, "0")}`;
+          monthByKey.set(key, m);
+          sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
+        }
       }
     }
 
-    // tri chronologique sur clé YYYY-MM
-    const orderedKeys = Array.from(monthByKey.keys()).sort();
-
+    const ordered = Array.from(monthByKey.keys()).sort(); // YYYY-MM
     const dataMoisAnnee: MonthYear[] = [];
     const dataEtab: number[] = [];
-    for (const k of orderedKeys) {
+    for (const k of ordered) {
       dataMoisAnnee.push(monthByKey.get(k)!);
       dataEtab.push(sumByKey.get(k) ?? 0);
     }
-
-    // dataFiliere n’est pas utilisée côté “total”
     return { dataFiliere: [], dataEtab, dataMoisAnnee };
   }
 
