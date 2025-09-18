@@ -18,7 +18,23 @@
     resize: none;
 }
 
+.import-textarea-erreur {
+    border: 1px dashed var(--background-alt-grey-active) !important;
+    background-color: var(--background-default-grey-hover);
+    width: 100%;
+    resize: none;
+    color: red;
+}
+
 .import-textarea::placeholder {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+.import-textarea-erreur::placeholder {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
