@@ -20,6 +20,7 @@ from datacrawler.load.nom_des_tables import (
     FichierSource,
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
     TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
+    TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -131,6 +132,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE};")
 
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:

@@ -5,7 +5,7 @@ export class AjoutTableRessourcesHumainesEJ1757946729822 implements MigrationInt
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
                 CREATE TABLE public.ressources_humaines_entite_juridique(
-                          numero_finess_entite_juridique varchar(9) not null references entite_juridique (numero_finess_entite_juridique),
+                          numero_finess_entite_juridique varchar(9) not null references entite_juridique (numero_finess_entite_juridique) on delete cascade,
                           annee int4 not null,
                           nombre_etp_pm float8 null,
                           nombre_etp_pnm float8 null,
