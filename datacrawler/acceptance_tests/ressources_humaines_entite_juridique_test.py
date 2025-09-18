@@ -1,4 +1,4 @@
-import pandas as pd 
+import pandas as pd
 import numpy as np
 from freezegun import freeze_time
 from datacrawler.load.nom_des_tables import TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE
@@ -16,13 +16,13 @@ from datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques impor
 class TestAjouteBlocRessourcesHumainesEntiteJuridique:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
-    
+
     @freeze_time("2023-01-11")
     def test_savegarde_les_donnees_des_ressources_humaines( self) -> None:
 
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,base_de_données_test)
         chemin_du_fichier_quo_san_finance = "data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_10.csv"
-        
+
         ajoute_le_bloc_ressources_humaines_des_entite_juridiques(
             chemin_du_fichier_quo_san_finance,
             base_de_données_test,
@@ -46,5 +46,3 @@ class TestAjouteBlocRessourcesHumainesEntiteJuridique:
         )
 
         pd.testing.assert_frame_equal(donnees_ressources_humaines_enregistrees.sort_index(axis=1),donnees_ressources_humaine_ej_attendu.sort_index(axis=1))
-
-

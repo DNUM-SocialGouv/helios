@@ -29,8 +29,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
 def ajoute_le_bloc_ressources_humaines_des_entite_juridiques(chemin_du_fichier_quo_san_finance: str, base_de_données: Engine, logger: Logger) -> None:
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios_ej)
     donnees_quo_san_finance = lis_le_fichier_csv(
-                                chemin_du_fichier_quo_san_finance, 
-                                colonnes_a_lire_bloc_ressources_humaines_entite_juridique, 
+                                chemin_du_fichier_quo_san_finance,
+                                colonnes_a_lire_bloc_ressources_humaines_entite_juridique,
                                 types_des_colonnes)
     numeros_finess_des_entites_juridiques_connues = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
 
