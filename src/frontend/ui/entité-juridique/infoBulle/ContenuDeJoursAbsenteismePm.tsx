@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
-type ContenuDuNombreDEtpPm = Readonly<{
+type ContenuDeJoursAbsenteismePm = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNombreDEtpPm) => {
+export const ContenuDeJoursAbsenteismePm = ({ dateDeMiseÀJour, source }: ContenuDeJoursAbsenteismePm) => {
   const { wording } = useDependencies();
 
   return (
@@ -23,11 +23,12 @@ export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNom
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <span className="fr-text--bold">Mode de calcul : </span>
-        <p>Nombre d’équivalents temps pleins moyens rémunérés personnel médical</p>
+        <p>Nombre de jours d’absence du personnel médical</p>
+        <p>La réalisation du bilan social est obligatoire pour les établissements (qu’ils soient sanitaires, sociaux ou médico-sociaux)
+          dont l’effectif global au 31/12/n-1 est d’au moins 300 agents. Il est facultatif pour les autres établissements.</p>
       </section>
       <section aria-label={wording.SOURCES}>
-        <span className="fr-text--bold">Source(s) : </span><p>Application Nationale Compte financier Rapport infra-annuel Eprd  (ANCRE) - Agence technique de l’information sur l’hospitalisation (ATIH)
-          <br />Fichier de la campagne CF.
+        <span className="fr-text--bold">Source(s) : </span><p>Enquête « Bilan Social »- Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

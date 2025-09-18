@@ -2,18 +2,20 @@ import { ReactElement } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
-type ContenuDuNombreDEtpPm = Readonly<{
+type ContenuDeDepensesInterimPm = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNombreDEtpPm) => {
+export const ContenuDeDepensesInterimPm = ({ dateDeMiseÀJour, source }: ContenuDeDepensesInterimPm) => {
   const { wording } = useDependencies();
 
   return (
     <>
       <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
+        <p>Cet indicateur permet de mesurer la difficulté de l’établissement à pourvoir les postes de personnel médical.
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
@@ -23,7 +25,7 @@ export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNom
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <span className="fr-text--bold">Mode de calcul : </span>
-        <p>Nombre d’équivalents temps pleins moyens rémunérés personnel médical</p>
+        <p>Montant du compte de charge &quot;62113 Personnel intérimaire médical&quot;</p>
       </section>
       <section aria-label={wording.SOURCES}>
         <span className="fr-text--bold">Source(s) : </span><p>Application Nationale Compte financier Rapport infra-annuel Eprd  (ANCRE) - Agence technique de l’information sur l’hospitalisation (ATIH)

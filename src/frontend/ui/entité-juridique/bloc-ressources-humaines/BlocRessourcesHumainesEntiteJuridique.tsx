@@ -7,7 +7,10 @@ import { IndicateurGraphique } from "../../commun/IndicateurGraphique/Indicateur
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
+import { ContenuDeDepensesInterimPm } from "../infoBulle/ContenuDeDepensesInterimPm";
+import { ContenuDeJoursAbsenteismePm } from "../infoBulle/ContenuDeJoursAbsenteismePm";
 import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
+import { ContenuDuNombreDEtpPnm } from "../infoBulle/ContenuDuNombreDEtpPnm";
 
 
 
@@ -48,6 +51,62 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
           >
             {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPm}
           </IndicateurGraphique>
+
+        ) : <></>}
+
+        {entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPnmEstIlRenseigne && entiteJuridiqueRessourcesHumainesViewModel.nombreDEtpPnmEstIlAutorise ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuDuNombreDEtpPnm
+                dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPnm}
+                source={Sources(wording.ANCRE)}
+              />
+            }
+            dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPnm}
+            identifiant="ressources-humaines-nombre-etp-pnm"
+            nomDeLIndicateur={wording.NOMBRE_D_ETP_PNM}
+            source={Sources(wording.ANCRE)}
+          >
+            {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPnm}
+          </IndicateurGraphique>
+
+        ) : <></>}
+
+
+        {entiteJuridiqueRessourcesHumainesViewModel.depensesInterimPmSontEllesRenseignees && entiteJuridiqueRessourcesHumainesViewModel.depensesInterimPmSontEllesAutorisees ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuDeDepensesInterimPm
+                dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourDepensesInterimPm}
+                source={Sources(wording.ANCRE)}
+              />
+            }
+            dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourDepensesInterimPm}
+            identifiant="ressources-humaines-depenses-interim-pm"
+            nomDeLIndicateur={wording.DEPENSES_INTERIM_PM}
+            source={Sources(wording.ANCRE)}
+          >
+            {entiteJuridiqueRessourcesHumainesViewModel.depensesInterimPm}
+          </IndicateurGraphique>
+
+        ) : <></>}
+
+        {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePmSontIlsRenseignes && entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePmSontIlsAutorises ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuDeJoursAbsenteismePm
+                dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourJoursAbsenteismePm}
+                source={Sources(wording.ANCRE)}
+              />
+            }
+            dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourJoursAbsenteismePm}
+            identifiant="ressources-humaines-jours-absenteisme"
+            nomDeLIndicateur={wording.JOURS_ABSENTEISME_PM}
+            source={Sources(wording.ANCRE)}
+          >
+            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePm}
+          </IndicateurGraphique>
+
         ) : <></>}
       </ul>
     </Bloc>

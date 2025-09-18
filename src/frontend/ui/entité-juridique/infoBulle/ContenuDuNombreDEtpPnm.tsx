@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
-type ContenuDuNombreDEtpPm = Readonly<{
+type ContenuDuNombreDEtpPnm = Readonly<{
   dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNombreDEtpPm) => {
+export const ContenuDuNombreDEtpPnm = ({ dateDeMiseÀJour, source }: ContenuDuNombreDEtpPnm) => {
   const { wording } = useDependencies();
 
   return (
@@ -23,7 +23,7 @@ export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNom
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <span className="fr-text--bold">Mode de calcul : </span>
-        <p>Nombre d’équivalents temps pleins moyens rémunérés personnel médical</p>
+        <p>Nombre d’équivalents temps pleins moyens rémunérés personnel non médical</p>
       </section>
       <section aria-label={wording.SOURCES}>
         <span className="fr-text--bold">Source(s) : </span><p>Application Nationale Compte financier Rapport infra-annuel Eprd  (ANCRE) - Agence technique de l’information sur l’hospitalisation (ATIH)

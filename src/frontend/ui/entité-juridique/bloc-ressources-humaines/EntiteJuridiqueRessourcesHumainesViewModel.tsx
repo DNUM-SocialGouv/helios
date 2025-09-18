@@ -42,6 +42,67 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     );
   }
 
+
+  public get nombreEtpPnm(): ReactElement {
+    const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("nombreEtpPnm");
+    const couleursHistogramme = annees.map((annee) => ({
+      premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+      secondPlan: couleurDuFond
+    }));
+    const anneesManquantes: number[] = annéesManquantes(annees, 5);
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.NOMBRE_D_ETP_PNM}
+        libellés={annees}
+        libellésDeValeursManquantes={anneesManquantes}
+        nombreDeLibelléTotal={5}
+        valeurs={valeurs}
+      />
+    );
+  }
+
+  public get depensesInterimPm(): ReactElement {
+    const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("depensesInterimPm");
+    const couleursHistogramme = annees.map((annee) => ({
+      premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+      secondPlan: couleurDuFond
+    }));
+    const anneesManquantes: number[] = annéesManquantes(annees, 5);
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.DEPENSES_INTERIM_PM}
+        libellés={annees}
+        libellésDeValeursManquantes={anneesManquantes}
+        nombreDeLibelléTotal={5}
+        valeurs={valeurs}
+      />
+    );
+  }
+
+  public get joursAbsenteismePm(): ReactElement {
+    const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("joursAbsenteismePm");
+    const couleursHistogramme = annees.map((annee) => ({
+      premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+      secondPlan: couleurDuFond
+    }));
+    const anneesManquantes: number[] = annéesManquantes(annees, 5);
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        identifiant={this.wording.JOURS_ABSENTEISME_PM}
+        libellés={annees}
+        libellésDeValeursManquantes={anneesManquantes}
+        nombreDeLibelléTotal={5}
+        valeurs={valeurs}
+      />
+    );
+  }
+
   private extraireLesValeursNombreesDesIndicateurs(indicateur: IndicateurAvecNombre): [number[], string[]] {
     const valeurs: number[] = [];
     const annees: string[] = [];
@@ -109,4 +170,15 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPm.dateMiseAJourSource);
   }
 
+  public get dateMiseAJourNombreEtpPnm(): string {
+    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPnm.dateMiseAJourSource);
+  }
+
+  public get dateMiseAJourDepensesInterimPm(): string {
+    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].depensesInterimPm.dateMiseAJourSource);
+  }
+
+  public get dateMiseAJourJoursAbsenteismePm(): string {
+    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].joursAbsenteismePm.dateMiseAJourSource);
+  }
 }
