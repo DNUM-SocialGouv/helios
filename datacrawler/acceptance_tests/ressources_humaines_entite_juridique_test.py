@@ -10,7 +10,7 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base
 )
 
-from datacrawler.ajoute_le_bloc_ressources_humaines_des_ej import (
+from datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques import (
     ajoute_le_bloc_ressources_humaines_des_entite_juridiques
 )
 class TestAjouteBlocRessourcesHumainesEntiteJuridique:
@@ -44,15 +44,6 @@ class TestAjouteBlocRessourcesHumainesEntiteJuridique:
             TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE,
             base_de_données_test
         )
-        print("DB")
-        print(donnees_ressources_humaines_enregistrees.to_string(index=False))
-        print("FILE")
-        print(donnees_ressources_humaine_ej_attendu.to_string(index=False))
-
-        try:
-            pd.testing.assert_frame_equal(donnees_ressources_humaine_ej_attendu, donnees_ressources_humaines_enregistrees)
-        except AssertionError as e:
-            print(e)
 
         pd.testing.assert_frame_equal(donnees_ressources_humaines_enregistrees.sort_index(axis=1),donnees_ressources_humaine_ej_attendu.sort_index(axis=1))
 
