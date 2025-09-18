@@ -100,7 +100,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
               />
             }
             dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourJoursAbsenteismePm}
-            identifiant="ressources-humaines-jours-absenteisme"
+            identifiant="ressources-humaines-jours-absenteisme-pm"
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PM}
             source={Sources(wording.ANCRE)}
           >
