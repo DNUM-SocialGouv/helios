@@ -26,10 +26,10 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
   return (
     <Bloc isMain={false} opnedBloc={openedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs}>
       {
-        entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees.length !==0 ?
-          <NotAUthorized indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees}/>:
-        entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ? 
-          <NoDataCallout indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees}/> : <></>
+        entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees.length !== 0 ?
+          <NotAUthorized indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasAutorisees} /> :
+          entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees.length !== 0 ?
+            <NoDataCallout indicateurs={entiteJuridiqueRessourcesHumainesViewModel.lesDonnéesRHPasRenseignees} /> : <></>
       }
 
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
@@ -38,13 +38,13 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             contenuInfoBulle={
               <ContenuDuNombreDEtpPm
                 dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPm}
-                source={Sources(wording.ATIH)}
+                source={Sources(wording.ANCRE)}
               />
             }
             dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourNombreEtpPm}
-            identifiant="ressources-humaines-nombre-etp-réalisé"
+            identifiant="ressources-humaines-nombre-etp-pm"
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PM}
-            source={Sources(wording.ATIH)}
+            source={Sources(wording.ANCRE)}
           >
             {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPm}
           </IndicateurGraphique>

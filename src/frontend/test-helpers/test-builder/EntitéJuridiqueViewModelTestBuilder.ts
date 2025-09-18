@@ -90,10 +90,10 @@ export class EntitéJuridiqueViewModelTestBuilder {
     },
     ressourcesHumaines: [{
       annee: 2025,
-      nombreEtpPm: { dateMiseAJourSource: "22/01/2025", valeur: 100 },
-      nombreEtpPnm: { dateMiseAJourSource: "21/01/2025", valeur: 120 },
-      depensesInterimPm: { dateMiseAJourSource: "23/01/2025", valeur: 230 },
-      joursAbsenteismePm: { dateMiseAJourSource: "24/01/2025", valeur: 41 },
+      nombreEtpPm: { dateMiseAJourSource: "2025-07-07", valeur: 100 },
+      nombreEtpPnm: { dateMiseAJourSource: "2025-07-08", valeur: 120 },
+      depensesInterimPm: { dateMiseAJourSource: "2025-07-09", valeur: 230 },
+      joursAbsenteismePm: { dateMiseAJourSource: "2025-07-10", valeur: 41 },
     }]
   };
 

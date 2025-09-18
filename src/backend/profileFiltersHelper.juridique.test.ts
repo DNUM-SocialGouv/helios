@@ -136,14 +136,14 @@ function getAllocationRessource(): AllocationRessource {
   }
 }
 
-function getRessourcesHumaines():EntiteJuridiqueRessourcesHumaines[] {
-  const ressourcesHumainesEJ : EntiteJuridiqueRessourcesHumaines[] = [];
-  const ressourcesHumaines : EntiteJuridiqueRessourcesHumaines = {
-    annee:2025,
-    nombreEtpPm:{dateMiseAJourSource:"22/01/2025",valeur:100},
-    nombreEtpPnm:{dateMiseAJourSource:"22/01/2025",valeur:120},
-    depensesInterimPm:{dateMiseAJourSource:"22/01/2025",valeur:230},
-    joursAbsenteismePm:{dateMiseAJourSource:"22/01/2025",valeur:41},
+function getRessourcesHumaines(): EntiteJuridiqueRessourcesHumaines[] {
+  const ressourcesHumainesEJ: EntiteJuridiqueRessourcesHumaines[] = [];
+  const ressourcesHumaines: EntiteJuridiqueRessourcesHumaines = {
+    annee: 2025,
+    nombreEtpPm: { dateMiseAJourSource: "22/01/2025", valeur: 100 },
+    nombreEtpPnm: { dateMiseAJourSource: "22/01/2025", valeur: 120 },
+    depensesInterimPm: { dateMiseAJourSource: "22/01/2025", valeur: 230 },
+    joursAbsenteismePm: { dateMiseAJourSource: "22/01/2025", valeur: 41 },
   }
   ressourcesHumainesEJ.push(ressourcesHumaines);
   return ressourcesHumainesEJ;
@@ -714,6 +714,80 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
     // Then
     expect(entiteJuridiqueResult.allocationRessource).toEqual(expectedAllocation);
   })
+
+})
+
+
+describe("Filtre des informations de ressources humaines des entités juridique selon le profil", () => {
+  it("retire les informations de nombre d'ETP PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+  it("retire les informations de nombre d'ETP PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPnm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPnm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+  it("retire les informations de jours d'absenteisme PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+
+
+  it("retire les informations de depenses interim si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].depensesInterimPm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.depensesInterimPm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
 
 })
 

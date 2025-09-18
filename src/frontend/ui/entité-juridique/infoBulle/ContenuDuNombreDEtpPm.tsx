@@ -27,10 +27,8 @@ export const ContenuDuNombreDEtpPm = ({ dateDeMiseÀJour, source }: ContenuDuNom
       </section>
       <section aria-label={wording.SOURCES}>
         <span className="fr-text--bold">Source(s) : </span>
-        <ul>
-          <li>Application Nationale Compte financier Rapport infra-annuel Eprd  (ANCRE)</li>
-          <li>Agence technique de l’information sur l’hospitalisation (ATIH)</li>
-        </ul>
+        <p>Application Nationale Compte financier Rapport infra-annuel Eprd  (ANCRE) - Agence technique de l’information sur l’hospitalisation (ATIH)</p>
+        <br />
         <p>Fichier de la campagne CF;</p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
