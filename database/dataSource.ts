@@ -41,6 +41,7 @@ import { AjoutTableSearchHistory1691400360927 } from "./migrations/1691400360927
 import { AjoutRefDepartementRegion1694523233904 } from "./migrations/1694523233904-AjoutRefDepartementRegion";
 import { AjoutRégionDansEntitéJuridique1694616724703 } from "./migrations/1694616724703-AjoutRégionDansEntitéJuridique";
 import { AjoutRégionDansEtablissementTerritorial1694617579347 } from "./migrations/1694617579347-AjoutRégionDansEtablissementTerritorial";
+import { ajoutTableProfil1695731844298 } from "./migrations/1695731844298-ajoutTableProfil";
 import { AjoutProfilsDansUtilisateurs1696841163367 } from "./migrations/1696841163367-AjoutProfilsDansUtilisateurs";
 import { AjouterSoftDeleteUtilisateur1701782042926 } from "./migrations/1701782042926-AjouterSoftDeleteUtilisateur";
 import { UpdateInstitutionsTable1704363653168 } from "./migrations/1704363653168-update-institutions-table";
@@ -79,7 +80,6 @@ import { AjoutTableAutorisationsSanitairesAMM1755849074192 } from "./migrations/
 import { AjoutDonneesMensuellesPsy1756720758341 } from "./migrations/1756720758341-AjoutDonneesMensuellesPsy";
 import { AjoutTableRessourcesHumainesEJ1757946729822 } from "./migrations/1757946729822-AjoutTableRessourcesHumainesEJ";
 import { ModificationValeurProfilAjoutBlocRhEj1758098318274 } from "./migrations/1758098318274-ModificationValeurProfilAjoutBlocRhEj";
-import { ajoutTableProfil1795731844298 } from "./migrations/1795731844278-ajoutTableProfil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -220,7 +220,7 @@ const datasource = new DataSource({
     AjoutRefDepartementRegion1694523233904,
     AjoutRégionDansEntitéJuridique1694616724703,
     AjoutRégionDansEtablissementTerritorial1694617579347,
-    ajoutTableProfil1795731844298,
+    ajoutTableProfil1695731844298,
     AjoutProfilsDansUtilisateurs1696841163367,
     AjouterSoftDeleteUtilisateur1701782042926,
     updateProfileTable1796422585498,
