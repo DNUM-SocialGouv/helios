@@ -74,6 +74,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        formateur={StringFormater.formatInEuro}
         identifiant={this.wording.DEPENSES_INTERIM_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
