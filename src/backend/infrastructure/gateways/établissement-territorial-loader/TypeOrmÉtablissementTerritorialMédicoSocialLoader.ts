@@ -195,7 +195,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return {
         annee: pyramideModel.annee,
         trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
-        effectif: pyramideModel.effectif,
         effectifHomme: pyramideModel.effectifHomme,
         effectifFemme: pyramideModel.effectifFemme,
         effectifHommeRef: pyramideModel.effectifHommeRef,
