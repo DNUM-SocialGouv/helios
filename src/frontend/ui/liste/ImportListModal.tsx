@@ -34,32 +34,35 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
 
   const importEts = () => {
     const finessList = finessAImporter.split(/\r?\n/).filter(ligne => ligne.trim() !== "");
+    setFinessEnErreur([]);
 
-    fetch("/api/recherche-par-finess", {
-      body: JSON.stringify({ finessNumber: finessList }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    }).then((response) => response.json())
-      .then((data: RechercheModel[]) => {
-        let findedEtab = data.map((resultat: RechercheModel) => new ImportListViewModel(resultat.numeroFiness, resultat.raisonSocialeCourte));
-        findedEtab = [...findedEtablissments, ...findedEtab];
-        // Code pour dedupliquer les finess
-        const findedFiness: string[] = [];
-        findedEtab = findedEtab.filter((etab) => {
-          if (findedFiness.includes(etab.finess)) {
-            return false;
-          } else {
-            findedFiness.push(etab.finess);
-            return true;
-          }
-        })
-        findedEtab = [...new Set(findedEtab)];
-        setFindedEtablissments(findedEtab);
+    if (finessList && finessList.length > 0) {
+      fetch("/api/recherche-par-finess", {
+        body: JSON.stringify({ finessNumber: finessList }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      }).then((response) => response.json())
+        .then((data: RechercheModel[]) => {
+          let findedEtab = data.map((resultat: RechercheModel) => new ImportListViewModel(resultat.numeroFiness, resultat.raisonSocialeCourte));
+          findedEtab = [...findedEtablissments, ...findedEtab];
+          // Code pour dedupliquer les finess
+          const findedFiness: string[] = [];
+          findedEtab = findedEtab.filter((etab) => {
+            if (findedFiness.includes(etab.finess)) {
+              return false;
+            } else {
+              findedFiness.push(etab.finess);
+              return true;
+            }
+          })
+          findedEtab = [...new Set(findedEtab)];
+          setFindedEtablissments(findedEtab);
 
-        const finessKo = finessList.filter((finess) => !findedFiness.includes(finess));
-        setFinessEnErreur(finessKo);
-        setFinessAImporter(finessKo.join("\n"))
-      });
+          const finessKo = finessList.filter((finess) => !findedFiness.includes(finess));
+          setFinessEnErreur(finessKo);
+          setFinessAImporter(finessKo.join("\n"))
+        });
+    }
   }
 
   const isErrorForm = () => {
