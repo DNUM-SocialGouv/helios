@@ -1,6 +1,4 @@
-"use client";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { ReactElement, ReactNode } from "react";
 
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useDependencies } from "../contexts/useDependencies";
@@ -15,12 +13,6 @@ type InfoBulleProps = Readonly<{
 
 export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {
   const { wording } = useDependencies();
-  const [container, setContainer] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setContainer(document.body);
-  }, []);
-
   let className = "fr-modal";
 
   if (estCeOuvert) {
@@ -35,7 +27,7 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
     setEstCeOuvert(false);
   };
 
-  const InfoBulleContent = (
+  return (
     <dialog aria-labelledby={`titre-info-bulle-${identifiant}`} className={className} id={`nom-info-bulle-${identifiant}`} open={estCeOuvert}>
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">
@@ -65,10 +57,4 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
       </div>
     </dialog>
   );
-
-  if (!container) {
-    return null;
-  }
-
-  return createPortal(InfoBulleContent, document.body);
 };
