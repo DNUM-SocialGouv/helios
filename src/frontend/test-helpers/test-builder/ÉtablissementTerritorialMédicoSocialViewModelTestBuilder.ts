@@ -635,7 +635,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       {
         annee: 2024,
         trancheLibelle: "15-20",
-        effectif: 200,
         effectifHomme: 20,
         effectifFemme: 23,
         effectifHommeRef: 11,

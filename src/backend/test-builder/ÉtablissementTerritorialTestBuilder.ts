@@ -914,7 +914,6 @@ export class ÉtablissementTerritorialTestBuilder {
       {
         "annee": 2023,
         "trancheLibelle": '15-20',
-        "effectif": 204,
         "effectifHomme": 10,
         "effectifFemme": 10,
         "effectifHommeRef": 12,
