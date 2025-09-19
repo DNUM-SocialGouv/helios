@@ -61,24 +61,24 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       etab.categorie ?? "-",
       etab.numéroFiness ?? "-",
       etab.capacite ?? "-",
-      etab.realisationActivite === 'NA' ? '' : etab.realisationActivite === null ? '-' : etab.realisationActivite,
-      etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes === null ? '-' : etab.fileActivePersonnesAccompagnes,
-      etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent === null ? '-' : etab.hebergementPermanent,
-      etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire === null ? '-' : etab.hebergementTemporaire,
-      etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour === null ? '-' : etab.acceuilDeJour,
-      etab.externat === 'NA' ? '' : etab.externat === null ? '-' : etab.externat,
-      etab.semiInternat === 'NA' ? '' : etab.semiInternat === null ? '-' : etab.semiInternat,
-      etab.internat === 'NA' ? '' : etab.internat === null ? '-' : etab.internat,
-      etab.autres === 'NA' ? '' : etab.autres === null ? '-' : etab.autres,
-      etab.seances === 'NA' ? '' : etab.seances === null ? '-' : etab.seances,
-      etab.prestationExterne === 'NA' ? '' : etab.prestationExterne === null ? '-' : etab.prestationExterne,
-      etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel === null ? '-' : etab.rotationPersonnel,
-      etab.etpVacant === 'NA' ? '' : etab.etpVacant === null ? '-' : etab.etpVacant,
-      etab.absenteisme === 'NA' ? '' : etab.absenteisme === null ? '-' : etab.absenteisme,
-      etab.tauxCaf === 'NA' ? '' : etab.tauxCaf === null ? '-' : etab.tauxCaf,
-      etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction === null ? '-' : etab.vetusteConstruction,
-      etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal === null ? '-' : etab.roulementNetGlobal,
-      etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable === null ? '-' : etab.resultatNetComptable
+      etab.realisationActivite === 'NA' ? '' : etab.realisationActivite ?? '-',
+      etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes ?? '-',
+      etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent ?? '-',
+      etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire ?? '-',
+      etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour ?? '-',
+      etab.externat === 'NA' ? '' : etab.externat ?? '-',
+      etab.semiInternat === 'NA' ? '' : etab.semiInternat ?? '-',
+      etab.internat === 'NA' ? '' : etab.internat ?? '-',
+      etab.autres === 'NA' ? '' : etab.autres ?? '-',
+      etab.seances === 'NA' ? '' : etab.seances ?? '-',
+      etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
+      etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
+      etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
+      etab.absenteisme === 'NA' ? '' : etab.absenteisme ?? '-',
+      etab.tauxCaf === 'NA' ? '' : etab.tauxCaf ?? '-',
+      etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction ?? '-',
+      etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal ?? '-',
+      etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable ?? '-'
     ])
   else if (type === 'Sanitaire')
     return data.resultat.map((etab: ResultatSAN) => [
@@ -88,15 +88,15 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       etab.categorie ?? "-",
       etab.numéroFiness ?? "-",
       etab.totalHosptMedecine ?? "-",
-      etab.totalHosptChirurgie === null ? '-' : etab.totalHosptChirurgie,
-      etab.totalHosptObstetrique === null ? '-' : etab.totalHosptObstetrique,
-      etab.totalHosptPsy === null ? '-' : etab.totalHosptPsy,
-      etab.totalHosptSsr === null ? '-' : etab.totalHosptSsr,
-      etab.passagesUrgences === null ? '-' : etab.passagesUrgences,
-      etab.journeesUsld === null ? '-' : etab.journeesUsld,
-      etab.enveloppe1 === null ? '-' : etab.enveloppe1,
-      etab.enveloppe2 === null ? '-' : etab.enveloppe2,
-      etab.enveloppe3 === null ? '-' : etab.enveloppe3,
+      etab.totalHosptChirurgie ?? '-',
+      etab.totalHosptObstetrique ?? '-',
+      etab.totalHosptPsy ?? '-',
+      etab.totalHosptSsr ?? '-',
+      etab.passagesUrgences ?? '-',
+      etab.journeesUsld ?? '-',
+      etab.enveloppe1 ?? '-',
+      etab.enveloppe2 ?? '-',
+      etab.enveloppe3 ?? '-',
     ])
   else return data.resultat.map((etab: ResultatEJ) => [
     etab.type ?? "-",
@@ -105,18 +105,18 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
     etab.categorie ?? "-",
     etab.numéroFiness ?? "-",
     etab.statutJuridique ?? "-",
-    etab.rattachements === null ? '-' : etab.rattachements,
-    etab.sejoursHad === null ? '-' : etab.sejoursHad,
-    etab.chargesPrincipaux === null ? '-' : etab.chargesPrincipaux,
-    etab.chargesAnnexes === null ? '-' : etab.chargesAnnexes,
-    etab.produitsPrincipaux === null ? '-' : etab.produitsPrincipaux,
-    etab.produitsAnnexes === null ? '-' : etab.produitsAnnexes,
-    etab.resultatNetComptableEj === null ? '-' : etab.resultatNetComptableEj,
-    etab.tauxCafEj === null ? '-' : etab.tauxCafEj,
-    etab.ratioDependanceFinanciere === null ? '-' : etab.ratioDependanceFinanciere,
-    etab.enveloppe1 === null ? '-' : etab.enveloppe1,
-    etab.enveloppe2 === null ? '-' : etab.enveloppe2,
-    etab.enveloppe3 === null ? '-' : etab.enveloppe3,
+    etab.rattachements ?? '-',
+    etab.sejoursHad ?? '-',
+    etab.chargesPrincipaux ?? '-',
+    etab.chargesAnnexes ?? '-',
+    etab.produitsPrincipaux ?? '-',
+    etab.produitsAnnexes ?? '-',
+    etab.resultatNetComptableEj ?? '-',
+    etab.tauxCafEj ?? '-',
+    etab.ratioDependanceFinanciere ?? '-',
+    etab.enveloppe1 ?? '-',
+    etab.enveloppe2 ?? '-',
+    etab.enveloppe3 ?? '-'
   ])
 }
 
@@ -139,21 +139,18 @@ export async function ExportToExcel(
   const sheetComparaison = workbook.getWorksheet(1);
   const sheetLisezMoi = workbook.getWorksheet(2);
 
-  if (!sheetComparaison) throw new Error("Feuille comparaison introuvable dans le template");
-  if (!sheetLisezMoi) throw new Error("Feuille LisezMoi introuvable dans le template");
-
-  const lignes: (string | number)[][] = [
-    header,
-    headerType as (string | number)[],
-    [""],
-    headers,
-    ...data,
-  ];
-
-
-  ecrireLignesDansSheet(lignes, sheetComparaison);
-  remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
-  telechargerWorkbook(workbook, fileName);
+  if (sheetComparaison && sheetLisezMoi) {
+    const lignes: (string | number)[][] = [
+      header,
+      headerType as (string | number)[],
+      [""],
+      headers,
+      ...data,
+    ];
+    ecrireLignesDansSheet(lignes, sheetComparaison);
+    remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
+    telechargerWorkbook(workbook, fileName);
+  }
 }
 
 
