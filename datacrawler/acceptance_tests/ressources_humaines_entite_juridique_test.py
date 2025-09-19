@@ -1,7 +1,12 @@
 import pandas as pd
 import numpy as np
+from datetime import date
 from freezegun import freeze_time
-from datacrawler.load.nom_des_tables import TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE
+from datacrawler.load.nom_des_tables import (
+    TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE,
+    TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
+    FichierSource
+)
 from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
     base_de_données_test,
@@ -46,3 +51,19 @@ class TestAjouteBlocRessourcesHumainesEntiteJuridique:
         )
 
         pd.testing.assert_frame_equal(donnees_ressources_humaines_enregistrees.sort_index(axis=1),donnees_ressources_humaine_ej_attendu.sort_index(axis=1))
+
+    @freeze_time("2023-01-11")
+    def test_sauvegarde_les_dates_de_mise_a_jour_des_indicateurs_ressources_humaines(self) -> None:
+        sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,base_de_données_test)
+        chemin_du_fichier_quo_san_finance = "data_test/entrée/diamant/QUO_SAN_FINANCE_2023_01_10.csv"
+
+        ajoute_le_bloc_ressources_humaines_des_entite_juridiques(
+            chemin_du_fichier_quo_san_finance,
+            base_de_données_test,
+            mocked_logger
+        )
+
+        date_mise_a_jour_fichier_quo_san_finance = base_de_données_test.execute(
+            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_QUO_SAN_FINANCE.value}'"
+        )
+        assert date_mise_a_jour_fichier_quo_san_finance.fetchone() == (date(2023, 1, 10), FichierSource.DIAMANT_QUO_SAN_FINANCE.value)
