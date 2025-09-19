@@ -5,7 +5,7 @@ from datacrawler.test_helpers.config_path import get_absolute_file_path
 class TestLisLeFichierParquet:
     def test_lis_le_fichier_ref_masque_parquet(self) -> None:
         # GIVEN
-        chemin_du_fichier = get_absolute_file_path("data_test/entrée/vigie_rh/vigierh_ref_tranche_age_2025_02_13.parquet")
+        chemin_du_fichier = get_absolute_file_path("data_test/entrée/vigie_rh/lecture/vigierh_ref_tranche_age_2025_02_13.parquet")
 
         # WHEN
         donnees = lis_le_fichier_parquet(chemin_du_fichier, {
