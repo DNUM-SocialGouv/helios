@@ -1,11 +1,11 @@
-
-
+import ExcelJS from "exceljs";
 import { useContext } from "react";
-import * as XLSX from "xlsx";
 
 import { useComparaison } from "./useComparaison";
-import { ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
+import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
 import { UserContext } from "../commun/contexts/userContext";
+import { StringFormater } from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
 
@@ -61,24 +61,24 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       etab.categorie ?? "-",
       etab.numéroFiness ?? "-",
       etab.capacite ?? "-",
-      etab.realisationActivite === 'NA' ? '' : etab.realisationActivite === null ? '-' : etab.realisationActivite,
-      etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes === null ? '-' : etab.fileActivePersonnesAccompagnes,
-      etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent === null ? '-' : etab.hebergementPermanent,
-      etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire === null ? '-' : etab.hebergementTemporaire,
-      etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour === null ? '-' : etab.acceuilDeJour,
-      etab.externat === 'NA' ? '' : etab.externat === null ? '-' : etab.externat,
-      etab.semiInternat === 'NA' ? '' : etab.semiInternat === null ? '-' : etab.semiInternat,
-      etab.internat === 'NA' ? '' : etab.internat === null ? '-' : etab.internat,
-      etab.autres === 'NA' ? '' : etab.autres === null ? '-' : etab.autres,
-      etab.seances === 'NA' ? '' : etab.seances === null ? '-' : etab.seances,
-      etab.prestationExterne === 'NA' ? '' : etab.prestationExterne === null ? '-' : etab.prestationExterne,
-      etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel === null ? '-' : etab.rotationPersonnel,
-      etab.etpVacant === 'NA' ? '' : etab.etpVacant === null ? '-' : etab.etpVacant,
-      etab.absenteisme === 'NA' ? '' : etab.absenteisme === null ? '-' : etab.absenteisme,
-      etab.tauxCaf === 'NA' ? '' : etab.tauxCaf === null ? '-' : etab.tauxCaf,
-      etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction === null ? '-' : etab.vetusteConstruction,
-      etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal === null ? '-' : etab.roulementNetGlobal,
-      etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable === null ? '-' : etab.resultatNetComptable
+      etab.realisationActivite === 'NA' ? '' : etab.realisationActivite ?? '-',
+      etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes ?? '-',
+      etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent ?? '-',
+      etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire ?? '-',
+      etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour ?? '-',
+      etab.externat === 'NA' ? '' : etab.externat ?? '-',
+      etab.semiInternat === 'NA' ? '' : etab.semiInternat ?? '-',
+      etab.internat === 'NA' ? '' : etab.internat ?? '-',
+      etab.autres === 'NA' ? '' : etab.autres ?? '-',
+      etab.seances === 'NA' ? '' : etab.seances ?? '-',
+      etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
+      etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
+      etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
+      etab.absenteisme === 'NA' ? '' : etab.absenteisme ?? '-',
+      etab.tauxCaf === 'NA' ? '' : etab.tauxCaf ?? '-',
+      etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction ?? '-',
+      etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal ?? '-',
+      etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable ?? '-'
     ])
   else if (type === 'Sanitaire')
     return data.resultat.map((etab: ResultatSAN) => [
@@ -88,15 +88,15 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       etab.categorie ?? "-",
       etab.numéroFiness ?? "-",
       etab.totalHosptMedecine ?? "-",
-      etab.totalHosptChirurgie === null ? '-' : etab.totalHosptChirurgie,
-      etab.totalHosptObstetrique === null ? '-' : etab.totalHosptObstetrique,
-      etab.totalHosptPsy === null ? '-' : etab.totalHosptPsy,
-      etab.totalHosptSsr === null ? '-' : etab.totalHosptSsr,
-      etab.passagesUrgences === null ? '-' : etab.passagesUrgences,
-      etab.journeesUsld === null ? '-' : etab.journeesUsld,
-      etab.enveloppe1 === null ? '-' : etab.enveloppe1,
-      etab.enveloppe2 === null ? '-' : etab.enveloppe2,
-      etab.enveloppe3 === null ? '-' : etab.enveloppe3,
+      etab.totalHosptChirurgie ?? '-',
+      etab.totalHosptObstetrique ?? '-',
+      etab.totalHosptPsy ?? '-',
+      etab.totalHosptSsr ?? '-',
+      etab.passagesUrgences ?? '-',
+      etab.journeesUsld ?? '-',
+      etab.enveloppe1 ?? '-',
+      etab.enveloppe2 ?? '-',
+      etab.enveloppe3 ?? '-',
     ])
   else return data.resultat.map((etab: ResultatEJ) => [
     etab.type ?? "-",
@@ -105,38 +105,69 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
     etab.categorie ?? "-",
     etab.numéroFiness ?? "-",
     etab.statutJuridique ?? "-",
-    etab.rattachements === null ? '-' : etab.rattachements,
-    etab.sejoursHad === null ? '-' : etab.sejoursHad,
-    etab.chargesPrincipaux === null ? '-' : etab.chargesPrincipaux,
-    etab.chargesAnnexes === null ? '-' : etab.chargesAnnexes,
-    etab.produitsPrincipaux === null ? '-' : etab.produitsPrincipaux,
-    etab.produitsAnnexes === null ? '-' : etab.produitsAnnexes,
-    etab.resultatNetComptableEj === null ? '-' : etab.resultatNetComptableEj,
-    etab.tauxCafEj === null ? '-' : etab.tauxCafEj,
-    etab.ratioDependanceFinanciere === null ? '-' : etab.ratioDependanceFinanciere,
-    etab.enveloppe1 === null ? '-' : etab.enveloppe1,
-    etab.enveloppe2 === null ? '-' : etab.enveloppe2,
-    etab.enveloppe3 === null ? '-' : etab.enveloppe3,
+    etab.rattachements ?? '-',
+    etab.sejoursHad ?? '-',
+    etab.chargesPrincipaux ?? '-',
+    etab.chargesAnnexes ?? '-',
+    etab.produitsPrincipaux ?? '-',
+    etab.produitsAnnexes ?? '-',
+    etab.resultatNetComptableEj ?? '-',
+    etab.tauxCafEj ?? '-',
+    etab.ratioDependanceFinanciere ?? '-',
+    etab.enveloppe1 ?? '-',
+    etab.enveloppe2 ?? '-',
+    etab.enveloppe3 ?? '-'
   ])
 }
 
-function ExportToExcel(header: string[], headerType: (string | undefined)[],
+
+export async function ExportToExcel(
+  header: string[],
+  headerType: (string | undefined)[],
   headers: string[],
-  data: (string | Number)[][],
+  data: (string | number)[][],
   fileName: string,
+  datesMaj: DatesMisAjourSources,
+  nomFichierTemplate: string
 ) {
-  const ws = XLSX.utils.aoa_to_sheet([header,
-    headerType,
-    [""],
-    headers,
-    ...data]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
-  XLSX.writeFile(wb, fileName);
+  const response = await fetch(`/templates/${nomFichierTemplate}`);
+  const arrayBuffer = await response.arrayBuffer();
+
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(arrayBuffer);
+
+  const sheetComparaison = workbook.getWorksheet(1);
+  const sheetLisezMoi = workbook.getWorksheet(2);
+
+  if (sheetComparaison && sheetLisezMoi) {
+    const lignes: (string | number)[][] = [
+      header,
+      headerType as (string | number)[],
+      [""],
+      headers,
+      ...data,
+    ];
+    ecrireLignesDansSheet(lignes, sheetComparaison);
+    remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
+    telechargerWorkbook(workbook, fileName);
+  }
+}
+
+
+function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Worksheet, datesMaj: DatesMisAjourSources, colonne: number) {
+  const dernierLigneNonVide = getIntervalCellulesNonVideDansColonne(sheetLisezMoi, colonne)?.derniereLigne ?? 0;
+
+  for (let ligne = 1; ligne <= dernierLigneNonVide; ligne++) {
+    const placeholder = sheetLisezMoi.getCell(ligne, colonne).text.trim(); //Placeholder est la valeur fictive mise dans le template pour positionner les dates de MAJ
+    if (placeholder in datesMaj) {
+      const cle = placeholder as keyof DatesMisAjourSources;
+      sheetLisezMoi.getCell(ligne, colonne).value = StringFormater.formatDate(datesMaj[cle]);
+    }
+  }
 }
 
 async function generateAndExportExcel(
-  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: string, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any
+  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any
 ) {
 
 
@@ -178,7 +209,7 @@ async function generateAndExportExcel(
     "Raison Sociale",
     "Cat. FINESS",
     "FINESS",
-    `Capacité Totale au ${datesMisAjour}`,
+    `Capacité Totale au ${StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}`,
     "Taux de réalisation de l'activité (en %)",
     "File active des personnes accompagnées sur la période",
     "Taux d'occupation en hébergement permanent (en %)",
@@ -216,18 +247,40 @@ async function generateAndExportExcel(
     `Allocation de ressources: ${enveloppes[1]}`,
     `Allocation de ressources: ${enveloppes[2]}`
   ];
+
+  let headers: string[];
+  let nomFichierTemplate: string;
+  switch (type) {
+    case 'Entité juridique':
+      headers = headersEJ;
+      nomFichierTemplate = "template_comparaison_EJ.xlsx"
+      break;
+    case 'Social et Médico-Social':
+      headers = headersMS;
+      nomFichierTemplate = "template_comparaison_MS.xlsx"
+      break;
+    case 'Sanitaire':
+      headers = headersSAN;
+      nomFichierTemplate = "template_comparaison_SAN.xlsx"
+      break;
+    default:
+      throw new Error("Illegal state: type d'établissement non identifié");
+  }
+
   ExportToExcel(headerYear,
     headerType,
-    type === 'Entité juridique' ? headersEJ : type === 'Social et Médico-Social' ? headersMS : headersSAN,
+    headers,
     dataTransormed,
     fileName,
+    datesMisAjour,
+    nomFichierTemplate
   );
 }
 
 const ExportExcel = ({
   year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
 }: {
-  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: string, codeRegion: string, codeProfiles: string[]
+  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[]
 }) => {
   const userContext = useContext(UserContext);
   const { getTopEnveloppes } = useComparaison();

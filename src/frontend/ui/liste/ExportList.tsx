@@ -1,10 +1,13 @@
 
 
-import * as XLSX from "xlsx";
+
+import { Workbook } from "exceljs";
 
 import { Paths } from "../../configuration/Paths";
+import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../home/RechercheViewModel";
+
 
 export function getCurrentDate() {
     const today = new Date();
@@ -50,10 +53,10 @@ function transformData(data: any) {
 }
 
 function ExportToExcel(headers: string[], data: (string | number)[][], fileName: string) {
-    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "List");
-    XLSX.writeFile(wb, fileName);
+  const workbook = new Workbook();
+  const sheet = workbook.addWorksheet("List");
+  ecrireLignesDansSheet([headers, ...data], sheet);
+  telechargerWorkbook(workbook, fileName);
 }
 
 async function generateAndExportExcel(
