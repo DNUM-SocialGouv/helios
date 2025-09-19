@@ -91,6 +91,7 @@ import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrati
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
 import { AjoutTableVigieRhMouvementsRH1757337280336 } from "./migrations/vigie_rh/1757337280336-AjoutTableVigieRhMouvementsRH";
 import { AjoutTableVigieRhMouvementsTrimestriels1757662996841 } from "./migrations/vigie_rh/1757662996841-AjoutTableVigieRhMouvementsTrimestriels";
+import { SupressionColonneEffectifDePyramideAges1758270710076 } from "./migrations/vigie_rh/1758270710076-supressionColonneEffectifDePyramideAges";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -307,7 +308,8 @@ const datasource = new DataSource({
     AjoutLibelleCategorieALaRecherche1754309418981,
     AjoutDonneesMensuellesPsy1756720758341,
     AjoutTableVigieRhMouvementsRH1757337280336,
-    AjoutTableVigieRhMouvementsTrimestriels1757662996841
+    AjoutTableVigieRhMouvementsTrimestriels1757662996841,
+    SupressionColonneEffectifDePyramideAges1758270710076
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
