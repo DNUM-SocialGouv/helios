@@ -27,8 +27,13 @@
 /* Flèche bleue DSFR */
 .arrow {
   color: var(--text-action-high-blue-france); /* DSFR blue */
-  font-size: 22px;
   line-height: 1;
+  font-weight: bold;
+}
+
+.arrow svg {
+  width: 28px;
+  height: auto;
 }
 
 /* Valeur en gros */

@@ -4,6 +4,7 @@
  */
 import React from "react";
 
+import { ArrowUpSVG, ArrowDownSVG, ArrowRightSVG } from "./ArrowSVG";
 import styles from "./CarteIndicateurEffectif.module.css";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 
@@ -42,7 +43,7 @@ export default function CarteIndicateurEffectif({
   const deltaAbs = currentValue - previousValue;
   const deltaPct = previousValue === 0 ? null : (deltaAbs / previousValue) * 100;
 
-  const arrow = deltaAbs > 0 ? "↗" : deltaAbs < 0 ? "↘" : "→";
+  const arrow = deltaAbs > 0 ? ArrowUpSVG("var(--text-action-high-blue-france)") : deltaAbs < 0 ? ArrowDownSVG("var(--text-action-high-blue-france)") : ArrowRightSVG("var(--text-action-high-blue-france)");
   const sign = deltaAbs > 0 ? "+" : deltaAbs < 0 ? "−" : "";
 
   /* calculs d’affichage pour éviter “par rapport à …” sans métrique */
