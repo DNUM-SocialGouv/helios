@@ -39,19 +39,19 @@ class TestImportVigieRhContrat:
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, mocked_logger)
         )
-        assert chemin_local_du_fichier_pyramide == 'data_test/entrée/vigie_rh/vigierh_pyramide_2025_02_13.parquet'
+        assert chemin_local_du_fichier_pyramide == 'data_test/entrée/vigie_rh/vigierh_pyramide_2025_09_19.parquet'
 
         chemin_local_du_fichier_ref = os.path.join(
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, mocked_logger)
         )
-        assert chemin_local_du_fichier_ref == 'data_test/entrée/vigie_rh/vigierh_ref_tranche_age_2025_02_13.parquet'
+        assert chemin_local_du_fichier_ref == 'data_test/entrée/vigie_rh/vigierh_ref_tranche_age_2025_09_19.parquet'
 
-        date_de_mise_à_jour_pyramide = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_pyramide)
-        assert date_de_mise_à_jour_pyramide == '2025-02-13'
+        date_de_mise_a_jour_pyramide = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_pyramide)
+        assert date_de_mise_a_jour_pyramide == '2025-09-19'
 
-        date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
-        assert date_de_mise_à_jour_ref == '2025-02-13'
+        date_de_mise_a_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
+        assert date_de_mise_a_jour_ref == '2025-09-19'
 
         # Traitements des données
         df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
@@ -59,8 +59,8 @@ class TestImportVigieRhContrat:
         nombre_de_lignes = df_ref.shape[0]
         assert nombre_de_lignes == 11
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_pyramide, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
-        df_filtré = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
-        assert df_filtré.shape[0] == 132
+        df_filtre = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
+        assert df_filtre.shape[0] == 121
 
         supprimer_donnees_existantes(TABLE_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
         assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
@@ -75,7 +75,7 @@ class TestImportVigieRhContrat:
             df_ref,
             mocked_logger,
             FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-            date_de_mise_à_jour_ref
+            date_de_mise_a_jour_ref
         )
         assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
 
@@ -83,9 +83,9 @@ class TestImportVigieRhContrat:
             TABLE_TRANCHE_AGE,
             base_de_données_test,
             SOURCE,
-            df_filtré,
+            df_filtre,
             mocked_logger,
             FichierSource.VIGIE_RH_PYRAMIDE,
-            date_de_mise_à_jour_pyramide
+            date_de_mise_a_jour_pyramide
         )
-        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 132
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121
