@@ -16,3 +16,8 @@
     border-radius: 50%;
     display: inline-block;
 }
+
+.colorLine {
+    width: 50px;
+    height: 2px;
+}

@@ -10,6 +10,8 @@ import { ReclamationETModel } from "../../../../../database/models/ReclamationET
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
+import { VigieRhDepartsEmbauchesModel } from "../../../../../database/models/vigie_rh/VigieRHDepartsEmbauchesModel";
+import { VigieRhDepartsEmbauchesTrimestrielsModel } from "../../../../../database/models/vigie_rh/VigieRhDepartsEmbauchesTrimestrielsModel";
 import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -168,17 +170,31 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const tranchesAge = await (await this.orm).getRepository(VigieRhRefTrancheAgeModel).find({
       order: { trancheAge: "DESC" },
     });
-    const professionFiliere = await this.getProfessionFiliere(numeroFinessET)
-    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, professionFiliere as unknown as ProfessionFiliere)
+    const professionFiliere = await this.getProfessionFiliere(numeroFinessET);
+    const departsEmbauches = await (await this.orm).getRepository(VigieRhDepartsEmbauchesModel).find({
+      order: { annee: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const departsEmbauchesTrimestriels = await (await this.orm).getRepository(VigieRhDepartsEmbauchesTrimestrielsModel).find({
+      order: { annee: "ASC", trimestre: "ASC" },
+      where: { numeroFinessET },
+    });
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, professionFiliere as unknown as ProfessionFiliere)
   }
 
-  private async construisLesDonneesVigieRH(pyramideAgesModel: VigieRhPyramideAgesModel[], tranchesAgeModel: VigieRhRefTrancheAgeModel[], professionFiliereModel: ProfessionFiliere): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+  private async construisLesDonneesVigieRH(
+    pyramideAgesModel: VigieRhPyramideAgesModel[],
+    tranchesAgeModel: VigieRhRefTrancheAgeModel[],
+    departsEmbauchesModel: VigieRhDepartsEmbauchesModel[],
+    departsEmbauchesTrimestrielsModel: VigieRhDepartsEmbauchesTrimestrielsModel[],
+    professionFiliereModel: ProfessionFiliere
+  ): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
     const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
         annee: pyramideModel.annee,
         trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
-        effectif: pyramideModel.effectif,
         effectifHomme: pyramideModel.effectifHomme,
         effectifFemme: pyramideModel.effectifFemme,
         effectifHommeRef: pyramideModel.effectifHommeRef,
@@ -192,9 +208,32 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
     const professionFiliere = await this.construisProfessionFiliere(professionFiliereModel);
 
+    const departsEmbauches = departsEmbauchesModel.map((departEmbaucheModel: VigieRhDepartsEmbauchesModel) => {
+      return {
+        annee: departEmbaucheModel.annee,
+        depart: departEmbaucheModel.depart,
+        departRef: departEmbaucheModel.departRef,
+        embauche: departEmbaucheModel.embauche,
+        embaucheRef: departEmbaucheModel.embaucheRef
+      }
+    })
+
+    const departsEmbauchesTrimestriels = departsEmbauchesTrimestrielsModel.map((departEmbaucheModel: VigieRhDepartsEmbauchesTrimestrielsModel) => {
+      return {
+        annee: departEmbaucheModel.annee,
+        trimestre: departEmbaucheModel.trimestre,
+        depart: departEmbaucheModel.depart,
+        departRef: departEmbaucheModel.departRef,
+        embauche: departEmbaucheModel.embauche,
+        embaucheRef: departEmbaucheModel.embaucheRef
+      }
+    });
+
     return {
       pyramideAges,
       tranchesAgesLibelles,
+      departsEmbauches,
+      departsEmbauchesTrimestriels,
       professionFiliere
     }
   }
@@ -224,14 +263,14 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
       order: { label: "ASC" }
     });
-    
+
     // Tri manuel en ignorant les accents
     refProfessionFiliere.sort((a, b) => {
       const labelA = a.label || '';
       const labelB = b.label || '';
       return labelA.localeCompare(labelB, 'fr', { sensitivity: 'base' });
     });
-        
+
     const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
 
     const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
@@ -252,7 +291,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     }))
 
-    return {data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere}
+    return { data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere }
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {

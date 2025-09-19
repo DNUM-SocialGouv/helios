@@ -2,7 +2,6 @@
 import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import { ContenuBlocRHMedicoSocialHelios } from "./contenu-bloc-rh-helios";
 import { ContenuBlocRHMedicoSocialVigieRH } from "./contenu-bloc-rh-vigierh";
-
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -28,12 +27,12 @@ export const BlocRessourcesHumainesMédicoSocial = ({
       {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' && categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes" ?
         <ContenuBlocRHMedicoSocialVigieRH
           blocVigieRhViewModel={blocVigieRhViewModel}
+          etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel}
           setStatusSousBlocs={setStatusSousBlocs}
           statusSousBlocs={statusSousBlocs}
-          établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel}
         />
         : <ContenuBlocRHMedicoSocialHelios
-          établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel}
+          etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel}
         />
       }
     </Bloc>
