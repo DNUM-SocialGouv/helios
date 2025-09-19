@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useCallback } from "react";
 
 
 import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
@@ -19,9 +19,9 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbau
 
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
-  const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
-  }
+  }, []);
 
   return (
     <div >

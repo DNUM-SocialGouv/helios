@@ -1,4 +1,5 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend } from "chart.js";
+import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
 
@@ -24,14 +25,20 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
 
   const { wording } = useDependencies();
 
-  const libelles = donneesDepartsEmbauches.map(donnee => donnee.trimestre);
-  const donneesDeparts = donneesDepartsEmbauches.map((donnee) => -Math.abs(donnee.depart));
-  const donneesEmbauches = donneesDepartsEmbauches.map((donnee) => donnee.embauche);
-  const donneesDepartsRef = donneesDepartsEmbauches.map((donnee) => -Math.abs(donnee.departRef));
-  const donneesEmbauchesRef = donneesDepartsEmbauches.map((donnee) => donnee.embaucheRef);
-
-  const donneesDepartsExtension = donneesDepartsRef.map((val, idx) => - Math.max(0, donneesDeparts[idx] - val));
-  const donneesEmbauchesExtension = donneesEmbauchesRef.map((val, idx) => Math.max(0, val - donneesEmbauches[idx]));
+  const {
+    libelles, donneesDeparts, donneesEmbauches,
+    donneesDepartsRef, donneesEmbauchesRef,
+    donneesDepartsExtension, donneesEmbauchesExtension
+  } = useMemo(() => {
+    const libelles = donneesDepartsEmbauches.map(d => d.trimestre);
+    const donneesDeparts = donneesDepartsEmbauches.map(d => -Math.abs(d.depart));
+    const donneesEmbauches = donneesDepartsEmbauches.map(d => d.embauche);
+    const donneesDepartsRef = donneesDepartsEmbauches.map(d => -Math.abs(d.departRef));
+    const donneesEmbauchesRef = donneesDepartsEmbauches.map(d => d.embaucheRef);
+    const donneesDepartsExtension = donneesDepartsRef.map((val, idx) => -Math.max(0, (donneesDeparts[idx] ?? 0) - val));
+    const donneesEmbauchesExtension = donneesEmbauchesRef.map((val, idx) => Math.max(0, val - (donneesEmbauches[idx] ?? 0)));
+    return { libelles, donneesDeparts, donneesEmbauches, donneesDepartsRef, donneesEmbauchesRef, donneesDepartsExtension, donneesEmbauchesExtension };
+  }, [donneesDepartsEmbauches]);
 
   const valeursNegativesRefPlugin = {
     id: "valeursNegativesRef",

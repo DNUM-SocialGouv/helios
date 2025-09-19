@@ -129,17 +129,18 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? [];
   }
 
   public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map((donnee) => {
+    const donneesTrimestrielles = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels ?? [];
+    return donneesTrimestrielles.map(({ annee, trimestre, depart, departRef, embauche, embaucheRef }) => {
       return {
-        trimestre: donnee.annee + '-T' + donnee.trimestre,
-        depart: donnee.depart,
-        departRef: donnee.departRef,
-        embauche: donnee.embauche,
-        embaucheRef: donnee.embaucheRef
+        trimestre: `${annee}-T${trimestre}`,
+        depart,
+        departRef,
+        embauche,
+        embaucheRef,
       }
     });
   }

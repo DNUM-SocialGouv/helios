@@ -19,7 +19,7 @@ def filtrer_les_donnees_mouvements_rh(donnees: pd.DataFrame, base_de_donnees: En
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
-    year_regex = r"(19\d{2}|2\d{3})"
+    year_regex = r"^(19\d{2}|2\d{3})$"
     annee_courante = datetime.now().year
     annee_de_depart = datetime.now().year - 2
 
