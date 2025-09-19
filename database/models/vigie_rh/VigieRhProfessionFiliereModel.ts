@@ -22,7 +22,4 @@ export class VigieRhProfessionFiliereModel {
 
   @Column({ type: "int", name: "effectif_filiere", nullable: true })
   public effectifFiliere?: number;
-
-  @Column({ type: "int", name: "effectif_etab", nullable: true })
-  public effectifEtab?: number;
 }

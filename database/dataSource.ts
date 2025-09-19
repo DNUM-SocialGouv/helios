@@ -81,6 +81,8 @@ import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
 import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migrations/1797688226682-AjoutBudgetEtFinanceAProfilETSanitaire";
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
+import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
+import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
 import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
 import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
 import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
@@ -88,6 +90,7 @@ import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_r
 import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrations/vigie_rh/1739960328134-AjoutEnumFichierDateMiseAjourReferentiel";
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
 import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./migrations/vigie_rh/1758014111419-SuppressionQuarterDeVigieRhProfessionFiliere";
+import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -95,8 +98,6 @@ import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/refer
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
 import { AjoutReferentielTrancheAge1739874041081 } from "./migrations/vigie_rh/referentiels/1739874041081-ajoutReferentielTrancheAge";
-import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
-import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
 import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -281,6 +282,7 @@ const datasource = new DataSource({
     AjoutVigieRhContrat1738320902145,
     AjoutVigieRhProfessionFiliere1738328763147,
     SuppressionQuarterDeVigieRhProfessionFiliere1758014111419,
+    SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238,
     AjoutVigieRhProfessionGroupe1738328796095,
     AjoutReferentielTypeContrat1738227384991,
     AjoutReferentielProfessionFiliere1738328597314,

@@ -23,7 +23,6 @@ class ColumMapping(Enum):
         'month': 'mois',
         'profession1_code': 'profession_code',
         'effectif': 'effectif_filiere',
-        'effectif_etab': 'effectif_etab',
     }
     REF_PROFESSION_FILIERE = {
         'profession1_code': 'code',
