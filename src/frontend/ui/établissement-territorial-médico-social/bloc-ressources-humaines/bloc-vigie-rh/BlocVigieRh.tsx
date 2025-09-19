@@ -83,7 +83,7 @@ export const BlocVigieRH = ({
         ) : <></>
         }
 
-        {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuPyramideDesAges />

@@ -41,11 +41,19 @@ export class BlocVigieRHViewModel {
     return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour === 'ko'
   }
 
+  public get lesDepartsEmbauchesNeSontIlsPasRenseignees(): boolean {
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches.length === 0;
+  }
+
+  public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0].annee === -1
+  }
+
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
-
+    if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
     return nonRenseignees;
   }
 
@@ -53,7 +61,7 @@ export class BlocVigieRHViewModel {
     const nonAutorises = [];
     if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
-
+    if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
     return nonAutorises;
   }
 
