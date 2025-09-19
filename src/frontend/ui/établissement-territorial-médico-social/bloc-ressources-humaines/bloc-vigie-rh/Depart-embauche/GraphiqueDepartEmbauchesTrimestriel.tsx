@@ -131,6 +131,11 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
     plugins: {
       datalabels: {
         color: "#000",
+        font: {
+          family: "Marianne",
+          size: 12,
+          weight: 700,
+        },
         display: (context: any) => {
           // Afficher les labels uniquement pour les datasets principaux
           return context.dataset.label === wording.DEPARTS || context.dataset.label === wording.EMBAUCHES;
