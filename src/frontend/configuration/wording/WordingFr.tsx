@@ -227,6 +227,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
+  readonly TRIMESTRIEL: string = "Trimestriel";
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
@@ -667,6 +668,13 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_TOTAUX: string = "Total";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
+  readonly DEPARTS: string = "Départs";
+  readonly EMBAUCHES: string = "Embauches";
+  readonly DEPARTS_REF: string = "Moyenne des départs";
+  readonly EMBAUCHES_REF: string = "Moyenne des embauches";
+  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
+
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";

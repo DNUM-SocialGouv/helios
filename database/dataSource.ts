@@ -89,8 +89,9 @@ import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh
 import { AjoutEnumFichierDateMiseAjour1739804255435 } from "./migrations/vigie_rh/1739804255435-AjoutEnumFichierDateMiseAjour";
 import { AjoutEnumFichierDateMiseAjourReferentiel1739960328134 } from "./migrations/vigie_rh/1739960328134-AjoutEnumFichierDateMiseAjourReferentiel";
 import { AjoutTableVigieRhPyramide1739979832918 } from "./migrations/vigie_rh/1739979832918-AjoutTableVigieRhPyramide";
-import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./migrations/vigie_rh/1758014111419-SuppressionQuarterDeVigieRhProfessionFiliere";
-import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
+import { AjoutTableVigieRhMouvementsRH1757337280336 } from "./migrations/vigie_rh/1757337280336-AjoutTableVigieRhMouvementsRH";
+import { AjoutTableVigieRhMouvementsTrimestriels1757662996841 } from "./migrations/vigie_rh/1757662996841-AjoutTableVigieRhMouvementsTrimestriels";
+import { SupressionColonneEffectifDePyramideAges1758270710076 } from "./migrations/vigie_rh/1758270710076-supressionColonneEffectifDePyramideAges";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -140,6 +141,8 @@ import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/Vigie
 import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
+import { VigieRhDepartsEmbauchesModel } from "./models/vigie_rh/VigieRHDepartsEmbauchesModel";
+import { VigieRhDepartsEmbauchesTrimestrielsModel } from "./models/vigie_rh/VigieRhDepartsEmbauchesTrimestrielsModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 import { VigieRhPyramideAgesModel } from "./models/vigie_rh/VigieRHPyramideAgeModel";
@@ -148,6 +151,8 @@ import { ÉtablissementTerritorialIdentitéModel } from "./models/Établissement
 import { dotEnvConfig } from "../download_data_source/infrastructure/gateways/dot-env/dotEnvConfig";
 import { NodeEnvironmentVariables } from "../download_data_source/infrastructure/gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "../download_data_source/infrastructure/gateways/logger/ConsoleLogger";
+import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./migrations/vigie_rh/1758014111419-SuppressionQuarterDeVigieRhProfessionFiliere";
+import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
 
 const logger = new ConsoleLogger();
 dotEnvConfig();
@@ -201,6 +206,8 @@ const datasource = new DataSource({
     VigieRhProfessionGroupeModel,
     VigieRhRefTrancheAgeModel,
     VigieRhPyramideAgesModel,
+    VigieRhDepartsEmbauchesModel,
+    VigieRhDepartsEmbauchesTrimestrielsModel,
     CategoriesFinessModel
   ],
   logger: "debug",
@@ -303,7 +310,10 @@ const datasource = new DataSource({
     AjoutCategorieRecherche1748009262073,
     AjoutLaColonneDomaineAuReferentielCategories1748332500947,
     AjoutLibelleCategorieALaRecherche1754309418981,
-    AjoutDonneesMensuellesPsy1756720758341
+    AjoutDonneesMensuellesPsy1756720758341,
+    AjoutTableVigieRhMouvementsRH1757337280336,
+    AjoutTableVigieRhMouvementsTrimestriels1757662996841,
+    SupressionColonneEffectifDePyramideAges1758270710076
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

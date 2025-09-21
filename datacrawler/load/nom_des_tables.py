@@ -39,6 +39,10 @@ TABLE_REF_MASQUE = "vigierh_ref_masque"
 TABLE_REF_PROFESSION_GROUPE = "vigierh_ref_profession_groupe"
 TABLE_REF_QUALITE = "vigierh_ref_qualite"
 TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
+# mouvements rh
+TABLE_VIGIE_RH_MOUVEMENTS_RH = "vigierh_mouvements"
+TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS = "vigierh_mouvements_trimestriel"
+
 TABLE_ENTITES_JURIDIQUES = "entite_juridique"
 TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
 CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = 'numero_finess_entite_juridique'
@@ -77,4 +81,6 @@ class FichierSource(Enum):
     # tranches des ages
     VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
     VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
-    
+    # mouvements rh
+    VIGIE_RH_MOUVEMENTS_RH = "vigierh_etablissement_annuel"
+    VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL = "vigierh_etablissement_trimestriel"

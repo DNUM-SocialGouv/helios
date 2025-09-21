@@ -5,7 +5,7 @@ import { ÉtablissementTerritorialMédicoSocialBudgetEtFinances } from "../../..
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
-import { ÉtablissementTerritorialMédicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
+import { EtablissementTerritorialMedicoSocialViewModel } from "../../ui/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialViewModel";
 import { annéeEnCours } from "../testHelper";
 
 const autorisationsMockData = {
@@ -635,7 +635,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       {
         annee: 2024,
         trancheLibelle: "15-20",
-        effectif: 200,
         effectifHomme: 20,
         effectifFemme: 23,
         effectifHommeRef: 11,
@@ -657,15 +656,32 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
           }]
         }
       ]
-    }
+    },
+    departsEmbauches: [{
+      annee: 2025,
+      depart: 12,
+      departRef: 12,
+      embauche: 12,
+      embaucheRef: 12,
+    }],
+    departsEmbauchesTrimestriels: [
+      {
+        annee: 2025,
+        trimestre: 1,
+        depart: 12,
+        departRef: 12,
+        embauche: 12,
+        embaucheRef: 12,
+      }
+    ]
   };
 
   public static crée(
     wording: Wording,
     paths: Paths,
     champsSurchargés?: Partial<ÉtablissementTerritorialMédicoSocial["identité"]>
-  ): ÉtablissementTerritorialMédicoSocialViewModel {
-    return new ÉtablissementTerritorialMédicoSocialViewModel(
+  ): EtablissementTerritorialMedicoSocialViewModel {
+    return new EtablissementTerritorialMedicoSocialViewModel(
       {
         activités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.activités,
         autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
