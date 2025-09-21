@@ -114,7 +114,6 @@ export class BlocVigieRHViewModel {
         categorie,
         dataCategorie: {
           dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
-          dataEtab: dataCategorie?.map(entry => entry.effectifEtab),
           dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
         },
       }));

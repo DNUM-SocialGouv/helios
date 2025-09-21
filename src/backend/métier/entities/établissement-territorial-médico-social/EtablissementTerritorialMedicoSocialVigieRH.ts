@@ -11,7 +11,6 @@ export type ProfessionFiliereRow = Readonly<{
   annee: number;
   mois: number;
   effectifFiliere: number;
-  effectifEtab: number;
 }>;
 
 export type ProfessionFiliereData = Readonly<{

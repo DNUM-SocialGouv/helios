@@ -247,7 +247,6 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
           annee: profession.annee,
           mois: profession.mois,
           effectifFiliere: profession.effectifFiliere,
-          effectifEtab: profession.effectifEtab,
         })) : []
       }));
 
