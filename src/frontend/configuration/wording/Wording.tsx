@@ -333,6 +333,8 @@ export interface Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string;
+  readonly NOMBRE_D_ETP_PM: string
+  readonly NOMBRE_D_ETP_PNM: string
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string;
   readonly TAUX_D_ABSENTÉISME: string;
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement;
@@ -343,11 +345,13 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string;
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string;
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string;
+  readonly JOURS_ABSENTEISME_PM : string
   readonly TAUX: string;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string;
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string;
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string;
+  readonly DEPENSES_INTERIM_PM: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string;

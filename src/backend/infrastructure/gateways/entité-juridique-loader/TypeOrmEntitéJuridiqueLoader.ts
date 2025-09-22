@@ -11,10 +11,12 @@ import { CapacitesSanitaireEntiteJuridiqueModel } from "../../../../../database/
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { RessourcesHumainesEntiteJuridiqueModel } from "../../../../../database/models/RessourcesHumainesEntiteJuridiqueModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { EntiteJuridiqueDeRattachement } from "../../../métier/entities/entité-juridique/EntiteJuridiqueDeRattachement";
+import { EntiteJuridiqueRessourcesHumaines } from "../../../métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { CatégorisationEnum, EntitéJuridiqueIdentité } from "../../../métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "../../../métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import {
@@ -492,4 +494,42 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       data: allocationRessource
     }
   }
+
+  async chargeRessourcesHumaines(numeroFinessEntiteJuridique: string): Promise<EntiteJuridiqueRessourcesHumaines[]> {
+    const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEntiteJuridiqueModel).find({
+      where: { numeroFinessEntiteJuridique },
+    });
+
+
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisRessourcesHumainesEJ(ressourcesHumaines, dateMisAJour);
+  }
+
+  construisRessourcesHumainesEJ(ressourcesHumaines: RessourcesHumainesEntiteJuridiqueModel[], dateMisAJour: DateMiseÀJourFichierSourceModel): EntiteJuridiqueRessourcesHumaines[] {
+    const entiteJuridiqueRessourcesHumaines: EntiteJuridiqueRessourcesHumaines[] = [];
+    ressourcesHumaines.map((donneeRessourcesHumaines) => ({
+      annee: donneeRessourcesHumaines.annee,
+      nombreEtpPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPm
+      },
+      nombreEtpPnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPnm
+      },
+      depensesInterimPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.depensesInterimPm
+      },
+      joursAbsenteismePm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePm
+      }
+    })).forEach((e) => entiteJuridiqueRessourcesHumaines.push(e))
+    return entiteJuridiqueRessourcesHumaines;
+  }
 }
+

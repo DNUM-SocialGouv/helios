@@ -1,5 +1,6 @@
 import { ActivitesSanitaireMensuel } from "../ActivitesSanitaireMensuel";
 import { AllocationRessource } from "../AllocationRessource";
+import { EntiteJuridiqueRessourcesHumaines } from "./EntiteJuridiqueRessourcesHumaines";
 import { EntitéJuridiqueActivités } from "./EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacité } from "./EntitéJuridiqueAutorisationEtCapacité";
 import { EntitéJuridiqueBudgetFinance } from "./EntitéJuridiqueBudgetFinance";
@@ -60,6 +61,7 @@ export type EntitéJuridique = EntitéJuridiqueIdentité &
     budgetFinance: EntitéJuridiqueBudgetFinance[];
     autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacité;
     allocationRessource: AllocationRessource;
+    ressourcesHumaines: EntiteJuridiqueRessourcesHumaines[]
   }>;
 
 export enum CatégorisationEnum {

@@ -42,6 +42,7 @@ populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
 populate_budget_et_finances_entite_juridique = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques'
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
+populate_ressoures_humaines_entites_juridiques = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques'
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
