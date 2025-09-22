@@ -556,6 +556,15 @@ export class WordingFr implements Wording {
   readonly IMPORT_SUCCESS_TITLE: string = "Succès";
   readonly IMPORT_SUCESS_MESSAGE: string = "Les modifications ont bien été enregistrées";
   readonly IMPORT_LIST_ERREUR_IMPORT: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
+  readonly IMPORT_LIST_FINESS_HEADER: string = "N° Finess";
+  readonly IMPORT_LIST_RS_HEADER: string = "Raison sociale";
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string = "Le numéro FINESS est composé de 9 caractères alphanumérique. Veuillez saisir un numéro par ligne sans espace, ni ponctuation.";
+  readonly IMPORT_LIST_TITLE: string = "Importer des établissements";
+  readonly IMPORT_LIST_CANCEL_LABEL: string = "Annuler";
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string = "Valider";
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string = "Vérifier";
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string = "Importer";
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

@@ -474,6 +474,14 @@ export interface Wording {
   readonly IMPORT_SUCCESS_TITLE: string;
   readonly IMPORT_SUCESS_MESSAGE: string;
   readonly IMPORT_LIST_ERREUR_IMPORT: string;
+  readonly IMPORT_LIST_FINESS_HEADER: string;
+  readonly IMPORT_LIST_RS_HEADER: string;
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string;
+  readonly IMPORT_LIST_TITLE: string;
+  readonly IMPORT_LIST_CANCEL_LABEL: string;
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string;
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string;
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string;
 
 
   // Mot de passe oublié

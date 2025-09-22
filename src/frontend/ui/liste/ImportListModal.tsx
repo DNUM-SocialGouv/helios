@@ -55,7 +55,6 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
               return true;
             }
           })
-          findedEtab = [...new Set(findedEtab)];
           setFindedEtablissments(findedEtab);
 
           const finessKo = finessList.filter((finess) => !findedFiness.includes(finess));
@@ -83,11 +82,11 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
 
 
   const okButtonLabel = () => {
-    let label = "Valider";
+    let label = wording.IMPORT_LIST_OK_VALIDATE_LABEL;
     if (isErrorForm()) {
-      label = "Vérifier";
+      label = wording.IMPORT_LIST_OK_VERIFY_LABEL;
     } else if (isImportForm()) {
-      label = "Importer"
+      label = wording.IMPORT_LIST_OK_IMPORT_LABEL;
     }
     return label;
   }
@@ -249,7 +248,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
               </div>
               <div className="fr-modal__content">
                 <h1 className="fr-modal__title" id="fr-modal-import-list-title">
-                  Importer des établissements
+                  {wording.IMPORT_LIST_TITLE}
                 </h1>
                 <p className={styles["sous-titre"]}>
                   {title()}
@@ -265,11 +264,10 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
                       <div className="fr-table__container">
                         <div className="fr-table__content">
                           <table>
-                            <caption>test</caption>
                             <thead>
                               <tr>
-                                <th scope="col">N° Finess</th>
-                                <th scope="col">Raison sociale</th>
+                                <th scope="col">{wording.IMPORT_LIST_FINESS_HEADER}</th>
+                                <th scope="col">{wording.IMPORT_LIST_RS_HEADER}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -295,7 +293,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
                   ? <textarea
                     className={finessEnErreur.length > 0 ? styles["import-textarea-erreur"] : styles["import-textarea"]}
                     onChange={onChangeFinessAImporter}
-                    placeholder="Le numéro FINESS est composé de 9 caractères alphanumérique. Veuillez saisir un numéro par lingne sans espace, ni ponctuation."
+                    placeholder={wording.IMPORT_LIST_TEXT_PLACEHOLDER}
                     rows={10}
                     value={finessAImporter}
                   />
@@ -316,7 +314,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
                   id="fr-modal-import-close-btn"
                   onClick={reset}
                 >
-                  Annuler
+                  {wording.IMPORT_LIST_CANCEL_LABEL}
                 </button>
               </div>
             </div>
