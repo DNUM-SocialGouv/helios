@@ -84,7 +84,11 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
       }
     }
 
-    const ordered = Array.from(monthByKey.keys()).sort(); // YYYY-MM
+    const ordered = Array.from(monthByKey.keys()).sort((a, b) => {
+      const [ay, am] = a.split("-").map(Number);
+      const [by, bm] = b.split("-").map(Number);
+      return ay === by ? am - bm : ay - by;
+    }); // tri chrono sûr: année puis mois
     const dataMoisAnnee: MonthYear[] = [];
     const dataEtab: number[] = [];
     for (const k of ordered) {
@@ -156,27 +160,22 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                         nomDeLIndicateur={wording.EFFECTIFS}
                         source={wording.VIGIE_RH}
                     >
-                        <>
-                          <div className="fr-grid-row">
-                            {(() => {
-                              const items = donneesEffectifs.data ?? [];
-                              const multiCategories = items as ProfessionFiliereData[];
-                              const dataEffectifs: EffectifsData = buildTotalsFromCategories(multiCategories);
-                              if (!items.length) return null;
-                              return (
-                                <>
-                                  <LineChart
-                                    classContainer="fr-col-6 fr-mb-4w"
-                                    couleurEffectifsTotaux={couleurEffectifsTotaux}
-                                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                                    dataEffectifs={dataEffectifs}
-                                    multiCategories={multiCategories}
-                                  />
-                                </>
-                              );
-                            })()}
-                          </div>
-                        </>
+                        <div className="fr-grid-row">
+                          {(() => {
+                            const items = donneesEffectifs.data ?? [];
+                            const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+                            if (!items.length) return null;
+                            return (
+                              <LineChart
+                                classContainer="fr-col-6 fr-mb-4w"
+                                couleurEffectifsTotaux={couleurEffectifsTotaux}
+                                couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                                dataEffectifs={dataEffectifs}
+                                multiCategories={items}
+                              />
+                            );
+                          })()}
+                        </div>
                     </IndicateurGraphique>
                 </>
             ) : <></>
