@@ -244,7 +244,8 @@ equivalences_diamant_quo_san_ressources_humaines_helios_ej: ÉquivalencesDiamant
     "Nombre d'ETP PM": ColonneHelios(nom="nombre_etp_pm",type=float),
     "Nombre d'ETP PNM" : ColonneHelios(nom="nombre_etp_pnm",type=float),
     "Dépenses d'intérim PM" : ColonneHelios(nom="depenses_interim_pm",type=float),
-    "Jours d'absentéisme PM" : ColonneHelios(nom="jours_absenteisme_pm",type=float)
+    "Jours d'absentéisme PM" : ColonneHelios(nom="jours_absenteisme_pm",type=float),
+    "Jours d'absentéisme PNM" : ColonneHelios(nom="jours_absenteisme_pnm",type=float)
 }
 
 colonnes_a_lire_bloc_ressources_humaines_entite_juridique: List[str] = list(equivalences_diamant_quo_san_ressources_humaines_helios_ej.keys())

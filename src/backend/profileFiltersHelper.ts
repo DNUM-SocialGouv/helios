@@ -518,6 +518,7 @@ const filterRessourcesHumainesEJ = (ressourcesHumaines: EntiteJuridiqueRessource
     if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
     if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
     if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+    if (profil.joursAbsenteismePnm !== 'ok') rh.joursAbsenteismePnm.valeur = "";
   });
   return ressourcesHumaines;
 }

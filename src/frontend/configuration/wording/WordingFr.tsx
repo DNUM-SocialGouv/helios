@@ -414,6 +414,7 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
   readonly JOURS_ABSENTEISME_PM: string = "Jour d’absentéisme PM"
+  readonly JOURS_ABSENTEISME_PNM: string = "Jour d’absentéisme PNM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -449,7 +450,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
-  
+
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);

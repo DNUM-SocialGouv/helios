@@ -16,4 +16,8 @@ export type EntiteJuridiqueRessourcesHumaines = Readonly<{
     dateMiseAJourSource: string;
     valeur: number | null | "";
   };
+  joursAbsenteismePnm: {
+    dateMiseAJourSource: string;
+    valeur: number | null | "";
+  };
 }>;

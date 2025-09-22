@@ -21,4 +21,7 @@ export class RessourcesHumainesEntiteJuridiqueModel {
   @Column({ name: "jours_absenteisme_pm", nullable: true, type: "float" })
   public joursAbsenteismePm!: number | null;
 
+  @Column({ name: "jours_absenteisme_pnm", nullable: true, type: "float" })
+  public joursAbsenteismePnm!: number | null;
+
 }
