@@ -46,7 +46,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0].annee === -1
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0]?.annee === -1
   }
 
   public get lesDonneesVgRHPasRenseignees(): string[] {
