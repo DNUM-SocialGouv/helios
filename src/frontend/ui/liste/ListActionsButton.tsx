@@ -18,9 +18,10 @@ type ListActionsButtonProps = Readonly<{
   onAddToFavorisSuccess?: (listName: string) => void;
   exportButton: ReactNode;
   fullSelectButton?: ReactNode;
+  importButton?: ReactNode;
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton, importButton }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -84,6 +85,10 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
           <li className={styles["menu-item"]}>
             {exportButton}
           </li>
+          {listId && <li className={styles["menu-item"]}>
+            {importButton}
+          </li>
+          }
           {fullSelectButton
             ? <li className={styles["menu-item"]}>
               {fullSelectButton}

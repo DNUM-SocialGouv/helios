@@ -456,6 +456,8 @@ export interface Wording {
   readonly EXPORTER: string;
   readonly DANS_FAVORIS: string;
   readonly NON_FAVORIS: string;
+  readonly IMPORTER_UNE_LISTE: string;
+  readonly IMPORTER_DES_ETABLISSEMENTS: string;
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string;
@@ -468,6 +470,24 @@ export interface Wording {
 
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
+
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string;
+  readonly IMPORT_LIST_SELECTOR: string;
+  readonly IMPORT_MAX_LISTE_ATTEINT: string;
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string;
+  readonly IMPORT_SUCCESS_TITLE: string;
+  readonly IMPORT_SUCESS_MESSAGE: string;
+  readonly IMPORT_LIST_ERREUR_IMPORT: string;
+  readonly IMPORT_LIST_FINESS_HEADER: string;
+  readonly IMPORT_LIST_RS_HEADER: string;
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string;
+  readonly IMPORT_LIST_TITLE: string;
+  readonly IMPORT_LIST_CANCEL_LABEL: string;
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string;
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string;
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string;
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
