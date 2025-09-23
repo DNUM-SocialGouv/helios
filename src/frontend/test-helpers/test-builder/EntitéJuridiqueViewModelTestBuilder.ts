@@ -79,6 +79,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       numéroFinessEntitéJuridique: "",
       capacités: [],
       autorisationsActivités: { autorisations: [], dateMiseÀJourSource: "" },
+      autorisationsAmmSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
       autresActivités: { autorisations: [], dateMiseÀJourSource: "" },
       reconnaissanceContractuelleActivités: { autorisations: [], dateMiseÀJourSource: "" },
       equipementMaterielLourdsActivités: { autorisations: [], dateMiseÀJourSource: "" },

@@ -19,15 +19,15 @@ type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs  }: BlocAutorisationEtCapacitéSanitaireProps) => {
+export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ}  toggelBlocs={toggelBlocs}/>;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
+    <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
       {établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
         établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
           <></>}
@@ -46,11 +46,14 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
-            identifiant="autorisations-sanitaire"
+            identifiant="autorisations-amm-sanitaire"
             nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
             source={Sources(wording.FINESS, wording.ARHGOS)}
           >
-            {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
+            <>
+              {établissementTerritorialSanitaireAutorisationsViewModel.autorisationsAmm}
+              {établissementTerritorialSanitaireAutorisationsViewModel.autorisations}
+            </>
           </IndicateurGraphique>
         )}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.lesAutresActivitésSontEllesAutorisées && (

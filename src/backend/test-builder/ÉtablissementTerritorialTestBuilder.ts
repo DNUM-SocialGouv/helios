@@ -616,6 +616,10 @@ export class ÉtablissementTerritorialTestBuilder {
         },
       ],
     },
+    autorisationsAmm: {
+      activites: [],
+      dateMiseAJourSource: ''
+    }
   };
 
   private static readonly budgetEtFinancesErrdMédicoSocial: ÉtablissementTerritorialMédicoSocialBudgetEtFinances = {

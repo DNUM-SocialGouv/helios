@@ -1,0 +1,210 @@
+﻿Code Activité;Libellé Activité;Code Modalité;Libellé Modalité;Code Mention;Code Libellé;Code Pratique Thérapeutique Spécifique;Libellé Pratique Thérapeutique Spécifique;Code Déclaration;Libellé Déclaration
+QA001;Médecine;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE015;Adultes
+QA001;Médecine;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE016;Enfant et adolescent
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS11;Maxillo-faciale, stomatologie et chirurgie orale;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS11;Maxillo-faciale, stomatologie et chirurgie orale;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS12;Orthopédique et traumatologique;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS12;Orthopédique et traumatologique;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS13;Plastique, reconstructrice;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS13;Plastique, reconstructrice;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS14;Thoracique et cardiovasculaire à l’exception de l’activité définie à l’article R. 6123-69;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS14;Thoracique et cardiovasculaire à l’exception de l’activité définie à l’article R. 6123-69;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS15;Vasculaire et endovasculaire;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS15;Vasculaire et endovasculaire;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS16;Viscérale et digestive;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS16;Viscérale et digestive;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS17;Gynécologie obstétrique à l’exception des actes liés à l’accouchement réalisés au titre de l’activité de soins mentionnée au 3° de l’article R. 6122-25;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS17;Gynécologie obstétrique à l’exception des actes liés à l’accouchement réalisés au titre de l’activité de soins mentionnée au 3° de l’article R. 6122-25;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS18;Neurochirurgie se limitant aux lésions des nerfs périphériques et aux lésions de la colonne vertébro-discale et intradurale, à l'Exclusion de la moelle épinière;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS18;Neurochirurgie se limitant aux lésions des nerfs périphériques et aux lésions de la colonne vertébro-discale et intradurale, à l'Exclusion de la moelle épinière;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS19;Ophtalmologie;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS19;Ophtalmologie;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS20;Oto-rhino-laryngologie et cervico-faciale;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS20;Oto-rhino-laryngologie et cervico-faciale;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS21;Urologie;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO006;Adultes;ME000;Pas de mention;PTS21;Urologie;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO007;​Pédiatrie;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO007;​Pédiatrie;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA002;Chirurgie;MO011;Bariatrique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE023;Hospitalisation ambulatoire
+QA002;Chirurgie;MO011;Bariatrique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA003;Gynécologique-Obstétrique, Néonatologie, Réanimation néonatale;MO016;Gynécologie obstétrique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA003;Gynécologique-Obstétrique, Néonatologie, Réanimation néonatale;MO016;Gynécologie obstétrique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE024;Hospitalisation à temps partiel
+QA003;Gynécologique-Obstétrique, Néonatologie, Réanimation néonatale;MO017;Néonatologie sans soins intensifs;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA003;Gynécologique-Obstétrique, Néonatologie, Réanimation néonatale;MO018;Néonatologie avec soins intensifs;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA003;Gynécologique-Obstétrique, Néonatologie, Réanimation néonatale;MO019;Réanimation néonatale;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE022;Hospitalisation à temps complet
+QA004;Psychiatrie;MO000;Pas de modalité;ME049;Psychiatrie de l'adulte;PTS00;Pas de pratique thérapeutique spécifique;DE025;Structures de prise en charge sur le site autorisé
+QA004;Psychiatrie;MO000;Pas de modalité;ME070;Psychiatrie de l'Enfant et adolescent;PTS00;Pas de pratique thérapeutique spécifique;DE025;Structures de prise en charge sur le site autorisé
+QA004;Psychiatrie;MO000;Pas de modalité;ME071;Psychaitrie périnatale;PTS00;Pas de pratique thérapeutique spécifique;DE025;Structures de prise en charge sur le site autorisé
+QA004;Psychiatrie;MO000;Pas de modalité;ME072;Soins sans consentement;PTS00;Pas de pratique thérapeutique spécifique;DE025;Structures de prise en charge sur le site autorisé
+QA007;Soins de longue durée;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA009;Grands Brûlés;MO006;Adultes;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA009;Grands Brûlés;MO015;Enfants;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA010;Chirugie cardiaque;MO006;Adultes;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA010;Chirugie cardiaque;MO007;​Pédiatrie;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO003;Rythmologie interventionnelle;ME009;A - Actes interventionnels d’électrophysiologie diagnostique et les actes de poses de pace maker mono et double chambre avec sonde;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO003;Rythmologie interventionnelle;ME011;B - ​Actes d'ablation atriale droite et atrioventriculaire, de poses de défibrillateurs et de stimulateurs multisites;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO003;Rythmologie interventionnelle;ME012;C - ​Actes d'ablation atriale avec abord transeptal, d'ablation ventriculaire et tous les actes de rythmologie réalisés chez un enfant hors cardiopathie congénitale complexe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO003;Rythmologie interventionnelle;ME013;D - ​Actes à haut risque de plaie cardiaque ou vasculaire et les actes de rythmologie réalisés chez un patient ayant une cardiopathie congénitale complexe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO004;​​Cardiopathies congénitales hors rythmologie;ME014;A - ​Actes de prise en charge des anomalies du cloisonnement inter atrial, fermeture du canal artériel, dilatation de sténose valvulaire pulmonaire, cathétérisme diagnostique des cardiopathies congénitales;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO004;​​Cardiopathies congénitales hors rythmologie;ME015;B - ​Geste de dilatation, toute pose de stent ou de dispositif intracardiaque, toute intervention sur septum atrial ou ventriculaire;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA011;Activité interventionnelle sous imagerie médicale en cardiologie;MO005;​​Cardiopathies ischémiques et structurelles de l’adulte;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA012;Neurochirurgie;MO012;Neurochirurgie fonctionnelle cérébrale;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA012;Neurochirurgie;MO013;Radiochirurgie intracrânienne et extracrânienne en conditions stéréotaxiques;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA012;Neurochirurgie;MO099;Neurochirurgie pédiatrique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA012;Neurochirurgie;MO026;Socle;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA013;Activité interventionnelle sous imagerie médicale en neuroradiologie;MO000;Pas de modalité;ME005;A - Thrombectomie mécanique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA013;Activité interventionnelle sous imagerie médicale en neuroradiologie;MO000;Pas de modalité;ME006;B - ​Ensemble des activités de NRI;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA014;Médecine d'urgence;MO030;SAMU;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA014;Médecine d'urgence;MO031;SMUR;ME065;Adulte et pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA014;Médecine d'urgence;MO031;SMUR;ME065;Adulte et pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA014;Médecine d'urgence;MO031;SMUR;ME064;Pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA014;Médecine d'urgence;MO031;SMUR;ME067;Antenne de SMUR;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA014;Médecine d'urgence;MO031;SMUR;ME067;Antenne de SMUR;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA014;Médecine d'urgence;MO032;Structure des urgences;ME065;Adulte et pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA014;Médecine d'urgence;MO032;Structure des urgences;ME065;Adulte et pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA014;Médecine d'urgence;MO032;Structure des urgences;ME064;Pédiatrique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA014;Médecine d'urgence;MO033;Antenne de médecine d'urgence;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO006;Adultes;ME016;Réanimation et soins intensifs polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE005;Aucun SI de spécialité
+QA015;Soins critiques;MO006;Adultes;ME016;Réanimation et soins intensifs polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE006;SI Néphrologie
+QA015;Soins critiques;MO006;Adultes;ME016;Réanimation et soins intensifs polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE007;SI Respiratoire
+QA015;Soins critiques;MO006;Adultes;ME016;Réanimation et soins intensifs polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE008;SI hépato-gastro-entérologie
+QA015;Soins critiques;MO006;Adultes;ME016;Réanimation et soins intensifs polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE009;SI Autres
+QA015;Soins critiques;MO006;Adultes;ME017;Soins intensifs polyvalents dérogatoires;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO006;Adultes;ME018;Soins intensifs de cardiologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO006;Adultes;ME019;Soins intensifs de neurologie vasculaire;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO006;Adultes;ME020;Soins intensifs d’hématologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO007;​Pédiatrie;ME021;Réanimation de recours et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE005;Aucun SI de spécialité
+QA015;Soins critiques;MO007;​Pédiatrie;ME021;Réanimation de recours et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE010;SI Cardio
+QA015;Soins critiques;MO007;​Pédiatrie;ME021;Réanimation de recours et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE009;SI Autres
+QA015;Soins critiques;MO007;​Pédiatrie;ME022;Réanimation et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE005;Aucun SI de spécialité
+QA015;Soins critiques;MO007;​Pédiatrie;ME022;Réanimation et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE010;SI Cardio
+QA015;Soins critiques;MO007;​Pédiatrie;ME022;Réanimation et soins intensifs pédiatriques polyvalents, et de spécialité le cas échéant;PTS00;Pas de pratique thérapeutique spécifique;DE009;SI Autres
+QA015;Soins critiques;MO007;​Pédiatrie;ME023;Soins intensifs pédiatriques polyvalents dérogatoires;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA015;Soins critiques;MO007;​Pédiatrie;ME024;Soins intensifs pédiatriques d’hématologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO020;Hémodialyse en centre;ME089;Adultes;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO020;Hémodialyse en centre;ME089;Adultes;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO020;Hémodialyse en centre;ME090;Enfants;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO020;Hémodialyse en centre;ME090;Enfants;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO021;Hémodialyse en unité de dialyse médicalisée;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO021;Hémodialyse en unité de dialyse médicalisée;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO022;Hémodialyse en unité d'autodialyse simple;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO022;Hémodialyse en unité d'autodialyse simple;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO023;Hémodialyse en unité d'autodialyse assistée;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE017;Saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO023;Hémodialyse en unité d'autodialyse assistée;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE018;Non saisonnier
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO024;Dialyse à domicile par hémodialyse;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA016;Traitement de l'insuffisance rénale chronique par épuration extrarénale;MO025;Dialyse à domicile par dialyse péritonéale;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO080;AMP BIO - Activité relative à la FIV avec ou sans micromanipulation;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO075;AMP BIO - Conservation à usage autologue des gamètes et préparation et conservation à usage autologue des tissus germinaux;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO059;AMP BIO -  Conservation des embryons en vue de leur accueil et mise en œuvre de celui-ci ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO074;AMP BIO - Conservation des embryons en vue d'un projet parental ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO051;AMP BIO - Préparation et conservation du sperme en vue d'une insémination artificielle ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO054;AMP BIO - Préparation, conservation et mise à disposition d'ovocytes en vue d'un don ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO052;AMP BIO - recueil, préparation, conservation et mise à disposition du sperme en vue d'un don;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO076;AMP BIO - Activités relatives à la conservation des gamètes en vue de la réalisation ultérieure d'une assistance médicale à la procréation en application de l'Article L. 2141-12;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO073;AMP CLI - Mise en œuvre de l'Accueil des embryons ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO049;AMP CLI -  Prélèvement de spermatozoïdes ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO048;AMP CLI - Prélèvement d'ovocytes en vue d'un don ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO047;AMP CLI -  Prélèvement d'ovocytes en vue d'une AMP ;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO050;AMP CLI - transfert des embryons en vue de leur implantation;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA017;AMP;MO001;AMP CLI - Prélèvements d'ovocytes en vue de leur conservation pour la réalisation ultérieure d'une assistance médicale à la procréation en application de l'Article L. 2141-12;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME025;A1 - Chirurgie oncologique viscérale et digestive;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME025;A1 - Chirurgie oncologique viscérale et digestive;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME026;A2 - Chirurgie oncologique thoracique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME026;A2 - Chirurgie oncologique thoracique;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME027;A3 - Chirurgie oncologiqueORL, cervico-faciale et maxillo-faciale, dont la chirurgie du cancer de la thyroïde;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME027;A3 - Chirurgie oncologiqueORL, cervico-faciale et maxillo-faciale, dont la chirurgie du cancer de la thyroïde;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME028;A4 - Chirurgie oncologique urologique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME028;A4 - Chirurgie oncologique urologique;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME029;A5 - Chirurgie oncologique gynécologique;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME029;A5 - Chirurgie oncologique gynécologique;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME030;A6 - Chirurgie oncologique mammaire;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME030;A6 - Chirurgie oncologique mammaire;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME031;A7 - Chirurgie oncologique indifférenciée;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS01;Mission de recours et chirurgie oncologique complexe y compris avec atteinte péritonéale (hors PTS d’organes ci-après);DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS01;Mission de recours et chirurgie oncologique complexe y compris avec atteinte péritonéale (hors PTS d’organes ci-après);DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS02;Chirurgie oncologique de l’œsophage ou de la  jonction gastro-œsophagienne;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS02;Chirurgie oncologique de l’œsophage ou de la  jonction gastro-œsophagienne;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS03;Chirurgie oncologique du foie;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS03;Chirurgie oncologique du foie;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS04;Chirurgie oncologique du l’estomac;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS04;Chirurgie oncologique du l’estomac;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS05;Chirurgie oncologique du pancréas;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS05;Chirurgie oncologique du pancréas;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS06;Chirurgie oncologique du rectum;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME032;B1 - Chirurgie oncologique viscérale et digestive complexe;PTS06;Chirurgie oncologique du rectum;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME033;B2 - Chirurgie oncologique thoracique complexe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME033;B2 - Chirurgie oncologique thoracique complexe;PTS00;Pas de pratique thérapeutique spécifique;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME034;B3 - Chirurgie oncologique ORL, cervico-faciale et maxillo-faciale complexe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME034;B3 - Chirurgie oncologique ORL, cervico-faciale et maxillo-faciale complexe;PTS00;Pas de pratique thérapeutique spécifique;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME035;B4 - Chirurgie oncologique urologique complexe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME035;B4 - Chirurgie oncologique urologique complexe;PTS00;Pas de pratique thérapeutique spécifique;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME036;B5 - Chirurgie oncologique gynécologique complexe;PTS07;Mission de recours et chirurgie oncologique complexe y compris avec atteinte péritonéale (hors PTS ovaire ci-après);DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME036;B5 - Chirurgie oncologique gynécologique complexe;PTS07;Mission de recours et chirurgie oncologique complexe y compris avec atteinte péritonéale (hors PTS ovaire ci-après);DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME036;B5 - Chirurgie oncologique gynécologique complexe;PTS08;Chirurgie oncologique de l'ovaire;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME036;B5 - Chirurgie oncologique gynécologique complexe;PTS08;Chirurgie oncologique de l'ovaire;DE013;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique (pour la région Corse et les DROM)
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME037;C - Chirurgie oncologique chez l'Enfant et les adolescents de moins de 18 ans;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO008;Chirurgie oncologique;ME037;C - Chirurgie oncologique chez l'Enfant et les adolescents de moins de 18 ans;PTS00;Pas de pratique thérapeutique spécifique;DE014;Demande exceptionnelle d’autorisation de chirurgie oncologique avec mention C hors site également autorisé en TMSC avec mention C
+QA018;Traitement du cancer;MO009;Radiothérapie externe, curiethérapie;ME038;A - Radiothérapie externe chez l’adulte;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO009;Radiothérapie externe, curiethérapie;ME038;A - Radiothérapie externe chez l’adulte;PTS00;Pas de pratique thérapeutique spécifique;DE012;Demande exceptionnelle d'autorisation dérogatoire pour exception géographique
+QA018;Traitement du cancer;MO009;Radiothérapie externe, curiethérapie;ME039;B - Curiethérapie chez l’adulte;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO009;Radiothérapie externe, curiethérapie;ME040;C1 - Radiothérapie externe chez l'Enfant et l'adolescent de moins de 18 ans (en sus des mêmes traitements de radiothérapie externe chez l'adulte);PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO009;Radiothérapie externe, curiethérapie;ME041;C2 - Curiethérapie chez l'Enfant et l'adolescent de moins de 18 ans (en sus des mêmes traitements de curiethérapie chez l'adulte);PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO010;Traitements médicamenteux systémiques du cancer;ME042;A - TMSC chez l'adulte;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO010;Traitements médicamenteux systémiques du cancer;ME043;B - TMSC chez l'adulte comprenant les chimiothérapies intensives entrainant une aplasie prévisible de plus de huit jours;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA018;Traitement du cancer;MO010;Traitements médicamenteux systémiques du cancer;ME044;C - TMSC chez l'Enfant et l’adolescent de moins de 18 ans comprenant les chimiothérapie intensives entraînant une aplasie prévisible de plus de huit jours;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA019;Génétique;MO026;Cytogénétique y compris cytogénétique moléculaire;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA019;Génétique;MO027;Génétique moléculaire;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA020;Hospitalisation à domicile;MO000;Pas de modalité;ME001;Socle;PTS00;Pas de pratique thérapeutique spécifique;DE026;Liste des communes (à renseigner dans la suite du dossier)
+QA020;Hospitalisation à domicile;MO000;Pas de modalité;ME002;​Réadaptation;PTS00;Pas de pratique thérapeutique spécifique;DE026;Liste des communes (à renseigner dans la suite du dossier)
+QA020;Hospitalisation à domicile;MO000;Pas de modalité;ME003;​Ante et post partum;PTS00;Pas de pratique thérapeutique spécifique;DE026;Liste des communes (à renseigner dans la suite du dossier)
+QA020;Hospitalisation à domicile;MO000;Pas de modalité;ME004;​Enfants de moins de trois ans;PTS00;Pas de pratique thérapeutique spécifique;DE026;Liste des communes (à renseigner dans la suite du dossier)
+QA021;DPN;MO060;DPN - Examens de cytogénétique y compris les examens moléculaires appliqués à la cytogénétique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA021;DPN;MOMAN;DPN - Examens de génétique moléculaire;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA021;DPN;MO062;DPN -  Examens en vue du diagnostic de maladies infectieuses;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA021;DPN;MOMAL;DPN -  Examens de biochimie portant sur les marqueurs sériques maternels;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA021;DPN;MOMAM;DPN -  Examens de biochimie fœtale à visée diagnostique;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA021;DPN;MOMAP;DPN -  Examens de génétique portant sur l'ADN fœtal libre circulant dans le sang maternel (dépistage);ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA030;Radiologie interventionnelle;MO000;Pas de modalité;ME045;Mention A - Actes de radiologie interventionnelle par voie endo-veineuse;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA030;Radiologie interventionnelle;MO000;Pas de modalité;ME046;Mention B - En sus des actes autorisés au titre de la mention A;PTS09;Hors actes portant sur l'aorte thoracique;DE000;Pas de déclaration
+QA030;Radiologie interventionnelle;MO000;Pas de modalité;ME046;Mention B - En sus des actes autorisés au titre de la mention A;PTS10;Y compris actes portant sur l'aorte thoracique;DE000;Pas de déclaration
+QA030;Radiologie interventionnelle;MO000;Pas de modalité;ME047;Mention C - En sus des actes autorisés au titre de la mention B et à l'Exception des actes réalisés dans les conditions spécifiquement prévues au titre de la mention D;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA030;Radiologie interventionnelle;MO000;Pas de modalité;ME048;Mention D - Ensemble des actes mentionnés à l'article R. 6123-165;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA040;Médecine nucléaire;MO000;Pas de modalité;ME007;Mention A - Actes diagnostiques ou thérapeutiques hors pathologie cancéreuses réalisés par l'administration de mrp en système clos;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA040;Médecine nucléaire;MO000;Pas de modalité;ME008;​Mention B - Actes diagnostiques ou thérapeutiques y compris pour les pathologies cancéreuses réalisés par l'administration de mrp en système clos ouvert;PTS00;Pas de pratique thérapeutique spécifique;DE001;B1 : Actes diagnostiques ou thérapeutiques réalisés par l’administration de mrp préparé en système ouvert
+QA040;Médecine nucléaire;MO000;Pas de modalité;ME008;​Mention B - Actes diagnostiques ou thérapeutiques y compris pour les pathologies cancéreuses réalisés par l'administration de mrp en système clos ouvert;PTS00;Pas de pratique thérapeutique spécifique;DE002;B2 : Actes diagnostiques réalisés dans le cadre d’explorations de marquage cellulaire des éléments figurés du sang par un ou des radionucléides
+QA040;Médecine nucléaire;MO000;Pas de modalité;ME008;​Mention B - Actes diagnostiques ou thérapeutiques y compris pour les pathologies cancéreuses réalisés par l'administration de mrp en système clos ouvert;PTS00;Pas de pratique thérapeutique spécifique;DE003;B3 : Actes thérapeutiques réalisés par l’administration de dispositif médical implantable actif
+QA040;Médecine nucléaire;MO000;Pas de modalité;ME008;​Mention B - Actes diagnostiques ou thérapeutiques y compris pour les pathologies cancéreuses réalisés par l'administration de mrp en système clos ouvert;PTS00;Pas de pratique thérapeutique spécifique;DE004;B4 : Actes thérapeutiques pour les pathologies cancéreuses réalisés par l’administration de mrp
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME050;​Polyvalent;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME059;​Gériatrie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME051;​Locomoteur;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME052;​Système nerveux;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME053;Cardio-Vasculaire;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME054;​Pneumologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME055;​Système digestif, endocrinologie, diabétologie, nutrition;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME057;​Brûlés;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO000;Pas de modalité;ME058;​Conduites addictives;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO007;​Pédiatrie;ME060;​Enfants et adolescents;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO007;​Pédiatrie;ME061;​Jeunes enfants, enfants et adolescents;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO002;​Cancer;ME062;​Oncologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA050;​Soins médicaux et de réadaptation;MO002;​Cancer;ME056;​Oncologie et hématologie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME080;Rein;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME085;Cœur;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME086;Poumon;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME087;Cœur-poumon;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME083;Foie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME084;Intestin;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME081;Pancréas;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME082;Rein-pancréas;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO006;Adultes;ME088;Cellules hématopoïétiques Allogreffe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME080;Rein;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME085;Cœur;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME086;Poumon;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME087;Cœur-poumon;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME083;Foie;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME084;Intestin;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME082;Rein-pancréas;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME081;Pancréas;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QA080;Greffe;MO007;​Pédiatrie;ME088;Cellules hématopoïétiques Allogreffe;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QEML1;Radiologie diagnostique;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QEML2;Caisson hyperbare;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration
+QEML3;Cyclotron à utilisation médicale;MO000;Pas de modalité;ME000;Pas de mention;PTS00;Pas de pratique thérapeutique spécifique;DE000;Pas de déclaration

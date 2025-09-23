@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fluxarhgos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<horodatage>
+  <emetteur>arhgos</emetteur>
+  <destinataire>finess</destinataire>
+  <versionmessage>test</versionmessage>
+  <datemaj>2025-08-12</datemaj>
+</horodatage>
+<activiteamm>
+  <nofinessej>450018106</nofinessej>
+  <rsej>UGECAM CENTRE</rsej>
+  <activite>QA050</activite>
+  <modalite>MO000</modalite>
+  <mention>ME051</mention>
+  <pts>PTS00</pts>
+  <declaration>DE000</declaration>
+  <codeautorarhgos>24-24-1370</codeautorarhgos>
+  <dateautor>2010-07-30</dateautor>
+  <daterenouv>2023-01-27</daterenouv>
+  <nofinesset>370000218</nofinesset>
+  <rset>CRF CLOS ST VICTOR - JOUE LES TOURS</rset>
+  <datelimite xsi:nil="true"/>
+  <datemeo>2012-07-27</datemeo>
+  <dateeffet xsi:nil="true"/>
+  <datefin>2030-01-26</datefin>
+  <datemaj xsi:nil="true"/>
+  <tep xsi:nil="true"/>
+  <temp xsi:nil="true"/>
+  <irm xsi:nil="true"/>
+  <scanner xsi:nil="true"/>
+</activiteamm>
+</fluxarhgos>

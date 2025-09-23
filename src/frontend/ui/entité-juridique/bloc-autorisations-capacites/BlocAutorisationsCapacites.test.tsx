@@ -4,6 +4,7 @@ import { mock } from "jest-mock-extended";
 import { BlocAutorisationsCapacites } from "./BlocAutorisationsCapacites";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 import {
+  AutorisationActivitesAmm,
   AutorisationsActivités,
   AutresActivités,
   CapacitéSanitaireEntitéJuridique,
@@ -20,10 +21,11 @@ describe("Bloc Autorisation et activités", () => {
   beforeAll(() => {
     viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
-      mock<AutorisationsActivités>({ autorisations: [] }),
-      mock<AutresActivités>({ autorisations: [] }),
-      mock<ReconnaissanceContractuelleActivités>({ autorisations: [] }),
-      mock<EquipementsMateriauxLourdsActivités>({ autorisations: [] }),
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<AutorisationActivitesAmm>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<AutresActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<ReconnaissanceContractuelleActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<EquipementsMateriauxLourdsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
       wording
     );
   });
@@ -32,6 +34,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     viewModel.autorisationsActivités = mock<AutorisationsActivités>({
       autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
+      dateMiseÀJourSource: '11/11/2025'
     });
 
     // WHEN
@@ -46,6 +49,8 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     viewModel.autresActivités = mock<AutresActivités>({
       autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
+      dateMiseÀJourSource: '11/11/2025'
+
     });
     // WHEN
     renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
@@ -59,6 +64,8 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     viewModel.reconnaissanceActivités = mock<ReconnaissanceContractuelleActivités>({
       autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test2" }] }] }] }] }],
+      dateMiseÀJourSource: '11/11/2025'
+
     });
 
     // WHEN
@@ -73,6 +80,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     viewModel.equipementsLourds = mock<EquipementsMateriauxLourdsActivités>({
       autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test2", valeur: "10" }] }] }] }],
+      dateMiseÀJourSource: '11/11/2025'
     });
 
     // WHEN
@@ -87,6 +95,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
@@ -110,6 +119,7 @@ describe("Bloc Autorisation et activités", () => {
     // GIVEN
     const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
       [],
+      { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },

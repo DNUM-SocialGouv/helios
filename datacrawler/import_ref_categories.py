@@ -5,20 +5,23 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.load.nom_des_tables import TABLE_REF_CATEGORIES
-from datacrawler.extract.lecteur_xml import lis_le_fichier_xml
+from datacrawler.extract.lecteur_xml import lis_le_fichier_xml_en_stream
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.transform.équivalences_finess_helios import (
-    XPATH_FINESS_CS1500106,
-    type_des_colonnes_categories_finess
+    XML_TAG_FINESS_CS1500106,
+    type_des_colonnes_categories_finess,
+    colonnes_a_garder_categories_finess,
     )
 from datacrawler.transform.transforme_les_categories.transforme_les_categories import transforme_les_categories
 
 
 def import_ref_categories(chemin_du_fichier: str, base_de_donnees: Engine, logger: Logger) -> None:
     logger.info("[FINESS] Récupère les catégories finess")
-    categies_finess = lis_le_fichier_xml(
+    categies_finess = lis_le_fichier_xml_en_stream(
+        logger,
         chemin_du_fichier,
-        XPATH_FINESS_CS1500106,
+        XML_TAG_FINESS_CS1500106,
+        colonnes_a_garder_categories_finess,
         type_des_colonnes_categories_finess,
     )
     categories_transformees = transforme_les_categories(categies_finess)

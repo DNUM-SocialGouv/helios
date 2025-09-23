@@ -93,6 +93,7 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
     const autorisationsMédicoSociauxFileName = "finess_cs1400105_stock_";
     const autresActivitésSanitairesFileName = "finess_cs1600101_stock_";
     const reconnaissancesContractuellesSanitairesFileName = "finess_cs1600102_stock_";
+    const autorisationsAMMSanitairesFileName = "amm_arhgos_";
 
     await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, autorisationsSanitairesFileName);
 
@@ -104,7 +105,10 @@ export class FinessSftpDownloadRawData implements DownloadRawData {
 
     await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, reconnaissancesContractuellesSanitairesFileName);
 
-    this.logger.info('[FINESS] Les 5 fichiers contenant les autorisations du répertoire "enrichi" téléchargés.');
+    await this.downloadFile(enrichiFiles, `${this.localPath}/enrichi`, this.enrichiSftpPath, autorisationsAMMSanitairesFileName);
+
+
+    this.logger.info('[FINESS] Les 6 fichiers contenant les autorisations du répertoire "enrichi" téléchargés.');
   }
 
   private async disconnect() {
