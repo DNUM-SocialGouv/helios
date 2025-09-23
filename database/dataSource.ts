@@ -323,6 +323,7 @@ const datasource = new DataSource({
     AjoutTableVigieRhMouvementsRH1757337280336,
     AjoutTableVigieRhMouvementsTrimestriels1757662996841,
     SupressionColonneEffectifDePyramideAges1758270710076,
+    AjoutDonneesMensuellesPsy1756720758341,
     AjoutTableRessourcesHumainesEJ1757946729822,
     ModificationValeurProfilAjoutBlocRhEj1758098318274
   ],
