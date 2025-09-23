@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { EntiteJuridiqueRessourcesHumaines } from "../../../../backend/métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
+import { EtablissementTerritorialSanitaireRH } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
@@ -8,12 +8,12 @@ import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizon
 import { StringFormater } from "../../commun/StringFormater";
 
 type IndicateurAvecNombre = Exclude<
-  keyof EntiteJuridiqueRessourcesHumaines, "annee"
+  keyof EtablissementTerritorialSanitaireRH, "annee"
 >;
 
-export class EntiteJuridiqueRessourcesHumainesViewModel {
 
-  constructor(private readonly ressourcesHumainesEntiteJuridique: EntiteJuridiqueRessourcesHumaines[], private readonly wording: Wording) {
+export class EtablissementTerritorialSanitaireRHViewModel {
+  constructor(private readonly ressourcesHumainesEtablissementSanitaire: EtablissementTerritorialSanitaireRH[], private readonly wording: Wording) {
   }
 
   public get lesDonneesRessourcesHumainesNeSontPasRenseigner(): boolean {
@@ -129,14 +129,13 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     );
   }
 
-
   private extraireLesValeursNombreesDesIndicateurs(indicateur: IndicateurAvecNombre): [number[], string[]] {
     const valeurs: number[] = [];
     const annees: string[] = [];
-    this.ressourcesHumainesEntiteJuridique.forEach((donneeRessourceHumaineEntiteJuridique: EntiteJuridiqueRessourcesHumaines) => {
-      const valeur = donneeRessourceHumaineEntiteJuridique[indicateur].valeur;
+    this.ressourcesHumainesEtablissementSanitaire.forEach((donneeRessourceHumaineEtablissementSanitaire: EtablissementTerritorialSanitaireRH) => {
+      const valeur = donneeRessourceHumaineEtablissementSanitaire[indicateur].valeur;
       if (valeur !== null && valeur !== "") {
-        annees.push(donneeRessourceHumaineEntiteJuridique.annee.toString());
+        annees.push(donneeRessourceHumaineEtablissementSanitaire.annee.toString());
         valeurs.push(valeur);
       }
     });
@@ -164,62 +163,62 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get nombreDEtpPmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
   }
 
   public get nombreDEtpPmEstIlAutorise(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== '');
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== '');
   }
 
   public get nombreDEtpPnmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
   }
 
   public get nombreDEtpPnmEstIlAutorise(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== '');
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== '');
   }
 
   public get depensesInterimPmSontEllesRenseignees(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
   }
 
   public get depensesInterimPmSontEllesAutorisees(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== '');
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== '');
   }
 
   public get joursAbsenteismePmSontIlsRenseignes(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null);
   }
 
   public get joursAbsenteismePmSontIlsAutorises(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== '');
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== '');
   }
 
   public get joursAbsenteismePnmSontIlsRenseignes(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== null);
   }
 
   public get joursAbsenteismePnmSontIlsAutorises(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== '');
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== '');
   }
 
   public get dateMiseAJourNombreEtpPm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPm.dateMiseAJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesEtablissementSanitaire[0].nombreEtpPm.dateMiseAJourSource);
   }
 
   public get dateMiseAJourNombreEtpPnm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].nombreEtpPnm.dateMiseAJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesEtablissementSanitaire[0].nombreEtpPnm.dateMiseAJourSource);
   }
 
   public get dateMiseAJourDepensesInterimPm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].depensesInterimPm.dateMiseAJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesEtablissementSanitaire[0].depensesInterimPm.dateMiseAJourSource);
   }
 
   public get dateMiseAJourJoursAbsenteismePm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].joursAbsenteismePm.dateMiseAJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesEtablissementSanitaire[0].joursAbsenteismePm.dateMiseAJourSource);
   }
 
   public get dateMiseAJourJoursAbsenteismePnm(): string {
-    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].joursAbsenteismePnm.dateMiseAJourSource);
+    return StringFormater.formatDate(this.ressourcesHumainesEtablissementSanitaire[0].joursAbsenteismePnm.dateMiseAJourSource);
   }
 }
