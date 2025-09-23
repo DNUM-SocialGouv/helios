@@ -46,7 +46,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0].annee === -1
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0]?.annee === -1
   }
 
   public get lesDonneesVgRHPasRenseignees(): string[] {
@@ -114,7 +114,6 @@ export class BlocVigieRHViewModel {
         categorie,
         dataCategorie: {
           dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
-          dataEtab: dataCategorie?.map(entry => entry.effectifEtab),
           dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
         },
       }));

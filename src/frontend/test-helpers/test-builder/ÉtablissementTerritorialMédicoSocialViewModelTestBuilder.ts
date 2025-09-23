@@ -652,7 +652,6 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
             annee: 2020,
             mois: 2,
             effectifFiliere: 20,
-            effectifEtab: 25,
           }]
         }
       ]

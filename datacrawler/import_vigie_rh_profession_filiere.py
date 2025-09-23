@@ -38,9 +38,10 @@ def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, 
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(database)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
-    # Convertir 'mois' et 'quarter' en nombres entiers après gestion des flottants
+    # Convertir 'mois' en nombres entiers après gestion des flottants
     donnees["mois"] = pd.to_numeric(donnees["mois"], errors='coerce').fillna(0).astype(int)
-    donnees["quarter"] = pd.to_numeric(donnees["quarter"], errors='coerce').fillna(0).astype(int)
+    donnees["profession_code"] = pd.to_numeric(donnees["profession_code"], errors='coerce').astype('Int64')
+
 
     # Appliquer la fonction de vérification de la période valide
     donnees["est_valide"] = donnees.apply(est_dans_la_periode_valide, axis=1)
@@ -51,7 +52,6 @@ def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, 
         (donnees["numero_finess"].astype(str).isin(numeros_finess_liste)) &
         (donnees["est_valide"]) &  # Utiliser la colonne "est_valide" pour filtrer
         (donnees["mois"].between(1, 12)) &
-        (donnees["quarter"].between(1, 4)) &
         (donnees["profession_code"].isin(ref_code))
     ]
 

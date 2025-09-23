@@ -380,7 +380,6 @@ describe("La récupération d’un établissement territorial médico-social", (
                 annee: 2020,
                 mois: 2,
                 effectifFiliere: 20,
-                effectifEtab: 25,
               }]
             }
           ]
@@ -405,7 +404,6 @@ describe("La récupération d’un établissement territorial médico-social", (
                 annee: 2022,
                 mois: 3,
                 effectifFiliere: 20,
-                effectifEtab: 25,
               }]
             }
           ]
