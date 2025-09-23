@@ -182,7 +182,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 }
 
                 const courant = Number(totaux[last]) || 0;
-                const ref = mois[last]; // { mois, annee }
+                const ref = mois[last];
 
                 // recherche de l’iso-période (même mois, année-1)
                 const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
