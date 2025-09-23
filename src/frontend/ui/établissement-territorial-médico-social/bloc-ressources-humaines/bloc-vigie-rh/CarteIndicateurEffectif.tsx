@@ -43,8 +43,20 @@ export default function CarteIndicateurEffectif({
   const deltaAbs = currentValue - previousValue;
   const deltaPct = previousValue === 0 ? null : (deltaAbs / previousValue) * 100;
 
-  const arrow = deltaAbs > 0 ? ArrowUpSVG("var(--text-action-high-blue-france)") : deltaAbs < 0 ? ArrowDownSVG("var(--text-action-high-blue-france)") : ArrowRightSVG("var(--text-action-high-blue-france)");
-  const sign = deltaAbs > 0 ? "+" : deltaAbs < 0 ? "−" : "";
+  let arrow;
+  if (deltaAbs > 0) {
+    arrow = ArrowUpSVG("var(--text-action-high-blue-france)");
+  } else if (deltaAbs < 0) {
+    arrow = ArrowDownSVG("var(--text-action-high-blue-france)");
+  } else {
+    arrow = ArrowRightSVG("var(--text-action-high-blue-france)");
+  }
+  let sign = "";
+  if (deltaAbs > 0) {
+    sign = "+";
+  } else if (deltaAbs < 0) {
+    sign = "−";
+  }
 
   /* calculs d’affichage pour éviter “par rapport à …” sans métrique */
   const showPctNow = !!(showPercent && deltaPct !== null);
@@ -65,39 +77,58 @@ export default function CarteIndicateurEffectif({
 
       <div className={styles["variation"]}>
         {deltaAbs !== 0 ? (
-          showPctNow || showAbsNow ? (
-            <>
-              <span className={styles["variationValue"]}>
-                  {showPctNow && (
-                    <span>
-                      {sign}
-                      {pf.format(Math.abs(deltaPct as number))}%
-                    </span>
-                  )}
-                  {showPctNow && showAbsNow ? " " : null}
-                  {showAbsNow && (
-                    <span>
-                      ({sign}
-                      {nf.format(Math.abs(deltaAbs))})
-                    </span>
-                  )}
-              </span>
-              <span> {" "}par rapport à {comparaisonLabel}</span>
-            </>
-          ) : (
-            /* fallback explicite si aucune métrique affichable */
-            <span style={{ color: "#666" }}>{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</span>
-          )
+          (() => {
+            if (showPctNow || showAbsNow) {
+              return (
+                <>
+                  <span className={styles["variationValue"]}>
+                    {showPctNow && (
+                      <span>
+                        {sign}
+                        {pf.format(Math.abs(deltaPct as number))}%
+                      </span>
+                    )}
+                    {showPctNow && showAbsNow ? " " : null}
+                    {showAbsNow && (
+                      <span>
+                        ({sign}
+                        {nf.format(Math.abs(deltaAbs))})
+                      </span>
+                    )}
+                  </span>
+                  <span> {" "}par rapport à {comparaisonLabel}</span>
+                </>
+              );
+            } else {
+              return (
+                <span style={{ color: "#666" }}>
+                  {wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}
+                </span>
+              );
+            }
+          })()
         ) : (
           <span style={{ color: "#666" }}>Stable par rapport à {comparaisonLabel}</span>
         )}
       </div>
 
       {/* Lecture d’écran : annonce la tendance et la variation */}
-      <span className="fr-sr-only">
-        Variation {deltaAbs > 0 ? "en hausse" : deltaAbs < 0 ? "en baisse" : "stable"}
-        {deltaPct !== null ? ` de ${pf.format(Math.abs(deltaPct))} pour cent` : ""} par rapport à {comparaisonLabel}.
-      </span>
+      {(() => {
+        let variationText: string;
+        if (deltaAbs > 0) {
+          variationText = "en hausse";
+        } else if (deltaAbs < 0) {
+          variationText = "en baisse";
+        } else {
+          variationText = "stable";
+        }
+        return (
+          <span className="fr-sr-only">
+            Variation {variationText}
+            {deltaPct !== null ? ` de ${pf.format(Math.abs(deltaPct))} pour cent` : ""} par rapport à {comparaisonLabel}.
+          </span>
+        );
+      })()}
     </div>
   );
 }
