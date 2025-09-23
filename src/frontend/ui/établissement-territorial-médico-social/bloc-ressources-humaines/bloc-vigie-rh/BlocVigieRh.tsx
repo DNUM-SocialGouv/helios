@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
@@ -12,7 +13,6 @@ import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -129,11 +129,9 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-{!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuPyramideDesAges />
-            }
+            contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-departs-embauches"
             nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
             source={wording.VIGIE_RH}
@@ -143,44 +141,41 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
               donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
             />
           </IndicateurGraphique>
-        ) : <></>
-        }      </ul>
+        ) : (
+          <></>
+        )}{" "}
+      </ul>
 
-            {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
-                <>
-                    <SeparatorHorizontal></SeparatorHorizontal>
-                    <IndicateurGraphique
-                        contenuInfoBulle={
-                            <ContenuEffectifs
-                                dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                                source={wording.VIGIE_RH}
-                            />
-                        }
-                        identifiant="vr-effectifs"
-                        nomDeLIndicateur={wording.EFFECTIFS}
-                        source={wording.VIGIE_RH}
-                    >
-                        <div className="fr-grid-row">
-                          {(() => {
-                            const items = donneesEffectifs.data ?? [];
-                            const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
-                            if (!items.length) return null;
-                            return (
-                              <LineChart
-                                classContainer="fr-col-6 fr-mb-4w"
-                                couleurEffectifsTotaux={couleurEffectifsTotaux}
-                                couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                                dataEffectifs={dataEffectifs}
-                                multiCategories={items}
-                              />
-                            );
-                          })()}
-                        </div>
-                    </IndicateurGraphique>
-                </>
-            ) : <></>
-            }
-
+      {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
+        <>
+          <SeparatorHorizontal></SeparatorHorizontal>
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            identifiant="vr-effectifs"
+            nomDeLIndicateur={wording.EFFECTIFS}
+            source={wording.VIGIE_RH}
+          >
+            <div className="fr-grid-row">
+              {(() => {
+                const items = donneesEffectifs.data ?? [];
+                const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+                if (!items.length) return null;
+                return (
+                  <LineChart
+                    classContainer="fr-col-6 fr-mb-4w"
+                    couleurEffectifsTotaux={couleurEffectifsTotaux}
+                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                    dataEffectifs={dataEffectifs}
+                    multiCategories={items}
+                  />
+                );
+              })()}
+            </div>
+          </IndicateurGraphique>
         </>
-    );
+      ) : (
+        <></>
+      )}
+    </>
+  );
 };
