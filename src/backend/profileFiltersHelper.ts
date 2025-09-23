@@ -1,4 +1,5 @@
 import { AllocationRessource } from "./métier/entities/AllocationRessource";
+import { EntiteJuridiqueRessourcesHumaines } from "./métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { EntitéJuridique } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
@@ -35,6 +36,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const activitésMensuels = result.activitésMensuels;
+  const ressourcesHumaines = filterRessourcesHumainesEJ(result.ressourcesHumaines, profil.ressourcesHumaines);
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -56,6 +58,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     allocationRessource: allocationRessource,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+    ressourcesHumaines
   };
 }
 
@@ -515,6 +518,16 @@ const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: Allocati
 
   return allocationRessource;
 };
+
+const filterRessourcesHumainesEJ = (ressourcesHumaines: EntiteJuridiqueRessourcesHumaines[], profil: any): EntiteJuridiqueRessourcesHumaines[] => {
+  ressourcesHumaines.forEach((rh) => {
+    if (profil.nombreEtpPm !== 'ok') rh.nombreEtpPm.valeur = "";
+    if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
+    if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
+    if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+  });
+  return ressourcesHumaines;
+}
 
 export const combineProfils = (userProfils: any[]) => {
   const combinedProfile = userProfils[0];

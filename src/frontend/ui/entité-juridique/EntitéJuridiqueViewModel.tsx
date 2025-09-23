@@ -7,6 +7,7 @@ import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActi
 import { EntiteJuridiqueActivitesViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
+import { EntiteJuridiqueRessourcesHumainesViewModel } from "./bloc-ressources-humaines/EntiteJuridiqueRessourcesHumainesViewModel";
 import { CatégorisationViewModel } from "./catégorisation/CatégorisationViewModel";
 
 export class EntiteJuridiqueViewModel {
@@ -15,6 +16,7 @@ export class EntiteJuridiqueViewModel {
   public entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
   public entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
+  public entiteJuridiqueRessourcesHumainesViewModel: EntiteJuridiqueRessourcesHumainesViewModel;
 
   constructor(private readonly entitéJuridique: EntitéJuridique, private readonly wording: Wording, autorisations: any) {
     this.catégorisationViewModel = new CatégorisationViewModel(entitéJuridique.catégorisation, wording);
@@ -35,6 +37,7 @@ export class EntiteJuridiqueViewModel {
       entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités,
       wording
     );
+    this.entiteJuridiqueRessourcesHumainesViewModel = new EntiteJuridiqueRessourcesHumainesViewModel(entitéJuridique.ressourcesHumaines, wording);
   }
 
   public get titreAccessible(): ReactElement {

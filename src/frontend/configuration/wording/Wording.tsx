@@ -334,6 +334,8 @@ export interface Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string;
+  readonly NOMBRE_D_ETP_PM: string
+  readonly NOMBRE_D_ETP_PNM: string
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string;
   readonly TAUX_D_ABSENTÉISME: string;
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement;
@@ -344,11 +346,13 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string;
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string;
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string;
+  readonly JOURS_ABSENTEISME_PM : string
   readonly TAUX: string;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string;
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string;
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string;
+  readonly DEPENSES_INTERIM_PM: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string;
@@ -455,6 +459,8 @@ export interface Wording {
   readonly EXPORTER: string;
   readonly DANS_FAVORIS: string;
   readonly NON_FAVORIS: string;
+  readonly IMPORTER_UNE_LISTE: string;
+  readonly IMPORTER_DES_ETABLISSEMENTS: string;
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string;
@@ -467,6 +473,24 @@ export interface Wording {
 
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
+
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string;
+  readonly IMPORT_LIST_SELECTOR: string;
+  readonly IMPORT_MAX_LISTE_ATTEINT: string;
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string;
+  readonly IMPORT_SUCCESS_TITLE: string;
+  readonly IMPORT_SUCESS_MESSAGE: string;
+  readonly IMPORT_LIST_ERREUR_IMPORT: string;
+  readonly IMPORT_LIST_FINESS_HEADER: string;
+  readonly IMPORT_LIST_RS_HEADER: string;
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string;
+  readonly IMPORT_LIST_TITLE: string;
+  readonly IMPORT_LIST_CANCEL_LABEL: string;
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string;
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string;
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string;
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;

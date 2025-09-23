@@ -4,6 +4,11 @@
     color: #000091;
 }
 
+.actionButton {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .reste-liste {
     background-color: var(--background-alt-blue-france);
     height: 100%;

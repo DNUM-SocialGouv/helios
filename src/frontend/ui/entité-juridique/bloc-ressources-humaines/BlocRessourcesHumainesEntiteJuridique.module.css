@@ -1,0 +1,23 @@
+.liste-indicateurs {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 36em) {
+  .liste-indicateurs {
+    display: inherit;
+  }
+}
+
+@media print {
+  .liste-indicateurs {
+    display: block !important;
+  }
+
+  .liste-indicateurs li {
+    display: block;
+    margin-bottom: 10px;
+    page-break-inside: avoid;
+  }
+}

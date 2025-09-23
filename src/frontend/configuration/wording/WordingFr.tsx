@@ -393,6 +393,8 @@ export class WordingFr implements Wording {
     </>
   );
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = "Nombre d’ETP Total réalisé";
+  readonly NOMBRE_D_ETP_PM: string = "Nombre d’ETP PM"
+  readonly NOMBRE_D_ETP_PNM: string = "Nombre d’ETP PNM"
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string = "Taux de rotation du personnel sur effectifs réels";
   readonly TAUX_D_ABSENTÉISME: string = "Taux d’absentéisme";
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement = (
@@ -412,6 +414,7 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = "Pour congés spéciaux dont les congés sans solde (hors congés payés)";
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
+  readonly JOURS_ABSENTEISME_PM: string = "Jour d’absentéisme PM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -421,6 +424,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = "Nombre de CDD de remplacement";
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string = "Taux d’ETP vacants au 31/12";
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string = "Taux de prestations externes sur les prestations directes";
+  readonly DEPENSES_INTERIM_PM: string = "Dépenses d’intérim PM"
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = "Établissement territorial";
@@ -537,6 +541,9 @@ export class WordingFr implements Wording {
   readonly EXPORTER: string = "Exporter";
   readonly DANS_FAVORIS: string = "Dans les favoris";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
+  readonly IMPORTER_UNE_LISTE: string = "Importer une liste";
+  readonly IMPORTER_DES_ETABLISSEMENTS: string = "Importer une liste";
+
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
@@ -549,6 +556,24 @@ export class WordingFr implements Wording {
 
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
+
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie`;
+  readonly IMPORT_LIST_SELECTOR: string = "Importer dans une nouvelle liste ou une liste existante";
+  readonly IMPORT_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly IMPORT_SUCCESS_TITLE: string = "Succès";
+  readonly IMPORT_SUCESS_MESSAGE: string = "Les modifications ont bien été enregistrées";
+  readonly IMPORT_LIST_ERREUR_IMPORT: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
+  readonly IMPORT_LIST_FINESS_HEADER: string = "N° Finess";
+  readonly IMPORT_LIST_RS_HEADER: string = "Raison sociale";
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string = "Le numéro FINESS est composé de 9 caractères alphanumérique. Veuillez saisir un numéro par ligne sans espace, ni ponctuation.";
+  readonly IMPORT_LIST_TITLE: string = "Importer des établissements";
+  readonly IMPORT_LIST_CANCEL_LABEL: string = "Annuler";
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string = "Valider";
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string = "Vérifier";
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string = "Importer";
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";

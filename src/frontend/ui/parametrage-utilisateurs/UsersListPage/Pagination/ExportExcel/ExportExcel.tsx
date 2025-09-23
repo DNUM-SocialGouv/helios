@@ -1,6 +1,6 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import { Workbook } from "exceljs";
 import { memo } from "react";
-import * as XLSX from "xlsx";
 
 import styles from "./ExportExcel.module.css";
 import { InstitutionModel } from "../../../../../../../database/models/InstitutionModel";
@@ -8,7 +8,9 @@ import { ProfilModel } from "../../../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../../../database/models/UtilisateurModel";
 import { formatDateAndHours } from "../../../../../utils/dateUtils";
+import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../../../utils/excelUtils";
 import { IQueryParams, getUserStatus } from "../../UsersListPage";
+
 
 export function getCurrentDate() {
   const today = new Date();
@@ -56,18 +58,19 @@ function transformDataRow(user: UtilisateurModel, profiles: ProfilModel[]) {
   ];
 }
 
-function transformData(users: UtilisateurModel[], profiles: ProfilModel[]): (string | Number)[][] {
+function transformData(users: UtilisateurModel[], profiles: ProfilModel[]): (string | number)[][] {
   if (users) {
     return users.map((user) => transformDataRow(user, profiles));
   }
   return [];
 }
 
-export function ExportToExcel(headerRecherche: string[], headers: string[], data: (string | Number)[][], fileName: string) {
-  const ws = XLSX.utils.aoa_to_sheet([headerRecherche, [""], headers, ...data]);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "liste des utilisateurs");
-  XLSX.writeFile(wb, fileName);
+export async function ExportToExcel(headerRecherche: string[], headers: string[], data: (string | number)[][], fileName: string) {
+  const lignes: (string | number)[][] = [headerRecherche, [""], headers, ...data];
+  const workbook = new Workbook();
+  const sheet = workbook.addWorksheet("liste des utilisateurs");
+  ecrireLignesDansSheet(lignes, sheet);
+  return telechargerWorkbook(workbook, fileName);
 }
 
 async function getUsersData(params: any) {

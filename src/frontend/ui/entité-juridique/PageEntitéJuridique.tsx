@@ -13,6 +13,7 @@ import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActi
 import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
+import { BlocRessourcesHumainesEntiteJuridique } from "./bloc-ressources-humaines/BlocRessourcesHumainesEntiteJuridique";
 import { Catégorisation } from "./catégorisation/Catégorisation";
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { useExportExcelETRattache } from "./ExportExcelETRattaches";
@@ -88,9 +89,14 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-          toggelBlocs={() => toggelBlocs(2)} type="EJ" />
+        <BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={entitéJuridiqueViewModel.entiteJuridiqueRessourcesHumainesViewModel} openedBloc={statusBlocs[2]}
+          toggleBlocs={() => toggelBlocs(2)} />
+
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
+          toggelBlocs={() => toggelBlocs(3)} type="EJ" />
 
       </div>
     </main>
