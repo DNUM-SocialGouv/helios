@@ -3,6 +3,7 @@
   border: 1px solid #e5e5f4;
   border-radius: 12px;
   max-width: 360px;
+  max-height: fit-content;
 }
 
 /* Ligne flèche + valeur */
