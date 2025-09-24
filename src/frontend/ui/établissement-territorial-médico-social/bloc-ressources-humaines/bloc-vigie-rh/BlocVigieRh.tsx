@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
+import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
-import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
 import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
@@ -13,6 +13,7 @@ import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { MOIS } from "../../../../utils/constantes";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -43,10 +44,6 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
   }, [anneeEnCours]);
-
-  if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
-    return <div>{wording.INDICATEURS_VIDES}</div>;
-  }
 
   // --- helper : aligne sur (année, mois) et somme les filières ---
   function buildTotalsFromCategories(categories: ProfessionFiliereData[]): EffectifsData {
@@ -98,6 +95,37 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     return { dataFiliere: [], dataEtab, dataMoisAnnee };
   }
 
+  const indicateurEffectif = useMemo(() => {
+    const items = donneesEffectifs.data ?? [];
+    if (!items.length) return null;
+
+    const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+    const mois = dataEffectifs.dataMoisAnnee ?? [];
+    const totaux = dataEffectifs.dataEtab ?? [];
+    if (!mois.length || !totaux.length) return null;
+
+    // dernier point valide
+    let last = totaux.length - 1;
+    while (last >= 0 && (totaux[last] === null || Number.isNaN(totaux[last] as any))) last--;
+    if (last < 0) return null;
+
+    const courant = Number(totaux[last]) || 0;
+    const ref = mois[last];
+
+    // iso-période (même mois année-1)
+    const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
+    if (isoIdx < 0) return null;
+
+    const precedent = Number(totaux[isoIdx]) || 0;
+    const comparaisonLabel = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+
+    return { items, dataEffectifs, courant, precedent, comparaisonLabel };
+  }, [donneesEffectifs]);
+
+  if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
+    return <div>{wording.INDICATEURS_VIDES}</div>;
+  }
+
   return (
     <>
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
@@ -144,38 +172,45 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}{" "}
-      </ul>
-
-      {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
-        <>
-          <SeparatorHorizontal></SeparatorHorizontal>
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
             identifiant="vr-effectifs"
             nomDeLIndicateur={wording.EFFECTIFS}
             source={wording.VIGIE_RH}
           >
-            <div className="fr-grid-row">
-              {(() => {
-                const items = donneesEffectifs.data ?? [];
-                const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
-                if (!items.length) return null;
-                return (
+            {(() => {
+              const items = indicateurEffectif?.items ?? [];
+              const EMPTY_EFFECTIFS: EffectifsData = { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] };
+              const dataEffectifsForChart = indicateurEffectif?.dataEffectifs ?? EMPTY_EFFECTIFS;
+
+              return (
+                <>
+                  {/* Colonne graphique */}
                   <LineChart
-                    classContainer="fr-col-6 fr-mb-4w"
+                    classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                    dataEffectifs={dataEffectifs}
+                    dataEffectifs={dataEffectifsForChart}
                     multiCategories={items}
                   />
-                );
-              })()}
-            </div>
+                </>
+              );
+            })()}
           </IndicateurGraphique>
-        </>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <CarteIndicateurEffectif
+            comparaisonLabel={indicateurEffectif.comparaisonLabel}
+            currentValue={indicateurEffectif.courant}
+            previousValue={indicateurEffectif.precedent}
+          />
+        ) : (
+          <></>
+        )}
+      </ul>
     </>
   );
 };
