@@ -5,7 +5,6 @@
 import React from "react";
 
 import styles from "./CarteIndicateurEffectif.module.css";
-import { useDependencies } from "../../../commun/contexts/useDependencies";
 
 /** Propriétés de la carte indicateur d’effectif. */
 type CarteIndicateurEffectifProps = Readonly<{
@@ -34,7 +33,6 @@ export default function CarteIndicateurEffectif({
   showPercent = true,
   showAbsolute = true,
 }: CarteIndicateurEffectifProps) {
-  const { wording } = useDependencies();
   const nf = new Intl.NumberFormat("fr-FR");
   const pf = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
@@ -62,11 +60,9 @@ export default function CarteIndicateurEffectif({
 
   return (
     <div aria-live="polite" className={`fr-p-3w fr-mb-4w ${styles["card"]}`}>
-      <div className={`fr-badge fr-mb-2w ${styles["badge"]}`}>{title}</div>
-
+      <p className="fr-tag">{title}</p>
       <div className={styles["headerRow"]}>
-        <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}>
-        </span>
+        <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}></span>
         <span className={styles["value"]}>{nf.format(currentValue)}</span>
       </div>
 
@@ -97,7 +93,7 @@ export default function CarteIndicateurEffectif({
                 </>
               );
             } else {
-              return <span style={{ color: "#666" }}>{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</span>;
+              return <></>;
             }
           })()
         ) : (
