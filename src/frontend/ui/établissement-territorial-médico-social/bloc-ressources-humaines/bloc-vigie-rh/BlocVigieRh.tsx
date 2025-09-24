@@ -164,7 +164,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 if (!items.length) {
                   return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
                 }
-                
+
                 const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
 
                 // --- Données iso-période (même mois N-1) à partir des totaux ---

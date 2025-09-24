@@ -35,8 +35,7 @@ export default function CarteIndicateurEffectif({
   showPercent = true,
   showAbsolute = true,
 }: CarteIndicateurEffectifProps) {
-
-    const { wording } = useDependencies();
+  const { wording } = useDependencies();
   const nf = new Intl.NumberFormat("fr-FR");
   const pf = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
@@ -96,15 +95,11 @@ export default function CarteIndicateurEffectif({
                       </span>
                     )}
                   </span>
-                  <span> {" "}par rapport à {comparaisonLabel}</span>
+                  <span> par rapport à {comparaisonLabel}</span>
                 </>
               );
             } else {
-              return (
-                <span style={{ color: "#666" }}>
-                  {wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}
-                </span>
-              );
+              return <span style={{ color: "#666" }}>{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</span>;
             }
           })()
         ) : (
