@@ -4,7 +4,6 @@
  */
 import React from "react";
 
-import { ArrowUpSVG, ArrowDownSVG, ArrowRightSVG } from "./ArrowSVG";
 import styles from "./CarteIndicateurEffectif.module.css";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 
@@ -44,11 +43,11 @@ export default function CarteIndicateurEffectif({
 
   let arrow;
   if (deltaAbs > 0) {
-    arrow = ArrowUpSVG("var(--text-action-high-blue-france)");
+    arrow = '<span class="fr-icon-arrow-right-up-line" aria-hidden="true"></span>';
   } else if (deltaAbs < 0) {
-    arrow = ArrowDownSVG("var(--text-action-high-blue-france)");
+    arrow = '<span class="fr-icon-arrow-right-down-line" aria-hidden="true"></span>';
   } else {
-    arrow = ArrowRightSVG("var(--text-action-high-blue-france)");
+    arrow = '<span class="fr-icon-arrow-right-line" aria-hidden="true"></span>';
   }
   let sign = "";
   if (deltaAbs > 0) {
@@ -66,8 +65,7 @@ export default function CarteIndicateurEffectif({
       <div className={`fr-badge fr-mb-2w ${styles["badge"]}`}>{title}</div>
 
       <div className={styles["headerRow"]}>
-        <span aria-hidden className={styles["arrow"]}>
-          {arrow}
+        <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}>
         </span>
         <span className={styles["value"]}>{nf.format(currentValue)}</span>
       </div>
