@@ -6,7 +6,6 @@ import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
-import { SeparatorHorizontal } from "../../../commun/Separateur/SeparatorHorizontal";
 import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
@@ -173,55 +172,47 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}{" "}
-      </ul>
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
+          <>
+            <IndicateurGraphique
+              contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+              identifiant="vr-effectifs"
+              nomDeLIndicateur={wording.EFFECTIFS}
+              source={wording.VIGIE_RH}
+            >
+                {(() => {
+                  const items = indicateurEffectif?.items ?? [];
+                  const EMPTY_EFFECTIFS: EffectifsData = { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] };
+                  const dataEffectifsForChart = indicateurEffectif?.dataEffectifs ?? EMPTY_EFFECTIFS;
 
-      {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
-        <>
-          <SeparatorHorizontal></SeparatorHorizontal>
-          <IndicateurGraphique
-            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
-            identifiant="vr-effectifs"
-            nomDeLIndicateur={wording.EFFECTIFS}
-            source={wording.VIGIE_RH}
-          >
-            <div className="fr-grid-row">
-              {(() => {
-                const items = indicateurEffectif?.items ?? [];
-                const EMPTY_EFFECTIFS: EffectifsData = { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] };
-                const dataEffectifsForChart = indicateurEffectif?.dataEffectifs ?? EMPTY_EFFECTIFS;
-
-                return (
-                  <>
-                    {/* Colonne graphique */}
-                    <LineChart
-                      classContainer="fr-col-6 fr-mb-4w"
-                      couleurEffectifsTotaux={couleurEffectifsTotaux}
-                      couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                      dataEffectifs={dataEffectifsForChart}
-                      multiCategories={items}
-                    />
-                  </>
-                );
-              })()}
-            </div>
-          </IndicateurGraphique>
-        </>
-      ) : (
-        <></>
-      )}
-
-      {/* Composant Carte Indicateur */}
-      {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
-        <div className="fr-col-6">
+                  return (
+                    <>
+                      {/* Colonne graphique */}
+                      <LineChart
+                        classContainer="fr-mb-4w"
+                        couleurEffectifsTotaux={couleurEffectifsTotaux}
+                        couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                        dataEffectifs={dataEffectifsForChart}
+                        multiCategories={items}
+                      />
+                    </>
+                  );
+                })()}
+            </IndicateurGraphique>
+          </>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
           <CarteIndicateurEffectif
             comparaisonLabel={indicateurEffectif.comparaisonLabel}
             currentValue={indicateurEffectif.courant}
             previousValue={indicateurEffectif.precedent}
           />
-        </div>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <></>
+        )}
+      </ul>
     </>
   );
 };
