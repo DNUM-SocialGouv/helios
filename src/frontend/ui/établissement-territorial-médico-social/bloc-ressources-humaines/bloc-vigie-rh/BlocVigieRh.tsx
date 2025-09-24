@@ -164,8 +164,8 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 if (!items.length) {
                   return <div className="fr-col-12">{wording.INDICATEUR_EFFECTIFS_DONNEES_NON_DISPONIBLE}</div>;
                 }
-                const multiCategories = items as ProfessionFiliereData[];
-                const dataEffectifs: EffectifsData = buildTotalsFromCategories(multiCategories);
+                
+                const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
 
                 // --- Données iso-période (même mois N-1) à partir des totaux ---
                 const mois = dataEffectifs.dataMoisAnnee ?? [];
@@ -182,7 +182,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 }
 
                 const courant = Number(totaux[last]) || 0;
-                const ref = mois[last]; // { mois, annee }
+                const ref = mois[last];
 
                 // recherche de l’iso-période (même mois, année-1)
                 const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
@@ -200,7 +200,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                       couleurEffectifsTotaux={couleurEffectifsTotaux}
                       couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
                       dataEffectifs={dataEffectifs}
-                      multiCategories={multiCategories}
+                      multiCategories={items}
                     />
 
                     {/* Colonne carte indicateur */}

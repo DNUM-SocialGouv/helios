@@ -9,7 +9,7 @@ import styles from "./CarteIndicateurEffectif.module.css";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 
 /** Propriétés de la carte indicateur d’effectif. */
-type Props = {
+type CarteIndicateurEffectifProps = Readonly<{
   // Libellé de la période de comparaison (ex. "septembre 2024").
   comparaisonLabel: string;
   // Valeur courante (ex. effectif total “N”).
@@ -24,7 +24,7 @@ type Props = {
   showPercent?: boolean;
   // Afficher la variation en valeur absolue.
   showAbsolute?: boolean;
-};
+}>;
 
 export default function CarteIndicateurEffectif({
   comparaisonLabel,
@@ -34,7 +34,7 @@ export default function CarteIndicateurEffectif({
   unitLabel = "Employés actifs",
   showPercent = true,
   showAbsolute = true,
-}: Props) {
+}: CarteIndicateurEffectifProps) {
 
     const { wording } = useDependencies();
   const nf = new Intl.NumberFormat("fr-FR");
