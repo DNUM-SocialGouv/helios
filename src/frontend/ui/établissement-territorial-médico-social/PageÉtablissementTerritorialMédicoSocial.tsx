@@ -65,7 +65,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     }
   }, [onBeforeGetContentResolve.current]);
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 
   return (
     <main className="fr-container" id="content">
@@ -90,8 +90,13 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocRessourcesHumainesMédicoSocial
+          blocVigieRhViewModel={établissementTerritorialViewModel.vigieRHViewModel}
+          categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement}
           opnedBloc={statusBlocs[2]}
-          toggelBlocs={() => toggelBlocs(2)} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
+          setStatusSousBlocs={setStatusSousBlocs}
+          statusSousBlocs={statusSousBlocs}
+          toggelBlocs={() => toggelBlocs(2)}
+          établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
         />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocBudgetEtFinancesMédicoSocial

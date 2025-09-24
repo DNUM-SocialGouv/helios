@@ -67,8 +67,8 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
     }
   }, [onBeforeGetContentResolve.current]);
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4);
 
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
 
   return (
     <main className="fr-container" id="content">

@@ -21,21 +21,21 @@
 
 @media (max-width: 55em) {
   .starInEstablishment {
-      color: #000091;
-      background-color: transparent !important;
-      position: relative;
-      bottom: 97%;
-      left: 84%;
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    bottom: 97%;
+    left: 84%;
   }
 }
 
 @media (max-width: 40em) {
   .starInEstablishment {
-      color: #000091;
-      background-color: transparent !important;
-      position: relative;
-      bottom: 97%;
-      left: 75%;
+    color: #000091;
+    background-color: transparent !important;
+    position: relative;
+    bottom: 97%;
+    left: 75%;
   }
 }
 

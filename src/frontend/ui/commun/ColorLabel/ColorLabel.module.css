@@ -1,0 +1,23 @@
+.colorLabelContainer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.colorLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.colorCircle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.colorLine {
+    width: 50px;
+    height: 2px;
+}

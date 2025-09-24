@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <horodatage>
+    <emetteur>finess</emetteur>
+    <destinataire>finess</destinataire>
+    <versionmessage>2</versionmessage>
+    <fluxnum>2178</fluxnum>
+    <datemaj>2022-08-24</datemaj>
+  </horodatage>
+  <structureej>
+    <nofiness>490000163</nofiness>
+    <rs>CHS CESAME ANGEVIN</rs>
+  </structureej>
+  <structureej>
+    <nofiness>670014604</nofiness>
+    <rs>FONDATION VINCENT DE PAUL</rs>
+  </structureej>
+  <structureej>
+    <nofiness>010008407</nofiness>
+    <rs>AURAL</rs>
+  </structureej>
+  <structureej>
+    <nofiness>050003508</nofiness>
+    <rs>SARL UGARIT SANTE LES JEUNES POUSSES</rs>
+  </structureej>
+  <activiteoffresoin>
+    <nofinessej>670014604</nofinessej>
+    <rsej>PAS DANS LES NoFINESS CONNUS</rsej>
+    <activite>02</activite>
+    <libactivite>Chirurgie</libactivite>
+    <modalite>00</modalite>
+    <libmodalite>Pas de modalité</libmodalite>
+    <forme>01</forme>
+    <libforme>Hospitalisation complète (24 heures consécutives ou plus)</libforme>
+    <noautor>442226732</noautor>
+    <dateautor>2000-12-12</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>670798636</nofinesset>
+    <rset>PAS DANS LES NoFINESS CONNUS</rset>
+    <noligautor>22158</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>00-00-000</noautorarhgos>
+    <noimplarhgos>00-00-000</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2001-08-03</datemeo>
+    <datefin>2029-02-04</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <activite>16</activite>
+    <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+    <modalite>42</modalite>
+    <libmodalite>Hémodialyse en unité médicalisée</libmodalite>
+    <forme>00</forme>
+    <libforme>Pas de forme</libforme>
+    <noautor>442218650</noautor>
+    <dateautor>2005-10-11</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>010005239</nofinesset>
+    <rset>NOMINAL</rset>
+    <noligautor>15239</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>01-00-000</noautorarhgos>
+    <noimplarhgos>01-00-000</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2008-12-04</datemeo>
+    <datefin>2026-05-03</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <activite>16</activite>
+    <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+    <modalite>44</modalite>
+    <libmodalite>Hémodialyse en unité d'auto dialyse assistée</libmodalite>
+    <forme>14</forme>
+    <libforme>Non saisonnier</libforme>
+    <noautor>442226729</noautor>
+    <dateautor>2005-10-11</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>010005239</nofinesset>
+    <rset>NOMINAL</rset>
+    <noligautor>22155</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>01-00-111</noautorarhgos>
+    <noimplarhgos>01-00-111</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2009-11-09</datemeo>
+    <datefin>2026-05-03</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <activite>16</activite>
+    <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+    <modalite>46</modalite>
+    <libmodalite>Dialyse péritonéale à domicile</libmodalite>
+    <forme>00</forme>
+    <libforme>Pas de forme</libforme>
+    <noautor>442226730</noautor>
+    <dateautor>2005-10-11</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>010005239</nofinesset>
+    <rset>NOMINAL</rset>
+    <noligautor>22156</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>01-00-222</noautorarhgos>
+    <noimplarhgos>01-00-222</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2008-12-04</datemeo>
+    <datefin>2026-05-03</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>010008407</nofinessej>
+    <rsej>NOMINAL</rsej>
+    <activite>16</activite>
+    <libactivite>Traitement de l'insuffisance rénale chronique par épuration extrarénale</libactivite>
+    <modalite>45</modalite>
+    <libmodalite>Hémodialyse à domicile</libmodalite>
+    <forme>00</forme>
+    <libforme>Pas de forme</libforme>
+    <noautor>442226731</noautor>
+    <dateautor>2005-10-11</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>010005239</nofinesset>
+    <rset>NOMINAL</rset>
+    <noligautor>22157</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>01-00-333</noautorarhgos>
+    <noimplarhgos>01-00-333</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2008-12-04</datemeo>
+    <datefin>2026-05-03</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>050003508</nofinessej>
+    <rsej>AVEC VALEURS MANQUANTES</rsej>
+    <activite>50</activite>
+    <libactivite>Soins de suite et de réadaptation non spécialisés</libactivite>
+    <modalite>78</modalite>
+    <libmodalite>Juvénile (âge &gt;= 6 ans et &lt; 18 ans)</libmodalite>
+    <forme>02</forme>
+    <libforme>Hospitalisation à temps partiel de jour ou de nuit</libforme>
+    <noautor>932209108</noautor>
+    <dateautor xsi:nil="true"/>
+    <indnatlien>J</indnatlien>
+    <nofinesset>010786259</nofinesset>
+    <rset>AVEC VALEURS MANQUANTES</rset>
+    <noligautor>8685</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>02-00-000</noautorarhgos>
+    <noimplarhgos>02-00-000</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo xsi:nil="true"/>
+    <datefin xsi:nil="true"/>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+  <activiteoffresoin>
+    <nofinessej>490000163</nofinessej>
+    <rsej>AVEC ACTIVITÉ MANQUANET</rsej>
+    <activite xsi:nil="true" />
+    <libactivite>Psychiatrie</libactivite>
+    <modalite>07</modalite>
+    <libmodalite>Infanto-juvénile</libmodalite>
+    <forme>04</forme>
+    <libforme>Hospitalisation à temps partiel de nuit</libforme>
+    <noautor>522204866</noautor>
+    <dateautor>2013-06-25</dateautor>
+    <indnatlien>J</indnatlien>
+    <nofinesset>490019148</nofinesset>
+    <rset>AVEC ACTIVITÉ MANQUANTE</rset>
+    <noligautor>4537</noligautor>
+    <noligautoranc xsi:nil="true"/>
+    <noautorarhgos>03-00-000</noautorarhgos>
+    <noimplarhgos>03-00-000</noimplarhgos>
+    <noancautact xsi:nil="true"/>
+    <noancauteml xsi:nil="true"/>
+    <sectpsy xsi:nil="true"/>
+    <libsectpsy xsi:nil="true"/>
+    <datemeo>2014-04-23</datemeo>
+    <datefin>2029-02-02</datefin>
+    <datelimite xsi:nil="true"/>
+    <indcaduc>N</indcaduc>
+    <daterenouv xsi:nil="true"/>
+    <indrenouv xsi:nil="true"/>
+    <indsupact>N</indsupact>
+    <indsupsite>N</indsupsite>
+    <datemajact>2022-08-24</datemajact>
+    <datemajsite>2022-08-24</datemajsite>
+  </activiteoffresoin>
+</fluxfiness>
