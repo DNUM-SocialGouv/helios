@@ -173,33 +173,31 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
           <></>
         )}{" "}
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
-          <>
-            <IndicateurGraphique
-              contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
-              identifiant="vr-effectifs"
-              nomDeLIndicateur={wording.EFFECTIFS}
-              source={wording.VIGIE_RH}
-            >
-                {(() => {
-                  const items = indicateurEffectif?.items ?? [];
-                  const EMPTY_EFFECTIFS: EffectifsData = { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] };
-                  const dataEffectifsForChart = indicateurEffectif?.dataEffectifs ?? EMPTY_EFFECTIFS;
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            identifiant="vr-effectifs"
+            nomDeLIndicateur={wording.EFFECTIFS}
+            source={wording.VIGIE_RH}
+          >
+            {(() => {
+              const items = indicateurEffectif?.items ?? [];
+              const EMPTY_EFFECTIFS: EffectifsData = { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] };
+              const dataEffectifsForChart = indicateurEffectif?.dataEffectifs ?? EMPTY_EFFECTIFS;
 
-                  return (
-                    <>
-                      {/* Colonne graphique */}
-                      <LineChart
-                        classContainer="fr-mb-4w"
-                        couleurEffectifsTotaux={couleurEffectifsTotaux}
-                        couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
-                        dataEffectifs={dataEffectifsForChart}
-                        multiCategories={items}
-                      />
-                    </>
-                  );
-                })()}
-            </IndicateurGraphique>
-          </>
+              return (
+                <>
+                  {/* Colonne graphique */}
+                  <LineChart
+                    classContainer="fr-mb-4w"
+                    couleurEffectifsTotaux={couleurEffectifsTotaux}
+                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                    dataEffectifs={dataEffectifsForChart}
+                    multiCategories={items}
+                  />
+                </>
+              );
+            })()}
+          </IndicateurGraphique>
         ) : (
           <></>
         )}
