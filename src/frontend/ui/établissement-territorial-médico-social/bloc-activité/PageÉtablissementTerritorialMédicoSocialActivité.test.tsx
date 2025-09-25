@@ -291,7 +291,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: [] },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: [], tauxRotationTrimestriel: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },
@@ -477,9 +477,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: {
-            pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: []
-          },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: [], tauxRotationTrimestriel: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },

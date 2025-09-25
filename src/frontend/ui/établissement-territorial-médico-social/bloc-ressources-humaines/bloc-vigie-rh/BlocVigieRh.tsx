@@ -221,7 +221,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             <GraphiqueTauxRotation
               blocVigieRHViewModel={blocVigieRHViewModel}
               donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
-              donneesTauxRotationTrimestriels={[]}
+              donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
             />
           </IndicateurGraphique>
         ) : (
