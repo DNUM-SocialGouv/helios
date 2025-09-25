@@ -940,7 +940,8 @@ export class ÉtablissementTerritorialTestBuilder {
       ]
     },
     departsEmbauches: [],
-    departsEmbauchesTrimestriels: []
+    departsEmbauchesTrimestriels: [],
+    tauxRotation: []
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

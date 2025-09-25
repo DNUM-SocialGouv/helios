@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column } from "typeorm";
 
 @Entity("vigierh_mouvements")
-export class VigieRhDepartsEmbauchesModel {
+export class VigieRhMouvementsModel {
   @PrimaryColumn({ type: "varchar", length: 9, name: "numero_finess_etablissement_territorial" })
   public numeroFinessET!: string;
 
@@ -19,4 +19,10 @@ export class VigieRhDepartsEmbauchesModel {
 
   @Column({ type: "int", nullable: true, name: "fins_contrats_ref" })
   public departRef!: number;
+
+  @Column({ type: "int", nullable: true, name: "taux_rotation" })
+  public rotation!: number;
+
+  @Column({ type: "int", nullable: true, name: "taux_rotation_ref" })
+  public rotationRef!: number;
 }

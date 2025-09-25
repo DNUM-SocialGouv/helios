@@ -672,7 +672,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
         embauche: 12,
         embaucheRef: 12,
       }
-    ]
+    ],
+    tauxRotation: []
   };
 
   public static crée(

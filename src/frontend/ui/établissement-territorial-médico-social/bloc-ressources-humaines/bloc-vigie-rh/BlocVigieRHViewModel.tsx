@@ -1,5 +1,6 @@
-import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
+import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme, TaillePoliceTick } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -141,6 +142,23 @@ export class BlocVigieRHViewModel {
         embauche,
         embaucheRef,
       }
+    });
+  }
+
+  public get donneesTauxRotation(): TauxRotation[] {
+    return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+  }
+
+  public construisLesLibellesDesTicks(): TaillePoliceTick[] {
+    return this.donneesTauxRotation.map((donnee) => donnee.annee === 2025 ? "bold" : "normal");
+  }
+
+  get couleursDeLHistogramme(): CouleurHistogramme[] {
+    return this.donneesTauxRotation.map(() => {
+      return {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      };
     });
   }
 
