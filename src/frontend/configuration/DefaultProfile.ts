@@ -23,6 +23,13 @@ export const DefaultProfile = {
                 "ratioDépendanceFinancière": "ok",
                 "allocationDeRessources": "ok"
             },
+            "ressourcesHumaines": {
+              "nombreEtpPm": "no",
+              "nombreEtpPnm": "no",
+              "depensesInterimPm": "no",
+              "joursAbsenteismePm": "no",
+              "joursAbsenteismePnm": "no"
+            },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
                 "autresActivités": "ok",
@@ -60,6 +67,13 @@ export const DefaultProfile = {
                 "résultatNetComptable": "ok",
                 "ratioDépendanceFinancière": "ok",
                 "allocationDeRessources": "ok"
+            },
+            "ressourcesHumaines": {
+              "nombreEtpPm": "no",
+              "nombreEtpPnm": "no",
+              "depensesInterimPm": "no",
+              "joursAbsenteismePm": "no",
+              "joursAbsenteismePnm": "no"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
@@ -149,6 +163,13 @@ export const DefaultProfile = {
                 "ratioDépendanceFinancière": "ok",
                 "allocationDeRessources": "ok"
             },
+            "ressourcesHumaines": {
+              "nombreEtpPm": "no",
+              "nombreEtpPnm": "no",
+              "depensesInterimPm": "no",
+              "joursAbsenteismePm": "no",
+              "joursAbsenteismePnm": "no"
+            },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
                 "autresActivités": "ok",
@@ -186,6 +207,13 @@ export const DefaultProfile = {
                 "résultatNetComptable": "ok",
                 "ratioDépendanceFinancière": "ok",
                 "allocationDeRessources": "ok"
+            },
+            "ressourcesHumaines": {
+              "nombreEtpPm": "no",
+              "nombreEtpPnm": "no",
+              "depensesInterimPm": "no",
+              "joursAbsenteismePm": "no",
+              "joursAbsenteismePnm": "no"
             },
             "autorisationsEtCapacités": {
                 "capacités": "ok",
