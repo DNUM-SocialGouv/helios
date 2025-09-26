@@ -4065,10 +4065,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "chart.js@npm:3.8.0"
-  checksum: 10/c73aabaa8c310e777e33b6df3623d5eaab9e36d820878c555105ad3491288f55546af0898c80f1ac7c4000ac0f62e0e714b0598783df53190ff9191f308a7f39
+"chart.js@npm:^3.9.1":
+  version: 3.9.1
+  resolution: "chart.js@npm:3.9.1"
+  checksum: 10/62ee137b296181d8d12e428cb83a02351768039ff672b8ff775534f844777e9c91a3213fc8c6c46b59175a47f23d1547178fdd64ff9afc37c2c1703b2cede93e
+  languageName: node
+  linkType: hard
+
+"chartjs-chart-treemap@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "chartjs-chart-treemap@npm:3.1.0"
+  peerDependencies:
+    chart.js: ">=3.0.0"
+  checksum: 10/faad116f097e28787343aba90262adbedd8a6c53a58ca27b12ec9c92b76a136b10c546bb09b022e685380bb7c71cef8214e84fbd8a7cde4d1deb3a4e224d0d71
   languageName: node
   linkType: hard
 
@@ -6781,7 +6790,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.21.0"
     basic-ftp: "npm:^5.0.5"
     bcrypt: "npm:^5.1.1"
-    chart.js: "npm:^3.8.0"
+    chart.js: "npm:^3.9.1"
+    chartjs-chart-treemap: "npm:^3.1.0"
     chartjs-plugin-datalabels: "npm:^2.0.0"
     cookie: "npm:^1.0.2"
     cookies-next: "npm:^4.3.0"

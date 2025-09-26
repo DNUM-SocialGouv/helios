@@ -14,6 +14,7 @@ import {
 } from "../../../../commun/Graphique/couleursGraphique";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
+import Treemap from "./Treemap";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -238,6 +239,8 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
 
         ]}
       />
+      <Treemap />
+
       <Transcription
         disabled={false}
         entêteLibellé={wording.ANNÉE}

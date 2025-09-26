@@ -36,7 +36,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
     if date_du_fichier_vigierh_ref_tranche_age != date_du_fichier_vigierh_donnees_pyramide:
         logger.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes "
-                f"({FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value}, "
+                f"({FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value}, " 
                 f"{FichierSource.VIGIE_RH_PYRAMIDE.value})."
             )
     else:
