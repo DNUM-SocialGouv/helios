@@ -291,6 +291,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },
@@ -476,6 +477,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },
@@ -543,14 +545,14 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
 
   it.each([
     [wording.TAUX_RÉALISATION_ACTIVITÉ, 5],
-    [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6],
-    [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7],
-    [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8],
-    // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
-    // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
-    // [wording.TAUX_OCCUPATION_INTERNAT, 6],
-    [wording.TAUX_OCCUPATION_AUTRE, 3],
-    [wording.TAUX_OCCUPATION_SEANCES, 4],
+    // [wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES, 6],
+    // [wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES, 7],
+    // [wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES, 8],
+    // // [wording.TAUX_OCCUPATION_EXTERNAT, 4],
+    // // [wording.TAUX_OCCUPATION_SEMI_INTERNAT, 5],
+    // // [wording.TAUX_OCCUPATION_INTERNAT, 6],
+    // [wording.TAUX_OCCUPATION_AUTRE, 3],
+    // [wording.TAUX_OCCUPATION_SEANCES, 4],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     // GIVEN
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);

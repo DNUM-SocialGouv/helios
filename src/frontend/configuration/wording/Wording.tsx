@@ -198,6 +198,7 @@ export interface Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
+  readonly TRIMESTRIEL: string;
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
@@ -393,6 +394,8 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly VIGIE_RH: ReactElement;
+
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
@@ -589,5 +592,27 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
+  readonly PYRAMIDE_DES_AGES: string;
+  readonly TRANCHE_AGE: string;
+  readonly EFFECTIF_FEMMES: string;
+  readonly EFFECTIF_FEMMES_REF: string;
+  readonly EFFECTIF_HOMMES: string;
+  readonly EFFECTIF_HOMMES_REF: string;
+  readonly EFFECTIFS: string;
+  readonly EFFECTIFS_TOTAUX: string;
+  readonly VIGIE_RH_CATEGORIE: string;
+  readonly MOIS_ANNEES: string;
+  readonly DEPARTS_EMBAUCHES: string;
+  readonly DEPARTS: string;
+  readonly EMBAUCHES: string;
+  readonly DEPARTS_REF: string;
+  readonly EMBAUCHES_REF: string;
+  readonly MOYENNE_REF: string;
+
+
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

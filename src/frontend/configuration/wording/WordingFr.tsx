@@ -227,6 +227,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
+  readonly TRIMESTRIEL: string = "Trimestriel";
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
@@ -450,6 +451,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -465,6 +467,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -677,7 +680,31 @@ export class WordingFr implements Wording {
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
+  readonly TRANCHE_AGE: string = "Tranche d'âge";
+  readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
+  readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
+  readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
+  readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS_TOTAUX: string = "Total";
+  readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
+  readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
+  readonly DEPARTS: string = "Départs";
+  readonly EMBAUCHES: string = "Embauches";
+  readonly DEPARTS_REF: string = "Moyenne des départs";
+  readonly EMBAUCHES_REF: string = "Moyenne des embauches";
+  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
+
+  readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
 
 }
+
+

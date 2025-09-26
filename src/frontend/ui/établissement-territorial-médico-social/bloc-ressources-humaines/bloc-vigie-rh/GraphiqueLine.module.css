@@ -1,0 +1,21 @@
+.chartLineDiv {
+    width: 90%;
+}
+.chartLineHeader {
+    padding: 15px 0 20px 0;
+    font-weight: bold;
+    text-transform: capitalize;
+    height: 62px;
+}
+.chartLineBody {
+    height: 250px;
+    margin: auto;
+}
+.chartLineContainer {
+    width: 95%;
+    margin-top: 20px;
+}
+.filieres_effectifs {
+  font-size: .8rem;
+  margin: 0;
+}
