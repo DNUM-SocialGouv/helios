@@ -1,7 +1,8 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -15,6 +16,7 @@ import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
+import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -41,6 +43,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
   const couleurEffectifsTotaux = "#FB8E68"; // orange
+  const couleursFilieres = ["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
@@ -96,8 +99,8 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     return { dataFiliere: [], dataEtab, dataMoisAnnee };
   }
 
+  const items = donneesEffectifs.data ?? [];
   const indicateurEffectif = useMemo(() => {
-    const items = donneesEffectifs.data ?? [];
     if (!items.length) return null;
 
     const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
@@ -126,6 +129,29 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
     return <div>{wording.INDICATEURS_VIDES}</div>;
   }
+
+  // Construit les items du treemap à partir des données d’effectifs par filière
+  // Règles :
+  // - on prend la DERNIÈRE valeur non nulle/non-NaN de la série (dernier mois disponible)
+  // - on met la filière en "Label" avec majuscule initiale
+  // - la "value" est forcée ≥ 0 (sécurise contre valeurs négatives inattendues)
+  const itemsTreemap: TreemapItem[] = (blocVigieRHViewModel.lesDonneesEffectifs.data ?? []).map((c: any) => {
+    // Série temporelle des effectifs pour la filière courante
+    const serie: number[] = c?.dataCategorie?.dataFiliere ?? [];
+
+    // Recherche depuis la fin le dernier point valide (≠ null et convertible en nombre)
+    let i = serie.length - 1;
+    while (i >= 0 && (serie[i] === null || Number.isNaN(Number(serie[i])))) i--;
+
+    // Dernier effectif valide (ou 0 si aucun trouvé)
+    const last = i >= 0 ? Number(serie[i]) : 0;
+
+    // Libellé : première lettre en majuscule (ex. "soins" → "Soins")
+    const label = c.categorie.charAt(0).toUpperCase() + c.categorie.slice(1);
+
+    // On s’assure que la valeur est positive (évite d’écraser le treemap avec une valeur négative)
+    return { label, value: Math.max(0, last) };
+  });
 
   return (
     <>
@@ -191,7 +217,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                   <LineChart
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
-                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                    couleursFilieres={couleursFilieres}
                     dataEffectifs={dataEffectifsForChart}
                     multiCategories={items}
                   />
@@ -208,6 +234,18 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             currentValue={indicateurEffectif.courant}
             previousValue={indicateurEffectif.precedent}
           />
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuRepartitionEffectif />}
+            identifiant="vr-repartition-effectif"
+            nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTreemapRepartitionEffectif couleursFilieres={couleursFilieres} height={350} items={itemsTreemap.slice(0, 4)} />
+          </IndicateurGraphique>
         ) : (
           <></>
         )}
