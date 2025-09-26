@@ -283,6 +283,7 @@ def helios_entite_juridique_ressources_humaines_builder(champs_surcharges: Optio
         "nombre_etp_pnm": 350.0,
         "depenses_interim_pm": 150.0,
         "jours_absenteisme_pm": 10.0,
+        "jours_absenteisme_pnm": 15.0,
     }
     if champs_surcharges:
         return {**ressources_humaines, **champs_surcharges}

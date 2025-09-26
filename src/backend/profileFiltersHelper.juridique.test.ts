@@ -144,6 +144,7 @@ function getRessourcesHumaines(): EntiteJuridiqueRessourcesHumaines[] {
     nombreEtpPnm: { dateMiseAJourSource: "22/01/2025", valeur: 120 },
     depensesInterimPm: { dateMiseAJourSource: "22/01/2025", valeur: 230 },
     joursAbsenteismePm: { dateMiseAJourSource: "22/01/2025", valeur: 41 },
+    joursAbsenteismePnm: { dateMiseAJourSource: "23/01/2025", valeur: 3900 },
   }
   ressourcesHumainesEJ.push(ressourcesHumaines);
   return ressourcesHumainesEJ;
@@ -207,7 +208,8 @@ function getRessourcesHumainesProfile() {
     nombreEtpPm: "ok",
     nombreEtpPnm: "ok",
     depensesInterimPm: "ok",
-    joursAbsenteismePm: "ok"
+    joursAbsenteismePm: "ok",
+    joursAbsenteismePnm: "ok"
   }
 }
 
@@ -770,6 +772,22 @@ describe("Filtre des informations de ressources humaines des entités juridique 
     expect(entiteJuriResult).toEqual(expectedIdentity);
   });
 
+  it("retire les informations de jours d'absenteisme PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePnm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePnm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
 
 
   it("retire les informations de depenses interim si il n’y a pas les droits", () => {

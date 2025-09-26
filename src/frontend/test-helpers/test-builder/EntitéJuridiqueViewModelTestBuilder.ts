@@ -94,6 +94,7 @@ export class EntitéJuridiqueViewModelTestBuilder {
       nombreEtpPnm: { dateMiseAJourSource: "2025-07-08", valeur: 120 },
       depensesInterimPm: { dateMiseAJourSource: "2025-07-09", valeur: 230 },
       joursAbsenteismePm: { dateMiseAJourSource: "2025-07-10", valeur: 41 },
+      joursAbsenteismePnm: { dateMiseAJourSource: "2025-07-11", valeur: 3900 },
     }]
   };
 

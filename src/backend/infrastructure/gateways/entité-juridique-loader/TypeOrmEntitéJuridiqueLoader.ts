@@ -527,6 +527,10 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       joursAbsenteismePm: {
         dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
         valeur: donneeRessourcesHumaines.joursAbsenteismePm
+      },
+      joursAbsenteismePnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePnm
       }
     })).forEach((e) => entiteJuridiqueRessourcesHumaines.push(e))
     return entiteJuridiqueRessourcesHumaines;
