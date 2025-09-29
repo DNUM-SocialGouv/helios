@@ -87,7 +87,6 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
         couleursDeLHistogramme={ratioDependanceFinanciereViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.RATIO_DEPENDANCE_FINANCIERE}
-        isVigieRh={false}
         libellés={ratioDependanceFinanciereViewModel.années}
         taillePoliceTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
         valeurs={ratioDependanceFinanciereViewModel.valeurs}

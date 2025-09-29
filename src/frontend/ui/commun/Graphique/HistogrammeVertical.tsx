@@ -6,7 +6,7 @@ import { Bar } from "react-chartjs-2";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
-import { annéesManquantes, annéesManquantesVigieRh } from "../../../utils/dateUtils";
+import { annéesManquantes } from "../../../utils/dateUtils";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
@@ -21,7 +21,6 @@ export function HistogrammeVertical(props: {
   entêteLibellé: string;
   identifiant: string;
   annéesTotales: number;
-  isVigieRh: boolean;
 }): ReactElement {
   const { wording } = useDependencies();
 
@@ -44,7 +43,6 @@ export function HistogrammeVertical(props: {
         datalabels: { display: false },
         type: "line",
         xAxisID: "xLine",
-        hidden: props.isVigieRh
       },
       {
         backgroundColor: props.couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
@@ -65,7 +63,7 @@ export function HistogrammeVertical(props: {
     ],
     labels: props.libellés,
   };
-  const listeAnnéesManquantes = props.isVigieRh ? annéesManquantesVigieRh(props.libellés, props.annéesTotales) : annéesManquantes(props.libellés, props.annéesTotales);
+  const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
 
   return (
     <>

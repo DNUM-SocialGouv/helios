@@ -189,7 +189,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         )}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
-        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
@@ -227,7 +226,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         )}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
-        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
@@ -266,7 +264,6 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         )}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
-        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}
