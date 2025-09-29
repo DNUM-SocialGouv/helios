@@ -44,6 +44,7 @@ export function HistogrammeVertical(props: {
         datalabels: { display: false },
         type: "line",
         xAxisID: "xLine",
+        hidden: props.isVigieRh
       },
       {
         backgroundColor: props.couleursDeLHistogramme.map((couleur) => couleur.premierPlan),

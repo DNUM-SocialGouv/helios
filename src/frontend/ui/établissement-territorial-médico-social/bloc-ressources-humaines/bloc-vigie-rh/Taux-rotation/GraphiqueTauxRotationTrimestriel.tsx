@@ -5,7 +5,7 @@ import { Bar } from "react-chartjs-2";
 
 import { TauxRotationTrimestriel } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
-import { couleurDuFondDeLaLigne, couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from "../../../../commun/Graphique/couleursGraphique";
+import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from "../../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../../commun/StringFormater";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 
@@ -34,24 +34,6 @@ const GraphiqueTauxRotationTrimestriel = ({ donneesTauxRotationTrimestriels }: G
 
   const data: ChartData = {
     datasets: [
-      {
-        borderColor: couleurDuFondDeLaLigne,
-        borderDash: [3, 3],
-        borderWidth: 2,
-        data: [
-          {
-            x: -1,
-            y: 100,
-          },
-          {
-            x: 2,
-            y: 100,
-          },
-        ],
-        datalabels: { display: false },
-        type: "line",
-        xAxisID: "xLine",
-      },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
         data: valeurs,
