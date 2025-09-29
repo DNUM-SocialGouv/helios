@@ -164,7 +164,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get nombreDEtpPmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null && ressourceHumaine.nombreEtpPm.valeur !== 0);
   }
 
   public get nombreDEtpPmEstIlAutorise(): boolean {
@@ -172,7 +172,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get nombreDEtpPnmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null && ressourceHumaine.nombreEtpPnm.valeur !== 0);
   }
 
   public get nombreDEtpPnmEstIlAutorise(): boolean {
@@ -180,7 +180,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get depensesInterimPmSontEllesRenseignees(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null && ressourceHumaine.depensesInterimPm.valeur !== 0);
   }
 
   public get depensesInterimPmSontEllesAutorisees(): boolean {
