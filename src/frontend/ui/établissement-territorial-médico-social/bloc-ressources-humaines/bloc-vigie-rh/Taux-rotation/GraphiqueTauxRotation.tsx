@@ -35,7 +35,7 @@ const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimest
       {selectedFrequency === wording.ANNUEL ?
         <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} />
         :
-        <GraphiqueTauxRotationTrimestriel donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} />
+        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} />
       }
     </div>
   );

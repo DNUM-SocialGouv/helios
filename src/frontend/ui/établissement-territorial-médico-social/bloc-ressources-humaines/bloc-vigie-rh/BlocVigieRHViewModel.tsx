@@ -1,6 +1,6 @@
 import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
-import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme, TaillePoliceTick } from "../../../commun/Graphique/couleursGraphique";
+import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -153,12 +153,20 @@ export class BlocVigieRHViewModel {
     return this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel ?? [];
   }
 
-  public construisLesLibellesDesTicks(): TaillePoliceTick[] {
-    return this.donneesTauxRotation.map((donnee) => donnee.annee === 2025 ? "bold" : "normal");
+  tickFormatter = (type: string, index: number): string => {
+    if (type === this.wording.ANNUEL) return '' + this.donneesTauxRotation[index].annee
+    else return 'T' + this.donneesTauxRotationTrimestrielles[index].trimestre
   }
 
-  get couleursDeLHistogramme(): CouleurHistogramme[] {
-    return this.donneesTauxRotation.map(() => {
+  tickX2Formatter = (type: string, index: number): string => {
+    if (type === this.wording.TRIMESTRIEL && this.donneesTauxRotationTrimestrielles[index].trimestre === 1)
+      return '' + this.donneesTauxRotationTrimestrielles[index].annee
+    else
+      return ''
+  }
+
+  couleursDeLHistogramme = (donnees: (TauxRotationTrimestriel | TauxRotation)[]): CouleurHistogramme[] => {
+    return donnees.map(() => {
       return {
         premierPlan: couleurDuFondHistogrammeJaune,
         secondPlan: couleurExtensionHistogrammeJaune,
