@@ -17,8 +17,7 @@ export const ContenuDeJoursAbsenteismePm = ({ dateDeMiseÀJour, source }: Conten
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Quotidienne
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>

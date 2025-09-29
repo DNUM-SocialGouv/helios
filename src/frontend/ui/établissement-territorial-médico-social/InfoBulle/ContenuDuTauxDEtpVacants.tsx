@@ -18,21 +18,17 @@ export const ContenuDuTauxDEtpVacants = ({ dateDeMiseÀJour, source }: ContenuDu
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Les postes sont considérés comme vacants dès lors que l’absence est supérieure à 6 mois. Le nombre d’ETP vacants est à comprendre comme la différence
-          entre les ETP budgétés et les ETP réalisés.
+          <span className="fr-text--bold">Mode de calcul :</span> Les postes sont considérés comme vacants dès lors que l’absence est supérieure à 6 mois. Le nombre d’ETP vacants est à comprendre comme la différence entre les ETP budgétés et les ETP réalisés.
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
+          <span className="fr-text--bold">Source(s) :</span> Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

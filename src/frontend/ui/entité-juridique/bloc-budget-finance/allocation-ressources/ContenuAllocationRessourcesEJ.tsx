@@ -32,14 +32,12 @@ export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source, compar
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Quotidienne
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          HAPI (HArmonisation et Partage d’Information) - Autres champs.
+          <span className="fr-text--bold">Source(s) :</span> HAPI (HArmonisation et Partage d’Information) - Autres champs.
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

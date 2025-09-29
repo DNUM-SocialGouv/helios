@@ -35,15 +35,13 @@ export const ContenuCompteDeRésultat = ({ dateDeMiseÀJour, source }: ContenuCo
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}></section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Caisse nationale de solidarité pour l’autonomie (CNSA)
+          <span className="fr-text--bold">Source(s) :</span> Caisse nationale de solidarité pour l’autonomie (CNSA)
         </p>
         <ul>
           <li>ERRD annexe 8 (feuilles « CRP SOUMIS EQUILIBRE », « CRP NON SOUMIS EQUIL » et « CRA ») </li>

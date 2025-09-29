@@ -21,14 +21,12 @@ export const ContenuDuTauxOccupation = ({ dateDeMiseÀJour, source }: ContenuDuT
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Calculé en divisant le nombre de journées réalisées dans l’année par l’établissement ou le service + les journées d’absence de moins de 72 heures pour
+          <span className="fr-text--bold">Mode de calcul :</span> Calculé en divisant le nombre de journées réalisées dans l’année par l’établissement ou le service + les journées d’absence de moins de 72 heures pour
           convenance personnelle ou hospitalisation par le nombre de journées théoriques correspondant à la capacité autorisée et financée multiplié par le
           nombre de journées d’ouverture de l’établissement ou du service (capacité × nombre de jours d’ouverture annuel).
         </p>
