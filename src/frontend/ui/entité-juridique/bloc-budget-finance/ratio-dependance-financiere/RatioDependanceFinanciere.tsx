@@ -9,7 +9,7 @@ type RationDependanceFinanciereProps = Readonly<{
   ratioDependanceFinanciereViewModel: RatioDependanceFinanciereViewModel;
 }>;
 
-export function ContenuRatioDependanceFinancière(props: { dateDeMiseÀJour: any; source: ReactElement }): ReactElement {
+export function ContenuRatioDependanceFinancière(props: Readonly<{ dateDeMiseÀJour: any; source: ReactElement }>): ReactElement {
   const { wording } = useDependencies();
 
   return (
