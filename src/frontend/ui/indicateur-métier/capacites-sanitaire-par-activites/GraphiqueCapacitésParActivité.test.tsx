@@ -364,7 +364,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       fireEvent.click(année);
 
       // THEN
-      const tableauDesCapacités = screen.getByRole("table");
+      const tableauDesCapacités = screen.getAllByRole("table")[0];
       const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
       const médecine = within(body).getAllByRole("row")[0];
       const nbLitMédecine = within(médecine).getAllByRole("cell")[1];
