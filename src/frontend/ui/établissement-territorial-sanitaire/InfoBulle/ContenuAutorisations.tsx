@@ -43,23 +43,19 @@ export const ContenuAutorisations = ({ dateDeMiseÀJour, source, estEntitéJurid
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Quotidien
+          <span className="fr-text--bold">Fréquence :</span> Quotidien
         </p>
       </section>
       {estEntitéJuridique && (
         <section aria-label={wording.MODE_DE_CALCUL}>
           <p>
-            <span className="fr-text--bold">Mode de calcul : </span>
-            Les autorisations et capacités affichées au niveau de l’entité juridique (EJ) correspondent à l’ensemble des autorisations et capacités des
-            établissements géographiques sanitaires rattachés à l’EJ.
+            <span className="fr-text--bold">Mode de calcul :</span> Les autorisations et capacités affichées au niveau de l’entité juridique (EJ) correspondent à l’ensemble des autorisations et capacités des établissements géographiques sanitaires rattachés à l’EJ.
           </p>
         </section>
       )}
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Agence Régionale Hospitalière Gestion des Objectifs Sanitaire (ARHGOS) - Fichier National des Établissements Sanitaires et Sociaux (FINESS)
+          <span className="fr-text--bold">Source(s) :</span> Agence Régionale Hospitalière Gestion des Objectifs Sanitaire (ARHGOS) - Fichier National des Établissements Sanitaires et Sociaux (FINESS)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

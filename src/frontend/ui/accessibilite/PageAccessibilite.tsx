@@ -22,7 +22,7 @@ export const PageAccessibilite = () => {
         <p>Helios s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.</p>
         <p>À cette fin, elle rédige la stratégie et le plan d’action à mettre en œuvre.</p>
         <p>
-          Cette déclaration d’accessibilité s’applique à&nbsp;
+          Cette déclaration d’accessibilité s’applique à{" "}
           <a className="fr-link" href="https://www.helios.ars.sante.fr/" rel="external noopener noreferrer" target="_blank">
             www.helios.ars.sante.fr/
           </a>
@@ -31,18 +31,18 @@ export const PageAccessibilite = () => {
       <div className="fr-mb-5w">
         <h3 className="fr-h6">État de conformité</h3>
         <p>
-          Le site&nbsp;
+          Le site{" "}
           <a className="fr-link" href="https://www.helios.ars.sante.fr/" rel="external noopener noreferrer" target="_blank">
             www.helios.ars.sante.fr/
           </a>{" "}
-          &nbsp;est non conforme avec le référentiel général d’amélioration de l’accessibilité (RGAA) car l’audit n’a pas encore été effectué.
+          est non conforme avec le référentiel général d’amélioration de l’accessibilité (RGAA) car l’audit n’a pas encore été effectué.
         </p>
       </div>
       <div className="fr-mb-5w">
         <h3 className="fr-h6">Retours d’informations et contact</h3>
         <p>
           Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous
-          un courriel à&nbsp;
+          un courriel à{" "}
           <a
             className="fr-link"
             href="mailto:dnum.scn-helios-support@sg.social.gouv.fr"
@@ -60,18 +60,10 @@ export const PageAccessibilite = () => {
         </p>
         <ul>
           <li>
-            Écrire un message au Défenseur des droits (
-            <a className="fr-link" href="https://formulaire.defenseurdesdroits.fr/">
-              https://formulaire.defenseurdesdroits.fr/
-            </a>
-            )
+            Écrire un message au Défenseur des droits (<a className="fr-link" href="https://formulaire.defenseurdesdroits.fr/">https://formulaire.defenseurdesdroits.fr/</a>)
           </li>
           <li>
-            Contacter le délégué du Défenseur des droits dans votre région (
-            <a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues">
-              https://www.defenseurdesdroits.fr/saisir/delegues
-            </a>
-            )
+            Contacter le délégué du Défenseur des droits dans votre région (<a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues">https://www.defenseurdesdroits.fr/saisir/delegues</a>)
           </li>
           <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à :</li>
 

@@ -23,14 +23,12 @@ export const ContenuAutorisations = ({ dateDeMiseÀJour, source }: ContenuAutori
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Hebdomadaire
+          <span className="fr-text--bold">Fréquence :</span> Hebdomadaire
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS)
+          <span className="fr-text--bold">Source(s) :</span> Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
