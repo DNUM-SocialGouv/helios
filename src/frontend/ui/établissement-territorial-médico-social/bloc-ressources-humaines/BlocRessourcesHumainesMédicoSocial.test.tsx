@@ -62,7 +62,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ ETP Total réalisé" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ ETP Total réalisé" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("CNSA", { selector: "abbr" });
@@ -111,7 +111,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre de CDD de remplacement" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre de CDD de remplacement" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -160,7 +160,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -211,7 +211,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_D_ETP_VACANTS_AU_31_12 });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_D_ETP_VACANTS_AU_31_12 });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -262,7 +262,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_DE_ROTATION_DU_PERSONNEL });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_DE_ROTATION_DU_PERSONNEL });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -313,7 +313,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_D_ABSENTÉISME });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_D_ABSENTÉISME });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -450,7 +450,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     const indicateur = indicateurs[indiceDeLIndicateur];
     const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
     fireEvent.click(détails);
-    const infoBulle = within(indicateur).getByRole("dialog", { name: titreDeLInfoBulle });
+    const infoBulle = screen.getByRole("dialog", { name: titreDeLInfoBulle });
     const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
 
     // WHEN

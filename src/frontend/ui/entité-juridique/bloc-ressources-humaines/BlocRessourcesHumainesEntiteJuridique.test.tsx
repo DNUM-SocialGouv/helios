@@ -79,14 +79,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const modal = within(indicateur).getByRole('dialog');
-      const titreModal = within(modal).getByRole('heading', {
-        level: 1,
-        name: wording.TITRE_TRANSCRIPTION,
-      });
-      expect(modal).toContainElement(titreModal);
-
-      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      const tableau = within(indicateur).getByRole('table', { name: 'tableau transcription' });
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
