@@ -27,8 +27,10 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   const [newListErrorMessage, setNewListErrorMessage] = useState<string>("");
   const [addToListError, setAddToListError] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>("");
+  const [textChanged, setTextChanged] = useState<boolean>(false);
 
   const onChangeFinessAImporter = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextChanged(true);
     setFinessAImporter(e.target.value);
   };
 
@@ -92,6 +94,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   }
 
   const handleOkButton = () => {
+    setTextChanged(false);
     if (isImportForm() && displayNewListInput) {
       handleListCreation()
     } else if (isImportForm() && !displayNewListInput) {
@@ -103,7 +106,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
 
   const isButtonEnabled = () => {
     if (isErrorForm()) {
-      return true;
+      return textChanged;
     } else if (isImportForm()) {
       return !!listId || selectedList >= 0 || newListName.trim().length > 0
     } else {
