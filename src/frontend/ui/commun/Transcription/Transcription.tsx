@@ -96,8 +96,12 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
       <button aria-controls={identifiant} aria-expanded="false" className="fr-transcription__btn" disabled={disabled} onClick={() => setIsInlineOpen((prev) => !prev)}>
         {wording.AFFICHER_LA_TRANSCRIPTION}
       </button>
-      <div className="fr-collapse" id={identifiant} style={isInlineOpen ? { maxHeight: "9.5rem" } : {}} >
-        {tableContent}
+      <div className="fr-collapse" id={identifiant}>
+        {isInlineOpen && (
+          <div style={{ maxHeight: "9.5rem", overflowY: "auto", padding: "1rem" }}>
+            {tableContent}
+          </div>
+        )}
       </div>
       {isInlineOpen && (
         <div className="fr-transcription__footer">
