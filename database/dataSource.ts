@@ -82,6 +82,8 @@ import { AjoutTableRessourcesHumainesEJ1757946729822 } from "./migrations/175794
 import { ModificationValeurProfilAjoutBlocRhEj1758098318274 } from "./migrations/1758098318274-ModificationValeurProfilAjoutBlocRhEj";
 import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations/1758551051552-ModificationTableRessourcesHumainesEJ";
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
+import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
+import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -136,6 +138,7 @@ import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
 import { RefDepartementRegionModel } from "./models/RefDepartementRegionModel";
 import { RessourcesHumainesEntiteJuridiqueModel } from "./models/RessourcesHumainesEntiteJuridiqueModel";
+import { RessourcesHumainesEtablissementSanitaireModel } from "./models/RessourcesHumainesEtablissementSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "./models/RessourcesHumainesMédicoSocialModel";
 import { RoleModel } from "./models/RoleModel";
 import { SearchHistoryModel } from "./models/SearchHistoryModel";
@@ -186,6 +189,7 @@ const datasource = new DataSource({
     RechercheModel,
     ReconnaissanceContractuelleSanitaireModel,
     RessourcesHumainesEntiteJuridiqueModel,
+    RessourcesHumainesEtablissementSanitaireModel,
     RessourcesHumainesMédicoSocialModel,
     ActivitéSanitaireEntitéJuridiqueModel,
     UtilisateurModel,
@@ -328,7 +332,9 @@ const datasource = new DataSource({
     AjoutTableRessourcesHumainesEJ1757946729822,
     ModificationValeurProfilAjoutBlocRhEj1758098318274,
     ModificationTableRessourcesHumainesEJ1758551051552,
-    ModificationProfilJoursAbsPnmRhEj1758555147382
+    ModificationProfilJoursAbsPnmRhEj1758555147382,
+    AjoutTableRessourcesHumainesETSAN1758618772544,
+    ModificationProfilRessourcesHumainesETSAN1758618803617
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

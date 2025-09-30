@@ -28,6 +28,15 @@ export namespace StringFormater {
     return value.toLocaleString("fr");
   }
 
+  export function roundFormatInFrench(value: number): string {
+    return formatInFrench(round(value, 2));
+  }
+
+  function round(value: number, decimals: number = 2): number {
+    const facteur = Math.pow(10, decimals);
+    return Math.round(value * facteur) / facteur;
+  }
+
   export function addPercent(value: string) {
     return value + " %";
   }

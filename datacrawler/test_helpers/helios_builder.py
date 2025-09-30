@@ -289,6 +289,20 @@ def helios_entite_juridique_ressources_humaines_builder(champs_surcharges: Optio
         return {**ressources_humaines, **champs_surcharges}
     return ressources_humaines
 
+def helios_etablissement_sanitaire_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    ressources_humaines = {
+        "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "annee": 2020,
+        "nombre_etp_pm": 30.0,
+        "nombre_etp_pnm": 370.0,
+        "depenses_interim_pm": 950.0,
+        "jours_absenteisme_pm": 120.0,
+        "jours_absenteisme_pnm": 115.0,
+    }
+    if champs_surcharges:
+        return {**ressources_humaines, **champs_surcharges}
+    return ressources_humaines
+
 def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,

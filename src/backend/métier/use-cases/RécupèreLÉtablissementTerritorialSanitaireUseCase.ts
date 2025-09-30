@@ -40,6 +40,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
 
     const allocationRessource = await this.établissementTerritorialSanitaireLoader.chargeAllocationRessource(numéroFinessÉtablissementTerritorialSanitaire);
 
+    const ressourcesHumaines = await this.établissementTerritorialSanitaireLoader.chargeRessourcesHumaines(numéroFinessÉtablissementTerritorialSanitaire);
+
     return {
       activités: établissementTerritorialSanitaireActivités,
       activitésMensuels,
@@ -52,7 +54,8 @@ export class RécupèreLÉtablissementTerritorialSanitaireUseCase {
       budgetFinance,
       allocationRessource,
       appartientAEtablissementsSantePrivesIntérêtsCollectif: entitéJuridiqueDeRattachementEstPriveNonLucratif,
-      autorisations: {}
+      autorisations: {},
+      ressourcesHumaines
     };
   }
 }
