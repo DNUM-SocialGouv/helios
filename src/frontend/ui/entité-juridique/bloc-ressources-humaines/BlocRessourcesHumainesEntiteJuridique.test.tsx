@@ -50,7 +50,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ETP PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ETP PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -127,7 +127,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ETP PNM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ETP PNM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -212,7 +212,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Dépenses d’intérim PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Dépenses d’intérim PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -295,7 +295,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Jour d’absentéisme PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Jour d’absentéisme PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
