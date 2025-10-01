@@ -98,7 +98,7 @@ export class HistogrammeWithToggleData {
 
     const isLabelsError = stackErrors.reduce((isLabelInError, isErrorStack) => {
       return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
-    }, Array(defaultArraySize).fill(false));
+    }, new Array(defaultArraySize).fill(false));
 
     return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
