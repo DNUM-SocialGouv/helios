@@ -59,7 +59,7 @@ export default function CarteIndicateurEffectif({
   const showAbsNow = showAbsolute || (!showPctNow && !showAbsolute);
 
   return (
-    <div aria-live="polite" className={`fr-p-3w fr-mb-4w ${styles["card"]}`}>
+    <div aria-live="polite" className={`fr-p-3w fr-mb-2w ${styles["card"]}`}>
       <p className="fr-tag">{title}</p>
       <div className={styles["headerRow"]}>
         <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}></span>

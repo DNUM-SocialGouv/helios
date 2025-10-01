@@ -129,7 +129,32 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   return (
     <>
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
-
+      <div className="fr-grid-row fr-grid-row--gutters">
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <div className="fr-col-4">
+            <CarteIndicateurEffectif
+              comparaisonLabel={indicateurEffectif.comparaisonLabel}
+              currentValue={indicateurEffectif.courant}
+              previousValue={indicateurEffectif.precedent}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <div className="fr-col-4">
+            <CarteIndicateurEffectif
+              comparaisonLabel="Janvier"
+              currentValue={150}
+              previousValue={100}
+              title="Départs et embauches"
+              unitLabel="Taux de rotation"
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
         {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
@@ -198,15 +223,6 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
               );
             })()}
           </IndicateurGraphique>
-        ) : (
-          <></>
-        )}
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
-          <CarteIndicateurEffectif
-            comparaisonLabel={indicateurEffectif.comparaisonLabel}
-            currentValue={indicateurEffectif.courant}
-            previousValue={indicateurEffectif.precedent}
-          />
         ) : (
           <></>
         )}
