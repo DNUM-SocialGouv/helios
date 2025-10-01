@@ -17,7 +17,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
   const { wording } = useDependencies();
   if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 
-  const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
+  const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replaceAll(/\s/g, "");
 
   return (
     <div className={"fr-transcription fr-mb-5w fr-mt-3w " + styles["indicateur"]}>

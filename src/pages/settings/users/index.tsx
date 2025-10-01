@@ -79,7 +79,7 @@ export default function Router({
       orderByPage={orderByPage}
       profile={profile?.toString()}
       profiles={profiles}
-      role={parseInt(role)}
+      role={Number.parseInt(role)}
       roles={roles}
       sortDirPage={sortDirPage}
       userSessionRole={userSessionRole}
@@ -89,96 +89,91 @@ export default function Router({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
-  try {
-    const session = await getSession(context);
+  const session = await getSession(context);
 
-    // if current user has role 'utilisateur' redirect to page inaccessible
-    if (session?.user?.role === 3) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/inaccessible",
-        },
-      };
-    }
-
-    let userSessionRole = "";
-
-    switch (session?.user?.role as unknown as number) {
-      case 1:
-        userSessionRole = "Admin National";
-        break;
-      case 2:
-        userSessionRole = "Admin Regional";
-        break;
-      case 3:
-        userSessionRole = "Utilisateur";
-        break;
-      default:
-        userSessionRole = "Utilisateur";
-    }
-
-    let { key, orderBy, sortDir } = context.query;
-    const { page, itemsPerPage, institutionId, institution, roleId, role, etat, profil, etatId, profileId, status } = context.query;
-
-    const pageNumber = parseInt(page as string) | 1;
-    const itemsPerOnePage = parseInt(itemsPerPage as string) | 10;
-    key = key as string | "";
-
-    let institutionCode = parseInt(institutionId as string) | 0;
-    if (userSessionRole === "Admin Regional") {
-      institutionCode = session?.user?.institutionId || 0;
-    }
-    const roleCode = parseInt(roleId as string) | 0;
-    const profilId = profileId as string | "";
-    const etatCode = etatId as string | "";
-
-    orderBy = (orderBy as string) || "default";
-    sortDir = (sortDir as string) || "ASC";
-
-    const users = await getUsersListPaginatedEndpoint(
-      dependencies,
-      key,
-      pageNumber,
-      institutionCode,
-      roleCode,
-      profilId,
-      etatCode,
-      itemsPerOnePage,
-      orderBy,
-      sortDir
-    );
-
-    let lastElementInPage = false;
-    if (users.data.length === 1) {
-      lastElementInPage = true;
-    }
-
-    const institutions = await getInstitutionsEndpoint(dependencies);
-    const profiles = await getAllProfilesEndpoint(dependencies);
-    const roles = await getAllRolesEndpoint(dependencies);
-
+  // if current user has role 'utilisateur' redirect to page inaccessible
+  if (session?.user?.role === 3) {
     return {
-      props: {
-        usersPaginatedList: JSON.parse(JSON.stringify(users)),
-        keyWord: key || "",
-        institutions: JSON.parse(JSON.stringify(institutions)),
-        profiles: JSON.parse(JSON.stringify(profiles)),
-        roles: JSON.parse(JSON.stringify(roles)),
-        institution: parseInt(institution as string),
-        institutionSessionCode: institutionCode,
-        role: (role as string) || "",
-        profile: parseInt(profil as string),
-        etat: (etat as string) || "",
-        status: (status as string) || "",
-        lastElementInPage: lastElementInPage,
-        itemsPerPage: itemsPerOnePage || 10,
-        userSessionRole: userSessionRole,
-        orderByPage: orderBy,
-        sortDirPage: sortDir,
+      redirect: {
+        permanent: false,
+        destination: "/inaccessible",
       },
     };
-  } catch (error) {
-    throw error;
   }
+
+  let userSessionRole = "";
+
+  switch (session?.user?.role as unknown as number) {
+    case 1:
+      userSessionRole = "Admin National";
+      break;
+    case 2:
+      userSessionRole = "Admin Regional";
+      break;
+    case 3:
+      userSessionRole = "Utilisateur";
+      break;
+    default:
+      userSessionRole = "Utilisateur";
+  }
+
+  let { key, orderBy, sortDir } = context.query;
+  const { page, itemsPerPage, institutionId, institution, roleId, role, etat, profil, etatId, profileId, status } = context.query;
+  const pageNumber = Number.parseInt(page as string) || 1;
+  const itemsPerOnePage = Number.parseInt(itemsPerPage as string) || 10;
+  key = key as string || "";
+
+  let institutionCode = Number.parseInt(institutionId as string) || 0;
+  if (userSessionRole === "Admin Regional") {
+    institutionCode = session?.user?.institutionId ?? 0;
+  }
+  const roleCode = Number.parseInt(roleId as string) || 0;
+  const profilId = profileId as string || "";
+  const etatCode = etatId as string || "";
+
+  orderBy = (orderBy as string) || "default";
+  sortDir = (sortDir as string) || "ASC";
+
+  const users = await getUsersListPaginatedEndpoint(
+    dependencies,
+    key,
+    pageNumber,
+    institutionCode,
+    roleCode,
+    profilId,
+    etatCode,
+    itemsPerOnePage,
+    orderBy,
+    sortDir
+  );
+
+  let lastElementInPage = false;
+  if (users.data.length === 1) {
+    lastElementInPage = true;
+  }
+
+  const institutions = await getInstitutionsEndpoint(dependencies);
+  const profiles = await getAllProfilesEndpoint(dependencies);
+  const roles = await getAllRolesEndpoint(dependencies);
+
+  return {
+    props: {
+      usersPaginatedList: JSON.parse(JSON.stringify(users)),
+      keyWord: key || "",
+      institutions: JSON.parse(JSON.stringify(institutions)),
+      profiles: JSON.parse(JSON.stringify(profiles)),
+      roles: JSON.parse(JSON.stringify(roles)),
+      institution: Number.parseInt(institution as string),
+      institutionSessionCode: institutionCode,
+      role: (role as string) || "",
+      profile: Number.parseInt(profil as string),
+      etat: (etat as string) || "",
+      status: (status as string) || "",
+      lastElementInPage: lastElementInPage,
+      itemsPerPage: itemsPerOnePage || 10,
+      userSessionRole: userSessionRole,
+      orderByPage: orderBy,
+      sortDirPage: sortDir,
+    },
+  };
 }

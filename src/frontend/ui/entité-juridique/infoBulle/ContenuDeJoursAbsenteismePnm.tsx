@@ -17,15 +17,14 @@ export const ContenuDeJoursAbsenteismePnm = ({ dateDeMiseÀJour, source }: Conte
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Quotidienne
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <span className="fr-text--bold">Mode de calcul : </span>
         <p>Nombre de jours d’absence du personnel non médical</p>
-        <p>La réalisation du bilan social est obligatoire pour les établissements 
-          (qu’ils soient sanitaires, sociaux ou médico-sociaux) dont l’effectif global au 31/12/n-1 est d’au moins 300 agents. 
+        <p>La réalisation du bilan social est obligatoire pour les établissements
+          (qu’ils soient sanitaires, sociaux ou médico-sociaux) dont l’effectif global au 31/12/n-1 est d’au moins 300 agents.
           Il est facultatif pour les autres établissements.</p>
       </section>
       <section aria-label={wording.SOURCES}>

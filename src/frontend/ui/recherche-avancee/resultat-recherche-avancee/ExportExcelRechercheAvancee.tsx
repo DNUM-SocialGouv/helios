@@ -91,7 +91,7 @@ function TransformeCapacitiesetActivites(
 ) {
   return ranges.map(range => {
     if (range.startsWith('>')) {
-      const value = parseInt(range.substring(1), 10);
+      const value = Number.parseInt(range.substring(1), 10);
       return `${value + 1} et plus`;
     } else {
       return range.replace(',', '-');
@@ -106,9 +106,9 @@ function SortRanges(
     // Extract the first number from each range
     const getLowerBound = (range: string) => {
       if (range.startsWith('>')) {
-        return parseInt(range.substring(1), 10);
+        return Number.parseInt(range.substring(1), 10);
       } else {
-        return parseInt(range.split(',')[0], 10);
+        return Number.parseInt(range.split(',')[0], 10);
       }
     };
 

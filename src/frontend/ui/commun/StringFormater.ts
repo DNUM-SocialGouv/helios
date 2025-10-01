@@ -46,7 +46,7 @@ export namespace StringFormater {
   }
 
   export function removePercent(value: string) {
-    return parseFloat(value.slice(0, -2).replace(',', '.'));
+    return Number.parseFloat(value.slice(0, -2).replace(',', '.'));
   }
 
   export function addPercentToValues(values: number[]): string[] {
