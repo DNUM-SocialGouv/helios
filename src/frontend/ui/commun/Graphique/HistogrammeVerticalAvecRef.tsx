@@ -47,6 +47,8 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
   };
 
   const optionsHistogrammeVertical: ChartOptions<"bar"> = {
+    responsive: true,
+    maintainAspectRatio: true,
     animation: false,
     plugins: {
       datalabels: {
