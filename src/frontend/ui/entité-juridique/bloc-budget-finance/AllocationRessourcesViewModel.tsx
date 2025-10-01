@@ -40,7 +40,7 @@ export function formatNumbuerWithSpaces(number: number) {
   const numberString = numberV2.toString();
   // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
   // La regex (?=(?:\d{3})+(?!\d)) est utilisée pour placer les espaces
-  const formattedString = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const formattedString = numberString.replaceAll(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return formattedString;
 }
 
