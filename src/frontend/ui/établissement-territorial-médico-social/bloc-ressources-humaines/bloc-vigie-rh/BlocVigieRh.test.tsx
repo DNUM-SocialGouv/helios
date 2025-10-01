@@ -95,7 +95,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.PYRAMIDE_DES_AGES });
+      const infoBulle = screen.getByRole("dialog", { name: wording.PYRAMIDE_DES_AGES });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });
@@ -135,7 +135,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.EFFECTIFS });
+      const infoBulle = screen.getByRole("dialog", { name: wording.EFFECTIFS });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });

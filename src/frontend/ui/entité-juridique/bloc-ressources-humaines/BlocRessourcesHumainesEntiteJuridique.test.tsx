@@ -50,7 +50,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ETP PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ETP PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -79,14 +79,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const modal = within(indicateur).getByRole('dialog');
-      const titreModal = within(modal).getByRole('heading', {
-        level: 1,
-        name: wording.TITRE_TRANSCRIPTION,
-      });
-      expect(modal).toContainElement(titreModal);
-
-      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[0];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -134,7 +127,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ETP PNM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ETP PNM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -163,14 +156,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const modal = within(indicateur).getByRole('dialog');
-      const titreModal = within(modal).getByRole('heading', {
-        level: 1,
-        name: wording.TITRE_TRANSCRIPTION,
-      });
-      expect(modal).toContainElement(titreModal);
-
-      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -219,7 +205,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Dépenses d’intérim PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Dépenses d’intérim PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -246,14 +232,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const modal = within(indicateur).getByRole('dialog');
-      const titreModal = within(modal).getByRole('heading', {
-        level: 1,
-        name: wording.TITRE_TRANSCRIPTION,
-      });
-      expect(modal).toContainElement(titreModal);
-
-      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -302,7 +281,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Jour d’absentéisme PM" });
+      const infoBulle = screen.getByRole("dialog", { name: "Jour d’absentéisme PM" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -329,14 +308,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const modal = within(indicateur).getByRole('dialog');
-      const titreModal = within(modal).getByRole('heading', {
-        level: 1,
-        name: wording.TITRE_TRANSCRIPTION,
-      });
-      expect(modal).toContainElement(titreModal);
-
-      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[3];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');

@@ -146,7 +146,7 @@ describe("Graphique ResultatNetComptable", () => {
       renderFakeComponent(<ResultatNetComptable resultatNetComptableViewModel={budget.resultatNetComptable} />);
       // THEN
       const contenuTableau = graphiqueTest.transcriptionTable;
-      const transcriptionTable = within(contenuTableau);
+      const transcriptionTable = within(contenuTableau[0]);
       expect(transcriptionTable.getByText(annéeEnCours - 2)).toBeInTheDocument();
       expect(transcriptionTable.getByText(annéeEnCours - 4)).toBeInTheDocument();
       expect(transcriptionTable.getByText("10 €")).toBeInTheDocument();

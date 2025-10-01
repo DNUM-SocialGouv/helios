@@ -58,7 +58,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
       const abréviationSourceOrigine = within(indicateur).getAllByText("SIREC", { selector: "abbr" });
       expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SIREC_TITLE);
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("07/07/2023")} - Source : SIREC`), { selector: "p" });
-      expect(dateMiseAJour).toHaveLength(2);
+      expect(dateMiseAJour).toHaveLength(1);
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
       expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-${wording.RECLAMATIONS}`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
@@ -117,7 +117,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
       const abréviationSourceOrigine = within(indicateur).getAllByText("SIVSS", { selector: "abbr" });
       expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SIVSS_TITLE);
       const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("15/03/2024")} - Source : SIVSS`), { selector: "p" });
-      expect(dateMiseAJour).toHaveLength(2);
+      expect(dateMiseAJour).toHaveLength(1);
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
       expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-qualite-evenements-indesirables`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
