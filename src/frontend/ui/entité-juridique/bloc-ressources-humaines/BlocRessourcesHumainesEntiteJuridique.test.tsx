@@ -79,7 +79,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const tableau = within(indicateur).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[0];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -156,7 +156,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const tableau = within(indicateur).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -232,7 +232,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const tableau = within(indicateur).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');
@@ -308,7 +308,7 @@ describe("La page entité juridique - bloc ressources humaines", () => {
 
       fireEvent.click(boutonTranscription);
 
-      const tableau = within(indicateur).getByRole('table', { name: 'tableau transcription' });
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[3];
       expect(tableau).toBeInTheDocument();
 
       const headers = within(tableau).getAllByRole('columnheader');

@@ -379,10 +379,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
-      const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-      const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
-      const tableau = within(tauxDAbsentéisme).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[5];
       const motifLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.MOTIF_DU_TAUX_D_ABSENTÉISME });
       const tauxLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX });
       expect(motifLigneDEnTête).toBeInTheDocument();
@@ -461,20 +458,17 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "47,42", "9,71", "10,44"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "45", "4", "3"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "65,9 %", "23,2 %", "9,3 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "65,2 %", "16,4 %", "13,3 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "66,7 %", "34,4 %", "14,7 %"],
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "47,42", "9,71", "10,44"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "45", "4", "3"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "65,9 %", "23,2 %", "9,3 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "65,2 %", "16,4 %", "13,3 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "66,7 %", "34,4 %", "14,7 %"],
   ])("affiche un tableau descriptif de l’indicateur %s avec les trois années", (enTêteDuTableau, indiceDeLIndicateur, valeur2019, valeur2020, valeur2021) => {
     // WHEN
     renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -505,11 +499,11 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "9,71"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "4"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "23,2 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "16,4 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "34,4 %"],
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "9,71"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "4"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "23,2 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "16,4 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "34,4 %"],
   ])("affiche un tableau descriptif de l’indicateur %s  avec deux années", (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
@@ -524,10 +518,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -554,12 +545,12 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "9,71"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "4"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "23,2 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "16,4 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "34,4 %"],
-  ])("affiche un tableau descriptif de l’indicateur %s avec une seule année", (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "9,71"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "4"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "23,2 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "16,4 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "34,4 %"],
+  ])("affiche un tableau descriptif de l’indicateur %s avec une seule année", (enTêteDuTableau, identifiant, valeur) => {
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
       [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
@@ -570,10 +561,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
