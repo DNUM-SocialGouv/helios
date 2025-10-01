@@ -79,7 +79,7 @@ export default function Router({
       orderByPage={orderByPage}
       profile={profile?.toString()}
       profiles={profiles}
-      role={parseInt(role)}
+      role={Number.parseInt(role)}
       roles={roles}
       sortDirPage={sortDirPage}
       userSessionRole={userSessionRole}
@@ -119,15 +119,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
   let { key, orderBy, sortDir } = context.query;
   const { page, itemsPerPage, institutionId, institution, roleId, role, etat, profil, etatId, profileId, status } = context.query;
-  const pageNumber = parseInt(page as string) || 1;
-  const itemsPerOnePage = parseInt(itemsPerPage as string) || 10;
+  const pageNumber = Number.parseInt(page as string) || 1;
+  const itemsPerOnePage = Number.parseInt(itemsPerPage as string) || 10;
   key = key as string || "";
 
-  let institutionCode = parseInt(institutionId as string) || 0;
+  let institutionCode = Number.parseInt(institutionId as string) || 0;
   if (userSessionRole === "Admin Regional") {
     institutionCode = session?.user?.institutionId ?? 0;
   }
-  const roleCode = parseInt(roleId as string) || 0;
+  const roleCode = Number.parseInt(roleId as string) || 0;
   const profilId = profileId as string || "";
   const etatCode = etatId as string || "";
 
@@ -163,10 +163,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       institutions: JSON.parse(JSON.stringify(institutions)),
       profiles: JSON.parse(JSON.stringify(profiles)),
       roles: JSON.parse(JSON.stringify(roles)),
-      institution: parseInt(institution as string),
+      institution: Number.parseInt(institution as string),
       institutionSessionCode: institutionCode,
       role: (role as string) || "",
-      profile: parseInt(profil as string),
+      profile: Number.parseInt(profil as string),
       etat: (etat as string) || "",
       status: (status as string) || "",
       lastElementInPage: lastElementInPage,

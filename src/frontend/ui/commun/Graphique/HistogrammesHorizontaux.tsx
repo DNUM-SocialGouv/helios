@@ -225,7 +225,7 @@ export const HistogrammesHorizontaux = ({
   let valeursTranscription = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
   if (cacheLesValeursBasse) {
     valeursTranscription = valeursTranscription.map((valeurs) => valeurs.map((valeur) => {
-      const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+      const numValue = Number.parseInt(valeur.replaceAll(/\s/g, ""));
       if (numValue > 0 && numValue <= MIN_VALUE) {
         hasSomeValuesToHide = true;
         return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;

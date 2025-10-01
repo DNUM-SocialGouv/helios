@@ -34,7 +34,7 @@ export function convertFloatToComma(number: number) {
 
 export function formatNumbuerWithSpaces(number: number) {
 
-  const numberV2 = parseFloat(number.toFixed(2))
+  const numberV2 = Number.parseFloat(number.toFixed(2))
 
   // Convertir le nombre en une chaîne de caractères
   const numberString = numberV2.toString();
@@ -190,15 +190,15 @@ export class AllocationRessourcesViewModel {
                 const pourcentageModeDeDélégation = ((montantNotifié / totalSousEnveloppe) * 100).toFixed(1); // Garde 1 décimales
                 return { modeDeDélégation, montantNotifié, pourcentage: pourcentageModeDeDélégation };
               })
-              .sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+              .sort((a, b) => Number.parseFloat(b.pourcentage) - Number.parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
 
             return { sousEnveloppe, total: totalSousEnveloppe, pourcentage: pourcentageSousEnveloppe, modesDeDélégation: modesDeDélégationResult };
           })
-          .sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+          .sort((a, b) => Number.parseFloat(b.pourcentage) - Number.parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
 
         return { enveloppe, total: totalEnveloppe, pourcentage: pourcentageEnveloppe, sousEnveloppes: sousEnveloppesResult };
       })
-      .sort((a, b) => parseFloat(b.pourcentage) - parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
+      .sort((a, b) => Number.parseFloat(b.pourcentage) - Number.parseFloat(a.pourcentage)); // Tri par pourcentage décroissant
 
     return result;
   }
@@ -318,11 +318,11 @@ export class AllocationRessourcesViewModel {
       couleursDesLibelles.push(noir);
     }
 
-    const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => parseFloat(item.valeur.toFixed(1)));
+    const valeursDesAllocationDeRessourcePourcentage = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => Number.parseFloat(item.valeur.toFixed(1)));
     const motifsDesAllocationDeRessource = valeursAvecMotif.map((item: AllocationValeursAvecMotif) => item.motif);
 
     const motifsDesAllocationDeRessourceWithPourcentage = valeursAvecMotif.map(
-      (item: AllocationValeursAvecMotif) => `${item.motif} : ${convertFloatToComma(parseFloat(item.valeur.toFixed(1)))}%`
+      (item: AllocationValeursAvecMotif) => `${item.motif} : ${convertFloatToComma(Number.parseFloat(item.valeur.toFixed(1)))}%`
     );
 
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
