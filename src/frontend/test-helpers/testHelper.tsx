@@ -28,7 +28,7 @@ export const fakeFrontDependencies: FrontDependencies = {
 
 export const trimHtml = (reactElement: ReactElement): string => {
   let sentence = "";
-  if (reactElement.props.children instanceof Array) {
+  if (Array.isArray(reactElement.props.children)) {
     for (const children1 of reactElement.props.children) {
       if (children1.props?.children) {
         for (const children2 of children1.props.children) {
@@ -38,7 +38,7 @@ export const trimHtml = (reactElement: ReactElement): string => {
         sentence += children1;
       }
     }
-  } else if (reactElement.props.children instanceof Object) {
+  } else if (typeof reactElement.props.children === "object") {
     sentence = reactElement.props.children.props.children;
   } else {
     sentence = reactElement.props.children;
