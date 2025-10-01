@@ -163,7 +163,7 @@ export class EtablissementTerritorialSanitaireRHViewModel {
   }
 
   public get nombreDEtpPmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null && ressourceHumaine.nombreEtpPm.valeur !== 0);
   }
 
   public get nombreDEtpPmEstIlAutorise(): boolean {
@@ -171,7 +171,7 @@ export class EtablissementTerritorialSanitaireRHViewModel {
   }
 
   public get nombreDEtpPnmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null && ressourceHumaine.nombreEtpPnm.valeur !== 0);
   }
 
   public get nombreDEtpPnmEstIlAutorise(): boolean {
@@ -179,7 +179,7 @@ export class EtablissementTerritorialSanitaireRHViewModel {
   }
 
   public get depensesInterimPmSontEllesRenseignees(): boolean {
-    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null && ressourceHumaine.depensesInterimPm.valeur !== 0);
   }
 
   public get depensesInterimPmSontEllesAutorisees(): boolean {
