@@ -19,7 +19,9 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       tranchesAgesLibelles: [],
       professionFiliere: { data: [], dateDeMiseAJour: '' },
       departsEmbauches: [],
-      departsEmbauchesTrimestriels: []
+      departsEmbauchesTrimestriels: [],
+      tauxRotation: [],
+      tauxRotationTrimestriel: []
     },
     wording
   );

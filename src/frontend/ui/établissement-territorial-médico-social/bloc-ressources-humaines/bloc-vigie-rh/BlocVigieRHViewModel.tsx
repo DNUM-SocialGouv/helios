@@ -1,5 +1,6 @@
-import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
+import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -144,4 +145,32 @@ export class BlocVigieRHViewModel {
     });
   }
 
+  public get donneesTauxRotation(): TauxRotation[] {
+    return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+  }
+
+  public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
+    return this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel ?? [];
+  }
+
+  tickFormatter = (type: string, index: number): string => {
+    if (type === this.wording.ANNUEL) return '' + this.donneesTauxRotation[index].annee
+    else return 'T' + this.donneesTauxRotationTrimestrielles[index].trimestre
+  }
+
+  tickX2Formatter = (type: string, index: number): string => {
+    if (type === this.wording.TRIMESTRIEL && this.donneesTauxRotationTrimestrielles[index].trimestre === 1)
+      return '' + this.donneesTauxRotationTrimestrielles[index].annee
+    else
+      return ''
+  }
+
+  couleursDeLHistogramme = (donnees: (TauxRotationTrimestriel | TauxRotation)[]): CouleurHistogramme[] => {
+    return donnees.map(() => {
+      return {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      };
+    });
+  }
 }
