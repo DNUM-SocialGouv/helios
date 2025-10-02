@@ -84,6 +84,7 @@ import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
+import { AjoutTableParametrageJson1759416645736 } from "./migrations/1759416645736-AjoutTableParametrageJson";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -132,6 +133,7 @@ import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel"
 import { FavorisModel } from "./models/FavorisModel";
 import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
@@ -198,6 +200,7 @@ const datasource = new DataSource({
     SearchHistoryModel,
     RefDepartementRegionModel,
     ProfilModel,
+    ParametrageJsonModel,
     ReclamationETModel,
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
@@ -334,7 +337,8 @@ const datasource = new DataSource({
     ModificationTableRessourcesHumainesEJ1758551051552,
     ModificationProfilJoursAbsPnmRhEj1758555147382,
     AjoutTableRessourcesHumainesETSAN1758618772544,
-    ModificationProfilRessourcesHumainesETSAN1758618803617
+    ModificationProfilRessourcesHumainesETSAN1758618803617,
+    AjoutTableParametrageJson1759416645736
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
