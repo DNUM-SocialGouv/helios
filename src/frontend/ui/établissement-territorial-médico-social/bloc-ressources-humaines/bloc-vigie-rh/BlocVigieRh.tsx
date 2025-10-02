@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 
-import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
+import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -132,7 +132,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
       <div className="fr-grid-row fr-grid-row--gutters">
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
           <div className="fr-col-4">
-            <CarteIndicateurEffectif
+            <CarteTopIndicateur
               comparaisonLabel={indicateurEffectif.comparaisonLabel}
               currentValue={indicateurEffectif.courant}
               previousValue={indicateurEffectif.precedent}
@@ -143,7 +143,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         )}
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
           <div className="fr-col-4">
-            <CarteIndicateurEffectif
+            <CarteTopIndicateur
               comparaisonLabel="Janvier"
               currentValue={150}
               previousValue={100}
