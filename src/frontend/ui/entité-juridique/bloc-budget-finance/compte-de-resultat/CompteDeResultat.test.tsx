@@ -157,7 +157,7 @@ describe("CompteDeResultat", () => {
 
       // THEN
       const transcription = graphiqueTest.transcriptionTable;
-      const transcriptionTable = within(transcription);
+      const transcriptionTable = within(transcription[0]);
       expect(transcriptionTable.getByText(wording.CHARGES_PRINCIPALES)).toBeInTheDocument();
       expect(transcriptionTable.getByText(wording.CHARGES_ANNEXES)).toBeInTheDocument();
       expect(transcriptionTable.getByText(wording.CHARGES)).toBeInTheDocument();

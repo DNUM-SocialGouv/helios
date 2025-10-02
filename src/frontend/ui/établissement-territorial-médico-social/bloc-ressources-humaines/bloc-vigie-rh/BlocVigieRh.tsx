@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
@@ -196,7 +197,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
           </IndicateurGraphique>
         ) : (
           <></>
-        )}{" "}
+        )}
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
@@ -222,6 +223,22 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 </>
               );
             })()}
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuPyramideDesAges />}
+            identifiant="vr-taux-rotation"
+            nomDeLIndicateur={wording.TAUX_ROTATION}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTauxRotation
+              blocVigieRHViewModel={blocVigieRHViewModel}
+              donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
+              donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+            />
           </IndicateurGraphique>
         ) : (
           <></>

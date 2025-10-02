@@ -9,7 +9,7 @@ import { Wording } from "../configuration/wording/Wording";
  * @Todo : Améliorer cette classe pour pouvoir tester plus facilement le contenu de la transcription, la mise en exergue et la sélection des années
  * */
 export class GraphiqueTest {
-  constructor(private wording: Wording) {}
+  constructor(private wording: Wording) { }
 
   get détail(): HTMLElement {
     return screen.getByRole("button", { name: this.wording.DÉTAILS });
@@ -52,8 +52,8 @@ export class GraphiqueTest {
     return screen.getByText(this.wording.AFFICHER_LA_TRANSCRIPTION);
   }
 
-  get transcriptionTable(): HTMLElement {
-    return screen.getByRole("table");
+  get transcriptionTable(): HTMLElement[] {
+    return screen.getAllByRole("table");
   }
 
   afficherLaTranscription(): void {

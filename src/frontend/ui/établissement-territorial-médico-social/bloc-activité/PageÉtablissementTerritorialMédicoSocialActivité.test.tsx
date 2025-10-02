@@ -97,9 +97,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
     renderFakeComponent(<SessionProvider session={mockSession}><PageÉtablissementTerritorialMédicoSocial rechercheViewModel={rechercheViewModel} établissementTerritorialViewModel={établissementTerritorialMédicoSocial} /> </SessionProvider>);
 
     // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const indicateurs = within(activité).getAllByRole("listitem");
-    const tableau = within(indicateurs[identifiant]).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant + 1];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: titreSection });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -291,7 +289,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [] },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: [], tauxRotationTrimestriel: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },
@@ -477,7 +475,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
           budgetEtFinances: [],
           identité: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.identité,
           ressourcesHumaines: [],
-          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [] },
+          vigieRh: { pyramideAges: [], tranchesAgesLibelles: [], professionFiliere: { dateDeMiseAJour: "10-10-2020", data: [] }, departsEmbauches: [], departsEmbauchesTrimestriels: [], tauxRotation: [], tauxRotationTrimestriel: [] },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },

@@ -346,7 +346,7 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string;
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string;
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string;
-  readonly JOURS_ABSENTEISME_PM : string
+  readonly JOURS_ABSENTEISME_PM: string
   readonly TAUX: string;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string;
@@ -611,7 +611,8 @@ export interface Wording {
   readonly DEPARTS_REF: string;
   readonly EMBAUCHES_REF: string;
   readonly MOYENNE_REF: string;
-
+  readonly TAUX_ROTATION: string;
+  readonly TAUX_ROTATION_REFERENCE: string;
 
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }
