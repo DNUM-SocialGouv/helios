@@ -36,7 +36,6 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
 
   const importEts = () => {
     const finessList = finessAImporter.split(/\r?\n/).filter(ligne => ligne.trim() !== "");
-    setFinessEnErreur([]);
 
     if (finessList && finessList.length > 0) {
       fetch("/api/recherche-par-finess", {
@@ -63,6 +62,8 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
           setFinessEnErreur(finessKo);
           setFinessAImporter(finessKo.join("\n"))
         });
+    } else {
+      setFinessEnErreur([]);
     }
   }
 
