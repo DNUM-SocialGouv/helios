@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-arrows/icons-arrows.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-design/icons-design.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-user/icons-user.min.css";

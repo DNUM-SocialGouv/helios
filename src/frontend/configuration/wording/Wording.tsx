@@ -613,6 +613,7 @@ export interface Wording {
   readonly MOYENNE_REF: string;
   readonly TAUX_ROTATION: string;
   readonly TAUX_ROTATION_REFERENCE: string;
+  readonly TOP_TAUX_ROTATION_TITLE: string;
 
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

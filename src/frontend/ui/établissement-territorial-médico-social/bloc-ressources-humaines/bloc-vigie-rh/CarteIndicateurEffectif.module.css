@@ -1,8 +1,6 @@
-/* Carte visuelle */
-.card {
-  border: 1px solid #e5e5f4;
-  border-radius: 12px;
-  max-height: fit-content;
+.detailsButton {
+  display: flex;
+  justify-content: end;
 }
 
 /* Ligne flèche + valeur */

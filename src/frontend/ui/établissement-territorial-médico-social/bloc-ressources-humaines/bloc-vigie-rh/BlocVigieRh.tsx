@@ -15,6 +15,7 @@ import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
+import { StringFormater } from "../../../commun/StringFormater";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -118,9 +119,12 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     if (isoIdx < 0) return null;
 
     const precedent = Number(totaux[isoIdx]) || 0;
-    const comparaisonLabel = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
-
-    return { items, dataEffectifs, courant, precedent, comparaisonLabel };
+    const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const variation = precedent - courant;
+    const deltaPct = precedent ? precedent === 0 ? null : (variation / precedent) * 100 : null;
+    const variationText = deltaPct ? variation > 0 ? `+${StringFormater.transformInRoundedRate(deltaPct)}% (+${variation})`
+      : `${StringFormater.transformInRoundedRate(deltaPct)}% (${variation})` : '';
+    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText };
   }, [donneesEffectifs]);
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
@@ -136,20 +140,23 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             <CarteTopIndicateur
               comparaisonLabel={indicateurEffectif.comparaisonLabel}
               currentValue={indicateurEffectif.courant}
-              previousValue={indicateurEffectif.precedent}
+              variation={indicateurEffectif.variation}
+              variationText={indicateurEffectif.variationText}
             />
           </div>
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
           <div className="fr-col-4">
             <CarteTopIndicateur
-              comparaisonLabel="Janvier"
-              currentValue={150}
-              previousValue={100}
-              title="Départs et embauches"
+              comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
+              currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
+              periode={blocVigieRHViewModel.topIndicateurTauxRotation.dernierePeriode}
+              title={wording.TOP_TAUX_ROTATION_TITLE}
               unitLabel="Taux de rotation"
+              variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
+              variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
             />
           </div>
         ) : (

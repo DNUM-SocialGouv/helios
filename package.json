@@ -117,7 +117,7 @@
     "typecheck:python": "pipenv run typecheck"
   },
   "dependencies": {
-    "@gouvfr/dsfr": "1.13",
+    "@gouvfr/dsfr": "^1.14.2",
     "@next/bundle-analyzer": "^15.1.7",
     "@sentry/nextjs": "7.120.0",
     "@types/bcrypt": "^5.0.2",
