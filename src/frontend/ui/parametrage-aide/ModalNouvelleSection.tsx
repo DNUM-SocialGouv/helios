@@ -67,7 +67,7 @@ export function ModalNouvelleSection({
                 </div>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="new-section-icon">Classe d’icône (ex. fr-icon-folder-open-line)</label>
+                  <label className="fr-label" htmlFor="new-section-icon">Icone DSFR</label>
                   <input
                     className="fr-input"
                     id="new-section-icon"
