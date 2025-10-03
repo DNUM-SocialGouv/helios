@@ -497,7 +497,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeRessourcesHumaines(numeroFinessEntiteJuridique: string): Promise<EntiteJuridiqueRessourcesHumaines[]> {
     const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEntiteJuridiqueModel).find({
-      where: { numeroFinessEntiteJuridique },
+      where: { numeroFinessEntiteJuridique }, order: { annee: "ASC" }
     });
 
 

@@ -1174,7 +1174,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   async chargeRessourcesHumaines(numeroFinessET: string): Promise<EtablissementTerritorialSanitaireRH[]> {
     const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEtablissementSanitaireModel).find({
-      where: { numeroFinessEtablissementTerritorial: numeroFinessET }
+      where: { numeroFinessEtablissementTerritorial: numeroFinessET }, order: { annee: "ASC" }
     });
     const dateMisAJour = (await (await this.orm)
       .getRepository(DateMiseÀJourFichierSourceModel)
