@@ -19,7 +19,7 @@ export class WordingFr implements Wording {
   // Messages d'erreur
   readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
   readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
-  readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
+  readonly SOMETHING_WENT_WRONG: string = "Votre action n’a pas été prise en compte. Veuillez réessayer ultérieurement.";
   readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
   readonly INVALID_USER: string = "Compte non inscrit sur Helios";
 
