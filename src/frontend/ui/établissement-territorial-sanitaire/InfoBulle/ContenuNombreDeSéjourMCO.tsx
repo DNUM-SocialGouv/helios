@@ -20,8 +20,7 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source, estEntité
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Mensuelle
+          <span className="fr-text--bold">Fréquence :</span> Mensuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>

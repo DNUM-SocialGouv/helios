@@ -19,7 +19,7 @@ export class WordingFr implements Wording {
   // Messages d'erreur
   readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
   readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
-  readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
+  readonly SOMETHING_WENT_WRONG: string = "Votre action n’a pas été prise en compte. Veuillez réessayer ultérieurement.";
   readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
   readonly INVALID_USER: string = "Compte non inscrit sur Helios";
 
@@ -415,6 +415,7 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
   readonly JOURS_ABSENTEISME_PM: string = "Jour d’absentéisme PM"
+  readonly JOURS_ABSENTEISME_PNM: string = "Jour d’absentéisme PNM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -558,7 +559,13 @@ export class WordingFr implements Wording {
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
 
   // Import d'une liste de finess dans une liste de Favoris
-  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie`;
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => {
+    if (nbError > 1) {
+      return `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie.`;
+    } else {
+      return "Aucun résultat pour le numéro FINESS indiqué en rouge. Veuillez vérifier votre saisie.";
+    }
+  };
   readonly IMPORT_LIST_SELECTOR: string = "Importer dans une nouvelle liste ou une liste existante";
   readonly IMPORT_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly IMPORT_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
@@ -700,6 +707,7 @@ export class WordingFr implements Wording {
   readonly EMBAUCHES_REF: string = "Moyenne des embauches";
   readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
   readonly TAUX_ROTATION: string = "Taux de Rotation";
+  readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
 

@@ -25,14 +25,12 @@ export const ContenuDuNombreDEtpRéalisé = ({ dateDeMiseÀJour, source }: Conte
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Caisse nationale de solidarité pour l’autonomie (CNSA)
+          <span className="fr-text--bold">Source(s) :</span> Caisse nationale de solidarité pour l’autonomie (CNSA)
         </p>
         <ul>
           <li>ERRD annexe 9h_j Tableau des effectifs et des rémunérations</li>

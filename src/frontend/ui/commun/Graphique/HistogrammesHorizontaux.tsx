@@ -120,7 +120,7 @@ export class HistogrammeData {
 
     const isLabelsError = stackErrors.reduce((isLabelInError, isErrorStack) => {
       return isLabelInError.map((isError, index) => isError || isErrorStack[index]);
-    }, Array(defaultArraySize).fill(false));
+    }, new Array(defaultArraySize).fill(false));
     return isLabelsError.map((error) => (error ? couleurErreur : couleurIdentifiant));
   }
 
@@ -160,7 +160,10 @@ export class HistogrammeData {
       indexAxis: "y",
       scales: {
         x: {
-          grid: { display: false, drawBorder: false },
+          border: {
+            display: false
+          },
+          grid: { display: false },
           max: 1.45 * (valeurMax > 0 ? valeurMax : 1),
           stacked: true,
           min: 0,
@@ -170,7 +173,10 @@ export class HistogrammeData {
         },
         y: {
           stacked: true,
-          grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+          border: {
+            display: false
+          },
+          grid: { drawOnChartArea: false, drawTicks: false },
           ticks: { color: couleurDelAbscisse, font: { weight: ["400"] }, padding: 8 },
         },
       },
@@ -225,7 +231,7 @@ export const HistogrammesHorizontaux = ({
   let valeursTranscription = histogrammes.flatMap((histogramme) => histogramme.transcriptionsValeurs);
   if (cacheLesValeursBasse) {
     valeursTranscription = valeursTranscription.map((valeurs) => valeurs.map((valeur) => {
-      const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+      const numValue = Number.parseInt(valeur.replaceAll(/\s/g, ""));
       if (numValue > 0 && numValue <= MIN_VALUE) {
         hasSomeValuesToHide = true;
         return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;

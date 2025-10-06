@@ -99,7 +99,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
         const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
         //Adds padding to numbers to handle them correctly in comparison
-        const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
+        const normalize = (str: string) => str.toLowerCase().replaceAll(/(\d+)/g, (match) => match.padStart(2, "0"));
 
         // Sort both lists alphabetically by 'nom'
         const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {

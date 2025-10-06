@@ -100,20 +100,26 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
     indexAxis: "y",
     scales: {
       x: {
+        border: {
+          display: false
+        },
         ticks: {
           display: false,
         },
         position: "top",
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         barPercentage: 1,
         stacked: true,
       },
       y: {
+        border: {
+          display: false
+        },
         ticks: {
           color: '#000',
           autoSkip: false
         },
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         categoryPercentage: 0.8,
         barPercentage: 0.9,
         barThickness: 35,

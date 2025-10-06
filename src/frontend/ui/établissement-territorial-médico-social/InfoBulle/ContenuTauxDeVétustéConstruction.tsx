@@ -21,20 +21,17 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Amortissements des constructions / Immobilisations corporelles brutes construction.
+          <span className="fr-text--bold">Mode de calcul :</span> Amortissements des constructions / Immobilisations corporelles brutes construction.
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Caisse nationale de solidarité pour l’autonomie (CNSA)
+          <span className="fr-text--bold">Source(s) :</span> Caisse nationale de solidarité pour l’autonomie (CNSA)
         </p>
         <ul>
           <li>ERRD annexe 8 (feuilles « Ratios financiers »)</li>

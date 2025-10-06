@@ -20,7 +20,8 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     return !this.nombreDEtpPmEstIlRenseigne
       && !this.nombreDEtpPnmEstIlRenseigne
       && !this.depensesInterimPmSontEllesRenseignees
-      && !this.joursAbsenteismePmSontIlsRenseignes;
+      && !this.joursAbsenteismePmSontIlsRenseignes
+      && !this.joursAbsenteismePnmSontIlsRenseignes;
   }
   public get nombreEtpPm(): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("nombreEtpPm");
@@ -33,6 +34,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.NOMBRE_D_ETP_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
@@ -54,6 +56,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.NOMBRE_D_ETP_PNM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
@@ -95,6 +98,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.JOURS_ABSENTEISME_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
@@ -103,6 +107,28 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       />
     );
   }
+
+  public get joursAbsenteismePnm(): ReactElement {
+    const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("joursAbsenteismePnm");
+    const couleursHistogramme = annees.map((annee) => ({
+      premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
+      secondPlan: couleurDuFond
+    }));
+    const anneesManquantes: number[] = annéesManquantes(annees, 5);
+    return (
+      <HistogrammeHorizontal
+        couleursDeLHistogramme={couleursHistogramme}
+        entêteLibellé={this.wording.ANNÉE}
+        formateur={StringFormater.roundFormatInFrench}
+        identifiant={this.wording.JOURS_ABSENTEISME_PNM}
+        libellés={annees}
+        libellésDeValeursManquantes={anneesManquantes}
+        nombreDeLibelléTotal={5}
+        valeurs={valeurs}
+      />
+    );
+  }
+
 
   private extraireLesValeursNombreesDesIndicateurs(indicateur: IndicateurAvecNombre): [number[], string[]] {
     const valeurs: number[] = [];
@@ -123,6 +149,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     if (!this.nombreDEtpPnmEstIlRenseigne) nonRenseignees.push(this.wording.NOMBRE_D_ETP_PNM);
     if (!this.depensesInterimPmSontEllesRenseignees) nonRenseignees.push(this.wording.DEPENSES_INTERIM_PM);
     if (!this.joursAbsenteismePmSontIlsRenseignes) nonRenseignees.push(this.wording.JOURS_ABSENTEISME_PM);
+    if (!this.joursAbsenteismePnmSontIlsRenseignes) nonRenseignees.push(this.wording.JOURS_ABSENTEISME_PNM);
     return nonRenseignees;
   }
 
@@ -132,11 +159,12 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
     if (!this.nombreDEtpPnmEstIlAutorise) nonAutorisees.push(this.wording.NOMBRE_D_ETP_PNM);
     if (!this.depensesInterimPmSontEllesAutorisees) nonAutorisees.push(this.wording.DEPENSES_INTERIM_PM);
     if (!this.joursAbsenteismePmSontIlsAutorises) nonAutorisees.push(this.wording.JOURS_ABSENTEISME_PM);
+    if (!this.joursAbsenteismePnmSontIlsAutorises) nonAutorisees.push(this.wording.JOURS_ABSENTEISME_PNM);
     return nonAutorisees;
   }
 
   public get nombreDEtpPmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPm.valeur !== null && ressourceHumaine.nombreEtpPm.valeur !== 0);
   }
 
   public get nombreDEtpPmEstIlAutorise(): boolean {
@@ -144,7 +172,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get nombreDEtpPnmEstIlRenseigne(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.nombreEtpPnm.valeur !== null && ressourceHumaine.nombreEtpPnm.valeur !== 0);
   }
 
   public get nombreDEtpPnmEstIlAutorise(): boolean {
@@ -152,7 +180,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
   public get depensesInterimPmSontEllesRenseignees(): boolean {
-    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null);
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.depensesInterimPm.valeur !== null && ressourceHumaine.depensesInterimPm.valeur !== 0);
   }
 
   public get depensesInterimPmSontEllesAutorisees(): boolean {
@@ -165,6 +193,14 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
 
   public get joursAbsenteismePmSontIlsAutorises(): boolean {
     return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== '');
+  }
+
+  public get joursAbsenteismePnmSontIlsRenseignes(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== null);
+  }
+
+  public get joursAbsenteismePnmSontIlsAutorises(): boolean {
+    return this.ressourcesHumainesEntiteJuridique.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== '');
   }
 
   public get dateMiseAJourNombreEtpPm(): string {
@@ -181,5 +217,9 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
 
   public get dateMiseAJourJoursAbsenteismePm(): string {
     return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].joursAbsenteismePm.dateMiseAJourSource);
+  }
+
+  public get dateMiseAJourJoursAbsenteismePnm(): string {
+    return StringFormater.formatDate(this.ressourcesHumainesEntiteJuridique[0].joursAbsenteismePnm.dateMiseAJourSource);
   }
 }

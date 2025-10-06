@@ -214,8 +214,10 @@ export class TauxDeCafViewModel {
       },
       scales: {
         x: {
+          border: {
+            display: false
+          },
           grid: {
-            drawBorder: false,
             drawOnChartArea: false,
             drawTicks: false,
           },
@@ -239,9 +241,11 @@ export class TauxDeCafViewModel {
           type: "linear",
         },
         y: {
+          border: {
+            display: false
+          },
           grid: {
             color: couleurDuFondDeLaLigne,
-            drawBorder: false,
             drawOnChartArea: true,
             drawTicks: false,
           },

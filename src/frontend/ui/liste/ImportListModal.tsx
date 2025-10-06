@@ -27,14 +27,15 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   const [newListErrorMessage, setNewListErrorMessage] = useState<string>("");
   const [addToListError, setAddToListError] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>("");
+  const [textChanged, setTextChanged] = useState<boolean>(false);
 
   const onChangeFinessAImporter = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextChanged(true);
     setFinessAImporter(e.target.value);
   };
 
   const importEts = () => {
     const finessList = finessAImporter.split(/\r?\n/).filter(ligne => ligne.trim() !== "");
-    setFinessEnErreur([]);
 
     if (finessList && finessList.length > 0) {
       fetch("/api/recherche-par-finess", {
@@ -61,6 +62,8 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
           setFinessEnErreur(finessKo);
           setFinessAImporter(finessKo.join("\n"))
         });
+    } else {
+      setFinessEnErreur([]);
     }
   }
 
@@ -92,6 +95,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   }
 
   const handleOkButton = () => {
+    setTextChanged(false);
     if (isImportForm() && displayNewListInput) {
       handleListCreation()
     } else if (isImportForm() && !displayNewListInput) {
@@ -103,7 +107,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
 
   const isButtonEnabled = () => {
     if (isErrorForm()) {
-      return true;
+      return textChanged;
     } else if (isImportForm()) {
       return !!listId || selectedList >= 0 || newListName.trim().length > 0
     } else {

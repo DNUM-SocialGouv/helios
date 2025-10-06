@@ -114,17 +114,21 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
             return mois === 1 ? annee : "";
           },
         },
+        border: {
+          display: false
+        },
         grid: {
-          drawBorder: true,
           drawOnChartArea: true,
           drawTicks: true,
           color: (context: any) => (context.tick && context.tick.label !== "" ? GRID_COLOR : "transparent"),
         },
       },
       y: {
+        border: {
+          display: false
+        },
         beginAtZero: true,
         grid: {
-          drawBorder: true,
           drawOnChartArea: true,
           drawTicks: true,
           color: GRID_COLOR,
@@ -179,7 +183,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
                 <div className="fr-checkbox-group" key={c.categorie} style={{ display: "flex", alignItems: "center" }}>
                   <input
                     checked={!!visibleCats[c.categorie]}
-                    id={id as unknown as string}                    
+                    id={id as unknown as string}
                     onChange={() => setVisibleCats((prev) => ({ ...prev, [c.categorie]: !prev[c.categorie] }))}
                     style={{ marginRight: 6 }}
                     type="checkbox"

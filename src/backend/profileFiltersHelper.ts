@@ -2,6 +2,7 @@ import { AllocationRessource } from "./métier/entities/AllocationRessource";
 import { EntiteJuridiqueRessourcesHumaines } from "./métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { EntitéJuridique } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
+import { EtablissementTerritorialSanitaireRH } from "./métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 
 export const filterEtablissementMedicoSocial = (result: any, profil: any): ÉtablissementTerritorialMédicoSocial => {
@@ -71,6 +72,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
+  const ressourcesHumaines = filterRessourcesHumainesSanitaire(result.ressourcesHumaines, profil.ressourcesHumaines);
   return {
     identité: identité,
     activités: activités,
@@ -80,7 +82,8 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
     budgetFinance: budgetFinance,
     allocationRessource: allocationRessource,
     appartientAEtablissementsSantePrivesIntérêtsCollectif: result.appartientAEtablissementsSantePrivesIntérêtsCollectif,
-    autorisations: profil
+    autorisations: profil,
+    ressourcesHumaines
   };
 };
 
@@ -197,6 +200,18 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
   };
   return filtredAutorisationCapacite;
 };
+
+const filterRessourcesHumainesSanitaire = (ressourcesHumaines: EtablissementTerritorialSanitaireRH[], profil: any): EtablissementTerritorialSanitaireRH[] => {
+  ressourcesHumaines.forEach((rh) => {
+    if (profil.nombreEtpPm !== 'ok') rh.nombreEtpPm.valeur = "";
+    if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
+    if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
+    if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+    if (profil.joursAbsenteismePnm !== 'ok') rh.joursAbsenteismePnm.valeur = "";
+  });
+  return ressourcesHumaines;
+}
+
 
 const filterQualiteSanitaireEtMS = (qualite: any, profil: any) => {
   const filtredQualite = {
@@ -525,6 +540,7 @@ const filterRessourcesHumainesEJ = (ressourcesHumaines: EntiteJuridiqueRessource
     if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
     if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
     if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+    if (profil.joursAbsenteismePnm !== 'ok') rh.joursAbsenteismePnm.valeur = "";
   });
   return ressourcesHumaines;
 }

@@ -3,6 +3,7 @@ import { AllocationRessource } from "./métier/entities/AllocationRessource";
 import { EntiteJuridiqueDeRattachement } from "./métier/entities/entité-juridique/EntiteJuridiqueDeRattachement";
 import { CatégorisationEnum } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueBudgetFinance } from "./métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { EtablissementTerritorialSanitaireRH } from "./métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { ÉtablissementTerritorialSanitaireAutorisationEtCapacité } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
@@ -162,6 +163,18 @@ function getQualitéSanitaire(): ÉtablissementTerritorialQualite {
   }
 }
 
+function getRessourcesHumaines(): EtablissementTerritorialSanitaireRH[] {
+  const ressourcesHumainesEtSan: EtablissementTerritorialSanitaireRH[] = [{
+    annee: 2025,
+    nombreEtpPm: { dateMiseAJourSource: "22/01/2025", valeur: 100 },
+    nombreEtpPnm: { dateMiseAJourSource: "22/01/2025", valeur: 120 },
+    depensesInterimPm: { dateMiseAJourSource: "22/01/2025", valeur: 230 },
+    joursAbsenteismePm: { dateMiseAJourSource: "22/01/2025", valeur: 41 },
+    joursAbsenteismePnm: { dateMiseAJourSource: "23/01/2025", valeur: 3900 },
+  }];
+  return ressourcesHumainesEtSan;
+}
+
 function getFullSanitaire(): ÉtablissementTerritorialSanitaire {
   return {
     activités: [getActiviteSanitaire()],
@@ -173,6 +186,7 @@ function getFullSanitaire(): ÉtablissementTerritorialSanitaire {
     allocationRessource: getAllocationRessource(),
     appartientAEtablissementsSantePrivesIntérêtsCollectif: true,
     autorisations: "autorisations",
+    ressourcesHumaines: getRessourcesHumaines()
   }
 }
 
@@ -223,12 +237,11 @@ function getBudgetFinanceProfile() {
 
 function getRessourcesHumainesProfile() {
   return {
-    nombreDEtpRéalisés: "ok",
-    nombreDeCddDeRemplacement: "ok",
-    tauxDAbsentéisme: "ok",
-    tauxDEtpVacants: "ok",
-    tauxDePrestationsExternes: "ok",
-    tauxDeRotationDuPersonnel: "ok",
+    nombreEtpPm: "ok",
+    nombreEtpPnm: "ok",
+    depensesInterimPm: "ok",
+    joursAbsenteismePm: "ok",
+    joursAbsenteismePnm: "ok"
   }
 }
 
@@ -921,4 +934,93 @@ describe("Filtre les informations qualite des etablissement medico-sociaux par r
     // Then
     expect(etabMedicoSocialResult.qualite).toEqual(expectedQuality);
   })
+})
+
+describe("Filtre des informations de ressources humaines des établissements sanitaires selon le profil", () => {
+  it("retire les informations de nombre d'ETP PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullSanitaire();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPm.valeur = "";
+
+    let etablissementSanitaire = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPm = "Ko";
+
+    // When
+    etablissementSanitaire = filterEtablissementSanitaire(etablissementSanitaire, profile);
+
+    // Then
+    expect(etablissementSanitaire.ressourcesHumaines).toEqual(expectedIdentity.ressourcesHumaines);
+  });
+
+  it("retire les informations de nombre d'ETP PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullSanitaire();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPnm.valeur = "";
+
+    let etablissementSanitaire = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPnm = "Ko";
+
+    // When
+    etablissementSanitaire = filterEtablissementSanitaire(etablissementSanitaire, profile);
+
+    // Then
+    expect(etablissementSanitaire.ressourcesHumaines).toEqual(expectedIdentity.ressourcesHumaines);
+  });
+
+  it("retire les informations de jours d'absenteisme PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullSanitaire();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePm.valeur = "";
+
+    let etablissementSanitaire = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePm = "Ko";
+
+    // When
+    etablissementSanitaire = filterEtablissementSanitaire(etablissementSanitaire, profile);
+
+    // Then
+    expect(etablissementSanitaire.ressourcesHumaines).toEqual(expectedIdentity.ressourcesHumaines);
+  });
+
+  it("retire les informations de jours d'absenteisme PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullSanitaire();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePnm.valeur = "";
+
+    let etablissementSanitaire = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePnm = "Ko";
+
+    // When
+    etablissementSanitaire = filterEtablissementSanitaire(etablissementSanitaire, profile);
+
+    // Then
+    expect(etablissementSanitaire.ressourcesHumaines).toEqual(expectedIdentity.ressourcesHumaines);
+  });
+
+
+  it("retire les informations de depenses interim si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullSanitaire();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].depensesInterimPm.valeur = "";
+
+    let etablissementSanitaire = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.depensesInterimPm = "Ko";
+
+    // When
+    etablissementSanitaire = filterEtablissementSanitaire(etablissementSanitaire, profile);
+
+    // Then
+    expect(etablissementSanitaire.ressourcesHumaines).toEqual(expectedIdentity.ressourcesHumaines);
+  });
+
 })

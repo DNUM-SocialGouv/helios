@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useCallback, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
+import { BlocRessourcesHumainesEtablissementSanitaire } from "./bloc-ressources-humaines/BlocRessourcesHumainesEtablissementSanitaire";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
@@ -90,24 +91,29 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel}
           opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+        {établissementTerritorialSanitaireViewModel.blocRhDisponible() &&
+          <>
+            <SeparatorHorizontal></SeparatorHorizontal>
+            <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={établissementTerritorialSanitaireViewModel.ressourcesHumainesViewModel}
+              openedBloc={statusBlocs[2]} toggleBlocs={() => toggelBlocs(2)} />
+          </>}
         <SeparatorHorizontal></SeparatorHorizontal>
-
         {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-              toggelBlocs={() => toggelBlocs(2)} type="ET_PNL" />
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
+              toggelBlocs={() => toggelBlocs(3)} type="ET_PNL" />
             <SeparatorHorizontal></SeparatorHorizontal>
           </>}
 
         {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-              toggelBlocs={() => toggelBlocs(2)} type="ET_Autres" />
+            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
+              toggelBlocs={() => toggelBlocs(3)} type="ET_Autres" />
             <SeparatorHorizontal></SeparatorHorizontal>
           </>}
 
         <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
-          opnedBloc={statusBlocs[3]} toggelBlocs={() => toggelBlocs(3)} />
+          opnedBloc={statusBlocs[4]} toggelBlocs={() => toggelBlocs(4)} />
 
       </div>
     </main >

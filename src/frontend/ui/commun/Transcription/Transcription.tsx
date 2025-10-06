@@ -30,7 +30,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
   }, []);
   if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 
-  const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replace(/\s/g, "");
+  const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replaceAll(/\s/g, "");
 
 
   const tableContent = (

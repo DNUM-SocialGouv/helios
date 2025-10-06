@@ -27,11 +27,11 @@ export const PageEcoConception = () => {
           ses outils et son pilotage les bonnes pratiques d’éco-conception.
         </li>
         <li className="fr-mb-2w">
-          Nous faisons des audits express via&nbsp;
+          Nous faisons des audits express via{" "}
           <a className="fr-link" href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">
             Lighthouse
           </a>{" "}
-          et l’extension&nbsp;
+          et l’extension{" "}
           <a className="fr-link" href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">
             Green IT Analysis
           </a>{" "}
@@ -71,10 +71,8 @@ export const PageEcoConception = () => {
           href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/"
           rel="external noopener noreferrer"
           target="_blank"
-        >
-          (RGESN)
-        </a>
-        . Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME et
+        >(RGESN)</a>.{" "}
+        Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME et
         l’Institut du Numérique Responsable.
       </p>
       <p className="fr-mb-2w">

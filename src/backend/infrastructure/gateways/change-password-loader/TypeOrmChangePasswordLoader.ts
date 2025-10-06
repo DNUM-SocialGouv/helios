@@ -6,14 +6,14 @@ import { checkToken } from "../../../jwtHelper";
 import { ChangePasswordLoader } from "../../../métier/gateways/ChangePasswordLoader";
 
 export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   updateUserPassword = async (password: string, user: any) => {
     const salt = await genSalt(10);
     const hashedPassword = await hash(password, salt);
     user.password = hashedPassword;
 
-    if (![1, 2].includes(parseInt(user.roleId))) {
+    if (![1, 2].includes(Number.parseInt(user.roleId))) {
       //update lastConnectionDate for current user
       user.lastConnectionDate = new Date();
     }
