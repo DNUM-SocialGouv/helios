@@ -21,14 +21,12 @@ export const ContenuDuTauxDeRotationDuPersonnel = ({ dateDeMiseÀJour, source }:
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Numérateur : Somme du taux d’entrée et du taux de sortie
+          <span className="fr-text--bold">Mode de calcul :</span> Numérateur : Somme du taux d’entrée et du taux de sortie
         </p>
         <ul>
           <li>Taux d’entrée : Nombre de recrutements au cours de l’année / Effectifs réels en nombre de personnes au 31/12/N-1</li>
@@ -38,8 +36,7 @@ export const ContenuDuTauxDeRotationDuPersonnel = ({ dateDeMiseÀJour, source }:
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
+          <span className="fr-text--bold">Source(s) :</span> Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

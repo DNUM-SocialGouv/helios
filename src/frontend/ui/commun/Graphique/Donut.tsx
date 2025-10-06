@@ -51,7 +51,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnu
   const enlèveLaPoliceGrasseDuLibelléDeLégende = (élément: Element) => {
     élément.classList.remove("fr-text--bold");
   };
-  const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ && isNaN(indexDeLArcSurvolé);
+  const unAutreArcÉtaitSurvolé = (indexDeLArcSurvolé: number) => indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ && Number.isNaN(indexDeLArcSurvolé);
   const plusAucunArcNestSurvolé = (élémentsActifs: ActiveElement[]) => élémentsActifs.length === 0 && indexDeLArcSurvolé !== AUCUN_ARC_SURVOLÉ;
 
   return {

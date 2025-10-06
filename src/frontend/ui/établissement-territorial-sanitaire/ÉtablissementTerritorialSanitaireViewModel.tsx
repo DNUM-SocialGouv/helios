@@ -4,29 +4,31 @@ import { EtablissementTerritorialSanitaireActiviteViewModel } from "./bloc-activ
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./bloc-autorisations/ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { EtablissementTerritorialSanitaireIdentiteViewModel } from "./bloc-identité/ÉtablissementTerritorialSanitaireIdentitéViewModel";
 import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteSanitaireViewModel";
+import { EtablissementTerritorialSanitaireRHViewModel } from "./bloc-ressources-humaines/EtablissementTerritorialSanitaireRHViewModel";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "../entité-juridique/bloc-budget-finance/EntitéJuridiqueBudgetFinanceViewModel";
 
 export class EtablissementTerritorialSanitaireViewModel {
-  private readonly établissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
-  private readonly établissementTerritorialSanitaireActivitésViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
-  private readonly établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
+  private readonly etablissementTerritorialSanitaireIdentitéViewModel: EtablissementTerritorialSanitaireIdentiteViewModel;
+  private readonly etablissementTerritorialSanitaireActivitésViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
+  private readonly etablissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   private readonly etablissementTerritorialSanitaireQualiteViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
+  private readonly etablissementTerritorialSanitaireRhViewModel: EtablissementTerritorialSanitaireRHViewModel;
   public entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialSanitaire, private readonly wording: Wording, paths: Paths, autorisations: any) {
-    this.établissementTerritorialSanitaireIdentitéViewModel = new EtablissementTerritorialSanitaireIdentiteViewModel(
+    this.etablissementTerritorialSanitaireIdentitéViewModel = new EtablissementTerritorialSanitaireIdentiteViewModel(
       établissementTerritorial.identité,
       wording,
       paths
     );
-    this.établissementTerritorialSanitaireActivitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(
+    this.etablissementTerritorialSanitaireActivitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(
       établissementTerritorial.activités,
       wording
     );
-    this.établissementTerritorialSanitaireAutorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
+    this.etablissementTerritorialSanitaireAutorisationsViewModel = new EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel(
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
@@ -37,10 +39,11 @@ export class EtablissementTerritorialSanitaireViewModel {
       wording,
       autorisations
     );
+    this.etablissementTerritorialSanitaireRhViewModel = new EtablissementTerritorialSanitaireRHViewModel(établissementTerritorial.ressourcesHumaines, wording);
   }
 
   public get titre(): string {
-    return `ET - ${this.établissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial} - ${this.établissementTerritorialSanitaireIdentitéViewModel.nomCourtDeLÉtablissementTerritorial}`;
+    return `ET - ${this.etablissementTerritorialSanitaireIdentitéViewModel.numéroFinessÉtablissementTerritorial} - ${this.etablissementTerritorialSanitaireIdentitéViewModel.nomCourtDeLÉtablissementTerritorial}`;
   }
 
   public get titreAccessibleDeLEntitéJuridique(): ReactElement {
@@ -58,15 +61,15 @@ export class EtablissementTerritorialSanitaireViewModel {
   }
 
   public get identitéViewModel(): EtablissementTerritorialSanitaireIdentiteViewModel {
-    return this.établissementTerritorialSanitaireIdentitéViewModel;
+    return this.etablissementTerritorialSanitaireIdentitéViewModel;
   }
 
   public get activitésViewModel(): EtablissementTerritorialSanitaireActiviteViewModel {
-    return this.établissementTerritorialSanitaireActivitésViewModel;
+    return this.etablissementTerritorialSanitaireActivitésViewModel;
   }
 
   public get autorisationsViewModel(): EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
-    return this.établissementTerritorialSanitaireAutorisationsViewModel;
+    return this.etablissementTerritorialSanitaireAutorisationsViewModel;
   }
 
   public get qualiteViewModel(): ÉtablissementTerritorialQualiteSanitaireViewModel {
@@ -75,6 +78,16 @@ export class EtablissementTerritorialSanitaireViewModel {
 
   public get appartientAEtablissementsSantePrivesIntérêtsCollectif(): any {
     return this.établissementTerritorial.appartientAEtablissementsSantePrivesIntérêtsCollectif;
+  }
+
+  public get ressourcesHumainesViewModel(): EtablissementTerritorialSanitaireRHViewModel {
+    return this.etablissementTerritorialSanitaireRhViewModel;
+  }
+
+  public blocRhDisponible(): boolean {
+    return [this.wording.PUBLIC, this.wording.PRIVÉ_NON_LUCRATIF].includes(
+      this.etablissementTerritorialSanitaireIdentitéViewModel.labelCategorisationDeLEntiteDeRattachement
+    );
   }
 
   private formateLeTitreDeLEntitéJuridiqueDeRattachement() {

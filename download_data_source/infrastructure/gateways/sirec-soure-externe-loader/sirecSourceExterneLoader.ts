@@ -90,7 +90,7 @@ export class SirecSourceExterneLoader implements ControleDonneesSirecLoader {
         }
 
         // Vérifier les dates qu’on a (priorité sur les 3 dernières années, 2021 à 2023 + l’année en cours)
-        const year1 = parseInt(row["ANNEE_DE_RECEPTION"]);
+        const year1 = Number.parseInt(row["ANNEE_DE_RECEPTION"]);
         if (!isValidYear(year1)) {
           return; // Ignorer la ligne
         }

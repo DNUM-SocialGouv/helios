@@ -603,7 +603,7 @@ FROM (
     // Convert value to a number and check if it's a valid number
     const numericValue = value !== null ? Number(value) : null;
 
-    if (numericValue !== null && !isNaN(numericValue)) {
+    if (numericValue !== null && !Number.isNaN(numericValue)) {
       // If numericValue is a valid number, return the rounded number
       if (num === 0) return Math.round(numericValue)
       return Math.round(numericValue * (10 * num)) / (10 * num)
@@ -620,7 +620,7 @@ FROM (
   private roundExpression(value1: any, value2: any, num: number): number | null {
     const numericValue1 = value1 !== null ? Number(value1) : null;
     const numericValue2 = value2 !== null ? Number(value2) : null;
-    if (numericValue1 !== null && !isNaN(numericValue1) && numericValue2 !== null && !isNaN(numericValue2)) {
+    if (numericValue1 !== null && !Number.isNaN(numericValue1) && numericValue2 !== null && !Number.isNaN(numericValue2)) {
       // If numericValue is a valid number, return the rounded number
       if (num === 0) return Math.round(numericValue1) - Math.round(numericValue2)
       return (Math.round(numericValue1 * (10 * num)) / (10 * num)) - (Math.round(numericValue2 * (10 * num)) / (10 * num))

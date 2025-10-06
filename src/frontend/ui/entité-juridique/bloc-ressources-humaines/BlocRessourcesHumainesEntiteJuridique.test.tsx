@@ -17,7 +17,8 @@ describe("La page entité juridique - bloc ressources humaines", () => {
     nombreEtpPm: 0,
     nombreEtpPnm: 1,
     depensesInterimPm: 2,
-    joursAbsenteismePm: 3
+    joursAbsenteismePm: 3,
+    joursAbsenteismePnm: 4
   };
 
   describe("L’indicateur du nombre d’ETP PM", () => {
@@ -323,6 +324,88 @@ describe("La page entité juridique - bloc ressources humaines", () => {
       expect(cells).toHaveLength(2);
       expect(cells[0]).toHaveTextContent('2025');
       expect(cells[1]).toHaveTextContent('41');
+    });
+  });
+
+  describe("L’indicateur jours absenteisme PNM", () => {
+    it("affiche l’intitulé de l’indicateur jours absenteisme PNM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
+
+      renderFakeComponent(<BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+
+      const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
+      const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
+      const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePnm];
+      const titre = within(indicateur).getByText(textMatch(wording.JOURS_ABSENTEISME_PNM), { selector: "h3" });
+      expect(titre).toBeInTheDocument();
+      const dateMiseAJour = within(indicateur).getAllByText(textMatch(`${wording.miseÀJour("11/07/2025")} - Source : ANCRE`), { selector: "p" });
+      expect(dateMiseAJour[0]).toBeInTheDocument();
+      const abreviationSourceOrigin = within(indicateur).getAllByText("ANCRE", { selector: "abbr" });
+      expect(abreviationSourceOrigin[0]).toHaveAttribute("title", wording.ANCRE_TITLE);
+      const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
+      expect(détails).toHaveAttribute("aria-controls", "nom-info-bulle-ressources-humaines-jours-absenteisme-pnm");
+      expect(détails).toHaveAttribute("data-fr-opened", "false");
+    });
+
+    it('affiche le contenu de l’info bulle jours absenteisme PNM après avoir cliqué sur le bouton "détails"', () => {
+
+      renderFakeComponent(<BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
+      const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
+      const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePnm];
+      const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
+
+      fireEvent.click(détails);
+
+      expect(détails).toHaveAttribute("data-fr-opened", "true");
+      const infoBulle = within(indicateur).getByRole("dialog", { name: "Jour d’absentéisme PNM" });
+      const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
+      expect(fermer).toBeInTheDocument();
+      const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
+      expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.ANCRE_TITLE);
+      const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
+      expect(élémentsDeCompréhension).toBeInTheDocument();
+      const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });
+      expect(fréquence).toBeInTheDocument();
+      const sources = within(infoBulle).getByRole("region", { name: wording.SOURCES });
+      expect(sources).toBeInTheDocument();
+      const modeDeCalcul = within(infoBulle).getByRole("region", { name: wording.MODE_DE_CALCUL });
+      expect(modeDeCalcul).toBeInTheDocument();
+      const infosComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
+      expect(infosComplémentaires).toBeInTheDocument();
+    });
+
+    it('affiche le tableau de transcription de jours absenteisme PNM', () => {
+
+      renderFakeComponent(<BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
+      const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
+      const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePnm];
+      const boutonTranscription = within(indicateur).getByRole('button', { name: wording.AFFICHER_LA_TRANSCRIPTION });
+
+      fireEvent.click(boutonTranscription);
+
+      const modal = within(indicateur).getByRole('dialog');
+      const titreModal = within(modal).getByRole('heading', {
+        level: 1,
+        name: wording.TITRE_TRANSCRIPTION,
+      });
+      expect(modal).toContainElement(titreModal);
+
+      const tableau = within(modal).getByRole('table', { name: 'tableau transcription' });
+      expect(tableau).toBeInTheDocument();
+
+      const headers = within(tableau).getAllByRole('columnheader');
+      expect(headers).toHaveLength(2);
+      expect(headers[0]).toHaveTextContent('Année');
+      expect(headers[1]).toHaveTextContent('Jour d’absentéisme PNM');
+
+      const rows = within(tableau).getAllByRole('row');
+      expect(rows).toHaveLength(2);
+
+      const cells = within(rows[1]).getAllByRole('cell');
+      expect(cells).toHaveLength(2);
+      expect(cells[0]).toHaveTextContent('2025');
+      expect(cells[1]).toHaveTextContent('3 900');
     });
   });
 

@@ -48,11 +48,7 @@ export const FormulaireDeConnexion = () => {
               headers: { "Content-Type": "application/json" },
               method: "POST",
             }).then(async (rep) => {
-              if (rep.status === 200) {
-                window.location.href = "/";
-              } else {
-                //console.log("error updateLastConnectionDate");
-              }
+              if (rep.status === 200) window.location.href = "/";
             });
           }
         });
@@ -112,7 +108,7 @@ export const FormulaireDeConnexion = () => {
                       id="password-1758-show"
                       style={{ marginRight: "3px" }}
                       type="checkbox"
-                    />
+                    />{/* */}
                     Afficher
                   </label>
                 </div>

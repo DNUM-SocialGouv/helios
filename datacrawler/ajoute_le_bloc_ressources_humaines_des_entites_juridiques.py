@@ -20,17 +20,17 @@ from datacrawler.transform.entite_juridique.ressources_humaines.transforme_les_d
     transform_les_donnees_ressources_humaines_entite_juridique,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_a_lire_bloc_ressources_humaines_entite_juridique,
+    colonnes_a_lire_bloc_ressources_humaines,
     extrais_l_equivalence_des_types_des_colonnes,
-    equivalences_diamant_quo_san_ressources_humaines_helios_ej,
+    equivalences_diamant_quo_san_ressources_humaines_helios,
 )
 
 
 def ajoute_le_bloc_ressources_humaines_des_entite_juridiques(chemin_du_fichier_quo_san_finance: str, base_de_données: Engine, logger: Logger) -> None:
-    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios_ej)
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios)
     donnees_quo_san_finance = lis_le_fichier_csv(
                                 chemin_du_fichier_quo_san_finance,
-                                colonnes_a_lire_bloc_ressources_humaines_entite_juridique,
+                                colonnes_a_lire_bloc_ressources_humaines,
                                 types_des_colonnes)
     numeros_finess_des_entites_juridiques_connues = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
 

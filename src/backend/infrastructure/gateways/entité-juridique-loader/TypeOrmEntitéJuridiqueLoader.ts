@@ -497,7 +497,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeRessourcesHumaines(numeroFinessEntiteJuridique: string): Promise<EntiteJuridiqueRessourcesHumaines[]> {
     const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEntiteJuridiqueModel).find({
-      where: { numeroFinessEntiteJuridique },
+      where: { numeroFinessEntiteJuridique }, order: { annee: "ASC" }
     });
 
 
@@ -527,6 +527,10 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       joursAbsenteismePm: {
         dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
         valeur: donneeRessourcesHumaines.joursAbsenteismePm
+      },
+      joursAbsenteismePnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePnm
       }
     })).forEach((e) => entiteJuridiqueRessourcesHumaines.push(e))
     return entiteJuridiqueRessourcesHumaines;

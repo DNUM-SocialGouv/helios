@@ -21,7 +21,8 @@ from datacrawler.load.nom_des_tables import (
     FichierSource,
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
     TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
-    TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE
+    TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE,
+    TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -30,7 +31,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_du_bloc_budget_et_finances,
     index_du_bloc_ressources_humaines,
     index_du_bloc_budget_et_finances_entite_juridique,
-    index_du_bloc_ressources_humaines_ej
+    index_du_bloc_ressources_humaines_ej,
+    index_du_bloc_ressources_humaines_etsan
 )
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
@@ -205,6 +207,12 @@ def sauvegarde_les_indicateurs_ressources_humaines_en_base_entite_juridique(indi
         name=TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE, con=base_de_données, index=True, if_exists="append"
     )
 
+def sauvegarde_les_indicateurs_ressources_humaines_en_base_etablissement_sanitaire(
+        indicateurs_ressources_humaines: pd.DataFrame,
+        base_de_données: Engine) -> None:
+    indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines_etsan).to_sql(
+        name=TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE, con=base_de_données, index=True, if_exists="append"
+    )
 
 def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
     with open(chemin_du_fichier, "w+", encoding="utf-8") as fichier:

@@ -80,10 +80,10 @@ export class BlocVigieRHViewModel {
           if (!acc[annee]) {
             acc[annee] = {
               annee,
-              effectifHomme: Array(labels.length).fill(-1),
-              effectifFemme: Array(labels.length).fill(-1),
-              effectifHommeRef: Array(labels.length).fill(-1),
-              effectifFemmeRef: Array(labels.length).fill(-1),
+              effectifHomme: new Array(labels.length).fill(-1),
+              effectifFemme: new Array(labels.length).fill(-1),
+              effectifHommeRef: new Array(labels.length).fill(-1),
+              effectifFemmeRef: new Array(labels.length).fill(-1),
             };
           }
 

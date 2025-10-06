@@ -67,7 +67,7 @@ const PaginationBtn = ({
           {lastPage > 1 && (
             <>
               {lastPage <= 11 &&
-                [...Array(lastPage)].map((_p, i) => (
+                [...(new Array(lastPage))].map((_p, i) => (
                   <li key={i}>
                     <button
                       className={`fr-pagination__link ${page === i + 1 && styles["currentPage"]}`}

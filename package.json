@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.6.9",
+  "version": "1.6.10",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -56,6 +56,8 @@
     "updateBudgetEtFinancesEntiteJuridique:local": "pipenv run populate_budget_et_finances_entite_juridique",
     "updateRessourcesHumainesEntiteJuridique": "python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques",
     "updateRessourcesHumainesEntiteJuridique:local": "pipenv run populate_ressoures_humaines_entites_juridiques",
+    "updateRessourcesHumainesEtablissementSanitaire": "python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_etablissements_sanitaires",
+    "updateRessourcesHumainesEtablissementSanitaire:local": "pipenv run populate_ressoures_humaines_etablissements_sanitaires",
     "updateRessourcesHumainesMedicoSocial": "python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux",
     "updateRessourcesHumainesMedicoSocial:local": "pipenv run populate_ressoures_humaines_medico_social",
     "updateActivitéSanitaireEntitéJuridique": "python -m datacrawler.agrégation_activité_sanitaire",

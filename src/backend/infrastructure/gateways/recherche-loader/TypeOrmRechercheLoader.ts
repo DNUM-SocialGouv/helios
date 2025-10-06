@@ -28,7 +28,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll(/-/g, " ");
+    const termeSansTirets = terme.replaceAll('-', " ");
 
     const queryBuilder = (await this.orm).createQueryBuilder();
 
@@ -116,8 +116,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       } else {
         zoneParam = zone
           .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .replace(/\b(?:[-'])\b/gi, " ")
+          .replaceAll(/[\u0300-\u036f]/g, "")
+          .replaceAll(/\b(?:[-'])\b/gi, " ")
           .toLocaleUpperCase();
       }
     }
@@ -128,13 +128,13 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport } = params;
 
     const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll(/-/g, " ");
+    const termeSansTirets = terme.replaceAll('-', " ");
 
     const zoneParam = this.computeZoneParam(zone, typeZone);
 
     const zoneDParam = typeZone === 'C' ? zoneD.normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\b(?:[-'])\b/gi, " ")
+      .replaceAll(/[\u0300-\u036f]/g, "")
+      .replaceAll(/\b(?:[-'])\b/gi, " ")
       .toLocaleUpperCase() : '';
 
     const conditions = [];

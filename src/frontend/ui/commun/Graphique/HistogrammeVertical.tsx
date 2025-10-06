@@ -54,7 +54,7 @@ export function HistogrammeVertical(props: {
       },
       {
         backgroundColor: props.couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: Array(props.valeurs.length).fill(100),
+        data: new Array(props.valeurs.length).fill(100),
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",

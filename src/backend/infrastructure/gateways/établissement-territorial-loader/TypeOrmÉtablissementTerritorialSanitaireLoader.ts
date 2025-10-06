@@ -12,12 +12,14 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { EtablissementTerritorialSanitaireRH } from "../../../métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
@@ -1168,5 +1170,44 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       dateMiseÀJourSource: dateDeMiseÀJourDiamantMenHapiModel.dernièreMiseÀJour,
       data: allocationRessource
     }
+  }
+
+  async chargeRessourcesHumaines(numeroFinessET: string): Promise<EtablissementTerritorialSanitaireRH[]> {
+    const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEtablissementSanitaireModel).find({
+      where: { numeroFinessEtablissementTerritorial: numeroFinessET }, order: { annee: "ASC" }
+    });
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisRessourcesHumainesEtSan(ressourcesHumaines, dateMisAJour);
+  }
+
+  construisRessourcesHumainesEtSan(ressourcesHumaines: RessourcesHumainesEtablissementSanitaireModel[], dateMisAJour: DateMiseÀJourFichierSourceModel): EtablissementTerritorialSanitaireRH[] {
+    const etablissementSanitaireRessourcesHumaines: EtablissementTerritorialSanitaireRH[] = [];
+    ressourcesHumaines.map((donneeRessourcesHumaines) => ({
+      annee: donneeRessourcesHumaines.annee,
+      nombreEtpPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPm
+      },
+      nombreEtpPnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPnm
+      },
+      depensesInterimPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.depensesInterimPm
+      },
+      joursAbsenteismePm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePm
+      },
+      joursAbsenteismePnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePnm
+      }
+    })).forEach((e) => etablissementSanitaireRessourcesHumaines.push(e))
+    return etablissementSanitaireRessourcesHumaines;
   }
 }

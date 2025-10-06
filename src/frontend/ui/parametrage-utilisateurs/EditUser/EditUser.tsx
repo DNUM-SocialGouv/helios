@@ -68,10 +68,10 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     if (searchParams.get("key")) {
       queryParams += "&key=" + searchParams.get("key");
     }
-    if (parseInt(searchParams.get("institutionId") as string) > 0) {
+    if (Number.parseInt(searchParams.get("institutionId") as string) > 0) {
       queryParams += "&institutionId=" + searchParams.get("institutionId");
     }
-    if (parseInt(searchParams.get("roleId") as string) > 0) {
+    if (Number.parseInt(searchParams.get("roleId") as string) > 0) {
       queryParams += "&roleId=" + searchParams.get("roleId");
     }
     if (searchParams.get("profileId")) {
@@ -123,7 +123,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   }
   //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
   const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > parseInt(user.roleId) && data?.user?.idUser !== user.code);
+    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > Number.parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
   let rolesF;
   if (data?.user?.role === 1) {
@@ -240,7 +240,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   </option>
                   {rolesF &&
                     rolesF.map((item) => (
-                      <option key={item.id} selected={parseInt(user.roleId) === item.id} value={item.code}>
+                      <option key={item.id} selected={Number.parseInt(user.roleId) === item.id} value={item.code}>
                         {item.libelle}
                       </option>
                     ))}

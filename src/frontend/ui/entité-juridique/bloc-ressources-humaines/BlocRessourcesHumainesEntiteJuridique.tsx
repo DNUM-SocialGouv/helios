@@ -9,6 +9,7 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { Sources } from "../../commun/Sources/Sources";
 import { ContenuDeDepensesInterimPm } from "../infoBulle/ContenuDeDepensesInterimPm";
 import { ContenuDeJoursAbsenteismePm } from "../infoBulle/ContenuDeJoursAbsenteismePm";
+import { ContenuDeJoursAbsenteismePnm } from "../infoBulle/ContenuDeJoursAbsenteismePnm";
 import { ContenuDuNombreDEtpPm } from "../infoBulle/ContenuDuNombreDEtpPm";
 import { ContenuDuNombreDEtpPnm } from "../infoBulle/ContenuDuNombreDEtpPnm";
 
@@ -105,6 +106,23 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             source={Sources(wording.ANCRE)}
           >
             {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePm}
+          </IndicateurGraphique>
+
+        ) : <></>}
+        {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePnmSontIlsRenseignes && entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePnmSontIlsAutorises ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuDeJoursAbsenteismePnm
+                dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourJoursAbsenteismePnm}
+                source={Sources(wording.ANCRE)}
+              />
+            }
+            dateDeMiseÀJour={entiteJuridiqueRessourcesHumainesViewModel.dateMiseAJourJoursAbsenteismePnm}
+            identifiant="ressources-humaines-jours-absenteisme-pnm"
+            nomDeLIndicateur={wording.JOURS_ABSENTEISME_PNM}
+            source={Sources(wording.ANCRE)}
+          >
+            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePnm}
           </IndicateurGraphique>
 
         ) : <></>}
