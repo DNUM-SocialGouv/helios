@@ -158,8 +158,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
     },
     scales: {
       x: {
+        border: {
+          display: false
+        },
         stacked: true,
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
           color: '#000',
           font: function (context: any) {
@@ -192,7 +195,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
 
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
-      <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+      <Bar
+        data={dataSet}
+        /* @ts-ignore */
+        options={options}
+        plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[

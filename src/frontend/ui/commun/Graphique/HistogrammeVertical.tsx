@@ -114,7 +114,6 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
     scales: {
       x: {
         grid: {
-          drawBorder: false,
           drawOnChartArea: false,
           drawTicks: false,
         },
@@ -124,6 +123,9 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
           // @ts-ignore
           font: { weight: grosseursDePoliceDesLibellés },
           padding: 10,
+        },
+        border: {
+          display: false
         },
       },
       xLine: {

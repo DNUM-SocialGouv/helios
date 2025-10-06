@@ -54,9 +54,11 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
         ticks: { color: "var(--text-default-grey)" },
       },
       y: {
+        border: {
+          display: false
+        },
         grid: {
           color: couleurDelAbscisse,
-          drawBorder: false,
         },
         stacked: true,
         ticks: { color: "var(--text-default-grey)" },

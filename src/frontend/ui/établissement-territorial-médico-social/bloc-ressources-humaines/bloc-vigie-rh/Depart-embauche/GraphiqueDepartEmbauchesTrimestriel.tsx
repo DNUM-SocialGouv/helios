@@ -165,8 +165,11 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
     },
     scales: {
       x: {
+        border: {
+          display: false
+        },
         stacked: true,
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         type: 'category',
         position: 'bottom',
         ticks: {
@@ -183,9 +186,12 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
         }
       },
       xAxis2: {
+        border: {
+          display: false
+        },
         type: 'category',
         position: 'bottom',
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
           color: '#000',
           callback: function (index: number) {
