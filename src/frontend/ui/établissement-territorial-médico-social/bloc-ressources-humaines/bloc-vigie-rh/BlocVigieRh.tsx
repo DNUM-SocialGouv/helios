@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
+import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
@@ -16,6 +16,7 @@ import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
+import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
@@ -121,9 +122,19 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     if (isoIdx < 0) return null;
 
     const precedent = Number(totaux[isoIdx]) || 0;
-    const comparaisonLabel = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const variation = precedent - courant;
+    const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
+    let variationText = '';
 
-    return { items, dataEffectifs, courant, precedent, comparaisonLabel };
+    if (deltaPct) {
+      const rate = StringFormater.transformInRoundedRate(deltaPct);
+      variationText = variation > 0
+        ? `+${rate}% (+${variation})`
+        : `${rate}% (${variation})`;
+    }
+
+    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText };
   }, [donneesEffectifs]);
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
@@ -156,7 +167,35 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   return (
     <>
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
-
+      <div className="fr-grid-row fr-grid-row--gutters">
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <div className="fr-col-4">
+            <CarteTopIndicateur
+              comparaisonLabel={indicateurEffectif.comparaisonLabel}
+              currentValue={indicateurEffectif.courant}
+              variation={indicateurEffectif.variation}
+              variationText={indicateurEffectif.variationText}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+          <div className="fr-col-4">
+            <CarteTopIndicateur
+              comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
+              currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
+              periode={blocVigieRHViewModel.topIndicateurTauxRotation.dernierePeriode}
+              title={wording.TOP_TAUX_ROTATION_TITLE}
+              unitLabel="Taux de rotation"
+              variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
+              variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
         {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
@@ -225,15 +264,6 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
               );
             })()}
           </IndicateurGraphique>
-        ) : (
-          <></>
-        )}
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
-          <CarteIndicateurEffectif
-            comparaisonLabel={indicateurEffectif.comparaisonLabel}
-            currentValue={indicateurEffectif.courant}
-            previousValue={indicateurEffectif.precedent}
-          />
         ) : (
           <></>
         )}

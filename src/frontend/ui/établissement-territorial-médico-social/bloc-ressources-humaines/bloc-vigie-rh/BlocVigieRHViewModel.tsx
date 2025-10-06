@@ -173,4 +173,26 @@ export class BlocVigieRHViewModel {
       };
     });
   }
+
+  public get topIndicateurTauxRotation() {
+    const derniereDonneeComparaison = this.donneesTauxRotationTrimestrielles[this.donneesTauxRotationTrimestrielles.length - 1]
+    const isoPeriodDonneeComparaison = this.donneesTauxRotationTrimestrielles.find(donnee => donnee.annee === derniereDonneeComparaison?.annee - 1 && donnee.trimestre === derniereDonneeComparaison?.trimestre);
+    const comparaisonLabel = isoPeriodDonneeComparaison ? `au T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '';
+    const variation = isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation)) : 0;
+    let variationText = '';
+
+    if (variation) {
+      variationText = variation > 0
+        ? `+${variation}pts`
+        : `${variation}pts`;
+    }
+    return {
+      comparaisonLabel,
+      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
+      precedent: isoPeriodDonneeComparaison?.rotation ?? '',
+      variation: variation,
+      variationText: variationText,
+      dernierePeriode: `(T${derniereDonneeComparaison?.trimestre}-${derniereDonneeComparaison?.annee})`
+    }
+  }
 }

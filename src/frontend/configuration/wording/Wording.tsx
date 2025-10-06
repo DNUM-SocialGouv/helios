@@ -615,6 +615,7 @@ export interface Wording {
   readonly TAUX_ROTATION: string;
   readonly REPARTITION_EFFECTIFS: string;
   readonly TAUX_ROTATION_REFERENCE: string;
+  readonly TOP_TAUX_ROTATION_TITLE: string;
 
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

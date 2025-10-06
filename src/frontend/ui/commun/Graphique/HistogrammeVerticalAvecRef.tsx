@@ -21,9 +21,6 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
 const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramme, libelles, type, tickFormatter, tickX2Formatter }: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
 
-  const borneMaximale = 105;
-  const borneMinimale = -1;
-
   const data: ChartData = {
     datasets: [
       {
@@ -36,7 +33,7 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: Array(valeurs.length).fill(100),
+        data: valeursRef,
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -122,8 +119,6 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       },
       y: {
         display: false,
-        max: borneMaximale,
-        min: borneMinimale,
       },
     }
   }

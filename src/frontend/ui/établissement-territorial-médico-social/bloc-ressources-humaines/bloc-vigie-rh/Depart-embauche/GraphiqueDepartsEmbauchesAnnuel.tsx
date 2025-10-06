@@ -97,24 +97,28 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
         data: donneesEmbauches,
         backgroundColor: couleurDuFondHistogrammeJaune,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: wording.DEPARTS,
         data: donneesDeparts,
         backgroundColor: couleurDuFondHistogrammeOrangeClair,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: "embauches-extension",
         data: donneesEmbauchesExtension,
         backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: "depart-extension",
         data: donneesDepartsExtension,
         backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
+        maxBarThickness: 60,
       },
     ],
   };
