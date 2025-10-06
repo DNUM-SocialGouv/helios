@@ -121,9 +121,16 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     const precedent = Number(totaux[isoIdx]) || 0;
     const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const variation = precedent - courant;
-    const deltaPct = precedent ? precedent === 0 ? null : (variation / precedent) * 100 : null;
-    const variationText = deltaPct ? variation > 0 ? `+${StringFormater.transformInRoundedRate(deltaPct)}% (+${variation})`
-      : `${StringFormater.transformInRoundedRate(deltaPct)}% (${variation})` : '';
+    const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
+    let variationText = '';
+
+    if (deltaPct) {
+      const rate = StringFormater.transformInRoundedRate(deltaPct);
+      variationText = variation > 0
+        ? `+${rate}% (+${variation})`
+        : `${rate}% (${variation})`;
+    }
+
     return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText };
   }, [donneesEffectifs]);
 
