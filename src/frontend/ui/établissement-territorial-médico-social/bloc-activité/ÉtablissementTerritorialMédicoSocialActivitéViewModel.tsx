@@ -105,6 +105,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -136,6 +137,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -163,6 +165,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -190,6 +193,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -277,6 +281,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_EXTERNAT}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -304,6 +309,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_SEMI_INTERNAT}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -331,6 +337,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_INTERNAT}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -358,6 +365,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_AUTRE}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
@@ -384,6 +392,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
         })}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_OCCUPATION_SEANCES}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}

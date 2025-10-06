@@ -8,6 +8,19 @@ import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 
 const { wording } = fakeFrontDependencies;
 
+jest.mock("chart.js", () => ({
+  Chart: {
+    register: jest.fn(),
+  },
+  Tooltip: {},
+  Legend: {},
+}));
+
+jest.mock("chartjs-chart-treemap", () => ({
+  TreemapController: {},
+  TreemapElement: {},
+}));
+
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
     ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,

@@ -81,8 +81,10 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
     },
     scales: {
       x: {
+        border: {
+          display: false
+        },
         grid: {
-          drawBorder: false,
           drawOnChartArea: false,
           drawTicks: false,
         },
@@ -101,7 +103,10 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       xAxis2: {
         type: 'category',
         position: 'bottom',
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        border: {
+          display: false
+        },
+        grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
           color: '#000',
           callback: (_tickValue, index) => tickX2Formatter(type, index),
