@@ -39,6 +39,19 @@ const mockSession = {
   expires: "1235"
 }
 
+jest.mock("chart.js", () => ({
+  Chart: {
+    register: jest.fn(),
+  },
+  Tooltip: {},
+  Legend: {},
+}));
+
+jest.mock("chartjs-chart-treemap", () => ({
+  TreemapController: {},
+  TreemapElement: {},
+}));
+
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
