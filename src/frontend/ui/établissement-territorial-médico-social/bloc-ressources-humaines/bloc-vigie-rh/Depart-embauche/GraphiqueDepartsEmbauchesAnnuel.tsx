@@ -121,6 +121,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       datalabels: {
         color: "#000",

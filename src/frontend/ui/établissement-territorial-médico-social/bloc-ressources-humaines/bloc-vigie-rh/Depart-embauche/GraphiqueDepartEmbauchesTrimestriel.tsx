@@ -128,6 +128,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       datalabels: {
         color: "#000",

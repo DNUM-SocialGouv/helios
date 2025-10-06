@@ -701,7 +701,7 @@ export class WordingFr implements Wording {
   readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
   readonly TAUX_ROTATION: string = "Taux de Rotation";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
-
+  readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
 
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";

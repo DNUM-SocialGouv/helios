@@ -59,6 +59,7 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   departsEmbauchesTrimestriels: DepartEmbaucheTrimestriel[];
   tranchesAgesLibelles: string[];
   professionFiliere: ProfessionFiliere;
-  tauxRotation: TauxRotation[]
+  tauxRotation: TauxRotation[];
+  tauxRotationTrimestriel: TauxRotationTrimestriel[]
 }>;
 

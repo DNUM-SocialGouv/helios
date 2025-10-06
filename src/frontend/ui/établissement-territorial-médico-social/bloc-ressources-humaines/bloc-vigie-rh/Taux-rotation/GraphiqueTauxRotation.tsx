@@ -6,6 +6,7 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { FrequencyFilter } from "../FrequencyFilter";
 import GraphiqueTauxRotationAnnuel from "./GraphiqueTauxRotationAnnuel";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
+import GraphiqueTauxRotationTrimestriel from "./GraphiqueTauxRotationTrimestriel";
 
 type GraphiqueTauxRotationProps = Readonly<{
   donneesTauxRotation: TauxRotation[],
@@ -13,7 +14,7 @@ type GraphiqueTauxRotationProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueTauxRotation = ({ donneesTauxRotation, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
+const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
 
   const { wording } = useDependencies();
 
@@ -34,7 +35,8 @@ const GraphiqueTauxRotation = ({ donneesTauxRotation, blocVigieRHViewModel }: Gr
       {selectedFrequency === wording.ANNUEL ?
         <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} />
         :
-        <div>trimestre</div>}
+        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} />
+      }
     </div>
   );
 };
