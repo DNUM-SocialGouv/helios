@@ -176,16 +176,16 @@ export class BlocVigieRHViewModel {
 
   public get topIndicateurTauxRotation() {
     const derniereDonneeComparaison = this.donneesTauxRotationTrimestrielles[this.donneesTauxRotationTrimestrielles.length - 1]
-    const isoPeriodDonneeComparaison = this.donneesTauxRotationTrimestrielles.find(donnee => donnee.annee === derniereDonneeComparaison.annee - 1 && donnee.trimestre === derniereDonneeComparaison.trimestre);
+    const isoPeriodDonneeComparaison = this.donneesTauxRotationTrimestrielles.find(donnee => donnee.annee === derniereDonneeComparaison?.annee - 1 && donnee.trimestre === derniereDonneeComparaison?.trimestre);
     const comparaisonLabel = isoPeriodDonneeComparaison ? `au T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '';
-    const variation = isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(derniereDonneeComparaison.rotation) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) : 0;
+    const variation = isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) : 0;
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison.rotation) + '%',
+      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
       precedent: isoPeriodDonneeComparaison?.rotation || '',
       variation: variation,
       variationText: variation !== 0 ? variation > 0 ? `+${variation}pts` : `${variation}pts` : '0pts',
-      dernierePeriode: `(T${derniereDonneeComparaison.trimestre}-${derniereDonneeComparaison.annee})`
+      dernierePeriode: `(T${derniereDonneeComparaison?.trimestre}-${derniereDonneeComparaison?.annee})`
     }
   }
 }
