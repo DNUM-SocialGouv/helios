@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { AideUseCase } from "../../backend/métier/use-cases/AideUseCase";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const useCase = new AideUseCase(dependencies.aideLoader);
 

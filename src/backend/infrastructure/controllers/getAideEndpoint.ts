@@ -1,5 +1,5 @@
-import { Dependencies } from "../dependencies";
 import { AideUseCase } from "../../métier/use-cases/AideUseCase";
+import { Dependencies } from "../dependencies";
 
 export async function getAideEndpoint(dependencies: Dependencies): Promise<Record<string, unknown>> {
   try {

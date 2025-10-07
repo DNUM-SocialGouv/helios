@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import {
   ChangeEvent,
   FormEvent,
@@ -8,7 +9,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useSession } from "next-auth/react";
 
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";

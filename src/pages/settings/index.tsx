@@ -10,9 +10,9 @@ import { getAideEndpoint } from "../../backend/infrastructure/controllers/getAid
 import { getAllProfilesEndpoint } from "../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
+import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { GestionAide, ContenuAide } from "../../frontend/ui/parametrage-aide";
 import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
-import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 
 type TabKey = "profiles" | "aide";
 
