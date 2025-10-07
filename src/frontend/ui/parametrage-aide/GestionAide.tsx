@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSession } from "next-auth/react";
 
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/input/input.min.css";
@@ -37,6 +38,7 @@ import type {
   ContenuAide,
   DefinitionSection,
   RessourceAide,
+  RessourceUtilisateur,
   SectionEditable,
   SectionNormalisee,
 } from "./types";
@@ -58,7 +60,24 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
+  const { data: session } = useSession();
   const contenuNormalise = useMemo(() => construireSectionsInitiales(contenuInitial), [contenuInitial]);
+
+  const utilisateurActif = useMemo<RessourceUtilisateur | undefined>(() => {
+    const prenom = session?.user?.firstname?.trim();
+    const nom = session?.user?.name?.trim();
+    const identifiant = session?.user?.idUser?.toString().trim();
+
+    if (!prenom && !nom && !identifiant) {
+      return undefined;
+    }
+
+    return {
+      id: identifiant || undefined,
+      prenom: prenom || undefined,
+      nom: nom || undefined,
+    };
+  }, [session?.user?.firstname, session?.user?.name, session?.user?.idUser]);
 
   const initialisationRoles = useMemo(() => {
     const resultat: Record<string, string> = {};
@@ -276,6 +295,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       date: ressourceFormulaire.date || undefined,
       nom_telechargement: ressourceFormulaire.nom_telechargement || undefined,
       allowedRoles: roles.length > 0 ? roles : undefined,
+      ...(utilisateurActif ? { updatedBy: utilisateurActif } : {}),
     };
 
     mettreAJourSection(slugSelectionne, (section) => {
@@ -322,7 +342,12 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       }
 
       const [deplacee] = ressources.splice(index, 1);
-      ressources.splice(indexCible, 0, deplacee);
+      if (!deplacee) {
+        return section;
+      }
+
+      const ressourceMaj = utilisateurActif ? { ...deplacee, updatedBy: utilisateurActif } : deplacee;
+      ressources.splice(indexCible, 0, ressourceMaj);
 
       return {
         ...section,

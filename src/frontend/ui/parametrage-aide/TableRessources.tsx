@@ -33,7 +33,8 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                   <th>Date</th>
                   <th>Nom du fichier</th>
                   <th>Rôles</th>
-                  <th></th>
+                  <th>Utilisateur</th>
+                  <th aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
@@ -41,6 +42,10 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                   const ordre = ressource.ordre ?? index + 1;
                   const estPremier = index === 0;
                   const estDernier = index === ressources.length - 1;
+                  const utilisateur = ressource.updatedBy;
+                  const nomUtilisateur = [utilisateur?.prenom, utilisateur?.nom]
+                    .filter((valeur) => valeur && valeur.trim().length > 0)
+                    .join(" ");
 
                   return (
                     <tr key={ressource.slug ?? `${ressource.nom}-${index}`}>
@@ -73,6 +78,7 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                       <td>{ressource.date ?? ""}</td>
                       <td>{ressource.nom_telechargement ?? ""}</td>
                       <td>{formaterRoles(ressource.allowedRoles ?? ressource.roles)}</td>
+                      <td>{nomUtilisateur || ""}</td>
                       <td>
                         <div className="fr-btns-group fr-btns-group--inline fr-btns-group--right">
                           <button className="fr-btn fr-btn--secondary fr-btn--sm" onClick={() => surModifier(index)} type="button">

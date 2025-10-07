@@ -7,6 +7,12 @@ export type MetadonneesRoles = Readonly<{
   hiddenForRoles?: (number | string)[];
 }>;
 
+export type RessourceUtilisateur = Readonly<{
+  id?: string;
+  prenom?: string;
+  nom?: string;
+}>;
+
 export type RessourceAide = Readonly<
   MetadonneesRoles & {
     slug?: string;
@@ -16,6 +22,7 @@ export type RessourceAide = Readonly<
     ordre?: number;
     date?: string;
     nom_telechargement?: string;
+    updatedBy?: RessourceUtilisateur;
   }
 >;
 
