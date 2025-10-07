@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjoutTableVigieRhRefDureeCdd1759821521368 implements MigrationInterface {
-
+export class AjoutTableVigieRhRefDureeCdd1759821492361 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
           ALTER TYPE fichier_source ADD VALUE IF NOT EXISTS 'vigierh_ref_duree_cdd';

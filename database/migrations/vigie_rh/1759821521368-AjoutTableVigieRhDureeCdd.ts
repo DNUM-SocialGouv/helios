@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjoutTableVigieRhDureeCdd1759821492361 implements MigrationInterface {
-
+export class AjoutTableVigieRhDureeCdd1759821521368 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
         CREATE TABLE vigierh_duree_cdd (
