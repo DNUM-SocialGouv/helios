@@ -134,6 +134,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     } else {
       modale.removeAttribute("open");
     }
+    return;
   }, [ressourceModaleOuverte]);
 
   useEffect(() => {
@@ -165,6 +166,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     } else {
       modale.removeAttribute("open");
     }
+    return;
   }, [nouvelleSectionOuverte]);
 
   const definitionsSections = useMemo(() => determinerDefinitionsSections(contenu), [contenu]);
@@ -463,7 +465,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       for (const [slug, section] of Object.entries(contenu)) {
         chargeUtile[slug] = {
           ...section,
-          resources: reindexerRessources(trierRessources(section.resources ?? [])),
+          resources: reindexerRessources(trierRessources(section?.resources ?? [])),
         };
       }
 
