@@ -40,7 +40,7 @@ def déchiffre(
         fichier_chiffré = os.path.join(dossier_avec_les_données_chiffrées, basename_du_fichier_avec_les_données_chiffrées)
         if vérifie_la_clef(fichier_chiffré):
             process = exécute_une_commande(
-                f"gpg --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré}", shell=True, capture_output=True, check=False
+                f"gpg --output {nom_cible_du_fichier_déchiffré} --decrypt {fichier_chiffré} 2>&1", shell=True, capture_output=True, check=False
             )
             log_process(logger, process)
             code_de_succès_commande_gpg = 0
