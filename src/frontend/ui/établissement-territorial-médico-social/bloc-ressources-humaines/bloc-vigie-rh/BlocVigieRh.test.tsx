@@ -8,6 +8,19 @@ import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 
 const { wording } = fakeFrontDependencies;
 
+jest.mock("chart.js", () => ({
+  Chart: {
+    register: jest.fn(),
+  },
+  Tooltip: {},
+  Legend: {},
+}));
+
+jest.mock("chartjs-chart-treemap", () => ({
+  TreemapController: {},
+  TreemapElement: {},
+}));
+
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
     ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
@@ -19,7 +32,9 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       tranchesAgesLibelles: [],
       professionFiliere: { data: [], dateDeMiseAJour: '' },
       departsEmbauches: [],
-      departsEmbauchesTrimestriels: []
+      departsEmbauchesTrimestriels: [],
+      tauxRotation: [],
+      tauxRotationTrimestriel: []
     },
     wording
   );
@@ -95,7 +110,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.PYRAMIDE_DES_AGES });
+      const infoBulle = screen.getByRole("dialog", { name: wording.PYRAMIDE_DES_AGES });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });
@@ -135,7 +150,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.EFFECTIFS });
+      const infoBulle = screen.getByRole("dialog", { name: wording.EFFECTIFS });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });

@@ -9,6 +9,7 @@ export function construisLePluginDeLaLegende() {
     caseÀCocher.type = "checkbox";
     caseÀCocher.id = libellé.text;
     caseÀCocher.name = libellé.text;
+    // @ts-ignore
     caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex);
 
     const libelléCaseÀCocher = document.createElement("label");
@@ -16,6 +17,7 @@ export function construisLePluginDeLaLegende() {
     libelléCaseÀCocher.htmlFor = libellé.text;
 
     libelléCaseÀCocher.onclick = () => {
+      // @ts-ignore
       chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
       chart.update();
     };
@@ -23,6 +25,7 @@ export function construisLePluginDeLaLegende() {
     caseÀCocher.onkeydown = (event) => {
       if (event.code === "Space") {
         event.preventDefault();
+        // @ts-ignore
         chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
         chart.update();
         // @ts-ignore

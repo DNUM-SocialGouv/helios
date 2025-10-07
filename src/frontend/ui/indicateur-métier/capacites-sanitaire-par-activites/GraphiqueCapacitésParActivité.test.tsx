@@ -82,7 +82,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       const tableau = graphiqueTest.transcriptionTable;
 
       const libellésLigneDEnTête = [wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE, wording.LITS, wording.PLACES];
-      const indicateursLigneDEnTête = within(tableau).getAllByRole("columnheader");
+      const indicateursLigneDEnTête = within(tableau[0]).getAllByRole("columnheader");
       libellésLigneDEnTête.forEach((libellé, index) => {
         expect(indicateursLigneDEnTête[index].textContent).toBe(libellé);
       });
@@ -113,7 +113,7 @@ describe("GraphiqueCapacitésParActivité", () => {
           valeur: ["5", "13"],
         },
       ];
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
+      const tbody = within(tableau[0]).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(activitésEtValeurs.length);
       activitésEtValeurs.forEach((activitéEtValeur, index) => {
@@ -153,7 +153,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
       // THEN
       const tableau = graphiqueTest.transcriptionTable;
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
+      const tbody = within(tableau[0]).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
     });
@@ -186,7 +186,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
       // THEN
       const tableau = graphiqueTest.transcriptionTable;
-      const tbody = within(tableau).getAllByRole("rowgroup")[1];
+      const tbody = within(tableau[0]).getAllByRole("rowgroup")[1];
       const lignes = within(tbody).getAllByRole("row");
       expect(lignes).toHaveLength(5);
     });
@@ -364,7 +364,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       fireEvent.click(année);
 
       // THEN
-      const tableauDesCapacités = screen.getByRole("table");
+      const tableauDesCapacités = screen.getAllByRole("table")[0];
       const body = within(tableauDesCapacités).getAllByRole("rowgroup")[1];
       const médecine = within(body).getAllByRole("row")[0];
       const nbLitMédecine = within(médecine).getAllByRole("cell")[1];

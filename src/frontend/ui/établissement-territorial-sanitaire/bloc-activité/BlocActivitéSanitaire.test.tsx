@@ -149,9 +149,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const indicateurs = within(activité).getAllByRole("listitem");
-    const tableau = within(indicateurs[identifiant]).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];;
 
     const indicateursLigneDEnTête = within(tableau).getAllByRole("columnheader");
     libellésLigneDEnTête.forEach((libellé, index) => {

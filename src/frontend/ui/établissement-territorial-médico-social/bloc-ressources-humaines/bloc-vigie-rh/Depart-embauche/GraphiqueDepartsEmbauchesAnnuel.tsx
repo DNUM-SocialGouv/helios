@@ -97,30 +97,35 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
         data: donneesEmbauches,
         backgroundColor: couleurDuFondHistogrammeJaune,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: wording.DEPARTS,
         data: donneesDeparts,
         backgroundColor: couleurDuFondHistogrammeOrangeClair,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: "embauches-extension",
         data: donneesEmbauchesExtension,
         backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
+        maxBarThickness: 60,
       },
       {
         label: "depart-extension",
         data: donneesDepartsExtension,
         backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
+        maxBarThickness: 60,
       },
     ],
   };
 
   const options = {
     responsive: true,
+    maintainAspectRatio: true,
     plugins: {
       datalabels: {
         color: "#000",
@@ -158,8 +163,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
     },
     scales: {
       x: {
+        border: {
+          display: false
+        },
         stacked: true,
-        grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+        grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
           color: '#000',
           font: function (context: any) {
@@ -192,7 +200,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
 
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
-      <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+      <Bar
+        data={dataSet}
+        /* @ts-ignore */
+        options={options}
+        plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[

@@ -1,5 +1,6 @@
-import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
+import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -144,4 +145,54 @@ export class BlocVigieRHViewModel {
     });
   }
 
+  public get donneesTauxRotation(): TauxRotation[] {
+    return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+  }
+
+  public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
+    return this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel ?? [];
+  }
+
+  tickFormatter = (type: string, index: number): string => {
+    if (type === this.wording.ANNUEL) return '' + this.donneesTauxRotation[index].annee
+    else return 'T' + this.donneesTauxRotationTrimestrielles[index].trimestre
+  }
+
+  tickX2Formatter = (type: string, index: number): string => {
+    if (type === this.wording.TRIMESTRIEL && this.donneesTauxRotationTrimestrielles[index].trimestre === 1)
+      return '' + this.donneesTauxRotationTrimestrielles[index].annee
+    else
+      return ''
+  }
+
+  couleursDeLHistogramme = (donnees: (TauxRotationTrimestriel | TauxRotation)[]): CouleurHistogramme[] => {
+    return donnees.map(() => {
+      return {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      };
+    });
+  }
+
+  public get topIndicateurTauxRotation() {
+    const derniereDonneeComparaison = this.donneesTauxRotationTrimestrielles[this.donneesTauxRotationTrimestrielles.length - 1]
+    const isoPeriodDonneeComparaison = this.donneesTauxRotationTrimestrielles.find(donnee => donnee.annee === derniereDonneeComparaison?.annee - 1 && donnee.trimestre === derniereDonneeComparaison?.trimestre);
+    const comparaisonLabel = isoPeriodDonneeComparaison ? `au T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '';
+    const variation = isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation)) : 0;
+    let variationText = '';
+
+    if (variation) {
+      variationText = variation > 0
+        ? `+${variation}pts`
+        : `${variation}pts`;
+    }
+    return {
+      comparaisonLabel,
+      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
+      precedent: isoPeriodDonneeComparaison?.rotation ?? '',
+      variation: variation,
+      variationText: variationText,
+      dernierePeriode: `(T${derniereDonneeComparaison?.trimestre}-${derniereDonneeComparaison?.annee})`
+    }
+  }
 }

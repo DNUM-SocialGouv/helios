@@ -6,7 +6,7 @@ import { Bar } from "react-chartjs-2";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
-import { annéesManquantes } from "../../../utils/dateUtils";
+import { annéesManquantes, annéesManquantesVigieRh } from "../../../utils/dateUtils";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
@@ -21,6 +21,7 @@ export function HistogrammeVertical(props: {
   entêteLibellé: string;
   identifiant: string;
   annéesTotales: number;
+  isVigieRh: boolean;
 }): ReactElement {
   const { wording } = useDependencies();
 
@@ -63,7 +64,7 @@ export function HistogrammeVertical(props: {
     ],
     labels: props.libellés,
   };
-  const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
+  const listeAnnéesManquantes = props.isVigieRh ? annéesManquantesVigieRh(props.libellés, props.annéesTotales) : annéesManquantes(props.libellés, props.annéesTotales);
 
   return (
     <>
@@ -113,7 +114,6 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
     scales: {
       x: {
         grid: {
-          drawBorder: false,
           drawOnChartArea: false,
           drawTicks: false,
         },
@@ -123,6 +123,9 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
           // @ts-ignore
           font: { weight: grosseursDePoliceDesLibellés },
           padding: 10,
+        },
+        border: {
+          display: false
         },
       },
       xLine: {

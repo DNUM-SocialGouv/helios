@@ -745,10 +745,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gouvfr/dsfr@npm:1.13":
-  version: 1.13.0
-  resolution: "@gouvfr/dsfr@npm:1.13.0"
-  checksum: 10/783d7c5a4c755ac4c6a7f5a643c1ce8b9e4e7c5d7b64e9cc7492c85fc86e9aa9ac9cc766c5b9e932104f336b6b0365e6a5087dc5ad9e0484c23de404eec69144
+"@gouvfr/dsfr@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "@gouvfr/dsfr@npm:1.14.2"
+  checksum: 10/797d6d7794ab2511228c1322754fce41c2846e436d53e681854cb54e39c5e74cdcae2cf1a22bac399fa615f8e2b2669c5ca40febd879ac0e0062b73b3c8e2d8e
   languageName: node
   linkType: hard
 
@@ -1281,6 +1281,13 @@ __metadata:
   dependencies:
     buffer: "npm:^6.0.3"
   checksum: 10/d6a9194dd781bc26cc4d55f392d843810c1fdc0da81e69203e633cb289fc0a8edc8bc6466f66c4cbb55da0a5b405e89f14a68b48d6e73919ae82f8249fb5e444
+  languageName: node
+  linkType: hard
+
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.4
+  resolution: "@kurkle/color@npm:0.3.4"
+  checksum: 10/a15bfb55eec4ff92ee27cdacff54e85c7497ec1f9e8e0e8eaec3d39320cc90b82eb7f716d92792a8235fad1617003c6e0c0d2cd07f6a79b7b138ca17ec5eb6e7
   languageName: node
   linkType: hard
 
@@ -4065,10 +4072,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^3.8.0":
-  version: 3.8.0
-  resolution: "chart.js@npm:3.8.0"
-  checksum: 10/c73aabaa8c310e777e33b6df3623d5eaab9e36d820878c555105ad3491288f55546af0898c80f1ac7c4000ac0f62e0e714b0598783df53190ff9191f308a7f39
+"chart.js@npm:4.4.9":
+  version: 4.4.9
+  resolution: "chart.js@npm:4.4.9"
+  dependencies:
+    "@kurkle/color": "npm:^0.3.0"
+  checksum: 10/b19adf26347589fccf8efa314d927284674c46d2a934869bc8dda1ee56e3cd2fffa627bd0b6c6e16e2cc876b2c3880e106e48f22737138f06293f8373c8ae9f9
+  languageName: node
+  linkType: hard
+
+"chartjs-chart-treemap@npm:3.1.0":
+  version: 3.1.0
+  resolution: "chartjs-chart-treemap@npm:3.1.0"
+  peerDependencies:
+    chart.js: ">=3.0.0"
+  checksum: 10/faad116f097e28787343aba90262adbedd8a6c53a58ca27b12ec9c92b76a136b10c546bb09b022e685380bb7c71cef8214e84fbd8a7cde4d1deb3a4e224d0d71
   languageName: node
   linkType: hard
 
@@ -6754,7 +6772,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "helios@workspace:."
   dependencies:
-    "@gouvfr/dsfr": "npm:1.13"
+    "@gouvfr/dsfr": "npm:^1.14.2"
     "@lhci/cli": "npm:^0.14.0"
     "@next/bundle-analyzer": "npm:^15.1.7"
     "@sentry/nextjs": "npm:7.120.0"
@@ -6781,7 +6799,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.21.0"
     basic-ftp: "npm:^5.0.5"
     bcrypt: "npm:^5.1.1"
-    chart.js: "npm:^3.8.0"
+    chart.js: "npm:4.4.9"
+    chartjs-chart-treemap: "npm:3.1.0"
     chartjs-plugin-datalabels: "npm:^2.0.0"
     cookie: "npm:^1.0.2"
     cookies-next: "npm:^4.3.0"

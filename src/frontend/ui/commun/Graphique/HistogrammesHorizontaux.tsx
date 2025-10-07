@@ -160,7 +160,10 @@ export class HistogrammeData {
       indexAxis: "y",
       scales: {
         x: {
-          grid: { display: false, drawBorder: false },
+          border: {
+            display: false
+          },
+          grid: { display: false },
           max: 1.45 * (valeurMax > 0 ? valeurMax : 1),
           stacked: true,
           min: 0,
@@ -170,7 +173,10 @@ export class HistogrammeData {
         },
         y: {
           stacked: true,
-          grid: { drawBorder: false, drawOnChartArea: false, drawTicks: false },
+          border: {
+            display: false
+          },
+          grid: { drawOnChartArea: false, drawTicks: false },
           ticks: { color: couleurDelAbscisse, font: { weight: ["400"] }, padding: 8 },
         },
       },

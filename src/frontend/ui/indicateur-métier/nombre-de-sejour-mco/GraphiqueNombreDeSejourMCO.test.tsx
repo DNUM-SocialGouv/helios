@@ -146,7 +146,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
 
       // THEN
       const transcription = graphiqueTest.transcriptionTable;
-      const transcriptionTable = within(transcription);
+      const transcriptionTable = within(transcription[0]);
       expect(transcriptionTable.getByText(annéeEnCours - 1)).toBeInTheDocument();
       expect(transcriptionTable.getByText("100")).toBeInTheDocument();
       expect(transcriptionTable.getByText("150")).toBeInTheDocument();

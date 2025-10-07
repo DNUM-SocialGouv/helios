@@ -1,7 +1,9 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import CarteIndicateurEffectif from "./CarteIndicateurEffectif";
+import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
+import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
@@ -14,6 +16,8 @@ import LineChart, { EffectifsData } from "./GraphiqueLine";
 import PyramidChart from "./GraphiquePyramide";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
+import { StringFormater } from "../../../commun/StringFormater";
+import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -40,6 +44,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
   const couleurEffectifsTotaux = "#FB8E68"; // orange
+  const couleursFilieres = ["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
@@ -95,8 +100,8 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     return { dataFiliere: [], dataEtab, dataMoisAnnee };
   }
 
+  const items = donneesEffectifs.data ?? [];
   const indicateurEffectif = useMemo(() => {
-    const items = donneesEffectifs.data ?? [];
     if (!items.length) return null;
 
     const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
@@ -117,19 +122,80 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     if (isoIdx < 0) return null;
 
     const precedent = Number(totaux[isoIdx]) || 0;
-    const comparaisonLabel = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const variation = precedent - courant;
+    const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
+    let variationText = '';
 
-    return { items, dataEffectifs, courant, precedent, comparaisonLabel };
+    if (deltaPct) {
+      const rate = StringFormater.transformInRoundedRate(deltaPct);
+      variationText = variation > 0
+        ? `+${rate}% (+${variation})`
+        : `${rate}% (${variation})`;
+    }
+
+    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText };
   }, [donneesEffectifs]);
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
     return <div>{wording.INDICATEURS_VIDES}</div>;
   }
 
+  // Construit les items du treemap à partir des données d’effectifs par filière
+  // Règles :
+  // - on prend la DERNIÈRE valeur non nulle/non-NaN de la série (dernier mois disponible)
+  // - on met la filière en "Label" avec majuscule initiale
+  // - la "value" est forcée ≥ 0 (sécurise contre valeurs négatives inattendues)
+  const itemsTreemap: TreemapItem[] = (blocVigieRHViewModel.lesDonneesEffectifs.data ?? []).map((c: any) => {
+    // Série temporelle des effectifs pour la filière courante
+    const serie: number[] = c?.dataCategorie?.dataFiliere ?? [];
+
+    // Recherche depuis la fin le dernier point valide (≠ null et convertible en nombre)
+    let i = serie.length - 1;
+    while (i >= 0 && (serie[i] === null || Number.isNaN(Number(serie[i])))) i--;
+
+    // Dernier effectif valide (ou 0 si aucun trouvé)
+    const last = i >= 0 ? Number(serie[i]) : 0;
+
+    // Libellé : première lettre en majuscule (ex. "soins" → "Soins")
+    const label = c.categorie.charAt(0).toUpperCase() + c.categorie.slice(1);
+
+    // On s’assure que la valeur est positive (évite d’écraser le treemap avec une valeur négative)
+    return { label, value: Math.max(0, last) };
+  });
+
   return (
     <>
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
-
+      <div className="fr-grid-row fr-grid-row--gutters">
+        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+          <div className="fr-col-4">
+            <CarteTopIndicateur
+              comparaisonLabel={indicateurEffectif.comparaisonLabel}
+              currentValue={indicateurEffectif.courant}
+              variation={indicateurEffectif.variation}
+              variationText={indicateurEffectif.variationText}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+          <div className="fr-col-4">
+            <CarteTopIndicateur
+              comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
+              currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
+              periode={blocVigieRHViewModel.topIndicateurTauxRotation.dernierePeriode}
+              title={wording.TOP_TAUX_ROTATION_TITLE}
+              unitLabel="Taux de rotation"
+              variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
+              variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
         {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
@@ -171,7 +237,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
           </IndicateurGraphique>
         ) : (
           <></>
-        )}{" "}
+        )}
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
@@ -190,7 +256,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                   <LineChart
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
-                    couleursFilieres={["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]}
+                    couleursFilieres={couleursFilieres}
                     dataEffectifs={dataEffectifsForChart}
                     multiCategories={items}
                   />
@@ -202,11 +268,30 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
           <></>
         )}
         {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
-          <CarteIndicateurEffectif
-            comparaisonLabel={indicateurEffectif.comparaisonLabel}
-            currentValue={indicateurEffectif.courant}
-            previousValue={indicateurEffectif.precedent}
-          />
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuRepartitionEffectif />}
+            identifiant="vr-repartition-effectif"
+            nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTreemapRepartitionEffectif couleursFilieres={couleursFilieres} height={350} items={itemsTreemap.slice(0, 4)} />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuPyramideDesAges />}
+            identifiant="vr-taux-rotation"
+            nomDeLIndicateur={wording.TAUX_ROTATION}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTauxRotation
+              blocVigieRHViewModel={blocVigieRHViewModel}
+              donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
+              donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+            />
+          </IndicateurGraphique>
         ) : (
           <></>
         )}
