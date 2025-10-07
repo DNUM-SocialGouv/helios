@@ -11,7 +11,7 @@ const Parametrage = () => {
 
     useBreadcrumb([
         {
-            label: wording.PARAMETRAGE_TITRE,
+            label: wording.PARAMETRAGE_AUTORISATIONS_TITRE,
             path: `${paths.PROFILES_LIST}`,
         },
         {

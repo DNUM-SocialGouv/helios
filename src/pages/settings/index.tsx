@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 
@@ -10,11 +10,9 @@ import { getAideEndpoint } from "../../backend/infrastructure/controllers/getAid
 import { getAllProfilesEndpoint } from "../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
-import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { GestionAide, ContenuAide } from "../../frontend/ui/parametrage-aide";
 import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
-
-const AIDE_TAB_LABEL = "Paramétrage de l'aide";
+import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 
 type TabKey = "profiles" | "aide";
 
@@ -28,7 +26,7 @@ const TAB_QUERY_KEY = "onglet";
 
 export default function SettingsParametragePage({ profiles, aideData, initialTab }: RouterProps) {
   const router = useRouter();
-  const { wording, breadcrumbHandler } = useDependencies();
+  const { wording} = useDependencies();
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
 
   const baseBreadcrumb = useMemo(
@@ -43,13 +41,6 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
 
   useBreadcrumb(baseBreadcrumb);
 
-  useEffect(() => {
-    const breadcrumb =
-      activeTab === "aide"
-        ? baseBreadcrumb.concat({ label: AIDE_TAB_LABEL, path: "" })
-        : baseBreadcrumb;
-    breadcrumbHandler.updateBreadcrum(breadcrumb);
-  }, [activeTab, baseBreadcrumb, breadcrumbHandler]);
 
   const handleTabChange = (tab: TabKey) => {
     setActiveTab(tab);
@@ -78,7 +69,7 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
                 role="tab"
                 type="button"
               >
-                {wording.PARAMETRAGE_TITRE}
+                {wording.PARAMETRAGE_AUTORISATIONS_TITRE}
               </button>
             </li>
             <li>
@@ -91,7 +82,7 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
                 role="tab"
                 type="button"
               >
-                {AIDE_TAB_LABEL}
+                {wording.PARAMETRAGE_AIDE_TITRE}
               </button>
             </li>
           </ul>

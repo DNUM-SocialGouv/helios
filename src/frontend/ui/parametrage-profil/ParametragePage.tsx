@@ -19,7 +19,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
     <>
       {profiles && (
         <>
-          <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
+          <h1 className={styles["title"]}>{wording.PARAMETRAGE_AUTORISATIONS_TITRE}</h1>
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {

@@ -3,7 +3,6 @@ import { getSession } from "next-auth/react";
 
 import { getAideEndpoint } from "../backend/infrastructure/controllers/getAideEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
-import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { GestionAide } from "../frontend/ui/parametrage-aide";
 import type { ContenuAide } from "../frontend/ui/parametrage-aide";
 
@@ -12,12 +11,6 @@ type PageParametrageAideProps = Readonly<{
 }>;
 
 export default function PageParametrageAide({ contenuInitial }: PageParametrageAideProps) {
-  useBreadcrumb([
-    {
-      label: "Paramétrage de l’aide",
-      path: "",
-    },
-  ]);
 
   return <GestionAide contenuInitial={contenuInitial} />;
 }
