@@ -69,6 +69,9 @@ colonnes_à_lire_ann_ms_tdp_et: List[str] = list(équivalences_diamant_ann_ms_td
     "Nb journées hospit complète PSY": ColonneHelios(nom="nombre_journees_complete_psy", type=float),
     "Nb journées HTP PSY": ColonneHelios(nom="nombre_journées_partielles_psy", type=float),
     "Nombre total de séjours HAD": ColonneHelios(nom="nombre_sejours_had", type=float),
+    "DMS MCO Médecine": ColonneHelios(nom="duree_moyenne_sejour_medecine", type=float),
+    "DMS MCO Chirurgie": ColonneHelios(nom="duree_moyenne_sejour_chirurgie", type=float),
+    "DMS MCO Obstétrique": ColonneHelios(nom="duree_moyenne_sejour_obstetrique", type=float),
 }
 
 colonnes_à_lire_men_pmsi_annuel: List[str] = list(équivalences_diamant_men_pmsi_annuel_helios.keys())

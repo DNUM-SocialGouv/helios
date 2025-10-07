@@ -23,7 +23,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_types_des_colonnes,
     équivalences_diamant_ann_rpu_helios,
     équivalences_diamant_men_pmsi_annuel_helios,
-    equivalences_diamant_ann_sae_activite_helios
+    equivalences_diamant_ann_sae_activite_helios,
 )
 
 
@@ -69,9 +69,9 @@ def ajoute_les_activites_des_etablissements_sanitaires(
         logger,
     )
     dates_mise_a_jour_fichiers = {
-        'date_du_fichier_ann_sae' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_sae),
-        'date_du_fichier_ann_rpu' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_rpu),
-        'date_du_fichier_men_pmsi_annuel' : extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_men_pmsi_annuel)
+        "date_du_fichier_ann_sae": extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_sae),
+        "date_du_fichier_ann_rpu": extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_ann_rpu),
+        "date_du_fichier_men_pmsi_annuel": extrais_la_date_du_nom_de_fichier_diamant(chemin_du_fichier_men_pmsi_annuel),
     }
 
     with base_de_donnees.begin() as connection:
@@ -81,10 +81,11 @@ def ajoute_les_activites_des_etablissements_sanitaires(
             connection,
             TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
             activites_des_etablissements_sanitaires,
-            [(FichierSource.DIAMANT_MEN_PMSI_ANNUEL, dates_mise_a_jour_fichiers['date_du_fichier_men_pmsi_annuel']),
-             (FichierSource.DIAMANT_ANN_RPU, dates_mise_a_jour_fichiers['date_du_fichier_ann_rpu']),
-             (FichierSource.DIAMANT_ANN_SAE, dates_mise_a_jour_fichiers['date_du_fichier_ann_sae'])
-             ],
+            [
+                (FichierSource.DIAMANT_MEN_PMSI_ANNUEL, dates_mise_a_jour_fichiers["date_du_fichier_men_pmsi_annuel"]),
+                (FichierSource.DIAMANT_ANN_RPU, dates_mise_a_jour_fichiers["date_du_fichier_ann_rpu"]),
+                (FichierSource.DIAMANT_ANN_SAE, dates_mise_a_jour_fichiers["date_du_fichier_ann_sae"]),
+            ],
             logger,
         )
 
@@ -104,9 +105,5 @@ if __name__ == "__main__":
     )
     logger_helios.info(f"[DIAMANT] Cherche les activités pour les ET sanitaires dans les fichiers {chemin_local_du_fichier_men_pmsi_annuel}")
     ajoute_les_activites_des_etablissements_sanitaires(
-        chemin_local_du_fichier_men_pmsi_annuel,
-        chemin_local_du_fichier_ann_rpu,
-        chemin_local_du_fichier_ann_sae,
-        base_de_donnees_helios,
-        logger_helios
+        chemin_local_du_fichier_men_pmsi_annuel, chemin_local_du_fichier_ann_rpu, chemin_local_du_fichier_ann_sae, base_de_donnees_helios, logger_helios
     )
