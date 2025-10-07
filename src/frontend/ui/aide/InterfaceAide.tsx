@@ -92,12 +92,6 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
         </div>
       </header>
 
-      {slugActif && (
-        <button className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-4w" onClick={revenirAccueil} type="button">
-          Retour à la page précédente
-        </button>
-      )}
-
       {slugActif && definitionActuelle ? (
         definitionActuelle.nature === "faq" ? (
           <BlocFaq />
