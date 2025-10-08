@@ -78,7 +78,7 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_DUREE_CDD.value}, "
                 f"{FichierSource.VIGIE_RH_REF_DUREE_CDD.value})"
-            )  
+            )
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
