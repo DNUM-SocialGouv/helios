@@ -102,6 +102,7 @@ import { AjoutTableVigieRhMouvementsTrimestriels1757662996841 } from "./migratio
 import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./migrations/vigie_rh/1758014111419-SuppressionQuarterDeVigieRhProfessionFiliere";
 import { SupressionColonneEffectifDePyramideAges1758270710076 } from "./migrations/vigie_rh/1758270710076-supressionColonneEffectifDePyramideAges";
 import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
+import { AjoutTableVigieRhDureeCdd1759821521368 } from "./migrations/vigie_rh/1759821521368-AjoutTableVigieRhDureeCdd";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -109,6 +110,7 @@ import { AjoutReferentielMasque1738593046415 } from "./migrations/vigie_rh/refer
 import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/referentiels/1738593074489-AjoutReferentielQualite";
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
 import { AjoutReferentielTrancheAge1739874041081 } from "./migrations/vigie_rh/referentiels/1739874041081-ajoutReferentielTrancheAge";
+import { AjoutTableVigieRhRefDureeCdd1759821492361 } from "./migrations/vigie_rh/referentiels/1759821492361-AjoutTableVigieRhRefDureeCdd";
 import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -334,7 +336,9 @@ const datasource = new DataSource({
     ModificationTableRessourcesHumainesEJ1758551051552,
     ModificationProfilJoursAbsPnmRhEj1758555147382,
     AjoutTableRessourcesHumainesETSAN1758618772544,
-    ModificationProfilRessourcesHumainesETSAN1758618803617
+    ModificationProfilRessourcesHumainesETSAN1758618803617,
+    AjoutTableVigieRhDureeCdd1759821521368,
+    AjoutTableVigieRhRefDureeCdd1759821492361
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
