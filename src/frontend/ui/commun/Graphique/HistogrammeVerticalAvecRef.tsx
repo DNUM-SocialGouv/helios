@@ -176,7 +176,6 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       />
       <Transcription
         entêteLibellé={wording.ANNÉE}
-        //TODO: L'identifiant n'est pas bon. 
         identifiants={identifiants}
         libellés={libelles}
         valeurs={[StringFormater.addPercentToValues(valeurs), StringFormater.addPercentToValues(valeursRef)]}
