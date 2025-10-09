@@ -8,8 +8,10 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
+import { VigieRhDureesCDDModel } from "../../../../../database/models/vigie_rh/VigieRHDureesCDDModel";
 import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
 import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
@@ -180,7 +182,17 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { annee: "ASC", trimestre: "ASC" },
       where: { numeroFinessET },
     });
-    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, professionFiliere as unknown as ProfessionFiliere)
+
+    const dureesCdd = await (await this.orm).getRepository(VigieRhDureesCDDModel).find({
+      order: { annee: "ASC", trimestre: "ASC", dureeCode: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const dureeLibelles = await (await this.orm).getRepository(VigieRhRefDureeCddModel).find({
+      order: { dureeCode: "ASC" },
+    });
+
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, dureesCdd, dureeLibelles, professionFiliere as unknown as ProfessionFiliere)
   }
 
   private async construisLesDonneesVigieRH(
@@ -188,6 +200,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     tranchesAgeModel: VigieRhRefTrancheAgeModel[],
     mouvementsModel: VigieRhMouvementsModel[],
     vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
+    dureesCddModel: VigieRhDureesCDDModel[],
+    dureesCddRefModel: VigieRhRefDureeCddModel[],
     professionFiliereModel: ProfessionFiliere
   ): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
@@ -246,7 +260,19 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
+    const dureesCdd = dureesCddModel.map((dureeCddModel: VigieRhDureesCDDModel) => {
+      return {
+        annee: dureeCddModel.annee,
+        trimestre: dureeCddModel.trimestre,
+        dureeLibelle: dureeCddModel.dureeCddRef.duree ?? '',
+        effectif: dureeCddModel.effectif,
+        effectifRef: dureeCddModel.effectifRef,
+      }
+    })
 
+    const dureesCddLibelles = dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
+      return dureeLibelleModel.duree ?? '';
+    })
     return {
       pyramideAges,
       tranchesAgesLibelles,
@@ -254,7 +280,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       departsEmbauchesTrimestriels,
       professionFiliere,
       tauxRotation,
-      tauxRotationTrimestriel
+      tauxRotationTrimestriel,
+      dureesCdd,
+      dureesCddLibelles
     }
   }
 
