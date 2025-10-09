@@ -58,10 +58,6 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
     surChangementSection?.(definitionActuelle ?? null);
   }, [definitionActuelle, surChangementSection]);
 
-  const revenirAccueil = () => {
-    setSlugActif(null);
-  };
-
   const ressourcesFiltrees = useMemo(() => {
     if (!sectionActuelle || definitionActuelle?.nature !== "resources") {
       return [];
