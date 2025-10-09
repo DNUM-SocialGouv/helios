@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
@@ -290,6 +291,19 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
               blocVigieRHViewModel={blocVigieRHViewModel}
               donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
               donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+            />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuPyramideDesAges />}
+            identifiant="vr-duree-cdd"
+            nomDeLIndicateur={wording.DUREE_CDD}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueDureeCDD
             />
           </IndicateurGraphique>
         ) : (

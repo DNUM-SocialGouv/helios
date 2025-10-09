@@ -710,7 +710,9 @@ export class WordingFr implements Wording {
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-
+  readonly DUREE_CDD: string = "Durée effective des CDD";
+  readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
+  readonly DUREE: string = "Durée";
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
