@@ -27,6 +27,7 @@ const GraphiqueTauxRotationAnnuel = ({ donneesTauxRotation, blocVigieRHViewModel
   return (
     <HistogrammeVerticalAvecRef
       couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotation)}
+      identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
       libelles={libelles}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
