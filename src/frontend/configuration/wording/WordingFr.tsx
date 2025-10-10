@@ -335,7 +335,7 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = "Montant de la contribution aux frais de siège et/ou de groupement";
   readonly MONTANT: string = "Montant";
-  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté construction";
+  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté des constructions";
   readonly RÉSULTAT_NET_COMPTABLE: string = "Résultat net comptable";
   readonly RATIO_DEPENDANCE_FINANCIERE: string = "Ratio de dépendance financière";
   readonly COMPTE_DE_RÉSULTAT_ERRD: string = "Compte de résultat ERRD";
