@@ -26,10 +26,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_a_lire_bloc_budget_finance_entite_juridique,
     équivalences_diamant_quo_san_finance_buget_finance_helios,
 )
-from datacrawler.test_helpers import (
-    CHEMIN_FICHIER_ANN_MS_TDP_ET,
-    CHEMIN_FICHIER_ANN_ERRD_EJ_ET
-)
+from datacrawler.test_helpers import CHEMIN_FICHIER_ANN_MS_TDP_ET, CHEMIN_FICHIER_ANN_ERRD_EJ_ET
 
 
 class TestLisLeFichierCsv:
@@ -173,6 +170,9 @@ class TestLisLeFichierCsv:
                 "Nombre total de séjours HAD": [NaN, 1674.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1674.0],
                 "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
                 "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 300],
+                "DMS MCO Médecine": [1, 4, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "DMS MCO Chirurgie": [2, 5, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "DMS MCO Obstétrique": [3, 6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
             }
         )
         pd.testing.assert_frame_equal(
