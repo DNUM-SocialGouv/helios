@@ -282,7 +282,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = screen.getByRole("dialog", { name: "Jour d’absentéisme PM" });
+      const infoBulle = screen.getByRole("dialog", { name: wording.JOURS_ABSENTEISME_PM });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -315,7 +315,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
       const headers = within(tableau).getAllByRole('columnheader');
       expect(headers).toHaveLength(2);
       expect(headers[0]).toHaveTextContent('Année');
-      expect(headers[1]).toHaveTextContent('Jour d’absentéisme PM');
+      expect(headers[1]).toHaveTextContent(wording.JOURS_ABSENTEISME_PM);
 
       const rows = within(tableau).getAllByRole('row');
       expect(rows).toHaveLength(2);
@@ -357,7 +357,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
       fireEvent.click(détails);
 
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = screen.getByRole("dialog", { name: "Jour d’absentéisme PNM" });
+      const infoBulle = screen.getByRole("dialog", { name: wording.JOURS_ABSENTEISME_PNM });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("ANCRE", { selector: "abbr" });
@@ -390,7 +390,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
       const headers = within(tableau).getAllByRole('columnheader');
       expect(headers).toHaveLength(2);
       expect(headers[0]).toHaveTextContent('Année');
-      expect(headers[1]).toHaveTextContent('Jour d’absentéisme PNM');
+      expect(headers[1]).toHaveTextContent(wording.JOURS_ABSENTEISME_PNM);
 
       const rows = within(tableau).getAllByRole('row');
       expect(rows).toHaveLength(2);
