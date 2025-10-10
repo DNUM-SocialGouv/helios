@@ -187,7 +187,7 @@ export class EtablissementTerritorialSanitaireRHViewModel {
   }
 
   public get joursAbsenteismePmSontIlsRenseignes(): boolean {
-    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePm.valeur !== null && ressourceHumaine.joursAbsenteismePm.valeur !== 0);
   }
 
   public get joursAbsenteismePmSontIlsAutorises(): boolean {
@@ -195,7 +195,7 @@ export class EtablissementTerritorialSanitaireRHViewModel {
   }
 
   public get joursAbsenteismePnmSontIlsRenseignes(): boolean {
-    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== null);
+    return this.ressourcesHumainesEtablissementSanitaire.some((ressourceHumaine) => ressourceHumaine.joursAbsenteismePnm.valeur !== null && ressourceHumaine.joursAbsenteismePnm.valeur !== 0);
   }
 
   public get joursAbsenteismePnmSontIlsAutorises(): boolean {
