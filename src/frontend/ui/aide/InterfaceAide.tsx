@@ -71,6 +71,14 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
   const descriptionSection =
     definitionActuelle?.nature === "resources" ? sectionActuelle?.description : undefined;
 
+  const currentBloc = () => {
+    if (definitionActuelle?.nature === "faq") {
+      return <BlocFaq />;
+    } else {
+      return <BlocRessources ressources={ressourcesFiltrees} />;
+    }
+  }
+
   return (
     <main className={`fr-container ${styles["conteneur"]}`} id="content">
       <header className="fr-mb-6w">
@@ -88,11 +96,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
       </header>
 
       {slugActif && definitionActuelle ? (
-        definitionActuelle.nature === "faq" ? (
-          <BlocFaq />
-        ) : (
-          <BlocRessources ressources={ressourcesFiltrees} />
-        )
+        currentBloc()
       ) : (
         <ListeSections onSelection={setSlugActif} sections={sectionsDisponibles} />
       )}

@@ -69,9 +69,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     }
 
     return {
-      id: identifiant || undefined,
-      prenom: prenom || undefined,
-      nom: nom || undefined,
+      id: identifiant,
+      prenom: prenom,
+      nom: nom,
     };
   }, [session?.user?.firstname, session?.user?.name, session?.user?.idUser]);
 
@@ -130,7 +130,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     } else {
       modale.removeAttribute("open");
     }
-    return;
+    return () => { };
   }, [ressourceModaleOuverte]);
 
   useEffect(() => {
@@ -162,7 +162,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     } else {
       modale.removeAttribute("open");
     }
-    return;
+    return () => { };
   }, [nouvelleSectionOuverte]);
 
   const definitionsSections = useMemo(() => determinerDefinitionsSections(contenu), [contenu]);
