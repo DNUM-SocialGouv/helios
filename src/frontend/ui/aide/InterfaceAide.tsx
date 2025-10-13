@@ -6,8 +6,8 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
 
 import styles from "./Aide.module.css";
-import { BlocFaq } from "./BlocFaq";
 import { BlocRessources } from "./BlocRessources";
+import Faq from "./Faq/Faq";
 import { ListeSections } from "./ListeSections";
 import {
   estAutorisePourRole,
@@ -73,7 +73,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
 
   const currentBloc = () => {
     if (definitionActuelle?.nature === "faq") {
-      return <BlocFaq />;
+      return <Faq />;
     } else {
       return <BlocRessources ressources={ressourcesFiltrees} />;
     }
