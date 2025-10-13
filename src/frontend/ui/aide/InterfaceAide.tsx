@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
-import "@gouvfr/dsfr/dist/utility/icons/icons.min.css";
 
 import styles from "./Aide.module.css";
 import { BlocFaq } from "./BlocFaq";

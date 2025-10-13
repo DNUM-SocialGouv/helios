@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { getAideEndpoint } from "../backend/infrastructure/controllers/getAideEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
-import { InterfaceAide } from "../frontend/ui/aide";
+import { InterfaceAide } from "../frontend/ui/aide/InterfaceAide";
 import type { IdentifiantRole } from "../frontend/ui/aide/utils";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";

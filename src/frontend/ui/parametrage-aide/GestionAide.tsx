@@ -10,12 +10,8 @@ import {
   useState,
 } from "react";
 
-import "@gouvfr/dsfr/dist/component/button/button.min.css";
-import "@gouvfr/dsfr/dist/component/input/input.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
-import "@gouvfr/dsfr/dist/utility/icons/icons.min.css";
 
 import {
   construireSectionsInitiales,

@@ -1,3 +1,7 @@
+import internetSvg from "@gouvfr/dsfr/dist/artwork/pictograms/digital/internet.svg"
+import documentSvg from "@gouvfr/dsfr/dist/artwork/pictograms/document/document.svg"
+import videoSvg from "@gouvfr/dsfr/dist/artwork/pictograms/leisure/video.svg"
+
 import {
   determinerDefinitionsSections,
   normaliserSection,
@@ -11,6 +15,7 @@ import type {
   RessourceAide,
   SectionNormalisee,
 } from "../parametrage-aide/types";
+
 
 export type IdentifiantRole = number | null;
 
@@ -58,9 +63,9 @@ export const obtenirSectionNormalisee = (contenu: ContenuAide, slug: string): Se
 export const regrouperRessourcesParType = (ressources: RessourceAide[]) => trierRessources(ressources);
 
 export const RESSOURCES_ICONES = [
-  { type: "document" as const, titre: "Documents", icone: "/assets/document.svg" },
-  { type: "video" as const, titre: "Vidéos", icone: "/assets/video.svg" },
-  { type: "link" as const, titre: "Liens utiles", icone: "/assets/internet.svg" },
+  { type: "document" as const, titre: "Documents", icone: documentSvg },
+  { type: "video" as const, titre: "Vidéos", icone: videoSvg },
+  { type: "link" as const, titre: "Liens utiles", icone: internetSvg },
 ];
 
 export const estSectionSupprimable = (slug: string): boolean => !SECTIONS_STATIQUES.some((section) => section.slug === slug);
