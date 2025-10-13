@@ -10,6 +10,7 @@ export class Paths {
   readonly RÉGION: string = "/region";
   readonly ECO_CONCEPTION: string = "/eco-conception";
   readonly GESTION_DES_COOKIES: string = "/gestion-des-cookies";
+  readonly AIDE: string = "/aide";
   readonly MES_LISTES: string = "/mes-listes"
   readonly HISTORY: string = "/history"
   readonly FORGET_PASSWORD = '/mot-passe-oublie';

@@ -8,17 +8,18 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 
 type ParametragePageProps = Readonly<{
   profiles: ProfilModel[];
+  wrapInMain?: boolean;
 }>;
 
-export const ParametragePage = ({ profiles }: ParametragePageProps) => {
+export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePageProps) => {
   const { wording, paths } = useDependencies();
   const router = useRouter();
 
-  return (
-    <main className="fr-container" id="content">
+  const content = (
+    <>
       {profiles && (
         <>
-          <h1 className={styles["title"]}>{wording.PARAMETRAGE_TITRE}</h1>
+          <h1 className={styles["title"]}>{wording.PARAMETRAGE_AUTORISATIONS_TITRE}</h1>
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {
@@ -69,6 +70,16 @@ export const ParametragePage = ({ profiles }: ParametragePageProps) => {
           )}
         </>
       )}
-    </main>
+    </>
   );
+
+  if (wrapInMain) {
+    return (
+      <main className="fr-container" id="content">
+        {content}
+      </main>
+    );
+  }
+
+  return <div>{content}</div>;
 };

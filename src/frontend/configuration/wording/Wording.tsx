@@ -522,6 +522,8 @@ export interface Wording {
 
   // Parametrage
   readonly PARAMETRAGE_TITRE: string;
+  readonly PARAMETRAGE_AUTORISATIONS_TITRE: string;
+  readonly PARAMETRAGE_AIDE_TITRE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;

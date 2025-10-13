@@ -236,7 +236,7 @@ export const Header = () => {
                           <button
                             className="fr-btn--icon-left fr-icon-settings-5-line"
                             onClick={() => {
-                              handleMenuAction(() => router.push(paths.PROFILES_LIST));
+                              handleMenuAction(() => router.push(paths.SETTINGS));
                             }}
                           >
                             Paramétrage
@@ -258,6 +258,16 @@ export const Header = () => {
                           <hr className={styles["menu-sperator"]} />
                         </>
                       )}
+                      <li className={styles["menu-item"]}>
+                        <button
+                          className="fr-btn--icon-left fr-icon-question-line"
+                          onClick={() => {
+                            handleMenuAction(() => router.push(paths.AIDE));
+                          }}
+                        >
+                          Aide
+                        </button>
+                      </li>
                       <hr className={styles["menu-sperator"]} />
                       <li className={styles["menu-item"]}>
                         <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={() => handleMenuAction(logOut)}>

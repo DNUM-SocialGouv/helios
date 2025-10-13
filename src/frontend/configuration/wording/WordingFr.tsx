@@ -609,7 +609,9 @@ export class WordingFr implements Wording {
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné";
 
-  readonly PARAMETRAGE_TITRE: string = "Paramétrage des autorisations";
+  readonly PARAMETRAGE_TITRE: string = "Paramétrage";
+  readonly PARAMETRAGE_AUTORISATIONS_TITRE: string = "Paramétrage des autorisations";
+  readonly PARAMETRAGE_AIDE_TITRE: string = "Paramétrage de l'aide";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";

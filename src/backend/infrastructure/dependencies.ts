@@ -36,6 +36,8 @@ import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/éta
 import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
 import { CategoriesFinessLoader } from "../métier/gateways/CategoriesFinessLoader";
 import { TypeOrmCategoriesFinessLoader } from "./gateways/categories-finess-loader/TypeOrmCategoriesFinessLoader";
+import { TypeOrmParametrageJsonLoader } from "./gateways/parametrage-json/TypeOrmParametrageJsonLoader";
+import { ParametrageJsonLoader } from "../métier/gateways/ParametrageJsonLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -58,6 +60,7 @@ export type Dependencies = Readonly<{
   userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
   vigieRhContratLoader: VigieRhContratLoader;
   categoriesFinessLoader: CategoriesFinessLoader;
+  aideLoader: ParametrageJsonLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -92,7 +95,8 @@ const createDependencies = (): Dependencies => {
     userListLoader: new TypeOrmUserListLoader(orm),
     userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
     vigieRhContratLoader: new TypeOrmVigieRhContratLoader(orm),
-    categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm)
+    categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm),
+    aideLoader: new TypeOrmParametrageJsonLoader(orm)
   };
 };
 
