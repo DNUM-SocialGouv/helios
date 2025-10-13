@@ -1,6 +1,6 @@
 import { ContenuAide, DefinitionSection, RessourceAide, SectionAide, SectionNormalisee } from "./types";
 
-export const ICON_PAR_DEFAUT = "fr-icon-folder-open-line";
+export const ICON_PAR_DEFAUT = "fr-icon-folder-2-line";
 
 export const SECTIONS_STATIQUES: DefinitionSection[] = [
   {
@@ -78,13 +78,13 @@ export const construireSectionsInitiales = (contenu: ContenuAide): ContenuAide =
 
   for (const sectionStatique of SECTIONS_STATIQUES) {
     resultat[sectionStatique.slug] ??= normaliserSection({
-        title: sectionStatique.titre,
-        icon: sectionStatique.icone,
-        kind: sectionStatique.nature,
-        description: "",
-        resources: [],
-        order: sectionStatique.ordre,
-      });
+      title: sectionStatique.titre,
+      icon: sectionStatique.icone,
+      kind: sectionStatique.nature,
+      description: "",
+      resources: [],
+      order: sectionStatique.ordre,
+    });
   }
 
   return resultat;
@@ -108,8 +108,8 @@ export const determinerDefinitionsSections = (contenu: ContenuAide): DefinitionS
 
     definitions.push({
       slug,
-      titre: section?.title?.trim() || sectionStatique?.titre || slug,
-      icone: section?.icon?.trim() || sectionStatique?.icone || ICON_PAR_DEFAUT,
+      titre: section?.title?.trim() ?? sectionStatique?.titre ?? slug,
+      icone: section?.icon?.trim() ?? sectionStatique?.icone ?? ICON_PAR_DEFAUT,
       nature: section?.kind === "faq" ? "faq" : sectionStatique?.nature ?? "resources",
       ordre,
     });
