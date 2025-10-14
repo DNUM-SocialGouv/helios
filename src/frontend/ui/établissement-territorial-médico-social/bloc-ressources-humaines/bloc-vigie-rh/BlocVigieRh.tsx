@@ -280,7 +280,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+        {!blocVigieRHViewModel.lesRotationsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesRotationsNeSontIlsPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-taux-rotation"
@@ -296,7 +296,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+        {!blocVigieRHViewModel.lesDureesCDDNeSontEllesPasRenseignees && !blocVigieRHViewModel.lesDureesCDDNeSontEllesPasAutorisee ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-duree-cdd"

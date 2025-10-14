@@ -23,38 +23,58 @@ export class BlocVigieRHViewModel {
 
   public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
 
-  constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH, private readonly wording: Wording) {
+  constructor(etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH, private readonly wording: Wording, private readonly autorisations: any) {
     this.etablissementTerritorialVRMedicoSocial = etablissementTerritorialVRMedicoSocial;
+    this.autorisations = autorisations;
+
   }
 
   public get lesAgesNeSontIlsPasRenseignees(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] !== 'ko' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
   }
   public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour !== 'ko' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
-  }
-
-  public get lesAgesNeSontIlsPasAutorisee(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles[0] === 'ko'
-  }
-
-  public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.professionFiliere?.dateDeMiseAJour === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasRenseignees(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches.length === 0;
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.departsEmbauches.length === 0
+  }
+
+  public get lesRotationsNeSontIlsPasRenseignees(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.tauxRotation.length === 0
+  }
+
+  public get lesDureesCDDNeSontEllesPasRenseignees(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.dureesCdd.length === 0;
+  }
+
+  public get lesAgesNeSontIlsPasAutorisee(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+  }
+
+  public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches[0]?.annee === -1
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+  }
+
+  public get lesRotationsNeSontIlsPasAutorisee(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+  }
+
+  public get lesDureesCDDNeSontEllesPasAutorisee(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
 
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
-    if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
+    if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) { nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES) };
+    if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
+    if (this.lesDureesCDDNeSontEllesPasRenseignees) nonRenseignees.push(this.wording.DUREE_CDD);
     return nonRenseignees;
   }
 
@@ -63,6 +83,8 @@ export class BlocVigieRHViewModel {
     if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
     if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
+    if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
+    if (this.lesDureesCDDNeSontEllesPasAutorisee) nonAutorises.push(this.wording.DUREE_CDD);
     return nonAutorises;
   }
 
@@ -100,7 +122,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
-    return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees;
+    return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees && this.lesDepartsEmbauchesNeSontIlsPasRenseignees && this.lesDureesCDDNeSontEllesPasRenseignees;
   }
 
   public get dateDeMiseAJourEffectifs(): string {
@@ -207,11 +229,5 @@ export class BlocVigieRHViewModel {
     return durees
       .filter(d => d.annee === maxAnnee)
       .sort((a, b) => a.dureeCode - b.dureeCode);
-  }
-
-  public get lesDureesQuiManquentDeRef(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.dureesCdd
-      .filter((duree) => duree.effectifRef === null)
-      .map((dureeRefManquantes) => dureeRefManquantes.dureeLibelle);
   }
 }

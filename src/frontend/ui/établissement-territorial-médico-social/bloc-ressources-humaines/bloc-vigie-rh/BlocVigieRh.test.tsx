@@ -24,7 +24,7 @@ jest.mock("chartjs-chart-treemap", () => ({
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
     ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.ressourcesHumaines,
-    wording
+    wording,
   );
   const blocVigieRhEmptyViewModel = new BlocVigieRHViewModel(
     {
@@ -38,12 +38,14 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       dureesCdd: [],
       dureesCddLibelles: []
     },
-    wording
+    wording,
+    { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }
   );
 
   const blocVigieRhViewModel = new BlocVigieRHViewModel(
     ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
-    wording
+    wording,
+    {}
   );
 
   const EHPAD_CATEGORIE = "500 - Etablissement d'hébergement pour personnes âgées dépendantes";
