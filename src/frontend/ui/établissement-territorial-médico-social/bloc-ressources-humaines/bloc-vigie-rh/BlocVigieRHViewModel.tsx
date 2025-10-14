@@ -1,4 +1,4 @@
-import { DepartEmbauche, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { DepartEmbauche, DureeCDD, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
@@ -194,5 +194,24 @@ export class BlocVigieRHViewModel {
       variationText: variationText,
       dernierePeriode: `(T${derniereDonneeComparaison?.trimestre}-${derniereDonneeComparaison?.annee})`
     }
+  }
+
+  public get lesLibellesDureeCdd(): string[] {
+    return this.etablissementTerritorialVRMedicoSocial.dureesCddLibelles;
+  }
+
+  public get lesDureesCdd(): DureeCDD[] {
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const maxAnnee = Math.max(...durees.map(d => d.annee));
+
+    return durees
+      .filter(d => d.annee === maxAnnee)
+      .sort((a, b) => a.dureeCode - b.dureeCode);
+  }
+
+  public get lesDureesQuiManquentDeRef(): string[] {
+    return this.etablissementTerritorialVRMedicoSocial.dureesCdd
+      .filter((duree) => duree.effectifRef === null)
+      .map((dureeRefManquantes) => dureeRefManquantes.dureeLibelle);
   }
 }

@@ -59,6 +59,7 @@ export type DureeCDD = Readonly<{
   effectif: number;
   effectifRef: number;
   dureeLibelle: string
+  dureeCode: number;
 }>;
 
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{

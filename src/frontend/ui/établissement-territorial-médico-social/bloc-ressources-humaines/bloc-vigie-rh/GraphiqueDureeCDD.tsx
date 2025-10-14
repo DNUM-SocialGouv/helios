@@ -1,14 +1,27 @@
+import { useMemo } from "react";
+
+import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from "../../../commun/Graphique/couleursGraphique";
 import HistogrammeHorizontalAvecRef from "../../../commun/Graphique/HistogrammeHorizontalAvecRef";
 
 type GraphiqueDureeCDDProps = Readonly<{
-
+  blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueDureeCDD = ({ }: GraphiqueDureeCDDProps) => {
+const GraphiqueDureeCDD = ({ blocVigieRHViewModel }: GraphiqueDureeCDDProps) => {
 
   const { wording } = useDependencies();
+
+  const {
+    donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef
+  } = useMemo(() => {
+    const donneesEffectifs = blocVigieRHViewModel.lesDureesCdd.map(d => d.effectif);
+    const donneesEffectifsRef = blocVigieRHViewModel.lesDureesCdd.map(d => d.effectifRef);
+    const lesDureesQuiManquentDeRef = blocVigieRHViewModel.lesDureesCdd.filter((duree) => duree.effectifRef === null)
+      .map((dureeRefManquantes) => dureeRefManquantes.dureeLibelle)
+    return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef };
+  }, [blocVigieRHViewModel.lesDureesCdd]);
 
   return (
     <HistogrammeHorizontalAvecRef
@@ -26,9 +39,11 @@ const GraphiqueDureeCDD = ({ }: GraphiqueDureeCDDProps) => {
       },]}
       enteteLibelle={wording.DUREE}
       identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
-      libelles={["Moins d'une semaine", "Entre 1 semaine et 1 mois", "Entre 1 et 3 mois"]}
-      valeursDesHistogrammes={[1, 3, 8]}
-      valeursDesHistogrammesRef={[5, 1, 7]}
+      libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
+      refsManquants={lesDureesQuiManquentDeRef}
+      refsManquantsTitre='Aucune donnée de référence pour les durées:'
+      valeursDesHistogrammes={donneesEffectifs}
+      valeursDesHistogrammesRef={donneesEffectifsRef}
     />
   );
 };

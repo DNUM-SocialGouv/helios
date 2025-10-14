@@ -5,6 +5,7 @@ import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGr
 import styles from "./HistogrammeHorizontaux.module.css";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
 
@@ -15,9 +16,21 @@ type HistogrammeHorizontalAvecRefProps = {
   valeursDesHistogrammesRef: number[];
   libelles: string[];
   identifiants: string[];
+  refsManquantsTitre?: string;
+  refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
 };
-const HistogrammeHorizontalAvecRef = ({ couleursDeLHistogramme, epaisseur, enteteLibelle, valeursDesHistogrammes, valeursDesHistogrammesRef, libelles, identifiants }: HistogrammeHorizontalAvecRefProps) => {
+const HistogrammeHorizontalAvecRef = (
+  { couleursDeLHistogramme,
+    epaisseur,
+    enteteLibelle,
+    valeursDesHistogrammes,
+    valeursDesHistogrammesRef,
+    libelles,
+    refsManquantsTitre,
+    refsManquants,
+    identifiants
+  }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
   const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
@@ -76,7 +89,19 @@ const HistogrammeHorizontalAvecRef = ({ couleursDeLHistogramme, epaisseur, entet
         },
       },
       legend: { display: false },
-      tooltip: { enabled: false },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            const index = context.dataIndex;
+            const value = valeursDesHistogrammes[index];
+            const refValue = valeursDesHistogrammesRef[index];
+            const refValueText = refValue ? `${refValue} ` : 'Non renseignée'
+
+            return [`Valeur: ${value}`,
+            `Valeur de référence: ${refValueText} `];
+          },
+        },
+      },
       // @ts-ignore
       valeursDeReference: { valeursDesHistogrammesRef } as any,
     },
@@ -123,6 +148,7 @@ const HistogrammeHorizontalAvecRef = ({ couleursDeLHistogramme, epaisseur, entet
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
       />
+      {refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
       <Transcription
         entêteLibellé={enteteLibelle}
         identifiants={identifiants}

@@ -304,6 +304,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             source={wording.VIGIE_RH}
           >
             <GraphiqueDureeCDD
+              blocVigieRHViewModel={blocVigieRHViewModel}
             />
           </IndicateurGraphique>
         ) : (
