@@ -31,7 +31,7 @@ def filtrer_les_donnees(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.Da
     return donnees_filtrees
 
 
-def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_fichier_donnees: str, base_de_donnees: Engine, logger: Logger):
+def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
     date_du_fichier_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_fichier_ref)
     date_du_fichier_donnees = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_fichier_donnees)
     # si les fichiers ref et données ne sont pas de même date, on fait rien
