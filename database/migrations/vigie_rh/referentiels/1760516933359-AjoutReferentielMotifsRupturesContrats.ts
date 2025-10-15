@@ -7,6 +7,7 @@ export class AjoutReferentielMotifsRupturesContrats1760516933359 implements Migr
       CREATE TABLE IF NOT EXISTS vigierh_ref_motifs_ruptures(
                 code int PRIMARY KEY,
                 motif varchar NOT NULL);`);
+    await queryRunner.query(`ALTER TYPE fichier_source ADD VALUE IF NOT EXISTS 'vigierh_ref_motifs_ruptures';`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

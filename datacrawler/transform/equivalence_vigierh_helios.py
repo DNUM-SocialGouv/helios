@@ -82,6 +82,18 @@ class ColumMapping(Enum):
         'taux_rotation': 'taux_rotation',
         'taux_rotation_ref': 'taux_rotation_ref'
     }
+    REF_MOTIFS_RUPTURES = {
+        'motif_code':'code',
+        'motif':'motif'
+    }
+    MOTIFS_RUPTURES = {
+        'finess_et':'finess_et',
+        'year':'annee',
+        'quarter':'trimestre',
+        'motif_code':'motif_code',
+        'effectif':'effectif',
+        'effectif_ref':'effectif_ref'
+    }
 
 index_des_mouvements_rh_annuel: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 index_des_mouvements_rh_trimestriel: List[str] = ["numero_finess_etablissement_territorial", "annee", "trimestre"]
