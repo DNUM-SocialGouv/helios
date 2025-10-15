@@ -17,7 +17,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
       on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
   */
 
-  const vigieRh = profil.ressourcesHumaines.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : { pyramideAges: [], tranchesAgesLibelles: ['ko'], professionFiliere: { data: [], dateDeMiseAJour: 'ko' }, departsEmbauches: [{ annee: -1 }] };
+  const vigieRh = profil.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : {};
 
   return {
     identité: identité,
