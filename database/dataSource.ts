@@ -1,5 +1,6 @@
 import { DataSource, LoggerOptions } from "typeorm";
 
+
 import { EntitéJuridique1652626977208 } from "./migrations/1652626977208-EntitéJuridique";
 import { ÉtablissementTerritorial1652627040870 } from "./migrations/1652627040870-ÉtablissementTerritorial";
 import { DateMiseÀJourSource1652627053530 } from "./migrations/1652627053530-DateMiseÀJourSource";
@@ -85,6 +86,7 @@ import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/175
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
 import { AjoutTableParametrageJson1759416645736 } from "./migrations/1759416645736-AjoutTableParametrageJson";
+import { AjoutAideReferentsRegionaux1760448332798 } from "./migrations/1760448332798-AjoutAideReferentsRegionaux"
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -338,7 +340,8 @@ const datasource = new DataSource({
     ModificationProfilJoursAbsPnmRhEj1758555147382,
     AjoutTableRessourcesHumainesETSAN1758618772544,
     ModificationProfilRessourcesHumainesETSAN1758618803617,
-    AjoutTableParametrageJson1759416645736
+    AjoutTableParametrageJson1759416645736,
+    AjoutAideReferentsRegionaux1760448332798
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
