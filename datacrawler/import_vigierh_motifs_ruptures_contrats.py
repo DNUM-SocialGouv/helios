@@ -46,7 +46,7 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
         ref_traite = verifie_si_le_fichier_est_traite(chemin_local_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
         donnees_traite =  verifie_si_le_fichier_est_traite(chemin_local_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
         if ref_traite & donnees_traite:
-            logger.info(f"Les fichiers {FichierSource.VIGIVIGIE_RH_REF_MOTIFS_RUPTURESE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
+            logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et  {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
         else:
             references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
             donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
