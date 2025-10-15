@@ -14,29 +14,24 @@ const GraphiqueDureeCDD = ({ blocVigieRHViewModel }: GraphiqueDureeCDDProps) => 
   const { wording } = useDependencies();
 
   const {
-    donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef
+    donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef, couleursDeLHistogramme
   } = useMemo(() => {
     const donneesEffectifs = blocVigieRHViewModel.lesDureesCdd.map(d => d.effectif);
     const donneesEffectifsRef = blocVigieRHViewModel.lesDureesCdd.map(d => d.effectifRef);
     const lesDureesQuiManquentDeRef = blocVigieRHViewModel.lesDureesCdd.filter((duree) => duree.effectifRef === null)
-      .map((dureeRefManquantes) => dureeRefManquantes.dureeLibelle)
-    return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef };
+      .map((dureeRefManquantes) => dureeRefManquantes.dureeLibelle);
+    const couleursDeLHistogramme = blocVigieRHViewModel.lesDureesCdd.map(() => {
+      return {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      };
+    })
+    return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
   return (
     <HistogrammeHorizontalAvecRef
-      couleursDeLHistogramme={[{
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },
-      {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },
-      {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },]}
+      couleursDeLHistogramme={couleursDeLHistogramme}
       enteteLibelle={wording.DUREE}
       identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
       libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
