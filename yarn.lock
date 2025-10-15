@@ -6823,6 +6823,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jest-mock-extended: "npm:^3.0.7"
     joi: "npm:^17.13.3"
+    json-diff-ts: "npm:^4.8.2"
     jsonwebtoken: "npm:^9.0.2"
     next: "npm:14.2.30"
     next-auth: "npm:^4.24.9"
@@ -8275,6 +8276,13 @@ __metadata:
   version: 3.0.1
   resolution: "json-buffer@npm:3.0.1"
   checksum: 10/82876154521b7b68ba71c4f969b91572d1beabadd87bd3a6b236f85fbc7dc4695089191ed60bb59f9340993c51b33d479f45b6ba9f3548beb519705281c32c3c
+  languageName: node
+  linkType: hard
+
+"json-diff-ts@npm:^4.8.2":
+  version: 4.8.2
+  resolution: "json-diff-ts@npm:4.8.2"
+  checksum: 10/d8b1284f7af4b855dd14da9e593426109d1574959f436fc27d1e63a390af7e24e382235fded121936f838344a4a9809ee676eeaee073286af4ed98da1fa16264
   languageName: node
   linkType: hard
 

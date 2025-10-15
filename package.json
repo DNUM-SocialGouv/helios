@@ -139,6 +139,7 @@
     "dotenv-defaults": "^5.0.2",
     "exceljs": "^4.4.0",
     "joi": "^17.13.3",
+    "json-diff-ts": "^4.8.2",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.30",
     "next-auth": "^4.24.9",
