@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 if len(sys.argv) <= 1 :
     print("Veuillez fournir le nom de fichier 'parquet' en paramétre ( sans extenson) !")
-    exit(1)
+    sys.exit(1)
 
 FILE_PREFIX = sys.argv[1]
 # Chemin vers votre fichier Parquet
