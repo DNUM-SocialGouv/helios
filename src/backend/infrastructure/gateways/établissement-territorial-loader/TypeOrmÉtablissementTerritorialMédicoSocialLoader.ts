@@ -8,6 +8,7 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
@@ -34,6 +35,16 @@ import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../mét
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
+
+type ResultatQueryDureeCdd = Readonly<{
+  numero_finess_etablissement_territorial: string,
+  annee: number,
+  trimestre: number,
+  effectif: number,
+  effectif_ref: number,
+  duree: string,
+  duree_code: number;
+}>
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
@@ -180,7 +191,32 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { annee: "ASC", trimestre: "ASC" },
       where: { numeroFinessET },
     });
-    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, professionFiliere as unknown as ProfessionFiliere)
+
+    const dureesCdd = await (await this.orm).query(`
+      select * from (    
+          SELECT *
+          FROM vigierh_duree_cdd d
+          WHERE (d.annee, d.trimestre) IN (
+            SELECT d1.annee, MAX(d1.trimestre)
+            FROM vigierh_duree_cdd d1
+            WHERE d1.annee = (SELECT MAX(d2.annee) FROM vigierh_duree_cdd d2)
+            GROUP BY d1.annee
+            UNION ALL
+            SELECT (MAX(d1.annee) - 1) AS annee,
+                  MAX(d1.trimestre) AS trimestre
+            FROM vigierh_duree_cdd d1
+            WHERE d1.annee = (SELECT MAX(d2.annee) FROM vigierh_duree_cdd d2)
+          )
+          AND d.numero_finess_etablissement_territorial = '${numeroFinessET}'
+          ORDER BY d.annee DESC, d.trimestre ASC, d.duree_code ASC) val
+          JOIN vigierh_referentiel_duree_cdd ref ON val.duree_code = ref.duree_code;`
+    )
+
+    const dureeLibelles = await (await this.orm).getRepository(VigieRhRefDureeCddModel).find({
+      order: { dureeCode: "ASC" },
+    });
+
+    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, dureesCdd, dureeLibelles, professionFiliere as unknown as ProfessionFiliere)
   }
 
   private async construisLesDonneesVigieRH(
@@ -188,6 +224,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     tranchesAgeModel: VigieRhRefTrancheAgeModel[],
     mouvementsModel: VigieRhMouvementsModel[],
     vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
+    dureesCddModel: ResultatQueryDureeCdd[],
+    dureesCddRefModel: VigieRhRefDureeCddModel[],
     professionFiliereModel: ProfessionFiliere
   ): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
@@ -246,7 +284,22 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
+    const dureesCdd = dureesCddModel.map((dureeCddModel: ResultatQueryDureeCdd) => {
+      return {
+        annee: dureeCddModel.annee,
+        trimestre: dureeCddModel.trimestre,
+        dureeLibelle: dureeCddModel.duree,
+        dureeCode: dureeCddModel.duree_code,
+        effectif: dureeCddModel.effectif,
+        effectifRef: dureeCddModel.effectif_ref,
+      }
+    })
 
+
+
+    const dureesCddLibelles = dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
+      return dureeLibelleModel.duree ?? '';
+    })
     return {
       pyramideAges,
       tranchesAgesLibelles,
@@ -254,7 +307,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       departsEmbauchesTrimestriels,
       professionFiliere,
       tauxRotation,
-      tauxRotationTrimestriel
+      tauxRotationTrimestriel,
+      dureesCdd,
+      dureesCddLibelles
     }
   }
 

@@ -3,7 +3,7 @@
   margin-bottom: 3rem;
 }
 
-.container > div {
+.container>div {
   flex: 1;
   width: 100%;
 }
@@ -13,7 +13,11 @@
 }
 
 .barWithToggleWidth {
-    width: 450px;
+  width: 450px;
+}
+
+.flexContainer {
+  display: flex;
 }
 
 /*@media print {

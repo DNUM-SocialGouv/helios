@@ -616,6 +616,8 @@ export interface Wording {
   readonly REPARTITION_EFFECTIFS: string;
   readonly TAUX_ROTATION_REFERENCE: string;
   readonly TOP_TAUX_ROTATION_TITLE: string;
-
+  readonly DUREE_CDD: string;
+  readonly DUREE_CDD_REF: string;
+  readonly DUREE: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }
