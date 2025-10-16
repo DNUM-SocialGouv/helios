@@ -20,14 +20,15 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageParametrageAideProps>> {
   try {
     const session = await getSession(contexte);
-    if (!session || session.user?.role !== 1) {
+    if (session?.user?.role !== 1) {
       return {
         redirect: {
-          destination: "/connexion",
           permanent: false,
+          destination: "/inaccessible",
         },
       };
     }
+
 
     const contenu = await getAideEndpoint(dependencies);
 

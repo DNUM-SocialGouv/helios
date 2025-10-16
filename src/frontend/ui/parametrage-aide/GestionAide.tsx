@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import {
   ChangeEvent,
   FormEvent,
@@ -34,7 +33,6 @@ import type {
   ContenuAide,
   DefinitionSection,
   RessourceAide,
-  RessourceUtilisateur,
   SectionEditable,
   SectionNormalisee,
 } from "./types";
@@ -56,32 +54,15 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
-  const { data: session } = useSession();
-  const contenuNormalise = useMemo(() => construireSectionsInitiales(contenuInitial), [contenuInitial]);
+  const contenuNormalise = construireSectionsInitiales(contenuInitial);
 
-  const utilisateurActif = useMemo<RessourceUtilisateur | undefined>(() => {
-    const prenom = session?.user?.firstname?.trim();
-    const nom = session?.user?.name?.trim();
-    const identifiant = session?.user?.idUser?.toString().trim();
-
-    if (!prenom && !nom && !identifiant) {
-      return undefined;
-    }
-
-    return {
-      id: identifiant,
-      prenom: prenom,
-      nom: nom,
-    };
-  }, [session?.user?.firstname, session?.user?.name, session?.user?.idUser]);
-
-  const initialisationRoles = useMemo(() => {
+  const initialisationRoles = () => {
     const resultat: Record<string, string> = {};
     for (const [slug, section] of Object.entries(contenuNormalise)) {
       resultat[slug] = formaterRoles(section?.allowedRoles ?? section?.roles);
     }
     return resultat;
-  }, [contenuNormalise]);
+  };
 
   const [contenu, setContenu] = useState<ContenuAide>(contenuNormalise);
   const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, string>>(initialisationRoles);
@@ -91,7 +72,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const [ressourceFormulaire, setRessourceFormulaire] = useState<RessourceFormulaire>(FORMULAIRE_RESSOURCE_VIERGE);
   const [indexRessourceEditee, setIndexRessourceEditee] = useState<number | null>(null);
   const [formulaireNouvelleSection, setFormulaireNouvelleSection] = useState({ title: "", icon: ICON_PAR_DEFAUT });
-  const [sectionsSupprimees, setSectionsSupprimees] = useState<string[]>([]);
   const [messageSucces, setMessageSucces] = useState<string | null>(null);
   const [messageErreur, setMessageErreur] = useState<string | null>(null);
   const [enregistrementEnCours, setEnregistrementEnCours] = useState(false);
@@ -243,7 +223,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         [slug]: miseAJour(actuel),
       };
     });
-    setSectionsSupprimees((precedent) => precedent.filter((element) => element !== slug));
   };
 
   const modifierDescription = (valeur: string) => {
@@ -293,7 +272,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       date: ressourceFormulaire.date || undefined,
       nom_telechargement: ressourceFormulaire.nom_telechargement || undefined,
       allowedRoles: roles.length > 0 ? roles : undefined,
-      ...(utilisateurActif ? { updatedBy: utilisateurActif } : {}),
     };
 
     mettreAJourSection(slugSelectionne, (section) => {
@@ -343,9 +321,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       if (!deplacee) {
         return section;
       }
-
-      const ressourceMaj = utilisateurActif ? { ...deplacee, updatedBy: utilisateurActif } : deplacee;
-      ressources.splice(indexCible, 0, ressourceMaj);
 
       return {
         ...section,
@@ -401,7 +376,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     }));
 
     setRolesBrouillon((precedent) => ({ ...precedent, [slug]: "" }));
-    setSectionsSupprimees((precedent) => precedent.filter((element) => element !== slug));
     setSlugSelectionne(slug);
     setNouvelleSectionOuverte(false);
   };
@@ -429,8 +403,6 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return copie;
     });
 
-    setSectionsSupprimees((precedent) => (precedent.includes(slug) ? precedent : [...precedent, slug]));
-
     if (slugSelectionne === slug) {
       setSlugSelectionne("");
     }
@@ -456,33 +428,35 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     setMessageSucces(null);
     setMessageErreur(null);
 
-    try {
-      const chargeUtile: ContenuAide = {};
-      for (const [slug, section] of Object.entries(contenu)) {
-        chargeUtile[slug] = {
-          ...section,
-          resources: reindexerRessources(trierRessources(section?.resources ?? [])),
-        };
-      }
-
-      const reponse = await fetch("/api/parametrage-aide", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: chargeUtile, remove: sectionsSupprimees }),
-      });
-
-      if (!reponse.ok) {
-        const details = await reponse.json().catch(() => ({}));
-        throw new Error(details?.message ?? "Enregistrement impossible");
-      }
-
-      setMessageSucces("Les contenus d’aide ont été enregistrés.");
-      setSectionsSupprimees([]);
-    } catch (erreur: any) {
-      setMessageErreur(erreur?.message ?? "Une erreur est survenue lors de l’enregistrement.");
-    } finally {
-      setEnregistrementEnCours(false);
+    const chargeUtile: ContenuAide = {};
+    for (const [slug, section] of Object.entries(contenu)) {
+      chargeUtile[slug] = {
+        ...section,
+        resources: reindexerRessources(trierRessources(section?.resources ?? [])),
+      };
     }
+
+    let responseOk = false;
+    await fetch("/api/parametrage-aide", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(chargeUtile),
+    })
+      .then((response) => {
+        responseOk = response.ok;
+        return response.json();
+      })
+      .then((payload) => {
+        if (responseOk) {
+          setContenu(construireSectionsInitiales(payload));
+          setMessageSucces("Les contenus d’aide ont été enregistrés.");
+        } else {
+          setMessageErreur(payload?.message ?? "Une erreur est survenue lors de l’enregistrement.");
+        }
+      })
+      .finally(() => {
+        setEnregistrementEnCours(false);
+      });
   };
 
   const contenuAffiche: ReactNode = (
