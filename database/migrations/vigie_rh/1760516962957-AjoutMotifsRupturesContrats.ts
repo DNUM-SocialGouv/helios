@@ -18,10 +18,13 @@ export class AjoutMotifsRupturesContrats1760516962957 implements MigrationInterf
           FOREIGN KEY (finess_et)
                         REFERENCES etablissement_territorial (numero_finess_etablissement_territorial)
                         ON DELETE CASCADE);`);
+
+    await queryRunner.query(`ALTER TYPE fichier_source ADD VALUE IF NOT EXISTS 'vigierh_motifs_ruptures';`);
+
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP TABLE IF EXISTS vigierh_motifs_ruptures;`);
   }
-  
+
 }
