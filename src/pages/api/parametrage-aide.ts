@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     try {
-      const { data } = req.body ?? {};
+      const data = req.body ?? {};
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         return res.status(400).json({ message: "Format de données invalide" });
       }
