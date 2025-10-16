@@ -676,7 +676,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     tauxRotation: [],
     tauxRotationTrimestriel: [],
     dureesCdd: [],
-    dureesCddLibelles: []
+    dureesCddLibelles: [],
+    motifsRuptureContrat: [],
+    motifsRuptureContratLibelles: []
   };
 
   public static crée(

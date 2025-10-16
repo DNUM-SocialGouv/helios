@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
+import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
@@ -306,6 +307,18 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             <GraphiqueDureeCDD
               blocVigieRHViewModel={blocVigieRHViewModel}
             />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {!blocVigieRHViewModel.lesMotifsNeSontIlsPasRenseignes && !blocVigieRHViewModel.lesMotifsNeSontIlsPasAutorises ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuPyramideDesAges />}
+            identifiant="vr-motif-rupture"
+            nomDeLIndicateur={wording.MOTIFS_RUPTURE_CONTRAT}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} />
           </IndicateurGraphique>
         ) : (
           <></>

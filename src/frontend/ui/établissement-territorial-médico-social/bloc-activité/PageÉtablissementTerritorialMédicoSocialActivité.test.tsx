@@ -310,7 +310,9 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             tauxRotation: [],
             tauxRotationTrimestriel: [],
             dureesCdd: [],
-            dureesCddLibelles: []
+            dureesCddLibelles: [],
+            motifsRuptureContrat: [],
+            motifsRuptureContratLibelles: []
           },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
@@ -506,7 +508,9 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             tauxRotation: [],
             tauxRotationTrimestriel: [],
             dureesCdd: [],
-            dureesCddLibelles: []
+            dureesCddLibelles: [],
+            motifsRuptureContrat: [],
+            motifsRuptureContratLibelles: []
           }, qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },

@@ -62,6 +62,15 @@ export type DureeCDD = Readonly<{
   dureeCode: number;
 }>;
 
+export type MotifsRuptureContrat = Readonly<{
+  annee: number;
+  trimestre: number;
+  effectif: number;
+  effectifRef: number;
+  motifLibelle: string
+  motifCode: number;
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   pyramideAges: PyramideAges[];
   departsEmbauches: DepartEmbauche[];
@@ -72,5 +81,6 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   tauxRotationTrimestriel: TauxRotationTrimestriel[];
   dureesCdd: DureeCDD[];
   dureesCddLibelles: string[];
+  motifsRuptureContrat: MotifsRuptureContrat[];
+  motifsRuptureContratLibelles: string[];
 }>;
-

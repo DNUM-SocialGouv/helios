@@ -75,6 +75,12 @@ const HistogrammeHorizontalAvecRef = (
         grid: { drawOnChartArea: false, drawTicks: false },
       },
     },
+    // intersect : false  avec mode : "index" => au survol du segment, on affiche la même tooltip.
+    // on affiche la tooltip qui correspond à la valeur , donc index 0 . Et on ignore la tooltip de la barre Référence (pour cela on ajout 'filter' dans tooltip)
+    interaction: {
+      intersect: true,
+      mode: "index",
+    },
     plugins: {
       datalabels: {
         align: "start",
@@ -90,6 +96,7 @@ const HistogrammeHorizontalAvecRef = (
       },
       legend: { display: false },
       tooltip: {
+        filter: (tooltipItem) => tooltipItem.datasetIndex === 0,
         callbacks: {
           label: function (context: any) {
             const index = context.dataIndex;
