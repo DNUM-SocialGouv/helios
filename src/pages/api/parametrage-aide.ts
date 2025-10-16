@@ -10,10 +10,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const useCase = new AideUseCase(dependencies.aideLoader);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const userSession = await getServerSession(req, res, authOptions);
-  const user = userSession?.user;
-  const updatedBy = { id: user?.idUser, prenom: user?.firstname, nom: user?.name };
-
   if (req.method === "GET") {
     try {
       const data = await useCase.recupererContenu();
@@ -25,6 +21,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     try {
+      const userSession = await getServerSession(req, res, authOptions);
+      const user = userSession?.user;
+      const updatedBy = { id: user?.idUser, prenom: user?.firstname, nom: user?.name };
+
       const data = req.body ?? {};
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         return res.status(400).json({ message: "Format de données invalide" });
