@@ -618,6 +618,9 @@ export interface Wording {
   readonly TOP_TAUX_ROTATION_TITLE: string;
   readonly DUREE_CDD: string;
   readonly DUREE_CDD_REF: string;
+  readonly MOTIFS_RUPTURE_CONTRAT: string;
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
+  readonly MOTIF: string;
   readonly DUREE: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

@@ -9,6 +9,7 @@ import { InspectionsControlesETModel } from "../../../../../database/models/Insp
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
+import { VigieRhRefMotifRuptutreContratModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
@@ -44,6 +45,16 @@ type ResultatQueryDureeCdd = Readonly<{
   effectif_ref: number,
   duree: string,
   duree_code: number;
+}>
+
+type ResultatQueryMotifRupture = Readonly<{
+  finess_et: string,
+  annee: number,
+  trimestre: number,
+  effectif: number,
+  effectif_ref: number,
+  motif: string,
+  code: number;
 }>
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -216,7 +227,40 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { dureeCode: "ASC" },
     });
 
-    return this.construisLesDonneesVigieRH(pyramideAges, tranchesAge, departsEmbauches, departsEmbauchesTrimestriels, dureesCdd, dureeLibelles, professionFiliere as unknown as ProfessionFiliere)
+    const motifsRupture = await (await this.orm).query(`
+      select * from (    
+          SELECT *
+          FROM vigierh_motifs_ruptures m
+          WHERE (m.annee, m.trimestre) IN (
+            SELECT m1.annee, MAX(m1.trimestre)
+            FROM vigierh_motifs_ruptures m1
+            WHERE m1.annee = (SELECT MAX(m2.annee) FROM vigierh_motifs_ruptures m2)
+            GROUP BY m1.annee
+            UNION ALL
+            SELECT (MAX(m1.annee) - 1) AS annee,
+                  MAX(m1.trimestre) AS trimestre
+            FROM vigierh_motifs_ruptures m1
+            WHERE m1.annee = (SELECT MAX(m2.annee) FROM vigierh_motifs_ruptures m2)
+          )
+          AND m.finess_et = '${numeroFinessET}'
+          ORDER BY m.annee DESC, m.trimestre ASC, m.motif_code ASC) val
+          JOIN vigierh_ref_motifs_ruptures ref ON val.motif_code = ref.code;`
+    )
+
+    const motifsLibelles = await (await this.orm).getRepository(VigieRhRefMotifRuptutreContratModel).find({
+      order: { code: "ASC" },
+    });
+
+    return this.construisLesDonneesVigieRH(
+      pyramideAges,
+      tranchesAge,
+      departsEmbauches,
+      departsEmbauchesTrimestriels,
+      dureesCdd,
+      dureeLibelles,
+      motifsRupture,
+      motifsLibelles,
+      professionFiliere as unknown as ProfessionFiliere)
   }
 
   private async construisLesDonneesVigieRH(
@@ -226,6 +270,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
     dureesCddModel: ResultatQueryDureeCdd[],
     dureesCddRefModel: VigieRhRefDureeCddModel[],
+    motifsRuptureModel: ResultatQueryMotifRupture[],
+    motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[],
     professionFiliereModel: ProfessionFiliere
   ): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
@@ -295,11 +341,25 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-
+    const motifsRuptureContrat = motifsRuptureModel.map((motifRuptureModel: ResultatQueryMotifRupture) => {
+      return {
+        annee: motifRuptureModel.annee,
+        trimestre: motifRuptureModel.trimestre,
+        motifLibelle: motifRuptureModel.motif,
+        motifCode: motifRuptureModel.code,
+        effectif: motifRuptureModel.effectif,
+        effectifRef: motifRuptureModel.effectif_ref,
+      }
+    })
 
     const dureesCddLibelles = dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
       return dureeLibelleModel.duree ?? '';
     })
+
+    const motifsRuptureContratLibelles = motifsLibelleModel.map((motifLibelleModel: VigieRhRefMotifRuptutreContratModel) => {
+      return motifLibelleModel.motif ?? '';
+    })
+
     return {
       pyramideAges,
       tranchesAgesLibelles,
@@ -309,7 +369,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       tauxRotation,
       tauxRotationTrimestriel,
       dureesCdd,
-      dureesCddLibelles
+      dureesCddLibelles,
+      motifsRuptureContrat,
+      motifsRuptureContratLibelles
     }
   }
 

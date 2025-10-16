@@ -1,4 +1,4 @@
-import { DepartEmbauche, DureeCDD, EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { DepartEmbauche, DureeCDD, EtablissementTerritorialMedicoSocialVigieRH, MotifsRuptureContrat, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
 import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
@@ -48,6 +48,10 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.dureesCdd.length === 0;
   }
 
+  public get lesMotifsNeSontIlsPasRenseignes(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
+  }
+
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
@@ -68,6 +72,10 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
 
+  public get lesMotifsNeSontIlsPasAutorises(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+  }
+
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
@@ -75,6 +83,7 @@ export class BlocVigieRHViewModel {
     if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) { nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES) };
     if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasRenseignees) nonRenseignees.push(this.wording.DUREE_CDD);
+    if (this.lesMotifsNeSontIlsPasRenseignes) nonRenseignees.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
     return nonRenseignees;
   }
 
@@ -85,6 +94,7 @@ export class BlocVigieRHViewModel {
     if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasAutorisee) nonAutorises.push(this.wording.DUREE_CDD);
+    if (this.lesMotifsNeSontIlsPasAutorises) nonAutorises.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
     return nonAutorises;
   }
 
@@ -122,7 +132,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
-    return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees && this.lesDepartsEmbauchesNeSontIlsPasRenseignees && this.lesDureesCDDNeSontEllesPasRenseignees;
+    return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees && this.lesDepartsEmbauchesNeSontIlsPasRenseignees && this.lesDureesCDDNeSontEllesPasRenseignees && this.lesMotifsNeSontIlsPasRenseignes;
   }
 
   public get dateDeMiseAJourEffectifs(): string {
@@ -229,5 +239,18 @@ export class BlocVigieRHViewModel {
     return durees
       .filter(d => d.annee === maxAnnee)
       .sort((a, b) => a.dureeCode - b.dureeCode);
+  }
+
+  public get lesLibellesMotifsRupture(): string[] {
+    return this.etablissementTerritorialVRMedicoSocial.motifsRuptureContratLibelles;
+  }
+
+  public get lesMotifsRuptureContrat(): MotifsRuptureContrat[] {
+    const motifs = this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat;
+    const maxAnnee = Math.max(...motifs.map(m => m.annee));
+
+    return motifs
+      .filter(m => m.annee === maxAnnee)
+      .sort((a, b) => a.motifCode - b.motifCode);
   }
 }

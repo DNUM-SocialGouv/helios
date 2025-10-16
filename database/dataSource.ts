@@ -103,6 +103,7 @@ import { SuppressionQuarterDeVigieRhProfessionFiliere1758014111419 } from "./mig
 import { SupressionColonneEffectifDePyramideAges1758270710076 } from "./migrations/vigie_rh/1758270710076-supressionColonneEffectifDePyramideAges";
 import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
 import { AjoutTableVigieRhDureeCdd1759821521368 } from "./migrations/vigie_rh/1759821521368-AjoutTableVigieRhDureeCdd";
+import { AjoutMotifsRupturesContrats1760516962957 } from "./migrations/vigie_rh/1760516962957-AjoutMotifsRupturesContrats";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -111,6 +112,7 @@ import { AjoutReferentielQualite1738593074489 } from "./migrations/vigie_rh/refe
 import { AjoutReferentielRedressement1738593097578 } from "./migrations/vigie_rh/referentiels/1738593097578-AjoutReferentielRedressement";
 import { AjoutReferentielTrancheAge1739874041081 } from "./migrations/vigie_rh/referentiels/1739874041081-ajoutReferentielTrancheAge";
 import { AjoutTableVigieRhRefDureeCdd1759821492361 } from "./migrations/vigie_rh/referentiels/1759821492361-AjoutTableVigieRhRefDureeCdd";
+import { AjoutReferentielMotifsRupturesContrats1760516933359 } from "./migrations/vigie_rh/referentiels/1760516933359-AjoutReferentielMotifsRupturesContrats";
 import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "./models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActiviteSanitaireMensuelModel } from "./models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "./models/ActivitéMédicoSocialModel";
@@ -149,6 +151,7 @@ import { UserListModel } from "./models/UserListModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { VigieRhRefDureeCddModel } from "./models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
+import { VigieRhRefMotifRuptutreContratModel } from "./models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
 import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
@@ -157,6 +160,7 @@ import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRh
 import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
+import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "./models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
@@ -227,7 +231,9 @@ const datasource = new DataSource({
     CategoriesFinessModel,
     AutorisationSanitaireModel,
     VigieRhDureesCDDModel,
-    VigieRhRefDureeCddModel
+    VigieRhRefDureeCddModel,
+    VigieRhMotifRuptutreContratModel,
+    VigieRhRefMotifRuptutreContratModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -341,6 +347,8 @@ const datasource = new DataSource({
     ModificationProfilJoursAbsPnmRhEj1758555147382,
     AjoutTableRessourcesHumainesETSAN1758618772544,
     ModificationProfilRessourcesHumainesETSAN1758618803617,
+    AjoutReferentielMotifsRupturesContrats1760516933359,
+    AjoutMotifsRupturesContrats1760516962957,
     AjoutTableVigieRhDureeCdd1759821521368,
     AjoutTableVigieRhRefDureeCdd1759821492361
   ],
