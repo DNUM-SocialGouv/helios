@@ -151,6 +151,7 @@ import { UserListModel } from "./models/UserListModel";
 import { UtilisateurModel } from "./models/UtilisateurModel";
 import { VigieRhRefDureeCddModel } from "./models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
+import { VigieRhRefMotifRuptutreContratModel } from "./models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
 import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
@@ -159,6 +160,7 @@ import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRh
 import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
 import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
+import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "./models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
@@ -229,7 +231,9 @@ const datasource = new DataSource({
     CategoriesFinessModel,
     AutorisationSanitaireModel,
     VigieRhDureesCDDModel,
-    VigieRhRefDureeCddModel
+    VigieRhRefDureeCddModel,
+    VigieRhMotifRuptutreContratModel,
+    VigieRhRefMotifRuptutreContratModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
