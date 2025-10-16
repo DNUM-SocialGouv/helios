@@ -15,9 +15,10 @@ from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMappin
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
 
-def filtrer_les_donnees(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
+def filtrer_les_donnees(donnees: pd.DataFrame, references: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
+    codes_motifs = references['code'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
 
@@ -25,7 +26,8 @@ def filtrer_les_donnees(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.Da
     donnees_filtrees = donnees[
         (donnees["finess_et"].astype(str).str.len() == 9) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
-        (donnees["finess_et"].astype(str).isin(numeros_finess_liste))
+        (donnees["finess_et"].astype(str).isin(numeros_finess_liste)) &
+        (donnees["motif_code"].astype(str).isin(codes_motifs))
     ]
 
     return donnees_filtrees
@@ -51,7 +53,7 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
         else:
             references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
             donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
-            donnees = filtrer_les_donnees(donnees_brutes,base_de_donnees)
+            donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
             supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, base_de_donnees, SOURCE, logger)
             supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, base_de_donnees, SOURCE, logger)
             inserer_nouvelles_donnees(
