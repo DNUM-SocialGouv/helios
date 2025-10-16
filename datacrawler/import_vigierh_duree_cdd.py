@@ -18,9 +18,7 @@ def filtrer_les_donnees_duree_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndar
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
-    #Pour un établissement et un trimestre donné, si l’effectif d’une catégorie de durée de CDD est manquante dans le fichier
-    # alors toutes les effectifs des différentes catégories de durée pour cette même date sont systématiquement manquants également
-    donnees_manquantes = donnees.loc[donnees['effectif'].isna(), ['numero_finess_etablissement_territorial', 'annee', 'trimestre']].drop_duplicates()
+
     # Filtrer les données
     donnees_filtrees = donnees[
         (donnees["numero_finess_etablissement_territorial"].astype(str).str.len() == 9) &
@@ -28,7 +26,7 @@ def filtrer_les_donnees_duree_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndar
         (donnees["annee"].astype(str).str.match(year_regex)) &
         (donnees["trimestre"].astype(str).astype(int).between(1, 4)) &
         (donnees["duree_code"].isin(code_list_ref)) &
-        (~donnees[['numero_finess_etablissement_territorial','annee', 'trimestre']].apply(tuple, axis=1).isin(donnees_manquantes.apply(tuple, axis=1)))
+        (~donnees['numero_finess_etablissement_territorial'].isin(donnees[donnees['effectif'].isna()]['numero_finess_etablissement_territorial']))
     ]
 
     return donnees_filtrees
