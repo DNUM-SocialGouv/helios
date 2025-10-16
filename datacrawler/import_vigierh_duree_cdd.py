@@ -25,7 +25,8 @@ def filtrer_les_donnees_duree_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndar
         (donnees["numero_finess_etablissement_territorial"].astype(str).isin(numeros_finess_liste)) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
         (donnees["trimestre"].astype(str).astype(int).between(1, 4)) &
-        (donnees["duree_code"].isin(code_list_ref))
+        (donnees["duree_code"].isin(code_list_ref)) &
+        (~donnees['numero_finess_etablissement_territorial'].isin(donnees[donnees['effectif'].isna()]['numero_finess_etablissement_territorial']))
     ]
 
     return donnees_filtrees
