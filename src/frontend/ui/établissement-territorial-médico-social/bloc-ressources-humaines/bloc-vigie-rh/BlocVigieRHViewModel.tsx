@@ -49,7 +49,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesMotifsNeSontIlsPasRenseignes(): boolean {
-    return this.autorisations.ressourcesHumaines.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
   }
 
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
@@ -73,7 +73,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesMotifsNeSontIlsPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
   }
 
   public get lesDonneesVgRHPasRenseignees(): string[] {
