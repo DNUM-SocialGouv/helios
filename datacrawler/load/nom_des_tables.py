@@ -45,6 +45,9 @@ TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
 # mouvements rh
 TABLE_VIGIE_RH_MOUVEMENTS_RH = "vigierh_mouvements"
 TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS = "vigierh_mouvements_trimestriel"
+# duree cdd
+TABLE_VIGIE_RH_REF_DUREE_CDD = "vigierh_referentiel_duree_cdd"
+TABLE_VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
 
 TABLE_ENTITES_JURIDIQUES = "entite_juridique"
 TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
@@ -95,3 +98,6 @@ class FichierSource(Enum):
     # motifs de ruptures de contrats
     VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
     VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
+    # duree cdd
+    VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
+    VIGIE_RH_REF_DUREE_CDD = "vigierh_ref_duree_cdd"
