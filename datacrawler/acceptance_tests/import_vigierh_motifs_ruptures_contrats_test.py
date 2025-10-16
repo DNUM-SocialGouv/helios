@@ -177,6 +177,38 @@ class TestImportVigierhMotifsRupturesContrats:
         assert donnees_filtrees.shape[0] == 1
         assert donnees_filtrees.iloc[0]["motif_code"] == 1
 
+    def test_filtrer_les_donnees_exclut_les_effectifs_non_renseignes(self) -> None:
+        references = pd.DataFrame(
+            [
+                {"code": 1, "motif": "Remplacement"},
+            ]
+        )
+        donnees = pd.DataFrame(
+            [
+                {
+                    "finess_et": NUMÉRO_FINESS_ÉTABLISSEMENT_1,
+                    "annee": "2024",
+                    "trimestre": 1,
+                    "motif_code": 1,
+                    "effectif": 3,
+                    "effectif_ref": 1,
+                },
+                {
+                    "finess_et": NUMÉRO_FINESS_ÉTABLISSEMENT_2,
+                    "annee": "2024",
+                    "trimestre": 1,
+                    "motif_code": 1,
+                    "effectif": None,
+                    "effectif_ref": 1,
+                },
+            ]
+        )
+
+        donnees_filtrees = filtrer_les_donnees(donnees, references, base_de_données_test)
+
+        assert donnees_filtrees.shape[0] == 1
+        assert donnees_filtrees.iloc[0]["finess_et"] == NUMÉRO_FINESS_ÉTABLISSEMENT_1
+
     def test_import_donnees_motifs_ruptures_inseres_les_donnees_filtrees(self) -> None:
         vegie_rh_data_path = "data_test/entrée/vigie_rh"
         file_paths = self._setup_file_paths(vegie_rh_data_path)
