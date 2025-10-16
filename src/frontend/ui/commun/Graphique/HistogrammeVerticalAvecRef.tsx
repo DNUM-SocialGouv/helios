@@ -16,9 +16,10 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
   type: string;
   tickFormatter: (type: string, index: number) => string;
   tickX2Formatter: (type: string, index: number) => string;
+  identifiants: string[];
 }>;
 
-const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramme, libelles, type, tickFormatter, tickX2Formatter }: HistogrammeVerticalAvecRefProps) => {
+const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramme, libelles, type, tickFormatter, tickX2Formatter,identifiants }: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
 
   const data: ChartData = {
@@ -47,6 +48,12 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
+    // intersect : false  avec mode : "index" => au survol du segment, on affiche la même tooltip.
+    // on affiche la tooltip qui correspond à la valeur , donc index 0 . Et on ignore la tooltip de la barre Référence (pour cela on ajout 'filter' dans tooltip)
+    interaction: {
+      intersect: false,
+      mode: "index",
+    },
     plugins: {
       datalabels: {
         align: "end",
@@ -63,6 +70,7 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       },
       legend: { display: false },
       tooltip: {
+        filter: (tooltipItem) => tooltipItem.datasetIndex === 0,
         callbacks: {
           label: function (context: any) {
             const index = context.dataIndex;
@@ -168,7 +176,7 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
       />
       <Transcription
         entêteLibellé={wording.ANNÉE}
-        identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
+        identifiants={identifiants}
         libellés={libelles}
         valeurs={[StringFormater.addPercentToValues(valeurs), StringFormater.addPercentToValues(valeursRef)]}
       />

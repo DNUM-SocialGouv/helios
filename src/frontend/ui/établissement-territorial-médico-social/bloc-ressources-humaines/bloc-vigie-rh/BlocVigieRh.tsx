@@ -188,7 +188,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
               currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
               periode={blocVigieRHViewModel.topIndicateurTauxRotation.dernierePeriode}
               title={wording.TOP_TAUX_ROTATION_TITLE}
-              unitLabel="Taux de rotation"
+              unitLabel={wording.TAUX_ROTATION}
               variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
               variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
             />
