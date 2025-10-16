@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       // On récupère le changeset sous la forme de modifications atomique pour pouvoir filtrer
       let changes = atomizeChangeset(diff(contenuActuel, data));
 
-      // On retire tous les changements concernant la Faq
+      // On retire la suppression de la Faq
       // Et les changements concernant la personne responsable de la dernière MAJ
       changes = filterChanges(changes);
 
@@ -66,9 +66,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const contenuMisAJour = applyChangeset(contenuActuel, filteredChanges);
 
       await useCase.enregistrerContenu(contenuMisAJour);
-      return res.status(200).json({ success: true });
+      return res.status(200).json(contenuMisAJour);
     } catch (error: any) {
-      return res.status(500).json({ message: error?.message ?? "Erreur lors de l'enregistrement" });
+      return res.status(500).json({ message: error?.message ?? "Une erreur est survenue lors de l’enregistrement." });
     }
   }
 

@@ -54,15 +54,15 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
-  const contenuNormalise = useMemo(() => construireSectionsInitiales(contenuInitial), [contenuInitial]);
+  const contenuNormalise = construireSectionsInitiales(contenuInitial);
 
-  const initialisationRoles = useMemo(() => {
+  const initialisationRoles = () => {
     const resultat: Record<string, string> = {};
     for (const [slug, section] of Object.entries(contenuNormalise)) {
       resultat[slug] = formaterRoles(section?.allowedRoles ?? section?.roles);
     }
     return resultat;
-  }, [contenuNormalise]);
+  };
 
   const [contenu, setContenu] = useState<ContenuAide>(contenuNormalise);
   const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, string>>(initialisationRoles);
@@ -428,32 +428,35 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     setMessageSucces(null);
     setMessageErreur(null);
 
-    try {
-      const chargeUtile: ContenuAide = {};
-      for (const [slug, section] of Object.entries(contenu)) {
-        chargeUtile[slug] = {
-          ...section,
-          resources: reindexerRessources(trierRessources(section?.resources ?? [])),
-        };
-      }
-
-      const reponse = await fetch("/api/parametrage-aide", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(chargeUtile),
-      });
-
-      if (!reponse.ok) {
-        const details = await reponse.json().catch(() => ({}));
-        throw new Error(details?.message ?? "Enregistrement impossible");
-      }
-
-      setMessageSucces("Les contenus d’aide ont été enregistrés.");
-    } catch (erreur: any) {
-      setMessageErreur(erreur?.message ?? "Une erreur est survenue lors de l’enregistrement.");
-    } finally {
-      setEnregistrementEnCours(false);
+    const chargeUtile: ContenuAide = {};
+    for (const [slug, section] of Object.entries(contenu)) {
+      chargeUtile[slug] = {
+        ...section,
+        resources: reindexerRessources(trierRessources(section?.resources ?? [])),
+      };
     }
+
+    let responseOk = false;
+    await fetch("/api/parametrage-aide", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(chargeUtile),
+    })
+      .then((response) => {
+        responseOk = response.ok;
+        return response.json();
+      })
+      .then((payload) => {
+        if (responseOk) {
+          setContenu(construireSectionsInitiales(payload));
+          setMessageSucces("Les contenus d’aide ont été enregistrés.");
+        } else {
+          setMessageErreur(payload?.message ?? "Une erreur est survenue lors de l’enregistrement.");
+        }
+      })
+      .finally(() => {
+        setEnregistrementEnCours(false);
+      });
   };
 
   const contenuAffiche: ReactNode = (
