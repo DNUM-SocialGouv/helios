@@ -27,7 +27,9 @@ def filtrer_les_donnees(donnees: pd.DataFrame, references: pd.DataFrame, base_de
         (donnees["finess_et"].astype(str).str.len() == 9) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
         (donnees["finess_et"].astype(str).isin(numeros_finess_liste)) &
-        (donnees["motif_code"].astype(str).isin(codes_motifs))
+        (donnees["motif_code"].astype(str).isin(codes_motifs)) &
+        (~donnees['finess_et'].isin(donnees[donnees['effectif'].isna()]['finess_et']))
+
     ]
 
     return donnees_filtrees
