@@ -72,7 +72,7 @@ export function SectionFormulaire({
               const identifiant = `section-role-${role.identifiant}`;
               const estSelectionne = rolesSelectionnes.includes(role.identifiant);
               return (
-                <div className="fr-checkbox-group" key={role.identifiant}>
+                <div className="fr-checkbox-group fr-mt-1w" key={role.identifiant}>
                   <input
                     checked={estSelectionne}
                     className="fr-checkbox"
