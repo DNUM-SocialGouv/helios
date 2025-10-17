@@ -17,17 +17,16 @@ export type RessourceFormulaire = {
   slug: string;
   nom: string;
   type: RessourceAide["type"];
-  contenu: string;
+  lien: string;
   ordre: number;
   date: string;
   nom_telechargement: string;
-  allowedRoles: string;
 };
 
 const TYPES_RESSOURCE: { valeur: RessourceAide["type"]; libelle: string }[] = [
   { valeur: "document", libelle: "Document" },
   { valeur: "video", libelle: "Vidéo" },
-  { valeur: "link", libelle: "Lien" },
+  { valeur: "lien", libelle: "Lien" },
 ];
 
 export function ModalRessource({
@@ -84,18 +83,6 @@ export function ModalRessource({
                   />
                 </div>
 
-                <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="resource-slug">Identifiant (optionnel)</label>
-                  <input
-                    className="fr-input"
-                    id="resource-slug"
-                    name="slug"
-                    onChange={surChangement}
-                    type="text"
-                    value={valeurs.slug}
-                  />
-                </div>
-
                 <div className="fr-grid-row fr-grid-row--gutters">
                   <div className="fr-col-12 fr-col-md-6">
                     <div className="fr-select-group">
@@ -119,15 +106,14 @@ export function ModalRessource({
                 </div>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="resource-contenu">Lien ou contenu *</label>
+                  <label className="fr-label" htmlFor="resource-lien">Lien *</label>
                   <textarea
                     className="fr-input"
-                    id="resource-contenu"
-                    name="contenu"
+                    id="resource-lien"
+                    name="lien"
                     onChange={surChangement}
                     required
-                    rows={3}
-                    value={valeurs.contenu}
+                    value={valeurs.lien}
                   />
                 </div>
 
@@ -158,20 +144,6 @@ export function ModalRessource({
                         onChange={surChangement}
                         type="text"
                         value={valeurs.nom_telechargement}
-                      />
-                    </div>
-                  </div>
-                  <div className="fr-col-12 fr-col-md-6">
-                    <div className="fr-input-group">
-                      <label className="fr-label" htmlFor="resource-roles">Rôles autorisés</label>
-                      <input
-                        className="fr-input"
-                        id="resource-roles"
-                        name="allowedRoles"
-                        onChange={surChangement}
-                        placeholder="Tous les rôles"
-                        type="text"
-                        value={valeurs.allowedRoles}
                       />
                     </div>
                   </div>

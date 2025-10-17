@@ -1,2 +1,2 @@
 export { GestionAide } from "./GestionAide";
-export type { ContenuAide, AideContent } from "./types";
+export type { ContenuAide, ContenuAide as AideContent } from "./types";

@@ -307,11 +307,6 @@ const renderAnswer = (answer: FaqQuestion["answer"]) => {
 export default function Faq() {
   return (
     <section>
-      <h1 className="fr-h2 fr-mb-2w">Foire aux questions</h1>
-      <p className="fr-text--sm fr-mb-6w">
-        Retrouvez les réponses aux questions les plus fréquentes sur Helios. Les rubriques sont mises à jour au fil des retours du terrain.
-      </p>
-
       <div className="fr-accordions-group">
         {FAQ_SECTIONS.map((category) => {
           const categoryId = `faq-category-${category.id}`;

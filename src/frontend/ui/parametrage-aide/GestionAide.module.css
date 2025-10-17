@@ -36,3 +36,18 @@
 .boutonAjouterSection {
   margin-bottom: 1rem;
 }
+
+.rolesSection {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.8rem;
+}
+
+.rolesSection .fr-checkbox-group {
+  margin-bottom: 0;
+  flex: 1 1 0;
+}
+
+.rolesSection .fr-label {
+  font-size: 0.875rem;
+}

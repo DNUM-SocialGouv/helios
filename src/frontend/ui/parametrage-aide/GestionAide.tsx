@@ -11,15 +11,16 @@ import {
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
+
 
 import {
   construireSectionsInitiales,
   creerSlug,
   determinerDefinitionsSections,
-  formaterRoles,
   ICON_PAR_DEFAUT,
+  normaliserRoles,
   normaliserSection,
-  parserRoles,
   reindexerRessources,
   SECTIONS_STATIQUES,
   trierRessources,
@@ -46,26 +47,25 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
   slug: "",
   nom: "",
   type: "document",
-  contenu: "",
+  lien: "",
   ordre: 1,
   date: "",
   nom_telechargement: "",
-  allowedRoles: "",
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
   const contenuNormalise = construireSectionsInitiales(contenuInitial);
 
   const initialisationRoles = () => {
-    const resultat: Record<string, string> = {};
+    const resultat: Record<string, number[]> = {};
     for (const [slug, section] of Object.entries(contenuNormalise)) {
-      resultat[slug] = formaterRoles(section?.allowedRoles ?? section?.roles);
+      resultat[slug] = normaliserRoles(section?.allowedRoles ?? section?.roles);
     }
     return resultat;
   };
 
   const [contenu, setContenu] = useState<ContenuAide>(contenuNormalise);
-  const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, string>>(initialisationRoles);
+  const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, number[]>>(initialisationRoles);
   const [slugSelectionne, setSlugSelectionne] = useState<string>("");
   const [ressourceModaleOuverte, setRessourceModaleOuverte] = useState(false);
   const [nouvelleSectionOuverte, setNouvelleSectionOuverte] = useState(false);
@@ -205,11 +205,10 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       slug: ressource.slug ?? "",
       nom: ressource.nom,
       type: ressource.type,
-      contenu: ressource.contenu,
+      lien: ressource.lien,
       ordre: ressource.ordre ?? index + 1,
       date: ressource.date ?? "",
       nom_telechargement: ressource.nom_telechargement ?? "",
-      allowedRoles: formaterRoles(ressource.allowedRoles ?? ressource.roles),
     });
     setIndexRessourceEditee(index);
     setRessourceModaleOuverte(true);
@@ -232,18 +231,19 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     mettreAJourSection(slugSelectionne, (section) => ({ ...section, description: valeur }));
   };
 
-  const modifierRoles = (valeur: string) => {
+  const basculerRoleSection = (role: number, actif: boolean) => {
     if (!slugSelectionne) {
       return;
     }
-    setRolesBrouillon((precedent) => ({ ...precedent, [slugSelectionne]: valeur }));
-    const roles = parserRoles(valeur);
+    const rolesActuels = rolesBrouillon[slugSelectionne] ?? [];
+    const rolesActualises = actif
+      ? normaliserRoles([...rolesActuels, role])
+      : normaliserRoles(rolesActuels.filter((identifiant) => identifiant !== role));
+    setRolesBrouillon((precedent) => ({ ...precedent, [slugSelectionne]: rolesActualises }));
     mettreAJourSection(slugSelectionne, (section) => ({
       ...section,
-      allowedRoles: roles.length > 0 ? roles : undefined,
+      allowedRoles: rolesActualises,
       roles: undefined,
-      excludedRoles: undefined,
-      hiddenForRoles: undefined,
     }));
   };
 
@@ -261,17 +261,14 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    const roles = parserRoles(ressourceFormulaire.allowedRoles);
-
     const nouvelleEntree: RessourceAide = {
       slug: ressourceFormulaire.slug ? creerSlug(ressourceFormulaire.slug, ressourceFormulaire.nom) : undefined,
       nom: ressourceFormulaire.nom,
       type: ressourceFormulaire.type,
-      contenu: ressourceFormulaire.contenu,
+      lien: ressourceFormulaire.lien,
       ordre: ressourceFormulaire.ordre,
       date: ressourceFormulaire.date || undefined,
       nom_telechargement: ressourceFormulaire.nom_telechargement || undefined,
-      allowedRoles: roles.length > 0 ? roles : undefined,
     };
 
     mettreAJourSection(slugSelectionne, (section) => {
@@ -322,6 +319,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         return section;
       }
 
+      ressources.splice(indexCible, 0, deplacee);
       return {
         ...section,
         resources: reindexerRessources(ressources),
@@ -368,14 +366,14 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       [slug]: normaliserSection({
         title: titre,
         icon: icone,
-        kind: "resources",
+        type: "resources",
         description: "",
         resources: [],
         order: ordre,
       }),
     }));
 
-    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: "" }));
+    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: [] }));
     setSlugSelectionne(slug);
     setNouvelleSectionOuverte(false);
   };
@@ -494,14 +492,14 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
                 icone: definitionActive.icone,
                 nature: definitionActive.nature,
               }}
-              rolesBrouillon={rolesBrouillon[slugSelectionne] ?? ""}
+              rolesSelectionnes={rolesBrouillon[slugSelectionne] ?? []}
               section={sectionActive}
               surAjoutRessource={ouvrirModaleCreationRessource}
+              surBasculeRole={basculerRoleSection}
               surDescendreRessource={(index) => deplacerRessource(index, "down")}
               surEditionRessource={ouvrirModaleEditionRessource}
               surModificationDescription={modifierDescription}
               surModificationOrdre={modifierOrdreSection}
-              surModificationRoles={modifierRoles}
               surMonterRessource={(index) => deplacerRessource(index, "up")}
               surSuppressionRessource={supprimerRessource}
             />
@@ -509,7 +507,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
             <p className="fr-text--sm">Aucune section sélectionnée.</p>
           )}
 
-          <div className="fr-mt-6w fr-text-right">
+          <div className="fr-mt-5w fr-text-right">
             <button
               className="fr-btn fr-btn--secondary fr-mr-2w"
               disabled={enregistrementEnCours}

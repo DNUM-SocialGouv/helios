@@ -1,4 +1,3 @@
-import { formaterRoles } from "./aideUtils";
 import styles from "./GestionAide.module.css";
 import type { RessourceAide } from "./types";
 
@@ -29,10 +28,9 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                   <th>Ordre</th>
                   <th>Nom</th>
                   <th>Type</th>
-                  <th>Lien ou contenu</th>
+                  <th>Lien</th>
                   <th>Date</th>
                   <th>Nom du fichier</th>
-                  <th>Rôles</th>
                   <th>Utilisateur</th>
                   <th aria-label="Actions" />
                 </tr>
@@ -74,10 +72,9 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                       </td>
                       <td>{ressource.nom}</td>
                       <td>{ressource.type}</td>
-                      <td>{ressource.contenu}</td>
+                      <td>{ressource.lien}</td>
                       <td>{ressource.date ?? ""}</td>
                       <td>{ressource.nom_telechargement ?? ""}</td>
-                      <td>{formaterRoles(ressource.allowedRoles ?? ressource.roles)}</td>
                       <td>{nomUtilisateur || ""}</td>
                       <td>
                         <div className="fr-btns-group fr-btns-group--inline fr-btns-group--right">

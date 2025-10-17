@@ -34,7 +34,7 @@ export function BlocRessources({ ressources }: BlocRessourcesProps) {
                     <li key={ressource.slug ?? `${ressource.nom}-${index}`}>
                       <a
                         className="fr-link fr-link--icon-right fr-icon-external-link-line"
-                        href={ressource.contenu}
+                        href={ressource.lien}
                         rel="noopener noreferrer"
                         target="_blank"
                       >

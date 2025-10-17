@@ -1,5 +1,5 @@
 .conteneur {
-  padding: 3rem 0;
+  padding: 0;
 }
 
 .listeSections {
@@ -22,8 +22,13 @@
 .sectionLien {
   display: inline-flex;
   align-items: center;
+  font-size: 1.4rem !important;
 }
 
 .icone {
   margin-right: 0.5rem;
+}
+
+.titreSection{
+  padding-bottom: 0px !important;
 }

@@ -1,3 +1,4 @@
+import { ROLES_SECTIONS } from "./aideUtils";
 import styles from "./GestionAide.module.css";
 import { TableRessources } from "./TableRessources";
 import { SectionNormalisee } from "./types";
@@ -9,9 +10,9 @@ type SectionFormulaireProps = Readonly<{
     icone: string;
     nature: "resources" | "faq";
   };
-  rolesBrouillon: string;
+  rolesSelectionnes: number[];
   surModificationDescription: (valeur: string) => void;
-  surModificationRoles: (valeur: string) => void;
+  surBasculeRole: (role: number, actif: boolean) => void;
   surModificationOrdre: (valeur: number | undefined) => void;
   surAjoutRessource: () => void;
   surEditionRessource: (index: number) => void;
@@ -23,9 +24,9 @@ type SectionFormulaireProps = Readonly<{
 export function SectionFormulaire({
   section,
   definition,
-  rolesBrouillon,
+  rolesSelectionnes,
   surModificationDescription,
-  surModificationRoles,
+  surBasculeRole,
   surModificationOrdre,
   surAjoutRessource,
   surEditionRessource,
@@ -34,7 +35,6 @@ export function SectionFormulaire({
   surDescendreRessource,
 }: SectionFormulaireProps) {
   const estSectionRessource = definition.nature === "resources";
-
   return (
     <div className={`fr-card fr-card--shadow fr-card--no-border ${styles["encart"]}`}>
       <header className="fr-mb-4w">
@@ -64,19 +64,32 @@ export function SectionFormulaire({
           value={section.description}
         />
       </div>
-
-      <div className="fr-input-group">
-        <label className="fr-label" htmlFor="section-roles">Rôles autorisés (séparés par des virgules)</label>
-        <input
-          className="fr-input"
-          id="section-roles"
-          name="roles"
-          onChange={(evenement) => surModificationRoles(evenement.target.value)}
-          placeholder="Tous les rôles"
-          type="text"
-          value={rolesBrouillon}
-        />
-      </div>
+      {section.type !== "faq" && (
+        <fieldset className="fr-fieldset fr-mt-4w">
+          <legend className="fr-fieldset__legend">Rôles autorisés</legend>
+          <div className={`fr-fieldset__content ${styles["rolesSection"]}`}>
+            {ROLES_SECTIONS.map((role) => {
+              const identifiant = `section-role-${role.identifiant}`;
+              const estSelectionne = rolesSelectionnes.includes(role.identifiant);
+              return (
+                <div className="fr-checkbox-group" key={role.identifiant}>
+                  <input
+                    checked={estSelectionne}
+                    className="fr-checkbox"
+                    id={identifiant}
+                    name="roles"
+                    onChange={(evenement) => surBasculeRole(role.identifiant, evenement.target.checked)}
+                    type="checkbox"
+                  />
+                  <label className="fr-label" htmlFor={identifiant}>
+                    {role.libelle}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </fieldset>
+      )}
 
       <div className="fr-input-group">
         <label className="fr-label" htmlFor="section-order">Ordre d’affichage</label>
