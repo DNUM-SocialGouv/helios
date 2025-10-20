@@ -266,10 +266,9 @@ async function generateAndExportExcel(
     default:
       throw new Error("Illegal state: type d'établissement non identifié");
   }
-
   ExportToExcel(headerYear,
     headerType,
-    type === 'Entité juridique' ? headersEJ : type === 'Social et Médico-Social' ? headersMS : headersSAN,
+    headers,
     dataTransormed,
     fileName,
     datesMisAjour,
