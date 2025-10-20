@@ -2,6 +2,7 @@ import "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.min.css";
 
 import styles from "./GestionAide.module.css";
 import type { SectionEditable } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type MenuSectionsProps = Readonly<{
   sections: SectionEditable[];
@@ -12,15 +13,17 @@ type MenuSectionsProps = Readonly<{
 }>;
 
 export function MenuSections({ sections, slugActif, surSelection, surAjout, surSuppression }: MenuSectionsProps) {
+  const { wording } = useDependencies();
+
   return (
-    <nav aria-label="Sections d’aide" className={`fr-sidemenu ${styles["barreLaterale"]}`}>
+    <nav aria-label={wording.PARAMETRAGE_AIDE_NAV_SECTIONS} className={`fr-sidemenu ${styles["barreLaterale"]}`}>
       <div className={styles["boutonAjouterSection"]}>
         <button
           className="fr-btn fr-btn--secondary fr-btn--sm fr-btn--icon-left"
           onClick={surAjout}
           type="button"
         >
-          <span aria-hidden className="fr-icon-add-line" /> Ajouter une section
+          <span aria-hidden className="fr-icon-add-line" /> {wording.PARAMETRAGE_AIDE_BOUTON_AJOUTER_SECTION}
         </button>
       </div>
 
@@ -39,7 +42,7 @@ export function MenuSections({ sections, slugActif, surSelection, surAjout, surS
               </button>
               {section.peutEtreSupprimee && (
                 <button
-                  aria-label={`Supprimer la section ${section.titre}`}
+                  aria-label={wording.PARAMETRAGE_AIDE_ARIA_SUPPRIMER_SECTION(section.titre)}
                   className={`fr-btn fr-btn--tertiary-no-outline fr-btn--sm fr-btn--icon-left ${styles["boutonIcone"]}`}
                   onClick={() => surSuppression(section.slug)}
                   type="button"

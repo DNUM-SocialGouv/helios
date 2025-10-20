@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import styles from "./Aide.module.css";
 import { RESSOURCES_ICONES } from "./utils";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import type { RessourceAide } from "../parametrage-aide/types";
 
 type BlocRessourcesProps = Readonly<{
@@ -9,17 +10,19 @@ type BlocRessourcesProps = Readonly<{
 }>;
 
 export function BlocRessources({ ressources }: BlocRessourcesProps) {
+  const { wording } = useDependencies();
   if (ressources.length === 0) {
-    return <p className="fr-text--sm">Ce contenu sera bientôt disponible.</p>;
+    return <p className="fr-text--sm">{wording.AIDE_MESSAGE_CONTENU_INDISPONIBLE}</p>;
   }
 
   return (
     <>
-      {RESSOURCES_ICONES.map(({ type, titre, icone }) => {
+      {RESSOURCES_ICONES.map(({ type, icone }) => {
         const elements = ressources.filter((ressource) => ressource.type === type);
         if (elements.length === 0) {
           return null;
         }
+        const titre = wording.AIDE_TITRES_RESSOURCES[type] ?? "";
 
         return (
           <section className={`fr-card fr-card--no-border fr-card--shadow fr-p-4w fr-mb-4w ${styles["carteRessource"]}`} key={type}>
@@ -42,9 +45,9 @@ export function BlocRessources({ ressources }: BlocRessourcesProps) {
                       </a>
                       {(ressource.date || ressource.nom_telechargement) && (
                         <div className="fr-text--sm fr-mt-1v fr-text-mention--grey">
-                          {ressource.date ? `Date de mise en ligne : ${ressource.date}` : null}
-                          {ressource.date && ressource.nom_telechargement ? " — " : null}
-                          {ressource.nom_telechargement ? `Nom du fichier : ${ressource.nom_telechargement}` : null}
+                          {ressource.date ? wording.AIDE_INFO_DATE(ressource.date) : null}
+                          {ressource.date && ressource.nom_telechargement ? wording.AIDE_INFO_SEPARATEUR : null}
+                          {ressource.nom_telechargement ? wording.AIDE_INFO_NOM_FICHIER(ressource.nom_telechargement) : null}
                         </div>
                       )}
                     </li>

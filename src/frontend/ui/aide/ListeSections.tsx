@@ -1,4 +1,5 @@
 import styles from "./Aide.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import type { DefinitionSection } from "../parametrage-aide/types";
 
 type ListeSectionsProps = Readonly<{
@@ -7,8 +8,9 @@ type ListeSectionsProps = Readonly<{
 }>;
 
 export function ListeSections({ sections, onSelection }: ListeSectionsProps) {
+  const { wording } = useDependencies();
   if (sections.length === 0) {
-    return <p className="fr-text--sm">Aucun contenu d’aide n’est disponible pour le moment.</p>;
+    return <p className="fr-text--sm">{wording.AIDE_MESSAGE_SECTIONS_VIDES}</p>;
   }
 
   return (

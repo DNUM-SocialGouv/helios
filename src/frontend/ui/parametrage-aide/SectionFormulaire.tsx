@@ -2,6 +2,7 @@ import { ROLES_SECTIONS } from "./aideUtils";
 import styles from "./GestionAide.module.css";
 import { TableRessources } from "./TableRessources";
 import { SectionNormalisee } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type SectionFormulaireProps = Readonly<{
   section: SectionNormalisee;
@@ -34,6 +35,7 @@ export function SectionFormulaire({
   surMonterRessource,
   surDescendreRessource,
 }: SectionFormulaireProps) {
+  const { wording } = useDependencies();
   const estSectionRessource = definition.nature === "resources";
   return (
     <div className={`fr-card fr-card--shadow fr-card--no-border ${styles["encart"]}`}>
@@ -46,15 +48,15 @@ export function SectionFormulaire({
             <h2 className="fr-h3 fr-m-0">{definition.titre}</h2>
             <p className="fr-text--sm fr-text-mention--grey fr-mt-1w">
               {estSectionRessource
-                ? "Ajoutez des ressources pour alimenter cette rubrique. Les éléments sont affichés aux utilisateurs selon leur ordre."
-                : "Cette rubrique est gérée automatiquement. Vous pouvez mettre à jour sa description, ses rôles et l’ordre d’affichage."}
+                ? wording.PARAMETRAGE_AIDE_MESSAGE_SECTION_RESSOURCE
+                : wording.PARAMETRAGE_AIDE_MESSAGE_SECTION_AUTRE}
             </p>
           </div>
         </div>
       </header>
 
       <div className="fr-input-group">
-        <label className="fr-label" htmlFor="section-description">Description</label>
+        <label className="fr-label" htmlFor="section-description">{wording.PARAMETRAGE_AIDE_LABEL_DESCRIPTION}</label>
         <textarea
           className="fr-input"
           id="section-description"
@@ -66,7 +68,7 @@ export function SectionFormulaire({
       </div>
       {section.type !== "faq" && (
         <fieldset className="fr-fieldset fr-mt-4w">
-          <legend className="fr-fieldset__legend">Rôles autorisés</legend>
+          <legend className="fr-fieldset__legend">{wording.PARAMETRAGE_AIDE_LEGENDE_ROLES}</legend>
           <div className={`fr-fieldset__content ${styles["rolesSection"]}`}>
             {ROLES_SECTIONS.map((role) => {
               const identifiant = `section-role-${role.identifiant}`;
@@ -92,7 +94,7 @@ export function SectionFormulaire({
       )}
 
       <div className="fr-input-group">
-        <label className="fr-label" htmlFor="section-order">Ordre d’affichage</label>
+        <label className="fr-label" htmlFor="section-order">{wording.PARAMETRAGE_AIDE_LABEL_ORDRE_AFFICHAGE}</label>
         <input
           className="fr-input"
           id="section-order"
@@ -102,7 +104,7 @@ export function SectionFormulaire({
             const valeur = Number.parseInt(evenement.target.value, 10);
             surModificationOrdre(Number.isNaN(valeur) ? undefined : valeur);
           }}
-          placeholder="Ordre actuel"
+          placeholder={wording.PARAMETRAGE_AIDE_PLACEHOLDER_ORDRE}
           type="number"
           value={section.order ?? ""}
         />
@@ -112,11 +114,11 @@ export function SectionFormulaire({
         <>
           <div className="fr-grid-row fr-grid-row--middle fr-mt-6w">
             <div className="fr-col">
-              <h3 className="fr-h4 fr-m-0">Ressources</h3>
+              <h3 className="fr-h4 fr-m-0">{wording.PARAMETRAGE_AIDE_TITRE_RESSOURCES}</h3>
             </div>
             <div className="fr-col-auto">
               <button className="fr-btn fr-btn--primary" onClick={surAjoutRessource} type="button">
-                Ajouter une ressource
+                {wording.PARAMETRAGE_AIDE_BOUTON_AJOUTER_RESSOURCE}
               </button>
             </div>
           </div>
@@ -130,7 +132,7 @@ export function SectionFormulaire({
           />
         </>
       ) : (
-        <p className={styles["messageInfo"]}>Cette section ne contient pas de ressources paramétrables depuis cet écran.</p>
+        <p className={styles["messageInfo"]}>{wording.PARAMETRAGE_AIDE_MESSAGE_SECTION_SANS_PARAMETRAGE}</p>
       )}
     </div>
   );

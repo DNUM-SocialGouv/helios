@@ -14,6 +14,7 @@ import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 
 
+
 import {
   construireSectionsInitiales,
   creerSlug,
@@ -37,6 +38,7 @@ import type {
   SectionEditable,
   SectionNormalisee,
 } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type GestionAideProps = Readonly<{
   contenuInitial: ContenuAide;
@@ -54,6 +56,7 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
+  const { wording } = useDependencies();
   const contenuNormalise = construireSectionsInitiales(contenuInitial);
 
   const initialisationRoles = () => {
@@ -292,7 +295,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    if (!window.confirm("Supprimer cette ressource ?")) {
+    if (!window.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE)) {
       return;
     }
 
@@ -344,18 +347,18 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     const icone = formulaireNouvelleSection.icon.trim() || ICON_PAR_DEFAUT;
 
     if (!titre) {
-      window.alert("Le nom de la section est obligatoire.");
+      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE);
       return;
     }
 
     const slug = creerSlug(titre, titre);
     if (!slug) {
-      window.alert("Impossible de créer la section. Nom invalide.");
+      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE);
       return;
     }
 
     if (contenu[slug]) {
-      window.alert("Une section avec ce nom existe déjà.");
+      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE);
       return;
     }
 
@@ -381,11 +384,11 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const supprimerSection = (slug: string) => {
     const estStatique = SECTIONS_STATIQUES.some((section) => section.slug === slug);
     if (estStatique) {
-      window.alert("Vous ne pouvez pas supprimer cette section.");
+      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION);
       return;
     }
 
-    if (!window.confirm("Supprimer cette section et toutes ses ressources ?")) {
+    if (!window.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION)) {
       return;
     }
 
@@ -447,9 +450,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       .then((payload) => {
         if (responseOk) {
           setContenu(construireSectionsInitiales(payload));
-          setMessageSucces("Les contenus d’aide ont été enregistrés.");
+          setMessageSucces(wording.PARAMETRAGE_AIDE_MESSAGE_SUCCES);
         } else {
-          setMessageErreur(payload?.message ?? "Une erreur est survenue lors de l’enregistrement.");
+          setMessageErreur(payload?.message ?? wording.PARAMETRAGE_AIDE_MESSAGE_ERREUR);
         }
       })
       .finally(() => {
@@ -460,11 +463,8 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const contenuAffiche: ReactNode = (
     <div className={`fr-container ${styles["conteneur"]}`}>
       <header className="fr-mb-6w">
-        <h1 className="fr-h2">Paramétrage de l’aide</h1>
-        <p className="fr-text--sm fr-mt-1w">
-          Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources
-          (documents, vidéos ou liens) pour chaque section.
-        </p>
+        <h1 className="fr-h2">{wording.PARAMETRAGE_AIDE_TITRE}</h1>
+        <p className="fr-text--sm fr-mt-1w">{wording.PARAMETRAGE_AIDE_DESCRIPTION}</p>
       </header>
 
       {(messageSucces || messageErreur) && (
@@ -504,7 +504,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
               surSuppressionRessource={supprimerRessource}
             />
           ) : (
-            <p className="fr-text--sm">Aucune section sélectionnée.</p>
+            <p className="fr-text--sm">{wording.PARAMETRAGE_AIDE_MESSAGE_AUCUNE_SECTION}</p>
           )}
 
           <div className="fr-mt-5w fr-text-right">
@@ -514,7 +514,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
               onClick={() => window.location.reload()}
               type="button"
             >
-              Annuler les modifications
+              {wording.PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS}
             </button>
             <button
               className="fr-btn"
@@ -522,7 +522,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
               onClick={enregistrerToutesLesSections}
               type="button"
             >
-              {enregistrementEnCours ? "Enregistrement..." : "Enregistrer"}
+              {enregistrementEnCours
+                ? wording.PARAMETRAGE_AIDE_ETAT_ENREGISTREMENT
+                : wording.PARAMETRAGE_AIDE_BOUTON_ENREGISTRER}
             </button>
           </div>
         </section>

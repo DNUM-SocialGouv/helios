@@ -14,6 +14,7 @@ import {
   sectionsVisibles,
   IdentifiantRole,
 } from "./utils";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
 
 type InterfaceAideProps = Readonly<{
@@ -23,6 +24,7 @@ type InterfaceAideProps = Readonly<{
 }>;
 
 export function InterfaceAide({ contenu, role, surChangementSection }: InterfaceAideProps) {
+  const { wording } = useDependencies();
   const router = useRouter();
   const sectionsDisponibles = useMemo(() => sectionsVisibles(contenu, role), [contenu, role]);
   const [slugActif, setSlugActif] = useState<string | null>(null);
@@ -63,7 +65,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
   }, [sectionActuelle, definitionActuelle?.nature]);
 
   const iconeSection = definitionActuelle?.icone;
-  const titreSection = definitionActuelle?.titre ?? "Aide";
+  const titreSection = definitionActuelle?.titre ?? wording.AIDE_TITRE_PAGE;
   const descriptionSection = sectionActuelle?.description;
 
   const currentBloc = () => {
