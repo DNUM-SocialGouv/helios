@@ -397,14 +397,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
   async getProfessionFiliere(numeroFinessET: string) {
     const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
-      order: { label: "ASC" }
-    });
-
-    // Tri manuel en ignorant les accents
-    refProfessionFiliere.sort((a, b) => {
-      const labelA = a.label || '';
-      const labelB = b.label || '';
-      return labelA.localeCompare(labelB, 'fr', { sensitivity: 'base' });
+      order: { code: "ASC" }
     });
 
     const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);

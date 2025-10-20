@@ -260,6 +260,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={couleursFilieres}
                     dataEffectifs={dataEffectifsForChart}
+                    identifiantLegende="légende-graphique-effectifs"
                     multiCategories={items}
                   />
                 </>

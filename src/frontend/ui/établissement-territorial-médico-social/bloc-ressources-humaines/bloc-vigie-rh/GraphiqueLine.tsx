@@ -1,11 +1,10 @@
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Title, Legend, ChartOptions } from "chart.js";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
-import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -33,17 +32,15 @@ interface LineChartProps {
   dataEffectifs: EffectifsData;
   multiCategories: ProfessionFiliereData[];
   couleursFilieres?: string[];
+  identifiantLegende: string;
 }
 
-const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres }: LineChartProps) => {
+const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
   const { wording } = useDependencies();
 
   // Couleurs/grille
   const GRID_COLOR = "#c8c8c880";
   const DEFAULT_PALETTE = ["#3B82F6", "#10B981", "#8B5CF6", "#EF4444", "#F59E0B", "#06B6D4"];
-
-  // Visibilité par filière (toutes visibles au chargement)
-  const [visibleCats, setVisibleCats] = useState<Record<string, boolean>>(() => Object.fromEntries((multiCategories ?? []).map((c) => [c.categorie, true])));
 
   // Axe X : on laisse des labels vides (l’année s’affiche via le callback quand mois === 1)
   const labels = useMemo(() => new Array(dataEffectifs.dataMoisAnnee?.length ?? 0).fill(""), [dataEffectifs.dataMoisAnnee?.length]);
@@ -78,7 +75,6 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
     ];
 
     (multiCategories ?? []).forEach((c, id) => {
-      if (!visibleCats[c.categorie]) return;
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
       datasets.push({
         label: capitalize(c.categorie),
@@ -92,7 +88,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
     });
 
     return { labels, datasets };
-  }, [multiCategories, visibleCats, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX]);
+  }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX]);
 
   // Options du graphique
   const options: ChartOptions<"line"> = {
@@ -136,17 +132,9 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
       },
     },
     plugins: {
-      legend: {
-        display: false, // on conserve les checkboxes "custom"
-        onClick: (_e, item, legend) => {
-          const label = item.text;
-          if (label === wording.EFFECTIFS_TOTAUX) return; // ne jamais masquer le total
-          const key = (multiCategories ?? []).find((c) => capitalize(c.categorie) === label)?.categorie;
-          if (!key) return;
-          setVisibleCats((prev) => ({ ...prev, [key]: !prev[key] }));
-          legend.chart.update();
-        },
-      },
+      // @ts-ignore
+      htmlLegend: { containerID: identifiantLegende },
+      legend: { display: false },
       tooltip: {
         enabled: true,
         callbacks: {
@@ -171,46 +159,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`}>
           {process.env.NODE_ENV !== "test" && <Line data={data} options={options} />}
         </div>
-
-        {/* Pastille “totaux” + cases à cocher filières */}
-        <div className="fr-ml-3w" style={{ display: "flex", flexWrap: "wrap" }}>
-          <ColorLabel classContainer="fr-mb-1w fr-mt-2w fr-ml-1w" items={[{ color: couleurEffectifsTotaux, label: wording.EFFECTIFS_TOTAUX }]} />
-          <div className="fr-mt-2w fr-ml-1w fr-mb-1w" style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-            {(multiCategories ?? []).map((c, id) => {
-              const pretty = capitalize(c.categorie);
-              const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
-              return (
-                <div className="fr-checkbox-group" key={c.categorie} style={{ display: "flex", alignItems: "center" }}>
-                  <input
-                    checked={!!visibleCats[c.categorie]}
-                    id={id as unknown as string}
-                    onChange={() => setVisibleCats((prev) => ({ ...prev, [c.categorie]: !prev[c.categorie] }))}
-                    style={{ marginRight: 6 }}
-                    type="checkbox"
-                  />
-                  <label
-                    className={styles["filieres_effectifs"]}
-                    htmlFor={id as unknown as string}
-                    style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-                  >
-                    <span
-                      aria-hidden
-                      style={{
-                        display: "inline-block",
-                        width: '.8rem',
-                        height: '.8rem',
-                        marginRight: 6,
-                        borderRadius: '50%',
-                        backgroundColor: color,
-                      }}
-                    />
-                    {pretty}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id={identifiantLegende} />
 
         <Transcription
           disabled={false}
