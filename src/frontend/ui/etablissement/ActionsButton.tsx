@@ -42,7 +42,8 @@ export const ActionsButton = ({ finess, downloadPDF, exportET }: ActionsButtonPr
               {wording.TÉLÉCHARGER_EN_PDF}
             </button>
           </li>
-          {exportET &&
+          {
+            exportET &&
             <li className={styles["menu-item"]}>
               <button
                 className="fr-btn fr-btn--tertiary-no-outline"
@@ -55,7 +56,7 @@ export const ActionsButton = ({ finess, downloadPDF, exportET }: ActionsButtonPr
               </button>
             </li>
           }
-        </ul>
+        </ul >
       }
     </div >
   );
