@@ -1,6 +1,6 @@
-import { useDependencies } from "../commun/contexts/useDependencies";
 import styles from "./GestionAide.module.css";
 import type { RessourceAide } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type TableRessourcesProps = Readonly<{
   ressources: RessourceAide[];

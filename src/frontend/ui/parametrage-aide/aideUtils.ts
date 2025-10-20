@@ -19,7 +19,9 @@ export const SECTIONS_STATIQUES: DefinitionSection[] = [
   },
 ];
 
-const ROLE_PAR_IDENTIFIANT = new Map(ROLES_SECTIONS.map((role) => [role.identifiant, role.libelle]));
+const ROLE_PAR_IDENTIFIANT = new Map<number, string>(
+  ROLES_SECTIONS.map((role) => [role.identifiant, role.libelle])
+);
 
 export const libelleRole = (identifiant: number): string =>
   ROLE_PAR_IDENTIFIANT.get(identifiant) ?? `Rôle ${identifiant}`;
