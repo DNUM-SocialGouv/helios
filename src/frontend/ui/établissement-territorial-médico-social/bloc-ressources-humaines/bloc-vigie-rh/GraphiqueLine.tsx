@@ -32,9 +32,10 @@ interface LineChartProps {
   dataEffectifs: EffectifsData;
   multiCategories: ProfessionFiliereData[];
   couleursFilieres?: string[];
+  identifiantLegende: string;
 }
 
-const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres }: LineChartProps) => {
+const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
   const { wording } = useDependencies();
 
   // Couleurs/grille
@@ -132,7 +133,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
     },
     plugins: {
       // @ts-ignore
-      htmlLegend: { containerID: 'légende-graphique-effectifs' },
+      htmlLegend: { containerID: identifiantLegende },
       legend: { display: false },
       tooltip: {
         enabled: true,
@@ -158,7 +159,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`}>
           {process.env.NODE_ENV !== "test" && <Line data={data} options={options} />}
         </div>
-        <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id='légende-graphique-effectifs' />
+        <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id={identifiantLegende} />
 
         <Transcription
           disabled={false}
