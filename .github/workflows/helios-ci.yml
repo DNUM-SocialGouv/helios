@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+        image: postgres:14.18-alpine # Conserver la même version avec le fichier docker-compose.yaml
         env:
           POSTGRES_DB: helios
           POSTGRES_PASSWORD: h3li0s
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:13.7-alpine # Conserver la même version avec le fichier docker-compose.yaml
+        image: postgres:14.18-alpine # Conserver la même version avec le fichier docker-compose.yaml
         env:
           POSTGRES_DB: helios
           POSTGRES_PASSWORD: h3li0s
