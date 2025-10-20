@@ -188,8 +188,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     if (!sectionActive) {
       return;
     }
-    const prochainOrdre =
-      (sectionActive.resources[sectionActive.resources.length - 1]?.ordre ?? sectionActive.resources.length) + 1;
+    const prochainOrdre = (sectionActive.resources.at(-1)?.ordre ?? sectionActive.resources.length) + 1;
     setRessourceFormulaire({ ...FORMULAIRE_RESSOURCE_VIERGE, ordre: prochainOrdre });
     setIndexRessourceEditee(null);
     setRessourceModaleOuverte(true);
@@ -276,10 +275,10 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
 
     mettreAJourSection(slugSelectionne, (section) => {
       const ressources = [...section.resources];
-      if (indexRessourceEditee !== null) {
-        ressources[indexRessourceEditee] = nouvelleEntree;
-      } else {
+      if (indexRessourceEditee === null) {
         ressources.push(nouvelleEntree);
+      } else {
+        ressources[indexRessourceEditee] = nouvelleEntree;
       }
       return {
         ...section,
@@ -295,7 +294,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    if (!window.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE)) {
+    if (!globalThis.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE)) {
       return;
     }
 
@@ -347,18 +346,18 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     const icone = formulaireNouvelleSection.icon.trim() || ICON_PAR_DEFAUT;
 
     if (!titre) {
-      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE);
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE);
       return;
     }
 
     const slug = creerSlug(titre, titre);
     if (!slug) {
-      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE);
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE);
       return;
     }
 
     if (contenu[slug]) {
-      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE);
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE);
       return;
     }
 
@@ -384,11 +383,11 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const supprimerSection = (slug: string) => {
     const estStatique = SECTIONS_STATIQUES.some((section) => section.slug === slug);
     if (estStatique) {
-      window.alert(wording.PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION);
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION);
       return;
     }
 
-    if (!window.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION)) {
+    if (!globalThis.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION)) {
       return;
     }
 
@@ -511,7 +510,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
             <button
               className="fr-btn fr-btn--secondary fr-mr-2w"
               disabled={enregistrementEnCours}
-              onClick={() => window.location.reload()}
+              onClick={() => globalThis.location.reload()}
               type="button"
             >
               {wording.PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS}

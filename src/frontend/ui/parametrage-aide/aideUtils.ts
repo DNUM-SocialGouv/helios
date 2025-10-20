@@ -60,14 +60,14 @@ export const reindexerRessources = (ressources: RessourceAide[]): RessourceAide[
     const {  ...autresChamps } = ressource;
     return { ...autresChamps, ordre: index + 1 };
   });
-
 const nettoyerSlug = (valeur: string) =>
   valeur
     .toLowerCase()
-    .replace(/\s+/gu, "-")
-    .replace(/[^a-z0-9-]/gu, "")
-    .replace(/-+/gu, "-")
-    .replace(/^-|-$/gu, "");
+    .replaceAll(/\s+/gu, "-")
+    .replaceAll(/[^a-z0-9-]/gu, "")
+    .replaceAll(/-+/gu, "-")
+    .replace(/^-+/u, "")
+    .replace(/-+$/u, "");
 
 export const creerSlug = (valeur: string, secours: string) => {
   const base = valeur.trim() || secours;
