@@ -225,7 +225,7 @@ async function generateAndExportExcel(
     "Taux d'ETP vacants au 31/12 (en %)",
     "Taux d'absentéisme (en %)",
     "Taux de CAF (en %)",
-    "Taux de vétusté des construction (en %)",
+    "Taux de vétusté des constructions (en %)",
     "Fond de roulement net global (en €)",
     "Résultat net comptable (en €)"
   ];
