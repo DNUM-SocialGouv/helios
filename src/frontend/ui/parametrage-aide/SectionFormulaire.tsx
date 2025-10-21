@@ -12,6 +12,8 @@ type SectionFormulaireProps = Readonly<{
     nature: "resources" | "faq";
   };
   rolesSelectionnes: number[];
+  surModificationTitre: (valeur: string) => void;
+  surModificationIcone: (valeur: string) => void;
   surModificationDescription: (valeur: string) => void;
   surBasculeRole: (role: number, actif: boolean) => void;
   surModificationOrdre: (valeur: number | undefined) => void;
@@ -26,6 +28,8 @@ export function SectionFormulaire({
   section,
   definition,
   rolesSelectionnes,
+  surModificationTitre,
+  surModificationIcone,
   surModificationDescription,
   surBasculeRole,
   surModificationOrdre,
@@ -54,7 +58,36 @@ export function SectionFormulaire({
           </div>
         </div>
       </header>
-
+      <div className="fr-input-group">
+        <label className="fr-label" htmlFor="section-order">{wording.PARAMETRAGE_AIDE_LABEL_NOM_SECTION}</label>
+        <input
+          className="fr-input"
+          id="section-titre"
+          min={1}
+          name="titre"
+          onChange={(evenement) => {
+            surModificationTitre(evenement.target.value);
+          }}
+          required
+          type="text"
+          value={section.title ?? ""}
+        />
+      </div>
+      <div className="fr-input-group">
+        <label className="fr-label" htmlFor="section-order">{wording.PARAMETRAGE_AIDE_LABEL_ICONE_SECTION}</label>
+        <input
+          className="fr-input"
+          id="section-icone"
+          min={1}
+          name="icone"
+          onChange={(evenement) => {
+            surModificationIcone(evenement.target.value);
+          }}
+          required
+          type="text"
+          value={section.icon ?? ""}
+        />
+      </div>
       <div className="fr-input-group">
         <label className="fr-label" htmlFor="section-description">{wording.PARAMETRAGE_AIDE_LABEL_DESCRIPTION}</label>
         <textarea

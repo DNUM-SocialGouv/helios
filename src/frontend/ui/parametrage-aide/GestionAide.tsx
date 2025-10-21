@@ -226,6 +226,20 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     });
   };
 
+  const modifierTitre = (valeur: string) => {
+    if (!slugSelectionne) {
+      return;
+    }
+    mettreAJourSection(slugSelectionne, (section) => ({ ...section, title: valeur }));
+  };
+
+  const modifierIcone = (valeur: string) => {
+    if (!slugSelectionne) {
+      return;
+    }
+    mettreAJourSection(slugSelectionne, (section) => ({ ...section, icon: valeur }));
+  };
+
   const modifierDescription = (valeur: string) => {
     if (!slugSelectionne) {
       return;
@@ -264,7 +278,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     }
 
     const nouvelleEntree: RessourceAide = {
-      slug: ressourceFormulaire.slug ? creerSlug(ressourceFormulaire.slug, ressourceFormulaire.nom) : undefined,
+      slug: ressourceFormulaire.slug ? creerSlug(ressourceFormulaire.slug) : undefined,
       nom: ressourceFormulaire.nom,
       type: ressourceFormulaire.type,
       lien: ressourceFormulaire.lien,
@@ -350,14 +364,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    const slug = creerSlug(titre, titre);
+    const slug = creerSlug(titre);
     if (!slug) {
       globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE);
-      return;
-    }
-
-    if (contenu[slug]) {
-      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE);
       return;
     }
 
@@ -498,7 +507,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
               surDescendreRessource={(index) => deplacerRessource(index, "down")}
               surEditionRessource={ouvrirModaleEditionRessource}
               surModificationDescription={modifierDescription}
+              surModificationIcone={modifierIcone}
               surModificationOrdre={modifierOrdreSection}
+              surModificationTitre={modifierTitre}
               surMonterRessource={(index) => deplacerRessource(index, "up")}
               surSuppressionRessource={supprimerRessource}
             />

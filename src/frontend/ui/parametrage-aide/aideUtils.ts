@@ -69,10 +69,11 @@ const nettoyerSlug = (valeur: string) =>
     .replace(/^-+/u, "")
     .replace(/-+$/u, "");
 
-export const creerSlug = (valeur: string, secours: string) => {
-  const base = valeur.trim() || secours;
+export const creerSlug = (valeur: string) => {
+  const base = valeur.trim();
   const slug = nettoyerSlug(base);
-  return slug || nettoyerSlug(secours) || undefined;
+  const timestamp = Date.now(); // Pour garantir l'unicité en cas de changemnet de titre. 
+  return slug + timestamp || undefined;
 };
 
 export const normaliserSection = (section?: SectionAide): SectionNormalisee => ({
