@@ -1,6 +1,5 @@
 export type MetadonneesRoles = Readonly<{
   allowedRoles?: (number | string)[];
-  roles?: (number | string)[];
 }>;
 
 export type RessourceUtilisateur = Readonly<{

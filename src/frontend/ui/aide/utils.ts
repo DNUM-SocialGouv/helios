@@ -23,7 +23,7 @@ export const sectionVisiblePourRole = (section: SectionNormalisee | undefined, r
     return false;
   }
   if(section.type === "faq") return true;
-  const rolesAutorises = normaliserRoles(section.allowedRoles ?? section.roles);
+  const rolesAutorises = normaliserRoles(section.allowedRoles);
   if (rolesAutorises.length === 0) {
     return false;
   }

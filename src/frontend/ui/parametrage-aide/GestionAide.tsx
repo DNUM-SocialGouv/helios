@@ -23,6 +23,7 @@ import {
   normaliserRoles,
   normaliserSection,
   reindexerRessources,
+  ROLES_PAR_DEFAUT,
   SECTIONS_STATIQUES,
   trierRessources,
 } from "./aideUtils";
@@ -62,7 +63,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const initialisationRoles = () => {
     const resultat: Record<string, number[]> = {};
     for (const [slug, section] of Object.entries(contenuNormalise)) {
-      resultat[slug] = normaliserRoles(section?.allowedRoles ?? section?.roles);
+      resultat[slug] = normaliserRoles(section?.allowedRoles);
     }
     return resultat;
   };
@@ -247,19 +248,18 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     mettreAJourSection(slugSelectionne, (section) => ({ ...section, description: valeur }));
   };
 
-  const basculerRoleSection = (role: number, actif: boolean) => {
+  const basculerRoleSection = (idRole: number, statutDeSelection: boolean) => {
     if (!slugSelectionne) {
       return;
     }
     const rolesActuels = rolesBrouillon[slugSelectionne] ?? [];
-    const rolesActualises = actif
-      ? normaliserRoles([...rolesActuels, role])
-      : normaliserRoles(rolesActuels.filter((identifiant) => identifiant !== role));
+    const rolesActualises = statutDeSelection
+      ? normaliserRoles([...rolesActuels, idRole])
+      : normaliserRoles(rolesActuels.filter((identifiant) => identifiant !== idRole));
     setRolesBrouillon((precedent) => ({ ...precedent, [slugSelectionne]: rolesActualises }));
     mettreAJourSection(slugSelectionne, (section) => ({
       ...section,
-      allowedRoles: rolesActualises,
-      roles: undefined,
+      allowedRoles: rolesActualises
     }));
   };
 
@@ -381,10 +381,11 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         description: "",
         resources: [],
         order: ordre,
+        allowedRoles: ROLES_PAR_DEFAUT
       }),
     }));
 
-    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: [] }));
+    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: ROLES_PAR_DEFAUT }));
     setSlugSelectionne(slug);
     setNouvelleSectionOuverte(false);
   };

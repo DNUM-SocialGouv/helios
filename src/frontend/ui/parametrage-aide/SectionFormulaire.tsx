@@ -1,3 +1,5 @@
+import { ChangeEvent, useEffect, useRef } from "react";
+
 import { ROLES_SECTIONS } from "./aideUtils";
 import styles from "./GestionAide.module.css";
 import { TableRessources } from "./TableRessources";
@@ -41,6 +43,29 @@ export function SectionFormulaire({
 }: SectionFormulaireProps) {
   const { wording } = useDependencies();
   const estSectionRessource = definition.nature === "resources";
+  const refTitre = useRef<HTMLInputElement | null>(null);
+
+  const gererModificationTitre = (evenement: ChangeEvent<HTMLInputElement>) => {
+    const valeur = evenement.target.value;
+    const champ = evenement.target;
+    champ.setCustomValidity(
+      valeur.trim().length === 0 ? wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE : ""
+    );
+    champ.reportValidity();
+    surModificationTitre(valeur);
+  };
+
+  useEffect(() => {
+    const champ = refTitre.current;
+    if (!champ) {
+      return;
+    }
+    const valeur = section.title ?? "";
+    champ.setCustomValidity(
+      valeur.trim().length === 0 ? wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE : ""
+    );
+  }, [section.title, wording]);
+
   return (
     <div className={`fr-card fr-card--shadow fr-card--no-border ${styles["encart"]}`}>
       <header className="fr-mb-4w">
@@ -65,9 +90,9 @@ export function SectionFormulaire({
           id="section-titre"
           min={1}
           name="titre"
-          onChange={(evenement) => {
-            surModificationTitre(evenement.target.value);
-          }}
+          onBlur={() => refTitre.current?.reportValidity()}
+          onChange={gererModificationTitre}
+          ref={refTitre}
           required
           type="text"
           value={section.title ?? ""}

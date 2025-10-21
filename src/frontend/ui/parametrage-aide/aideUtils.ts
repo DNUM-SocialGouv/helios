@@ -8,6 +8,7 @@ export const ROLES_SECTIONS = [
 ] as const;
 
 export const ICON_PAR_DEFAUT = "fr-icon-folder-2-line";
+export const ROLES_PAR_DEFAUT = [1, 2, 3, 4];
 
 export const SECTIONS_STATIQUES: DefinitionSection[] = [
   {
@@ -57,7 +58,7 @@ export const trierRessources = (ressources: RessourceAide[] = []): RessourceAide
 
 export const reindexerRessources = (ressources: RessourceAide[]): RessourceAide[] =>
   ressources.map((ressource, index) => {
-    const {  ...autresChamps } = ressource;
+    const { ...autresChamps } = ressource;
     return { ...autresChamps, ordre: index + 1 };
   });
 const nettoyerSlug = (valeur: string) =>
