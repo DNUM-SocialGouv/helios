@@ -19,7 +19,7 @@ def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndarra
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
-    annee_courante = datetime.now().year 
+    annee_courante = datetime.now().year
     annee_courante_moins_2 = datetime.now().year - 2
     # Filtrer les données
     donnees_filtrees = donnees[
