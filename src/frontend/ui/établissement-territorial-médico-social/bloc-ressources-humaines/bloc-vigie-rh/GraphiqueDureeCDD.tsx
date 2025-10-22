@@ -36,7 +36,7 @@ const GraphiqueDureeCDD = ({ blocVigieRHViewModel }: GraphiqueDureeCDDProps) => 
       identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
       libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
       refsManquants={lesDureesQuiManquentDeRef}
-      refsManquantsTitre='Aucune donnée de référence pour les durées:'
+      refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />

@@ -12,6 +12,7 @@ import {
   couleurExtensionHistogrammeJaune,
   couleurExtensionHistogrammeOrangeClair
 } from "../../../../commun/Graphique/couleursGraphique";
+import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
 
@@ -26,18 +27,108 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
   const { wording } = useDependencies();
 
   const {
-    libelles, donneesDeparts, donneesEmbauches,
-    donneesDepartsRef, donneesEmbauchesRef,
-    donneesDepartsExtension, donneesEmbauchesExtension
+    libelles,
+    donneesDeparts,
+    donneesEmbauches,
+    donneesDepartsRef,
+    donneesEmbauchesRef,
+    donneesDepartsExtension,
+    donneesEmbauchesExtension,
+    libellesValeursManquantes,
+    libellesValeursReferenceManquantes
   } = useMemo(() => {
-    const libelles = donneesDepartsEmbauches.map(d => d.trimestre);
-    const donneesDeparts = donneesDepartsEmbauches.map(d => -Math.abs(d.depart));
-    const donneesEmbauches = donneesDepartsEmbauches.map(d => d.embauche);
-    const donneesDepartsRef = donneesDepartsEmbauches.map(d => -Math.abs(d.departRef));
-    const donneesEmbauchesRef = donneesDepartsEmbauches.map(d => d.embaucheRef);
-    const donneesDepartsExtension = donneesDepartsRef.map((val, idx) => -Math.max(0, (donneesDeparts[idx] ?? 0) - val));
-    const donneesEmbauchesExtension = donneesEmbauchesRef.map((val, idx) => Math.max(0, val - (donneesEmbauches[idx] ?? 0)));
-    return { libelles, donneesDeparts, donneesEmbauches, donneesDepartsRef, donneesEmbauchesRef, donneesDepartsExtension, donneesEmbauchesExtension };
+    const libelles = donneesDepartsEmbauches.map((d) => d.trimestre);
+    const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
+      const valeur = donnee.depart;
+      if (Number.isFinite(valeur)) {
+        return -Math.abs(valeur);
+      }
+      return null;
+    });
+    const donneesEmbauches = donneesDepartsEmbauches.map((donnee) => {
+      const valeur = donnee.embauche;
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+    const donneesDepartsRef = donneesDepartsEmbauches.map((donnee) => {
+      const valeur = donnee.departRef;
+      if (Number.isFinite(valeur)) {
+        return -Math.abs(valeur);
+      }
+      return null;
+    });
+    const donneesEmbauchesRef = donneesDepartsEmbauches.map((donnee) => {
+      const valeur = donnee.embaucheRef;
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+
+    const libellesValeursManquantes: string[] = [];
+    const libellesValeursReferenceManquantes: string[] = [];
+
+    donneesDeparts.forEach((valeur, index) => {
+      if (!Number.isFinite(valeur)) {
+        const libelle = libelles[index];
+        if (!libellesValeursManquantes.includes(libelle)) {
+          libellesValeursManquantes.push(`${wording.DEPARTS}-${libelle}`);
+        }
+      }
+    });
+    donneesEmbauches.forEach((valeur, index) => {
+      if (!Number.isFinite(valeur)) {
+        const libelle = libelles[index];
+        if (!libellesValeursManquantes.includes(libelle)) {
+          libellesValeursManquantes.push(`${wording.EMBAUCHES}-${libelle}`);
+        }
+      }
+    });
+    donneesDepartsRef.forEach((valeur, index) => {
+      if (!Number.isFinite(valeur)) {
+        const libelle = libelles[index];
+        if (!libellesValeursReferenceManquantes.includes(libelle)) {
+          libellesValeursReferenceManquantes.push(`${wording.DEPARTS}-${libelle}`);
+        }
+      }
+    });
+    donneesEmbauchesRef.forEach((valeur, index) => {
+      if (!Number.isFinite(valeur)) {
+        const libelle = libelles[index];
+        if (!libellesValeursReferenceManquantes.includes(libelle)) {
+          libellesValeursReferenceManquantes.push(`${wording.EMBAUCHES}-${libelle}`);
+        }
+      }
+    });
+
+    const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
+      const valeur = donneesDeparts[idx];
+      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+        return -Math.max(0, (valeur as number) - (valeurRef as number));
+      }
+      return 0;
+    });
+    const donneesEmbauchesExtension = donneesEmbauchesRef.map((valeurRef, idx) => {
+      const valeur = donneesEmbauches[idx];
+      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+        return Math.max(0, (valeurRef as number) - (valeur as number));
+      }
+      return 0;
+    });
+
+    return {
+      libelles,
+      donneesDeparts,
+      donneesEmbauches,
+      donneesDepartsRef,
+      donneesEmbauchesRef,
+      donneesDepartsExtension,
+      donneesEmbauchesExtension,
+      libellesValeursManquantes,
+      libellesValeursReferenceManquantes,
+    };
   }, [donneesDepartsEmbauches]);
 
   const valeursNegativesRefPlugin = {
@@ -155,8 +246,10 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
 
-            return [`Valeur: ${Math.abs(value)}`,
-            `Valeur de référence: ${Math.abs(refValue)}`];
+            const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
+
+            return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
           },
         },
       },
@@ -236,6 +329,16 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
     <div>
       {/* @ts-ignore */}
       <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+      {libellesValeursManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
+      {libellesValeursReferenceManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
@@ -250,7 +353,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
         entêteLibellé={wording.ANNÉE}
         identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
         libellés={libelles}
-        valeurs={[donneesDeparts.map(Math.abs), donneesDepartsRef.map(Math.abs), donneesEmbauches, donneesEmbauchesRef]}
+        valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
       />
     </div>
   );

@@ -150,6 +150,8 @@ export class WordingFr implements Wording {
   readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string = "Aucune donnée renseignée pour :";
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string = "Aucune donnée de référence renseignée pour :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";

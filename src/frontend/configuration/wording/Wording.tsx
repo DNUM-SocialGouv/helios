@@ -127,6 +127,8 @@ export interface Wording {
   readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string;
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;

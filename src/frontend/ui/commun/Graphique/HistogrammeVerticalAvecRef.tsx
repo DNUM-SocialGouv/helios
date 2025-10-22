@@ -5,22 +5,40 @@ import { Bar } from "react-chartjs-2";
 import { CouleurHistogramme, couleurDesTraitsRefHistogramme } from "./couleursGraphique";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
-import { StringFormater } from "../StringFormater";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
 type HistogrammeVerticalAvecRefProps = Readonly<{
-  valeurs: number[];
-  valeursRef: number[];
+  valeurs: (number | null)[];
+  valeursRef: (number | null)[];
   couleursDeLHistogramme: CouleurHistogramme[];
   libelles: (number | string)[];
   type: string;
   tickFormatter: (type: string, index: number) => string;
   tickX2Formatter: (type: string, index: number) => string;
   identifiants: string[];
+  libellesDeValeursManquantes?: (number | string)[];
+  libellesDeValeursManquantesTitre?: string;
+  libellesDeValeursDeReferenceManquantes?: (number | string)[];
+  libellesDeValeursDeReferenceManquantesTitre?: string;
 }>;
 
-const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramme, libelles, type, tickFormatter, tickX2Formatter,identifiants }: HistogrammeVerticalAvecRefProps) => {
+const HistogrammeVerticalAvecRef = ({
+  valeurs,
+  valeursRef,
+  couleursDeLHistogramme,
+  libelles,
+  type,
+  tickFormatter,
+  tickX2Formatter,
+  identifiants,
+  libellesDeValeursManquantes = [],
+  libellesDeValeursDeReferenceManquantes = [],
+}: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
+
+  const transcriptionValeurs = valeurs.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
+  const transcriptionValeursRef = valeursRef.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
 
   const data: ChartData = {
     datasets: [
@@ -66,7 +84,7 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
           size: 12,
           weight: 700,
         },
-        formatter: (value: number, _context: Context): string => value.toLocaleString("fr") + " %",
+        formatter: (value: number, _context: Context): string => value ? value.toLocaleString("fr") + " %" : "",
       },
       legend: { display: false },
       tooltip: {
@@ -76,9 +94,11 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
             const index = context.dataIndex;
             const value = valeurs[index];
             const refValue = valeursRef[index];
+            const valeurText = Number.isFinite(value as number) ? Math.abs(value as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
+            const valeurRefText = Number.isFinite(refValue as number) ? Math.abs(refValue as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${Math.abs(value)}`,
-            `Valeur de référence: ${Math.abs(refValue)}`];
+            return [`Valeur: ${valeurText}`,
+            `Valeur de référence: ${valeurRefText}`];
           },
         },
       },      // @ts-ignore
@@ -174,11 +194,21 @@ const HistogrammeVerticalAvecRef = ({ valeurs, valeursRef, couleursDeLHistogramm
 
         ]}
       />
+      {libellesDeValeursManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesDeValeursManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
+      {libellesDeValeursDeReferenceManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesDeValeursDeReferenceManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
       <Transcription
         entêteLibellé={wording.ANNÉE}
         identifiants={identifiants}
         libellés={libelles}
-        valeurs={[StringFormater.addPercentToValues(valeurs), StringFormater.addPercentToValues(valeursRef)]}
+        valeurs={[transcriptionValeurs, transcriptionValeursRef]}
       />
     </>
   );
