@@ -14,20 +14,37 @@ type GraphiqueTauxRotationAnnuelProps = Readonly<{
 const GraphiqueTauxRotationTrimestriel = ({ donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
-  const {
-    libelles, valeurs, valeursRef
-  } = useMemo(() => {
-    const libelles = donneesTauxRotationTrimestriels.map(d => `${d.annee}-T${d.trimestre}`);
-    const valeurs = donneesTauxRotationTrimestriels.map((donnee) => StringFormater.transformInRoundedRate(donnee.rotation));
-    const valeursRef = donneesTauxRotationTrimestriels.map((donnee) => StringFormater.transformInRoundedRate(donnee.rotationRef))
+  const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
+    const libelles = donneesTauxRotationTrimestriels.map((donnee) => `${donnee.annee}-T${donnee.trimestre}`);
+    const valeursManquantes: string[] = [];
+    const valeursRefManquantes: string[] = [];
+    const valeurs = donneesTauxRotationTrimestriels.map((donnee) => {
+      const valeur = donnee.rotation;
+      if (!Number.isFinite(valeur)) {
+        valeursManquantes.push(`${donnee.annee}-T${donnee.trimestre}`);
+        return null;
+      }
+      return StringFormater.transformInRoundedRate(valeur);
+    });
+    const valeursRef = donneesTauxRotationTrimestriels.map((donnee) => {
+      const valeurRef = donnee.rotationRef;
+      if (!Number.isFinite(valeurRef)) {
+        valeursRefManquantes.push(`${donnee.annee}-T${donnee.trimestre}`);
+        return null;
+      }
+      return StringFormater.transformInRoundedRate(valeurRef);
+    });
 
-    return { libelles, valeurs, valeursRef };
+    return { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes };
   }, [donneesTauxRotationTrimestriels]);
 
   return (
     <HistogrammeVerticalAvecRef
       couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotationTrimestriels)}
+      identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
       libelles={libelles}
+      libellesDeValeursDeReferenceManquantes={valeursRefManquantes}
+      libellesDeValeursManquantes={valeursManquantes}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
       type={wording.TRIMESTRIEL}

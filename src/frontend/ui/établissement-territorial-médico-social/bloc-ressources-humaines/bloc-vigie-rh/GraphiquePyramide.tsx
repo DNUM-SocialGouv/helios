@@ -1,10 +1,13 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData } from "chart.js";
+import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Title);
+
 
 type PyramidChartProps = Readonly<{
   labels: string[];
@@ -19,8 +22,106 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
 
   const { wording } = useDependencies();
 
-  const menExtension = effectifHommeRef.map((val, idx) => Math.max(0, val - effectifHomme[idx]));
-  const womenExtension = effectifFemmeRef.map((val, idx) => Math.max(0, val - effectifFemme[idx]));
+  const {
+    hommesExtension,
+    femmesExtension,
+    libellesValeursManquantes,
+    libellesValeursReferenceManquantes,
+  } = useMemo(() => {
+    const valeursEffectifHomme = effectifHomme.map((valeur) => {
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+
+    const valeursEffectifHommeRef = effectifHommeRef.map((valeur) => {
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+
+    const valeursEffectifFemme = effectifFemme.map((valeur) => {
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+
+    const valeursEffectifFemmeRef = effectifFemmeRef.map((valeur) => {
+      if (Number.isFinite(valeur)) {
+        return valeur;
+      }
+      return null;
+    });
+
+    const libellesValeursManquantes: string[] = [];
+    const libellesValeursReferenceManquantes: string[] = [];
+
+    const ajouterLibellesManquants = (
+      valeurs: (number | null)[],
+      construireLibelle: (index: number) => string,
+      accumulateur: string[]
+    ) => {
+      for (const [index, valeur] of valeurs.entries()) {
+        if (!Number.isFinite(valeur)) {
+          const libelle = construireLibelle(index);
+          if (!accumulateur.includes(libelle)) {
+            accumulateur.push(libelle);
+          }
+        }
+      }
+    };
+
+    ajouterLibellesManquants(
+      valeursEffectifHomme,
+      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifFemme,
+      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifHommeRef,
+      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
+      libellesValeursReferenceManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifFemmeRef,
+      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
+      libellesValeursReferenceManquantes
+    );
+
+    const menExtension = valeursEffectifHommeRef.map((valeurRef, index) => {
+      const valeur = valeursEffectifHomme[index];
+      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+        return Math.max(0, (valeurRef as number) - (valeur as number));
+      }
+      return 0;
+    });
+
+    const womenExtension = valeursEffectifFemmeRef.map((valeurRef, index) => {
+      const valeur = valeursEffectifFemme[index];
+      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+        return Math.max(0, (valeurRef as number) - (valeur as number));
+      }
+      return 0;
+    });
+
+    return {
+      valeursEffectifHomme,
+      valeursEffectifHommeRef,
+      valeursEffectifFemme,
+      valeursEffectifFemmeRef,
+      hommesExtension: menExtension,
+      femmesExtension: womenExtension,
+      libellesValeursManquantes,
+      libellesValeursReferenceManquantes,
+    };
+  }, [effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, labels, wording.EFFECTIF_FEMMES, wording.EFFECTIF_HOMMES]);
 
   const menData: ChartData = {
     datasets: [
@@ -34,7 +135,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
       {
         label: "Men Extension",
         backgroundColor: "rgba(255,249,235,255)",
-        data: menExtension,
+        data: hommesExtension,
         yAxisID: "y"
 
       },
@@ -53,7 +154,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
       },
       {
         label: "Women Extension",
-        data: womenExtension,
+        data: femmesExtension,
         backgroundColor: "rgba(255,249,235,255)",
         yAxisID: "y"
       },
@@ -69,8 +170,8 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
       const { effectifHommeRef, effectifFemmeRef } = options;
 
       const values = isMenChart ? effectifHommeRef : effectifFemmeRef;
-
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+      const datasetMeta = chart.getDatasetMeta(0).data as unknown as (BarElement & { height: number })[]
+      for (const [index, bar] of datasetMeta.entries()) {
         const value = values[index];
         if (value === undefined) return;
 
@@ -89,7 +190,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
-      });
+      }
     },
   };
 
@@ -218,6 +319,16 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
           />
         </div>
       </div>
+      {libellesValeursManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
+      {libellesValeursReferenceManquantes.length > 0 && (
+        <MiseEnExergue>
+          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
+        </MiseEnExergue>
+      )}
       <Transcription
         disabled={false}
         entêteLibellé={wording.TRANCHE_AGE}

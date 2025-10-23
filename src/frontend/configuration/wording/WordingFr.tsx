@@ -150,6 +150,8 @@ export class WordingFr implements Wording {
   readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string = "Aucune donnée renseignée pour :";
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string = "Aucune donnée de référence renseignée pour :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
@@ -710,7 +712,12 @@ export class WordingFr implements Wording {
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-
+  readonly DUREE_CDD: string = "Durée effective des CDD";
+  readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
+  readonly DUREE: string = "Durée";
+  readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
+  readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";

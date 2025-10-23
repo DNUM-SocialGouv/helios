@@ -127,6 +127,8 @@ export interface Wording {
   readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string;
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
@@ -616,6 +618,11 @@ export interface Wording {
   readonly REPARTITION_EFFECTIFS: string;
   readonly TAUX_ROTATION_REFERENCE: string;
   readonly TOP_TAUX_ROTATION_TITLE: string;
-
+  readonly DUREE_CDD: string;
+  readonly DUREE_CDD_REF: string;
+  readonly MOTIFS_RUPTURE_CONTRAT: string;
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
+  readonly MOTIF: string;
+  readonly DUREE: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }

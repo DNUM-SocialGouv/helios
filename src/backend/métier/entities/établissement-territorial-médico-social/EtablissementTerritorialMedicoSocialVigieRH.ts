@@ -53,6 +53,24 @@ export type TauxRotationTrimestriel = Readonly<{
   rotationRef: number;
 }>;
 
+export type DureeCDD = Readonly<{
+  annee: number;
+  trimestre: number;
+  effectif: number;
+  effectifRef: number;
+  dureeLibelle: string
+  dureeCode: number;
+}>;
+
+export type MotifsRuptureContrat = Readonly<{
+  annee: number;
+  trimestre: number;
+  effectif: number;
+  effectifRef: number;
+  motifLibelle: string
+  motifCode: number;
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   pyramideAges: PyramideAges[];
   departsEmbauches: DepartEmbauche[];
@@ -60,6 +78,9 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   tranchesAgesLibelles: string[];
   professionFiliere: ProfessionFiliere;
   tauxRotation: TauxRotation[];
-  tauxRotationTrimestriel: TauxRotationTrimestriel[]
+  tauxRotationTrimestriel: TauxRotationTrimestriel[];
+  dureesCdd: DureeCDD[];
+  dureesCddLibelles: string[];
+  motifsRuptureContrat: MotifsRuptureContrat[];
+  motifsRuptureContratLibelles: string[];
 }>;
-

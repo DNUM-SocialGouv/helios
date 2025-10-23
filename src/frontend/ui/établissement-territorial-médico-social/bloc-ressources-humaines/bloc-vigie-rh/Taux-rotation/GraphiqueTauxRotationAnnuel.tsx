@@ -14,20 +14,37 @@ type GraphiqueTauxRotationAnnuelProps = Readonly<{
 const GraphiqueTauxRotationAnnuel = ({ donneesTauxRotation, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
-  const {
-    libelles, valeurs, valeursRef
-  } = useMemo(() => {
-    const libelles = donneesTauxRotation.map(d => d.annee);
-    const valeurs = donneesTauxRotation.map((donnee) => StringFormater.transformInRoundedRate(donnee.rotation));
-    const valeursRef = donneesTauxRotation.map((donnee) => StringFormater.transformInRoundedRate(donnee.rotationRef))
+  const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
+    const libelles = donneesTauxRotation.map((donnee) => donnee.annee);
+    const valeursManquantes: (number | string)[] = [];
+    const valeursRefManquantes: (number | string)[] = [];
+    const valeurs = donneesTauxRotation.map((donnee) => {
+      const valeur = donnee.rotation;
+      if (!Number.isFinite(valeur)) {
+        valeursManquantes.push(donnee.annee);
+        return null;
+      }
+      return StringFormater.transformInRoundedRate(valeur);
+    });
+    const valeursRef = donneesTauxRotation.map((donnee) => {
+      const valeurRef = donnee.rotationRef;
+      if (!Number.isFinite(valeurRef)) {
+        valeursRefManquantes.push(donnee.annee);
+        return null;
+      }
+      return StringFormater.transformInRoundedRate(valeurRef);
+    });
 
-    return { libelles, valeurs, valeursRef };
+    return { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes };
   }, [donneesTauxRotation]);
 
   return (
     <HistogrammeVerticalAvecRef
       couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotation)}
+      identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
       libelles={libelles}
+      libellesDeValeursDeReferenceManquantes={valeursRefManquantes}
+      libellesDeValeursManquantes={valeursManquantes}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
       type={wording.ANNUEL}
