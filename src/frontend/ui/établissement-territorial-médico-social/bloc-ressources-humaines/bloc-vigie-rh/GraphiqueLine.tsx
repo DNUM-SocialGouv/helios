@@ -74,7 +74,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
       },
     ];
 
-    (multiCategories ?? []).forEach((c, id) => {
+    for (const [id,c] of (multiCategories ?? []).entries()){
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
       datasets.push({
         label: capitalize(c.categorie),
@@ -85,7 +85,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         fill: false,
         pointRadius: 1,
       });
-    });
+    }
 
     return { labels, datasets };
   }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX]);

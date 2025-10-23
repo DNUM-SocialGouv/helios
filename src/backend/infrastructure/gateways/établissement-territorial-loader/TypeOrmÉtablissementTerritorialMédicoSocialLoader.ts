@@ -56,6 +56,18 @@ type ResultatQueryMotifRupture = Readonly<{
   motif: string,
   code: number;
 }>
+
+type ModelsBlocVigieRh = Readonly<{
+  pyramideAgesModel: VigieRhPyramideAgesModel[],
+  tranchesAgeModel: VigieRhRefTrancheAgeModel[],
+  mouvementsModel: VigieRhMouvementsModel[],
+  vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
+  dureesCddModel: ResultatQueryDureeCdd[],
+  dureesCddRefModel: VigieRhRefDureeCddModel[],
+  motifsRuptureModel: ResultatQueryMotifRupture[],
+  motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[],
+  professionFiliereModel: ProfessionFiliere
+}>;
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
@@ -251,31 +263,22 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { code: "ASC" },
     });
 
-    return this.construisLesDonneesVigieRH(
-      pyramideAges,
-      tranchesAge,
-      departsEmbauches,
-      departsEmbauchesTrimestriels,
-      dureesCdd,
-      dureeLibelles,
-      motifsRupture,
-      motifsLibelles,
-      professionFiliere as unknown as ProfessionFiliere)
+    return this.construisLesDonneesVigieRH({
+      pyramideAgesModel: pyramideAges,
+      tranchesAgeModel: tranchesAge,
+      mouvementsModel: departsEmbauches,
+      vigieRhMouvementsTrimestrielsModel: departsEmbauchesTrimestriels,
+      dureesCddModel: dureesCdd,
+      dureesCddRefModel: dureeLibelles,
+      motifsRuptureModel: motifsRupture,
+      motifsLibelleModel: motifsLibelles,
+      professionFiliereModel: professionFiliere as unknown as ProfessionFiliere,
+    });
   }
 
-  private async construisLesDonneesVigieRH(
-    pyramideAgesModel: VigieRhPyramideAgesModel[],
-    tranchesAgeModel: VigieRhRefTrancheAgeModel[],
-    mouvementsModel: VigieRhMouvementsModel[],
-    vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
-    dureesCddModel: ResultatQueryDureeCdd[],
-    dureesCddRefModel: VigieRhRefDureeCddModel[],
-    motifsRuptureModel: ResultatQueryMotifRupture[],
-    motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[],
-    professionFiliereModel: ProfessionFiliere
-  ): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+  private async construisLesDonneesVigieRH(models : ModelsBlocVigieRh): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
-    const pyramideAges = pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
+    const pyramideAges = models.pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
         annee: pyramideModel.annee,
         trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
@@ -286,13 +289,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const tranchesAgesLibelles = tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
+    const tranchesAgesLibelles = models.tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
       return trancheModel.trancheAge ?? '';
     })
 
-    const professionFiliere = await this.construisProfessionFiliere(professionFiliereModel);
+    const professionFiliere = await this.construisProfessionFiliere(models.professionFiliereModel);
 
-    const departsEmbauches = mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
+    const departsEmbauches = models.mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
       return {
         annee: departEmbaucheModel.annee,
         depart: departEmbaucheModel.depart,
@@ -302,7 +305,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const departsEmbauchesTrimestriels = vigieRhMouvementsTrimestrielsModel.map((departEmbaucheModel: VigieRhMouvementsTrimestrielsModel) => {
+    const departsEmbauchesTrimestriels = models.vigieRhMouvementsTrimestrielsModel.map((departEmbaucheModel: VigieRhMouvementsTrimestrielsModel) => {
       return {
         annee: departEmbaucheModel.annee,
         trimestre: departEmbaucheModel.trimestre,
@@ -313,7 +316,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     });
 
-    const tauxRotation = mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
+    const tauxRotation = models.mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
       return {
         annee: departEmbaucheModel.annee,
         rotation: departEmbaucheModel.rotation,
@@ -321,7 +324,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const tauxRotationTrimestriel = vigieRhMouvementsTrimestrielsModel.map((mouvementTrimestrielsModel: VigieRhMouvementsTrimestrielsModel) => {
+    const tauxRotationTrimestriel = models.vigieRhMouvementsTrimestrielsModel.map((mouvementTrimestrielsModel: VigieRhMouvementsTrimestrielsModel) => {
       return {
         annee: mouvementTrimestrielsModel.annee,
         trimestre: mouvementTrimestrielsModel.trimestre,
@@ -330,7 +333,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const dureesCdd = dureesCddModel.map((dureeCddModel: ResultatQueryDureeCdd) => {
+    const dureesCdd = models.dureesCddModel.map((dureeCddModel: ResultatQueryDureeCdd) => {
       return {
         annee: dureeCddModel.annee,
         trimestre: dureeCddModel.trimestre,
@@ -341,7 +344,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const motifsRuptureContrat = motifsRuptureModel.map((motifRuptureModel: ResultatQueryMotifRupture) => {
+    const motifsRuptureContrat = models.motifsRuptureModel.map((motifRuptureModel: ResultatQueryMotifRupture) => {
       return {
         annee: motifRuptureModel.annee,
         trimestre: motifRuptureModel.trimestre,
@@ -352,11 +355,11 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
 
-    const dureesCddLibelles = dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
+    const dureesCddLibelles = models.dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
       return dureeLibelleModel.duree ?? '';
     })
 
-    const motifsRuptureContratLibelles = motifsLibelleModel.map((motifLibelleModel: VigieRhRefMotifRuptutreContratModel) => {
+    const motifsRuptureContratLibelles = models.motifsLibelleModel.map((motifLibelleModel: VigieRhRefMotifRuptutreContratModel) => {
       return motifLibelleModel.motif ?? '';
     })
 

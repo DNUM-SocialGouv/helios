@@ -31,7 +31,6 @@
 /* Le premier enfant occupe toute la largeur */
 .graphique-effectif-legende> :first-child {
     width: 100%;
-    ;
 }
 
 .graphique-effectif-legende li {

@@ -76,6 +76,26 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
   }
 
+  public get graphiqueMotifsAffichable(): boolean {
+    return !this.lesDureesCDDNeSontEllesPasRenseignees && !this.lesDureesCDDNeSontEllesPasAutorisee;
+  }
+
+  public get graphiqueRotationsAffichable(): boolean {
+    return !this.lesRotationsNeSontIlsPasRenseignees && !this.lesRotationsNeSontIlsPasAutorisee;
+  }
+
+  public get graphiqueEffectifsAffichable(): boolean {
+    return !this.lesEffectifsNeSontIlsPasRenseignees && !this.lesEffectifsNeSontIlsPasAutorisee
+  }
+
+  public get graphiqueDepartsEmbauchesAffichable():boolean {
+    return !this.lesDepartsEmbauchesNeSontIlsPasRenseignees && !this.lesDepartsEmbauchesNeSontIlsPasAutorisee
+  }
+
+  public get graphiquePyramideAgesAffichable(): boolean {
+    return !this.lesAgesNeSontIlsPasRenseignees && !this.lesAgesNeSontIlsPasAutorisee;
+  }
+
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);

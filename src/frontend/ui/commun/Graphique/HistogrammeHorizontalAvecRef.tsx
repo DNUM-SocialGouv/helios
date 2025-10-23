@@ -1,4 +1,4 @@
-import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
+import { BarElement, Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
@@ -120,7 +120,8 @@ const HistogrammeHorizontalAvecRef = (
       const { ctx, scales } = chart;
       const { valeursDesHistogrammesRef } = options;
       const values = valeursDesHistogrammesRef;
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+      const datasetMeta = chart.getDatasetMeta(0).data as unknown as (BarElement & { height: number })[];
+      for (const [index, bar] of datasetMeta.entries()) {
         const value = values[index];
         if (value === undefined) return;
 
@@ -138,7 +139,7 @@ const HistogrammeHorizontalAvecRef = (
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
-      });
+      }
     },
   }
 

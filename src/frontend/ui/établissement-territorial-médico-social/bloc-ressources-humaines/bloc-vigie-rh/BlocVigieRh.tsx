@@ -28,7 +28,7 @@ type BlocVigieRHProps = Readonly<{
 const ListeIndicateursNonAutorisesOuNonRenseignes = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   if (blocVigieRHViewModel.lesDonneesVgRHPasAutorises.length !== 0) {
     return <NotAUthorized indicateurs={blocVigieRHViewModel.lesDonneesVgRHPasAutorises} />;
-  } else if (blocVigieRHViewModel.lesDonneesVgRHPasRenseignees.length !== 0) {
+  } else if (blocVigieRHViewModel.lesDonneesVgRHPasRenseignees.length > 0) {
     return <NoDataCallout indicateurs={blocVigieRHViewModel.lesDonneesVgRHPasRenseignees} />;
   } else {
     return <></>;
@@ -170,7 +170,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
     <>
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
       <div className="fr-grid-row fr-grid-row--gutters">
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+        {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
           <div className="fr-col-4">
             <CarteTopIndicateur
               comparaisonLabel={indicateurEffectif.comparaisonLabel}
@@ -182,7 +182,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+        {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
           <div className="fr-col-4">
             <CarteTopIndicateur
               comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
@@ -199,7 +199,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         )}
       </div>
       <ul className={`indicateurs ${styles["liste-indicateurs-vr"]}`}>
-        {!blocVigieRHViewModel.lesAgesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesAgesNeSontIlsPasAutorisee ? (
+        {blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
           <IndicateurGraphique
             années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
             contenuInfoBulle={<ContenuPyramideDesAges />}
@@ -225,7 +225,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesDepartsEmbauchesNeSontIlsPasAutorisee ? (
+        {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-departs-embauches"
@@ -240,7 +240,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee ? (
+        {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
             identifiant="vr-effectifs"
@@ -270,7 +270,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesEffectifsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesEffectifsNeSontIlsPasAutorisee && indicateurEffectif ? (
+        {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuRepartitionEffectif />}
             identifiant="vr-repartition-effectif"
@@ -282,7 +282,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesRotationsNeSontIlsPasRenseignees && !blocVigieRHViewModel.lesRotationsNeSontIlsPasAutorisee ? (
+        {blocVigieRHViewModel.graphiqueRotationsAffichable ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-taux-rotation"
@@ -298,21 +298,19 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesDureesCDDNeSontEllesPasRenseignees && !blocVigieRHViewModel.lesDureesCDDNeSontEllesPasAutorisee ? (
+        {blocVigieRHViewModel.graphiqueMotifsAffichable ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-duree-cdd"
             nomDeLIndicateur={wording.DUREE_CDD}
             source={wording.VIGIE_RH}
           >
-            <GraphiqueDureeCDD
-              blocVigieRHViewModel={blocVigieRHViewModel}
-            />
+            <GraphiqueDureeCDD blocVigieRHViewModel={blocVigieRHViewModel} />
           </IndicateurGraphique>
         ) : (
           <></>
         )}
-        {!blocVigieRHViewModel.lesMotifsNeSontIlsPasRenseignes && !blocVigieRHViewModel.lesMotifsNeSontIlsPasAutorises ? (
+        {blocVigieRHViewModel.graphiqueMotifsAffichable ? (
           <IndicateurGraphique
             contenuInfoBulle={<ContenuPyramideDesAges />}
             identifiant="vr-motif-rupture"

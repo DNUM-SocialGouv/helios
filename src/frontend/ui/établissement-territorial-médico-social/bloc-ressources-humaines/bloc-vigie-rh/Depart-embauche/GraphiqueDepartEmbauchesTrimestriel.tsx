@@ -70,38 +70,41 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
     const libellesValeursManquantes: string[] = [];
     const libellesValeursReferenceManquantes: string[] = [];
 
-    donneesDeparts.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = libelles[index];
-        if (!libellesValeursManquantes.includes(libelle)) {
-          libellesValeursManquantes.push(`${wording.DEPARTS}-${libelle}`);
+    const ajouterLibellesManquants = (
+      valeurs: (number | null)[],
+      construireLibelle: (index: number) => string,
+      accumulateur: string[]
+    ) => {
+      for (const [index, valeur] of valeurs.entries()) {
+        if (!Number.isFinite(valeur)) {
+          const libelle = construireLibelle(index);
+          if (!accumulateur.includes(libelle)) {
+            accumulateur.push(libelle);
+          }
         }
       }
-    });
-    donneesEmbauches.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = libelles[index];
-        if (!libellesValeursManquantes.includes(libelle)) {
-          libellesValeursManquantes.push(`${wording.EMBAUCHES}-${libelle}`);
-        }
-      }
-    });
-    donneesDepartsRef.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = libelles[index];
-        if (!libellesValeursReferenceManquantes.includes(libelle)) {
-          libellesValeursReferenceManquantes.push(`${wording.DEPARTS}-${libelle}`);
-        }
-      }
-    });
-    donneesEmbauchesRef.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = libelles[index];
-        if (!libellesValeursReferenceManquantes.includes(libelle)) {
-          libellesValeursReferenceManquantes.push(`${wording.EMBAUCHES}-${libelle}`);
-        }
-      }
-    });
+    };
+
+    ajouterLibellesManquants(
+      donneesDeparts,
+      (index) => `${wording.DEPARTS}-${libelles[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      donneesEmbauches,
+      (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      donneesDepartsRef,
+      (index) => `${wording.DEPARTS}-${libelles[index]}`,
+      libellesValeursReferenceManquantes
+    );
+    ajouterLibellesManquants(
+      donneesEmbauchesRef,
+      (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
+      libellesValeursReferenceManquantes
+    );
 
     const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
       const valeur = donneesDeparts[idx];
@@ -137,7 +140,8 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
       const { ctx, scales } = chart;
       const { donneesDepartsRef } = options;
       const values = donneesDepartsRef;
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+      const datasetMeta = chart.getDatasetMeta(0).data as unknown as (BarElement & { width: number })[];
+      for (const [index, bar] of datasetMeta.entries()) {
         const value = values[index];
         if (value === undefined) return;
 
@@ -155,7 +159,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
-      });
+      }
     },
   };
 
@@ -165,7 +169,8 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
       const { ctx, scales } = chart;
       const { donneesEmbauchesRef } = options;
       const values = donneesEmbauchesRef;
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+      const datasetMeta = chart.getDatasetMeta(0).data as unknown as (BarElement & { width: number })[];
+      for (const [index, bar] of datasetMeta.entries()) {
         const value = values[index];
         if (value === undefined) return;
 
@@ -183,7 +188,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
-      });
+      }
     },
   };
 

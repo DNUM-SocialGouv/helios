@@ -59,41 +59,41 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
     const libellesValeursManquantes: string[] = [];
     const libellesValeursReferenceManquantes: string[] = [];
 
-    valeursEffectifHomme.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = `${wording.EFFECTIF_HOMMES}-${labels[index]}`;
-        if (!libellesValeursManquantes.includes(libelle)) {
-          libellesValeursManquantes.push(libelle);
+    const ajouterLibellesManquants = (
+      valeurs: (number | null)[],
+      construireLibelle: (index: number) => string,
+      accumulateur: string[]
+    ) => {
+      for (const [index, valeur] of valeurs.entries()) {
+        if (!Number.isFinite(valeur)) {
+          const libelle = construireLibelle(index);
+          if (!accumulateur.includes(libelle)) {
+            accumulateur.push(libelle);
+          }
         }
       }
-    });
+    };
 
-    valeursEffectifFemme.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = `${wording.EFFECTIF_FEMMES}-${labels[index]}`;
-        if (!libellesValeursManquantes.includes(libelle)) {
-          libellesValeursManquantes.push(libelle);
-        }
-      }
-    });
-
-    valeursEffectifHommeRef.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = `${wording.EFFECTIF_HOMMES}-${labels[index]}`;
-        if (!libellesValeursReferenceManquantes.includes(libelle)) {
-          libellesValeursReferenceManquantes.push(libelle);
-        }
-      }
-    });
-
-    valeursEffectifFemmeRef.forEach((valeur, index) => {
-      if (!Number.isFinite(valeur)) {
-        const libelle = `${wording.EFFECTIF_FEMMES}-${labels[index]}`;
-        if (!libellesValeursReferenceManquantes.includes(libelle)) {
-          libellesValeursReferenceManquantes.push(libelle);
-        }
-      }
-    });
+    ajouterLibellesManquants(
+      valeursEffectifHomme,
+      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifFemme,
+      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
+      libellesValeursManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifHommeRef,
+      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
+      libellesValeursReferenceManquantes
+    );
+    ajouterLibellesManquants(
+      valeursEffectifFemmeRef,
+      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
+      libellesValeursReferenceManquantes
+    );
 
     const menExtension = valeursEffectifHommeRef.map((valeurRef, index) => {
       const valeur = valeursEffectifHomme[index];
@@ -170,8 +170,8 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
       const { effectifHommeRef, effectifFemmeRef } = options;
 
       const values = isMenChart ? effectifHommeRef : effectifFemmeRef;
-
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+      const datasetMeta = chart.getDatasetMeta(0).data as unknown as (BarElement & { height: number })[]
+      for (const [index, bar] of datasetMeta.entries()) {
         const value = values[index];
         if (value === undefined) return;
 
@@ -190,7 +190,7 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.restore();
-      });
+      }
     },
   };
 
