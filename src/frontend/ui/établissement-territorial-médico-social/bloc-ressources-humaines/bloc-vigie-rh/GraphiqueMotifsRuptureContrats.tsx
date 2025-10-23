@@ -36,7 +36,7 @@ const GraphiqueMotifsRuptureContrats = ({ blocVigieRHViewModel }: GraphiqueMotif
       identifiants={[wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF]}
       libelles={blocVigieRHViewModel.lesLibellesMotifsRupture}
       refsManquants={lesMotifsQuiManquentDeRef}
-      refsManquantsTitre='Aucune donnée de référence pour les motifs:'
+      refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />
