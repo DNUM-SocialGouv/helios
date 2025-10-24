@@ -59,6 +59,11 @@ TABLE_REF_CATEGORIES = "referentiel_categories"
 TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
 TABLE_VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
 
+# nature contrats
+TABLE_VIGIE_RH_REF_NATURE_CONTRATS = "vigierh_referentiel_nature_contrat"
+TABLE_VIGIE_RH_NATURE_CONTRATS = "vigierh_nature_contrats_annuel"
+TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
@@ -101,3 +106,7 @@ class FichierSource(Enum):
     # duree cdd
     VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
     VIGIE_RH_REF_DUREE_CDD = "vigierh_ref_duree_cdd"
+    # cdi cdd
+    VIGIE_RH_CDI_CDD = "vigierh_nature_contrats_annuel"
+    VIGIE_RH_CDI_CDD_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+    VIGIE_RH_REF_CDI_CDD = "vigierh_ref_nature_contrat"
