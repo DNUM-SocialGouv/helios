@@ -17,13 +17,13 @@ export const GraphiqueEquipementMateriauxLourds = ({ entiteJuridiqueEquipementLo
         <ContenuÉquipementsMatérielsLourds
           dateDeMiseÀJour={entiteJuridiqueEquipementLourds.dateMiseÀJourSource}
           estEntitéJuridique={true}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
+          source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
         />
       }
       dateDeMiseÀJour={entiteJuridiqueEquipementLourds.dateMiseÀJourSource}
       identifiant="equipement-materiaux-lourds"
       nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
-      source={Sources(wording.FINESS, wording.ARHGOS)}
+      source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
     >
       <EquipementsTagMultiniveaux equipementLourds={entiteJuridiqueEquipementLourds.autorisations} />
     </IndicateurGraphique>

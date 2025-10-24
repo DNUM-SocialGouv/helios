@@ -101,13 +101,13 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
+                source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
             identifiant="équipements-matériels-lourds-sanitaire"
             nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
+            source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
           </IndicateurGraphique>
