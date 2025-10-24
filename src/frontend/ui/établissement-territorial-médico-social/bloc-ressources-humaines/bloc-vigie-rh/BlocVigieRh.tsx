@@ -20,6 +20,7 @@ import { ProfessionFiliereData } from "../../../../../backend/m√©tier/entities/√
 import { MOIS } from "../../../../utils/constantes";
 import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
+import GraphiqueNatureContrats from "./nature-contrats/NatureContrats";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -318,6 +319,20 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             source={wording.VIGIE_RH}
           >
             <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<></>}
+            identifiant="vr-nature-contrats"
+            nomDeLIndicateur={wording.NATURE_CONTRATS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueNatureContrats
+              blocVigieRhViewModel={blocVigieRHViewModel}
+            />
           </IndicateurGraphique>
         ) : (
           <></>
