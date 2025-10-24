@@ -1,40 +1,41 @@
-import { useDependencies } from "../../../../commun/contexts/useDependencies";
-import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
-import { FrequencyFilter } from "../FrequencyFilter";
-
-import { ChangeEvent, useCallback, useState } from "react";
+import { Chart, ChartConfiguration, ChartData } from "chart.js";
+import { ChangeEvent, useCallback, useState, useEffect, useRef } from "react";
 
 import {
   NatureContratsAnnuel,
   NatureContratsTrimestriel,
 } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-
+import { useDependencies } from "../../../../commun/contexts/useDependencies";
+import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
+import { FrequencyFilter } from "../FrequencyFilter";
+import styles from "./NatureContrats.module.css";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueNatureContrats = ({blocVigieRhViewModel} : GraphiqueNatureContratsProps) =>{
-  const {wording} = useDependencies();
-  const [selectedFrequency,setSelectedFrequency] = useState(wording.ANNUEL);
+const GraphiqueNatureContrats = ({ blocVigieRhViewModel }: GraphiqueNatureContratsProps) => {
+  const { wording } = useDependencies();
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
   const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
   }, []);
   return (
     <div>
-      <FrequencyFilter ListeFrquences={[wording.ANNUEL,wording.TRIMESTRIEL]}
-                       handleFrequency={handleFrequency}
-                       identifiant="frequency-filter-nature-contrats"
-                       selectedFrequency={selectedFrequency}
+      <FrequencyFilter
+        ListeFrquences={[wording.ANNUEL, wording.TRIMESTRIEL]}
+        handleFrequency={handleFrequency}
+        identifiant="frequency-filter-nature-contrats"
+        selectedFrequency={selectedFrequency}
       />
-      {selectedFrequency === wording.ANNUEL ?
-        <GraphiqueNatureContratsAnnuel donnees={[]} />
-        :
-        <GraphiqueNatureContratsTrimestriel donnees={[]} />
-      }
+      {selectedFrequency === wording.ANNUEL ? (
+        <GraphiqueNatureContratsAnnuel donnees={blocVigieRhViewModel.natureContratsAnnuel} />
+      ) : (
+        <GraphiqueNatureContratsTrimestriel donnees={blocVigieRhViewModel.natureContratsTrimestriel} />
+      )}
     </div>
   );
-}
+};
 
 type GraphiqueNatureContratsAnnuelProps = Readonly<{
   donnees: NatureContratsAnnuel[];
@@ -44,20 +45,92 @@ type GraphiqueNatureContratsTrimestrielProps = Readonly<{
   donnees: NatureContratsTrimestriel[];
 }>;
 
-const GraphiqueNatureContratsAnnuel = ({donnees}: GraphiqueNatureContratsAnnuelProps) => {
-  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />
-}
+const GraphiqueNatureContratsAnnuel = ({ donnees }: GraphiqueNatureContratsAnnuelProps) => {
+  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />;
+};
 
-const GraphiqueNatureContratsTrimestriel = ({donnees}: GraphiqueNatureContratsTrimestrielProps) => {
-  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />
-}
+const GraphiqueNatureContratsTrimestriel = ({ donnees }: GraphiqueNatureContratsTrimestrielProps) => {
+  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />;
+};
 
 type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
-  donnees: any;
+  donnees: any[];
 }>;
 
-const HistogrammeComparaisonVerticalAvecRef = ({donnees}: HistogrammeComparaisonVerticalAvecRefProps) => {
-  return <div>histogramme</div>;
-}
+const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparaisonVerticalAvecRefProps) => {
+  const rawData = [
+    { annee: "2023", nature: "CDI", effectif: 67, effectif_ref: 89 },
+    { annee: "2023", nature: "CDD", effectif: 22, effectif_ref: 89 },
+    { annee: "2024", nature: "CDI", effectif: 60, effectif_ref: 89 },
+    { annee: "2024", nature: "CDD", effectif: 21, effectif_ref: 89 },
+    { annee: "2025", nature: "CDI", effectif: 60, effectif_ref: 89 },
+    { annee: "2025", nature: "CDD", effectif: 14, effectif_ref: 89 },
+  ];
+
+  const chartData: ChartData = {
+    labels: Array.from(new Set(rawData.map((d) => d.annee))),
+    datasets: [
+      {
+        label: "CDI",
+        data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif),
+        backgroundColor: "rgba(234,170,6,0.6)",
+        maxBarThickness: 60,
+      },
+      {
+        label: "CDD",
+        data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif),
+        backgroundColor: "rgba(241,94,47,0.6)",
+        maxBarThickness: 60,
+      }
+    ],
+  };
+  const chatConfig: ChartConfiguration = {
+    type: "bar",
+    data: chartData,
+    options: {
+      maintainAspectRatio: true,
+      animation: false,
+      responsive: true,
+      plugins: {
+        htmlLegend: { containerID: "id-legend" },
+        legend: { display: false },
+      },
+    },
+    plugins: [{ id: "htmlLegend" }],
+  };
+
+  const HtmlLegend = () => {
+    return <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="id-legend" />;
+  };
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const chartRef = useRef<Chart | null>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Détruire le chart existant avant d'en créer un nouveau
+    if (chartRef.current) {
+      chartRef.current.destroy();
+      chartRef.current = null;
+    }
+
+    chartRef.current = new Chart(ctx, chatConfig);
+
+    return () => {
+      chartRef.current?.destroy();
+      chartRef.current = null;
+    };
+  }, []);
+
+  return (
+    <div>
+      <canvas ref={canvasRef} />
+      <HtmlLegend />
+    </div>
+  );
+};
 
 export default GraphiqueNatureContrats;
