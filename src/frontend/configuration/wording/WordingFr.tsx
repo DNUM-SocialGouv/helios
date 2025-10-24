@@ -721,6 +721,7 @@ export class WordingFr implements Wording {
   readonly MOIS_ANNEES: string = "Mois / Années";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
+  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD"
 
 }
 

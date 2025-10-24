@@ -625,4 +625,5 @@ export interface Wording {
   readonly MOTIF: string;
   readonly DUREE: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
+  readonly NATURE_CONTRATS: string;
 }
