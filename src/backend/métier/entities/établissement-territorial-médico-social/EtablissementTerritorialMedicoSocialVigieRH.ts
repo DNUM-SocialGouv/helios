@@ -29,6 +29,7 @@ export type DepartEmbauche = Readonly<{
   departRef: number;
   embauche: number;
   embaucheRef: number;
+  departsPrematuresCdi: number | null;
 }>;
 
 export type DepartEmbaucheTrimestriel = Readonly<{
@@ -76,7 +77,7 @@ export type NatureContratsAnnuel = Readonly<{
   effectif: number | null;
   effectifRef: number | null;
   natureLibelle: string;
-  natureCode: number
+  natureCode: number;
 }>;
 
 export type NatureContratsTrimestriel = NatureContratsAnnuel & Readonly<{

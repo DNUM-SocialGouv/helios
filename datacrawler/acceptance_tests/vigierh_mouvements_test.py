@@ -35,6 +35,7 @@ class TestImportVigieRhMouvements:
                 "fins_contrats_ref": [769, 738, 586],
                 "taux_rotation": [1.8983688833124215, 1.7444574095682615, 1.2917594654788418],
                 "taux_rotation_ref": [1.935941893600912, 1.7789841639697426, 1.3173263045233183],
+                "departs_prematures_cdi": [10, 10, 10],
             }
         )
         pd.testing.assert_frame_equal(mouvements_enregistres.sort_index(axis=1), mouvements_attendus.sort_index(axis=1))

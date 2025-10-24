@@ -49,6 +49,7 @@ class TestImportVigierhNatureContrats:
                     "nature_contrat_code": 1,
                     "effectif": 3,
                     "effectif_ref": 1,
+                    "depart_prematures_cdi": 2,
                 },
                 {
                     "numero_finess_etablissement_territorial": "12345678",
@@ -56,6 +57,7 @@ class TestImportVigierhNatureContrats:
                     "nature_contrat_code": 3,
                     "effectif": 5,
                     "effectif_ref": 2,
+                    "depart_prematures_cdi": 1,
                 },
                 {
                     "numero_finess_etablissement_territorial": "999999999",
@@ -63,6 +65,7 @@ class TestImportVigierhNatureContrats:
                     "nature_contrat_code": 4,
                     "effectif": 6,
                     "effectif_ref": 3,
+                    "depart_prematures_cdi": 0,
                 },
             ]
         )
