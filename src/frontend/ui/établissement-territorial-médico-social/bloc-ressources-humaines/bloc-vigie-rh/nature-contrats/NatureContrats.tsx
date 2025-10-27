@@ -1,4 +1,4 @@
-import { Chart, ChartConfiguration, ChartData } from "chart.js";
+import { Chart as ChartJS, Chart, ChartConfiguration, ChartData } from "chart.js";
 import { ChangeEvent, useCallback, useState, useEffect, useRef } from "react";
 
 import {
@@ -9,6 +9,8 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import { FrequencyFilter } from "../FrequencyFilter";
 import styles from "./NatureContrats.module.css";
+import { Context } from "chartjs-plugin-datalabels";
+import { couleurDesTraitsRefHistogramme } from "../../../../commun/Graphique/couleursGraphique";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
@@ -75,15 +77,66 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
         data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif),
         backgroundColor: "rgba(234,170,6,0.6)",
         maxBarThickness: 60,
+        xAxisID: 'x',
+        stack:"stack-0"
+      },
+      {
+        label: "Valeur référence CDI",
+        data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif_ref),
+        backgroundColor: "rgba(234,170,6,0)",
+        maxBarThickness: 60,
+        datalabels: { display: false },
+        xAxisID: 'x',
+        stack:"stack-0"
       },
       {
         label: "CDD",
         data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif),
         backgroundColor: "rgba(241,94,47,0.6)",
         maxBarThickness: 60,
+        xAxisID: 'x',
+        stack:"stack-1"
+
+      },
+      {
+        label: "Valeur référence CDD",
+        data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif_ref),
+        backgroundColor: "rgba(241,47,47,0)",
+        maxBarThickness: 60,
+        xAxisID: 'x',
+        stack:"stack-1",
+        datalabels: { display: false },
       }
     ],
   };
+  const rotationRefPlugin = {
+    id: "rotationRef",
+    afterDraw(chart: ChartJS, _args: any, options: any) {
+      const { ctx, scales } = chart;
+      console.log("Options are :  "+JSON.stringify( options ));
+      const { valeursRef } = options;
+      const values = valeursRef;
+      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
+        const value = values[index];
+        if (value === undefined) return;
+
+        const yScale = scales['y'];
+        const yPos = yScale.getPixelForValue(value);
+
+        const xLeft = bar.x - bar.width / 2;
+        const xRight = bar.x + bar.width / 2;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(xLeft, yPos);
+        ctx.lineTo(xRight, yPos);
+        ctx.strokeStyle = couleurDesTraitsRefHistogramme;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      });
+    },
+  }
   const chatConfig: ChartConfiguration = {
     type: "bar",
     data: chartData,
@@ -91,13 +144,38 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       maintainAspectRatio: true,
       animation: false,
       responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        }
+      },
       plugins: {
-        htmlLegend: { containerID: "id-legend" },
+        rotationRef:{
+          options: donnees
+        },
         legend: { display: false },
+        datalabels: {
+          align: "end",
+          anchor: (context: any) => {
+            const value = context.dataset.data[context.dataIndex] as number;
+            return value > 0 ? "start" : "end";
+          },
+          font: {
+            family: "Marianne",
+            size: 12,
+            weight: 700,
+          },
+          formatter: (value: number, _context: Context): string => value??"",
+        }
       },
     },
-    plugins: [{ id: "htmlLegend" }],
+    plugins: [{ id: "htmlLegend" },rotationRefPlugin],
   };
+
+
 
   const HtmlLegend = () => {
     return <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="id-legend" />;

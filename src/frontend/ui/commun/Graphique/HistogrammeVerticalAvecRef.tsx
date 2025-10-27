@@ -155,10 +155,8 @@ const HistogrammeVerticalAvecRef = ({
     id: "rotationRef",
     afterDraw(chart: ChartJS, _args: any, options: any) {
       const { ctx, scales } = chart;
-      const { valeursRef } = options;
-      const values = valeursRef;
       chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
-        const value = values[index];
+        const value = 89;
         if (value === undefined) return;
 
         const yScale = scales['y'];
