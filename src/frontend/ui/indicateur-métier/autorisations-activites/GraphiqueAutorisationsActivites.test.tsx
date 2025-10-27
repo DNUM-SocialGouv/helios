@@ -46,9 +46,9 @@ describe("GraphiqueAutorisationActivite", () => {
     renderFakeComponent(<GraphiqueAutorisationsActivites entiteJuridiqueAutorisations={viewModel.autorisationsActivités} entiteJuridiqueAutorisationsAmm={viewModel.autorisationsAmmActivites} />);
 
     // THEN
-    const arhgos = graphiqueTest.abréviationFichierSource("ARHGOS");
+    const arhgos = graphiqueTest.abréviationFichierSource(wording.SI_AUTORISATIONS_TITLE);
     expect(arhgos).toBeInTheDocument();
-    expect(arhgos).toHaveAttribute("title", wording.ARHGOS_TITLE);
+    expect(arhgos).toHaveAttribute("title", wording.SI_AUTORISATIONS_TITLE);
   });
 
   it("affiche abréviation du fichier source FINESS", () => {
