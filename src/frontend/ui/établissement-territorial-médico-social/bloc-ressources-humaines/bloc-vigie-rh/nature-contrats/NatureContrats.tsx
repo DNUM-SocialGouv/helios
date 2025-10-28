@@ -81,7 +81,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
     { annee: "2025", nature: "CDD", effectif: 25, effectif_ref: 70 },
   ];
 
-  const data = {};
+  const referencesByLabel = rawData.reduce<Record<string, number[]>>((acc, valeur) => {
+    if (!acc[valeur.nature]) {
+      acc[valeur.nature] = [];
+    }
+    acc[valeur.nature].push(valeur.effectif_ref);
+    return acc;
+  }, {});
 
   const chartData: ChartData = {
     labels: Array.from(new Set(rawData.map((d) => d.annee))),
@@ -93,7 +99,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
         backgroundColor: "rgba(234,170,6,0.6)",
         maxBarThickness: 60,
         type: "bar",
-        stack: "stack-0",
       },
       {
         label: "CDD",
@@ -102,36 +107,66 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
         backgroundColor: "rgba(241,94,47,0.6)",
         maxBarThickness: 60,
         type: "bar",
-        stack: "stack-1",
       }
     ],
   };
+  const valeurMax = rawData.reduce((max, valeur) => {
+    return Math.max(max, valeur.effectif ?? 0, valeur.effectif_ref ?? 0);
+  }, 0);
+
   const rotationRefPlugin = {
     id: "rotationRef",
-    afterDraw(chart: ChartJS, _args: any, options: any) {
+    afterDraw(chart: ChartJS) {
       const { ctx, scales } = chart;
-      for (let i = 0; i < chart.data.datasets.length; i++) {
-        if (chart.isDatasetVisible(i) && (i + 1) % 2 === 0) {
-          chart.getDatasetMeta(i).data.forEach((bar: any, index: number) => {
-            const valeurRef = chart.data.datasets[i].data[index] as number;
-            if (valeurRef === undefined) return;
-            const yScale = scales["y"];
-            const yPos = yScale.getPixelForValue(valeurRef);
-            const xLeft = bar.x - bar.width / 2;
-            const xRight = bar.x + bar.width / 2;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(xLeft, yPos);
-            ctx.lineTo(xRight, yPos);
-            ctx.strokeStyle = couleurDesTraitsRefHistogramme;
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.restore();
-          });
+      const pluginOptions = chart.config.options?.plugins?.rotationRef as { referencesByLabel?: Record<string, (number | null)[]> } | undefined;
+      const refs = pluginOptions?.referencesByLabel ?? {};
+
+      chart.data.datasets.forEach((dataset, datasetIndex) => {
+        if (!chart.isDatasetVisible(datasetIndex)) {
+          return;
         }
-      }
+
+        const label = dataset.label as string | undefined;
+        if (!label) {
+          return;
+        }
+
+        const refValues = refs[label];
+        if (!refValues) {
+          return;
+        }
+
+        chart.getDatasetMeta(datasetIndex).data.forEach((bar: any, index: number) => {
+          const valeurRef = refValues[index];
+          if (valeurRef === undefined || valeurRef === null) {
+            return;
+          }
+
+          const yScale = scales["y"];
+          if (!yScale) {
+            return;
+          }
+
+          const yPos = yScale.getPixelForValue(valeurRef);
+          const xLeft = bar.x - bar.width / 2;
+          const xRight = bar.x + bar.width / 2;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(xLeft, yPos);
+          ctx.lineTo(xRight, yPos);
+          ctx.strokeStyle = couleurDesTraitsRefHistogramme;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.restore();
+        });
+      });
     },
   };
+
+
+
+
   const chatConfig: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
     animation: false,
@@ -153,11 +188,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       },
       legend: { display: false },
       tooltip: {
-        filter: (tooltipItem) => (tooltipItem.datasetIndex + 1) % 2 === 1,
         callbacks: {
           label: function (context: any) {
             const valeur = context.raw;
-            const valeurRef = context.chart.data.datasets[context.datasetIndex + 1].data[context.dataIndex] as number;
+            const datasetLabel = context.dataset.label as string;
+            const valeurRef = referencesByLabel[datasetLabel]?.[context.dataIndex];
             const valeurText = Number.isFinite(valeur as number) ? Math.abs(valeur as number).toLocaleString("fr") : "non renseigné";
             const valeurRefText = Number.isFinite(valeurRef as number) ? Math.abs(valeurRef as number).toLocaleString("fr") : "non renseigné";
 
@@ -165,7 +200,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
           },
         },
       }, // @ts-ignore
-      rotationRef: {} as any,
+      rotationRef: { referencesByLabel } as any,
     },
     scales: {
       x: {
@@ -176,7 +211,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
           drawOnChartArea: false,
           drawTicks: false,
         },
-        stacked: true,
+        stacked: false,
         ticks: {
           color: "#000",
           font: function (context: any) {
@@ -210,6 +245,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       },
       y: {
         display: false,
+        suggestedMax: valeurMax,
       },
     },
   };
