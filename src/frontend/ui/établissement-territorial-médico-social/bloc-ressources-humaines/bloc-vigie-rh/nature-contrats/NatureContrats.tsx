@@ -227,13 +227,58 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
     },
   };
 
+  const dynamicScalePlugin = {
+    id: "dynamicScale",
+    beforeUpdate(chart: ChartJS) {
+      const rotationOptions = chart.config.options?.plugins?.rotationRef as { referencesByLabel?: Record<string, (number | null)[]> } | undefined;
+      const refs = rotationOptions?.referencesByLabel ?? {};
+
+      let maxValue = 0;
+
+      chart.data.datasets.forEach((dataset, datasetIndex) => {
+        if (!chart.isDatasetVisible(datasetIndex)) {
+          return;
+        }
+
+        dataset.data.forEach((value) => {
+          const numericValue = typeof value === "number" ? value : value === null ? null : Number(value);
+          if (numericValue !== null && Number.isFinite(numericValue)) {
+            maxValue = Math.max(maxValue, numericValue);
+          }
+        });
+
+        const datasetLabel = dataset.label as string | undefined;
+        if (!datasetLabel) {
+          return;
+        }
+
+        refs[datasetLabel]?.forEach((refValue) => {
+          if (refValue !== null && Number.isFinite(refValue)) {
+            maxValue = Math.max(maxValue, refValue as number);
+          }
+        });
+      });
+
+      if (!chart.options.scales?.y) {
+        return;
+      }
+
+      if (maxValue > 0) {
+        const padding = maxValue * 0.05;
+        chart.options.scales.y.max = maxValue + padding;
+      } else {
+        chart.options.scales.y.max = undefined;
+      }
+    },
+  };
+
   const chatConfig: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
     animation: false,
     responsive: true,
     interaction: {
       intersect: false,
-      mode: "point",
+      mode: "nearest",
     },
     plugins: {
       htmlLegend: { containerID: "legende" },
@@ -330,7 +375,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
   return (
     <>
       <div>
-        <Bar data={chartData} options={chatConfig} plugins={[rotationRefPlugin]} />
+        <Bar data={chartData} options={chatConfig} plugins={[dynamicScalePlugin, rotationRefPlugin]} />
         <HtmlLegend />
       </div>
 
