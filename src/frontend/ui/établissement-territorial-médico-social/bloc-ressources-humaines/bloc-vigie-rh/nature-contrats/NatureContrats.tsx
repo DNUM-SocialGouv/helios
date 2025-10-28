@@ -12,7 +12,6 @@ import styles from "./NatureContrats.module.css";
 import { couleurDesTraitsRefHistogramme } from "../../../../commun/Graphique/couleursGraphique";
 import { Bar } from "react-chartjs-2";
 import { Context } from "chartjs-plugin-datalabels";
-import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 
 type GraphiqueNatureContratsProps = Readonly<{
@@ -317,7 +316,15 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
   };
 
   const HtmlLegend = () => {
-    return <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="legende" />;
+    return (
+      <div className={styles["graphique-legende-container"]}>
+        <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="legende" />
+        <div aria-hidden="true" className={styles["reference-legende"]}>
+          <span className={styles["reference-line"]} style={{ backgroundColor: couleurDesTraitsRefHistogramme }} />
+          <span>{wording.MOYENNE_REF}</span>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -325,10 +332,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
       <div>
         <Bar data={chartData} options={chatConfig} plugins={[rotationRefPlugin]} />
         <HtmlLegend />
-        <ColorLabel
-          classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
-          items={[{ color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }]}
-        />
       </div>
 
       <Transcription

@@ -1,6 +1,8 @@
-.graphique-legende {
+.graphique-legende-container {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .graphique-legende {
@@ -31,4 +33,17 @@
 
 .graphique-legende li label::before {
     top: inherit !important;
+}
+
+.reference-legende {
+    align-items: center;
+    display: inline-flex;
+    font-size: .8rem;
+    gap: .5rem;
+}
+
+.reference-line {
+    border-radius: 2px;
+    height: 2px;
+    width: 1.5rem;
 }
