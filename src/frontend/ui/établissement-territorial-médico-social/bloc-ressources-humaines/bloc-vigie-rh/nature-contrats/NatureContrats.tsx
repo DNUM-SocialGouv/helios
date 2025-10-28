@@ -45,74 +45,137 @@ type GraphiqueNatureContratsAnnuelProps = Readonly<{
 }>;
 
 type GraphiqueNatureContratsTrimestrielProps = Readonly<{
-  donnees: NatureContratsTrimestriel[];
+  donnees: (NatureContratsTrimestriel | NatureContratsAnnuel)[];
 }>;
 
 const GraphiqueNatureContratsAnnuel = ({ donnees }: GraphiqueNatureContratsAnnuelProps) => {
-  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />;
+  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} type="annuel" />;
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ donnees }: GraphiqueNatureContratsTrimestrielProps) => {
-  return <></>;
+  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} type="trimestriel" />;
 };
 
-type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
-  donnees: DonneesHistogrammeVerticalGroupeAvecRef[];
-}>;
+type HistogrammeComparaisonVerticalAvecRefProps =
+  | Readonly<{
+      donnees: NatureContratsAnnuel[];
+      type: "annuel";
+    }>
+  | Readonly<{
+      donnees: (NatureContratsTrimestriel | NatureContratsAnnuel)[];
+      type: "trimestriel";
+    }>;
 
-type DonneesHistogrammeVerticalGroupeAvecRef = Readonly<{
-  groupLabel: string;
-  groupData: HistogrammeVerticalGroupeAvecRefData[];
-  groupDataRef: HistogrammeVerticalGroupeAvecRefData[];
-}>;
+const couleursParNature = (natureLibelle: string, index: number) => {
+  const normalized = natureLibelle.toLowerCase();
+  if (normalized.includes("cdi")) {
+    return { arrierePlan: "rgba(234,170,6,0.6)", texte: "#000" };
+  }
+  if (normalized.includes("cdd")) {
+    return { arrierePlan: "rgba(241,94,47,0.6)", texte: "#000" };
+  }
 
-type HistogrammeVerticalGroupeAvecRefData = Readonly<{
-  label: string;
-  value: number;
-}>;
-
-const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparaisonVerticalAvecRefProps) => {
-  const rawData = [
-    { annee: "2023", nature: "CDI", effectif: 20, effectif_ref: 20 },
-    { annee: "2023", nature: "CDD", effectif: 23, effectif_ref: 30 },
-    { annee: "2024", nature: "CDI", effectif: 4, effectif_ref: 40 },
-    { annee: "2024", nature: "CDD", effectif: 24, effectif_ref: 50 },
-    { annee: "2025", nature: "CDI", effectif: 5, effectif_ref: 60 },
-    { annee: "2025", nature: "CDD", effectif: 25, effectif_ref: 70 },
+  const palette = [
+    "rgba(62,132,206,0.6)",
+    "rgba(130,69,173,0.6)",
+    "rgba(0,155,119,0.6)",
+    "rgba(0,99,164,0.6)",
   ];
 
-  const referencesByLabel = rawData.reduce<Record<string, number[]>>((acc, valeur) => {
-    if (!acc[valeur.nature]) {
-      acc[valeur.nature] = [];
+  return {
+    arrierePlan: palette[index % palette.length],
+    texte: "#000",
+  };
+};
+
+const estTrimestriel = (
+  valeur: NatureContratsAnnuel | NatureContratsTrimestriel,
+): valeur is NatureContratsTrimestriel => {
+  return "trimestre" in valeur && valeur.trimestre !== undefined;
+};
+
+const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeComparaisonVerticalAvecRefProps) => {
+  const isTrimestriel = type === "trimestriel";
+
+  const categorieKey = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel) =>
+    isTrimestriel && estTrimestriel(valeur) ? `${valeur.annee}-T${valeur.trimestre}` : valeur.annee.toString();
+
+  const categorieLabel = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel) =>
+    isTrimestriel && estTrimestriel(valeur) ? `T${valeur.trimestre} ${valeur.annee}` : valeur.annee.toString();
+
+  const sortedDonnees = [...donnees].sort((a, b) => {
+    if (isTrimestriel && estTrimestriel(a) && estTrimestriel(b)) {
+      const aKey = a.annee * 10 + a.trimestre;
+      const bKey = b.annee * 10 + b.trimestre;
+      return aKey - bKey;
     }
-    acc[valeur.nature].push(valeur.effectif_ref);
+    return a.annee - b.annee;
+  });
+
+  const categories = sortedDonnees.reduce<{ key: string; label: string }[]>((acc, valeur) => {
+    const key = categorieKey(valeur);
+    if (!acc.find((categorie) => categorie.key === key)) {
+      acc.push({ key, label: categorieLabel(valeur) });
+    }
+    return acc;
+  }, []);
+
+  const natures = sortedDonnees.reduce<string[]>((acc, valeur) => {
+    if (acc.includes(valeur.natureLibelle)) {
+      return acc;
+    }
+    acc.push(valeur.natureLibelle);
+    return acc;
+  }, []);
+
+  const groupedByCategorie = sortedDonnees.reduce<Record<string, Record<string, NatureContratsAnnuel | NatureContratsTrimestriel>>>((acc, valeur) => {
+    const key = categorieKey(valeur);
+    if (!acc[key]) {
+      acc[key] = {};
+    }
+    acc[key][valeur.natureLibelle] = valeur;
     return acc;
   }, {});
 
-  const chartData: ChartData = {
-    labels: Array.from(new Set(rawData.map((d) => d.annee))),
-    datasets: [
-      {
-        label: "CDI",
-        data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif),
-        datalabels: { labels: { title: { color: rawData.map(() => "#000") } } },
-        backgroundColor: "rgba(234,170,6,0.6)",
-        maxBarThickness: 60,
-        type: "bar",
-      },
-      {
-        label: "CDD",
-        data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif),
-        datalabels: { labels: { title: { color: rawData.map(() => "#000") } } },
-        backgroundColor: "rgba(241,94,47,0.6)",
-        maxBarThickness: 60,
-        type: "bar",
+  const referencesByLabel: Record<string, (number | null)[]> = {};
+  let valeurMax = 0;
+
+  const datasets = natures.map((natureLibelle, natureIndex) => {
+    const couleurs = couleursParNature(natureLibelle, natureIndex);
+    const data = categories.map(({ key }) => {
+      const valeur = groupedByCategorie[key]?.[natureLibelle];
+      const effectif = valeur?.effectif ?? null;
+      if (effectif !== null) {
+        valeurMax = Math.max(valeurMax, effectif);
       }
-    ],
+      return effectif;
+    });
+
+    referencesByLabel[natureLibelle] = categories.map(({ key }) => {
+      const valeur = groupedByCategorie[key]?.[natureLibelle];
+      const effectifRef = valeur?.effectifRef ?? null;
+      if (effectifRef !== null) {
+        valeurMax = Math.max(valeurMax, effectifRef);
+      }
+      return effectifRef;
+    });
+
+    return {
+      label: natureLibelle,
+      data,
+      datalabels: { color: couleurs.texte },
+      backgroundColor: couleurs.arrierePlan,
+      maxBarThickness: 60,
+      type: "bar" as const,
+    };
+  });
+
+  const labels = categories.map(({ label }) => label);
+
+  const chartData: ChartData<"bar"> = {
+    labels,
+    datasets,
   };
-  const valeurMax = rawData.reduce((max, valeur) => {
-    return Math.max(max, valeur.effectif ?? 0, valeur.effectif_ref ?? 0);
-  }, 0);
 
   const rotationRefPlugin = {
     id: "rotationRef",
@@ -173,7 +236,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
     responsive: true,
     interaction: {
       intersect: false,
-      mode: "nearest",
+      mode: "point",
     },
     plugins: {
       htmlLegend: { containerID: "legende" },
@@ -192,6 +255,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       },
       legend: { display: false },
       tooltip: {
+        filter: (tooltipItem) => tooltipItem.raw !== null && tooltipItem.raw !== undefined,
         callbacks: {
           label: function (context: any) {
             const valeur = context.raw;
@@ -219,7 +283,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
         ticks: {
           color: "#000",
           font: function (context: any) {
-            if (context.index === 2) {
+            if (context.index === labels.length - 1) {
               return { weight: "bold" };
             }
             return {};
@@ -238,7 +302,8 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
           color: "#000",
           callback: (_tickValue, index) => "",
           font: function (context: any) {
-            if (context.tick.label === new Date().getFullYear().toString()) {
+            const label = context.tick.label as string;
+            if (typeof label === "string" && label.includes(new Date().getFullYear().toString())) {
               return { weight: "bold" };
             }
             return {};
@@ -249,7 +314,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       },
       y: {
         display: false,
-        suggestedMax: valeurMax,
+        suggestedMax: valeurMax > 0 ? valeurMax : undefined,
       },
     },
   };
