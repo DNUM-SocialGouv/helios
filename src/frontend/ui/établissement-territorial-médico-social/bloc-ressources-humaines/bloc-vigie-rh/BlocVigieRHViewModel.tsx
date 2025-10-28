@@ -9,7 +9,13 @@ import {
   TauxRotationTrimestriel,
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
-import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
+import {
+  couleurDuFondHistogrammeJaune,
+  couleurExtensionHistogrammeJaune,
+  CouleurHistogramme,
+  couleurDuFondHistogrammeOrangeClair,
+  couleurExtensionHistogrammeOrangeClair,
+} from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -305,5 +311,18 @@ export class BlocVigieRHViewModel {
 
   public get natureContratsTrimestriel():NatureContratsAnnuel[]{
     return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
+  }
+
+  public get paletteNatureContrats(): CouleurHistogramme[] {
+    return [
+      {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      },
+      {
+        premierPlan: couleurDuFondHistogrammeOrangeClair,
+        secondPlan: couleurExtensionHistogrammeOrangeClair,
+      },
+    ];
   }
 }

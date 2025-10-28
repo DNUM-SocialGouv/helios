@@ -1,48 +1,47 @@
-.graphique-legende-container {
+.legendContainer {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.graphique-legende {
+.legend {
     display: flex;
     flex-wrap: wrap;
 }
 
-
-.graphique-legende li {
+.legend li {
     align-items: center;
     cursor: pointer;
     display: flex;
     padding: 0 .5rem 0 0;
 }
 
-.graphique-legende li span {
+.legend li span {
     border-radius: 50%;
     height: .8rem;
     margin: 0 .25rem 0 0;
     width: .8rem;
 }
 
-.graphique-legende li label {
+.legend li label {
     font-size: .8rem;
     margin: 0;
     padding: .75rem 0;
 }
 
-.graphique-legende li label::before {
+.legend li label::before {
     top: inherit !important;
 }
 
-.reference-legende {
+.referenceLegend {
     align-items: center;
     display: inline-flex;
-    font-size: .8rem;
+    font-size: 1rem;
     gap: .5rem;
 }
 
-.reference-line {
+.referenceLine {
     border-radius: 2px;
     height: 2px;
     width: 1.5rem;
