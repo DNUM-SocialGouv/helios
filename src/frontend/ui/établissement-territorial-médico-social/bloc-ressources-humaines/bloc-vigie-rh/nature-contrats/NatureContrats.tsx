@@ -12,6 +12,8 @@ import styles from "./NatureContrats.module.css";
 import { couleurDesTraitsRefHistogramme } from "../../../../commun/Graphique/couleursGraphique";
 import { Bar } from "react-chartjs-2";
 import { Context } from "chartjs-plugin-datalabels";
+import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
+import { Transcription } from "../../../../commun/Transcription/Transcription";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
@@ -75,12 +77,7 @@ const couleursParNature = (natureLibelle: string, index: number) => {
     return { arrierePlan: "rgba(241,94,47,0.6)", texte: "#000" };
   }
 
-  const palette = [
-    "rgba(62,132,206,0.6)",
-    "rgba(130,69,173,0.6)",
-    "rgba(0,155,119,0.6)",
-    "rgba(0,99,164,0.6)",
-  ];
+  const palette = ["rgba(62,132,206,0.6)", "rgba(130,69,173,0.6)", "rgba(0,155,119,0.6)", "rgba(0,99,164,0.6)"];
 
   return {
     arrierePlan: palette[index % palette.length],
@@ -88,13 +85,12 @@ const couleursParNature = (natureLibelle: string, index: number) => {
   };
 };
 
-const estTrimestriel = (
-  valeur: NatureContratsAnnuel | NatureContratsTrimestriel,
-): valeur is NatureContratsTrimestriel => {
+const estTrimestriel = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel): valeur is NatureContratsTrimestriel => {
   return "trimestre" in valeur && valeur.trimestre !== undefined;
 };
 
 const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeComparaisonVerticalAvecRefProps) => {
+  const { wording } = useDependencies();
   const isTrimestriel = type === "trimestriel";
 
   const categorieKey = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel) =>
@@ -138,25 +134,20 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
   }, {});
 
   const referencesByLabel: Record<string, (number | null)[]> = {};
-  let valeurMax = 0;
+  const valeursParNature: Record<string, (number | null)[]> = {};
 
   const datasets = natures.map((natureLibelle, natureIndex) => {
     const couleurs = couleursParNature(natureLibelle, natureIndex);
     const data = categories.map(({ key }) => {
       const valeur = groupedByCategorie[key]?.[natureLibelle];
       const effectif = valeur?.effectif ?? null;
-      if (effectif !== null) {
-        valeurMax = Math.max(valeurMax, effectif);
-      }
       return effectif;
     });
+    valeursParNature[natureLibelle] = data;
 
     referencesByLabel[natureLibelle] = categories.map(({ key }) => {
       const valeur = groupedByCategorie[key]?.[natureLibelle];
       const effectifRef = valeur?.effectifRef ?? null;
-      if (effectifRef !== null) {
-        valeurMax = Math.max(valeurMax, effectifRef);
-      }
       return effectifRef;
     });
 
@@ -171,6 +162,16 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
   });
 
   const labels = categories.map(({ label }) => label);
+
+  const formatValeur = (valeur: number | null) => (Number.isFinite(valeur as number) ? (valeur as number).toLocaleString("fr") : null);
+
+  const identifiants = natures.flatMap((natureLibelle) => [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`]);
+
+  const valeursTranscription = natures.flatMap((natureLibelle) => {
+    const valeurs = (valeursParNature[natureLibelle] ?? Array(labels.length).fill(null)).map(formatValeur);
+    const refs = (referencesByLabel[natureLibelle] ?? Array(labels.length).fill(null)).map(formatValeur);
+    return [valeurs, refs];
+  });
 
   const chartData: ChartData<"bar"> = {
     labels,
@@ -226,9 +227,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
       });
     },
   };
-
-
-
 
   const chatConfig: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
@@ -314,7 +312,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
       },
       y: {
         display: false,
-        suggestedMax: valeurMax > 0 ? valeurMax : undefined,
       },
     },
   };
@@ -324,10 +321,24 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees, type }: HistogrammeCom
   };
 
   return (
-    <div>
-      <Bar data={chartData} options={chatConfig} plugins={[rotationRefPlugin]} />
-      <HtmlLegend />
-    </div>
+    <>
+      <div>
+        <Bar data={chartData} options={chatConfig} plugins={[rotationRefPlugin]} />
+        <HtmlLegend />
+        <ColorLabel
+          classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+          items={[{ color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }]}
+        />
+      </div>
+
+      <Transcription
+        entêteLibellé={isTrimestriel ? wording.MOIS_ANNEES : wording.ANNÉE}
+        identifiantUnique={`transcription-nature-contrats-${type}`}
+        identifiants={identifiants}
+        libellés={labels}
+        valeurs={valeursTranscription}
+      />
+    </>
   );
 };
 
