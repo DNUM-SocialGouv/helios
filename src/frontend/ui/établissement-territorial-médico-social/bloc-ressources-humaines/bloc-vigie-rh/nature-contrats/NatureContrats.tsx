@@ -171,6 +171,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
     maintainAspectRatio: true,
     animation: false,
     responsive: true,
+    interaction: {
+      intersect: false,
+      mode: "nearest",
+    },
     plugins: {
       htmlLegend: { containerID: "legende" },
       datalabels: {
