@@ -1,5 +1,5 @@
-import { Chart as ChartJS, Chart, ChartConfiguration, ChartData } from "chart.js";
-import { ChangeEvent, useCallback, useState, useEffect, useRef } from "react";
+import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
+import { ChangeEvent, useCallback, useState } from "react";
 
 import {
   NatureContratsAnnuel,
@@ -9,8 +9,9 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import { FrequencyFilter } from "../FrequencyFilter";
 import styles from "./NatureContrats.module.css";
-import { Context } from "chartjs-plugin-datalabels";
 import { couleurDesTraitsRefHistogramme } from "../../../../commun/Graphique/couleursGraphique";
+import { Bar } from "react-chartjs-2";
+import { Context } from "chartjs-plugin-datalabels";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
@@ -52,22 +53,35 @@ const GraphiqueNatureContratsAnnuel = ({ donnees }: GraphiqueNatureContratsAnnue
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ donnees }: GraphiqueNatureContratsTrimestrielProps) => {
-  return <HistogrammeComparaisonVerticalAvecRef donnees={donnees} />;
+  return <></>;
 };
 
 type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
-  donnees: any[];
+  donnees: DonneesHistogrammeVerticalGroupeAvecRef[];
+}>;
+
+type DonneesHistogrammeVerticalGroupeAvecRef = Readonly<{
+  groupLabel: string;
+  groupData: HistogrammeVerticalGroupeAvecRefData[];
+  groupDataRef: HistogrammeVerticalGroupeAvecRefData[];
+}>;
+
+type HistogrammeVerticalGroupeAvecRefData = Readonly<{
+  label: string;
+  value: number;
 }>;
 
 const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparaisonVerticalAvecRefProps) => {
   const rawData = [
-    { annee: "2023", nature: "CDI", effectif: 67, effectif_ref: 89 },
-    { annee: "2023", nature: "CDD", effectif: 22, effectif_ref: 89 },
-    { annee: "2024", nature: "CDI", effectif: 60, effectif_ref: 89 },
-    { annee: "2024", nature: "CDD", effectif: 21, effectif_ref: 89 },
-    { annee: "2025", nature: "CDI", effectif: 60, effectif_ref: 89 },
-    { annee: "2025", nature: "CDD", effectif: 14, effectif_ref: 89 },
+    { annee: "2023", nature: "CDI", effectif: 20, effectif_ref: 20 },
+    { annee: "2023", nature: "CDD", effectif: 23, effectif_ref: 30 },
+    { annee: "2024", nature: "CDI", effectif: 4, effectif_ref: 40 },
+    { annee: "2024", nature: "CDD", effectif: 24, effectif_ref: 50 },
+    { annee: "2025", nature: "CDI", effectif: 5, effectif_ref: 60 },
+    { annee: "2025", nature: "CDD", effectif: 25, effectif_ref: 70 },
   ];
+
+  const data = {};
 
   const chartData: ChartData = {
     labels: Array.from(new Set(rawData.map((d) => d.annee))),
@@ -75,37 +89,20 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
       {
         label: "CDI",
         data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif),
+        datalabels: { labels: { title: { color: rawData.map(() => "#000") } } },
         backgroundColor: "rgba(234,170,6,0.6)",
         maxBarThickness: 60,
-        xAxisID: 'x',
-        stack:"stack-0"
-      },
-      {
-        label: "Valeur référence CDI",
-        data: rawData.filter((d) => d.nature === "CDI").map((d) => d.effectif_ref),
-        backgroundColor: "rgba(234,170,6,0)",
-        maxBarThickness: 60,
-        datalabels: { display: false },
-        xAxisID: 'x',
-        stack:"stack-0"
+        type: "bar",
+        stack: "stack-0",
       },
       {
         label: "CDD",
         data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif),
+        datalabels: { labels: { title: { color: rawData.map(() => "#000") } } },
         backgroundColor: "rgba(241,94,47,0.6)",
         maxBarThickness: 60,
-        xAxisID: 'x',
-        stack:"stack-1"
-
-      },
-      {
-        label: "Valeur référence CDD",
-        data: rawData.filter((d) => d.nature === "CDD").map((d) => d.effectif_ref),
-        backgroundColor: "rgba(241,47,47,0)",
-        maxBarThickness: 60,
-        xAxisID: 'x',
-        stack:"stack-1",
-        datalabels: { display: false },
+        type: "bar",
+        stack: "stack-1",
       }
     ],
   };
@@ -113,99 +110,117 @@ const HistogrammeComparaisonVerticalAvecRef = ({ donnees }: HistogrammeComparais
     id: "rotationRef",
     afterDraw(chart: ChartJS, _args: any, options: any) {
       const { ctx, scales } = chart;
-      console.log("Options are :  "+JSON.stringify( options ));
-      const { valeursRef } = options;
-      const values = valeursRef;
-      chart.getDatasetMeta(0).data.forEach((bar: any, index: number) => {
-        const value = values[index];
-        if (value === undefined) return;
-
-        const yScale = scales['y'];
-        const yPos = yScale.getPixelForValue(value);
-
-        const xLeft = bar.x - bar.width / 2;
-        const xRight = bar.x + bar.width / 2;
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(xLeft, yPos);
-        ctx.lineTo(xRight, yPos);
-        ctx.strokeStyle = couleurDesTraitsRefHistogramme;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.restore();
-      });
-    },
-  }
-  const chatConfig: ChartConfiguration = {
-    type: "bar",
-    data: chartData,
-    options: {
-      maintainAspectRatio: true,
-      animation: false,
-      responsive: true,
-      scales: {
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true,
+      for (let i = 0; i < chart.data.datasets.length; i++) {
+        if (chart.isDatasetVisible(i) && (i + 1) % 2 === 0) {
+          chart.getDatasetMeta(i).data.forEach((bar: any, index: number) => {
+            const valeurRef = chart.data.datasets[i].data[index] as number;
+            if (valeurRef === undefined) return;
+            const yScale = scales["y"];
+            const yPos = yScale.getPixelForValue(valeurRef);
+            const xLeft = bar.x - bar.width / 2;
+            const xRight = bar.x + bar.width / 2;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(xLeft, yPos);
+            ctx.lineTo(xRight, yPos);
+            ctx.strokeStyle = couleurDesTraitsRefHistogramme;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+          });
         }
-      },
-      plugins: {
-        rotationRef:{
-          options: donnees
-        },
-        legend: { display: false },
-        datalabels: {
-          align: "end",
-          anchor: (context: any) => {
-            const value = context.dataset.data[context.dataIndex] as number;
-            return value > 0 ? "start" : "end";
-          },
-          font: {
-            family: "Marianne",
-            size: 12,
-            weight: 700,
-          },
-          formatter: (value: number, _context: Context): string => value??"",
-        }
-      },
+      }
     },
-    plugins: [{ id: "htmlLegend" },rotationRefPlugin],
   };
+  const chatConfig: ChartOptions<"bar"> = {
+    maintainAspectRatio: true,
+    animation: false,
+    responsive: true,
+    plugins: {
+      htmlLegend: { containerID: "legende" },
+      datalabels: {
+        align: "end",
+        anchor: (context: any) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value > 0 ? "start" : "end";
+        },
+        font: {
+          family: "Marianne",
+          size: 12,
+          weight: 700,
+        },
+        formatter: (value: number, _context: Context): string => (value ? value.toLocaleString("fr") : ""),
+      },
+      legend: { display: false },
+      tooltip: {
+        filter: (tooltipItem) => (tooltipItem.datasetIndex + 1) % 2 === 1,
+        callbacks: {
+          label: function (context: any) {
+            const valeur = context.raw;
+            const valeurRef = context.chart.data.datasets[context.datasetIndex + 1].data[context.dataIndex] as number;
+            const valeurText = Number.isFinite(valeur as number) ? Math.abs(valeur as number).toLocaleString("fr") : "non renseigné";
+            const valeurRefText = Number.isFinite(valeurRef as number) ? Math.abs(valeurRef as number).toLocaleString("fr") : "non renseigné";
 
-
+            return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
+          },
+        },
+      }, // @ts-ignore
+      rotationRef: {} as any,
+    },
+    scales: {
+      x: {
+        border: {
+          display: false,
+        },
+        grid: {
+          drawOnChartArea: false,
+          drawTicks: false,
+        },
+        stacked: true,
+        ticks: {
+          color: "#000",
+          font: function (context: any) {
+            if (context.index === 2) {
+              return { weight: "bold" };
+            }
+            return {};
+          },
+        },
+        beginAtZero: false,
+      },
+      xAxis2: {
+        type: "category",
+        position: "bottom",
+        border: {
+          display: false,
+        },
+        grid: { drawOnChartArea: false, drawTicks: false },
+        ticks: {
+          color: "#000",
+          callback: (_tickValue, index) => "",
+          font: function (context: any) {
+            if (context.tick.label === new Date().getFullYear().toString()) {
+              return { weight: "bold" };
+            }
+            return {};
+          },
+          maxRotation: 0,
+          autoSkip: false,
+        },
+      },
+      y: {
+        display: false,
+      },
+    },
+  };
 
   const HtmlLegend = () => {
-    return <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="id-legend" />;
+    return <menu className={"fr-checkbox-group " + styles["graphique-legende"]} id="legende" />;
   };
-
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const chartRef = useRef<Chart | null>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Détruire le chart existant avant d'en créer un nouveau
-    if (chartRef.current) {
-      chartRef.current.destroy();
-      chartRef.current = null;
-    }
-
-    chartRef.current = new Chart(ctx, chatConfig);
-
-    return () => {
-      chartRef.current?.destroy();
-      chartRef.current = null;
-    };
-  }, []);
 
   return (
     <div>
-      <canvas ref={canvasRef} />
+      <Bar data={chartData} options={chatConfig} plugins={[rotationRefPlugin]} />
       <HtmlLegend />
     </div>
   );
