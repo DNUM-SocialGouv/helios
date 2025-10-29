@@ -9,12 +9,12 @@ import { BlocRessources } from "./BlocRessources";
 import Faq from "./Faq/Faq";
 import { ListeSections } from "./ListeSections";
 import {
-  estAutorisePourRole,
   obtenirSectionNormalisee,
   regrouperRessourcesParType,
   sectionsVisibles,
   IdentifiantRole,
 } from "./utils";
+import { useDependencies } from "../commun/contexts/useDependencies";
 import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
 
 type InterfaceAideProps = Readonly<{
@@ -24,6 +24,7 @@ type InterfaceAideProps = Readonly<{
 }>;
 
 export function InterfaceAide({ contenu, role, surChangementSection }: InterfaceAideProps) {
+  const { wording } = useDependencies();
   const router = useRouter();
   const sectionsDisponibles = useMemo(() => sectionsVisibles(contenu, role), [contenu, role]);
   const [slugActif, setSlugActif] = useState<string | null>(null);
@@ -60,15 +61,12 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
     if (!sectionActuelle || definitionActuelle?.nature !== "resources") {
       return [];
     }
-    return regrouperRessourcesParType(
-      (sectionActuelle.resources ?? []).filter((ressource) => estAutorisePourRole(ressource, role))
-    );
-  }, [sectionActuelle, definitionActuelle?.nature, role]);
+    return regrouperRessourcesParType(sectionActuelle.resources ?? []);
+  }, [sectionActuelle, definitionActuelle?.nature]);
 
   const iconeSection = definitionActuelle?.icone;
-  const titreSection = definitionActuelle?.titre ?? "Aide";
-  const descriptionSection =
-    definitionActuelle?.nature === "resources" ? sectionActuelle?.description : undefined;
+  const titreSection = definitionActuelle?.titre ?? wording.AIDE_TITRE_PAGE;
+  const descriptionSection = sectionActuelle?.description;
 
   const currentBloc = () => {
     if (definitionActuelle?.nature === "faq") {
@@ -87,7 +85,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
               <span aria-hidden className={`${iconeSection} fr-icon fr-icon--xl fr-text-title--blue-france ${styles["iconesSection"]}`} />
             </div>
           )}
-          <div className="fr-col">
+          <div className={`fr-col ${styles["titreSection"]}`}>
             <h1 className="fr-h2 fr-m-0">{titreSection}</h1>
             {descriptionSection && <p className="fr-text--sm fr-mt-1w">{descriptionSection}</p>}
           </div>

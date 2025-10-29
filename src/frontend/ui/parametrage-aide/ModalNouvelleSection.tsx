@@ -1,5 +1,7 @@
 import { FormEvent, ChangeEvent, RefObject } from "react";
 
+import { useDependencies } from "../commun/contexts/useDependencies";
+
 type ModalNouvelleSectionProps = Readonly<{
   ouverte: boolean;
   formulaire: {
@@ -22,6 +24,8 @@ export function ModalNouvelleSection({
   surModification,
   surValidation,
 }: ModalNouvelleSectionProps) {
+  const { wording } = useDependencies();
+
   return (
     <dialog
       aria-labelledby="parametrage-aide-new-section-modal-title"
@@ -44,16 +48,16 @@ export function ModalNouvelleSection({
                   onClick={surFermeture}
                   type="button"
                 >
-                  Fermer
+                  {wording.PARAMETRAGE_AIDE_BOUTON_FERMER}
                 </button>
               </div>
               <form className="fr-form fr-p-4w fr-card fr-card--shadow fr-modal__content" onSubmit={surValidation}>
                 <h3 className="fr-modal__title fr-mb-4w" id="parametrage-aide-new-section-modal-title">
-                  Ajouter une section
+                  {wording.PARAMETRAGE_AIDE_TITRE_MODAL_SECTION}
                 </h3>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="new-section-title">Nom de la section *</label>
+                  <label className="fr-label" htmlFor="new-section-title">{wording.PARAMETRAGE_AIDE_LABEL_NOM_SECTION}</label>
                   <input
                     className="fr-input"
                     id="new-section-title"
@@ -67,7 +71,7 @@ export function ModalNouvelleSection({
                 </div>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="new-section-icon">Icone DSFR</label>
+                  <label className="fr-label" htmlFor="new-section-icon">{wording.PARAMETRAGE_AIDE_LABEL_ICONE_SECTION}</label>
                   <input
                     className="fr-input"
                     id="new-section-icon"
@@ -80,10 +84,10 @@ export function ModalNouvelleSection({
 
                 <div className="fr-mt-4w fr-btns-group fr-btns-group--inline fr-btns-group--right">
                   <button className="fr-btn fr-btn--secondary" onClick={surFermeture} type="button">
-                    Annuler
+                    {wording.PARAMETRAGE_AIDE_BOUTON_ANNULER}
                   </button>
                   <button className="fr-btn" type="submit">
-                    Ajouter
+                    {wording.PARAMETRAGE_AIDE_BOUTON_AJOUTER}
                   </button>
                 </div>
               </form>

@@ -1,6 +1,6 @@
-import { formaterRoles } from "./aideUtils";
 import styles from "./GestionAide.module.css";
 import type { RessourceAide } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type TableRessourcesProps = Readonly<{
   ressources: RessourceAide[];
@@ -11,9 +11,13 @@ type TableRessourcesProps = Readonly<{
 }>;
 
 export function TableRessources({ ressources, surModifier, surSupprimer, surMonter, surDescendre }: TableRessourcesProps) {
+  const { wording } = useDependencies();
+
   if (ressources.length === 0) {
     return (
-      <p className="fr-text--sm fr-text-mention--grey fr-my-4w">Aucune ressource n’a encore été ajoutée.</p>
+      <p className="fr-text--sm fr-text-mention--grey fr-my-4w">
+        {wording.PARAMETRAGE_AIDE_MESSAGE_AUCUNE_RESSOURCE}
+      </p>
     );
   }
 
@@ -23,18 +27,17 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
         <div className="fr-table__container">
           <div className="fr-table__content">
             <table>
-              <caption className="fr-sr-only">Ressources de la section</caption>
+              <caption className="fr-sr-only">{wording.PARAMETRAGE_AIDE_TABLE_TITRE}</caption>
               <thead>
                 <tr>
-                  <th>Ordre</th>
-                  <th>Nom</th>
-                  <th>Type</th>
-                  <th>Lien ou contenu</th>
-                  <th>Date</th>
-                  <th>Nom du fichier</th>
-                  <th>Rôles</th>
-                  <th>Utilisateur</th>
-                  <th aria-label="Actions" />
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_ORDRE}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_NOM}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_TYPE}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_LIEN}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_DATE}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_FICHIER}</th>
+                  <th>{wording.PARAMETRAGE_AIDE_COLONNE_UTILISATEUR}</th>
+                  <th aria-label={wording.PARAMETRAGE_AIDE_COLONNE_ACTIONS} />
                 </tr>
               </thead>
               <tbody>
@@ -53,7 +56,7 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                         <div className={styles["actionsTable"]}>
                           <span className={styles["ordreRessource"]}>{ordre}</span>
                           <button
-                            aria-label="Monter la ressource"
+                            aria-label={wording.PARAMETRAGE_AIDE_BOUTON_MONTER_RESSOURCE}
                             className={`fr-btn fr-btn--tertiary-no-outline fr-btn--sm fr-btn--icon-left ${styles["boutonIcone"]}`}
                             disabled={estPremier}
                             onClick={() => surMonter(index)}
@@ -62,7 +65,7 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                             <span aria-hidden className="fr-icon-arrow-up-s-line" />
                           </button>
                           <button
-                            aria-label="Descendre la ressource"
+                            aria-label={wording.PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE}
                             className={`fr-btn fr-btn--tertiary-no-outline fr-btn--sm fr-btn--icon-left ${styles["boutonIcone"]}`}
                             disabled={estDernier}
                             onClick={() => surDescendre(index)}
@@ -73,23 +76,22 @@ export function TableRessources({ ressources, surModifier, surSupprimer, surMont
                         </div>
                       </td>
                       <td>{ressource.nom}</td>
-                      <td>{ressource.type}</td>
-                      <td>{ressource.contenu}</td>
+                      <td>{wording.AIDE_TITRES_RESSOURCES[ressource.type] ?? ressource.type}</td>
+                      <td>{ressource.lien}</td>
                       <td>{ressource.date ?? ""}</td>
                       <td>{ressource.nom_telechargement ?? ""}</td>
-                      <td>{formaterRoles(ressource.allowedRoles ?? ressource.roles)}</td>
                       <td>{nomUtilisateur || ""}</td>
                       <td>
                         <div className="fr-btns-group fr-btns-group--inline fr-btns-group--right">
                           <button className="fr-btn fr-btn--secondary fr-btn--sm" onClick={() => surModifier(index)} type="button">
-                            Modifier
+                            {wording.PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE}
                           </button>
                           <button
                             className="fr-btn fr-btn--tertiary-no-outline fr-btn--sm"
                             onClick={() => surSupprimer(index)}
                             type="button"
                           >
-                            Supprimer
+                            {wording.PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE}
                           </button>
                         </div>
                       </td>

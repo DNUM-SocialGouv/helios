@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, RefObject } from "react";
 
 import { RessourceAide } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type ModalRessourceProps = Readonly<{
   ouverte: boolean;
@@ -17,18 +18,11 @@ export type RessourceFormulaire = {
   slug: string;
   nom: string;
   type: RessourceAide["type"];
-  contenu: string;
+  lien: string;
   ordre: number;
   date: string;
   nom_telechargement: string;
-  allowedRoles: string;
 };
-
-const TYPES_RESSOURCE: { valeur: RessourceAide["type"]; libelle: string }[] = [
-  { valeur: "document", libelle: "Document" },
-  { valeur: "video", libelle: "Vidéo" },
-  { valeur: "link", libelle: "Lien" },
-];
 
 export function ModalRessource({
   ouverte,
@@ -40,6 +34,8 @@ export function ModalRessource({
   surChangement,
   surValidation,
 }: ModalRessourceProps) {
+  const { wording } = useDependencies();
+
   return (
     <dialog
       aria-labelledby="parametrage-aide-resource-modal-title"
@@ -62,16 +58,18 @@ export function ModalRessource({
                   onClick={surFermeture}
                   type="button"
                 >
-                  Fermer
+                  {wording.PARAMETRAGE_AIDE_BOUTON_FERMER}
                 </button>
               </div>
               <form className="fr-form fr-p-4w fr-card fr-card--shadow fr-modal__content" onSubmit={surValidation}>
                 <h3 className="fr-modal__title fr-mb-4w" id="parametrage-aide-resource-modal-title">
-                  {editionEnCours ? "Modifier la ressource" : "Ajouter une ressource"}
+                  {editionEnCours
+                    ? wording.PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_EDITION
+                    : wording.PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_AJOUT}
                 </h3>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="resource-nom">Nom *</label>
+                  <label className="fr-label" htmlFor="resource-nom">{wording.PARAMETRAGE_AIDE_LABEL_NOM_RESSOURCE}</label>
                   <input
                     className="fr-input"
                     id="resource-nom"
@@ -84,22 +82,10 @@ export function ModalRessource({
                   />
                 </div>
 
-                <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="resource-slug">Identifiant (optionnel)</label>
-                  <input
-                    className="fr-input"
-                    id="resource-slug"
-                    name="slug"
-                    onChange={surChangement}
-                    type="text"
-                    value={valeurs.slug}
-                  />
-                </div>
-
                 <div className="fr-grid-row fr-grid-row--gutters">
                   <div className="fr-col-12 fr-col-md-6">
                     <div className="fr-select-group">
-                      <label className="fr-label" htmlFor="resource-type">Type *</label>
+                      <label className="fr-label" htmlFor="resource-type">{wording.PARAMETRAGE_AIDE_LABEL_TYPE_RESSOURCE}</label>
                       <select
                         className="fr-select"
                         id="resource-type"
@@ -108,33 +94,30 @@ export function ModalRessource({
                         required
                         value={valeurs.type}
                       >
-                        {TYPES_RESSOURCE.map((option) => (
-                          <option key={option.valeur} value={option.valeur}>
-                            {option.libelle}
-                          </option>
-                        ))}
+                        <option value="document">{wording.PARAMETRAGE_AIDE_OPTION_DOCUMENT}</option>
+                        <option value="video">{wording.PARAMETRAGE_AIDE_OPTION_VIDEO}</option>
+                        <option value="lien">{wording.PARAMETRAGE_AIDE_OPTION_LIEN}</option>
                       </select>
                     </div>
                   </div>
                 </div>
 
                 <div className="fr-input-group">
-                  <label className="fr-label" htmlFor="resource-contenu">Lien ou contenu *</label>
+                  <label className="fr-label" htmlFor="resource-lien">{wording.PARAMETRAGE_AIDE_LABEL_LIEN_RESSOURCE}</label>
                   <textarea
                     className="fr-input"
-                    id="resource-contenu"
-                    name="contenu"
+                    id="resource-lien"
+                    name="lien"
                     onChange={surChangement}
                     required
-                    rows={3}
-                    value={valeurs.contenu}
+                    value={valeurs.lien}
                   />
                 </div>
 
                 <div className="fr-grid-row fr-grid-row--gutters">
                   <div className="fr-col-12 fr-col-md-6">
                     <div className="fr-input-group">
-                      <label className="fr-label" htmlFor="resource-date">Date</label>
+                      <label className="fr-label" htmlFor="resource-date">{wording.PARAMETRAGE_AIDE_LABEL_DATE_RESSOURCE}</label>
                       <input
                         className="fr-input"
                         id="resource-date"
@@ -150,7 +133,7 @@ export function ModalRessource({
                 <div className="fr-grid-row fr-grid-row--gutters">
                   <div className="fr-col-12 fr-col-md-6">
                     <div className="fr-input-group">
-                      <label className="fr-label" htmlFor="resource-nom-telechargement">Nom du fichier</label>
+                      <label className="fr-label" htmlFor="resource-nom-telechargement">{wording.PARAMETRAGE_AIDE_LABEL_NOM_FICHIER_RESSOURCE}</label>
                       <input
                         className="fr-input"
                         id="resource-nom-telechargement"
@@ -161,28 +144,14 @@ export function ModalRessource({
                       />
                     </div>
                   </div>
-                  <div className="fr-col-12 fr-col-md-6">
-                    <div className="fr-input-group">
-                      <label className="fr-label" htmlFor="resource-roles">Rôles autorisés</label>
-                      <input
-                        className="fr-input"
-                        id="resource-roles"
-                        name="allowedRoles"
-                        onChange={surChangement}
-                        placeholder="Tous les rôles"
-                        type="text"
-                        value={valeurs.allowedRoles}
-                      />
-                    </div>
-                  </div>
                 </div>
 
                 <div className="fr-mt-4w fr-btns-group fr-btns-group--inline fr-btns-group--right">
                   <button className="fr-btn fr-btn--secondary" onClick={surFermeture} type="button">
-                    Annuler
+                    {wording.PARAMETRAGE_AIDE_BOUTON_ANNULER}
                   </button>
                   <button className="fr-btn" type="submit">
-                    {editionEnCours ? "Enregistrer" : "Ajouter"}
+                    {editionEnCours ? wording.PARAMETRAGE_AIDE_BOUTON_ENREGISTRER : wording.PARAMETRAGE_AIDE_BOUTON_AJOUTER}
                   </button>
                 </div>
               </form>

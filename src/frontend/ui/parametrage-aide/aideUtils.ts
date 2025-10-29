@@ -1,6 +1,14 @@
 import { ContenuAide, DefinitionSection, RessourceAide, SectionAide, SectionNormalisee } from "./types";
 
+export const ROLES_SECTIONS = [
+  { identifiant: 1, libelle: "Administrateur national" },
+  { identifiant: 2, libelle: "Administrateur régional" },
+  { identifiant: 3, libelle: "Administration centrale" },
+  { identifiant: 4, libelle: "Utilisateur" },
+] as const;
+
 export const ICON_PAR_DEFAUT = "fr-icon-folder-2-line";
+export const ROLES_PAR_DEFAUT = [1, 2, 3, 4];
 
 export const SECTIONS_STATIQUES: DefinitionSection[] = [
   {
@@ -12,32 +20,35 @@ export const SECTIONS_STATIQUES: DefinitionSection[] = [
   },
 ];
 
-export const normaliserRoles = (valeurs?: (number | string)[]): number[] | undefined => {
+const ROLE_PAR_IDENTIFIANT = new Map<number, string>(
+  ROLES_SECTIONS.map((role) => [role.identifiant, role.libelle])
+);
+
+export const libelleRole = (identifiant: number): string =>
+  ROLE_PAR_IDENTIFIANT.get(identifiant) ?? `Rôle ${identifiant}`;
+
+export const normaliserRoles = (valeurs?: (number | string)[]): number[] => {
   if (!valeurs) {
-    return undefined;
-  }
-
-  const roles = valeurs
-    .map((valeur) => (typeof valeur === "string" ? Number.parseInt(valeur, 10) : valeur))
-    .filter((valeur): valeur is number => Number.isInteger(valeur));
-
-  return roles.length > 0 ? roles : undefined;
-};
-
-export const formaterRoles = (valeurs?: (number | string)[]): string => {
-  const roles = normaliserRoles(valeurs);
-  return roles ? roles.join(", ") : "";
-};
-
-export const parserRoles = (valeur: string): number[] => {
-  if (!valeur.trim()) {
     return [];
   }
 
-  return valeur
-    .split(/[,;\s]+/u)
-    .map((element) => Number.parseInt(element, 10))
-    .filter((element) => Number.isInteger(element));
+  const roles = Array.from(
+    new Set(
+      valeurs
+        .map((valeur) => (typeof valeur === "string" ? Number.parseInt(valeur, 10) : valeur))
+        .filter((valeur): valeur is number => Number.isInteger(valeur))
+    )
+  ).sort((premier, second) => premier - second);
+
+  return roles;
+};
+
+export const formaterLibellesRoles = (valeurs?: (number | string)[]): string => {
+  const roles = normaliserRoles(valeurs);
+  if (roles.length === 0) {
+    return "";
+  }
+  return roles.map(libelleRole).join(", ");
 };
 
 export const trierRessources = (ressources: RessourceAide[] = []): RessourceAide[] =>
@@ -46,20 +57,24 @@ export const trierRessources = (ressources: RessourceAide[] = []): RessourceAide
     .sort((premiere, seconde) => (premiere.ordre ?? Number.MAX_SAFE_INTEGER) - (seconde.ordre ?? Number.MAX_SAFE_INTEGER));
 
 export const reindexerRessources = (ressources: RessourceAide[]): RessourceAide[] =>
-  ressources.map((ressource, index) => ({ ...ressource, ordre: index + 1 }));
-
+  ressources.map((ressource, index) => {
+    const { ...autresChamps } = ressource;
+    return { ...autresChamps, ordre: index + 1 };
+  });
 const nettoyerSlug = (valeur: string) =>
   valeur
     .toLowerCase()
-    .replace(/\s+/gu, "-")
-    .replace(/[^a-z0-9-]/gu, "")
-    .replace(/-+/gu, "-")
-    .replace(/^-|-$/gu, "");
+    .replaceAll(/\s+/gu, "-")
+    .replaceAll(/[^a-z0-9-]/gu, "")
+    .replaceAll(/-+/gu, "-")
+    .replace(/^-+/u, "")
+    .replace(/-+$/u, "");
 
-export const creerSlug = (valeur: string, secours: string) => {
-  const base = valeur.trim() || secours;
+export const creerSlug = (valeur: string) => {
+  const base = valeur.trim();
   const slug = nettoyerSlug(base);
-  return slug || nettoyerSlug(secours) || undefined;
+  const timestamp = Date.now(); // Pour garantir l'unicité en cas de changemnet de titre. 
+  return slug + timestamp || undefined;
 };
 
 export const normaliserSection = (section?: SectionAide): SectionNormalisee => ({
@@ -80,7 +95,7 @@ export const construireSectionsInitiales = (contenu: ContenuAide): ContenuAide =
     resultat[sectionStatique.slug] ??= normaliserSection({
       title: sectionStatique.titre,
       icon: sectionStatique.icone,
-      kind: sectionStatique.nature,
+      type: sectionStatique.nature,
       description: "",
       resources: [],
       order: sectionStatique.ordre,
@@ -110,7 +125,7 @@ export const determinerDefinitionsSections = (contenu: ContenuAide): DefinitionS
       slug,
       titre: section?.title?.trim() ?? sectionStatique?.titre ?? slug,
       icone: section?.icon?.trim() ?? sectionStatique?.icone ?? ICON_PAR_DEFAUT,
-      nature: section?.kind === "faq" ? "faq" : sectionStatique?.nature ?? "resources",
+      nature: section?.type === "faq" ? "faq" : sectionStatique?.nature ?? "resources",
       ordre,
     });
 

@@ -11,16 +11,19 @@ import {
 
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
+import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
+
+
 
 import {
   construireSectionsInitiales,
   creerSlug,
   determinerDefinitionsSections,
-  formaterRoles,
   ICON_PAR_DEFAUT,
+  normaliserRoles,
   normaliserSection,
-  parserRoles,
   reindexerRessources,
+  ROLES_PAR_DEFAUT,
   SECTIONS_STATIQUES,
   trierRessources,
 } from "./aideUtils";
@@ -36,6 +39,7 @@ import type {
   SectionEditable,
   SectionNormalisee,
 } from "./types";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 type GestionAideProps = Readonly<{
   contenuInitial: ContenuAide;
@@ -46,26 +50,26 @@ const FORMULAIRE_RESSOURCE_VIERGE: RessourceFormulaire = {
   slug: "",
   nom: "",
   type: "document",
-  contenu: "",
+  lien: "",
   ordre: 1,
   date: "",
   nom_telechargement: "",
-  allowedRoles: "",
 };
 
 export function GestionAide({ contenuInitial, envelopperDansMain = true }: GestionAideProps) {
+  const { wording } = useDependencies();
   const contenuNormalise = construireSectionsInitiales(contenuInitial);
 
   const initialisationRoles = () => {
-    const resultat: Record<string, string> = {};
+    const resultat: Record<string, number[]> = {};
     for (const [slug, section] of Object.entries(contenuNormalise)) {
-      resultat[slug] = formaterRoles(section?.allowedRoles ?? section?.roles);
+      resultat[slug] = normaliserRoles(section?.allowedRoles);
     }
     return resultat;
   };
 
   const [contenu, setContenu] = useState<ContenuAide>(contenuNormalise);
-  const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, string>>(initialisationRoles);
+  const [rolesBrouillon, setRolesBrouillon] = useState<Record<string, number[]>>(initialisationRoles);
   const [slugSelectionne, setSlugSelectionne] = useState<string>("");
   const [ressourceModaleOuverte, setRessourceModaleOuverte] = useState(false);
   const [nouvelleSectionOuverte, setNouvelleSectionOuverte] = useState(false);
@@ -185,8 +189,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     if (!sectionActive) {
       return;
     }
-    const prochainOrdre =
-      (sectionActive.resources[sectionActive.resources.length - 1]?.ordre ?? sectionActive.resources.length) + 1;
+    const prochainOrdre = (sectionActive.resources.at(-1)?.ordre ?? sectionActive.resources.length) + 1;
     setRessourceFormulaire({ ...FORMULAIRE_RESSOURCE_VIERGE, ordre: prochainOrdre });
     setIndexRessourceEditee(null);
     setRessourceModaleOuverte(true);
@@ -205,11 +208,10 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       slug: ressource.slug ?? "",
       nom: ressource.nom,
       type: ressource.type,
-      contenu: ressource.contenu,
+      lien: ressource.lien,
       ordre: ressource.ordre ?? index + 1,
       date: ressource.date ?? "",
       nom_telechargement: ressource.nom_telechargement ?? "",
-      allowedRoles: formaterRoles(ressource.allowedRoles ?? ressource.roles),
     });
     setIndexRessourceEditee(index);
     setRessourceModaleOuverte(true);
@@ -225,6 +227,20 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     });
   };
 
+  const modifierTitre = (valeur: string) => {
+    if (!slugSelectionne) {
+      return;
+    }
+    mettreAJourSection(slugSelectionne, (section) => ({ ...section, title: valeur }));
+  };
+
+  const modifierIcone = (valeur: string) => {
+    if (!slugSelectionne) {
+      return;
+    }
+    mettreAJourSection(slugSelectionne, (section) => ({ ...section, icon: valeur }));
+  };
+
   const modifierDescription = (valeur: string) => {
     if (!slugSelectionne) {
       return;
@@ -232,18 +248,18 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     mettreAJourSection(slugSelectionne, (section) => ({ ...section, description: valeur }));
   };
 
-  const modifierRoles = (valeur: string) => {
+  const basculerRoleSection = (idRole: number, statutDeSelection: boolean) => {
     if (!slugSelectionne) {
       return;
     }
-    setRolesBrouillon((precedent) => ({ ...precedent, [slugSelectionne]: valeur }));
-    const roles = parserRoles(valeur);
+    const rolesActuels = rolesBrouillon[slugSelectionne] ?? [];
+    const rolesActualises = statutDeSelection
+      ? normaliserRoles([...rolesActuels, idRole])
+      : normaliserRoles(rolesActuels.filter((identifiant) => identifiant !== idRole));
+    setRolesBrouillon((precedent) => ({ ...precedent, [slugSelectionne]: rolesActualises }));
     mettreAJourSection(slugSelectionne, (section) => ({
       ...section,
-      allowedRoles: roles.length > 0 ? roles : undefined,
-      roles: undefined,
-      excludedRoles: undefined,
-      hiddenForRoles: undefined,
+      allowedRoles: rolesActualises
     }));
   };
 
@@ -261,25 +277,22 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    const roles = parserRoles(ressourceFormulaire.allowedRoles);
-
     const nouvelleEntree: RessourceAide = {
-      slug: ressourceFormulaire.slug ? creerSlug(ressourceFormulaire.slug, ressourceFormulaire.nom) : undefined,
+      slug: ressourceFormulaire.slug ? creerSlug(ressourceFormulaire.slug) : undefined,
       nom: ressourceFormulaire.nom,
       type: ressourceFormulaire.type,
-      contenu: ressourceFormulaire.contenu,
+      lien: ressourceFormulaire.lien,
       ordre: ressourceFormulaire.ordre,
       date: ressourceFormulaire.date || undefined,
       nom_telechargement: ressourceFormulaire.nom_telechargement || undefined,
-      allowedRoles: roles.length > 0 ? roles : undefined,
     };
 
     mettreAJourSection(slugSelectionne, (section) => {
       const ressources = [...section.resources];
-      if (indexRessourceEditee !== null) {
-        ressources[indexRessourceEditee] = nouvelleEntree;
-      } else {
+      if (indexRessourceEditee === null) {
         ressources.push(nouvelleEntree);
+      } else {
+        ressources[indexRessourceEditee] = nouvelleEntree;
       }
       return {
         ...section,
@@ -295,7 +308,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       return;
     }
 
-    if (!window.confirm("Supprimer cette ressource ?")) {
+    if (!globalThis.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE)) {
       return;
     }
 
@@ -322,6 +335,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         return section;
       }
 
+      ressources.splice(indexCible, 0, deplacee);
       return {
         ...section,
         resources: reindexerRessources(ressources),
@@ -346,18 +360,13 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     const icone = formulaireNouvelleSection.icon.trim() || ICON_PAR_DEFAUT;
 
     if (!titre) {
-      window.alert("Le nom de la section est obligatoire.");
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE);
       return;
     }
 
-    const slug = creerSlug(titre, titre);
+    const slug = creerSlug(titre);
     if (!slug) {
-      window.alert("Impossible de créer la section. Nom invalide.");
-      return;
-    }
-
-    if (contenu[slug]) {
-      window.alert("Une section avec ce nom existe déjà.");
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE);
       return;
     }
 
@@ -368,14 +377,15 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       [slug]: normaliserSection({
         title: titre,
         icon: icone,
-        kind: "resources",
+        type: "resources",
         description: "",
         resources: [],
         order: ordre,
+        allowedRoles: ROLES_PAR_DEFAUT
       }),
     }));
 
-    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: "" }));
+    setRolesBrouillon((precedent) => ({ ...precedent, [slug]: ROLES_PAR_DEFAUT }));
     setSlugSelectionne(slug);
     setNouvelleSectionOuverte(false);
   };
@@ -383,11 +393,11 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const supprimerSection = (slug: string) => {
     const estStatique = SECTIONS_STATIQUES.some((section) => section.slug === slug);
     if (estStatique) {
-      window.alert("Vous ne pouvez pas supprimer cette section.");
+      globalThis.alert(wording.PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION);
       return;
     }
 
-    if (!window.confirm("Supprimer cette section et toutes ses ressources ?")) {
+    if (!globalThis.confirm(wording.PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION)) {
       return;
     }
 
@@ -449,9 +459,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       .then((payload) => {
         if (responseOk) {
           setContenu(construireSectionsInitiales(payload));
-          setMessageSucces("Les contenus d’aide ont été enregistrés.");
+          setMessageSucces(wording.PARAMETRAGE_AIDE_MESSAGE_SUCCES);
         } else {
-          setMessageErreur(payload?.message ?? "Une erreur est survenue lors de l’enregistrement.");
+          setMessageErreur(payload?.message ?? wording.PARAMETRAGE_AIDE_MESSAGE_ERREUR);
         }
       })
       .finally(() => {
@@ -462,11 +472,8 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   const contenuAffiche: ReactNode = (
     <div className={`fr-container ${styles["conteneur"]}`}>
       <header className="fr-mb-6w">
-        <h1 className="fr-h2">Paramétrage de l’aide</h1>
-        <p className="fr-text--sm fr-mt-1w">
-          Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources
-          (documents, vidéos ou liens) pour chaque section.
-        </p>
+        <h1 className="fr-h2">{wording.PARAMETRAGE_AIDE_TITRE}</h1>
+        <p className="fr-text--sm fr-mt-1w">{wording.PARAMETRAGE_AIDE_DESCRIPTION}</p>
       </header>
 
       {(messageSucces || messageErreur) && (
@@ -494,29 +501,31 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
                 icone: definitionActive.icone,
                 nature: definitionActive.nature,
               }}
-              rolesBrouillon={rolesBrouillon[slugSelectionne] ?? ""}
+              rolesSelectionnes={rolesBrouillon[slugSelectionne] ?? []}
               section={sectionActive}
               surAjoutRessource={ouvrirModaleCreationRessource}
+              surBasculeRole={basculerRoleSection}
               surDescendreRessource={(index) => deplacerRessource(index, "down")}
               surEditionRessource={ouvrirModaleEditionRessource}
               surModificationDescription={modifierDescription}
+              surModificationIcone={modifierIcone}
               surModificationOrdre={modifierOrdreSection}
-              surModificationRoles={modifierRoles}
+              surModificationTitre={modifierTitre}
               surMonterRessource={(index) => deplacerRessource(index, "up")}
               surSuppressionRessource={supprimerRessource}
             />
           ) : (
-            <p className="fr-text--sm">Aucune section sélectionnée.</p>
+            <p className="fr-text--sm">{wording.PARAMETRAGE_AIDE_MESSAGE_AUCUNE_SECTION}</p>
           )}
 
-          <div className="fr-mt-6w fr-text-right">
+          <div className="fr-mt-5w fr-text-right">
             <button
               className="fr-btn fr-btn--secondary fr-mr-2w"
               disabled={enregistrementEnCours}
-              onClick={() => window.location.reload()}
+              onClick={() => globalThis.location.reload()}
               type="button"
             >
-              Annuler les modifications
+              {wording.PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS}
             </button>
             <button
               className="fr-btn"
@@ -524,7 +533,9 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
               onClick={enregistrerToutesLesSections}
               type="button"
             >
-              {enregistrementEnCours ? "Enregistrement..." : "Enregistrer"}
+              {enregistrementEnCours
+                ? wording.PARAMETRAGE_AIDE_ETAT_ENREGISTREMENT
+                : wording.PARAMETRAGE_AIDE_BOUTON_ENREGISTRER}
             </button>
           </div>
         </section>

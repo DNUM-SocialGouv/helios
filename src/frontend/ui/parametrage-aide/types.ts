@@ -1,10 +1,5 @@
-export type IdentifiantSection = string;
-
 export type MetadonneesRoles = Readonly<{
   allowedRoles?: (number | string)[];
-  roles?: (number | string)[];
-  excludedRoles?: (number | string)[];
-  hiddenForRoles?: (number | string)[];
 }>;
 
 export type RessourceUtilisateur = Readonly<{
@@ -17,8 +12,8 @@ export type RessourceAide = Readonly<
   MetadonneesRoles & {
     slug?: string;
     nom: string;
-    type: "document" | "video" | "link";
-    contenu: string;
+    type: "document" | "video" | "lien";
+    lien: string;
     ordre?: number;
     date?: string;
     nom_telechargement?: string;
@@ -30,14 +25,14 @@ export type SectionAide = Readonly<
   MetadonneesRoles & {
     title?: string;
     icon?: string;
-    kind?: "resources" | "faq";
+    type?: "resources" | "faq";
     description?: string;
     resources?: RessourceAide[];
     order?: number;
   }
 >;
 
-export type ContenuAide = Partial<Record<IdentifiantSection, SectionAide>>;
+export type ContenuAide = Partial<Record<string, SectionAide>>;
 
 export type SectionNormalisee = SectionAide & {
   description: string;
@@ -46,7 +41,7 @@ export type SectionNormalisee = SectionAide & {
 };
 
 export type DefinitionSection = Readonly<{
-  slug: IdentifiantSection;
+  slug: string;
   titre: string;
   icone: string;
   nature: "resources" | "faq";
@@ -56,6 +51,3 @@ export type DefinitionSection = Readonly<{
 export type SectionEditable = DefinitionSection & {
   peutEtreSupprimee: boolean;
 };
-
-// Compatibilité avec l’existant
-export type AideContent = ContenuAide;

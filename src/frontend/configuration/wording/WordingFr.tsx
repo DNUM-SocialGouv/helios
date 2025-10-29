@@ -717,6 +717,77 @@ export class WordingFr implements Wording {
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
 
+  readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
+    "Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources (documents, vidéos ou liens) pour chaque section.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SUCCES: string = "Les contenus d’aide ont été enregistrés.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_ERREUR: string = "Une erreur est survenue lors de l’enregistrement.";
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE: string = "Supprimer cette ressource ?";
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION: string =
+    "Supprimer cette section et toutes ses ressources ?";
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE: string = "Le nom de la section est obligatoire.";
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE: string = "Impossible de créer la section. Nom invalide.";
+  readonly PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE: string = "Une section avec ce nom existe déjà.";
+  readonly PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION: string = "Vous ne pouvez pas supprimer cette section.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_SECTION: string = "Aucune section sélectionnée.";
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS: string = "Annuler les modifications";
+  readonly PARAMETRAGE_AIDE_BOUTON_ENREGISTRER: string = "Enregistrer";
+  readonly PARAMETRAGE_AIDE_ETAT_ENREGISTREMENT: string = "Enregistrement...";
+  readonly PARAMETRAGE_AIDE_NAV_SECTIONS: string = "Sections d’aide";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_SECTION: string = "Ajouter une section";
+  readonly PARAMETRAGE_AIDE_ARIA_SUPPRIMER_SECTION = (titre: string): string => `Supprimer la section ${titre}`;
+  readonly PARAMETRAGE_AIDE_BOUTON_FERMER: string = "Fermer";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_SECTION: string = "Ajouter une section";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_SECTION: string = "Nom de la section *";
+  readonly PARAMETRAGE_AIDE_LABEL_ICONE_SECTION: string = "Icône DSFR";
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER: string = "Annuler";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER: string = "Ajouter";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_AJOUT: string = "Ajouter une ressource";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_EDITION: string = "Modifier la ressource";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_RESSOURCE: string = "Nom *";
+  readonly PARAMETRAGE_AIDE_LABEL_TYPE_RESSOURCE: string = "Type *";
+  readonly PARAMETRAGE_AIDE_OPTION_DOCUMENT: string = "Document";
+  readonly PARAMETRAGE_AIDE_OPTION_VIDEO: string = "Vidéo";
+  readonly PARAMETRAGE_AIDE_OPTION_LIEN: string = "Lien";
+  readonly PARAMETRAGE_AIDE_LABEL_LIEN_RESSOURCE: string = "Lien *";
+  readonly PARAMETRAGE_AIDE_LABEL_DATE_RESSOURCE: string = "Date";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_FICHIER_RESSOURCE: string = "Nom du fichier";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_RESSOURCE: string =
+    "Ajoutez des ressources pour alimenter cette rubrique. Les éléments sont affichés aux utilisateurs selon leur ordre.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_AUTRE: string =
+    "Cette rubrique est gérée automatiquement. Vous pouvez mettre à jour sa description, ses rôles et l’ordre d’affichage.";
+  readonly PARAMETRAGE_AIDE_LABEL_DESCRIPTION: string = "Description";
+  readonly PARAMETRAGE_AIDE_LEGENDE_ROLES: string = "Rôles autorisés";
+  readonly PARAMETRAGE_AIDE_LABEL_ORDRE_AFFICHAGE: string = "Ordre d’affichage";
+  readonly PARAMETRAGE_AIDE_PLACEHOLDER_ORDRE: string = "Ordre actuel";
+  readonly PARAMETRAGE_AIDE_TITRE_RESSOURCES: string = "Ressources";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_RESSOURCE: string = "Ajouter une ressource";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_SANS_PARAMETRAGE: string =
+    "Cette section ne contient pas de ressources paramétrables depuis cet écran.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_RESSOURCE: string = "Aucune ressource n’a encore été ajoutée.";
+  readonly PARAMETRAGE_AIDE_TABLE_TITRE: string = "Ressources de la section";
+  readonly PARAMETRAGE_AIDE_COLONNE_ORDRE: string = "Ordre";
+  readonly PARAMETRAGE_AIDE_COLONNE_NOM: string = "Nom";
+  readonly PARAMETRAGE_AIDE_COLONNE_TYPE: string = "Type";
+  readonly PARAMETRAGE_AIDE_COLONNE_LIEN: string = "Lien";
+  readonly PARAMETRAGE_AIDE_COLONNE_DATE: string = "Date";
+  readonly PARAMETRAGE_AIDE_COLONNE_FICHIER: string = "Nom du fichier";
+  readonly PARAMETRAGE_AIDE_COLONNE_UTILISATEUR: string = "Utilisateur";
+  readonly PARAMETRAGE_AIDE_COLONNE_ACTIONS: string = "Actions";
+  readonly PARAMETRAGE_AIDE_BOUTON_MONTER_RESSOURCE: string = "Monter la ressource";
+  readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string = "Descendre la ressource";
+  readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string = "Modifier";
+  readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string = "Supprimer";
+
+  readonly AIDE_TITRE_PAGE: string = "Aide";
+  readonly AIDE_MESSAGE_SECTIONS_VIDES: string = "Aucun contenu d’aide n’est disponible pour le moment.";
+  readonly AIDE_MESSAGE_CONTENU_INDISPONIBLE: string = "Ce contenu sera bientôt disponible.";
+  readonly AIDE_TITRES_RESSOURCES: Readonly<Record<"document" | "video" | "lien", string>> = {
+    document: "Documents",
+    video: "Vidéos",
+    lien: "Liens utiles",
+  };
+  readonly AIDE_INFO_DATE = (date: string): string => `Date de mise en ligne : ${date}`;
+  readonly AIDE_INFO_NOM_FICHIER = (nom: string): string => `Nom du fichier : ${nom}`;
+  readonly AIDE_INFO_SEPARATEUR: string = " — ";
+
 }
-
-

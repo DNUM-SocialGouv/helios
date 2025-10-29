@@ -16,12 +16,13 @@ type PageAideProps = Readonly<{
 }>;
 
 export default function PageAide({ contenu, role }: PageAideProps) {
-  const { breadcrumbHandler } = useDependencies();
+  const { breadcrumbHandler, wording } = useDependencies();
+  const titreAide = wording.AIDE_TITRE_PAGE;
   const [sectionCourante, setSectionCourante] = useState<DefinitionSection | null>(null);
 
   useBreadcrumb([
     {
-      label: "Aide",
+      label: titreAide,
       path: "",
     },
   ]);
@@ -29,7 +30,7 @@ export default function PageAide({ contenu, role }: PageAideProps) {
   useEffect(() => {
     const filAriane = [
       {
-        label: "Aide",
+        label: titreAide,
         path: sectionCourante ? "/aide" : "",
       },
     ];
@@ -39,7 +40,7 @@ export default function PageAide({ contenu, role }: PageAideProps) {
     }
 
     breadcrumbHandler.updateBreadcrum(filAriane);
-  }, [sectionCourante, breadcrumbHandler]);
+  }, [sectionCourante, breadcrumbHandler, titreAide]);
 
   return <InterfaceAide contenu={contenu} role={role} surChangementSection={setSectionCourante} />;
 }
