@@ -33,10 +33,10 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
 }>;
 
 const valeurFormateeParDefaut = (valeur: number | null): string | null => {
-  if (!Number.isFinite(valeur as number) || valeur === null) {
+  if (typeof valeur !== "number" || Number.isNaN(valeur)) {
     return null;
   }
-  return (valeur as number).toLocaleString("fr");
+  return valeur.toLocaleString("fr");
 };
 
 const HistogrammeComparaisonVerticalAvecRef = ({
@@ -50,10 +50,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   formatValeur = valeurFormateeParDefaut,
   highlightLastLabel = false,
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
-  const referencesByLabel = series.reduce<Record<string, (number | null)[]>>((acc, serie) => {
-    acc[serie.label] = serie.valeursRef;
-    return acc;
-  }, {});
+  const referencesByLabel: Record<string, (number | null)[]> = {};
+  for (const serie of series) {
+    referencesByLabel[serie.label] = serie.valeursRef;
+  }
 
   const chartData: ChartData<"bar"> = {
     labels: libelles,
@@ -75,35 +75,38 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       const { ctx, scales } = chart;
       const refs = referencesByLabel;
 
-      chart.data.datasets.forEach((dataset, datasetIndex) => {
+      const datasets = chart.data.datasets ?? [];
+      for (const [datasetIndex, dataset] of datasets.entries()) {
         if (!chart.isDatasetVisible(datasetIndex)) {
-          return;
+          continue;
         }
 
-        const label = dataset.label as string | undefined;
+        const label = dataset.label;
         if (!label) {
-          return;
+          continue;
         }
 
         const refValues = refs[label];
         if (!refValues) {
-          return;
+          continue;
         }
 
-        chart.getDatasetMeta(datasetIndex).data.forEach((bar: any, index: number) => {
+        const yScale = scales["y"];
+        if (!yScale) {
+          continue;
+        }
+
+        const elements = chart.getDatasetMeta(datasetIndex).data ?? [];
+        for (const [index, element] of elements.entries()) {
           const valeurRef = refValues[index];
           if (valeurRef === undefined || valeurRef === null) {
-            return;
-          }
-
-          const yScale = scales["y"];
-          if (!yScale) {
-            return;
+            continue;
           }
 
           const yPos = yScale.getPixelForValue(valeurRef);
-          const xLeft = bar.x - bar.width / 2;
-          const xRight = bar.x + bar.width / 2;
+          const barElement = element as unknown as { x: number; width: number };
+          const xLeft = barElement.x - barElement.width / 2;
+          const xRight = barElement.x + barElement.width / 2;
 
           ctx.save();
           ctx.beginPath();
@@ -113,18 +116,25 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           ctx.lineWidth = 2;
           ctx.stroke();
           ctx.restore();
-        });
-      });
+        }
+      }
     },
   };
 
-  const valeursTranscription = series.flatMap((serie) => {
+  const valeursTranscription: (string | null)[][] = [];
+  for (const serie of series) {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
     const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
-    return [valeursFormatees, refsFormatees];
-  });
+    valeursTranscription.push(valeursFormatees, refsFormatees);
+  }
 
-  const transcriptionIdentifiants = transcription?.identifiants ?? series.flatMap((serie) => [serie.label, `${legendReferenceLabel} - ${serie.label}`]);
+  const transcriptionIdentifiants = transcription?.identifiants ?? (() => {
+    const identifiants: string[] = [];
+    for (const serie of series) {
+      identifiants.push(serie.label, `${legendReferenceLabel} - ${serie.label}`);
+    }
+    return identifiants;
+  })();
 
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
@@ -139,8 +149,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       datalabels: {
         align: "end",
         anchor: (context: any) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value > 0 ? "start" : "end";
+          const datasetValues = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+          const rawValue = datasetValues[context.dataIndex];
+          const numericValue = typeof rawValue === "number" ? rawValue : null;
+          return numericValue !== null && numericValue > 0 ? "start" : "end";
         },
         font: {
           family: "Marianne",
@@ -148,7 +160,8 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           weight: 700,
         },
         formatter: (value: number | null, _context: Context): string => {
-          const formatted = formatValeur(value);
+          const numericValue = typeof value === "number" ? value : null;
+          const formatted = formatValeur(numericValue);
           return formatted ?? "";
         },
       },
@@ -156,10 +169,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       tooltip: {
         filter: (tooltipItem) => tooltipItem.raw !== null && tooltipItem.raw !== undefined,
         callbacks: {
-          label: function (context: any) {
-            const valeur = context.raw as number | null;
-            const datasetLabel = context.dataset.label as string;
-            const valeurRef = referencesByLabel[datasetLabel]?.[context.dataIndex] ?? null;
+          label(context: any) {
+            const rawValue = context.raw;
+            const valeur = typeof rawValue === "number" ? rawValue : null;
+            const labelValue = typeof context.dataset.label === "string" ? context.dataset.label : "";
+            const referenceValues = labelValue ? referencesByLabel[labelValue] ?? [] : [];
+            const valeurRef = referenceValues[context.dataIndex] ?? null;
+
             const valeurText = formatValeur(valeur) ?? valeurNonRenseigneeLabel;
             const valeurRefText = formatValeur(valeurRef) ?? valeurNonRenseigneeLabel;
 
@@ -197,9 +213,9 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     },
   };
 
-  const Legend = () => (
+  const legend = (
     <div className={styles["legendContainer"]}>
-      <menu className={"fr-checkbox-group " + styles["legend"]} id={legendContainerId} />
+      <menu className={`fr-checkbox-group ${styles["legend"]}`} id={legendContainerId} />
       <div aria-hidden="true" className={styles["referenceLegend"]}>
         <span className={styles["referenceLine"]} style={{ backgroundColor: legendReferenceColor }} />
         <span>{legendReferenceLabel}</span>
@@ -211,7 +227,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     <>
       <div>
         <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
-        <Legend />
+        {legend}
       </div>
       {transcription && (
         <Transcription

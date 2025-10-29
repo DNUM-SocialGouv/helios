@@ -4,10 +4,10 @@ import {
   NatureContratsAnnuel,
   NatureContratsTrimestriel,
 } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import HistogrammeComparaisonVerticalAvecRef, { HistogrammeComparaisonVerticalAvecRefSerie } from "../../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
-import type { CouleurHistogramme } from "../../../../commun/Graphique/couleursGraphique";
 import type { Wording } from "../../../../../configuration/wording/Wording";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
+import type { CouleurHistogramme } from "../../../../commun/Graphique/couleursGraphique";
+import HistogrammeComparaisonVerticalAvecRef, { HistogrammeComparaisonVerticalAvecRefSerie } from "../../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import { FrequencyFilter } from "../FrequencyFilter";
 
@@ -95,7 +95,7 @@ const prépareSeries = (
 
   for (const valeur of sortedDonnees) {
     const categorie = construitLibelleCategorie(valeur, isTrimestriel);
-    if (!categories.find((c) => c.key === categorie.key)) {
+    if (!categories.some((c) => c.key === categorie.key)) {
       categories.push(categorie);
     }
 
