@@ -1,9 +1,9 @@
 import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
-import { Bar } from "react-chartjs-2";
 import { Context } from "chartjs-plugin-datalabels";
+import { Bar } from "react-chartjs-2";
 
-import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
 import { CouleurHistogramme, couleurDesTraitsRefHistogramme } from "./couleursGraphique";
+import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
 import { Transcription } from "../Transcription/Transcription";
 
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
@@ -118,50 +118,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     },
   };
 
-  const dynamicScalePlugin = {
-    id: "dynamicScale",
-    beforeUpdate(chart: ChartJS) {
-      let maxValue = 0;
-
-      chart.data.datasets.forEach((dataset, datasetIndex) => {
-        if (!chart.isDatasetVisible(datasetIndex)) {
-          return;
-        }
-
-        dataset.data.forEach((value) => {
-          const numericValue = typeof value === "number" ? value : value === null ? null : Number(value);
-          if (numericValue !== null && Number.isFinite(numericValue)) {
-            maxValue = Math.max(maxValue, numericValue);
-          }
-        });
-
-        const datasetLabel = dataset.label as string | undefined;
-        if (!datasetLabel) {
-          return;
-        }
-
-        referencesByLabel[datasetLabel]?.forEach((refValue) => {
-          if (refValue !== null && Number.isFinite(refValue)) {
-            maxValue = Math.max(maxValue, refValue as number);
-          }
-        });
-      });
-
-      if (!chart.options.scales?.y) {
-        return;
-      }
-
-      chart.options.scales.y.beginAtZero = true;
-
-      if (maxValue > 0) {
-        const padding = maxValue * 0.05;
-        chart.options.scales.y.max = maxValue + padding;
-      } else {
-        chart.options.scales.y.max = undefined;
-      }
-    },
-  };
-
   const valeursTranscription = series.flatMap((serie) => {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
     const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
@@ -242,10 +198,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   };
 
   const Legend = () => (
-    <div className={styles.legendContainer}>
-      <menu className={"fr-checkbox-group " + styles.legend} id={legendContainerId} />
-      <div aria-hidden="true" className={styles.referenceLegend}>
-        <span className={styles.referenceLine} style={{ backgroundColor: legendReferenceColor }} />
+    <div className={styles["legendContainer"]}>
+      <menu className={"fr-checkbox-group " + styles["legend"]} id={legendContainerId} />
+      <div aria-hidden="true" className={styles["referenceLegend"]}>
+        <span className={styles["referenceLine"]} style={{ backgroundColor: legendReferenceColor }} />
         <span>{legendReferenceLabel}</span>
       </div>
     </div>
@@ -254,7 +210,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={[dynamicScalePlugin, rotationRefPlugin]} />
+        <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
         <Legend />
       </div>
       {transcription && (
