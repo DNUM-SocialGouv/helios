@@ -1,15 +1,15 @@
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 
+import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
+import { FrequencyFilter } from "./FrequencyFilter";
 import {
   NatureContratsAnnuel,
   NatureContratsTrimestriel,
-} from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import type { Wording } from "../../../../../configuration/wording/Wording";
-import { useDependencies } from "../../../../commun/contexts/useDependencies";
-import type { CouleurHistogramme } from "../../../../commun/Graphique/couleursGraphique";
-import HistogrammeComparaisonVerticalAvecRef, { HistogrammeComparaisonVerticalAvecRefSerie } from "../../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
-import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
-import { FrequencyFilter } from "../FrequencyFilter";
+} from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import type { Wording } from "../../../../configuration/wording/Wording";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
+import type { CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
+import HistogrammeComparaisonVerticalAvecRef, { HistogrammeComparaisonVerticalAvecRefSerie } from "../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
@@ -132,6 +132,37 @@ const prépareSeries = (
 const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueNatureContratsAnnuelProps) => {
   const { libelles, series, natures } = useMemo(() => prépareSeries(donnees, palette, false), [donnees, palette]);
 
+  const libellesValeursManquantes = useMemo(() => {
+    const valeursManquantes: string[] = [];
+    for (const serie of series) {
+      serie.valeurs.forEach((valeur, index) => {
+        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
+          const libelleComplet = `${serie.label} - ${libelles[index]}`;
+          if (!valeursManquantes.includes(libelleComplet)) {
+            valeursManquantes.push(libelleComplet);
+          }
+        }
+      });
+    }
+    return valeursManquantes;
+  }, [libelles, series]);
+
+  const libellesValeursRefManquantes = useMemo(() => {
+    const valeursRefManquantes: string[] = [];
+    for (const serie of series) {
+      serie.valeursRef.forEach((valeur, index) => {
+        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
+          const annee = libelles[index];
+          const libelleComplet = `${serie.label} - ${annee}`;
+          if (!valeursRefManquantes.includes(libelleComplet)) {
+            valeursRefManquantes.push(libelleComplet);
+          }
+        }
+      });
+    }
+    return valeursRefManquantes;
+  }, [libelles, series]);
+
   const transcriptionIdentifiants = useMemo(
     () => natures.flatMap((natureLibelle) => [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`]),
     [natures, wording.MOYENNE_REF],
@@ -143,19 +174,50 @@ const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueN
       legendContainerId="legende-nature-contrats-annuel"
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
+      libellesValeursManquantes={libellesValeursManquantes}
+      libellesValeursRefManquantes={libellesValeursRefManquantes}
       series={series}
       transcription={{
         enteteLibelle: wording.ANNÉE,
         identifiantUnique: "transcription-nature-contrats-annuel",
         identifiants: transcriptionIdentifiants,
       }}
-      valeurNonRenseigneeLabel={wording.NON_RENSEIGNÉ}
     />
   );
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ donnees, palette, wording }: GraphiqueNatureContratsTrimestrielProps) => {
   const { libelles, series, natures } = useMemo(() => prépareSeries(donnees, palette, true), [donnees, palette]);
+
+  const libellesValeursManquantes = useMemo(() => {
+    const valeursManquantes: string[] = [];
+    for (const serie of series) {
+      serie.valeurs.forEach((valeur, index) => {
+        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
+          const libelleComplet = `${serie.label} - ${libelles[index]}`;
+          if (!valeursManquantes.includes(libelleComplet)) {
+            valeursManquantes.push(libelleComplet);
+          }
+        }
+      });
+    }
+    return valeursManquantes;
+  }, [libelles, series]);
+
+  const libellesValeursRefManquantes = useMemo(() => {
+    const valeursRefManquantes: string[] = [];
+    for (const serie of series) {
+      serie.valeursRef.forEach((valeur, index) => {
+        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
+          const libelleComplet = `${serie.label} - ${libelles[index]}`;
+          if (!valeursRefManquantes.includes(libelleComplet)) {
+            valeursRefManquantes.push(libelleComplet);
+          }
+        }
+      });
+    }
+    return valeursRefManquantes;
+  }, [libelles, series]);
 
   const transcriptionIdentifiants = useMemo(
     () => natures.flatMap((natureLibelle) => [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`]),
@@ -168,13 +230,14 @@ const GraphiqueNatureContratsTrimestriel = ({ donnees, palette, wording }: Graph
       legendContainerId="legende-nature-contrats-trimestriel"
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
+      libellesValeursManquantes={libellesValeursManquantes}
+      libellesValeursRefManquantes={libellesValeursRefManquantes}
       series={series}
       transcription={{
         enteteLibelle: wording.MOIS_ANNEES,
         identifiantUnique: "transcription-nature-contrats-trimestriel",
         identifiants: transcriptionIdentifiants,
       }}
-      valeurNonRenseigneeLabel={wording.NON_RENSEIGNÉ}
     />
   );
 };

@@ -2,8 +2,11 @@ import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 
-import { CouleurHistogramme, couleurDesTraitsRefHistogramme } from "./couleursGraphique";
+import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
+import { useDependencies } from "../contexts/useDependencies";
+import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
@@ -27,16 +30,17 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   legendReferenceColor?: string;
   legendContainerId?: string;
   transcription?: TranscriptionOptions;
-  valeurNonRenseigneeLabel: string;
   formatValeur?: (valeur: number | null) => string | null;
   highlightLastLabel?: boolean;
+  libellesValeursManquantes?: string[];
+  libellesValeursRefManquantes?: string[];
 }>;
 
 const valeurFormateeParDefaut = (valeur: number | null): string | null => {
   if (typeof valeur !== "number" || Number.isNaN(valeur)) {
     return null;
   }
-  return valeur.toLocaleString("fr");
+  return StringFormater.formatInFrench(valeur);
 };
 
 const HistogrammeComparaisonVerticalAvecRef = ({
@@ -46,13 +50,18 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   legendReferenceColor = couleurDesTraitsRefHistogramme,
   legendContainerId = "histogramme-comparaison-vertical-legend",
   transcription,
-  valeurNonRenseigneeLabel,
   formatValeur = valeurFormateeParDefaut,
-  highlightLastLabel = false,
+  libellesValeursManquantes,
+  libellesValeursRefManquantes,
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
-  const referencesByLabel: Record<string, (number | null)[]> = {};
+  const { wording } = useDependencies();
+  const valeursManquantes = libellesValeursManquantes ?? [];
+  const valeursRefManquantes = libellesValeursRefManquantes ?? [];
+  const referencesParLibelle: Record<string, (number | null)[]> = {};
+  const valeursParLibelle: Record<string, (number | null)[]> = {};
   for (const serie of series) {
-    referencesByLabel[serie.label] = serie.valeursRef;
+    referencesParLibelle[serie.label] = serie.valeursRef;
+    valeursParLibelle[serie.label] = serie.valeurs;
   }
 
   const chartData: ChartData<"bar"> = {
@@ -73,7 +82,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     id: "rotationRef",
     afterDraw(chart: ChartJS) {
       const { ctx, scales } = chart;
-      const refs = referencesByLabel;
 
       const datasets = chart.data.datasets ?? [];
       for (const [datasetIndex, dataset] of datasets.entries()) {
@@ -86,8 +94,9 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           continue;
         }
 
-        const refValues = refs[label];
-        if (!refValues) {
+        const valeursReference = referencesParLibelle[label];
+        const valeurs = valeursParLibelle[label];
+        if (!valeursReference || !valeurs) {
           continue;
         }
 
@@ -98,12 +107,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
 
         const elements = chart.getDatasetMeta(datasetIndex).data ?? [];
         for (const [index, element] of elements.entries()) {
-          const valeurRef = refValues[index];
-          if (valeurRef === undefined || valeurRef === null) {
+          const valeurRef = valeursReference[index];
+          const valeur = valeurs[index];
+          if (!Number.isFinite(valeur) || !Number.isFinite(valeurRef)) {
             continue;
           }
 
-          const yPos = yScale.getPixelForValue(valeurRef);
+          const yPos = yScale.getPixelForValue(valeurRef as number);
           const barElement = element as unknown as { x: number; width: number };
           const xLeft = barElement.x - barElement.width / 2;
           const xRight = barElement.x + barElement.width / 2;
@@ -128,13 +138,15 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     valeursTranscription.push(valeursFormatees, refsFormatees);
   }
 
-  const transcriptionIdentifiants = transcription?.identifiants ?? (() => {
-    const identifiants: string[] = [];
-    for (const serie of series) {
-      identifiants.push(serie.label, `${legendReferenceLabel} - ${serie.label}`);
-    }
-    return identifiants;
-  })();
+  const transcriptionIdentifiants =
+    transcription?.identifiants ??
+    (() => {
+      const identifiants: string[] = [];
+      for (const serie of series) {
+        identifiants.push(serie.label, `${legendReferenceLabel} - ${serie.label}`);
+      }
+      return identifiants;
+    })();
 
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
@@ -173,18 +185,18 @@ const HistogrammeComparaisonVerticalAvecRef = ({
             const rawValue = context.raw;
             const valeur = typeof rawValue === "number" ? rawValue : null;
             const labelValue = typeof context.dataset.label === "string" ? context.dataset.label : "";
-            const referenceValues = labelValue ? referencesByLabel[labelValue] ?? [] : [];
+            const referenceValues = labelValue ? (referencesParLibelle[labelValue] ?? []) : [];
             const valeurRef = referenceValues[context.dataIndex] ?? null;
 
-            const valeurText = formatValeur(valeur) ?? valeurNonRenseigneeLabel;
-            const valeurRefText = formatValeur(valeurRef) ?? valeurNonRenseigneeLabel;
+            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
+            const valeurRefText = formatValeur(valeurRef) ?? wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
           },
         },
       },
       // @ts-ignore
-      rotationRef: { referencesByLabel } as any,
+      rotationRef: { referencesByLabel: referencesParLibelle } as any,
     },
     scales: {
       x: {
@@ -199,7 +211,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         ticks: {
           color: "#000",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === libelles.length - 1) {
+            if (context.index === libelles.length - 1) {
               return { weight: "bold" };
             }
             return {};
@@ -229,6 +241,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
         {legend}
       </div>
+      {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}
+      {valeursRefManquantes.length > 0 && (
+        <MiseEnExergue>{`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${valeursRefManquantes.join(", ")}`}</MiseEnExergue>
+      )}
       {transcription && (
         <Transcription
           entêteLibellé={transcription.enteteLibelle}

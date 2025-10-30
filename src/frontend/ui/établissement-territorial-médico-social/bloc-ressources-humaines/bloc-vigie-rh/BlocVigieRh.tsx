@@ -20,7 +20,7 @@ import { ProfessionFiliereData } from "../../../../../backend/m√©tier/entities/√
 import { MOIS } from "../../../../utils/constantes";
 import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
-import GraphiqueNatureContrats from "./nature-contrats/NatureContrats";
+import GraphiqueNatureContrats from "./NatureContrats";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;

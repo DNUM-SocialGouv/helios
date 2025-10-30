@@ -4,6 +4,7 @@ import {
   EtablissementTerritorialMedicoSocialVigieRH,
   MotifsRuptureContrat,
   NatureContratsAnnuel,
+  NatureContratsTrimestriel,
   ProfessionFiliere,
   TauxRotation,
   TauxRotationTrimestriel,
@@ -309,7 +310,7 @@ export class BlocVigieRHViewModel {
     return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
   }
 
-  public get natureContratsTrimestriel():NatureContratsAnnuel[]{
+  public get natureContratsTrimestriel():NatureContratsTrimestriel[]{
     return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
   }
 
