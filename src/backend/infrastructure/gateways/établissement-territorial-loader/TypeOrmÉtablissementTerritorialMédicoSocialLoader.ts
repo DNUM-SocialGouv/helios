@@ -313,7 +313,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         depart: departEmbaucheModel.depart,
         departRef: departEmbaucheModel.departRef,
         embauche: departEmbaucheModel.embauche,
-        embaucheRef: departEmbaucheModel.embaucheRef
+        embaucheRef: departEmbaucheModel.embaucheRef,
+        departsPrematuresCdi: departEmbaucheModel.departsPrematuresCdi ?? null,
       }
     })
 

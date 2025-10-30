@@ -1,25 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
+import LineChart, { EffectifsData } from "./GraphiqueLine";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
+import PyramidChart from "./GraphiquePyramide";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
 import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
+import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
+import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
+import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi";
+import { MOIS } from "../../../../utils/constantes";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
+import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
-import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
-import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
-import LineChart, { EffectifsData } from "./GraphiqueLine";
-import PyramidChart from "./GraphiquePyramide";
-import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { MOIS } from "../../../../utils/constantes";
-import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
@@ -331,6 +332,20 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             source={wording.VIGIE_RH}
           >
             <GraphiqueNatureContrats
+              blocVigieRhViewModel={blocVigieRHViewModel}
+            />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {blocVigieRHViewModel.graphiqueDepartsPrematuresCdiAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<></>}
+            identifiant="vr-departs-prematures-cdi"
+            nomDeLIndicateur={wording.DEPARTS_PREMATURES_CDI}
+            source={wording.VIGIE_RH}
+          >
+            <DepartsPrematuresCdi
               blocVigieRhViewModel={blocVigieRHViewModel}
             />
           </IndicateurGraphique>

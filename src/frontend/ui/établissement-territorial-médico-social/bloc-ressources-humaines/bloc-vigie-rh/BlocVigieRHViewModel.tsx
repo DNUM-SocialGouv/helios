@@ -35,6 +35,11 @@ export type DepartEmbaucheTrimestrielViewModel = {
   embaucheRef: number;
 }
 
+export type DepartPrematuresCdiViewModel = Readonly<{
+  annee: number;
+  valeur: number | null;
+}>;
+
 export class BlocVigieRHViewModel {
 
   public etablissementTerritorialVRMedicoSocial: EtablissementTerritorialMedicoSocialVigieRH;
@@ -72,6 +77,10 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.length === 0;
   }
 
+  public get lesDepartsPrematuresCdiPasRenseignes(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.departsPrematuresCdiDisponibles;
+  }
+
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
@@ -100,6 +109,10 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
   }
 
+  public get lesDepartsPrematuresCdiPasAutorises(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+  }
+
   public get graphiqueMotifsAffichable(): boolean {
     return !this.lesMotifsNeSontIlsPasRenseignes && !this.lesMotifsNeSontIlsPasAutorises;
   }
@@ -124,6 +137,10 @@ export class BlocVigieRHViewModel {
     return !this.lesNaturesContratsNeSontPasAutorisees && !this.lesNaturesContratsNeSontPasReseignees;
   }
 
+  public get graphiqueDepartsPrematuresCdiAffichable(): boolean {
+    return !this.lesDepartsEmbauchesNeSontIlsPasAutorisee && this.departsPrematuresCdiDisponibles;
+  }
+
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
@@ -133,6 +150,7 @@ export class BlocVigieRHViewModel {
     if (this.lesDureesCDDNeSontEllesPasRenseignees) nonRenseignees.push(this.wording.DUREE_CDD);
     if (this.lesMotifsNeSontIlsPasRenseignes) nonRenseignees.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
     if (this.lesNaturesContratsNeSontPasReseignees) nonRenseignees.push(this.wording.NATURE_CONTRATS);
+    if (this.lesDepartsPrematuresCdiPasRenseignes) nonRenseignees.push(this.wording.DEPARTS_PREMATURES_CDI);
 
     return nonRenseignees;
   }
@@ -146,6 +164,7 @@ export class BlocVigieRHViewModel {
     if (this.lesDureesCDDNeSontEllesPasAutorisee) nonAutorises.push(this.wording.DUREE_CDD);
     if (this.lesMotifsNeSontIlsPasAutorises) nonAutorises.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
     if (this.lesNaturesContratsNeSontPasAutorisees) nonAutorises.push(this.wording.NATURE_CONTRATS);
+    if (this.lesDepartsPrematuresCdiPasAutorises) nonAutorises.push(this.wording.DEPARTS_PREMATURES_CDI);
 
     return nonAutorises;
   }
@@ -227,6 +246,16 @@ export class BlocVigieRHViewModel {
         embaucheRef,
       }
     });
+  }
+
+  public get departsPrematuresCdi(): DepartPrematuresCdiViewModel[] {
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+      .map(({ annee, departsPrematuresCdi }) => ({ annee, valeur: departsPrematuresCdi ?? null }))
+      .sort((a, b) => b.annee - a.annee);
+  }
+
+  private get departsPrematuresCdiDisponibles(): boolean {
+    return this.departsPrematuresCdi.some(({ valeur }) => valeur !== null && valeur !== undefined);
   }
 
   public get donneesTauxRotation(): TauxRotation[] {

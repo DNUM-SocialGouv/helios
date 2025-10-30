@@ -626,4 +626,5 @@ export interface Wording {
   readonly DUREE: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
   readonly NATURE_CONTRATS: string;
+  readonly DEPARTS_PREMATURES_CDI: string;
 }

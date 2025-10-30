@@ -84,6 +84,7 @@ import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
+import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761819265202-AjoutColonneDepartsPrematuresCdi";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -358,7 +359,8 @@ const datasource = new DataSource({
     AjoutMotifsRupturesContrats1760516962957,
     AjoutTableVigieRhDureeCdd1759821521368,
     AjoutTableVigieRhRefDureeCdd1759821492361,
-    VigierhNatureContratsTables1760966102359
+    VigierhNatureContratsTables1760966102359,
+    AjoutColonneDepartsPrematuresCdi1761819265202
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
