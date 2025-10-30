@@ -5,6 +5,7 @@ import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauche
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
+import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -20,7 +21,6 @@ import { ProfessionFiliereData } from "../../../../../backend/m√©tier/entities/√
 import { MOIS } from "../../../../utils/constantes";
 import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
-import GraphiqueNatureContrats from "./NatureContrats";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;

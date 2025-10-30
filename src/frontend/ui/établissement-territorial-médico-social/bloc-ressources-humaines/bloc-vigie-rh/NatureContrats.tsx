@@ -4,15 +4,40 @@ import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 import { FrequencyFilter } from "./FrequencyFilter";
 import {
   NatureContratsAnnuel,
-  NatureContratsTrimestriel,
+  NatureContratsTrimestriel
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import type { Wording } from "../../../../configuration/wording/Wording";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import type { CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
-import HistogrammeComparaisonVerticalAvecRef, { HistogrammeComparaisonVerticalAvecRefSerie } from "../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
+import HistogrammeComparaisonVerticalAvecRef, {
+  HistogrammeComparaisonVerticalAvecRefSerie
+} from "../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
 
 type GraphiqueNatureContratsProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
+}>;
+
+type GraphiqueNatureContratsAnnuelProps = Readonly<{
+  donnees: NatureContratsAnnuel[];
+  palette: CouleurHistogramme[];
+  wording: Wording;
+}>;
+
+type GraphiqueNatureContratsTrimestrielProps = Readonly<{
+  donnees: NatureContratsTrimestriel[];
+  palette: CouleurHistogramme[];
+  wording: Wording;
+}>;
+
+type NatureContratCategorie = Readonly<{
+  key: string;
+  label: string;
+}>;
+
+type Serie = Readonly<{
+  libelles: string[];
+  series: HistogrammeComparaisonVerticalAvecRefSerie[];
+  natures: string[];
 }>;
 
 const GraphiqueNatureContrats = ({ blocVigieRhViewModel }: GraphiqueNatureContratsProps) => {
@@ -43,26 +68,8 @@ const GraphiqueNatureContrats = ({ blocVigieRhViewModel }: GraphiqueNatureContra
   );
 };
 
-type GraphiqueNatureContratsAnnuelProps = Readonly<{
-  donnees: NatureContratsAnnuel[];
-  palette: CouleurHistogramme[];
-  wording: Wording;
-}>;
-
-type GraphiqueNatureContratsTrimestrielProps = Readonly<{
-  donnees: NatureContratsTrimestriel[];
-  palette: CouleurHistogramme[];
-  wording: Wording;
-}>;
-
-type NatureContratCategorie = Readonly<{
-  key: string;
-  label: string;
-}>;
-
-const estTrimestriel = (
-  valeur: NatureContratsAnnuel | NatureContratsTrimestriel,
-): valeur is NatureContratsTrimestriel => "trimestre" in valeur && valeur.trimestre !== undefined;
+const estTrimestriel = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel): valeur is NatureContratsTrimestriel =>
+  "trimestre" in valeur && valeur.trimestre !== undefined;
 
 const construitLibelleCategorie = (valeur: NatureContratsAnnuel | NatureContratsTrimestriel, isTrimestriel: boolean): NatureContratCategorie => {
   if (isTrimestriel && estTrimestriel(valeur)) {
@@ -71,15 +78,7 @@ const construitLibelleCategorie = (valeur: NatureContratsAnnuel | NatureContrats
   return { key: valeur.annee.toString(), label: valeur.annee.toString() };
 };
 
-const prépareSeries = (
-  donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[],
-  palette: CouleurHistogramme[],
-  isTrimestriel: boolean,
-): Readonly<{
-  libelles: string[];
-  series: HistogrammeComparaisonVerticalAvecRefSerie[];
-  natures: string[];
-}> => {
+const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean): Serie => {
   const sortedDonnees = [...donnees].sort((a, b) => {
     if (isTrimestriel && estTrimestriel(a) && estTrimestriel(b)) {
       const aKey = a.annee * 10 + a.trimestre;
@@ -129,38 +128,31 @@ const prépareSeries = (
   return { libelles, series, natures };
 };
 
+function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: HistogrammeComparaisonVerticalAvecRefSerie[], libelles: string[]) {
+  const valeursRefManquantes: string[] = [];
+  for (const serie of series) {
+    for(const [index,valeur] of serie[typeValeur].entries()){
+      if (typeof valeur !== "number" || Number.isNaN(valeur)) {
+        const annee = libelles[index];
+        const libelleComplet = `${serie.label} - ${annee}`;
+        if (!valeursRefManquantes.includes(libelleComplet)) {
+          valeursRefManquantes.push(libelleComplet);
+        }
+      }
+    }
+  }
+  return valeursRefManquantes;
+}
+
 const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueNatureContratsAnnuelProps) => {
-  const { libelles, series, natures } = useMemo(() => prépareSeries(donnees, palette, false), [donnees, palette]);
+  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, false), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
-    const valeursManquantes: string[] = [];
-    for (const serie of series) {
-      serie.valeurs.forEach((valeur, index) => {
-        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-          const libelleComplet = `${serie.label} - ${libelles[index]}`;
-          if (!valeursManquantes.includes(libelleComplet)) {
-            valeursManquantes.push(libelleComplet);
-          }
-        }
-      });
-    }
-    return valeursManquantes;
+    return trouverValeursManquantes("valeurs", series, libelles);
   }, [libelles, series]);
 
   const libellesValeursRefManquantes = useMemo(() => {
-    const valeursRefManquantes: string[] = [];
-    for (const serie of series) {
-      serie.valeursRef.forEach((valeur, index) => {
-        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-          const annee = libelles[index];
-          const libelleComplet = `${serie.label} - ${annee}`;
-          if (!valeursRefManquantes.includes(libelleComplet)) {
-            valeursRefManquantes.push(libelleComplet);
-          }
-        }
-      });
-    }
-    return valeursRefManquantes;
+    return trouverValeursManquantes("valeursRef", series, libelles);
   }, [libelles, series]);
 
   const transcriptionIdentifiants = useMemo(
@@ -187,36 +179,14 @@ const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueN
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ donnees, palette, wording }: GraphiqueNatureContratsTrimestrielProps) => {
-  const { libelles, series, natures } = useMemo(() => prépareSeries(donnees, palette, true), [donnees, palette]);
+  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, true), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
-    const valeursManquantes: string[] = [];
-    for (const serie of series) {
-      serie.valeurs.forEach((valeur, index) => {
-        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-          const libelleComplet = `${serie.label} - ${libelles[index]}`;
-          if (!valeursManquantes.includes(libelleComplet)) {
-            valeursManquantes.push(libelleComplet);
-          }
-        }
-      });
-    }
-    return valeursManquantes;
+    return trouverValeursManquantes("valeurs", series, libelles);
   }, [libelles, series]);
 
   const libellesValeursRefManquantes = useMemo(() => {
-    const valeursRefManquantes: string[] = [];
-    for (const serie of series) {
-      serie.valeursRef.forEach((valeur, index) => {
-        if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-          const libelleComplet = `${serie.label} - ${libelles[index]}`;
-          if (!valeursRefManquantes.includes(libelleComplet)) {
-            valeursRefManquantes.push(libelleComplet);
-          }
-        }
-      });
-    }
-    return valeursRefManquantes;
+    return trouverValeursManquantes("valeursRef", series, libelles);
   }, [libelles, series]);
 
   const transcriptionIdentifiants = useMemo(

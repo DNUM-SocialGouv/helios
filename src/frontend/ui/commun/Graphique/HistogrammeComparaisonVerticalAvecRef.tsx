@@ -27,7 +27,6 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   libelles: (number | string)[];
   series: HistogrammeComparaisonVerticalAvecRefSerie[];
   legendReferenceLabel: string;
-  legendReferenceColor?: string;
   legendContainerId?: string;
   transcription?: TranscriptionOptions;
   formatValeur?: (valeur: number | null) => string | null;
@@ -47,7 +46,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   libelles,
   series,
   legendReferenceLabel,
-  legendReferenceColor = couleurDesTraitsRefHistogramme,
+
   legendContainerId = "histogramme-comparaison-vertical-legend",
   transcription,
   formatValeur = valeurFormateeParDefaut,
@@ -122,7 +121,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           ctx.beginPath();
           ctx.moveTo(xLeft, yPos);
           ctx.lineTo(xRight, yPos);
-          ctx.strokeStyle = legendReferenceColor;
+          ctx.strokeStyle = couleurDesTraitsRefHistogramme;
           ctx.lineWidth = 2;
           ctx.stroke();
           ctx.restore();
@@ -131,22 +130,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     },
   };
 
-  const valeursTranscription: (string | null)[][] = [];
-  for (const serie of series) {
-    const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
-    const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
-    valeursTranscription.push(valeursFormatees, refsFormatees);
-  }
-
-  const transcriptionIdentifiants =
-    transcription?.identifiants ??
-    (() => {
-      const identifiants: string[] = [];
-      for (const serie of series) {
-        identifiants.push(serie.label, `${legendReferenceLabel} - ${serie.label}`);
-      }
-      return identifiants;
-    })();
+  const anneeEnCours = String(new Date().getFullYear());
 
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
@@ -211,7 +195,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         ticks: {
           color: "#000",
           font: (context: any) => {
-            if (context.index === libelles.length - 1) {
+            if (String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: "bold" };
             }
             return {};
@@ -225,11 +209,28 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     },
   };
 
+  const valeursTranscription: (string | null)[][] = [];
+  for (const serie of series) {
+    const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
+    const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
+    valeursTranscription.push(valeursFormatees, refsFormatees);
+  }
+
+  const transcriptionIdentifiants =
+    transcription?.identifiants ??
+    (() => {
+      const identifiants: string[] = [];
+      for (const serie of series) {
+        identifiants.push(serie.label, `${legendReferenceLabel} - ${serie.label}`);
+      }
+      return identifiants;
+    })();
+
   const legend = (
     <div className={styles["legendContainer"]}>
       <menu className={`fr-checkbox-group ${styles["legend"]}`} id={legendContainerId} />
       <div aria-hidden="true" className={styles["referenceLegend"]}>
-        <span className={styles["referenceLine"]} style={{ backgroundColor: legendReferenceColor }} />
+        <span className={styles["referenceLine"]} style={{ backgroundColor: couleurDesTraitsRefHistogramme }} />
         <span>{legendReferenceLabel}</span>
       </div>
     </div>
