@@ -21,21 +21,21 @@ class TestImportVigieRhMouvements:
 
 
     def test_import_vigie_rh_mouvements(self) -> None:
-        chemin_local_du_fichier_mouvements = 'data_test/entrée/vigie_rh/vigierh_etablissement_annuel_2025_09_09.parquet'
+        chemin_local_du_fichier_mouvements = 'data_test/entrée/vigie_rh/vigierh_etablissement_annuel_2025_10_30.parquet'
         import_donnees_mouvements_rh(chemin_local_du_fichier_mouvements, base_de_données_test, mocked_logger )
 
         mouvements_enregistres = pd.read_sql(TABLE_VIGIE_RH_MOUVEMENTS_RH, base_de_données_test)
         mouvements_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": ["010002228", "010002228", "010002228"],
-                "annee": [2023, 2024, 2025],
-                "nouveaux_contrats": [783, 751, 597],
-                "nouveaux_contrats_ref": [788, 756, 601],
-                "fins_contrats": [730, 744, 563],
-                "fins_contrats_ref": [769, 738, 586],
-                "taux_rotation": [1.8983688833124215, 1.7444574095682615, 1.2917594654788418],
-                "taux_rotation_ref": [1.935941893600912, 1.7789841639697426, 1.3173263045233183],
-                "departs_prematures_cdi": [10, 10, 10],
+                "numero_finess_etablissement_territorial": ["010002228", "010002228"],
+                "annee": [2024, 2025],
+                "nouveaux_contrats": [751, 597],
+                "nouveaux_contrats_ref": [738, 587],
+                "fins_contrats": [744, 563],
+                "fins_contrats_ref": [746, 593],
+                "taux_rotation": [1.7444574095682615, 1.2917594654788418],
+                "taux_rotation_ref": [1.6117762806016536, 1.1935099448582995],
+                "departs_prematures_cdi": [7, 6],
             }
         )
         pd.testing.assert_frame_equal(mouvements_enregistres.sort_index(axis=1), mouvements_attendus.sort_index(axis=1))
