@@ -77,7 +77,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get graphiqueMotifsAffichable(): boolean {
-    return !this.lesDureesCDDNeSontEllesPasRenseignees && !this.lesDureesCDDNeSontEllesPasAutorisee;
+    return !this.lesMotifsNeSontIlsPasRenseignes && !this.lesMotifsNeSontIlsPasAutorises;
   }
 
   public get graphiqueRotationsAffichable(): boolean {

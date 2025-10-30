@@ -53,6 +53,8 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             logger.info(
                 f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
         else:
+            logger.info(f"Début de traitement des fichiers"
+                        f" {chemin_local_fichier_ref}  et {chemin_local_fichier_donnees}")
             references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
             donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
             donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
