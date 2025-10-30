@@ -5,6 +5,7 @@ import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauche
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
+import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
@@ -318,6 +319,20 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             source={wording.VIGIE_RH}
           >
             <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} />
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<></>}
+            identifiant="vr-nature-contrats"
+            nomDeLIndicateur={wording.NATURE_CONTRATS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueNatureContrats
+              blocVigieRhViewModel={blocVigieRHViewModel}
+            />
           </IndicateurGraphique>
         ) : (
           <></>

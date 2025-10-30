@@ -153,6 +153,7 @@ import { UtilisateurModel } from "./models/UtilisateurModel";
 import { VigieRhRefDureeCddModel } from "./models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
 import { VigieRhRefMotifRuptutreContratModel } from "./models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
+import { VigieRhRefNatureContrat } from "./models/vigie_rh/referentiel/VigieRhRefNatureContratsModel";
 import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
@@ -164,6 +165,8 @@ import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
 import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "./models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
+import { VigieRhNatureContratsAnnuelModel } from "./models/vigie_rh/VigieRhNatureContratsAnnuelModel";
+import { VigieRhNatureContratsTrimestrielModel } from "./models/vigie_rh/VigieRhNatureContratsTrimestrielModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 import { VigieRhPyramideAgesModel } from "./models/vigie_rh/VigieRHPyramideAgeModel";
@@ -234,7 +237,10 @@ const datasource = new DataSource({
     VigieRhDureesCDDModel,
     VigieRhRefDureeCddModel,
     VigieRhMotifRuptutreContratModel,
-    VigieRhRefMotifRuptutreContratModel
+    VigieRhRefMotifRuptutreContratModel,
+    VigieRhRefNatureContrat,
+    VigieRhNatureContratsAnnuelModel,
+    VigieRhNatureContratsTrimestrielModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,

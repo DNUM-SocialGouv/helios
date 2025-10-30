@@ -71,6 +71,18 @@ export type MotifsRuptureContrat = Readonly<{
   motifCode: number;
 }>;
 
+export type NatureContratsAnnuel = Readonly<{
+  annee: number;
+  effectif: number | null;
+  effectifRef: number | null;
+  natureLibelle: string;
+  natureCode: number
+}>;
+
+export type NatureContratsTrimestriel = NatureContratsAnnuel & Readonly<{
+  trimestre: number;
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   pyramideAges: PyramideAges[];
   departsEmbauches: DepartEmbauche[];
@@ -83,4 +95,6 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   dureesCddLibelles: string[];
   motifsRuptureContrat: MotifsRuptureContrat[];
   motifsRuptureContratLibelles: string[];
+  natureContratsAnnuel: NatureContratsAnnuel[];
+  natureContratsTrimestriel: NatureContratsTrimestriel[];
 }>;
