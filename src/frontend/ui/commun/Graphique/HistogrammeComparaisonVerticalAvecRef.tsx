@@ -132,6 +132,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
 
   const anneeEnCours = String(new Date().getFullYear());
 
+  // @ts-ignore
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
     animation: false,
@@ -141,6 +142,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       mode: "point",
     },
     plugins: {
+      // @ts-ignore
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
         align: "end",
