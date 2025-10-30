@@ -54,12 +54,11 @@ export class ActivitéSanitaireModel {
   public nombreSéjoursHad!: number;
 
   @Column({ name: "duree_moyenne_sejour_medecine", nullable: true, type: "float" })
-  public dmsMedecine!: number;
+  public dureeMoyenneSejourMedecine!: number;
 
   @Column({ name: "duree_moyenne_sejour_chirurgie", nullable: true, type: "float" })
-  public dmsChirurgie!: number;
+  public dureeMoyenneSejourChirurgie!: number;
 
   @Column({ name: "duree_moyenne_sejour_obstetrique", nullable: true, type: "float" })
-  public dmsObstetrique!: number;
-
+  public dureeMoyenneSejourObstetrique!: number;
 }

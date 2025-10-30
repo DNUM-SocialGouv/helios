@@ -93,10 +93,9 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
         nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
         nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
-        dmsChirurgie: activite.dmsChirurgie,
-        dmsMedecine: activite.dmsMedecine,
-        dmsObstetrique: activite.dmsObstetrique,
-
+        dureeMoyenneSejourMedecine: activite.dureeMoyenneSejourMedecine,
+        dureeMoyenneSejourChirurgie: activite.dureeMoyenneSejourChirurgie,
+        dureeMoyenneSejourObstetrique: activite.dureeMoyenneSejourObstetrique,
       }
     })
 
@@ -575,6 +574,19 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         dateMiseÀJourSource: dateDeMiseAJourAnnSaeModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.nombreJourneesUsld,
       },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourMedecine,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourChirurgie,
+      },
+      dureeMoyenneSejourObstetrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourObstetrique,
+      },
+
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));
   }

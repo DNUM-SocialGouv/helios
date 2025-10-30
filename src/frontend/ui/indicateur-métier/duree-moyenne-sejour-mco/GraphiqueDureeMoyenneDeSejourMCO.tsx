@@ -1,0 +1,53 @@
+import { ChangeEvent, useState } from "react";
+
+import { DureeMoyenneDeSejourMCOHistogrammes } from "./DureeMoyenneDeSejourMCOHistogrammes";
+import { DureeMoyenneSejourMCOViewModel } from "./DureeMoyenneDeSejourMCOViewModel";
+import { useDependencies } from "../../commun/contexts/useDependencies";
+import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ContenuDureeMoyenneDeSejourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuDureeMoyenneDeSejourMCO";
+
+
+type GraphiqueNombreDeSejourMCOProps = Readonly<{
+  nombreDeSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
+  estEntitéJuridique?: boolean;
+}>;
+export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueNombreDeSejourMCOProps) => {
+  const { wording } = useDependencies();
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+
+  const handleFrequency = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedFrequency(event.target.value);
+  }
+
+  const dateDeMiseAJour = (): string => {
+    if (selectedFrequency === wording.ANNUEL) {
+      return dureeMoyenneSejourMCOViewModel.dateDeMiseÀJourDureeMoyenneSejoursMédecineChirurgieObstétrique;
+    } else {
+      return activitéMensuelleViewModel.getDateDeMiseAJour();
+    }
+  }
+
+  return (
+    <IndicateurGraphique
+      contenuInfoBulle={
+        <ContenuDureeMoyenneDeSejourMCO
+          dateDeMiseÀJour={dateDeMiseAJour()}
+          source={wording.PMSI}
+        />
+      }
+      dateDeMiseÀJour={dateDeMiseAJour()}
+      identifiant="activite-moyenne"
+      nomDeLIndicateur={wording.MOYENNE_DE_SEJOUR_MCO}
+      source={wording.PMSI}
+    >
+      <DureeMoyenneDeSejourMCOHistogrammes
+        activiteMensuelleViewModel={activitéMensuelleViewModel}
+        dureeMoyenneDeSejourMCOViewModel={dureeMoyenneSejourMCOViewModel}
+        onFrequencyChange={handleFrequency}
+        selectedFrequency={selectedFrequency}
+      />
+    </IndicateurGraphique>
+  );
+};
