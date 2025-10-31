@@ -323,7 +323,6 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 42
         </div>
         {legendItems.length ? (
           <div style={{ marginTop: "1rem" }}>
-            <p style={{ fontFamily: FONT_FAMILY, fontWeight: 600, fontSize: "0.875rem", margin: "0 0 0.5rem" }}>Légendes :</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               {legendItems.map((entry) => (
                 <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
