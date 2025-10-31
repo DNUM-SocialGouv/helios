@@ -27,7 +27,8 @@ const environmentVariables: EnvironmentVariables = {
   HAPI_SFTP_HOST: "",
   HAPI_SFTP_PORT: "",
   HAPI_SFTP_PASSWORD: "",
-  HAPI_SFTP_USERNAME: ""
+  HAPI_SFTP_USERNAME: "",
+  VIGIE_RH_DATA_PATH: ""
 };
 
 export function getOrm() {
@@ -47,7 +48,8 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     unzipRawData: { exécute: jest.fn() },
     controleDonneesSirecLoader: {
       checkDowloadedSirecFile: jest.fn(),
-    }
+    },
+    vigieRhDownloadRawData: { exécute: jest.fn() },
   };
 };
 
