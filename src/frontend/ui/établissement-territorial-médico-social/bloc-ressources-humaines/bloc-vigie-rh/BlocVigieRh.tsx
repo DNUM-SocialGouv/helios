@@ -47,8 +47,8 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
-  const couleurEffectifsTotaux = "#000000ff"; // orange
-  const couleursFilieres = ["#E3D45C", "#D8A47E", "#FF8E68", "#E8C882"]; // réutilisées pour treemap + line
+  const couleurEffectifsTotaux = "#ff6600ff"; // orange
+  const couleursFilieres = ["#FF8E68","#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);

@@ -5,7 +5,9 @@ import { TreemapController, TreemapElement } from "chartjs-chart-treemap";
 import React, { useMemo } from "react";
 import { Chart } from "react-chartjs-2";
 
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { StringFormater } from "../../../commun/StringFormater";
+import { Transcription } from "../../../commun/Transcription/Transcription";
 
 // Enregistrer treemap + plugins une seule fois (au chargement du module)
 ChartJS.register(TreemapController, TreemapElement, Tooltip, Legend);
@@ -219,6 +221,7 @@ const treemapWrapLabelsPlugin = {
  * Composant principal
  * ------------------------------------------ */
 export default function GraphiqueTreemapRepartitionEffectif({ items, height = 420, couleursFilieres, periodeLibelle }: Props) {
+  const { wording } = useDependencies();
   // Normalisation des données + choix des couleurs (parent > palette)
   const dataNorm = useMemo(
     () =>
@@ -272,7 +275,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 42
               const d = ti.raw?._data;
               const v = Number(ti.raw?.v ?? 0);
               const pct = total > 0 ? (v / total) * 100 : 0;
-              return d?.name ? `${d.name} (${pct.toFixed(1)}%)` : `(${pct.toFixed(1)}%)`;
+              return d?.name ? `${d.name} ` : `(${pct.toFixed(1)}%)`;
             },
           },
         },
@@ -294,29 +297,51 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 42
 
   const legendItems = useMemo(() => dataNorm.map(({ label, color }) => ({ label, color })), [dataNorm]);
 
+  const transcriptionIdentifiants = useMemo(() => [wording.EFFECTIFS, wording.POURCENTAGE], [wording]);
+  const transcriptionLibellés = useMemo(() => dataNorm.map(({ label }) => label), [dataNorm]);
+  const transcriptionValeurs = useMemo(
+    () => [
+      dataNorm.map(({ value }) => value),
+      dataNorm.map(({ value }) => {
+        const pct = total > 0 ? (value / total) * 100 : 0;
+        return `${StringFormater.round(pct, 0)}%`;
+      }),
+    ],
+    [dataNorm, total],
+  );
+
   return (
-    <div style={{ height, display: "flex", flexDirection: "column" }}>
-      {periodeLibelle ? (
-        <p style={{ fontFamily: FONT_FAMILY, fontSize: "0.875rem", margin: "0 0 0.75rem" }}>
-          <span style={{ fontWeight: 600 }}>Période représentée :</span> {periodeLibelle}
-        </p>
-      ) : null}
-      <div style={{ flex: 1, minHeight: 0, maxWidth: height, margin: "0 auto", width: "100%" }}>
-        <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} style={{ height: "100%" }} type="treemap" />
-      </div>
-      {legendItems.length ? (
-        <div style={{ marginTop: "1rem" }}>
-          <p style={{ fontFamily: FONT_FAMILY, fontWeight: 600, fontSize: "0.875rem", margin: "0 0 0.5rem" }}>Légendes :</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
-            {legendItems.map((entry) => (
-              <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
-                <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", backgroundColor: entry.color }} />
-                <span>{entry.label}</span>
-              </div>
-            ))}
-          </div>
+    <>
+      <div style={{ height, display: "flex", flexDirection: "column" }}>
+        {periodeLibelle ? (
+          <p style={{ fontFamily: FONT_FAMILY, fontSize: "0.875rem", margin: "0 0 0.75rem" }}>
+            <span style={{ fontWeight: 600 }}>Période représentée :</span> {periodeLibelle}
+          </p>
+        ) : null}
+        <div style={{ flex: 1, minHeight: 0, maxWidth: height, margin: "0 auto", width: "100%" }}>
+          <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} style={{ height: "100%" }} type="treemap" />
         </div>
-      ) : null}
-    </div>
+        {legendItems.length ? (
+          <div style={{ marginTop: "1rem" }}>
+            <p style={{ fontFamily: FONT_FAMILY, fontWeight: 600, fontSize: "0.875rem", margin: "0 0 0.5rem" }}>Légendes :</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+              {legendItems.map((entry) => (
+                <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
+                  <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", backgroundColor: entry.color }} />
+                  <span>{entry.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <Transcription
+        disabled={!transcriptionLibellés.length}
+        entêteLibellé={wording.VIGIE_RH_CATEGORIE}
+        identifiants={transcriptionIdentifiants}
+        libellés={transcriptionLibellés}
+        valeurs={transcriptionValeurs}
+      />
+    </>
   );
 }
