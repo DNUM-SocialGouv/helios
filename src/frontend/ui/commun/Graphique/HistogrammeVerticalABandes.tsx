@@ -87,6 +87,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   annéesTotales: number;
   grapheMensuel: boolean;
   cacheLesValeursBasse?: boolean;
+  legendeCentreeUneLigne?: boolean;
 }>) {
   const { wording } = useDependencies();
 
@@ -114,12 +115,22 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     );
   }
 
+  const legendStyle: { justifyContent?: string, gridTemplateRows?: string } = {};
+  // Si la légende doit être centrée ou si c’est in graph mensuel on centre la légende
+  if (props.legendeCentreeUneLigne || props.grapheMensuel) {
+    legendStyle.justifyContent = "center";
+  }
+  // Si la légende doit être centrée, on la met sur une ligne
+  if (props.legendeCentreeUneLigne) {
+    legendStyle.gridTemplateRows = "repeat(1, 1fr)";
+  }
+
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

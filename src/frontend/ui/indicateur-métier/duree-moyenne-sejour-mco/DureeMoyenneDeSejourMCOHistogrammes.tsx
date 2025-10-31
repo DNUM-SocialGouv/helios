@@ -50,6 +50,7 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
           id={dureeMoyenneDeSejourMCOViewModel.identifiantDeLaLégendeDureeSejoursMCO}
           idDeLaLégende={dureeMoyenneDeSejourMCOViewModel.identifiantDeLaLégendeDureeSejoursMCO}
           identifiants={dureeMoyenneDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
+          legendeCentreeUneLigne={true}
           libellés={dureeMoyenneDeSejourMCOViewModel.années}
           valeurs={dureeMoyenneDeSejourMCOViewModel.getValeurTableIndicateur()}
         />
@@ -62,6 +63,7 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
           id={activiteMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           idDeLaLégende={activiteMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           identifiants={activiteMensuelleViewModel.getIdentifiantTableIndicateurDureeMoyenneMCO()}
+          legendeCentreeUneLigne={true}
           libellés={activiteMensuelleViewModel.listeDesMois}
           valeurs={activiteMensuelleViewModel.getValeurTableIndicateurDureeMoyenneMCO(annéeEnCours)}
         />
