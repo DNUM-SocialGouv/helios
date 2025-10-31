@@ -14,6 +14,7 @@ import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDo
 import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
+import { VigieRhSftpDownloadRawData } from "./gateways/download-raw-data/VigieRhSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { SirecSourceExterneLoader } from "./gateways/sirec-soure-externe-loader/sirecSourceExterneLoader";
@@ -28,6 +29,7 @@ export type Dependencies = Readonly<{
   siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
   hapiDownloadRawData: DownloadRawData;
+  vigieRhDownloadRawData: DownloadRawData;
   unzipRawData: UnzipRawData;
   controleDonneesSirecLoader: ControleDonneesSirecLoader;
   logger: Logger;
@@ -43,6 +45,7 @@ const createDependencies = (): Dependencies => {
   const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
   const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
+  const cheminDesFichiersSourcesVigieRhSurLeSftpDnum = "VIGIE_RH";
 
   const cheminDesFichiersSourcesHapiSurLeSftpHapi = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes";
 
@@ -90,6 +93,13 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesHapiSurLeSftpHapi,
       environmentVariables.HAPI_DATA_PATH,
+      logger
+    ),
+    vigieRhDownloadRawData: new VigieRhSftpDownloadRawData(
+      new Ssh2SftpClient(),
+      environmentVariables,
+      cheminDesFichiersSourcesVigieRhSurLeSftpDnum,
+      environmentVariables.VIGIE_RH_DATA_PATH,
       logger
     ),
     environmentVariables,
