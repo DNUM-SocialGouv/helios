@@ -47,8 +47,8 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
-  const couleurEffectifsTotaux = "#FB8E68"; // orange
-  const couleursFilieres = ["#2A9D8F", "#344966", "#748BAA", "#EDDD79"]; // réutilisées pour treemap + line
+  const couleurEffectifsTotaux = "#000000ff"; // orange
+  const couleursFilieres = ["#E3D45C", "#D8A47E", "#FF8E68", "#E8C882"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
@@ -120,6 +120,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
     const courant = Number(totaux[last]) || 0;
     const ref = mois[last];
+    const periodeLibelle = ref && ref.mois ? `jusque fin ${MOIS[ref.mois - 1]} ${ref.annee}` : '';
 
     // iso-période (même mois année-1)
     const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
@@ -138,7 +139,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
         : `${rate}% (${variation})`;
     }
 
-    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText };
+    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle };
   }, [donneesEffectifs]);
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
@@ -279,7 +280,12 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
             nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
             source={wording.VIGIE_RH}
           >
-            <GraphiqueTreemapRepartitionEffectif couleursFilieres={couleursFilieres} height={350} items={itemsTreemap.slice(0, 4)} />
+            <GraphiqueTreemapRepartitionEffectif
+              couleursFilieres={couleursFilieres}
+              height={420}
+              items={itemsTreemap.slice(0, 4)}
+              periodeLibelle={indicateurEffectif.periodeLibelle}
+            />
           </IndicateurGraphique>
         ) : (
           <></>
