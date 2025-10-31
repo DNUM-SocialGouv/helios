@@ -130,9 +130,4 @@ export class DureeMoyenneSejourMCOViewModel {
     });
   }
 
-  public tooltipMoyenneSejoursMCO() {
-    return function (context: any) {
-      return `${context.dataset.label} : ${context.parsed.y.toLocaleString("fr")}`;
-    };
-  }
 }

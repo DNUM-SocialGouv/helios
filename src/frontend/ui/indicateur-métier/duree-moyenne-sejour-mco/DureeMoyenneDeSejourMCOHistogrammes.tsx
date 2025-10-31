@@ -45,7 +45,6 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
         <HistogrammeVerticalABandes
           annéesTotales={dureeMoyenneDeSejourMCOViewModel.NOMBRE_ANNEES}
           cacheLesValeursBasse={false}
-          créeLeLibelléDuTooltip={dureeMoyenneDeSejourMCOViewModel.tooltipMoyenneSejoursMCO}
           data={dureeMoyenneDeSejourMCOViewModel.getHistogrammeDataSet()}
           grapheMensuel={false}
           id={dureeMoyenneDeSejourMCOViewModel.identifiantDeLaLégendeDureeSejoursMCO}
@@ -58,7 +57,6 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
         <HistogrammeVerticalABandes
           annéesTotales={12}
           cacheLesValeursBasse={false}
-          créeLeLibelléDuTooltip={dureeMoyenneDeSejourMCOViewModel.tooltipMoyenneSejoursMCO}
           data={activiteMensuelleViewModel.getHistogrammeMoyenneSejourDataSet(annéeEnCours, selectedActivity)}
           grapheMensuel={true}
           id={activiteMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
