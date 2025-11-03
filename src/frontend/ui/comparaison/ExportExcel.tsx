@@ -269,7 +269,7 @@ async function generateAndExportExcel(
 
   ExportToExcel(headerYear,
     headerType,
-    headers,
+    type === 'Entité juridique' ? headersEJ : type === 'Social et Médico-Social' ? headersMS : headersSAN,
     dataTransormed,
     fileName,
     datesMisAjour,
