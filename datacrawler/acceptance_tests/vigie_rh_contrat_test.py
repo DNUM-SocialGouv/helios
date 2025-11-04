@@ -79,14 +79,3 @@ class TestImportVigieRhContrat:
             date_de_mise_à_jour_ref
         )
         assert compte_nombre_de_lignes(TABLE_REF_TYPE_CONTRAT, base_de_données_test) == 2
-
-        # inserer_nouvelles_donnees(
-        #     TABLE_CONTRAT,
-        #     base_de_données_test,
-        #     SOURCE,
-        #     df_filtré,
-        #     mocked_logger,
-        #     FichierSource.VIGIE_RH_CONTRAT,
-        #     date_de_mise_à_jour_contrat
-        # )
-        # assert compte_nombre_de_lignes(TABLE_CONTRAT, base_de_données_test) == 190
