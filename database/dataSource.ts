@@ -106,6 +106,7 @@ import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "
 import { AjoutTableVigieRhDureeCdd1759821521368 } from "./migrations/vigie_rh/1759821521368-AjoutTableVigieRhDureeCdd";
 import { AjoutMotifsRupturesContrats1760516962957 } from "./migrations/vigie_rh/1760516962957-AjoutMotifsRupturesContrats";
 import { VigierhNatureContratsTables1760966102359 } from "./migrations/vigie_rh/1760966102359-vigierhNatureContratsTables";
+import { ModificationTableProfession21762263346352 } from "./migrations/vigie_rh/1762263346352-ModificationsTablesProfessions";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -360,7 +361,8 @@ const datasource = new DataSource({
     AjoutTableVigieRhDureeCdd1759821521368,
     AjoutTableVigieRhRefDureeCdd1759821492361,
     VigierhNatureContratsTables1760966102359,
-    AjoutColonneDepartsPrematuresCdi1761819265202
+    AjoutColonneDepartsPrematuresCdi1761819265202,
+    ModificationTableProfession21762263346352
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
