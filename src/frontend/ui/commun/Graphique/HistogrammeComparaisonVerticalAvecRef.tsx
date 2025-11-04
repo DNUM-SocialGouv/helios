@@ -42,6 +42,8 @@ const valeurFormateeParDefaut = (valeur: number | null): string | null => {
   return StringFormater.formatInFrench(valeur);
 };
 
+const expressionReguliereTrimestre = /^T(\d)\s+(\d{4})$/;
+
 const HistogrammeComparaisonVerticalAvecRef = ({
   libelles,
   series,
@@ -50,6 +52,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   legendContainerId = "histogramme-comparaison-vertical-legend",
   transcription,
   formatValeur = valeurFormateeParDefaut,
+  highlightLastLabel = false,
   libellesValeursManquantes,
   libellesValeursRefManquantes,
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
@@ -58,10 +61,43 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const valeursRefManquantes = libellesValeursRefManquantes ?? [];
   const referencesParLibelle: Record<string, (number | null)[]> = {};
   const valeursParLibelle: Record<string, (number | null)[]> = {};
+
+  const decomposerLibelle = (label: number | string): { principal: string; secondaire: string } => {
+    if (typeof label === "number") {
+      const libelleTexte = String(label);
+      return { principal: libelleTexte, secondaire: "" };
+    }
+
+    const libelleNettoye = label.trim();
+    const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
+    if (correspondanceTrimestre) {
+      return { principal: `T${correspondanceTrimestre[1]}`, secondaire: correspondanceTrimestre[2] };
+    }
+
+    const segments = libelleNettoye.split(/\s+/);
+    if (segments.length > 1) {
+      return { principal: segments.slice(0, -1).join(" "), secondaire: segments.at(-1) ?? "" };
+    }
+
+    return { principal: libelleNettoye, secondaire: "" };
+  };
+
   for (const serie of series) {
     referencesParLibelle[serie.label] = serie.valeursRef;
     valeursParLibelle[serie.label] = serie.valeurs;
   }
+
+  const libellesDecomposes = libelles.map(decomposerLibelle);
+  const libellesPrincipaux = libellesDecomposes.map(({ principal }) => principal);
+  const libellesSecondaires = libellesDecomposes.map(({ secondaire }, index) => {
+    if (!secondaire) {
+      return "";
+    }
+    const libelleSecondairePrecedent = index > 0 ? libellesDecomposes.at(index - 1)?.secondaire ?? "" : "";
+    return libelleSecondairePrecedent === secondaire ? "" : secondaire;
+  });
+  const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
+  const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
 
   const chartData: ChartData<"bar"> = {
     labels: libelles,
@@ -145,12 +181,17 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       // @ts-ignore
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
-        align: "end",
+        align: (context: any) => {
+          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+          const valeurBrute = donnees[context.dataIndex];
+          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
+          return valeurNumerique !== null && valeurNumerique < 0 ? "end" : "start";
+        },
         anchor: (context: any) => {
-          const datasetValues = Array.isArray(context.dataset.data) ? context.dataset.data : [];
-          const rawValue = datasetValues[context.dataIndex];
-          const numericValue = typeof rawValue === "number" ? rawValue : null;
-          return numericValue !== null && numericValue > 0 ? "start" : "end";
+          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+          const valeurBrute = donnees[context.dataIndex];
+          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
+          return valeurNumerique !== null && valeurNumerique < 0 ? "start" : "end";
         },
         font: {
           family: "Marianne",
@@ -196,7 +237,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         stacked: false,
         ticks: {
           color: "#000",
+          callback: (_value, index) => libellesPrincipaux[index] ?? "",
           font: (context: any) => {
+            if (highlightLastLabel && context.index === libelles.length - 1) {
+              return { weight: "bold" };
+            }
             if (String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: "bold" };
             }
@@ -204,6 +249,34 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           },
         },
         beginAtZero: false,
+      },
+      xAxis2: {
+        type: "category",
+        position: "bottom",
+        border: {
+          display: false,
+        },
+        display: presenceLibellesSecondaires,
+        grid: {
+          drawOnChartArea: false,
+          drawTicks: false,
+        },
+        ticks: {
+          color: "#000",
+          callback: (_value, index) => libellesSecondaires[index] ?? "",
+          font: (context: any) => {
+            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire) {
+              return { weight: "bold" };
+            }
+            const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
+            if (tickLabel === anneeEnCours) {
+              return { weight: "bold" };
+            }
+            return {};
+          },
+          maxRotation: 0,
+          autoSkip: false,
+        },
       },
       y: {
         display: false,

@@ -120,7 +120,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
     const courant = Number(totaux[last]) || 0;
     const ref = mois[last];
-    const periodeLibelle = ref && ref.mois ? `jusque fin ${MOIS[ref.mois - 1]} ${ref.annee}` : '';
+    const periodeLibelle = ref?.mois ? `jusque fin ${MOIS[ref.mois - 1]} ${ref.annee}` : '';
 
     // iso-période (même mois année-1)
     const isoIdx = mois.findIndex((m) => m.mois === ref.mois && m.annee === ref.annee - 1);
