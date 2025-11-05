@@ -1,6 +1,8 @@
 import { AllocationRessource } from "./métier/entities/AllocationRessource";
+import { EntiteJuridiqueRessourcesHumaines } from "./métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { EntitéJuridique } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { ÉtablissementTerritorialMédicoSocial } from "./métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
+import { EtablissementTerritorialSanitaireRH } from "./métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaire } from "./métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 
 export const filterEtablissementMedicoSocial = (result: any, profil: any): ÉtablissementTerritorialMédicoSocial => {
@@ -10,6 +12,12 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
   const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
+  /* les autorisations pour le bloc Vigie RH sont les mêmes que celles du bloc ressources humaines helios.
+      Vu que c'est tout ou rien pour les indicateurs ressources humaines , 
+      on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
+  */
+
+  const vigieRh = profil.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : {};
 
   return {
     identité: identité,
@@ -17,6 +25,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
     autorisationsEtCapacités: autorisationsEtCapacités,
     budgetEtFinances: budgetEtFinances,
     ressourcesHumaines: ressourcesHumaines,
+    vigieRh: vigieRh,
     qualite: qualite,
     autorisations: profil
   };
@@ -28,6 +37,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const activitésMensuels = result.activitésMensuels;
+  const ressourcesHumaines = filterRessourcesHumainesEJ(result.ressourcesHumaines, profil.ressourcesHumaines);
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
@@ -49,6 +59,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
     allocationRessource: allocationRessource,
     // to change "télEtEmail" by "dateOuverture"
     dateOuverture: profil.identité.télEtEmail === 'ok' ? result.dateOuverture : { 'dateMiseÀJourSource': '', value: '' },
+    ressourcesHumaines
   };
 }
 
@@ -61,6 +72,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
+  const ressourcesHumaines = filterRessourcesHumainesSanitaire(result.ressourcesHumaines, profil.ressourcesHumaines);
   return {
     identité: identité,
     activités: activités,
@@ -70,7 +82,8 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
     budgetFinance: budgetFinance,
     allocationRessource: allocationRessource,
     appartientAEtablissementsSantePrivesIntérêtsCollectif: result.appartientAEtablissementsSantePrivesIntérêtsCollectif,
-    autorisations: profil
+    autorisations: profil,
+    ressourcesHumaines
   };
 };
 
@@ -181,11 +194,24 @@ const filterAutorisationSanitaire = (autorisationCapacite: any, profil: any) => 
       profil.reconnaissanceContractuelleActivités === "ok" ? autorisationCapacite.reconnaissancesContractuelles : { dateMiseÀJourSource: "", activités: [] },
     équipementsMatérielsLourds:
       profil.equipementMaterielLourdsActivités === "ok" ? autorisationCapacite.équipementsMatérielsLourds : { dateMiseÀJourSource: "", équipements: [] },
+    autorisationsAmm: profil.autorisationsActivités === "ok" ? autorisationCapacite.autorisationsAmm : { dateMiseÀJourSource: "", activités: [] },
     capacités: profil.capacités === "ok" ? autorisationCapacite.capacités : [{ dateMiseÀJourSource: "" }],
     numéroFinessÉtablissementTerritorial: autorisationCapacite.numéroFinessÉtablissementTerritorial,
   };
   return filtredAutorisationCapacite;
 };
+
+const filterRessourcesHumainesSanitaire = (ressourcesHumaines: EtablissementTerritorialSanitaireRH[], profil: any): EtablissementTerritorialSanitaireRH[] => {
+  ressourcesHumaines.forEach((rh) => {
+    if (profil.nombreEtpPm !== 'ok') rh.nombreEtpPm.valeur = "";
+    if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
+    if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
+    if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+    if (profil.joursAbsenteismePnm !== 'ok') rh.joursAbsenteismePnm.valeur = "";
+  });
+  return ressourcesHumaines;
+}
+
 
 const filterQualiteSanitaireEtMS = (qualite: any, profil: any) => {
   const filtredQualite = {
@@ -428,6 +454,8 @@ const filterAutorisationCapaciteEJ = (autorisationsEtCapacites: any, profil: any
   const filtredAutorisationCapacite = {
     autorisationsActivités:
       profil.autorisationsActivités === "ok" ? autorisationsEtCapacites.autorisationsActivités : { dateMiseÀJourSource: "", autorisations: [] },
+    autorisationsAmmSanitaire:
+      profil.autorisationsActivités === "ok" ? autorisationsEtCapacites.autorisationsAmmSanitaire : { dateMiseÀJourSource: "", autorisations: [] },
     autresActivités: profil.autresActivités === "ok" ? autorisationsEtCapacites.autresActivités : { dateMiseÀJourSource: "", autorisations: [] },
     reconnaissanceContractuelleActivités:
       profil.reconnaissanceContractuelleActivités === "ok"
@@ -505,6 +533,17 @@ const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: Allocati
 
   return allocationRessource;
 };
+
+const filterRessourcesHumainesEJ = (ressourcesHumaines: EntiteJuridiqueRessourcesHumaines[], profil: any): EntiteJuridiqueRessourcesHumaines[] => {
+  ressourcesHumaines.forEach((rh) => {
+    if (profil.nombreEtpPm !== 'ok') rh.nombreEtpPm.valeur = "";
+    if (profil.nombreEtpPnm !== 'ok') rh.nombreEtpPnm.valeur = "";
+    if (profil.depensesInterimPm !== 'ok') rh.depensesInterimPm.valeur = "";
+    if (profil.joursAbsenteismePm !== 'ok') rh.joursAbsenteismePm.valeur = "";
+    if (profil.joursAbsenteismePnm !== 'ok') rh.joursAbsenteismePnm.valeur = "";
+  });
+  return ressourcesHumaines;
+}
 
 export const combineProfils = (userProfils: any[]) => {
   const combinedProfile = userProfils[0];

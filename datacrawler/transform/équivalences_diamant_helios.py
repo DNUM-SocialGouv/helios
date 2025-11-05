@@ -237,6 +237,21 @@ colonnes_a_lire_bloc_budget_finance_entite_juridique: List[str] = list(équivale
 index_du_bloc_budget_et_finances_entite_juridique: List[str] = ["numero_finess_entite_juridique", "annee"]
 index_du_bloc_budget_et_finances_etablissement_territorial: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
+equivalences_diamant_quo_san_ressources_humaines_helios: ÉquivalencesDiamantHelios = {
+    "Finess EJ": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
+    "Finess ET": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
+    "Année": ColonneHelios(nom="annee", type=int),
+    "Nombre d'ETP PM": ColonneHelios(nom="nombre_etp_pm",type=float),
+    "Nombre d'ETP PNM" : ColonneHelios(nom="nombre_etp_pnm",type=float),
+    "Dépenses d'intérim PM" : ColonneHelios(nom="depenses_interim_pm",type=float),
+    "Jours d'absentéisme PM" : ColonneHelios(nom="jours_absenteisme_pm",type=float),
+    "Jours d'absentéisme PNM" : ColonneHelios(nom="jours_absenteisme_pnm",type=float)
+}
+
+colonnes_a_lire_bloc_ressources_humaines: List[str] = list(equivalences_diamant_quo_san_ressources_humaines_helios.keys())
+index_du_bloc_ressources_humaines_ej :  List[str] = ["numero_finess_entite_juridique","annee"]
+index_du_bloc_ressources_humaines_etsan :  List[str] = ["numero_finess_etablissement_territorial","annee"]
+
 équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
     "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
     "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
@@ -272,6 +287,8 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
     "Nombre de séjours mensuels HTP/AMBU Obstétrique": ColonneHelios(nom="nombre_sejours_partiels_obstetrique", type=str),
     "Nombre de journées mensuelles hospit complète SSR": ColonneHelios(nom="nombre_journees_completes_ssr", type=str),
     "Nombre de journées mensuelles HTP SSR": ColonneHelios(nom="nombre_journees_partiels_ssr", type=str),
+    "Nombre total de journées cumulés mensuels hospit complète PSY": ColonneHelios(nom="nombre_journees_completes_psy", type=str),
+    "Nombre total de journées cumulés mensuels HTP PSY": ColonneHelios(nom="nombre_journees_partielles_psy", type=str),
 }
 
 colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())

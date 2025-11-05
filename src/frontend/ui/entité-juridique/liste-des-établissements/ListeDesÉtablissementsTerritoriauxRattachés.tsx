@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { EtablissementsTerritoriauxRattachésViewModel } from "./EtablissementsTerritoriauxRattachésViewModel";
 import styles from "./ListeDesÉtablissementsTerritoriauxRattachés.module.css";
-import { ÉtablissementTerritorialRattachéViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
+import { EtablissementTerritorialRattacheViewModel } from "./ÉtablissementTerritorialRattachéViewModel";
 import { DomaineÉtablissementTerritorial } from "../../../../backend/métier/entities/DomaineÉtablissementTerritorial";
 import { FrontDependencies } from "../../../configuration/frontDependencies";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -15,7 +15,7 @@ type ETRattachésProps = Readonly<{
 }>;
 
 const listeDunTypeDetablissement = (
-  établissementsPaginés: ÉtablissementTerritorialRattachéViewModel[],
+  établissementsPaginés: EtablissementTerritorialRattacheViewModel[],
   domaine: DomaineÉtablissementTerritorial,
   paths: FrontDependencies["paths"],
   wording: Wording,
@@ -26,7 +26,7 @@ const listeDunTypeDetablissement = (
       <div className="fr-col" key={"liste-" + domaine}>
         {tagDomaineEtablissement(totalEtablissements, domaine, wording)}
         <ol className=" fr-raw-list fr-text--bold fr-raw-link fr-text--sm">
-          {établissementsPaginés.map((établissementTerritorialRattachéViewModel: ÉtablissementTerritorialRattachéViewModel) => (
+          {établissementsPaginés.map((établissementTerritorialRattachéViewModel: EtablissementTerritorialRattacheViewModel) => (
             <ListItem
               hasFocus={établissementTerritorialRattachéViewModel.doitAvoirLeFocus}
               key={établissementTerritorialRattachéViewModel.numéroFiness}

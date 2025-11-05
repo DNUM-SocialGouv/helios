@@ -1,13 +1,15 @@
 
 
+import { Workbook } from "exceljs";
 import { useContext } from "react";
-import * as XLSX from "xlsx";
 
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
+import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../utils/excelUtils";
 import { RechercheAvanceeContext, RechercheAvanceeContextValue } from "../../commun/contexts/RechercheAvanceeContext";
 import { UserContext } from "../../commun/contexts/userContext";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
 import { CategoriesFinessViewModel } from "../model/CategoriesFinessViewModel";
+
 
 const orderByMap = new Map([
   ["type", "Type"],
@@ -78,10 +80,10 @@ function ExportToExcel(
   data: (string | number)[][],
   fileName: string,
 ) {
-  const ws = XLSX.utils.aoa_to_sheet(data);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Comparaison");
-  XLSX.writeFile(wb, fileName);
+  const workbook = new Workbook();
+  const sheet = workbook.addWorksheet("Comparaison");
+  ecrireLignesDansSheet(data,sheet);
+  telechargerWorkbook(workbook,fileName);
 }
 
 function TransformeCapacitiesetActivites(
@@ -89,7 +91,7 @@ function TransformeCapacitiesetActivites(
 ) {
   return ranges.map(range => {
     if (range.startsWith('>')) {
-      const value = parseInt(range.substring(1), 10);
+      const value = Number.parseInt(range.substring(1), 10);
       return `${value + 1} et plus`;
     } else {
       return range.replace(',', '-');
@@ -104,9 +106,9 @@ function SortRanges(
     // Extract the first number from each range
     const getLowerBound = (range: string) => {
       if (range.startsWith('>')) {
-        return parseInt(range.substring(1), 10);
+        return Number.parseInt(range.substring(1), 10);
       } else {
-        return parseInt(range.split(',')[0], 10);
+        return Number.parseInt(range.split(',')[0], 10);
       }
     };
 

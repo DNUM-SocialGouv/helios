@@ -1,1 +1,3 @@
 /.next/cache
+/.git
+/.yarn/cache

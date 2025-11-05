@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { ActivitéSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../../../../../database/models/ActiviteSanitaireMensuelModel";
 import { ActivitéSanitaireModel } from "../../../../../database/models/ActivitéSanitaireModel";
 import { AllocationRessourceETModel } from "../../../../../database/models/AllocationRessourceETModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -12,12 +12,14 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
+import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { ActivitesSanitaireMensuel } from "../../../métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource, AllocationRessourceData } from "../../../métier/entities/AllocationRessource";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { EntitéJuridiqueBudgetFinance } from "../../../métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
+import { EtablissementTerritorialSanitaireRH } from "../../../métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import {
   AutorisationSanitaireForme,
@@ -36,6 +38,12 @@ import {
   ReconnaissanceContractuelleSanitaire,
   AutorisationSanitaire,
   CapacitéSanitaire,
+  AutorisationsAMMSanitaire,
+  AutorisationsAMMMQueryResult,
+  AutorisationsAMMSanitaireModalite,
+  AutorisationsAMMSanitaireMention,
+  AutorisationsAMMSanitairePratique,
+  AutorisationsAMMSanitaireDeclaration
 } from "../../../métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/ÉtablissementTerritorialIdentité";
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
@@ -60,7 +68,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   async chargeActivitéMensuel(numeroFinessEtablissementTerritorial: string): Promise<ActivitesSanitaireMensuel> {
 
     const activitéSanitaireMensuelModel = await (await this.orm)
-      .getRepository(ActivitéSanitaireMensuelModel)
+      .getRepository(ActiviteSanitaireMensuelModel)
       .createQueryBuilder("activite_sanitaire_mensuel")
       .where("numero_finess_etablissement_territorial = :finess", { finess: numeroFinessEtablissementTerritorial })
       .orderBy('annee', 'ASC')
@@ -83,6 +91,8 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         nombreSéjoursPartielsChirurgie: activite.nombreSéjoursPartielsChirurgie,
         nombreSéjoursPartielsMédecine: activite.nombreSéjoursPartielsMédecine,
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
+        nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
+        nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
       }
     })
 
@@ -107,15 +117,18 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     const équipementsDeLÉtablissementModel = await this.chargeLesÉquipementsMatérielsLourdsModel(numéroFinessÉtablissementTerritorial);
     const autresActivitésDeLÉtablissementModel = await this.chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial);
     const reconnaissancesContractuellesDeLÉtablissementModel = await this.chargeLesReconnaissancesContractuellesModel(numéroFinessÉtablissementTerritorial);
+    const autorisationsAMMDeLEtablissementModel = await this.chargeLesAutorisationsAMMModel(numéroFinessÉtablissementTerritorial);
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessÉtablissementTerritorial);
     const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1400104Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400104)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1600101Mode1 = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600101)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1600102Mode1 = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1600102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseAJourFinessAMMArhgosModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_AMM_ARHGOS)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
 
     return {
       autorisations: this.construisLesAutorisations(autorisationsDeLÉtablissementModel, dateDeMiseÀJourFinessCs1400103Model),
+      autorisationsAmm: this.construisLesAutorisationsAmm(autorisationsAMMDeLEtablissementModel, dateDeMiseAJourFinessAMMArhgosModel),
       autresActivités: this.construisLesAutresActivités(autresActivitésDeLÉtablissementModel, dateDeMiseÀJourFinessCs1600101Mode1),
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       numéroFinessÉtablissementTerritorial,
@@ -267,7 +280,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     })
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private readonly constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -300,15 +313,16 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+      } else if (evenement.etat === 'EN_COURS') {
+        evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
       } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
+        evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
       }
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private readonly construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,
@@ -356,6 +370,36 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
+  }
+
+  private async chargeLesAutorisationsAMMModel(numéroFinessÉtablissementTerritorial: string): Promise<AutorisationsAMMMQueryResult[]> {
+    const autorisationsAMMMQueryResult = await (await this.orm).query(`
+      SELECT
+        autorisation_sanitaire_amm.code_activite,
+        ref.libelle_activite, 
+        autorisation_sanitaire_amm.code_modalite,
+        ref.libelle_modalite,
+        autorisation_sanitaire_amm.code_mention,
+        ref.libelle_mention,
+        autorisation_sanitaire_amm.code_pratique AS code_pratique_therapeutique_specifique,
+        ref.libelle_pratique_therapeutique_specifique,
+        autorisation_sanitaire_amm.code_declaration,
+        ref.libelle_declaration,
+        autorisation_sanitaire_amm.code_autorisation_arhgos,
+        autorisation_sanitaire_amm.date_autorisation,
+        autorisation_sanitaire_amm.date_fin,
+        autorisation_sanitaire_amm.date_mise_en_oeuvre,
+        autorisation_sanitaire_amm.numero_finess_etablissement_territorial
+      FROM autorisation_sanitaire_amm
+      JOIN referentiel_nomenclature_amm ref
+        ON autorisation_sanitaire_amm.code_activite = ref.code_activite
+      AND autorisation_sanitaire_amm.code_modalite = ref.code_modalite
+      AND autorisation_sanitaire_amm.code_mention = ref.code_mention
+      AND autorisation_sanitaire_amm.code_pratique = ref.code_pratique_therapeutique_specifique
+      AND autorisation_sanitaire_amm.code_declaration = ref.code_declaration
+      where autorisation_sanitaire_amm.numero_finess_etablissement_territorial = '${numéroFinessÉtablissementTerritorial}'
+      ORDER BY ref.code_activite,  ref.code_modalite, ref.code_mention, ref.code_declaration `)
+    return autorisationsAMMMQueryResult;
   }
 
   private async chargeLesActivitésModel(numéroFinessÉtablissementTerritorial: string) {
@@ -553,6 +597,94 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     };
   }
 
+  private construisLesAutorisationsAmm(
+    autorisationAmmSanitaireModels: AutorisationsAMMMQueryResult[],
+    dateMiseAJourSourceModel: DateMiseÀJourFichierSourceModel
+  ): ÉtablissementTerritorialSanitaireAutorisationEtCapacité["autorisationsAmm"] {
+    const autorisationsammGroupeesDeLEtablissement: AutorisationsAMMSanitaire[] = [];
+    autorisationAmmSanitaireModels.forEach((autorisation: AutorisationsAMMMQueryResult) => {
+      const activiteConnue = autorisationsammGroupeesDeLEtablissement.find(
+        (activite) => activite.code === autorisation.code_activite
+      );
+
+      if (!activiteConnue) {
+        this.ajouteLAutorisationAmmAUneNouvelleActivite(autorisationsammGroupeesDeLEtablissement, autorisation);
+      } else {
+        this.ajouteLAutorisationAmmAUneActiviteExistante(activiteConnue, autorisation);
+      }
+    });
+    return {
+      activites: autorisationsammGroupeesDeLEtablissement,
+      dateMiseAJourSource: dateMiseAJourSourceModel.dernièreMiseÀJour
+    }
+  }
+
+  private ajouteLAutorisationAmmAUneNouvelleActivite(activiteAmmSanitaire: AutorisationsAMMSanitaire[], autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    activiteAmmSanitaire.push(this.construisLActiviteAmmDUneAutorisation(autorisationAmmModel));
+  }
+
+  private ajouteLAutorisationAmmAUneActiviteExistante(activiteAmmSanitaire: AutorisationsAMMSanitaire, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    const modaliteEstDejeCreee = activiteAmmSanitaire.modalites.find((modalite) => modalite.code === autorisationAmmModel.code_modalite);
+
+    if (!modaliteEstDejeCreee) {
+      this.ajouteLAutorisationAmmAUneNouvelleModalite(activiteAmmSanitaire, autorisationAmmModel);
+    } else {
+      this.ajouteLAutorisationAmmALaModaliteExistante(modaliteEstDejeCreee, autorisationAmmModel);
+    }
+  }
+
+  private ajouteLAutorisationAmmAUneNouvelleModalite(activiteAmmSanitaire: AutorisationsAMMSanitaire, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    activiteAmmSanitaire.modalites.push(this.construisLaModaliteDUneAutorisationAmm(autorisationAmmModel));
+  }
+
+  private ajouteLAutorisationAmmALaModaliteExistante(modaliteAmmSanitaire: AutorisationsAMMSanitaireModalite, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    const mentionEstDejeCreee = modaliteAmmSanitaire.mentions.find((mention) => mention.code === autorisationAmmModel.code_mention);
+
+    if (!mentionEstDejeCreee) {
+      this.ajouteLAutorisationAmmAUneNouvelleMention(modaliteAmmSanitaire, autorisationAmmModel);
+    } else {
+      this.ajouteLAutorisationAmmALaMentionExistante(mentionEstDejeCreee, autorisationAmmModel);
+    }
+  }
+
+  private ajouteLAutorisationAmmAUneNouvelleMention(modaliteAmmSanitaire: AutorisationsAMMSanitaireModalite, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    modaliteAmmSanitaire.mentions.push(this.construisLaMentionDUneAutorisationAmm(autorisationAmmModel));
+  }
+
+  private ajouteLAutorisationAmmALaMentionExistante(mentionAmmSanitaire: AutorisationsAMMSanitaireMention, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    const pratiqueEstDejeCreee = mentionAmmSanitaire.pratiques.find((pratique) => pratique.code === autorisationAmmModel.code_pratique_therapeutique_specifique);
+
+    if (!pratiqueEstDejeCreee) {
+      this.ajouteLAutorisationAmmAUneNouvellePratique(mentionAmmSanitaire, autorisationAmmModel);
+    } else {
+      this.ajouteLAutorisationAmmALaPratiqueExistante(pratiqueEstDejeCreee, autorisationAmmModel);
+    }
+  }
+
+  private ajouteLAutorisationAmmAUneNouvellePratique(mentionAmmSanitaire: AutorisationsAMMSanitaireMention, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    mentionAmmSanitaire.pratiques.push(this.construisLaPratiqueDUneAutorisationAmm(autorisationAmmModel));
+  }
+
+  private ajouteLAutorisationAmmALaPratiqueExistante(pratiqueAmmSanitaire: AutorisationsAMMSanitairePratique, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    const declarationEstDejeCreee = pratiqueAmmSanitaire.declarations.find((declaration) => declaration.code === autorisationAmmModel.code_declaration);
+
+    if (!declarationEstDejeCreee) {
+      this.ajouteLAutorisationAmmAUneNouvelleDaclaration(pratiqueAmmSanitaire, autorisationAmmModel);
+    }
+  }
+
+  private ajouteLAutorisationAmmAUneNouvelleDaclaration(pratiqueAmmSanitaire: AutorisationsAMMSanitairePratique, autorisationAmmModel: AutorisationsAMMMQueryResult) {
+    pratiqueAmmSanitaire.declarations.push(this.construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel));
+  }
+
+  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireActivité {
+    return {
+      code: autorisationModel.codeActivité,
+      libellé: autorisationModel.libelléActivité,
+      modalités: [this.construisLaModalitéDUneAutorisation(autorisationModel)],
+    };
+  }
+
   private ajouteLAutorisationÀLActivitéExistante(activitéSanitaire: AutorisationSanitaireActivité, autorisationModel: AutorisationSanitaireModel) {
     const modalitéEstDéjàCréée = activitéSanitaire.modalités.find((modalité) => modalité.code === autorisationModel.codeModalité);
 
@@ -583,11 +715,46 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     activitésSanitaires.push(this.construisLActivitéDUneAutorisation(autorisationModel));
   }
 
-  private construisLActivitéDUneAutorisation(autorisationModel: AutorisationSanitaireModel): AutorisationSanitaireActivité {
+  private construisLActiviteAmmDUneAutorisation(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaire {
     return {
-      code: autorisationModel.codeActivité,
-      libellé: autorisationModel.libelléActivité,
-      modalités: [this.construisLaModalitéDUneAutorisation(autorisationModel)],
+      code: autorisationAmmModel.code_activite,
+      libelle: autorisationAmmModel.libelle_activite,
+      modalites: [this.construisLaModaliteDUneAutorisationAmm(autorisationAmmModel)],
+    };
+  }
+
+  private construisLaModaliteDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireModalite {
+    return {
+      code: autorisationAmmModel.code_modalite,
+      libelle: autorisationAmmModel.libelle_modalite,
+      mentions: [this.construisLaMentionDUneAutorisationAmm(autorisationAmmModel)],
+    };
+  }
+
+  private construisLaMentionDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireMention {
+    return {
+      code: autorisationAmmModel.code_mention,
+      libelle: autorisationAmmModel.libelle_mention,
+      pratiques: [this.construisLaPratiqueDUneAutorisationAmm(autorisationAmmModel)],
+    };
+  }
+
+  private construisLaPratiqueDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitairePratique {
+    return {
+      code: autorisationAmmModel.code_pratique_therapeutique_specifique,
+      libelle: autorisationAmmModel.libelle_pratique_therapeutique_specifique,
+      declarations: [this.construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel)],
+    };
+  }
+
+  private construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireDeclaration {
+    return {
+      code: autorisationAmmModel.code_declaration,
+      libelle: autorisationAmmModel.libelle_declaration,
+      codeAutorisationArhgos: autorisationAmmModel.code_autorisation_arhgos,
+      dateFin: autorisationAmmModel.date_fin,
+      dateAutorisation: autorisationAmmModel.date_autorisation,
+      dateMiseEnOeuvre: autorisationAmmModel.date_mise_en_oeuvre
     };
   }
 
@@ -1003,5 +1170,44 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       dateMiseÀJourSource: dateDeMiseÀJourDiamantMenHapiModel.dernièreMiseÀJour,
       data: allocationRessource
     }
+  }
+
+  async chargeRessourcesHumaines(numeroFinessET: string): Promise<EtablissementTerritorialSanitaireRH[]> {
+    const ressourcesHumaines = await (await this.orm).getRepository(RessourcesHumainesEtablissementSanitaireModel).find({
+      where: { numeroFinessEtablissementTerritorial: numeroFinessET }, order: { annee: "ASC" }
+    });
+    const dateMisAJour = (await (await this.orm)
+      .getRepository(DateMiseÀJourFichierSourceModel)
+      .findOneBy({ fichier: FichierSource.DIAMANT_QUO_SAN_FINANCE })) as DateMiseÀJourFichierSourceModel;
+
+    return this.construisRessourcesHumainesEtSan(ressourcesHumaines, dateMisAJour);
+  }
+
+  construisRessourcesHumainesEtSan(ressourcesHumaines: RessourcesHumainesEtablissementSanitaireModel[], dateMisAJour: DateMiseÀJourFichierSourceModel): EtablissementTerritorialSanitaireRH[] {
+    const etablissementSanitaireRessourcesHumaines: EtablissementTerritorialSanitaireRH[] = [];
+    ressourcesHumaines.map((donneeRessourcesHumaines) => ({
+      annee: donneeRessourcesHumaines.annee,
+      nombreEtpPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPm
+      },
+      nombreEtpPnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.nombreEtpPnm
+      },
+      depensesInterimPm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.depensesInterimPm
+      },
+      joursAbsenteismePm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePm
+      },
+      joursAbsenteismePnm: {
+        dateMiseAJourSource: dateMisAJour.dernièreMiseÀJour,
+        valeur: donneeRessourcesHumaines.joursAbsenteismePnm
+      }
+    })).forEach((e) => etablissementSanitaireRessourcesHumaines.push(e))
+    return etablissementSanitaireRessourcesHumaines;
   }
 }

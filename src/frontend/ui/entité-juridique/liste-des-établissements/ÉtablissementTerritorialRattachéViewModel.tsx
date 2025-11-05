@@ -5,16 +5,19 @@ import { ÉtablissementTerritorialRattaché } from "../../../../backend/métier/
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
 
-export class ÉtablissementTerritorialRattachéViewModel {
-  public doitAvoirLeFocus: boolean = false;
-  constructor(private readonly établissementTerritorialRattaché: ÉtablissementTerritorialRattaché, private wording: Wording) {}
+export class EtablissementTerritorialRattacheViewModel {
+  public doitAvoirLeFocus: boolean = false; constructor(private readonly etablissementTerritorialRattache: ÉtablissementTerritorialRattaché, private readonly wording: Wording) { }
 
   public get numéroFiness(): string {
-    return this.établissementTerritorialRattaché.numéroFiness;
+    return this.etablissementTerritorialRattache.numéroFiness;
+  }
+
+  public get raisonSocialeCourte(): string {
+    return this.etablissementTerritorialRattache.raisonSocialeCourte;
   }
 
   public get libelléCatégorieÉtablissement(): string {
-    return this.établissementTerritorialRattaché.libelléCatégorieÉtablissement;
+    return this.etablissementTerritorialRattache.libelléCatégorieÉtablissement;
   }
 
   public get identifiant(): ReactElement {
@@ -24,20 +27,20 @@ export class ÉtablissementTerritorialRattachéViewModel {
         {" - "}
         {this.numéroFiness}
         {" - "}
-        {this.établissementTerritorialRattaché.raisonSocialeCourte}
+        {this.etablissementTerritorialRattache.raisonSocialeCourte}
       </>
     );
   }
 
   public lienVersLÉtablissement(paths: Paths): string {
     const préfixe =
-      this.établissementTerritorialRattaché.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
+      this.etablissementTerritorialRattache.domaine === DomaineÉtablissementTerritorial.MÉDICO_SOCIAL
         ? paths.ÉTABLISSEMENT_TERRITORIAL_MÉDICO_SOCIAL
         : paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE;
     return `${préfixe}/${this.numéroFiness}`;
   }
 
   public get domaine(): DomaineÉtablissementTerritorial {
-    return this.établissementTerritorialRattaché.domaine;
+    return this.etablissementTerritorialRattache.domaine;
   }
 }

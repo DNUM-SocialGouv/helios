@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
 
 import { TypeOrmEntiteJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
-import { ActivitéSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
+import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
@@ -29,7 +29,7 @@ describe("Entité juridique loader", () => {
   const orm = getOrm();
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let entitéJuridiqueActivitésRepository: Repository<ActivitéSanitaireEntitéJuridiqueModel>;
-  let entitéJuridiqueActivitésMensuelsRepository: Repository<ActivitéSanitaireMensuelEntiteJuridiqueModel>;
+  let entitéJuridiqueActivitésMensuelsRepository: Repository<ActiviteSanitaireMensuelEntiteJuridiqueModel>;
   let dateMiseÀJourFichierSourceRepository: Repository<DateMiseÀJourFichierSourceModel>;
   let budgetFinanceEntiteJuridiqueRepository: Repository<BudgetEtFinancesEntiteJuridiqueModel>;
   let capacitéSanitaireRepository: Repository<CapacitesSanitaireEntiteJuridiqueModel>;
@@ -43,7 +43,7 @@ describe("Entité juridique loader", () => {
   beforeAll(async () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     entitéJuridiqueActivitésRepository = (await orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel);
-    entitéJuridiqueActivitésMensuelsRepository = (await orm).getRepository(ActivitéSanitaireMensuelEntiteJuridiqueModel);
+    entitéJuridiqueActivitésMensuelsRepository = (await orm).getRepository(ActiviteSanitaireMensuelEntiteJuridiqueModel);
     dateMiseÀJourFichierSourceRepository = (await orm).getRepository(DateMiseÀJourFichierSourceModel);
     budgetFinanceEntiteJuridiqueRepository = (await orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel);
     capacitéSanitaireRepository = (await orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel);
@@ -249,7 +249,7 @@ describe("Entité juridique loader", () => {
 
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
 
-      const activiteMensuel = new ActivitéSanitaireMensuelEntiteJuridiqueModel();
+      const activiteMensuel = new ActiviteSanitaireMensuelEntiteJuridiqueModel();
       activiteMensuel.année = 2023;
       activiteMensuel.mois = 1;
       activiteMensuel.numeroFinessEtablissementTerritorial = numéroFinessEntitéJuridique;
@@ -383,6 +383,10 @@ describe("Entité juridique loader", () => {
           dernièreMiseÀJour: "2022-05-14",
           fichier: FichierSource.FINESS_CS1400103,
         }),
+        DateMiseÀJourFichierSourceModelTestBuilder.crée({
+          dernièreMiseÀJour: "2022-05-14",
+          fichier: FichierSource.FINESS_AMM_ARHGOS,
+        }),
       ]);
       await capacitéSanitaireRepository.insert([
         EntitéJuridiqueModelTestBuilder.créeCapacitéSanitaireEntiteJuridique({
@@ -445,6 +449,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertAutorisationActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -494,6 +502,10 @@ describe("Entité juridique loader", () => {
           DateMiseÀJourFichierSourceModelTestBuilder.crée({
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
           }),
         ]);
         await insertAutresActivités(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
@@ -550,6 +562,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertReconnaissanceContractuelles(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -605,6 +621,10 @@ describe("Entité juridique loader", () => {
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.FINESS_CS1400103,
           }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
         ]);
         await insertEquipementLourds(numéroFinessEntitéJuridique, numéroFinessÉtablissementTerritorial, {
           numéroAutorisationArhgos: "1",
@@ -638,6 +658,10 @@ describe("Entité juridique loader", () => {
           DateMiseÀJourFichierSourceModelTestBuilder.crée({
             dernièreMiseÀJour: "2022-05-14",
             fichier: FichierSource.DIAMANT_MEN_HAPI,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
           }),
         ]);
         await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }), [

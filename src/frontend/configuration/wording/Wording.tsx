@@ -110,6 +110,7 @@ export interface Wording {
   readonly NON: string;
   readonly DÉTAILS: string;
   readonly TÉLÉCHARGER_EN_PDF: string;
+  readonly EXPORT_ET_RATTACHES: string;
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string;
@@ -126,6 +127,8 @@ export interface Wording {
   readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string;
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string;
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string;
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
@@ -197,6 +200,7 @@ export interface Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string;
   readonly ANNUEL: string;
   readonly MENSUEL: string;
+  readonly TRIMESTRIEL: string;
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string;
@@ -332,6 +336,8 @@ export interface Wording {
   readonly TITRE_BLOC_RESSOURCES_HUMAINES: string;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ: ReactElement;
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string;
+  readonly NOMBRE_D_ETP_PM: string
+  readonly NOMBRE_D_ETP_PNM: string
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string;
   readonly TAUX_D_ABSENTÉISME: string;
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement;
@@ -342,11 +348,14 @@ export interface Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string;
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string;
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string;
+  readonly JOURS_ABSENTEISME_PM: string
+  readonly JOURS_ABSENTEISME_PNM: string
   readonly TAUX: string;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement;
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string;
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string;
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string;
+  readonly DEPENSES_INTERIM_PM: string
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string;
@@ -387,6 +396,8 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly VIGIE_RH: ReactElement;
+
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string;
@@ -451,6 +462,8 @@ export interface Wording {
   readonly EXPORTER: string;
   readonly DANS_FAVORIS: string;
   readonly NON_FAVORIS: string;
+  readonly IMPORTER_UNE_LISTE: string;
+  readonly IMPORTER_DES_ETABLISSEMENTS: string;
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string;
@@ -463,6 +476,24 @@ export interface Wording {
 
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string;
+
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string;
+  readonly IMPORT_LIST_SELECTOR: string;
+  readonly IMPORT_MAX_LISTE_ATTEINT: string;
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string;
+  readonly IMPORT_SUCCESS_TITLE: string;
+  readonly IMPORT_SUCESS_MESSAGE: string;
+  readonly IMPORT_LIST_ERREUR_IMPORT: string;
+  readonly IMPORT_LIST_FINESS_HEADER: string;
+  readonly IMPORT_LIST_RS_HEADER: string;
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string;
+  readonly IMPORT_LIST_TITLE: string;
+  readonly IMPORT_LIST_CANCEL_LABEL: string;
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string;
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string;
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string;
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string;
@@ -563,5 +594,36 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
+  readonly PYRAMIDE_DES_AGES: string;
+  readonly TRANCHE_AGE: string;
+  readonly EFFECTIF_FEMMES: string;
+  readonly EFFECTIF_FEMMES_REF: string;
+  readonly EFFECTIF_HOMMES: string;
+  readonly EFFECTIF_HOMMES_REF: string;
+  readonly EFFECTIFS: string;
+  readonly EFFECTIFS_TOTAUX: string;
+  readonly VIGIE_RH_CATEGORIE: string;
+  readonly MOIS_ANNEES: string;
+  readonly DEPARTS_EMBAUCHES: string;
+  readonly DEPARTS: string;
+  readonly EMBAUCHES: string;
+  readonly DEPARTS_REF: string;
+  readonly EMBAUCHES_REF: string;
+  readonly MOYENNE_REF: string;
+  readonly TAUX_ROTATION: string;
+  readonly REPARTITION_EFFECTIFS: string;
+  readonly TAUX_ROTATION_REFERENCE: string;
+  readonly TOP_TAUX_ROTATION_TITLE: string;
+  readonly DUREE_CDD: string;
+  readonly DUREE_CDD_REF: string;
+  readonly MOTIFS_RUPTURE_CONTRAT: string;
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
+  readonly MOTIF: string;
+  readonly DUREE: string;
 }

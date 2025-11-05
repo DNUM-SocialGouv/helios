@@ -5,9 +5,19 @@ export function estCeLAnnéePassée(année: number | string): boolean {
 export function annéesManquantes(années: (number | string)[], annéesTotales: number = 3): number[] {
   const annéeEnCours = new Date().getFullYear();
 
-  return Array(annéesTotales)
+  return new Array(annéesTotales)
     .fill(annéeEnCours)
     .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
+    .reverse()
+    .filter((année) => !années.map(Number).includes(année));
+}
+
+export function annéesManquantesVigieRh(années: (number | string)[], annéesTotales: number = 3): number[] {
+  const annéeEnCours = new Date().getFullYear();
+
+  return Array(annéesTotales)
+    .fill(annéeEnCours)
+    .map((annéeÀAvoir, index) => annéeÀAvoir - index)
     .reverse()
     .filter((année) => !années.map(Number).includes(année));
 }
@@ -15,7 +25,7 @@ export function annéesManquantes(années: (number | string)[], annéesTotales: 
 export function annéesManquantesQualite(années: (number | string)[], annéesTotales: number = 3): number[] {
   const annéeEnCours = new Date().getFullYear() + 1;
 
-  return Array(annéesTotales + 1)
+  return new Array(annéesTotales + 1)
     .fill(annéeEnCours)
     .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
     .reverse()

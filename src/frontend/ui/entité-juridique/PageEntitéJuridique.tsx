@@ -9,19 +9,21 @@ import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipl
 import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMultipleBlocs";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
-import { ActivitésMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { LogoEntitéJuridique } from "./bloc-activité/LogoEntitéJuridique";
 import { BlocAutorisationsCapacites } from "./bloc-autorisations-capacites/BlocAutorisationsCapacites";
 import { BlocBudgetFinance } from "./bloc-budget-finance/BlocBudgetFinance";
+import { BlocRessourcesHumainesEntiteJuridique } from "./bloc-ressources-humaines/BlocRessourcesHumainesEntiteJuridique";
 import { Catégorisation } from "./catégorisation/Catégorisation";
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
+import { useExportExcelETRattache } from "./ExportExcelETRattaches";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
 
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntiteJuridiqueViewModel;
-  entitéJuridiqueActivitéMensuelleViewModel: ActivitésMensuelViewModel;
+  entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   établissementsTerritoriauxRattachésViewModels: EtablissementsTerritoriauxRattachésViewModel;
   rechercheViewModel: RechercheViewModel;
 }>;
@@ -62,8 +64,9 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
     }
   }, [onBeforeGetContentResolve.current]);
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3, 0);
 
+  const { exportEtRattache } = useExportExcelETRattache(entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels);
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -71,7 +74,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
       </Head>
       <div className="print-content" ref={componentRef}>
         <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre downloadPDF={handlePrint} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={handlePrint} exportET={exportEtRattache} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
           {entitéJuridiqueViewModel.titre}
         </Titre>
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />
@@ -86,9 +89,14 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[2]}
-          toggelBlocs={() => toggelBlocs(2)} type="EJ" />
+        <BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={entitéJuridiqueViewModel.entiteJuridiqueRessourcesHumainesViewModel} openedBloc={statusBlocs[2]}
+          toggleBlocs={() => toggelBlocs(2)} />
+
+        <SeparatorHorizontal></SeparatorHorizontal>
+        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
+          toggelBlocs={() => toggelBlocs(3)} type="EJ" />
 
       </div>
     </main>

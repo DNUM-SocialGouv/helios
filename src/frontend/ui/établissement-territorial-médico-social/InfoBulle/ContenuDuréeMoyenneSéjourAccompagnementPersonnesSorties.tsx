@@ -25,22 +25,19 @@ export const ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties = ({
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Somme des durées d’accompagnement pour les personnes sorties définitivement dans l’année hors personnes en hébergement temporaire et accueil de jour
+          <span className="fr-text--bold">Mode de calcul :</span> Somme des durées d’accompagnement pour les personnes sorties définitivement dans l’année hors personnes en hébergement temporaire et accueil de jour
           (la durée d’accompagnement est l’écart en nombre de jours entre admission et sortie) / Nombre de sorties définitives dans l’année hors personnes en
           hébergement temporaire et accueil de jour
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
+          <span className="fr-text--bold">Source(s) :</span> Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

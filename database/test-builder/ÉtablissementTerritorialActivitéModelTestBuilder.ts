@@ -1,4 +1,4 @@
-import { ActivitéSanitaireMensuelModel } from "../models/ActiviteSanitaireMensuelModel";
+import { ActiviteSanitaireMensuelModel } from "../models/ActiviteSanitaireMensuelModel";
 import { ActivitéMédicoSocialModel } from "../models/ActivitéMédicoSocialModel";
 import { ActivitéSanitaireModel } from "../models/ActivitéSanitaireModel";
 
@@ -42,8 +42,8 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     return activitéSanitaireModel;
   }
 
-  public static créeSanitaireMensuel(champsSurchargés?: Partial<ActivitéSanitaireMensuelModel>): ActivitéSanitaireMensuelModel {
-    const activitéSanitaireModel = new ActivitéSanitaireMensuelModel();
+  public static créeSanitaireMensuel(champsSurchargés?: Partial<ActiviteSanitaireMensuelModel>): ActiviteSanitaireMensuelModel {
+    const activitéSanitaireModel = new ActiviteSanitaireMensuelModel();
     activitéSanitaireModel.année = champsSurchargés?.année || 2022;
     activitéSanitaireModel.mois = champsSurchargés?.mois || 1;
     activitéSanitaireModel.numeroFinessEtablissementTerritorial = champsSurchargés?.numeroFinessEtablissementTerritorial || "210987665";

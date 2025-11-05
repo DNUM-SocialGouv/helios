@@ -1,0 +1,58 @@
+.chartLineDiv {
+    width: 90%;
+}
+
+.chartLineHeader {
+    padding: 15px 0 20px 0;
+    font-weight: bold;
+    text-transform: capitalize;
+    height: 62px;
+}
+
+.chartLineBody {
+    height: 350px;
+}
+
+.chartLineContainer {
+    width: 95%;
+    margin-top: 20px;
+}
+
+.filieres_effectifs {
+    font-size: .8rem;
+    margin: 0;
+}
+
+.graphique-effectif-legende {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Le premier enfant occupe toute la largeur */
+.graphique-effectif-legende> :first-child {
+    width: 100%;
+}
+
+.graphique-effectif-legende li {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding: 0 .5rem 0 0;
+}
+
+.graphique-effectif-legende li span {
+    border-radius: 50%;
+    height: .8rem;
+    margin: 0 .25rem 0 0;
+    width: .8rem;
+}
+
+.graphique-effectif-legende li label {
+    font-size: .8rem;
+    margin: 0;
+    padding: .75rem 0;
+}
+
+.graphique-effectif-legende li label::before {
+    top: inherit !important;
+}

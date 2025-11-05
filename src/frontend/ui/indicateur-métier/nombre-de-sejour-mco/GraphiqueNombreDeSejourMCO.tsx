@@ -4,13 +4,13 @@ import { NombreDeSejourMCOHistogrammes } from "./NombreDeSejourMCOHistogrammes";
 import { NombreDeSejourMCOViewModel } from "./NombreDeSejourMCOViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { ContenuNombreDeSéjourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 
 
 type GraphiqueNombreDeSejourMCOProps = Readonly<{
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
 export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {

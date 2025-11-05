@@ -1,4 +1,5 @@
 import { CatégorisationEnum } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
+import { EtablissementTerritorialSanitaireRH } from "../../../backend/métier/entities/établissement-territorial-sanitaire/EtablissementTerritorialSanitaireRH";
 import { ÉtablissementTerritorialSanitaire } from "../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
@@ -547,6 +548,10 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         },
       ],
     },
+    autorisationsAmm: {
+      activites: [],
+      dateMiseAJourSource: ''
+    }
   };
 
   public static readonly qualite: ÉtablissementTerritorialSanitaire["qualite"] = {
@@ -585,6 +590,15 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
     inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   }
 
+  public static readonly ressourcesHumaines : EtablissementTerritorialSanitaireRH[] = [{
+      annee: 2025,
+      nombreEtpPm: { dateMiseAJourSource: "2025-07-07", valeur: 100 },
+      nombreEtpPnm: { dateMiseAJourSource: "2025-07-08", valeur: 120 },
+      depensesInterimPm: { dateMiseAJourSource: "2025-07-09", valeur: 230 },
+      joursAbsenteismePm: { dateMiseAJourSource: "2025-07-10", valeur: 41 },
+      joursAbsenteismePnm: { dateMiseAJourSource: "2025-07-11", valeur: 3900 },
+    }] ;
+
   public static crée(
     wording: Wording,
     paths: Paths,
@@ -603,7 +617,8 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         allocationRessource: {
           dateMiseÀJourSource: '10/10/2020',
           data: []
-        }
+        },
+        ressourcesHumaines: EtablissementTerritorialSanitaireViewModelTestBuilder.ressourcesHumaines
       } as any,
       wording,
       paths,

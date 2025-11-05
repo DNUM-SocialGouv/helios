@@ -1,0 +1,48 @@
+.detailsButton {
+  display: flex;
+  justify-content: end;
+}
+
+/* Ligne flèche + valeur */
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Flèche bleue DSFR */
+.arrow {
+  color: var(--text-action-high-blue-france);
+  /* DSFR blue */
+}
+
+/* Valeur en gros */
+.value {
+  margin-top: 8px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Libellé sous la valeur */
+.unit {
+  margin-top: 6px;
+  color: #666;
+}
+
+/* Variation bleu DSFR */
+.variation {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.variationValue {
+  font-weight: bold;
+  color: var(--text-action-high-blue-france);
+}
+
+/* Texte atténué (cas stable ou fallback) */
+.muted {
+  color: #666;
+}

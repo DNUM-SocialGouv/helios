@@ -1,5 +1,6 @@
 import { ActivitesSanitaireMensuel } from "./métier/entities/ActivitesSanitaireMensuel";
 import { AllocationRessource } from "./métier/entities/AllocationRessource";
+import { EntiteJuridiqueRessourcesHumaines } from "./métier/entities/entité-juridique/EntiteJuridiqueRessourcesHumaines";
 import { CatégorisationEnum, EntitéJuridique, EntitéJuridiqueIdentité } from "./métier/entities/entité-juridique/EntitéJuridique";
 import { EntitéJuridiqueActivités } from "./métier/entities/entité-juridique/EntitéJuridiqueActivités";
 import { EntitéJuridiqueAutorisationEtCapacité } from "./métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité";
@@ -59,6 +60,8 @@ function getActiviteMensuelleJuridique(): ActivitesSanitaireMensuel {
       nombreSéjoursPartielsChirurgie: 6,
       nombreSéjoursPartielsMédecine: 7,
       nombreSéjoursPartielsObstétrique: 8,
+      nombreJournéesPartiellesPsy: 9,
+      nombreJournéesComplètesPsy: 10,
     }],
   };
 }
@@ -70,6 +73,7 @@ function getAutorisationCapaciteJuridique(): EntitéJuridiqueAutorisationEtCapac
       année: 2025, dateMiseÀJourSource: "dateMajCap", nombreDeLitsEnChirurgie: 1, nombreDeLitsEnMédecine: 2, nombreDeLitsEnObstétrique: 3, nombreDeLitsEnSsr: 4, nombreDeLitsEnUsld: 5, nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 6, nombreDePlacesEnChirurgie: 7, nombreDePlacesEnMédecine: 8, nombreDePlacesEnObstétrique: 9, nombreDePlacesEnPsyHospitalisationPartielle: 10, nombreDePlacesEnSsr: 11
     }],
     autorisationsActivités: { dateMiseÀJourSource: "dateMajAutorisation", autorisations: [{ modalites: [], libelle: "libAutoriAct", code: "codeAutoriAct" }] },
+    autorisationsAmmSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
     autresActivités: { dateMiseÀJourSource: "dateMajAutreActivite", autorisations: [{ modalites: [], libelle: "libAutreAct", code: "codeAutreAct" }] },
     reconnaissanceContractuelleActivités: { dateMiseÀJourSource: "dateMajReco", autorisations: [{ modalites: [], libelle: "libRecoContr", code: "codeRecoContr" }] },
     equipementMaterielLourdsActivités: { dateMiseÀJourSource: "dateMajEquipeLourd", autorisations: [] },
@@ -132,6 +136,20 @@ function getAllocationRessource(): AllocationRessource {
   }
 }
 
+function getRessourcesHumaines(): EntiteJuridiqueRessourcesHumaines[] {
+  const ressourcesHumainesEJ: EntiteJuridiqueRessourcesHumaines[] = [];
+  const ressourcesHumaines: EntiteJuridiqueRessourcesHumaines = {
+    annee: 2025,
+    nombreEtpPm: { dateMiseAJourSource: "22/01/2025", valeur: 100 },
+    nombreEtpPnm: { dateMiseAJourSource: "22/01/2025", valeur: 120 },
+    depensesInterimPm: { dateMiseAJourSource: "22/01/2025", valeur: 230 },
+    joursAbsenteismePm: { dateMiseAJourSource: "22/01/2025", valeur: 41 },
+    joursAbsenteismePnm: { dateMiseAJourSource: "23/01/2025", valeur: 3900 },
+  }
+  ressourcesHumainesEJ.push(ressourcesHumaines);
+  return ressourcesHumainesEJ;
+}
+
 function getFullEntiteJuridique(): EntitéJuridique {
   return {
     ...getIdentiteJuridique(),
@@ -140,6 +158,7 @@ function getFullEntiteJuridique(): EntitéJuridique {
     budgetFinance: [getBudgetFinanceJuridique()],
     autorisationsEtCapacites: getAutorisationCapaciteJuridique(),
     allocationRessource: getAllocationRessource(),
+    ressourcesHumaines: getRessourcesHumaines()
   }
 }
 
@@ -183,12 +202,24 @@ function getBudgetFinanceProfile() {
   }
 }
 
+
+function getRessourcesHumainesProfile() {
+  return {
+    nombreEtpPm: "ok",
+    nombreEtpPnm: "ok",
+    depensesInterimPm: "ok",
+    joursAbsenteismePm: "ok",
+    joursAbsenteismePnm: "ok"
+  }
+}
+
 function getFullProfile() {
   return {
     identité: getIdentityProfile(),
     activités: getActiviteProfile(),
     autorisationsEtCapacités: getAutorisationCapaciteProfile(),
     budgetEtFinance: getBudgetFinanceProfile(),
+    ressourcesHumaines: getRessourcesHumainesProfile()
   }
 }
 
@@ -685,6 +716,96 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
     // Then
     expect(entiteJuridiqueResult.allocationRessource).toEqual(expectedAllocation);
   })
+
+})
+
+
+describe("Filtre des informations de ressources humaines des entités juridique selon le profil", () => {
+  it("retire les informations de nombre d'ETP PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+  it("retire les informations de nombre d'ETP PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].nombreEtpPnm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.nombreEtpPnm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+  it("retire les informations de jours d'absenteisme PM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+  it("retire les informations de jours d'absenteisme PNM si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].joursAbsenteismePnm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.joursAbsenteismePnm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
+
+
+  it("retire les informations de depenses interim si il n’y a pas les droits", () => {
+    // Given
+    const rawEntity = getFullEntiteJuridique();
+    const expectedIdentity = { ...rawEntity };
+    expectedIdentity.ressourcesHumaines[0].depensesInterimPm.valeur = "";
+
+    let entiteJuriResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.ressourcesHumaines.depensesInterimPm = "Ko";
+
+    // When
+    entiteJuriResult = filterEntiteJuridique(entiteJuriResult, profile);
+
+    // Then
+    expect(entiteJuriResult).toEqual(expectedIdentity);
+  });
 
 })
 

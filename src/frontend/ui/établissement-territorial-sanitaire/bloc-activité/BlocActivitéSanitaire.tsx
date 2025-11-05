@@ -5,7 +5,7 @@ import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { GraphiqueNombreDeSejourMCO } from "../../indicateur-métier/nombre-de-sejour-mco/GraphiqueNombreDeSejourMCO";
 import { GraphiquePsySSR } from "../../indicateur-métier/nombre-journees-psy-ssr/GraphiquePsySSR";
 import { GraphiqueNombreDeJourneesUsld } from "../../indicateur-métier/nombre-journees-usld/GraphiqueNombreDeJourneesUsld";
@@ -13,7 +13,7 @@ import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-p
 
 type BlocActivitéSanitaireProps = Readonly<{
   établissementTerritorialSanitaireActivitéViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
-  activitéMensuelleViewModel: ActivitésMensuelViewModel;
+  activitéMensuelleViewModel: ActivitesMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;

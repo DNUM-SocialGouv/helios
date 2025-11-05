@@ -1,3 +1,4 @@
+import { EtablissementTerritorialMedicoSocialVigieRH } from "../entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import { ÉtablissementTerritorialMédicoSocialAutorisationEtCapacité } from "../entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation";
@@ -15,4 +16,5 @@ export interface ÉtablissementTerritorialMédicoSocialLoader {
   chargeRessourcesHumaines(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialMédicoSocialRessourcesHumaines[]>;
   chargeQualite(numéroFinessÉtablissementTerritorial: string): Promise<ÉtablissementTerritorialQualite>;
   estUnMonoÉtablissement(numéroFinessEntitéJuridique: string): Promise<MonoÉtablissement>;
+  chargeLesDonneesVigieRH(numeroFinessET: string): Promise<EtablissementTerritorialMedicoSocialVigieRH>;
 }

@@ -244,6 +244,7 @@ describe("Téléchargement de FINESS via un SFTP", () => {
       { name: "finess_cs1600101_stock_20000101-0000.xml.gz" },
       { name: "finess_cs1600102_stock_20211214-0347.xml.gz" },
       { name: "finess_cs1600102_stock_20000101-0000.xml.gz" },
+      { name: "amm_arhgos_20250812-0238.xml.gz" }
     ]);
     const sftpDownloadDataSource = new FinessSftpDownloadRawData(
       fakeClientSftp,
@@ -303,7 +304,16 @@ describe("Téléchargement de FINESS via un SFTP", () => {
         concurrency: 2,
       }
     );
-    expect(fakeLogger.info).toHaveBeenNthCalledWith(4, '[FINESS] Les 5 fichiers contenant les autorisations du répertoire "enrichi" téléchargés.');
+    expect(fakeClientSftp.fastGet).toHaveBeenNthCalledWith(
+      6,
+      `${enrichiSftpPath}/amm_arhgos_20250812-0238.xml.gz`,
+      `data_test/sortie/${localPath}/enrichi/amm_arhgos_20250812-0238.xml.gz`,
+      {
+        chunkSize: 1000000,
+        concurrency: 2,
+      }
+    );
+    expect(fakeLogger.info).toHaveBeenNthCalledWith(4, '[FINESS] Les 6 fichiers contenant les autorisations du répertoire "enrichi" téléchargés.');
   });
 
   it("se déconnecte du SFTP", async () => {

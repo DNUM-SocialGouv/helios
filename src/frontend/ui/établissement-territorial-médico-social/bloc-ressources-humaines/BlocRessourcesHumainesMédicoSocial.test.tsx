@@ -1,5 +1,6 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
+import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import { BlocRessourcesHumainesMédicoSocial } from "./BlocRessourcesHumainesMédicoSocial";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
@@ -7,6 +8,19 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+
+jest.mock("chart.js", () => ({
+  Chart: {
+    register: jest.fn(),
+  },
+  Tooltip: {},
+  Legend: {},
+}));
+
+jest.mock("chartjs-chart-treemap", () => ({
+  TreemapController: {},
+  TreemapElement: {},
+}));
 
 describe("La page établissement territorial - bloc ressources humaines", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
@@ -23,10 +37,16 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     tauxDeRotationDuPersonnel: 4,
   };
 
+  const blocVigieRhViewModel = new BlocVigieRHViewModel(
+    ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.vigierh,
+    wording,
+    {}
+  );
+
   describe("L’indicateur du nombre d’ETP réalisé", () => {
     it("affiche l’intitulé de l’indicateur du nombre d’ETP réalisé, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -45,7 +65,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreDEtpRéalisés];
@@ -56,7 +76,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre d’ ETP Total réalisé" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre d’ ETP Total réalisé" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("CNSA", { selector: "abbr" });
@@ -75,7 +95,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   describe("L’indicateur du nombre de CDD de remplacement", () => {
     it("affiche l’intitulé de l’indicateur du nombre de CDD de remplacement, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -94,7 +114,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du nombre de CDD de remplacement après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreDeCddDeRemplacement];
@@ -105,7 +125,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: "Nombre de CDD de remplacement" });
+      const infoBulle = screen.getByRole("dialog", { name: "Nombre de CDD de remplacement" });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -124,7 +144,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   describe("L’indicateur du taux de prestations externes sur les prestations directes", () => {
     it("affiche l’intitulé de l’indicateur du taux de prestations externes sur les prestations directes, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -143,7 +163,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du taux de prestations externes sur les prestations directes après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDePrestationsExternes];
@@ -154,7 +174,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -175,7 +195,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   describe("L’indicateur du taux d’ETP vacants au 31 décembre", () => {
     it("affiche l’intitulé de l’indicateur du taux d’ETP vacants au 31 décembre, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -194,7 +214,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du taux d’ETP vacants au 31 décembre après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDEtpVacants];
@@ -205,7 +225,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_D_ETP_VACANTS_AU_31_12 });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_D_ETP_VACANTS_AU_31_12 });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -226,7 +246,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   describe("L’indicateur du taux de rotation du personnel", () => {
     it("affiche l’intitulé de l’indicateur du taux de rotation du personnel, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -245,7 +265,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du taux de rotation du personnel après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDeRotationDuPersonnel];
@@ -256,7 +276,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_DE_ROTATION_DU_PERSONNEL });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_DE_ROTATION_DU_PERSONNEL });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -277,7 +297,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   describe("L’indicateur du taux d’absentéisme", () => {
     it("affiche l’intitulé de l’indicateur du taux d’absentéisme, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -296,7 +316,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it('affiche le contenu de l’info bulle du taux d’absentéisme après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
@@ -307,7 +327,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = within(indicateur).getByRole("dialog", { name: wording.TAUX_D_ABSENTÉISME });
+      const infoBulle = screen.getByRole("dialog", { name: wording.TAUX_D_ABSENTÉISME });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
       const abréviationSourceOrigine = within(infoBulle).getAllByText("TdB Perf", { selector: "abbr" });
@@ -326,7 +346,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it("affiche une phrase présentant le taux d’absentéisme hors formation quand il n’est pas nul", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -359,7 +379,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
       );
 
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -370,13 +390,10 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it("affiche un tableau descriptif avec tous les motifs d’absentéismes ayant des valeurs non nulles", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
-      const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-      const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-      const tauxDAbsentéisme = indicateurs[indiceDeLIndicateur.tauxDAbsentéisme];
-      const tableau = within(tauxDAbsentéisme).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[5];
       const motifLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.MOTIF_DU_TAUX_D_ABSENTÉISME });
       const tauxLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX });
       expect(motifLigneDEnTête).toBeInTheDocument();
@@ -416,7 +433,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
 
     it("affiche les années dans une liste déroulante par ordre anté-chronologique quand le taux d’absentéisme de ces années est renseigné", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -438,13 +455,13 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     [wording.TAUX_D_ABSENTÉISME, indiceDeLIndicateur.tauxDAbsentéisme],
   ])('ferme l’info bulle du nombre d’ETP réalisé après avoir cliqué sur le bouton "Fermer"', (titreDeLInfoBulle, indiceDeLIndicateur) => {
     // GIVEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
     const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
     const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
     const indicateur = indicateurs[indiceDeLIndicateur];
     const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
     fireEvent.click(détails);
-    const infoBulle = within(indicateur).getByRole("dialog", { name: titreDeLInfoBulle });
+    const infoBulle = screen.getByRole("dialog", { name: titreDeLInfoBulle });
     const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
 
     // WHEN
@@ -455,20 +472,17 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "47,42", "9,71", "10,44"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "45", "4", "3"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "65,9 %", "23,2 %", "9,3 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "65,2 %", "16,4 %", "13,3 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "66,7 %", "34,4 %", "14,7 %"],
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "47,42", "9,71", "10,44"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "45", "4", "3"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "65,9 %", "23,2 %", "9,3 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "65,2 %", "16,4 %", "13,3 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "66,7 %", "34,4 %", "14,7 %"],
   ])("affiche un tableau descriptif de l’indicateur %s avec les trois années", (enTêteDuTableau, indiceDeLIndicateur, valeur2019, valeur2020, valeur2021) => {
     // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -499,11 +513,11 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "9,71"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "4"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "23,2 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "16,4 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "34,4 %"],
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "9,71"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "4"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "23,2 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "16,4 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "34,4 %"],
   ])("affiche un tableau descriptif de l’indicateur %s  avec deux années", (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
@@ -515,13 +529,10 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     );
 
     // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -548,12 +559,12 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
   });
 
   it.each([
-    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDEtpRéalisés, "9,71"],
-    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, indiceDeLIndicateur.nombreDeCddDeRemplacement, "4"],
-    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, indiceDeLIndicateur.tauxDePrestationsExternes, "23,2 %"],
-    [wording.TAUX_D_ETP_VACANTS_AU_31_12, indiceDeLIndicateur.tauxDEtpVacants, "16,4 %"],
-    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, indiceDeLIndicateur.tauxDeRotationDuPersonnel, "34,4 %"],
-  ])("affiche un tableau descriptif de l’indicateur %s avec une seule année", (enTêteDuTableau, indiceDeLIndicateur, valeur) => {
+    [wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION, 0, "9,71"],
+    [wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION, 1, "4"],
+    [wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES, 2, "23,2 %"],
+    [wording.TAUX_D_ETP_VACANTS_AU_31_12, 3, "16,4 %"],
+    [wording.TAUX_DE_ROTATION_DU_PERSONNEL, 4, "34,4 %"],
+  ])("affiche un tableau descriptif de l’indicateur %s avec une seule année", (enTêteDuTableau, identifiant, valeur) => {
     // GIVEN
     const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
       [ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.créeUneAnnéeRessourcesHumaines({ année: 2020 })],
@@ -561,13 +572,10 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     );
 
     // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
-    const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
-    const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
-    const tauxDeCaf = indicateurs[indiceDeLIndicateur];
-    const tableau = within(tauxDeCaf).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: enTêteDuTableau });
     expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -600,7 +608,7 @@ describe("La page établissement territorial - bloc ressources humaines", () => 
     );
 
     // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
     const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });

@@ -23,20 +23,17 @@ export const ContenuFileActivePersonnesAccompagnées = ({ dateDeMiseÀJour, sour
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Nombre de personnes accompagnées dans l’effectif au 31/12 + Nombre de sorties définitives dans l’année
+          <span className="fr-text--bold">Mode de calcul :</span> Nombre de personnes accompagnées dans l’effectif au 31/12 + Nombre de sorties définitives dans l’année
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
+          <span className="fr-text--bold">Source(s) :</span> Tableau de bord de la performance dans le secteur médico-social - Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

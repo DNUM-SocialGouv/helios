@@ -24,8 +24,7 @@ export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source, e
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>

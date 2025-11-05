@@ -19,7 +19,7 @@ export class WordingFr implements Wording {
   // Messages d'erreur
   readonly MISSING_EMAIL: string = "Veuillez renseigner le champ courriel";
   readonly EMAIL_NOT_VALID: string = "Veuillez saisir une adresse email valide";
-  readonly SOMETHING_WENT_WRONG: string = "Quelque chose s'est mal passé. Veuillez réessayer ultérieurement";
+  readonly SOMETHING_WENT_WRONG: string = "Votre action n’a pas été prise en compte. Veuillez réessayer ultérieurement.";
   readonly INVALID_REQUEST: string = "veuillez vérifier vos données";
   readonly INVALID_USER: string = "Compte non inscrit sur Helios";
 
@@ -134,6 +134,7 @@ export class WordingFr implements Wording {
   readonly NON: string = "Non";
   readonly DÉTAILS: string = "Détails";
   readonly TÉLÉCHARGER_EN_PDF: string = "Télécharger en PDF";
+  readonly EXPORT_ET_RATTACHES: string = "Exporter les ET rattachés";
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = "Éléments de compréhension";
@@ -149,6 +150,8 @@ export class WordingFr implements Wording {
   readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string = "Aucune donnée renseignée pour :";
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string = "Aucune donnée de référence renseignée pour :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
@@ -226,6 +229,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_JOURNEES_USLD: string = "Nombre de journées USLD";
   readonly ANNUEL: string = "Annuel";
   readonly MENSUEL: string = "Mensuel";
+  readonly TRIMESTRIEL: string = "Trimestriel";
 
   // Bloc Autorisation
   readonly TITRE_BLOC_AUTORISATION_ET_CAPACITÉ: string = "capacité et autorisation";
@@ -333,7 +337,7 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = "Montant de la contribution aux frais de siège et/ou de groupement";
   readonly MONTANT: string = "Montant";
-  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté construction";
+  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté des constructions";
   readonly RÉSULTAT_NET_COMPTABLE: string = "Résultat net comptable";
   readonly RATIO_DEPENDANCE_FINANCIERE: string = "Ratio de dépendance financière";
   readonly COMPTE_DE_RÉSULTAT_ERRD: string = "Compte de résultat ERRD";
@@ -391,6 +395,8 @@ export class WordingFr implements Wording {
     </>
   );
   readonly NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION: string = "Nombre d’ETP Total réalisé";
+  readonly NOMBRE_D_ETP_PM: string = "Nombre d’ETP PM"
+  readonly NOMBRE_D_ETP_PNM: string = "Nombre d’ETP PNM"
   readonly TAUX_DE_ROTATION_DU_PERSONNEL: string = "Taux de rotation du personnel sur effectifs réels";
   readonly TAUX_D_ABSENTÉISME: string = "Taux d’absentéisme";
   readonly TAUX_D_ABSENTÉISME_HORS_FORMATION: (taux: string, enErreur: boolean, tauxNul: boolean) => ReactElement = (
@@ -410,6 +416,8 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = "Pour congés spéciaux dont les congés sans solde (hors congés payés)";
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
+  readonly JOURS_ABSENTEISME_PM: string = "Jours d’absentéisme PM"
+  readonly JOURS_ABSENTEISME_PNM: string = "Jours d’absentéisme PNM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -419,6 +427,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION: string = "Nombre de CDD de remplacement";
   readonly TAUX_D_ETP_VACANTS_AU_31_12: string = "Taux d’ETP vacants au 31/12";
   readonly TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES: string = "Taux de prestations externes sur les prestations directes";
+  readonly DEPENSES_INTERIM_PM: string = "Dépenses d’intérim PM"
 
   // Liste des établissements rattachés
   readonly ÉTABLISSEMENT_TERRITORIAL: string = "Établissement territorial";
@@ -444,6 +453,8 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
   readonly DIAMANT: ReactElement = (<abbr title={this.DIAMANT_TITLE}>DIAMANT</abbr>);
@@ -458,6 +469,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -532,6 +544,9 @@ export class WordingFr implements Wording {
   readonly EXPORTER: string = "Exporter";
   readonly DANS_FAVORIS: string = "Dans les favoris";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
+  readonly IMPORTER_UNE_LISTE: string = "Importer une liste";
+  readonly IMPORTER_DES_ETABLISSEMENTS: string = "Importer une liste";
+
 
   // Etoile des Favoris
   readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
@@ -544,6 +559,30 @@ export class WordingFr implements Wording {
 
   // Nouveau Favoris
   readonly LIST_ACTION_FAVORIS_SUCCESS_MESSAGE: (list: string) => string = (list: string) => `Vos établissements ont été ajoutés avec succès à la liste ${list}.`;
+
+  // Import d'une liste de finess dans une liste de Favoris
+  readonly IMPORT_LIST_FINESS_ERROR_MESSAGE: (nbError: number) => string = (nbError: number) => {
+    if (nbError > 1) {
+      return `Aucun résultat pour les ${nbError} numéros FINESS indiqués en rouge. Veuillez vérifier votre saisie.`;
+    } else {
+      return "Aucun résultat pour le numéro FINESS indiqué en rouge. Veuillez vérifier votre saisie.";
+    }
+  };
+  readonly IMPORT_LIST_SELECTOR: string = "Importer dans une nouvelle liste ou une liste existante";
+  readonly IMPORT_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
+  readonly IMPORT_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly IMPORT_SUCCESS_TITLE: string = "Succès";
+  readonly IMPORT_SUCESS_MESSAGE: string = "Les modifications ont bien été enregistrées";
+  readonly IMPORT_LIST_ERREUR_IMPORT: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
+  readonly IMPORT_LIST_FINESS_HEADER: string = "N° Finess";
+  readonly IMPORT_LIST_RS_HEADER: string = "Raison sociale";
+  readonly IMPORT_LIST_TEXT_PLACEHOLDER: string = "Le numéro FINESS est composé de 9 caractères alphanumérique. Veuillez saisir un numéro par ligne sans espace, ni ponctuation.";
+  readonly IMPORT_LIST_TITLE: string = "Importer des établissements";
+  readonly IMPORT_LIST_CANCEL_LABEL: string = "Annuler";
+  readonly IMPORT_LIST_OK_VALIDATE_LABEL: string = "Valider";
+  readonly IMPORT_LIST_OK_VERIFY_LABEL: string = "Vérifier";
+  readonly IMPORT_LIST_OK_IMPORT_LABEL: string = "Importer";
+
 
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
@@ -649,7 +688,41 @@ export class WordingFr implements Wording {
   readonly LISTE_NON_TROUVÉE = "Liste non trouvée";
   //Callout page d'acceuil
   readonly NOUVEAU: string = "NOUVEAU";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
+  readonly NOUVELLES_FONCTIONNALITÉS: string = "Nouvelles fonctionnalités disponibles";
+
+  //Vigie RH
+  readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
+  readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
+  readonly TRANCHE_AGE: string = "Tranche d'âge";
+  readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
+  readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
+  readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
+  readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS_TOTAUX: string = "Total";
+  readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
+  readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
+  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
+  readonly DEPARTS: string = "Départs";
+  readonly EMBAUCHES: string = "Embauches";
+  readonly DEPARTS_REF: string = "Moyenne des départs";
+  readonly EMBAUCHES_REF: string = "Moyenne des embauches";
+  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
+  readonly TAUX_ROTATION: string = "Taux de Rotation";
+  readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
+  readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
+  readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
+  readonly DUREE_CDD: string = "Durée effective des CDD";
+  readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
+  readonly DUREE: string = "Durée";
+  readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
+  readonly MOTIF: string = "Motif";
+  readonly MOIS_ANNEES: string = "Mois / Années";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
 
 }
+
+

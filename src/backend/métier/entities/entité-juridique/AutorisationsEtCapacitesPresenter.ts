@@ -2,7 +2,12 @@ import { EntitéJuridique } from "./EntitéJuridique";
 import {
   Autorisation,
   AutorisationActivites,
+  AutorisationDActivitesAmm,
   AutorisationEtablissement,
+  AutorisationsAMMDeclaration,
+  AutorisationsAMMMention,
+  AutorisationsAMMModalite,
+  AutorisationsAMMPratique,
   EntitéJuridiqueAutorisationEtCapacitéLoader,
   EquipementEtablissement,
   EquipementLourds,
@@ -15,6 +20,7 @@ import { AutreActivitéSanitaireModel } from "../../../../../database/models/Aut
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
 import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
+import { AutorisationsAMMMEJQueryResult } from "../établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 class AutorisationsFactory {
   static createFromAutorisationsSanitaire(autorisationsSanitaire: AutorisationSanitaireModel[]): AutorisationActivites[] {
@@ -27,6 +33,22 @@ class AutorisationsFactory {
 
       etablissement.autorisations.push(...autorisation);
       return autorisationsActivites;
+    }, []);
+  }
+
+  static createFromAutorisationsAmmSanitaire(autorisationsAmmSanitaire: AutorisationsAMMMEJQueryResult[]): AutorisationDActivitesAmm[] {
+    return autorisationsAmmSanitaire.reduce((autorisationsAmmActivites: AutorisationDActivitesAmm[], autorisationAmmSanitaire) => {
+      const activite = this.findOrAddActiviteAmm(autorisationsAmmActivites, autorisationAmmSanitaire);
+      const modalite = this.findOrAddModaliteAmm(activite, autorisationAmmSanitaire);
+      const mention = this.findOrAddMentionAmm(modalite, autorisationAmmSanitaire);
+      const pratique = this.findOrAddPratiqueAmm(mention, autorisationAmmSanitaire);
+      const declaration = this.findOrAddDeclarationAmm(pratique, autorisationAmmSanitaire);
+
+      const etablissement = this.findOrAddEtablissementAmm(declaration, autorisationAmmSanitaire);
+      const autorisation = this.addAutorisationAmm(autorisationAmmSanitaire);
+
+      etablissement.autorisations.push(...autorisation);
+      return autorisationsAmmActivites;
     }, []);
   }
 
@@ -127,6 +149,87 @@ class AutorisationsFactory {
     return etablissement;
   }
 
+  private static findOrAddModaliteAmm(activiteAmm: AutorisationDActivitesAmm, autorisationAmmSanitaire: { code_modalite: string; libelle_modalite: string }): AutorisationsAMMModalite {
+    let modalite = activiteAmm.modalites.find((m) => m.code === autorisationAmmSanitaire.code_modalite);
+
+    if (!modalite) {
+      modalite = {
+        mentions: [],
+        code: autorisationAmmSanitaire.code_modalite,
+        libelle: autorisationAmmSanitaire.libelle_modalite,
+      };
+      activiteAmm.modalites.push(modalite);
+    }
+
+    return modalite;
+  }
+
+  private static findOrAddMentionAmm(modaliteAmm: AutorisationsAMMModalite, autorisationAmmSanitaire: { code_mention: string; libelle_mention: string }): AutorisationsAMMMention {
+    let mention = modaliteAmm.mentions.find((m) => m.code === autorisationAmmSanitaire.code_mention);
+
+    if (!mention) {
+      mention = {
+        pratiques: [],
+        code: autorisationAmmSanitaire.code_mention,
+        libelle: autorisationAmmSanitaire.libelle_mention,
+      };
+      modaliteAmm.mentions.push(mention);
+    }
+
+    return mention;
+  }
+
+  private static findOrAddPratiqueAmm(mentionAmm: AutorisationsAMMMention, autorisationAmmSanitaire: { code_pratique_therapeutique_specifique: string; libelle_pratique_therapeutique_specifique: string }): AutorisationsAMMPratique {
+    let pratique = mentionAmm.pratiques.find((p) => p.code === autorisationAmmSanitaire.code_pratique_therapeutique_specifique);
+
+    if (!pratique) {
+      pratique = {
+        declarations: [],
+        code: autorisationAmmSanitaire.code_pratique_therapeutique_specifique,
+        libelle: autorisationAmmSanitaire.libelle_pratique_therapeutique_specifique,
+      };
+      mentionAmm.pratiques.push(pratique);
+    }
+
+    return pratique;
+  }
+
+  private static findOrAddDeclarationAmm(pratiqueAmm: AutorisationsAMMPratique, autorisationAmmSanitaire: { code_declaration: string; libelle_declaration: string }): AutorisationsAMMDeclaration {
+    let declaration = pratiqueAmm.declarations.find((d) => d.code === autorisationAmmSanitaire.code_declaration);
+
+    if (!declaration) {
+      declaration = {
+        autorisationAmmEtablissments: [],
+        code: autorisationAmmSanitaire.code_declaration,
+        libelle: autorisationAmmSanitaire.libelle_declaration,
+      };
+      pratiqueAmm.declarations.push(declaration);
+    }
+
+    return declaration;
+  }
+
+  private static findOrAddEtablissementAmm(
+    declaration: AutorisationsAMMDeclaration,
+    autorisationAmmSanitaire: {
+      numero_finess_etablissement_territorial: string;
+      raison_sociale_courte: string;
+    }
+  ): AutorisationEtablissement {
+    let etablissement = declaration.autorisationAmmEtablissments.find((e) => e.numeroFiness === autorisationAmmSanitaire.numero_finess_etablissement_territorial);
+
+    if (!etablissement) {
+      etablissement = {
+        numeroFiness: autorisationAmmSanitaire.numero_finess_etablissement_territorial,
+        nomEtablissement: autorisationAmmSanitaire.raison_sociale_courte,
+        autorisations: [],
+      };
+      declaration.autorisationAmmEtablissments.push(etablissement);
+    }
+
+    return etablissement;
+  }
+
   private static addAutorisation(autorisationSanitaire: {
     dateAutorisation: string;
     dateMiseEnOeuvre: string;
@@ -151,6 +254,51 @@ class AutorisationsFactory {
         valeur: autorisationSanitaire.dateFin ? StringFormater.formatDate(autorisationSanitaire.dateFin) : "N/A",
       },
     ];
+  }
+
+  private static addAutorisationAmm(autorisationAmmSanitaire: {
+    date_autorisation: string | null;
+    date_mise_en_oeuvre: string | null;
+    date_fin: string | null;
+    code_autorisation_arhgos: string;
+  }): Autorisation[] {
+    return [
+      {
+        nom: "Numéro ARHGOS",
+        valeur: autorisationAmmSanitaire.code_autorisation_arhgos,
+      },
+      {
+        nom: "Date d'autorisation",
+        valeur: autorisationAmmSanitaire.date_autorisation ? StringFormater.formatDate(autorisationAmmSanitaire.date_autorisation) : "N/A",
+      },
+      {
+        nom: "Date de mise en oeuvre",
+        valeur: autorisationAmmSanitaire.date_mise_en_oeuvre ? StringFormater.formatDate(autorisationAmmSanitaire.date_mise_en_oeuvre) : "N/A",
+      },
+      {
+        nom: "Date de fin",
+        valeur: autorisationAmmSanitaire.date_fin ? StringFormater.formatDate(autorisationAmmSanitaire.date_fin) : "N/A",
+      },
+    ];
+  }
+
+
+  private static findOrAddActiviteAmm(
+    autorisationAmmActivites: AutorisationDActivitesAmm[],
+    autorisationAmmSanitaire: { libelle_activite: string; code_activite: string }
+  ): AutorisationDActivitesAmm {
+    let activite = autorisationAmmActivites.find((a) => a.code === autorisationAmmSanitaire.code_activite);
+
+    if (!activite) {
+      activite = {
+        modalites: [],
+        libelle: autorisationAmmSanitaire.libelle_activite,
+        code: autorisationAmmSanitaire.code_activite,
+      };
+      autorisationAmmActivites.push(activite);
+    }
+
+    return activite;
   }
 
   private static addAutresActivites(autresActivites: { dateAutorisation: string; dateMiseEnOeuvre: string; dateFin: string }): Autorisation[] {
@@ -210,6 +358,7 @@ class AutorisationsFactory {
 export class AutorisationsEtCapacitesPresenter {
   static present(autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader): EntitéJuridique["autorisationsEtCapacites"] {
     const autorisationsActivites = AutorisationsFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
+    const autorisationsAmmActivites = AutorisationsFactory.createFromAutorisationsAmmSanitaire(autorisationsEtCapacites.autorisationsAmmSanitaire.autorisations);
     const autresActivites = AutorisationsFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
     const reconnaissanceContractuellesActivites = AutorisationsFactory.createFromReconnaissanceContractuellesSanitaire(
       autorisationsEtCapacites.reconnaissanceContractuellesSanitaire.autorisations
@@ -224,6 +373,10 @@ export class AutorisationsEtCapacitesPresenter {
       autorisationsActivités: {
         autorisations: this.sortAutorisationActivites(autorisationsActivites),
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
+      },
+      autorisationsAmmSanitaire: {
+        autorisations: this.sortAutorisationAmmActivites(autorisationsAmmActivites),
+        dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsAmmSanitaire.dateMiseAJourSource),
       },
       autresActivités: {
         autorisations: this.sortAutorisationActivites(autresActivites),
@@ -257,6 +410,39 @@ export class AutorisationsEtCapacitesPresenter {
                   autorisationEtablissements: forme.autorisationEtablissements.sort((a, b) => a.numeroFiness.localeCompare(b.numeroFiness)),
                 };
               }),
+          })),
+      }));
+  }
+
+  private static sortAutorisationAmmActivites(data: AutorisationDActivitesAmm[]): AutorisationDActivitesAmm[] {
+    return data
+      .sort((a, b) => a.code.localeCompare(b.code))
+      .map((autorisationActivite) => ({
+        ...autorisationActivite,
+        modalites: autorisationActivite.modalites
+          .sort((a, b) => a.code.localeCompare(b.code))
+          .map((modalite) => ({
+            ...modalite,
+            mentions: modalite.mentions
+              .sort((a, b) => a.code.localeCompare(b.code))
+              .map((mention) => ({
+                ...mention,
+                pratiques: mention.pratiques
+                  .sort((a, b) => a.code.localeCompare(b.code))
+                  .map((pratique) => {
+                    return {
+                      ...pratique,
+                      declarations: pratique.declarations
+                        .sort((a, b) => a.code.localeCompare(b.code))
+                        .map((declaration) => {
+                          return {
+                            ...declaration,
+                            autorisationAmmEtablissments: declaration.autorisationAmmEtablissments.sort((a, b) => a.numeroFiness.localeCompare(b.numeroFiness)),
+                          };
+                        }),
+                    };
+                  }),
+              })),
           })),
       }));
   }

@@ -14,7 +14,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   );
 
   it.each([
-    [wording.AUTORISATIONS_SANITAIRE, "autorisations-sanitaire"],
+    [wording.AUTORISATIONS_SANITAIRE, "autorisations-amm-sanitaire"],
     [wording.AUTRES_ACTIVITÉS_SAN, "autres-activités-sanitaire"],
     [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissances-contractuelles-sanitaire"],
     [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],
@@ -334,7 +334,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    expect(within(activité).getByText(indicateurAffiché, { selector: "h1" })).toBeInTheDocument();
+    expect(within(activité).getByText(indicateurAffiché, { selector: "h3" })).toBeInTheDocument();
     expect(within(activité).getByText(wording.AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS)).toBeInTheDocument();
   });
 

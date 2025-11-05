@@ -155,6 +155,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
         entêteLibellé={this.wording.ANNÉE}
         identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
+        isVigieRh={false}
         libellés={années}
         taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}

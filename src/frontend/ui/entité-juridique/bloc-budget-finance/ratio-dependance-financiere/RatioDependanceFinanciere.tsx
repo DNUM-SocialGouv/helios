@@ -9,7 +9,7 @@ type RationDependanceFinanciereProps = Readonly<{
   ratioDependanceFinanciereViewModel: RatioDependanceFinanciereViewModel;
 }>;
 
-export function ContenuRatioDependanceFinancière(props: { dateDeMiseÀJour: any; source: ReactElement }): ReactElement {
+export function ContenuRatioDependanceFinancière(props: Readonly<{ dateDeMiseÀJour: any; source: ReactElement }>): ReactElement {
   const { wording } = useDependencies();
 
   return (
@@ -23,8 +23,7 @@ export function ContenuRatioDependanceFinancière(props: { dateDeMiseÀJour: any
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Quotidienne
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
@@ -52,8 +51,7 @@ export function ContenuRatioDependanceFinancière(props: { dateDeMiseÀJour: any
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          ANCRE (Application Nationale Compte financier Rapport infra-annuel Eprd) - Agence technique de l’information sur l’hospitalisation (ATIH)
+          <span className="fr-text--bold">Source(s) :</span> ANCRE (Application Nationale Compte financier Rapport infra-annuel Eprd) - Agence technique de l’information sur l’hospitalisation (ATIH)
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
@@ -87,6 +85,7 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
         couleursDeLHistogramme={ratioDependanceFinanciereViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         identifiant={wording.RATIO_DEPENDANCE_FINANCIERE}
+        isVigieRh={false}
         libellés={ratioDependanceFinanciereViewModel.années}
         taillePoliceTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
         valeurs={ratioDependanceFinanciereViewModel.valeurs}

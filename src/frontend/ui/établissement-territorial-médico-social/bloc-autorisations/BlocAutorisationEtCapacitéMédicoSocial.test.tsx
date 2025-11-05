@@ -39,10 +39,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
     );
 
     // THEN
-    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
-    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
-    const capacités = indicateurs[0];
-    const tableau = within(capacités).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[0];
     const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ACTIVITÉ });
     const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.CAPACITÉ_INSTALLÉE });
     expect(annéeLigneDEnTête).toBeInTheDocument();

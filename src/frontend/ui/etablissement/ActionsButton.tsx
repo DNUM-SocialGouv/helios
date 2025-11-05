@@ -7,9 +7,10 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 type ActionsButtonProps = Readonly<{
   finess: string;
   downloadPDF: () => void;
+  exportET?: () => void;
 }>;
 
-export const ActionsButton = ({ finess, downloadPDF }: ActionsButtonProps) => {
+export const ActionsButton = ({ finess, downloadPDF, exportET }: ActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -41,6 +42,19 @@ export const ActionsButton = ({ finess, downloadPDF }: ActionsButtonProps) => {
               {wording.TÉLÉCHARGER_EN_PDF}
             </button>
           </li>
+          {exportET &&
+            <li className={styles["menu-item"]}>
+              <button
+                className="fr-btn fr-btn--tertiary-no-outline"
+                name={wording.EXPORT_ET_RATTACHES}
+                onClick={exportET}
+                title={wording.EXPORT_ET_RATTACHES}
+                type="button"
+              >
+                {wording.EXPORT_ET_RATTACHES}
+              </button>
+            </li>
+          }
         </ul>
       }
     </div >

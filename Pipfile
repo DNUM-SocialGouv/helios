@@ -9,6 +9,7 @@ psycopg2 = "2.9.3"
 sentry-sdk = "1.16.0"
 python-dotenv = "0.20.0"
 pandas = "==1.5.2"
+pyarrow = "==13.0.0"
 lxml = "4.9.1"
 
 [dev-packages]
@@ -42,6 +43,8 @@ populate_autorisation_et_capacite_sanitaire = 'python -m datacrawler.ajoute_les_
 populate_budget_et_finances_medico_social = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux'
 populate_budget_et_finances_entite_juridique = 'python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques'
 populate_ressoures_humaines_medico_social = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux'
+populate_ressoures_humaines_entites_juridiques = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques'
+populate_ressoures_humaines_etablissements_sanitaires = 'python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_etablissements_sanitaires'
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
@@ -53,6 +56,15 @@ check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_fi
 populate_inspections = 'python -m datacrawler.import_inspections'
 populate_activites_mensuel = 'python -m datacrawler.import_activites_mensuel'
 populate_activites_mensuel_ej = 'python -m datacrawler.import_activites_mensuel_entite_juridique'
+transforme_parquet_en_csv = 'python -m datacrawler.transform_un_fichier_parquet_en_csv'
+populate_vigie_rh_contrat = 'python -m datacrawler.import_vigie_rh_contrat'
+populate_vigie_rh_profession_filiere = 'python -m datacrawler.import_vigie_rh_profession_filiere'
+populate_vigie_rh_profession_groupe = 'python -m datacrawler.import_vigie_rh_profession_groupe'
+populate_tranches_ages = 'python -m datacrawler.import_vigierh_tranches_ages'
+populate_mouvements_vigierh = 'python -m datacrawler.import_vigie_rh_mouvements'
+populate_mouvements_vigierh_trimestriels = 'python -m datacrawler.import_vigie_rh_mouvements_trimestriels'
+populate_vigierh_motifs_ruptures_contrats = 'python -m datacrawler.import_vigierh_motifs_ruptures_contrats'
+populate_mouvements_vigierh_duree_cdd = 'python -m datacrawler.import_vigierh_duree_cdd'
 populate_les_entites_juridiques = 'python -m datacrawler.import_les_entites_juridiques'
 populate_les_etablissements_territoriaux = 'python -m datacrawler.import_les_etablissements_territoriaux'
 populate_ref_categories = 'python -m datacrawler.import_ref_categories'

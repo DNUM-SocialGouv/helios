@@ -24,20 +24,17 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Hebdomadaire
+          <span className="fr-text--bold">Fréquence :</span> Hebdomadaire
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de calcul : </span>
-          Nombre total de places installées et nombre total de places par type d’activité installée.
+          <span className="fr-text--bold">Mode de calcul :</span> Nombre total de places installées et nombre total de places par type d’activité installée.
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) : </span>
-          Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS).
+          <span className="fr-text--bold">Source(s) :</span> Fichier National des Établissements Sanitaires et Sociaux (FINESS) - Agence du Numérique en Santé (ANS).
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>

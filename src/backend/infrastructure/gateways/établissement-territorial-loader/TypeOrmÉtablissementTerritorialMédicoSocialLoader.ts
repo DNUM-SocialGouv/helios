@@ -8,9 +8,18 @@ import { EvenementIndesirableETModel } from "../../../../../database/models/Even
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
+import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
+import { VigieRhRefMotifRuptutreContratModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
+import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
+import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
+import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
+import { VigieRhMouvementsTrimestrielsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
+import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
+import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereData } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -27,6 +36,38 @@ import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../mét
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 
+
+type ResultatQueryDureeCdd = Readonly<{
+  numero_finess_etablissement_territorial: string,
+  annee: number,
+  trimestre: number,
+  effectif: number,
+  effectif_ref: number,
+  duree: string,
+  duree_code: number;
+}>
+
+type ResultatQueryMotifRupture = Readonly<{
+  finess_et: string,
+  annee: number,
+  trimestre: number,
+  effectif: number,
+  effectif_ref: number,
+  motif: string,
+  code: number;
+}>
+
+type ModelsBlocVigieRh = Readonly<{
+  pyramideAgesModel: VigieRhPyramideAgesModel[],
+  tranchesAgeModel: VigieRhRefTrancheAgeModel[],
+  mouvementsModel: VigieRhMouvementsModel[],
+  vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
+  dureesCddModel: ResultatQueryDureeCdd[],
+  dureesCddRefModel: VigieRhRefDureeCddModel[],
+  motifsRuptureModel: ResultatQueryMotifRupture[],
+  motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[],
+  professionFiliereModel: ProfessionFiliere
+}>;
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
@@ -46,8 +87,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
-    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
+    const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET));
     const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, dateDeMiseÀJourAnnMsTdpEtModel, domaineÉtablissementPrincipal);
@@ -68,7 +109,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const nombreDÉtablissementTerritoriauxDansLEntitéJuridique = await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
       .countBy({ numéroFinessEntitéJuridique });
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
 
     return {
       estMonoÉtablissement: {
@@ -152,6 +193,237 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { année: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
+  }
+
+  async chargeLesDonneesVigieRH(numeroFinessET: string) {
+    const pyramideAges = await (await this.orm).getRepository(VigieRhPyramideAgesModel).find({
+      order: { annee: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const tranchesAge = await (await this.orm).getRepository(VigieRhRefTrancheAgeModel).find({
+      order: { trancheAge: "DESC" },
+    });
+    const professionFiliere = await this.getProfessionFiliere(numeroFinessET);
+    const departsEmbauches = await (await this.orm).getRepository(VigieRhMouvementsModel).find({
+      order: { annee: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const departsEmbauchesTrimestriels = await (await this.orm).getRepository(VigieRhMouvementsTrimestrielsModel).find({
+      order: { annee: "ASC", trimestre: "ASC" },
+      where: { numeroFinessET },
+    });
+
+    const dureesCdd = await (await this.orm).query(`
+      select * from (    
+          SELECT *
+          FROM vigierh_duree_cdd d
+          WHERE (d.annee, d.trimestre) IN (
+            SELECT d1.annee, MAX(d1.trimestre)
+            FROM vigierh_duree_cdd d1
+            WHERE d1.annee = (SELECT MAX(d2.annee) FROM vigierh_duree_cdd d2)
+            GROUP BY d1.annee
+            UNION ALL
+            SELECT (MAX(d1.annee) - 1) AS annee,
+                  MAX(d1.trimestre) AS trimestre
+            FROM vigierh_duree_cdd d1
+            WHERE d1.annee = (SELECT MAX(d2.annee) FROM vigierh_duree_cdd d2)
+          )
+          AND d.numero_finess_etablissement_territorial = '${numeroFinessET}'
+          ORDER BY d.annee DESC, d.trimestre ASC, d.duree_code ASC) val
+          JOIN vigierh_referentiel_duree_cdd ref ON val.duree_code = ref.duree_code;`
+    )
+
+    const dureeLibelles = await (await this.orm).getRepository(VigieRhRefDureeCddModel).find({
+      order: { dureeCode: "ASC" },
+    });
+
+    const motifsRupture = await (await this.orm).query(`
+      select * from (    
+          SELECT *
+          FROM vigierh_motifs_ruptures m
+          WHERE (m.annee, m.trimestre) IN (
+            SELECT m1.annee, MAX(m1.trimestre)
+            FROM vigierh_motifs_ruptures m1
+            WHERE m1.annee = (SELECT MAX(m2.annee) FROM vigierh_motifs_ruptures m2)
+            GROUP BY m1.annee
+            UNION ALL
+            SELECT (MAX(m1.annee) - 1) AS annee,
+                  MAX(m1.trimestre) AS trimestre
+            FROM vigierh_motifs_ruptures m1
+            WHERE m1.annee = (SELECT MAX(m2.annee) FROM vigierh_motifs_ruptures m2)
+          )
+          AND m.finess_et = '${numeroFinessET}'
+          ORDER BY m.annee DESC, m.trimestre ASC, m.motif_code ASC) val
+          JOIN vigierh_ref_motifs_ruptures ref ON val.motif_code = ref.code;`
+    )
+
+    const motifsLibelles = await (await this.orm).getRepository(VigieRhRefMotifRuptutreContratModel).find({
+      order: { code: "ASC" },
+    });
+
+    return this.construisLesDonneesVigieRH({
+      pyramideAgesModel: pyramideAges,
+      tranchesAgeModel: tranchesAge,
+      mouvementsModel: departsEmbauches,
+      vigieRhMouvementsTrimestrielsModel: departsEmbauchesTrimestriels,
+      dureesCddModel: dureesCdd,
+      dureesCddRefModel: dureeLibelles,
+      motifsRuptureModel: motifsRupture,
+      motifsLibelleModel: motifsLibelles,
+      professionFiliereModel: professionFiliere as unknown as ProfessionFiliere,
+    });
+  }
+
+  private async construisLesDonneesVigieRH(models : ModelsBlocVigieRh): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+
+    const pyramideAges = models.pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
+      return {
+        annee: pyramideModel.annee,
+        trancheLibelle: pyramideModel.trancheAgeRef.trancheAge ?? '',
+        effectifHomme: pyramideModel.effectifHomme,
+        effectifFemme: pyramideModel.effectifFemme,
+        effectifHommeRef: pyramideModel.effectifHommeRef,
+        effectifFemmeRef: pyramideModel.effectifFemmeRef,
+      }
+    })
+
+    const tranchesAgesLibelles = models.tranchesAgeModel.map((trancheModel: VigieRhRefTrancheAgeModel) => {
+      return trancheModel.trancheAge ?? '';
+    })
+
+    const professionFiliere = await this.construisProfessionFiliere(models.professionFiliereModel);
+
+    const departsEmbauches = models.mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
+      return {
+        annee: departEmbaucheModel.annee,
+        depart: departEmbaucheModel.depart,
+        departRef: departEmbaucheModel.departRef,
+        embauche: departEmbaucheModel.embauche,
+        embaucheRef: departEmbaucheModel.embaucheRef
+      }
+    })
+
+    const departsEmbauchesTrimestriels = models.vigieRhMouvementsTrimestrielsModel.map((departEmbaucheModel: VigieRhMouvementsTrimestrielsModel) => {
+      return {
+        annee: departEmbaucheModel.annee,
+        trimestre: departEmbaucheModel.trimestre,
+        depart: departEmbaucheModel.depart,
+        departRef: departEmbaucheModel.departRef,
+        embauche: departEmbaucheModel.embauche,
+        embaucheRef: departEmbaucheModel.embaucheRef
+      }
+    });
+
+    const tauxRotation = models.mouvementsModel.map((departEmbaucheModel: VigieRhMouvementsModel) => {
+      return {
+        annee: departEmbaucheModel.annee,
+        rotation: departEmbaucheModel.rotation,
+        rotationRef: departEmbaucheModel.rotationRef,
+      }
+    })
+
+    const tauxRotationTrimestriel = models.vigieRhMouvementsTrimestrielsModel.map((mouvementTrimestrielsModel: VigieRhMouvementsTrimestrielsModel) => {
+      return {
+        annee: mouvementTrimestrielsModel.annee,
+        trimestre: mouvementTrimestrielsModel.trimestre,
+        rotation: mouvementTrimestrielsModel.rotation,
+        rotationRef: mouvementTrimestrielsModel.rotationRef,
+      }
+    })
+
+    const dureesCdd = models.dureesCddModel.map((dureeCddModel: ResultatQueryDureeCdd) => {
+      return {
+        annee: dureeCddModel.annee,
+        trimestre: dureeCddModel.trimestre,
+        dureeLibelle: dureeCddModel.duree,
+        dureeCode: dureeCddModel.duree_code,
+        effectif: dureeCddModel.effectif,
+        effectifRef: dureeCddModel.effectif_ref,
+      }
+    })
+
+    const motifsRuptureContrat = models.motifsRuptureModel.map((motifRuptureModel: ResultatQueryMotifRupture) => {
+      return {
+        annee: motifRuptureModel.annee,
+        trimestre: motifRuptureModel.trimestre,
+        motifLibelle: motifRuptureModel.motif,
+        motifCode: motifRuptureModel.code,
+        effectif: motifRuptureModel.effectif,
+        effectifRef: motifRuptureModel.effectif_ref,
+      }
+    })
+
+    const dureesCddLibelles = models.dureesCddRefModel.map((dureeLibelleModel: VigieRhRefDureeCddModel) => {
+      return dureeLibelleModel.duree ?? '';
+    })
+
+    const motifsRuptureContratLibelles = models.motifsLibelleModel.map((motifLibelleModel: VigieRhRefMotifRuptutreContratModel) => {
+      return motifLibelleModel.motif ?? '';
+    })
+
+    return {
+      pyramideAges,
+      tranchesAgesLibelles,
+      departsEmbauches,
+      departsEmbauchesTrimestriels,
+      professionFiliere,
+      tauxRotation,
+      tauxRotationTrimestriel,
+      dureesCdd,
+      dureesCddLibelles,
+      motifsRuptureContrat,
+      motifsRuptureContratLibelles
+    }
+  }
+
+  private async construisProfessionFiliere(professionFiliereModel: ProfessionFiliere): Promise<{ data: ProfessionFiliereData[]; dateDeMiseAJour: string }> {
+    const professionFiliereFiltree: ProfessionFiliereData[] = professionFiliereModel.data
+      .filter((item: ProfessionFiliereData | null) => item !== null) // Filtre les éléments null
+      .map((item: ProfessionFiliereData) => ({
+        categorie: item.categorie,
+        dataCategorie: item.dataCategorie ? item.dataCategorie.map(profession => ({
+          annee: profession.annee,
+          mois: profession.mois,
+          effectifFiliere: profession.effectifFiliere,
+        })) : []
+      }));
+
+    const dateDeMiseÀJourprofessionFiliereModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_FILIERE);
+
+    return {
+      data: professionFiliereFiltree,
+      dateDeMiseAJour: dateDeMiseÀJourprofessionFiliereModel.dernièreMiseÀJour
+    };
+  }
+
+  async getProfessionFiliere(numeroFinessET: string) {
+    const refProfessionFiliere = await (await this.orm).getRepository(VigieRhRefProfessionFiliereModel).find({
+      order: { code: "ASC" }
+    });
+
+    const dateDeMiseAJourProfessionFiliere = await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET);
+
+    const data = await Promise.all(refProfessionFiliere.map(async (itemRef: VigieRhRefProfessionFiliereModel) => {
+
+      const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
+        order: { annee: "ASC", mois: "ASC" },
+        where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
+      });
+
+      // Vérifier si professionFiliere est vide
+      if (professionFiliere.length === 0) {
+        return null;
+      }
+
+      return {
+        categorie: itemRef.label,
+        dataCategorie: professionFiliere
+      }
+    }))
+
+    return { data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere }
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
@@ -547,15 +819,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       if (evenement.famillePrincipale === evenementsIndesirableParET.libelle) {
         if (evenement.etat === 'EN_COURS') evenementsIndesirableParET.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
         else evenementsIndesirableParET.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      } else {
-        if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
-        else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
-      }
+      } else if (evenement.etat === 'EN_COURS') evenementsIndesirableAssocieAuxSoins.evenementsEncours.push(this.constuisLevenementIndesirable(evenement));
+      else evenementsIndesirableAssocieAuxSoins.evenementsClotures.push(this.constuisLevenementIndesirable(evenement));
     });
     return [evenementsIndesirableAssocieAuxSoins, evenementsIndesirableParET]
   }
 
-  private constuisLevenementIndesirable = (evenement: EvenementIndesirableETModel) => {
+  private constuisLevenementIndesirable(evenement: EvenementIndesirableETModel) {
     return {
       famille: evenement.famillePrincipale,
       nature: evenement.naturePrincipale,
@@ -568,7 +838,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }
   }
 
-  private construisInspections = (inspections: InspectionsControlesETModel[], dateMisAJour: string) => {
+  private construisInspections(inspections: InspectionsControlesETModel[], dateMisAJour: string) {
     const inspectionsEtControles = inspections.map((inspection: InspectionsControlesETModel) => {
       return {
         typeMission: inspection.typeMission,

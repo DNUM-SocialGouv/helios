@@ -9,7 +9,7 @@ import { ÉtablissementTerritorialSanitaire } from "../../backend/métier/entiti
 import { ÉtablissementTerritorialSanitaireNonTrouvée } from "../../backend/métier/entities/ÉtablissementTerritorialSanitaireNonTrouvée";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
-import { ActivitésMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../frontend/ui/entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import { PageÉtablissementTerritorialSanitaire } from "../../frontend/ui/établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 import { EtablissementTerritorialSanitaireViewModel } from "../../frontend/ui/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireViewModel";
@@ -27,7 +27,7 @@ export default function Router({ rechercheResult, établissementTerritorial, aut
   if (!établissementTerritorial) return null;
 
   const établissementTerritorialSanitaireViewModel = new EtablissementTerritorialSanitaireViewModel(établissementTerritorial, wording, paths, autorisations);
-  const activitéMensuelleViewModel = new ActivitésMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
+  const activitéMensuelleViewModel = new ActivitesMensuelViewModel(établissementTerritorial.activitésMensuels, wording);
 
   const rechercheViewModel = new RechercheViewModel(rechercheResult.résultats[0], paths);
 

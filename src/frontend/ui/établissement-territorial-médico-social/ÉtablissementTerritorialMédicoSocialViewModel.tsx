@@ -5,18 +5,20 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from "./
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./bloc-budget-et-finances/ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 import { EtablissementTerritorialMedicoSocialIdentiteViewModel } from "./bloc-identité/ÉtablissementTerritorialMédicoSocialIdentitéViewModel";
 import { ÉtablissementTerritorialQualiteMédicoSocialViewModel } from "./bloc-qualite/ÉtablissementTerritorialQualiteMédicoSocialViewModel";
+import { BlocVigieRHViewModel } from "./bloc-ressources-humaines/bloc-vigie-rh/BlocVigieRHViewModel";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./bloc-ressources-humaines/ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
 import { ÉtablissementTerritorialMédicoSocial } from "../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../configuration/Paths";
 import { Wording } from "../../configuration/wording/Wording";
 
 export class EtablissementTerritorialMedicoSocialViewModel {
-  private readonly établissementTerritorialIdentitéMédicoSocialViewModel: EtablissementTerritorialMedicoSocialIdentiteViewModel;
-  private readonly établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
-  private readonly établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
-  private readonly établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
-  private readonly établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
-  private readonly établissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
+  private établissementTerritorialIdentitéMédicoSocialViewModel: EtablissementTerritorialMedicoSocialIdentiteViewModel;
+  private établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+  private établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
+  private établissementTerritorialBudgetEtFinancesMédicoSocialViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
+  private établissementTerritorialRessourcesHumainesMédicoSocialViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
+  private établissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
+  private blocVigieRHViewModel: BlocVigieRHViewModel;
   public autorisations: any;
 
   constructor(private readonly établissementTerritorial: ÉtablissementTerritorialMédicoSocial, private readonly wording: Wording, paths: Paths, autorisations: any) {
@@ -45,7 +47,8 @@ export class EtablissementTerritorialMedicoSocialViewModel {
     this.établissementTerritorialQualiteMédicoSocialViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
       wording,
       établissementTerritorial.qualite
-    )
+    );
+    this.blocVigieRHViewModel = new BlocVigieRHViewModel(établissementTerritorial.vigieRh, wording, autorisations);
   }
 
   public get titre(): string {
@@ -93,5 +96,9 @@ export class EtablissementTerritorialMedicoSocialViewModel {
 
   public get qualiteViewModel(): ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     return this.établissementTerritorialQualiteMédicoSocialViewModel;
+  }
+
+  public get vigieRHViewModel(): BlocVigieRHViewModel {
+    return this.blocVigieRHViewModel;
   }
 }

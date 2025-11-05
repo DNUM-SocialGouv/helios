@@ -54,9 +54,11 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
         ticks: { color: "var(--text-default-grey)" },
       },
       y: {
+        border: {
+          display: false
+        },
         grid: {
           color: couleurDelAbscisse,
-          drawBorder: false,
         },
         stacked: true,
         ticks: { color: "var(--text-default-grey)" },
@@ -95,7 +97,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   if (props.cacheLesValeursBasse) {
     valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
       if (valeur) {
-        const numValue = parseInt(valeur.replaceAll(/\s/g, ""));
+        const numValue = Number.parseInt(valeur.replaceAll(/\s/g, ""));
         if (numValue > 0 && numValue <= MIN_VALUE) {
           hasSomeValuesToHide = true;
           return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;

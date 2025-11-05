@@ -59,7 +59,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     // if user is not addmin
-    if (user && ![1, 2].includes(parseInt(user.roleId))) {
+    if (user && ![1, 2].includes(Number.parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
       NMonthsAgo.setMonth(new Date().getMonth() - 6);
       //if lastConnectionDate More than 6 months
@@ -232,7 +232,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       { email: ILike("%" + key.toString() + "%"), ...selectConditions },
     ];
 
-    const currentPageA: number = parseInt(currentPage as any) || 1;
+    const currentPageA: number = Number.parseInt(currentPage as any) || 1;
 
     const take = itemsPerPage || 10;
 

@@ -119,7 +119,7 @@ describe("Taux de CAF", () => {
 
       // THEN
       const transcription = graphiqueTest.transcriptionTable;
-      const transcriptionTable = within(transcription);
+      const transcriptionTable = within(transcription[0]);
       expect(transcriptionTable.getByText(wording.ANNÉE)).toBeInTheDocument();
       expect(transcriptionTable.getByText(wording.TAUX_DE_CAF)).toBeInTheDocument();
       expect(transcriptionTable.getByText(annéeEnCours - 2)).toBeInTheDocument();

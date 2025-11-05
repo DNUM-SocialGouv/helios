@@ -6,7 +6,7 @@ import { EtablissementTerritorialSanitaireActiviteViewModel } from "./Établisse
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
 import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialSanitaireViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
-import { ActivitésMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
+import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
 
@@ -19,7 +19,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 3, "RPU", wording.RPU_TITLE],
     [wording.NOMBRE_DE_JOURNEES_USLD, 2, "SAE", wording.SAE_TITLE],
   ])("affiche les informations de l’indicateur %s", (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -56,7 +56,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
-      const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+      const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
         activitesSanitaireMensuelList: [],
         dateDeMiseAJour: "11/12/12"
       }), wording);
@@ -95,7 +95,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     [wording.NOMBRE_DE_JOURNEES_USLD, 2],
     [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 3],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -141,7 +141,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     [[wording.ANNÉE, wording.NOMBRE_DE_JOURNEES_USLD], 2],
     [[wording.ANNÉE, wording.NOMBRE_DE_PASSAGES_AUX_URGENCES], 3],
   ])("affiche un tableau descriptif avec les cinq années", (libellésLigneDEnTête, identifiant) => {
-    const activitéMensuelleViewModel = new ActivitésMensuelViewModel(mock<ActivitesSanitaireMensuel>({
+    const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
@@ -149,9 +149,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
-    const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
-    const indicateurs = within(activité).getAllByRole("listitem");
-    const tableau = within(indicateurs[identifiant]).getByRole("table");
+    const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];;
 
     const indicateursLigneDEnTête = within(tableau).getAllByRole("columnheader");
     libellésLigneDEnTête.forEach((libellé, index) => {

@@ -28,6 +28,15 @@ export namespace StringFormater {
     return value.toLocaleString("fr");
   }
 
+  export function roundFormatInFrench(value: number): string {
+    return formatInFrench(round(value, 2));
+  }
+
+  function round(value: number, decimals: number = 2): number {
+    const facteur = Math.pow(10, decimals);
+    return Math.round(value * facteur) / facteur;
+  }
+
   export function addPercent(value: string) {
     return value + " %";
   }
@@ -37,7 +46,7 @@ export namespace StringFormater {
   }
 
   export function removePercent(value: string) {
-    return parseFloat(value.slice(0, -2).replace(',', '.'));
+    return Number.parseFloat(value.slice(0, -2).replace(',', '.'));
   }
 
   export function addPercentToValues(values: number[]): string[] {
@@ -46,5 +55,9 @@ export namespace StringFormater {
 
   export function transformInRate(number: number): number {
     return Math.round((number * 100) * 10) / 10;
+  }
+
+  export function transformInRoundedRate(number: number): number {
+    return Math.round(number * 10) / 10;
   }
 }

@@ -44,15 +44,16 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
     codesPostaux: [],
     codeNum: "",
   });
+  const [debounceTimeoutId, setDebounceTimeoutId] = useState<NodeJS.Timeout>();
 
   const requestCounterRef = useRef(0);
 
   // Debounce function to control the rate of API calls
   const debounce = (func: any, delay: number) => {
-    let timeout: any;
     return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), delay);
+      clearTimeout(debounceTimeoutId);
+      const timeout = setTimeout(() => func(...args), delay);
+      setDebounceTimeoutId(timeout);
     };
   };
 
@@ -98,7 +99,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
         const nonMatchingItems = responseData.filter((item: any) => !item.nom.toLowerCase().startsWith(searchQuery.toLowerCase()));
 
         //Adds padding to numbers to handle them correctly in comparison
-        const normalize = (str: string) => str.toLowerCase().replace(/(\d+)/g, (match) => match.padStart(2, "0"));
+        const normalize = (str: string) => str.toLowerCase().replaceAll(/(\d+)/g, (match) => match.padStart(2, "0"));
 
         // Sort both lists alphabetically by 'nom'
         const sortedMatchingItems = matchingItems.sort((a: any, b: any) => {

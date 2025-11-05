@@ -21,14 +21,12 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence : </span>
-          Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
-          <span className="fr-text--bold">Mode de Calcul : </span>
-          Nombre de séjours commencés lors de la période étudiée (mais pas nécessairement terminés).
+          <span className="fr-text--bold">Mode de Calcul :</span> Nombre de séjours commencés lors de la période étudiée (mais pas nécessairement terminés).
         </p>
       </section>
       <section aria-label={wording.SOURCES}>

@@ -1,6 +1,12 @@
 [tool.black]
 line-length = 160
 
+[tool.autopep8]
+max_line_length = 160
+
+[tool.ruff]
+line-length = 160
+
 [tool.mypy]
 strict_optional = true
 plugins = ["sqlmypy"]

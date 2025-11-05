@@ -182,10 +182,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const tableau = within(recettesEtDépenses).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur.recettesEtDépenses];;
       const titreBudgétaire = within(tableau).getByRole("columnheader", { name: wording.COMPTE_DE_RÉSULTAT_ERRD });
       expect(titreBudgétaire).toBeInTheDocument();
       const dépensesLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.DÉPENSES });
@@ -239,10 +236,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
-      const tableau = within(recettesEtDépenses).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur.recettesEtDépenses];;
       const dépensesLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.CHARGES });
       expect(dépensesLigneDEnTête).toBeInTheDocument();
       const recettesLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.PRODUITS });
@@ -270,7 +264,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       fireEvent.click(année);
 
       // THEN
-      const tableau = within(recettesEtDépenses).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur.recettesEtDépenses];
 
       const dépensesEtRecettes = [
         {
@@ -312,7 +306,6 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       const résultatNetComptable = indicateurs[indiceDeLIndicateur.résultatNetComptable];
       const tableau = within(résultatNetComptable).getByRole("table");
       expect(tableau).toBeInTheDocument();
-
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.MONTANT });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -419,10 +412,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette];
-      const tableau = within(tauxDeCaf).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -467,10 +457,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette - 1];
-      const tableau = within(tauxDeCaf).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];;
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -508,10 +495,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeCaf = indicateurs[indiceDeLIndicateur.tauxDeCafNette - 2];
-      const tableau = within(tauxDeCaf).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -532,10 +516,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction];
-      const tableau = within(tauxDeVétustéConstruction).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -580,10 +561,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction - 1];
-      const tableau = within(tauxDeVétustéConstruction).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -621,10 +599,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
-      const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
-      const tauxDeVétustéConstruction = indicateurs[indiceDeLIndicateur.tauxDeVétustéConstruction - 2];
-      const tableau = within(tauxDeVétustéConstruction).getByRole("table");
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
       expect(annéeLigneDEnTête).toBeInTheDocument();

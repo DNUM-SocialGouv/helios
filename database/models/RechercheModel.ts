@@ -12,12 +12,8 @@ import { ViewColumn, ViewEntity } from "typeorm";
       departement,
       code_region,
       '' AS rattachement,
-<<<<<<< HEAD
       '' AS categorie,
       '' As libelle_catgeorie
-=======
-      '' AS categorie
->>>>>>> master
     FROM entite_juridique
     UNION ALL
     SELECT

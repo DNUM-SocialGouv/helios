@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
+from sqlalchemy.sql import text
 
 from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
@@ -20,6 +21,8 @@ from datacrawler.load.nom_des_tables import (
     FichierSource,
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
     TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
+    TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE,
+    TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -28,6 +31,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_du_bloc_budget_et_finances,
     index_du_bloc_ressources_humaines,
     index_du_bloc_budget_et_finances_entite_juridique,
+    index_du_bloc_ressources_humaines_ej,
+    index_du_bloc_ressources_humaines_etsan
 )
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
@@ -131,7 +136,7 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
-
+    base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE};")
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
@@ -197,6 +202,17 @@ def sauvegarde_les_indicateurs_ressources_humaines_en_base(indicateurs_ressource
         name=TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
     )
 
+def sauvegarde_les_indicateurs_ressources_humaines_en_base_entite_juridique(indicateurs_ressources_humaines: pd.DataFrame, base_de_données: Engine) -> None:
+    indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines_ej).to_sql(
+        name=TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE, con=base_de_données, index=True, if_exists="append"
+    )
+
+def sauvegarde_les_indicateurs_ressources_humaines_en_base_etablissement_sanitaire(
+        indicateurs_ressources_humaines: pd.DataFrame,
+        base_de_données: Engine) -> None:
+    indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines_etsan).to_sql(
+        name=TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE, con=base_de_données, index=True, if_exists="append"
+    )
 
 def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
     with open(chemin_du_fichier, "w+", encoding="utf-8") as fichier:
@@ -206,3 +222,9 @@ def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
   {contenu}
 </fluxfiness>"""
         )
+
+
+def compte_nombre_de_lignes(table_name: str , base_de_données: Engine) -> int:
+    with base_de_données.connect() as connexion:
+        result = connexion.execute(text(f"SELECT COUNT(*) FROM {table_name};"))
+        return result.scalar()

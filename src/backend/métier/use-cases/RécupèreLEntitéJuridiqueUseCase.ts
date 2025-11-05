@@ -4,27 +4,29 @@ import { EntitéJuridiqueNonTrouvée } from "../entities/EntitéJuridiqueNonTrou
 import { EntitéJuridiqueLoader } from "../gateways/EntitéJuridiqueLoader";
 
 export class RécupèreLEntitéJuridiqueUseCase {
-  constructor(private readonly entitéJuridiqueLoader: EntitéJuridiqueLoader) { }
+  constructor(private readonly entiteJuridiqueLoader: EntitéJuridiqueLoader) { }
 
-  async exécute(numéroFiness: string): Promise<EntitéJuridique> {
-    const entitéJuridiqueIdentitéOuErreur = await this.entitéJuridiqueLoader.chargeIdentité(numéroFiness);
-    const activités = await this.entitéJuridiqueLoader.chargeActivités(numéroFiness);
-    const activitésMensuels = await this.entitéJuridiqueLoader.chargeActivitésMensuel(numéroFiness);
-    const budgetFinance = await this.entitéJuridiqueLoader.chargeBudgetFinance(numéroFiness);
-    const autorisationsEtCapacites = await this.entitéJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFiness);
-    const allocationRessource = await this.entitéJuridiqueLoader.chargeAllocationRessource(numéroFiness);
+  async exécute(numeroFiness: string): Promise<EntitéJuridique> {
+    const entiteJuridiqueIdentiteOuErreur = await this.entiteJuridiqueLoader.chargeIdentité(numeroFiness);
+    const activites = await this.entiteJuridiqueLoader.chargeActivités(numeroFiness);
+    const activitesMensuels = await this.entiteJuridiqueLoader.chargeActivitésMensuel(numeroFiness);
+    const budgetFinance = await this.entiteJuridiqueLoader.chargeBudgetFinance(numeroFiness);
+    const autorisationsEtCapacites = await this.entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numeroFiness);
+    const allocationRessource = await this.entiteJuridiqueLoader.chargeAllocationRessource(numeroFiness);
+    const ressourcesHumaines = await this.entiteJuridiqueLoader.chargeRessourcesHumaines(numeroFiness);
 
-    if (entitéJuridiqueIdentitéOuErreur instanceof EntitéJuridiqueNonTrouvée) {
-      throw entitéJuridiqueIdentitéOuErreur;
+    if (entiteJuridiqueIdentiteOuErreur instanceof EntitéJuridiqueNonTrouvée) {
+      throw entiteJuridiqueIdentiteOuErreur;
     }
 
     return {
-      ...entitéJuridiqueIdentitéOuErreur,
-      activités,
-      activitésMensuels,
+      ...entiteJuridiqueIdentiteOuErreur,
+      activités: activites,
+      activitésMensuels: activitesMensuels,
       budgetFinance,
       autorisationsEtCapacites: AutorisationsEtCapacitesPresenter.present(autorisationsEtCapacites),
-      allocationRessource
+      allocationRessource,
+      ressourcesHumaines
     };
   }
 }

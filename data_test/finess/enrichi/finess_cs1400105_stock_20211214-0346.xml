@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fluxfiness xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <horodatage>
+    <emetteur>finess</emetteur>
+    <destinataire>finess</destinataire>
+    <versionmessage>1</versionmessage>
+    <fluxnum>2001</fluxnum>
+    <datemaj>2021-12-14</datemaj>
+  </horodatage>
+  <structureet>
+    <nofinesset>580006104</nofinesset>
+    <nofinessej>580000149</nofinessej>
+    <rs>SAVS DECIZE</rs>
+  </structureet>
+  <structureet>
+      <nofinesset>010786259</nofinesset>
+      <nofinessej>620110072</nofinessej>
+      <rs>LOGEMENT FOYER LES PRES LENCLOS</rs>
+  </structureet>
+  <structureet>
+    <nofinesset>140004698</nofinesset>
+    <nofinessej>140018797</nofinessej>
+    <rs>IME LUCIENNE VASNIER - SITE PRINCIPAL</rs>
+  </structureet>
+  <structureet>
+    <nofinesset>010003598</nofinesset>
+    <nofinessej>750719361</nofinessej>
+    <rs>CHRS AURORE MONTROUGE</rs>
+  </structureet>
+  <equipementsocial>
+    <nofinesset>580006104</nofinesset>
+    <de>509</de>
+    <libde>Accompagnement à la vie sociale des adultes handicapés</libde>
+    <libcourtde>AVSAH</libcourtde>
+    <ta>16</ta>
+    <libta>Prestation en milieu ordinaire</libta>
+    <libcourtta>Milieu ordinaire</libcourtta>
+    <client>010</client>
+    <libclient>Tous Types de Déficiences Pers.Handicap.(sans autre indic.)</libclient>
+    <libcourtclient>Toutes Déf P.H. SAI</libcourtclient>
+    <sourceinfo>E</sourceinfo>
+    <libsourceinfo>Enquête statistique</libsourceinfo>
+    <capinstot>37</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>O</indsupinst>
+    <datederinst>2014-12-31</datederinst>
+    <datepremautor>2013-04-01</datepremautor>
+    <capautot>37</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>N</indsupaut>
+    <dateautor>2013-04-01</dateautor>
+    <datemajaut>2013-04-19</datemajaut>
+    <datemajinst>2015-05-20</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010786259</nofinesset>
+    <de>925</de>
+    <libde>Hébergement résidence autonomie personnes âgées seules F1</libde>
+    <libcourtde>Héb.R-A.P.A. F1</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>700</client>
+    <libclient>Personnes Agées (Sans Autre Indication)</libclient>
+    <libcourtclient>Personnes Agées</libcourtclient>
+    <sourceinfo>E</sourceinfo>
+    <libsourceinfo>Enquête statistique</libsourceinfo>
+    <capinstot xsi:nil="true"/>
+    <capinstm>0</capinstm>
+    <capinstf>0</capinstf>
+    <capinsthab>0</capinsthab>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>N</indsupinst>
+    <datederinst xsi:nil="true" />
+    <datepremautor xsi:nil="true"/>
+    <capautot xsi:nil="true"/>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>N</indsupaut>
+    <dateautor xsi:nil="true"/>
+    <datemajaut xsi:nil="true"/>
+    <datemajinst xsi:nil="true"/>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010786259</nofinesset>
+    <de>926</de>
+    <libde>Hébergement résidence autonomie personnes âgées couple F2</libde>
+    <libcourtde>Héb.R-A.P.A. F2</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>701</client>
+    <libclient>Personnes Agées Autonomes</libclient>
+    <libcourtclient>Pers. Agées Autonom.</libcourtclient>
+    <sourceinfo>E</sourceinfo>
+    <libsourceinfo>Enquête statistique</libsourceinfo>
+    <capinstot>0</capinstot>
+    <capinstm>0</capinstm>
+    <capinstf>0</capinstf>
+    <capinsthab>0</capinsthab>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>O</indsupinst>
+    <datederinst>2011-12-31</datederinst>
+    <datepremautor xsi:nil="true"/>
+    <capautot xsi:nil="true"/>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut xsi:nil="true"/>
+    <dateautor xsi:nil="true"/>
+    <datemajaut xsi:nil="true"/>
+    <datemajinst>2020-06-19</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010003598</nofinesset>
+    <de>957</de>
+    <libde>Hébergement d'insertion Adultes,Familles Difficulté</libde>
+    <libcourtde>Héb.Insertion Diffi.</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>810</client>
+    <libclient>Adultes en Difficulté d'Insertion Sociale (SAI)</libclient>
+    <libcourtclient>Adult.en Dif.Insert.</libcourtclient>
+    <sourceinfo>C</sourceinfo>
+    <libsourceinfo>Convention</libsourceinfo>
+    <capinstot>15</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>O</indsupinst>
+    <datederinst>2018-04-16</datederinst>
+    <datepremautor>2016-10-07</datepremautor>
+    <capautot>15</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>N</indsupaut>
+    <dateautor>2016-10-07</dateautor>
+    <datemajaut>2018-12-21</datemajaut>
+    <datemajinst>2018-12-21</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010003598</nofinesset>
+    <de>957</de>
+    <libde>Hébergement d'insertion Adultes,Familles Difficulté</libde>
+    <libcourtde>Héb.Insertion Diffi.</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>810</client>
+    <libclient>Adultes en Difficulté d'Insertion Sociale (SAI)</libclient>
+    <libcourtclient>Adult.en Dif.Insert.</libcourtclient>
+    <sourceinfo>C</sourceinfo>
+    <libsourceinfo>Convention</libsourceinfo>
+    <capinstot>15</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>N</indsupinst>
+    <datederinst>2018-04-16</datederinst>
+    <datepremautor>2016-10-07</datepremautor>
+    <capautot>75</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>N</indsupaut>
+    <dateautor>2016-10-07</dateautor>
+    <datemajaut>2019-12-28</datemajaut>
+    <datemajinst>2018-12-21</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010003598</nofinesset>
+    <de>957</de>
+    <libde>Hébergement d'insertion Adultes,Familles Difficulté</libde>
+    <libcourtde>Héb.Insertion Diffi.</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>810</client>
+    <libclient>Adultes en Difficulté d'Insertion Sociale (SAI)</libclient>
+    <libcourtclient>Adult.en Dif.Insert.</libcourtclient>
+    <sourceinfo>C</sourceinfo>
+    <libsourceinfo>Convention</libsourceinfo>
+    <capinstot>75</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>N</indsupinst>
+    <datederinst>2018-04-16</datederinst>
+    <datepremautor>2016-10-07</datepremautor>
+    <capautot>15</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>O</indsupaut>
+    <dateautor>2016-10-07</dateautor>
+    <datemajaut>2018-12-21</datemajaut>
+    <datemajinst>2019-12-28</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>010003598</nofinesset>
+    <de>957</de>
+    <libde>Hébergement d'insertion Adultes,Familles Difficulté</libde>
+    <libcourtde>Héb.Insertion Diffi.</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>810</client>
+    <libclient>Adultes en Difficulté d'Insertion Sociale (SAI)</libclient>
+    <libcourtclient>Adult.en Dif.Insert.</libcourtclient>
+    <sourceinfo>C</sourceinfo>
+    <libsourceinfo>Convention</libsourceinfo>
+    <capinstot>75</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst xsi:nil="true"/>
+    <agemaxiinst xsi:nil="true"/>
+    <indsupinst>N</indsupinst>
+    <datederinst>2018-04-16</datederinst>
+    <datepremautor>2016-10-07</datepremautor>
+    <capautot>75</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut xsi:nil="true"/>
+    <agemaxiaut xsi:nil="true"/>
+    <indsupaut>N</indsupaut>
+    <dateautor>2016-10-07</dateautor>
+    <datemajaut>2019-12-28</datemajaut>
+    <datemajinst>2019-12-28</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>140004698</nofinesset>
+    <de>901</de>
+    <libde>Éducation Générale et Soins Spécialisés Enfants Handicapés</libde>
+    <libcourtde>Educ.Gén.Soin.Sp.E.H</libcourtde>
+    <ta>11</ta>
+    <libta>Hébergement Complet Internat</libta>
+    <libcourtta>Héberg. Comp. Inter.</libcourtta>
+    <client>110</client>
+    <libclient>Déficience Intellectuelle (sans autre indication)</libclient>
+    <libcourtclient>Déf. Intellectuelle</libcourtclient>
+    <sourceinfo>A</sourceinfo>
+    <libsourceinfo>Autre</libsourceinfo>
+    <capinstot>8</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst>3</ageminiinst>
+    <agemaxiinst>20</agemaxiinst>
+    <indsupinst>N</indsupinst>
+    <datederinst>2016-11-29</datederinst>
+    <datepremautor>2017-01-03</datepremautor>
+    <capautot>8</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut>3</ageminiaut>
+    <agemaxiaut>20</agemaxiaut>
+    <indsupaut>N</indsupaut>
+    <dateautor>2017-01-03</dateautor>
+    <datemajaut>2017-04-21</datemajaut>
+    <datemajinst>2016-12-14</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>140004698</nofinesset>
+    <de>901</de>
+    <libde>Éducation Générale et Soins Spécialisés Enfants Handicapés</libde>
+    <libcourtde>Educ.Gén.Soin.Sp.E.H</libcourtde>
+    <ta>13</ta>
+    <libta>Semi-Internat</libta>
+    <libcourtta>Semi-Internat</libcourtta>
+    <client>110</client>
+    <libclient>Déficience Intellectuelle (sans autre indication)</libclient>
+    <libcourtclient>Déf. Intellectuelle</libcourtclient>
+    <sourceinfo>A</sourceinfo>
+    <libsourceinfo>Autre</libsourceinfo>
+    <capinstot>21</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst>3</ageminiinst>
+    <agemaxiinst>20</agemaxiinst>
+    <indsupinst>N</indsupinst>
+    <datederinst>2016-11-29</datederinst>
+    <datepremautor>2017-01-03</datepremautor>
+    <capautot>21</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut>3</ageminiaut>
+    <agemaxiaut>20</agemaxiaut>
+    <indsupaut>N</indsupaut>
+    <dateautor>2017-01-03</dateautor>
+    <datemajaut>2017-04-21</datemajaut>
+    <datemajinst>2016-12-14</datemajinst>
+  </equipementsocial>
+  <equipementsocial>
+    <nofinesset>140004698</nofinesset>
+    <de>901</de>
+    <libde>Éducation Générale et Soins Spécialisés Enfants Handicapés</libde>
+    <libcourtde>Educ.Gén.Soin.Sp.E.H</libcourtde>
+    <ta>13</ta>
+    <libta>Semi-Internat</libta>
+    <libcourtta>Semi-Internat</libcourtta>
+    <client>500</client>
+    <libclient>Polyhandicap</libclient>
+    <libcourtclient>Polyhandicap</libcourtclient>
+    <sourceinfo>A</sourceinfo>
+    <libsourceinfo>Autre</libsourceinfo>
+    <capinstot>6</capinstot>
+    <capinstm xsi:nil="true"/>
+    <capinstf xsi:nil="true"/>
+    <capinsthab xsi:nil="true"/>
+    <ageminiinst>3</ageminiinst>
+    <agemaxiinst>20</agemaxiinst>
+    <indsupinst>O</indsupinst>
+    <datederinst>2016-11-29</datederinst>
+    <datepremautor>2017-01-03</datepremautor>
+    <capautot>6</capautot>
+    <capautm xsi:nil="true"/>
+    <capautf xsi:nil="true"/>
+    <capauthab xsi:nil="true"/>
+    <ageminiaut>3</ageminiaut>
+    <agemaxiaut>20</agemaxiaut>
+    <indsupaut>N</indsupaut>
+    <dateautor>2017-01-03</dateautor>
+    <datemajaut>2017-04-21</datemajaut>
+    <datemajinst>2016-12-14</datemajinst>
+  </equipementsocial>
+</fluxfiness>
