@@ -719,8 +719,9 @@ export class WordingFr implements Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
   readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
 
 }
 

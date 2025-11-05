@@ -594,6 +594,8 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
@@ -624,5 +626,4 @@ export interface Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
 }
