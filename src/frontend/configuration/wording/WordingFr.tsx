@@ -454,6 +454,7 @@ export class WordingFr implements Wording {
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
   readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+  readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -470,6 +471,7 @@ export class WordingFr implements Wording {
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
   readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
+  readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
