@@ -11,6 +11,9 @@ import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/mo
 import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefMotifRuptutreContratModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
 import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
+import {
+  VigieRhRefProfessionGroupeModel
+} from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
@@ -21,11 +24,17 @@ import {
   VigieRhNatureContratsTrimestrielModel
 } from "../../../../../database/models/vigie_rh/VigieRhNatureContratsTrimestrielModel";
 import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
+import { VigieRhProfessionGroupeModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionGroupeModel";
 import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
-import { EtablissementTerritorialMedicoSocialVigieRH, ProfessionFiliere, ProfessionFiliereData } from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import {
+  EtablissementTerritorialMedicoSocialVigieRH,
+  ProfessionFiliere,
+  ProfessionFiliereData,
+  ProfessionGroupeData,
+} from "../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MonoÉtablissement } from "../../../métier/entities/établissement-territorial-médico-social/MonoÉtablissement";
 import { ÉtablissementTerritorialMédicoSocialActivité } from "../../../métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialActivité";
 import {
@@ -41,7 +50,6 @@ import { ÉtablissementTerritorialIdentité } from "../../../métier/entities/É
 import { ÉtablissementTerritorialMédicoSocialNonTrouvée } from "../../../métier/entities/ÉtablissementTerritorialMédicoSocialNonTrouvée";
 import { EvenementsIndesirables, Reclamations, ÉtablissementTerritorialQualite } from "../../../métier/entities/ÉtablissementTerritorialQualite";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../../../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
-
 
 type ResultatQueryDureeCdd = Readonly<{
   numero_finess_etablissement_territorial: string,
@@ -213,6 +221,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { trancheAge: "DESC" },
     });
     const professionFiliere = await this.getProfessionFiliere(numeroFinessET);
+
     const departsEmbauches = await (await this.orm).getRepository(VigieRhMouvementsModel).find({
       order: { annee: "ASC" },
       where: { numeroFinessET },
@@ -416,6 +425,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   }
 
   private async construisProfessionFiliere(professionFiliereModel: ProfessionFiliere): Promise<{ data: ProfessionFiliereData[]; dateDeMiseAJour: string }> {
+    const dateDeMiseÀJourGroupesModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_GROUPE);
+    const dateDeMiseÀJourGroupes = dateDeMiseÀJourGroupesModel?.dernièreMiseÀJour ?? "";
+
     const professionFiliereFiltree: ProfessionFiliereData[] = professionFiliereModel.data
       .filter((item: ProfessionFiliereData | null) => item !== null) // Filtre les éléments null
       .map((item: ProfessionFiliereData) => ({
@@ -424,7 +436,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
           annee: profession.annee,
           mois: profession.mois,
           effectifFiliere: profession.effectifFiliere,
-        })) : []
+        })) : [],
+        ...(this.extractProfessionsGroupes(item, dateDeMiseÀJourGroupes)),
       }));
 
     const dateDeMiseÀJourprofessionFiliereModel = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_FILIERE);
@@ -432,6 +445,31 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     return {
       data: professionFiliereFiltree,
       dateDeMiseAJour: dateDeMiseÀJourprofessionFiliereModel.dernièreMiseÀJour
+    };
+  }
+
+  private extractProfessionsGroupes(item: ProfessionFiliereData, dateDeMiseÀJour: string): Partial<ProfessionFiliereData> {
+    const groupesSource = (item as any)?.groupes;
+    const dataGroupes: ProfessionGroupeData[] = (groupesSource?.data ?? [])
+      .filter((g: ProfessionGroupeData | null) => g !== null)
+      .map((g: any) => ({
+        categorie: g.categorie,
+        dataCategorie: (g.dataCategorie ?? []).map((profession: any) => ({
+          annee: Number(profession.annee),
+          mois: Number(profession.mois),
+          effectif: Number(profession.effectif ?? profession.effectifFiliere ?? 0),
+        })),
+      }));
+
+    if (!dataGroupes.length) {
+      return {};
+    }
+
+    return {
+      groupes: {
+        data: dataGroupes,
+        dateDeMiseAJour: dateDeMiseÀJour,
+      },
     };
   }
 
@@ -446,21 +484,54 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
       const professionFiliere = await (await this.orm).getRepository(VigieRhProfessionFiliereModel).find({
         order: { annee: "ASC", mois: "ASC" },
-        where: { numeroFiness: numeroFinessET, professionCode: itemRef.code },
+        where: { numeroFiness: numeroFinessET, profession: { code: itemRef.code } },
       });
 
-      // Vérifier si professionFiliere est vide
-      if (professionFiliere.length === 0) {
+      const groupes = await this.getProfessionsGroupe(numeroFinessET, itemRef.code);
+
+      if (professionFiliere.length === 0 && (groupes?.data?.length ?? 0) === 0) {
         return null;
       }
 
       return {
         categorie: itemRef.label,
-        dataCategorie: professionFiliere
-      }
+        dataCategorie: professionFiliere,
+        groupes,
+      };
     }))
 
     return { data: data, dateDeMiseAJour: dateDeMiseAJourProfessionFiliere }
+  }
+
+  async getProfessionsGroupe(numeroFinessET: string, codeFiliere: number): Promise<{ data: ProfessionGroupeData[]; dateDeMiseAJour: string }> {
+    const refProfessionGroupe = await (await this.orm).getRepository(VigieRhRefProfessionGroupeModel).find({
+      order: { code: "ASC" },
+      where: { filiere:{code: codeFiliere} }
+    });
+
+    const dateDeMiseAJourProfessionGroupe = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_GROUPE);
+
+    const data = (await Promise.all(refProfessionGroupe.map(async (itemRef: VigieRhRefProfessionGroupeModel) => {
+
+      const professionGroup = await (await this.orm).getRepository(VigieRhProfessionGroupeModel).find({
+        order: { annee: "ASC", mois: "ASC" },
+        where: { numeroFiness: numeroFinessET, profession: { code: itemRef.code } },
+      });
+
+      if (professionGroup.length === 0) {
+        return null;
+      }
+
+      return {
+        categorie: itemRef.label,
+        dataCategorie: professionGroup,
+      };
+    }))).filter((item) => item !== null);
+
+    return {
+      data :  data as ProfessionGroupeData[],
+      dateDeMiseAJour: dateDeMiseAJourProfessionGroupe?.dernièreMiseÀJour ?? "",
+    };
   }
 
   private async chargeLaDateDeMiseÀJourModel(source: FichierSource): Promise<DateMiseÀJourFichierSourceModel> {
