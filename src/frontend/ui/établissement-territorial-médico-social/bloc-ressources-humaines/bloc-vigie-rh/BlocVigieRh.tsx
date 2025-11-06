@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import CarteTopIndicateur from "./CarteTopIndicateur";
@@ -22,6 +23,7 @@ import { StringFormater } from "../../../commun/StringFormater";
 import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
 import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
+import { HistogrammeMensuelFilters } from "../../../commun/Graphique/HistogrammeMensuelFilters";
 
 type BlocVigieRHProps = Readonly<{
   blocVigieRHViewModel: BlocVigieRHViewModel;
@@ -47,12 +49,32 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
+  const filieresAvecGroupes = useMemo(
+    () => (donneesEffectifs.data ?? []).filter((f: any) => (f?.groupes?.data ?? []).length > 0),
+    [donneesEffectifs],
+  );
+  const [filiereSelectionnee, setFiliereSelectionnee] = useState<string>("");
+  const filiereCourante = useMemo(
+    () => filieresAvecGroupes.find((f: any) => f.categorie === filiereSelectionnee),
+    [filieresAvecGroupes, filiereSelectionnee],
+  );
+
   const couleurEffectifsTotaux = "#ff6600ff"; // orange
   const couleursFilieres = ["#FF8E68","#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
   }, [anneeEnCours]);
+
+  useEffect(() => {
+    if (!filieresAvecGroupes.length) {
+      setFiliereSelectionnee("");
+      return;
+    }
+    if (!filiereSelectionnee || !filieresAvecGroupes.some((f: any) => f.categorie === filiereSelectionnee)) {
+      setFiliereSelectionnee(filieresAvecGroupes[0].categorie);
+    }
+  }, [filieresAvecGroupes, filiereSelectionnee]);
 
   // --- helper : aligne sur (année, mois) et somme les filières ---
   function buildTotalsFromCategories(categories: ProfessionFiliereData[]): EffectifsData {
@@ -105,6 +127,18 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   }
 
   const items = donneesEffectifs.data ?? [];
+  const groupesCourants = useMemo(() => filiereCourante?.groupes?.data ?? [], [filiereCourante]);
+  const detailDataEffectifs = useMemo<EffectifsData>(() => {
+    const serie = (filiereCourante as any)?.dataCategorie ?? {};
+    const dataMoisAnnee = serie?.dataMoisAnnee ?? [];
+    const dataFiliere = serie?.dataFiliere ?? [];
+    return {
+      dataEtab: dataFiliere ?? [],
+      dataFiliere: [],
+      dataMoisAnnee: dataMoisAnnee ?? [],
+    };
+  }, [filiereCourante]);
+
   const indicateurEffectif = useMemo(() => {
     if (!items.length) return null;
 
@@ -269,6 +303,39 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
                 </>
               );
             })()}
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {blocVigieRHViewModel.graphiqueEffectifsAffichable && filieresAvecGroupes.length > 0 ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            identifiant="vr-effectifs-groupes"
+            nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+            source={wording.VIGIE_RH}
+          >
+            <>
+              <HistogrammeMensuelFilters
+                activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
+                handleFrequency={() => undefined}
+                identifiant="effectifs-groupes"
+                ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
+                selectedActivity={filiereSelectionnee}
+                selectedFrequency={wording.MENSUEL}
+                setSelectedActivity={setFiliereSelectionnee}
+                showFrequencySwitch={false}
+                showYearSelection={false}
+                wording={wording}
+              />
+              <LineChart
+                afficherSerieTotale={false}
+                classContainer="fr-mb-4w"
+                couleurEffectifsTotaux={couleurEffectifsTotaux}
+                dataEffectifs={detailDataEffectifs}
+                identifiantLegende="légende-graphique-effectifs-groupes"
+                multiCategories={groupesCourants}
+              />
+            </>
           </IndicateurGraphique>
         ) : (
           <></>

@@ -609,6 +609,7 @@ export interface Wording {
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
+  readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly VIGIE_RH_CATEGORIE: string;
   readonly MOIS_ANNEES: string;
@@ -620,6 +621,7 @@ export interface Wording {
   readonly MOYENNE_REF: string;
   readonly TAUX_ROTATION: string;
   readonly REPARTITION_EFFECTIFS: string;
+  readonly SELECTIONNER_UNE_FILIERE: string;
   readonly TAUX_ROTATION_REFERENCE: string;
   readonly TOP_TAUX_ROTATION_TITLE: string;
   readonly DUREE_CDD: string;

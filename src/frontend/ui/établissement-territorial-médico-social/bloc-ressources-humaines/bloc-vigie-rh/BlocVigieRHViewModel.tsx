@@ -214,13 +214,32 @@ export class BlocVigieRHViewModel {
     const dataEffectifs = this.etablissementTerritorialVRMedicoSocial.professionFiliere;
 
     const transformData = (dataEffectifs: ProfessionFiliere): any => {
-      return dataEffectifs?.data?.map(({ categorie, dataCategorie }) => ({
-        categorie,
-        dataCategorie: {
-          dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
-          dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
-        },
-      }));
+      const transformSerie = (serie: any[] | undefined, effectifKey: "effectifFiliere" | "effectif") => ({
+        dataFiliere: (serie ?? []).map((entry) => Number(entry?.[effectifKey] ?? 0)),
+        dataMoisAnnee: (serie ?? []).map(({ mois, annee }) => ({ mois: Number(mois), annee: Number(annee) })),
+      });
+
+      return dataEffectifs?.data?.map(({ categorie, dataCategorie, groupes }) => {
+        const serieFiliere = transformSerie(dataCategorie, "effectifFiliere");
+        const groupesTransformes = groupes?.data
+          ?.map((groupe) => ({
+            categorie: groupe.categorie,
+            dataCategorie: transformSerie(groupe.dataCategorie, "effectif"),
+          })) ?? [];
+
+        return {
+          categorie,
+          dataCategorie: serieFiliere,
+          ...(groupesTransformes.length
+            ? {
+              groupes: {
+                data: groupesTransformes,
+                dateDeMiseAJour: groupes?.dateDeMiseAJour ?? "",
+              },
+            }
+            : {}),
+        };
+      });
     };
 
     let transformedData = [];

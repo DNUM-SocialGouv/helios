@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
-import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { ProfessionFiliereData, ProfessionGroupeData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
@@ -26,16 +26,27 @@ export interface CategorieData {
   data: EffectifsData;
 }
 
+type MultiCategorie = ProfessionFiliereData | ProfessionGroupeData;
+
 interface LineChartProps {
   classContainer: string;
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
-  multiCategories: ProfessionFiliereData[];
+  multiCategories: MultiCategorie[];
   couleursFilieres?: string[];
   identifiantLegende: string;
+  afficherSerieTotale?: boolean;
 }
 
-const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
+const LineChart = ({
+  classContainer,
+  couleurEffectifsTotaux,
+  dataEffectifs,
+  multiCategories,
+  couleursFilieres,
+  identifiantLegende,
+  afficherSerieTotale = true,
+}: LineChartProps) => {
   const { wording } = useDependencies();
 
   // Couleurs/grille
@@ -53,7 +64,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
   // Petite utilité pour l’affichage des libellés des filières
   const capitalize = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
-  const getSerie = (c: ProfessionFiliereData): number[] => {
+  const getSerie = (c: MultiCategorie): number[] => {
     const dc: any = (c as any)?.dataCategorie;
     if (!dc) return [];
     if (Array.isArray(dc)) return dc.map((r: any) => Number(r?.effectifFiliere ?? r?.effectif ?? 0));
@@ -62,19 +73,21 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
 
   // Données du graphique : 1 dataset “totaux” + les datasets des filières visibles
   const data = useMemo(() => {
-    const datasets: any[] = [
-      {
+    const datasets: any[] = [];
+
+    if (afficherSerieTotale) {
+      datasets.push({
         label: wording.EFFECTIFS_TOTAUX,
-        data: dataEffectifs.dataEtab,
+        data: dataEffectifs?.dataEtab ?? [],
         borderColor: couleurEffectifsTotaux,
         backgroundColor: couleurEffectifsTotaux,
         borderWidth: 2,
         fill: false,
         pointRadius: 1,
-      },
-    ];
+      });
+    }
 
-    for (const [id,c] of (multiCategories ?? []).entries()){
+    for (const [id, c] of (multiCategories ?? []).entries()) {
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
       datasets.push({
         label: capitalize(c.categorie),
@@ -88,7 +101,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
     }
 
     return { labels, datasets };
-  }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX]);
+  }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, afficherSerieTotale, wording.EFFECTIFS_TOTAUX]);
 
   // Options du graphique
   const options: ChartOptions<"line"> = {
@@ -164,9 +177,15 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         <Transcription
           disabled={false}
           entêteLibellé={wording.MOIS_ANNEES}
-          identifiants={[wording.EFFECTIFS_TOTAUX, ...(multiCategories ?? []).map((c) => capitalize(c.categorie))]}
+          identifiants={[
+            ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
+            ...(multiCategories ?? []).map((c) => capitalize(c.categorie)),
+          ]}
           libellés={labelsTranscription}
-          valeurs={[dataEffectifs.dataEtab, ...(multiCategories ?? []).map(getSerie)]}
+          valeurs={[
+            ...(afficherSerieTotale ? [dataEffectifs.dataEtab] : []),
+            ...(multiCategories ?? []).map(getSerie),
+          ]}
         />
       </div>
     </div>
