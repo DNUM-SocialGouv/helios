@@ -362,8 +362,7 @@ const datasource = new DataSource({
     AjoutTableVigieRhRefDureeCdd1759821492361,
     VigierhNatureContratsTables1760966102359,
     AjoutColonneDepartsPrematuresCdi1761819265202,
-    ModificationTableProfession21762263346352,
-    AjoutColonneDepartsPrematuresCdi1761819265202
+    ModificationTableProfession21762263346352
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
