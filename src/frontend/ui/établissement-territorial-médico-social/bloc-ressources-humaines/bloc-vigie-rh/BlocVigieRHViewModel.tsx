@@ -1,6 +1,22 @@
-import { DepartEmbauche, DureeCDD, EtablissementTerritorialMedicoSocialVigieRH, MotifsRuptureContrat, ProfessionFiliere, TauxRotation, TauxRotationTrimestriel } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import {
+  DepartEmbauche,
+  DureeCDD,
+  EtablissementTerritorialMedicoSocialVigieRH,
+  MotifsRuptureContrat,
+  NatureContratsAnnuel,
+  NatureContratsTrimestriel,
+  ProfessionFiliere,
+  TauxRotation,
+  TauxRotationTrimestriel,
+} from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { Wording } from "../../../../configuration/wording/Wording";
-import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune, CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
+import {
+  couleurDuFondHistogrammeJaune,
+  couleurExtensionHistogrammeJaune,
+  CouleurHistogramme,
+  couleurDuFondHistogrammeOrangeClair,
+  couleurExtensionHistogrammeOrangeClair,
+} from "../../../commun/Graphique/couleursGraphique";
 import { StringFormater } from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
@@ -18,6 +34,11 @@ export type DepartEmbaucheTrimestrielViewModel = {
   embauche: number;
   embaucheRef: number;
 }
+
+export type DepartPrematuresCdiViewModel = Readonly<{
+  annee: number;
+  valeur: number | null;
+}>;
 
 export class BlocVigieRHViewModel {
 
@@ -52,6 +73,14 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
   }
 
+  public get lesNaturesContratsNeSontPasReseignees(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.length === 0;
+  }
+
+  public get lesDepartsPrematuresCdiPasRenseignes(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.departsPrematuresCdiDisponibles;
+  }
+
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
   }
@@ -76,8 +105,16 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
   }
 
+  public get lesNaturesContratsNeSontPasAutorisees(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+  }
+
+  public get lesDepartsPrematuresCdiPasAutorises(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+  }
+
   public get graphiqueMotifsAffichable(): boolean {
-    return !this.lesDureesCDDNeSontEllesPasRenseignees && !this.lesDureesCDDNeSontEllesPasAutorisee;
+    return !this.lesMotifsNeSontIlsPasRenseignes && !this.lesMotifsNeSontIlsPasAutorises;
   }
 
   public get graphiqueRotationsAffichable(): boolean {
@@ -96,6 +133,14 @@ export class BlocVigieRHViewModel {
     return !this.lesAgesNeSontIlsPasRenseignees && !this.lesAgesNeSontIlsPasAutorisee;
   }
 
+  public get graphiqueNatureContratsAffichable(): boolean {
+    return !this.lesNaturesContratsNeSontPasAutorisees && !this.lesNaturesContratsNeSontPasReseignees;
+  }
+
+  public get graphiqueDepartsPrematuresCdiAffichable(): boolean {
+    return !this.lesDepartsEmbauchesNeSontIlsPasAutorisee && this.departsPrematuresCdiDisponibles;
+  }
+
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
@@ -104,6 +149,9 @@ export class BlocVigieRHViewModel {
     if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasRenseignees) nonRenseignees.push(this.wording.DUREE_CDD);
     if (this.lesMotifsNeSontIlsPasRenseignes) nonRenseignees.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
+    if (this.lesNaturesContratsNeSontPasReseignees) nonRenseignees.push(this.wording.NATURE_CONTRATS);
+    if (this.lesDepartsPrematuresCdiPasRenseignes) nonRenseignees.push(this.wording.DEPARTS_PREMATURES_CDI);
+
     return nonRenseignees;
   }
 
@@ -115,6 +163,9 @@ export class BlocVigieRHViewModel {
     if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasAutorisee) nonAutorises.push(this.wording.DUREE_CDD);
     if (this.lesMotifsNeSontIlsPasAutorises) nonAutorises.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
+    if (this.lesNaturesContratsNeSontPasAutorisees) nonAutorises.push(this.wording.NATURE_CONTRATS);
+    if (this.lesDepartsPrematuresCdiPasAutorises) nonAutorises.push(this.wording.DEPARTS_PREMATURES_CDI);
+
     return nonAutorises;
   }
 
@@ -197,6 +248,16 @@ export class BlocVigieRHViewModel {
     });
   }
 
+  public get departsPrematuresCdi(): DepartPrematuresCdiViewModel[] {
+    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+      .map(({ annee, departsPrematuresCdi }) => ({ annee, valeur: departsPrematuresCdi ?? null }))
+      .sort((a, b) => b.annee - a.annee);
+  }
+
+  private get departsPrematuresCdiDisponibles(): boolean {
+    return this.departsPrematuresCdi.some(({ valeur }) => valeur !== null && valeur !== undefined);
+  }
+
   public get donneesTauxRotation(): TauxRotation[] {
     return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
   }
@@ -272,5 +333,26 @@ export class BlocVigieRHViewModel {
     return motifs
       .filter(m => m.annee === maxAnnee)
       .sort((a, b) => a.motifCode - b.motifCode);
+  }
+
+  public get natureContratsAnnuel():NatureContratsAnnuel[]{
+    return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+  }
+
+  public get natureContratsTrimestriel():NatureContratsTrimestriel[]{
+    return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
+  }
+
+  public get paletteNatureContrats(): CouleurHistogramme[] {
+    return [
+      {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
+      },
+      {
+        premierPlan: couleurDuFondHistogrammeOrangeClair,
+        secondPlan: couleurExtensionHistogrammeOrangeClair,
+      },
+    ];
   }
 }

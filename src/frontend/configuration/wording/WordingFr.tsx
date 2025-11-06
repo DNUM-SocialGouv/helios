@@ -724,7 +724,7 @@ export class WordingFr implements Wording {
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
   readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
+  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
+  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
 
 }
-
-

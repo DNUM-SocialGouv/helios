@@ -84,6 +84,7 @@ import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
+import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761819265202-AjoutColonneDepartsPrematuresCdi";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -104,6 +105,7 @@ import { SupressionColonneEffectifDePyramideAges1758270710076 } from "./migratio
 import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "./migrations/vigie_rh/1758292560238-SuppressionEffectifEtabDeVigieRhProfessionFiliere";
 import { AjoutTableVigieRhDureeCdd1759821521368 } from "./migrations/vigie_rh/1759821521368-AjoutTableVigieRhDureeCdd";
 import { AjoutMotifsRupturesContrats1760516962957 } from "./migrations/vigie_rh/1760516962957-AjoutMotifsRupturesContrats";
+import { VigierhNatureContratsTables1760966102359 } from "./migrations/vigie_rh/1760966102359-vigierhNatureContratsTables";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -152,6 +154,7 @@ import { UtilisateurModel } from "./models/UtilisateurModel";
 import { VigieRhRefDureeCddModel } from "./models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
 import { VigieRhRefMasqueModel } from "./models/vigie_rh/referentiel/VigieRhRefMasqueModel";
 import { VigieRhRefMotifRuptutreContratModel } from "./models/vigie_rh/referentiel/VigieRhRefMotifRuptureContratModel";
+import { VigieRhRefNatureContrat } from "./models/vigie_rh/referentiel/VigieRhRefNatureContratsModel";
 import { VigieRhRefProfessionFiliereModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionFiliereModel";
 import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/VigieRhRefProfessionGroupeModel";
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
@@ -163,6 +166,8 @@ import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
 import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "./models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
+import { VigieRhNatureContratsAnnuelModel } from "./models/vigie_rh/VigieRhNatureContratsAnnuelModel";
+import { VigieRhNatureContratsTrimestrielModel } from "./models/vigie_rh/VigieRhNatureContratsTrimestrielModel";
 import { VigieRhProfessionFiliereModel } from "./models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhProfessionGroupeModel } from "./models/vigie_rh/VigieRhProfessionGroupeModel";
 import { VigieRhPyramideAgesModel } from "./models/vigie_rh/VigieRHPyramideAgeModel";
@@ -233,7 +238,10 @@ const datasource = new DataSource({
     VigieRhDureesCDDModel,
     VigieRhRefDureeCddModel,
     VigieRhMotifRuptutreContratModel,
-    VigieRhRefMotifRuptutreContratModel
+    VigieRhRefMotifRuptutreContratModel,
+    VigieRhRefNatureContrat,
+    VigieRhNatureContratsAnnuelModel,
+    VigieRhNatureContratsTrimestrielModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -350,7 +358,9 @@ const datasource = new DataSource({
     AjoutReferentielMotifsRupturesContrats1760516933359,
     AjoutMotifsRupturesContrats1760516962957,
     AjoutTableVigieRhDureeCdd1759821521368,
-    AjoutTableVigieRhRefDureeCdd1759821492361
+    AjoutTableVigieRhRefDureeCdd1759821492361,
+    VigierhNatureContratsTables1760966102359,
+    AjoutColonneDepartsPrematuresCdi1761819265202
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

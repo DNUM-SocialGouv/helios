@@ -14,6 +14,12 @@ import { VigieRhRefProfessionFiliereModel } from "../../../../../database/models
 import { VigieRhRefTrancheAgeModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
 import { VigieRhMouvementsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsModel";
 import { VigieRhMouvementsTrimestrielsModel } from "../../../../../database/models/vigie_rh/VigieRhMouvementsTrimestrielsModel";
+import {
+  VigieRhNatureContratsAnnuelModel
+} from "../../../../../database/models/vigie_rh/VigieRhNatureContratsAnnuelModel";
+import {
+  VigieRhNatureContratsTrimestrielModel
+} from "../../../../../database/models/vigie_rh/VigieRhNatureContratsTrimestrielModel";
 import { VigieRhProfessionFiliereModel } from "../../../../../database/models/vigie_rh/VigieRhProfessionFiliereModel";
 import { VigieRhPyramideAgesModel } from "../../../../../database/models/vigie_rh/VigieRHPyramideAgeModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -58,15 +64,17 @@ type ResultatQueryMotifRupture = Readonly<{
 }>
 
 type ModelsBlocVigieRh = Readonly<{
-  pyramideAgesModel: VigieRhPyramideAgesModel[],
-  tranchesAgeModel: VigieRhRefTrancheAgeModel[],
-  mouvementsModel: VigieRhMouvementsModel[],
-  vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[],
-  dureesCddModel: ResultatQueryDureeCdd[],
-  dureesCddRefModel: VigieRhRefDureeCddModel[],
-  motifsRuptureModel: ResultatQueryMotifRupture[],
-  motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[],
-  professionFiliereModel: ProfessionFiliere
+  pyramideAgesModel: VigieRhPyramideAgesModel[];
+  tranchesAgeModel: VigieRhRefTrancheAgeModel[];
+  mouvementsModel: VigieRhMouvementsModel[];
+  vigieRhMouvementsTrimestrielsModel: VigieRhMouvementsTrimestrielsModel[];
+  dureesCddModel: ResultatQueryDureeCdd[];
+  dureesCddRefModel: VigieRhRefDureeCddModel[];
+  motifsRuptureModel: ResultatQueryMotifRupture[];
+  motifsLibelleModel: VigieRhRefMotifRuptutreContratModel[];
+  professionFiliereModel: ProfessionFiliere;
+  natureContratsAnnuel: VigieRhNatureContratsAnnuelModel[];
+  natureContratsTrimestriel: VigieRhNatureContratsTrimestrielModel[];
 }>;
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -263,6 +271,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       order: { code: "ASC" },
     });
 
+    const natureContratsAnnuel = await (await this.orm).getRepository(VigieRhNatureContratsAnnuelModel).find({ where: { numeroFiness: numeroFinessET } });
+    const natureContratsTrimestriel = await (await this.orm).getRepository(VigieRhNatureContratsTrimestrielModel).find({ where: { numeroFiness: numeroFinessET } });
     return this.construisLesDonneesVigieRH({
       pyramideAgesModel: pyramideAges,
       tranchesAgeModel: tranchesAge,
@@ -273,6 +283,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       motifsRuptureModel: motifsRupture,
       motifsLibelleModel: motifsLibelles,
       professionFiliereModel: professionFiliere as unknown as ProfessionFiliere,
+      natureContratsAnnuel,
+      natureContratsTrimestriel
     });
   }
 
@@ -301,7 +313,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
         depart: departEmbaucheModel.depart,
         departRef: departEmbaucheModel.departRef,
         embauche: departEmbaucheModel.embauche,
-        embaucheRef: departEmbaucheModel.embaucheRef
+        embaucheRef: departEmbaucheModel.embaucheRef,
+        departsPrematuresCdi: departEmbaucheModel.departsPrematuresCdi ?? null,
       }
     })
 
@@ -363,6 +376,28 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return motifLibelleModel.motif ?? '';
     })
 
+    const natureContratsAnnuel = models.natureContratsAnnuel.map((natureContratModel: VigieRhNatureContratsAnnuelModel) => {
+      return {
+        annee: natureContratModel.annee,
+        effectif: natureContratModel.effectif,
+        effectifRef: natureContratModel.effectifRef,
+        natureLibelle: natureContratModel.nature.libelle,
+        natureCode: natureContratModel.nature.code,
+      };
+    });
+
+    const natureContratsTrimestriel = models.natureContratsTrimestriel.map((natureContratModel: VigieRhNatureContratsTrimestrielModel) => {
+      return {
+        annee: natureContratModel.annee,
+        trimestre: natureContratModel.trimestre,
+        effectif: natureContratModel.effectif,
+        effectifRef: natureContratModel.effectifRef,
+        natureLibelle: natureContratModel.nature.libelle,
+        natureCode: natureContratModel.nature.code,
+      }
+    });
+
+
     return {
       pyramideAges,
       tranchesAgesLibelles,
@@ -374,7 +409,9 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       dureesCdd,
       dureesCddLibelles,
       motifsRuptureContrat,
-      motifsRuptureContratLibelles
+      motifsRuptureContratLibelles,
+      natureContratsAnnuel,
+      natureContratsTrimestriel
     }
   }
 

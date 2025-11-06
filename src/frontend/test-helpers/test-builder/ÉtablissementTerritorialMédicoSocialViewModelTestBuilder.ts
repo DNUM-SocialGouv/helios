@@ -662,6 +662,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       departRef: 12,
       embauche: 12,
       embaucheRef: 12,
+      departsPrematuresCdi: 10
     }],
     departsEmbauchesTrimestriels: [
       {
@@ -678,7 +679,9 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     dureesCdd: [],
     dureesCddLibelles: [],
     motifsRuptureContrat: [],
-    motifsRuptureContratLibelles: []
+    motifsRuptureContratLibelles: [],
+    natureContratsAnnuel: [],
+    natureContratsTrimestriel:[]
   };
 
   public static crée(

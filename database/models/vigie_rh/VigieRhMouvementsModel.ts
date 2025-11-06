@@ -25,4 +25,7 @@ export class VigieRhMouvementsModel {
 
   @Column({ type: "int", nullable: true, name: "taux_rotation_ref" })
   public rotationRef!: number;
+
+  @Column({ type: "int", nullable: true, name: "departs_prematures_cdi" })
+  public departsPrematuresCdi!: number | null;
 }

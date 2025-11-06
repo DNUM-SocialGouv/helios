@@ -69,7 +69,8 @@ class ColumMapping(Enum):
         'fins_contrats': 'fins_contrats',
         'fins_contrats_ref': 'fins_contrats_ref',
         'taux_rotation': 'taux_rotation',
-        'taux_rotation_ref': 'taux_rotation_ref'
+        'taux_rotation_ref': 'taux_rotation_ref',
+        'departs_prematures_cdi': 'departs_prematures_cdi'
     }
     MOUVEMENTS_RH_TRIMESTRIEL = {
         'finess_et': 'numero_finess_etablissement_territorial',
@@ -106,9 +107,29 @@ class ColumMapping(Enum):
         'duree_code': 'duree_code',
         'duree': 'duree'
     }
+    REF_NATURE_CONTRAT = {
+        'nature_contrat_code': 'nature_contrat_code',
+        'nature_contrat': 'nature_contrat'
+    }
+    NATURE_CONTRAT_ANNUEL = {
+        'finess_et': 'numero_finess_etablissement_territorial',
+        'year': 'annee',
+        'nature_contrat_code': 'nature_contrat_code',
+        'effectif': 'effectif',
+        'effectif_ref': 'effectif_ref'
+    }
+    NATURE_CONTRAT_TRIMESTRIEL = {
+        'finess_et': 'numero_finess_etablissement_territorial',
+        'year': 'annee',
+        'quarter': 'trimestre',
+        'nature_contrat_code': 'nature_contrat_code',
+        'effectif': 'effectif',
+        'effectif_ref': 'effectif_ref'
+    }
 
 index_des_mouvements_rh_annuel: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 index_des_mouvements_rh_trimestriel: List[str] = ["numero_finess_etablissement_territorial", "annee", "trimestre"]
 
 index_duree_cdd: List[str] = ["numero_finess_etablissement_territorial", "annee", "trimestre", "duree_code"]
 index_ref_duree_cdd: List[str] = ["duree_code"]
+index_nature_contrat_trimestriel: List[str] = ["numero_finess_etablissement_territorial", "annee", "trimestre", "nature_contrat_code"]

@@ -628,4 +628,6 @@ export interface Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
+  readonly NATURE_CONTRATS: string;
+  readonly DEPARTS_PREMATURES_CDI: string;
 }

@@ -21,7 +21,6 @@ export const BlocRessourcesHumainesMédicoSocial = ({
   établissementTerritorialMédicoSocialRessourcesHumainesViewModel, categorie, opnedBloc, toggelBlocs, setStatusSousBlocs, statusSousBlocs, blocVigieRhViewModel
 }: BlocRessourcesHumainesMédicoSocialProps) => {
   const { wording } = useDependencies();
-
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggelBlocs}>
       {process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true' && categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes" ?

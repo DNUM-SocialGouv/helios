@@ -946,7 +946,9 @@ export class ÉtablissementTerritorialTestBuilder {
     dureesCdd: [],
     dureesCddLibelles: [],
     motifsRuptureContrat: [],
-    motifsRuptureContratLibelles: []
+    motifsRuptureContratLibelles: [],
+    natureContratsAnnuel: [],
+    natureContratsTrimestriel: []
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {
