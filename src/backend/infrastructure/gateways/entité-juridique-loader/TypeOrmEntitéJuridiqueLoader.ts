@@ -110,9 +110,9 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
         nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
         nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
-        dmsChirurgie: activite.dmsChirurgie,
-        dmsMedecine: activite.dmsMedecine,
-        dmsObstetrique: activite.dmsObstetrique,
+        dureeMoyenneSejourMedecine: activite.dureeMoyenneSejourMedecine,
+        dureeMoyenneSejourChirurgie: activite.dureeMoyenneSejourChirurgie,
+        dureeMoyenneSejourObstetrique: activite.dureeMoyenneSejourObstetrique,
 
       }
     })
