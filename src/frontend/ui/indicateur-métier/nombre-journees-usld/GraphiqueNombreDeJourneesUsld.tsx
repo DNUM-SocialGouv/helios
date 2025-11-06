@@ -21,7 +21,7 @@ export const GraphiqueNombreDeJourneesUsld = ({ nombreDeJourneesUsldViewModel, e
         />
       }
       dateDeMiseÀJour={nombreDeJourneesUsldViewModel.dateMiseAJour}
-      identifiant="activite-2"
+      identifiant="activite-3"
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNEES_USLD}
       source={wording.SAE}
     >

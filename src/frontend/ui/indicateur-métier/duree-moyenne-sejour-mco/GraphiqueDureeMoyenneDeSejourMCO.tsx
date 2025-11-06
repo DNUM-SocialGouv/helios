@@ -8,12 +8,12 @@ import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activit�
 import { ContenuDureeMoyenneDeSejourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuDureeMoyenneDeSejourMCO";
 
 
-type GraphiqueNombreDeSejourMCOProps = Readonly<{
+type GraphiqueDureeMoyenneDeSejourMCOProps = Readonly<{
   nombreDeSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueNombreDeSejourMCOProps) => {
+export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueDureeMoyenneDeSejourMCOProps) => {
   const { wording } = useDependencies();
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
@@ -38,7 +38,7 @@ export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: d
         />
       }
       dateDeMiseÀJour={dateDeMiseAJour()}
-      identifiant="activite-moyenne"
+      identifiant="activite-1"
       nomDeLIndicateur={wording.MOYENNE_DE_SEJOUR_MCO}
       source={wording.PMSI}
     >

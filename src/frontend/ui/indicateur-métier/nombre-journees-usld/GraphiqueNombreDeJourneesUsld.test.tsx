@@ -41,7 +41,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-2`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-3`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 

@@ -84,7 +84,7 @@ describe("Graphique Moyenne de Sejour MCO", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-moyenne`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-1`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 

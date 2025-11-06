@@ -42,7 +42,7 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
         />
       }
       dateDeMiseÀJour={dateDeMiseAJour()}
-      identifiant="activite-1"
+      identifiant="activite-2"
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
       source={wording.PMSI}
     >
