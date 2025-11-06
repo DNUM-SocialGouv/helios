@@ -454,6 +454,7 @@ export class WordingFr implements Wording {
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
   readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+  readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -470,6 +471,7 @@ export class WordingFr implements Wording {
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
   readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
+  readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -719,8 +721,9 @@ export class WordingFr implements Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
   readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
   readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
 

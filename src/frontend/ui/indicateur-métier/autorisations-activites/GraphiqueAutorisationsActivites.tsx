@@ -28,13 +28,13 @@ export const GraphiqueAutorisationsActivites = ({ entiteJuridiqueAutorisations, 
         <ContenuAutorisations
           dateDeMiseÀJour={dateMiseAJourRecente}
           estEntitéJuridique={true}
-          source={Sources(wording.FINESS, wording.ARHGOS)}
+          source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
         />
       }
       dateDeMiseÀJour={dateMiseAJourRecente}
       identifiant="autorisation-activites"
       nomDeLIndicateur={wording.AUTORISATIONS_ACTIVITES}
-      source={Sources(wording.FINESS, wording.ARHGOS)}
+      source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
     >
       <>
         <AutorisationsAmmTagMultiNiveaux activites={entiteJuridiqueAutorisationsAmm.autorisations} />

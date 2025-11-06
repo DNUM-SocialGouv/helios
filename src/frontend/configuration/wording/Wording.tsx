@@ -381,6 +381,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly SI_AUTORISATIONS_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -397,6 +398,7 @@ export interface Wording {
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
   readonly VIGIE_RH: ReactElement;
+  readonly SI_AUTORISATIONS: ReactElement;
 
 
   // Inaccessible
@@ -594,6 +596,8 @@ export interface Wording {
   //Callout page d'acceuil
   readonly NOUVEAU: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
@@ -624,7 +628,6 @@ export interface Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string;
   readonly NATURE_CONTRATS: string;
   readonly DEPARTS_PREMATURES_CDI: string;
 }
