@@ -8,6 +8,7 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
@@ -38,7 +39,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, cr
           if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= MIN_VALUE) {
             return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
           }
-          return value.y;
+          return StringFormater.roundFormatInFrench(valueNumber);
         },
         font: {
           weight: "bolder",
