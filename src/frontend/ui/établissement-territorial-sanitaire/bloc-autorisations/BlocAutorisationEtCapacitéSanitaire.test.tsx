@@ -14,10 +14,8 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   );
 
   it.each([
-    [wording.AUTORISATIONS_SANITAIRE, "autorisations-amm-sanitaire"],
     [wording.AUTRES_ACTIVITÉS_SAN, "autres-activités-sanitaire"],
     [wording.RECONNAISSANCES_CONTRACTUELLES, "reconnaissances-contractuelles-sanitaire"],
-    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],
   ])("affiche le titre de la partie %s, sa source et l’accès aux détails", (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
     // WHEN
     renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
@@ -40,10 +38,32 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
   });
 
   it.each([
-    [wording.AUTORISATIONS_SANITAIRE],
+    [wording.AUTORISATIONS_SANITAIRE, "autorisations-amm-sanitaire"],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, "équipements-matériels-lourds-sanitaire"],
+  ])("affiche le titre de la partie %s, sa source et l’accès aux détails", (nomDeLIndicateur: string, suffixeDeLInfoBulle: string) => {
+    // WHEN
+    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+
+    // THEN
+    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
+    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
+    const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs);
+    const titre = within(autorisations).getByText(nomDeLIndicateur, { selector: "h3" });
+    expect(titre).toBeInTheDocument();
+    const dateMiseAJour = within(autorisations).getAllByText(textMatch(`${wording.miseÀJour("29/08/2022")} - Source : SI-Autorisations, FINESS`), { selector: "p" });
+    expect(dateMiseAJour[0]).toBeInTheDocument();
+    const abréviationSourceFournisseur = within(autorisations).getAllByText("FINESS", { selector: "abbr" });
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute("title", wording.FINESS_TITLE);
+    const abréviationSourceOrigine = within(autorisations).getAllByText(wording.SI_AUTORISATIONS_TITLE, { selector: "abbr" });
+    expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SI_AUTORISATIONS_TITLE);
+    const détails = within(autorisations).getByRole("button", { name: wording.DÉTAILS });
+    expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-${suffixeDeLInfoBulle}`);
+    expect(détails).toHaveAttribute("data-fr-opened", "false");
+  });
+
+  it.each([
     [wording.AUTRES_ACTIVITÉS_SAN],
     [wording.RECONNAISSANCES_CONTRACTUELLES],
-    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS],
   ])("a une infobulle avec le contenu relatif aux %s", (nomDeLIndicateur: string) => {
     // GIVEN
     renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
@@ -65,6 +85,40 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
     expect(abréviationSourceFournisseur[0]).toHaveAttribute("title", wording.FINESS_TITLE);
     const abréviationSourceOrigine = within(infoBulle).getAllByText("ARHGOS", { selector: "abbr" });
     expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.ARHGOS_TITLE);
+    const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
+    expect(élémentsDeCompréhension).toBeInTheDocument();
+    const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });
+    expect(fréquence).toBeInTheDocument();
+    const sources = within(infoBulle).getByRole("region", { name: wording.SOURCES });
+    expect(sources).toBeInTheDocument();
+    const informationsComplémentaires = within(infoBulle).getByRole("region", { name: wording.INFOS_COMPLÉMENTAIRES });
+    expect(informationsComplémentaires).toBeInTheDocument();
+  });
+
+  it.each([
+    [wording.AUTORISATIONS_SANITAIRE],
+    [wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS],
+  ])("a une infobulle avec le contenu relatif aux %s", (nomDeLIndicateur: string) => {
+    // GIVEN
+    renderFakeComponent(<BlocAutorisationEtCapacitéSanitaire établissementTerritorialSanitaireAutorisationsViewModel={autorisationsViewModel} />);
+
+    const autorisationEtCapacité = screen.getByRole("region", { name: wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ });
+    const indicateurs = within(autorisationEtCapacité).getAllByRole("listitem");
+    const autorisations = sélectionneLIndicateur(nomDeLIndicateur, indicateurs);
+    const détails = within(autorisations).getByRole("button", { name: wording.DÉTAILS });
+
+    // WHEN
+    fireEvent.click(détails);
+
+    // THEN
+    expect(détails).toHaveAttribute("data-fr-opened", "true");
+    const infoBulle = screen.getByRole("dialog", { name: nomDeLIndicateur });
+    const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
+    expect(fermer).toBeInTheDocument();
+    const abréviationSourceFournisseur = within(infoBulle).getAllByText("FINESS", { selector: "abbr" });
+    expect(abréviationSourceFournisseur[0]).toHaveAttribute("title", wording.FINESS_TITLE);
+    const abréviationSourceOrigine = within(infoBulle).getAllByText(wording.SI_AUTORISATIONS_TITLE, { selector: "abbr" });
+    expect(abréviationSourceOrigine[0]).toHaveAttribute("title", wording.SI_AUTORISATIONS_TITLE);
     const élémentsDeCompréhension = within(infoBulle).getByRole("region", { name: wording.ÉLÉMENTS_DE_COMPRÉHENSION });
     expect(élémentsDeCompréhension).toBeInTheDocument();
     const fréquence = within(infoBulle).getByRole("region", { name: wording.FRÉQUENCE });

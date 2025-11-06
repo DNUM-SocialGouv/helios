@@ -26,12 +26,20 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
+  const dataInformationBloc = () => {
+    if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0) {
+      return <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} />;
+    } else if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0) {
+      return <NoDataCallout indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} />;
+    } else {
+      return <></>;
+    }
+
+  }
+
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
-      {établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
-        établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
-          <></>}
-
+      {dataInformationBloc()}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées ?
           <GraphiqueCapacitésParActivité
@@ -42,13 +50,13 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             contenuInfoBulle={
               <ContenuAutorisations
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
+                source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-amm-sanitaire"
             nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
+            source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
           >
             <>
               {établissementTerritorialSanitaireAutorisationsViewModel.autorisationsAmm}
@@ -93,13 +101,13 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
+                source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
             identifiant="équipements-matériels-lourds-sanitaire"
             nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
+            source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
           </IndicateurGraphique>
