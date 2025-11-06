@@ -36,15 +36,17 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
-        'quarter': 'quarter',
-        'profession_code': 'profession_code',
+        'profession2_code': 'profession_code',
         'effectif': 'effectif',
-        'effectif_filiere': 'effectif_filiere',
 
     }
     REF_PROFESSION_GROUPE = {
         'profession2_code': 'code',
         'profession2': 'label'
+    }
+    PASSAGE_GROUPE_FILIERE = {
+        'profession1_code': 'code_filiere',
+        'profession2_code': 'profession_code'
     }
     # pyramide des ages
     REF_TRANCHE_AGE = {
