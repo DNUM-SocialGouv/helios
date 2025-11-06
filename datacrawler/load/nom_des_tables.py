@@ -45,12 +45,24 @@ TABLE_REF_REDRESSEMENT = "vigierh_ref_redressement"
 # mouvements rh
 TABLE_VIGIE_RH_MOUVEMENTS_RH = "vigierh_mouvements"
 TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS = "vigierh_mouvements_trimestriel"
+# duree cdd
+TABLE_VIGIE_RH_REF_DUREE_CDD = "vigierh_referentiel_duree_cdd"
+TABLE_VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
 
 TABLE_ENTITES_JURIDIQUES = "entite_juridique"
 TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
 CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = 'numero_finess_entite_juridique'
 CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX = 'numero_finess_etablissement_territorial'
 TABLE_REF_CATEGORIES = "referentiel_categories"
+
+# motifs de ruptures de contrats
+TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
+TABLE_VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
+
+# nature contrats
+TABLE_VIGIE_RH_REF_NATURE_CONTRATS = "vigierh_referentiel_nature_contrat"
+TABLE_VIGIE_RH_NATURE_CONTRATS = "vigierh_nature_contrats_annuel"
+TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
@@ -88,3 +100,13 @@ class FichierSource(Enum):
     # mouvements rh
     VIGIE_RH_MOUVEMENTS_RH = "vigierh_etablissement_annuel"
     VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL = "vigierh_etablissement_trimestriel"
+    # motifs de ruptures de contrats
+    VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
+    VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
+    # duree cdd
+    VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
+    VIGIE_RH_REF_DUREE_CDD = "vigierh_ref_duree_cdd"
+    # cdi cdd
+    VIGIE_RH_CDI_CDD = "vigierh_nature_contrats_annuel"
+    VIGIE_RH_CDI_CDD_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+    VIGIE_RH_REF_CDI_CDD = "vigierh_ref_nature_contrat"

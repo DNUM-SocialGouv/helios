@@ -62,6 +62,10 @@ function getActiviteMensuelleJuridique(): ActivitesSanitaireMensuel {
       nombreSéjoursPartielsObstétrique: 8,
       nombreJournéesPartiellesPsy: 9,
       nombreJournéesComplètesPsy: 10,
+      dmsChirurgie: 11,
+      dmsMedecine: 12,
+      dmsObstetrique: 13,
+
     }],
   };
 }

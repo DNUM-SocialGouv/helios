@@ -150,6 +150,8 @@ export class WordingFr implements Wording {
   readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE: string = "Aucune donnée pour les années suivantes :";
+  readonly AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE: string = "Aucune donnée renseignée pour :";
+  readonly AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE: string = "Aucune donnée de référence renseignée pour :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_MENSUEL: string = "Aucune donnée renseignée à partir de :";
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
@@ -335,7 +337,7 @@ export class WordingFr implements Wording {
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
   readonly MONTANT_DE_LA_CONTRIBUTION_AUX_FRAIS_DE_SIÈGE: string = "Montant de la contribution aux frais de siège et/ou de groupement";
   readonly MONTANT: string = "Montant";
-  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté construction";
+  readonly TAUX_DE_VÉTUSTÉ_CONSTRUCTION: string = "Taux de vétusté des constructions";
   readonly RÉSULTAT_NET_COMPTABLE: string = "Résultat net comptable";
   readonly RATIO_DEPENDANCE_FINANCIERE: string = "Ratio de dépendance financière";
   readonly COMPTE_DE_RÉSULTAT_ERRD: string = "Compte de résultat ERRD";
@@ -414,8 +416,8 @@ export class WordingFr implements Wording {
   readonly TAUX_D_ABSENTÉISME_POUR_CONGÉS_SPÉCIAUX: string = "Pour congés spéciaux dont les congés sans solde (hors congés payés)";
   readonly TAUX_D_ABSENTÉISME_POUR_MALADIE_PROFESSIONNELLE: string = "Pour accident du travail / maladie professionnelle";
   readonly MOTIF_DU_TAUX_D_ABSENTÉISME: string = "Type";
-  readonly JOURS_ABSENTEISME_PM: string = "Jour d’absentéisme PM"
-  readonly JOURS_ABSENTEISME_PNM: string = "Jour d’absentéisme PNM"
+  readonly JOURS_ABSENTEISME_PM: string = "Jours d’absentéisme PM"
+  readonly JOURS_ABSENTEISME_PNM: string = "Jours d’absentéisme PNM"
   readonly TAUX: string = "Taux";
   readonly NOMBRE_DE_CDD_DE_REMPLACEMENT: ReactElement = (
     <>
@@ -452,6 +454,7 @@ export class WordingFr implements Wording {
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
   readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+  readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -468,6 +471,7 @@ export class WordingFr implements Wording {
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
   readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
+  readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -712,10 +716,18 @@ export class WordingFr implements Wording {
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-
+  readonly DUREE_CDD: string = "Durée effective des CDD";
+  readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
+  readonly DUREE: string = "Durée";
+  readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
+  readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
+  readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "La comparaison évolue!";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_2: string = " La fonctionnalité est disponible pour toutes les catégories d'établissements.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
+  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
+  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
     "Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources (documents, vidéos ou liens) pour chaque section.";

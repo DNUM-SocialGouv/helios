@@ -23,7 +23,7 @@ from datacrawler.test_helpers import (
     supprime_les_données_des_tables,
     CHEMIN_FICHIER_MEN_PMSI_ANNUEL,
     CHEMIN_FICHIER_ANN_RPU,
-    CHEMIN_FICHIER_ANN_SAE
+    CHEMIN_FICHIER_ANN_SAE,
 )
 from datacrawler.test_helpers.config_path import get_absolute_file_path
 
@@ -42,11 +42,9 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
         sauvegarde_un_établissement_en_base("010005239", "010008407", base_de_données_test)
         sauvegarde_un_établissement_en_base("2A0000155", "010008407", base_de_données_test)
         # WHEN
-        ajoute_les_activites_des_etablissements_sanitaires(chemin_du_fichier_men_pmsi_annuel,
-                                                           chemin_du_fichier_ann_rpu,
-                                                           chemin_du_fichier_ann_sae,
-                                                           base_de_données_test,
-                                                           mocked_logger)
+        ajoute_les_activites_des_etablissements_sanitaires(
+            chemin_du_fichier_men_pmsi_annuel, chemin_du_fichier_ann_rpu, chemin_du_fichier_ann_sae, base_de_données_test, mocked_logger
+        )
         # THEN
         activite_attendue = pd.DataFrame(
             {
@@ -65,6 +63,9 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
                 "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
                 "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, NaN],
+                "duree_moyenne_sejour_medecine": [4, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_chirurgie": [5, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_obstetrique": [6, NaN, NaN, NaN, NaN],
             }
         )
 
@@ -109,17 +110,18 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "nombre_journées_partielles_psy": [NaN],
                 "nombre_passages_urgences": [10],
                 "nombre_sejours_had": [100],
-                "nombre_journees_usld":  [15484],
+                "nombre_journees_usld": [15484],
+                "duree_moyenne_sejour_medecine": [7],
+                "duree_moyenne_sejour_chirurgie": [8],
+                "duree_moyenne_sejour_obstetrique": [9],
             }
         )
         sauvegarde_une_activité_en_base(activite_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
 
         # WHEN
-        ajoute_les_activites_des_etablissements_sanitaires(chemin_du_fichier_men_pmsi_annuel,
-                                                           chemin_du_fichier_ann_rpu,
-                                                           chemin_du_fichier_ann_sae,
-                                                           base_de_données_test,
-                                                           mocked_logger)
+        ajoute_les_activites_des_etablissements_sanitaires(
+            chemin_du_fichier_men_pmsi_annuel, chemin_du_fichier_ann_rpu, chemin_du_fichier_ann_sae, base_de_données_test, mocked_logger
+        )
 
         # THEN
         activite_attendue = pd.DataFrame(
@@ -139,6 +141,9 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
                 "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
                 "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, NaN],
+                "duree_moyenne_sejour_medecine": [4, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_chirurgie": [5, NaN, NaN, NaN, NaN],
+                "duree_moyenne_sejour_obstetrique": [6, NaN, NaN, NaN, NaN],
             }
         )
 
@@ -182,7 +187,10 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "nombre_journées_partielles_psy": [NaN, NaN],
                 "nombre_passages_urgences": [NaN, NaN],
                 "nombre_sejours_had": [NaN, NaN],
-                "nombre_journees_usld":  [NaN, NaN],
+                "nombre_journees_usld": [NaN, NaN],
+                "duree_moyenne_sejour_medecine": [NaN, NaN],
+                "duree_moyenne_sejour_chirurgie": [NaN, NaN],
+                "duree_moyenne_sejour_obstetrique": [NaN, NaN],
             }
         )
         sauvegarde_une_activité_en_base(activite_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)

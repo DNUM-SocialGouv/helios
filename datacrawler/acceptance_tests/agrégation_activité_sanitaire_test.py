@@ -41,6 +41,9 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_passages_urgences": [1.0, 2.0, 5.0],
                 "nombre_sejours_had": [1.0, 2.0, 5.0],
                 "nombre_journees_usld": [12345.0, 23456.0, 56789.0],
+                "duree_moyenne_sejour_medecine": [1.0, 2.0, 3.0],
+                "duree_moyenne_sejour_chirurgie": [4.0, 5.0, 6.0],
+                "duree_moyenne_sejour_obstetrique": [7.0, 8.0, 9.0],
             }
         )
 
@@ -69,6 +72,9 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
                 "nombre_passage_urgence": [3.0, 5.0],
                 "nombre_sejours_had": [3.0, 5.0],
                 "nombre_journees_usld": [35801.0, 56789.0],
+                "duree_moyenne_sejour_medecine": [3.0, 3.0],
+                "duree_moyenne_sejour_chirurgie": [9.0, 6.0],
+                "duree_moyenne_sejour_obstetrique": [15.0, 9.0],
             }
         )
 
@@ -96,11 +102,7 @@ class TestAgregeLesActivitesSanitaireDesEntitesJuridiques:
         # THEN
         query = text(
             f"SELECT * FROM {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES} WHERE numero_finess_entite_juridique = :numero_finess_entite_juridique"
-            )
-        agregation_activites = pd.read_sql_query(
-            query,
-            base_de_données_test,
-            params={"numero_finess_entite_juridique": '111111111'}
         )
+        agregation_activites = pd.read_sql_query(query, base_de_données_test, params={"numero_finess_entite_juridique": "111111111"})
 
         assert 1 == len(agregation_activites)

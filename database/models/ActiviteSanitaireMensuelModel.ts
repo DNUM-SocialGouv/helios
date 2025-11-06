@@ -41,4 +41,13 @@ export class ActiviteSanitaireMensuelModel {
   @Column({ name: "nombre_journees_partielles_psy", nullable: true, type: "float" })
   public nombreJournéesPartiellesPsy!: number;
 
+  @Column({ name: "duree_moyenne_sejour_medecine", nullable: true, type: "float" })
+  public dmsMedecine!: number;
+
+  @Column({ name: "duree_moyenne_sejour_chirurgie", nullable: true, type: "float" })
+  public dmsChirurgie!: number;
+
+  @Column({ name: "duree_moyenne_sejour_obstetrique", nullable: true, type: "float" })
+  public dmsObstetrique!: number;
+
 }

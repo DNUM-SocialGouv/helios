@@ -36,6 +36,7 @@ def helios_ann_rpu_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str
         return {**ann_rpu, **champs_surcharges}
     return ann_rpu
 
+
 def helios_ann_sae_activite_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ann_sae_activite = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -45,6 +46,7 @@ def helios_ann_sae_activite_builder(champs_surcharges: Optional[Dict] = None) ->
     if champs_surcharges:
         return {**ann_sae_activite, **champs_surcharges}
     return ann_sae_activite
+
 
 def helios_ann_errd_ej_et_budget_et_finances_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
@@ -116,6 +118,9 @@ def helios_activité_sanitaire_builder(champs_surcharges: Optional[Dict] = None)
         "nombre_passages_urgences": 100.0,
         "nombre_journees_usld": 100.0,
         "nombre_sejours_had": 200.0,
+        "duree_moyenne_sejour_medecine": 300.0,
+        "duree_moyenne_sejour_chirurgie": 400.0,
+        "duree_moyenne_sejour_obstetrique": 500.0,
     }
     if champs_surcharges:
         return {**activité, **champs_surcharges}
@@ -275,6 +280,7 @@ def helios_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None)
         return {**ressources_humaines, **champs_surcharges}
     return ressources_humaines
 
+
 def helios_entite_juridique_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ressources_humaines = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
@@ -289,6 +295,7 @@ def helios_entite_juridique_ressources_humaines_builder(champs_surcharges: Optio
         return {**ressources_humaines, **champs_surcharges}
     return ressources_humaines
 
+
 def helios_etablissement_sanitaire_ressources_humaines_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     ressources_humaines = {
         "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -302,6 +309,7 @@ def helios_etablissement_sanitaire_ressources_humaines_builder(champs_surcharges
     if champs_surcharges:
         return {**ressources_humaines, **champs_surcharges}
     return ressources_humaines
+
 
 def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
     budget_et_finances = {
@@ -330,10 +338,11 @@ def helios_quo_san_finance_budget_builder(champs_surcharges: Optional[Dict] = No
         return {**budget_et_finances, **champs_surcharges}
     return budget_et_finances
 
+
 def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str]:
     entite_juridique = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-        "adresse_acheminement" : "01220 DIVONNE LES BAINS",
+        "adresse_acheminement": "01220 DIVONNE LES BAINS",
         "adresse_numero_voie": "240",
         "adresse_type_voie": "R",
         "adresse_voie": "GUY DE MAUPASSANT",
@@ -352,10 +361,11 @@ def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) ->
         return {**entite_juridique, **champs_surcharges}
     return entite_juridique
 
+
 def helios_etablissement_territorial_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str]:
     etablissement_territorial = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-        "adresse_acheminement" : "01220 DIVONNE LES BAINS",
+        "adresse_acheminement": "01220 DIVONNE LES BAINS",
         "adresse_numero_voie": "240",
         "adresse_type_voie": "R",
         "adresse_voie": "GUY DE MAUPASSANT",
