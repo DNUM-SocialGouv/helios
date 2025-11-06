@@ -64,7 +64,7 @@ def inserer_nouvelles_donnees(
     data_frame: pd.DataFrame,
     logger: logging.Logger,
     fichier: Optional[FichierSource] = None,
-    date_de_mise_à_jour: Optional[str] = None
+    date_de_mise_à_jour: Optional[str] = None,
 ) -> None:
     try:
         # Vérifier si le DataFrame est vide après filtrage
@@ -80,12 +80,11 @@ def inserer_nouvelles_donnees(
         data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
 
         # Insérer les nouvelles données
-        data_frame.to_sql(table_name, engine, if_exists='append', index=False, chunksize=1000, method='multi')
+        data_frame.to_sql(table_name, engine, if_exists="append", index=False, chunksize=1000, method="multi")
         if fichier and date_de_mise_à_jour:
             with engine.connect() as connection:
                 mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
-
 
     except SQLAlchemyError as exception:  # Capture les erreurs SQLAlchemy
         logger.error(f"[{fournisseur}]❌ Erreur SQL lors de l'insertion des données : {exception}")
@@ -102,6 +101,7 @@ def inserer_nouvelles_donnees(
     except Exception as exception:  # Dernier recours (peut être évité si inutile)
         logger.error(f"[{fournisseur}]❌ Erreur inattendue lors de l'insertion des données : {exception}")
         raise  # Relance pour ne pas masquer l'erreur
+
 
 def verifie_si_le_fichier_est_traite(date_mise_a_jour_fichier: str, base_de_données: Engine, prefix_fichier: str) -> bool:
     derniere_date_de_chargement = recupere_la_derniere_date_de_chargement_du_fichier(base_de_données, prefix_fichier)

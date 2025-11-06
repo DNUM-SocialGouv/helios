@@ -84,6 +84,8 @@ import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
+import { AjoutDmsActiviteMensuel1759826053430 } from "./migrations/1759826053430-AjoutDmsActiviteMensuel"
+import { AjoutDmsActiviteSanitaire1759845977685 } from "./migrations/1759845977685-AjoutDmsActiviteSanitaire"
 import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761819265202-AjoutColonneDepartsPrematuresCdi";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
@@ -360,7 +362,9 @@ const datasource = new DataSource({
     AjoutTableVigieRhDureeCdd1759821521368,
     AjoutTableVigieRhRefDureeCdd1759821492361,
     VigierhNatureContratsTables1760966102359,
-    AjoutColonneDepartsPrematuresCdi1761819265202
+    AjoutColonneDepartsPrematuresCdi1761819265202,
+    AjoutDmsActiviteMensuel1759826053430,
+    AjoutDmsActiviteSanitaire1759845977685
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

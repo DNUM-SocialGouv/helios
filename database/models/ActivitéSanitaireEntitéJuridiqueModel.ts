@@ -46,4 +46,14 @@ export class ActivitéSanitaireEntitéJuridiqueModel {
 
   @Column({ name: "nombre_sejours_had", nullable: true, type: "float" })
   public nombreSéjoursHad!: number;
+
+  @Column({ name: "duree_moyenne_sejour_medecine", nullable: true, type: "float" })
+  public dmsMedecine!: number;
+
+  @Column({ name: "duree_moyenne_sejour_chirurgie", nullable: true, type: "float" })
+  public dmsChirurgie!: number;
+
+  @Column({ name: "duree_moyenne_sejour_obstetrique", nullable: true, type: "float" })
+  public dmsObstetrique!: number;
+
 }

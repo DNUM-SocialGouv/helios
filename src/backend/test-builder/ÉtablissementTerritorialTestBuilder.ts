@@ -289,6 +289,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     }, {
       année: 2023,
@@ -303,6 +306,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -318,6 +324,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -333,6 +342,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -348,6 +360,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -363,6 +378,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -378,6 +396,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -393,6 +414,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -408,6 +432,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -423,6 +450,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     },
     {
@@ -438,6 +468,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
 
     }, {
       année: 2023,
@@ -452,6 +485,10 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dmsChirurgie: 100,
+      dmsMedecine: 100,
+      dmsObstetrique: 100,
+
     }]
   };
 
