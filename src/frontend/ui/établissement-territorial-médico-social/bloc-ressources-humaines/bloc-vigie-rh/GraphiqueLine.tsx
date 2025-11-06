@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Line } from "react-chartjs-2";
 
 import styles from "./GraphiqueLine.module.css";
-import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { ProfessionFiliereData, ProfessionGroupeData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
@@ -26,18 +26,32 @@ export interface CategorieData {
   data: EffectifsData;
 }
 
+type MultiCategorie = ProfessionFiliereData | ProfessionGroupeData;
+
 interface LineChartProps {
   etabFiness: string;
   etabTitle: string;
   classContainer: string;
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
-  multiCategories: ProfessionFiliereData[];
+  multiCategories: MultiCategorie[];
   couleursFilieres?: string[];
   identifiantLegende: string;
+  afficherSerieTotale?: boolean;
+  identifiantTranscription?: string;
 }
 
-const LineChart = ({ etabFiness, etabTitle, classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
+const LineChart = ({
+  etabFiness, etabTitle,
+  classContainer,
+  couleurEffectifsTotaux,
+  dataEffectifs,
+  multiCategories,
+  couleursFilieres,
+  identifiantLegende,
+  afficherSerieTotale = true,
+  identifiantTranscription,
+}: LineChartProps) => {
   const { wording } = useDependencies();
 
   // Couleurs/grille
@@ -55,26 +69,33 @@ const LineChart = ({ etabFiness, etabTitle, classContainer, couleurEffectifsTota
   // Petite utilité pour l’affichage des libellés des filières
   const capitalize = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
-  const getSerie = (c: ProfessionFiliereData): number[] => {
+  const getSerie = (c: MultiCategorie): number[] => {
     const dc: any = (c as any)?.dataCategorie;
     if (!dc) return [];
     if (Array.isArray(dc)) return dc.map((r: any) => Number(r?.effectifFiliere ?? r?.effectif ?? 0));
     return Array.isArray(dc.dataFiliere) ? dc.dataFiliere : [];
   };
 
+  const transcriptionId = useMemo(() => {
+    if (identifiantTranscription && identifiantTranscription.trim().length > 0) return identifiantTranscription;
+    return `${identifiantLegende}`.replaceAll(/\s/g, "") + "-transcription";
+  }, [identifiantTranscription, identifiantLegende]);
+
   // Données du graphique : 1 dataset “totaux” + les datasets des filières visibles
   const data = useMemo(() => {
-    const datasets: any[] = [
-      {
+    const datasets: any[] = [];
+
+    if (afficherSerieTotale) {
+      datasets.push({
         label: wording.EFFECTIFS_TOTAUX,
-        data: dataEffectifs.dataEtab,
+        data: dataEffectifs?.dataEtab ?? [],
         borderColor: couleurEffectifsTotaux,
         backgroundColor: couleurEffectifsTotaux,
         borderWidth: 2,
         fill: false,
         pointRadius: 1,
-      },
-    ];
+      });
+    }
 
     for (const [id, c] of (multiCategories ?? []).entries()) {
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
@@ -90,7 +111,7 @@ const LineChart = ({ etabFiness, etabTitle, classContainer, couleurEffectifsTota
     }
 
     return { labels, datasets };
-  }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, wording.EFFECTIFS_TOTAUX]);
+  }, [multiCategories, labels, dataEffectifs, couleurEffectifsTotaux, couleursFilieres, afficherSerieTotale, wording.EFFECTIFS_TOTAUX]);
 
   // Options du graphique
   const options: ChartOptions<"line"> = {
@@ -168,10 +189,17 @@ const LineChart = ({ etabFiness, etabTitle, classContainer, couleurEffectifsTota
           entêteLibellé={wording.MOIS_ANNEES}
           etabFiness={etabFiness}
           etabTitle={etabTitle}
-          identifiants={[wording.EFFECTIFS_TOTAUX, ...(multiCategories ?? []).map((c) => capitalize(c.categorie))]}
+          identifiantUnique={transcriptionId}
+          identifiants={[
+            ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
+            ...(multiCategories ?? []).map((c) => capitalize(c.categorie)),
+          ]}
           libellés={labelsTranscription}
           nomGraph={wording.EFFECTIFS}
-          valeurs={[dataEffectifs.dataEtab, ...(multiCategories ?? []).map(getSerie)]}
+          valeurs={[
+            ...(afficherSerieTotale ? [dataEffectifs.dataEtab] : []),
+            ...(multiCategories ?? []).map(getSerie),
+          ]}
         />
       </div>
     </div>

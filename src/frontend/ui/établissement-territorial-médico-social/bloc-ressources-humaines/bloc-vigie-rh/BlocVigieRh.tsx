@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import CarteTopIndicateur from "./CarteTopIndicateur";
@@ -12,6 +13,7 @@ import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { HistogrammeMensuelFilters } from "../../../commun/Graphique/HistogrammeMensuelFilters";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
@@ -39,6 +41,116 @@ const ListeIndicateursNonAutorisesOuNonRenseignes = ({ blocVigieRHViewModel }: B
   }
 };
 
+type MonthYear = { mois: number; annee: number };
+
+const buildTotalsFromCategories = (categories: ProfessionFiliereData[]): EffectifsData => {
+  const sumByKey = new Map<string, number>();
+  const monthByKey = new Map<string, MonthYear>();
+
+  const registerValue = (annee: number, mois: number, valeur: number) => {
+    if (!annee || !mois) return;
+    const key = `${annee}-${String(mois).padStart(2, "0")}`;
+    monthByKey.set(key, { annee, mois });
+    sumByKey.set(key, (sumByKey.get(key) ?? 0) + valeur);
+  };
+
+  const collectFromArray = (serie: any[]) => {
+    for (const row of serie) {
+      const annee = Number(row?.annee);
+      const mois = Number(row?.mois);
+      const valeur = Number(row?.effectifFiliere ?? row?.effectif ?? 0);
+      registerValue(annee, mois, valeur);
+    }
+  };
+
+  const collectFromSerie = (serie: any) => {
+    const moisAnnees = serie?.dataMoisAnnee ?? [];
+    const valeurs = serie?.dataFiliere ?? [];
+    const n = Math.min(moisAnnees.length, valeurs.length);
+    for (let i = 0; i < n; i++) {
+      const moisAnnee = moisAnnees[i];
+      registerValue(Number(moisAnnee?.annee), Number(moisAnnee?.mois), Number(valeurs[i]) || 0);
+    }
+  };
+
+  for (const cat of categories) {
+    const dc: any = (cat as any)?.dataCategorie;
+    if (!dc) continue;
+
+    if (Array.isArray(dc)) {
+      collectFromArray(dc);
+      continue;
+    }
+
+    collectFromSerie(dc);
+  }
+
+  const ordered = Array.from(monthByKey.keys()).sort((a, b) => {
+    const [ay, am] = a.split("-").map(Number);
+    const [by, bm] = b.split("-").map(Number);
+    return ay === by ? am - bm : ay - by;
+  });
+  const dataMoisAnnee: MonthYear[] = [];
+  const dataEtab: number[] = [];
+  for (const k of ordered) {
+    dataMoisAnnee.push(monthByKey.get(k)!);
+    dataEtab.push(sumByKey.get(k) ?? 0);
+  }
+  return { dataFiliere: [], dataEtab, dataMoisAnnee };
+};
+
+const useEffectifsGroupes = (blocVigieRHViewModel: BlocVigieRHViewModel) => {
+  const filieresAvecGroupes = useMemo(() => blocVigieRHViewModel.filieresAvecGroupes, [blocVigieRHViewModel]);
+  const [filiereSelectionnee, setFiliereSelectionnee] = useState<string>("");
+
+  useEffect(() => {
+    if (!filieresAvecGroupes.length) {
+      setFiliereSelectionnee("");
+      return;
+    }
+    if (!filiereSelectionnee || !filieresAvecGroupes.some((f: any) => f.categorie === filiereSelectionnee)) {
+      setFiliereSelectionnee(filieresAvecGroupes[0].categorie);
+    }
+  }, [filieresAvecGroupes, filiereSelectionnee]);
+
+  const filiereCourante = useMemo(
+    () => filieresAvecGroupes.find((f: any) => f.categorie === filiereSelectionnee),
+    [filieresAvecGroupes, filiereSelectionnee],
+  );
+
+  const groupesCourants = useMemo(() => filiereCourante?.groupes?.data ?? [], [filiereCourante]);
+
+  const detailDataEffectifs = useMemo<EffectifsData>(() => {
+    if (!filiereCourante) return { dataEtab: [], dataFiliere: [], dataMoisAnnee: [] };
+    const serie = (filiereCourante as any)?.dataCategorie ?? {};
+    let dataMoisAnnee = serie?.dataMoisAnnee ?? [];
+    let dataFiliere = serie?.dataFiliere ?? [];
+
+    if ((!dataMoisAnnee?.length || !dataFiliere?.length) && groupesCourants.length > 0) {
+      const premiereSerieGroupe = (groupesCourants[0] as any)?.dataCategorie ?? {};
+      dataMoisAnnee = premiereSerieGroupe?.dataMoisAnnee ?? [];
+      dataFiliere = premiereSerieGroupe?.dataFiliere ?? [];
+    }
+
+    return {
+      dataEtab: dataFiliere ?? [],
+      dataFiliere: [],
+      dataMoisAnnee: dataMoisAnnee ?? [],
+    };
+  }, [filiereCourante, groupesCourants]);
+
+  const graphiqueEffectifsGroupesAffichable = blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable && filieresAvecGroupes.length > 0;
+
+  return {
+    filieresAvecGroupes,
+    filiereSelectionnee,
+    setFiliereSelectionnee,
+    groupesCourants,
+    detailDataEffectifs,
+    graphiqueEffectifsGroupesAffichable,
+  };
+};
+
 export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: BlocVigieRHProps) => {
   const { wording } = useDependencies();
   const donneesPyramides = blocVigieRHViewModel.lesDonneesPyramideAges;
@@ -48,65 +160,23 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
+  const {
+    filieresAvecGroupes,
+    filiereSelectionnee,
+    setFiliereSelectionnee,
+    groupesCourants,
+    detailDataEffectifs,
+    graphiqueEffectifsGroupesAffichable,
+  } = useEffectifsGroupes(blocVigieRHViewModel);
 
   const couleurEffectifsTotaux = "#ff6600ff"; // orange
-  const couleursFilieres = ["#FF8E68", "#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
-
+  const couleursFilieres = ["#FF8E68","#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
+  const paletteGroupes = ["#FB926B", "#E2CF58", "#D69E75", "#E7CA8E", "#929359", "#D7D979", "#B9A597"];
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
   }, [anneeEnCours]);
-
-  // --- helper : aligne sur (année, mois) et somme les filières ---
-  function buildTotalsFromCategories(categories: ProfessionFiliereData[]): EffectifsData {
-    type MonthYear = { mois: number; annee: number };
-    const sumByKey = new Map<string, number>();
-    const monthByKey = new Map<string, MonthYear>();
-
-    for (const cat of categories) {
-      const dc: any = (cat as any)?.dataCategorie;
-      if (!dc) continue;
-
-      if (Array.isArray(dc)) {
-        // format tableau: [{ annee, mois, effectifFiliere/effectif }]
-        for (const row of dc) {
-          const annee = Number(row?.annee);
-          const mois = Number(row?.mois);
-          if (!annee || !mois) continue;
-          const key = `${annee}-${String(mois).padStart(2, "0")}`;
-          monthByKey.set(key, { annee, mois });
-          const v = Number(row?.effectifFiliere ?? row?.effectif ?? 0);
-          sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
-        }
-      } else {
-        // format objet: { dataMoisAnnee: [], dataFiliere: [] }
-        const moisAnnees = dc?.dataMoisAnnee ?? [];
-        const valeurs = dc?.dataFiliere ?? [];
-        const n = Math.min(moisAnnees.length, valeurs.length);
-        for (let i = 0; i < n; i++) {
-          const m = moisAnnees[i];
-          const v = Number(valeurs[i]) || 0;
-          const key = `${m.annee}-${String(m.mois).padStart(2, "0")}`;
-          monthByKey.set(key, m);
-          sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
-        }
-      }
-    }
-
-    const ordered = Array.from(monthByKey.keys()).sort((a, b) => {
-      const [ay, am] = a.split("-").map(Number);
-      const [by, bm] = b.split("-").map(Number);
-      return ay === by ? am - bm : ay - by;
-    }); // tri chrono sûr: année puis mois
-    const dataMoisAnnee: MonthYear[] = [];
-    const dataEtab: number[] = [];
-    for (const k of ordered) {
-      dataMoisAnnee.push(monthByKey.get(k)!);
-      dataEtab.push(sumByKey.get(k) ?? 0);
-    }
-    return { dataFiliere: [], dataEtab, dataMoisAnnee };
-  }
-
   const items = donneesEffectifs.data ?? [];
+
   const indicateurEffectif = useMemo(() => {
     if (!items.length) return null;
 
@@ -272,11 +342,46 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     etabFiness={etabFiness}
                     etabTitle={etabTitle}
                     identifiantLegende="légende-graphique-effectifs"
+                    identifiantTranscription="transcription-graphique-effectifs"
                     multiCategories={items}
                   />
                 </>
               );
             })()}
+          </IndicateurGraphique>
+        ) : (
+          <></>
+        )}
+        {graphiqueEffectifsGroupesAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            identifiant="vr-effectifs-groupes"
+            nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+            source={wording.VIGIE_RH}
+          >
+            <>
+              <HistogrammeMensuelFilters
+                ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
+                activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
+                handleFrequency={() => undefined}
+                identifiant="effectifs-groupes"
+                selectedActivity={filiereSelectionnee}
+                selectedFrequency={wording.MENSUEL}
+                setSelectedActivity={setFiliereSelectionnee}
+                showFrequencySwitch={false}
+                showYearSelection={false}
+                wording={wording}
+              />
+              <LineChart
+                afficherSerieTotale={false}
+                classContainer="fr-mb-4w"
+                couleurEffectifsTotaux={couleurEffectifsTotaux}
+                couleursFilieres={paletteGroupes}
+                dataEffectifs={detailDataEffectifs}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants}              />
+            </>
           </IndicateurGraphique>
         ) : (
           <></>

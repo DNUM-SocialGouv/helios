@@ -652,7 +652,45 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
             annee: 2020,
             mois: 2,
             effectifFiliere: 20,
-          }]
+          }],
+          groupes: {
+            dateDeMiseAJour: "10-10-2020",
+            data: [
+              {
+                categorie: "groupe test",
+                dataCategorie: [
+                  {
+                    annee: 2020,
+                    mois: 2,
+                    effectif: 5,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          categorie: "test2",
+          dataCategorie: [{
+            annee: 2020,
+            mois: 2,
+            effectifFiliere: 20,
+          }],
+          groupes: {
+            dateDeMiseAJour: "10-10-2020",
+            data: [
+              {
+                categorie: "groupe test",
+                dataCategorie: [
+                  {
+                    annee: 2020,
+                    mois: 2,
+                    effectif: 5,
+                  },
+                ],
+              },
+            ],
+          },
         }
       ]
     },
@@ -681,7 +719,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     motifsRuptureContrat: [],
     motifsRuptureContratLibelles: [],
     natureContratsAnnuel: [],
-    natureContratsTrimestriel:[]
+    natureContratsTrimestriel: []
   };
 
   public static crée(

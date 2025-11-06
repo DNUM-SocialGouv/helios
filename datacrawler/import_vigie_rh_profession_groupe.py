@@ -75,10 +75,16 @@ if __name__ == "__main__":
     )
     date_de_mise_a_jour_passage_profession = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_passage_profession)
 
+    traite_passage_profession = verifie_si_le_fichier_est_traite(
+        date_de_mise_a_jour_passage_profession,
+        base_de_donnees,
+        FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value
+    )
     # Traitements des données
-    if traite_profession_groupe and traite_ref_profession_groupe:
+    if  traite_profession_groupe and traite_ref_profession_groupe and traite_passage_profession:
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_GROUPE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value} a été déjà traité")
+        logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value} a été déjà traité")
     else:
         if len({
             date_de_mise_à_jour_profession_groupe,

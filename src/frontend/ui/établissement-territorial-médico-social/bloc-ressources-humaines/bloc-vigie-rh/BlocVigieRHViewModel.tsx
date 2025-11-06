@@ -6,6 +6,7 @@ import {
   NatureContratsAnnuel,
   NatureContratsTrimestriel,
   ProfessionFiliere,
+  ProfessionFiliereData,
   TauxRotation,
   TauxRotationTrimestriel,
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
@@ -53,8 +54,18 @@ export class BlocVigieRHViewModel {
   public get lesAgesNeSontIlsPasRenseignees(): boolean {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
   }
+  private get effectifsDisponibles(): boolean {
+    const data = this.lesDonneesEffectifs.data ?? [];
+    return data.some((item: any) => {
+      const serie = item?.dataCategorie?.dataFiliere ?? [];
+      return Array.isArray(serie) && serie.some((valeur: number | null | undefined) => valeur !== null && valeur !== undefined);
+    });
+  }
+
   public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data.length === 0;
+    const autorise = this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok';
+    const aucuneFiliere = (this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data?.length ?? 0) === 0;
+    return autorise && (aucuneFiliere || !this.effectifsDisponibles);
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasRenseignees(): boolean {
@@ -87,6 +98,18 @@ export class BlocVigieRHViewModel {
 
   public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+  }
+
+  private get effectifsGroupesDisponibles(): boolean {
+    return this.filieresAvecGroupes.length > 0;
+  }
+
+  public get lesEffectifsGroupesNeSontIlsPasRenseignees(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles;
+  }
+
+  public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
@@ -125,6 +148,10 @@ export class BlocVigieRHViewModel {
     return !this.lesEffectifsNeSontIlsPasRenseignees && !this.lesEffectifsNeSontIlsPasAutorisee
   }
 
+  public get graphiqueEffectifsGroupesAffichable(): boolean {
+    return !this.lesEffectifsGroupesNeSontIlsPasRenseignees && !this.lesEffectifsGroupesNeSontIlsPasAutorisee;
+  }
+
   public get graphiqueDepartsEmbauchesAffichable():boolean {
     return !this.lesDepartsEmbauchesNeSontIlsPasRenseignees && !this.lesDepartsEmbauchesNeSontIlsPasAutorisee
   }
@@ -145,7 +172,8 @@ export class BlocVigieRHViewModel {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
-    if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) { nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES) };
+    if (this.lesEffectifsGroupesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
+    if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasRenseignees) nonRenseignees.push(this.wording.DUREE_CDD);
     if (this.lesMotifsNeSontIlsPasRenseignes) nonRenseignees.push(this.wording.MOTIFS_RUPTURE_CONTRAT);
@@ -159,6 +187,7 @@ export class BlocVigieRHViewModel {
     const nonAutorises = [];
     if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsGroupesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
     if (this.lesDureesCDDNeSontEllesPasAutorisee) nonAutorises.push(this.wording.DUREE_CDD);
@@ -203,7 +232,14 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesVigieRHNeSontPasRenseignees(): boolean {
-    return this.lesAgesNeSontIlsPasRenseignees && this.lesEffectifsNeSontIlsPasRenseignees && this.lesDepartsEmbauchesNeSontIlsPasRenseignees && this.lesDureesCDDNeSontEllesPasRenseignees && this.lesMotifsNeSontIlsPasRenseignes;
+    return (
+      this.lesAgesNeSontIlsPasRenseignees &&
+      this.lesEffectifsNeSontIlsPasRenseignees &&
+      this.lesEffectifsGroupesNeSontIlsPasRenseignees &&
+      this.lesDepartsEmbauchesNeSontIlsPasRenseignees &&
+      this.lesDureesCDDNeSontEllesPasRenseignees &&
+      this.lesMotifsNeSontIlsPasRenseignes
+    );
   }
 
   public get dateDeMiseAJourEffectifs(): string {
@@ -214,13 +250,32 @@ export class BlocVigieRHViewModel {
     const dataEffectifs = this.etablissementTerritorialVRMedicoSocial.professionFiliere;
 
     const transformData = (dataEffectifs: ProfessionFiliere): any => {
-      return dataEffectifs?.data?.map(({ categorie, dataCategorie }) => ({
-        categorie,
-        dataCategorie: {
-          dataFiliere: dataCategorie?.map(entry => entry.effectifFiliere),
-          dataMoisAnnee: dataCategorie?.map(({ mois, annee }) => ({ mois, annee })),
-        },
-      }));
+      const transformSerie = (serie: any[] | undefined, effectifKey: "effectifFiliere" | "effectif") => ({
+        dataFiliere: (serie ?? []).map((entry) => Number(entry?.[effectifKey] ?? 0)),
+        dataMoisAnnee: (serie ?? []).map(({ mois, annee }) => ({ mois: Number(mois), annee: Number(annee) })),
+      });
+
+      return dataEffectifs?.data?.map(({ categorie, dataCategorie, groupes }) => {
+        const serieFiliere = transformSerie(dataCategorie, "effectifFiliere");
+        const groupesTransformes = groupes?.data
+          ?.map((groupe) => ({
+            categorie: groupe.categorie,
+            dataCategorie: transformSerie(groupe.dataCategorie, "effectif"),
+          })) ?? [];
+
+        return {
+          categorie,
+          dataCategorie: serieFiliere,
+          ...(groupesTransformes.length
+            ? {
+              groupes: {
+                data: groupesTransformes,
+                dateDeMiseAJour: groupes?.dateDeMiseAJour ?? "",
+              },
+            }
+            : {}),
+        };
+      });
     };
 
     let transformedData = [];
@@ -229,6 +284,11 @@ export class BlocVigieRHViewModel {
     }
 
     return { ...dataEffectifs, data: transformedData }
+  }
+
+  public get filieresAvecGroupes(): ProfessionFiliereData[] {
+    const data = this.lesDonneesEffectifs.data ?? [];
+    return data.filter((item: any) => (item?.groupes?.data ?? []).length > 0);
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
