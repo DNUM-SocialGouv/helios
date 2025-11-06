@@ -52,31 +52,50 @@ class TestImportVigiePprofessionGroupe:
                     FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value,
                     mocked_logger
                 )
+            ),
+            'table_passage_profession': os.path.join(
+                vegie_rh_data_path,
+                trouve_le_nom_du_fichier(
+                    fichiers,
+                    FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value,
+                    mocked_logger
+                )
             )
         }
 
     def _assert_file_paths(self, file_paths: Dict[str, str]) -> None:
-        assert file_paths['profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_profession2_2025_02_13.parquet'
-        assert file_paths['ref_profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_ref_profession2_2025_02_13.parquet'
+        assert file_paths['profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_profession2_2025_10_30.parquet'
+        assert file_paths['ref_profession_groupe'] == 'data_test/entrée/vigie_rh/vigierh_ref_profession2_2025_10_30.parquet'
+        assert file_paths['table_passage_profession'] == 'data_test/entrée/vigie_rh/vigierh_table_passage_professions_1_2_2025_10_30.parquet'
 
     def _extract_dates(self, file_paths: Dict[str, str]) -> Dict[str, str]:
         return {
             'profession_groupe': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['profession_groupe']),
             'ref_profession_groupe': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['ref_profession_groupe']),
+            'table_passage_profession': extrais_la_date_du_nom_de_fichier_vigie_rh(file_paths['table_passage_profession']),
         }
 
     def _assert_dates(self, dates: Dict[str, str]) -> None:
-        assert dates['profession_groupe'] == '2025-02-13'
-        assert dates['ref_profession_groupe'] == '2025-02-13'
+        assert dates['profession_groupe'] == '2025-10-30'
+        assert dates['ref_profession_groupe'] == '2025-10-30'
+        assert dates['table_passage_profession'] == '2025-10-30'
 
     def _read_and_assert_dataframes(self, file_paths: Dict[str, str]) -> Tuple[pd.DataFrame, pd.DataFrame]:
         df_ref_profession_groupe = lis_le_fichier_parquet(file_paths['ref_profession_groupe'], ColumMapping.REF_PROFESSION_GROUPE.value)
         code_list_ref_profession_groupe = np.array(df_ref_profession_groupe['code'].tolist())
 
+        df_passage_profession = lis_le_fichier_parquet(
+            file_paths['table_passage_profession'],
+            ColumMapping.PASSAGE_GROUPE_FILIERE.value
+        )
+        df_passage_profession.rename(columns={"profession_code": "code"}, inplace=True)
+        df_ref_profession_groupe = df_ref_profession_groupe.merge(df_passage_profession, on="code", how="left")
+        df_ref_profession_groupe["code_filiere"] = pd.to_numeric(df_ref_profession_groupe["code_filiere"], errors="coerce").astype("Int64")
+
         data_frame = lis_le_fichier_parquet(file_paths['profession_groupe'], ColumMapping.PROFESSION_GROUPE.value)
         df_filtré = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_données_test).head(200)
 
-        assert df_ref_profession_groupe.shape[0] == 16
+        assert df_ref_profession_groupe.shape[0] == 25
         assert df_filtré.shape[0] == 200
 
         return df_ref_profession_groupe, df_filtré
@@ -108,7 +127,7 @@ class TestImportVigiePprofessionGroupe:
             dates['profession_groupe']
         )
 
-        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 16
+        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 25
         assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, base_de_données_test) == 200
 
     def test_import_vigie_rh_profession_groupe_test(self) -> None:
