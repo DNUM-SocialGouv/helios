@@ -61,7 +61,7 @@ services:
       USERS: "infocentre_helios|passwordforhapi|/home/infocentre_helios"
 
   postgres:
-    image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
+    image: postgres:14.18-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_db
     ports:
       - target: 5432
@@ -76,7 +76,7 @@ services:
         target: /var/lib/postgresql/data
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=100"]
   postgres-test:
-    image: postgres:13.7-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
+    image: postgres:14.18-alpine # Conserver la même version avec le fichier de la CI : helios-ci.yml
     container_name: helios_test_db
     ports:
       - target: 5432
@@ -85,12 +85,7 @@ services:
       POSTGRES_DB: helios
       POSTGRES_USER: helios
       POSTGRES_PASSWORD: h3li0s
-    volumes:
-      - type: volume
-        source: postgres_data_test
-        target: /var/lib/postgresql/data
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
 volumes:
   postgres_data:
-  postgres_data_test:
