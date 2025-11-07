@@ -23,6 +23,12 @@ type IndicateurDesSejoursMCO = Readonly<{
   nombreSéjoursPartielsObstétrique: { x: number; y: number | null | '' }[];
 }>;
 
+type DonneeDureeMoyenneMCO = Readonly<{
+  dureeMoyenneSejourMedecine: { x: number; y: number | null | '' }[];
+  dureeMoyenneSejourChirurgie: { x: number; y: number | null | '' }[];
+  dureeMoyenneSejourObstetrique: { x: number; y: number | null | '' }[];
+}>;
+
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesComplètesPsy: { x: number; y: number | null | "" }[];
   nombreJournéesComplètesSsr: { x: number; y: number | null | "" }[];
@@ -158,6 +164,76 @@ export class ActivitesMensuelViewModel {
     };
   }
 
+  private construisLaDureeMoyenneDeSejoursMCOParMois(annee: number): DonneeDureeMoyenneMCO {
+    const dureeMoyenneSejour: DonneeDureeMoyenneMCO = {
+      dureeMoyenneSejourMedecine: [],
+      dureeMoyenneSejourChirurgie: [],
+      dureeMoyenneSejourObstetrique: []
+    };
+
+    if (this.annees.length === 0) return dureeMoyenneSejour;
+
+    this.activitésMensuellesParAnnee[annee].forEach((activité: ActiviteSanitaireMensuel) => {
+      dureeMoyenneSejour.dureeMoyenneSejourMedecine.push({
+        x: activité.mois,
+        y: activité.dureeMoyenneSejourMedecine
+      });
+      dureeMoyenneSejour.dureeMoyenneSejourChirurgie.push({
+        x: activité.mois,
+        y: activité.dureeMoyenneSejourChirurgie
+      });
+      dureeMoyenneSejour.dureeMoyenneSejourObstetrique.push({
+        x: activité.mois,
+        y: activité.dureeMoyenneSejourObstetrique
+      });
+    });
+    return dureeMoyenneSejour;
+  }
+
+  getHistogrammeMoyenneSejourDataSet(annee: number, activite: string) {
+    const dureeMoyenneSejour = this.construisLaDureeMoyenneDeSejoursMCOParMois(annee);
+    if (activite === this.wording.MÉDECINE) {
+      return {
+        datasets: [
+          {
+            backgroundColor: couleurDuFondHistogrammeBleuFoncé,
+            borderColor: couleurDuFondHistogrammeBleuFoncé,
+            data: dureeMoyenneSejour.dureeMoyenneSejourMedecine,
+            label: this.wording.DUREE_MOYENNE_SEJOUR_MEDECINE,
+            stack: "Stack 1",
+          },
+        ],
+        labels: this.listeDesMois,
+      }
+    }
+    if (activite === this.wording.CHIRURGIE) {
+      return {
+        datasets: [
+          {
+            backgroundColor: couleurDuFondHistogrammeVertFoncé,
+            borderColor: couleurDuFondHistogrammeVertFoncé,
+            data: dureeMoyenneSejour.dureeMoyenneSejourChirurgie,
+            label: this.wording.DUREE_MOYENNE_SEJOUR_CHIRURGIE,
+            stack: "Stack 2",
+          },
+        ],
+        labels: this.listeDesMois,
+      }
+    }
+    return {
+      datasets: [
+        {
+          backgroundColor: couleurDuFondHistogrammeRougeFoncé,
+          borderColor: couleurDuFondHistogrammeRougeFoncé,
+          data: dureeMoyenneSejour.dureeMoyenneSejourObstetrique,
+          label: this.wording.DUREE_MOYENNE_SEJOUR_OBSTETRIQUE,
+          stack: "Stack 3",
+        }
+      ],
+      labels: this.listeDesMois,
+    };
+  }
+
   private construisLesJournéesPsyEtSsrParMois(annee: number): DonnéesDeDiagrammeDesJournéesPsyEtSsr {
     const nombreDeJournées: DonnéesDeDiagrammeDesJournéesPsyEtSsr = {
       nombreJournéesComplètesPsy: [],
@@ -254,6 +330,24 @@ export class ActivitesMensuelViewModel {
       this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsChirurgie),
       this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursPartielsObstétrique),
       this.valeursDesNombresDeSéjours(nombreDeSéjours.nombreSéjoursCompletsObstétrique),
+    ];
+  }
+
+  public getIdentifiantTableIndicateurDureeMoyenneMCO() {
+    return [
+      this.wording.DUREE_MOYENNE_SEJOUR_MEDECINE,
+      this.wording.DUREE_MOYENNE_SEJOUR_CHIRURGIE,
+      this.wording.DUREE_MOYENNE_SEJOUR_OBSTETRIQUE,
+    ];
+  }
+
+  public getValeurTableIndicateurDureeMoyenneMCO(annee: number) {
+    const dureeMoyenneSejour = this.construisLaDureeMoyenneDeSejoursMCOParMois(annee);
+
+    return [
+      this.valeursDesNombresDeSéjours(dureeMoyenneSejour.dureeMoyenneSejourMedecine),
+      this.valeursDesNombresDeSéjours(dureeMoyenneSejour.dureeMoyenneSejourChirurgie),
+      this.valeursDesNombresDeSéjours(dureeMoyenneSejour.dureeMoyenneSejourObstetrique),
     ];
   }
 

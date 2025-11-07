@@ -48,5 +48,17 @@ export type ÉtablissementTerritorialSanitaireActivité = Readonly<{
     dateMiseÀJourSource: string;
     value: number | null | '';
   };
+  dureeMoyenneSejourMedecine: {
+    dateMiseÀJourSource: string;
+    value: number | null | '';
+  };
+  dureeMoyenneSejourChirurgie: {
+    dateMiseÀJourSource: string;
+    value: number | null | '';
+  };
+  dureeMoyenneSejourObstetrique: {
+    dateMiseÀJourSource: string;
+    value: number | null | '';
+  };
   numéroFinessÉtablissementTerritorial: string;
 }>;

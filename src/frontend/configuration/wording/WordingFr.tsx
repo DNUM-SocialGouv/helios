@@ -209,6 +209,7 @@ export class WordingFr implements Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly MOYENNE_DE_SEJOUR_MCO: string = "Durée moyenne de séjour Médecine, Chirurgie et Obstétrique";
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = "Total Hospitalisation Médecine";
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = "Total Hospitalisation Chirurgie";
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = "Total Hospitalisation Obstétrique";
@@ -218,6 +219,10 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string = "Hospitalisation Complète Chirurgie";
   readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string = "Hospitalisation Partielle Obstétrique";
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = "Hospitalisation Complète Obstétrique";
+  readonly DUREE_MOYENNE_SEJOUR_MEDECINE: string = "DMS Médecine";
+  readonly DUREE_MOYENNE_SEJOUR_CHIRURGIE: string = "DMS Chirurgie";
+  readonly DUREE_MOYENNE_SEJOUR_OBSTETRIQUE: string = "DMS Obstétrique";
+
   readonly TOTAL_HOSPITALISATION_SSR: string = "Total Hospitalisation SSR";
   readonly TOTAL_HOSPITALISATION_PSY: string = "Total Hospitalisation PSY";
   readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";

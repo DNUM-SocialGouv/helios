@@ -180,6 +180,7 @@ export interface Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
+  readonly MOYENNE_DE_SEJOUR_MCO: string;
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string;
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string;
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string;
@@ -189,6 +190,9 @@ export interface Wording {
   readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string;
   readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string;
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string;
+  readonly DUREE_MOYENNE_SEJOUR_MEDECINE: string;
+  readonly DUREE_MOYENNE_SEJOUR_CHIRURGIE: string;
+  readonly DUREE_MOYENNE_SEJOUR_OBSTETRIQUE: string;
   readonly TOTAL_HOSPITALISATION_SSR: string;
   readonly TOTAL_HOSPITALISATION_PSY: string;
   readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string;

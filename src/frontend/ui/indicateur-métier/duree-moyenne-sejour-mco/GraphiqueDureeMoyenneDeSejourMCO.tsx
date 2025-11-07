@@ -1,19 +1,19 @@
 import { ChangeEvent, useState } from "react";
 
-import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
-import { NombreDeJournneesPsySsrHistogrammes } from "./NombreDeJournneePsySsrHistogrammes";
+import { DureeMoyenneDeSejourMCOHistogrammes } from "./DureeMoyenneDeSejourMCOHistogrammes";
+import { DureeMoyenneSejourMCOViewModel } from "./DureeMoyenneDeSejourMCOViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
-import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
+import { ContenuDureeMoyenneDeSejourMCO } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuDureeMoyenneDeSejourMCO";
 
-type GraphiquePsySSRProps = Readonly<{
-  nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
+
+type GraphiqueDureeMoyenneDeSejourMCOProps = Readonly<{
+  nombreDeSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
-
-export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
+export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueDureeMoyenneDeSejourMCOProps) => {
   const { wording } = useDependencies();
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
@@ -23,35 +23,31 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
 
   const dateDeMiseAJour = (): string => {
     if (selectedFrequency === wording.ANNUEL) {
-      return nombreJournéesPsySSRViewModel.dateDeMiseÀJourDuNombreDeJournéesPsyEtSsr;
+      return dureeMoyenneSejourMCOViewModel.dateDeMiseÀJourDureeMoyenneSejoursMédecineChirurgieObstétrique;
     } else {
       return activitéMensuelleViewModel.getDateDeMiseAJour();
     }
   }
 
-
-
   return (
     <IndicateurGraphique
       contenuInfoBulle={
-        <ContenuNombreDeJournéesPSYetSSR
+        <ContenuDureeMoyenneDeSejourMCO
           dateDeMiseÀJour={dateDeMiseAJour()}
-          estComparaison={false}
-          estEntitéJuridique={estEntitéJuridique}
           source={wording.PMSI}
         />
       }
       dateDeMiseÀJour={dateDeMiseAJour()}
-      identifiant="activite-2"
-      nomDeLIndicateur={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
+      identifiant="activite-1"
+      nomDeLIndicateur={wording.MOYENNE_DE_SEJOUR_MCO}
       source={wording.PMSI}
     >
-      <NombreDeJournneesPsySsrHistogrammes
-        activitéMensuelleViewModel={activitéMensuelleViewModel}
-        nombreDeJourneePsySsrViewModel={nombreJournéesPsySSRViewModel}
+      <DureeMoyenneDeSejourMCOHistogrammes
+        activiteMensuelleViewModel={activitéMensuelleViewModel}
+        dureeMoyenneDeSejourMCOViewModel={dureeMoyenneSejourMCOViewModel}
         onFrequencyChange={handleFrequency}
         selectedFrequency={selectedFrequency}
       />
     </IndicateurGraphique>
   );
-}
+};

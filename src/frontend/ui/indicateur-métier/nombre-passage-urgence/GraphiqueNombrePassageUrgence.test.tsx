@@ -41,7 +41,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-3`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-4`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 

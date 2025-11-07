@@ -16,7 +16,7 @@ export type ActiviteSanitaireMensuel = Readonly<{
   nombreSéjoursPartielsObstétrique: number | null;
   nombreJournéesComplètesPsy: number | null;
   nombreJournéesPartiellesPsy: number | null;
-  dmsMedecine: number | null;
-  dmsChirurgie: number | null;
-  dmsObstetrique: number | null;
+  dureeMoyenneSejourMedecine: number | null;
+  dureeMoyenneSejourChirurgie: number | null;
+  dureeMoyenneSejourObstetrique: number | null;
 }>;

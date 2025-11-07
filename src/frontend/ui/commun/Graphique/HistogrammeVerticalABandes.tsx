@@ -8,12 +8,19 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 const MIN_VALUE = 5;
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, créeLeLibelléDuTooltip?: Function, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+  let tooltip;
+  if (créeLeLibelléDuTooltip) {
+    tooltip = { callbacks: { label: créeLeLibelléDuTooltip(wording) } }
+  } else {
+    tooltip = { enabled: false }
+  }
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },
@@ -32,7 +39,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
           if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= MIN_VALUE) {
             return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
           }
-          return value.y;
+          return StringFormater.roundFormatInFrench(valueNumber);
         },
         font: {
           weight: "bolder",
@@ -45,7 +52,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
-      tooltip: { callbacks: { label: créeLeLibelléDuTooltip(wording) } },
+      tooltip: tooltip,
     },
     responsive: true,
     scales: {
@@ -77,10 +84,11 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   libellés: (string | number)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
-  créeLeLibelléDuTooltip: Function;
+  créeLeLibelléDuTooltip?: Function;
   annéesTotales: number;
   grapheMensuel: boolean;
   cacheLesValeursBasse?: boolean;
+  legendeCentreeUneLigne?: boolean;
 }>) {
   const { wording } = useDependencies();
 
@@ -108,12 +116,22 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     );
   }
 
+  const legendStyle: { justifyContent?: string, gridTemplateRows?: string } = {};
+  // Si la légende doit être centrée ou si c’est in graph mensuel on centre la légende
+  if (props.legendeCentreeUneLigne || props.grapheMensuel) {
+    legendStyle.justifyContent = "center";
+  }
+  // Si la légende doit être centrée, on la met sur une ligne
+  if (props.legendeCentreeUneLigne) {
+    legendStyle.gridTemplateRows = "repeat(1, 1fr)";
+  }
+
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording, props.cacheLesValeursBasse)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
+          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

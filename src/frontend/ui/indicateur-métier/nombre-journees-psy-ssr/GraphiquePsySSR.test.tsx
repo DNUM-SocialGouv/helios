@@ -60,7 +60,7 @@ describe("Graphique Psy SSR", () => {
 
       // THEN
       const détails = graphiqueTest.détail;
-      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-1`);
+      expect(détails).toHaveAttribute("aria-controls", `nom-info-bulle-activite-2`);
       expect(détails).toHaveAttribute("data-fr-opened", "false");
     });
 
