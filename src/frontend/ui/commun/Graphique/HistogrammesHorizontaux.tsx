@@ -78,9 +78,7 @@ export class HistogrammeData {
 
   private setDefaultErrorStatut() {
     this.stacks.forEach((stack) => {
-      if (!stack.isError) {
-        stack.isError = new Array(stack.data.length).fill(false);
-      }
+      stack.isError ??= new Array(stack.data.length).fill(false);
     });
   }
 
@@ -103,6 +101,7 @@ export class HistogrammeData {
             labels: {
               title: { color: this.labelsColor },
             },
+            formatter: this.valueFormatter,
           },
         };
       }),
