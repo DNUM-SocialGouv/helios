@@ -1,5 +1,6 @@
 import { DataSource, LoggerOptions } from "typeorm";
 
+
 import { EntitéJuridique1652626977208 } from "./migrations/1652626977208-EntitéJuridique";
 import { ÉtablissementTerritorial1652627040870 } from "./migrations/1652627040870-ÉtablissementTerritorial";
 import { DateMiseÀJourSource1652627053530 } from "./migrations/1652627053530-DateMiseÀJourSource";
@@ -84,6 +85,7 @@ import { ModificationTableRessourcesHumainesEJ1758551051552 } from "./migrations
 import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/1758555147382-ModificationProfilJoursAbsPnmRhEj";
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
+import { AjoutTableParametrageJson1759416645736 } from "./migrations/1759416645736-AjoutTableParametrageJson";
 import { AjoutDmsActiviteMensuel1759826053430 } from "./migrations/1759826053430-AjoutDmsActiviteMensuel"
 import { AjoutDmsActiviteSanitaire1759845977685 } from "./migrations/1759845977685-AjoutDmsActiviteSanitaire"
 import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761819265202-AjoutColonneDepartsPrematuresCdi";
@@ -141,6 +143,7 @@ import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel"
 import { FavorisModel } from "./models/FavorisModel";
 import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
@@ -214,6 +217,7 @@ const datasource = new DataSource({
     SearchHistoryModel,
     RefDepartementRegionModel,
     ProfilModel,
+    ParametrageJsonModel,
     ReclamationETModel,
     EvenementIndesirableETModel,
     InspectionsControlesETModel,
@@ -358,6 +362,7 @@ const datasource = new DataSource({
     ModificationProfilJoursAbsPnmRhEj1758555147382,
     AjoutTableRessourcesHumainesETSAN1758618772544,
     ModificationProfilRessourcesHumainesETSAN1758618803617,
+    AjoutTableParametrageJson1759416645736,
     AjoutReferentielMotifsRupturesContrats1760516933359,
     AjoutMotifsRupturesContrats1760516962957,
     AjoutTableVigieRhDureeCdd1759821521368,
