@@ -24,6 +24,8 @@ import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
 import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
@@ -37,7 +39,7 @@ const ListeIndicateursNonAutorisesOuNonRenseignes = ({ blocVigieRHViewModel }: B
   }
 };
 
-export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
+export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: BlocVigieRHProps) => {
   const { wording } = useDependencies();
   const donneesPyramides = blocVigieRHViewModel.lesDonneesPyramideAges;
   const libelles = blocVigieRHViewModel.lesLibellesTranchesAges;
@@ -48,7 +50,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
 
   const couleurEffectifsTotaux = "#ff6600ff"; // orange
-  const couleursFilieres = ["#FF8E68","#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
+  const couleursFilieres = ["#FF8E68", "#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
 
   useEffect(() => {
     setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
@@ -171,7 +173,7 @@ export const BlocVigieRH = ({ blocVigieRHViewModel }: BlocVigieRHProps) => {
 
   return (
     <>
-      <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} />
+      <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       <div className="fr-grid-row fr-grid-row--gutters">
         {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
           <div className="fr-col-4">

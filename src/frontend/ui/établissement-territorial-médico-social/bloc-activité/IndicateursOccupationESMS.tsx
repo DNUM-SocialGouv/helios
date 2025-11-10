@@ -5,84 +5,86 @@ import { ContenuDuTauxOccupationESMS } from "../InfoBulle/ContenuTauxOccupationE
 
 
 type IndicateursOccupationESMSProps = Readonly<{
-    établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+  etabFiness: string;
+  etabTitle: string;
+  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
 }>;
 
-export const IndicateursOccupationESMS = ({ établissementTerritorialActivitéMédicoSocialViewModel }: IndicateursOccupationESMSProps) => {
-    const { wording } = useDependencies();
+export const IndicateursOccupationESMS = ({ etabFiness, etabTitle, établissementTerritorialActivitéMédicoSocialViewModel }: IndicateursOccupationESMSProps) => {
+  const { wording } = useDependencies();
 
-    return (
-        <>
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationExternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationExternatEstIlAutorise ? <IndicateurGraphique
-                contenuInfoBulle={
-                    <ContenuDuTauxOccupationESMS
-                        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                        source={wording.CNSA}
-                    />
-                }
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-0"
-                nomDeLIndicateur={wording.TAUX_OCCUPATION_EXTERNAT}
-                source={wording.CNSA}
-            >
-                {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationExternat}
-            </IndicateurGraphique> : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSemiInternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSemiInternatEstIlAutorise ? <IndicateurGraphique
-                contenuInfoBulle={
-                    <ContenuDuTauxOccupationESMS
-                        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                        source={wording.CNSA}
-                    />
-                }
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-1"
-                nomDeLIndicateur={wording.TAUX_OCCUPATION_SEMI_INTERNAT}
-                source={wording.CNSA}
-            >
-                {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationSemiInternat}
-            </IndicateurGraphique> : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationInternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationInternatEstIlAutorise ? <IndicateurGraphique
-                contenuInfoBulle={
-                    <ContenuDuTauxOccupationESMS
-                        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                        source={wording.CNSA}
-                    />
-                }
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-2"
-                nomDeLIndicateur={wording.TAUX_OCCUPATION_INTERNAT}
-                source={wording.CNSA}
-            >
-                {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationInternat}
-            </IndicateurGraphique> : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAutreEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAutreEstIlAutorise ? <IndicateurGraphique
-                contenuInfoBulle={
-                    <ContenuDuTauxOccupationESMS
-                        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                        source={wording.CNSA}
-                    />
-                }
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-3"
-                nomDeLIndicateur={wording.TAUX_OCCUPATION_AUTRE}
-                source={wording.CNSA}
-            >
-                {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAutre}
-            </IndicateurGraphique> : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSeancesEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSeancesEstIlAutorise ? <IndicateurGraphique
-                contenuInfoBulle={
-                    <ContenuDuTauxOccupationESMS
-                        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                        source={wording.CNSA}
-                    />
-                }
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                identifiant="activite-4"
-                nomDeLIndicateur={wording.TAUX_OCCUPATION_SEANCES}
-                source={wording.CNSA}
-            >
-                {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationSeances}
-            </IndicateurGraphique> : <></>}
-        </>
-    );
+  return (
+    <>
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationExternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationExternatEstIlAutorise ? <IndicateurGraphique
+        contenuInfoBulle={
+          <ContenuDuTauxOccupationESMS
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+            source={wording.CNSA}
+          />
+        }
+        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+        identifiant="activite-0"
+        nomDeLIndicateur={wording.TAUX_OCCUPATION_EXTERNAT}
+        source={wording.CNSA}
+      >
+        {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationExternatHistogramme(etabFiness, etabTitle)}
+      </IndicateurGraphique> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSemiInternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSemiInternatEstIlAutorise ? <IndicateurGraphique
+        contenuInfoBulle={
+          <ContenuDuTauxOccupationESMS
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+            source={wording.CNSA}
+          />
+        }
+        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+        identifiant="activite-1"
+        nomDeLIndicateur={wording.TAUX_OCCUPATION_SEMI_INTERNAT}
+        source={wording.CNSA}
+      >
+        {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationSemiInternatHistogramme(etabFiness, etabTitle)}
+      </IndicateurGraphique> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationInternatEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationInternatEstIlAutorise ? <IndicateurGraphique
+        contenuInfoBulle={
+          <ContenuDuTauxOccupationESMS
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+            source={wording.CNSA}
+          />
+        }
+        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+        identifiant="activite-2"
+        nomDeLIndicateur={wording.TAUX_OCCUPATION_INTERNAT}
+        source={wording.CNSA}
+      >
+        {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationInternatHistogramme(etabFiness, etabTitle)}
+      </IndicateurGraphique> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAutreEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAutreEstIlAutorise ? <IndicateurGraphique
+        contenuInfoBulle={
+          <ContenuDuTauxOccupationESMS
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+            source={wording.CNSA}
+          />
+        }
+        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+        identifiant="activite-3"
+        nomDeLIndicateur={wording.TAUX_OCCUPATION_AUTRE}
+        source={wording.CNSA}
+      >
+        {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAutreHistogramme(etabFiness, etabTitle)}
+      </IndicateurGraphique> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSeancesEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationSeancesEstIlAutorise ? <IndicateurGraphique
+        contenuInfoBulle={
+          <ContenuDuTauxOccupationESMS
+            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+            source={wording.CNSA}
+          />
+        }
+        dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+        identifiant="activite-4"
+        nomDeLIndicateur={wording.TAUX_OCCUPATION_SEANCES}
+        source={wording.CNSA}
+      >
+        {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationSeancesHistogramme(etabFiness, etabTitle)}
+      </IndicateurGraphique> : <></>}
+    </>
+  );
 };

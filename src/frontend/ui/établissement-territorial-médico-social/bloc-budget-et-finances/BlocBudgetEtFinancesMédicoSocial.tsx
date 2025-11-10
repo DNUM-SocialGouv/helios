@@ -14,20 +14,22 @@ import { GraphiqueCompteDeResultat } from "./compte-de-resultat/GraphiqueCompteD
 import { ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel } from "./ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   établissementTerritorialMédicoSocialBudgetEtFinancesViewModel: ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMédicoSocialBudgetEtFinancesViewModel, opnedBloc, toggelBlocs  }: BlocBudgetEtFinancesMédicoSocialProps) => {
+export const BlocBudgetEtFinancesMédicoSocial = ({ etabFiness, etabTitle, établissementTerritorialMédicoSocialBudgetEtFinancesViewModel, opnedBloc, toggelBlocs }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetEtFinancesNeSontPasRenseignées) {
-    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
+    <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
 
       {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés} /> :
         établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees} /> : <></>}
@@ -72,7 +74,11 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
         ) : <></>}
 
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeCafEstIlAutorisé ?
-          <TauxDeCaf tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel} /> : <></>
+          <TauxDeCaf
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            tauxDeCafViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeCafViewModel}
+          /> : <></>
         }
 
         {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlRenseigné && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leTauxDeVétustéEstIlAutorisé ? (
@@ -88,7 +94,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
             nomDeLIndicateur={wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
             source={wording.CNSA}
           >
-            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstruction}
+            {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.tauxDeVétustéConstructionHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -108,7 +114,6 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ établissementTerritorialMé
             {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.fondDeRoulementNetGlobal}
           </IndicateurGraphique>
         ) : <></>}
-
       </ul>
     </Bloc>
   );
