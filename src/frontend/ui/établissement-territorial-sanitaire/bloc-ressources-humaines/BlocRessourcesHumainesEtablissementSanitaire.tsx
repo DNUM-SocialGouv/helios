@@ -52,7 +52,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabT
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.nombreEtpPm}
+            {etSanRhviewModel.nombreEtpPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -70,7 +70,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabT
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.nombreEtpPnm}
+            {etSanRhviewModel.nombreEtpPnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -89,7 +89,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabT
             nomDeLIndicateur={wording.DEPENSES_INTERIM_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.depensesInterimPm}
+            {etSanRhviewModel.depensesInterimPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -107,7 +107,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabT
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.joursAbsenteismePm}
+            {etSanRhviewModel.joursAbsenteismePmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -125,7 +125,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabT
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.joursAbsenteismePnm}
+            {etSanRhviewModel.joursAbsenteismePnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
