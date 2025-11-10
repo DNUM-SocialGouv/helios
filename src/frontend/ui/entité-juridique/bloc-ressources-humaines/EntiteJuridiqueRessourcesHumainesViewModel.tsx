@@ -23,7 +23,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       && !this.joursAbsenteismePmSontIlsRenseignes
       && !this.joursAbsenteismePnmSontIlsRenseignes;
   }
-  public get nombreEtpPm(): ReactElement {
+  public nombreEtpPmHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("nombreEtpPm");
     const couleursHistogramme = annees.map((annee) => ({
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -34,10 +34,13 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.NOMBRE_D_ETP_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
+        nomGraph={this.wording.NOMBRE_D_ETP_PM}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -45,7 +48,7 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
   }
 
 
-  public get nombreEtpPnm(): ReactElement {
+  public nombreEtpPnmHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("nombreEtpPnm");
     const couleursHistogramme = annees.map((annee) => ({
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -56,17 +59,20 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.NOMBRE_D_ETP_PNM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
+        nomGraph={this.wording.NOMBRE_D_ETP_PNM}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
   }
 
-  public get depensesInterimPm(): ReactElement {
+  public depensesInterimPmHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("depensesInterimPm");
     const couleursHistogramme = annees.map((annee) => ({
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -77,17 +83,20 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         formateur={StringFormater.formatInEuro}
         identifiant={this.wording.DEPENSES_INTERIM_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
+        nomGraph={this.wording.DEPENSES_INTERIM_PM}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
   }
 
-  public get joursAbsenteismePm(): ReactElement {
+  public joursAbsenteismePmHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("joursAbsenteismePm");
     const couleursHistogramme = annees.map((annee) => ({
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -98,17 +107,20 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.JOURS_ABSENTEISME_PM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
+        nomGraph={this.wording.JOURS_ABSENTEISME_PM}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
     );
   }
 
-  public get joursAbsenteismePnm(): ReactElement {
+  public joursAbsenteismePnmHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, annees] = this.extraireLesValeursNombreesDesIndicateurs("joursAbsenteismePnm");
     const couleursHistogramme = annees.map((annee) => ({
       premierPlan: estCeLAnnéePassée(annee) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -119,10 +131,13 @@ export class EntiteJuridiqueRessourcesHumainesViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         formateur={StringFormater.roundFormatInFrench}
         identifiant={this.wording.JOURS_ABSENTEISME_PNM}
         libellés={annees}
         libellésDeValeursManquantes={anneesManquantes}
+        nomGraph={this.wording.JOURS_ABSENTEISME_PNM}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />

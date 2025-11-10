@@ -5,6 +5,9 @@ import { CouleurHistogramme } from "./couleursGraphique";
 import { HistogrammeData, HistogrammesHorizontaux } from "./HistogrammesHorizontaux";
 
 type HistogrammeHorizontalProps = {
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   valeurs: number[];
   libellés: string[];
   couleursDeLHistogramme: CouleurHistogramme[];
@@ -17,6 +20,9 @@ type HistogrammeHorizontalProps = {
 };
 
 export const HistogrammeHorizontal = ({
+  etabTitle,
+  etabFiness,
+  nomGraph,
   valeurs,
   libellés,
   couleursDeLHistogramme,
@@ -48,8 +54,11 @@ export const HistogrammeHorizontal = ({
       annéesManquantes={libellésDeValeursManquantes}
       cacheLesValeursBasse={cacheLesValeursBasse}
       epaisseur="FIN"
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       identifiant={identifiant}
       nom={entêteLibellé}
+      nomGraph={nomGraph}
       nombreDAnnéeTotale={nombreDeLibelléTotal}
       valeursDesHistogrammes={valeursDesHistogrammes}
     />

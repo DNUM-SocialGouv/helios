@@ -12,18 +12,19 @@ import { ResultatNetComptable } from "../../indicateur-métier/resultat-net-comp
 import { TauxDeCaf } from "../../indicateur-métier/taux-de-caf/TauxDeCaf";
 
 type BlocBudgetFinanceProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
-  type : 'EJ' | 'ET_PNL' | 'ET_Autres'
+  type: 'EJ' | 'ET_PNL' | 'ET_Autres'
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
-export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel, type, opnedBloc, toggelBlocs  }: BlocBudgetFinanceProps) => {
+export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel, type, opnedBloc, toggelBlocs }: BlocBudgetFinanceProps) => {
   const { wording } = useDependencies();
 
-  if(type === 'EJ' || type === 'ET_PNL') 
-  {
+  if (type === 'EJ' || type === 'ET_PNL') {
     if (entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
-       return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}/>;
+      return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
     }
   }
 
@@ -32,16 +33,52 @@ export const BlocBudgetFinance = ({ entitéJuridiqueBudgetFinanceViewModel, type
       {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type).length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type)} />
         : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type).length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type)} /> : <></>}
 
-      {(type === 'EJ' || type === 'ET_PNL') ? (<ul className={"indicateurs " + styles["budget"]}>
-            {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé ? <CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel} /> : <></>}
-            {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé ? <ResultatNetComptable estEntitéJuridique={true} resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable} /> : <></>}
-            {entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé ? <TauxDeCaf isEntiteJuridique={true} tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel} /> : <></>}
-            {entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé ? <RatioDependanceFinanciere ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere} /> : <></>}
-      </ul>) : <></>}
+      {(type === 'EJ' || type === 'ET_PNL')
+        ? (<ul className={"indicateurs " + styles["budget"]}>
+          {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé
+            ? <CompteDeResultat
+              entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+            />
+            : <></>
+          }
+          {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé
+            ? <ResultatNetComptable
+              estEntitéJuridique={true}
+              resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable}
+            />
+            : <></>
+          }
+          {entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé
+            ? <TauxDeCaf
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              isEntiteJuridique={true}
+              tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel}
+            />
+            : <></>
+          }
+          {entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé
+            ? <RatioDependanceFinanciere
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere}
+            />
+            : <></>
+          }
+        </ul>)
+        : <></>}
 
       <ul className="indicateurs">
-          {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ? 
-          <AllocationRessources allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources} /> : <></>}
+        {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ?
+          <AllocationRessources
+            allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+          />
+          : <></>
+        }
       </ul>
 
     </Bloc>

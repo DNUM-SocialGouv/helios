@@ -7,10 +7,12 @@ import { EntitéJuridiqueBudgetFinanceViewModel } from "../EntitéJuridiqueBudge
 import { ContenuCompteDeRésultatEJ } from "./ContenuCompteDeRésultatEJ";
 
 type BlocBudgetFinanceProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
 }>;
 
-export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) {
+export function CompteDeResultat({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(entitéJuridiqueBudgetFinanceViewModel.annéeInitiale);
   const budgetEtFinance = entitéJuridiqueBudgetFinanceViewModel.budgetEtFinanceEnCours(annéeEnCours);
@@ -26,8 +28,11 @@ export function CompteDeResultat({ entitéJuridiqueBudgetFinanceViewModel }: Blo
     >
       <HistogrammesHorizontaux
         annéesManquantes={entitéJuridiqueBudgetFinanceViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         légende={entitéJuridiqueBudgetFinanceViewModel.légendeChart}
         nom={wording.COMPTE_DE_RÉSULTAT_CF}
+        nomGraph={wording.COMPTE_DE_RÉSULTAT_CF}
         nombreDAnnéeTotale={entitéJuridiqueBudgetFinanceViewModel.NOMBRE_ANNEES}
         valeursDesHistogrammes={[
           entitéJuridiqueBudgetFinanceViewModel.dataGraphiqueCharges(budgetEtFinance),

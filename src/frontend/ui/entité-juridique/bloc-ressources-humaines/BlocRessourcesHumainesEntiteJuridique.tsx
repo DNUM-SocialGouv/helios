@@ -16,12 +16,14 @@ import { ContenuDuNombreDEtpPnm } from "../infoBulle/ContenuDuNombreDEtpPnm";
 
 
 type BlocRessourcesHumainesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   entiteJuridiqueRessourcesHumainesViewModel: EntiteJuridiqueRessourcesHumainesViewModel;
   openedBloc?: boolean;
   toggleBlocs?: () => void;
 }>;
 
-export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessourcesHumainesViewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
+export const BlocRessourcesHumainesEntiteJuridique = ({ etabFiness, etabTitle, entiteJuridiqueRessourcesHumainesViewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
   const { wording } = useDependencies();
 
   if (entiteJuridiqueRessourcesHumainesViewModel.lesDonneesRessourcesHumainesNeSontPasRenseigner) {
@@ -50,7 +52,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PM}
             source={Sources(wording.ANCRE)}
           >
-            {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPm}
+            {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -68,7 +70,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPnm}
+            {entiteJuridiqueRessourcesHumainesViewModel.nombreEtpPnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -87,7 +89,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             nomDeLIndicateur={wording.DEPENSES_INTERIM_PM}
             source={Sources(wording.ANCRE)}
           >
-            {entiteJuridiqueRessourcesHumainesViewModel.depensesInterimPm}
+            {entiteJuridiqueRessourcesHumainesViewModel.depensesInterimPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -105,7 +107,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PM}
             source={Sources(wording.ANCRE)}
           >
-            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePm}
+            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -122,7 +124,7 @@ export const BlocRessourcesHumainesEntiteJuridique = ({ entiteJuridiqueRessource
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePnm}
+            {entiteJuridiqueRessourcesHumainesViewModel.joursAbsenteismePnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}

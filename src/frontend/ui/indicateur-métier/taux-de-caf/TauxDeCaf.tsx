@@ -4,7 +4,7 @@ import { TauxDeCafViewModel } from "./TauxDeCafViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 
-export const TauxDeCaf = ({ tauxDeCafViewModel, isEntiteJuridique = false }: { tauxDeCafViewModel: TauxDeCafViewModel; isEntiteJuridique?: boolean }) => {
+export const TauxDeCaf = ({ etabFiness, etabTitle, tauxDeCafViewModel, isEntiteJuridique = false }: { etabFiness: string; etabTitle: string; tauxDeCafViewModel: TauxDeCafViewModel; isEntiteJuridique?: boolean }) => {
   const { wording } = useDependencies();
   const source = isEntiteJuridique ? wording.ANCRE : wording.CNSA;
   const Contenu = isEntiteJuridique ? ContenuTauxDeCafEJ : ContenuTauxDeCaf;
@@ -16,7 +16,7 @@ export const TauxDeCaf = ({ tauxDeCafViewModel, isEntiteJuridique = false }: { t
       nomDeLIndicateur={wording.TAUX_DE_CAF}
       source={source}
     >
-      {tauxDeCafViewModel.tauxDeCaf}
+      {tauxDeCafViewModel.tauxDeCafHistogramme(etabFiness, etabTitle)}
     </IndicateurGraphique>
   );
 };

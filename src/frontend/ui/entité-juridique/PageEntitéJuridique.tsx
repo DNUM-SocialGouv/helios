@@ -84,20 +84,36 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
 
         <BlocAutorisationsCapacites
           entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
-          opnedBloc={statusBlocs[0]} toggelBlocs={() => toggelBlocs(0)}
+          etabFiness={entitéJuridiqueViewModel.numéroFiness}
+          etabTitle={entitéJuridiqueViewModel.titre}
+          opnedBloc={statusBlocs[0]}
+          toggelBlocs={() => toggelBlocs(0)}
         />
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéSanitaire entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
-          entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel} opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} />
+        <BlocActivitéSanitaire
+          entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+          entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel}
+          etabFiness={entitéJuridiqueViewModel.numéroFiness}
+          etabTitle={entitéJuridiqueViewModel.titre}
+          opnedBloc={statusBlocs[1]}
+          toggelBlocs={() => toggelBlocs(1)} />
 
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={entitéJuridiqueViewModel.entiteJuridiqueRessourcesHumainesViewModel} openedBloc={statusBlocs[2]}
+        <BlocRessourcesHumainesEntiteJuridique
+          entiteJuridiqueRessourcesHumainesViewModel={entitéJuridiqueViewModel.entiteJuridiqueRessourcesHumainesViewModel}
+          etabFiness={entitéJuridiqueViewModel.numéroFiness}
+          etabTitle={entitéJuridiqueViewModel.titre}
+          openedBloc={statusBlocs[2]}
           toggleBlocs={() => toggelBlocs(2)} />
 
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
-          toggelBlocs={() => toggelBlocs(3)} type="EJ" />
-
+        <BlocBudgetFinance
+          entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueViewModel.entitéJuridiqueBudgetFinanceViewModel}
+          etabFiness={entitéJuridiqueViewModel.numéroFiness}
+          etabTitle={entitéJuridiqueViewModel.titre}
+          opnedBloc={statusBlocs[3]}
+          toggelBlocs={() => toggelBlocs(3)}
+          type="EJ" />
       </div>
     </main>
   );

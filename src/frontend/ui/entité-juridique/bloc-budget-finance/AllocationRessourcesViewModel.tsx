@@ -294,7 +294,7 @@ export class AllocationRessourcesViewModel {
     );
   }
 
-  public allocationDeRessource(annéeEnCours: number): ReactElement {
+  public allocationDeRessource(etabFiness: string, etabTitle: string, annéeEnCours: number): ReactElement {
     if (!annéeEnCours) return this.pasDeAllocationDeRessource;
 
     const couleursDuDoughnut: CouleurHistogramme[] = [];
@@ -350,16 +350,22 @@ export class AllocationRessourcesViewModel {
           <div className="fr-col-5 fr-pt-0">
             <Transcription
               entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
               identifiants={[this.wording.REPARTITION_DES_ENVELOPPES]}
               libellés={motifsDesAllocationDeRessource}
+              nomGraph={this.wording.REPARTITION_DES_ENVELOPPES}
               valeurs={[[...StringFormater.addPercentToValues(valeursDesAllocationDeRessourcePourcentage)]]}
             />
           </div>
           <div className="fr-col-6 fr-pt-0 fr-ml-3w">
             <Transcription
               entêteLibellé={this.wording.ALLOCATION_DE_RESSOURCES}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
               identifiants={[this.wording.REPARTITION_DES_SOUS_ENVELOPPES]}
               libellés={transcriptionDataKeys}
+              nomGraph={this.wording.REPARTITION_DES_SOUS_ENVELOPPES}
               valeurs={[[...transcriptionDataValues]]}
             />
           </div>

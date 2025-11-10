@@ -84,12 +84,14 @@ export class TauxDeCafViewModel {
     return [valeurs, années];
   }
 
-  public get tauxDeCaf(): ReactElement {
+  public tauxDeCafHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux();
     const libellésDesValeurs = valeurs.map(() => couleurDuFond);
     const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
 
     return this.afficheLHistogrammeDuTauxDeCaf(
+      etabFiness,
+      etabTitle,
       valeurs,
       années,
       valeurs.map((valeur: number, index: number) => {
@@ -103,7 +105,7 @@ export class TauxDeCafViewModel {
         return { premierPlan };
       }),
       libellésDesValeurs,
-      taillePoliceTick
+      taillePoliceTick,
     );
   }
 
@@ -112,6 +114,8 @@ export class TauxDeCafViewModel {
   };
 
   private afficheLHistogrammeDuTauxDeCaf(
+    etabFiness: string,
+    etabTitle: string,
     valeurs: number[],
     années: number[],
     couleursDeLHistogramme: CouleurHistogramme[],
@@ -178,8 +182,11 @@ export class TauxDeCafViewModel {
         <Transcription
           disabled={listeAnnéesManquantes.length === this.nombreDAnnéesParIndicateur}
           entêteLibellé={this.wording.ANNÉE}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           identifiants={[this.wording.TAUX_DE_CAF]}
           libellés={années}
+          nomGraph={this.wording.TAUX_DE_CAF}
           valeurs={[StringFormater.addPercentToValues(valeurs)]}
         />
       </>

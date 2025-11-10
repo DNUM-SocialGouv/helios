@@ -6,6 +6,7 @@ import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useExportExcelTranscription } from "./ExportExcel"
 import styles from "./Transcription.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 
@@ -14,13 +15,17 @@ type TableIndicateurProps = Readonly<{
   disabled?: boolean;
   entêteLibellé: string;
   identifiants: string[];
+  nomGraph: string;
+  etabTitle: string;
+  etabFiness: string;
   identifiantUnique?: string;
   libellés: (number | string)[];
   valeurs: (number | string | null)[][];
 }>;
 
-export const Transcription = ({ disabled = false, entêteLibellé, identifiants, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
+export const Transcription = ({ disabled = false, entêteLibellé, identifiants, nomGraph, etabTitle, etabFiness, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
+  const { exportExcelTranscription } = useExportExcelTranscription();
   const [container, setContainer] = useState<HTMLElement | null>(null);
   const [isInlineOpen, setIsInlineOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +36,10 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
   if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 
   const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replaceAll(/\s/g, "");
+
+  const exportTab = () => {
+    exportExcelTranscription(nomGraph, etabFiness, etabTitle, [entêteLibellé, ...identifiants], libellés, valeurs);
+  }
 
 
   const tableContent = (
@@ -52,7 +61,6 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
               <td>{libellé}</td>
               {valeurs.map((valeur, index2) => (
                 <td className={styles["transcriptionData"]} key={valeur[index] + index2.toString()}>
-                  {/* @ts-ignore */}
                   {valeur[index] ?? wording.NON_RENSEIGNÉ}
                 </td>
               ))}
@@ -63,10 +71,10 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
     </div>
   );
 
-  {/*
-          Hack pour les tests : on ajoute style={{ display: "flex" }} pour que la dialog ne soit pas en display:none dans les tests.
-          En dehors des tests la classe "fr-modal" ajoute le display:"flex" mais les classes ne sont pas appliquées dans les tests
-        */}
+  /*
+    Hack pour les tests : on ajoute style={{ display: "flex" }} pour que la dialog ne soit pas en display:none dans les tests.
+    En dehors des tests la classe "fr-modal" ajoute le display:"flex" mais les classes ne sont pas appliquées dans les tests
+  */
   const TranscriptionContent = (
     <dialog aria-labelledby={identifiant + "-modal-title"} className="fr-modal" id={identifiant + "-modal-transcription"} open={isModalOpen} style={{ display: "flex" }}>
       <div className="fr-container fr-container--fluid fr-container-md">
@@ -76,6 +84,9 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
               <div className="fr-modal__header">
                 <button aria-controls={identifiant + "-modal-transcription"} className="fr-btn--close fr-btn" title={wording.FERMER}>
                   {wording.FERMER}
+                </button>
+                <button className="fr-btn--close fr-btn" onClick={exportTab} title={wording.FERMER}>
+                  DL
                 </button>
               </div>
               <div className="fr-modal__content">

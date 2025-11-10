@@ -201,6 +201,9 @@ export class HistogrammeData {
 }
 
 type HistogrammeHorizontalNewProps = {
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   nom: string;
   valeursDesHistogrammes: HistogrammeData[];
   annéesManquantes: number[] | string[];
@@ -211,6 +214,9 @@ type HistogrammeHorizontalNewProps = {
   cacheLesValeursBasse?: boolean;
 };
 export const HistogrammesHorizontaux = ({
+  etabTitle,
+  etabFiness,
+  nomGraph,
   nom,
   valeursDesHistogrammes,
   annéesManquantes,
@@ -272,9 +278,12 @@ export const HistogrammesHorizontaux = ({
       <Transcription
         disabled={aucuneDonnées}
         entêteLibellé={nom}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiantUnique={identifiant}
         identifiants={transcriptionTitles()}
         libellés={histogrammes[0].labels}
+        nomGraph={nomGraph}
         valeurs={valeursTranscription}
       />
     </>

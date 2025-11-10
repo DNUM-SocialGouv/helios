@@ -5,9 +5,11 @@ import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizon
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 
 type GraphiqueNombreHADProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   nombreHADViewModel: GraphiqueNombreHADViewModel;
 }>;
-export const GraphiqueNombreHAD = ({ nombreHADViewModel }: GraphiqueNombreHADProps) => {
+export const GraphiqueNombreHAD = ({ etabTitle, etabFiness, nombreHADViewModel }: GraphiqueNombreHADProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -21,9 +23,12 @@ export const GraphiqueNombreHAD = ({ nombreHADViewModel }: GraphiqueNombreHADPro
       <HistogrammeHorizontal
         couleursDeLHistogramme={nombreHADViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.NOMBRE_DE_HAD}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={wording.NOMBRE_DE_HAD}
         libellés={nombreHADViewModel.libellés}
         libellésDeValeursManquantes={nombreHADViewModel.annéesManquantes()}
+        nomGraph={wording.NOMBRE_DE_HAD}
         nombreDeLibelléTotal={nombreHADViewModel.NOMBRE_ANNEES}
         valeurs={nombreHADViewModel.valeurs}
       />
