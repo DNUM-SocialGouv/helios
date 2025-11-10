@@ -9,6 +9,8 @@ import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("La page établissement territorial sanitaire - bloc activité", () => {
   const activitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(EtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
@@ -25,7 +27,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
@@ -63,7 +65,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
         dateDeMiseAJour: "11/12/12"
       }), wording);
       // GIVEN
-      renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+      renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
       const indicateurs = within(activité).getAllByRole("listitem");
       const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -103,7 +105,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // GIVEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
     const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -158,7 +160,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
     const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];;

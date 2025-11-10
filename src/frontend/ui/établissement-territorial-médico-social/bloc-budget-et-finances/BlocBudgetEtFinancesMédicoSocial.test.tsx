@@ -7,6 +7,8 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { textMatch, fakeFrontDependencies, renderFakeComponent, annéeEnCours } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 const autorisationsMockData = {
   budgetEtFinance: {
@@ -55,7 +57,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     "affiche l’intitulé de l’indicateur %s, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails",
     (indiceDeLIndicateur, libelléDeLIndicateur, identifiantInfoBulle) => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -82,7 +84,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     [indiceDeLIndicateur.fondsDeRoulement, wording.FONDS_DE_ROULEMENT_NET_GLOBAL],
   ])('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
     const indicateur = indicateurs[indiceDeLIndicateur];
@@ -117,7 +119,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     [indiceDeLIndicateur.fondsDeRoulement, wording.FONDS_DE_ROULEMENT_NET_GLOBAL],
   ])('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', (indiceDeLIndicateur, libelléDeLIndicateur) => {
     // GIVEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
     const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
     const indicateur = indicateurs[indiceDeLIndicateur];
@@ -152,7 +154,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
     );
 
     // WHEN
-    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+    renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
     // THEN
     const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -165,7 +167,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur de compte de résultat", () => {
     it("affiche les années dans une liste des tags par ordre chronologique quand le budget et finances est ERRD", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -179,7 +181,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
     it("affiche un tableau descriptif sur la dernière année qui est ERRD", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur.recettesEtDépenses];;
@@ -233,7 +235,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[indiceDeLIndicateur.recettesEtDépenses];;
@@ -254,7 +256,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
     it("affiche un tableau descriptif en fonction de l’année sélectionnée", () => {
       // GIVEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const recettesEtDépenses = indicateurs[indiceDeLIndicateur.recettesEtDépenses];
@@ -298,7 +300,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur du résultat net comptable", () => {
     it("affiche un tableau affichant les 3 années passées", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -338,7 +340,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
 
     it('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
       const indicateurs = within(budgetEtFinances).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.résultatNetComptable];
@@ -366,7 +368,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur du montant de la contribution aux frais de siège et/ou groupement", () => {
     it("affiche un tableau des 3 années passées", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -409,7 +411,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur du taux de caf", () => {
     it("affiche un tableau descriptif du taux de caf avec les trois années", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
@@ -454,7 +456,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];;
@@ -492,7 +494,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
@@ -513,7 +515,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur du taux de vétusté construction", () => {
     it("affiche un tableau descriptif avec les trois années", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
@@ -558,7 +560,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
@@ -596,7 +598,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
@@ -617,7 +619,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
   describe("L’indicateur du fonds de roulement net global", () => {
     it("affiche un tableau affichant le fonds de roulement net global des 3 années passées d’un établissement sous cadre ERRD", () => {
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });
@@ -670,7 +672,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       );
 
       // WHEN
-      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
+      renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
       const budgetEtFinances = screen.getByRole("region", { name: wording.TITRE_BLOC_BUDGET_ET_FINANCES });

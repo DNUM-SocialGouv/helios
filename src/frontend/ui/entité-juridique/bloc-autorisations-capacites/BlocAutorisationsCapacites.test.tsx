@@ -14,6 +14,8 @@ import {
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("Bloc Autorisation et activités", () => {
   let viewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
@@ -38,7 +40,7 @@ describe("Bloc Autorisation et activités", () => {
     });
 
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = screen.getByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
@@ -53,7 +55,7 @@ describe("Bloc Autorisation et activités", () => {
 
     });
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = screen.getByText(wording.AUTRES_ACTIVITÉS, { selector: "h3" });
@@ -69,7 +71,7 @@ describe("Bloc Autorisation et activités", () => {
     });
 
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = screen.getByText(wording.RECONNAISSANCES_CONTRACTUELLES, { selector: "h3" });
@@ -84,7 +86,7 @@ describe("Bloc Autorisation et activités", () => {
     });
 
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = screen.getByText(wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS, { selector: "h3" });
@@ -104,7 +106,7 @@ describe("Bloc Autorisation et activités", () => {
     );
 
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const autorisationActivites = screen.queryByText(wording.AUTORISATIONS_ACTIVITES, { selector: "h3" });
@@ -128,7 +130,7 @@ describe("Bloc Autorisation et activités", () => {
     );
 
     // WHEN
-    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} />);
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = screen.getByText(wording.INDICATEURS_VIDES);

@@ -7,6 +7,8 @@ import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("La page établissement sanitaire - bloc ressources humaines", () => {
   const ressourcesHumainesViewModel = new EtablissementTerritorialSanitaireRHViewModel(
@@ -24,7 +26,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
   describe("L’indicateur du nombre d’ETP PM", () => {
     it("affiche l’intitulé de l’indicateur du nombre d’ETP PM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
@@ -42,7 +44,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le contenu de l’info bulle du nombre d’ETP PM après avoir cliqué sur le bouton "détails"', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreEtpPm];
@@ -71,7 +73,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
     it('affiche le tableau de transcription du Nombre d’ETP PM', () => {
 
       renderFakeComponent(
-        <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />
+        <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       );
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
@@ -101,7 +103,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
   describe("L’indicateur du nombre d’ETP PNM", () => {
     it("affiche l’intitulé de l’indicateur du nombre d’ETP PNM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
@@ -119,7 +121,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le contenu de l’info bulle du nombre d’ETP PNM après avoir cliqué sur le bouton "détails"', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.nombreEtpPnm];
@@ -148,7 +150,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
     it('affiche le tableau de transcription du Nombre d’ETP PNM', () => {
 
       renderFakeComponent(
-        <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />
+        <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       );
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
@@ -179,7 +181,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
   describe("L’indicateur dépenses d’intérim PM", () => {
     it("affiche l’intitulé de l’indicateur Dépenses d’intérim PM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
@@ -197,7 +199,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le contenu de l’info bulle dépenses d’intérim PM après avoir cliqué sur le bouton "détails"', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.depensesInterimPm];
@@ -225,7 +227,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le tableau de transcription de dépenses d’intérim PM', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
       const indicateur = indicateurs[indiceDeLIndicateur.depensesInterimPm];
@@ -255,7 +257,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
   describe("L’indicateur jours absenteisme PM", () => {
     it("affiche l’intitulé de l’indicateur jours absenteisme PM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
@@ -273,7 +275,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le contenu de l’info bulle jours absenteisme PM après avoir cliqué sur le bouton "détails"', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePm];
@@ -301,7 +303,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le tableau de transcription de jours absenteisme PM', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
       const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePm];
@@ -330,7 +332,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
   describe("L’indicateur jours absenteisme PNM", () => {
     it("affiche l’intitulé de l’indicateur jours absenteisme PNM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
@@ -348,7 +350,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le contenu de l’info bulle jours absenteisme PNM après avoir cliqué sur le bouton "détails"', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole("listitem");
       const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePnm];
@@ -376,7 +378,7 @@ describe("La page établissement sanitaire - bloc ressources humaines", () => {
 
     it('affiche le tableau de transcription de jours absenteisme PNM', () => {
 
-      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       const ressourcesHumaines = screen.getByRole('region', { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       const indicateurs = within(ressourcesHumaines).getAllByRole('listitem');
       const indicateur = indicateurs[indiceDeLIndicateur.joursAbsenteismePnm];
