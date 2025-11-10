@@ -14,12 +14,14 @@ import { ContenuReconnaissancesContractuelles } from "../InfoBulle/ContenuReconn
 import { ContenuÉquipementsMatérielsLourds } from "../InfoBulle/ContenuÉquipementsMatérielsLourds";
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
+export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
@@ -43,7 +45,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées ?
           <GraphiqueCapacitésParActivité
-            estSanitaire={true} graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
+            estSanitaire={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesAutorisées && (
           <IndicateurGraphique

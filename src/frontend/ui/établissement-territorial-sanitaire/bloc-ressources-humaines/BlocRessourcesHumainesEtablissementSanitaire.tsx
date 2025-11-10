@@ -15,6 +15,8 @@ import { ContenuDuNombreDEtpPm } from "../../entité-juridique/infoBulle/Contenu
 import { ContenuDuNombreDEtpPnm } from "../../entité-juridique/infoBulle/ContenuDuNombreDEtpPnm";
 
 type BlocRessourcesHumainesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etSanRhviewModel: EtablissementTerritorialSanitaireRHViewModel;
   openedBloc?: boolean;
   toggleBlocs?: () => void;
@@ -22,7 +24,7 @@ type BlocRessourcesHumainesProps = Readonly<{
 
 
 
-export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
+export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabTitle, etSanRhviewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
   const { wording } = useDependencies();
   if (etSanRhviewModel.lesDonneesRessourcesHumainesNeSontPasRenseigner) {
     return <BlocIndicateurVide opnedBloc={openedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs} />;

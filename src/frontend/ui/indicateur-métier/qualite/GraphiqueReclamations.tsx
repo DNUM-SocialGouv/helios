@@ -9,12 +9,14 @@ import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type GraphiqueReclamationsProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   data: any;
   dateMiseAJour: string;
   annéesTotales: number;
 }>;
 
-const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: GraphiqueReclamationsProps) => {
+const GraphiqueReclamations = ({ etabFiness, etabTitle, data, dateMiseAJour, annéesTotales }: GraphiqueReclamationsProps) => {
   const { wording } = useDependencies();
   const annees = Object.keys(data).sort((a, b) => a.localeCompare(b)).map(Number);
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(annees[annees.length - 1]);
@@ -69,7 +71,15 @@ const GraphiqueReclamations = ({ data, dateMiseAJour, annéesTotales }: Graphiqu
         />
       </IndicateurGraphique>
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <Transcription entêteLibellé={wording.RECLAMATIONS} identifiants={identifiants} libellés={libelles} valeurs={getvalues()} />
+      <Transcription
+        entêteLibellé={wording.RECLAMATIONS}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        identifiants={identifiants}
+        libellés={libelles}
+        nomGraph={wording.RECLAMATIONS}
+        valeurs={getvalues()}
+      />
     </>
   );
 };

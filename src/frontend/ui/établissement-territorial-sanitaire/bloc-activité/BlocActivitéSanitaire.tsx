@@ -13,6 +13,8 @@ import { GraphiqueNombreDeJourneesUsld } from "../../indicateur-métier/nombre-j
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 
 type BlocActivitéSanitaireProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   établissementTerritorialSanitaireActivitéViewModel: EtablissementTerritorialSanitaireActiviteViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   opnedBloc?: boolean;
@@ -34,7 +36,7 @@ const ListeIndicateursNonAutorisesOuNonRenseignes = ({
   }
 }
 
-export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActivitéViewModel, activitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ etabFiness, etabTitle, établissementTerritorialSanitaireActivitéViewModel, activitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialSanitaireActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
@@ -49,6 +51,8 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
           établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés ?
           <GraphiqueNombreDeSejourMCO
             activitéMensuelleViewModel={activitéMensuelleViewModel}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombreDeSejourMCOViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDeSejourMCOViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireActivitéViewModel.dureeMoyenneSejourMCOViewModel.moyenneSejoursMCOSontIlsRenseignés &&
@@ -61,16 +65,22 @@ export const BlocActivitéSanitaire = ({ établissementTerritorialSanitaireActiv
           établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé ?
           <GraphiquePsySSR
             activitéMensuelleViewModel={activitéMensuelleViewModel}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombreJournéesPsySSRViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireActivitéViewModel.nombreDeJourneesUsldEstIlRenseigne &&
           établissementTerritorialSanitaireActivitéViewModel.nombreDeJourneesUsldEstIlAutorise ?
           <GraphiqueNombreDeJourneesUsld
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombreDeJourneesUsldViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDeJourneesUsldViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesEstIlRenseigné &&
           établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesEstIlAutorisé ?
           <GraphiqueNombrePassageUrgence
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombrePassageAuxUrgencesViewModel={établissementTerritorialSanitaireActivitéViewModel.nombreDePassagesAuxUrgencesViewModel}
           /> : <></>}
       </ul>
