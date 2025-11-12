@@ -9,12 +9,15 @@ import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import GraphiqueTauxRotationTrimestriel from "./GraphiqueTauxRotationTrimestriel";
 
 type GraphiqueTauxRotationProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   donneesTauxRotation: TauxRotation[],
   donneesTauxRotationTrimestriels: TauxRotationTrimestriel[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
+const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
 
   const { wording } = useDependencies();
 
@@ -33,9 +36,9 @@ const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimest
         selectedFrequency={selectedFrequency}
       />
       {selectedFrequency === wording.ANNUEL ?
-        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} />
+        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
         :
-        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} />
+        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
       }
     </div>
   );

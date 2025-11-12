@@ -24,6 +24,9 @@ type TranscriptionOptions = Readonly<{
 }>;
 
 type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   libelles: (number | string)[];
   series: HistogrammeComparaisonVerticalAvecRefSerie[];
   legendReferenceLabel: string;
@@ -45,10 +48,12 @@ const valeurFormateeParDefaut = (valeur: number | null): string | null => {
 const expressionReguliereTrimestre = /^T(\d)\s+(\d{4})$/;
 
 const HistogrammeComparaisonVerticalAvecRef = ({
+  etabFiness,
+  etabTitle,
+  nomGraph,
   libelles,
   series,
   legendReferenceLabel,
-
   legendContainerId = "histogramme-comparaison-vertical-legend",
   transcription,
   formatValeur = valeurFormateeParDefaut,
@@ -324,9 +329,12 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       {transcription && (
         <Transcription
           entêteLibellé={transcription.enteteLibelle}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           identifiantUnique={transcription.identifiantUnique}
           identifiants={transcriptionIdentifiants}
           libellés={libelles}
+          nomGraph={nomGraph}
           valeurs={valeursTranscription}
         />
       )}

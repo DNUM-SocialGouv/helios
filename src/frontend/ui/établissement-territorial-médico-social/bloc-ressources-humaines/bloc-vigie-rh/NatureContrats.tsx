@@ -14,16 +14,25 @@ import HistogrammeComparaisonVerticalAvecRef, {
 } from "../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
 
 type GraphiqueNatureContratsProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   blocVigieRhViewModel: BlocVigieRHViewModel;
 }>;
 
 type GraphiqueNatureContratsAnnuelProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   donnees: NatureContratsAnnuel[];
   palette: CouleurHistogramme[];
   wording: Wording;
 }>;
 
 type GraphiqueNatureContratsTrimestrielProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   donnees: NatureContratsTrimestriel[];
   palette: CouleurHistogramme[];
   wording: Wording;
@@ -40,7 +49,7 @@ type Serie = Readonly<{
   natures: string[];
 }>;
 
-const GraphiqueNatureContrats = ({ blocVigieRhViewModel }: GraphiqueNatureContratsProps) => {
+const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhViewModel }: GraphiqueNatureContratsProps) => {
   const { wording } = useDependencies();
   const palette = blocVigieRhViewModel.paletteNatureContrats;
 
@@ -60,9 +69,9 @@ const GraphiqueNatureContrats = ({ blocVigieRhViewModel }: GraphiqueNatureContra
         selectedFrequency={selectedFrequency}
       />
       {isAnnuel ? (
-        <GraphiqueNatureContratsAnnuel donnees={blocVigieRhViewModel.natureContratsAnnuel} palette={palette} wording={wording} />
+        <GraphiqueNatureContratsAnnuel donnees={blocVigieRhViewModel.natureContratsAnnuel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} wording={wording} />
       ) : (
-        <GraphiqueNatureContratsTrimestriel donnees={blocVigieRhViewModel.natureContratsTrimestriel} palette={palette} wording={wording} />
+        <GraphiqueNatureContratsTrimestriel donnees={blocVigieRhViewModel.natureContratsTrimestriel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} wording={wording} />
       )}
     </div>
   );
@@ -131,7 +140,7 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
 function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: HistogrammeComparaisonVerticalAvecRefSerie[], libelles: string[]) {
   const valeursRefManquantes: string[] = [];
   for (const serie of series) {
-    for(const [index,valeur] of serie[typeValeur].entries()){
+    for (const [index, valeur] of serie[typeValeur].entries()) {
       if (typeof valeur !== "number" || Number.isNaN(valeur)) {
         const annee = libelles[index];
         const libelleComplet = `${serie.label} - ${annee}`;
@@ -144,7 +153,7 @@ function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: 
   return valeursRefManquantes;
 }
 
-const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueNatureContratsAnnuelProps) => {
+const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording }: GraphiqueNatureContratsAnnuelProps) => {
   const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, false), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
@@ -162,12 +171,15 @@ const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueN
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       highlightLastLabel
       legendContainerId="legende-nature-contrats-annuel"
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
       libellesValeursManquantes={libellesValeursManquantes}
       libellesValeursRefManquantes={libellesValeursRefManquantes}
+      nomGraph={nomGraph}
       series={series}
       transcription={{
         enteteLibelle: wording.ANNÉE,
@@ -178,7 +190,7 @@ const GraphiqueNatureContratsAnnuel = ({ donnees, palette, wording }: GraphiqueN
   );
 };
 
-const GraphiqueNatureContratsTrimestriel = ({ donnees, palette, wording }: GraphiqueNatureContratsTrimestrielProps) => {
+const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording }: GraphiqueNatureContratsTrimestrielProps) => {
   const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, true), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
@@ -196,12 +208,15 @@ const GraphiqueNatureContratsTrimestriel = ({ donnees, palette, wording }: Graph
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       highlightLastLabel
       legendContainerId="legende-nature-contrats-trimestriel"
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
       libellesValeursManquantes={libellesValeursManquantes}
       libellesValeursRefManquantes={libellesValeursRefManquantes}
+      nomGraph={nomGraph}
       series={series}
       transcription={{
         enteteLibelle: wording.MOIS_ANNEES,

@@ -222,6 +222,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                     effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
                     effectifHommeRef={donneesAnneeEnCours?.effectifHommeRef}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
                     labels={libelles}
                   />
                 )}
@@ -240,6 +242,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <GraphiqueDepartEmbauches
               donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
               donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
             />
           </IndicateurGraphique>
         ) : (
@@ -265,6 +269,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={couleursFilieres}
                     dataEffectifs={dataEffectifsForChart}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
                     identifiantLegende="légende-graphique-effectifs"
                     multiCategories={items}
                   />
@@ -284,6 +290,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           >
             <GraphiqueTreemapRepartitionEffectif
               couleursFilieres={couleursFilieres}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
               height={420}
               items={itemsTreemap.slice(0, 4)}
               periodeLibelle={indicateurEffectif.periodeLibelle}
@@ -303,6 +311,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               blocVigieRHViewModel={blocVigieRHViewModel}
               donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
               donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              nomGraph={wording.TAUX_ROTATION}
             />
           </IndicateurGraphique>
         ) : (
@@ -315,7 +326,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             nomDeLIndicateur={wording.DUREE_CDD}
             source={wording.VIGIE_RH}
           >
-            <GraphiqueDureeCDD blocVigieRHViewModel={blocVigieRHViewModel} />
+            <GraphiqueDureeCDD blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={wording.DUREE_CDD} />
           </IndicateurGraphique>
         ) : (
           <></>
@@ -327,7 +338,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             nomDeLIndicateur={wording.MOTIFS_RUPTURE_CONTRAT}
             source={wording.VIGIE_RH}
           >
-            <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} />
+            <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={wording.MOTIFS_RUPTURE_CONTRAT} />
           </IndicateurGraphique>
         ) : (
           <></>
@@ -341,6 +352,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           >
             <GraphiqueNatureContrats
               blocVigieRhViewModel={blocVigieRHViewModel}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              nomGraph={wording.NATURE_CONTRATS}
             />
           </IndicateurGraphique>
         ) : (

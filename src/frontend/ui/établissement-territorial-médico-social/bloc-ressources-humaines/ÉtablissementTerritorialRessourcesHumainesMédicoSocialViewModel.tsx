@@ -306,7 +306,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   }
 
   public tauxDAbsentéisme(etabFiness: string, etabTitle: string, annéeEnCours: number): ReactElement {
-    if (!annéeEnCours) return this.pasDeTauxDAbsentéisme;
+    if (!annéeEnCours) return this.pasDeTauxDAbsentéisme(etabFiness, etabTitle);
 
     const tauxDAbsentéismesDeLAnnéeEnCours = this.trouveLesTauxDAbsentéismesDeLAnnée(annéeEnCours);
     const [valeursAvecMotif] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
@@ -364,13 +364,13 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     );
   }
 
-  private get pasDeTauxDAbsentéisme(): ReactElement {
+  private pasDeTauxDAbsentéisme(etabFiness: string, etabTitle: string): ReactElement {
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
 
     return (
       <>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
+        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} etabFiness={etabFiness} etabTitle={etabTitle} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} nomGraph={this.wording.TAUX_D_ABSENTÉISME} valeurs={[]} />
       </>
     );
   }

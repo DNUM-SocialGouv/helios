@@ -59,6 +59,8 @@ export const BlocActivitéSanitaire = ({ etabFiness, etabTitle, établissementTe
           établissementTerritorialSanitaireActivitéViewModel.dureeMoyenneSejourMCOViewModel.moyenneSejoursMCOSontIlsAutorisés ?
           <GraphiqueDureeMoyenneDeSejourMCO
             activitéMensuelleViewModel={activitéMensuelleViewModel}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombreDeSejourMCOViewModel={établissementTerritorialSanitaireActivitéViewModel.dureeMoyenneSejourMCOViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&

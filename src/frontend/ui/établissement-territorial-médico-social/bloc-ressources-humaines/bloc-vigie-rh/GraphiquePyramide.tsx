@@ -10,6 +10,8 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Title);
 
 
 type PyramidChartProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   labels: string[];
   effectifHomme: number[];
   effectifHommeRef: number[];
@@ -17,7 +19,7 @@ type PyramidChartProps = Readonly<{
   effectifFemmeRef: number[];
 }>;
 
-const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
+const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
   const refColor = "#929292";
 
   const { wording } = useDependencies();
@@ -332,8 +334,11 @@ const PyramidChart = ({ labels, effectifFemme, effectifFemmeRef, effectifHomme, 
       <Transcription
         disabled={false}
         entêteLibellé={wording.TRANCHE_AGE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={[wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF]}
         libellés={labels}
+        nomGraph={wording.PYRAMIDE_DES_AGES}
         valeurs={[effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef]}
       />
     </>

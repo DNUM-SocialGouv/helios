@@ -27,6 +27,8 @@ export interface CategorieData {
 }
 
 interface LineChartProps {
+  etabFiness: string;
+  etabTitle: string;
   classContainer: string;
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
@@ -35,7 +37,7 @@ interface LineChartProps {
   identifiantLegende: string;
 }
 
-const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
+const LineChart = ({ etabFiness, etabTitle, classContainer, couleurEffectifsTotaux, dataEffectifs, multiCategories, couleursFilieres, identifiantLegende }: LineChartProps) => {
   const { wording } = useDependencies();
 
   // Couleurs/grille
@@ -74,7 +76,7 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
       },
     ];
 
-    for (const [id,c] of (multiCategories ?? []).entries()){
+    for (const [id, c] of (multiCategories ?? []).entries()) {
       const color = couleursFilieres?.[id] ?? DEFAULT_PALETTE[id % DEFAULT_PALETTE.length];
       datasets.push({
         label: capitalize(c.categorie),
@@ -164,8 +166,11 @@ const LineChart = ({ classContainer, couleurEffectifsTotaux, dataEffectifs, mult
         <Transcription
           disabled={false}
           entêteLibellé={wording.MOIS_ANNEES}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           identifiants={[wording.EFFECTIFS_TOTAUX, ...(multiCategories ?? []).map((c) => capitalize(c.categorie))]}
           libellés={labelsTranscription}
+          nomGraph={wording.EFFECTIFS}
           valeurs={[dataEffectifs.dataEtab, ...(multiCategories ?? []).map(getSerie)]}
         />
       </div>

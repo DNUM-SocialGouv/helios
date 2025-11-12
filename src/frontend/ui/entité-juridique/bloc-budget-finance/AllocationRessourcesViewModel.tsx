@@ -249,13 +249,13 @@ export class AllocationRessourcesViewModel {
     return [];
   }
 
-  private get pasDeAllocationDeRessource(): ReactElement {
+  private pasDeAllocationDeRessource(etabFiness: string, etabTitle: string): ReactElement {
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesAllocationDeRessource);
 
     return (
       <>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
+        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} etabFiness={etabFiness} etabTitle={etabTitle} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} nomGraph={this.wording.ALLOCATION_DE_RESSOURCES} valeurs={[]} />
       </>
     );
   }
@@ -295,7 +295,7 @@ export class AllocationRessourcesViewModel {
   }
 
   public allocationDeRessource(etabFiness: string, etabTitle: string, annéeEnCours: number): ReactElement {
-    if (!annéeEnCours) return this.pasDeAllocationDeRessource;
+    if (!annéeEnCours) return this.pasDeAllocationDeRessource(etabFiness, etabTitle);
 
     const couleursDuDoughnut: CouleurHistogramme[] = [];
     const couleursDesLibelles: string[] = [];

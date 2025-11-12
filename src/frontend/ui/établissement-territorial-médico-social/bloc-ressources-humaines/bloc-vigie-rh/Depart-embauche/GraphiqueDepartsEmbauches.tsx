@@ -9,11 +9,13 @@ import GraphiqueDepartEmbauchesAnnuel from "./GraphiqueDepartsEmbauchesAnnuel";
 import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueDepartEmbauchesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   donneesDepartsEmbauches: DepartEmbauche[],
   donneesDepartsEmbauchesTrimestriels: DepartEmbaucheTrimestrielViewModel[]
 }>;
 
-const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
+const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
 
   const { wording } = useDependencies();
 
@@ -34,9 +36,11 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbau
       {selectedFrequency === wording.ANNUEL ?
         <GraphiqueDepartEmbauchesAnnuel
           donneesDepartsEmbauches={donneesDepartsEmbauches}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
         />
         :
-        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} />
+        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} />
       }
     </div>
   );
