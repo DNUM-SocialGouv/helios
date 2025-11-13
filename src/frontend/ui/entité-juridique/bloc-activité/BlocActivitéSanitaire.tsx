@@ -12,16 +12,16 @@ import { GraphiqueNombreDeJourneesUsld } from "../../indicateur-métier/nombre-j
 import { GraphiqueNombrePassageUrgence } from "../../indicateur-métier/nombre-passage-urgence/GraphiqueNombrePassageUrgence";
 
 type BlocActivitéSanitaireProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   entitéJuridiqueActivitéViewModel: EntiteJuridiqueActivitesViewModel;
   entitéJuridiqueActivitéMensuelleViewModel: ActivitesMensuelViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, entitéJuridiqueActivitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
+export const BlocActivitéSanitaire = ({ etabTitle, etabFiness, entitéJuridiqueActivitéViewModel, entitéJuridiqueActivitéMensuelleViewModel, opnedBloc, toggelBlocs }: BlocActivitéSanitaireProps) => {
   const { wording } = useDependencies();
-
-
 
   if (entitéJuridiqueActivitéViewModel.lesDonnéesActivitéNeSontPasRenseignées) {
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs} />;
@@ -40,24 +40,39 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, ent
       <ul className="indicateurs">
         {entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsAutorisés &&
           entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés ? (
-          <GraphiqueNombreDeSejourMCO activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel} estEntitéJuridique={true} nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
+          <GraphiqueNombreDeSejourMCO
+            activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+            estEntitéJuridique={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            nombreDeSejourMCOViewModel={entitéJuridiqueActivitéViewModel.nombreDeSejourMCOViewModel} />
         ) : (
           <></>
         )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé &&
           entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés ? (
-          <GraphiquePsySSR activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel} estEntitéJuridique={true} nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
+          <GraphiquePsySSR
+            activitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
+            estEntitéJuridique={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            nombreJournéesPsySSRViewModel={entitéJuridiqueActivitéViewModel.nombreJourneesPsySSRViewModel} />
         ) : (
           <></>
         )}
         {entitéJuridiqueActivitéViewModel.nombreHADEstIlAutorisé && entitéJuridiqueActivitéViewModel.nombreHADEstIlRenseigné() ? (
-          <GraphiqueNombreHAD nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />
+          <GraphiqueNombreHAD
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            nombreHADViewModel={entitéJuridiqueActivitéViewModel.nombreHADViewModel} />
         ) : (
           <></>
         )}
         {entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlAutorise && entitéJuridiqueActivitéViewModel.nombreJourneesUsldEstIlRenseigne() ? (
           <GraphiqueNombreDeJourneesUsld
             estEntitéJuridique={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombreDeJourneesUsldViewModel={entitéJuridiqueActivitéViewModel.nombreDeJourneesUsldViewModel}
           />
         ) : (
@@ -66,6 +81,8 @@ export const BlocActivitéSanitaire = ({ entitéJuridiqueActivitéViewModel, ent
         {entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlAutorisé && entitéJuridiqueActivitéViewModel.nombrePassageUrgenceEstIlRenseigné() ? (
           <GraphiqueNombrePassageUrgence
             estEntitéJuridique={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             nombrePassageAuxUrgencesViewModel={entitéJuridiqueActivitéViewModel.nombreDePassageAuxUrgencesViewModel}
           />
         ) : (

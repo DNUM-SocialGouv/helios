@@ -9,6 +9,8 @@ import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("GraphiqueCapacitésParActivité", () => {
   let graphiqueTest: GraphiqueTest;
@@ -23,7 +25,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
   it('affiche les informations de l’indicateur "Capacité par activités"', () => {
     // WHEN
-    renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
+    renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
     // THEN
     expect(graphiqueTest.titre(wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE)).toBeInTheDocument();
@@ -38,7 +40,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Info bulle", () => {
     it('affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
       // WHEN
       graphiqueTest.ouvreDétail();
@@ -62,7 +64,7 @@ describe("GraphiqueCapacitésParActivité", () => {
 
     it('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (Capacité par activités)', () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -76,7 +78,7 @@ describe("GraphiqueCapacitésParActivité", () => {
   describe("Transcription textuelle", () => {
     it("affiche un tableau descriptif avec les toutes les activités", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={graphiqueCapacitésViewModel} />);
 
       // THEN
       const tableau = graphiqueTest.transcriptionTable;
@@ -149,7 +151,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
 
       // THEN
       const tableau = graphiqueTest.transcriptionTable;
@@ -182,7 +184,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
 
       // THEN
       const tableau = graphiqueTest.transcriptionTable;
@@ -195,7 +197,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       // GIVEN
       const autorisationsSansActivité = new GraphiqueCapacitésParActivitéViewModel([], wording);
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
       expect(transcription).toBeDisabled();
@@ -207,7 +209,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       // GIVEN
       const autorisationsSansActivité = new GraphiqueCapacitésParActivitéViewModel([], wording);
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
 
       // THEN
       const exergue = screen.getByText(
@@ -224,7 +226,7 @@ describe("GraphiqueCapacitésParActivité", () => {
         wording
       );
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
 
       // THEN
       const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 3}, ${annéeEnCours - 1}`, { selector: "p" });
@@ -244,7 +246,7 @@ describe("GraphiqueCapacitésParActivité", () => {
         wording
       );
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
 
       // THEN
       const exergue = screen.queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, {
@@ -277,7 +279,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsSansActivité} />);
 
       // THEN
       const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}`, {
@@ -299,7 +301,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
       // THEN
       const indicateursAutorisationsEtCapacités = screen.getAllByTestId("groupe-annees");
       expect(indicateursAutorisationsEtCapacités).toHaveLength(2);
@@ -334,7 +336,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
       // THEN
       const indicateursAutorisationsEtCapacités = screen.getAllByTestId("groupe-annees");
       expect(indicateursAutorisationsEtCapacités).toHaveLength(1);
@@ -357,7 +359,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       );
 
       // WHEN
-      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
+      renderFakeComponent(<GraphiqueCapacitésParActivité estSanitaire etabFiness={etabFiness} etabTitle={etabTitle} graphiqueCapacitésParActivitéViewModel={autorisationsViewModel} />);
       const année = screen.getByRole("button", { name: "2021" });
 
       // WHEN

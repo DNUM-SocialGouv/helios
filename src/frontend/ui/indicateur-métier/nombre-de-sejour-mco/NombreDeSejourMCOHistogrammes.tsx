@@ -9,6 +9,9 @@ import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVe
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   selectedFrequency: string;
@@ -16,7 +19,7 @@ type NombreDeSejourMCOHistogrammesProps = Readonly<{
 }>;
 
 
-export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, activitéMensuelleViewModel, selectedFrequency, onFrequencyChange }: NombreDeSejourMCOHistogrammesProps) => {
+export const NombreDeSejourMCOHistogrammes = ({ etabTitle, etabFiness, nomGraph, nombreDeSejourMCOViewModel, activitéMensuelleViewModel, selectedFrequency, onFrequencyChange }: NombreDeSejourMCOHistogrammesProps) => {
   const { wording } = useDependencies();
 
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
@@ -47,11 +50,14 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
           cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
           data={nombreDeSejourMCOViewModel.getHistogrammeDataSet()}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           grapheMensuel={false}
           id={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
           idDeLaLégende={nombreDeSejourMCOViewModel.identifiantDeLaLégendeDesSéjoursMCO}
           identifiants={nombreDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
           libellés={nombreDeSejourMCOViewModel.années}
+          nomGraph={nomGraph}
           valeurs={nombreDeSejourMCOViewModel.getValeurTableIndicateur()}
         />
         :
@@ -60,11 +66,14 @@ export const NombreDeSejourMCOHistogrammes = ({ nombreDeSejourMCOViewModel, acti
           cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeSejourMCOViewModel.tooltipSéjoursMCO}
           data={activitéMensuelleViewModel.getHistogrammeDataSet(annéeEnCours, selectedActivity)}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           grapheMensuel={true}
           id={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           idDeLaLégende={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           identifiants={activitéMensuelleViewModel.getIdentifiantTableIndicateur()}
           libellés={activitéMensuelleViewModel.listeDesMois}
+          nomGraph={nomGraph}
           valeurs={activitéMensuelleViewModel.getValeurTableIndicateur(annéeEnCours)}
         />
       }

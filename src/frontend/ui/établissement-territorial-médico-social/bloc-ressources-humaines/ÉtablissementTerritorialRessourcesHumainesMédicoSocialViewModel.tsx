@@ -88,7 +88,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDEtpRéalisés.valeur !== '');
   }
 
-  public get nombreDEtpRéalisé(): ReactElement {
+  public nombreDEtpRéaliséHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs("nombreDEtpRéalisés");
     const couleursDeLHistogramme = années.map((année) => ({
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -100,9 +100,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursDeLHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
+        nomGraph={this.wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ_SANS_ABRÉVIATION}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -121,7 +124,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.nombreDeCddDeRemplacement.valeur !== '');
   }
 
-  public get nombreDeCddDeRemplacement(): ReactElement {
+  public nombreDeCddDeRemplacementHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.extraisLesValeursNombréesDesIndicateurs("nombreDeCddDeRemplacement");
     const couleursDeLHistogramme = années.map((année) => ({
       premierPlan: estCeLAnnéePassée(année) ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
@@ -132,9 +135,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
       <HistogrammeHorizontal
         couleursDeLHistogramme={couleursDeLHistogramme}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
         libellés={années}
         libellésDeValeursManquantes={listeAnnéesManquantes}
+        nomGraph={this.wording.NOMBRE_DE_CDD_DE_REMPLACEMENT_SANS_ABRÉVIATION}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -174,7 +180,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     };
   }
 
-  public get tauxDePrestationsExternes(): JSX.Element {
+  public tauxDePrestationsExternesHistogramme(etabFiness: string, etabTitle: string): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDePrestationsExternes");
 
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
@@ -188,9 +194,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDePrestationsExternesEstIlDansLesBornesAcceptables.bind(this))
         )}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
         taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
       />
@@ -213,7 +222,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDEtpVacants.valeur !== '');
   }
 
-  public get tauxDEtpVacants(): JSX.Element {
+  public tauxDEtpVacantsHistogramme(etabFiness: string, etabTitle: string): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDEtpVacants");
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
     const taillePoliceTick = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
@@ -226,9 +235,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDEtpVacantsEstIlDansLesBornesAcceptables.bind(this))
         )}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_D_ETP_VACANTS_AU_31_12}
         taillePoliceTicks={taillePoliceTick}
         valeurs={valeurs}
       />
@@ -252,7 +264,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
   }
 
 
-  public get tauxDeRotationDuPersonnel(): JSX.Element {
+  public tauxDeRotationDuPersonnelHistogramme(etabFiness: string, etabTitle: string): JSX.Element {
     const [valeurs, années] = this.extraisLesTauxDesIndicateurs("tauxDeRotationDuPersonnel");
     const libellésDesValeurs = this.construisLesCouleursLibellésDeTaux(valeurs);
     const libellésDesTicks = années.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
@@ -265,9 +277,12 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
           this.construisLaCouleurDeLaBarreDeLHistogramme(valeur, années[index], this.leTauxDeRotationDuPersonnelEstIlDansLesBornesAcceptables.bind(this))
         )}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_DE_ROTATION_DU_PERSONNEL}
         taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}
       />
@@ -290,8 +305,8 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
     return this.ressourcesHumainesMédicoSocial.some((ressourceHumaine) => ressourceHumaine.tauxDAbsentéisme.dateMiseÀJourSource !== '');
   }
 
-  public tauxDAbsentéisme(annéeEnCours: number): ReactElement {
-    if (!annéeEnCours) return this.pasDeTauxDAbsentéisme;
+  public tauxDAbsentéisme(etabFiness: string, etabTitle: string, annéeEnCours: number): ReactElement {
+    if (!annéeEnCours) return this.pasDeTauxDAbsentéisme(etabFiness, etabTitle);
 
     const tauxDAbsentéismesDeLAnnéeEnCours = this.trouveLesTauxDAbsentéismesDeLAnnée(annéeEnCours);
     const [valeursAvecMotif] = this.construisLesTauxDAbsentéisme(tauxDAbsentéismesDeLAnnéeEnCours);
@@ -338,21 +353,24 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
         <Transcription
           disabled={listeAnnéesManquantes.length === 5}
           entêteLibellé={this.wording.MOTIF_DU_TAUX_D_ABSENTÉISME}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           identifiants={[this.wording.TAUX]}
           libellés={motifsDesTauxDAbsentéismes}
+          nomGraph={this.wording.TAUX_D_ABSENTÉISME}
           valeurs={[StringFormater.addPercentToValues(valeursDesTauxDAbsentéismesFormatted)]}
         />
       </>
     );
   }
 
-  private get pasDeTauxDAbsentéisme(): ReactElement {
+  private pasDeTauxDAbsentéisme(etabFiness: string, etabTitle: string): ReactElement {
     const listeAnnéesManquantes = annéesManquantes(this.annéesAvecDesTauxDAbsentéismes);
 
     return (
       <>
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} valeurs={[]} />
+        <Transcription disabled={true} entêteLibellé={this.wording.ANNÉE} etabFiness={etabFiness} etabTitle={etabTitle} identifiants={[this.wording.TAUX_D_ABSENTÉISME]} libellés={[]} nomGraph={this.wording.TAUX_D_ABSENTÉISME} valeurs={[]} />
       </>
     );
   }

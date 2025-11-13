@@ -5,10 +5,12 @@ import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizon
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 
 type GraphiqueNombrePassageUrgenceProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   nombrePassageAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewModel, estEntitéJuridique = false }: GraphiqueNombrePassageUrgenceProps) => {
+export const GraphiqueNombrePassageUrgence = ({ etabTitle, etabFiness, nombrePassageAuxUrgencesViewModel, estEntitéJuridique = false }: GraphiqueNombrePassageUrgenceProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -29,9 +31,12 @@ export const GraphiqueNombrePassageUrgence = ({ nombrePassageAuxUrgencesViewMode
         cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombrePassageAuxUrgencesViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
         libellés={nombrePassageAuxUrgencesViewModel.libellés}
         libellésDeValeursManquantes={nombrePassageAuxUrgencesViewModel.libellésDeValeursManquantes}
+        nomGraph={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
         nombreDeLibelléTotal={nombrePassageAuxUrgencesViewModel.nombreDeLibelléTotal}
         valeurs={nombrePassageAuxUrgencesViewModel.valeurs}
       />

@@ -6,6 +6,8 @@ import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("La page établissement territorial Sanitaire - bloc qualité", () => {
   const qualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
@@ -38,7 +40,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
   );
 
   it("affiche aucune donnée pour cet établissement", () => {
-    renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteViewModel} />);
+    renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteViewModel} />);
     const qualite = screen.getByRole("region", { name: wording.TITRE_BLOC_QUALITE });
     const message = within(qualite).getByText(wording.INDICATEURS_VIDES);
     expect(message).toBeInTheDocument();
@@ -47,7 +49,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
   describe("L’indicateur réclamations", () => {
     it("affiche l’intitulé de l’indicateur, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
 
       // THEN
       const qualite = screen.getByRole("region", { name: wording.TITRE_BLOC_QUALITE });
@@ -66,7 +68,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
 
     it('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
       const evenementsIndesirables = screen.getAllByRole("listitem")[2];
       const détails = within(evenementsIndesirables).getByRole("button", { name: wording.DÉTAILS });
 
@@ -88,7 +90,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
 
     it('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', () => {
       // GIVEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteRecViewModel} />);
       const evenementsIndesirables = screen.getAllByRole("listitem")[2];
       const détails = within(evenementsIndesirables).getByRole("button", { name: wording.DÉTAILS });
       fireEvent.click(détails);
@@ -106,7 +108,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
   describe("L’indicateur évènements indésirables", () => {
     it("affiche l’intitulé de l’indicateur, avec sa date de mise à jour, ses sources et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
 
       // THEN
       const qualite = screen.getByRole("region", { name: wording.TITRE_BLOC_QUALITE });
@@ -125,7 +127,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
 
     it('affiche le contenu de l’info bulle %s après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
       const evenementsIndesirables = screen.getAllByRole("listitem")[2];
       const détails = within(evenementsIndesirables).getByRole("button", { name: wording.DÉTAILS });
 
@@ -147,7 +149,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
 
     it('ferme l’info bulle %s après avoir cliqué sur le bouton "Fermer"', () => {
       // GIVEN
-      renderFakeComponent(<BlocQualite etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
+      renderFakeComponent(<BlocQualite etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialQualiteSanitairelViewModel={qualiteEIViewModel} />);
       const evenementsIndesirables = screen.getAllByRole("listitem")[2];
       const détails = within(evenementsIndesirables).getByRole("button", { name: wording.DÉTAILS });
       fireEvent.click(détails);

@@ -15,6 +15,8 @@ ChartJS.register(TreemapController, TreemapElement, Tooltip, Legend);
 export type TreemapItem = Readonly<{ label: string; value: number }>;
 
 type Props = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   items: TreemapItem[];
   height?: number;
   /** Optionnel : couleurs imposées par le parent (ordre des filières) */
@@ -220,7 +222,7 @@ const treemapWrapLabelsPlugin = {
 /* --------------------------------------------
  * Composant principal
  * ------------------------------------------ */
-export default function GraphiqueTreemapRepartitionEffectif({ items, height = 420, couleursFilieres, periodeLibelle }: Props) {
+export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTitle, items, height = 420, couleursFilieres, periodeLibelle }: Props) {
   const { wording } = useDependencies();
   // Normalisation des données + choix des couleurs (parent > palette)
   const dataNorm = useMemo(
@@ -337,8 +339,11 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 42
       <Transcription
         disabled={!transcriptionLibellés.length}
         entêteLibellé={wording.VIGIE_RH_CATEGORIE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
         libellés={transcriptionLibellés}
+        nomGraph={wording.REPARTITION_EFFECTIFS}
         valeurs={transcriptionValeurs}
       />
     </>

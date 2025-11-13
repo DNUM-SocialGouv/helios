@@ -12,12 +12,14 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
 
 type BlocQualitéProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etablissementTerritorialQualiteMédicoSocialViewModel: ÉtablissementTerritorialQualiteMédicoSocialViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
+const BlocQualité = ({ etabFiness, etabTitle, etablissementTerritorialQualiteMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   if (etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesQualiteNeSontPasRenseignées) {
@@ -53,6 +55,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteMédicoSocialViewModel, o
               annéesTotales={3}
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildReclamationsData}
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJour}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
             />
           )}
         {!etablissementTerritorialQualiteMédicoSocialViewModel.lesEvenementsIndesirablesNeSontPasRenseignées &&

@@ -7,10 +7,12 @@ import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/Indicat
 import { ContenuCompteDeRésultat } from "../../InfoBulle/ContenuCompteDeRésultat";
 
 type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   compteDeRésultatViewModel: CompteDeResultatViewModel;
 }>;
 
-export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
+export const GraphiqueCompteDeResultat = ({ etabFiness, etabTitle, compteDeRésultatViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(compteDeRésultatViewModel.annéeInitiale);
   const budgetEtFinance = compteDeRésultatViewModel.budgetEtFinanceEnCours(annéeEnCours);
@@ -27,7 +29,10 @@ export const GraphiqueCompteDeResultat = ({ compteDeRésultatViewModel }: BlocBu
     >
       <HistogrammesHorizontaux
         annéesManquantes={compteDeRésultatViewModel.lesAnnéesManquantesDuCompteDeRésultat()}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         nom={compteDeRésultatViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
+        nomGraph={compteDeRésultatViewModel.intituléDuCompteDeRésultat(annéeEnCours)}
         nombreDAnnéeTotale={5}
         valeursDesHistogrammes={[compteDeRésultatViewModel.dépensesOuCharges(budgetEtFinance), compteDeRésultatViewModel.recettesOuProduits(budgetEtFinance)]}
       />

@@ -10,6 +10,9 @@ import { Transcription } from "../Transcription/Transcription";
 
 
 type HistogrammeHorizontalAvecRefProps = {
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   enteteLibelle: string;
   couleursDeLHistogramme: CouleurHistogramme[]
   valeursDesHistogrammes: number[];
@@ -20,17 +23,20 @@ type HistogrammeHorizontalAvecRefProps = {
   refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
 };
-const HistogrammeHorizontalAvecRef = (
-  { couleursDeLHistogramme,
-    epaisseur,
-    enteteLibelle,
-    valeursDesHistogrammes,
-    valeursDesHistogrammesRef,
-    libelles,
-    refsManquantsTitre,
-    refsManquants,
-    identifiants
-  }: HistogrammeHorizontalAvecRefProps) => {
+const HistogrammeHorizontalAvecRef = ({
+  etabFiness,
+  etabTitle,
+  nomGraph,
+  couleursDeLHistogramme,
+  epaisseur,
+  enteteLibelle,
+  valeursDesHistogrammes,
+  valeursDesHistogrammesRef,
+  libelles,
+  refsManquantsTitre,
+  refsManquants,
+  identifiants
+}: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
   const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
@@ -159,8 +165,11 @@ const HistogrammeHorizontalAvecRef = (
       {refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
       <Transcription
         entêteLibellé={enteteLibelle}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={identifiants}
         libellés={libelles}
+        nomGraph={nomGraph}
         valeurs={[valeursDesHistogrammes, valeursDesHistogrammesRef]}
       />
     </>

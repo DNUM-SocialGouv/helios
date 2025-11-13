@@ -6,6 +6,8 @@ import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entit
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 const allocationRessourceMockData = {
   dateMiseÀJourSource: "20/20/2020",
@@ -35,7 +37,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel([], allocationRessourceMockData, wording, autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
 
     // THEN
     const titre = screen.getByText(wording.INDICATEURS_VIDES);
@@ -53,7 +55,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.COMPTE_DE_RÉSULTAT_CF);
@@ -71,7 +73,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.RÉSULTAT_NET_COMPTABLE);
@@ -89,7 +91,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.RATIO_DEPENDANCE_FINANCIERE);
@@ -107,7 +109,7 @@ describe("Bloc Budget et Finance", () => {
     const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} type="EJ" />);
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
 
     // THEN
     const titre = screen.getAllByText(wording.TAUX_DE_CAF);

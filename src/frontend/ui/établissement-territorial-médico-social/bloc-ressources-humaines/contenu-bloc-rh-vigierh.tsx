@@ -6,6 +6,8 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etablissementTerritorialMedicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
   statusSousBlocs: boolean[];
   setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -13,7 +15,12 @@ type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
 }>;
 
 export const ContenuBlocRHMedicoSocialVigieRH = ({
-  etablissementTerritorialMedicoSocialRessourcesHumainesViewModel, setStatusSousBlocs, statusSousBlocs, blocVigieRhViewModel
+  etabFiness,
+  etabTitle,
+  etablissementTerritorialMedicoSocialRessourcesHumainesViewModel,
+  setStatusSousBlocs,
+  statusSousBlocs,
+  blocVigieRhViewModel
 }: ContenuBlocRHMedicoSocialVigieRHProps) => {
   const { wording } = useDependencies();
 
@@ -39,7 +46,11 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
           </button>
         </h3>
         <div className="fr-collapse" id="accordion-indicateurs-rh-helios">
-          <ContenuBlocRHMedicoSocialHelios etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={etablissementTerritorialMedicoSocialRessourcesHumainesViewModel} />
+          <ContenuBlocRHMedicoSocialHelios
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={etablissementTerritorialMedicoSocialRessourcesHumainesViewModel}
+          />
         </div>
       </section>
       <section className={styles["sous-bloc"] + " fr-accordion"} data-testid="sous-bloc-vigie-rh">
@@ -54,7 +65,11 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
           </button>
         </h3>
         <div className="fr-collapse" id="accordion-indicateurs-rh-vigierh">
-          <BlocVigieRH blocVigieRHViewModel={blocVigieRhViewModel} />
+          <BlocVigieRH
+            blocVigieRHViewModel={blocVigieRhViewModel}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+          />
         </div>
       </section>
     </div>

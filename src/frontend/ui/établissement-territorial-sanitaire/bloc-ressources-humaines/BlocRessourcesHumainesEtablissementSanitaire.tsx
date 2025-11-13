@@ -15,6 +15,8 @@ import { ContenuDuNombreDEtpPm } from "../../entité-juridique/infoBulle/Contenu
 import { ContenuDuNombreDEtpPnm } from "../../entité-juridique/infoBulle/ContenuDuNombreDEtpPnm";
 
 type BlocRessourcesHumainesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etSanRhviewModel: EtablissementTerritorialSanitaireRHViewModel;
   openedBloc?: boolean;
   toggleBlocs?: () => void;
@@ -22,7 +24,7 @@ type BlocRessourcesHumainesProps = Readonly<{
 
 
 
-export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
+export const BlocRessourcesHumainesEtablissementSanitaire = ({ etabFiness, etabTitle, etSanRhviewModel, openedBloc, toggleBlocs }: BlocRessourcesHumainesProps) => {
   const { wording } = useDependencies();
   if (etSanRhviewModel.lesDonneesRessourcesHumainesNeSontPasRenseigner) {
     return <BlocIndicateurVide opnedBloc={openedBloc} title={wording.TITRE_BLOC_RESSOURCES_HUMAINES} toggelBlocs={toggleBlocs} />;
@@ -50,7 +52,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel,
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.nombreEtpPm}
+            {etSanRhviewModel.nombreEtpPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -68,7 +70,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel,
             nomDeLIndicateur={wording.NOMBRE_D_ETP_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.nombreEtpPnm}
+            {etSanRhviewModel.nombreEtpPnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -87,7 +89,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel,
             nomDeLIndicateur={wording.DEPENSES_INTERIM_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.depensesInterimPm}
+            {etSanRhviewModel.depensesInterimPmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -105,7 +107,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel,
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.joursAbsenteismePm}
+            {etSanRhviewModel.joursAbsenteismePmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}
@@ -123,7 +125,7 @@ export const BlocRessourcesHumainesEtablissementSanitaire = ({ etSanRhviewModel,
             nomDeLIndicateur={wording.JOURS_ABSENTEISME_PNM}
             source={Sources(wording.ANCRE)}
           >
-            {etSanRhviewModel.joursAbsenteismePnm}
+            {etSanRhviewModel.joursAbsenteismePnmHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
 
         ) : <></>}

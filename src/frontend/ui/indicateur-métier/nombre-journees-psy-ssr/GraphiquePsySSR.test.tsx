@@ -8,6 +8,8 @@ import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../..
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 const activitesSanitaireMensuel: ActivitesSanitaireMensuel = {
   activitesSanitaireMensuelList: [],
   dateDeMiseAJour: "11/12/12"
@@ -27,7 +29,7 @@ describe("Graphique Psy SSR", () => {
     const viewModel = new NombreDeJourneesPsySSRViewModel([], wording);
 
     // WHEN
-    renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={viewModel} />);
+    renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={viewModel} />);
 
     // THEN
     const pmsi = graphiqueTest.abréviationFichierSource("PMSI");
@@ -40,7 +42,7 @@ describe("Graphique Psy SSR", () => {
     const viewModel = new NombreDeJourneesPsySSRViewModel([], wording);
 
     // WHEN
-    renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={viewModel} />);
+    renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={viewModel} />);
     // THEN
     const titre = graphiqueTest.titre(wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     expect(titre).toBeInTheDocument();
@@ -56,7 +58,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={viewModel} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -66,7 +68,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={viewModel} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={viewModel} />);
 
       // WHEN
       graphiqueTest.ouvreDétail();
@@ -79,7 +81,7 @@ describe("Graphique Psy SSR", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={viewModel} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -123,7 +125,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche la date de mise à jour du fichier PMSI", () => {
       // WHEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // THEN
       const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2020");
@@ -132,7 +134,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -142,7 +144,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche le contenu de la transcription", async () => {
       // GIVEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -159,7 +161,7 @@ describe("Graphique Psy SSR", () => {
 
     it("affiche la mise en exergue pour les années manquantes", () => {
       // WHEN
-      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
+      renderFakeComponent(<GraphiquePsySSR activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nombreJournéesPsySSRViewModel={psySSRUneAnnée} />);
 
       // THEN
       const exergue = graphiqueTest.miseEnExergue([annéeEnCours - 5, annéeEnCours - 4, annéeEnCours - 3, annéeEnCours - 2]);

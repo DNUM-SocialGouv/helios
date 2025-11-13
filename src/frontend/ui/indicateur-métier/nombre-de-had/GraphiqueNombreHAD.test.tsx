@@ -6,6 +6,8 @@ import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("Graphique Nombre de HAD", () => {
   let graphiqueTest: GraphiqueTest;
@@ -19,7 +21,7 @@ describe("Graphique Nombre de HAD", () => {
     const viewModel = new GraphiqueNombreHADViewModel([]);
 
     // WHEN
-    renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
 
     // THEN
     const rpu = graphiqueTest.abréviationFichierSource("PMSI");
@@ -37,7 +39,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -47,7 +49,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -61,7 +63,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -83,7 +85,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche le titre", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
       // THEN
       const titre = graphiqueTest.titre(wording.NOMBRE_DE_HAD);
       expect(titre).toBeInTheDocument();
@@ -91,7 +93,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche la mise en exergue de toutes les années sans données", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={viewModel} />);
 
       // THEN
       const exergue = screen.getByText(
@@ -117,7 +119,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche la date de mise à jour du fichier PMSI", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={nombreHADUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={nombreHADUneAnnée} />);
 
       // THEN
       const dateMiseAJour = graphiqueTest.dateMiseAJour("PMSI", "01/10/2020");
@@ -126,7 +128,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={nombreHADUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={nombreHADUneAnnée} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -136,7 +138,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche le contenu de la transcription", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={nombreHADUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={nombreHADUneAnnée} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -150,7 +152,7 @@ describe("Graphique Nombre de HAD", () => {
 
     it("affiche la mise en exergue pour les années manquantes", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreHAD nombreHADViewModel={nombreHADUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreHAD etabFiness={etabFiness} etabTitle={etabTitle} nombreHADViewModel={nombreHADUneAnnée} />);
 
       // THEN
       const exergue = screen.getByText(

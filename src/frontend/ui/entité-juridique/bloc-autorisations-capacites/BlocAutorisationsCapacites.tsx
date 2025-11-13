@@ -11,12 +11,14 @@ import { GraphiqueEquipementMateriauxLourds } from "../../indicateur-métier/equ
 import { GraphiqueReconnaissanceContractuelles } from "../../indicateur-métier/reconnaissance-contractuelles/GraphiqueReconnaissanceContractuelles";
 
 type BlocAutorisationsCapacitesProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
+export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
   const { wording } = useDependencies();
 
   if (
@@ -47,6 +49,8 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
           <GraphiqueCapacitésParActivité
             estEntitéJuridique
             estSanitaire={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
           />)}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées && (

@@ -9,6 +9,9 @@ import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVe
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 type NombreDeSejourMCOHistogrammesProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   nombreDeJourneePsySsrViewModel: NombreDeJourneesPsySSRViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   selectedFrequency: string;
@@ -16,7 +19,7 @@ type NombreDeSejourMCOHistogrammesProps = Readonly<{
 }>;
 
 
-export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewModel, activitéMensuelleViewModel, selectedFrequency, onFrequencyChange }: NombreDeSejourMCOHistogrammesProps) => {
+export const NombreDeJournneesPsySsrHistogrammes = ({ etabTitle, etabFiness, nomGraph, nombreDeJourneePsySsrViewModel, activitéMensuelleViewModel, selectedFrequency, onFrequencyChange }: NombreDeSejourMCOHistogrammesProps) => {
   const { wording } = useDependencies();
 
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
@@ -47,11 +50,14 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
           cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
           data={nombreDeJourneePsySsrViewModel.histogrammeDataSet}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           grapheMensuel={false}
           id={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
           idDeLaLégende={nombreDeJourneePsySsrViewModel.identifiantDeLaLégendeDesJournéesPsyEtSsr}
           identifiants={nombreDeJourneePsySsrViewModel.identifiants}
           libellés={nombreDeJourneePsySsrViewModel.années}
+          nomGraph={nomGraph}
           valeurs={nombreDeJourneePsySsrViewModel.valeurs}
         />
         :
@@ -60,11 +66,14 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ nombreDeJourneePsySsrViewM
           cacheLesValeursBasse={true}
           créeLeLibelléDuTooltip={nombreDeJourneePsySsrViewModel.tooltipJournéesPsyEtSsr}
           data={activitéMensuelleViewModel.getHistogrammePsySsrDataSet(annéeEnCours, selectedActivity)}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
           grapheMensuel={true}
           id={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
           idDeLaLégende={activitéMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelPsySsr}
           identifiants={activitéMensuelleViewModel.getIdentifiantTablePsyIndicateur()}
           libellés={activitéMensuelleViewModel.listeDesMois}
+          nomGraph={nomGraph}
           valeurs={activitéMensuelleViewModel.getValeurTablePsyIndicateur(annéeEnCours)}
         />
       }

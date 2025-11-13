@@ -12,12 +12,14 @@ import { GraphiqueEvenementsIndesirables } from "../../établissement-territoria
 import { GraphiqueInspectionsControles } from "../../établissement-territorial-médico-social/bloc-qualite/inspections-controles/GraphiqueInspectionsControles";
 
 type BlocQualitéProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etablissementTerritorialQualiteSanitairelViewModel: ÉtablissementTerritorialQualiteSanitaireViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
+const BlocQualité = ({ etabFiness, etabTitle, etablissementTerritorialQualiteSanitairelViewModel, opnedBloc, toggelBlocs }: BlocQualitéProps) => {
   const { wording } = useDependencies();
 
   if (etablissementTerritorialQualiteSanitairelViewModel.lesDonneesQualiteNeSontPasRenseignées) {
@@ -55,6 +57,8 @@ const BlocQualité = ({ etablissementTerritorialQualiteSanitairelViewModel, opne
               annéesTotales={5}
               data={etablissementTerritorialQualiteSanitairelViewModel.buildReclamationsData}
               dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJour}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
             />
           )}
       </ul>

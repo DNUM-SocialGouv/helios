@@ -6,10 +6,13 @@ import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from 
 import HistogrammeHorizontalAvecRef from "../../../commun/Graphique/HistogrammeHorizontalAvecRef";
 
 type GraphiqueMotifsRuptureContratsProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueMotifsRuptureContrats = ({ blocVigieRHViewModel }: GraphiqueMotifsRuptureContratsProps) => {
+const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueMotifsRuptureContratsProps) => {
 
   const { wording } = useDependencies();
 
@@ -33,8 +36,11 @@ const GraphiqueMotifsRuptureContrats = ({ blocVigieRHViewModel }: GraphiqueMotif
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
       enteteLibelle={wording.MOTIF}
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       identifiants={[wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF]}
       libelles={blocVigieRHViewModel.lesLibellesMotifsRupture}
+      nomGraph={nomGraph}
       refsManquants={lesMotifsQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
       valeursDesHistogrammes={donneesEffectifs}

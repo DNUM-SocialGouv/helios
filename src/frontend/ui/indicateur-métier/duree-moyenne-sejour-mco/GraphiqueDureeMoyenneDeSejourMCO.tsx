@@ -9,11 +9,13 @@ import { ContenuDureeMoyenneDeSejourMCO } from "../../établissement-territorial
 
 
 type GraphiqueDureeMoyenneDeSejourMCOProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   nombreDeSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueDureeMoyenneDeSejourMCOProps) => {
+export const GraphiqueDureeMoyenneDeSejourMCO = ({ etabFiness, etabTitle, nombreDeSejourMCOViewModel: dureeMoyenneSejourMCOViewModel, activitéMensuelleViewModel }: GraphiqueDureeMoyenneDeSejourMCOProps) => {
   const { wording } = useDependencies();
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
@@ -45,6 +47,8 @@ export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: d
       <DureeMoyenneDeSejourMCOHistogrammes
         activiteMensuelleViewModel={activitéMensuelleViewModel}
         dureeMoyenneDeSejourMCOViewModel={dureeMoyenneSejourMCOViewModel}
+        etabFiness={etabFiness}
+        etabtitle={etabTitle}
         onFrequencyChange={handleFrequency}
         selectedFrequency={selectedFrequency}
       />

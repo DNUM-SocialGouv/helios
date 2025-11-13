@@ -93,7 +93,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationHébergementPermanent");
   }
 
-  public get tauxOccupationHébergementPermanent(): ReactElement {
+  public tauxOccupationHébergementPermanentHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationHébergementPermanent");
 
     return (
@@ -104,9 +104,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -125,7 +128,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationHébergementTemporaire");
   }
 
-  public get tauxOccupationHébergementTemporaire(): ReactElement {
+  public tauxOccupationHébergementTemporaireHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationHébergementTemporaire");
 
     return (
@@ -136,9 +139,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -153,7 +159,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationAccueilDeJour");
   }
 
-  public get tauxOccupationAccueilDeJour(): ReactElement {
+  public tauxOccupationAccueilDeJourHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationAccueilDeJour");
 
     return (
@@ -164,9 +170,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -181,7 +190,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxRéalisationActivité");
   }
 
-  public get tauxRéalisationActivité(): ReactElement {
+  public tauxRéalisationActivitéHistrogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxRéalisationActivité");
 
     return (
@@ -192,9 +201,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_RÉALISATION_ACTIVITÉ}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -213,7 +225,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("fileActivePersonnesAccompagnées");
   }
 
-  public get fileActivePersonnesAccompagnées(): ReactElement {
+  public fileActivePersonnesAccompagnéesHistrogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("fileActivePersonnesAccompagnées");
 
     return (
@@ -222,9 +234,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
         libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nomGraph={this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -243,7 +258,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("nombreMoyenJournéesAbsencePersonnesAccompagnées");
   }
 
-  public get nombreMoyenJournéesAbsencePersonnesAccompagnées(): ReactElement {
+  public nombreMoyenJournéesAbsencePersonnesAccompagnéesHistrogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("nombreMoyenJournéesAbsencePersonnesAccompagnées");
 
     return (
@@ -252,9 +267,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
         libellés={années}
         libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nomGraph={this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />
@@ -269,7 +287,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationExternat");
   }
 
-  public get tauxOccupationExternat(): ReactElement {
+  public tauxOccupationExternatHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationExternat");
 
     return (
@@ -280,9 +298,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_EXTERNAT}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_EXTERNAT}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -297,7 +318,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationSemiInternat");
   }
 
-  public get tauxOccupationSemiInternat(): ReactElement {
+  public tauxOccupationSemiInternatHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationSemiInternat");
 
     return (
@@ -308,9 +329,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_SEMI_INTERNAT}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_SEMI_INTERNAT}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -325,7 +349,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationInternat");
   }
 
-  public get tauxOccupationInternat(): ReactElement {
+  public tauxOccupationInternatHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationInternat");
 
     return (
@@ -336,9 +360,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_INTERNAT}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_INTERNAT}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -353,7 +380,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("tauxOccupationAutre");
   }
 
-  public get tauxOccupationAutre(): ReactElement {
+  public tauxOccupationAutreHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationAutre");
 
     return (
@@ -364,9 +391,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_AUTRE}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_AUTRE}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -380,7 +410,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   public get leTauxOccupationSeancesEstIlAutorise(): boolean {
     return this.lIndicateurEstIlAutorise("tauxOccupationSeances");
   }
-  public get tauxOccupationSeances(): ReactElement {
+  public tauxOccupationSeancesHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationSeances");
 
     return (
@@ -391,9 +421,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_OCCUPATION_SEANCES}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_SEANCES}
         taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
         valeurs={valeurs}
       />
@@ -411,7 +444,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     return this.lIndicateurEstIlAutorise("duréeMoyenneSéjourAccompagnementPersonnesSorties");
   }
 
-  public get duréeMoyenneSéjourAccompagnementPersonnesSorties(): ReactElement {
+  public duréeMoyenneSéjourAccompagnementPersonnesSortiesHistrogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesValeurs("duréeMoyenneSéjourAccompagnementPersonnesSorties");
 
     return (
@@ -420,9 +453,12 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
           return this.construisLaCouleurDeLaBarreHorizontale(valeur, années[index]);
         })}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
         libellés={années}
         libellésDeValeursManquantes={annéesManquantes(années, 5)}
+        nomGraph={this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
         nombreDeLibelléTotal={5}
         valeurs={valeurs}
       />

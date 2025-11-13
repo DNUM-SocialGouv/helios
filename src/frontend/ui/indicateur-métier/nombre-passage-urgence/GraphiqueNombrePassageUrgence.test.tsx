@@ -6,6 +6,8 @@ import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("Graphique Nombre de Passage d'urgence", () => {
   let graphiqueTest: GraphiqueTest;
@@ -19,7 +21,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
     const viewModel = new NombrePassageAuxUrgencesViewModel([], wording);
 
     // WHEN
-    renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
 
     // THEN
     const rpu = graphiqueTest.abréviationFichierSource("RPU");
@@ -37,7 +39,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -47,7 +49,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -61,7 +63,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -83,7 +85,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche le titre", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
       // THEN
       const titre = graphiqueTest.titre(wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
       expect(titre).toBeInTheDocument();
@@ -91,7 +93,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("désactive la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -100,7 +102,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche la mise en exergue de toutes les années sans données", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={viewModel} />);
 
       // THEN
       const exergue = screen.getByText(
@@ -129,7 +131,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche la date de mise à jour du fichier RPU", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const dateMiseAJour = graphiqueTest.dateMiseAJour("RPU", "01/10/2020");
@@ -138,7 +140,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -148,7 +150,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche le contenu de la transcription", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -162,7 +164,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
 
     it("affiche la mise en exergue pour les années manquantes", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombrePassageUrgence nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombrePassageUrgence etabFiness={etabFiness} etabTitle={etabTitle} nombrePassageAuxUrgencesViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const exergue = screen.getByText(

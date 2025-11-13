@@ -9,6 +9,9 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../Transcription/Transcription";
 
 type HistogrammeVerticalAvecRefProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   valeurs: (number | null)[];
   valeursRef: (number | null)[];
   couleursDeLHistogramme: CouleurHistogramme[];
@@ -24,6 +27,9 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
 }>;
 
 const HistogrammeVerticalAvecRef = ({
+  etabFiness,
+  etabTitle,
+  nomGraph,
   valeurs,
   valeursRef,
   couleursDeLHistogramme,
@@ -206,8 +212,11 @@ const HistogrammeVerticalAvecRef = ({
       )}
       <Transcription
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={identifiants}
         libellés={libelles}
+        nomGraph={nomGraph}
         valeurs={[transcriptionValeurs, transcriptionValeursRef]}
       />
     </>

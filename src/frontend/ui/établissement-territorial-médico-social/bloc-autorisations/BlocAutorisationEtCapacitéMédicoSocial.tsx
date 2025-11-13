@@ -11,22 +11,28 @@ import { ContenuAutorisations } from "../InfoBulle/ContenuAutorisations";
 import { ContenuCapacitéParActivité } from "../InfoBulle/ContenuCapacitéParActivité";
 
 type BlocAutorisationEtCapacitéMédicoSocialProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   établissementTerritorialAutorisationsMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
 export const BlocAutorisationEtCapacitéMédicoSocial = ({
-  établissementTerritorialAutorisationsMédicoSocialViewModel, opnedBloc, toggelBlocs 
+  etabFiness,
+  etabTitle,
+  établissementTerritorialAutorisationsMédicoSocialViewModel,
+  opnedBloc,
+  toggelBlocs
 }: BlocAutorisationEtCapacitéMédicoSocialProps) => {
   const { wording } = useDependencies();
 
   if (établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
-    return <BlocIndicateurVide  opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
   return (
-    <Bloc  isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
+    <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
       {établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
         établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialAutorisationsMédicoSocialViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
           <></>}
@@ -44,7 +50,7 @@ export const BlocAutorisationEtCapacitéMédicoSocial = ({
             nomDeLIndicateur={wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
             source={Sources(wording.FINESS)}
           >
-            {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivités}
+            {établissementTerritorialAutorisationsMédicoSocialViewModel.capacitéParActivitésHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
         {établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesAutorisées && établissementTerritorialAutorisationsMédicoSocialViewModel.lesAutorisationsSontEllesRenseignées ? (

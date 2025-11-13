@@ -6,6 +6,8 @@ import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("Graphique Nombre de Journées USLD", () => {
   let graphiqueTest: GraphiqueTest;
@@ -19,7 +21,7 @@ describe("Graphique Nombre de Journées USLD", () => {
     const viewModel = new NombreDeJourneesUsldViewModel([], wording);
 
     // WHEN
-    renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+    renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
 
     // THEN
     const sae = graphiqueTest.abréviationFichierSource("SAE");
@@ -37,7 +39,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -47,7 +49,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -61,7 +63,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -83,7 +85,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche le titre", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
       // THEN
       const titre = graphiqueTest.titre(wording.NOMBRE_DE_JOURNEES_USLD);
       expect(titre).toBeInTheDocument();
@@ -91,7 +93,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("désactive la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -100,7 +102,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche la mise en exergue de toutes les années sans données", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={viewModel} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={viewModel} />);
 
       // THEN
       const exergue = screen.getByText(
@@ -129,7 +131,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche la date de mise à jour du fichier SAE", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const dateMiseAJour = graphiqueTest.dateMiseAJour("SAE", "01/10/2020");
@@ -138,7 +140,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -148,7 +150,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche le contenu de la transcription", () => {
       // GIVEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -162,7 +164,7 @@ describe("Graphique Nombre de Journées USLD", () => {
 
     it("affiche la mise en exergue pour les années manquantes", () => {
       // WHEN
-      renderFakeComponent(<GraphiqueNombreDeJourneesUsld nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
+      renderFakeComponent(<GraphiqueNombreDeJourneesUsld etabFiness={etabFiness} etabTitle={etabTitle} nombreDeJourneesUsldViewModel={passageUrgenceUneAnnée} />);
 
       // THEN
       const exergue = screen.getByText(

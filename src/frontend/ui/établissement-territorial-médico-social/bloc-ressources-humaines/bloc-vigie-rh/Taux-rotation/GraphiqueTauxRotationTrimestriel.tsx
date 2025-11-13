@@ -7,11 +7,14 @@ import { StringFormater } from "../../../../commun/StringFormater";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueTauxRotationAnnuelProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   donneesTauxRotationTrimestriels: TauxRotationTrimestriel[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueTauxRotationTrimestriel = ({ donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
+const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
@@ -41,10 +44,13 @@ const GraphiqueTauxRotationTrimestriel = ({ donneesTauxRotationTrimestriels, blo
   return (
     <HistogrammeVerticalAvecRef
       couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotationTrimestriels)}
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
       libelles={libelles}
       libellesDeValeursDeReferenceManquantes={valeursRefManquantes}
       libellesDeValeursManquantes={valeursManquantes}
+      nomGraph={nomGraph}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
       type={wording.TRIMESTRIEL}

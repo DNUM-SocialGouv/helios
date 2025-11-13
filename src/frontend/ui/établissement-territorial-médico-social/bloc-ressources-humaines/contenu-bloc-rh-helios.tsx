@@ -16,6 +16,8 @@ import { ContenuDuTauxDeRotationDuPersonnel } from "../InfoBulle/ContenuDuTauxDe
 import { ContenuDuTauxDEtpVacants } from "../InfoBulle/ContenuDuTauxDEtpVacants";
 
 type ContenuBlocRHMedicoSocialHeliosProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   etablissementTerritorialMedicoSocialRessourcesHumainesViewModel: ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel;
 }>;
 
@@ -32,6 +34,8 @@ const ListeIndicateursNonAutorisesOuNonRenseignes = ({
 }
 
 export const ContenuBlocRHMedicoSocialHelios = ({
+  etabFiness,
+  etabTitle,
   etablissementTerritorialMedicoSocialRessourcesHumainesViewModel,
 }: ContenuBlocRHMedicoSocialHeliosProps) => {
 
@@ -43,7 +47,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
 
   return (
     <>
-      <ListeIndicateursNonAutorisesOuNonRenseignes etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={etablissementTerritorialMedicoSocialRessourcesHumainesViewModel} />
+      <ListeIndicateursNonAutorisesOuNonRenseignes etabFiness={etabFiness} etabTitle={etabTitle} etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={etablissementTerritorialMedicoSocialRessourcesHumainesViewModel} />
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlRenseigné && etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.leNombreDEtpRéaliséEstIlAutorisé ? (
           <IndicateurGraphique
@@ -58,7 +62,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.NOMBRE_D_ETP_TOTAL_RÉALISÉ}
             source={Sources(wording.CNSA)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.nombreDEtpRéalisé}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.nombreDEtpRéaliséHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -75,7 +79,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.NOMBRE_DE_CDD_DE_REMPLACEMENT}
             source={Sources(wording.TDB_PERF)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacement}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.nombreDeCddDeRemplacementHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -93,7 +97,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.TAUX_DE_PRESTATIONS_EXTERNES_SUR_LES_PRESTATIONS_DIRECTES}
             source={Sources(wording.TDB_PERF)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDePrestationsExternes}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDePrestationsExternesHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -110,7 +114,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.TAUX_D_ETP_VACANTS_AU_31_12}
             source={Sources(wording.TDB_PERF)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDEtpVacants}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDEtpVacantsHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -127,7 +131,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.TAUX_DE_ROTATION_DU_PERSONNEL}
             source={Sources(wording.TDB_PERF)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDeRotationDuPersonnel}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDeRotationDuPersonnelHistogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -148,7 +152,7 @@ export const ContenuBlocRHMedicoSocialHelios = ({
             nomDeLIndicateur={wording.TAUX_D_ABSENTÉISME}
             source={Sources(wording.TDB_PERF)}
           >
-            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDAbsentéisme(annéeEnCours)}
+            {etablissementTerritorialMedicoSocialRessourcesHumainesViewModel.tauxDAbsentéisme(etabFiness, etabTitle, annéeEnCours)}
           </IndicateurGraphique>
         ) : <></>}
       </ul>

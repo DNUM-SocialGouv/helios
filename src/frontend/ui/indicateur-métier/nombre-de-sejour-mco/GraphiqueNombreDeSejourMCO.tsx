@@ -9,11 +9,13 @@ import { ContenuNombreDeSéjourMCO } from "../../établissement-territorial-sani
 
 
 type GraphiqueNombreDeSejourMCOProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {
+export const GraphiqueNombreDeSejourMCO = ({ etabTitle, etabFiness, nombreDeSejourMCOViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiqueNombreDeSejourMCOProps) => {
   const { wording } = useDependencies();
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
@@ -46,6 +48,9 @@ export const GraphiqueNombreDeSejourMCO = ({ nombreDeSejourMCOViewModel, activit
     >
       <NombreDeSejourMCOHistogrammes
         activitéMensuelleViewModel={activitéMensuelleViewModel}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        nomGraph={wording.NOMBRE_DE_SÉJOUR_MCO}
         nombreDeSejourMCOViewModel={nombreDeSejourMCOViewModel}
         onFrequencyChange={handleFrequency}
         selectedFrequency={selectedFrequency}
