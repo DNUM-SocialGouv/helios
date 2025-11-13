@@ -34,5 +34,5 @@ export function useExportExcelTranscription() {
     const fileName: string = `${getCurrentDate()}_Helios_${etabFiness}_${graphName}.xlsx`;
     telechargerWorkbook(workbook, fileName);
   }
-  return { exportExcelTranscription }
+  return { exportExcelTranscription };
 }

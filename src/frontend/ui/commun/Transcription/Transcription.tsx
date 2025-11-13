@@ -6,7 +6,7 @@ import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { useExportExcelTranscription } from "./ExportExcel"
+import { useExportExcelTranscription } from "./ExportExcel";
 import styles from "./Transcription.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 
@@ -39,7 +39,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
 
   const exportTab = () => {
     exportExcelTranscription(nomGraph, etabFiness, etabTitle, [entêteLibellé, ...identifiants], libellés, valeurs);
-  }
+  };
 
 
   const tableContent = (
