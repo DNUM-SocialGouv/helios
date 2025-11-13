@@ -85,14 +85,16 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
                 <button aria-controls={identifiant + "-modal-transcription"} className="fr-btn--close fr-btn" title={wording.FERMER}>
                   {wording.FERMER}
                 </button>
-                <button className="fr-btn--close fr-btn" onClick={exportTab} title={wording.FERMER}>
-                  DL
-                </button>
               </div>
               <div className="fr-modal__content">
-                <h1 className="fr-modal__title" id={identifiant + "-modal-title"}>
-                  {wording.TITRE_TRANSCRIPTION}
-                </h1>
+                <div className={styles["header-container"]}>
+                  <h1 className="fr-modal__title" id={identifiant + "-modal-title"}>
+                    {wording.TITRE_TRANSCRIPTION}
+                  </h1>
+                  <button className="fr-btn fr-icon-download-line fr-btn--icon-left fr-btn--tertiary-no-outline" onClick={exportTab} title={wording.DOWNLOAD_EXCEL} type="button">
+                    {wording.DOWNLOAD_EXCEL}
+                  </button>
+                </div>
                 {tableContent}
               </div>
             </div>
