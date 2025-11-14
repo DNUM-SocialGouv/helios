@@ -45,32 +45,42 @@ const buildTotalsFromCategories = (categories: ProfessionFiliereData[]): Effecti
   const sumByKey = new Map<string, number>();
   const monthByKey = new Map<string, MonthYear>();
 
+  const registerValue = (annee: number, mois: number, valeur: number) => {
+    if (!annee || !mois) return;
+    const key = `${annee}-${String(mois).padStart(2, "0")}`;
+    monthByKey.set(key, { annee, mois });
+    sumByKey.set(key, (sumByKey.get(key) ?? 0) + valeur);
+  };
+
+  const collectFromArray = (serie: any[]) => {
+    for (const row of serie) {
+      const annee = Number(row?.annee);
+      const mois = Number(row?.mois);
+      const valeur = Number(row?.effectifFiliere ?? row?.effectif ?? 0);
+      registerValue(annee, mois, valeur);
+    }
+  };
+
+  const collectFromSerie = (serie: any) => {
+    const moisAnnees = serie?.dataMoisAnnee ?? [];
+    const valeurs = serie?.dataFiliere ?? [];
+    const n = Math.min(moisAnnees.length, valeurs.length);
+    for (let i = 0; i < n; i++) {
+      const moisAnnee = moisAnnees[i];
+      registerValue(Number(moisAnnee?.annee), Number(moisAnnee?.mois), Number(valeurs[i]) || 0);
+    }
+  };
+
   for (const cat of categories) {
     const dc: any = (cat as any)?.dataCategorie;
     if (!dc) continue;
 
     if (Array.isArray(dc)) {
-      for (const row of dc) {
-        const annee = Number(row?.annee);
-        const mois = Number(row?.mois);
-        if (!annee || !mois) continue;
-        const key = `${annee}-${String(mois).padStart(2, "0")}`;
-        monthByKey.set(key, { annee, mois });
-        const v = Number(row?.effectifFiliere ?? row?.effectif ?? 0);
-        sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
-      }
-    } else {
-      const moisAnnees = dc?.dataMoisAnnee ?? [];
-      const valeurs = dc?.dataFiliere ?? [];
-      const n = Math.min(moisAnnees.length, valeurs.length);
-      for (let i = 0; i < n; i++) {
-        const m = moisAnnees[i];
-        const v = Number(valeurs[i]) || 0;
-        const key = `${m.annee}-${String(m.mois).padStart(2, "0")}`;
-        monthByKey.set(key, m);
-        sumByKey.set(key, (sumByKey.get(key) ?? 0) + v);
-      }
+      collectFromArray(dc);
+      continue;
     }
+
+    collectFromSerie(dc);
   }
 
   const ordered = Array.from(monthByKey.keys()).sort((a, b) => {

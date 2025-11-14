@@ -55,7 +55,7 @@ export class BlocVigieRHViewModel {
     return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
   }
   private get effectifsDisponibles(): boolean {
-    const data = (this.lesDonneesEffectifs.data ?? []) as ProfessionFiliereData[];
+    const data = this.lesDonneesEffectifs.data ?? [];
     return data.some((item: any) => {
       const serie = item?.dataCategorie?.dataFiliere ?? [];
       return Array.isArray(serie) && serie.some((valeur: number | null | undefined) => valeur !== null && valeur !== undefined);
@@ -287,7 +287,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get filieresAvecGroupes(): ProfessionFiliereData[] {
-    const data = (this.lesDonneesEffectifs.data ?? []) as ProfessionFiliereData[];
+    const data = this.lesDonneesEffectifs.data ?? [];
     return data.filter((item: any) => (item?.groupes?.data ?? []).length > 0);
   }
 

@@ -169,9 +169,9 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
       const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE), { selector: "h3" }))!;
-      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE) as HTMLSelectElement;
+      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE);
       expect(select).toBeInTheDocument();
-      expect(select.value).toBe("test");
+      expect(select).toHaveValue("test");
       const options = within(select).getAllByRole("option");
       expect(options.map((option) => option.getAttribute("value"))).toContain("test");
     });
