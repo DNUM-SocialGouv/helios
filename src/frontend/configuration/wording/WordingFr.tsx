@@ -708,6 +708,7 @@ export class WordingFr implements Wording {
   readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
   readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
   readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
   readonly EFFECTIFS_TOTAUX: string = "Total";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
@@ -719,6 +720,7 @@ export class WordingFr implements Wording {
   readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
   readonly TAUX_ROTATION: string = "Taux de Rotation";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
+  readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
   readonly DUREE_CDD: string = "Durée effective des CDD";

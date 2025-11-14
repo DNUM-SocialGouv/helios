@@ -94,6 +94,8 @@ class FichierSource(Enum):
     # profession_groupe
     VIGIE_RH_PROFESSION_GROUPE = "vigierh_profession2"
     VIGIE_RH_REF_PROFESSION_GROUPE = "vigierh_ref_profession2"
+    VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE = "vigierh_table_passage_professions_1_2"
+
     # tranches des ages
     VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
     VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
