@@ -21,7 +21,7 @@ NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
 NUMÉRO_FINESS_ÉTABLISSEMENT_2 = "010004059"
 NUMÉRO_FINESS_ÉTABLISSEMENT_3 = "010006799"
 
-class TestImportVigieRhContrat:
+class TestImportVigieRhPyramide:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)

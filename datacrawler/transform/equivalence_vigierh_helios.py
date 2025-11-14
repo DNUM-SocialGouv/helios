@@ -5,19 +5,6 @@ from typing import List
 SOURCE = 'VigieRh'
 
 class ColumMapping(Enum):
-    # contrat
-    CONTRAT = {
-        'finess_et': 'numero_finess',
-        'year': 'annee',
-        'month': 'mois',
-        'nature_contrat_code': 'type_contrat_code',
-        'effectif': 'effectif'
-    }
-    REF_TYPE_CONTRAT = {
-        'nature_contrat_code': 'code',
-        'nature_contrat': 'label'
-    }
-
     # profession_filiere
     PROFESSION_FILIERE = {
         'finess_et': 'numero_finess',
