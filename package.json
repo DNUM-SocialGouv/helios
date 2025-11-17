@@ -90,8 +90,6 @@
     "updateActivitesSanitairesMensuel:local": "pipenv run populate_activites_mensuel",
     "updateActivitesSanitairesMensuelEJ": "python -m datacrawler.import_activites_mensuel_entite_juridique",
     "updateActivitesSanitairesMensuelEJ:local": "pipenv run populate_activites_mensuel_ej",
-    "updateVigieRhContrat": "python -m datacrawler.import_vigie_rh_contrat",
-    "updateVigieRhContrat:local": "pipenv run populate_vigie_rh_contrat",
     "updateVigieRhProfessionFiliere": "python -m datacrawler.import_vigie_rh_profession_filiere",
     "updateVigieRhProfessionFiliere:local": "pipenv run populate_vigie_rh_profession_filiere",
     "updateVigieRhProfessionGroupe": "python -m datacrawler.import_vigie_rh_profession_groupe",

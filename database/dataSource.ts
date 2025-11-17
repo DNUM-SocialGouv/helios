@@ -167,8 +167,6 @@ import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/V
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
 import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/VigieRhRefRedressementModel";
 import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
-import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
-import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
 import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
@@ -230,11 +228,9 @@ const datasource = new DataSource({
     UserListEtablissementModel,
     VigieRhRefProfessionFiliereModel,
     VigieRhRefProfessionGroupeModel,
-    VigieRhRefTypeContratModel,
     VigieRhRefMasqueModel,
     VigieRhRefQualiteModel,
     VigieRhRefRedressementModel,
-    VigieRhContratModel,
     VigieRhProfessionFiliereModel,
     VigieRhProfessionGroupeModel,
     VigieRhRefTrancheAgeModel,
