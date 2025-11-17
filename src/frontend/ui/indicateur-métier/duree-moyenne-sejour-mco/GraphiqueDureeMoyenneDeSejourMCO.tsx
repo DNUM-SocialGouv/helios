@@ -33,6 +33,7 @@ export const GraphiqueDureeMoyenneDeSejourMCO = ({ nombreDeSejourMCOViewModel: d
     <IndicateurGraphique
       contenuInfoBulle={
         <ContenuDureeMoyenneDeSejourMCO
+          annuel={selectedFrequency === wording.ANNUEL}
           dateDeMiseÀJour={dateDeMiseAJour()}
           source={wording.PMSI}
         />
