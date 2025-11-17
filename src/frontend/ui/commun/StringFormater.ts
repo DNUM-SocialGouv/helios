@@ -60,4 +60,8 @@ export namespace StringFormater {
   export function transformInRoundedRate(number: number): number {
     return Math.round(number * 10) / 10;
   }
+
+  export function formatNumberForExcel(value: string): string {
+    return value?.replaceAll(/\s/g, '');
+  }
 }

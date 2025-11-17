@@ -1,7 +1,7 @@
-
 import { Workbook } from "exceljs";
 
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../utils/excelUtils";
+import { StringFormater } from "../../commun/StringFormater";
 import { useDependencies } from "../contexts/useDependencies";
 
 export function getCurrentDate() {
@@ -22,7 +22,7 @@ export function useExportExcelTranscription() {
       const line = [];
       line.push(lineTitle.toString());
       for (const value of values) {
-        line.push(value[index]?.toString() ?? wording.NON_RENSEIGNÉ);
+        line.push(formatValue(value[index]) ?? wording.NON_RENSEIGNÉ);
       }
       lines.push(line);
     }
@@ -35,4 +35,11 @@ export function useExportExcelTranscription() {
     telechargerWorkbook(workbook, fileName);
   }
   return { exportExcelTranscription };
+}
+
+function formatValue(value: number | string | null): string | undefined {
+  if (typeof value === "string") {
+    return StringFormater.formatNumberForExcel(value);
+  }
+  return value?.toString();
 }
