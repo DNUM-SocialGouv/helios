@@ -9,6 +9,8 @@ import { HistogrammeVerticalABandes } from "../../commun/Graphique/HistogrammeVe
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 type DureeMoyenneDeSejourMCOHistogrammesProps = Readonly<{
+  etabFiness: string;
+  etabtitle: string;
   dureeMoyenneDeSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
   activiteMensuelleViewModel: ActivitesMensuelViewModel;
   selectedFrequency: string;
@@ -16,7 +18,7 @@ type DureeMoyenneDeSejourMCOHistogrammesProps = Readonly<{
 }>;
 
 
-export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOViewModel, activiteMensuelleViewModel, selectedFrequency, onFrequencyChange }: DureeMoyenneDeSejourMCOHistogrammesProps) => {
+export const DureeMoyenneDeSejourMCOHistogrammes = ({ etabFiness, etabtitle, dureeMoyenneDeSejourMCOViewModel, activiteMensuelleViewModel, selectedFrequency, onFrequencyChange }: DureeMoyenneDeSejourMCOHistogrammesProps) => {
   const { wording } = useDependencies();
 
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(activiteMensuelleViewModel.annees[activiteMensuelleViewModel.annees.length - 1]);
@@ -46,12 +48,15 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
           annéesTotales={dureeMoyenneDeSejourMCOViewModel.NOMBRE_ANNEES}
           cacheLesValeursBasse={false}
           data={dureeMoyenneDeSejourMCOViewModel.getHistogrammeDataSet()}
+          etabFiness={etabFiness}
+          etabTitle={etabtitle}
           grapheMensuel={false}
           id={dureeMoyenneDeSejourMCOViewModel.identifiantDeLaLégendeDureeSejoursMCO}
           idDeLaLégende={dureeMoyenneDeSejourMCOViewModel.identifiantDeLaLégendeDureeSejoursMCO}
           identifiants={dureeMoyenneDeSejourMCOViewModel.getIdentifiantTableIndicateur()}
           legendeCentreeUneLigne={true}
           libellés={dureeMoyenneDeSejourMCOViewModel.années}
+          nomGraph={wording.MOYENNE_DE_SEJOUR_MCO}
           valeurs={dureeMoyenneDeSejourMCOViewModel.getValeurTableIndicateur()}
         />
         :
@@ -59,12 +64,15 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ dureeMoyenneDeSejourMCOVie
           annéesTotales={12}
           cacheLesValeursBasse={false}
           data={activiteMensuelleViewModel.getHistogrammeMoyenneSejourDataSet(annéeEnCours, selectedActivity)}
+          etabFiness={etabFiness}
+          etabTitle={etabtitle}
           grapheMensuel={true}
           id={activiteMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           idDeLaLégende={activiteMensuelleViewModel.identifiantDeLaLégendeDesSéjoursMensuelMCO}
           identifiants={activiteMensuelleViewModel.getIdentifiantTableIndicateurDureeMoyenneMCO()}
           legendeCentreeUneLigne={true}
           libellés={activiteMensuelleViewModel.listeDesMois}
+          nomGraph={wording.MOYENNE_DE_SEJOUR_MCO}
           valeurs={activiteMensuelleViewModel.getValeurTableIndicateurDureeMoyenneMCO(annéeEnCours)}
         />
       }

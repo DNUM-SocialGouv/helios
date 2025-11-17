@@ -8,12 +8,14 @@ import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activit�
 import { ContenuNombreDeJournéesPSYetSSR } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 
 type GraphiquePsySSRProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   nombreJournéesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   activitéMensuelleViewModel: ActivitesMensuelViewModel;
   estEntitéJuridique?: boolean;
 }>;
 
-export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
+export function GraphiquePsySSR({ etabTitle, etabFiness, nombreJournéesPsySSRViewModel, activitéMensuelleViewModel, estEntitéJuridique = false }: GraphiquePsySSRProps) {
   const { wording } = useDependencies();
   const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
 
@@ -48,6 +50,9 @@ export function GraphiquePsySSR({ nombreJournéesPsySSRViewModel, activitéMensu
     >
       <NombreDeJournneesPsySsrHistogrammes
         activitéMensuelleViewModel={activitéMensuelleViewModel}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        nomGraph={wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR}
         nombreDeJourneePsySsrViewModel={nombreJournéesPsySSRViewModel}
         onFrequencyChange={handleFrequency}
         selectedFrequency={selectedFrequency}

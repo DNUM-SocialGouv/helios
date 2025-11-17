@@ -6,10 +6,13 @@ import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from 
 import HistogrammeHorizontalAvecRef from "../../../commun/Graphique/HistogrammeHorizontalAvecRef";
 
 type GraphiqueDureeCDDProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueDureeCDD = ({ blocVigieRHViewModel }: GraphiqueDureeCDDProps) => {
+const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueDureeCDDProps) => {
 
   const { wording } = useDependencies();
 
@@ -33,8 +36,11 @@ const GraphiqueDureeCDD = ({ blocVigieRHViewModel }: GraphiqueDureeCDDProps) => 
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
       enteteLibelle={wording.DUREE}
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
       libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
+      nomGraph={nomGraph}
       refsManquants={lesDureesQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
       valeursDesHistogrammes={donneesEffectifs}

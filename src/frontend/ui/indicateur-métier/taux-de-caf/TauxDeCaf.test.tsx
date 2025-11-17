@@ -7,6 +7,8 @@ import { GraphiqueTest } from "../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 let graphiqueTest: GraphiqueTest;
 
 const autorisationsMockData = {
@@ -45,7 +47,7 @@ describe("Taux de CAF", () => {
 
   it("affiche l’intitulé de l’indicateur - Taux de caf nette", () => {
     // WHEN
-    renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+    renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
     // THEN
     const titre = graphiqueTest.titre(wording.TAUX_DE_CAF);
@@ -54,7 +56,7 @@ describe("Taux de CAF", () => {
 
   it("affiche la date de mise à jour du fichier CNSA", () => {
     // WHEN
-    renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+    renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
     // THEN
     const dateMiseAJour = graphiqueTest.dateMiseAJour("CNSA", "22/10/2023");
@@ -64,7 +66,7 @@ describe("Taux de CAF", () => {
   describe("Détails info bulle", () => {
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -74,7 +76,7 @@ describe("Taux de CAF", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
       // WHEN
       graphiqueTest.ouvreDétail();
@@ -87,7 +89,7 @@ describe("Taux de CAF", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -102,7 +104,7 @@ describe("Taux de CAF", () => {
   describe("Transcription", () => {
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -112,7 +114,7 @@ describe("Taux de CAF", () => {
 
     it("affiche le contenu de la transcription", async () => {
       // GIVEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={tauxDeCafViewModel} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={tauxDeCafViewModel} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -134,7 +136,7 @@ describe("Taux de CAF", () => {
       // GIVEN
       const budgetFinanceVide = new TauxDeCafViewModel([{ année: annéeEnCours - 2, valeur: 0.1 }], "22-10-2023", autorisationsMockData, wording, 3);
       // WHEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={budgetFinanceVide} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={budgetFinanceVide} />);
 
       // THEN
       const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 3}, ${annéeEnCours - 1}`, { selector: "p" });
@@ -155,7 +157,7 @@ describe("Taux de CAF", () => {
         3
       );
       // WHEN
-      renderFakeComponent(<TauxDeCaf tauxDeCafViewModel={budgetFinanceAnnees} />);
+      renderFakeComponent(<TauxDeCaf etabFiness={etabFiness} etabTitle={etabTitle} tauxDeCafViewModel={budgetFinanceAnnees} />);
 
       // THEN
       const exergue = screen.queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, {

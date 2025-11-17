@@ -6,10 +6,12 @@ import { AllocationRessourcesViewModel } from "../AllocationRessourcesViewModel"
 import { ContenuAllocationRessourcesEJ } from "./ContenuAllocationRessourcesEJ";
 
 type BlocAllocationRessourcesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   allocationRessourcesViewModel: AllocationRessourcesViewModel;
 }>;
 
-export function AllocationRessources({ allocationRessourcesViewModel }: BlocAllocationRessourcesProps) {
+export function AllocationRessources({etabFiness, etabTitle, allocationRessourcesViewModel }: BlocAllocationRessourcesProps) {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(allocationRessourcesViewModel.annéeInitiale);
 
@@ -23,7 +25,7 @@ export function AllocationRessources({ allocationRessourcesViewModel }: BlocAllo
       prefixSelect="Campagne"
       source={wording.HAPI}
     >
-      {allocationRessourcesViewModel.allocationDeRessource(annéeEnCours)}
+      {allocationRessourcesViewModel.allocationDeRessource(etabFiness, etabTitle, annéeEnCours)}
     </IndicateurGraphique>
   );
 }

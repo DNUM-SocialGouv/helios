@@ -75,6 +75,9 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, cr
 }
 
 export function HistogrammeVerticalABandes(props: Readonly<{
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   data: {
     datasets: { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }[];
     labels: (string | number)[];
@@ -140,8 +143,11 @@ export function HistogrammeVerticalABandes(props: Readonly<{
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
+        etabFiness={props.etabFiness}
+        etabTitle={props.etabTitle}
         identifiants={props.identifiants}
         libellés={props.libellés}
+        nomGraph={props.nomGraph}
         valeurs={valeursTranscription}
       />
     </>
