@@ -6,6 +6,7 @@ import React from "react";
 
 import styles from "./CarteIndicateurEffectif.module.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
+import { EchelleTemporelleVigieRh } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 
 /** Propriétés de la carte indicateur d’effectif. */
 type CarteIndicateurEffectifProps = Readonly<{
@@ -15,7 +16,7 @@ type CarteIndicateurEffectifProps = Readonly<{
   currentValue: string | number;
   variation: number;
   variationText: string;
-  periode?: string;
+  echelleTemporelle?: EchelleTemporelleVigieRh;
   // Titre du badge ("Effectif total").
   title?: string;
   // Libellé sous la valeur ("Employés actifs").
@@ -29,7 +30,7 @@ export default function CarteTopIndicateur({
   unitLabel = "Employés actifs",
   variation,
   variationText = "",
-  periode
+  echelleTemporelle
 }: CarteIndicateurEffectifProps) {
 
   let arrow;
@@ -58,7 +59,9 @@ export default function CarteTopIndicateur({
           <div className={styles["headerRow"]}>
             <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}></span>
             <span className={styles["value"]}>{currentValue}</span>
-            {periode && <span>{periode}</span>}
+            {echelleTemporelle && 
+              echelleTemporelle.type==="TRIMESTRIEL"? <abbr title={echelleTemporelle?.valeurTranscription}><span>({echelleTemporelle?.valeur})</span></abbr>:<span>({echelleTemporelle?.valeur})</span>
+            }
           </div>
 
           <div className={styles["unit"]}>{unitLabel}</div>

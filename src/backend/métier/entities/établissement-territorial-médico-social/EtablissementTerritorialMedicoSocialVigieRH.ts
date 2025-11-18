@@ -115,4 +115,13 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   motifsRuptureContratLibelles: string[];
   natureContratsAnnuel: NatureContratsAnnuel[];
   natureContratsTrimestriel: NatureContratsTrimestriel[];
+  echelleTemporelle: Record<string, EchelleTemporelleVigieRh>;
 }>;
+
+export type EchelleTemporelleVigieRh = Readonly<{
+  type: TypeEchelle;
+  valeur: string;
+  valeurTranscription?: string;
+}>
+
+export type TypeEchelle = "MENSUEL" | "TRIMESTRIEL" | "ANNUEL";
