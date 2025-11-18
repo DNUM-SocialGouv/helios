@@ -21,8 +21,6 @@ type Props = Readonly<{
   height?: number;
   /** Optionnel : couleurs imposées par le parent (ordre des filières) */
   couleursFilieres?: string[];
-  /** Libellé de la période affichée au-dessus du graphique */
-  periodeLibelle?: string;
 }>;
 
 /* -------------------------------
@@ -222,7 +220,7 @@ const treemapWrapLabelsPlugin = {
 /* --------------------------------------------
  * Composant principal
  * ------------------------------------------ */
-export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTitle, items, height = 420, couleursFilieres, periodeLibelle }: Props) {
+export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTitle, items, height = 420, couleursFilieres }: Props) {
   const { wording } = useDependencies();
   // Normalisation des données + choix des couleurs (parent > palette)
   const dataNorm = useMemo(
@@ -315,11 +313,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
   return (
     <>
       <div style={{ height, display: "flex", flexDirection: "column" }}>
-        {periodeLibelle ? (
-          <p style={{ fontFamily: FONT_FAMILY, fontSize: "0.875rem", margin: "0 0 0.75rem" }}>
-            <span style={{ fontWeight: 600 }}>Période représentée :</span> {periodeLibelle}
-          </p>
-        ) : null}
+
         <div style={{ flex: 1, minHeight: 0, maxWidth: height, margin: "0 auto", width: "100%" }}>
           <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} style={{ height: "100%" }} type="treemap" />
         </div>

@@ -1,6 +1,7 @@
 import {
   DepartEmbauche,
   DureeCDD,
+  EchelleTemporelleVigieRh,
   EtablissementTerritorialMedicoSocialVigieRH,
   MotifsRuptureContrat,
   NatureContratsAnnuel,
@@ -365,7 +366,6 @@ export class BlocVigieRHViewModel {
       precedent: isoPeriodDonneeComparaison?.rotation ?? '',
       variation: variation,
       variationText: variationText,
-      dernierePeriode: `(T${derniereDonneeComparaison?.trimestre}-${derniereDonneeComparaison?.annee})`
     }
   }
 
@@ -414,5 +414,9 @@ export class BlocVigieRHViewModel {
         secondPlan: couleurExtensionHistogrammeOrangeClair,
       },
     ];
+  }
+
+  public get echelleTemporelle(): Map<string, EchelleTemporelleVigieRh> {
+    return new Map(Object.entries(this.etablissementTerritorialVRMedicoSocial.echelleTemporelle ?? {}));
   }
 }
