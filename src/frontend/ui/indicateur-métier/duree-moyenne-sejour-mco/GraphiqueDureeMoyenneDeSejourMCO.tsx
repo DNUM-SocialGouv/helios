@@ -35,6 +35,7 @@ export const GraphiqueDureeMoyenneDeSejourMCO = ({ etabFiness, etabTitle, nombre
     <IndicateurGraphique
       contenuInfoBulle={
         <ContenuDureeMoyenneDeSejourMCO
+          annuel={selectedFrequency === wording.ANNUEL}
           dateDeMiseÀJour={dateDeMiseAJour()}
           source={wording.PMSI}
         />

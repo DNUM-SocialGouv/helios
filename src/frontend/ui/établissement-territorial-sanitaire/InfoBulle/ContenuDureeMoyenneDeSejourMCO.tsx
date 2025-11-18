@@ -3,11 +3,12 @@ import { ReactElement } from "react";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuDuNombreDeSéjourMCOProps = Readonly<{
+  annuel: boolean;
   dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuDureeMoyenneDeSejourMCO = ({ dateDeMiseÀJour, source }: ContenuDuNombreDeSéjourMCOProps) => {
+export const ContenuDureeMoyenneDeSejourMCO = ({ annuel, dateDeMiseÀJour, source }: ContenuDuNombreDeSéjourMCOProps) => {
   const { wording } = useDependencies();
   return (
     <>
@@ -17,7 +18,7 @@ export const ContenuDureeMoyenneDeSejourMCO = ({ dateDeMiseÀJour, source }: Con
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence :</span> Mensuelle/Annuelle
+          <span className="fr-text--bold">Fréquence :</span> {annuel ? "Annuelle" : "Mensuelle"}
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
