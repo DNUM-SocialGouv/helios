@@ -121,7 +121,6 @@ export interface Wording {
 
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string;
-
   readonly TITRE_TRANSCRIPTION: string;
   readonly ANNÉE: string;
   readonly MOIS: string;
@@ -134,6 +133,8 @@ export interface Wording {
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
   readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string;
   readonly DOWNLOAD_EXCEL: string;
+  readonly DONNEES_ARRETEES: string;
+
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
@@ -697,6 +698,7 @@ export interface Wording {
   readonly AIDE_INFO_DATE: (date: string) => string;
   readonly AIDE_INFO_NOM_FICHIER: (nom: string) => string;
   readonly AIDE_INFO_SEPARATEUR: string;
+
   readonly DUREE_CDD: string;
   readonly DUREE_CDD_REF: string;
   readonly MOTIFS_RUPTURE_CONTRAT: string;
@@ -705,6 +707,12 @@ export interface Wording {
   readonly DUREE: string;
   readonly NATURE_CONTRATS: string;
   readonly DEPARTS_PREMATURES_CDI: string;
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcription_mois: string | undefined) => string;
 
   readonly SELECTIONNER_UNE_ACTIVIE: string;
+  readonly SOURCE: string;
+  readonly INDICATEURS_CLES_ACTUELS: string;
+  readonly DECLARATION_SOCIALE_NOMINATIVE: string;
+
+
 }
