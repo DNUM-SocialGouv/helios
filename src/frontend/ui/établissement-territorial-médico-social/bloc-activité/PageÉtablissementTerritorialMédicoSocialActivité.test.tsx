@@ -314,7 +314,8 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             motifsRuptureContrat: [],
             motifsRuptureContratLibelles: [],
             natureContratsAnnuel: [],
-            natureContratsTrimestriel: []
+            natureContratsTrimestriel: [],
+            echelleTemporelle:{}
           },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
@@ -515,6 +516,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             motifsRuptureContratLibelles: [],
             natureContratsAnnuel: [],
             natureContratsTrimestriel: [],
+            echelleTemporelle: {}
           }, qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
         },

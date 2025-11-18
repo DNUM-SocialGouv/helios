@@ -39,7 +39,35 @@
   margin-bottom: 1rem;
 }
 
+.vigie-rh-header {
+  margin-bottom: 2rem;
+  padding-top: .5rem;
+}
 
+.vigie-rh-title-block {
+  margin-bottom: 1rem;
+}
+
+.vigie-rh-caption {
+  align-items: baseline;
+  color: var(--text-title-grey);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .9375rem;
+  gap: .35rem;
+  margin: 0;
+}
+
+
+.vigie-rh-caption-separator {
+  color: var(--text-mention-grey);
+  font-weight: 500;
+  padding: 0 .5rem;
+}
+
+.vigie-rh-top-indicateurs {
+  margin-top: 1rem;
+}
 
 @media (max-width: 36em) {
   .liste-indicateurs {

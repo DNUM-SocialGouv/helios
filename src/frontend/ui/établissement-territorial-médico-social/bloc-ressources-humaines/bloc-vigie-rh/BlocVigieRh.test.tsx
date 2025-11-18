@@ -43,6 +43,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       motifsRuptureContratLibelles: [],
       natureContratsAnnuel: [],
       natureContratsTrimestriel: [],
+      echelleTemporelle:{}
     },
     wording,
     { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }

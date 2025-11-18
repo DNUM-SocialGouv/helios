@@ -1,9 +1,11 @@
 import { ReactNode, ReactElement, useState } from "react";
 
 import styles from "./IndicateurGraphique.module.css";
+import { EchelleTemporelleVigieRh } from "../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../contexts/useDependencies";
 import { InfoBulle } from "../InfoBulle/InfoBulle";
 import { SelectionAnneeTags } from "../Tag/SelectionAnneeTags";
+
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
 
 type IndicateurProps = Readonly<{
@@ -15,9 +17,10 @@ type IndicateurProps = Readonly<{
   nomDeLIndicateur: ReactNode;
   source: ReactElement;
   prefixSelect?: string;
+  echelleTemporel?: EchelleTemporelleVigieRh
 }>;
 
-export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect }: IndicateurProps) => {
+export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect, echelleTemporel }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
@@ -52,7 +55,18 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
           {wording.DÉTAILS}
         </button>
       </div>}
+      {echelleTemporel && (
+        <p className={styles["donnees-arretees"]}>
+          {wording.DONNEES_ARRETEES}{" "}
+          {echelleTemporel.type === "TRIMESTRIEL" ? (
+            <abbr title={echelleTemporel.valeurTranscription}>{echelleTemporel.valeur}</abbr>
+          ) : (
+            echelleTemporel.valeur
+          )}
+        </p>
+      )}
       {années ? <SelectionAnneeTags annees={années.liste} id={identifiant} prefix={prefixSelect} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
+
       <div className={styles["graphe"]}>{children}</div>
       <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
         {contenuInfoBulle}
