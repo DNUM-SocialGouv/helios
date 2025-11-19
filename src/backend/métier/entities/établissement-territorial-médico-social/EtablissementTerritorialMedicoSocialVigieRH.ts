@@ -122,6 +122,7 @@ export type EchelleTemporelleVigieRh = Readonly<{
   type: TypeEchelle;
   valeur: string;
   valeurTranscription?: string;
+  dateDonneesArretees?: string;
 }>
 
 export type TypeEchelle = "MENSUEL" | "TRIMESTRIEL" | "ANNUEL";

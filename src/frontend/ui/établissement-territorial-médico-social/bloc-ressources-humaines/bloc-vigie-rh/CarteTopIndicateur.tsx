@@ -2,11 +2,12 @@
  * CarteIndicateurEffectif
  * Affiche une carte indicateur : effectif total + flèche de tendance + variation (% et/ou valeur) vs iso-période.
  */
-import React from "react";
+import React, { ReactElement, useState } from "react";
 
 import styles from "./CarteIndicateurEffectif.module.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
 import { EchelleTemporelleVigieRh } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { InfoBulle } from "../../../commun/InfoBulle/InfoBulle";
 
 /** Propriétés de la carte indicateur d’effectif. */
 type CarteIndicateurEffectifProps = Readonly<{
@@ -21,6 +22,8 @@ type CarteIndicateurEffectifProps = Readonly<{
   title?: string;
   // Libellé sous la valeur ("Employés actifs").
   unitLabel?: string;
+  identifiant: string;
+  contenuInfoBulle: ReactElement;
 }>;
 
 export default function CarteTopIndicateur({
@@ -30,8 +33,11 @@ export default function CarteTopIndicateur({
   unitLabel = "Employés actifs",
   variation,
   variationText = "",
-  echelleTemporelle
+  echelleTemporelle,
+  identifiant,
+  contenuInfoBulle
 }: CarteIndicateurEffectifProps) {
+  const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   let arrow;
   if (variation > 0) {
@@ -46,7 +52,10 @@ export default function CarteTopIndicateur({
     <div aria-live="polite" className='fr-card'>
       <div className={styles['detailsButton']}>
         <button
+          aria-controls={`infobulle-${identifiant}`}
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
+          data-fr-opened={estCeOuvert}
+          onClick={() => setEstCeOuvert(true)}
           title="Détails de l'indicateur"
           type="button"
         >
@@ -84,6 +93,9 @@ export default function CarteTopIndicateur({
           </div>
         </div>
       </div>
+      <InfoBulle estCeOuvert={estCeOuvert} identifiant={`infobulle-${identifiant}`} setEstCeOuvert={setEstCeOuvert} titre={title}>
+        {contenuInfoBulle}
+      </InfoBulle>
     </div>
   );
 }
