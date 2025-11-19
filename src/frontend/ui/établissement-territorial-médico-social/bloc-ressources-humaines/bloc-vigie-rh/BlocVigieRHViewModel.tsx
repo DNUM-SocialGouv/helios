@@ -419,4 +419,8 @@ export class BlocVigieRHViewModel {
   public get echelleTemporelle(): Map<string, EchelleTemporelleVigieRh> {
     return new Map(Object.entries(this.etablissementTerritorialVRMedicoSocial.echelleTemporelle ?? {}));
   }
+
+  public dateDonneesArrete(indicateurId: string): string | null {
+    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.dateDonneesArretees ?? null;
+  }
 }
