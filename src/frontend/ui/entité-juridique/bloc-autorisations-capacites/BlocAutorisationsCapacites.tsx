@@ -1,4 +1,5 @@
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
+import { useExportExcelAutorisation } from "./ExportExcelAutorisation"
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -13,13 +14,15 @@ import { GraphiqueReconnaissanceContractuelles } from "../../indicateur-métier/
 type BlocAutorisationsCapacitesProps = Readonly<{
   etabTitle: string;
   etabFiness: string;
+  etabNom: string;
   entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
+export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
   const { wording } = useDependencies();
+  const { exportExcelAutorisation } = useExportExcelAutorisation(etabFiness, etabNom, entitéJuridiqueAutorisationsCapacitesViewModel);
 
   if (
     entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées &&
@@ -40,6 +43,11 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, entitéJurid
       return <></>;
     }
   }
+
+  const handleExport = () => {
+    exportExcelAutorisation();
+  }
+
 
   return (
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
@@ -68,7 +76,8 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, entitéJurid
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées && (
           <GraphiqueEquipementMateriauxLourds entiteJuridiqueEquipementLourds={entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds} />
         )}
+        <button className="fr-btn fr-icon-download-line fr-btn--icon-left fr-btn--tertiary-no-outline" onClick={handleExport} type="button">{wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}</button>
       </ul>
-    </Bloc>
+    </Bloc >
   );
 };
