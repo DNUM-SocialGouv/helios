@@ -113,60 +113,78 @@ export async function construitEchelleTemporelleVigieRh(
 
   const echelle: Record<string, EchelleTemporelleVigieRh> = {};
 
+  const dateGlobal = construitDateDernierJour(globalPeriod.annee, globalPeriod.mois);
   echelle["vr-pyramide-ages"] = {
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
+    ...(dateGlobal ? { dateDonneesArretees: dateGlobal } : {}),
   };
 
   const departsTrimestreFormat = formatTrimestriel(departsTrimestrielPeriod.annee, departsTrimestrielPeriod.trimestre);
+  const departsDate = construitDateDepuisTrimestre(departsTrimestrielPeriod.annee, departsTrimestrielPeriod.trimestre);
   echelle["vr-departs-embauches"] = {
     type: "TRIMESTRIEL",
     valeur: departsTrimestreFormat?.valeur ?? "",
     ...(departsTrimestreFormat?.transcription ? { valeurTranscription: departsTrimestreFormat.transcription } : {}),
+    ...(departsDate ? { dateDonneesArretees: departsDate } : {}),
   };
   echelle["vr-taux-rotation"] = {
     type: "TRIMESTRIEL",
     valeur: departsTrimestreFormat?.valeur ?? "",
     ...(departsTrimestreFormat?.transcription ? { valeurTranscription: departsTrimestreFormat.transcription } : {}),
+    ...(departsDate ? { dateDonneesArretees: departsDate } : {}),
   };
 
+  const effectifsDate = construitDateDernierJour(effectifsPeriod.annee, effectifsPeriod.mois);
   echelle["vr-effectifs"] = {
     type: "MENSUEL",
     valeur: formatMensuel(effectifsPeriod.annee, effectifsPeriod.mois) ?? "",
+    ...(effectifsDate ? { dateDonneesArretees: effectifsDate } : {}),
   };
 
+  const effectifsGroupesDate = construitDateDernierJour(effectifsGroupesPeriod.annee, effectifsGroupesPeriod.mois);
   echelle["vr-effectifs-groupes"] = {
     type: "MENSUEL",
     valeur: formatMensuel(effectifsGroupesPeriod.annee, effectifsGroupesPeriod.mois) ?? "",
+    ...(effectifsGroupesDate ? { dateDonneesArretees: effectifsGroupesDate } : {}),
   };
 
   const natureTrimestreFormat = formatTrimestriel(natureTrimestrielPeriod.annee, natureTrimestrielPeriod.trimestre);
+  const natureDate = construitDateDepuisTrimestre(natureTrimestrielPeriod.annee, natureTrimestrielPeriod.trimestre);
   echelle["vr-nature-contrats"] = {
     type: "TRIMESTRIEL",
     valeur: natureTrimestreFormat?.valeur ?? "",
     ...(natureTrimestreFormat?.transcription ? { valeurTranscription: natureTrimestreFormat.transcription } : {}),
+    ...(natureDate ? { dateDonneesArretees: natureDate } : {}),
   };
 
+  const departsPrematuresDate = construitDateDernierJour(globalPeriod.annee, globalPeriod.mois);
   echelle["vr-departs-prematures-cdi"] = {
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
     valeurTranscription: formatMoisDepuisJanvier(globalPeriod.mois) ?? "",
-
+    ...(departsPrematuresDate ? { dateDonneesArretees: departsPrematuresDate } : {}),
   };
 
+  const dureeDate = construitDateDernierJour(dureePeriod.annee, dureePeriod.mois);
   echelle["vr-duree-cdd"] = {
     type: "ANNUEL",
     valeur: formatAnnuel(dureePeriod.annee, dureePeriod.mois) ?? "",
+    ...(dureeDate ? { dateDonneesArretees: dureeDate } : {}),
   };
 
+  const motifDate = construitDateDernierJour(motifPeriod.annee, motifPeriod.mois);
   echelle["vr-motif-rupture"] = {
     type: "ANNUEL",
     valeur: formatAnnuel(motifPeriod.annee, motifPeriod.mois) ?? "",
+    ...(motifDate ? { dateDonneesArretees: motifDate } : {}),
   };
 
+  const indicateursGlobalDate = construitDateDernierJour(globalPeriod.annee, globalPeriod.mois);
   echelle["vr-indicateurs-global"] = {
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
+    ...(indicateursGlobalDate ? { dateDonneesArretees: indicateursGlobalDate } : {}),
   };
 
   return echelle;
@@ -263,6 +281,19 @@ function formatMoisDepuisJanvier(mois: number | null): string | null {
   if (mois === 1) return `${MOIS_LABELS[0]}`;
   else return `de ${MOIS_LABELS[0]} à ${MOIS_LABELS[mois - 1]}`
 
+}
+
+function construitDateDernierJour(annee?: number | null, mois?: number | null): string | undefined {
+  if (!annee || !mois) {
+    return undefined;
+  }
+  const date = new Date(Date.UTC(annee, mois, 0));
+  return date.toISOString().split("T")[0];
+}
+
+function construitDateDepuisTrimestre(annee?: number | null, trimestre?: number | null): string | undefined {
+  const mois = numeroMoisDepuisTrimestre(trimestre);
+  return construitDateDernierJour(annee, mois);
 }
 
 function convertToNumber(value: unknown): number | null {
