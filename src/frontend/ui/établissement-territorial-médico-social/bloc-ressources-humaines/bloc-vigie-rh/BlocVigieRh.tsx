@@ -9,6 +9,18 @@ import LineChart, { EffectifsData } from "./GraphiqueLine";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
 import PyramidChart from "./GraphiquePyramide";
 import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
+import { ContenuDepartsEmbauchesVigieRh } from "./info-bulles/ContenuDepartsEmbauchesVigieRh";
+import { ContenuDepartsPrematuresVigieRh } from "./info-bulles/ContenuDepartsPrematuresVigieRh";
+import { ContenuDureeCddVigieRh } from "./info-bulles/ContenuDureeCddVigieRh";
+import { ContenuEffectifsCategorieVigieRh } from "./info-bulles/ContenuEffectifsCategorieVigieRh";
+import { ContenuEffectifsVigieRh } from "./info-bulles/ContenuEffectifsVigieRh";
+import { ContenuMotifsRuptureVigieRh } from "./info-bulles/ContenuMotifsRuptureVigieRh";
+import { ContenuNatureContratsVigieRh } from "./info-bulles/ContenuNatureContratsVigieRh";
+import { ContenuPyramideAgesVigieRh } from "./info-bulles/ContenuPyramideAgesVigieRh";
+import { ContenuRepartitionEffectifsVigieRh } from "./info-bulles/ContenuRepartitionEffectifsVigieRh";
+import { ContenuTauxRotationVigieRh } from "./info-bulles/ContenuTauxRotationVigieRh";
+import { ContenuTopEffectifVigieRh } from "./info-bulles/ContenuTopEffectifVigieRh";
+import { ContenuTopTauxRotationVigieRh } from "./info-bulles/ContenuTopTauxRotationVigieRh";
 import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
@@ -21,9 +33,6 @@ import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi"
 import { MOIS } from "../../../../utils/constantes";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
 import { StringFormater } from "../../../commun/StringFormater";
-import { ContenuEffectifs } from "../../InfoBulle/ContenuEffectifs";
-import { ContenuPyramideDesAges } from "../../InfoBulle/ContenuPyramideDesAges";
-import { ContenuRepartitionEffectif } from "../../InfoBulle/ContenuRepartitionEffectif";
 
 type BlocVigieRHProps = Readonly<{
   etabFiness: string;
@@ -177,6 +186,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   }, [anneeEnCours]);
   const items = donneesEffectifs.data ?? [];
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
+  const recupereDateDonnees = (identifiant: string) => blocVigieRHViewModel.dateDonneesArrete(identifiant);
+  const recuperePeriodeGlissante = (identifiant: string) => {
+    const echelle = blocVigieRHViewModel.echelleTemporelle?.get(identifiant);
+    return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
+  };
 
   const indicateurEffectif = useMemo(() => {
     if (!items.length) return null;
@@ -261,8 +275,16 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <div className="fr-col-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
+                contenuInfoBulle={
+                  <ContenuTopEffectifVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+                  />
+                }
                 currentValue={indicateurEffectif.courant}
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-effectifs")}
+                identifiant="vr-top-effectifs"
+                infoBulleTitle={wording.EFFECTIFS}
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
               />
@@ -274,8 +296,16 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <div className="fr-col-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
+                contenuInfoBulle={
+                  <ContenuTopTauxRotationVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
+                  />
+                }
                 currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-taux-rotation")}
+                identifiant="vr-top-taux-rotation"
+                infoBulleTitle={wording.TAUX_ROTATION}
                 title={wording.TOP_TAUX_ROTATION_TITLE}
                 unitLabel={wording.TAUX_ROTATION}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
@@ -291,7 +321,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         {blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
           <IndicateurGraphique
             années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
-            contenuInfoBulle={<ContenuPyramideDesAges />}
+            contenuInfoBulle={
+              <ContenuPyramideAgesVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-pyramide-ages")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-pyramide-ages")}
             identifiant="vr-pyramide-ages"
             nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
@@ -319,7 +354,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuPyramideDesAges />}
+            contenuInfoBulle={
+              <ContenuDepartsEmbauchesVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
             identifiant="vr-departs-embauches"
             nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
@@ -337,7 +377,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            contenuInfoBulle={
+              <ContenuEffectifsVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
             identifiant="vr-effectifs"
             nomDeLIndicateur={wording.EFFECTIFS}
@@ -360,7 +405,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {graphiqueEffectifsGroupesAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuEffectifs dateDeMiseÀJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs} source={wording.VIGIE_RH} />}
+            contenuInfoBulle={
+              <ContenuEffectifsCategorieVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
             identifiant="vr-effectifs-groupes"
             nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
@@ -395,7 +445,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuRepartitionEffectif />}
+            contenuInfoBulle={
+              <ContenuRepartitionEffectifsVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
             identifiant="vr-repartition-effectif"
             nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
@@ -414,7 +469,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueRotationsAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuPyramideDesAges />}
+            contenuInfoBulle={
+              <ContenuTauxRotationVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
             identifiant="vr-taux-rotation"
             nomDeLIndicateur={wording.TAUX_ROTATION}
@@ -434,7 +494,13 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueMotifsAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuPyramideDesAges />}
+            contenuInfoBulle={
+              <ContenuDureeCddVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
+                periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-duree-cdd")}
             identifiant="vr-duree-cdd"
             nomDeLIndicateur={wording.DUREE_CDD}
@@ -447,7 +513,13 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueMotifsAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<ContenuPyramideDesAges />}
+            contenuInfoBulle={
+              <ContenuMotifsRuptureVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-motif-rupture")}
+                periodeGlissante={recuperePeriodeGlissante("vr-motif-rupture")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-motif-rupture")}
             identifiant="vr-motif-rupture"
             nomDeLIndicateur={wording.MOTIFS_RUPTURE_CONTRAT}
@@ -460,7 +532,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<></>}
+            contenuInfoBulle={
+              <ContenuNatureContratsVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-nature-contrats")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-nature-contrats")}
             identifiant="vr-nature-contrats"
             nomDeLIndicateur={wording.NATURE_CONTRATS}
@@ -478,7 +555,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         )}
         {blocVigieRHViewModel.graphiqueDepartsPrematuresCdiAffichable ? (
           <IndicateurGraphique
-            contenuInfoBulle={<></>}
+            contenuInfoBulle={
+              <ContenuDepartsPrematuresVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-departs-prematures-cdi")}
+              />
+            }
             echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-prematures-cdi")}
             identifiant="vr-departs-prematures-cdi"
             nomDeLIndicateur={wording.DEPARTS_PREMATURES_CDI}
