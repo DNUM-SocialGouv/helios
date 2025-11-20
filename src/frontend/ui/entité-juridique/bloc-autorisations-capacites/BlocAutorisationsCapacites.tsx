@@ -35,9 +35,9 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
   }
 
   const dataInformationBloc = () => {
-    if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0) {
+    if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length > 0) {
       return <NotAUthorized indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} />;
-    } else if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0) {
+    } else if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length > 0) {
       return <NoDataCallout indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} />;
     } else {
       return <></>;
