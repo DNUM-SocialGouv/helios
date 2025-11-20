@@ -1,0 +1,26 @@
+.downloadButton {
+  width: 100%;
+  border: 1px solid var(--border-default-grey);
+  padding: 0.75rem 0.5rem;
+}
+
+.voir_plus {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.voir_plus::before {
+  border-bottom: 1px solid;
+  color: var(--border-default-grey);
+  content: "";
+  flex: 1 1;
+  margin: auto 1rem auto auto;
+}
+
+.voir_plus::after {
+  border-bottom: 1px solid;
+  color: var(--border-default-grey);
+  content: "";
+  flex: 1 1;
+  margin: auto auto auto 1rem;
+}

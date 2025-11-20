@@ -1,3 +1,4 @@
+import styles from './BlocAutorisationsCapacites.module.css';
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 import { useExportExcelAutorisation } from "./ExportExcelAutorisation"
 import { Bloc } from "../../commun/Bloc/Bloc";
@@ -76,7 +77,11 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées && (
           <GraphiqueEquipementMateriauxLourds entiteJuridiqueEquipementLourds={entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds} />
         )}
-        <button className="fr-btn fr-icon-download-line fr-btn--icon-left fr-btn--tertiary-no-outline" onClick={handleExport} type="button">{wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}</button>
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
+            {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
+          </button>
+        </div>
       </ul>
     </Bloc >
   );
