@@ -137,7 +137,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[3];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
       const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
@@ -152,7 +152,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[3];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -163,6 +163,19 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       const infoBulle = screen.getByRole("dialog", { name: wording.EFFECTIFS });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
+    });
+
+    it("affiche le graphique détaillé des effectifs par catégorie professionnelle", () => {
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { } } statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+
+      const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
+      const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE), { selector: "h3" }))!;
+      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE);
+      expect(select).toBeInTheDocument();
+      expect(select).toHaveValue("test");
+      const options = within(select).getAllByRole("option");
+      expect(options.map((option) => option.getAttribute("value"))).toContain("test");
     });
 
   });

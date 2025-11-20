@@ -5,19 +5,6 @@ from typing import List
 SOURCE = 'VigieRh'
 
 class ColumMapping(Enum):
-    # contrat
-    CONTRAT = {
-        'finess_et': 'numero_finess',
-        'year': 'annee',
-        'month': 'mois',
-        'nature_contrat_code': 'type_contrat_code',
-        'effectif': 'effectif'
-    }
-    REF_TYPE_CONTRAT = {
-        'nature_contrat_code': 'code',
-        'nature_contrat': 'label'
-    }
-
     # profession_filiere
     PROFESSION_FILIERE = {
         'finess_et': 'numero_finess',
@@ -36,15 +23,17 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess',
         'year': 'annee',
         'month': 'mois',
-        'quarter': 'quarter',
-        'profession_code': 'profession_code',
+        'profession2_code': 'profession_code',
         'effectif': 'effectif',
-        'effectif_filiere': 'effectif_filiere',
 
     }
     REF_PROFESSION_GROUPE = {
         'profession2_code': 'code',
         'profession2': 'label'
+    }
+    PASSAGE_GROUPE_FILIERE = {
+        'profession1_code': 'code_filiere',
+        'profession2_code': 'profession_code'
     }
     # pyramide des ages
     REF_TRANCHE_AGE = {

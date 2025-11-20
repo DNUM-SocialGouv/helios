@@ -13,9 +13,26 @@ export type ProfessionFiliereRow = Readonly<{
   effectifFiliere: number;
 }>;
 
+export type ProfessionGroupeRow = Readonly<{
+  annee: number;
+  mois: number;
+  effectif: number;
+}>;
+
+export type ProfessionGroupeData = Readonly<{
+  categorie: string;
+  dataCategorie: ProfessionGroupeRow[];
+}>;
+
+export type ProfessionGroupes = Readonly<{
+  data: ProfessionGroupeData[];
+  dateDeMiseAJour: string;
+}>;
+
 export type ProfessionFiliereData = Readonly<{
   categorie: string;
   dataCategorie: ProfessionFiliereRow[];
+  groupes?: ProfessionGroupes;
 }>;
 
 export type ProfessionFiliere = Readonly<{

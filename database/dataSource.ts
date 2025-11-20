@@ -111,6 +111,8 @@ import { SuppressionEffectifEtabDeVigieRhProfessionFiliere1758292560238 } from "
 import { AjoutTableVigieRhDureeCdd1759821521368 } from "./migrations/vigie_rh/1759821521368-AjoutTableVigieRhDureeCdd";
 import { AjoutMotifsRupturesContrats1760516962957 } from "./migrations/vigie_rh/1760516962957-AjoutMotifsRupturesContrats";
 import { VigierhNatureContratsTables1760966102359 } from "./migrations/vigie_rh/1760966102359-vigierhNatureContratsTables";
+import { ModificationTableProfession21762263346352 } from "./migrations/vigie_rh/1762263346352-ModificationsTablesProfessions";
+import { SupressionTableVigierhContrat1763372516438 } from "./migrations/vigie_rh/1763372516438-SupressionTableVigierhContrat";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -166,8 +168,6 @@ import { VigieRhRefProfessionGroupeModel } from "./models/vigie_rh/referentiel/V
 import { VigieRhRefQualiteModel } from "./models/vigie_rh/referentiel/VigieRhRefQualiteModel";
 import { VigieRhRefRedressementModel } from "./models/vigie_rh/referentiel/VigieRhRefRedressementModel";
 import { VigieRhRefTrancheAgeModel } from "./models/vigie_rh/referentiel/VigieRhRefTrancheAgeModel";
-import { VigieRhRefTypeContratModel } from "./models/vigie_rh/referentiel/VigieRhRefTypeContratModel";
-import { VigieRhContratModel } from "./models/vigie_rh/VigieRhContratModel";
 import { VigieRhDureesCDDModel } from "./models/vigie_rh/VigieRHDureesCDDModel";
 import { VigieRhMotifRuptutreContratModel } from "./models/vigie_rh/VigieRhMotifRuptutreContratModel";
 import { VigieRhMouvementsModel } from "./models/vigie_rh/VigieRhMouvementsModel";
@@ -229,11 +229,9 @@ const datasource = new DataSource({
     UserListEtablissementModel,
     VigieRhRefProfessionFiliereModel,
     VigieRhRefProfessionGroupeModel,
-    VigieRhRefTypeContratModel,
     VigieRhRefMasqueModel,
     VigieRhRefQualiteModel,
     VigieRhRefRedressementModel,
-    VigieRhContratModel,
     VigieRhProfessionFiliereModel,
     VigieRhProfessionGroupeModel,
     VigieRhRefTrancheAgeModel,
@@ -371,7 +369,9 @@ const datasource = new DataSource({
     AjoutColonneDepartsPrematuresCdi1761819265202,
     AjoutDmsActiviteMensuel1759826053430,
     AjoutDmsActiviteSanitaire1759845977685,
-    AjoutDureeMoyenneSejourDansLesProfils1762435683856
+    AjoutDureeMoyenneSejourDansLesProfils1762435683856,
+    ModificationTableProfession21762263346352,
+    SupressionTableVigierhContrat1763372516438
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
