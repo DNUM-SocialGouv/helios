@@ -13,7 +13,12 @@ const DepartsPrematuresCdi = ({ blocVigieRhViewModel }: DepartsPrematuresCdiProp
   const donnees = blocVigieRhViewModel.departsPrematuresCdi;
   const libellesValeursManquantes = donnees.filter(({ valeur }) => typeof valeur !== "number" || !Number.isFinite(valeur)).map(({ annee }) => `${annee}`);
   const anneeCourante = new Date().getFullYear();
-  const anneeMax = donnees.map(d => d.annee).reduce((accum, valeur) => Math.max(accum, valeur));
+  const anneeMax = donnees.reduce<number | null>((accum, { annee }) => {
+    if (accum === null) {
+      return annee;
+    }
+    return Math.max(accum, annee);
+  }, null);
   const formatValeur = (valeur: number | null): string => {
     if (typeof valeur !== "number" || Number.isNaN(valeur)) {
       return wording.NON_RENSEIGNÉ;
@@ -39,7 +44,7 @@ const DepartsPrematuresCdi = ({ blocVigieRhViewModel }: DepartsPrematuresCdiProp
           ))}
         </tbody>
       </table>
-      {anneeMax === anneeCourante && (
+      {anneeMax !== null && anneeMax === anneeCourante && (
         <p className={`fr-text--sm ${styles["partial-data-note"]}`}>
           {wording.DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES(
             anneeMax,

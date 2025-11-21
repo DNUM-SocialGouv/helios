@@ -53,7 +53,7 @@ const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhV
   const { wording } = useDependencies();
   const palette = blocVigieRhViewModel.paletteNatureContrats;
 
-  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.TRIMESTRIEL);
   const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
   }, []);
@@ -63,7 +63,7 @@ const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhV
   return (
     <div>
       <FrequencyFilter
-        ListeFrquences={[wording.ANNUEL, wording.TRIMESTRIEL]}
+        ListeFrquences={[wording.TRIMESTRIEL, wording.ANNUEL]}
         handleFrequency={handleFrequency}
         identifiant="frequency-filter-nature-contrats"
         selectedFrequency={selectedFrequency}

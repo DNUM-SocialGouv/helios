@@ -79,8 +79,9 @@ export default function CarteTopIndicateur({
           <div className={styles["headerRow"]}>
             <span aria-hidden className={`${styles[variationColorClass]} ${styles["arrow"]} ${arrowIcone}`}></span>
             <span className={styles["value"]}>{currentValue}</span>
-            {echelleTemporelle &&
-              echelleTemporelle.type === "TRIMESTRIEL" ? <abbr title={echelleTemporelle?.valeurTranscription}><span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span></abbr> : <span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span>
+            {echelleTemporelle?.type === "TRIMESTRIEL"
+              ? <abbr title={echelleTemporelle?.valeurTranscription}><span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span></abbr>
+              : <span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span>
             }
           </div>
 

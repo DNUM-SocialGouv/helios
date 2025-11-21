@@ -402,7 +402,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </>
             </IndicateurGraphique>
           ) : null,
-          blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+        ], 3)}
+
+        {renderRow([blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
             <IndicateurGraphique
               contenuInfoBulle={
                 <ContenuRepartitionEffectifsVigieRh
@@ -425,9 +427,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               />
             </IndicateurGraphique>
           ) : null,
-        ], 3)}
-
-        {renderRow([
           blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
             <IndicateurGraphique
               contenuInfoBulle={
@@ -496,7 +495,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               />
             </IndicateurGraphique>
           ) : null,
-        ], 3)}
+        ], 2)}
 
         {renderRow([
           blocVigieRHViewModel.graphiqueMotifsAffichable ? (
