@@ -1,4 +1,5 @@
 import styles from "./BlocAutorisationEtCapacitéSanitaire.module.css";
+import { useExportExcelAutorisationSanitaire } from "./ExportExcelAutorisationsSanitaire";
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -16,13 +17,15 @@ import { ContenuÉquipementsMatérielsLourds } from "../InfoBulle/ContenuÉquipe
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
+  etabNom: string;
   établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
+export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, etabNom, établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies();
+  const { exportExcelAutorisationSanitaire } = useExportExcelAutorisationSanitaire(etabFiness, etabNom, établissementTerritorialSanitaireAutorisationsViewModel);
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
@@ -37,6 +40,10 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, é
       return <></>;
     }
 
+  }
+
+  const handleExport = () => {
+    exportExcelAutorisationSanitaire();
   }
 
   return (
@@ -117,6 +124,11 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, é
             {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
           </IndicateurGraphique>
         )}
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
+            {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
+          </button>
+        </div>
       </ul>
     </Bloc>
   );

@@ -83,6 +83,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
 
         <BlocAutorisationEtCapacitéMédicoSocial
           etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabNom={établissementTerritorialViewModel.identitéViewModel.nomDeLÉtablissementTerritorial}
           etabTitle={établissementTerritorialViewModel.titre}
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)}

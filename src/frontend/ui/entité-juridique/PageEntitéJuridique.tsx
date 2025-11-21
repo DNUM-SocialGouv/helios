@@ -85,6 +85,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
         <BlocAutorisationsCapacites
           entitéJuridiqueAutorisationsCapacitesViewModel={entitéJuridiqueViewModel.entitéJuridiqueAutorisationsCapacitesViewModel}
           etabFiness={entitéJuridiqueViewModel.numéroFiness}
+          etabNom={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
           etabTitle={entitéJuridiqueViewModel.titre}
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)}

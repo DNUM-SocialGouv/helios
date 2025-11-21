@@ -1,9 +1,3 @@
-.liste-indicateurs {
-  display: grid;
-  gap: 1rem;
-  grid-auto-flow: row;
-}
-
 .voir_plus {
   margin-left: 10px;
   margin-right: 10px;
