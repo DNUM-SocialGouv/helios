@@ -56,7 +56,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
   },
   {
     id: "compte-helios",
-    title: "Compte Hélios",
+    title: "Compte Helios",
     questions: [
       {
         id: "compte-inactif",
