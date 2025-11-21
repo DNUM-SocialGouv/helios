@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 import style from "./Faq.module.css";
-
 import "@gouvfr/dsfr/dist/component/accordion/accordion.min.css";
 import type { ReactNode } from "react";
 
@@ -313,7 +312,7 @@ export default function Faq() {
         const categoryId = `faq-category-${category.id}`;
         return (
           <div className="fr-accordions-group" key={category.id}>
-            <section className="fr-accordion" key={category.id}>
+            <section className="fr-accordion">
               <h2 className="fr-accordion__title">
                 <button aria-controls={categoryId} aria-expanded={true} className="fr-accordion__btn" type="button">
                   {category.title}
@@ -359,6 +358,6 @@ export default function Faq() {
           </a>
         </div>
       </div>
-    </section >
+    </section>
   );
 }
