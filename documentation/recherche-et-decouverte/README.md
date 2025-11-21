@@ -8,6 +8,7 @@ Cette section détaille les différentes fonctionnalités de recherche disponibl
 - **Historique de recherche** : consultation des établissements récemment consultés pour un accès rapide.
 - **Suggestions et catégories FINESS** : assistance à la saisie grâce à une taxonomie harmonisée des catégories d'établissements.
 - **Favoris et listes** : sauvegarde de sélections d'établissements pour usage ultérieur, partage et préparation d'analyses comparatives.
+- **Import de listes** : import rapide de plusieurs établissements en collant leurs numéros FINESS pour réutiliser des listes existantes.
 
 Ces fonctionnalités sont conçues pour s'adapter aux différents profils d'utilisateurs (agents terrain, administrateurs régionaux, administrateurs nationaux) tout en respectant les périmètres d'accès définis par rôle.
 

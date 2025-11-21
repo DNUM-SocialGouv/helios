@@ -9,6 +9,7 @@
   * [Historique de recherche](recherche-et-decouverte/historique.md)
   * [Suggestions et catégories FINESS](recherche-et-decouverte/suggestions.md)
   * [Favoris et listes](recherche-et-decouverte/favoris.md)
+  * [Import de listes](recherche-et-decouverte/import-liste.md)
 * [Fiche 360 entité / établissement](fiche-360/README.md)
   * [Fiche entité juridique](fiche-360/entite-juridique.md)
   * [Fiche établissement sanitaire](fiche-360/etablissement-sanitaire.md)

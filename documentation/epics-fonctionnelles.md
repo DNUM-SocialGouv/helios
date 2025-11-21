@@ -7,6 +7,7 @@ Cette page présente les grandes capacités fonctionnelles d'Helios. Chaque EPIC
 - [Historique de recherche](recherche-et-decouverte/historique.md) : consultation des recherches récentes pour gagner du temps.
 - [Suggestions et catégories FINESS](recherche-et-decouverte/suggestions.md) : assistance à la saisie grâce à une taxonomie harmonisée.
 - [Favoris et listes](recherche-et-decouverte/favoris.md) : sauvegarde de sélections d'établissements pour usage ultérieur.
+- [Import de listes](recherche-et-decouverte/import-liste.md) : import rapide de plusieurs établissements via leurs numéros FINESS.
 
 ## 2. Fiche 360 entité / établissement
 - [Fiche entité juridique](fiche-360/entite-juridique.md) : consolidation des blocs Activité, Finances, Ressources humaines, Autorisations pour piloter la gouvernance.
