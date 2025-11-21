@@ -10,7 +10,7 @@ import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
   constructor(
-    private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
+    readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
     private wording: Wording
   ) { }
 
