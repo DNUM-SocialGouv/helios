@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import style from "./Faq.module.css";
+
 import "@gouvfr/dsfr/dist/component/accordion/accordion.min.css";
 import type { ReactNode } from "react";
 
@@ -307,17 +309,17 @@ const renderAnswer = (answer: FaqQuestion["answer"]) => {
 export default function Faq() {
   return (
     <section>
-      <div className="fr-accordions-group">
-        {FAQ_SECTIONS.map((category) => {
-          const categoryId = `faq-category-${category.id}`;
-          return (
-            <section className="fr-accordion fr-mb-3w" key={category.id}>
+      {FAQ_SECTIONS.map((category) => {
+        const categoryId = `faq-category-${category.id}`;
+        return (
+          <div className="fr-accordions-group" key={category.id}>
+            <section className="fr-accordion" key={category.id}>
               <h2 className="fr-accordion__title">
-                <button aria-controls={categoryId} aria-expanded={false} className="fr-accordion__btn" type="button">
+                <button aria-controls={categoryId} aria-expanded={true} className="fr-accordion__btn" type="button">
                   {category.title}
                 </button>
               </h2>
-              <div className="fr-collapse" id={categoryId}>
+              <div className="fr-collapse fr-collapse--expanded" id={categoryId}>
                 <div className="fr-accordions-group fr-mt-3w fr-ml-2w">
                   {category.questions.map((question) => {
                     const questionId = `${categoryId}-question-${question.id}`;
@@ -342,21 +344,21 @@ export default function Faq() {
                 </div>
               </div>
             </section>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
 
       <div className="fr-callout fr-my-8w">
         <p className="fr-callout__title">Besoin d’un accompagnement personnalisé ?</p>
         <p className="fr-callout__text fr-mb-2w">
           Notre équipe support est joignable pour répondre à vos questions et vous guider dans vos démarches.
         </p>
-        <div className="fr-btns-group">
-          <a className="fr-btn" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">
+        <div className={`fr-btns-group ${style["center-button-grp"]}`}>
+          <a className={`fr-btn fr-btn--secondary ${style["center-button"]}`} href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">
             Contacter notre équipe
           </a>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

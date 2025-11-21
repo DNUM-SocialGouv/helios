@@ -1,0 +1,7 @@
+.center-button-grp {
+  justify-content: center;
+}
+
+.center-button-grp .center-button {
+  width: auto;
+}
