@@ -1,8 +1,7 @@
 import { Workbook } from 'exceljs';
 
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
-import { AutorisationActivitesAmm } from '../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAutorisationEtCapacité';
-import { AutorisationSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation';
+import { AutorisationsAMMSanitaire, AutorisationSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation';
 import { ecrireLignesDansSheet, telechargerWorkbook } from '../../../utils/excelUtils';
 import { useDependencies } from '../../commun/contexts/useDependencies';
 
@@ -17,8 +16,6 @@ export function getCurrentDate() {
 
 export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, etablissementTerritorialSanitaireAutorisationsCapacites: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) {
   const { wording } = useDependencies();
-
-  const autorisationFields = [wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
   function exportExcelAutorisationSanitaire() {
     const workbook = new Workbook();
@@ -42,7 +39,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
   }
 
   const exportExcelAutorisationDeSoin = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) => {
-    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", "Autorisations Établissements", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
     const etablissementSanitaireAutorisations = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.autorisations;
     const etablissementSanitaireAutorisationsAmm = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.autorisationsAmm;
@@ -58,7 +55,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
     ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
   }
 
-  function getAmmRows(autorisations: AutorisationActivitesAmm['autorisations']): string[][] {
+  function getAmmRows(autorisations: AutorisationsAMMSanitaire[]): string[][] {
     const result: string[][] = [];
     for (const activite of autorisations) {
       const activiteColumn = `${activite.libelle} [${activite.code}]`;
@@ -71,7 +68,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
             for (const declaration of pratique.declarations) {
               const declarationColumn = `${declaration.libelle} [${declaration.code}]`;
               result.push(
-                ...getEtablissementRows(declaration.autorisationAmmEtablissments, [activiteColumn, modaliteColumn, mentionColumn, pratiqueColumn, declarationColumn], autorisationFields)
+                [activiteColumn, modaliteColumn, mentionColumn, pratiqueColumn, declarationColumn, ...processEtablissement(declaration)]
               );
             }
           }
@@ -79,6 +76,15 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
       }
     }
     return result;
+  };
+
+  const processEtablissement = (declaration: any) => {
+    return [
+      declaration.codeAutorisationArhgos,
+      declaration.dateAutorisation || "",
+      declaration.dateMiseEnOeuvre || "",
+      declaration.dateFin || ""
+    ]
   };
 
   function getAutorisationRows(etablissementSanitaireAutorisations: AutorisationSanitaireActivité[]): string[][] {
@@ -98,31 +104,6 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
     }
     return result;
   }
-
-  function getEtablissementRows(
-    autorisationSanitaire: any[],
-    prefixColumns: string[],
-    fields: string[],
-  ): string[][] {
-    return autorisationSanitaire.map(etablissement => {
-      const { etablissementColumn, fieldValues } = processEtablissement(etablissement, fields);
-      return [
-        ...prefixColumns,
-        etablissementColumn,
-        ...fieldValues
-      ];
-    });
-  }
-
-  const processEtablissement = (etablissement: any, fields: string[]) => {
-    const etablissementColumn = `${etablissement.nomEtablissement} [${etablissement.numeroFiness}]`;
-    const autorisationsMap: Record<string, string> = {};
-    for (const autorisation of etablissement.autorisations) {
-      autorisationsMap[autorisation.nom] = autorisation.valeur;
-    }
-    const fieldValues = fields.map(field => autorisationsMap[field] || '');
-    return { etablissementColumn, fieldValues };
-  };
 
   const exportExcelAutresAutorisations = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) => {
     const columns = [wording.ACTIVITÉ, "Modalité", "Déclaration/Forme", wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
