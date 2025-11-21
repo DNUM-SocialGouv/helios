@@ -49,7 +49,6 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
     exportExcelAutorisation();
   }
 
-
   return (
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
       {dataInformationBloc()}

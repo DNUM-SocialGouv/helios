@@ -219,6 +219,3 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
 
   return { exportExcelAutorisation };
 }
-
-
-
