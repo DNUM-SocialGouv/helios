@@ -1,10 +1,12 @@
 # Grandes EPIC fonctionnelles
 
+Cette page présente les grandes capacités fonctionnelles d'Helios. Chaque EPIC est détaillée dans des sous-pages dédiées.
+
 ## 1. Recherche & découverte
-- **Recherche simple** : moteur accessible dès la page d’accueil pour retrouver rapidement une entité juridique ou un établissement via FINESS, nom ou localisation.
-- **Recherche avancée** : filtres multicritères (typologie, statut, activité, zone géographique) pour bâtir des ciblages précis.
-- **Historique & suggestions** : consultation des recherches récentes et propositions intelligentes pour gagner du temps.
-- **Catégories FINESS** : assistance à la saisie grâce à une taxonomie harmonisée.
+- [Recherche simple et avancée](recherche-et-decouverte/recherche.md) : moteur de recherche accessible dès la page d'accueil pour retrouver rapidement une entité juridique ou un établissement.
+- [Historique de recherche](recherche-et-decouverte/historique.md) : consultation des recherches récentes pour gagner du temps.
+- [Suggestions et catégories FINESS](recherche-et-decouverte/suggestions.md) : assistance à la saisie grâce à une taxonomie harmonisée.
+- [Favoris et listes](recherche-et-decouverte/favoris.md) : sauvegarde de sélections d'établissements pour usage ultérieur.
 
 ## 2. Fiche 360 entité / établissement
 - **Entité juridique** : consolidation des blocs Activité, Finances, Ressources humaines, Autorisations, Qualité/inspections pour piloter la gouvernance.

@@ -15,14 +15,5 @@ Cette documentation fonctionne comme la source de vérité fonctionnelle :
 
 Chaque page est pensée pour être lisible par les équipes produit, métier et design. Les références techniques sont volontairement écartées au profit d’une description orientée usages.
 
-## Prochaines itérations
-- Décrire chaque bloc d’indicateurs (activité, finances, RH, qualité) avec leurs objectifs et utilisateurs.
-- Ajouter des user stories détaillées par rôle avec illustrations ou captures.
-- Préciser la fréquence d’actualisation des sources de données et le SLA associé.
-- Documenter les cas limites (données manquantes, établissements multi-rattachements, etc.).
-
 ## Contribution
-Avant toute contribution :
-1. Synchroniser la branche `doc/documentation`.
-2. Vérifier les règles d’écriture dans `documentation/rules.md` et les consignes Cursor (`.cursor/rules.md`).
-3. AJouter les nouvelles pages dans `documentation/SUMMARY.md` pour qu’elles apparaissent dans la navigation GitBook.
+à définir
