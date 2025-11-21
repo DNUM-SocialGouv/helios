@@ -14,5 +14,5 @@ export const formaterMiseAJourEtDonnees = (
 ): string => {
   const dateMaj = dateDeMiseAJour && dateDeMiseAJour.trim().length > 0 ? dateDeMiseAJour : wording.NON_RENSEIGNÉ;
   const arretees = dateDonneesArretees ? StringFormater.formatDate(dateDonneesArretees) : wording.NON_RENSEIGNÉ;
-  return `${wording.miseÀJour(dateMaj)} (données arrêtées au ${arretees})`;
+  return `${wording.miseÀJour(dateMaj)} - ${wording.DONNEES_ARRETEES} ${arretees}`;
 };

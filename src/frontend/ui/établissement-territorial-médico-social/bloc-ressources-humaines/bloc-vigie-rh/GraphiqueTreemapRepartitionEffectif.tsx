@@ -314,7 +314,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
     <>
       <div style={{ height, display: "flex", flexDirection: "column" }}>
 
-        <div style={{ flex: 1, minHeight: 0, maxWidth: height, margin: "0 auto", width: "100%" }}>
+        <div style={{ flex: 1, minHeight: 0, maxWidth: height, width: "100%", alignSelf: "flex-start" }}>
           <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} style={{ height: "100%" }} type="treemap" />
         </div>
         {legendItems.length ? (
