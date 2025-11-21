@@ -18,17 +18,33 @@
   margin-bottom: 1rem;
 }
 
+.liste-indicateurs-vr-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
 .liste-indicateurs-vr {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
+  grid-template-columns: repeat(var(--vigie-rh-cols, 3), minmax(0, 1fr));
+  --indicateur-graph-min-height: 420px;
 }
 
 .liste-indicateurs-vr>li {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100%;
+}
+
+.liste-indicateurs-vr [class*="graphe"] {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--indicateur-graph-min-height, 420px);
+  flex: 1 1 auto;
 }
 
 .liste-indicateurs-vr canvas {
@@ -75,7 +91,8 @@
   }
 
   .liste-indicateurs-vr {
-    display: inherit;
+    display: block;
+    grid-template-columns: none;
   }
 
   .liste-indicateurs>li {

@@ -227,6 +227,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   const options = {
     responsive: true,
     maintainAspectRatio: true,
+    animation: false,
     plugins: {
       datalabels: {
         color: "#000",
