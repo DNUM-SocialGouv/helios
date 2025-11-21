@@ -9,9 +9,10 @@ Cette page présente les grandes capacités fonctionnelles d'Helios. Chaque EPIC
 - [Favoris et listes](recherche-et-decouverte/favoris.md) : sauvegarde de sélections d'établissements pour usage ultérieur.
 
 ## 2. Fiche 360 entité / établissement
-- **Entité juridique** : consolidation des blocs Activité, Finances, Ressources humaines, Autorisations, Qualité/inspections pour piloter la gouvernance.
-- **Établissements territoriaux** : vue détaillée adaptée au profil (sanitaire ou médico-social) avec indicateurs spécifiques et historique pluriannuel.
-- **Navigation parent/enfant** : passage fluide entre la maison mère et les sites rattachés pour comprendre l’organisation territoriale.
+- [Fiche entité juridique](fiche-360/entite-juridique.md) : consolidation des blocs Activité, Finances, Ressources humaines, Autorisations pour piloter la gouvernance.
+- [Fiche établissement sanitaire](fiche-360/etablissement-sanitaire.md) : vue détaillée adaptée aux établissements de santé avec indicateurs d'activité, autorisations, capacités et qualité.
+- [Fiche établissement médico-social](fiche-360/etablissement-medicosocial.md) : vue détaillée adaptée aux établissements médico-sociaux avec indicateurs d'activité, capacités, ressources humaines, budget et qualité.
+- [Navigation parent/enfant](fiche-360/navigation-parent-enfant.md) : passage fluide entre la maison mère et les sites rattachés pour comprendre l'organisation territoriale.
 
 ## 3. Comparaison multi-structures
 - **Construction des scénarios** : sélection de plusieurs établissements/entités, choix du type (sanitaire, médico-social, entité juridique) et de l’année de référence.
