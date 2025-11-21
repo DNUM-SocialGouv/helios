@@ -232,6 +232,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
   const options = {
     responsive: true,
     maintainAspectRatio: true,
+    animation: false,
     plugins: {
       datalabels: {
         color: "#000",

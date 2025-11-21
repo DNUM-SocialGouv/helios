@@ -7,6 +7,7 @@ import React, { ReactElement, useState } from "react";
 import styles from "./CarteIndicateurEffectif.module.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
 import { EchelleTemporelleVigieRh } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { InfoBulle } from "../../../commun/InfoBulle/InfoBulle";
 
 /** Propriétés de la carte indicateur d’effectif. */
@@ -25,6 +26,7 @@ type CarteIndicateurEffectifProps = Readonly<{
   unitLabel?: string;
   identifiant: string;
   contenuInfoBulle: ReactElement;
+  tendance?: "ASC" | "DESC";
 }>;
 
 export default function CarteTopIndicateur({
@@ -37,22 +39,29 @@ export default function CarteTopIndicateur({
   variationText = "",
   echelleTemporelle,
   identifiant,
-  contenuInfoBulle
+  contenuInfoBulle,
+  tendance = "ASC"
 }: CarteIndicateurEffectifProps) {
   const [estCeOuvert, setEstCeOuvert] = useState(false);
-
-  let arrow;
+  const { wording } = useDependencies()
+  let variationColorClass = 'variationGreen',arrowIcone;
+  const variationEstRouge = (variation > 0 && tendance==="DESC") //Si la valeur de l'indicateur augmente alors que la tendance souhaité est déscendante
+                          ||(variation < 0 && tendance==="ASC") //Si la valeur de l'indicateur baisse alors que la tendance souhaité est ascendante
+                          ||(variation === 0 && tendance==="ASC"); //Si la valeur de l'indicateur est stable alors que la tedance souhaité est ascendante 
+  if(variationEstRouge){
+    variationColorClass = 'variationRed';
+  }
   if (variation > 0) {
-    arrow = '<span class="fr-icon-arrow-right-up-fill" aria-hidden="true"></span>';
-  } else if (variation < 0) {
-    arrow = '<span class="fr-icon-arrow-right-down-fill" aria-hidden="true"></span>';
+    arrowIcone = 'fr-icon-arrow-right-up-fill';
+  } else if (variation < 0 ) {
+    arrowIcone = "fr-icon-arrow-right-down-fill";
   } else {
-    arrow = '<span class="fr-icon-arrow-right-fill" aria-hidden="true"></span>';
+    arrowIcone = "fr-icon-arrow-right-fill";
   }
 
   return (
-    <div aria-live="polite" className='fr-card'>
-      <div className={styles['detailsButton']}>
+    <div aria-live="polite" className='fr-card '>
+      <div className={`${styles['detailsButton']}`}>
         <button
           aria-controls={`infobulle-${identifiant}`}
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
@@ -61,17 +70,17 @@ export default function CarteTopIndicateur({
           title="Détails de l'indicateur"
           type="button"
         >
-          DÉTAILS
+          {wording.DÉTAILS}
         </button>
       </div>
       <div className="fr-card__body">
-        <div className="fr-card__content">
+        <div className={`${styles["contenuVignette"]} fr-card__content`}>
           <p className="fr-tag">{title}</p>
           <div className={styles["headerRow"]}>
-            <span aria-hidden className={styles["arrow"]} dangerouslySetInnerHTML={{ __html: arrow }}></span>
+            <span aria-hidden className={`${styles[variationColorClass]} ${styles["arrow"]} ${arrowIcone}`}></span>
             <span className={styles["value"]}>{currentValue}</span>
-            {echelleTemporelle && 
-              echelleTemporelle.type==="TRIMESTRIEL"? <abbr title={echelleTemporelle?.valeurTranscription}><span>({echelleTemporelle?.valeur})</span></abbr>:<span>({echelleTemporelle?.valeur})</span>
+            {echelleTemporelle &&
+              echelleTemporelle.type === "TRIMESTRIEL" ? <abbr title={echelleTemporelle?.valeurTranscription}><span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span></abbr> : <span className={styles["echelleTemporelle"]}>({echelleTemporelle?.valeur})</span>
             }
           </div>
 
@@ -79,12 +88,12 @@ export default function CarteTopIndicateur({
 
           <div className={styles["variation"]}>
             {variation === 0 ? (
-              <span style={{ color: "#666" }}>Stable par rapport {comparaisonLabel}</span>
+              <><span className={`${styles[variationColorClass]}`}>Stable </span><span style={{ color: "#666" }}> par rapport {comparaisonLabel}</span></>
             ) : (
               (() => {
                 return (
                   <>
-                    <span className={styles["variationValue"]}>
+                    <span className={`${styles["variationValue"]} ${styles[variationColorClass]}`}>
                       {variationText}
                     </span>
                     <span> par rapport {comparaisonLabel}</span>
