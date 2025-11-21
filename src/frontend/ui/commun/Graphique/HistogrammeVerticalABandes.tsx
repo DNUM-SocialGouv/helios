@@ -103,21 +103,21 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     setIndexPremierMoisNonRenseigne(props.valeurs[0].length);
   }, [props.valeurs])
 
-  let valeursTranscription = props.valeurs;
   let hasSomeValuesToHide = false;
-  if (props.cacheLesValeursBasse) {
-    valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
-      if (valeur) {
-        const numValue = Number.parseInt(valeur.replaceAll(/\s/g, ""));
-        if (numValue > 0 && numValue <= MIN_VALUE) {
-          hasSomeValuesToHide = true;
-          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
-        }
+  const valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
+    if (valeur) {
+      const numValue = Number.parseFloat(valeur.replaceAll(/\s/g, "").replace(",", "."));
+      if (Number.isNaN(numValue)) {
+        return valeur;
       }
-      return valeur;
-    })
-    );
-  }
+      if (props.cacheLesValeursBasse && numValue > 0 && numValue <= MIN_VALUE) {
+        hasSomeValuesToHide = true;
+        return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+      }
+      return StringFormater.roundFormatInFrench(numValue);
+    }
+    return valeur;
+  }));
 
   const legendStyle: { justifyContent?: string, gridTemplateRows?: string } = {};
   // Si la légende doit être centrée ou si c’est in graph mensuel on centre la légende
