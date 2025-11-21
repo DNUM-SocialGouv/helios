@@ -6,4 +6,3 @@
 * [EPIC fonctionnelles](epics-fonctionnelles.md)
 * [Règles métiers](regles-metiers.md)
 * [Règles de contribution](rules.md)
-* [Intégration GitBook](GITBOOK.md)

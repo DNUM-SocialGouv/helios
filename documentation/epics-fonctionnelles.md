@@ -1,26 +1,30 @@
 # Grandes EPIC fonctionnelles
 
 ## 1. Recherche & découverte
-- **Recherche simple et avancée** : `RechercheParmiLesEntitésEtÉtablissementsUseCase.ts` et `RechercheAvanceeParmiLesEntitésEtÉtablissementsUseCase.ts` pilotent les API `pages/api/recherche*.ts` ; l’UI se trouve dans `src/frontend/ui/recherche-avancee/`.
-- **Historique & suggestions** : `SearchHistoryUseCase.ts` + composant `src/frontend/ui/search-history` pour rejouer les recherches.
-- **Catégories FINESS** : `CategoriesFinessUseCase.ts` expose la taxonomie explorée dans les formulaires.
+- **Recherche simple** : moteur accessible dès la page d’accueil pour retrouver rapidement une entité juridique ou un établissement via FINESS, nom ou localisation.
+- **Recherche avancée** : filtres multicritères (typologie, statut, activité, zone géographique) pour bâtir des ciblages précis.
+- **Historique & suggestions** : consultation des recherches récentes et propositions intelligentes pour gagner du temps.
+- **Catégories FINESS** : assistance à la saisie grâce à une taxonomie harmonisée.
 
 ## 2. Fiche 360 entité / établissement
-- **Entité juridique** : `RécupèreLEntitéJuridiqueUseCase.ts` ragrège capacité, budget, ressources humaines et inspections pour la page `src/pages/entite-juridique/[numeroFiness].tsx`.
-- **Établissements territoriaux** : use cases spécialisés (`RécupèreLÉtablissementTerritorialMédicoSocialUseCase.ts`, `RécupèreLÉtablissementTerritorialSanitaireUseCase.ts`) alimentent les composants `src/frontend/ui/établissement-territorial-*`.
-- **Navigation parent/enfant** : `RécupèreLesÉtablissementsTerritoriauxRattachésÀLEntitéJuridiqueUseCase.ts` alimente les tables de rattachement.
+- **Entité juridique** : consolidation des blocs Activité, Finances, Ressources humaines, Autorisations, Qualité/inspections pour piloter la gouvernance.
+- **Établissements territoriaux** : vue détaillée adaptée au profil (sanitaire ou médico-social) avec indicateurs spécifiques et historique pluriannuel.
+- **Navigation parent/enfant** : passage fluide entre la maison mère et les sites rattachés pour comprendre l’organisation territoriale.
 
 ## 3. Comparaison multi-structures
-- **Construction des scénarios** : `ComparaisonEtablissementsUseCase.ts` expose la logique, tandis que `ComparaisonPage.tsx` gère la sélection des FINESS, les années et l’export Excel.
-- **Listes de favoris** : `ListeActionsButton` et `src/frontend/ui/liste/` permettent d’enregistrer des combinaisons pour usage ultérieur.
-- **Alertes & infobulles** : `contenuModal` contextualise chaque indicateur et rappelle la date de mise à jour (`DatesMisAjourSources`).
+- **Construction des scénarios** : sélection de plusieurs établissements/entités, choix du type (sanitaire, médico-social, entité juridique) et de l’année de référence.
+- **Lecture assistée** : tableaux comparatifs avec tris, pagination, infobulles explicatives et rappel de la fraîcheur des données.
+- **Listes de favoris** : sauvegarde de paniers d’établissements pour rejouer des analyses, partager avec des collègues, ou préparer des comités.
+- **Export & partage** : génération d’Excel prêts à diffuser.
 
 ## 4. Administration & sécurité
-- **Gestion des utilisateurs** : `UtilisateursUseCase.ts` + pages `src/pages/settings/users` couvrent création, activation, reset mot de passe.
-- **Profils métiers** : `ProfilesUseCase.ts` + UI `parametrage-profil` définissent les filtres d’accès aux indicateurs.
-- **Rôles & middleware** : `RolesUseCase.ts`, `checkAdminMiddleware.ts`, `checkNationalAdminMiddleware.ts` sécurisent les routes sensibles.
+- **Gestion des utilisateurs** : workflow d’invitation, activation/désactivation, réinitialisation de mot de passe et suivi des statuts.
+- **Profils métiers** : paramétrage des périmètres visibles (indicateurs, zones, filtres) pour personnaliser l’expérience.
+- **Rôles & accès** : hiérarchie nationale/régionale/centrale/utilisateur avec contrôles sur les fonctionnalités sensibles.
+- **Journalisation** : traçabilité des actions critiques (création de compte, listes partagées, exports) pour répondre aux exigences RGPD.
 
 ## 5. Suivi des données et pipelines
-- **Data crawler** : scripts `datacrawler/ajoute_le_bloc_*` agrègent budget, finances, ressources humaines, activités.
-- **Vigie RH** : l’EPIC RH (`vigie-rh/ContratUseCase.ts`) expose contrats et mouvements.
-- **Qualité des données** : endpoints de comparaison (`getDatesMisAJourSourcesComparaison`) affichent la fraîcheur des sources sur l’UI.
+- **Collecte automatisée** : pipelines planifiés pour rapatrier les sources nationales (Diamant, SIICEA, SIVSS, Vigie RH…).
+- **Transformation & contrôle** : normalisation, rapprochement FINESS, calcul des indicateurs et détection d’anomalies.
+- **Vigie RH** : exploitation des informations RH (contrats, mouvements, effectifs) pour éclairer les décisions.
+- **Qualité & fraîcheur** : exposition des dates de mise à jour, communication proactive en cas de retard de données.

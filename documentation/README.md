@@ -1,17 +1,28 @@
 # Documentation produit Helios
 
-Cette branche `doc/documentation` initialise l’espace documentaire destiné à GitBook. On y décrira progressivement la vision produit, les parcours utilisateurs et les règles métier afin de faciliter la mise en place de la fiche de synthèse 360° pour les ARS.
+## Vision produit
+Helios ambitionne d’offrir aux ARS une vue unifiée et actionnable de l’offre de soins. En unissant les données sanitaires et médico-sociales dans une fiche 360°, le produit vise :
+- un diagnostic rapide de chaque entité juridique et de ses établissements rattachés ;
+- un pilotage territorial basé sur des indicateurs fiables et comparables ;
+- une animation des acteurs grâce à des parcours adaptés aux rôles (administrateurs nationaux, régionaux, agents terrain).
 
-Les sections à venir couvriront :
-- vue d’ensemble et objectifs
-- rôles cibles et parcours associés
-- grandes EPIC fonctionnelles
-- règles métiers et sources de données
+## À propos de cette documentation
+Cette documentation fonctionne comme la source de vérité fonctionnelle :
+- **Vue d’ensemble** : cadre produit, périmètre et articulation des couches.
+- **Rôles & parcours** : responsabilités clés et scénarios d’usage.
+- **EPIC fonctionnelles** : regroupement des capacités majeures (recherche, fiches 360, comparaison, administration, données).
+- **Règles métier** : principes et garde-fous à respecter lors des évolutions.
 
-Une fois GitBook relié à cette branche, la structure générée sera versionnée ici pour permettre un travail collaboratif.
+Chaque page est pensée pour être lisible par les équipes produit, métier et design. Les références techniques sont volontairement écartées au profit d’une description orientée usages.
 
-## Prochaines étapes
-- Connecter GitBook sur la branche (`documentation/GITBOOK.md`) puis synchroniser.
-- Documenter chaque bloc d’indicateurs (activité, finances, RH, qualité) à partir des use cases existants.
-- Ajouter des parcours détaillés (captures, user stories) pour chaque rôle.
-- Décrire la fréquence d’actualisation des sources (scripts `datacrawler`) et le SLA attendu.
+## Prochaines itérations
+- Décrire chaque bloc d’indicateurs (activité, finances, RH, qualité) avec leurs objectifs et utilisateurs.
+- Ajouter des user stories détaillées par rôle avec illustrations ou captures.
+- Préciser la fréquence d’actualisation des sources de données et le SLA associé.
+- Documenter les cas limites (données manquantes, établissements multi-rattachements, etc.).
+
+## Contribution
+Avant toute contribution :
+1. Synchroniser la branche `doc/documentation`.
+2. Vérifier les règles d’écriture dans `documentation/rules.md` et les consignes Cursor (`.cursor/rules.md`).
+3. AJouter les nouvelles pages dans `documentation/SUMMARY.md` pour qu’elles apparaissent dans la navigation GitBook.
