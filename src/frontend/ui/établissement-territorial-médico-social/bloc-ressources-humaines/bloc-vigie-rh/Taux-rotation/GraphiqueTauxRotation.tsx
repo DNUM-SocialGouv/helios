@@ -21,7 +21,7 @@ const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRot
 
   const { wording } = useDependencies();
 
-  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.TRIMESTRIEL);
 
   const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
@@ -30,7 +30,7 @@ const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRot
   return (
     <div >
       <FrequencyFilter
-        ListeFrquences={[wording.ANNUEL, wording.TRIMESTRIEL]}
+        ListeFrquences={[wording.TRIMESTRIEL, wording.ANNUEL]}
         handleFrequency={handleFrequency}
         identifiant='frequency-filter-taux-rotation'
         selectedFrequency={selectedFrequency}
