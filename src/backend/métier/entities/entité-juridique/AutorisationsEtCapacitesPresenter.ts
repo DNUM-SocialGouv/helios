@@ -238,7 +238,7 @@ class AutorisationsFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro autorisation",
         valeur: autorisationSanitaire.numéroAutorisationArhgos,
       },
       {
@@ -264,7 +264,7 @@ class AutorisationsFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro autorisation",
         valeur: autorisationAmmSanitaire.code_autorisation_arhgos,
       },
       {
@@ -524,7 +524,7 @@ export class EquipementFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro autorisation",
         valeur: equipementMaterielLourd.numéroAutorisationArhgos,
       },
       {
