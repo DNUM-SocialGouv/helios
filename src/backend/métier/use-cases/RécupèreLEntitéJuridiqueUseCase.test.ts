@@ -507,7 +507,7 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités.autorisations[0].modalites[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(1);
-      expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
+      expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro autorisation");
       expect(forme.autorisationEtablissements[0].autorisations[0].valeur).toBe("argos-1");
       expect(forme.autorisationEtablissements[0].autorisations[1].nom).toBe("Date d'autorisation");
       expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("20/01/2020");
@@ -1349,7 +1349,7 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       const equipements = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations[0].equipementEtablissements[0].equipements;
       expect(equipements).toHaveLength(1);
-      expect(equipements[0].autorisations[0].nom).toBe("Numéro ARHGOS");
+      expect(equipements[0].autorisations[0].nom).toBe("Numéro autorisation");
       expect(equipements[0].autorisations[0].valeur).toBe("argos-1");
       expect(equipements[0].autorisations[1].nom).toBe("Date d'autorisation");
       expect(equipements[0].autorisations[1].valeur).toBe("20/10/2021");
