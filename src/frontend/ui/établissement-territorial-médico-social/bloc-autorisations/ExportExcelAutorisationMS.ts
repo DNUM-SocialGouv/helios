@@ -4,6 +4,7 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './
 import { AutorisationMédicoSocialDiscipline } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation';
 import { ecrireLignesDansSheet, telechargerWorkbook } from '../../../utils/excelUtils';
 import { useDependencies } from '../../commun/contexts/useDependencies';
+import { StringFormater } from '../../commun/StringFormater';
 
 export function getCurrentDate() {
   const today = new Date();
@@ -13,6 +14,7 @@ export function getCurrentDate() {
   const currentDate = `${year}${month}${day}`;
   return currentDate;
 }
+const dateOrEmpty = (date?: string | null) => date ? StringFormater.formatDate(date) : "";
 
 export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, etablissementMSAutorisationsViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel) {
   const { wording } = useDependencies();
@@ -51,7 +53,7 @@ export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string
           const clienteleColumn = `${clientele.libellé} [${clientele.code}]`;
           const dateCapacite = clientele.datesEtCapacités;
           result.push(
-            [disciplineColumn, activiteColumn, clienteleColumn, dateCapacite.dateDAutorisation ?? "", dateCapacite.dateDeMiseÀJourDAutorisation ?? "", dateCapacite.dateDeDernièreInstallation ?? "", dateCapacite.capacitéAutoriséeTotale !== null ? dateCapacite.capacitéAutoriséeTotale.toString() : "", dateCapacite.capacitéInstalléeTotale !== null ? dateCapacite.capacitéInstalléeTotale.toString() : ""]
+            [disciplineColumn, activiteColumn, clienteleColumn, dateOrEmpty(dateCapacite.dateDAutorisation), dateOrEmpty(dateCapacite.dateDeMiseÀJourDAutorisation), dateOrEmpty(dateCapacite.dateDeDernièreInstallation), dateCapacite.capacitéAutoriséeTotale !== null ? dateCapacite.capacitéAutoriséeTotale.toString() : "", dateCapacite.capacitéInstalléeTotale !== null ? dateCapacite.capacitéInstalléeTotale.toString() : ""]
           );
         }
       }
