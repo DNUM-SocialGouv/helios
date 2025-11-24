@@ -272,6 +272,7 @@ export interface Wording {
   readonly DATE_DE_FIN_CPOM: ReactElement;
   readonly NUMÉRO_CPOM: ReactElement;
   readonly NUMÉRO_ARHGOS: string;
+  readonly NUMÉRO_AUTORISATION: string;
   readonly ACTIVITÉS: string;
   readonly CHIRURGIE: string;
   readonly MÉDECINE: string;
