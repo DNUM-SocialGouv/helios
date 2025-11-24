@@ -4,6 +4,7 @@ import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from
 import { AutorisationsAMMSanitaire, AutorisationSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation';
 import { ecrireLignesDansSheet, telechargerWorkbook } from '../../../utils/excelUtils';
 import { useDependencies } from '../../commun/contexts/useDependencies';
+import { StringFormater } from '../../commun/StringFormater';
 
 export function getCurrentDate() {
   const today = new Date();
@@ -13,6 +14,8 @@ export function getCurrentDate() {
   const currentDate = `${year}${month}${day}`;
   return currentDate;
 }
+const dateOrEmpty = (date?: string | null) => date ? StringFormater.formatDate(date) : "";
+
 
 export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, etablissementTerritorialSanitaireAutorisationsCapacites: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) {
   const { wording } = useDependencies();
@@ -81,9 +84,9 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
   const processEtablissement = (declaration: any) => {
     return [
       declaration.codeAutorisationArhgos,
-      declaration.dateAutorisation || "",
-      declaration.dateMiseEnOeuvre || "",
-      declaration.dateFin || ""
+      dateOrEmpty(declaration.dateAutorisation),
+      dateOrEmpty(declaration.dateMiseEnOeuvre),
+      dateOrEmpty(declaration.dateFin)
     ]
   };
 
@@ -97,7 +100,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
           const formeColumn = `${forme.libellé} [${forme.code}]`;
           const autorisationSanitaire = forme.autorisationSanitaire;
           result.push(
-            [activiteColumn, modaliteColumn, "", "", formeColumn, autorisationSanitaire.numéroArhgos, autorisationSanitaire.dateDAutorisation || "", autorisationSanitaire.dateDeMiseEnOeuvre || "", autorisationSanitaire.dateDeFin || ""]
+            [activiteColumn, modaliteColumn, "", "", formeColumn, autorisationSanitaire.numéroArhgos, dateOrEmpty(autorisationSanitaire.dateDAutorisation), dateOrEmpty(autorisationSanitaire.dateDeMiseEnOeuvre), dateOrEmpty(autorisationSanitaire.dateDeFin)]
           );
         }
       }
@@ -119,7 +122,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
           const formeColumn = `${forme.libellé} [${forme.code}]`;
           const autorisationSanitaire = forme.autreActivitéSanitaire;
           rows.push(
-            [activiteColumn, modaliteColumn, formeColumn, autorisationSanitaire.dateDAutorisation || "", autorisationSanitaire.dateDeMiseEnOeuvre || "", autorisationSanitaire.dateDeFin || ""]
+            [activiteColumn, modaliteColumn, formeColumn, dateOrEmpty(autorisationSanitaire.dateDAutorisation), dateOrEmpty(autorisationSanitaire.dateDeMiseEnOeuvre), dateOrEmpty(autorisationSanitaire.dateDeFin)]
           );
         }
       }
@@ -143,7 +146,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
           const formeColumn = `${forme.libellé} [${forme.code}]`;
           const reconnaissanceContractuelleSanitaire = forme.reconnaissanceContractuelleSanitaire;
           rows.push(
-            [activiteColumn, modaliteColumn, formeColumn, reconnaissanceContractuelleSanitaire.capacitéAutorisée?.toString() || "", reconnaissanceContractuelleSanitaire.dateDEffetAsr || "", reconnaissanceContractuelleSanitaire.numéroArhgos || "", reconnaissanceContractuelleSanitaire.dateDEffetCpom || "", reconnaissanceContractuelleSanitaire.dateDeFinCpom || "", reconnaissanceContractuelleSanitaire.numéroCpom]
+            [activiteColumn, modaliteColumn, formeColumn, reconnaissanceContractuelleSanitaire.capacitéAutorisée?.toString() || "", dateOrEmpty(reconnaissanceContractuelleSanitaire.dateDEffetAsr), reconnaissanceContractuelleSanitaire.numéroArhgos || "", dateOrEmpty(reconnaissanceContractuelleSanitaire.dateDEffetCpom), dateOrEmpty(reconnaissanceContractuelleSanitaire.dateDeFinCpom), reconnaissanceContractuelleSanitaire.numéroCpom]
           );
         }
       }
@@ -163,7 +166,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
       const equipementColumn = `${equipement.libellé} [${equipement.code}]`;
       for (const autorisationEquipement of equipement.autorisations) {
         rows.push(
-          [equipementColumn, autorisationEquipement.numéroArhgos || "", autorisationEquipement.dateDAutorisation || "", autorisationEquipement.dateDeMiseEnOeuvre || "", autorisationEquipement.dateDeFin || ""]
+          [equipementColumn, autorisationEquipement.numéroArhgos || "", dateOrEmpty(autorisationEquipement.dateDAutorisation), dateOrEmpty(autorisationEquipement.dateDeMiseEnOeuvre), dateOrEmpty(autorisationEquipement.dateDeFin)]
         );
       }
     }
