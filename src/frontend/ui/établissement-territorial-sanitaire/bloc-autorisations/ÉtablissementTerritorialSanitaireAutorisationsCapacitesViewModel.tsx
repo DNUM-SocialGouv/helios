@@ -71,7 +71,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                           <TagGroup label="autorisations">
                             <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
-                              label={`${this.wording.NUMÉRO_ARHGOS} : ${autorisationSanitaire.numéroArhgos ? autorisationSanitaire.numéroArhgos : "N/A"}`}
+                              label={`${this.wording.NUMÉRO_AUTORISATION} : ${autorisationSanitaire.numéroArhgos ? autorisationSanitaire.numéroArhgos : "N/A"}`}
                               size={TAG_SIZE.SM}
                             />
                             <Tag
@@ -205,7 +205,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                           <TagGroup label="reconnaissance-contractuelle">
                             <Tag label={`${forme.libellé} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
                             <Tag
-                              label={`${this.wording.NUMÉRO_ARHGOS} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
+                              label={`${this.wording.NUMÉRO_AUTORISATION} : ${reconnaissancesContractuellesSanitaire.numéroArhgos ? reconnaissancesContractuellesSanitaire.numéroArhgos : "N/A"
                                 }`}
                               size={TAG_SIZE.SM}
                             />
@@ -279,7 +279,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                   <li key={`forme-${autorisationÉquipementMatérielLourd.numéroArhgos}`}>
                     <TagGroup label="équipement-matériel-lourd">
                       <Tag
-                        label={`${this.wording.NUMÉRO_ARHGOS} : ${autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
+                        label={`${this.wording.NUMÉRO_AUTORISATION} : ${autorisationÉquipementMatérielLourd.numéroArhgos ? autorisationÉquipementMatérielLourd.numéroArhgos : "N/A"
                           }`}
                         size={TAG_SIZE.SM}
                         withArrow
@@ -350,7 +350,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                                   <div className="fr-ml-2w">
                                     <TagGroup label="autorisation_amm" >
                                       <Tag
-                                        label={`${this.wording.NUMÉRO_ARHGOS} : ${declaration.codeAutorisationArhgos ? declaration.codeAutorisationArhgos : "N/A"}`}
+                                        label={`${this.wording.NUMÉRO_AUTORISATION} : ${declaration.codeAutorisationArhgos ? declaration.codeAutorisationArhgos : "N/A"}`}
                                         size={TAG_SIZE.SM}
                                       />
                                       <Tag

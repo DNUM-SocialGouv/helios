@@ -168,7 +168,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const tags = within(informationsDUneAutorisation).getAllByRole("listitem");
 
       expect(tags[0].textContent).toBe("Pas de forme [00]");
-      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-00-000`);
+      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_AUTORISATION} : 01-00-000`);
       expect(tags[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`);
       expect(tags[3].textContent).toBe(`${wording.DATE_DE_FIN} : 03/05/2026`);
       expect(tags[4].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 11/10/2005`);
@@ -435,7 +435,7 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const tags = within(informationsDUneReconnaissanceContractuelle).getAllByRole("listitem");
 
       expect(tags[0].textContent).toBe("Hospitalisation complète (24 heures consécutives ou plus) [01]");
-      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 18-00-RC00000`);
+      expect(tags[1].textContent).toBe(`${wording.NUMÉRO_AUTORISATION} : 18-00-RC00000`);
       expect(tags[2].textContent).toBe("Numéro de CPOM : 18-00-C00000");
       expect(within(tags[2]).getByText("CPOM", { selector: "abbr" })).toHaveAttribute("title", wording.CPOM_TITLE);
       expect(tags[3].textContent).toBe("Date d’effet de l’ASR : 30/11/2013");
@@ -473,11 +473,11 @@ describe("La page établissement territorial sanitaire - bloc autorisation et ca
       const tagsLigne1 = within(informationsDUnEquipementMatérielLourd[0]).getAllByRole("listitem");
       const tagsLigne2 = within(informationsDUnEquipementMatérielLourd[1]).getAllByRole("listitem");
 
-      expect(tagsLigne1[0].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-00-0000`);
+      expect(tagsLigne1[0].textContent).toBe(`${wording.NUMÉRO_AUTORISATION} : 01-00-0000`);
       expect(tagsLigne1[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 02/05/2006`);
       expect(tagsLigne1[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : 20/01/2009`);
       expect(tagsLigne1[3].textContent).toBe(`${wording.DATE_DE_FIN} : 16/02/2027`);
-      expect(tagsLigne2[0].textContent).toBe(`${wording.NUMÉRO_ARHGOS} : 01-20-0000`);
+      expect(tagsLigne2[0].textContent).toBe(`${wording.NUMÉRO_AUTORISATION} : 01-20-0000`);
       expect(tagsLigne2[1].textContent).toBe(`${wording.DATE_D_AUTORISATION} : 14/12/2005`);
       expect(tagsLigne2[2].textContent).toBe(`${wording.DATE_DE_MISE_EN_OEUVRE} : N/A`);
       expect(tagsLigne2[3].textContent).toBe(`${wording.DATE_DE_FIN} : 16/03/2026`);
