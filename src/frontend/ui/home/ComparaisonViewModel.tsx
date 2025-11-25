@@ -43,6 +43,11 @@ export type ResultatComparaisonEJ = Readonly<{
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
   sejoursHad: number | null | string;
+  nombreEtpPm: number | null | string;
+  nombreEtpPnm: number | null | string;
+  depensesInterimPm: number | null | string;
+  joursAbsenteismePm: number | null | string;
+  joursAbsenteismePnm: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -379,6 +384,31 @@ export class ComparaisonEJViewModel {
   public get sejoursHad(): number | string | null {
     if (this.comparaison.sejoursHad === '') return ''
     return this.comparaison.sejoursHad;
+  }
+
+  public get nombreEtpPm(): number | string | null {
+    if (this.comparaison.nombreEtpPm === '') return ''
+    return this.comparaison.nombreEtpPm;
+  }
+
+  public get nombreEtpPnm(): number | string | null {
+    if (this.comparaison.nombreEtpPnm === '') return ''
+    return this.comparaison.nombreEtpPnm;
+  }
+
+  public get depensesInterimPm(): number | string | null {
+    if (this.comparaison.depensesInterimPm === '') return ''
+    return this.comparaison.depensesInterimPm;
+  }
+
+  public get joursAbsenteismePm(): number | string | null {
+    if (this.comparaison.joursAbsenteismePm === '') return ''
+    return this.comparaison.joursAbsenteismePm;
+  }
+
+  public get joursAbsenteismePnm(): number | string | null {
+    if (this.comparaison.joursAbsenteismePnm === '') return ''
+    return this.comparaison.joursAbsenteismePnm;
   }
 
   public get chargesPrincipaux(): string | null {
