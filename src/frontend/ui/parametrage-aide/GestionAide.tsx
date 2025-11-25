@@ -465,6 +465,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         }
       })
       .finally(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setEnregistrementEnCours(false);
       });
   };
