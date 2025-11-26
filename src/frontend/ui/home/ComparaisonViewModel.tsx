@@ -1,3 +1,5 @@
+import { StringFormater } from "../commun/StringFormater";
+
 export type ResultatComparaisonSMS = Readonly<{
   numéroFiness: string;
   socialReason: string;
@@ -386,29 +388,38 @@ export class ComparaisonEJViewModel {
     return this.comparaison.sejoursHad;
   }
 
-  public get nombreEtpPm(): number | string | null {
-    if (this.comparaison.nombreEtpPm === '') return ''
-    return this.comparaison.nombreEtpPm;
+  private formatNumberValue(value: number | string | null): string {
+    if (value === '' || value === null) return '-';
+    const num = Number(value);
+    if (isNaN(num)) return '-';
+    return StringFormater.formatInFrench(num);
   }
 
-  public get nombreEtpPnm(): number | string | null {
-    if (this.comparaison.nombreEtpPnm === '') return ''
-    return this.comparaison.nombreEtpPnm;
+  public get nombreEtpPm(): string {
+    return this.formatNumberValue(this.comparaison.nombreEtpPm);
+  }
+
+  public get nombreEtpPnm(): string {
+    return this.formatNumberValue(this.comparaison.nombreEtpPnm);
   }
 
   public get depensesInterimPm(): number | string | null {
     if (this.comparaison.depensesInterimPm === '') return ''
-    return this.comparaison.depensesInterimPm;
+    return this.comparaison.depensesInterimPm ? this.comparaison.depensesInterimPm
+      .toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR",
+      })
+      .split(",")[0] + " €"
+      : "-";
   }
 
-  public get joursAbsenteismePm(): number | string | null {
-    if (this.comparaison.joursAbsenteismePm === '') return ''
-    return this.comparaison.joursAbsenteismePm;
+  public get joursAbsenteismePm(): string {
+    return this.formatNumberValue(this.comparaison.joursAbsenteismePm);
   }
 
-  public get joursAbsenteismePnm(): number | string | null {
-    if (this.comparaison.joursAbsenteismePnm === '') return ''
-    return this.comparaison.joursAbsenteismePnm;
+  public get joursAbsenteismePnm(): string {
+    return this.formatNumberValue(this.comparaison.joursAbsenteismePnm);
   }
 
   public get chargesPrincipaux(): string | null {
