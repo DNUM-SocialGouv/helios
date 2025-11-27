@@ -71,6 +71,11 @@ export type ResultatComparaisonSAN = Readonly<{
   totalHosptPsy: number | null | string;
   passagesUrgences: number | null | string;
   journeesUsld: number | null | string;
+  nombreEtpPm: number | null | string;
+  nombreEtpPnm: number | null | string;
+  depensesInterimPm: number | null | string;
+  joursAbsenteismePm: number | null | string;
+  joursAbsenteismePnm: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -120,6 +125,14 @@ function formatRatio(value: ValueOrNA): string | null {
   return value + "%";
 
 }
+function formatNumberValue(value: number | string | null): string {
+  if (value === '') return '';
+  if (!value) return '-';
+  const num = Number(value);
+  if (isNaN(num)) return '-';
+  return StringFormater.formatInFrench(num);
+}
+
 
 export class ComparaisonSMSViewModel {
   constructor(private readonly comparaison: ResultatComparaisonSMS) { }
@@ -244,7 +257,6 @@ export class ComparaisonSANViewModel {
 
   public get commune(): string {
     return this.comparaison.commune;
-
   }
 
   public get departement(): string {
@@ -284,6 +296,26 @@ export class ComparaisonSANViewModel {
   public get journeesUsld(): ValueOrNA {
     if (this.comparaison.journeesUsld === '') return ''
     return this.comparaison.journeesUsld;
+  }
+
+  public get nombreEtpPm(): string {
+    return formatNumberValue(this.comparaison.nombreEtpPm);
+  }
+
+  public get nombreEtpPnm(): string {
+    return formatNumberValue(this.comparaison.nombreEtpPnm);
+  }
+
+  public get depensesInterimPm(): string {
+    return formatCurrency(this.comparaison.depensesInterimPm);
+  }
+
+  public get joursAbsenteismePm(): string {
+    return formatNumberValue(this.comparaison.joursAbsenteismePm);
+  }
+
+  public get joursAbsenteismePnm(): string {
+    return formatNumberValue(this.comparaison.joursAbsenteismePnm);
   }
 
   public get enveloppe1(): string {
@@ -351,20 +383,12 @@ export class ComparaisonEJViewModel {
     return this.comparaison.sejoursHad;
   }
 
-  private formatNumberValue(value: number | string | null): string {
-    if (value === '') return '';
-    if (!value) return '-';
-    const num = Number(value);
-    if (isNaN(num)) return '-';
-    return StringFormater.formatInFrench(num);
-  }
-
   public get nombreEtpPm(): string {
-    return this.formatNumberValue(this.comparaison.nombreEtpPm);
+    return formatNumberValue(this.comparaison.nombreEtpPm);
   }
 
   public get nombreEtpPnm(): string {
-    return this.formatNumberValue(this.comparaison.nombreEtpPnm);
+    return formatNumberValue(this.comparaison.nombreEtpPnm);
   }
 
   public get depensesInterimPm(): string {
@@ -372,11 +396,11 @@ export class ComparaisonEJViewModel {
   }
 
   public get joursAbsenteismePm(): string {
-    return this.formatNumberValue(this.comparaison.joursAbsenteismePm);
+    return formatNumberValue(this.comparaison.joursAbsenteismePm);
   }
 
   public get joursAbsenteismePnm(): string {
-    return this.formatNumberValue(this.comparaison.joursAbsenteismePnm);
+    return formatNumberValue(this.comparaison.joursAbsenteismePnm);
   }
 
   public get chargesPrincipaux(): string {
