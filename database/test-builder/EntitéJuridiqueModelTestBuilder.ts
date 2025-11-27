@@ -1,6 +1,7 @@
 import { AllocationRessourceModel } from "../models/AllocationRessourceModel";
 import { CapacitesSanitaireEntiteJuridiqueModel } from "../models/CapacitesSanitaireEntiteJuridiqueModel";
 import { EntitéJuridiqueModel } from "../models/EntitéJuridiqueModel";
+import { RessourcesHumainesEntiteJuridiqueModel } from "../models/RessourcesHumainesEntiteJuridiqueModel";
 
 export class EntitéJuridiqueModelTestBuilder {
   public static crée(champsSurchargés?: Partial<EntitéJuridiqueModel>): EntitéJuridiqueModel {
@@ -56,5 +57,20 @@ export class EntitéJuridiqueModelTestBuilder {
     allocationRessourceModel.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "010018407";
 
     return allocationRessourceModel;
+  }
+
+  public static creeRessourceHumaineEntiteJuridique(
+    champsSurchargés?: Partial<RessourcesHumainesEntiteJuridiqueModel>
+  ): RessourcesHumainesEntiteJuridiqueModel {
+    const ressourceHumaineEntiteJuridiqueModel = new RessourcesHumainesEntiteJuridiqueModel();
+    ressourceHumaineEntiteJuridiqueModel.annee = champsSurchargés?.annee || 2022;
+    ressourceHumaineEntiteJuridiqueModel.nombreEtpPm = champsSurchargés?.nombreEtpPm || 10;
+    ressourceHumaineEntiteJuridiqueModel.nombreEtpPnm = champsSurchargés?.nombreEtpPnm || 15;
+    ressourceHumaineEntiteJuridiqueModel.joursAbsenteismePm = champsSurchargés?.joursAbsenteismePm || 20;
+    ressourceHumaineEntiteJuridiqueModel.joursAbsenteismePnm = champsSurchargés?.joursAbsenteismePnm || 25;
+    ressourceHumaineEntiteJuridiqueModel.depensesInterimPm = champsSurchargés?.depensesInterimPm || 3000;
+    ressourceHumaineEntiteJuridiqueModel.numeroFinessEntiteJuridique = champsSurchargés?.numeroFinessEntiteJuridique || "010018407";
+
+    return ressourceHumaineEntiteJuridiqueModel;
   }
 }
