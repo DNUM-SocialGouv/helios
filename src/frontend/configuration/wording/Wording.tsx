@@ -459,6 +459,7 @@ export interface Wording {
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly BOUTON_CHOIX_INDICATEURS: string;
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;

@@ -274,6 +274,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     }
   }
 
+  const indicatorChoiceButton = (): ReactNode => {
+    return <button className="fr-btn fr-btn--tertiary-no-outline" type="button">{wording.BOUTON_CHOIX_INDICATEURS}</button>;
+  }
+
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -282,7 +286,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       <div className={styles["container"]}>
         <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
+          <ListActionsButton exportButton={exportExcel()} indicatorChoiceButton={indicatorChoiceButton()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
         </div>
         <div className={styles["ajout-etab-div"]}>
           {!isShowAjoutEtab && (
