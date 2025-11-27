@@ -403,7 +403,7 @@ export class ComparaisonEJViewModel {
     return this.formatNumberValue(this.comparaison.nombreEtpPnm);
   }
 
-  public get depensesInterimPm(): number | string | null {
+  public get depensesInterimPm(): string {
     if (this.comparaison.depensesInterimPm === '') return ''
     return this.comparaison.depensesInterimPm ? this.comparaison.depensesInterimPm
       .toLocaleString("fr-FR", {

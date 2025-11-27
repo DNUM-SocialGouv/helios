@@ -232,27 +232,27 @@ export function useComparaison() {
         };
       case "nombreEtpPm":
         return {
-          contenu: <ContenuDuNombreDEtpPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.ANCRE}></ContenuDuNombreDEtpPm>,
+          contenu: <ContenuDuNombreDEtpPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDuNombreDEtpPm>,
           titre: wording.NOMBRE_D_ETP_PM,
         };
       case "nombreEtpPnm":
         return {
-          contenu: <ContenuDuNombreDEtpPnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.ANCRE}></ContenuDuNombreDEtpPnm>,
+          contenu: <ContenuDuNombreDEtpPnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDuNombreDEtpPnm>,
           titre: wording.NOMBRE_D_ETP_PNM,
         };
       case "depensesInterimPm":
         return {
-          contenu: <ContenuDeDepensesInterimPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.ANCRE}></ContenuDeDepensesInterimPm>,
+          contenu: <ContenuDeDepensesInterimPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeDepensesInterimPm>,
           titre: wording.DEPENSES_INTERIM_PM,
         };
       case "joursAbsenteismePm":
         return {
-          contenu: <ContenuDeJoursAbsenteismePm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePm>,
+          contenu: <ContenuDeJoursAbsenteismePm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePm>,
           titre: wording.JOURS_ABSENTEISME_PM,
         };
       case "joursAbsenteismePnm":
         return {
-          contenu: <ContenuDeJoursAbsenteismePnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePnm>,
+          contenu: <ContenuDeJoursAbsenteismePnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePnm>,
           titre: wording.JOURS_ABSENTEISME_PNM,
         };
 
