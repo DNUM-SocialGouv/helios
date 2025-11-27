@@ -11,7 +11,7 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
   public graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
 
   constructor(
-    private readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
+    readonly établissementTerritorialSanitaireAutorisations: ÉtablissementTerritorialSanitaire["autorisationsEtCapacités"],
     private wording: Wording
   ) {
     this.graphiqueCapacitésParActivitéViewModel = new GraphiqueCapacitésParActivitéViewModel(établissementTerritorialSanitaireAutorisations.capacités, wording);

@@ -214,6 +214,7 @@ export interface Wording {
   readonly AUTORISATIONS_MS: string;
   readonly AUTORISATIONS_ACTIVITES: string;
   readonly DATE_D_AUTORISATION: string;
+  readonly DATE_D_AUTORISATION_KEY: string;
   readonly DATE_DE_FIN: string;
   readonly DATE_DE_MISE_EN_OEUVRE: string;
   readonly MISE_À_JOUR_AUTORISATION: string;
@@ -282,6 +283,7 @@ export interface Wording {
   readonly PSYCHIATRIE: string;
   readonly LITS: string;
   readonly PLACES: string;
+  readonly BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES: string;
 
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string;

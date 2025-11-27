@@ -243,6 +243,7 @@ export class WordingFr implements Wording {
   readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
   readonly DATE_D_AUTORISATION: string = "Date d’autorisation";
+  readonly DATE_D_AUTORISATION_KEY: string = "Date d'autorisation";
   readonly CAPACITÉ_AUTORISÉE: string = "Capacité autorisée";
 
   // Bloc Qualité
@@ -339,6 +340,7 @@ export class WordingFr implements Wording {
   readonly PSYCHIATRIE: string = "Psychiatrie";
   readonly LITS: string = "Lits";
   readonly PLACES: string = "Places";
+  readonly BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES: string = "Télécharger les autorisations";
 
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
