@@ -36,9 +36,9 @@ const MIN_TILE_PERCENT_TO_DRAW_LABEL = 3; // < 3% : on n’écrit pas, on laisse
 function pickTextColor(hex: string): string {
   const c = (hex || "").replace("#", "");
   if (c.length !== 6) return "#111";
-  const r = parseInt(c.slice(0, 2), 16);
-  const g = parseInt(c.slice(2, 4), 16);
-  const b = parseInt(c.slice(4, 6), 16);
+  const r = Number.parseInt(c.slice(0, 2), 16);
+  const g = Number.parseInt(c.slice(2, 4), 16);
+  const b = Number.parseInt(c.slice(4, 6), 16);
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 150 ? "#111" : "#fff";
 }
