@@ -11,6 +11,7 @@ import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/mode
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RessourcesHumainesEntiteJuridiqueModel } from "../../../../../database/models/RessourcesHumainesEntiteJuridiqueModel";
+import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -29,6 +30,7 @@ describe("La comparaison des établissements", () => {
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let ressourcesHumainesModelRepository: Repository<RessourcesHumainesMédicoSocialModel>;
   let ressourcesHumainesEJModelRepository: Repository<RessourcesHumainesEntiteJuridiqueModel>;
+  let ressourcesHumainesETSANModelRepository: Repository<RessourcesHumainesEtablissementSanitaireModel>;
   let budgetEtFinancesMedicoSocialModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
   let activiteeMedicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>;
   let autorisationMedicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
@@ -82,6 +84,7 @@ describe("La comparaison des établissements", () => {
     établissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     ressourcesHumainesModelRepository = (await orm).getRepository(RessourcesHumainesMédicoSocialModel);
     ressourcesHumainesEJModelRepository = (await orm).getRepository(RessourcesHumainesEntiteJuridiqueModel);
+    ressourcesHumainesETSANModelRepository = (await orm).getRepository(RessourcesHumainesEtablissementSanitaireModel);
     budgetEtFinancesMedicoSocialModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
     activiteeMedicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
     autorisationMedicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
@@ -271,6 +274,27 @@ describe("La comparaison des établissements", () => {
         enveloppe: "MIGAC"
       }),
     ]);
+
+    await ressourcesHumainesETSANModelRepository.insert([
+      ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.creeEtablissementSanitaire({
+        annee: 2022,
+        numeroFinessEtablissementTerritorial: "200000000",
+        nombreEtpPm: 10,
+        nombreEtpPnm: 20,
+        joursAbsenteismePm: 30,
+        joursAbsenteismePnm: 40,
+        depensesInterimPm: 5000
+      }),
+      ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.creeEtablissementSanitaire({
+        annee: 2022,
+        numeroFinessEtablissementTerritorial: "200000001",
+        nombreEtpPm: 15,
+        nombreEtpPnm: 25,
+        joursAbsenteismePm: 35,
+        joursAbsenteismePnm: 45,
+        depensesInterimPm: 10000
+      })
+    ])
 
     const budgetFinanceEntiteJuridique = new BudgetEtFinancesEntiteJuridiqueModel();
     budgetFinanceEntiteJuridique.numéroFinessEntitéJuridique = "000000000";
@@ -491,7 +515,12 @@ describe("La comparaison des établissements", () => {
         journeesUsld: 21654,
         enveloppe1: 3300,
         enveloppe2: 2000,
-        enveloppe3: 3300
+        enveloppe3: 3300,
+        depensesInterimPm: 5000,
+        joursAbsenteismePm: 30,
+        joursAbsenteismePnm: 40,
+        nombreEtpPm: 10,
+        nombreEtpPnm: 20,
       },
       {
         numéroFiness: "200000001",
@@ -509,7 +538,12 @@ describe("La comparaison des établissements", () => {
         journeesUsld: 21654,
         enveloppe1: 3300,
         enveloppe2: 3300,
-        enveloppe3: null
+        enveloppe3: null,
+        depensesInterimPm: 10000,
+        joursAbsenteismePm: 35,
+        joursAbsenteismePnm: 45,
+        nombreEtpPm: 15,
+        nombreEtpPnm: 25,
       },
       {
         numéroFiness: "299999999",
@@ -527,7 +561,12 @@ describe("La comparaison des établissements", () => {
         journeesUsld: null,
         enveloppe1: null,
         enveloppe2: null,
-        enveloppe3: null
+        enveloppe3: null,
+        depensesInterimPm: null,
+        joursAbsenteismePm: null,
+        joursAbsenteismePnm: null,
+        nombreEtpPm: null,
+        nombreEtpPnm: null,
       },
       {
         numéroFiness: "000000000",
@@ -545,7 +584,12 @@ describe("La comparaison des établissements", () => {
         journeesUsld: '',
         enveloppe1: '',
         enveloppe2: '',
-        enveloppe3: ''
+        enveloppe3: '',
+        depensesInterimPm: '',
+        joursAbsenteismePm: '',
+        joursAbsenteismePnm: '',
+        nombreEtpPm: '',
+        nombreEtpPnm: '',
       },
     ]);
   });
