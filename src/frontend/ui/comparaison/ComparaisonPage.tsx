@@ -5,6 +5,7 @@ import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements"
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
+import { useModalSelectionIndicateur } from "./useModalSelectionIndicateur";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -27,6 +28,7 @@ interface ComparaisonPageProps {
 
 export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
+  const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur();
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
@@ -213,6 +215,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setIsShowAjoutEtab(true);
   };
 
+  const filteredTableHeader = () => {
+    return tableHeaders(datesMisAjour, structureChoice).filter((line) => enabledIndicators.includes(line.key));
+  }
+
   const results = (): ReactNode => {
     let content;
     if (loading) {
@@ -225,7 +231,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
           <Table
             data={resultats}
             handleSelectAll={handleSelectAll}
-            headers={tableHeaders(datesMisAjour, structureChoice)}
+            headers={filteredTableHeader()}
             isAllSelected={isAllSelected}
             isCenter={true}
             isShowAvrage={false}
@@ -275,7 +281,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   }
 
   const indicatorChoiceButton = (): ReactNode => {
-    return <button className="fr-btn fr-btn--tertiary-no-outline" type="button">{wording.BOUTON_CHOIX_INDICATEURS}</button>;
+    return <button aria-controls="fr-modal-selection-indicateur" aria-label={wording.BOUTON_CHOIX_INDICATEURS} className="fr-btn fr-btn--tertiary-no-outline" data-fr-opened="false" onClick={openIndicatorSelectionModal} type="button">{wording.BOUTON_CHOIX_INDICATEURS}</button>;
   }
 
   return (
@@ -318,6 +324,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
         <>{contenu}</>
       </InfoBulle>
+      {generateModal()}
     </main>
   );
 };

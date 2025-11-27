@@ -1,0 +1,214 @@
+import { ReactNode, useEffect, useState } from "react";
+
+const DEFAULT_INDICATORS = ["delete", "etsLogo", "favori", "Raison sociale", "categorie", "numéroFiness"];
+
+type IndicatorStateItem = {
+  displayName: string;
+  columnName: string;
+  enabled: boolean;
+}
+
+export enum IndicatorPosition {
+  LEFT = "left",
+  RIGHT = "right",
+}
+
+type IndicatorCategory = {
+  name: string;
+  position: IndicatorPosition;
+}
+
+type IndicatorsState = {
+  medicoSocial: Map<IndicatorCategory, IndicatorStateItem[]>;
+}
+
+function getInitialIndicatorsState(): IndicatorsState {
+  // ################################## Medico-social indicators ##################################
+  const medicoSocialIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
+
+  // Bloc Capacité et Autorisation
+  const capaciteCategory: IndicatorCategory = { name: "Bloc Capacité et Autorisation", position: IndicatorPosition.LEFT };
+  const medicoSocialIndicatorsCapacityAutorisation: IndicatorStateItem[] = [
+    { displayName: "Capacité Totale", columnName: "capacite", enabled: true }
+  ];
+  medicoSocialIndicators.set(capaciteCategory, medicoSocialIndicatorsCapacityAutorisation);
+
+  // Bloc Activité
+  const activiteCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
+  const medicoSocialIndicatorsActivite: IndicatorStateItem[] = [
+    { displayName: "Taux de réalisation de l’activité ", columnName: "realisationActivite", enabled: true },
+    { displayName: "File active des personnes accompagnées sur la période", columnName: "fileActivePersonnesAccompagnes", enabled: true },
+    { displayName: "Taux d’occupation en hébergement permanent", columnName: "hebergementPermanent", enabled: true },
+    { displayName: "Taux d’occupation en hébergement temporaire", columnName: "hebergementTemporaire", enabled: true },
+    { displayName: "Taux d’occupation en accueil de jour", columnName: "acceuilDeJour", enabled: true },
+    { displayName: "Taux d’occupation externat", columnName: "externat", enabled: true },
+    { displayName: "Taux d’occupation semi-internat", columnName: "semiInternat", enabled: true },
+    { displayName: "Taux d’occupation internat", columnName: "internat", enabled: true },
+    { displayName: "Taux d’occupation autre 1, 2 et 3", columnName: "autres", enabled: true },
+    { displayName: "Taux d'occupation Séances", columnName: "seances", enabled: true }
+  ];
+  medicoSocialIndicators.set(activiteCategory, medicoSocialIndicatorsActivite);
+
+  // Bloc Ressources Humaines
+  const rhCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.RIGHT };
+  const medicoSocialIndicatorsRessourcesHumaines: IndicatorStateItem[] = [
+    { displayName: "Taux de prestations externes sur les prestations directes", columnName: "prestationExterne", enabled: true },
+    { displayName: "Taux de rotation du personnel sur effectifs réels", columnName: "rotationPersonnel", enabled: true },
+    { displayName: "Taux d'ETP vacants au 31/12", columnName: "etpVacant", enabled: true },
+    { displayName: "Taux d'absentéisme", columnName: "absenteisme", enabled: true }
+  ];
+  medicoSocialIndicators.set(rhCategory, medicoSocialIndicatorsRessourcesHumaines);
+
+  // Bloc Budget et Finances
+  const budgetCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const medicoSocialIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
+    { displayName: "Taux de CAF", columnName: "tauxCaf", enabled: true },
+    { displayName: "Taux de vétusté des constructions", columnName: "vetusteConstruction", enabled: true },
+    { displayName: "Fond de roulement net global", columnName: "roulementNetGlobal", enabled: true },
+    { displayName: "Résultat net comptable", columnName: "resultatNetComptable", enabled: true }
+  ];
+  medicoSocialIndicators.set(budgetCategory, medicoSocialIndicatorsBudgetEtFinances);
+
+  // ##############################################################################################
+  return {
+    medicoSocial: medicoSocialIndicators,
+  };
+}
+
+export function useModalSelectionIndicateur() {
+  // State containing the selected indicators
+  const [indicators, setIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
+  const [pendingIndicators, setPendingIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
+  const [enabledIndicators, setEnabledIndicators] = useState<string[]>(getEnabledIndicators());
+
+  // Call this when opening the modal to sync pendingIndicators
+  function openIndicatorSelectionModal() {
+    setPendingIndicators(indicators);
+  }
+
+  useEffect(() => {
+    setEnabledIndicators(getEnabledIndicators());
+  }, [indicators]);
+
+  function getEnabledIndicators(): string[] {
+    const result: string[] = [...DEFAULT_INDICATORS];
+    for (const items of indicators.medicoSocial.values()) {
+      for (const item of items) {
+        if (item.enabled) {
+          result.push(item.columnName);
+        }
+      }
+    }
+    return result;
+  };
+
+  const toggleIndicator = (category: IndicatorCategory, columnName: string) => {
+    setPendingIndicators((prevState) => {
+      const newMedicoSocial = new Map(prevState.medicoSocial);
+      const items = newMedicoSocial.get(category);
+      if (items) {
+        const newItems = items.map((item) =>
+          item.columnName === columnName ? { ...item, enabled: !item.enabled } : item
+        );
+        newMedicoSocial.set(category, newItems);
+      }
+      return { ...prevState, medicoSocial: newMedicoSocial };
+    });
+  };
+
+  // Toggles all indicators in the given category: if all are enabled, disable all; otherwise, enable all
+  const toggleCategory = (category: IndicatorCategory) => {
+    setPendingIndicators((prevState) => {
+      const newMedicoSocial = new Map(prevState.medicoSocial);
+      const items = newMedicoSocial.get(category);
+      if (items) {
+        const allEnabled = items.every(item => item.enabled);
+        const newItems = items.map((item) => ({ ...item, enabled: !allEnabled }));
+        newMedicoSocial.set(category, newItems);
+      }
+      return { ...prevState, medicoSocial: newMedicoSocial };
+    });
+  };
+
+  function generateModal(): ReactNode {
+    const categories = Array.from(indicators.medicoSocial.entries());
+    const leftColumn = categories.filter(([category]) => category.position === IndicatorPosition.LEFT);
+    const rightColumn = categories.filter(([category]) => category.position === IndicatorPosition.RIGHT);
+
+    const renderCategory = ([category]: [IndicatorCategory, IndicatorStateItem[]]) => {
+      const pendingItems = pendingIndicators.medicoSocial.get(category) || [];
+      return (
+        <div className="fr-mb-4w" key={category.name}>
+          <fieldset className="fr-fieldset">
+            <div className="fr-fieldset__content">
+              <div className="fr-checkbox-group" >
+                <input
+                  checked={pendingItems.every(item => item.enabled)}
+                  id={`category-checkbox-${category.name}`}
+                  onChange={() => toggleCategory(category)}
+                  type="checkbox"
+                />
+                <label className="fr-label fr-ml-2w fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
+                  {category.name}
+                </label>
+                {pendingItems.map((item) => (
+                  <div className="fr-my-n2w" key={item.columnName}>
+                    <input
+                      checked={item.enabled}
+                      id={`checkbox-${item.columnName}`}
+                      name={item.columnName}
+                      onChange={() => toggleIndicator(category, item.columnName)}
+                      type="checkbox"
+                    />
+                    <label className="fr-label fr-ml-5w" htmlFor={`checkbox-${item.columnName}`}>
+                      {item.displayName}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div >
+          </fieldset >
+        </div >
+      );
+    };
+
+    return (
+      <dialog aria-labelledby="fr-modal-selection-indicateur-title" className="fr-modal" id="fr-modal-selection-indicateur">
+        <div className="fr-container fr-container--fluid fr-container-md">
+          <div className="fr-grid-row fr-grid-row--center">
+            <div className="fr-col-12 fr-col-md-10 fr-col-lg-10">
+              <div className="fr-modal__body">
+                <div className="fr-modal__content">
+                  <h1 className="fr-modal__title fr-my-2w" id="fr-modal-selection-indicateur-title">
+                    Sélection des indicateurs
+                  </h1>
+                  <div className="fr-grid-row fr-grid-row--gutters">
+                    <div className="fr-col-12 fr-col-md-6">
+                      {leftColumn.map(renderCategory)}
+                    </div>
+                    <div className="fr-col-12 fr-col-md-6">
+                      {rightColumn.map(renderCategory)}
+                    </div>
+                  </div>
+                </div>
+                <div className="fr-modal__footer">
+                  <div className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
+                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn" onClick={() => setIndicators(pendingIndicators)}>
+                      Valider
+                    </button>
+                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn fr-btn--secondary">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    );
+  }
+
+  return { generateModal, enabledIndicators, openIndicatorSelectionModal };
+}
+
