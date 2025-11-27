@@ -1,3 +1,7 @@
+import { StringFormater } from "../commun/StringFormater";
+
+type ValueOrNA = number | null | string;
+
 export type ResultatComparaisonSMS = Readonly<{
   numéroFiness: string;
   socialReason: string;
@@ -43,6 +47,11 @@ export type ResultatComparaisonEJ = Readonly<{
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
   sejoursHad: number | null | string;
+  nombreEtpPm: number | null | string;
+  nombreEtpPnm: number | null | string;
+  depensesInterimPm: number | null | string;
+  joursAbsenteismePm: number | null | string;
+  joursAbsenteismePnm: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -92,6 +101,26 @@ export type ApiComparaisonResultat = Readonly<{
   resultat: ResultatComparaison[];
 }>;
 
+function formatCurrency(value: ValueOrNA): string {
+  if (value === '') return "";
+  if (!value) return "-";
+  if (value === 'NA') return 'Consultation non autorisée';
+  return value
+    .toLocaleString("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    })
+    .split(",")[0] + " €";
+}
+
+function formatRatio(value: ValueOrNA): string | null {
+  if (value === null) return null;
+  if (value === '') return ''
+  if (value === 'NA') return 'Consultation non autorisée';
+  return value + "%";
+
+}
+
 export class ComparaisonSMSViewModel {
   constructor(private readonly comparaison: ResultatComparaisonSMS) { }
 
@@ -115,91 +144,69 @@ export class ComparaisonSMSViewModel {
     return this.comparaison.capacite;
   }
 
-  public get realisationActivite(): string | null | string {
-    if (this.comparaison.realisationActivite === '') return ''
-    return this.comparaison.realisationActivite !== null ? this.comparaison.realisationActivite === 'NA' ? 'Consultation non autorisée' : this.comparaison.realisationActivite + "%" : null;
+  public get realisationActivite(): string | null {
+    return formatRatio(this.comparaison.realisationActivite);
   }
 
   public get acceuilDeJour(): string | null {
-    if (this.comparaison.acceuilDeJour === '') return ''
-    return this.comparaison.acceuilDeJour !== null ? this.comparaison.acceuilDeJour === 'NA' ? 'Consultation non autorisée' : this.comparaison.acceuilDeJour + "%" : null;
+    return formatRatio(this.comparaison.acceuilDeJour);
   }
 
   public get hebergementPermanent(): string | null {
-    if (this.comparaison.hebergementPermanent === '') return ''
-    return this.comparaison.hebergementPermanent !== null ? this.comparaison.hebergementPermanent === 'NA' ? 'Consultation non autorisée' : this.comparaison.hebergementPermanent + "%" : null;
+    return formatRatio(this.comparaison.hebergementPermanent);
   }
 
   public get hebergementTemporaire(): string | null {
-    if (this.comparaison.hebergementTemporaire === '') return ''
-    return this.comparaison.hebergementTemporaire !== null ? this.comparaison.hebergementTemporaire === 'NA' ? 'Consultation non autorisée' : this.comparaison.hebergementTemporaire + "%" : null;
+    return formatRatio(this.comparaison.hebergementTemporaire);
   }
 
-  public get fileActivePersonnesAccompagnes(): number | null | string {
+  public get fileActivePersonnesAccompagnes(): number | string {
     if (this.comparaison.fileActivePersonnesAccompagnes === '') return ''
     return this.comparaison.fileActivePersonnesAccompagnes === 'NA' ? 'Consultation non autorisée' : this.comparaison.fileActivePersonnesAccompagnes;
   }
 
   public get rotationPersonnel(): string | null {
-    if (this.comparaison.rotationPersonnel === '') return ''
-    return this.comparaison.rotationPersonnel !== null ? this.comparaison.rotationPersonnel === 'NA' ? 'Consultation non autorisée' : this.comparaison.rotationPersonnel + "%" : null;
+    return formatRatio(this.comparaison.rotationPersonnel);
   }
 
   public get absenteisme(): string | null {
-    if (this.comparaison.absenteisme === '') return ''
-    return this.comparaison.absenteisme !== null ? this.comparaison.absenteisme === 'NA' ? 'Consultation non autorisée' : this.comparaison.absenteisme + "%" : null;
+    return formatRatio(this.comparaison.absenteisme);
   }
 
   public get externat(): string | null {
-    if (this.comparaison.externat === '') return ''
-    return this.comparaison.externat !== null ? this.comparaison.externat === 'NA' ? 'Consultation non autorisée' : this.comparaison.externat + "%" : null;
+    return formatRatio(this.comparaison.externat);
   }
 
   public get internat(): string | null {
-    if (this.comparaison.internat === '') return ''
-    return this.comparaison.internat !== null ? this.comparaison.internat === 'NA' ? 'Consultation non autorisée' : this.comparaison.internat + "%" : null;
+    return formatRatio(this.comparaison.internat);
   }
   public get semiInternat(): string | null {
-    if (this.comparaison.semiInternat === '') return ''
-    return this.comparaison.semiInternat !== null ? this.comparaison.semiInternat === 'NA' ? 'Consultation non autorisée' : this.comparaison.semiInternat + "%" : null;
+    return formatRatio(this.comparaison.semiInternat);
   }
   public get autres(): string | null {
-    if (this.comparaison.autres === '') return ''
-    return this.comparaison.autres !== null ? this.comparaison.autres === 'NA' ? 'Consultation non autorisée' : this.comparaison.autres + "%" : null;
+    return formatRatio(this.comparaison.autres);
   }
   public get seances(): string | null {
-    if (this.comparaison.seances === '') return ''
-    return this.comparaison.seances !== null ? this.comparaison.seances === 'NA' ? 'Consultation non autorisée' : this.comparaison.seances + "%" : null;
+    return formatRatio(this.comparaison.seances);
   }
   public get prestationExterne(): string | null {
-    if (this.comparaison.prestationExterne === '') return ''
-    return this.comparaison.prestationExterne !== null ? this.comparaison.prestationExterne === 'NA' ? 'Consultation non autorisée' : this.comparaison.prestationExterne + "%" : null;
+    return formatRatio(this.comparaison.prestationExterne);
   }
 
   public get etpVacant(): string | null {
-    if (this.comparaison.etpVacant === '') return ''
-    return this.comparaison.etpVacant !== null ? this.comparaison.etpVacant === 'NA' ? 'Consultation non autorisée' : this.comparaison.etpVacant + "%" : null;
+    return formatRatio(this.comparaison.etpVacant);
   }
 
   public get tauxCaf(): string | null {
-    if (this.comparaison.tauxCaf === '') return ''
-    return this.comparaison.tauxCaf !== null ? this.comparaison.tauxCaf === 'NA' ? 'Consultation non autorisée' : this.comparaison.tauxCaf + "%" : null;
+    return formatRatio(this.comparaison.tauxCaf);
   }
 
   public get vetusteConstruction(): string | null {
-    if (this.comparaison.vetusteConstruction === '') return ''
-    return this.comparaison.vetusteConstruction !== null ? this.comparaison.vetusteConstruction === 'NA' ? 'Consultation non autorisée' : this.comparaison.vetusteConstruction + "%" : null;
+    return formatRatio(this.comparaison.vetusteConstruction);
   }
 
   public get roulementNetGlobal(): string {
-    if (this.comparaison.roulementNetGlobal === '') return ''
-    return this.comparaison.roulementNetGlobal ? this.comparaison.roulementNetGlobal === 'NA' ? 'Consultation non autorisée' : this.comparaison.roulementNetGlobal
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+    return formatCurrency(this.comparaison.roulementNetGlobal);
   }
 
   public get commune(): string {
@@ -212,14 +219,7 @@ export class ComparaisonSMSViewModel {
   }
 
   public get resultatNetComptable(): string {
-    if (this.comparaison.resultatNetComptable === '') return ''
-    return this.comparaison.resultatNetComptable ? this.comparaison.resultatNetComptable === 'NA' ? 'Consultation non autorisée' : this.comparaison.resultatNetComptable
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+    return formatCurrency(this.comparaison.resultatNetComptable);
   }
 }
 
@@ -251,72 +251,51 @@ export class ComparaisonSANViewModel {
     return this.comparaison.departement;
   }
 
-  public get totalHosptMedecine(): number | string | null {
+  public get totalHosptMedecine(): ValueOrNA {
     if (this.comparaison.totalHosptMedecine === '') return ''
     return this.comparaison.totalHosptMedecine;
   }
 
-  public get totalHosptObstetrique(): number | string | null {
+  public get totalHosptObstetrique(): ValueOrNA {
     if (this.comparaison.totalHosptObstetrique === '') return ''
     return this.comparaison.totalHosptObstetrique;
   }
 
-  public get totalHosptChirurgie(): number | string | null {
+  public get totalHosptChirurgie(): ValueOrNA {
     if (this.comparaison.totalHosptChirurgie === '') return ''
     return this.comparaison.totalHosptChirurgie;
   }
 
-  public get totalHosptSsr(): number | string | null {
+  public get totalHosptSsr(): ValueOrNA {
     if (this.comparaison.totalHosptSsr === '') return ''
     return this.comparaison.totalHosptSsr;
   }
 
-  public get totalHosptPsy(): number | string | null {
+  public get totalHosptPsy(): ValueOrNA {
     if (this.comparaison.totalHosptPsy === '') return ''
     return this.comparaison.totalHosptPsy;
   }
 
-  public get passagesUrgences(): number | string | null {
+  public get passagesUrgences(): ValueOrNA {
     if (this.comparaison.passagesUrgences === '') return ''
     return this.comparaison.passagesUrgences;
   }
 
-  public get journeesUsld(): number | string | null {
+  public get journeesUsld(): ValueOrNA {
     if (this.comparaison.journeesUsld === '') return ''
     return this.comparaison.journeesUsld;
   }
 
-  public get enveloppe1(): string | null {
-    if (this.comparaison.enveloppe1 === '') return ''
-    return this.comparaison.enveloppe1 ? this.comparaison.enveloppe1
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get enveloppe1(): string {
+    return formatCurrency(this.comparaison.enveloppe1);
   }
 
-  public get enveloppe2(): string | null {
-    if (this.comparaison.enveloppe2 === '') return ''
-    return this.comparaison.enveloppe2 ? this.comparaison.enveloppe2
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get enveloppe2(): string {
+    return formatCurrency(this.comparaison.enveloppe2);
   }
 
-  public get enveloppe3(): string | null {
-    if (this.comparaison.enveloppe3 === '') return ''
-    return this.comparaison.enveloppe3 ? this.comparaison.enveloppe3
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get enveloppe3(): string {
+    return formatCurrency(this.comparaison.enveloppe3);
   }
 }
 export class ComparaisonEJViewModel {
@@ -356,24 +335,15 @@ export class ComparaisonEJViewModel {
   }
 
   public get resultatNetComptableEj(): string {
-    if (this.comparaison.resultatNetComptableEj === '') return ''
-    return this.comparaison.resultatNetComptableEj ? this.comparaison.resultatNetComptableEj
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+    return formatCurrency(this.comparaison.resultatNetComptableEj);
   }
 
   public get tauxCafEj(): string | null {
-    if (this.comparaison.tauxCafEj === '') return ''
-    return this.comparaison.tauxCafEj ? this.comparaison.tauxCafEj + "%" : null;
+    return formatRatio(this.comparaison.tauxCafEj);
   }
 
   public get ratioDependanceFinanciere(): string | null {
-    if (this.comparaison.ratioDependanceFinanciere === '') return ''
-    return this.comparaison.ratioDependanceFinanciere !== null ? this.comparaison.ratioDependanceFinanciere + "%" : null;
+    return formatRatio(this.comparaison.ratioDependanceFinanciere);
   }
 
   public get sejoursHad(): number | string | null {
@@ -381,80 +351,60 @@ export class ComparaisonEJViewModel {
     return this.comparaison.sejoursHad;
   }
 
-  public get chargesPrincipaux(): string | null {
-    if (this.comparaison.chargesPrincipaux === '') return ''
-    return this.comparaison.chargesPrincipaux ? this.comparaison.chargesPrincipaux
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  private formatNumberValue(value: number | string | null): string {
+    if (value === '') return '';
+    if (!value) return '-';
+    const num = Number(value);
+    if (isNaN(num)) return '-';
+    return StringFormater.formatInFrench(num);
   }
 
-  public get produitsPrincipaux(): string | null {
-    if (this.comparaison.produitsPrincipaux === '') return ''
-    return this.comparaison.produitsPrincipaux ? this.comparaison.produitsPrincipaux.toLocaleString("fr-FR", {
-      style: "currency",
-      currency: "EUR",
-    })
-      .split(",")[0] + " €"
-      : "-";
+  public get nombreEtpPm(): string {
+    return this.formatNumberValue(this.comparaison.nombreEtpPm);
   }
 
-  public get chargesAnnexes(): string | null {
-    if (this.comparaison.chargesAnnexes === '') return ''
-    return this.comparaison.chargesAnnexes ? this.comparaison.chargesAnnexes
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get nombreEtpPnm(): string {
+    return this.formatNumberValue(this.comparaison.nombreEtpPnm);
   }
 
-  public get produitsAnnexes(): string | null {
-    if (this.comparaison.produitsAnnexes === '') return ''
-    return this.comparaison.produitsAnnexes ? this.comparaison.produitsAnnexes === '' ? '' : this.comparaison.produitsAnnexes
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get depensesInterimPm(): string {
+    return formatCurrency(this.comparaison.depensesInterimPm);
   }
 
-  public get enveloppe1(): string | null {
-    if (this.comparaison.enveloppe1 === '') return ''
-    return this.comparaison.enveloppe1 ? this.comparaison.enveloppe1
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get joursAbsenteismePm(): string {
+    return this.formatNumberValue(this.comparaison.joursAbsenteismePm);
   }
 
-  public get enveloppe2(): string | null {
-    if (this.comparaison.enveloppe2 === '') return ''
-    return this.comparaison.enveloppe2 ? this.comparaison.enveloppe2
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get joursAbsenteismePnm(): string {
+    return this.formatNumberValue(this.comparaison.joursAbsenteismePnm);
   }
 
-  public get enveloppe3(): string | null {
-    if (this.comparaison.enveloppe3 === '') return ''
-    return this.comparaison.enveloppe3 ? this.comparaison.enveloppe3
-      .toLocaleString("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      })
-      .split(",")[0] + " €"
-      : "-";
+  public get chargesPrincipaux(): string {
+    return formatCurrency(this.comparaison.chargesPrincipaux);
+  }
+
+  public get produitsPrincipaux(): string {
+    return formatCurrency(this.comparaison.produitsPrincipaux);
+  }
+
+  public get chargesAnnexes(): string {
+    return formatCurrency(this.comparaison.chargesAnnexes);
+  }
+
+  public get produitsAnnexes(): string {
+    return formatCurrency(this.comparaison.produitsAnnexes);
+  }
+
+  public get enveloppe1(): string {
+    return formatCurrency(this.comparaison.enveloppe1);
+  }
+
+  public get enveloppe2(): string {
+    return formatCurrency(this.comparaison.enveloppe2);
+  }
+
+  public get enveloppe3(): string {
+    return formatCurrency(this.comparaison.enveloppe3);
   }
 
   public get commune(): string {
@@ -465,6 +415,5 @@ export class ComparaisonEJViewModel {
   public get departement(): string {
     return this.comparaison.departement;
   }
-
 
 }

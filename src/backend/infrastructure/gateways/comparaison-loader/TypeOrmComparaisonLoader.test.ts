@@ -10,6 +10,7 @@ import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/mo
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
+import { RessourcesHumainesEntiteJuridiqueModel } from "../../../../../database/models/RessourcesHumainesEntiteJuridiqueModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
 import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
@@ -27,6 +28,7 @@ describe("La comparaison des établissements", () => {
   let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
   let établissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let ressourcesHumainesModelRepository: Repository<RessourcesHumainesMédicoSocialModel>;
+  let ressourcesHumainesEJModelRepository: Repository<RessourcesHumainesEntiteJuridiqueModel>;
   let budgetEtFinancesMedicoSocialModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
   let activiteeMedicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>;
   let autorisationMedicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
@@ -79,6 +81,7 @@ describe("La comparaison des établissements", () => {
     entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
     établissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     ressourcesHumainesModelRepository = (await orm).getRepository(RessourcesHumainesMédicoSocialModel);
+    ressourcesHumainesEJModelRepository = (await orm).getRepository(RessourcesHumainesEntiteJuridiqueModel);
     budgetEtFinancesMedicoSocialModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
     activiteeMedicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
     autorisationMedicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
@@ -126,6 +129,16 @@ describe("La comparaison des établissements", () => {
       ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2022, numéroFinessÉtablissementTerritorial: "100000001" }),
       ÉtablissementTerritorialRessourcesHumainesModelTestBuilder.créeMédicoSocial({ année: 2023, numéroFinessÉtablissementTerritorial: "100000001" }),
     ]);
+
+    await ressourcesHumainesEJModelRepository.insert(EntitéJuridiqueModelTestBuilder.creeRessourceHumaineEntiteJuridique({
+      numeroFinessEntiteJuridique: "000000000",
+      annee: 2022,
+      nombreEtpPm: 10,
+      nombreEtpPnm: 20,
+      joursAbsenteismePm: 30,
+      joursAbsenteismePnm: 40,
+      depensesInterimPm: 5000,
+    }));
 
     await budgetEtFinancesMedicoSocialModelRepository.insert([
       ÉtablissementTerritorialBudgetEtFinancesModelTestBuilder.créeMédicoSocial(CadreBudgétaire.ERRD, {
@@ -579,6 +592,11 @@ describe("La comparaison des établissements", () => {
         enveloppe1: null,
         enveloppe2: null,
         enveloppe3: null,
+        depensesInterimPm: 5000,
+        joursAbsenteismePm: 30,
+        joursAbsenteismePnm: 40,
+        nombreEtpPm: 10,
+        nombreEtpPnm: 20,
       },
       {
         numéroFiness: "200000000",
@@ -599,7 +617,12 @@ describe("La comparaison des établissements", () => {
         sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
-        enveloppe3: ''
+        enveloppe3: '',
+        depensesInterimPm: '',
+        joursAbsenteismePm: '',
+        joursAbsenteismePnm: '',
+        nombreEtpPm: '',
+        nombreEtpPnm: '',
       },
       {
         numéroFiness: "200000001",
@@ -620,7 +643,12 @@ describe("La comparaison des établissements", () => {
         sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
-        enveloppe3: ''
+        enveloppe3: '',
+        depensesInterimPm: '',
+        joursAbsenteismePm: '',
+        joursAbsenteismePnm: '',
+        nombreEtpPm: '',
+        nombreEtpPnm: '',
       },
       {
         numéroFiness: "299999999",
@@ -641,7 +669,12 @@ describe("La comparaison des établissements", () => {
         sejoursHad: '',
         enveloppe1: '',
         enveloppe2: '',
-        enveloppe3: ''
+        enveloppe3: '',
+        depensesInterimPm: '',
+        joursAbsenteismePm: '',
+        joursAbsenteismePnm: '',
+        nombreEtpPm: '',
+        nombreEtpPnm: '',
       },
     ]);
   });
