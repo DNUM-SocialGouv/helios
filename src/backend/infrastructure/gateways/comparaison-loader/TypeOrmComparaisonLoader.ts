@@ -80,6 +80,11 @@ type ComparaisonSANTypeOrm = Readonly<{
   total_hospt_psy: number;
   nombre_passages_urgences: number;
   nombre_journees_usld: number;
+  nombre_etp_pm: number;
+  nombre_etp_pnm: number;
+  depenses_interim_pm: number;
+  jours_absenteisme_pm: number;
+  jours_absenteisme_pnm: number;
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
@@ -560,6 +565,8 @@ FROM (
     LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe2} on et.numero_finess  = ar2.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe3} on et.numero_finess  = ar3.numero_finess_etablissement_territorial
+    LEFT JOIN ressources_humaines_sanitaire rhs
+    on et.numero_finess = rhs.numero_finess_etablissement_territorial and rhs.annee = ${annee}
     where et.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
 
     const compareEtSanQuery = `Select et.numero_finess,
@@ -592,6 +599,11 @@ FROM (
     END AS total_hospt_psy,
     acs.nombre_passages_urgences,
     acs.nombre_journees_usld,
+    rhs.nombre_etp_pm,
+    rhs.nombre_etp_pnm,
+    rhs.depenses_interim_pm,
+    rhs.jours_absenteisme_pm,
+    rhs.jours_absenteisme_pnm,
     enveloppe_1,
     enveloppe_2,
     enveloppe_3 ${compareEtSanQueryBody}`;
@@ -728,6 +740,11 @@ FROM (
         totalHosptPsy: resultat.type === "Sanitaire" ? resultat.total_hospt_psy : '',
         passagesUrgences: resultat.type === "Sanitaire" ? resultat.nombre_passages_urgences : '',
         journeesUsld: resultat.type === "Sanitaire" ? resultat.nombre_journees_usld : '',
+        nombreEtpPm: resultat.type === "Sanitaire" ? resultat.nombre_etp_pm : '',
+        nombreEtpPnm: resultat.type === "Sanitaire" ? resultat.nombre_etp_pnm : '',
+        depensesInterimPm: resultat.type === "Sanitaire" ? resultat.depenses_interim_pm : '',
+        joursAbsenteismePm: resultat.type === "Sanitaire" ? resultat.jours_absenteisme_pm : '',
+        joursAbsenteismePnm: resultat.type === "Sanitaire" ? resultat.jours_absenteisme_pnm : '',
         enveloppe1: resultat.type === "Sanitaire" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Sanitaire" ? resultat.enveloppe_2 : '',
         enveloppe3: resultat.type === "Sanitaire" ? resultat.enveloppe_3 : ''
