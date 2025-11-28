@@ -719,7 +719,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     motifsRuptureContrat: [],
     motifsRuptureContratLibelles: [],
     natureContratsAnnuel: [],
-    natureContratsTrimestriel: []
+    natureContratsTrimestriel: [],
+    echelleTemporelle:{}
   };
 
   public static crée(

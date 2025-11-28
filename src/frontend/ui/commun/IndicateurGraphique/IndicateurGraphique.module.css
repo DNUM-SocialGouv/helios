@@ -22,6 +22,12 @@
   list-style: none;
 }
 
+.donnees-arretees {
+  color: var(--text-title-grey);
+  font-size: .875rem;
+  margin: .25rem 0 .5rem;
+}
+
 @media print {
   .print-only {
     page-break-inside: avoid;

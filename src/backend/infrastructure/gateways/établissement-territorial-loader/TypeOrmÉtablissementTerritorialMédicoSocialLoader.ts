@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { construitEchelleTemporelleVigieRh } from "./utils/EchelleTemporelleVigieRh";
 import { ActivitéMédicoSocialModel } from "../../../../../database/models/ActivitéMédicoSocialModel";
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
@@ -30,6 +31,7 @@ import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database
 import { DomaineÉtablissementTerritorial } from "../../../métier/entities/DomaineÉtablissementTerritorial";
 import { CadreBudgétaire } from "../../../métier/entities/établissement-territorial-médico-social/CadreBudgétaire";
 import {
+  EchelleTemporelleVigieRh,
   EtablissementTerritorialMedicoSocialVigieRH,
   ProfessionFiliere,
   ProfessionFiliereData,
@@ -83,6 +85,7 @@ type ModelsBlocVigieRh = Readonly<{
   professionFiliereModel: ProfessionFiliere;
   natureContratsAnnuel: VigieRhNatureContratsAnnuelModel[];
   natureContratsTrimestriel: VigieRhNatureContratsTrimestrielModel[];
+  echelleTemporelle: Record<string, EchelleTemporelleVigieRh>;
 }>;
 export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements ÉtablissementTerritorialMédicoSocialLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
@@ -282,6 +285,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
 
     const natureContratsAnnuel = await (await this.orm).getRepository(VigieRhNatureContratsAnnuelModel).find({ where: { numeroFiness: numeroFinessET } });
     const natureContratsTrimestriel = await (await this.orm).getRepository(VigieRhNatureContratsTrimestrielModel).find({ where: { numeroFiness: numeroFinessET } });
+    const professionFiliereModel = professionFiliere as unknown as ProfessionFiliere;
+    const echelleTemporelle = await construitEchelleTemporelleVigieRh(this.orm, numeroFinessET);
     return this.construisLesDonneesVigieRH({
       pyramideAgesModel: pyramideAges,
       tranchesAgeModel: tranchesAge,
@@ -291,9 +296,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       dureesCddRefModel: dureeLibelles,
       motifsRuptureModel: motifsRupture,
       motifsLibelleModel: motifsLibelles,
-      professionFiliereModel: professionFiliere as unknown as ProfessionFiliere,
+      professionFiliereModel: professionFiliereModel,
       natureContratsAnnuel,
-      natureContratsTrimestriel
+      natureContratsTrimestriel,
+      echelleTemporelle
     });
   }
 
@@ -420,7 +426,8 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       motifsRuptureContrat,
       motifsRuptureContratLibelles,
       natureContratsAnnuel,
-      natureContratsTrimestriel
+      natureContratsTrimestriel,
+      echelleTemporelle: models.echelleTemporelle
     }
   }
 
