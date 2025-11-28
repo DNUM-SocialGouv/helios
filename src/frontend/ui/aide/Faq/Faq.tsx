@@ -311,39 +311,35 @@ export default function Faq() {
       {FAQ_SECTIONS.map((category) => {
         const categoryId = `faq-category-${category.id}`;
         return (
-          <div className="fr-accordions-group" key={category.id}>
-            <section className="fr-accordion">
-              <h2 className="fr-accordion__title">
-                <button aria-controls={categoryId} aria-expanded={true} className="fr-accordion__btn" type="button">
-                  {category.title}
-                </button>
-              </h2>
-              <div className="fr-collapse fr-collapse--expanded" id={categoryId}>
-                <div className="fr-accordions-group fr-mt-3w fr-ml-2w">
-                  {category.questions.map((question) => {
-                    const questionId = `${categoryId}-question-${question.id}`;
-                    return (
-                      <section className="fr-accordion fr-mb-2w" key={question.id}>
-                        <h3 className="fr-accordion__title">
-                          <button
-                            aria-controls={questionId}
-                            aria-expanded={false}
-                            className="fr-accordion__btn"
-                            type="button"
-                          >
-                            {question.question}
-                          </button>
-                        </h3>
-                        <div className="fr-collapse" id={questionId}>
-                          {renderAnswer(question.answer)}
-                        </div>
-                      </section>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          </div>
+          <section className="fr-accordion" key={category.id}>
+            <h2 className="fr-accordion__title">
+              <button aria-controls={categoryId} aria-expanded={true} className="fr-accordion__btn" type="button">
+                {category.title}
+              </button>
+            </h2>
+            <div className="fr-collapse fr-collapse--expanded" id={categoryId}>
+              {category.questions.map((question) => {
+                const questionId = `${categoryId}-question-${question.id}`;
+                return (
+                  <section className="fr-accordion " key={question.id}>
+                    <h3 className="fr-accordion__title">
+                      <button
+                        aria-controls={questionId}
+                        aria-expanded={false}
+                        className="fr-accordion__btn"
+                        type="button"
+                      >
+                        {question.question}
+                      </button>
+                    </h3>
+                    <div className="fr-collapse" id={questionId}>
+                      {renderAnswer(question.answer)}
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+          </section>
         );
       })}
 
@@ -358,6 +354,6 @@ export default function Faq() {
           </a>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
