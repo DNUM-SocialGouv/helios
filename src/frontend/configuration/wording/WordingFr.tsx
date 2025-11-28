@@ -330,7 +330,7 @@ export class WordingFr implements Wording {
     </>
   );
   readonly NUMÉRO_ARHGOS: string = "Numéro ARHGOS";
-  readonly NUMÉRO_AUTORISATION: string = "Numéro autorisation";
+  readonly NUMÉRO_AUTORISATION: string = "Numéro";
   readonly ACTIVITÉS: string = "Activités";
   readonly CHIRURGIE: string = "Chirurgie";
   readonly MÉDECINE: string = "Médecine";
