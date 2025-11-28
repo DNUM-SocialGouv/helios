@@ -42,7 +42,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
   }
 
   const exportExcelAutorisationDeSoin = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) => {
-    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
     const etablissementSanitaireAutorisations = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.autorisations;
     const etablissementSanitaireAutorisationsAmm = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.autorisationsAmm;
@@ -133,7 +133,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
   }
 
   const exportExcelReconnaissanceContractuelles = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) => {
-    const columns = [wording.ACTIVITÉ, "Modalité", "Reconnaissance/Forme", "Capacité autorisée", "Date d'effet de l'ASR", "Auto. ARGHOS", "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
+    const columns = [wording.ACTIVITÉ, "Modalité", "Reconnaissance/Forme", "Capacité autorisée", "Date d'effet de l'ASR", wording.NUMÉRO_AUTORISATION, "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
 
     const etablissementSanitaireReconnaissanceActivites = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.reconnaissancesContractuelles;
     const rows: string[][] = [];
@@ -157,7 +157,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
   }
 
   const exportExcelEquipementsLourds = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel) => {
-    const columns = ["Équipement", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+    const columns = ["Équipement", wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
     const etablissementSanitaireEquipementsLourds = entitéJuridiqueAutorisationsCapacitesViewModel.établissementTerritorialSanitaireAutorisations.équipementsMatérielsLourds;
     const rows: string[][] = [];

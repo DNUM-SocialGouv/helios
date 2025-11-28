@@ -19,10 +19,10 @@ export function getCurrentDate() {
 export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) {
   const { wording } = useDependencies();
 
-  const autorisationFields = [wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+  const autorisationFields = [wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
   const autresAutorisationFields = [wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
-  const reconnaissanceFields = ["Capacité autorisée", "Date d'effet de l'ASR", "Auto. ARGHOS", "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
-  const equipementLourdFields = [wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION_KEY, "Date de mis en oeuvre", wording.DATE_DE_FIN];
+  const reconnaissanceFields = ["Capacité autorisée", "Date d'effet de l'ASR", wording.NUMÉRO_AUTORISATION, "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
+  const equipementLourdFields = [wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION_KEY, "Date de mis en oeuvre", wording.DATE_DE_FIN];
 
   function exportExcelAutorisation() {
     const workbook = new Workbook();
@@ -46,7 +46,7 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
   }
 
   const exportExcelAutorisationDeSoin = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {
-    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", "Autorisations Établissements", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+    const columns = [wording.ACTIVITÉ, "Modalité", "Mentions", "Pratiques", "Déclaration/Forme", "Autorisations Établissements", wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
     const entiteJuridiqueAutorisations = entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsActivités;
     const entiteJuridiqueAutorisationsAmm = entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsAmmActivites;
@@ -151,7 +151,7 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
   }
 
   const exportExcelReconnaissanceContractuelles = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {
-    const columns = [wording.ACTIVITÉ, "Modalité", "Reconnaissance/Forme", "Autorisations Établissements", "Capacité autorisée", "Date d'effet de l'ASR", "Auto. ARGHOS", "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
+    const columns = [wording.ACTIVITÉ, "Modalité", "Reconnaissance/Forme", "Autorisations Établissements", "Capacité autorisée", "Date d'effet de l'ASR", wording.NUMÉRO_AUTORISATION, "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
 
     const entiteJuridiqueReconnaissanceActivites = entitéJuridiqueAutorisationsCapacitesViewModel.reconnaissanceActivités;
     const rows: string[][] = [];
@@ -174,7 +174,7 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
   }
 
   const exportExcelEquipementsLourds = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {
-    const columns = ["Équipement", "Autorisations Établissements", wording.NUMÉRO_ARHGOS, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
+    const columns = ["Équipement", "Autorisations Établissements", wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
 
     const entiteJuridiqueEquipementsLourds = entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds;
     const rows: string[][] = [];
