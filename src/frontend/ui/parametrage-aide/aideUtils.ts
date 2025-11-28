@@ -112,14 +112,12 @@ export const determinerDefinitionsSections = (contenu: ContenuAide): DefinitionS
     return accumulateur;
   }, {});
 
-  let position = 0;
-
   for (const [slug, section] of Object.entries(contenu)) {
     const sectionStatique = repertoireStatique[slug];
     const ordre =
       typeof section?.order === "number" && Number.isFinite(section.order)
         ? section.order
-        : sectionStatique?.ordre ?? position;
+        : sectionStatique?.ordre ?? Number.MAX_VALUE;
 
     definitions.push({
       slug,
@@ -128,8 +126,6 @@ export const determinerDefinitionsSections = (contenu: ContenuAide): DefinitionS
       nature: section?.type === "faq" ? "faq" : sectionStatique?.nature ?? "resources",
       ordre,
     });
-
-    position += 1;
   }
 
   for (const sectionStatique of SECTIONS_STATIQUES) {
