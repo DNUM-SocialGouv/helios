@@ -19,9 +19,10 @@ type ListActionsButtonProps = Readonly<{
   exportButton: ReactNode;
   fullSelectButton?: ReactNode;
   importButton?: ReactNode;
+  indicatorChoiceButton?: ReactNode;
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton, importButton }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton, importButton, indicatorChoiceButton }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -82,6 +83,11 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
               </button>
             }
           </li>
+          {indicatorChoiceButton &&
+            <li className={styles["menu-item"]}>
+              {indicatorChoiceButton}
+            </li>
+          }
           <li className={styles["menu-item"]}>
             {exportButton}
           </li>
