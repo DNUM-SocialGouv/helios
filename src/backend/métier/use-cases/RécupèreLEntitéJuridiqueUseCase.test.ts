@@ -507,7 +507,7 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       const forme = entitéJuridique.autorisationsEtCapacites.autorisationsActivités.autorisations[0].modalites[0].formes[0];
       expect(forme.autorisationEtablissements).toHaveLength(1);
-      expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro autorisation");
+      expect(forme.autorisationEtablissements[0].autorisations[0].nom).toBe("Numéro");
       expect(forme.autorisationEtablissements[0].autorisations[0].valeur).toBe("argos-1");
       expect(forme.autorisationEtablissements[0].autorisations[1].nom).toBe("Date d'autorisation");
       expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("20/01/2020");
@@ -1130,7 +1130,7 @@ describe("La récupération d’une entité juridique", () => {
       expect(forme.autorisationEtablissements[0].autorisations[0].valeur).toBe("1");
       expect(forme.autorisationEtablissements[0].autorisations[1].nom).toBe("Date d'effet de l'ASR");
       expect(forme.autorisationEtablissements[0].autorisations[1].valeur).toBe("20/10/2021");
-      expect(forme.autorisationEtablissements[0].autorisations[2].nom).toBe("Auto. ARGHOS");
+      expect(forme.autorisationEtablissements[0].autorisations[2].nom).toBe("Numéro");
       expect(forme.autorisationEtablissements[0].autorisations[2].valeur).toBe("argos-1");
       expect(forme.autorisationEtablissements[0].autorisations[3].nom).toBe("Date d'effet du CPOM");
       expect(forme.autorisationEtablissements[0].autorisations[3].valeur).toBe("15/01/2020");
@@ -1349,7 +1349,7 @@ describe("La récupération d’une entité juridique", () => {
       // THEN
       const equipements = entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités.autorisations[0].equipementEtablissements[0].equipements;
       expect(equipements).toHaveLength(1);
-      expect(equipements[0].autorisations[0].nom).toBe("Numéro autorisation");
+      expect(equipements[0].autorisations[0].nom).toBe("Numéro");
       expect(equipements[0].autorisations[0].valeur).toBe("argos-1");
       expect(equipements[0].autorisations[1].nom).toBe("Date d'autorisation");
       expect(equipements[0].autorisations[1].valeur).toBe("20/10/2021");
