@@ -200,7 +200,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
         answer: (
           <>
             <p className="fr-mb-2w">
-              La dernière date de mise à jour des données disponibles dans Helios, sont indiquées sous chaque intitulé d’indicateur.
+              La dernière date de mise à jour des données disponibles dans Helios, est indiquée sous chaque intitulé d’indicateur.
             </p>
             <Image alt="" height={29} src="/assets/faq/date_maj.png" width={152} />
           </>
@@ -262,9 +262,9 @@ const FAQ_SECTIONS: FaqCategory[] = [
         answer: (
           <>
             <p className="fr-mb-1w">Vous pouvez trouver la documentation depuis :</p>
-            <p className="fr-mb-1w">-l’application Helios en vous rendant dans le menu Aide puis Guide utilisateurs ou Vidéos tutoriels</p>
+            <p className="fr-mb-1w">- l’application Helios en vous rendant dans le menu Aide puis Guide utilisateurs ou Vidéos tutoriels</p>
             <p className="fr-mb-0">
-              -l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : dnum.scn-helios-support@sg.social.gouv.fr.
+              - l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : dnum.scn-helios-support@sg.social.gouv.fr.
             </p>
           </>
         ),
