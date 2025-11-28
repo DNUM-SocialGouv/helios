@@ -90,7 +90,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)}
         />
-        <SeparatorHorizontal></SeparatorHorizontal>
+        {!statusBlocs[0] && <SeparatorHorizontal></SeparatorHorizontal>}
         <BlocActivitéSanitaire
           entitéJuridiqueActivitéMensuelleViewModel={entitéJuridiqueActivitéMensuelleViewModel}
           entitéJuridiqueActivitéViewModel={entitéJuridiqueViewModel.entitéJuridiqueActivitéViewModel}

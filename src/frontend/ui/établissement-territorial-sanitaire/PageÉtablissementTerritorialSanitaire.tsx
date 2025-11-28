@@ -91,7 +91,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)} établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
         />
-        <SeparatorHorizontal></SeparatorHorizontal>
+        {!statusBlocs[0] && <SeparatorHorizontal></SeparatorHorizontal>}
         <BlocActivitéSanitaire
           activitéMensuelleViewModel={activitéMensuelleViewModel}
           etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
