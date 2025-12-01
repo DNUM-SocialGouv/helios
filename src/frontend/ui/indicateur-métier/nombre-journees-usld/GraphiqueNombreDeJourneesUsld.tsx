@@ -28,6 +28,7 @@ export const GraphiqueNombreDeJourneesUsld = ({ etabTitle, etabFiness, nombreDeJ
       source={wording.SAE}
     >
       <HistogrammeHorizontal
+        cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombreDeJourneesUsldViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
