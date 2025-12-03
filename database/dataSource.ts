@@ -113,6 +113,7 @@ import { AjoutMotifsRupturesContrats1760516962957 } from "./migrations/vigie_rh/
 import { VigierhNatureContratsTables1760966102359 } from "./migrations/vigie_rh/1760966102359-vigierhNatureContratsTables";
 import { ModificationTableProfession21762263346352 } from "./migrations/vigie_rh/1762263346352-ModificationsTablesProfessions";
 import { SupressionTableVigierhContrat1763372516438 } from "./migrations/vigie_rh/1763372516438-SupressionTableVigierhContrat";
+import { AjouteTypePassageProfessions1764753717478 } from "./migrations/vigie_rh/1764753717478-AjouteTypePassageProfessions";
 import { AjoutReferentielTypeContrat1738227384991 } from "./migrations/vigie_rh/referentiels/1738227384991-AjoutReferentielTypeContrat";
 import { AjoutReferentielProfessionFiliere1738328597314 } from "./migrations/vigie_rh/referentiels/1738328597314-AjoutReferentielProfessionFiliere";
 import { AjoutReferentielProfessionGroupe1738328713502 } from "./migrations/vigie_rh/referentiels/1738328713502-AjoutReferentielProfessionGroupe";
@@ -371,7 +372,8 @@ const datasource = new DataSource({
     AjoutDmsActiviteSanitaire1759845977685,
     AjoutDureeMoyenneSejourDansLesProfils1762435683856,
     ModificationTableProfession21762263346352,
-    SupressionTableVigierhContrat1763372516438
+    SupressionTableVigierhContrat1763372516438,
+    AjouteTypePassageProfessions1764753717478
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
