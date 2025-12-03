@@ -41,6 +41,9 @@ services:
         source: ${PWD}/data_set/flux_sivss
         target: /home/HELIOS/SIVSS
       - type: bind
+        source: ${PWD}/data_set/flux_vigierh
+        target: /home/HELIOS/VIGIE_RH
+      - type: bind
         source: ${HOME}/.ssh/sftp_local.pub
         target: /home/HELIOS/.ssh/keys/sftp_local.pub
         read_only: true
