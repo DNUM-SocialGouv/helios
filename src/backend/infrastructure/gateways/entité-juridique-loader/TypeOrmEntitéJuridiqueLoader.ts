@@ -64,7 +64,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeActivités(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueActivités[]> {
     const activiteSanitareEJModel = await (await this.orm).getRepository(ActivitéSanitaireEntitéJuridiqueModel).find({
-      where: { numéroFinessEntitéJuridique },
+      where: { numéroFinessEntitéJuridique }, order: { année: "ASC" }
     });
 
     const dateMisAJourRPU = (await (await this.orm)
@@ -279,7 +279,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
 
   async chargeBudgetFinance(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueBudgetFinance[]> {
     const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesEntiteJuridiqueModel).find({
-      where: { numéroFinessEntitéJuridique },
+      where: { numéroFinessEntitéJuridique }, order: { année: "ASC" }
     });
 
     const dateMisAJour = (await (await this.orm)

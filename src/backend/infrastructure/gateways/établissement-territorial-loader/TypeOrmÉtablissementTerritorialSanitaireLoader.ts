@@ -1074,7 +1074,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   async chargeBudgetFinance(numéroFinessEtablissementTerritorial: string): Promise<EntitéJuridiqueBudgetFinance[]> {
     const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesSanitaireModel).find({
-      where: { numéroFinessEtablissementTerritorial },
+      where: { numéroFinessEtablissementTerritorial }, order: { année: "ASC" }
     });
 
     const dateMisAJour = (await (await this.orm)
