@@ -267,7 +267,44 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
     if (!slugSelectionne) {
       return;
     }
-    mettreAJourSection(slugSelectionne, (section) => ({ ...section, order: valeur }));
+
+    setContenu((precedent) => {
+      const sectionModifiee = precedent[slugSelectionne];
+
+      // Si la section n’existe pas, on ne fait rien
+      if (!sectionModifiee) {
+        return precedent;
+      }
+
+      // Les ordres non définits sont considérés comme étant à la fin
+      const ancienOrdre = sectionModifiee.order ?? Number.MAX_VALUE;
+      const usedValeur = valeur ?? Number.MAX_VALUE;
+
+      // Si la nouvelle valeur est identique à l’ancienne, on ne fait rien
+      if (usedValeur === ancienOrdre) {
+        return precedent;
+      }
+
+      const nouveauContenu: ContenuAide = { ...precedent };
+      nouveauContenu[slugSelectionne] = { ...sectionModifiee, order: valeur };
+
+      for (const [slug, section] of Object.entries(precedent)) {
+        if (slug === slugSelectionne) continue;
+
+        const normedSection = normaliserSection(section);
+        const ordreSection = normedSection.order;
+
+        if (typeof ordreSection !== "number") continue;
+
+        if (usedValeur > ancienOrdre && ordreSection > ancienOrdre && ordreSection <= usedValeur) {
+          nouveauContenu[slug] = { ...normedSection, order: ordreSection - 1 };
+        } else if (ordreSection >= usedValeur && ordreSection < ancienOrdre) {
+          nouveauContenu[slug] = { ...normedSection, order: ordreSection + 1 };
+        }
+      }
+
+      return nouveauContenu;
+    });
   };
 
   const enregistrerRessource = (event: FormEvent<HTMLFormElement>) => {
