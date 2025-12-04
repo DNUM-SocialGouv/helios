@@ -153,7 +153,7 @@ export class BlocVigieRHViewModel {
     return !this.lesEffectifsGroupesNeSontIlsPasRenseignees && !this.lesEffectifsGroupesNeSontIlsPasAutorisee;
   }
 
-  public get graphiqueDepartsEmbauchesAffichable():boolean {
+  public get graphiqueDepartsEmbauchesAffichable(): boolean {
     return !this.lesDepartsEmbauchesNeSontIlsPasRenseignees && !this.lesDepartsEmbauchesNeSontIlsPasAutorisee
   }
 
@@ -363,8 +363,9 @@ export class BlocVigieRHViewModel {
     return {
       comparaisonLabel,
       courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
-      precedent: isoPeriodDonneeComparaison?.rotation ?? '',
+      precedent: isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) + '%' : '',
       variation: variation,
+      pastPeriod: isoPeriodDonneeComparaison ? `T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '',
       variationText: variationText,
     }
   }
@@ -395,11 +396,11 @@ export class BlocVigieRHViewModel {
       .sort((a, b) => a.motifCode - b.motifCode);
   }
 
-  public get natureContratsAnnuel():NatureContratsAnnuel[]{
+  public get natureContratsAnnuel(): NatureContratsAnnuel[] {
     return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
   }
 
-  public get natureContratsTrimestriel():NatureContratsTrimestriel[]{
+  public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
     return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
   }
 

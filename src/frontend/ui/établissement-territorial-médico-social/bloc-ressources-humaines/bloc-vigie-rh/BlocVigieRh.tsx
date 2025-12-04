@@ -214,6 +214,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     if (isoIdx < 0) return null;
 
     const precedent = Number(totaux[isoIdx]) || 0;
+    const pastPeriod = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const variation = precedent - courant;
     const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
@@ -226,7 +227,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         : `${rate}%`;
     }
 
-    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle };
+    return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle, pastPeriod };
   }, [donneesEffectifs]);
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
@@ -298,8 +299,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 }
                 currentValue={indicateurEffectif.courant}
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-effectifs")}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
                 identifiant="vr-top-effectifs"
                 infoBulleTitle={wording.EFFECTIFS}
+                pastPeriod={indicateurEffectif.pastPeriod}
+                pastValue={indicateurEffectif.precedent}
                 tendance="ASC"
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
@@ -320,8 +325,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 }
                 currentValue={blocVigieRHViewModel.topIndicateurTauxRotation.courant}
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-taux-rotation")}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
                 identifiant="vr-top-taux-rotation"
                 infoBulleTitle={wording.TAUX_ROTATION}
+                pastPeriod={blocVigieRHViewModel.topIndicateurTauxRotation.pastPeriod}
+                pastValue={blocVigieRHViewModel.topIndicateurTauxRotation.precedent}
                 tendance="DESC"
                 title={wording.TOP_TAUX_ROTATION_TITLE}
                 unitLabel={wording.TAUX_ROTATION}
@@ -405,96 +414,96 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         ], 3)}
 
         {renderRow([blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuRepartitionEffectifsVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
-              identifiant="vr-repartition-effectif"
-              key="vr-repartition-effectif"
-              nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
-              source={wording.VIGIE_RH}
-            >
-              <GraphiqueTreemapRepartitionEffectif
-                couleursFilieres={couleursFilieres}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
-                height={420}
-                items={itemsTreemap.slice(0, 4)}
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuRepartitionEffectifsVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
               />
-            </IndicateurGraphique>
-          ) : null,
-          blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuDepartsEmbauchesVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
-              identifiant="vr-departs-embauches"
-              key="vr-departs-embauches"
-              nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
-              source={wording.VIGIE_RH}
-            >
-              <GraphiqueDepartEmbauches
-                donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
-                donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
+            }
+            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
+            identifiant="vr-repartition-effectif"
+            key="vr-repartition-effectif"
+            nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTreemapRepartitionEffectif
+              couleursFilieres={couleursFilieres}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              height={420}
+              items={itemsTreemap.slice(0, 4)}
+            />
+          </IndicateurGraphique>
+        ) : null,
+        blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuDepartsEmbauchesVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
               />
-            </IndicateurGraphique>
-          ) : null,
-          blocVigieRHViewModel.graphiqueRotationsAffichable ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuTauxRotationVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
-              identifiant="vr-taux-rotation"
-              key="vr-taux-rotation"
-              nomDeLIndicateur={wording.TAUX_ROTATION}
-              source={wording.VIGIE_RH}
-            >
-              <GraphiqueTauxRotation
-                blocVigieRHViewModel={blocVigieRHViewModel}
-                donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
-                donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
-                nomGraph={wording.TAUX_ROTATION}
+            }
+            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
+            identifiant="vr-departs-embauches"
+            key="vr-departs-embauches"
+            nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueDepartEmbauches
+              donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
+              donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+            />
+          </IndicateurGraphique>
+        ) : null,
+        blocVigieRHViewModel.graphiqueRotationsAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuTauxRotationVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
               />
-            </IndicateurGraphique>
-          ) : null,
-          blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuNatureContratsVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-nature-contrats")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-nature-contrats")}
-              identifiant="vr-nature-contrats"
-              key="vr-nature-contrats"
-              nomDeLIndicateur={wording.NATURE_CONTRATS}
-              source={wording.VIGIE_RH}
-            >
-              <GraphiqueNatureContrats
-                blocVigieRhViewModel={blocVigieRHViewModel}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
-                nomGraph={wording.NATURE_CONTRATS}
+            }
+            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
+            identifiant="vr-taux-rotation"
+            key="vr-taux-rotation"
+            nomDeLIndicateur={wording.TAUX_ROTATION}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueTauxRotation
+              blocVigieRHViewModel={blocVigieRHViewModel}
+              donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
+              donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              nomGraph={wording.TAUX_ROTATION}
+            />
+          </IndicateurGraphique>
+        ) : null,
+        blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
+          <IndicateurGraphique
+            contenuInfoBulle={
+              <ContenuNatureContratsVigieRh
+                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                dateDonneesArretees={recupereDateDonnees("vr-nature-contrats")}
               />
-            </IndicateurGraphique>
-          ) : null,
+            }
+            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-nature-contrats")}
+            identifiant="vr-nature-contrats"
+            key="vr-nature-contrats"
+            nomDeLIndicateur={wording.NATURE_CONTRATS}
+            source={wording.VIGIE_RH}
+          >
+            <GraphiqueNatureContrats
+              blocVigieRhViewModel={blocVigieRHViewModel}
+              etabFiness={etabFiness}
+              etabTitle={etabTitle}
+              nomGraph={wording.NATURE_CONTRATS}
+            />
+          </IndicateurGraphique>
+        ) : null,
         ], 2)}
 
         {renderRow([
