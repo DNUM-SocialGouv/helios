@@ -431,7 +431,16 @@ export class BlocVigieRHViewModel {
   }
 
   public get natureContratsAnnuel(): NatureContratsAnnuel[] {
-    return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour une nature de contrats) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel
+        .filter(contrat => contrat.annee !== maxAnnee);
+    }
   }
 
   public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
