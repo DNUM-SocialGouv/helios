@@ -173,7 +173,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
     <HistogrammeComparaisonVerticalAvecRef
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      highlightLastLabel
+      highlightLastLabel={false}
       legendContainerId="legende-nature-contrats-annuel"
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
