@@ -244,10 +244,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesPrincipaux[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === libelles.length - 1) {
-              return { weight: "bold" };
-            }
-            if (String(libelles[context.index]).includes(anneeEnCours)) {
+            if (highlightLastLabel && context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: "bold" };
             }
             return {};
@@ -270,13 +267,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesSecondaires[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire) {
-              return { weight: "bold" };
-            }
             const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
-            if (tickLabel === anneeEnCours) {
+            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
               return { weight: "bold" };
             }
+
             return {};
           },
           maxRotation: 0,
