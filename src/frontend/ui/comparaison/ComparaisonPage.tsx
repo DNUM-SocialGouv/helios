@@ -19,6 +19,8 @@ import { ListActionsButton } from "../liste/ListActionsButton";
 import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
 
+const DEFAULT_INDICATORS = ["delete", "etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
+
 interface ComparaisonPageProps {
   codeProfiles: string[];
   codeRegion: string;
@@ -29,6 +31,7 @@ interface ComparaisonPageProps {
 export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
   const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur();
+  const [indicators, setIndicators] = useState<string[]>({ ...DEFAULT_INDICATORS, ...enabledIndicators });
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
@@ -103,6 +106,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       );
     }
   }, [triggerCompare]);
+
+  useEffect(() => {
+    setIndicators([...DEFAULT_INDICATORS, ...enabledIndicators]);
+  }, enabledIndicators);
 
   const handleOrderChange = (order: string) => {
     setParams(prev => ({
@@ -216,7 +223,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   };
 
   const filteredTableHeader = () => {
-    return tableHeaders(datesMisAjour, structureChoice).filter((line) => enabledIndicators.includes(line.key));
+    return tableHeaders(datesMisAjour, structureChoice).filter((line) => indicators.includes(line.key));
   }
 
   const results = (): ReactNode => {
@@ -263,6 +270,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       codeRegion={codeRegion}
       datesMisAjour={datesMisAjour}
       disabled={resultats.length === 0}
+      enabledIndicators={enabledIndicators}
       order={params.order}
       orderBy={params.orderBy}
       type={structureChoice}

@@ -1,7 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
 
-const DEFAULT_INDICATORS = ["delete", "etsLogo", "favori", "Raison sociale", "categorie", "numéroFiness"];
-
 type IndicatorStateItem = {
   displayName: string;
   columnName: string;
@@ -91,7 +89,7 @@ export function useModalSelectionIndicateur() {
   }, [indicators]);
 
   function getEnabledIndicators(): string[] {
-    const result: string[] = [...DEFAULT_INDICATORS];
+    const result: string[] = [];
     for (const items of indicators.medicoSocial.values()) {
       for (const item of items) {
         if (item.enabled) {
