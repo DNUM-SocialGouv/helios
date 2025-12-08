@@ -1,6 +1,6 @@
 .detailsButton {
-  display: flex;
-  justify-content: end;
+  position: absolute;
+  right: 0;
 }
 
 /* Ligne flèche + valeur */
@@ -8,7 +8,7 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 /* Flèche bleue DSFR */
@@ -20,9 +20,14 @@
 /* Valeur en gros */
 .value {
   margin-top: 8px;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
 }
+
+.echelleTemporelle {
+  font-size: 14px;
+}
+
 
 /* Libellé sous la valeur */
 .unit {
@@ -32,8 +37,8 @@
 
 /* Variation bleu DSFR */
 .variation {
-  margin-top: 12px;
-  font-size: 14px;
+  margin-top: 8px;
+  font-size: 12px;
   color: #666;
 }
 
@@ -42,7 +47,19 @@
   color: var(--text-action-high-blue-france);
 }
 
+.variationGreen {
+  color: green;
+}
+
+.variationRed {
+  color: red;
+}
+
 /* Texte atténué (cas stable ou fallback) */
 .muted {
   color: #666;
+}
+
+.contenuVignette {
+  padding: 24px;
 }

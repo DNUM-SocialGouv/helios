@@ -157,6 +157,7 @@ export class WordingFr implements Wording {
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
   readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string = "1 à 5";
   readonly DOWNLOAD_EXCEL: string = "Excel";
+  readonly DONNEES_ARRETEES: string = "Données arrêtées :";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
@@ -738,6 +739,7 @@ export class WordingFr implements Wording {
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
   readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
     "Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources (documents, vidéos ou liens) pour chaque section.";
@@ -812,6 +814,9 @@ export class WordingFr implements Wording {
   readonly AIDE_INFO_NOM_FICHIER = (nom: string): string => `Nom du fichier : ${nom}`;
   readonly AIDE_INFO_SEPARATEUR: string = " — ";
 
-  readonly SELECTIONNER_UNE_ACTIVIE = "Sélectionner une activité";
+  readonly SELECTIONNER_UNE_ACTIVITE = "Sélectionner une activité";
+  readonly SOURCE: string = "Source: ";
+  readonly INDICATEURS_CLES_ACTUELS: string = "Indicateurs clés actuels";
+  readonly DECLARATION_SOCIALE_NOMINATIVE: string = "Déclaration Sociale Nominative";
 
 }

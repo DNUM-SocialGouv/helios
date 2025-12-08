@@ -25,3 +25,8 @@
     text-align: left;
     padding: 10px;
 }
+
+.partial-data-note {
+    color: var(--text-title-grey);
+    margin: .5rem 0 0;
+}

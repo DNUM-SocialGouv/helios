@@ -21,66 +21,89 @@ type BlocBudgetFinanceProps = Readonly<{
 }>;
 export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel, type, opnedBloc, toggelBlocs }: BlocBudgetFinanceProps) => {
   const { wording } = useDependencies();
+  const estEntiteJuridiqueOuPnL = type === 'EJ' || type === 'ET_PNL';
+  const donneesNonAutorisees = entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type);
+  const donneesNonRenseignees = entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type);
 
-  if (type === 'EJ' || type === 'ET_PNL') {
-    if (entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
-      return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
-    }
+  if (estEntiteJuridiqueOuPnL && entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
   }
 
-  return (
-    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
-      {entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type).length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type)} />
-        : entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type).length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type)} /> : <></>}
+  const renderBlocMessages = () => {
+    if (donneesNonAutorisees.length !== 0) {
+      return <NotAUthorized indicateurs={donneesNonAutorisees} />;
+    }
+    if (donneesNonRenseignees.length !== 0) {
+      return <NoDataCallout indicateurs={donneesNonRenseignees} />;
+    }
+    return null;
+  };
 
-      {(type === 'EJ' || type === 'ET_PNL')
-        ? (<ul className={"indicateurs " + styles["budget"]}>
-          {!entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé
-            ? <CompteDeResultat
-              entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel}
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-            />
-            : <></>
-          }
-          {entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé
-            ? <ResultatNetComptable
-              estEntitéJuridique={true}
-              resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable}
-            />
-            : <></>
-          }
-          {entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé
-            ? <TauxDeCaf
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-              isEntiteJuridique={true}
-              tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel}
-            />
-            : <></>
-          }
-          {entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé
-            ? <RatioDependanceFinanciere
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-              ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere}
-            />
-            : <></>
-          }
-        </ul>)
-        : <></>}
+  const renderBudgetEtFinances = () => {
+    if (!estEntiteJuridiqueOuPnL) {
+      return null;
+    }
 
-      <ul className="indicateurs">
-        {!entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé ?
-          <AllocationRessources
-            allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources}
+    const peutAfficherCompteDeResultat = !entitéJuridiqueBudgetFinanceViewModel.compteDeResultatVide() && entitéJuridiqueBudgetFinanceViewModel.compteDeResultatEstIlAutorisé;
+    const peutAfficherResultatNet = entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.auMoinsUnResultatNetRenseigné() && entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable.resultatNetComptableEstIlAutorisé;
+    const peutAfficherTauxDeCaf = entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné && entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé;
+    const peutAfficherRatioDependance = entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() && entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé;
+
+    return (
+      <ul className={"indicateurs " + styles["budget"]}>
+        {peutAfficherCompteDeResultat && (
+          <CompteDeResultat
+            entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel}
             etabFiness={etabFiness}
             etabTitle={etabTitle}
           />
-          : <></>
-        }
+        )}
+        {peutAfficherResultatNet && (
+          <ResultatNetComptable
+            estEntitéJuridique={true}
+            resultatNetComptableViewModel={entitéJuridiqueBudgetFinanceViewModel.resultatNetComptable}
+          />
+        )}
+        {peutAfficherTauxDeCaf && (
+          <TauxDeCaf
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            isEntiteJuridique={true}
+            tauxDeCafViewModel={entitéJuridiqueBudgetFinanceViewModel.tauxDeCafViewModel}
+          />
+        )}
+        {peutAfficherRatioDependance && (
+          <RatioDependanceFinanciere
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            ratioDependanceFinanciereViewModel={entitéJuridiqueBudgetFinanceViewModel.ratioDependanceFinanciere}
+          />
+        )}
       </ul>
+    );
+  };
 
+  const renderAllocationRessources = () => {
+    if (entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide() || !entitéJuridiqueBudgetFinanceViewModel.allocationRessources.estIlAutorisé) {
+      return null;
+    }
+
+    return (
+      <ul className="indicateurs">
+        <AllocationRessources
+          allocationRessourcesViewModel={entitéJuridiqueBudgetFinanceViewModel.allocationRessources}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
+        />
+      </ul>
+    );
+  };
+
+  return (
+    <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
+      {renderBlocMessages()}
+      {renderBudgetEtFinances()}
+      {renderAllocationRessources()}
     </Bloc>
   );
 };
