@@ -31,7 +31,7 @@ interface ComparaisonPageProps {
 export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
   const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur();
-  const [indicators, setIndicators] = useState<string[]>({ ...DEFAULT_INDICATORS, ...enabledIndicators });
+  const [indicators, setIndicators] = useState<string[]>([...DEFAULT_INDICATORS, ...enabledIndicators]);
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
@@ -109,7 +109,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
 
   useEffect(() => {
     setIndicators([...DEFAULT_INDICATORS, ...enabledIndicators]);
-  }, enabledIndicators);
+  }, [enabledIndicators]);
 
   const handleOrderChange = (order: string) => {
     setParams(prev => ({

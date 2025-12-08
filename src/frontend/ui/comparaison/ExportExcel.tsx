@@ -308,8 +308,8 @@ const getHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]): s
   ]);
 
   return Array.from(headersMS.entries())
-    .filter(([key, _]) => enabledIndicators.includes(key))
-    .map(([_, value]) => value);
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
 }
 
 const ExportExcel = ({

@@ -34,7 +34,7 @@ function getInitialIndicatorsState(): IndicatorsState {
   // Bloc Activité
   const activiteCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
   const medicoSocialIndicatorsActivite: IndicatorStateItem[] = [
-    { displayName: "Taux de réalisation de l’activité ", columnName: "realisationActivite", enabled: true },
+    { displayName: "Taux de réalisation de l’activité", columnName: "realisationActivite", enabled: true },
     { displayName: "File active des personnes accompagnées sur la période", columnName: "fileActivePersonnesAccompagnes", enabled: true },
     { displayName: "Taux d’occupation en hébergement permanent", columnName: "hebergementPermanent", enabled: true },
     { displayName: "Taux d’occupation en hébergement temporaire", columnName: "hebergementTemporaire", enabled: true },
