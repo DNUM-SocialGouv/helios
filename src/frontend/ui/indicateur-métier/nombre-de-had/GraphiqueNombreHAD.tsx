@@ -21,6 +21,7 @@ export const GraphiqueNombreHAD = ({ etabTitle, etabFiness, nombreHADViewModel }
       source={wording.PMSI}
     >
       <HistogrammeHorizontal
+        cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombreHADViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.NOMBRE_DE_HAD}
         etabFiness={etabFiness}
