@@ -739,7 +739,7 @@ export class WordingFr implements Wording {
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
   readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
-  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcription_mois: string | undefined) => string = (annee: number,transcription_mois: string | undefined) => `* Données partielles sur ${annee}: ${transcription_mois}.`;
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
     "Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources (documents, vidéos ou liens) pour chaque section.";
@@ -814,7 +814,7 @@ export class WordingFr implements Wording {
   readonly AIDE_INFO_NOM_FICHIER = (nom: string): string => `Nom du fichier : ${nom}`;
   readonly AIDE_INFO_SEPARATEUR: string = " — ";
 
-  readonly SELECTIONNER_UNE_ACTIVIE = "Sélectionner une activité";
+  readonly SELECTIONNER_UNE_ACTIVITE = "Sélectionner une activité";
   readonly SOURCE: string = "Source: ";
   readonly INDICATEURS_CLES_ACTUELS: string = "Indicateurs clés actuels";
   readonly DECLARATION_SOCIALE_NOMINATIVE: string = "Déclaration Sociale Nominative";

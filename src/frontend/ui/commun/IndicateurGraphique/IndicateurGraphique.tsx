@@ -17,7 +17,7 @@ type IndicateurProps = Readonly<{
   nomDeLIndicateur: ReactNode;
   source: ReactElement;
   prefixSelect?: string;
-  echelleTemporel?: EchelleTemporelleVigieRh
+  echelleTemporel?: EchelleTemporelleVigieRh;
 }>;
 
 export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect, echelleTemporel }: IndicateurProps) => {

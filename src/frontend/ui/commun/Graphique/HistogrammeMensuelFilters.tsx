@@ -32,7 +32,7 @@ export const HistogrammeMensuelFilters = ({
   wording,
   showFrequencySwitch = true,
   showYearSelection = true,
-  activiteLabel = wording.SELECTIONNER_UNE_ACTIVIE,
+  activiteLabel = wording.SELECTIONNER_UNE_ACTIVITE,
 }: HistogrammeMensuelFiltersProps) => {
   const handleOnChangeMCO = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedActivity(event.target.value);

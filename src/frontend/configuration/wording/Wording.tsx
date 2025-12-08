@@ -709,9 +709,9 @@ export interface Wording {
   readonly DUREE: string;
   readonly NATURE_CONTRATS: string;
   readonly DEPARTS_PREMATURES_CDI: string;
-  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcription_mois: string | undefined) => string;
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string;
 
-  readonly SELECTIONNER_UNE_ACTIVIE: string;
+  readonly SELECTIONNER_UNE_ACTIVITE: string;
   readonly SOURCE: string;
   readonly INDICATEURS_CLES_ACTUELS: string;
   readonly DECLARATION_SOCIALE_NOMINATIVE: string;

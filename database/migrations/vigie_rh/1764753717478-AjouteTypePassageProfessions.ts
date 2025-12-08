@@ -8,6 +8,8 @@ export class AjouteTypePassageProfessions1764753717478 implements MigrationInter
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // eslint-disable-next-line no-console
+    console.warn("WARNING: Cannot rollback enum value addition in PostgreSQL. Manual intervention required if rollback is needed.");
     await queryRunner.query(``);
   }
 
