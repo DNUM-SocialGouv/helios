@@ -30,14 +30,14 @@ interface ComparaisonPageProps {
 
 export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categories }: ComparaisonPageProps) => {
   const comparaisonContext = useContext(ComparaisonContext);
-  const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur();
-  const [indicators, setIndicators] = useState<string[]>([...DEFAULT_INDICATORS, ...enabledIndicators]);
 
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
+  const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur(structureChoice);
   const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
+  const [indicators, setIndicators] = useState<string[]>([...DEFAULT_INDICATORS, ...enabledIndicators]);
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();

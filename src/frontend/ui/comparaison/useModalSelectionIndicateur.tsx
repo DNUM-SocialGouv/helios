@@ -16,9 +16,7 @@ type IndicatorCategory = {
   position: IndicatorPosition;
 }
 
-type IndicatorsState = {
-  medicoSocial: Map<IndicatorCategory, IndicatorStateItem[]>;
-}
+type IndicatorsState = Map<string, Map<IndicatorCategory, IndicatorStateItem[]>>
 
 function getInitialIndicatorsState(): IndicatorsState {
   // ################################## Medico-social indicators ##################################
@@ -68,12 +66,10 @@ function getInitialIndicatorsState(): IndicatorsState {
   medicoSocialIndicators.set(budgetCategory, medicoSocialIndicatorsBudgetEtFinances);
 
   // ##############################################################################################
-  return {
-    medicoSocial: medicoSocialIndicators,
-  };
+  return new Map([["medicoSocial", medicoSocialIndicators]]);
 }
 
-export function useModalSelectionIndicateur() {
+export function useModalSelectionIndicateur(structure: string) {
   // State containing the selected indicators
   const [indicators, setIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
   const [pendingIndicators, setPendingIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
@@ -90,7 +86,8 @@ export function useModalSelectionIndicateur() {
 
   function getEnabledIndicators(): string[] {
     const result: string[] = [];
-    for (const items of indicators.medicoSocial.values()) {
+    const structureIndicators = getCurrentIndicators();
+    for (const items of structureIndicators.values()) {
       for (const item of items) {
         if (item.enabled) {
           result.push(item.columnName);
@@ -102,39 +99,77 @@ export function useModalSelectionIndicateur() {
 
   const toggleIndicator = (category: IndicatorCategory, columnName: string) => {
     setPendingIndicators((prevState) => {
-      const newMedicoSocial = new Map(prevState.medicoSocial);
-      const items = newMedicoSocial.get(category);
+      const indicatorsKey = getIndicatorsKey();
+      const structureState = prevState.get(indicatorsKey);
+      if (!structureState) return prevState;
+
+      const newState = new Map(prevState);
+      const newStructureState = new Map(structureState);
+      const items = newStructureState.get(category);
       if (items) {
         const newItems = items.map((item) =>
           item.columnName === columnName ? { ...item, enabled: !item.enabled } : item
         );
-        newMedicoSocial.set(category, newItems);
+        newStructureState.set(category, newItems);
       }
-      return { ...prevState, medicoSocial: newMedicoSocial };
+      return newState.set(indicatorsKey, newStructureState);
     });
   };
 
   // Toggles all indicators in the given category: if all are enabled, disable all; otherwise, enable all
   const toggleCategory = (category: IndicatorCategory) => {
     setPendingIndicators((prevState) => {
-      const newMedicoSocial = new Map(prevState.medicoSocial);
-      const items = newMedicoSocial.get(category);
+      const indicatorsKey = getIndicatorsKey();
+      const structureState = prevState.get(indicatorsKey);
+      if (!structureState) return prevState;
+
+      const newState = new Map(prevState);
+      const newStructureState = new Map(structureState);
+      const items = newStructureState.get(category);
       if (items) {
         const allEnabled = items.every(item => item.enabled);
         const newItems = items.map((item) => ({ ...item, enabled: !allEnabled }));
-        newMedicoSocial.set(category, newItems);
+        newStructureState.set(category, newItems);
       }
-      return { ...prevState, medicoSocial: newMedicoSocial };
+      return newState.set(indicatorsKey, newStructureState);
     });
   };
 
+  const getIndicatorsKey = (): string => {
+    if (structure === 'Médico-social')
+      return "medicoSocial";
+    else if (structure === 'Sanitaire')
+      return "";
+    else return "";
+  }
+
+
+  function getCurrentIndicators(): Map<IndicatorCategory, IndicatorStateItem[]> {
+    if (structure === 'Médico-social')
+      return indicators.get("medicoSocial") ?? new Map();
+    else if (structure === 'Sanitaire')
+      return new Map();
+    else return new Map();
+  }
+
+  const getPendingIndicators = (): Map<IndicatorCategory, IndicatorStateItem[]> => {
+    if (structure === 'Médico-social')
+      return pendingIndicators.get("medicoSocial") ?? new Map();
+    else if (structure === 'Sanitaire')
+      return new Map();
+    else return new Map();
+
+  }
+
   function generateModal(): ReactNode {
-    const categories = Array.from(indicators.medicoSocial.entries());
+    const currentStructureIndicators = getCurrentIndicators();
+    const pendingStructureIndicators = getPendingIndicators();
+    const categories = Array.from(currentStructureIndicators.entries());
     const leftColumn = categories.filter(([category]) => category.position === IndicatorPosition.LEFT);
     const rightColumn = categories.filter(([category]) => category.position === IndicatorPosition.RIGHT);
 
     const renderCategory = ([category]: [IndicatorCategory, IndicatorStateItem[]]) => {
-      const pendingItems = pendingIndicators.medicoSocial.get(category) || [];
+      const pendingItems = pendingStructureIndicators.get(category) || [];
       return (
         <div className="fr-mb-4w" key={category.name}>
           <fieldset className="fr-fieldset">
