@@ -23,14 +23,14 @@ function getInitialIndicatorsState(): IndicatorsState {
   const medicoSocialIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
 
   // Bloc Capacité et Autorisation
-  const capaciteCategory: IndicatorCategory = { name: "Bloc Capacité et Autorisation", position: IndicatorPosition.LEFT };
+  const capaciteMSCategory: IndicatorCategory = { name: "Bloc Capacité et Autorisation", position: IndicatorPosition.LEFT };
   const medicoSocialIndicatorsCapacityAutorisation: IndicatorStateItem[] = [
     { displayName: "Capacité Totale", columnName: "capacite", enabled: true }
   ];
-  medicoSocialIndicators.set(capaciteCategory, medicoSocialIndicatorsCapacityAutorisation);
+  medicoSocialIndicators.set(capaciteMSCategory, medicoSocialIndicatorsCapacityAutorisation);
 
   // Bloc Activité
-  const activiteCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
+  const activiteMSCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
   const medicoSocialIndicatorsActivite: IndicatorStateItem[] = [
     { displayName: "Taux de réalisation de l’activité", columnName: "realisationActivite", enabled: true },
     { displayName: "File active des personnes accompagnées sur la période", columnName: "fileActivePersonnesAccompagnes", enabled: true },
@@ -43,30 +43,69 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Taux d’occupation autre 1, 2 et 3", columnName: "autres", enabled: true },
     { displayName: "Taux d'occupation Séances", columnName: "seances", enabled: true }
   ];
-  medicoSocialIndicators.set(activiteCategory, medicoSocialIndicatorsActivite);
+  medicoSocialIndicators.set(activiteMSCategory, medicoSocialIndicatorsActivite);
 
   // Bloc Ressources Humaines
-  const rhCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.RIGHT };
+  const rhMSCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.RIGHT };
   const medicoSocialIndicatorsRessourcesHumaines: IndicatorStateItem[] = [
     { displayName: "Taux de prestations externes sur les prestations directes", columnName: "prestationExterne", enabled: true },
     { displayName: "Taux de rotation du personnel sur effectifs réels", columnName: "rotationPersonnel", enabled: true },
     { displayName: "Taux d'ETP vacants au 31/12", columnName: "etpVacant", enabled: true },
     { displayName: "Taux d'absentéisme", columnName: "absenteisme", enabled: true }
   ];
-  medicoSocialIndicators.set(rhCategory, medicoSocialIndicatorsRessourcesHumaines);
+  medicoSocialIndicators.set(rhMSCategory, medicoSocialIndicatorsRessourcesHumaines);
 
   // Bloc Budget et Finances
-  const budgetCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const budgetMSCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
   const medicoSocialIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
     { displayName: "Taux de CAF", columnName: "tauxCaf", enabled: true },
     { displayName: "Taux de vétusté des constructions", columnName: "vetusteConstruction", enabled: true },
     { displayName: "Fond de roulement net global", columnName: "roulementNetGlobal", enabled: true },
     { displayName: "Résultat net comptable", columnName: "resultatNetComptable", enabled: true }
   ];
-  medicoSocialIndicators.set(budgetCategory, medicoSocialIndicatorsBudgetEtFinances);
+  medicoSocialIndicators.set(budgetMSCategory, medicoSocialIndicatorsBudgetEtFinances);
 
-  // ##############################################################################################
-  return new Map([["medicoSocial", medicoSocialIndicators]]);
+  // ##########################################################################################
+  // ################################## Sanitaire indicators ##################################
+  const sanitaireIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
+
+  // Bloc Activité
+  const activiteSanCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
+  const sanitaireIndicatorsActivite: IndicatorStateItem[] = [
+    { displayName: "Nb séjours Médecine Total Hospit", columnName: "totalHosptMedecine", enabled: true },
+    { displayName: "Nb séjours Chirurgie Total Hospit", columnName: "totalHosptChirurgie", enabled: true },
+    { displayName: "Nb séjours Obstétrique Total Hospit", columnName: "totalHosptObstetrique", enabled: true },
+    { displayName: "Nb journées Psychiatrie Total Hospit", columnName: "totalHosptPsy", enabled: true },
+    { displayName: "Nb journées SSR Total Hospit", columnName: "totalHosptSsr", enabled: true },
+    { displayName: "Nb de passage aux urgences", columnName: "passagesUrgences", enabled: true },
+    { displayName: "Nb journées USLD", columnName: "journeesUsld", enabled: true }
+  ];
+  sanitaireIndicators.set(activiteSanCategory, sanitaireIndicatorsActivite);
+
+  // Bloc Ressources Humaines
+  const rhSanCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.LEFT };
+  const sanitaireIndicatorsRessourcesHumaines: IndicatorStateItem[] = [
+    { displayName: "Nb ETP PM", columnName: "nombreEtpPm", enabled: true },
+    { displayName: "Nb ETP PNM", columnName: "nombreEtpPnm", enabled: true },
+    { displayName: "Dépenses d’intérim PM", columnName: "depensesInterimPm", enabled: true },
+    { displayName: "Jours d’absentéisme PM", columnName: "joursAbsenteismePm", enabled: true },
+    { displayName: "Jours d’absentéisme PNM", columnName: "joursAbsenteismePnm", enabled: true },
+  ];
+  sanitaireIndicators.set(rhSanCategory, sanitaireIndicatorsRessourcesHumaines);
+
+  // Bloc Budget et Finances
+  const budgetSanCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const sanitaireIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
+    { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
+    { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
+    { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
+  ];
+  sanitaireIndicators.set(budgetSanCategory, sanitaireIndicatorsBudgetEtFinances);
+
+  return new Map([
+    ["medicoSocial", medicoSocialIndicators],
+    ["sanitaire", sanitaireIndicators]
+  ]);
 }
 
 export function useModalSelectionIndicateur(structure: string) {
@@ -135,30 +174,23 @@ export function useModalSelectionIndicateur(structure: string) {
     });
   };
 
-  const getIndicatorsKey = (): string => {
+  function getIndicatorsKey(): string {
     if (structure === 'Médico-social')
       return "medicoSocial";
     else if (structure === 'Sanitaire')
-      return "";
+      return "sanitaire";
+    else if (structure === "Entité Juridique")
+      return "entiteJuridique";
     else return "";
   }
 
 
   function getCurrentIndicators(): Map<IndicatorCategory, IndicatorStateItem[]> {
-    if (structure === 'Médico-social')
-      return indicators.get("medicoSocial") ?? new Map();
-    else if (structure === 'Sanitaire')
-      return new Map();
-    else return new Map();
+    return indicators.get(getIndicatorsKey()) ?? new Map();
   }
 
   const getPendingIndicators = (): Map<IndicatorCategory, IndicatorStateItem[]> => {
-    if (structure === 'Médico-social')
-      return pendingIndicators.get("medicoSocial") ?? new Map();
-    else if (structure === 'Sanitaire')
-      return new Map();
-    else return new Map();
-
+    return pendingIndicators.get(getIndicatorsKey()) ?? new Map();
   }
 
   function generateModal(): ReactNode {
