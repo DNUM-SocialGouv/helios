@@ -117,31 +117,39 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       )
     );
   }
-  else return data.resultat.map((etab: ResultatEJ) => [
-    etab.type ?? "-",
-    getFavoris(favoris, etab.numéroFiness),
-    etab.socialReason ?? "-",
-    etab.categorie ?? "-",
-    etab.numéroFiness ?? "-",
-    etab.statutJuridique ?? "-",
-    etab.rattachements ?? '-',
-    etab.sejoursHad ?? '-',
-    etab.chargesPrincipaux ?? '-',
-    etab.chargesAnnexes ?? '-',
-    etab.produitsPrincipaux ?? '-',
-    etab.produitsAnnexes ?? '-',
-    etab.resultatNetComptableEj ?? '-',
-    etab.tauxCafEj ?? '-',
-    etab.nombreEtpPm ?? '-',
-    etab.nombreEtpPnm ?? '-',
-    etab.depensesInterimPm ?? '-',
-    etab.joursAbsenteismePm ?? '-',
-    etab.joursAbsenteismePnm ?? '-',
-    etab.ratioDependanceFinanciere ?? '-',
-    etab.enveloppe1 ?? '-',
-    etab.enveloppe2 ?? '-',
-    etab.enveloppe3 ?? '-'
-  ])
+  else {
+    const indicatorExtractors: Record<string, (etab: ResultatEJ) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      statutJuridique: (etab) => etab.statutJuridique ?? "-",
+      rattachements: (etab) => etab.rattachements ?? '-',
+      sejoursHad: (etab) => etab.sejoursHad ?? '-',
+      chargesPrincipaux: (etab) => etab.chargesPrincipaux ?? '-',
+      chargesAnnexes: (etab) => etab.chargesAnnexes ?? '-',
+      produitsPrincipaux: (etab) => etab.produitsPrincipaux ?? '-',
+      produitsAnnexes: (etab) => etab.produitsAnnexes ?? '-',
+      resultatNetComptableEj: (etab) => etab.resultatNetComptableEj ?? '-',
+      tauxCafEj: (etab) => etab.tauxCafEj ?? '-',
+      nombreEtpPm: (etab) => etab.nombreEtpPm ?? '-',
+      nombreEtpPnm: (etab) => etab.nombreEtpPnm ?? '-',
+      depensesInterimPm: (etab) => etab.depensesInterimPm ?? '-',
+      joursAbsenteismePm: (etab) => etab.joursAbsenteismePm ?? '-',
+      joursAbsenteismePnm: (etab) => etab.joursAbsenteismePnm ?? '-',
+      ratioDependanceFinanciere: (etab) => etab.ratioDependanceFinanciere ?? '-',
+      enveloppe1: (etab) => etab.enveloppe1 ?? '-',
+      enveloppe2: (etab) => etab.enveloppe2 ?? '-',
+      enveloppe3: (etab) => etab.enveloppe3 ?? '-',
+    };
+
+    return data.resultat.map((etab: ResultatEJ) =>
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  }
 }
 
 
@@ -208,37 +216,11 @@ async function generateAndExportExcel(
 
   const headerYear = ["Année", year];
 
-  const headersEJ = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "Cat. FINESS",
-    "FINESS",
-    "Statut juridique",
-    "Rattachements",
-    "Nb de séjours HAD",
-    "Compte de résultat - Charges  (Budgets principaux)",
-    "Compte de résultat - Charges  (Budgets Annexes)",
-    "Compte de résultat - Produits (Budgets principaux)",
-    "Compte de résultat - Produits (Budgets Annexes)",
-    "Résultat net comptable",
-    "Taux de CAF",
-    "Nb ETP PM",
-    "Nb ETP PNM",
-    "Dépenses intérim PM",
-    "Jours d’absentéisme PM",
-    "Jours d’absentéisme PNM",
-    "Ratio de dépendance financière",
-    `Allocation de ressources: ${enveloppes[0]}`,
-    `Allocation de ressources: ${enveloppes[1]}`,
-    `Allocation de ressources: ${enveloppes[2]}`
-  ];
-
   let headers: string[];
   let nomFichierTemplate: string;
   switch (type) {
     case 'Entité juridique':
-      headers = headersEJ;
+      headers = getEJHeaders(indicators, enveloppes);
       nomFichierTemplate = "template_comparaison_EJ.xlsx"
       break;
     case 'Social et Médico-Social':
@@ -324,6 +306,39 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     .filter(([key,]) => enabledIndicators.includes(key))
     .map(([, value]) => value);
 }
+
+const getEJHeaders = (enabledIndicators: string[], enveloppes: string[]): string[] => {
+  const headersEJ = new Map<string, string>([
+    ["etsLogo", "Type d'établissement"],
+    ["favori", "Favoris"],
+    ["socialReason", "Raison Sociale"],
+    ["categorie", "Cat. FINESS"],
+    ["numéroFiness", "FINESS"],
+    ["statutJuridique", "Statut juridique"],
+    ["rattachements", "Rattachements"],
+    ["sejoursHad", "Nb de séjours HAD"],
+    ["chargesPrincipaux", "Compte de résultat - Charges  (Budgets principaux)"],
+    ["chargesAnnexes", "Compte de résultat - Charges  (Budgets Annexes)"],
+    ["produitsPrincipaux", "Compte de résultat - Produits (Budgets principaux)"],
+    ["produitsAnnexes", "Compte de résultat - Produits (Budgets Annexes)"],
+    ["resultatNetComptableEj", "Résultat net comptable"],
+    ["tauxCafEj", "Taux de CAF"],
+    ["nombreEtpPm", "Nb ETP PM"],
+    ["nombreEtpPnm", "Nb ETP PNM"],
+    ["depensesInterimPm", "Dépenses intérim PM"],
+    ["joursAbsenteismePm", "Jours d’absentéisme PM"],
+    ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
+    ["ratioDependanceFinanciere", "Ratio de dépendance financière"],
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+  ]);
+
+  return Array.from(headersEJ.entries())
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
+}
+
 
 const ExportExcel = ({
   year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles, enabledIndicators
