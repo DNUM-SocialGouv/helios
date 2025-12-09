@@ -87,34 +87,36 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
         indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
       )
     );
-  } else if (type === 'Sanitaire')
+  } else if (type === 'Sanitaire') {
+    const indicatorExtractors: Record<string, (etab: ResultatSAN) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      totalHosptMedecine: (etab) => etab.totalHosptMedecine ?? "-",
+      totalHosptChirurgie: (etab) => etab.totalHosptChirurgie ?? "-",
+      totalHosptObstetrique: (etab) => etab.totalHosptObstetrique ?? "-",
+      totalHosptPsy: (etab) => etab.totalHosptPsy ?? "-",
+      totalHosptSsr: (etab) => etab.totalHosptSsr ?? "-",
+      passagesUrgences: (etab) => etab.passagesUrgences ?? "-",
+      journeesUsld: (etab) => etab.journeesUsld ?? "-",
+      nombreEtpPm: (etab) => etab.nombreEtpPm ?? "-",
+      nombreEtpPnm: (etab) => etab.nombreEtpPnm ?? "-",
+      depensesInterimPm: (etab) => etab.depensesInterimPm ?? "-",
+      joursAbsenteismePm: (etab) => etab.joursAbsenteismePm ?? "-",
+      joursAbsenteismePnm: (etab) => etab.joursAbsenteismePnm ?? "-",
+      enveloppe1: (etab) => etab.enveloppe1 ?? "-",
+      enveloppe2: (etab) => etab.enveloppe2 ?? "-",
+      enveloppe3: (etab) => etab.enveloppe3 ?? "-",
+    };
+
     return data.resultat.map((etab: ResultatSAN) =>
-      enabledIndicators.map((key) => {
-        switch (key) {
-          case "etsLogo": return etab.type ?? "-";
-          case "favori": return getFavoris(favoris, etab.numéroFiness);
-          case "socialReason": return etab.socialReason ?? "-";
-          case "categorie": return etab.categorie ?? "-";
-          case "numéroFiness": return etab.numéroFiness ?? "-";
-          case "totalHosptMedecine": return etab.totalHosptMedecine ?? "-";
-          case "totalHosptChirurgie": return etab.totalHosptChirurgie ?? "-";
-          case "totalHosptObstetrique": return etab.totalHosptObstetrique ?? "-";
-          case "totalHosptPsy": return etab.totalHosptPsy ?? "-";
-          case "totalHosptSsr": return etab.totalHosptSsr ?? "-";
-          case "passagesUrgences": return etab.passagesUrgences ?? "-";
-          case "journeesUsld": return etab.journeesUsld ?? "-";
-          case "nombreEtpPm": return etab.nombreEtpPm ?? "-";
-          case "nombreEtpPnm": return etab.nombreEtpPnm ?? "-";
-          case "depensesInterimPm": return etab.depensesInterimPm ?? "-";
-          case "joursAbsenteismePm": return etab.joursAbsenteismePm ?? "-";
-          case "joursAbsenteismePnm": return etab.joursAbsenteismePnm ?? "-";
-          case "enveloppe1": return etab.enveloppe1 ?? "-";
-          case "enveloppe2": return etab.enveloppe2 ?? "-";
-          case "enveloppe3": return etab.enveloppe3 ?? "-";
-          default: return "-";
-        }
-      })
-    )
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  }
   else return data.resultat.map((etab: ResultatEJ) => [
     etab.type ?? "-",
     getFavoris(favoris, etab.numéroFiness),
