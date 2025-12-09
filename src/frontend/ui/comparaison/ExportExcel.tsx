@@ -87,29 +87,36 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
         indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
       )
     );
-  } else if (type === 'Sanitaire')
-    return data.resultat.map((etab: ResultatSAN) => [
-      etab.type ?? "-",
-      getFavoris(favoris, etab.numéroFiness),
-      etab.socialReason ?? "-",
-      etab.categorie ?? "-",
-      etab.numéroFiness ?? "-",
-      etab.totalHosptMedecine ?? "-",
-      etab.totalHosptChirurgie ?? '-',
-      etab.totalHosptObstetrique ?? '-',
-      etab.totalHosptPsy ?? '-',
-      etab.totalHosptSsr ?? '-',
-      etab.passagesUrgences ?? '-',
-      etab.journeesUsld ?? '-',
-      etab.nombreEtpPm ?? '-',
-      etab.nombreEtpPnm ?? '-',
-      etab.depensesInterimPm ?? '-',
-      etab.joursAbsenteismePm ?? '-',
-      etab.joursAbsenteismePnm ?? '-',
-      etab.enveloppe1 ?? '-',
-      etab.enveloppe2 ?? '-',
-      etab.enveloppe3 ?? '-',
-    ])
+  } else if (type === 'Sanitaire') {
+    const indicatorExtractors: Record<string, (etab: ResultatSAN) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      totalHosptMedecine: (etab) => etab.totalHosptMedecine ?? "-",
+      totalHosptChirurgie: (etab) => etab.totalHosptChirurgie ?? "-",
+      totalHosptObstetrique: (etab) => etab.totalHosptObstetrique ?? "-",
+      totalHosptPsy: (etab) => etab.totalHosptPsy ?? "-",
+      totalHosptSsr: (etab) => etab.totalHosptSsr ?? "-",
+      passagesUrgences: (etab) => etab.passagesUrgences ?? "-",
+      journeesUsld: (etab) => etab.journeesUsld ?? "-",
+      nombreEtpPm: (etab) => etab.nombreEtpPm ?? "-",
+      nombreEtpPnm: (etab) => etab.nombreEtpPnm ?? "-",
+      depensesInterimPm: (etab) => etab.depensesInterimPm ?? "-",
+      joursAbsenteismePm: (etab) => etab.joursAbsenteismePm ?? "-",
+      joursAbsenteismePnm: (etab) => etab.joursAbsenteismePnm ?? "-",
+      enveloppe1: (etab) => etab.enveloppe1 ?? "-",
+      enveloppe2: (etab) => etab.enveloppe2 ?? "-",
+      enveloppe3: (etab) => etab.enveloppe3 ?? "-",
+    };
+
+    return data.resultat.map((etab: ResultatSAN) =>
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  }
   else return data.resultat.map((etab: ResultatEJ) => [
     etab.type ?? "-",
     getFavoris(favoris, etab.numéroFiness),
@@ -227,29 +234,6 @@ async function generateAndExportExcel(
     `Allocation de ressources: ${enveloppes[2]}`
   ];
 
-  const headersSAN = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "Cat. FINESS",
-    "FINESS",
-    `Nb de séjours Médecine -Total Hospt`,
-    "Nb de séjours Chirurgie -Total Hospt",
-    "Nb séjours Obstétrique -Total Hospt",
-    "Nb journées Psychiatrie - Total Hospt",
-    "Nb journées SSR- Total Hospt",
-    "Nb de passage aux urgences",
-    "Nb journées USLD",
-    "Nb ETP PM",
-    "Nb ETP PNM",
-    "Dépenses intérim PM",
-    "Jours d’absentéisme PM",
-    "Jours d’absentéisme PNM",
-    `Allocation de ressources: ${enveloppes[0]}`,
-    `Allocation de ressources: ${enveloppes[1]}`,
-    `Allocation de ressources: ${enveloppes[2]}`
-  ];
-
   let headers: string[];
   let nomFichierTemplate: string;
   switch (type) {
@@ -258,11 +242,11 @@ async function generateAndExportExcel(
       nomFichierTemplate = "template_comparaison_EJ.xlsx"
       break;
     case 'Social et Médico-Social':
-      headers = getHeaders(datesMisAjour.date_mis_a_jour_finess, indicators);
+      headers = getMSHeaders(datesMisAjour.date_mis_a_jour_finess, indicators);
       nomFichierTemplate = "template_comparaison_MS.xlsx"
       break;
     case 'Sanitaire':
-      headers = headersSAN;
+      headers = getSanHeaders(indicators, enveloppes);
       nomFichierTemplate = "template_comparaison_SAN.xlsx"
       break;
     default:
@@ -279,7 +263,7 @@ async function generateAndExportExcel(
   );
 }
 
-const getHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]): string[] => {
+const getMSHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]): string[] => {
   const headersMS = new Map<string, string>([
     ["etsLogo", "Type d'établissement"],
     ["favori", "Favoris"],
@@ -308,6 +292,35 @@ const getHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]): s
   ]);
 
   return Array.from(headersMS.entries())
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
+}
+
+const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): string[] => {
+  const headersSan = new Map<string, string>([
+    ["etsLogo", "Type d'établissement"],
+    ["favori", "Favoris"],
+    ["socialReason", "Raison Sociale"],
+    ["categorie", "Cat. FINESS"],
+    ["numéroFiness", "FINESS"],
+    ["totalHosptMedecine", "Nb de séjours Médecine -Total Hospt"],
+    ["totalHosptChirurgie", "Nb de séjours Chirurgie -Total Hospt"],
+    ["totalHosptObstetrique", "Nb séjours Obstétrique -Total Hospt"],
+    ["totalHosptPsy", "Nb journées Psychiatrie - Total Hospt"],
+    ["totalHosptSsr", "Nb journées SSR- Total Hospt"],
+    ["passagesUrgences", "Nb de passage aux urgences"],
+    ["journeesUsld", "Nb journées USLD"],
+    ["nombreEtpPm", "Nb ETP PM"],
+    ["nombreEtpPnm", "Nb ETP PNM"],
+    ["depensesInterimPm", "Dépenses intérim PM"],
+    ["joursAbsenteismePm", "Jours d’absentéisme PM"],
+    ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+  ]);
+
+  return Array.from(headersSan.entries())
     .filter(([key,]) => enabledIndicators.includes(key))
     .map(([, value]) => value);
 }
