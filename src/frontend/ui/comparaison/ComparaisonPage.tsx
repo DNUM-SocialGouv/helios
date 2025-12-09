@@ -37,7 +37,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur(structureChoice);
   const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
-  const [indicators, setIndicators] = useState<string[]>([...DEFAULT_INDICATORS, ...enabledIndicators]);
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
   const [titre, setTitre] = useState<ReactNode>("");
   const [contenu, setContenu] = useState();
@@ -106,10 +105,6 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       );
     }
   }, [triggerCompare]);
-
-  useEffect(() => {
-    setIndicators([...DEFAULT_INDICATORS, ...enabledIndicators]);
-  }, [enabledIndicators]);
 
   const handleOrderChange = (order: string) => {
     setParams(prev => ({
@@ -222,8 +217,8 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setIsShowAjoutEtab(true);
   };
 
-  const filteredTableHeader = () => {
-    return tableHeaders(datesMisAjour, structureChoice).filter((line) => indicators.includes(line.key));
+  function filterTableHeader() {
+    return tableHeaders(datesMisAjour, structureChoice).filter((line) => [...DEFAULT_INDICATORS, ...enabledIndicators].includes(line.key));
   }
 
   const results = (): ReactNode => {
@@ -238,7 +233,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
           <Table
             data={resultats}
             handleSelectAll={handleSelectAll}
-            headers={filteredTableHeader()}
+            headers={filterTableHeader()}
             isAllSelected={isAllSelected}
             isCenter={true}
             isShowAvrage={false}

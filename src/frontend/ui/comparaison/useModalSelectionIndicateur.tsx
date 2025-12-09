@@ -121,7 +121,7 @@ export function useModalSelectionIndicateur(structure: string) {
 
   useEffect(() => {
     setEnabledIndicators(getEnabledIndicators());
-  }, [indicators]);
+  }, [indicators, structure]);
 
   function getEnabledIndicators(): string[] {
     const result: string[] = [];
