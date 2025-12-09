@@ -101,10 +101,57 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
   ];
   sanitaireIndicators.set(budgetSanCategory, sanitaireIndicatorsBudgetEtFinances);
+  // ##########################################################################################
+  // ################################## Entité Juridique indicators ##################################
+  const entiteJuridiqueIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
+
+  // Bloc Identité
+  const identiteEJCategory: IndicatorCategory = { name: "Bloc Identité", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsIdentite: IndicatorStateItem[] = [
+    { displayName: "Statut juridique", columnName: "statutJuridique", enabled: true },
+    { displayName: "Rattachements", columnName: "rattachements", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(identiteEJCategory, entiteJuridiqueIndicatorsIdentite);
+
+  // Bloc Activité
+  const activiteEJCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsActivite: IndicatorStateItem[] = [
+    { displayName: "Nb séjours HAD", columnName: "sejoursHad", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(activiteEJCategory, entiteJuridiqueIndicatorsActivite);
+
+  // Bloc Ressources Humaines
+  const rhEJCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsRessourcesHumaines: IndicatorStateItem[] = [
+    { displayName: "Nb ETP PM", columnName: "nombreEtpPm", enabled: true },
+    { displayName: "Nb ETP PNM", columnName: "nombreEtpPnm", enabled: true },
+    { displayName: "Dépenses intérim PM", columnName: "depensesInterimPm", enabled: true },
+    { displayName: "Jours d’absentéisme PM", columnName: "joursAbsenteismePm", enabled: true },
+    { displayName: "Jours d’absentéisme PNM", columnName: "joursAbsenteismePnm", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(rhEJCategory, entiteJuridiqueIndicatorsRessourcesHumaines);
+
+  // Bloc Budget et Finances
+  const budgetEJCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const entiteJuridiqueIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
+    { displayName: "Cpte résultat - Charges (principaux)", columnName: "chargesPrincipaux", enabled: true },
+    { displayName: "Cpte résultat - Charges (annexes)", columnName: "chargesAnnexes", enabled: true },
+    { displayName: "Cpte résultat - Produits (principaux)", columnName: "produitsPrincipaux", enabled: true },
+    { displayName: "Cpte résultat - Produits (annexes)", columnName: "produitsAnnexes", enabled: true },
+    { displayName: "Résultat net comptable", columnName: "resultatNetComptableEj", enabled: true },
+    { displayName: "Tx CAF", columnName: "tauxCafEj", enabled: true },
+    { displayName: "Ratio de dépendance financière", columnName: "ratioDependanceFinanciere", enabled: true },
+    { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
+    { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
+    { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
+  ];
+  entiteJuridiqueIndicators.set(budgetEJCategory, entiteJuridiqueIndicatorsBudgetEtFinances);
+  // ##########################################################################################
 
   return new Map([
     ["medicoSocial", medicoSocialIndicators],
-    ["sanitaire", sanitaireIndicators]
+    ["sanitaire", sanitaireIndicators],
+    ["entiteJuridique", entiteJuridiqueIndicators]
   ]);
 }
 
@@ -179,7 +226,7 @@ export function useModalSelectionIndicateur(structure: string) {
       return "medicoSocial";
     else if (structure === 'Sanitaire')
       return "sanitaire";
-    else if (structure === "Entité Juridique")
+    else if (structure === "Entité juridique")
       return "entiteJuridique";
     else return "";
   }
