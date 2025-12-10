@@ -343,167 +343,214 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           )}
         </div>
       </section>
+
       <div className={styles["liste-indicateurs-vr-wrapper"]}>
-        {renderRow([
-          blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuEffectifsVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
-              identifiant="vr-effectifs"
-              key="vr-effectifs"
-              nomDeLIndicateur={wording.EFFECTIFS}
-              source={wording.VIGIE_RH}
-            >
-              <LineChart
-                classContainer="fr-mb-4w"
-                couleurEffectifsTotaux={couleurEffectifsTotaux}
-                couleursFilieres={couleursFilieres}
-                dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
-                identifiantLegende="légende-graphique-effectifs"
-                identifiantTranscription="transcription-graphique-effectifs"
-                multiCategories={indicateurEffectif?.items ?? []}
-              />
-            </IndicateurGraphique>
-          ) : null,
-          graphiqueEffectifsGroupesAffichable ? (
-            <IndicateurGraphique
-              contenuInfoBulle={
-                <ContenuEffectifsCategorieVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
-              identifiant="vr-effectifs-groupes"
-              key="vr-effectifs-groupes"
-              nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
-              source={wording.VIGIE_RH}
-            >
-              <>
-                <HistogrammeMensuelFilters
-                  ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
-                  activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
-                  handleFrequency={() => undefined}
-                  identifiant="effectifs-groupes"
-                  selectedActivity={filiereSelectionnee}
-                  selectedFrequency={wording.MENSUEL}
-                  setSelectedActivity={setFiliereSelectionnee}
-                  showFrequencySwitch={false}
-                  showYearSelection={false}
-                  wording={wording}
-                />
+        <section aria-label="effectif">
+          <div className={styles["vigie-rh-title-block"]}>
+            <h2 className="fr-h3 fr-mb-1v">Effectif</h2>
+          </div>
+          <div className={styles["liste-indicateurs-vr-wrapper"]}>
+            {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
+              <IndicateurGraphique
+                contenuInfoBulle={
+                  <ContenuEffectifsVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+                  />
+                }
+                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
+                identifiant="vr-effectifs"
+                key="vr-effectifs"
+                nomDeLIndicateur={wording.EFFECTIFS}
+                source={wording.VIGIE_RH}
+              >
                 <LineChart
-                  afficherSerieTotale={false}
                   classContainer="fr-mb-4w"
                   couleurEffectifsTotaux={couleurEffectifsTotaux}
-                  couleursFilieres={paletteGroupes}
-                  dataEffectifs={detailDataEffectifs}
+                  couleursFilieres={couleursFilieres}
+                  dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
-                  identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants} />
-              </>
+                  identifiantLegende="légende-graphique-effectifs"
+                  identifiantTranscription="transcription-graphique-effectifs"
+                  multiCategories={indicateurEffectif?.items ?? []}
+                />
+              </IndicateurGraphique>
+            ) : null}
+
+            {renderRow([blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
+              <IndicateurGraphique
+                années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
+                contenuInfoBulle={
+                  <ContenuPyramideAgesVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-pyramide-ages")}
+                  />
+                }
+                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-pyramide-ages")}
+                identifiant="vr-pyramide-ages"
+                key="vr-pyramide-ages"
+                nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
+                source={wording.VIGIE_RH}
+              >
+                <>
+                  {donneesAnneeEnCours?.effectifFemmeRef &&
+                    donneesAnneeEnCours?.effectifHomme &&
+                    donneesAnneeEnCours?.effectifFemme &&
+                    donneesAnneeEnCours?.effectifHommeRef && (
+                      <PyramidChart
+                        effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
+                        effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
+                        effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
+                        effectifHommeRef={donneesAnneeEnCours?.effectifHommeRef}
+                        etabFiness={etabFiness}
+                        etabTitle={etabTitle}
+                        labels={libelles}
+                      />
+                    )}
+                </>
+              </IndicateurGraphique>
+            )
+              : (
+                <></>
+              ), blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+                <IndicateurGraphique
+                  contenuInfoBulle={
+                    <ContenuRepartitionEffectifsVigieRh
+                      dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                      dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+                    />
+                  }
+                  echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
+                  identifiant="vr-repartition-effectif"
+                  key="vr-repartition-effectif"
+                  nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
+                  source={wording.VIGIE_RH}
+                >
+                  <GraphiqueTreemapRepartitionEffectif
+                    couleursFilieres={couleursFilieres}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
+                    height={420}
+                    items={itemsTreemap.slice(0, 4)}
+                  />
+                </IndicateurGraphique>
+              ) : (
+              <></>
+            )
+            ], 2)}
+            p
+            {graphiqueEffectifsGroupesAffichable ? (
+              <IndicateurGraphique
+                contenuInfoBulle={
+                  <ContenuEffectifsCategorieVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
+                  />
+                }
+                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
+                identifiant="vr-effectifs-groupes"
+                key="vr-effectifs-groupes"
+                nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+                source={wording.VIGIE_RH}
+              >
+                <>
+                  <HistogrammeMensuelFilters
+                    ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
+                    activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
+                    handleFrequency={() => undefined}
+                    identifiant="effectifs-groupes"
+                    selectedActivity={filiereSelectionnee}
+                    selectedFrequency={wording.MENSUEL}
+                    setSelectedActivity={setFiliereSelectionnee}
+                    showFrequencySwitch={false}
+                    showYearSelection={false}
+                    wording={wording}
+                  />
+                  <LineChart
+                    afficherSerieTotale={false}
+                    classContainer="fr-mb-4w"
+                    couleurEffectifsTotaux={couleurEffectifsTotaux}
+                    couleursFilieres={paletteGroupes}
+                    dataEffectifs={detailDataEffectifs}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
+                    identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants} />
+                </>
+              </IndicateurGraphique>
+            ) : null}
+          </div>
+        </section>
+
+        {renderRow([
+          blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
+            <IndicateurGraphique
+              contenuInfoBulle={
+                <ContenuDepartsEmbauchesVigieRh
+                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                  dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
+                />
+              }
+              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
+              identifiant="vr-departs-embauches"
+              key="vr-departs-embauches"
+              nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
+              source={wording.VIGIE_RH}
+            >
+              <GraphiqueDepartEmbauches
+                donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
+                donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+              />
             </IndicateurGraphique>
           ) : null,
-        ], 3)}
-
-        {renderRow([blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuRepartitionEffectifsVigieRh
-                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+          blocVigieRHViewModel.graphiqueRotationsAffichable ? (
+            <IndicateurGraphique
+              contenuInfoBulle={
+                <ContenuTauxRotationVigieRh
+                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                  dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
+                />
+              }
+              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
+              identifiant="vr-taux-rotation"
+              key="vr-taux-rotation"
+              nomDeLIndicateur={wording.TAUX_ROTATION}
+              source={wording.VIGIE_RH}
+            >
+              <GraphiqueTauxRotation
+                blocVigieRHViewModel={blocVigieRHViewModel}
+                donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
+                donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                nomGraph={wording.TAUX_ROTATION}
               />
-            }
-            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
-            identifiant="vr-repartition-effectif"
-            key="vr-repartition-effectif"
-            nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
-            source={wording.VIGIE_RH}
-          >
-            <GraphiqueTreemapRepartitionEffectif
-              couleursFilieres={couleursFilieres}
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-              height={420}
-              items={itemsTreemap.slice(0, 4)}
-            />
-          </IndicateurGraphique>
-        ) : null,
-        blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuDepartsEmbauchesVigieRh
-                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
+            </IndicateurGraphique>
+          ) : null,
+          blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
+            <IndicateurGraphique
+              contenuInfoBulle={
+                <ContenuNatureContratsVigieRh
+                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                  dateDonneesArretees={recupereDateDonnees("vr-nature-contrats")}
+                />
+              }
+              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-nature-contrats")}
+              identifiant="vr-nature-contrats"
+              key="vr-nature-contrats"
+              nomDeLIndicateur={wording.NATURE_CONTRATS}
+              source={wording.VIGIE_RH}
+            >
+              <GraphiqueNatureContrats
+                blocVigieRhViewModel={blocVigieRHViewModel}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                nomGraph={wording.NATURE_CONTRATS}
               />
-            }
-            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
-            identifiant="vr-departs-embauches"
-            key="vr-departs-embauches"
-            nomDeLIndicateur={wording.DEPARTS_EMBAUCHES}
-            source={wording.VIGIE_RH}
-          >
-            <GraphiqueDepartEmbauches
-              donneesDepartsEmbauches={blocVigieRHViewModel.lesDonneesDepartsEmbauches}
-              donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-            />
-          </IndicateurGraphique>
-        ) : null,
-        blocVigieRHViewModel.graphiqueRotationsAffichable ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxRotationVigieRh
-                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
-              />
-            }
-            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
-            identifiant="vr-taux-rotation"
-            key="vr-taux-rotation"
-            nomDeLIndicateur={wording.TAUX_ROTATION}
-            source={wording.VIGIE_RH}
-          >
-            <GraphiqueTauxRotation
-              blocVigieRHViewModel={blocVigieRHViewModel}
-              donneesTauxRotation={blocVigieRHViewModel.donneesTauxRotation}
-              donneesTauxRotationTrimestriels={blocVigieRHViewModel.donneesTauxRotationTrimestrielles}
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-              nomGraph={wording.TAUX_ROTATION}
-            />
-          </IndicateurGraphique>
-        ) : null,
-        blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuNatureContratsVigieRh
-                dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                dateDonneesArretees={recupereDateDonnees("vr-nature-contrats")}
-              />
-            }
-            echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-nature-contrats")}
-            identifiant="vr-nature-contrats"
-            key="vr-nature-contrats"
-            nomDeLIndicateur={wording.NATURE_CONTRATS}
-            source={wording.VIGIE_RH}
-          >
-            <GraphiqueNatureContrats
-              blocVigieRhViewModel={blocVigieRHViewModel}
-              etabFiness={etabFiness}
-              etabTitle={etabTitle}
-              nomGraph={wording.NATURE_CONTRATS}
-            />
-          </IndicateurGraphique>
-        ) : null,
+            </IndicateurGraphique>
+          ) : null,
         ], 2)}
 
         {renderRow([
@@ -563,39 +610,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               source={wording.VIGIE_RH}
             >
               <GraphiqueDureeCDD blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={wording.DUREE_CDD} />
-            </IndicateurGraphique>
-          ) : null,
-          blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
-            <IndicateurGraphique
-              années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
-              contenuInfoBulle={
-                <ContenuPyramideAgesVigieRh
-                  dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                  dateDonneesArretees={recupereDateDonnees("vr-pyramide-ages")}
-                />
-              }
-              echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-pyramide-ages")}
-              identifiant="vr-pyramide-ages"
-              key="vr-pyramide-ages"
-              nomDeLIndicateur={wording.PYRAMIDE_DES_AGES}
-              source={wording.VIGIE_RH}
-            >
-              <>
-                {donneesAnneeEnCours?.effectifFemmeRef &&
-                  donneesAnneeEnCours?.effectifHomme &&
-                  donneesAnneeEnCours?.effectifFemme &&
-                  donneesAnneeEnCours?.effectifHommeRef && (
-                    <PyramidChart
-                      effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
-                      effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
-                      effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
-                      effectifHommeRef={donneesAnneeEnCours?.effectifHommeRef}
-                      etabFiness={etabFiness}
-                      etabTitle={etabTitle}
-                      labels={libelles}
-                    />
-                  )}
-              </>
             </IndicateurGraphique>
           ) : null,
         ], 2)}
