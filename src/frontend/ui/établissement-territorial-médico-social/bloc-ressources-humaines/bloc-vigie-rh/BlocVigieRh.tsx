@@ -314,6 +314,35 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           ) : (
             <></>
           )}
+          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
+            <div className="fr-col-4">
+              <CarteTopIndicateur
+                comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
+                contenuInfoBulle={
+                  <ContenuTopContratsCourtsVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
+                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
+                  />
+                }
+                currentValue={blocVigieRHViewModel.topIndicateurContrats.courant}
+                echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-duree-cdd")}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                identifiant="vr-top-duree-cdd"
+                infoBulleTitle={wording.TAUX_ROTATION}
+                pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
+                pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
+                tendance="DESC"
+                title={wording.TOP_CONTRATS_TITLE}
+                unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
+                variation={blocVigieRHViewModel.topIndicateurContrats.variation}
+                variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
           {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
             <div className="fr-col-4">
               <CarteTopIndicateur
@@ -337,34 +366,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 unitLabel={wording.TAUX_ROTATION}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
-              />
-            </div>
-          ) : (
-            <></>
-          )}
-          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
-            <div className="fr-col-4">
-              <CarteTopIndicateur
-                comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
-                contenuInfoBulle={
-                  <ContenuTopContratsCourtsVigieRh
-                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                    dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                  />
-                }
-                currentValue={blocVigieRHViewModel.topIndicateurContrats.courant}
-                echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-duree-cdd")}
-                etabFiness={etabFiness}
-                etabTitle={etabTitle}
-                identifiant="vr-top-duree-cdd"
-                infoBulleTitle={wording.TAUX_ROTATION}
-                pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
-                pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
-                tendance="DESC"
-                title={wording.TOP_CONTRATS_TITLE}
-                unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
-                variation={blocVigieRHViewModel.topIndicateurContrats.variation}
-                variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
               />
             </div>
           ) : (

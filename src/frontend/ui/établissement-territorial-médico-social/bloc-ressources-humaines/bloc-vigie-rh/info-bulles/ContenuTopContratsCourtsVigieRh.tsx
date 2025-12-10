@@ -1,8 +1,9 @@
 import { ContenuVigieRhInfoBulleProps, formaterMiseAJourEtDonnees } from "./ContenuVigieRhInfoBulleProps";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
-export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees }: ContenuVigieRhInfoBulleProps) => {
+export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, periodeGlissante }: ContenuVigieRhInfoBulleProps) => {
   const { wording } = useDependencies();
+  const periode = periodeGlissante ?? wording.NON_RENSEIGNÉ;
 
   return (
     <>
@@ -16,7 +17,7 @@ export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesAr
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> sur 12 derniers mois glissants ({periode})
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
