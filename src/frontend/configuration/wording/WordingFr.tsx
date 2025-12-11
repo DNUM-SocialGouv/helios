@@ -716,18 +716,19 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_TOTAUX: string = "Total";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
-  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
-  readonly DEPARTS: string = "Départs";
-  readonly EMBAUCHES: string = "Embauches";
+  readonly DEPARTS_EMBAUCHES: string = "Entrées et sorties";
+  readonly DEPARTS: string = "Fins de contrats";
+  readonly EMBAUCHES: string = "Nouveaux contrats";
   readonly DEPARTS_REF: string = "Moyenne des départs";
   readonly EMBAUCHES_REF: string = "Moyenne des embauches";
-  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
-  readonly TAUX_ROTATION: string = "Taux de Rotation";
+  readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
+  readonly TAUX_ROTATION: string = "Taux de renouvellments des contrats";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
-  readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
+  readonly TAUX_ROTATION_REFERENCE: string = "Taux de renouvellments des contrats de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-  readonly DUREE_CDD: string = "Durée effective des CDD";
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
+  readonly DUREE_CDD: string = "Contrats CDD par durée effective";
   readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
   readonly DUREE: string = "Durée";
   readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
@@ -737,8 +738,8 @@ export class WordingFr implements Wording {
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
   readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
-  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
-  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
+  readonly NATURE_CONTRATS: string = "Nature des contrats actifs ";
+  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
