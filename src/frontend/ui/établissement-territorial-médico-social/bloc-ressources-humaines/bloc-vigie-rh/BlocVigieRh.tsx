@@ -277,7 +277,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       <section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>
-          <h2 className="fr-h3 fr-mb-1v">Indicateurs clés actuels</h2>
+          <h2 className="fr-h3 fr-mb-1v">Indicateurs clés</h2>
           <p className={styles["vigie-rh-caption"]}>
             <span>{wording.DONNEES_ARRETEES}</span>
             <span>{periodeIndicateursGlobal}</span>
@@ -333,7 +333,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 pastValue={blocVigieRHViewModel.topIndicateurTauxRotation.precedent}
                 tendance="DESC"
                 title={wording.TOP_TAUX_ROTATION_TITLE}
-                unitLabel={wording.TAUX_ROTATION}
+                unitLabel={wording.TOP_TAUX_ROTATION_UNIT_TITLE}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
               />
