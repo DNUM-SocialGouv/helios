@@ -605,7 +605,9 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string;
   readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
