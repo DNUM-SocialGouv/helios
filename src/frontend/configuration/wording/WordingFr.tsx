@@ -695,6 +695,7 @@ export class WordingFr implements Wording {
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string = "A partir d'une liste existante";
+  readonly BOUTON_CHOIX_INDICATEURS: string = "Choix des indicateurs";
 
   //Page d’une liste de favoris
   readonly LISTE_DE_FAVORIS = "Liste de favoris";
