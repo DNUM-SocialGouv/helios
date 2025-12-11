@@ -245,6 +245,11 @@ export function useModalSelectionIndicateur(structure: string) {
     return pendingIndicators.get(getIndicatorsKey()) ?? new Map();
   }
 
+  function noPendingIndicatorEnabled(): boolean {
+    return !getPendingIndicators().values()
+      .find(items => items.find(item => item.enabled));
+  }
+
   // Returns the modal title with an icon depending on the structure
   const getModalTitle = (): ReactNode => {
     let icon: ReactNode = null;
@@ -343,7 +348,7 @@ export function useModalSelectionIndicateur(structure: string) {
                 </div>
                 <div className="fr-modal__footer">
                   <div className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
-                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn" onClick={() => setIndicators(pendingIndicators)}>
+                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn" disabled={noPendingIndicatorEnabled()} onClick={() => setIndicators(pendingIndicators)}>
                       Valider
                     </button>
                     <button aria-controls="fr-modal-selection-indicateur" className="fr-btn fr-btn--secondary">
