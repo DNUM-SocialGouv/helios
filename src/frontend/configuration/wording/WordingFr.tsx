@@ -711,7 +711,7 @@ export class WordingFr implements Wording {
   readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
   readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
   readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
-  readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS: string = "Evolution des effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
   readonly EFFECTIFS_TOTAUX: string = "Total";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";

@@ -58,10 +58,17 @@
 .vigie-rh-header {
   margin-bottom: 2rem;
   padding-top: .5rem;
+  border: 1px solid var(--border-default-grey);
+  padding: 1rem;
 }
 
 .vigie-rh-title-block {
   margin-bottom: 1rem;
+}
+
+.vigie-rh-block-border {
+  padding: 1rem;
+  border: 1px solid var(--border-default-grey);
 }
 
 .vigie-rh-caption {
