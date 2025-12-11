@@ -636,6 +636,7 @@ export interface Wording {
   readonly TOP_TAUX_ROTATION_TITLE: string;
   readonly TOP_CONTRATS_TITLE: string;
   readonly TOP_CONTRATS_UNIT_LABEL: string;
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string;
 
   // Paramétrage aide
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string;
