@@ -295,11 +295,11 @@ export function useModalSelectionIndicateur(structure: string) {
                   onChange={() => toggleCategory(category)}
                   type="checkbox"
                 />
-                <label className="fr-label fr-ml-2w fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
+                <label className="fr-label fr-ml-5v fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
                   {category.name}
                 </label>
                 {pendingItems.map((item) => (
-                  <div className="fr-my-n2w" key={item.columnName}>
+                  <div className="fr-my-n2w fr-ml-1v" key={item.columnName}>
                     <input
                       checked={item.enabled}
                       id={`checkbox-${item.columnName}`}
