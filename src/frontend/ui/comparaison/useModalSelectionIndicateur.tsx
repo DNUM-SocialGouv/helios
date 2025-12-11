@@ -1,5 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
 
+import styles from './useModalSelectionIndicateur.module.css';
+import { LogoEntiteJuridiqueSvg } from "../entité-juridique/bloc-activité/LogoEntitéJuridique";
+import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
+import { LogoEtablissementTerritorialSanitaireSvg } from "../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
+
 type IndicatorStateItem = {
   displayName: string;
   columnName: string;
@@ -240,6 +245,36 @@ export function useModalSelectionIndicateur(structure: string) {
     return pendingIndicators.get(getIndicatorsKey()) ?? new Map();
   }
 
+  // Returns the modal title with an icon depending on the structure
+  const getModalTitle = (): ReactNode => {
+    let icon: ReactNode = null;
+    let title = "";
+
+    switch (structure) {
+      case "Médico-social":
+        icon = LogoEtablissementTerritorialMedicoSociauxSvg("#000091");
+        title = "Indicateurs Social et Médico-social";
+        break;
+      case "Sanitaire":
+        icon = LogoEtablissementTerritorialSanitaireSvg("#000091");
+        title = "Indicateurs Sanitaire";
+        break;
+      case "Entité juridique":
+        icon = LogoEntiteJuridiqueSvg("#000091");
+        title = "Indicateurs Entités juridiques";
+        break;
+      default:
+        title = "Type d’établissement inconnu";
+    }
+
+    return (
+      <span className={styles["modalTitleContainer"]}>
+        <span className={styles["modalIconContainer"]}>{icon}</span>
+        <span>{title}</span>
+      </span>
+    );
+  }
+
   function generateModal(): ReactNode {
     const currentStructureIndicators = getCurrentIndicators();
     const pendingStructureIndicators = getPendingIndicators();
@@ -292,7 +327,7 @@ export function useModalSelectionIndicateur(structure: string) {
               <div className="fr-modal__body">
                 <div className="fr-modal__content">
                   <h1 className="fr-modal__title fr-my-2w" id="fr-modal-selection-indicateur-title">
-                    Sélection des indicateurs
+                    {getModalTitle()}
                   </h1>
                   <div className="fr-grid-row fr-grid-row--gutters">
                     <div className="fr-col-12 fr-col-md-6">
