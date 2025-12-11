@@ -2,7 +2,9 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Titl
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { couleurDesTraitsRefHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -321,6 +323,13 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
           />
         </div>
       </div>
+      <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+
+        ]}
+      />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
