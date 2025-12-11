@@ -19,6 +19,7 @@ import { ContenuNatureContratsVigieRh } from "./info-bulles/ContenuNatureContrat
 import { ContenuPyramideAgesVigieRh } from "./info-bulles/ContenuPyramideAgesVigieRh";
 import { ContenuRepartitionEffectifsVigieRh } from "./info-bulles/ContenuRepartitionEffectifsVigieRh";
 import { ContenuTauxRotationVigieRh } from "./info-bulles/ContenuTauxRotationVigieRh";
+import { ContenuTopContratsCourtsVigieRh } from "./info-bulles/ContenuTopContratsCourtsVigieRh";
 import { ContenuTopEffectifVigieRh } from "./info-bulles/ContenuTopEffectifVigieRh";
 import { ContenuTopTauxRotationVigieRh } from "./info-bulles/ContenuTopTauxRotationVigieRh";
 import GraphiqueNatureContrats from "./NatureContrats";
@@ -308,6 +309,35 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 tendance="ASC"
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
+            <div className="fr-col-4">
+              <CarteTopIndicateur
+                comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
+                contenuInfoBulle={
+                  <ContenuTopContratsCourtsVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
+                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
+                  />
+                }
+                currentValue={blocVigieRHViewModel.topIndicateurContrats.courant}
+                echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-duree-cdd")}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                identifiant="vr-top-duree-cdd"
+                infoBulleTitle={wording.TAUX_ROTATION}
+                pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
+                pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
+                tendance="DESC"
+                title={wording.TOP_CONTRATS_TITLE}
+                unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
+                variation={blocVigieRHViewModel.topIndicateurContrats.variation}
+                variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
               />
             </div>
           ) : (

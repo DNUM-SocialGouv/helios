@@ -149,6 +149,9 @@ export class BlocVigieRHViewModel {
     return !this.lesEffectifsNeSontIlsPasRenseignees && !this.lesEffectifsNeSontIlsPasAutorisee
   }
 
+  public get graphiqueDureeCddAffichable(): boolean {
+    return !this.lesDureesCDDNeSontEllesPasRenseignees && !this.lesDureesCDDNeSontEllesPasAutorisee
+  }
   public get graphiqueEffectifsGroupesAffichable(): boolean {
     return !this.lesEffectifsGroupesNeSontIlsPasRenseignees && !this.lesEffectifsGroupesNeSontIlsPasAutorisee;
   }
@@ -366,6 +369,37 @@ export class BlocVigieRHViewModel {
       precedent: isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) + '%' : '',
       variation: variation,
       pastPeriod: isoPeriodDonneeComparaison ? `T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '',
+      variationText: variationText,
+    }
+  }
+
+  sommeDesEffectifs = (cddCourts: DureeCDD[], predicate: (item: DureeCDD) => boolean,): number => {
+    return cddCourts.reduce((total: number, item: DureeCDD) => {
+      return predicate(item) ? total + item.effectif : total;
+    }, 0);
+  }
+
+  public get topIndicateurContrats() {
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur ?? '';
+    const maxAnnee = Math.max(...durees.map(d => d.annee));
+    const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
+    const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
+    const comparaisonLabel = `à (${period})`;
+    const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
+    let variationText = '';
+
+    if (variation) {
+      variationText = variation > 0
+        ? `+${variation}pts`
+        : `${variation}pts`;
+    }
+    return {
+      comparaisonLabel,
+      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison) + '%',
+      precedent: StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison) + '%',
+      variation: variation,
+      pastPeriod: period.replace(/(\d{4})/g, (year) => String(Number(year) - 1)),
       variationText: variationText,
     }
   }

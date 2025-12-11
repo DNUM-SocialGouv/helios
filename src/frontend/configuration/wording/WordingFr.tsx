@@ -727,6 +727,8 @@ export class WordingFr implements Wording {
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de renouvellments des contrats de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
+  readonly TOP_CONTRATS_TITLE: string = "Contrats courts";
+  readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD court < 6 mois";
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
   readonly DUREE_CDD: string = "Contrats CDD par durée effective";
   readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
