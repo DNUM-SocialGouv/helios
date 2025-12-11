@@ -1,5 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
 
+import styles from './useModalSelectionIndicateur.module.css';
+import { LogoEntiteJuridiqueSvg } from "../entité-juridique/bloc-activité/LogoEntitéJuridique";
+import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
+import { LogoEtablissementTerritorialSanitaireSvg } from "../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
+
 type IndicatorStateItem = {
   displayName: string;
   columnName: string;
@@ -101,10 +106,57 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
   ];
   sanitaireIndicators.set(budgetSanCategory, sanitaireIndicatorsBudgetEtFinances);
+  // ##########################################################################################
+  // ################################## Entité Juridique indicators ##################################
+  const entiteJuridiqueIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
+
+  // Bloc Identité
+  const identiteEJCategory: IndicatorCategory = { name: "Bloc Identité", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsIdentite: IndicatorStateItem[] = [
+    { displayName: "Statut juridique", columnName: "statutJuridique", enabled: true },
+    { displayName: "Rattachements", columnName: "rattachements", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(identiteEJCategory, entiteJuridiqueIndicatorsIdentite);
+
+  // Bloc Activité
+  const activiteEJCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsActivite: IndicatorStateItem[] = [
+    { displayName: "Nb séjours HAD", columnName: "sejoursHad", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(activiteEJCategory, entiteJuridiqueIndicatorsActivite);
+
+  // Bloc Ressources Humaines
+  const rhEJCategory: IndicatorCategory = { name: "Bloc Ressources Humaines", position: IndicatorPosition.LEFT };
+  const entiteJuridiqueIndicatorsRessourcesHumaines: IndicatorStateItem[] = [
+    { displayName: "Nb ETP PM", columnName: "nombreEtpPm", enabled: true },
+    { displayName: "Nb ETP PNM", columnName: "nombreEtpPnm", enabled: true },
+    { displayName: "Dépenses intérim PM", columnName: "depensesInterimPm", enabled: true },
+    { displayName: "Jours d’absentéisme PM", columnName: "joursAbsenteismePm", enabled: true },
+    { displayName: "Jours d’absentéisme PNM", columnName: "joursAbsenteismePnm", enabled: true }
+  ];
+  entiteJuridiqueIndicators.set(rhEJCategory, entiteJuridiqueIndicatorsRessourcesHumaines);
+
+  // Bloc Budget et Finances
+  const budgetEJCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const entiteJuridiqueIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
+    { displayName: "Cpte résultat - Charges (principaux)", columnName: "chargesPrincipaux", enabled: true },
+    { displayName: "Cpte résultat - Charges (annexes)", columnName: "chargesAnnexes", enabled: true },
+    { displayName: "Cpte résultat - Produits (principaux)", columnName: "produitsPrincipaux", enabled: true },
+    { displayName: "Cpte résultat - Produits (annexes)", columnName: "produitsAnnexes", enabled: true },
+    { displayName: "Résultat net comptable", columnName: "resultatNetComptableEj", enabled: true },
+    { displayName: "Tx CAF", columnName: "tauxCafEj", enabled: true },
+    { displayName: "Ratio de dépendance financière", columnName: "ratioDependanceFinanciere", enabled: true },
+    { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
+    { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
+    { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
+  ];
+  entiteJuridiqueIndicators.set(budgetEJCategory, entiteJuridiqueIndicatorsBudgetEtFinances);
+  // ##########################################################################################
 
   return new Map([
     ["medicoSocial", medicoSocialIndicators],
-    ["sanitaire", sanitaireIndicators]
+    ["sanitaire", sanitaireIndicators],
+    ["entiteJuridique", entiteJuridiqueIndicators]
   ]);
 }
 
@@ -179,7 +231,7 @@ export function useModalSelectionIndicateur(structure: string) {
       return "medicoSocial";
     else if (structure === 'Sanitaire')
       return "sanitaire";
-    else if (structure === "Entité Juridique")
+    else if (structure === "Entité juridique")
       return "entiteJuridique";
     else return "";
   }
@@ -193,6 +245,41 @@ export function useModalSelectionIndicateur(structure: string) {
     return pendingIndicators.get(getIndicatorsKey()) ?? new Map();
   }
 
+  function noPendingIndicatorEnabled(): boolean {
+    return !getPendingIndicators().values()
+      .find(items => items.find(item => item.enabled));
+  }
+
+  // Returns the modal title with an icon depending on the structure
+  const getModalTitle = (): ReactNode => {
+    let icon: ReactNode = null;
+    let title = "";
+
+    switch (structure) {
+      case "Médico-social":
+        icon = LogoEtablissementTerritorialMedicoSociauxSvg("#000091");
+        title = "Indicateurs Social et Médico-social";
+        break;
+      case "Sanitaire":
+        icon = LogoEtablissementTerritorialSanitaireSvg("#000091");
+        title = "Indicateurs Sanitaire";
+        break;
+      case "Entité juridique":
+        icon = LogoEntiteJuridiqueSvg("#000091");
+        title = "Indicateurs Entités juridiques";
+        break;
+      default:
+        title = "Type d’établissement inconnu";
+    }
+
+    return (
+      <span className={styles["modalTitleContainer"]}>
+        <span className={styles["modalIconContainer"]}>{icon}</span>
+        <span>{title}</span>
+      </span>
+    );
+  }
+
   function generateModal(): ReactNode {
     const currentStructureIndicators = getCurrentIndicators();
     const pendingStructureIndicators = getPendingIndicators();
@@ -200,8 +287,24 @@ export function useModalSelectionIndicateur(structure: string) {
     const leftColumn = categories.filter(([category]) => category.position === IndicatorPosition.LEFT);
     const rightColumn = categories.filter(([category]) => category.position === IndicatorPosition.RIGHT);
 
+    const renderIndicatorItem = (category: IndicatorCategory, item: IndicatorStateItem) => (
+      <div className="fr-my-n2w fr-ml-1v" key={item.columnName}>
+        <input
+          checked={item.enabled}
+          id={`checkbox-${item.columnName}`}
+          name={item.columnName}
+          onChange={() => toggleIndicator(category, item.columnName)}
+          type="checkbox"
+        />
+        <label className="fr-label fr-ml-5w" htmlFor={`checkbox-${item.columnName}`}>
+          {item.displayName}
+        </label>
+      </div>
+    );
+
     const renderCategory = ([category]: [IndicatorCategory, IndicatorStateItem[]]) => {
       const pendingItems = pendingStructureIndicators.get(category) || [];
+
       return (
         <div className="fr-mb-4w" key={category.name}>
           <fieldset className="fr-fieldset">
@@ -213,23 +316,10 @@ export function useModalSelectionIndicateur(structure: string) {
                   onChange={() => toggleCategory(category)}
                   type="checkbox"
                 />
-                <label className="fr-label fr-ml-2w fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
+                <label className="fr-label fr-ml-5v fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
                   {category.name}
                 </label>
-                {pendingItems.map((item) => (
-                  <div className="fr-my-n2w" key={item.columnName}>
-                    <input
-                      checked={item.enabled}
-                      id={`checkbox-${item.columnName}`}
-                      name={item.columnName}
-                      onChange={() => toggleIndicator(category, item.columnName)}
-                      type="checkbox"
-                    />
-                    <label className="fr-label fr-ml-5w" htmlFor={`checkbox-${item.columnName}`}>
-                      {item.displayName}
-                    </label>
-                  </div>
-                ))}
+                {pendingItems.map((item) => renderIndicatorItem(category, item))}
               </div>
             </div >
           </fieldset >
@@ -245,7 +335,7 @@ export function useModalSelectionIndicateur(structure: string) {
               <div className="fr-modal__body">
                 <div className="fr-modal__content">
                   <h1 className="fr-modal__title fr-my-2w" id="fr-modal-selection-indicateur-title">
-                    Sélection des indicateurs
+                    {getModalTitle()}
                   </h1>
                   <div className="fr-grid-row fr-grid-row--gutters">
                     <div className="fr-col-12 fr-col-md-6">
@@ -258,7 +348,7 @@ export function useModalSelectionIndicateur(structure: string) {
                 </div>
                 <div className="fr-modal__footer">
                   <div className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-lg fr-btns-group--icon-left">
-                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn" onClick={() => setIndicators(pendingIndicators)}>
+                    <button aria-controls="fr-modal-selection-indicateur" className="fr-btn" disabled={noPendingIndicatorEnabled()} onClick={() => setIndicators(pendingIndicators)}>
                       Valider
                     </button>
                     <button aria-controls="fr-modal-selection-indicateur" className="fr-btn fr-btn--secondary">
