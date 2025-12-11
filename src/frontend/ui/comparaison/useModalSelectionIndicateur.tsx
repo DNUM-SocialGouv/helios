@@ -282,8 +282,24 @@ export function useModalSelectionIndicateur(structure: string) {
     const leftColumn = categories.filter(([category]) => category.position === IndicatorPosition.LEFT);
     const rightColumn = categories.filter(([category]) => category.position === IndicatorPosition.RIGHT);
 
+    const renderIndicatorItem = (category: IndicatorCategory, item: IndicatorStateItem) => (
+      <div className="fr-my-n2w fr-ml-1v" key={item.columnName}>
+        <input
+          checked={item.enabled}
+          id={`checkbox-${item.columnName}`}
+          name={item.columnName}
+          onChange={() => toggleIndicator(category, item.columnName)}
+          type="checkbox"
+        />
+        <label className="fr-label fr-ml-5w" htmlFor={`checkbox-${item.columnName}`}>
+          {item.displayName}
+        </label>
+      </div>
+    );
+
     const renderCategory = ([category]: [IndicatorCategory, IndicatorStateItem[]]) => {
       const pendingItems = pendingStructureIndicators.get(category) || [];
+
       return (
         <div className="fr-mb-4w" key={category.name}>
           <fieldset className="fr-fieldset">
@@ -298,20 +314,7 @@ export function useModalSelectionIndicateur(structure: string) {
                 <label className="fr-label fr-ml-5v fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
                   {category.name}
                 </label>
-                {pendingItems.map((item) => (
-                  <div className="fr-my-n2w fr-ml-1v" key={item.columnName}>
-                    <input
-                      checked={item.enabled}
-                      id={`checkbox-${item.columnName}`}
-                      name={item.columnName}
-                      onChange={() => toggleIndicator(category, item.columnName)}
-                      type="checkbox"
-                    />
-                    <label className="fr-label fr-ml-5w" htmlFor={`checkbox-${item.columnName}`}>
-                      {item.displayName}
-                    </label>
-                  </div>
-                ))}
+                {pendingItems.map((item) => renderIndicatorItem(category, item))}
               </div>
             </div >
           </fieldset >
