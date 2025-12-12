@@ -36,10 +36,10 @@
 - hel-926: Retour en haut de la page de configuration de l’aide à la validation
 - hel-939: Modification de l’intitulé des numéros ARHGOS
 - hel-942: Affichage des données dans l’ordre chronologique dans les graphiques
-- vr-76:
-- vr-83:
-- vr-92:
-- vr-100:
+- vr-76: Titre TDB Affichage Source
+- vr-83: Guide utilisateurs - définitions des indicateurs
+- vr-92: Echelle temporelle localisée DVZ
+- vr-100: Echelle temporelle - Globale
 
 ## [1.7.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.0...release/1.7.1) (2025-11-24)
 
@@ -58,8 +58,8 @@
 - hel-907: Ajout d’un séparateur des milliers
 - hel-908: Exploration de l’export des autorisations en Excel
 - hel-930: Modification de l’intitulé des numéros ARHGOS
-- vr-99:
-- vr-49:
+- vr-99: Intégration Data Effectifs par catégorie professionnelle
+- vr-49: DVIZ Effectifs catégorie professionnelles
 
 ## [1.7.0](https://github.com/DNUM-SocialGouv/helios/compare/release/v1.6.12...release/1.7.0) (2025-11-10)
 
@@ -81,11 +81,11 @@
 - hel-897: Mise à jour du detail des indicateurs d’autorisations
 - hel-900: Création du formulaire de modification d’une section d’aide
 - hel-901: Ajout d’un lien vers la documentation du DSFR sur le label de l’icone d’une section d’aide
-- vr-90:
-- vr-95:
-- vr-60:
-- vr-74:
-- vr-77:
-- vr-78:
-- vr-84:
-- vr-87:
+- vr-90: Intégration Données CDI et CDD
+- vr-95: Problème Affichage/Mapping "Motifs de rupture de contrat"
+- vr-60: DVIZ Contrat CDD-CDI
+- vr-74: DVIZ Départs prématurés des CDI de moins de 6 mois
+- vr-77: Treemap - Transcription
+- vr-78: Intégration Data Départs Prématurés CDI
+- vr-84: DVZ Effectif Palette couleur courbes
+- vr-87: Connexion Serveur FTP
