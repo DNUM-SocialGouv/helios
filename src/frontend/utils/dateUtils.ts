@@ -15,7 +15,7 @@ export function annéesManquantes(années: (number | string)[], annéesTotales: 
 export function annéesManquantesVigieRh(années: (number | string)[], annéesTotales: number = 3): number[] {
   const annéeEnCours = new Date().getFullYear();
 
-  return Array(annéesTotales)
+  return new Array(annéesTotales)
     .fill(annéeEnCours)
     .map((annéeÀAvoir, index) => annéeÀAvoir - index)
     .reverse()

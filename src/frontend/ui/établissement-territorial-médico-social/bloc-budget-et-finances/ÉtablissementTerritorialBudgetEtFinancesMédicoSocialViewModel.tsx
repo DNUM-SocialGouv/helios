@@ -142,7 +142,7 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
     return { premierPlan, secondPlan };
   }
 
-  public get tauxDeVétustéConstruction(): ReactElement {
+  public tauxDeVétustéConstructionHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxDeVétustéConstruction");
 
     const libellésDesValeurs = valeurs.map((valeur) => (valeur > this.seuilDuContrasteDuLibellé ? couleurDuFond : couleurIdentifiant));
@@ -154,9 +154,12 @@ export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {
         couleurDesLibelles={libellésDesValeurs}
         couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => this.construisLaCouleurDeLaBarre(valeur, années[index]))}
         entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
         isVigieRh={false}
         libellés={années}
+        nomGraph={this.wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION}
         taillePoliceTicks={libellésDesTicks}
         valeurs={valeurs}
       />

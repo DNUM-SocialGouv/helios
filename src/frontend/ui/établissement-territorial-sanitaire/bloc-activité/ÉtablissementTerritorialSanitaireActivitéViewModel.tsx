@@ -1,6 +1,7 @@
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { ÉtablissementTerritorialSanitaireActivité } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireActivité";
 import { Wording } from "../../../configuration/wording/Wording";
+import { DureeMoyenneSejourMCOViewModel } from "../../indicateur-métier/duree-moyenne-sejour-mco/DureeMoyenneDeSejourMCOViewModel";
 import { IndicateurActivité } from "../../indicateur-métier/IndicateurActivité";
 import { NombreDeSejourMCOViewModel } from "../../indicateur-métier/nombre-de-sejour-mco/NombreDeSejourMCOViewModel";
 import { NombreDeJourneesPsySSRViewModel } from "../../indicateur-métier/nombre-journees-psy-ssr/NombreDeJourneesPsySSRViewModel";
@@ -13,6 +14,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
   nombreDeJourneesUsldViewModel: NombreDeJourneesUsldViewModel;
+  dureeMoyenneSejourMCOViewModel: DureeMoyenneSejourMCOViewModel;
   wording: Wording;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
@@ -20,6 +22,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
     this.nombreDeJourneesUsldViewModel = this.createNombreDeJourneesUsldViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);
+    this.dureeMoyenneSejourMCOViewModel = new DureeMoyenneSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.wording = wording;
   }
 
@@ -51,7 +54,8 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
       (!this.nombreDeSejourMCOViewModel.nombreDeSéjoursMCOSontIlsRenseignés &&
         !this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés &&
         !this.nombreDePassagesAuxUrgencesEstIlRenseigné &&
-        !this.nombreDeJourneesUsldEstIlRenseigne)
+        !this.nombreDeJourneesUsldEstIlRenseigne &&
+        !this.dureeMoyenneSejourMCOViewModel.moyenneSejoursMCOSontIlsRenseignés)
     );
   }
 
@@ -61,6 +65,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsRenseignés) nonRenseignes.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreDePassagesAuxUrgencesEstIlRenseigné) nonRenseignes.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
     if (!this.nombreDeJourneesUsldEstIlRenseigne) nonRenseignes.push(this.wording.NOMBRE_DE_JOURNEES_USLD)
+    if (!this.dureeMoyenneSejourMCOViewModel.moyenneSejoursMCOSontIlsRenseignés) nonRenseignes.push(this.wording.MOYENNE_DE_SEJOUR_MCO)
 
     return nonRenseignes;
   }
@@ -103,6 +108,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
     if (!this.nombreJourneesPsySSRViewModel.nombreDeJournéesPsyEtSsrSontIlsAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR);
     if (!this.nombreDePassagesAuxUrgencesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_DE_PASSAGES_AUX_URGENCES);
     if (!this.nombreDeJourneesUsldEstIlAutorise) nonAutorisés.push(this.wording.NOMBRE_DE_JOURNEES_USLD)
+    if (!this.dureeMoyenneSejourMCOViewModel.moyenneSejoursMCOSontIlsAutorisés) nonAutorisés.push(this.wording.MOYENNE_DE_SEJOUR_MCO)
 
     return nonAutorisés;
   }

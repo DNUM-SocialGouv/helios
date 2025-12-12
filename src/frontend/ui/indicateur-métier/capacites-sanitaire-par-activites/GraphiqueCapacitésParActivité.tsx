@@ -7,12 +7,16 @@ import { IndicateurGraphique } from "../../commun/IndicateurGraphique/Indicateur
 import { ContenuCapacitéParActivités } from "../../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
 
 type GraphiqueCapacitésParActivitéProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
   estEntitéJuridique?: boolean;
   estSanitaire: boolean;
 }>;
 
 export const GraphiqueCapacitésParActivité = ({
+  etabTitle,
+  etabFiness,
   graphiqueCapacitésParActivitéViewModel,
   estEntitéJuridique = false,
   estSanitaire,
@@ -39,7 +43,10 @@ export const GraphiqueCapacitésParActivité = ({
     >
       <HistogrammesHorizontaux
         annéesManquantes={graphiqueCapacitésParActivitéViewModel.annéesManquantes()}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         nom={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
+        nomGraph={estSanitaire ? wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE : wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
         nombreDAnnéeTotale={graphiqueCapacitésParActivitéViewModel.NOMBRE_ANNEES}
         valeursDesHistogrammes={[
           graphiqueCapacitésParActivitéViewModel.valeursLits(annéeEnCours),

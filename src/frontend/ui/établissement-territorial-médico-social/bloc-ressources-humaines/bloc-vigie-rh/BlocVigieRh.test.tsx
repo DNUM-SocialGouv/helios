@@ -7,6 +7,8 @@ import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } fro
 import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 jest.mock("chart.js", () => ({
   Chart: {
@@ -38,7 +40,10 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       dureesCdd: [],
       dureesCddLibelles: [],
       motifsRuptureContrat: [],
-      motifsRuptureContratLibelles: []
+      motifsRuptureContratLibelles: [],
+      natureContratsAnnuel: [],
+      natureContratsTrimestriel: [],
+      echelleTemporelle:{}
     },
     wording,
     { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }
@@ -55,7 +60,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
   describe("Bloc vigie rh est visible que pour les Ehpads", () => {
     it("affiche le bloc vigie rh quand il s'agit d'un ehpad", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -70,7 +75,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
     it("n'affiche pas le bloc vigie rh quand il ne s'agit pas d'un ehpad", () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie="" etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
       expect(ressourcesHumaines).toBeInTheDocument()
@@ -84,7 +89,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
   describe("L’indicateur pyramide des âges", () => {
     it("affiche l’intitulé de l’indicateur pyramide des âges et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -93,7 +98,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[0];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.PYRAMIDE_DES_AGES), { selector: "h3" }))!;
       const titre = within(indicateur).getByText(textMatch(wording.PYRAMIDE_DES_AGES), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
@@ -103,12 +108,12 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
     it('affiche le contenu de l’info bulle du pyramide des âges après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[0];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.PYRAMIDE_DES_AGES), { selector: "h3" }))!;
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -124,7 +129,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
     it("affiche l’intitulé de l’indicateur effectifs et un bouton pour accéder aux détails", () => {
       // WHEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       // THEN
       const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });
@@ -133,7 +138,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[3];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
       const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
@@ -143,12 +148,12 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
     it('affiche le contenu de l’info bulle d"effectifs après avoir cliqué sur le bouton "détails"', () => {
       // GIVEN
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
       const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs[3];
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -161,12 +166,25 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(fermer).toBeInTheDocument();
     });
 
+    it("affiche le graphique détaillé des effectifs par catégorie professionnelle", () => {
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { } } statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+
+      const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
+      const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE), { selector: "h3" }))!;
+      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE);
+      expect(select).toBeInTheDocument();
+      expect(select).toHaveValue("test");
+      const options = within(select).getAllByRole("option");
+      expect(options.map((option) => option.getAttribute("value"))).toContain("test");
+    });
+
   });
 
 
   it('affiche le message aucune donnée qd il pas de données vigieRH', () => {
     // WHEN
-    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhEmptyViewModel} categorie={EHPAD_CATEGORIE} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhEmptyViewModel} categorie={EHPAD_CATEGORIE} etabFiness={etabFiness} etabTitle={etabTitle} setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
     // THEN
     const ressourcesHumaines = screen.getByRole("region", { name: wording.TITRE_BLOC_RESSOURCES_HUMAINES });

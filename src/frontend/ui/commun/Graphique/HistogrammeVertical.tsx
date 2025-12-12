@@ -12,7 +12,10 @@ import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
-export function HistogrammeVertical(props: {
+export function HistogrammeVertical(props: Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   valeurs: number[];
   libellés: (number | string)[];
   couleursDeLHistogramme: CouleurHistogramme[];
@@ -22,7 +25,7 @@ export function HistogrammeVertical(props: {
   identifiant: string;
   annéesTotales: number;
   isVigieRh: boolean;
-}): ReactElement {
+}>): ReactElement {
   const { wording } = useDependencies();
 
   const data: ChartData = {
@@ -79,8 +82,11 @@ export function HistogrammeVertical(props: {
       <Transcription
         disabled={listeAnnéesManquantes.length === props.annéesTotales}
         entêteLibellé={props.entêteLibellé}
+        etabFiness={props.etabFiness}
+        etabTitle={props.etabTitle}
         identifiants={[props.identifiant]}
         libellés={props.libellés}
+        nomGraph={props.nomGraph}
         valeurs={[StringFormater.addPercentToValues(props.valeurs)]}
       />
     </>

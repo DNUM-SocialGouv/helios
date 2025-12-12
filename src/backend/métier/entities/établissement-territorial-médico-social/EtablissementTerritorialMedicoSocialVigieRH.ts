@@ -13,9 +13,26 @@ export type ProfessionFiliereRow = Readonly<{
   effectifFiliere: number;
 }>;
 
+export type ProfessionGroupeRow = Readonly<{
+  annee: number;
+  mois: number;
+  effectif: number;
+}>;
+
+export type ProfessionGroupeData = Readonly<{
+  categorie: string;
+  dataCategorie: ProfessionGroupeRow[];
+}>;
+
+export type ProfessionGroupes = Readonly<{
+  data: ProfessionGroupeData[];
+  dateDeMiseAJour: string;
+}>;
+
 export type ProfessionFiliereData = Readonly<{
   categorie: string;
   dataCategorie: ProfessionFiliereRow[];
+  groupes?: ProfessionGroupes;
 }>;
 
 export type ProfessionFiliere = Readonly<{
@@ -29,6 +46,7 @@ export type DepartEmbauche = Readonly<{
   departRef: number;
   embauche: number;
   embaucheRef: number;
+  departsPrematuresCdi: number | null;
 }>;
 
 export type DepartEmbaucheTrimestriel = Readonly<{
@@ -71,6 +89,18 @@ export type MotifsRuptureContrat = Readonly<{
   motifCode: number;
 }>;
 
+export type NatureContratsAnnuel = Readonly<{
+  annee: number;
+  effectif: number | null;
+  effectifRef: number | null;
+  natureLibelle: string;
+  natureCode: number;
+}>;
+
+export type NatureContratsTrimestriel = NatureContratsAnnuel & Readonly<{
+  trimestre: number;
+}>;
+
 export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   pyramideAges: PyramideAges[];
   departsEmbauches: DepartEmbauche[];
@@ -83,4 +113,16 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
   dureesCddLibelles: string[];
   motifsRuptureContrat: MotifsRuptureContrat[];
   motifsRuptureContratLibelles: string[];
+  natureContratsAnnuel: NatureContratsAnnuel[];
+  natureContratsTrimestriel: NatureContratsTrimestriel[];
+  echelleTemporelle: Record<string, EchelleTemporelleVigieRh>;
 }>;
+
+export type EchelleTemporelleVigieRh = Readonly<{
+  type: TypeEchelle;
+  valeur: string;
+  valeurTranscription?: string;
+  dateDonneesArretees?: string;
+}>
+
+export type TypeEchelle = "MENSUEL" | "TRIMESTRIEL" | "ANNUEL";

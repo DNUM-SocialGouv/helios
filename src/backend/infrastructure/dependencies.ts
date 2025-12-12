@@ -9,7 +9,6 @@ import { Logger } from "../métier/gateways/Logger";
 import { RechercheLoader } from "../métier/gateways/RechercheLoader";
 import { SearchHistoryLoader } from "../métier/gateways/SearchHistoryLoader";
 import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
-import { VigieRhContratLoader } from "../métier/gateways/vigie-rh/VigieRhContratLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 import { ÉtablissementTerritorialRattachéLoader } from "../métier/gateways/ÉtablissementTerritorialRattachéLoader";
 import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
@@ -30,12 +29,13 @@ import { TypeOrmSearchHistoryLoader } from "./gateways/search-history-loader/Typ
 import { TypeOrmUserListEtablissementLoader } from "./gateways/user-list-loader/TypeOrmUserListEtablissementLoader";
 import { TypeOrmUserListLoader } from "./gateways/user-list-loader/TypeOrmUserListLoader";
 import { TypeOrmUtilisateurLoader } from "./gateways/utilisateur-loader/TypeOrmUtilisateurLoader";
-import { TypeOrmVigieRhContratLoader } from "./gateways/vigierh-loader/TypeOrmVigieRhContratLoader";
 import { TypeOrmÉtablissementTerritorialMédicoSocialLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialMédicoSocialLoader";
 import { TypeOrmÉtablissementTerritorialRattachéLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialRattachéLoader";
 import { TypeOrmEtablissementTerritorialSanitaireLoader } from "./gateways/établissement-territorial-loader/TypeOrmÉtablissementTerritorialSanitaireLoader";
 import { CategoriesFinessLoader } from "../métier/gateways/CategoriesFinessLoader";
 import { TypeOrmCategoriesFinessLoader } from "./gateways/categories-finess-loader/TypeOrmCategoriesFinessLoader";
+import { TypeOrmParametrageJsonLoader } from "./gateways/parametrage-json/TypeOrmParametrageJsonLoader";
+import { ParametrageJsonLoader } from "../métier/gateways/ParametrageJsonLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -56,8 +56,8 @@ export type Dependencies = Readonly<{
   comparaisonLoader: ComparaisonLoader;
   userListLoader: TypeOrmUserListLoader;
   userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
-  vigieRhContratLoader: VigieRhContratLoader;
   categoriesFinessLoader: CategoriesFinessLoader;
+  aideLoader: ParametrageJsonLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -91,8 +91,8 @@ const createDependencies = (): Dependencies => {
     comparaisonLoader: new TypeOrmComparaisonLoader(orm),
     userListLoader: new TypeOrmUserListLoader(orm),
     userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
-    vigieRhContratLoader: new TypeOrmVigieRhContratLoader(orm),
-    categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm)
+    categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm),
+    aideLoader: new TypeOrmParametrageJsonLoader(orm)
   };
 };
 

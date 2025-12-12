@@ -8,12 +8,19 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
+import { StringFormater } from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 const MIN_VALUE = 5;
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuTooltip: Function, wording: Wording, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, créeLeLibelléDuTooltip?: Function, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+  let tooltip;
+  if (créeLeLibelléDuTooltip) {
+    tooltip = { callbacks: { label: créeLeLibelléDuTooltip(wording) } }
+  } else {
+    tooltip = { enabled: false }
+  }
   return {
     animation: false,
     elements: { bar: { borderWidth: 2 } },
@@ -32,7 +39,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
           if (cacheLesValeursBasse && valueNumber > 0 && valueNumber <= MIN_VALUE) {
             return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
           }
-          return value.y;
+          return StringFormater.roundFormatInFrench(valueNumber);
         },
         font: {
           weight: "bolder",
@@ -45,7 +52,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
       // @ts-ignore
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
-      tooltip: { callbacks: { label: créeLeLibelléDuTooltip(wording) } },
+      tooltip: tooltip,
     },
     responsive: true,
     scales: {
@@ -68,6 +75,9 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, créeLeLibelléDuToo
 }
 
 export function HistogrammeVerticalABandes(props: Readonly<{
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   data: {
     datasets: { backgroundColor: string; borderColor: string; stack: string; data: { x: number; y: number | null | "" }[]; label: string }[];
     labels: (string | number)[];
@@ -77,10 +87,11 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   libellés: (string | number)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
-  créeLeLibelléDuTooltip: Function;
+  créeLeLibelléDuTooltip?: Function;
   annéesTotales: number;
   grapheMensuel: boolean;
   cacheLesValeursBasse?: boolean;
+  legendeCentreeUneLigne?: boolean;
 }>) {
   const { wording } = useDependencies();
 
@@ -92,28 +103,38 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     setIndexPremierMoisNonRenseigne(props.valeurs[0].length);
   }, [props.valeurs])
 
-  let valeursTranscription = props.valeurs;
   let hasSomeValuesToHide = false;
-  if (props.cacheLesValeursBasse) {
-    valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
-      if (valeur) {
-        const numValue = Number.parseInt(valeur.replaceAll(/\s/g, ""));
-        if (numValue > 0 && numValue <= MIN_VALUE) {
-          hasSomeValuesToHide = true;
-          return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
-        }
+  const valeursTranscription = props.valeurs.map((valeurs) => valeurs.map((valeur) => {
+    if (valeur) {
+      const numValue = Number.parseFloat(valeur.replaceAll(/\s/g, "").replace(",", "."));
+      if (Number.isNaN(numValue)) {
+        return valeur;
       }
-      return valeur;
-    })
-    );
+      if (props.cacheLesValeursBasse && numValue > 0 && numValue <= MIN_VALUE) {
+        hasSomeValuesToHide = true;
+        return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+      }
+      return StringFormater.roundFormatInFrench(numValue);
+    }
+    return valeur;
+  }));
+
+  const legendStyle: { justifyContent?: string, gridTemplateRows?: string } = {};
+  // Si la légende doit être centrée ou si c’est in graph mensuel on centre la légende
+  if (props.legendeCentreeUneLigne || props.grapheMensuel) {
+    legendStyle.justifyContent = "center";
+  }
+  // Si la légende doit être centrée, on la met sur une ligne
+  if (props.legendeCentreeUneLigne) {
+    legendStyle.gridTemplateRows = "repeat(1, 1fr)";
   }
 
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, props.créeLeLibelléDuTooltip, wording, props.cacheLesValeursBasse)} />
-          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={props.grapheMensuel ? { justifyContent: 'center' } : {}} />
+          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)} />
+          <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>
       ) : null}
       {!props.grapheMensuel && listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
@@ -122,8 +143,11 @@ export function HistogrammeVerticalABandes(props: Readonly<{
       <Transcription
         disabled={props.grapheMensuel ? false : aucuneDonnee}
         entêteLibellé={props.grapheMensuel ? wording.MOIS : wording.ANNÉE}
+        etabFiness={props.etabFiness}
+        etabTitle={props.etabTitle}
         identifiants={props.identifiants}
         libellés={props.libellés}
+        nomGraph={props.nomGraph}
         valeurs={valeursTranscription}
       />
     </>

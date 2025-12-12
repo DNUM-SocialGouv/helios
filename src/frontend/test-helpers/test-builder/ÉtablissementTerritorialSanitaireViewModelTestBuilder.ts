@@ -168,6 +168,18 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 10,
       },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10,
+      },
+      dureeMoyenneSejourObstetrique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 10,
+      },
       numéroFinessÉtablissementTerritorial: "010000040",
     },
     {
@@ -217,6 +229,18 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         value: 20,
       },
       nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 20,
+      },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 20,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 20,
+      },
+      dureeMoyenneSejourObstetrique: {
         dateMiseÀJourSource: "2021-07-07",
         value: 20,
       },
@@ -272,6 +296,18 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 30,
       },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 30,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 30,
+      },
+      dureeMoyenneSejourObstetrique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 30,
+      },
       numéroFinessÉtablissementTerritorial: "010000040",
     },
     {
@@ -324,6 +360,18 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         dateMiseÀJourSource: "2021-07-07",
         value: 40,
       },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 40,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 40,
+      },
+      dureeMoyenneSejourObstetrique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 40,
+      },
       numéroFinessÉtablissementTerritorial: "010000040",
     },
     {
@@ -373,6 +421,18 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
         value: 5000,
       },
       nombreSéjoursPartielsObstétrique: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 5000,
+      },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 5000,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 5000,
+      },
+      dureeMoyenneSejourObstetrique: {
         dateMiseÀJourSource: "2021-07-07",
         value: 5000,
       },
@@ -590,14 +650,14 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
     inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
   }
 
-  public static readonly ressourcesHumaines : EtablissementTerritorialSanitaireRH[] = [{
-      annee: 2025,
-      nombreEtpPm: { dateMiseAJourSource: "2025-07-07", valeur: 100 },
-      nombreEtpPnm: { dateMiseAJourSource: "2025-07-08", valeur: 120 },
-      depensesInterimPm: { dateMiseAJourSource: "2025-07-09", valeur: 230 },
-      joursAbsenteismePm: { dateMiseAJourSource: "2025-07-10", valeur: 41 },
-      joursAbsenteismePnm: { dateMiseAJourSource: "2025-07-11", valeur: 3900 },
-    }] ;
+  public static readonly ressourcesHumaines: EtablissementTerritorialSanitaireRH[] = [{
+    annee: 2025,
+    nombreEtpPm: { dateMiseAJourSource: "2025-07-07", valeur: 100 },
+    nombreEtpPnm: { dateMiseAJourSource: "2025-07-08", valeur: 120 },
+    depensesInterimPm: { dateMiseAJourSource: "2025-07-09", valeur: 230 },
+    joursAbsenteismePm: { dateMiseAJourSource: "2025-07-10", valeur: 41 },
+    joursAbsenteismePnm: { dateMiseAJourSource: "2025-07-11", valeur: 3900 },
+  }];
 
   public static crée(
     wording: Wording,

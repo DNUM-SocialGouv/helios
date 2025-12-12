@@ -6,6 +6,11 @@ import { StringFormater } from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
+import { ContenuDeDepensesInterimPm } from "../entité-juridique/infoBulle/ContenuDeDepensesInterimPm";
+import { ContenuDeJoursAbsenteismePm } from "../entité-juridique/infoBulle/ContenuDeJoursAbsenteismePm";
+import { ContenuDeJoursAbsenteismePnm } from "../entité-juridique/infoBulle/ContenuDeJoursAbsenteismePnm";
+import { ContenuDuNombreDEtpPm } from "../entité-juridique/infoBulle/ContenuDuNombreDEtpPm";
+import { ContenuDuNombreDEtpPnm } from "../entité-juridique/infoBulle/ContenuDuNombreDEtpPnm";
 import { ApiComparaisonResultat, ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, ResultatComparaisonEJ, ResultatComparaisonSAN, ResultatComparaisonSMS } from "../home/ComparaisonViewModel";
 import { ContenuNombreHAD } from "../indicateur-métier/nombre-de-had/ContenuNombreHAD";
 import { ContenuNombreDeJourneesUsld } from "../indicateur-métier/nombre-journees-usld/ContenuNombreDeJourneesUsld";
@@ -225,6 +230,32 @@ export function useComparaison() {
           contenu: <ContenuTauxDeCaf dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA}></ContenuTauxDeCaf>,
           titre: wording.TAUX_DE_CAF,
         };
+      case "nombreEtpPm":
+        return {
+          contenu: <ContenuDuNombreDEtpPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDuNombreDEtpPm>,
+          titre: wording.NOMBRE_D_ETP_PM,
+        };
+      case "nombreEtpPnm":
+        return {
+          contenu: <ContenuDuNombreDEtpPnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDuNombreDEtpPnm>,
+          titre: wording.NOMBRE_D_ETP_PNM,
+        };
+      case "depensesInterimPm":
+        return {
+          contenu: <ContenuDeDepensesInterimPm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeDepensesInterimPm>,
+          titre: wording.DEPENSES_INTERIM_PM,
+        };
+      case "joursAbsenteismePm":
+        return {
+          contenu: <ContenuDeJoursAbsenteismePm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePm>,
+          titre: wording.JOURS_ABSENTEISME_PM,
+        };
+      case "joursAbsenteismePnm":
+        return {
+          contenu: <ContenuDeJoursAbsenteismePnm dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE}></ContenuDeJoursAbsenteismePnm>,
+          titre: wording.JOURS_ABSENTEISME_PNM,
+        };
+
       case "vetusteConstruction":
         return {
           contenu: <ContenuTauxDeVétustéConstruction dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_tdbPerf)} source={wording.TDB_PERF}></ContenuTauxDeVétustéConstruction>,
@@ -304,7 +335,7 @@ export function useComparaison() {
           titre: wording.ALLOCATION_DE_RESSOURCES,
         };
       default:
-        return { contenu: "Aucun contenue à afficher pour l'instant", titre: "Bonjour" };
+        return { contenu: "Aucun contenu à afficher pour l'instant", titre: "Bonjour" };
     }
   }
 
@@ -370,16 +401,21 @@ export function useComparaison() {
         { label: "Statut juridique", nomComplet: "Statut juridique", key: "statutJuridique", sort: true, orderBy: "statut_juridique" },
         { label: "Rattachements", nomComplet: "Rattachements", key: "rattachements", sort: true, orderBy: "numero_finess" },
         { label: "Nb séjours HAD", nomComplet: "Nb de séjours HAD", key: "sejoursHad", info: true, sort: true, orderBy: "nombre_sejours_had" },
+        { label: "Nb ETP PM", nomComplet: "Nombre d’ETP PM", key: "nombreEtpPm", info: true, sort: true, orderBy: "nombre_etp_pm" },
+        { label: "Nb ETP PNM", nomComplet: "Nombre d’ETP PNM", key: "nombreEtpPnm", info: true, sort: true, orderBy: "nombre_etp_pnm" },
+        { label: "Dépenses intérim PM", nomComplet: "Dépenses d’intérim PM", key: "depensesInterimPm", info: true, sort: true, orderBy: "depenses_interim_pm" },
+        { label: "Jours d’absentéisme PM", nomComplet: "Jours d’absentéisme PM", key: "joursAbsenteismePm", info: true, sort: true, orderBy: "jours_absenteisme_pm" },
+        { label: "Jours d’absentéisme PNM", nomComplet: "Jours d’absentéisme PNM", key: "joursAbsenteismePnm", info: true, sort: true, orderBy: "jours_absenteisme_pnm" },
         { label: "Cpte résultat - Charges (principaux) ", nomComplet: "Compte de résultat - Charges  (Budgets principaux)", key: "chargesPrincipaux", info: true, sort: true, orderBy: "total_depenses_principales" },
         { label: " Cpte résultat - Charges (annexes)", nomComplet: "Compte de résultat - Charges  (Budgets Annexes)", key: "chargesAnnexes", info: true, sort: true, orderBy: "total_depenses_global - total_depenses_principales" },
         { label: "Cpte résultat - Produits (principaux)", nomComplet: "Compte de résultat - Produits (Budgets principaux)", key: "produitsPrincipaux", info: true, sort: true, orderBy: "total_recettes_principales" },
-        { label: "Cpte résultat - Produits (annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", info: true, sort: true, orderBy: "total_recettes_global - total_recettes_principales " },
+        { label: "Cpte résultat - Produits (annexes)", nomComplet: "Compte de résultat - Produits (Budgets Annexes)", key: "produitsAnnexes", info: true, sort: true, orderBy: "total_recettes_global - total_recettes_principales" },
         { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptableEj", info: true, sort: true, orderBy: "resultat_net_comptable_san" },
         { label: "Tx CAF", nomComplet: "Taux de CAF", key: "tauxCafEj", info: true, sort: true, orderBy: "taux_de_caf_nette_san" },
         { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
-        { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
-        { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
-        { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: `Alloc. ressources: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressources: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressources: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
     }
     else
@@ -390,16 +426,21 @@ export function useComparaison() {
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "Cat. FINESS", nomComplet: "Cat. FINESS", key: "categorie", sort: true, orderBy: "libelle_categorie" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
-        { label: "Nb séjours Médecine -Total Hospt", nomComplet: "Nb de séjours Médecine -Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "total_hospt_medecine" },
-        { label: "Nb séjours Chirurgie -Total Hospt", nomComplet: "Nb de séjours Chirurgie -Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "total_hospt_chirurgie" },
-        { label: "Nb séjours Obstétrique -Total Hospt", nomComplet: "Nb de séjours Obstétrique -Total Hospt", key: "totalHosptObstetrique", info: true, sort: true, orderBy: "total_hospt_obstetrique" },
-        { label: "Nb journées Psychiatrie - Total Hospt", nomComplet: "Nb de  journées Psychiatrie - Total Hospt", key: "totalHosptPsy", info: true, sort: true, orderBy: "total_hospt_ssr" },
-        { label: "Nb journées  SSR- Total Hospt", nomComplet: "Nb de journées  SSR- Total Hospt", key: "totalHosptSsr", info: true, sort: true, orderBy: "total_hospt_psy" },
+        { label: "Nb séjours Médecine - Total Hospt", nomComplet: "Nb de séjours Médecine - Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "total_hospt_medecine" },
+        { label: "Nb séjours Chirurgie - Total Hospt", nomComplet: "Nb de séjours Chirurgie - Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "total_hospt_chirurgie" },
+        { label: "Nb séjours Obstétrique - Total Hospt", nomComplet: "Nb de séjours Obstétrique - Total Hospt", key: "totalHosptObstetrique", info: true, sort: true, orderBy: "total_hospt_obstetrique" },
+        { label: "Nb journées Psychiatrie - Total Hospt", nomComplet: "Nb de journées Psychiatrie - Total Hospt", key: "totalHosptPsy", info: true, sort: true, orderBy: "total_hospt_psy" },
+        { label: "Nb journées SSR - Total Hospt", nomComplet: "Nb de journées SSR - Total Hospt", key: "totalHosptSsr", info: true, sort: true, orderBy: "total_hospt_ssr" },
         { label: "Nb de passage aux urgences", nomComplet: "Nb de passage aux urgences", key: "passagesUrgences", info: true, sort: true, orderBy: "nombre_passages_urgences" },
         { label: "Nb journées USLD", nomComplet: "Nb de journées USLD", key: "journeesUsld", info: true, sort: true, orderBy: "nombre_journees_usld" },
-        { label: `Alloc. ressoures: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
-        { label: `Alloc. ressoures: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
-        { label: `Alloc. ressoures: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: "Nb ETP PM", nomComplet: "Nombre d’ETP PM", key: "nombreEtpPm", info: true, sort: true, orderBy: "nombre_etp_pm" },
+        { label: "Nb ETP PNM", nomComplet: "Nombre d’ETP PNM", key: "nombreEtpPnm", info: true, sort: true, orderBy: "nombre_etp_pnm" },
+        { label: "Dépenses intérim PM", nomComplet: "Dépenses d’intérim PM", key: "depensesInterimPm", info: true, sort: true, orderBy: "depenses_interim_pm" },
+        { label: "Jours d’absentéisme PM", nomComplet: "Jours d’absentéisme PM", key: "joursAbsenteismePm", info: true, sort: true, orderBy: "jours_absenteisme_pm" },
+        { label: "Jours d’absentéisme PNM", nomComplet: "Jours d’absentéisme PNM", key: "joursAbsenteismePnm", info: true, sort: true, orderBy: "jours_absenteisme_pnm" },
+        { label: `Alloc. ressources: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressources: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressources: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
   };
 

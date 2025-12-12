@@ -15,7 +15,7 @@ export default function Router({ profiles }: RouterProps) {
 
   useBreadcrumb([
     {
-      label: wording.PARAMETRAGE_TITRE,
+      label: wording.PARAMETRAGE_AUTORISATIONS_TITRE,
       path: "",
     },
   ]);

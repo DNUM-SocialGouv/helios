@@ -82,16 +82,28 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
         <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
         <BlocAutorisationEtCapacitéMédicoSocial
+          etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabNom={établissementTerritorialViewModel.identitéViewModel.nomDeLÉtablissementTerritorial}
+          etabTitle={établissementTerritorialViewModel.titre}
           opnedBloc={statusBlocs[0]}
-          toggelBlocs={() => toggelBlocs(0)} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
+          toggelBlocs={() => toggelBlocs(0)}
+          établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialViewModel.autorisationsViewModel}
         />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéMédicoSocial categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement} opnedBloc={statusBlocs[1]}
-          toggelBlocs={() => toggelBlocs(1)} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel} />
+        {!statusBlocs[0] && <SeparatorHorizontal></SeparatorHorizontal>}
+        <BlocActivitéMédicoSocial
+          categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement}
+          etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialViewModel.titre}
+          opnedBloc={statusBlocs[1]}
+          toggelBlocs={() => toggelBlocs(1)}
+          établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialViewModel.activitésViewModel}
+        />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocRessourcesHumainesMédicoSocial
           blocVigieRhViewModel={établissementTerritorialViewModel.vigieRHViewModel}
           categorie={établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement}
+          etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialViewModel.titre}
           opnedBloc={statusBlocs[2]}
           setStatusSousBlocs={setStatusSousBlocs}
           statusSousBlocs={statusSousBlocs}
@@ -100,12 +112,19 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
         />
         <SeparatorHorizontal></SeparatorHorizontal>
         <BlocBudgetEtFinancesMédicoSocial
+          etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialViewModel.titre}
           opnedBloc={statusBlocs[3]}
           toggelBlocs={() => toggelBlocs(3)} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={établissementTerritorialViewModel.budgetEtFinancesViewModel}
         />
         <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocQualite etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel}
-          opnedBloc={statusBlocs[4]} toggelBlocs={() => toggelBlocs(4)} />
+        <BlocQualite
+          etabFiness={établissementTerritorialViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialViewModel.titre}
+          etablissementTerritorialQualiteMédicoSocialViewModel={établissementTerritorialViewModel.qualiteViewModel}
+          opnedBloc={statusBlocs[4]}
+          toggelBlocs={() => toggelBlocs(4)}
+        />
       </div>
     </main>
   );

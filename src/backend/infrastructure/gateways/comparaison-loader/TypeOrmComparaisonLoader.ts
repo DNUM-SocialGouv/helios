@@ -55,6 +55,11 @@ type ComparaisonEJTypeOrm = Readonly<{
   total_depenses_principales: number;
   total_recettes_principales: number;
   nombre_sejours_had: number;
+  nombre_etp_pm: number;
+  nombre_etp_pnm: number;
+  depenses_interim_pm: number;
+  jours_absenteisme_pm: number;
+  jours_absenteisme_pnm: number;
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
@@ -75,6 +80,11 @@ type ComparaisonSANTypeOrm = Readonly<{
   total_hospt_psy: number;
   nombre_passages_urgences: number;
   nombre_journees_usld: number;
+  nombre_etp_pm: number;
+  nombre_etp_pnm: number;
+  depenses_interim_pm: number;
+  jours_absenteisme_pm: number;
+  jours_absenteisme_pnm: number;
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
@@ -273,6 +283,8 @@ FROM (
     on ej.numero_finess = bg.numero_finess_entite_juridique and bg.annee = ${annee}
     LEFT JOIN activite_sanitaire_entite_juridique acs
     on ej.numero_finess = acs.numero_finess_entite_juridique and acs.annee = ${annee}
+    LEFT JOIN ressources_humaines_entite_juridique rhej
+    on ej.numero_finess = rhej.numero_finess_entite_juridique and rhej.annee = ${annee}
     LEFT JOIN etablissement_territorial et 
     on ej.numero_finess = et.numero_finess_entite_juridique
     LEFT JOIN ${compareEnveloppe1} on ej.numero_finess  = ar1.numero_finess_entite_juridique
@@ -307,6 +319,11 @@ FROM (
     bg.taux_de_caf_nette_san,
     bg.ratio_dependance_financiere,
     acs.nombre_sejours_had,
+    rhej.nombre_etp_pm,
+    rhej.nombre_etp_pnm,
+    rhej.depenses_interim_pm,
+    rhej.jours_absenteisme_pm,
+    rhej.jours_absenteisme_pnm,
     ar1.enveloppe_1,
     ar2.enveloppe_2,
     ar3.enveloppe_3`
@@ -348,7 +365,13 @@ FROM (
         WHEN bg.recettes_titre_i_h IS NULL AND bg.recettes_titre_ii_h IS NULL AND bg.recettes_titre_iii_h IS NULL THEN NULL
         ELSE COALESCE(bg.recettes_titre_i_h, 0)  + COALESCE(bg.recettes_titre_ii_h, 0) + COALESCE(bg.recettes_titre_iii_h, 0)
     END AS total_recettes_principales,
-    bg.ratio_dependance_financiere, acs.nombre_sejours_had ${compareEjQueryBody} ) as subquery`;
+    bg.ratio_dependance_financiere,
+    acs.nombre_sejours_had,
+    rhej.nombre_etp_pm,
+    rhej.nombre_etp_pnm,
+    rhej.depenses_interim_pm,
+    rhej.jours_absenteisme_pm,
+    rhej.jours_absenteisme_pnm ${compareEjQueryBody} ) as subquery`;
 
     const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
     const paginatedCompareEJQuery =
@@ -365,6 +388,7 @@ FROM (
   END, numero_finess ASC  ${limitForExport} `;
 
     const compareEJQueryResult = await (await this.orm).query(paginatedCompareEJQuery);
+
     return {
       nombreDeResultats: numerosFiness.length,
       resultat: this.contruitResultatEJ(compareEJQueryResult),
@@ -541,6 +565,8 @@ FROM (
     LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe2} on et.numero_finess  = ar2.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe3} on et.numero_finess  = ar3.numero_finess_etablissement_territorial
+    LEFT JOIN ressources_humaines_sanitaire rhs
+    on et.numero_finess = rhs.numero_finess_etablissement_territorial and rhs.annee = ${annee}
     where et.numero_finess IN(${numerosFiness.map((finess) => "'" + finess + "'")})`
 
     const compareEtSanQuery = `Select et.numero_finess,
@@ -573,6 +599,11 @@ FROM (
     END AS total_hospt_psy,
     acs.nombre_passages_urgences,
     acs.nombre_journees_usld,
+    rhs.nombre_etp_pm,
+    rhs.nombre_etp_pnm,
+    rhs.depenses_interim_pm,
+    rhs.jours_absenteisme_pm,
+    rhs.jours_absenteisme_pnm,
     enveloppe_1,
     enveloppe_2,
     enveloppe_3 ${compareEtSanQueryBody}`;
@@ -678,9 +709,14 @@ FROM (
         produitsPrincipaux: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.total_recettes_principales, 0) : '',
         produitsAnnexes: resultat.type === "Entité juridique" ? this.roundExpression(resultat.total_recettes_global, resultat.total_recettes_principales, 0) : '',
         resultatNetComptableEj: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
-        tauxCafEj: resultat.type === "Entité juridique" ? resultat.taux_de_caf_nette_san : '',
-        ratioDependanceFinanciere: resultat.type === "Entité juridique" ? resultat.ratio_dependance_financiere : '',
+        tauxCafEj: resultat.type === "Entité juridique" ? this.transformInRate(resultat.taux_de_caf_nette_san, 1) : '',
+        ratioDependanceFinanciere: resultat.type === "Entité juridique" ? this.transformInRate(resultat.ratio_dependance_financiere, 1) : '',
         sejoursHad: resultat.type === "Entité juridique" ? resultat.nombre_sejours_had : '',
+        nombreEtpPm: resultat.type === "Entité juridique" ? resultat.nombre_etp_pm : '',
+        nombreEtpPnm: resultat.type === "Entité juridique" ? resultat.nombre_etp_pnm : '',
+        depensesInterimPm: resultat.type === "Entité juridique" ? resultat.depenses_interim_pm : '',
+        joursAbsenteismePm: resultat.type === "Entité juridique" ? resultat.jours_absenteisme_pm : '',
+        joursAbsenteismePnm: resultat.type === "Entité juridique" ? resultat.jours_absenteisme_pnm : '',
         enveloppe1: resultat.type === "Entité juridique" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Entité juridique" ? resultat.enveloppe_2 : '',
         enveloppe3: resultat.type === "Entité juridique" ? resultat.enveloppe_3 : '',
@@ -704,6 +740,11 @@ FROM (
         totalHosptPsy: resultat.type === "Sanitaire" ? resultat.total_hospt_psy : '',
         passagesUrgences: resultat.type === "Sanitaire" ? resultat.nombre_passages_urgences : '',
         journeesUsld: resultat.type === "Sanitaire" ? resultat.nombre_journees_usld : '',
+        nombreEtpPm: resultat.type === "Sanitaire" ? resultat.nombre_etp_pm : '',
+        nombreEtpPnm: resultat.type === "Sanitaire" ? resultat.nombre_etp_pnm : '',
+        depensesInterimPm: resultat.type === "Sanitaire" ? resultat.depenses_interim_pm : '',
+        joursAbsenteismePm: resultat.type === "Sanitaire" ? resultat.jours_absenteisme_pm : '',
+        joursAbsenteismePnm: resultat.type === "Sanitaire" ? resultat.jours_absenteisme_pnm : '',
         enveloppe1: resultat.type === "Sanitaire" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Sanitaire" ? resultat.enveloppe_2 : '',
         enveloppe3: resultat.type === "Sanitaire" ? resultat.enveloppe_3 : ''

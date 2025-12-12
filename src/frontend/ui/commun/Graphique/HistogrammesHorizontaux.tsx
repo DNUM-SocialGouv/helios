@@ -13,23 +13,29 @@ import { Transcription } from "../Transcription/Transcription";
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 const MIN_VALUE = 5;
 
+class LowValueHandler {
+  constructor(private readonly formatter: (value: number, _context: Context) => string, private readonly wording: Wording, private readonly cacheLesValeursBasse?: boolean) {
+    this.hideLowValueFormatter = (value: number, _context: Context): string => {
+      if (this.cacheLesValeursBasse && value > 0 && value <= MIN_VALUE) {
+        return this.wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
+      }
+      return this.formatter(value, _context);
+    };
+  }
+
+  public hideLowValueFormatter: (value: number, _context: Context) => string;
+}
+
 function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeursBasse?: boolean) {
   const [chartsData, setChartsData] = useState(charts);
   useEffect(() => setChartsData(charts), charts);
 
-
-
-  const hideLowValueFormatter = (value: number, _context: Context): any => {
-    if (cacheLesValeursBasse && value > 0 && value <= MIN_VALUE) {
-      return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
-    }
-    return value;
-  };
-
   return {
     histogrammes: chartsData.map((chartData) => {
       const inputOptions = chartData.optionsHistogramme;
-      inputOptions.plugins.datalabels.formatter = hideLowValueFormatter;
+      const currentFormatter = inputOptions.plugins.datalabels.formatter;
+      const lowValueHandlerInstance = new LowValueHandler(currentFormatter, wording, cacheLesValeursBasse);
+      inputOptions.plugins.datalabels.formatter = lowValueHandlerInstance.hideLowValueFormatter;
 
       return ({
         transcriptionTitles: chartData.transcriptionTitles,
@@ -78,9 +84,7 @@ export class HistogrammeData {
 
   private setDefaultErrorStatut() {
     this.stacks.forEach((stack) => {
-      if (!stack.isError) {
-        stack.isError = new Array(stack.data.length).fill(false);
-      }
+      stack.isError ??= new Array(stack.data.length).fill(false);
     });
   }
 
@@ -201,6 +205,9 @@ export class HistogrammeData {
 }
 
 type HistogrammeHorizontalNewProps = {
+  etabTitle: string;
+  etabFiness: string;
+  nomGraph: string;
   nom: string;
   valeursDesHistogrammes: HistogrammeData[];
   annéesManquantes: number[] | string[];
@@ -211,6 +218,9 @@ type HistogrammeHorizontalNewProps = {
   cacheLesValeursBasse?: boolean;
 };
 export const HistogrammesHorizontaux = ({
+  etabTitle,
+  etabFiness,
+  nomGraph,
   nom,
   valeursDesHistogrammes,
   annéesManquantes,
@@ -272,9 +282,12 @@ export const HistogrammesHorizontaux = ({
       <Transcription
         disabled={aucuneDonnées}
         entêteLibellé={nom}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiantUnique={identifiant}
         identifiants={transcriptionTitles()}
         libellés={histogrammes[0].labels}
+        nomGraph={nomGraph}
         valeurs={valeursTranscription}
       />
     </>

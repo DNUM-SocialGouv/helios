@@ -9,27 +9,30 @@ import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 describe("La page établissement territorial sanitaire - bloc activité", () => {
   const activitésViewModel = new EtablissementTerritorialSanitaireActiviteViewModel(EtablissementTerritorialSanitaireViewModelTestBuilder.activités, wording);
 
   it.each([
     [wording.NOMBRE_DE_SÉJOUR_MCO, 0, "PMSI", wording.PMSI_TITLE],
-    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, "PMSI", wording.PMSI_TITLE],
-    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 3, "RPU", wording.RPU_TITLE],
-    [wording.NOMBRE_DE_JOURNEES_USLD, 2, "SAE", wording.SAE_TITLE],
+    [wording.MOYENNE_DE_SEJOUR_MCO, 1, "PMSI", wording.PMSI_TITLE],
+    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 2, "PMSI", wording.PMSI_TITLE],
+    [wording.NOMBRE_DE_JOURNEES_USLD, 3, "SAE", wording.SAE_TITLE],
+    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 4, "RPU", wording.RPU_TITLE],
   ])("affiche les informations de l’indicateur %s", (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
     const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
-    expect(indicateurs).toHaveLength(4);
+    expect(indicateurs).toHaveLength(5);
     const titre = within(indicateurs[identifiant]).getByText(titreSection, { selector: "h3" });
     expect(titre).toBeInTheDocument();
     const dateMiseAJour = within(indicateurs[identifiant]).getAllByText(textMatch(`${wording.miseÀJour("07/07/2021")} - Source : ${sourceOrigineAttendue}`), {
@@ -50,9 +53,10 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
 
   it.each([
     [wording.NOMBRE_DE_SÉJOUR_MCO, 0, "PMSI", wording.PMSI_TITLE],
-    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1, "PMSI", wording.PMSI_TITLE],
-    [wording.NOMBRE_DE_JOURNEES_USLD, 2, "SAE", wording.SAE_TITLE],
-    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 3, "RPU", wording.RPU_TITLE],
+    [wording.MOYENNE_DE_SEJOUR_MCO, 1, "PMSI", wording.PMSI_TITLE],
+    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 2, "PMSI", wording.PMSI_TITLE],
+    [wording.NOMBRE_DE_JOURNEES_USLD, 3, "SAE", wording.SAE_TITLE],
+    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 4, "RPU", wording.RPU_TITLE],
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
@@ -61,7 +65,7 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
         dateDeMiseAJour: "11/12/12"
       }), wording);
       // GIVEN
-      renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+      renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
       const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
       const indicateurs = within(activité).getAllByRole("listitem");
       const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -91,16 +95,17 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
 
   it.each([
     [wording.NOMBRE_DE_SÉJOUR_MCO, 0],
-    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 1],
-    [wording.NOMBRE_DE_JOURNEES_USLD, 2],
-    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 3],
+    [wording.MOYENNE_DE_SEJOUR_MCO, 1],
+    [wording.NOMBRE_DE_JOURNÉES_PSY_ET_SSR, 2],
+    [wording.NOMBRE_DE_JOURNEES_USLD, 3],
+    [wording.NOMBRE_DE_PASSAGES_AUX_URGENCES, 4],
   ])('ferme l’info bulle après avoir cliqué sur le bouton "Fermer" (%s)', (titreSection, identifiant) => {
     const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // GIVEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
     const activité = screen.getByRole("region", { name: wording.TITRE_BLOC_ACTIVITÉ });
     const indicateurs = within(activité).getAllByRole("listitem");
     const détails = within(indicateurs[identifiant]).getByRole("button", { name: wording.DÉTAILS });
@@ -131,22 +136,31 @@ describe("La page établissement territorial sanitaire - bloc activité", () => 
     [
       [
         wording.ANNÉE,
+        wording.DUREE_MOYENNE_SEJOUR_MEDECINE,
+        wording.DUREE_MOYENNE_SEJOUR_CHIRURGIE,
+        wording.DUREE_MOYENNE_SEJOUR_OBSTETRIQUE,
+      ],
+      1,
+    ],
+    [
+      [
+        wording.ANNÉE,
         wording.HOSPITALISATION_PARTIELLE_SSR,
         wording.HOSPITALISATION_COMPLÈTE_SSR,
         wording.HOSPITALISATION_PARTIELLE_PSY,
         wording.HOSPITALISATION_COMPLÈTE_PSY,
       ],
-      1,
+      2,
     ],
-    [[wording.ANNÉE, wording.NOMBRE_DE_JOURNEES_USLD], 2],
-    [[wording.ANNÉE, wording.NOMBRE_DE_PASSAGES_AUX_URGENCES], 3],
+    [[wording.ANNÉE, wording.NOMBRE_DE_JOURNEES_USLD], 3],
+    [[wording.ANNÉE, wording.NOMBRE_DE_PASSAGES_AUX_URGENCES], 4],
   ])("affiche un tableau descriptif avec les cinq années", (libellésLigneDEnTête, identifiant) => {
     const activitéMensuelleViewModel = new ActivitesMensuelViewModel(mock<ActivitesSanitaireMensuel>({
       activitesSanitaireMensuelList: [],
       dateDeMiseAJour: "11/12/12"
     }), wording);
     // WHEN
-    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
+    renderFakeComponent(<BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel} etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialSanitaireActivitéViewModel={activitésViewModel} />);
 
     // THEN
     const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[identifiant];;

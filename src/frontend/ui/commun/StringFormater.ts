@@ -32,7 +32,7 @@ export namespace StringFormater {
     return formatInFrench(round(value, 2));
   }
 
-  function round(value: number, decimals: number = 2): number {
+  export function round(value: number, decimals: number = 2): number {
     const facteur = Math.pow(10, decimals);
     return Math.round(value * facteur) / facteur;
   }
@@ -59,5 +59,9 @@ export namespace StringFormater {
 
   export function transformInRoundedRate(number: number): number {
     return Math.round(number * 10) / 10;
+  }
+
+  export function formatNumberForExcel(value: string): string {
+    return value?.replaceAll(/\s/g, '');
   }
 }

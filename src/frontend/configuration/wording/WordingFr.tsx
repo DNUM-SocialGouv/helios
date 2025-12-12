@@ -156,6 +156,8 @@ export class WordingFr implements Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string = "Aucune donnée pour les indicateurs suivants :";
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string = "Pour respecter le RGPD, les valeurs inférieures ou égales à 5 sont remplacées par la mention “1 à 5”.";
   readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string = "1 à 5";
+  readonly DOWNLOAD_EXCEL: string = "Excel";
+  readonly DONNEES_ARRETEES: string = "Données arrêtées :";
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF = "PRIVÉ LUCRATIF";
@@ -209,6 +211,7 @@ export class WordingFr implements Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
+  readonly MOYENNE_DE_SEJOUR_MCO: string = "Durée moyenne de séjour Médecine, Chirurgie et Obstétrique";
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string = "Total Hospitalisation Médecine";
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string = "Total Hospitalisation Chirurgie";
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string = "Total Hospitalisation Obstétrique";
@@ -218,6 +221,10 @@ export class WordingFr implements Wording {
   readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string = "Hospitalisation Complète Chirurgie";
   readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string = "Hospitalisation Partielle Obstétrique";
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string = "Hospitalisation Complète Obstétrique";
+  readonly DUREE_MOYENNE_SEJOUR_MEDECINE: string = "DMS Médecine";
+  readonly DUREE_MOYENNE_SEJOUR_CHIRURGIE: string = "DMS Chirurgie";
+  readonly DUREE_MOYENNE_SEJOUR_OBSTETRIQUE: string = "DMS Obstétrique";
+
   readonly TOTAL_HOSPITALISATION_SSR: string = "Total Hospitalisation SSR";
   readonly TOTAL_HOSPITALISATION_PSY: string = "Total Hospitalisation PSY";
   readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string = "Nombre de journées PSY et SSR en Hospitalisation Complète et Hospitalisation Partielle";
@@ -237,6 +244,7 @@ export class WordingFr implements Wording {
   readonly AUTORISATIONS_MS: string = "Autorisations sociales et médico-sociales";
   readonly AUTORISATIONS_ACTIVITES: string = "Autorisations d'activité de soins";
   readonly DATE_D_AUTORISATION: string = "Date d’autorisation";
+  readonly DATE_D_AUTORISATION_KEY: string = "Date d'autorisation";
   readonly CAPACITÉ_AUTORISÉE: string = "Capacité autorisée";
 
   // Bloc Qualité
@@ -322,7 +330,7 @@ export class WordingFr implements Wording {
       &nbsp;
     </>
   );
-  readonly NUMÉRO_ARHGOS: string = "Numéro ARHGOS";
+  readonly NUMÉRO_AUTORISATION: string = "Numéro";
   readonly ACTIVITÉS: string = "Activités";
   readonly CHIRURGIE: string = "Chirurgie";
   readonly MÉDECINE: string = "Médecine";
@@ -332,6 +340,7 @@ export class WordingFr implements Wording {
   readonly PSYCHIATRIE: string = "Psychiatrie";
   readonly LITS: string = "Lits";
   readonly PLACES: string = "Places";
+  readonly BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES: string = "Télécharger les autorisations";
 
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string = "budget et finances";
@@ -454,6 +463,7 @@ export class WordingFr implements Wording {
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
   readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+  readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -470,6 +480,7 @@ export class WordingFr implements Wording {
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
   readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
+  readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -611,7 +622,9 @@ export class WordingFr implements Wording {
   readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
   readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné";
 
-  readonly PARAMETRAGE_TITRE: string = "Paramétrage des autorisations";
+  readonly PARAMETRAGE_TITRE: string = "Paramétrage";
+  readonly PARAMETRAGE_AUTORISATIONS_TITRE: string = "Paramétrage des autorisations";
+  readonly PARAMETRAGE_AIDE_TITRE: string = "Paramétrage de l'aide";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
@@ -699,6 +712,7 @@ export class WordingFr implements Wording {
   readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
   readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
   readonly EFFECTIFS: string = "Effectifs";
+  readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
   readonly EFFECTIFS_TOTAUX: string = "Total";
   readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
   readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
@@ -710,6 +724,7 @@ export class WordingFr implements Wording {
   readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
   readonly TAUX_ROTATION: string = "Taux de Rotation";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
+  readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
   readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
   readonly DUREE_CDD: string = "Durée effective des CDD";
@@ -719,10 +734,91 @@ export class WordingFr implements Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
   readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "De nouveaux indicateurs sont disponibles (Bloc Activité et Ressources Humaines). Depuis vos listes importez vos n°FINESS et exportez les établissements rattachés à un EJ.";
-  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://msociauxfr.sharepoint.com/:f:/r/teams/Helios-Communautdutilisateurs/Documents%20partages/General/Documentation?csf=1&web=1&e=sekz8x";
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2025-11-30";
+  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string = "Questionnaire";
+  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://forms.office.com/e/wXN1pQd20j";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-01-30";
+  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
+  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
+
+  readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
+    "Les rubriques de premier niveau sont fixes. Vous pouvez mettre à jour leur description et ajouter des ressources (documents, vidéos ou liens) pour chaque section.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SUCCES: string = "Les contenus d’aide ont été enregistrés.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_ERREUR: string = "Une erreur est survenue lors de l’enregistrement.";
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE: string = "Supprimer cette ressource ?";
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION: string =
+    "Supprimer cette section et toutes ses ressources ?";
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE: string = "Le nom de la section est obligatoire.";
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE: string = "Impossible de créer la section. Nom invalide.";
+  readonly PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE: string = "Une section avec ce nom existe déjà.";
+  readonly PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION: string = "Vous ne pouvez pas supprimer cette section.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_SECTION: string = "Aucune section sélectionnée.";
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS: string = "Annuler les modifications";
+  readonly PARAMETRAGE_AIDE_BOUTON_ENREGISTRER: string = "Enregistrer";
+  readonly PARAMETRAGE_AIDE_ETAT_ENREGISTREMENT: string = "Enregistrement...";
+  readonly PARAMETRAGE_AIDE_NAV_SECTIONS: string = "Sections d’aide";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_SECTION: string = "Ajouter une section";
+  readonly PARAMETRAGE_AIDE_ARIA_SUPPRIMER_SECTION = (titre: string): string => `Supprimer la section ${titre}`;
+  readonly PARAMETRAGE_AIDE_BOUTON_FERMER: string = "Fermer";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_SECTION: string = "Ajouter une section";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_SECTION: string = "Nom de la section *";
+  readonly PARAMETRAGE_AIDE_LABEL_ICONE_SECTION: string = "Icône DSFR";
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER: string = "Annuler";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER: string = "Ajouter";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_AJOUT: string = "Ajouter une ressource";
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_EDITION: string = "Modifier la ressource";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_RESSOURCE: string = "Nom *";
+  readonly PARAMETRAGE_AIDE_LABEL_TYPE_RESSOURCE: string = "Type *";
+  readonly PARAMETRAGE_AIDE_OPTION_DOCUMENT: string = "Document";
+  readonly PARAMETRAGE_AIDE_OPTION_VIDEO: string = "Vidéo";
+  readonly PARAMETRAGE_AIDE_OPTION_LIEN: string = "Lien";
+  readonly PARAMETRAGE_AIDE_LABEL_LIEN_RESSOURCE: string = "Lien *";
+  readonly PARAMETRAGE_AIDE_LABEL_DATE_RESSOURCE: string = "Date";
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_FICHIER_RESSOURCE: string = "Nom du fichier";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_RESSOURCE: string =
+    "Ajoutez des ressources pour alimenter cette rubrique. Les éléments sont affichés aux utilisateurs selon leur ordre.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_AUTRE: string =
+    "Cette rubrique est gérée automatiquement. Vous pouvez mettre à jour sa description, ses rôles et l’ordre d’affichage.";
+  readonly PARAMETRAGE_AIDE_LABEL_DESCRIPTION: string = "Description";
+  readonly PARAMETRAGE_AIDE_LEGENDE_ROLES: string = "Rôles autorisés";
+  readonly PARAMETRAGE_AIDE_LABEL_ORDRE_AFFICHAGE: string = "Ordre d’affichage";
+  readonly PARAMETRAGE_AIDE_PLACEHOLDER_ORDRE: string = "Ordre actuel";
+  readonly PARAMETRAGE_AIDE_TITRE_RESSOURCES: string = "Ressources";
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_RESSOURCE: string = "Ajouter une ressource";
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_SANS_PARAMETRAGE: string =
+    "Cette section ne contient pas de ressources paramétrables depuis cet écran.";
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_RESSOURCE: string = "Aucune ressource n’a encore été ajoutée.";
+  readonly PARAMETRAGE_AIDE_TABLE_TITRE: string = "Ressources de la section";
+  readonly PARAMETRAGE_AIDE_COLONNE_ORDRE: string = "Ordre";
+  readonly PARAMETRAGE_AIDE_COLONNE_NOM: string = "Nom";
+  readonly PARAMETRAGE_AIDE_COLONNE_TYPE: string = "Type";
+  readonly PARAMETRAGE_AIDE_COLONNE_LIEN: string = "Lien";
+  readonly PARAMETRAGE_AIDE_COLONNE_DATE: string = "Date";
+  readonly PARAMETRAGE_AIDE_COLONNE_FICHIER: string = "Nom du fichier";
+  readonly PARAMETRAGE_AIDE_COLONNE_UTILISATEUR: string = "Utilisateur";
+  readonly PARAMETRAGE_AIDE_COLONNE_ACTIONS: string = "Actions";
+  readonly PARAMETRAGE_AIDE_BOUTON_MONTER_RESSOURCE: string = "Monter la ressource";
+  readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string = "Descendre la ressource";
+  readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string = "Modifier";
+  readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string = "Supprimer";
+
+  readonly AIDE_TITRE_PAGE: string = "Aide";
+  readonly AIDE_MESSAGE_SECTIONS_VIDES: string = "Aucun contenu d’aide n’est disponible pour le moment.";
+  readonly AIDE_MESSAGE_CONTENU_INDISPONIBLE: string = "Ce contenu sera bientôt disponible.";
+  readonly AIDE_TITRES_RESSOURCES: Readonly<Record<"document" | "video" | "lien", string>> = {
+    document: "Documents",
+    video: "Vidéos",
+    lien: "Liens utiles",
+  };
+  readonly AIDE_INFO_DATE = (date: string): string => `Date de mise en ligne : ${date}`;
+  readonly AIDE_INFO_NOM_FICHIER = (nom: string): string => `Nom du fichier : ${nom}`;
+  readonly AIDE_INFO_SEPARATEUR: string = " — ";
+
+  readonly SELECTIONNER_UNE_ACTIVITE = "Sélectionner une activité";
+  readonly SOURCE: string = "Source: ";
+  readonly INDICATEURS_CLES_ACTUELS: string = "Indicateurs clés actuels";
+  readonly DECLARATION_SOCIALE_NOMINATIVE: string = "Déclaration Sociale Nominative";
 
 }
-
-

@@ -9,15 +9,17 @@ import GraphiqueDepartEmbauchesAnnuel from "./GraphiqueDepartsEmbauchesAnnuel";
 import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueDepartEmbauchesProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   donneesDepartsEmbauches: DepartEmbauche[],
   donneesDepartsEmbauchesTrimestriels: DepartEmbaucheTrimestrielViewModel[]
 }>;
 
-const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
+const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
 
   const { wording } = useDependencies();
 
-  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.TRIMESTRIEL);
 
   const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
@@ -26,7 +28,7 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbau
   return (
     <div >
       <FrequencyFilter
-        ListeFrquences={[wording.ANNUEL, wording.TRIMESTRIEL]}
+        ListeFrquences={[wording.TRIMESTRIEL, wording.ANNUEL]}
         handleFrequency={handleFrequency}
         identifiant='frequency-filter-departs-embauches'
         selectedFrequency={selectedFrequency}
@@ -34,9 +36,11 @@ const GraphiqueDepartEmbauches = ({ donneesDepartsEmbauches, donneesDepartsEmbau
       {selectedFrequency === wording.ANNUEL ?
         <GraphiqueDepartEmbauchesAnnuel
           donneesDepartsEmbauches={donneesDepartsEmbauches}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
         />
         :
-        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} />
+        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} />
       }
     </div>
   );

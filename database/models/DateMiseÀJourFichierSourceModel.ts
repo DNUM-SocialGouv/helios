@@ -23,9 +23,6 @@ export enum FichierSource {
   SIVSS = "sivss",
   SIICEA = "siicea",
 
-  // contrat
-  VIGIE_RH_CONTRAT = "vigierh_contrat",
-  VIGIE_RH_REF_TYPE_CONTRAT = "vigierh_ref_nature_contrat",
   // profession_filiere
   VIGIE_RH_PROFESSION_FILIERE = "vigierh_profession1",
   VIGIE_RH_REF_PROFESSION_FILIERE = "vigierh_ref_profession1",

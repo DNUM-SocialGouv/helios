@@ -5,6 +5,9 @@ import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../.
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../../test-helpers/testHelper";
 
 const { paths, wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
+const etabNom = "Test Entity";
 
 describe("La page établissement territorial médico-social - bloc autorisation et capacité", () => {
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths);
@@ -12,8 +15,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche le titre de la partie capacités, sa source et l’accès aux détails", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -33,8 +35,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche un tableau descriptif des capacités", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -76,8 +77,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it('affiche le contenu de l’info bulle des capacités après avoir cliqué sur le bouton "détails"', () => {
     // GIVEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -110,8 +110,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it('ferme l’info bulle des capacités après avoir cliqué sur le bouton "Fermer"', () => {
     // GIVEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -132,8 +131,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche le titre de la partie autorisations, sa source et l’accès aux détails", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -157,8 +155,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it('affiche le contenu de l’info bulle des autorisations après avoir cliqué sur le bouton "détails"', () => {
     // GIVEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -191,8 +188,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it('ferme l’info bulle des autorisations après avoir cliqué sur le bouton "Fermer"', () => {
     // GIVEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -213,8 +209,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche un lien pour chaque disciplines de l’établissement", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -231,8 +226,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche un lien pour chaque activités d’une discipline", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 
@@ -251,8 +245,7 @@ describe("La page établissement territorial médico-social - bloc autorisation 
   it("affiche le titre, les dates et les capacités pour chaque clientèle quand ces informations sont renseignées", () => {
     // WHEN
     renderFakeComponent(
-      <BlocAutorisationEtCapacitéMédicoSocial
-        établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
+      <BlocAutorisationEtCapacitéMédicoSocial etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} établissementTerritorialAutorisationsMédicoSocialViewModel={établissementTerritorialMédicoSocial.autorisationsViewModel}
       />
     );
 

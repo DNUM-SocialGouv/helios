@@ -10,7 +10,7 @@ import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
   constructor(
-    private readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
+    readonly établissementTerritorialAutorisations: ÉtablissementTerritorialMédicoSocial["autorisationsEtCapacités"],
     private wording: Wording
   ) { }
 
@@ -98,7 +98,7 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
     return StringFormater.formatDate(this.établissementTerritorialAutorisations.autorisations.dateMiseÀJourSource);
   }
 
-  public get capacitéParActivités(): ReactElement {
+  public capacitéParActivitésHistogramme(etabFiness: string, etabTitle: string): ReactElement {
     const [activités, capacités] = this.construisLesCapacitésParActivités();
 
     return (
@@ -107,9 +107,12 @@ export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {
           premierPlan: activité === this.wording.NOMBRE_TOTAL_DE_PLACE ? couleurDuFondHistogrammePrimaire : couleurDuFondHistogrammeSecondaire,
         }))}
         entêteLibellé={this.wording.ACTIVITÉ}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={this.wording.CAPACITÉ_INSTALLÉE}
         libellés={activités}
         libellésDeValeursManquantes={[]}
+        nomGraph={this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS}
         nombreDeLibelléTotal={capacités.length}
         valeurs={capacités}
       />

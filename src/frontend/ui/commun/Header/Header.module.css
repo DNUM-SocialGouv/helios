@@ -97,17 +97,15 @@
   width: auto;
 }
 
-.user-name{
+.user-name {
   font-weight: bold;
   font-size: 1rem;
   margin-left: 0.5rem;
-  height: 1rem;
+
 }
 
-.user-email{
+.user-email {
   color: gray;
   font-size: 0.8rem;
-  margin-left: 0.5rem;  
-  margin-bottom: 0.25rem;
-  height: 1rem;
+  margin-left: 0.5rem;
 }

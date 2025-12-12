@@ -271,6 +271,18 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: 60,
     },
+    dureeMoyenneSejourMedecine: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: 60,
+    },
+    dureeMoyenneSejourChirurgie: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: 60,
+    },
+    dureeMoyenneSejourObstetrique: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: 60,
+    },
     numéroFinessÉtablissementTerritorial: "123456789",
   };
 
@@ -289,7 +301,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     }, {
       année: 2023,
       mois: 2,
@@ -303,7 +317,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -318,7 +334,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -333,7 +351,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -348,7 +368,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -363,7 +385,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -378,7 +402,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -393,7 +419,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -408,7 +436,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -423,7 +453,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     },
     {
       année: 2023,
@@ -438,8 +470,11 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
-
-    }, {
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
+    },
+    {
       année: 2023,
       mois: 12,
       nombreJournéesPartiellesSsr: 100,
@@ -452,6 +487,9 @@ export class ÉtablissementTerritorialTestBuilder {
       nombreSéjoursPartielsObstétrique: 100,
       nombreJournéesPartiellesPsy: 100,
       nombreJournéesComplètesPsy: 100,
+      dureeMoyenneSejourMedecine: 100,
+      dureeMoyenneSejourChirurgie: 100,
+      dureeMoyenneSejourObstetrique: 100,
     }]
   };
 
@@ -946,7 +984,10 @@ export class ÉtablissementTerritorialTestBuilder {
     dureesCdd: [],
     dureesCddLibelles: [],
     motifsRuptureContrat: [],
-    motifsRuptureContratLibelles: []
+    motifsRuptureContratLibelles: [],
+    natureContratsAnnuel: [],
+    natureContratsTrimestriel: [],
+    echelleTemporelle: {}
   }
 
   public static créeUneIdentitéMédicoSocial(champsSurchargés?: Partial<ÉtablissementTerritorialIdentité>): ÉtablissementTerritorialIdentité {

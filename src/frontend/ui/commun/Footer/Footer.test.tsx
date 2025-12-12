@@ -81,6 +81,12 @@ describe("Le pied de page", () => {
     expect(donnéesPersonnelles).toHaveAttribute("href", paths.DONNÉES_PERSONNELLES);
   });
 
+  it("permet d’accéder directement à la FAQ de la page d’aide", () => {
+    renderFakeComponent(<Footer />);
+    const faq = screen.getByRole("link", { name: "FAQ" });
+    expect(faq).toHaveAttribute("href", `${paths.AIDE}?path=foire-aux-questions`);
+  });
+
   it("affiche un lien pour nous contacter", () => {
     // WHEN
     renderFakeComponent(<Footer />);

@@ -1,0 +1,34 @@
+.conteneur {
+  padding: 0;
+}
+
+.listeSections {
+  list-style: none;
+  padding-left: 0;
+}
+
+.carte {
+  border-radius: 0.5rem;
+}
+
+.iconesSection {
+  font-size: 3rem;
+}
+
+.carteRessource {
+  border-radius: 0.5rem;
+}
+
+.sectionLien {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.4rem !important;
+}
+
+.icone {
+  margin-right: 0.5rem;
+}
+
+.titreSection {
+  padding-bottom: 0 !important;
+}

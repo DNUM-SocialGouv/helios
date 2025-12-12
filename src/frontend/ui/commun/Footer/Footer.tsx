@@ -106,12 +106,17 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={`${paths.AIDE}?path=foire-aux-questions`} passHref>
+                FAQ
+              </Link>
+            </li>
+            <li className="fr-footer__bottom-item">
               <a className="fr-footer__bottom-link" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
                 {wording.NOUS_CONTACTER}
               </a>
             </li>
             <li className="fr-footer__bottom-item">
-              <span className="fr-footer__bottom-link"> v1.6.12</span>
+              <span className="fr-footer__bottom-link"> v1.7.3</span>
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">

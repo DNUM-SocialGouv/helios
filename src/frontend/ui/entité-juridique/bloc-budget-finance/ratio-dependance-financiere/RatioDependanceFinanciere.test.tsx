@@ -9,6 +9,8 @@ import { GraphiqueTest } from "../../../../test-helpers/GraphiqueTest";
 import { annéeEnCours, fakeFrontDependencies, renderFakeComponent } from "../../../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const etabFiness = "123456789";
+const etabTitle = "etabTitle";
 
 const autorisationsMockData = {
   budgetEtFinance: {
@@ -42,7 +44,7 @@ describe("RatioDependanceFinanciere", () => {
     ], autorisationsMockData);
 
     // WHEN
-    renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+    renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
     // THEN
     const fichierSource = graphiqueTest.abréviationFichierSource("ANCRE");
@@ -62,7 +64,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -72,7 +74,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // WHEN
       const détails = graphiqueTest.détail;
@@ -86,7 +88,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -108,7 +110,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("le graphique n'est pas affiché", () => {
       // WHEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
       // THEN
       const titre = graphiqueTest.titre(wording.RATIO_DEPENDANCE_FINANCIERE);
       expect(titre).not.toBeInTheDocument();
@@ -130,7 +132,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche la date de mise à jour du fichier ANCRE", () => {
       // WHEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // THEN
       const dateMiseAJour = graphiqueTest.dateMiseAJour("ANCRE", "01/10/2020");
@@ -139,7 +141,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -149,7 +151,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche le contenu de la transcription", () => {
       // GIVEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -163,7 +165,7 @@ describe("RatioDependanceFinanciere", () => {
 
     it("affiche la mise en exergue pour les années manquantes", () => {
       // WHEN
-      renderFakeComponent(<RatioDependanceFinanciere ratioDependanceFinanciereViewModel={viewModel} />);
+      renderFakeComponent(<RatioDependanceFinanciere etabFiness={etabFiness} etabTitle={etabTitle} ratioDependanceFinanciereViewModel={viewModel} />);
 
       // THEN
       const exergue = screen.getByText(

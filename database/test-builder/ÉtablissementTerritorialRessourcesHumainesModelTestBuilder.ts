@@ -1,3 +1,4 @@
+import { RessourcesHumainesEtablissementSanitaireModel } from "../models/RessourcesHumainesEtablissementSanitaireModel";
 import { RessourcesHumainesMédicoSocialModel } from "../models/RessourcesHumainesMédicoSocialModel";
 
 export class ÉtablissementTerritorialRessourcesHumainesModelTestBuilder {
@@ -19,5 +20,17 @@ export class ÉtablissementTerritorialRessourcesHumainesModelTestBuilder {
     ressourcesHumainesMédicoSocialModel.tauxDePrestationsExternes = champsSurchargés?.tauxDePrestationsExternes || 0.659;
     ressourcesHumainesMédicoSocialModel.tauxDeRotationDuPersonnel = champsSurchargés?.tauxDeRotationDuPersonnel || 0.667;
     return ressourcesHumainesMédicoSocialModel;
+  }
+
+  public static creeEtablissementSanitaire(champsSurchargés?: Partial<RessourcesHumainesEtablissementSanitaireModel>): RessourcesHumainesEtablissementSanitaireModel {
+    const ressourcesHumainesEtablissementSanitaireModel = new RessourcesHumainesEtablissementSanitaireModel();
+    ressourcesHumainesEtablissementSanitaireModel.annee = champsSurchargés?.annee || 2019;
+    ressourcesHumainesEtablissementSanitaireModel.numeroFinessEtablissementTerritorial = champsSurchargés?.numeroFinessEtablissementTerritorial || "590782553";
+    ressourcesHumainesEtablissementSanitaireModel.nombreEtpPm = champsSurchargés?.nombreEtpPm || 10;
+    ressourcesHumainesEtablissementSanitaireModel.nombreEtpPnm = champsSurchargés?.nombreEtpPnm || 20;
+    ressourcesHumainesEtablissementSanitaireModel.joursAbsenteismePm = champsSurchargés?.joursAbsenteismePm || 30;
+    ressourcesHumainesEtablissementSanitaireModel.joursAbsenteismePnm = champsSurchargés?.joursAbsenteismePnm || 40;
+    ressourcesHumainesEtablissementSanitaireModel.depensesInterimPm = champsSurchargés?.depensesInterimPm || 5000;
+    return ressourcesHumainesEtablissementSanitaireModel;
   }
 }

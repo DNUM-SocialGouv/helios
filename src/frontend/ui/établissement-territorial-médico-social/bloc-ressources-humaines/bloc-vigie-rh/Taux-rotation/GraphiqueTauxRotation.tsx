@@ -9,16 +9,19 @@ import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import GraphiqueTauxRotationTrimestriel from "./GraphiqueTauxRotationTrimestriel";
 
 type GraphiqueTauxRotationProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  nomGraph: string;
   donneesTauxRotation: TauxRotation[],
   donneesTauxRotationTrimestriels: TauxRotationTrimestriel[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
 }>;
 
-const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
+const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
 
   const { wording } = useDependencies();
 
-  const [selectedFrequency, setSelectedFrequency] = useState(wording.ANNUEL);
+  const [selectedFrequency, setSelectedFrequency] = useState(wording.TRIMESTRIEL);
 
   const handleFrequency = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFrequency(event.target.value);
@@ -27,15 +30,15 @@ const GraphiqueTauxRotation = ({ donneesTauxRotation, donneesTauxRotationTrimest
   return (
     <div >
       <FrequencyFilter
-        ListeFrquences={[wording.ANNUEL, wording.TRIMESTRIEL]}
+        ListeFrquences={[wording.TRIMESTRIEL, wording.ANNUEL]}
         handleFrequency={handleFrequency}
         identifiant='frequency-filter-taux-rotation'
         selectedFrequency={selectedFrequency}
       />
       {selectedFrequency === wording.ANNUEL ?
-        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} />
+        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
         :
-        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} />
+        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
       }
     </div>
   );

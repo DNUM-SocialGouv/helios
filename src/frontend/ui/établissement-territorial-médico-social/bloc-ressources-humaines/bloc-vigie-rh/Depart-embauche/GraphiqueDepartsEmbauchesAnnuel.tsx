@@ -19,10 +19,12 @@ import { Transcription } from "../../../../commun/Transcription/Transcription";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   donneesDepartsEmbauches: DepartEmbauche[]
 }>;
 
-const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
+const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
@@ -230,6 +232,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
   const options = {
     responsive: true,
     maintainAspectRatio: true,
+    animation: false,
     plugins: {
       datalabels: {
         color: "#000",
@@ -334,8 +337,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ donneesDepartsEmbauches }: GraphiqueDe
       <Transcription
         disabled={false}
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
         libellés={libelles}
+        nomGraph={wording.DEPARTS_EMBAUCHES}
         valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
       />
     </div>

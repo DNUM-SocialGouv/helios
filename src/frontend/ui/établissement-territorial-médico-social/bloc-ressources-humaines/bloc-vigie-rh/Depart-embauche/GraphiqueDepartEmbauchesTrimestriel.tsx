@@ -19,10 +19,12 @@ import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   donneesDepartsEmbauches: DepartEmbaucheTrimestrielViewModel[]
 }>;
 
-const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
+const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
@@ -225,6 +227,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
   const options = {
     responsive: true,
     maintainAspectRatio: true,
+    animation: false,
     plugins: {
       datalabels: {
         color: "#000",
@@ -356,8 +359,11 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ donneesDepartsEmbauches }: Graphi
       <Transcription
         disabled={false}
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
         libellés={libelles}
+        nomGraph={wording.DEPARTS_EMBAUCHES}
         valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
       />
     </div>

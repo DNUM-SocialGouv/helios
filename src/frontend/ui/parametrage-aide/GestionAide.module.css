@@ -1,0 +1,53 @@
+.conteneur {
+  padding: 3rem 0;
+}
+
+.encart {
+  border: 1px solid #e5e5f4;
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+
+.barreLaterale {
+  border: 1px solid #e5e5f4;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+}
+
+.actionsTable {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ordreRessource {
+  font-weight: 600;
+}
+
+.boutonIcone {
+  min-width: auto;
+}
+
+.messageInfo {
+  margin-top: 1.5rem;
+  color: var(--text-mention-grey);
+}
+
+.boutonAjouterSection {
+  margin-bottom: 1rem;
+}
+
+.rolesSection {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.8rem;
+}
+
+.rolesSection .fr-checkbox-group {
+  margin-bottom: 0;
+  flex: 1 1 0;
+}
+
+.rolesSection .fr-label {
+  font-size: 0.875rem;
+}

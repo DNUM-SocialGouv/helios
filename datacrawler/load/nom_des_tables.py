@@ -28,10 +28,6 @@ TABLE_ACTIVITE_SANITAIRE_MENSUEL = "activite_sanitaire_mensuel"
 TABLE_ACTIVITE_SANITAIRE_MENSUEL_EJ = "activite_sanitaire_mensuel_entite_juridique"
 TABLE_REF_TRANCHE_AGE = "vigierh_referentiel_tranche_age"
 TABLE_TRANCHE_AGE = "vigierh_pyramide"
-# VIGIE_RH contrat
-TABLE_CONTRAT = "vigierh_contrat"
-TABLE_REF_TYPE_CONTRAT = "vigierh_ref_type_contrat"
-
 # VIGIE_RH profession_filiere
 TABLE_PROFESSION_FILIERE = "vigierh_profession_filiere"
 TABLE_REF_PROFESSION_FILIERE = "vigierh_ref_profession_filiere"
@@ -59,6 +55,11 @@ TABLE_REF_CATEGORIES = "referentiel_categories"
 TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
 TABLE_VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
 
+# nature contrats
+TABLE_VIGIE_RH_REF_NATURE_CONTRATS = "vigierh_referentiel_nature_contrat"
+TABLE_VIGIE_RH_NATURE_CONTRATS = "vigierh_nature_contrats_annuel"
+TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
@@ -80,15 +81,14 @@ class FichierSource(Enum):
     SIREC = "sirec"
     SIVSS = "sivss"
     SIICEA = "siicea"
-    # contrat
-    VIGIE_RH_CONTRAT = "vigierh_contrat"
-    VIGIE_RH_REF_TYPE_CONTRAT = "vigierh_ref_nature_contrat"
     # profession_filiere
     VIGIE_RH_PROFESSION_FILIERE = "vigierh_profession1"
     VIGIE_RH_REF_PROFESSION_FILIERE = "vigierh_ref_profession1"
     # profession_groupe
     VIGIE_RH_PROFESSION_GROUPE = "vigierh_profession2"
     VIGIE_RH_REF_PROFESSION_GROUPE = "vigierh_ref_profession2"
+    VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE = "vigierh_table_passage_professions_1_2"
+
     # tranches des ages
     VIGIE_RH_REF_TRANCHE_AGE = "vigierh_ref_tranche_age"
     VIGIE_RH_PYRAMIDE = "vigierh_pyramide"
@@ -101,3 +101,7 @@ class FichierSource(Enum):
     # duree cdd
     VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
     VIGIE_RH_REF_DUREE_CDD = "vigierh_ref_duree_cdd"
+    # cdi cdd
+    VIGIE_RH_CDI_CDD = "vigierh_nature_contrats_annuel"
+    VIGIE_RH_CDI_CDD_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+    VIGIE_RH_REF_CDI_CDD = "vigierh_ref_nature_contrat"

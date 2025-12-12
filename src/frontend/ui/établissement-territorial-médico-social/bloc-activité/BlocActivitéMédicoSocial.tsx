@@ -14,6 +14,8 @@ import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from "../Inf
 import { ContenuTauxRéalisationActivité } from "../InfoBulle/ContenuTauxRéalisationActivité";
 
 type BlocActivitéMédicoSocialProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   categorie: string;
   établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
   opnedBloc?: boolean;
@@ -59,7 +61,7 @@ const GestionnaireListeIndicateurs = ({
 
 }
 
-export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritorialActivitéMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocActivitéMédicoSocialProps) => {
+export const BlocActivitéMédicoSocial = ({ etabFiness, etabTitle, categorie, établissementTerritorialActivitéMédicoSocialViewModel, opnedBloc, toggelBlocs }: BlocActivitéMédicoSocialProps) => {
   const { wording } = useDependencies();
   const estEHPAD = categorie === "500 - Etablissement d'hébergement pour personnes âgées dépendantes";
 
@@ -71,8 +73,8 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_ACTIVITÉ} toggelBlocs={toggelBlocs}>
       <GestionnaireListeIndicateurs estEHPAD={estEHPAD} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {estEHPAD && <IndicateursOccupationEHPAD établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
-        {!estEHPAD ? <IndicateursOccupationESMS établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} /> : <></>}
+        {estEHPAD && <IndicateursOccupationEHPAD etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
+        {estEHPAD ? <></> : <IndicateursOccupationESMS etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
         {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
@@ -86,7 +88,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
             nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
             source={wording.TDB_PERF}
           >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivité}
+            {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivitéHistrogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée && établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleAutorisé ? (
@@ -102,7 +104,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
             nomDeLIndicateur={wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
-            {établissementTerritorialActivitéMédicoSocialViewModel.fileActivePersonnesAccompagnées}
+            {établissementTerritorialActivitéMédicoSocialViewModel.fileActivePersonnesAccompagnéesHistrogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé ? (
@@ -118,7 +120,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
             nomDeLIndicateur={wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES}
             source={wording.TDB_PERF}
           >
-            {établissementTerritorialActivitéMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnées}
+            {établissementTerritorialActivitéMédicoSocialViewModel.nombreMoyenJournéesAbsencePersonnesAccompagnéesHistrogramme(etabFiness, etabTitle)}
           </IndicateurGraphique>
         ) : <></>}
 
@@ -134,7 +136,7 @@ export const BlocActivitéMédicoSocial = ({ categorie, établissementTerritoria
           nomDeLIndicateur={wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES}
           source={wording.TDB_PERF}
         >
-          {établissementTerritorialActivitéMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSorties}
+          {établissementTerritorialActivitéMédicoSocialViewModel.duréeMoyenneSéjourAccompagnementPersonnesSortiesHistrogramme(etabFiness, etabTitle)}
         </IndicateurGraphique>
         ) : <></>}
       </ul>

@@ -93,6 +93,9 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         nombreSéjoursPartielsObstétrique: activite.nombreSéjoursPartielsObstétrique,
         nombreJournéesComplètesPsy: activite.nombreJournéesCompletesPsy,
         nombreJournéesPartiellesPsy: activite.nombreJournéesPartiellesPsy,
+        dureeMoyenneSejourMedecine: activite.dureeMoyenneSejourMedecine,
+        dureeMoyenneSejourChirurgie: activite.dureeMoyenneSejourChirurgie,
+        dureeMoyenneSejourObstetrique: activite.dureeMoyenneSejourObstetrique,
       }
     })
 
@@ -571,6 +574,19 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         dateMiseÀJourSource: dateDeMiseAJourAnnSaeModel.dernièreMiseÀJour,
         value: établissementTerritorialModel.nombreJourneesUsld,
       },
+      dureeMoyenneSejourMedecine: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourMedecine,
+      },
+      dureeMoyenneSejourChirurgie: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourChirurgie,
+      },
+      dureeMoyenneSejourObstetrique: {
+        dateMiseÀJourSource: dateDeMiseAJourMenPmsiAnnuelModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.dureeMoyenneSejourObstetrique,
+      },
+
       numéroFinessÉtablissementTerritorial: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
     }));
   }
@@ -1058,7 +1074,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   async chargeBudgetFinance(numéroFinessEtablissementTerritorial: string): Promise<EntitéJuridiqueBudgetFinance[]> {
     const budgetFinance = await (await this.orm).getRepository(BudgetEtFinancesSanitaireModel).find({
-      where: { numéroFinessEtablissementTerritorial },
+      where: { numéroFinessEtablissementTerritorial }, order: { année: "ASC" }
     });
 
     const dateMisAJour = (await (await this.orm)

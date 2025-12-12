@@ -85,35 +85,64 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
         <ToggelMultipleBlocs allFalse={allFalse} allTrue={allTrue} setAllValue={setAllValue} statusBlocs={statusBlocs} />
 
         <BlocAutorisationEtCapacitéSanitaire
+          etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabNom={établissementTerritorialSanitaireViewModel.identitéViewModel.nomDeLÉtablissementTerritorial}
+          etabTitle={établissementTerritorialSanitaireViewModel.titre}
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)} établissementTerritorialSanitaireAutorisationsViewModel={établissementTerritorialSanitaireViewModel.autorisationsViewModel}
         />
-        <SeparatorHorizontal></SeparatorHorizontal>
-        <BlocActivitéSanitaire activitéMensuelleViewModel={activitéMensuelleViewModel}
-          opnedBloc={statusBlocs[1]} toggelBlocs={() => toggelBlocs(1)} établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel} />
+        {!statusBlocs[0] && <SeparatorHorizontal></SeparatorHorizontal>}
+        <BlocActivitéSanitaire
+          activitéMensuelleViewModel={activitéMensuelleViewModel}
+          etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialSanitaireViewModel.titre}
+          opnedBloc={statusBlocs[1]}
+          toggelBlocs={() => toggelBlocs(1)}
+          établissementTerritorialSanitaireActivitéViewModel={établissementTerritorialSanitaireViewModel.activitésViewModel}
+        />
         {établissementTerritorialSanitaireViewModel.blocRhDisponible() &&
           <>
             <SeparatorHorizontal></SeparatorHorizontal>
-            <BlocRessourcesHumainesEtablissementSanitaire etSanRhviewModel={établissementTerritorialSanitaireViewModel.ressourcesHumainesViewModel}
-              openedBloc={statusBlocs[2]} toggleBlocs={() => toggelBlocs(2)} />
+            <BlocRessourcesHumainesEtablissementSanitaire
+              etSanRhviewModel={établissementTerritorialSanitaireViewModel.ressourcesHumainesViewModel}
+              etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+              etabTitle={établissementTerritorialSanitaireViewModel.titre}
+              openedBloc={statusBlocs[2]}
+              toggleBlocs={() => toggelBlocs(2)}
+            />
           </>}
         <SeparatorHorizontal></SeparatorHorizontal>
         {établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
-              toggelBlocs={() => toggelBlocs(3)} type="ET_PNL" />
+            <BlocBudgetFinance
+              entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel}
+              etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+              etabTitle={établissementTerritorialSanitaireViewModel.titre}
+              opnedBloc={statusBlocs[3]}
+              toggelBlocs={() => toggelBlocs(3)}
+              type="ET_PNL" />
             <SeparatorHorizontal></SeparatorHorizontal>
           </>}
 
         {!établissementTerritorialSanitaireViewModel.appartientAEtablissementsSantePrivesIntérêtsCollectif &&
           <>
-            <BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel} opnedBloc={statusBlocs[3]}
-              toggelBlocs={() => toggelBlocs(3)} type="ET_Autres" />
+            <BlocBudgetFinance
+              entitéJuridiqueBudgetFinanceViewModel={établissementTerritorialSanitaireViewModel.entitéJuridiqueBudgetFinanceViewModel}
+              etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+              etabTitle={établissementTerritorialSanitaireViewModel.titre}
+              opnedBloc={statusBlocs[3]}
+              toggelBlocs={() => toggelBlocs(3)}
+              type="ET_Autres" />
             <SeparatorHorizontal></SeparatorHorizontal>
           </>}
 
-        <BlocQualite etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
-          opnedBloc={statusBlocs[4]} toggelBlocs={() => toggelBlocs(4)} />
+        <BlocQualite
+          etabFiness={établissementTerritorialSanitaireViewModel.identitéViewModel.numéroFinessÉtablissementTerritorial}
+          etabTitle={établissementTerritorialSanitaireViewModel.titre}
+          etablissementTerritorialQualiteSanitairelViewModel={établissementTerritorialSanitaireViewModel.qualiteViewModel}
+          opnedBloc={statusBlocs[4]}
+          toggelBlocs={() => toggelBlocs(4)}
+        />
 
       </div>
     </main >

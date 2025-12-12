@@ -5,10 +5,12 @@ import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizon
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 
 type GraphiqueNombreDeJourneesUsldProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
   nombreDeJourneesUsldViewModel: NombreDeJourneesUsldViewModel;
   estEntitéJuridique?: boolean;
 }>;
-export const GraphiqueNombreDeJourneesUsld = ({ nombreDeJourneesUsldViewModel, estEntitéJuridique = false }: GraphiqueNombreDeJourneesUsldProps) => {
+export const GraphiqueNombreDeJourneesUsld = ({ etabTitle, etabFiness, nombreDeJourneesUsldViewModel, estEntitéJuridique = false }: GraphiqueNombreDeJourneesUsldProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -21,16 +23,20 @@ export const GraphiqueNombreDeJourneesUsld = ({ nombreDeJourneesUsldViewModel, e
         />
       }
       dateDeMiseÀJour={nombreDeJourneesUsldViewModel.dateMiseAJour}
-      identifiant="activite-2"
+      identifiant="activite-3"
       nomDeLIndicateur={wording.NOMBRE_DE_JOURNEES_USLD}
       source={wording.SAE}
     >
       <HistogrammeHorizontal
+        cacheLesValeursBasse={true}
         couleursDeLHistogramme={nombreDeJourneesUsldViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={wording.NOMBRE_DE_JOURNEES_USLD}
         libellés={nombreDeJourneesUsldViewModel.libellés}
         libellésDeValeursManquantes={nombreDeJourneesUsldViewModel.libellesDeValeursManquantes}
+        nomGraph={wording.NOMBRE_DE_JOURNEES_USLD}
         nombreDeLibelléTotal={nombreDeJourneesUsldViewModel.nombreDeLibelléTotal}
         valeurs={nombreDeJourneesUsldViewModel.valeurs}
       />

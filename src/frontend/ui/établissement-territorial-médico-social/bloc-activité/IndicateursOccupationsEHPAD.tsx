@@ -7,62 +7,64 @@ import { ContenuTauxOccupationHébergementTemporaire } from "../InfoBulle/Conten
 
 
 type IndicateursOccupationEHPADProps = Readonly<{
-    établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
+  etabFiness: string;
+  etabTitle: string;
+  établissementTerritorialActivitéMédicoSocialViewModel: ÉtablissementTerritorialMédicoSocialActivitéViewModel;
 }>;
 
-export const IndicateursOccupationEHPAD = ({ établissementTerritorialActivitéMédicoSocialViewModel }: IndicateursOccupationEHPADProps) => {
-    const { wording } = useDependencies();
+export const IndicateursOccupationEHPAD = ({ etabFiness, etabTitle, établissementTerritorialActivitéMédicoSocialViewModel }: IndicateursOccupationEHPADProps) => {
+  const { wording } = useDependencies();
 
-    return (
-        <>
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé ? (
-                <IndicateurGraphique
-                    contenuInfoBulle={
-                        <ContenuTauxOccupationHébergementPermanent
-                            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                            source={wording.CNSA}
-                        />
-                    }
-                    dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                    identifiant="activite-0"
-                    nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
-                    source={wording.CNSA}
-                >
-                    {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanent}
-                </IndicateurGraphique>
-            ) : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé ? (
-                <IndicateurGraphique
-                    contenuInfoBulle={
-                        <ContenuTauxOccupationHébergementTemporaire
-                            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                            source={wording.CNSA}
-                        />
-                    }
-                    dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                    identifiant="activite-1"
-                    nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
-                    source={wording.CNSA}
-                >
-                    {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementTemporaire}
-                </IndicateurGraphique>
-            ) : <></>}
-            {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé ? (
-                <IndicateurGraphique
-                    contenuInfoBulle={
-                        <ContenuTauxOccupationAccueilDeJour
-                            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                            source={wording.CNSA}
-                        />
-                    }
-                    dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
-                    identifiant="activite-2"
-                    nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
-                    source={wording.CNSA}
-                >
-                    {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJour}
-                </IndicateurGraphique>
-            ) : <></>}
-        </>
-    );
+  return (
+    <>
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementPermanentEstIlAutorisé ? (
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuTauxOccupationHébergementPermanent
+              dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+          identifiant="activite-0"
+          nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_PERMANENT}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementPermanentHistogramme(etabFiness, etabTitle)}
+        </IndicateurGraphique>
+      ) : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationHébergementTemporaireEstIlAutorisé ? (
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuTauxOccupationHébergementTemporaire
+              dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+          identifiant="activite-1"
+          nomDeLIndicateur={wording.TAUX_OCCUPATION_HÉBERGEMENT_TEMPORAIRE}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationHébergementTemporaireHistogramme(etabFiness, etabTitle)}
+        </IndicateurGraphique>
+      ) : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationAccueilDeJourEstIlAutorisé ? (
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuTauxOccupationAccueilDeJour
+              dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourCNSA}
+          identifiant="activite-2"
+          nomDeLIndicateur={wording.TAUX_OCCUPATION_ACCUEIL_DE_JOUR}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJourHistogramme(etabFiness, etabTitle)}
+        </IndicateurGraphique>
+      ) : <></>}
+    </>
+  );
 };

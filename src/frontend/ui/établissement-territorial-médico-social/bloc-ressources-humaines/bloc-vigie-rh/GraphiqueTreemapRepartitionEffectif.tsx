@@ -5,12 +5,18 @@ import { TreemapController, TreemapElement } from "chartjs-chart-treemap";
 import React, { useMemo } from "react";
 import { Chart } from "react-chartjs-2";
 
+import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { StringFormater } from "../../../commun/StringFormater";
+import { Transcription } from "../../../commun/Transcription/Transcription";
+
 // Enregistrer treemap + plugins une seule fois (au chargement du module)
 ChartJS.register(TreemapController, TreemapElement, Tooltip, Legend);
 
 export type TreemapItem = Readonly<{ label: string; value: number }>;
 
 type Props = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   items: TreemapItem[];
   height?: number;
   /** Optionnel : couleurs imposées par le parent (ordre des filières) */
@@ -20,21 +26,17 @@ type Props = Readonly<{
 /* -------------------------------
  * Constantes & utilitaires
  * ----------------------------- */
-const PALETTE = ["#E6D875", "#2CA49A", "#7A8EAB", "#2E4560"];
+const PALETTE = ["#E3D45C", "#D8A47E", "#FF8E68", "#E8C882"];
 const FONT_FAMILY = "Marianne, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif";
-const FORMAT_PCT_FR = new Intl.NumberFormat("fr-FR", {
-  minimumFractionDigits: 1,
-  maximumFractionDigits: 1,
-});
 const MIN_TILE_PERCENT_TO_DRAW_LABEL = 3; // < 3% : on n’écrit pas, on laisse le tooltip
 
 /** Contraste texte/fond (YIQ) pour rester lisible sur toutes les couleurs. */
 function pickTextColor(hex: string): string {
   const c = (hex || "").replace("#", "");
   if (c.length !== 6) return "#111";
-  const r = parseInt(c.slice(0, 2), 16);
-  const g = parseInt(c.slice(2, 4), 16);
-  const b = parseInt(c.slice(4, 6), 16);
+  const r = Number.parseInt(c.slice(0, 2), 16);
+  const g = Number.parseInt(c.slice(2, 4), 16);
+  const b = Number.parseInt(c.slice(4, 6), 16);
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 150 ? "#111" : "#fff";
 }
@@ -173,7 +175,7 @@ const treemapWrapLabelsPlugin = {
     if (pct < MIN_TILE_PERCENT_TO_DRAW_LABEL) return;
 
     // Exemple : "Médical (30,5%)"
-    const label = `${name} (${FORMAT_PCT_FR.format(pct)}%)`;
+    const label = `${StringFormater.round(pct, 0)}%`;
 
     // Couleur de texte : contraste auto par rapport au fond
     const bg = el?.options?.backgroundColor;
@@ -195,26 +197,31 @@ const treemapWrapLabelsPlugin = {
    * en respectant les marges et sans dépasser la hauteur disponible.
    */
   drawLines(ctx: CanvasRenderingContext2D, lines: string[], dimensions: { x: number; y: number; w: number; h: number; padding: number; lineHeight: number }) {
-    const { x, y, h, padding, lineHeight } = dimensions;
+    const { x, y, w, h, padding, lineHeight } = dimensions;
 
     // Position de la 1ʳᵉ ligne : un interligne sous le padding supérieur
     let ty = y + padding + lineHeight;
+    const textX = x + w - padding;
+    const previousAlign = ctx.textAlign;
+    ctx.textAlign = "right";
 
     for (const line of lines) {
       // N’écrit plus si on dépasse le bas de la tuile
       if (ty > y + h - padding) break;
 
       // Texte aligné coin haut-gauche avec la marge
-      ctx.fillText(line, x + padding, ty);
+      ctx.fillText(line, textX, ty);
       ty += lineHeight;
     }
+    ctx.textAlign = previousAlign;
   },
 };
 
 /* --------------------------------------------
  * Composant principal
  * ------------------------------------------ */
-export default function GraphiqueTreemapRepartitionEffectif({ items, height = 360, couleursFilieres }: Props) {
+export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTitle, items, height = 420, couleursFilieres }: Props) {
+  const { wording } = useDependencies();
   // Normalisation des données + choix des couleurs (parent > palette)
   const dataNorm = useMemo(
     () =>
@@ -235,7 +242,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 36
       // le contrôleur treemap attend un arbre d’objets : on y met name + v
       tree: dataNorm.map((d) => ({ name: d.label, v: d.value, _idx: d._idx })),
       key: "v", // valeur numérique prise en compte pour la surface
-      spacing: 2,
+      spacing: 0,
       borderWidth: 1,
       borderColor: "#fff",
       // On récupère la couleur depuis l’index d’origine
@@ -254,6 +261,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 36
     () => ({
       responsive: true,
       maintainAspectRatio: false,
+      animation: false,
       plugins: {
         legend: { display: false },
         // Tooltip entièrement contrôlé pour ne pas afficher la clé 'v' par défaut
@@ -268,7 +276,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 36
               const d = ti.raw?._data;
               const v = Number(ti.raw?.v ?? 0);
               const pct = total > 0 ? (v / total) * 100 : 0;
-              return d?.name ? `${d.name} (${pct.toFixed(1)}%)` : `(${pct.toFixed(1)}%)`;
+              return d?.name ? `${d.name} ` : `(${pct.toFixed(1)}%)`;
             },
           },
         },
@@ -288,9 +296,51 @@ export default function GraphiqueTreemapRepartitionEffectif({ items, height = 36
     [total],
   );
 
+  const legendItems = useMemo(() => dataNorm.map(({ label, color }) => ({ label, color })), [dataNorm]);
+
+  const transcriptionIdentifiants = useMemo(() => [wording.EFFECTIFS, wording.POURCENTAGE], [wording]);
+  const transcriptionLibellés = useMemo(() => dataNorm.map(({ label }) => label), [dataNorm]);
+  const transcriptionValeurs = useMemo(
+    () => [
+      dataNorm.map(({ value }) => value),
+      dataNorm.map(({ value }) => {
+        const pct = total > 0 ? (value / total) * 100 : 0;
+        return `${StringFormater.round(pct, 0)}%`;
+      }),
+    ],
+    [dataNorm, total],
+  );
+
   return (
-    <div style={{ height }}>
-      <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} type="treemap" />
-    </div>
+    <>
+      <div style={{ height, display: "flex", flexDirection: "column" }}>
+
+        <div style={{ flex: 1, minHeight: 0, maxWidth: height, width: "100%", alignSelf: "flex-start" }}>
+          <Chart data={{ datasets: [dataset as any] }} options={options as any} plugins={[treemapWrapLabelsPlugin]} style={{ height: "100%" }} type="treemap" />
+        </div>
+        {legendItems.length ? (
+          <div style={{ marginTop: "1rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+              {legendItems.map((entry) => (
+                <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
+                  <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", backgroundColor: entry.color }} />
+                  <span>{entry.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <Transcription
+        disabled={!transcriptionLibellés.length}
+        entêteLibellé={wording.VIGIE_RH_CATEGORIE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        identifiants={transcriptionIdentifiants}
+        libellés={transcriptionLibellés}
+        nomGraph={wording.REPARTITION_EFFECTIFS}
+        valeurs={transcriptionValeurs}
+      />
+    </>
   );
 }

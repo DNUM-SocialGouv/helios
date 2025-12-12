@@ -6,6 +6,8 @@ import { HistogrammeVertical } from "../../../commun/Graphique/HistogrammeVertic
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 
 type RationDependanceFinanciereProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
   ratioDependanceFinanciereViewModel: RatioDependanceFinanciereViewModel;
 }>;
 
@@ -64,7 +66,7 @@ export function ContenuRatioDependanceFinancière(props: Readonly<{ dateDeMiseÀ
   );
 }
 
-export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }: RationDependanceFinanciereProps): ReactElement {
+export function RatioDependanceFinanciere({ etabFiness, etabTitle, ratioDependanceFinanciereViewModel }: RationDependanceFinanciereProps): ReactElement {
   const { wording } = useDependencies();
   const infoBulleContenu = <ContenuRatioDependanceFinancière dateDeMiseÀJour={ratioDependanceFinanciereViewModel.dateMiseÀJour} source={wording.ANCRE} />;
   const sourceName = wording.ANCRE;
@@ -84,9 +86,12 @@ export function RatioDependanceFinanciere({ ratioDependanceFinanciereViewModel }
         couleurDesLibelles={ratioDependanceFinanciereViewModel.construisLesCouleursDesLibelles()}
         couleursDeLHistogramme={ratioDependanceFinanciereViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
         identifiant={wording.RATIO_DEPENDANCE_FINANCIERE}
         isVigieRh={false}
         libellés={ratioDependanceFinanciereViewModel.années}
+        nomGraph={wording.RATIO_DEPENDANCE_FINANCIERE}
         taillePoliceTicks={ratioDependanceFinanciereViewModel.construisLesLibellésDesTicks()}
         valeurs={ratioDependanceFinanciereViewModel.valeurs}
       />

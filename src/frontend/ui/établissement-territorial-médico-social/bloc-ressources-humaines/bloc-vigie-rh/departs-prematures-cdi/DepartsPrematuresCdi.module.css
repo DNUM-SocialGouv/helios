@@ -1,0 +1,32 @@
+.table {
+    width: 70%;
+}
+
+.table thead th {
+    background-color: rgba(255,249,235,255);
+    font-weight: 700;
+}
+
+.highlightRow {
+    background-color: #e2cf58 !important;
+}
+
+.highlightRow td {
+    font-weight: 700;
+}
+
+.row {
+    background-color: #fffaf0 !important;
+}
+
+.table td,
+.table th {
+    border-color: transparent;
+    text-align: left;
+    padding: 10px;
+}
+
+.partial-data-note {
+    color: var(--text-title-grey);
+    margin: .5rem 0 0;
+}

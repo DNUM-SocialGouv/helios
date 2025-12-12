@@ -20,7 +20,7 @@ export default function Router({ profileValue, profileLabel, profileCode, profil
 
     useBreadcrumb([
         {
-            label: wording.PARAMETRAGE_TITRE,
+            label: wording.PARAMETRAGE_AUTORISATIONS_TITRE,
             path: paths.PROFILES_LIST,
         },
         {

@@ -121,7 +121,6 @@ export interface Wording {
 
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string;
-
   readonly TITRE_TRANSCRIPTION: string;
   readonly ANNÉE: string;
   readonly MOIS: string;
@@ -133,6 +132,9 @@ export interface Wording {
   readonly AUCUNE_DONNÉE_RENSEIGNÉE_INDICATEURS: string;
   readonly VALEURS_INFERIEUR_A_5_CACHÉS: string;
   readonly PLACEHOLDER_VALEUR_INFERIEUR_A_5: string;
+  readonly DOWNLOAD_EXCEL: string;
+  readonly DONNEES_ARRETEES: string;
+
 
   // Catégorisation
   readonly PRIVÉ_LUCRATIF: string;
@@ -180,6 +182,7 @@ export interface Wording {
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
+  readonly MOYENNE_DE_SEJOUR_MCO: string;
   readonly TOTAL_HOSPITALISATION_MÉDECINE: string;
   readonly TOTAL_HOSPITALISATION_CHIRURGIE: string;
   readonly TOTAL_HOSPITALISATION_OBSTÉTRIQUE: string;
@@ -189,6 +192,9 @@ export interface Wording {
   readonly HOSPITALISATION_COMPLÈTE_CHIRURGIE: string;
   readonly HOSPITALISATION_PARTIELLE_OBSTÉTRIQUE: string;
   readonly HOSPITALISATION_COMPLÈTE_OBSTÉTRIQUE: string;
+  readonly DUREE_MOYENNE_SEJOUR_MEDECINE: string;
+  readonly DUREE_MOYENNE_SEJOUR_CHIRURGIE: string;
+  readonly DUREE_MOYENNE_SEJOUR_OBSTETRIQUE: string;
   readonly TOTAL_HOSPITALISATION_SSR: string;
   readonly TOTAL_HOSPITALISATION_PSY: string;
   readonly NOMBRE_DE_JOURNÉES_PSY_ET_SSR: string;
@@ -209,6 +215,7 @@ export interface Wording {
   readonly AUTORISATIONS_MS: string;
   readonly AUTORISATIONS_ACTIVITES: string;
   readonly DATE_D_AUTORISATION: string;
+  readonly DATE_D_AUTORISATION_KEY: string;
   readonly DATE_DE_FIN: string;
   readonly DATE_DE_MISE_EN_OEUVRE: string;
   readonly MISE_À_JOUR_AUTORISATION: string;
@@ -266,7 +273,7 @@ export interface Wording {
   readonly DATE_D_EFFET_CPOM: ReactElement;
   readonly DATE_DE_FIN_CPOM: ReactElement;
   readonly NUMÉRO_CPOM: ReactElement;
-  readonly NUMÉRO_ARHGOS: string;
+  readonly NUMÉRO_AUTORISATION: string;
   readonly ACTIVITÉS: string;
   readonly CHIRURGIE: string;
   readonly MÉDECINE: string;
@@ -276,6 +283,7 @@ export interface Wording {
   readonly PSYCHIATRIE: string;
   readonly LITS: string;
   readonly PLACES: string;
+  readonly BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES: string;
 
   // Bloc budget et finances
   readonly TITRE_BLOC_BUDGET_ET_FINANCES: string;
@@ -381,6 +389,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly SI_AUTORISATIONS_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -397,6 +406,7 @@ export interface Wording {
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
   readonly VIGIE_RH: ReactElement;
+  readonly SI_AUTORISATIONS: ReactElement;
 
 
   // Inaccessible
@@ -524,6 +534,8 @@ export interface Wording {
 
   // Parametrage
   readonly PARAMETRAGE_TITRE: string;
+  readonly PARAMETRAGE_AUTORISATIONS_TITRE: string;
+  readonly PARAMETRAGE_AIDE_TITRE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;
@@ -593,7 +605,9 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string;
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
+  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string;
   readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
@@ -607,6 +621,7 @@ export interface Wording {
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
+  readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly VIGIE_RH_CATEGORIE: string;
   readonly MOIS_ANNEES: string;
@@ -618,12 +633,90 @@ export interface Wording {
   readonly MOYENNE_REF: string;
   readonly TAUX_ROTATION: string;
   readonly REPARTITION_EFFECTIFS: string;
+  readonly SELECTIONNER_UNE_FILIERE: string;
   readonly TAUX_ROTATION_REFERENCE: string;
   readonly TOP_TAUX_ROTATION_TITLE: string;
+
+  // Paramétrage aide
+  readonly PARAMETRAGE_AIDE_DESCRIPTION: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_SUCCES: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_ERREUR: string;
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_CONFIRMER_SUPPRESSION_SECTION: string;
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_OBLIGATOIRE: string;
+  readonly PARAMETRAGE_AIDE_ALERTE_NOM_SECTION_INVALIDE: string;
+  readonly PARAMETRAGE_AIDE_ALERTE_SECTION_EXISTANTE: string;
+  readonly PARAMETRAGE_AIDE_ALERTE_SUPPRESSION_SECTION: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_SECTION: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER_MODIFICATIONS: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_ENREGISTRER: string;
+  readonly PARAMETRAGE_AIDE_ETAT_ENREGISTREMENT: string;
+  readonly PARAMETRAGE_AIDE_NAV_SECTIONS: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_SECTION: string;
+  readonly PARAMETRAGE_AIDE_ARIA_SUPPRIMER_SECTION: (titre: string) => string;
+  readonly PARAMETRAGE_AIDE_BOUTON_FERMER: string;
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_SECTION: string;
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_SECTION: string;
+  readonly PARAMETRAGE_AIDE_LABEL_ICONE_SECTION: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_ANNULER: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER: string;
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_AJOUT: string;
+  readonly PARAMETRAGE_AIDE_TITRE_MODAL_RESSOURCE_EDITION: string;
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_LABEL_TYPE_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_OPTION_DOCUMENT: string;
+  readonly PARAMETRAGE_AIDE_OPTION_VIDEO: string;
+  readonly PARAMETRAGE_AIDE_OPTION_LIEN: string;
+  readonly PARAMETRAGE_AIDE_LABEL_LIEN_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_LABEL_DATE_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_LABEL_NOM_FICHIER_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_AUTRE: string;
+  readonly PARAMETRAGE_AIDE_LABEL_DESCRIPTION: string;
+  readonly PARAMETRAGE_AIDE_LEGENDE_ROLES: string;
+  readonly PARAMETRAGE_AIDE_LABEL_ORDRE_AFFICHAGE: string;
+  readonly PARAMETRAGE_AIDE_PLACEHOLDER_ORDRE: string;
+  readonly PARAMETRAGE_AIDE_TITRE_RESSOURCES: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_AJOUTER_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_SECTION_SANS_PARAMETRAGE: string;
+  readonly PARAMETRAGE_AIDE_MESSAGE_AUCUNE_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_TABLE_TITRE: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_ORDRE: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_NOM: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_TYPE: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_LIEN: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_DATE: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_FICHIER: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_UTILISATEUR: string;
+  readonly PARAMETRAGE_AIDE_COLONNE_ACTIONS: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_MONTER_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string;
+  readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string;
+
+  // Aide
+  readonly AIDE_TITRE_PAGE: string;
+  readonly AIDE_MESSAGE_SECTIONS_VIDES: string;
+  readonly AIDE_MESSAGE_CONTENU_INDISPONIBLE: string;
+  readonly AIDE_TITRES_RESSOURCES: Readonly<Record<"document" | "video" | "lien", string>>;
+  readonly AIDE_INFO_DATE: (date: string) => string;
+  readonly AIDE_INFO_NOM_FICHIER: (nom: string) => string;
+  readonly AIDE_INFO_SEPARATEUR: string;
+
   readonly DUREE_CDD: string;
   readonly DUREE_CDD_REF: string;
   readonly MOTIFS_RUPTURE_CONTRAT: string;
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
+  readonly NATURE_CONTRATS: string;
+  readonly DEPARTS_PREMATURES_CDI: string;
+  readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string;
+
+  readonly SELECTIONNER_UNE_ACTIVITE: string;
+  readonly SOURCE: string;
+  readonly INDICATEURS_CLES_ACTUELS: string;
+  readonly DECLARATION_SOCIALE_NOMINATIVE: string;
+
+
 }

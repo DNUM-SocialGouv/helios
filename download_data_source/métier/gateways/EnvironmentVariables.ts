@@ -26,4 +26,6 @@ export interface EnvironmentVariables {
   readonly HAPI_SFTP_PORT: string;
   readonly HAPI_SFTP_PASSWORD: string;
   readonly HAPI_SFTP_USERNAME: string;
+
+  readonly VIGIE_RH_DATA_PATH: string;
 }

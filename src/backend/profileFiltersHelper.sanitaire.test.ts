@@ -55,6 +55,9 @@ function getActiviteSanitaire(): ÉtablissementTerritorialSanitaireActivité {
     nombreSéjoursPartielsMédecine: { dateMiseÀJourSource: "dateMajNbJourPartMed", value: 10 },
     nombreSéjoursPartielsObstétrique: { dateMiseÀJourSource: "dateMajNbSejPartObs", value: 11 },
     nombreJourneesUsld: { dateMiseÀJourSource: "dateMajNbJourUsld", value: 11 },
+    dureeMoyenneSejourMedecine: { dateMiseÀJourSource: "dateMajDurrSejMed", value: 11 },
+    dureeMoyenneSejourChirurgie: { dateMiseÀJourSource: "dateMajDurrSejChir", value: 11 },
+    dureeMoyenneSejourObstetrique: { dateMiseÀJourSource: "dateMajDurrSejObst", value: 11 },
     numéroFinessÉtablissementTerritorial: "numFinessActiv",
   };
 }
@@ -75,6 +78,10 @@ function getActiviteSanitaireMensuel(): ActivitesSanitaireMensuel {
       nombreSéjoursPartielsObstétrique: 8,
       nombreJournéesPartiellesPsy: 9,
       nombreJournéesComplètesPsy: 10,
+      dureeMoyenneSejourChirurgie: 11,
+      dureeMoyenneSejourMedecine: 12,
+      dureeMoyenneSejourObstetrique: 13,
+
     }],
   };
 }
@@ -212,6 +219,7 @@ function getActiviteProfile() {
     nombreJournées: "ok",
     nombreSéjours: "ok",
     nombreJourneesUsld: "ok",
+    dureeMoyenneSejour: "ok",
   }
 }
 
@@ -264,7 +272,7 @@ function getFullProfile() {
   }
 }
 
-describe("Filtre des informations d’identité des etablissement medico-sociaux par rapport au profil", () => {
+describe("Filtre des informations d’identité des etablissements sanitaires par rapport au profil", () => {
   it("laisse toutes les informations si il y a les droits", () => {
     // Given
     const rawIdentity = getIdentiteSanitaire();
@@ -502,7 +510,7 @@ describe("Filtre des informations d’identité des etablissement medico-sociaux
 
 });
 
-describe("Filtre des informations d’activité des etablissement medico-sociaux par rapport au profil", () => {
+describe("Filtre des informations d’activité des etablissements sanitaires par rapport au profil", () => {
   it("laisse toutes les informations si il y a tous les droits", () => {
     // Given
     const rawActivity = getActiviteSanitaire();
@@ -547,15 +555,15 @@ describe("Filtre des informations d’activité des etablissement medico-sociaux
       nombreJournéesPartielsSsr: { dateMiseÀJourSource: "", value: "" },
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.activités.nombreJournées = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.activités).toEqual([expectedActivity]);
+    expect(etabSanitaireResult.activités).toEqual([expectedActivity]);
   });
 
   it("retire les info sur le nombre de sejour si il n’y a pas les droits", () => {
@@ -571,15 +579,15 @@ describe("Filtre des informations d’activité des etablissement medico-sociaux
       nombreSéjoursPartielsObstétrique: { dateMiseÀJourSource: "", value: "" },
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.activités.nombreSéjours = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.activités).toEqual([expectedActivity]);
+    expect(etabSanitaireResult.activités).toEqual([expectedActivity]);
   });
 
   it("retire les info sur le nombre de sejour USLD s’il n’y a pas les droits", () => {
@@ -590,20 +598,41 @@ describe("Filtre des informations d’activité des etablissement medico-sociaux
       nombreJourneesUsld: { dateMiseÀJourSource: "", value: "" },
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.activités.nombreJourneesUsld = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.activités).toEqual([expectedActivity]);
+    expect(etabSanitaireResult.activités).toEqual([expectedActivity]);
+  });
+
+  it("retire les info sur la durée moyenne de séjour s’il n’y a pas les droits", () => {
+    // Given
+    const rawActivity = getActiviteSanitaire();
+    const expectedActivity = {
+      ...rawActivity,
+      dureeMoyenneSejourMedecine: { dateMiseÀJourSource: "", value: "" },
+      dureeMoyenneSejourChirurgie: { dateMiseÀJourSource: "", value: "" },
+      dureeMoyenneSejourObstetrique: { dateMiseÀJourSource: "", value: "" },
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.activités.dureeMoyenneSejour = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.activités).toEqual([expectedActivity]);
   });
 
 })
 
-describe("Filtre des informations d’autorisation des etablissement medico-sociaux par rapport au profil", () => {
+describe("Filtre des informations d’autorisation des etablissement sanitaire par rapport au profil", () => {
   it("laisse toutes les informations si il y a tous les droits", () => {
     // Given
     const rawAutorisationCapacity = getAutorisationCapaciteSanitaire();
@@ -863,19 +892,19 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
 
 })
 
-describe("Filtre les informations qualite des etablissement medico-sociaux par rapport au profil", () => {
+describe("Filtre les informations qualite des etablissement sanitaire par rapport au profil", () => {
   it("laisse toutes les informations si il y a tous les droits", () => {
     // Given
     const rawQuality = getQualitéSanitaire();
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.qualite).toEqual(rawQuality);
+    expect(etabSanitaireResult.qualite).toEqual(rawQuality);
   });
 
   it("retire les info des donnee de reclamation si n’y a pas les droits", () => {
@@ -886,15 +915,15 @@ describe("Filtre les informations qualite des etablissement medico-sociaux par r
       reclamations: [{ details: [] }],
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.Qualité.DonnéesSirec = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.qualite).toEqual(expectedQuality);
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
   })
 
   it("retire les info d’evenement indesirable si n’y a pas les droits", () => {
@@ -905,15 +934,15 @@ describe("Filtre les informations qualite des etablissement medico-sociaux par r
       evenementsIndesirables: [],
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.Qualité.DonnéesSivss = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.qualite).toEqual(expectedQuality);
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
   })
 
   it("retire les info d’inspection et controle si n’y a pas les droits", () => {
@@ -924,15 +953,15 @@ describe("Filtre les informations qualite des etablissement medico-sociaux par r
       inspectionsEtControles: { dateMiseAJourSource: "", inspectionsEtControles: [] },
     }
 
-    let etabMedicoSocialResult = getFullSanitaire();
+    let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.Qualité.DonnéesSiicea = "Ko";
 
     // When
-    etabMedicoSocialResult = filterEtablissementSanitaire(etabMedicoSocialResult, profile);
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
 
     // Then
-    expect(etabMedicoSocialResult.qualite).toEqual(expectedQuality);
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
   })
 })
 

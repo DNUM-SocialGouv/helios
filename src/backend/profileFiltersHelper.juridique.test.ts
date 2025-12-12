@@ -62,6 +62,10 @@ function getActiviteMensuelleJuridique(): ActivitesSanitaireMensuel {
       nombreSéjoursPartielsObstétrique: 8,
       nombreJournéesPartiellesPsy: 9,
       nombreJournéesComplètesPsy: 10,
+      dureeMoyenneSejourChirurgie: 11,
+      dureeMoyenneSejourMedecine: 12,
+      dureeMoyenneSejourObstetrique: 13,
+
     }],
   };
 }

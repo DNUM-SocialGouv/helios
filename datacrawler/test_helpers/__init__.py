@@ -6,6 +6,9 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.sql import text
 
 from datacrawler.load.nom_des_tables import (
+    TABLE_VIGIE_RH_NATURE_CONTRATS,
+    TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL,
+    TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES,
     TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES,
@@ -137,6 +140,9 @@ def supprime_les_données_des_tables(base_de_données: Engine) -> None:
     base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
     base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE};")
+    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL};")
+    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS};")
+    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_REF_NATURE_CONTRATS};")
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")

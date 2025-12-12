@@ -1,4 +1,5 @@
 import styles from "./BlocAutorisationEtCapacitéSanitaire.module.css";
+import { useExportExcelAutorisationSanitaire } from "./ExportExcelAutorisationsSanitaire";
 import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from "./ÉtablissementTerritorialSanitaireAutorisationsCapacitesViewModel";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -14,41 +15,60 @@ import { ContenuReconnaissancesContractuelles } from "../InfoBulle/ContenuReconn
 import { ContenuÉquipementsMatérielsLourds } from "../InfoBulle/ContenuÉquipementsMatérielsLourds";
 
 type BlocAutorisationEtCapacitéSanitaireProps = Readonly<{
+  etabFiness: string;
+  etabTitle: string;
+  etabNom: string;
   établissementTerritorialSanitaireAutorisationsViewModel: EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
+export const BlocAutorisationEtCapacitéSanitaire = ({ etabFiness, etabTitle, etabNom, établissementTerritorialSanitaireAutorisationsViewModel, opnedBloc, toggelBlocs }: BlocAutorisationEtCapacitéSanitaireProps) => {
   const { wording } = useDependencies();
+  const { exportExcelAutorisationSanitaire } = useExportExcelAutorisationSanitaire(etabFiness, etabNom, établissementTerritorialSanitaireAutorisationsViewModel);
 
   if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéNeSontPasRenseignées) {
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
+  const dataInformationBloc = () => {
+    if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0) {
+      return <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} />;
+    } else if (établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0) {
+      return <NoDataCallout indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} />;
+    } else {
+      return <></>;
+    }
+
+  }
+
+  const handleExport = () => {
+    exportExcelAutorisationSanitaire();
+  }
+
   return (
     <Bloc isMain={false} opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
-      {établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
-        établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialSanitaireAutorisationsViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
-          <></>}
-
+      {dataInformationBloc()}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel.lesCapacitésParActivitésSontEllesAutorisées ?
           <GraphiqueCapacitésParActivité
-            estSanitaire={true} graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
+            estSanitaire={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            graphiqueCapacitésParActivitéViewModel={établissementTerritorialSanitaireAutorisationsViewModel.graphiqueCapacitésParActivitéViewModel}
           /> : <></>}
         {établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesRenseignées && établissementTerritorialSanitaireAutorisationsViewModel.lesAutorisationsSontEllesAutorisées && (
           <IndicateurGraphique
             contenuInfoBulle={
               <ContenuAutorisations
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
+                source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesAutorisations}
             identifiant="autorisations-amm-sanitaire"
             nomDeLIndicateur={wording.AUTORISATIONS_SANITAIRE}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
+            source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
           >
             <>
               {établissementTerritorialSanitaireAutorisationsViewModel.autorisationsAmm}
@@ -93,17 +113,22 @@ export const BlocAutorisationEtCapacitéSanitaire = ({ établissementTerritorial
             contenuInfoBulle={
               <ContenuÉquipementsMatérielsLourds
                 dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
-                source={Sources(wording.FINESS, wording.ARHGOS)}
+                source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
               />
             }
             dateDeMiseÀJour={établissementTerritorialSanitaireAutorisationsViewModel.dateDeMiseÀJourDesÉquipementsMatérielsLourds}
             identifiant="équipements-matériels-lourds-sanitaire"
             nomDeLIndicateur={wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS}
-            source={Sources(wording.FINESS, wording.ARHGOS)}
+            source={Sources(wording.FINESS, wording.SI_AUTORISATIONS)}
           >
             {établissementTerritorialSanitaireAutorisationsViewModel.équipementsMatérielsLourds}
           </IndicateurGraphique>
         )}
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
+            {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
+          </button>
+        </div>
       </ul>
     </Bloc>
   );

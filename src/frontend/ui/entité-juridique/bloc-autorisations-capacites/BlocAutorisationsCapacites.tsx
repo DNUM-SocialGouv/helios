@@ -1,4 +1,6 @@
+import styles from './BlocAutorisationsCapacites.module.css';
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
+import { useExportExcelAutorisation } from "./ExportExcelAutorisation"
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -11,13 +13,17 @@ import { GraphiqueEquipementMateriauxLourds } from "../../indicateur-métier/equ
 import { GraphiqueReconnaissanceContractuelles } from "../../indicateur-métier/reconnaissance-contractuelles/GraphiqueReconnaissanceContractuelles";
 
 type BlocAutorisationsCapacitesProps = Readonly<{
+  etabTitle: string;
+  etabFiness: string;
+  etabNom: string;
   entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel;
   opnedBloc?: boolean;
   toggelBlocs?: () => void;
 }>;
 
-export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
+export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, entitéJuridiqueAutorisationsCapacitesViewModel, opnedBloc, toggelBlocs }: BlocAutorisationsCapacitesProps) => {
   const { wording } = useDependencies();
+  const { exportExcelAutorisation } = useExportExcelAutorisation(etabFiness, etabNom, entitéJuridiqueAutorisationsCapacitesViewModel);
 
   if (
     entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées &&
@@ -29,16 +35,30 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs} />;
   }
 
+  const dataInformationBloc = () => {
+    if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length > 0) {
+      return <NotAUthorized indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} />;
+    } else if (entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length > 0) {
+      return <NoDataCallout indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} />;
+    } else {
+      return <></>;
+    }
+  }
+
+  const handleExport = () => {
+    exportExcelAutorisation();
+  }
+
   return (
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_AUTORISATION_ET_CAPACITÉ} toggelBlocs={toggelBlocs}>
-      {entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasAutorisés} /> :
-        entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={entitéJuridiqueAutorisationsCapacitesViewModel.lesDonnéesAutorisationEtCapacitéPasRenseignees} /> :
-          <></>}
+      {dataInformationBloc()}
       <ul className="indicateurs">
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées && (
           <GraphiqueCapacitésParActivité
             estEntitéJuridique
             estSanitaire={true}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
             graphiqueCapacitésParActivitéViewModel={entitéJuridiqueAutorisationsCapacitesViewModel.graphiqueCapacitesParActivitesViewModel}
           />)}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées && (
@@ -56,7 +76,12 @@ export const BlocAutorisationsCapacites = ({ entitéJuridiqueAutorisationsCapaci
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées && (
           <GraphiqueEquipementMateriauxLourds entiteJuridiqueEquipementLourds={entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds} />
         )}
+        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+          <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
+            {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
+          </button>
+        </div>
       </ul>
-    </Bloc>
+    </Bloc >
   );
 };

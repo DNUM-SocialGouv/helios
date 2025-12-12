@@ -238,7 +238,7 @@ class AutorisationsFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro",
         valeur: autorisationSanitaire.numéroAutorisationArhgos,
       },
       {
@@ -264,7 +264,7 @@ class AutorisationsFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro",
         valeur: autorisationAmmSanitaire.code_autorisation_arhgos,
       },
       {
@@ -336,7 +336,7 @@ class AutorisationsFactory {
         valeur: reconnaissanceContractuelle.dateEffetAsr ? StringFormater.formatDate(reconnaissanceContractuelle.dateEffetAsr) : "N/A",
       },
       {
-        nom: "Auto. ARGHOS",
+        nom: "Numéro",
         valeur: reconnaissanceContractuelle.numéroAutorisationArhgos,
       },
       {
@@ -524,7 +524,7 @@ export class EquipementFactory {
   }): Autorisation[] {
     return [
       {
-        nom: "Numéro ARHGOS",
+        nom: "Numéro",
         valeur: equipementMaterielLourd.numéroAutorisationArhgos,
       },
       {
