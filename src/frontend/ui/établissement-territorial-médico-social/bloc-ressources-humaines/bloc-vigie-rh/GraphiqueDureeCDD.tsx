@@ -36,6 +36,7 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
       enteteLibelle={wording.DUREE}
+      epaisseur="EPAIS"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
       identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}

@@ -352,8 +352,12 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         items={[
           { color: couleurDuFondHistogrammeJaune, label: wording.EMBAUCHES, circle: true },
           { color: couleurDuFondHistogrammeOrangeClair, label: wording.DEPARTS, circle: true },
+        ]}
+      />
+      <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
-
         ]}
       />
       <Transcription

@@ -1,7 +1,7 @@
 import { BarElement, Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
+import { couleurDesTraitsRefHistogramme, CouleurHistogramme, couleurIdentifiant } from "./couleursGraphique";
 import styles from "./HistogrammeHorizontaux.module.css";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
@@ -39,7 +39,7 @@ const HistogrammeHorizontalAvecRef = ({
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
-  const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
+  const ASPECT_RATIO = epaisseur === "EPAIS" ? 11 : 15;
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
 
   const data: ChartData = {
@@ -66,7 +66,7 @@ const HistogrammeHorizontalAvecRef = ({
 
   const optionsHistogramme: ChartOptions<"bar"> = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     animation: false,
     indexAxis: "y",
     scales: {
@@ -78,6 +78,7 @@ const HistogrammeHorizontalAvecRef = ({
         border: {
           display: false
         },
+        ticks: { color: couleurIdentifiant },
         grid: { drawOnChartArea: false, drawTicks: false },
       },
     },
