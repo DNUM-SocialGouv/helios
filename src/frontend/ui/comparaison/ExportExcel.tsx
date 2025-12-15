@@ -287,7 +287,7 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     ["numéroFiness", "FINESS"],
     ["totalHosptMedecine", "Nb de séjours Médecine - Total Hospt"],
     ["totalHosptChirurgie", "Nb de séjours Chirurgie - Total Hospt"],
-    ["totalHosptObstetrique", "Nb séjours Obstétrique -Total Hospt"],
+    ["totalHosptObstetrique", "Nb séjours Obstétrique - Total Hospt"],
     ["totalHosptPsy", "Nb journées Psychiatrie - Total Hospt"],
     ["totalHosptSsr", "Nb journées SSR - Total Hospt"],
     ["passagesUrgences", "Nb de passages aux urgences"],
