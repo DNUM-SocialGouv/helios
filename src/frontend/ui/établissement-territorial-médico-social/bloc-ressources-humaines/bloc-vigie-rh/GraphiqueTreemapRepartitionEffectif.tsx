@@ -322,7 +322,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           <div style={{ marginTop: "1rem" }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               {legendItems.map((entry) => (
-                <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
+                <div className="fr-label" key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.8rem" }}>
                   <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", backgroundColor: entry.color }} />
                   <span>{entry.label}</span>
                 </div>

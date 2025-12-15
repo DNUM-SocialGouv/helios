@@ -296,7 +296,16 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? [];
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+        .filter(departEmbauche => departEmbauche.annee !== maxAnnee);
+    }
   }
 
   public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
@@ -323,7 +332,17 @@ export class BlocVigieRHViewModel {
   }
 
   public get donneesTauxRotation(): TauxRotation[] {
-    return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.tauxRotation.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.tauxRotation
+        .filter(rotation => rotation.annee !== maxAnnee);
+    }
+
   }
 
   public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
@@ -431,7 +450,16 @@ export class BlocVigieRHViewModel {
   }
 
   public get natureContratsAnnuel(): NatureContratsAnnuel[] {
-    return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour une nature de contrats) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel
+        .filter(contrat => contrat.annee !== maxAnnee);
+    }
   }
 
   public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {

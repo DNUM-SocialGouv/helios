@@ -4,6 +4,7 @@ import { Bar } from "react-chartjs-2";
 
 import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
+import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
 import { StringFormater } from "../StringFormater";
@@ -244,10 +245,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesPrincipaux[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === libelles.length - 1) {
-              return { weight: "bold" };
-            }
-            if (String(libelles[context.index]).includes(anneeEnCours)) {
+            if (highlightLastLabel && context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: "bold" };
             }
             return {};
@@ -270,13 +268,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesSecondaires[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire) {
-              return { weight: "bold" };
-            }
             const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
-            if (tickLabel === anneeEnCours) {
+            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
               return { weight: "bold" };
             }
+
             return {};
           },
           maxRotation: 0,
@@ -309,10 +305,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const legend = (
     <div className={styles["legendContainer"]}>
       <menu className={`fr-checkbox-group ${styles["legend"]}`} id={legendContainerId} />
-      <div aria-hidden="true" className={styles["referenceLegend"]}>
-        <span className={styles["referenceLine"]} style={{ backgroundColor: couleurDesTraitsRefHistogramme }} />
-        <span>{legendReferenceLabel}</span>
-      </div>
     </div>
   );
 
@@ -326,6 +318,12 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       {valeursRefManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${valeursRefManquantes.join(", ")}`}</MiseEnExergue>
       )}
+      <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+        ]}
+      />
       {transcription && (
         <Transcription
           entêteLibellé={transcription.enteteLibelle}
