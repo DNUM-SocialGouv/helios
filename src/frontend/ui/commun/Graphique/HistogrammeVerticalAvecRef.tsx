@@ -156,7 +156,7 @@ const HistogrammeVerticalAvecRef = ({
       y: {
         display: false,
         min: 0,
-        suggestedMax: Math.max(50, ...valeurs.filter((v) => v !== null)),
+        suggestedMax: Math.max(50, ...valeurs.filter((v) => v !== null).filter((v) => Number.isFinite(v))),
       },
     }
   }

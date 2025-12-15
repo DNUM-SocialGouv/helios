@@ -722,10 +722,10 @@ export class WordingFr implements Wording {
   readonly DEPARTS_REF: string = "Moyenne des départs";
   readonly EMBAUCHES_REF: string = "Moyenne des embauches";
   readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
-  readonly TAUX_ROTATION: string = "Taux de renouvellments des contrats";
+  readonly TAUX_ROTATION: string = "Taux de renouvellements des contrats";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
-  readonly TAUX_ROTATION_REFERENCE: string = "Taux de renouvellments des contrats de référence";
+  readonly TAUX_ROTATION_REFERENCE: string = "Taux de renouvellements des contrats de référence";
   readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
   readonly TOP_CONTRATS_TITLE: string = "Contrats courts";
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD court < 6 mois";
@@ -737,7 +737,7 @@ export class WordingFr implements Wording {
   readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
   readonly MOTIF: string = "Motif";
   readonly MOIS_ANNEES: string = "Mois / Années";
-  readonly NATURE_CONTRATS: string = "Nature des contrats actifs ";
+  readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
   readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
