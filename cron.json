@@ -1,8 +1,13 @@
 {
   "jobs": [
     {
-      "command": "0 4 * * 1-5 /app/populateDatabase.sh",
+      "command": "0 4 * * 1-5 /app/populateDatabaseHelios.sh",
+      "size": "2XL"
+    },
+    {
+      "command": "20 4 * * 1-5 /app/populateDatabaseVigieRh.sh",
       "size": "2XL"
     }
+
   ]
 }
