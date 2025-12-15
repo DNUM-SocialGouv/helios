@@ -6,6 +6,8 @@
 
 ### Features
 
+- hel-938: Isolation du batch vigierh
+
 ## [1.7.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.2...release/1.7.3) (2025-12-11)
 
 ### Bug Fixes
