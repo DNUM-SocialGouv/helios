@@ -8,6 +8,7 @@ import { UserContext } from "../commun/contexts/userContext";
 import { StringFormater } from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
+const DEFAULT_INDICATORS = ["etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
 
 export function getCurrentDate() {
   const today = new Date();
@@ -52,82 +53,103 @@ function getFavoris(favoris: UserListViewModel[] | undefined, numeroFiness: stri
   return isFavoris ? "Oui" : "Non"
 }
 
-function transformData(data: any, favoris: UserListViewModel[] | undefined, type: string | undefined) {
-  if (type === 'Social et Médico-Social')
-    return data.resultat.map((etab: ResultatSMS) => [
-      etab.type ?? "-",
-      getFavoris(favoris, etab.numéroFiness),
-      etab.socialReason ?? "-",
-      etab.categorie ?? "-",
-      etab.numéroFiness ?? "-",
-      etab.capacite ?? "-",
-      etab.realisationActivite === 'NA' ? '' : etab.realisationActivite ?? '-',
-      etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes ?? '-',
-      etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent ?? '-',
-      etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire ?? '-',
-      etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour ?? '-',
-      etab.externat === 'NA' ? '' : etab.externat ?? '-',
-      etab.semiInternat === 'NA' ? '' : etab.semiInternat ?? '-',
-      etab.internat === 'NA' ? '' : etab.internat ?? '-',
-      etab.autres === 'NA' ? '' : etab.autres ?? '-',
-      etab.seances === 'NA' ? '' : etab.seances ?? '-',
-      etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
-      etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
-      etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
-      etab.absenteisme === 'NA' ? '' : etab.absenteisme ?? '-',
-      etab.tauxCaf === 'NA' ? '' : etab.tauxCaf ?? '-',
-      etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction ?? '-',
-      etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal ?? '-',
-      etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable ?? '-'
-    ])
-  else if (type === 'Sanitaire')
-    return data.resultat.map((etab: ResultatSAN) => [
-      etab.type ?? "-",
-      getFavoris(favoris, etab.numéroFiness),
-      etab.socialReason ?? "-",
-      etab.categorie ?? "-",
-      etab.numéroFiness ?? "-",
-      etab.totalHosptMedecine ?? "-",
-      etab.totalHosptChirurgie ?? '-',
-      etab.totalHosptObstetrique ?? '-',
-      etab.totalHosptPsy ?? '-',
-      etab.totalHosptSsr ?? '-',
-      etab.passagesUrgences ?? '-',
-      etab.journeesUsld ?? '-',
-      etab.nombreEtpPm ?? '-',
-      etab.nombreEtpPnm ?? '-',
-      etab.depensesInterimPm ?? '-',
-      etab.joursAbsenteismePm ?? '-',
-      etab.joursAbsenteismePnm ?? '-',
-      etab.enveloppe1 ?? '-',
-      etab.enveloppe2 ?? '-',
-      etab.enveloppe3 ?? '-',
-    ])
-  else return data.resultat.map((etab: ResultatEJ) => [
-    etab.type ?? "-",
-    getFavoris(favoris, etab.numéroFiness),
-    etab.socialReason ?? "-",
-    etab.categorie ?? "-",
-    etab.numéroFiness ?? "-",
-    etab.statutJuridique ?? "-",
-    etab.rattachements ?? '-',
-    etab.sejoursHad ?? '-',
-    etab.chargesPrincipaux ?? '-',
-    etab.chargesAnnexes ?? '-',
-    etab.produitsPrincipaux ?? '-',
-    etab.produitsAnnexes ?? '-',
-    etab.resultatNetComptableEj ?? '-',
-    etab.tauxCafEj ?? '-',
-    etab.nombreEtpPm ?? '-',
-    etab.nombreEtpPnm ?? '-',
-    etab.depensesInterimPm ?? '-',
-    etab.joursAbsenteismePm ?? '-',
-    etab.joursAbsenteismePnm ?? '-',
-    etab.ratioDependanceFinanciere ?? '-',
-    etab.enveloppe1 ?? '-',
-    etab.enveloppe2 ?? '-',
-    etab.enveloppe3 ?? '-'
-  ])
+function transformData(data: any, favoris: UserListViewModel[] | undefined, type: string | undefined, enabledIndicators: string[]): (string | number)[][] {
+  if (type === 'Social et Médico-Social') {
+    const indicatorExtractors: Record<string, (etab: ResultatSMS) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      capacite: (etab) => etab.capacite ?? "-",
+      realisationActivite: (etab) => etab.realisationActivite === 'NA' ? '' : etab.realisationActivite ?? '-',
+      fileActivePersonnesAccompagnes: (etab) => etab.fileActivePersonnesAccompagnes === 'NA' ? '' : etab.fileActivePersonnesAccompagnes ?? '-',
+      hebergementPermanent: (etab) => etab.hebergementPermanent === 'NA' ? '' : etab.hebergementPermanent ?? '-',
+      hebergementTemporaire: (etab) => etab.hebergementTemporaire === 'NA' ? '' : etab.hebergementTemporaire ?? '-',
+      acceuilDeJour: (etab) => etab.acceuilDeJour === 'NA' ? '' : etab.acceuilDeJour ?? '-',
+      externat: (etab) => etab.externat === 'NA' ? '' : etab.externat ?? '-',
+      semiInternat: (etab) => etab.semiInternat === 'NA' ? '' : etab.semiInternat ?? '-',
+      internat: (etab) => etab.internat === 'NA' ? '' : etab.internat ?? '-',
+      autres: (etab) => etab.autres === 'NA' ? '' : etab.autres ?? '-',
+      seances: (etab) => etab.seances === 'NA' ? '' : etab.seances ?? '-',
+      prestationExterne: (etab) => etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
+      rotationPersonnel: (etab) => etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
+      etpVacant: (etab) => etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
+      absenteisme: (etab) => etab.absenteisme === 'NA' ? '' : etab.absenteisme ?? '-',
+      tauxCaf: (etab) => etab.tauxCaf === 'NA' ? '' : etab.tauxCaf ?? '-',
+      vetusteConstruction: (etab) => etab.vetusteConstruction === 'NA' ? '' : etab.vetusteConstruction ?? '-',
+      roulementNetGlobal: (etab) => etab.roulementNetGlobal === 'NA' ? '' : etab.roulementNetGlobal ?? '-',
+      resultatNetComptable: (etab) => etab.resultatNetComptable === 'NA' ? '' : etab.resultatNetComptable ?? '-',
+    };
+
+    return data.resultat.map((etab: ResultatSMS) =>
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  } else if (type === 'Sanitaire') {
+    const indicatorExtractors: Record<string, (etab: ResultatSAN) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      totalHosptMedecine: (etab) => etab.totalHosptMedecine ?? "-",
+      totalHosptChirurgie: (etab) => etab.totalHosptChirurgie ?? "-",
+      totalHosptObstetrique: (etab) => etab.totalHosptObstetrique ?? "-",
+      totalHosptPsy: (etab) => etab.totalHosptPsy ?? "-",
+      totalHosptSsr: (etab) => etab.totalHosptSsr ?? "-",
+      passagesUrgences: (etab) => etab.passagesUrgences ?? "-",
+      journeesUsld: (etab) => etab.journeesUsld ?? "-",
+      nombreEtpPm: (etab) => etab.nombreEtpPm ?? "-",
+      nombreEtpPnm: (etab) => etab.nombreEtpPnm ?? "-",
+      depensesInterimPm: (etab) => etab.depensesInterimPm ?? "-",
+      joursAbsenteismePm: (etab) => etab.joursAbsenteismePm ?? "-",
+      joursAbsenteismePnm: (etab) => etab.joursAbsenteismePnm ?? "-",
+      enveloppe1: (etab) => etab.enveloppe1 ?? "-",
+      enveloppe2: (etab) => etab.enveloppe2 ?? "-",
+      enveloppe3: (etab) => etab.enveloppe3 ?? "-",
+    };
+
+    return data.resultat.map((etab: ResultatSAN) =>
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  }
+  else {
+    const indicatorExtractors: Record<string, (etab: ResultatEJ) => string | number> = {
+      etsLogo: (etab) => etab.type ?? "-",
+      favori: (etab) => getFavoris(favoris, etab.numéroFiness),
+      socialReason: (etab) => etab.socialReason ?? "-",
+      categorie: (etab) => etab.categorie ?? "-",
+      numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      statutJuridique: (etab) => etab.statutJuridique ?? "-",
+      rattachements: (etab) => etab.rattachements ?? '-',
+      sejoursHad: (etab) => etab.sejoursHad ?? '-',
+      chargesPrincipaux: (etab) => etab.chargesPrincipaux ?? '-',
+      chargesAnnexes: (etab) => etab.chargesAnnexes ?? '-',
+      produitsPrincipaux: (etab) => etab.produitsPrincipaux ?? '-',
+      produitsAnnexes: (etab) => etab.produitsAnnexes ?? '-',
+      resultatNetComptableEj: (etab) => etab.resultatNetComptableEj ?? '-',
+      tauxCafEj: (etab) => etab.tauxCafEj ?? '-',
+      nombreEtpPm: (etab) => etab.nombreEtpPm ?? '-',
+      nombreEtpPnm: (etab) => etab.nombreEtpPnm ?? '-',
+      depensesInterimPm: (etab) => etab.depensesInterimPm ?? '-',
+      joursAbsenteismePm: (etab) => etab.joursAbsenteismePm ?? '-',
+      joursAbsenteismePnm: (etab) => etab.joursAbsenteismePnm ?? '-',
+      ratioDependanceFinanciere: (etab) => etab.ratioDependanceFinanciere ?? '-',
+      enveloppe1: (etab) => etab.enveloppe1 ?? '-',
+      enveloppe2: (etab) => etab.enveloppe2 ?? '-',
+      enveloppe3: (etab) => etab.enveloppe3 ?? '-',
+    };
+
+    return data.resultat.map((etab: ResultatEJ) =>
+      enabledIndicators.map((key) =>
+        indicatorExtractors[key] ? indicatorExtractors[key](etab) : "-"
+      )
+    );
+  }
 }
 
 
@@ -177,7 +199,7 @@ function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Workshe
 }
 
 async function generateAndExportExcel(
-  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any
+  year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any, enabledIndicators: string[]
 ) {
 
 
@@ -189,98 +211,24 @@ async function generateAndExportExcel(
   const type = getType(data.type)
   const headerType = ["Indicateurs", type];
 
-  const dataTransormed = transformData(data, favoris, type);
+  const indicators = [...DEFAULT_INDICATORS, ...enabledIndicators];
+  const dataTransormed = transformData(data, favoris, type, indicators);
+
   const headerYear = ["Année", year];
-
-  const headersEJ = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "Cat. FINESS",
-    "FINESS",
-    "Statut juridique",
-    "Rattachements",
-    "Nb de séjours HAD",
-    "Nb ETP PM",
-    "Nb ETP PNM",
-    "Dépenses intérim PM",
-    "Jours d’absentéisme PM",
-    "Jours d’absentéisme PNM",
-    "Compte de résultat - Charges  (Budgets principaux)",
-    "Compte de résultat - Charges  (Budgets Annexes)",
-    "Compte de résultat - Produits (Budgets principaux)",
-    "Compte de résultat - Produits (Budgets Annexes)",
-    "Résultat net comptable",
-    "Taux de CAF",
-    "Ratio de dépendance financière",
-    `Allocation de ressources: ${enveloppes[0]}`,
-    `Allocation de ressources: ${enveloppes[1]}`,
-    `Allocation de ressources: ${enveloppes[2]}`
-  ];
-
-  const headersMS = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "Cat. FINESS",
-    "FINESS",
-    `Capacité Totale au ${StringFormater.formatDate(datesMisAjour.date_mis_a_jour_finess)}`,
-    "Taux de réalisation de l'activité (en %)",
-    "File active des personnes accompagnées sur la période",
-    "Taux d'occupation en hébergement permanent (en %)",
-    "Taux d'occupation en hébergement temporaire (en %)",
-    "Taux d'occupation en accueil de jour (en %)",
-    "Taux d’occupation externat (en %)",
-    "Taux d’occupation semi-internat (en %)",
-    "Taux d’occupation internat (en %)",
-    "Taux d’occupation autre 1, 2 et 3 (en %)",
-    "Taux d'occupation Séances (en %)",
-    "Taux de prestations externes sur les prestations directes (en %)",
-    "Taux de rotation du personnel sur effectifs réels (en %)",
-    "Taux d'ETP vacants au 31/12 (en %)",
-    "Taux d'absentéisme (en %)",
-    "Taux de CAF (en %)",
-    "Taux de vétusté des constructions (en %)",
-    "Fond de roulement net global (en €)",
-    "Résultat net comptable (en €)"
-  ];
-
-  const headersSAN = [
-    "Type d'établissement",
-    "Favoris",
-    "Raison Sociale",
-    "Cat. FINESS",
-    "FINESS",
-    `Nb de séjours Médecine - Total Hospt`,
-    "Nb de séjours Chirurgie - Total Hospt",
-    "Nb séjours Obstétrique - Total Hospt",
-    "Nb journées Psychiatrie - Total Hospt",
-    "Nb journées SSR - Total Hospt",
-    "Nb de passages aux urgences",
-    "Nb journées USLD",
-    "Nb ETP PM",
-    "Nb ETP PNM",
-    "Dépenses intérim PM",
-    "Jours d’absentéisme PM",
-    "Jours d’absentéisme PNM",
-    `Allocation de ressources: ${enveloppes[0]}`,
-    `Allocation de ressources: ${enveloppes[1]}`,
-    `Allocation de ressources: ${enveloppes[2]}`
-  ];
 
   let headers: string[];
   let nomFichierTemplate: string;
   switch (type) {
     case 'Entité juridique':
-      headers = headersEJ;
+      headers = getEJHeaders(indicators, enveloppes);
       nomFichierTemplate = "template_comparaison_EJ.xlsx"
       break;
     case 'Social et Médico-Social':
-      headers = headersMS;
+      headers = getMSHeaders(datesMisAjour.date_mis_a_jour_finess, indicators);
       nomFichierTemplate = "template_comparaison_MS.xlsx"
       break;
     case 'Sanitaire':
-      headers = headersSAN;
+      headers = getSanHeaders(indicators, enveloppes);
       nomFichierTemplate = "template_comparaison_SAN.xlsx"
       break;
     default:
@@ -297,10 +245,105 @@ async function generateAndExportExcel(
   );
 }
 
+const getMSHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]): string[] => {
+  const headersMS = new Map<string, string>([
+    ["etsLogo", "Type d'établissement"],
+    ["favori", "Favoris"],
+    ["socialReason", "Raison Sociale"],
+    ["categorie", "Cat. FINESS"],
+    ["numéroFiness", "FINESS"],
+    ["capacite", `Capacité Totale au ${StringFormater.formatDate(dateMiseAJourFiness)}`],
+    ["realisationActivite", "Taux de réalisation de l'activité (en %)"],
+    ["fileActivePersonnesAccompagnes", "File active des personnes accompagnées sur la période"],
+    ["hebergementPermanent", "Taux d'occupation en hébergement permanent (en %)"],
+    ["hebergementTemporaire", "Taux d'occupation en hébergement temporaire (en %)"],
+    ["acceuilDeJour", "Taux d'occupation en accueil de jour (en %)"],
+    ["externat", "Taux d’occupation externat (en %)"],
+    ["semiInternat", "Taux d’occupation semi-internat (en %)"],
+    ["internat", "Taux d’occupation internat (en %)"],
+    ["autres", "Taux d’occupation autre 1, 2 et 3 (en %)"],
+    ["seances", "Taux d'occupation Séances (en %)"],
+    ["prestationExterne", "Taux de prestations externes sur les prestations directes (en %)"],
+    ["rotationPersonnel", "Taux de rotation du personnel sur effectifs réels (en %)"],
+    ["etpVacant", "Taux d'ETP vacants au 31/12 (en %)"],
+    ["absenteisme", "Taux d'absentéisme (en %)"],
+    ["tauxCaf", "Taux de CAF (en %)"],
+    ["vetusteConstruction", "Taux de vétusté des constructions (en %)"],
+    ["roulementNetGlobal", "Fond de roulement net global (en €)"],
+    ["resultatNetComptable", "Résultat net comptable (en €)"],
+  ]);
+
+  return Array.from(headersMS.entries())
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
+}
+
+const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): string[] => {
+  const headersSan = new Map<string, string>([
+    ["etsLogo", "Type d'établissement"],
+    ["favori", "Favoris"],
+    ["socialReason", "Raison Sociale"],
+    ["categorie", "Cat. FINESS"],
+    ["numéroFiness", "FINESS"],
+    ["totalHosptMedecine", "Nb de séjours Médecine - Total Hospt"],
+    ["totalHosptChirurgie", "Nb de séjours Chirurgie - Total Hospt"],
+    ["totalHosptObstetrique", "Nb séjours Obstétrique - Total Hospt"],
+    ["totalHosptPsy", "Nb journées Psychiatrie - Total Hospt"],
+    ["totalHosptSsr", "Nb journées SSR - Total Hospt"],
+    ["passagesUrgences", "Nb de passages aux urgences"],
+    ["journeesUsld", "Nb journées USLD"],
+    ["nombreEtpPm", "Nb ETP PM"],
+    ["nombreEtpPnm", "Nb ETP PNM"],
+    ["depensesInterimPm", "Dépenses intérim PM"],
+    ["joursAbsenteismePm", "Jours d’absentéisme PM"],
+    ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+  ]);
+
+  return Array.from(headersSan.entries())
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
+}
+
+const getEJHeaders = (enabledIndicators: string[], enveloppes: string[]): string[] => {
+  const headersEJ = new Map<string, string>([
+    ["etsLogo", "Type d'établissement"],
+    ["favori", "Favoris"],
+    ["socialReason", "Raison Sociale"],
+    ["categorie", "Cat. FINESS"],
+    ["numéroFiness", "FINESS"],
+    ["statutJuridique", "Statut juridique"],
+    ["rattachements", "Rattachements"],
+    ["sejoursHad", "Nb de séjours HAD"],
+    ["nombreEtpPm", "Nb ETP PM"],
+    ["nombreEtpPnm", "Nb ETP PNM"],
+    ["depensesInterimPm", "Dépenses intérim PM"],
+    ["joursAbsenteismePm", "Jours d’absentéisme PM"],
+    ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
+    ["chargesPrincipaux", "Compte de résultat - Charges  (Budgets principaux)"],
+    ["chargesAnnexes", "Compte de résultat - Charges  (Budgets Annexes)"],
+    ["produitsPrincipaux", "Compte de résultat - Produits (Budgets principaux)"],
+    ["produitsAnnexes", "Compte de résultat - Produits (Budgets Annexes)"],
+    ["resultatNetComptableEj", "Résultat net comptable"],
+    ["tauxCafEj", "Taux de CAF"],
+    ["ratioDependanceFinanciere", "Ratio de dépendance financière"],
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+  ]);
+
+  return Array.from(headersEJ.entries())
+    .filter(([key,]) => enabledIndicators.includes(key))
+    .map(([, value]) => value);
+}
+
+
 const ExportExcel = ({
-  year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles
+  year, type, order, orderBy, disabled, datesMisAjour, codeRegion, codeProfiles, enabledIndicators
 }: {
-  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[]
+  year: string, type: string, order: string, orderBy: string, disabled: boolean, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], enabledIndicators: string[]
 }) => {
   const userContext = useContext(UserContext);
   const { getTopEnveloppes } = useComparaison();
@@ -310,7 +353,7 @@ const ExportExcel = ({
       className="fr-btn fr-btn--tertiary-no-outline"
       disabled={disabled}
       name="Exporter"
-      onClick={() => generateAndExportExcel(year, type, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles, getTopEnveloppes)}
+      onClick={() => generateAndExportExcel(year, type, order, orderBy, userContext?.favorisLists, datesMisAjour, codeRegion, codeProfiles, getTopEnveloppes, enabledIndicators)}
       title="Exporter"
       type="button"
     >

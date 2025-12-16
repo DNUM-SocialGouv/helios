@@ -7,6 +7,10 @@
 ### Features
 
 - hel-938: Isolation du batch vigierh
+- hel-911: [Comparaison] Ajout d’un bouton de choix d’indicateur
+- hel-912: [Comparaison] Selection des indicateurs SAN
+- hel-913: [Comparaison] Selection des indicateurs SMS
+- hel-914: [Comparaison] Selection des indicateurs EJ
 
 ## [1.7.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.2...release/1.7.3) (2025-12-11)
 
