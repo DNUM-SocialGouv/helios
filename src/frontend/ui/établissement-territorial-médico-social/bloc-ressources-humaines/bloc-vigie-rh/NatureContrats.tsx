@@ -18,6 +18,7 @@ type GraphiqueNatureContratsProps = Readonly<{
   etabTitle: string;
   nomGraph: string;
   blocVigieRhViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
 type GraphiqueNatureContratsAnnuelProps = Readonly<{
@@ -27,6 +28,7 @@ type GraphiqueNatureContratsAnnuelProps = Readonly<{
   donnees: NatureContratsAnnuel[];
   palette: CouleurHistogramme[];
   wording: Wording;
+  showRefValues: boolean;
 }>;
 
 type GraphiqueNatureContratsTrimestrielProps = Readonly<{
@@ -36,6 +38,7 @@ type GraphiqueNatureContratsTrimestrielProps = Readonly<{
   donnees: NatureContratsTrimestriel[];
   palette: CouleurHistogramme[];
   wording: Wording;
+  showRefValues: boolean;
 }>;
 
 type NatureContratCategorie = Readonly<{
@@ -49,7 +52,7 @@ type Serie = Readonly<{
   natures: string[];
 }>;
 
-const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhViewModel }: GraphiqueNatureContratsProps) => {
+const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhViewModel, showRefValues }: GraphiqueNatureContratsProps) => {
   const { wording } = useDependencies();
   const palette = blocVigieRhViewModel.paletteNatureContrats;
 
@@ -69,9 +72,9 @@ const GraphiqueNatureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRhV
         selectedFrequency={selectedFrequency}
       />
       {isAnnuel ? (
-        <GraphiqueNatureContratsAnnuel donnees={blocVigieRhViewModel.natureContratsAnnuel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} wording={wording} />
+        <GraphiqueNatureContratsAnnuel donnees={blocVigieRhViewModel.natureContratsAnnuel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} showRefValues={showRefValues} wording={wording} />
       ) : (
-        <GraphiqueNatureContratsTrimestriel donnees={blocVigieRhViewModel.natureContratsTrimestriel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} wording={wording} />
+        <GraphiqueNatureContratsTrimestriel donnees={blocVigieRhViewModel.natureContratsTrimestriel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} palette={palette} showRefValues={showRefValues} wording={wording} />
       )}
     </div>
   );
@@ -87,7 +90,7 @@ const construitLibelleCategorie = (valeur: NatureContratsAnnuel | NatureContrats
   return { key: valeur.annee.toString(), label: valeur.annee.toString() };
 };
 
-const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean): Serie => {
+const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean, showRefValues: boolean): Serie => {
   const sortedDonnees = [...donnees].sort((a, b) => {
     if (isTrimestriel && estTrimestriel(a) && estTrimestriel(b)) {
       const aKey = a.annee * 10 + a.trimestre;
@@ -122,7 +125,7 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
   const series: HistogrammeComparaisonVerticalAvecRefSerie[] = natures.map((natureLibelle, index) => {
     const couleur = palette.length > 0 ? palette[index % palette.length] : couleurParDefaut;
     const valeurs = categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectif ?? null);
-    const valeursRef = categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectifRef ?? null);
+    const valeursRef = showRefValues ? categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectifRef ?? null) : [];
 
     return {
       label: natureLibelle,
@@ -153,8 +156,8 @@ function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: 
   return valeursRefManquantes;
 }
 
-const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording }: GraphiqueNatureContratsAnnuelProps) => {
-  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, false), [donnees, palette]);
+const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsAnnuelProps) => {
+  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, false, showRefValues), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);
@@ -181,6 +184,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
       libellesValeursRefManquantes={libellesValeursRefManquantes}
       nomGraph={nomGraph}
       series={series}
+      showRefValues={showRefValues}
       transcription={{
         enteteLibelle: wording.ANNÉE,
         identifiantUnique: "transcription-nature-contrats-annuel",
@@ -190,8 +194,8 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
   );
 };
 
-const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording }: GraphiqueNatureContratsTrimestrielProps) => {
-  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, true), [donnees, palette]);
+const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsTrimestrielProps) => {
+  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, true, showRefValues), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);
@@ -218,6 +222,7 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
       libellesValeursRefManquantes={libellesValeursRefManquantes}
       nomGraph={nomGraph}
       series={series}
+      showRefValues={showRefValues}
       transcription={{
         enteteLibelle: wording.MOIS_ANNEES,
         identifiantUnique: "transcription-nature-contrats-trimestriel",

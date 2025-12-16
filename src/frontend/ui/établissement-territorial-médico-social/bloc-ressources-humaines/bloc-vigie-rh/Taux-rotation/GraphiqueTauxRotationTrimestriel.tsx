@@ -12,9 +12,10 @@ type GraphiqueTauxRotationAnnuelProps = Readonly<{
   nomGraph: string;
   donneesTauxRotationTrimestriels: TauxRotationTrimestriel[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
+const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotationTrimestriels, blocVigieRHViewModel, showRefValues }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
@@ -51,6 +52,7 @@ const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, don
       libellesDeValeursDeReferenceManquantes={valeursRefManquantes}
       libellesDeValeursManquantes={valeursManquantes}
       nomGraph={nomGraph}
+      showRefValues={showRefValues}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
       type={wording.TRIMESTRIEL}

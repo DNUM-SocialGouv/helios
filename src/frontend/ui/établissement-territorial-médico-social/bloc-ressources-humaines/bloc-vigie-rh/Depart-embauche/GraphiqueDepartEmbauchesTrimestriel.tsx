@@ -21,10 +21,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
-  donneesDepartsEmbauches: DepartEmbaucheTrimestrielViewModel[]
+  donneesDepartsEmbauches: DepartEmbaucheTrimestrielViewModel[];
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
+const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDepartsEmbauches, showRefValues }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
@@ -211,13 +212,13 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
       },
       {
         label: "embauches-extension",
-        data: donneesEmbauchesExtension,
+        data: showRefValues ? donneesEmbauchesExtension : [],
         backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
       },
       {
         label: "depart-extension",
-        data: donneesDepartsExtension,
+        data: showRefValues ? donneesDepartsExtension : [],
         backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
       },
@@ -336,7 +337,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   return (
     <div>
       {/* @ts-ignore */}
-      <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+      <Bar data={dataSet} options={options} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

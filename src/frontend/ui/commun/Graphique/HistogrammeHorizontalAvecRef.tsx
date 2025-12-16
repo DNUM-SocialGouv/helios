@@ -22,6 +22,7 @@ type HistogrammeHorizontalAvecRefProps = {
   refsManquantsTitre?: string;
   refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
+  showRefValues: boolean;
 };
 const HistogrammeHorizontalAvecRef = ({
   etabFiness,
@@ -35,7 +36,8 @@ const HistogrammeHorizontalAvecRef = ({
   libelles,
   refsManquantsTitre,
   refsManquants,
-  identifiants
+  identifiants,
+  showRefValues
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
@@ -54,7 +56,7 @@ const HistogrammeHorizontalAvecRef = ({
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: valeursDesHistogrammesRef,
+        data: showRefValues ? valeursDesHistogrammesRef : [],
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -154,7 +156,7 @@ const HistogrammeHorizontalAvecRef = ({
     <>
       <div className={styles["flexContainer"]}>
         {/* @ts-ignore */}
-        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={[valeursRefPlugin]}
+        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
         />
       </div>
       <ColorLabel

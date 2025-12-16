@@ -24,6 +24,7 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
   libellesDeValeursManquantesTitre?: string;
   libellesDeValeursDeReferenceManquantes?: (number | string)[];
   libellesDeValeursDeReferenceManquantesTitre?: string;
+  showRefValues: boolean;
 }>;
 
 const HistogrammeVerticalAvecRef = ({
@@ -40,6 +41,7 @@ const HistogrammeVerticalAvecRef = ({
   identifiants,
   libellesDeValeursManquantes = [],
   libellesDeValeursDeReferenceManquantes = [],
+  showRefValues,
 }: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
 
@@ -60,7 +62,7 @@ const HistogrammeVerticalAvecRef = ({
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: valeursRef,
+        data: showRefValues ? valeursRef : [],
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -195,7 +197,7 @@ const HistogrammeVerticalAvecRef = ({
         // @ts-ignore
         data={data}
         options={optionsHistogrammeVertical}
-        plugins={[rotationRefPlugin]}
+        plugins={showRefValues ? [rotationRefPlugin] : []}
       />
       <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"

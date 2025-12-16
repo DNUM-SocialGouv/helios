@@ -37,6 +37,7 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   highlightLastLabel?: boolean;
   libellesValeursManquantes?: string[];
   libellesValeursRefManquantes?: string[];
+  showRefValues: boolean;
 }>;
 
 const valeurFormateeParDefaut = (valeur: number | null): string | null => {
@@ -61,6 +62,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   highlightLastLabel = false,
   libellesValeursManquantes,
   libellesValeursRefManquantes,
+  showRefValues
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
   const { wording } = useDependencies();
   const valeursManquantes = libellesValeursManquantes ?? [];
@@ -311,7 +313,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
+        <Bar data={chartData} options={chartOptions} plugins={showRefValues ? [rotationRefPlugin] : []} />
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}

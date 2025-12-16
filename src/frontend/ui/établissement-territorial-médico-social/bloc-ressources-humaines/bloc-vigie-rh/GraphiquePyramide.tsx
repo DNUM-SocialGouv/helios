@@ -19,9 +19,10 @@ type PyramidChartProps = Readonly<{
   effectifHommeRef: number[];
   effectifFemme: number[];
   effectifFemmeRef: number[];
+  showRefValues: boolean;
 }>;
 
-const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
+const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, showRefValues }: PyramidChartProps) => {
   const refColor = "#929292";
 
   const { wording } = useDependencies();
@@ -139,7 +140,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       {
         label: "Men Extension",
         backgroundColor: "rgba(255,249,235,255)",
-        data: hommesExtension,
+        data: showRefValues ? hommesExtension : [],
         yAxisID: "y"
 
       },
@@ -158,7 +159,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       },
       {
         label: "Women Extension",
-        data: femmesExtension,
+        data: showRefValues ? femmesExtension : [],
         backgroundColor: "rgba(255,249,235,255)",
         yAxisID: "y"
       },
@@ -324,7 +325,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 y: { ...options.scales.y, display: false },
               }
             }}
-            plugins={[verticalLinePlugin]}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
         <div className="fr-col-2">
@@ -364,7 +365,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 y: { ...options.scales.y, display: false },
               },
             }}
-            plugins={[verticalLinePlugin]}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
       </div>

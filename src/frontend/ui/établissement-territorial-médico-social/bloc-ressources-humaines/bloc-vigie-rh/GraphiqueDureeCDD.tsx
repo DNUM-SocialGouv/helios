@@ -10,9 +10,10 @@ type GraphiqueDureeCDDProps = Readonly<{
   etabTitle: string;
   nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueDureeCDDProps) => {
+const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel, showRefValues }: GraphiqueDureeCDDProps) => {
 
   const { wording } = useDependencies();
 
@@ -44,6 +45,7 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
       nomGraph={nomGraph}
       refsManquants={lesDureesQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
+      showRefValues={showRefValues}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />

@@ -10,9 +10,10 @@ type GraphiqueMotifsRuptureContratsProps = Readonly<{
   etabTitle: string;
   nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueMotifsRuptureContratsProps) => {
+const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel, showRefValues }: GraphiqueMotifsRuptureContratsProps) => {
 
   const { wording } = useDependencies();
 
@@ -44,6 +45,7 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
       nomGraph={nomGraph}
       refsManquants={lesMotifsQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
+      showRefValues={showRefValues}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />
