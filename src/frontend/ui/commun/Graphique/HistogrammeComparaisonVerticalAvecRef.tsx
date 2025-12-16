@@ -219,11 +219,14 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           label(context: any) {
             const rawValue = context.raw;
             const valeur = typeof rawValue === "number" ? rawValue : null;
+            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
+            if (!showRefValues) {
+              return `Valeur: ${valeurText}`;
+            }
+
             const labelValue = typeof context.dataset.label === "string" ? context.dataset.label : "";
             const referenceValues = labelValue ? (referencesParLibelle[labelValue] ?? []) : [];
             const valeurRef = referenceValues[context.dataIndex] ?? null;
-
-            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
             const valeurRefText = formatValeur(valeurRef) ?? wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];

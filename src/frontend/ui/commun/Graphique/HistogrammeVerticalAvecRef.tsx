@@ -103,8 +103,11 @@ const HistogrammeVerticalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeurs[index];
-            const refValue = valeursRef[index];
             const valeurText = Number.isFinite(value as number) ? Math.abs(value as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
+            if (!showRefValues) {
+              return `Valeur: ${valeurText}`;
+            }
+            const refValue = valeursRef[index];
             const valeurRefText = Number.isFinite(refValue as number) ? Math.abs(refValue as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`,

@@ -246,6 +246,9 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
 
             const value = isWomenChart ? effectifFemme[index] : effectifHomme[index];
             const refValue = isWomenChart ? effectifFemmeRef[index] : effectifHommeRef[index];
+            if (!showRefValues) {
+              return `Valeur: ${value}`;
+            }
 
             return [`Valeur: ${value}`,
             `Valeur de référence: ${refValue}`];

@@ -110,6 +110,10 @@ const HistogrammeHorizontalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeursDesHistogrammes[index];
+            if (!showRefValues) {
+              return `Valeur: ${value}`;
+            }
+
             const refValue = valeursDesHistogrammesRef[index];
             const refValueText = refValue ? `${refValue} ` : 'Non renseignée'
 

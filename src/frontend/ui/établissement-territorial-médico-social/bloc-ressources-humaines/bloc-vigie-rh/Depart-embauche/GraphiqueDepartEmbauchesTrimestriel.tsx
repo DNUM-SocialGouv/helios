@@ -253,9 +253,12 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-
             const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+
+            if (!showRefValues) {
+              return `Valeur: ${valeurText}`;
+            }
+            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
             const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
