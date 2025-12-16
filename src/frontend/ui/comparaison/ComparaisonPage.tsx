@@ -5,6 +5,7 @@ import { AjoutEtablissements } from "./ajout-etablissements/AjoutEtablissements"
 import styles from "./Comparaison.module.css";
 import ExportExcel from "./ExportExcel";
 import { useComparaison } from "./useComparaison";
+import { useModalSelectionIndicateur } from "./useModalSelectionIndicateur";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -17,6 +18,8 @@ import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
+
+const DEFAULT_INDICATORS = ["delete", "etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
 
 interface ComparaisonPageProps {
   codeProfiles: string[];
@@ -31,6 +34,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
   const [selectedRows, setSelectedRows] = useState<Map<string, string>>(new Map());
   const { wording } = useDependencies();
   const [structureChoice, setStructureChoice] = useState<string>("");
+  const { generateModal, enabledIndicators, openIndicatorSelectionModal } = useModalSelectionIndicateur(structureChoice);
   const { lancerLaComparaison, contenuModal, tableHeaders, getListAnnees, getcomparedTypes, resultats, nombreRésultats, lastPage, loading, NombreDeResultatsMaxParPage, listeAnnees } = useComparaison();
 
   const [estCeOuvert, setEstCeOuvert] = useState<boolean>(false);
@@ -213,6 +217,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setIsShowAjoutEtab(true);
   };
 
+  function filterTableHeader() {
+    return tableHeaders(datesMisAjour, structureChoice).filter((line) => [...DEFAULT_INDICATORS, ...enabledIndicators].includes(line.key));
+  }
+
   const results = (): ReactNode => {
     let content;
     if (loading) {
@@ -225,7 +233,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
           <Table
             data={resultats}
             handleSelectAll={handleSelectAll}
-            headers={tableHeaders(datesMisAjour, structureChoice)}
+            headers={filterTableHeader()}
             isAllSelected={isAllSelected}
             isCenter={true}
             isShowAvrage={false}
@@ -257,6 +265,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       codeRegion={codeRegion}
       datesMisAjour={datesMisAjour}
       disabled={resultats.length === 0}
+      enabledIndicators={enabledIndicators}
       order={params.order}
       orderBy={params.orderBy}
       type={structureChoice}
@@ -274,6 +283,10 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     }
   }
 
+  const indicatorChoiceButton = (): ReactNode => {
+    return <button aria-controls="fr-modal-selection-indicateur" aria-label={wording.BOUTON_CHOIX_INDICATEURS} className="fr-btn fr-btn--tertiary-no-outline" data-fr-opened="false" onClick={openIndicatorSelectionModal} type="button">{wording.BOUTON_CHOIX_INDICATEURS}</button>;
+  }
+
   return (
     <main className="fr-container" id="content">
       <Head>
@@ -282,7 +295,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       <div className={styles["container"]}>
         <div className={styles["header-container"]}>
           <h1>{wording.COMPARAISON}</h1>
-          <ListActionsButton exportButton={exportExcel()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
+          <ListActionsButton exportButton={exportExcel()} indicatorChoiceButton={indicatorChoiceButton()} onAddToFavorisSuccess={(listName: string) => handleAddToFavorisSuccess(listName)} selectedRows={selectedRows} />
         </div>
         <div className={styles["ajout-etab-div"]}>
           {!isShowAjoutEtab && (
@@ -314,6 +327,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
         <>{contenu}</>
       </InfoBulle>
+      {generateModal()}
     </main>
   );
 };

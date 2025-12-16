@@ -7,6 +7,10 @@
 ### Features
 
 - hel-938: Isolation du batch vigierh
+- hel-911: [Comparaison] Ajout d’un bouton de choix d’indicateur
+- hel-912: [Comparaison] Selection des indicateurs SAN
+- hel-913: [Comparaison] Selection des indicateurs SMS
+- hel-914: [Comparaison] Selection des indicateurs EJ
 - vr-117: RU Ajustements Titres/ légendes DVZ
 - vr-115: AUDIT Ajustements Pyramide des âges
 - vr-112: AUDIT Echelle tronquée
