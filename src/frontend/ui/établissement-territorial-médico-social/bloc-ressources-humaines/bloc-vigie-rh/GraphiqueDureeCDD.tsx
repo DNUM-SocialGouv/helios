@@ -33,6 +33,8 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
     return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
+  const transcriptionIdentifiants = showRefValues ? [wording.DUREE_CDD, wording.DUREE_CDD_REF] : [wording.DUREE_CDD];
+
   return (
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
@@ -40,7 +42,7 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
       epaisseur="EPAIS"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
+      identifiants={transcriptionIdentifiants}
       libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
       nomGraph={nomGraph}
       refsManquants={lesDureesQuiManquentDeRef}

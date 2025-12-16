@@ -173,7 +173,7 @@ const HistogrammeHorizontalAvecRef = ({
         identifiants={identifiants}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={[valeursDesHistogrammes, valeursDesHistogrammesRef]}
+        valeurs={showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] : [valeursDesHistogrammes]}
       />
     </>
   );

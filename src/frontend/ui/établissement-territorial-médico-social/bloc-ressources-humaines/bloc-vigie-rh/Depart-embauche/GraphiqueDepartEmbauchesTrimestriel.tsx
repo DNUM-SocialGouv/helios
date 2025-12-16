@@ -334,6 +334,14 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     },
   };
 
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
+    : [wording.DEPARTS, wording.EMBAUCHES];
+
+  const transcriptionValeurs = showRefValues
+    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+
   return (
     <div>
       {/* @ts-ignore */}
@@ -366,10 +374,10 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
+        identifiants={transcriptionIdentifiants}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
-        valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
+        valeurs={transcriptionValeurs}
       />
     </div>
   );

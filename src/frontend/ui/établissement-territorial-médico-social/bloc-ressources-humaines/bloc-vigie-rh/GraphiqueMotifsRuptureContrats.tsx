@@ -33,6 +33,8 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
     return { donneesEffectifs, donneesEffectifsRef, lesMotifsQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
+  const transcriptionIdentifiants = showRefValues ? [wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF] : [wording.MOTIFS_RUPTURE_CONTRAT];
+
   return (
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
@@ -40,7 +42,7 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
       epaisseur="FIN"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      identifiants={[wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF]}
+      identifiants={transcriptionIdentifiants}
       libelles={blocVigieRHViewModel.lesLibellesMotifsRupture}
       nomGraph={nomGraph}
       refsManquants={lesMotifsQuiManquentDeRef}

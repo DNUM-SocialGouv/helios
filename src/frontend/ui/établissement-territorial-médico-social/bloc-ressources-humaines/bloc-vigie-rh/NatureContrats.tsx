@@ -125,7 +125,13 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
   const series: HistogrammeComparaisonVerticalAvecRefSerie[] = natures.map((natureLibelle, index) => {
     const couleur = palette.length > 0 ? palette[index % palette.length] : couleurParDefaut;
     const valeurs = categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectif ?? null);
-    const valeursRef = showRefValues ? categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectifRef ?? null) : [];
+    if (!showRefValues)
+      return {
+        label: natureLibelle,
+        valeurs,
+        couleurHistogramme: couleur,
+      };
+    const valeursRef = categories.map(({ key }) => groupedByCategorie[key]?.[natureLibelle]?.effectifRef ?? null);
 
     return {
       label: natureLibelle,
@@ -143,7 +149,7 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
 function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: HistogrammeComparaisonVerticalAvecRefSerie[], libelles: string[]) {
   const valeursRefManquantes: string[] = [];
   for (const serie of series) {
-    for (const [index, valeur] of serie[typeValeur].entries()) {
+    for (const [index, valeur] of serie[typeValeur]?.entries() ?? []) {
       if (typeof valeur !== "number" || Number.isNaN(valeur)) {
         const annee = libelles[index];
         const libelleComplet = `${serie.label} - ${annee}`;
@@ -168,8 +174,8 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
   }, [libelles, series]);
 
   const transcriptionIdentifiants = useMemo(
-    () => natures.flatMap((natureLibelle) => [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`]),
-    [natures, wording.MOYENNE_REF],
+    () => natures.flatMap((natureLibelle) => showRefValues ? [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`] : [natureLibelle]),
+    [natures, wording.MOYENNE_REF, showRefValues],
   );
 
   return (
@@ -206,8 +212,8 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
   }, [libelles, series]);
 
   const transcriptionIdentifiants = useMemo(
-    () => natures.flatMap((natureLibelle) => [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`]),
-    [natures, wording.MOYENNE_REF],
+    () => natures.flatMap((natureLibelle) => showRefValues ? [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`] : [natureLibelle]),
+    [natures, wording.MOYENNE_REF, showRefValues],
   );
 
   return (

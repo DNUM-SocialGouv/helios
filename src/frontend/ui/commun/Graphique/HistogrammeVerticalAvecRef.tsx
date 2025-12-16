@@ -223,7 +223,7 @@ const HistogrammeVerticalAvecRef = ({
         identifiants={identifiants}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={[transcriptionValeurs, transcriptionValeursRef]}
+        valeurs={showRefValues ? [transcriptionValeurs, transcriptionValeursRef] : [transcriptionValeurs]}
       />
     </>
   );

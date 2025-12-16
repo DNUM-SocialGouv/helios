@@ -300,6 +300,11 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
     ],
   };
 
+  const transcriptionIdentifiantsRef = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF];
+  const transcriptionIdentifiants = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_FEMMES];
+  const transcriptionValeursRef = [effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef];
+  const transcriptionValeurs = [effectifHomme, effectifFemme];
+
   return (
     <>
       <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
@@ -391,10 +396,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         entêteLibellé={wording.TRANCHE_AGE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF]}
+        identifiants={showRefValues ? transcriptionIdentifiantsRef : transcriptionIdentifiants}
         libellés={labels}
         nomGraph={wording.PYRAMIDE_DES_AGES}
-        valeurs={[effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef]}
+        valeurs={showRefValues ? transcriptionValeursRef : transcriptionValeurs}
       />
     </>
   );

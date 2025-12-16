@@ -309,6 +309,14 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     },
   };
 
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
+    : [wording.DEPARTS, wording.EMBAUCHES];
+
+  const transcriptionValeurs = showRefValues
+    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
@@ -344,10 +352,10 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
+        identifiants={transcriptionIdentifiants}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
-        valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
+        valeurs={transcriptionValeurs}
       />
     </div>
   );

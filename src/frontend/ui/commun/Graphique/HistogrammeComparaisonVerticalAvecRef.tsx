@@ -13,7 +13,7 @@ import { Transcription } from "../Transcription/Transcription";
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
   label: string;
   valeurs: (number | null)[];
-  valeursRef: (number | null)[];
+  valeursRef?: (number | null)[];
   couleurHistogramme: CouleurHistogramme;
   datalabelColor?: string;
 }>;
@@ -91,7 +91,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   };
 
   for (const serie of series) {
-    referencesParLibelle[serie.label] = serie.valeursRef;
+    referencesParLibelle[serie.label] = serie.valeursRef ?? [];
     valeursParLibelle[serie.label] = serie.valeurs;
   }
 
@@ -290,8 +290,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const valeursTranscription: (string | null)[][] = [];
   for (const serie of series) {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
-    const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
-    valeursTranscription.push(valeursFormatees, refsFormatees);
+    const refsFormatees = (serie.valeursRef ?? []).map((valeur) => formatValeur(valeur));
+    if (!showRefValues) {
+      valeursTranscription.push(valeursFormatees)
+    } else {
+      valeursTranscription.push(valeursFormatees, refsFormatees);
+
+    }
   }
 
   const transcriptionIdentifiants =
