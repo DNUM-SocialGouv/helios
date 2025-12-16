@@ -36,6 +36,7 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
       enteteLibelle={wording.MOTIF}
+      epaisseur="FIN"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
       identifiants={[wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF]}

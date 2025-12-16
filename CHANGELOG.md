@@ -11,6 +11,14 @@
 - hel-912: [Comparaison] Selection des indicateurs SAN
 - hel-913: [Comparaison] Selection des indicateurs SMS
 - hel-914: [Comparaison] Selection des indicateurs EJ
+- vr-117: RU Ajustements Titres/ légendes DVZ
+- vr-115: AUDIT Ajustements Pyramide des âges
+- vr-112: AUDIT Echelle tronquée
+- vr-111: AUDIT Display VigieRH
+- vr-105: Transcription Vignettes
+- vr-102: Cohérence affichage temporelle vue T/ vue A
+- vr-64: AJUSTEM Front Top indicateur clé
+- vr-63: DVIZ Top Indicateur clé - CDD courts 
 
 ## [1.7.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.2...release/1.7.3) (2025-12-11)
 

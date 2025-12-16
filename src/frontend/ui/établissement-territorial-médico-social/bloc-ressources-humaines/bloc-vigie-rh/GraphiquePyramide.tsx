@@ -2,7 +2,9 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Titl
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { couleurDesTraitsRefHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -199,8 +201,8 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: false,
-    indexAxis: "y",
+    animation: false as const,
+    indexAxis: "y" as const,
     scales: {
       x: {
         border: {
@@ -266,12 +268,46 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
     },
   };
 
+  const labelPlugin = {
+    id: "labelPlugin",
+    afterDraw: (chart: ChartJS) => {
+      const { ctx, chartArea: { width, left } } = chart;
+      const datasetMeta = chart.getDatasetMeta(0);
 
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "12px Marianne";
+      ctx.fillStyle = "#000";
+
+      datasetMeta.data.forEach((bar: any, index: number) => {
+        const label = labels[index];
+        ctx.fillText(label, left + width / 2, bar.y);
+      });
+      ctx.restore();
+    }
+  };
+
+  const middleData = {
+    labels,
+    datasets: [
+      {
+        data: new Array(labels.length).fill(0),
+        backgroundColor: "transparent",
+        borderWidth: 0,
+      },
+    ],
+  };
 
   return (
     <>
-      <div className="fr-grid-row" style={{ paddingRight: "50px", minHeight: "220px" }}>
-        <div className="fr-col-6">
+      <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
+        <div className="fr-col-5" style={{ textAlign: "center", fontWeight: "bold" }}>Hommes</div>
+        <div className="fr-col-2" style={{ textAlign: "center", fontWeight: "bold" }}></div>
+        <div className="fr-col-5" style={{ textAlign: "center", fontWeight: "bold" }}>Femmes</div>
+      </div>
+      <div className="fr-grid-row" style={{ height: "300px", alignItems: "stretch" }}>
+        <div className="fr-col-5">
           <Bar
             // @ts-ignore
             data={menData}
@@ -282,22 +318,38 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 // @ts-ignore
                 x: {
                   ...options.scales.x,
+                  display: false,
                   reverse: true,
-                  title: {
-                    align: "center",
-                    color: "#000",
-                    display: true,
-                    font: { weight: "bold" },
-                    text: "Hommes",
-                  },
                 },
-                y: { ...options.scales.y, ticks: { ...options.scales.y.ticks, color: "white" } },
+                y: { ...options.scales.y, display: false },
               }
             }}
             plugins={[verticalLinePlugin]}
           />
         </div>
-        <div className="fr-col-6">
+        <div className="fr-col-2">
+          <Bar
+            data={middleData}
+            options={{
+              ...options,
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+                datalabels: { display: false },
+              },
+              scales: {
+                x: { display: false },
+                y: {
+                  ...options.scales.y,
+                  display: false,
+                },
+              },
+              events: [],
+            }}
+            plugins={[labelPlugin]}
+          />
+        </div>
+        <div className="fr-col-5">
           <Bar
             data={womenData}
             options={{
@@ -307,20 +359,22 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 // @ts-ignore
                 x: {
                   ...options.scales.x,
-                  title: {
-                    align: "center",
-                    color: "#000",
-                    display: true,
-                    font: { weight: "bold" },
-                    text: "Femmes",
-                  },
+                  display: false,
                 },
+                y: { ...options.scales.y, display: false },
               },
             }}
             plugins={[verticalLinePlugin]}
           />
         </div>
       </div>
+      <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+
+        ]}
+      />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

@@ -46,6 +46,8 @@ const HistogrammeVerticalAvecRef = ({
   const transcriptionValeurs = valeurs.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
   const transcriptionValeursRef = valeursRef.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
 
+  const anneeEnCours = String(new Date().getFullYear());
+
   const data: ChartData = {
     datasets: [
       {
@@ -124,7 +126,7 @@ const HistogrammeVerticalAvecRef = ({
           color: '#000',
           callback: (_tickValue, index) => tickFormatter(type, index),
           font: function (context: any) {
-            if (context.index === libelles.length - 1) {
+            if (context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: 'bold' };
             }
             return {};
@@ -153,6 +155,8 @@ const HistogrammeVerticalAvecRef = ({
       },
       y: {
         display: false,
+        min: 0,
+        suggestedMax: Math.max(50, ...valeurs.filter((v) => v !== null).filter((v) => Number.isFinite(v))),
       },
     }
   }
