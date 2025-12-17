@@ -323,6 +323,11 @@ const filterActiviteMedicoSocial = (activites: any[], profil: any) => {
       defaultValue: { dateMiseÀJourSource: "", value: "" }
     },
     {
+      field: 'tauxOccupationGlobal',
+      condition: profil.tauxOccupationGlobal === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
       field: 'tauxOccupationExternat',
       condition: profil.tauxOccupationExternat === "ok",
       defaultValue: { value: "" }

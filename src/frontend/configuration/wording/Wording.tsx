@@ -179,6 +179,7 @@ export interface Wording {
   readonly TAUX_OCCUPATION_INTERNAT: string;
   readonly TAUX_OCCUPATION_AUTRE: string;
   readonly TAUX_OCCUPATION_SEANCES: string;
+  readonly TAUX_OCCUPATION_GLOBAL: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
