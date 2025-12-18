@@ -333,7 +333,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesValeursReferenceManquantes.length > 0 && (
+      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>

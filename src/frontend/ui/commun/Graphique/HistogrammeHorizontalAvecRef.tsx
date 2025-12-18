@@ -169,7 +169,7 @@ const HistogrammeHorizontalAvecRef = ({
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
       />}
-      {refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
+      {showRefValues && refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
       <Transcription
         entêteLibellé={enteteLibelle}
         etabFiness={etabFiness}

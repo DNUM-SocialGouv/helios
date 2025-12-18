@@ -214,7 +214,7 @@ const HistogrammeVerticalAvecRef = ({
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesDeValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesDeValeursDeReferenceManquantes.length > 0 && (
+      {showRefValues && libellesDeValeursDeReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesDeValeursDeReferenceManquantes.join(", ")}`}
         </MiseEnExergue>

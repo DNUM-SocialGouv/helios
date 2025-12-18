@@ -325,7 +325,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}
-      {valeursRefManquantes.length > 0 && (
+      {showRefValues && valeursRefManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${valeursRefManquantes.join(", ")}`}</MiseEnExergue>
       )}
       {showRefValues && <ColorLabel
