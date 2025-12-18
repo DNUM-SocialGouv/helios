@@ -19,6 +19,7 @@ export class ÉtablissementTerritorialActivitéModelTestBuilder {
     activitéMédicoSocialModel.fileActivePersonnesAccompagnées = champsSurchargés?.fileActivePersonnesAccompagnées || 80;
     activitéMédicoSocialModel.nombreMoyenJournéesAbsencePersonnesAccompagnées = champsSurchargés?.nombreMoyenJournéesAbsencePersonnesAccompagnées || 80;
     activitéMédicoSocialModel.duréeMoyenneSéjourAccompagnementPersonnesSorties = champsSurchargés?.duréeMoyenneSéjourAccompagnementPersonnesSorties || 80;
+    activitéMédicoSocialModel.tauxOccupationGlobal = champsSurchargés?.tauxOccupationGlobal || 80;
     return activitéMédicoSocialModel;
   }
 

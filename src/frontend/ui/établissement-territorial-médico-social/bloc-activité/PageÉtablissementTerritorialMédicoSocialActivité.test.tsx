@@ -201,6 +201,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
               tauxOccupationSeances: {
                 value: valeurIndicateur1,
               },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur1,
+              },
             },
             {
               année: 2021,
@@ -246,6 +250,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
                 value: valeurIndicateur2,
               },
               tauxOccupationSeances: {
+                value: valeurIndicateur2,
+              },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur2,
               },
             },
@@ -295,6 +303,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
               tauxOccupationSeances: {
                 value: valeurIndicateur3,
               },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur3,
+              },
             },
           ],
           autorisationsEtCapacités: ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.autorisations,
@@ -315,7 +327,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             motifsRuptureContratLibelles: [],
             natureContratsAnnuel: [],
             natureContratsTrimestriel: [],
-            echelleTemporelle:{}
+            echelleTemporelle: {}
           },
           qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
           autorisations: autorisationsMockData,
@@ -402,6 +414,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
               tauxOccupationSeances: {
                 value: valeurIndicateur1,
               },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur1,
+              },
             },
             {
               année: 2021,
@@ -449,6 +465,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
               tauxOccupationSeances: {
                 value: valeurIndicateur2,
               },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
+                value: valeurIndicateur2,
+              },
             },
             {
               année: 2022,
@@ -494,6 +514,10 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
                 value: valeurIndicateur3,
               },
               tauxOccupationSeances: {
+                value: valeurIndicateur3,
+              },
+              tauxOccupationGlobal: {
+                dateMiseÀJourSource: "2021-07-07",
                 value: valeurIndicateur3,
               },
             },
@@ -550,6 +574,7 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
     // [wording.TAUX_OCCUPATION_INTERNAT, 6, "CNSA", wording.CNSA_TITLE],
     [wording.TAUX_OCCUPATION_AUTRE, 3, "CNSA", wording.CNSA_TITLE],
     [wording.TAUX_OCCUPATION_SEANCES, 4, "CNSA", wording.CNSA_TITLE],
+    [wording.TAUX_OCCUPATION_GLOBAL, 9, "CNSA", wording.CNSA_TITLE],
   ])(
     'affiche le contenu de l’info bulle après avoir cliqué sur le bouton "détails" (%s)',
     (titreSection, identifiant, sourceOrigineAttendue, abréviationSourceOrigineAttendue) => {
