@@ -11,8 +11,6 @@ import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import { ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties } from "../InfoBulle/ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties";
 import { ContenuFileActivePersonnesAccompagnées } from "../InfoBulle/ContenuFileActivePersonnesAccompagnées";
 import { ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées } from "../InfoBulle/ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées";
-import { ContenuTauxOccupationGlobal } from "../InfoBulle/ContenuTauxOccupationGlobal";
-import { ContenuTauxRéalisationActivité } from "../InfoBulle/ContenuTauxRéalisationActivité";
 
 type BlocActivitéMédicoSocialProps = Readonly<{
   etabFiness: string;
@@ -76,38 +74,6 @@ export const BlocActivitéMédicoSocial = ({ etabFiness, etabTitle, categorie, �
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
         {estEHPAD && <IndicateursOccupationEHPAD etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
         {estEHPAD ? <></> : <IndicateursOccupationESMS etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialActivitéMédicoSocialViewModel={établissementTerritorialActivitéMédicoSocialViewModel} />}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxRéalisationActivité
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
-                source={wording.TDB_PERF}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
-            identifiant="activite-5"
-            nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
-            source={wording.TDB_PERF}
-          >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivitéHistrogramme(etabFiness, etabTitle)}
-          </IndicateurGraphique>
-        ) : <></>}
-        {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationGlobalEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationGlobalEstIlAutorisé ? (
-          <IndicateurGraphique
-            contenuInfoBulle={
-              <ContenuTauxOccupationGlobal
-                dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationGlobal}
-                source={wording.CNSA}
-              />
-            }
-            dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationGlobal}
-            identifiant="activite-9"
-            nomDeLIndicateur={wording.TAUX_OCCUPATION_GLOBAL}
-            source={wording.CNSA}
-          >
-            {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationGlobalHistrogramme(etabFiness, etabTitle)}
-          </IndicateurGraphique>
-        ) : <></>}
         {établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleRenseignée && établissementTerritorialActivitéMédicoSocialViewModel.laFileActivePersonnesAccompagnéesEstElleAutorisé ? (
           <IndicateurGraphique
             contenuInfoBulle={
