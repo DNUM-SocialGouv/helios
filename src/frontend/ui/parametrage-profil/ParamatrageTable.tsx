@@ -15,9 +15,10 @@ type ProfileTableProps = Readonly<{
   creating: boolean;
   name: string;
   profileId?: number;
+  onEmptyLabel?: () => void;
 }>;
 
-export const ProfileTable = ({ codeValue, profileValue, creating, name, profileId }: ProfileTableProps) => {
+export const ProfileTable = ({ codeValue, profileValue, creating, name, profileId, onEmptyLabel = () => { } }: ProfileTableProps) => {
   const { wording, paths } = useDependencies();
   const { data } = useSession();
   const router = useRouter();
@@ -42,18 +43,23 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
 
   const saveButtonClick = () => {
     if (creating) {
-      saveProfile(userId, codeValue, {
-        institution: {
-          profilEJ: editableInstitutionEJValues,
-          profilMédicoSocial: editableInstitutionETMSValues,
-          profilETSanitaire: editableInstitutionETSANValues,
-        },
-        autreRegion: {
-          profilEJ: editableAutreRegionEJValues,
-          profilMédicoSocial: editableAutreRegionETMSValues,
-          profilETSanitaire: editableAutreRegionETSANValues,
-        },
-      });
+      if (codeValue.trim() === "") {
+        onEmptyLabel();
+        window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll en haut de page pour voir l'erreur
+      } else {
+        saveProfile(userId, codeValue, {
+          institution: {
+            profilEJ: editableInstitutionEJValues,
+            profilMédicoSocial: editableInstitutionETMSValues,
+            profilETSanitaire: editableInstitutionETSANValues,
+          },
+          autreRegion: {
+            profilEJ: editableAutreRegionEJValues,
+            profilMédicoSocial: editableAutreRegionETMSValues,
+            profilETSanitaire: editableAutreRegionETSANValues,
+          },
+        });
+      }
     } else {
       updateProfile(userId, codeValue, {
         institution: {

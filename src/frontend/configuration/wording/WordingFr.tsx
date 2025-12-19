@@ -635,6 +635,7 @@ export class WordingFr implements Wording {
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code";
   readonly PROFILE_TITLE: string = "Libellé de l'autorisation";
+  readonly NEW_PROFILE_LABEL_MANDATORY: string = "Veuillez renseigner un libellé.";
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
   readonly PROJECT_TEAM: string = "Équipe projet";
 
