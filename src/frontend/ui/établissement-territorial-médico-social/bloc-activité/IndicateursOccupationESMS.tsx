@@ -95,7 +95,7 @@ export const IndicateursOccupationESMS = ({ etabFiness, etabTitle, établissemen
             />
           }
           dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationGlobal}
-          identifiant="activite-9"
+          identifiant="activite-5"
           nomDeLIndicateur={wording.TAUX_OCCUPATION_GLOBAL}
           source={wording.CNSA}
         >
