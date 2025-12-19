@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "private": true,
   "scripts": {
     "amibroken": "yarn deadcode && yarn lint && yarn typecheck && yarn test && yarn build",
@@ -152,15 +152,18 @@
     "joi": "^17.13.3",
     "json-diff-ts": "^4.8.2",
     "jsonwebtoken": "^9.0.2",
+    "katex": "^0.16.27",
     "next": "14.2.30",
     "next-auth": "^4.24.9",
     "nuqs": "^1.20.0",
     "papaparse": "^5.5.2",
     "pg": "^8.7.3",
+    "prop-types": "^15.8.1",
     "react": "18.3.1",
     "react-chartjs-2": "^4.2.0",
     "react-dom": "18.3.1",
     "react-emojis": "^1.0.6",
+    "react-katex": "^3.1.0",
     "react-to-print": "^2.15.1",
     "ssh2": "^1.9.0",
     "ssh2-sftp-client": "^8.0.0",
@@ -183,8 +186,10 @@
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "22.13.5",
+    "@types/prop-types": "^15",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.1",
+    "@types/react-katex": "^3",
     "@types/ssh2": "^0.5.52",
     "@types/ssh2-sftp-client": "^7.0.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -213,5 +218,5 @@
   "engines": {
     "node": "22.14"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0+sha512.5383cc12567a95f1d668fbe762dfe0075c595b4bfff433be478dbbe24e05251a8e8c3eb992a986667c1d53b6c3a9c85b8398c35a960587fbd9fa3a0915406728"
 }
