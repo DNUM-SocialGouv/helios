@@ -2497,6 +2497,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prop-types@npm:^15":
+  version: 15.7.15
+  resolution: "@types/prop-types@npm:15.7.15"
+  checksum: 10/31aa2f59b28f24da6fb4f1d70807dae2aedfce090ec63eaf9ea01727a9533ef6eaf017de5bff99fbccad7d1c9e644f52c6c2ba30869465dd22b1a7221c29f356
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:18.3.1":
   version: 18.3.1
   resolution: "@types/react-dom@npm:18.3.1"
@@ -6807,6 +6814,7 @@ __metadata:
     "@types/jsonwebtoken": "npm:^9.0.2"
     "@types/node": "npm:22.13.5"
     "@types/papaparse": "npm:^5.3.15"
+    "@types/prop-types": "npm:^15"
     "@types/react": "npm:18.3.1"
     "@types/react-dom": "npm:18.3.1"
     "@types/react-katex": "npm:^3"
@@ -6850,6 +6858,7 @@ __metadata:
     papaparse: "npm:^5.5.2"
     pg: "npm:^8.7.3"
     prettier: "npm:^3.5.2"
+    prop-types: "npm:^15.8.1"
     react: "npm:18.3.1"
     react-chartjs-2: "npm:^4.2.0"
     react-dom: "npm:18.3.1"
