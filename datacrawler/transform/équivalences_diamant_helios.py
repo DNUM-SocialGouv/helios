@@ -20,6 +20,7 @@ class ColonneHelios(TypedDict):
     "Taux d'occupation Semi-internat Autres ESMS": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
     "Taux d'occupation Internat Autres ESMS": ColonneHelios(nom="taux_occupation_internat", type=float),
     "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": ColonneHelios(nom="taux_occupation_autre", type=float),
+    "Taux d'occupation global ERRD": ColonneHelios(nom="taux_occupation_global_errd", type=float),
     "Taux d'occupation global Autres ESMS": ColonneHelios(nom="taux_occupation_global_autres_esms", type=float),
     "Etat taux d'occupation global Autres ESMS": ColonneHelios(nom="etat_taux_occupation_global_autres_esms", type=str),
 }

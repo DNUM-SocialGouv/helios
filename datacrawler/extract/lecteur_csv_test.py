@@ -116,6 +116,27 @@ class TestLisLeFichierCsv:
                         NaN,
                         NaN,
                     ],
+                    "Taux d'occupation global ERRD": [
+                        1.0,
+                        2.0,
+                        3.0,
+                        4.0,
+                        5.0,
+                        6.0,
+                        7.0,
+                        8.0,
+                    ],
+                    "Taux d'occupation global Autres ESMS": [
+                        1.0,
+                        2.0,
+                        3.0,
+                        4.0,
+                        5.0,
+                        6.0,
+                        7.0,
+                        8.0,
+                    ],
+                    "Etat taux d'occupation global Autres ESMS": ["KO", None, "KO", None, "KO", None, "KO", None],
                 }
             ),
         )

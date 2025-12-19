@@ -19,93 +19,99 @@ from datacrawler.test_helpers import (
     supprime_les_données_des_tables,
     CHEMIN_FICHIER_ANN_MS_TDP_ET,
     CHEMIN_FICHIER_ANN_CA_EJ_ET,
-    CHEMIN_FICHIER_ANN_ERRD_EJ_ET
+    CHEMIN_FICHIER_ANN_ERRD_EJ_ET,
 )
 
 data_frame_attendu = pd.DataFrame(
-            {
-                "annee": [2018, 2019, 2020, 2021],
-                "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010003598"],
-                "taux_occupation_accueil_de_jour": [
-                    0.48012820512820514,
-                    0.36153846153846153,
-                    0.33974358974358976,
-                    0.33974358974358976,
-                ],
-                "taux_occupation_en_hebergement_temporaire": [
-                    0.93698630136986305,
-                    0.25136612021857924,
-                    0.75890410958904109,
-                    0.75890410958904109,
-                ],
-                "taux_occupation_en_hebergement_permanent": [
-                    0.99779299847793002,
-                    0.93245060949978986,
-                    0.99023972602739729,
-                    0.99023972602739729,
-                ],
-                "taux_realisation_activite": [
-                    0.899300000000000000000000000,
-                    1.018200000000000000000000000,
-                    0.899300000000000000000000000,
-                    0.899300000000000000000000000,
-                ],
-                "file_active_personnes_accompagnees": [
-                    121.0,
-                    119.0,
-                    121.0,
-                    121.0,
-                ],
-                "nombre_moyen_journees_absence_personnes_accompagnees": [
-                    17.86,
-                    18.52,
-                    17.86,
-                    17.86,
-                ],
-                "duree_moyenne_sejour_accompagnement_personnes_sorties": [
-                    2359.81,
-                    2226.21,
-                    2352.81,
-                    2351.81,
-                ],
-                "taux_occupation_externat": [
-                     1.000817111271329,
-                    1.000817111271329,
-                    0.926075462629176,
-                    0.926075462629176,
-                ],
-                "taux_occupation_semi_internat": [
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
-                ],
-                "taux_occupation_internat": [
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
-                ],
-                "taux_occupation_autre": [
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
-                ],
-                "taux_occupation_seances": [
-                    NaN,
-                    NaN,
-                    NaN,
-                    0.79774305555555558,
-
-                ]
-            }
-        )
+    {
+        "annee": [2018, 2019, 2020, 2021],
+        "numero_finess_etablissement_territorial": ["010003598", "010003598", "010003598", "010003598"],
+        "taux_occupation_accueil_de_jour": [
+            0.48012820512820514,
+            0.36153846153846153,
+            0.33974358974358976,
+            0.33974358974358976,
+        ],
+        "taux_occupation_en_hebergement_temporaire": [
+            0.93698630136986305,
+            0.25136612021857924,
+            0.75890410958904109,
+            0.75890410958904109,
+        ],
+        "taux_occupation_en_hebergement_permanent": [
+            0.99779299847793002,
+            0.93245060949978986,
+            0.99023972602739729,
+            0.99023972602739729,
+        ],
+        "taux_realisation_activite": [
+            0.899300000000000000000000000,
+            1.018200000000000000000000000,
+            0.899300000000000000000000000,
+            0.899300000000000000000000000,
+        ],
+        "file_active_personnes_accompagnees": [
+            121.0,
+            119.0,
+            121.0,
+            121.0,
+        ],
+        "nombre_moyen_journees_absence_personnes_accompagnees": [
+            17.86,
+            18.52,
+            17.86,
+            17.86,
+        ],
+        "duree_moyenne_sejour_accompagnement_personnes_sorties": [
+            2359.81,
+            2226.21,
+            2352.81,
+            2351.81,
+        ],
+        "taux_occupation_externat": [
+            1.000817111271329,
+            1.000817111271329,
+            0.926075462629176,
+            0.926075462629176,
+        ],
+        "taux_occupation_semi_internat": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+        ],
+        "taux_occupation_internat": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+        ],
+        "taux_occupation_autre": [
+            NaN,
+            NaN,
+            NaN,
+            NaN,
+        ],
+        "taux_occupation_seances": [
+            NaN,
+            NaN,
+            NaN,
+            0.79774305555555558,
+        ],
+        "taux_occupation_global": [
+            1.0,
+            2.0,
+            3.0,
+            1.0,
+        ],
+    }
+)
 
 
 class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
+
     @freeze_time("2022-01-14")
     def test_sauvegarde_les_cinqs_dernieres_annees_dans_une_table_vide(self) -> None:
         # GIVEN
@@ -191,11 +197,15 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
                 "file_active_personnes_accompagnees": [121.0, NaN],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [17.86, 18.52],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
-                 "taux_occupation_externat": [1.000817111271329,1.000817111271329,],
-                "taux_occupation_semi_internat": [NaN,NaN],
-                "taux_occupation_internat": [NaN,NaN],
-                "taux_occupation_autre": [NaN,NaN],
-                "taux_occupation_seances": [NaN,NaN],
+                "taux_occupation_externat": [
+                    1.000817111271329,
+                    1.000817111271329,
+                ],
+                "taux_occupation_semi_internat": [NaN, NaN],
+                "taux_occupation_internat": [NaN, NaN],
+                "taux_occupation_autre": [NaN, NaN],
+                "taux_occupation_seances": [NaN, NaN],
+                "taux_occupation_global": [NaN, 2.0],
             }
         )
         sauvegarde_une_activité_en_base(table_activite_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
