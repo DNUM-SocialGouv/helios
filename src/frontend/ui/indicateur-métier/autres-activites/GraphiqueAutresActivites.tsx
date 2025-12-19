@@ -25,7 +25,7 @@ export const GraphiqueAutresActivites = ({ entiteJuridiqueAutorisations }: Graph
       nomDeLIndicateur={wording.AUTRES_ACTIVITÉS}
       source={Sources(wording.FINESS, wording.ARHGOS)}
     >
-      <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} />
+      <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} type="autorisation-activites" />
     </IndicateurGraphique>
   );
 };

@@ -18,21 +18,22 @@ import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export type TagMultiNiveauxProps = {
   activites: AutorisationActivites[];
+  type: string;
 };
 
 export type TagMultiNiveauxAmmProps = {
   activites: AutorisationDActivitesAmm[];
 };
 
-export const AutorisationsTagMultiNiveaux = ({ activites }: TagMultiNiveauxProps): ReactElement => {
+export const AutorisationsTagMultiNiveaux = ({ activites, type }: TagMultiNiveauxProps): ReactElement => {
   return (
     <ul>
       {activites.map((activité) => (
         <li key={`activité-${activité.code}`}>
-          <TagCliquable for={`autresActivités-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
-          <ul className={"fr-collapse niveau1 " + style["tag-niveau1"]} id={`autresActivités-accordion-${activité.code}`}>
+          <TagCliquable for={`${type}-accordion-${activité.code}`} titre={`${activité.libelle} [${activité.code}]`} />
+          <ul className={"fr-collapse niveau1 " + style["tag-niveau1"]} id={`${type}-accordion-${activité.code}`}>
             {activité.modalites.map((modalités) => (
-              <Modalite codeActivite={activité.code} key={`modalité-${modalités.code}`} modalité={modalités} />
+              <Modalite codeActivite={activité.code} key={`modalité-${modalités.code}`} modalité={modalités} type={type} />
             ))}
           </ul>
         </li>
@@ -78,13 +79,13 @@ const AfficherLesEt = ({ for: identifiant }: AfficherLesEtProps) => {
   );
 };
 
-const Modalite = ({ modalité, codeActivite }: { codeActivite: string; modalité: ModaliteType }): ReactElement => {
+const Modalite = ({ modalité, codeActivite, type }: { codeActivite: string; modalité: ModaliteType, type: string }): ReactElement => {
   return (
     <li>
-      <TagCliquable for={`autorisations-accordion-${codeActivite}-${modalité.code}`} texteGras={false} titre={`${modalité.libelle} [${modalité.code}]`} />
-      <ul className={"fr-collapse niveau2 " + style["modalites"]} id={`autorisations-accordion-${codeActivite}-${modalité.code}`}>
+      <TagCliquable for={`${type}-accordion-${codeActivite}-${modalité.code}`} texteGras={false} titre={`${modalité.libelle} [${modalité.code}]`} />
+      <ul className={"fr-collapse niveau2 " + style["modalites"]} id={`${type}-accordion-${codeActivite}-${modalité.code}`}>
         {modalité.formes.map((forme) => (
-          <Forme codeActivite={codeActivite} codeModalite={modalité.code} forme={forme} key={`forme-${forme.code}`} />
+          <Forme codeActivite={codeActivite} codeModalite={modalité.code} forme={forme} key={`forme-${forme.code}`} type={type} />
         ))}
       </ul>
     </li>
@@ -139,12 +140,12 @@ const PratiqueDeclarationAmm = ({ codeModalite, codeMention, declaration, pratiq
 };
 
 
-const Forme = ({ codeModalite, forme, codeActivite }: { codeModalite: string; forme: FormeType; codeActivite: string }): ReactElement => {
+const Forme = ({ codeModalite, forme, codeActivite, type }: { codeModalite: string; forme: FormeType; codeActivite: string, type: string }): ReactElement => {
   return (
     <li>
       <Tag label={`${forme.libelle} [${forme.code}]`} size={TAG_SIZE.SM} withArrow />
-      <AfficherLesEt for={`autorisations-accordion-${codeActivite}-${codeModalite}-${forme.code}`} />
-      <ul className={"fr-collapse niveau3 " + style["liste-etablissements"]} id={`autorisations-accordion-${codeActivite}-${codeModalite}-${forme.code}`}>
+      <AfficherLesEt for={`${type}-accordion-${codeActivite}-${codeModalite}-${forme.code}`} />
+      <ul className={"fr-collapse niveau3 " + style["liste-etablissements"]} id={`${type}-accordion-${codeActivite}-${codeModalite}-${forme.code}`}>
         {forme.autorisationEtablissements.map((autorisationEtablissement) => (
           <AutorisationEtablissement
             autorisations={autorisationEtablissement.autorisations}
