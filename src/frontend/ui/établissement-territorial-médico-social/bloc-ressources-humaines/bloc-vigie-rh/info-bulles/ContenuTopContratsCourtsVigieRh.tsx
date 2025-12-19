@@ -1,34 +1,37 @@
-import { ContenuVigieRhInfoBulleProps, formaterMiseAJourEtDonnees } from "./ContenuVigieRhInfoBulleProps";
+import { ContenuVigieRhInfoBulleProps } from "./ContenuVigieRhInfoBulleProps";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
-export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, periodeGlissante }: ContenuVigieRhInfoBulleProps) => {
+export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, source }: ContenuVigieRhInfoBulleProps) => {
   const { wording } = useDependencies();
-  const periode = periodeGlissante ?? wording.NON_RENSEIGNÉ;
 
   return (
     <>
-      <p>{formaterMiseAJourEtDonnees(wording, dateDeMiseAJour, dateDonneesArretees)}</p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          <span className="fr-text--bold">Définition :</span>
+          Part des CDD ayant eu une durée effective strictement inférieure à 6
+          mois parmi l’ensemble des CDD. Le décompte est réalisé pour les CDD
+          terminés durant les 12 derniers mois glissants.
         </p>
-        <p>Part des CDD &lt; 6 mois sur le total des CDD. Pour chaque durée, le décompte est réalisé sur les <span className="fr-text--bold"> 12 derniers mois glissants. </span> </p>
-        <p>Permet de repérer la dépendance aux contrats ultra-courts.  </p>
+        <p>
+          Permet de repérer la dépendance aux contrats courts.
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> sur 12 derniers mois glissants ({periode})
-        </p>
-      </section>
-      <section aria-label={wording.SOURCES}>
-        <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative)
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          La variation en pourcentage indique l’évolution du taux de contrat court par rapport à la même période de l’année précédente, permettant de
-          suivre la tendance d’évolution (croissance, baisse).
+          La variation indique l’évolution absolue (en points de pourcentage) de la
+          part des contrats courts par rapport à la même période de l’année
+          précédente.
+        </p>
+      </section>
+      <section aria-label={wording.SOURCES}>
+        <p>
+          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>
