@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
@@ -18,7 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
@@ -33,7 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
@@ -64,7 +70,9 @@ jobs:
         side: ['back', 'front']
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
@@ -79,7 +87,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
@@ -112,7 +122,9 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/setup-node@v6
         with:
           cache: yarn
           node-version-file: package.json
