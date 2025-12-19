@@ -405,7 +405,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
-  readonly VIGIE_RH: ReactElement;
+  readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
 
 

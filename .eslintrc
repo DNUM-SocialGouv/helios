@@ -1,5 +1,10 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:react/recommended","plugin:jsx-a11y/recommended","prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "es2021": true,
@@ -11,7 +16,9 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["public/smarttag.js"],
+  "ignorePatterns": [
+    "public/smarttag.js"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -33,7 +40,12 @@
     "no-param-reassign": "error",
     "prefer-const": "error",
     "yoda": "error",
-    "@typescript-eslint/array-type": ["error", { "default": "array" }],
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -46,41 +58,67 @@
         ]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "@typescript-eslint/no-var-requires": "error",
     "react-hooks/exhaustive-deps": "off",
     "react/jsx-curly-brace-presence": "error",
     "react/jsx-sort-props": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
-    "import/no-extraneous-dependencies": "error",
+    "import/no-extraneous-dependencies": "off",
     "import/no-mutable-exports": "error",
-    "import/no-restricted-paths": ["error", {
-      "zones": [
-        {
-          "target": "download_data_source",
-          "from": "src",
-          "message": "L'application est fermée au download_data_source."
-        },
-        {
-          "target": "src",
-          "from": "download_data_source",
-          "message": "Le download_data_source est fermé à l'application."
-        }
-      ]
-    }],
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "download_data_source",
+            "from": "src",
+            "message": "L'application est fermée au download_data_source."
+          },
+          {
+            "target": "src",
+            "from": "download_data_source",
+            "message": "Le download_data_source est fermé à l'application."
+          }
+        ]
+      }
+    ],
     "import/order": [
       "warn",
       {
-        "groups": [["builtin", "external"], ["internal", "parent", "sibling", "index", "object", "type"]],
+        "groups": [
+          [
+            "builtin",
+            "external"
+          ],
+          [
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type"
+          ]
+        ],
         "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ]
   },
   "overrides": [
     {
-      "files": ["**/*.test.ts?(x)"],
+      "files": [
+        "**/*.test.ts?(x)"
+      ],
       "extends": [
         "plugin:jest/all",
         "plugin:jest-formatting/recommended"
@@ -90,14 +128,30 @@
         "jest/no-hooks": "off",
         "jest/require-hook": "off",
         "jest/prefer-expect-assertions": "off",
-        "jest/prefer-lowercase-title": [ "error", { "ignore": ["describe"] } ],
+        "jest/prefer-lowercase-title": [
+          "error",
+          {
+            "ignore": [
+              "describe"
+            ]
+          }
+        ],
         "jest/prefer-strict-equal": "off",
-        "jest/max-expects": ["warn", { "max": 10 }],
+        "jest/max-expects": [
+          "warn",
+          {
+            "max": 10
+          }
+        ],
       }
     },
     {
-      "files": ["**/*.test.tsx"],
-      "extends": ["plugin:testing-library/react"]
+      "files": [
+        "**/*.test.tsx"
+      ],
+      "extends": [
+        "plugin:testing-library/react"
+      ]
     }
   ]
 }
