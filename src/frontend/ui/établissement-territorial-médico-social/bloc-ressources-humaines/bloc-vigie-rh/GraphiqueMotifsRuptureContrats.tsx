@@ -10,9 +10,10 @@ type GraphiqueMotifsRuptureContratsProps = Readonly<{
   etabTitle: string;
   nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueMotifsRuptureContratsProps) => {
+const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel, showRefValues }: GraphiqueMotifsRuptureContratsProps) => {
 
   const { wording } = useDependencies();
 
@@ -32,6 +33,8 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
     return { donneesEffectifs, donneesEffectifsRef, lesMotifsQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
+  const transcriptionIdentifiants = showRefValues ? [wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF] : [wording.MOTIFS_RUPTURE_CONTRAT];
+
   return (
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
@@ -39,11 +42,12 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
       epaisseur="FIN"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      identifiants={[wording.MOTIFS_RUPTURE_CONTRAT, wording.MOTIFS_RUPTURE_CONTRAT_REF]}
+      identifiants={transcriptionIdentifiants}
       libelles={blocVigieRHViewModel.lesLibellesMotifsRupture}
       nomGraph={nomGraph}
       refsManquants={lesMotifsQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
+      showRefValues={showRefValues}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />

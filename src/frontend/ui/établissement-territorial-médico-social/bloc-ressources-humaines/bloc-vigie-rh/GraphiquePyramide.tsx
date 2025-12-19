@@ -19,9 +19,10 @@ type PyramidChartProps = Readonly<{
   effectifHommeRef: number[];
   effectifFemme: number[];
   effectifFemmeRef: number[];
+  showRefValues: boolean;
 }>;
 
-const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
+const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, showRefValues }: PyramidChartProps) => {
   const refColor = "#929292";
 
   const { wording } = useDependencies();
@@ -139,7 +140,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       {
         label: "Men Extension",
         backgroundColor: "rgba(255,249,235,255)",
-        data: hommesExtension,
+        data: showRefValues ? hommesExtension : [],
         yAxisID: "y"
 
       },
@@ -158,7 +159,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       },
       {
         label: "Women Extension",
-        data: femmesExtension,
+        data: showRefValues ? femmesExtension : [],
         backgroundColor: "rgba(255,249,235,255)",
         yAxisID: "y"
       },
@@ -245,6 +246,9 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
 
             const value = isWomenChart ? effectifFemme[index] : effectifHomme[index];
             const refValue = isWomenChart ? effectifFemmeRef[index] : effectifHommeRef[index];
+            if (!showRefValues) {
+              return `Valeur: ${value}`;
+            }
 
             return [`Valeur: ${value}`,
             `Valeur de référence: ${refValue}`];
@@ -299,6 +303,11 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
     ],
   };
 
+  const transcriptionIdentifiantsRef = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF];
+  const transcriptionIdentifiants = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_FEMMES];
+  const transcriptionValeursRef = [effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef];
+  const transcriptionValeurs = [effectifHomme, effectifFemme];
+
   return (
     <>
       <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
@@ -324,7 +333,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 y: { ...options.scales.y, display: false },
               }
             }}
-            plugins={[verticalLinePlugin]}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
         <div className="fr-col-2">
@@ -364,23 +373,23 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 y: { ...options.scales.y, display: false },
               },
             }}
-            plugins={[verticalLinePlugin]}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
       </div>
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
 
         ]}
-      />
+      />}
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesValeursReferenceManquantes.length > 0 && (
+      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
@@ -390,10 +399,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         entêteLibellé={wording.TRANCHE_AGE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF]}
+        identifiants={showRefValues ? transcriptionIdentifiantsRef : transcriptionIdentifiants}
         libellés={labels}
         nomGraph={wording.PYRAMIDE_DES_AGES}
-        valeurs={[effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef]}
+        valeurs={showRefValues ? transcriptionValeursRef : transcriptionValeurs}
       />
     </>
   );

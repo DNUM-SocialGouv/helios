@@ -13,7 +13,7 @@ import { Transcription } from "../Transcription/Transcription";
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
   label: string;
   valeurs: (number | null)[];
-  valeursRef: (number | null)[];
+  valeursRef?: (number | null)[];
   couleurHistogramme: CouleurHistogramme;
   datalabelColor?: string;
 }>;
@@ -37,6 +37,7 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   highlightLastLabel?: boolean;
   libellesValeursManquantes?: string[];
   libellesValeursRefManquantes?: string[];
+  showRefValues: boolean;
 }>;
 
 const valeurFormateeParDefaut = (valeur: number | null): string | null => {
@@ -61,6 +62,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   highlightLastLabel = false,
   libellesValeursManquantes,
   libellesValeursRefManquantes,
+  showRefValues
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
   const { wording } = useDependencies();
   const valeursManquantes = libellesValeursManquantes ?? [];
@@ -89,7 +91,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   };
 
   for (const serie of series) {
-    referencesParLibelle[serie.label] = serie.valeursRef;
+    referencesParLibelle[serie.label] = serie.valeursRef ?? [];
     valeursParLibelle[serie.label] = serie.valeurs;
   }
 
@@ -217,11 +219,14 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           label(context: any) {
             const rawValue = context.raw;
             const valeur = typeof rawValue === "number" ? rawValue : null;
+            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
+            if (!showRefValues) {
+              return `Valeur: ${valeurText}`;
+            }
+
             const labelValue = typeof context.dataset.label === "string" ? context.dataset.label : "";
             const referenceValues = labelValue ? (referencesParLibelle[labelValue] ?? []) : [];
             const valeurRef = referenceValues[context.dataIndex] ?? null;
-
-            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
             const valeurRefText = formatValeur(valeurRef) ?? wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
@@ -288,8 +293,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const valeursTranscription: (string | null)[][] = [];
   for (const serie of series) {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
-    const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
-    valeursTranscription.push(valeursFormatees, refsFormatees);
+    const refsFormatees = (serie.valeursRef ?? []).map((valeur) => formatValeur(valeur));
+    if (!showRefValues) {
+      valeursTranscription.push(valeursFormatees)
+    } else {
+      valeursTranscription.push(valeursFormatees, refsFormatees);
+
+    }
   }
 
   const transcriptionIdentifiants =
@@ -311,19 +321,19 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
+        <Bar data={chartData} options={chartOptions} plugins={showRefValues ? [rotationRefPlugin] : []} />
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}
-      {valeursRefManquantes.length > 0 && (
+      {showRefValues && valeursRefManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${valeursRefManquantes.join(", ")}`}</MiseEnExergue>
       )}
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
-      />
+      />}
       {transcription && (
         <Transcription
           entêteLibellé={transcription.enteteLibelle}

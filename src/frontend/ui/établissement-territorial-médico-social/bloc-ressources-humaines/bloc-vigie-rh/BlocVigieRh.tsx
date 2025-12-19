@@ -169,6 +169,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
 
+  const showRefValues = process.env["NEXT_PUBLIC_SHOW_VIGIE_RH_REF"] === 'true';
+
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
   const {
     filieresAvecGroupes,
@@ -442,6 +444,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                         etabFiness={etabFiness}
                         etabTitle={etabTitle}
                         labels={libelles}
+                        showRefValues={showRefValues}
                       />
                     )}
                 </>
@@ -546,6 +549,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
                   nomGraph={wording.NATURE_CONTRATS}
+                  showRefValues={showRefValues}
+
                 />
               </IndicateurGraphique>
             ) : null,
@@ -557,7 +562,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
                     periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
-
                   />
                 }
                 echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-duree-cdd")}
@@ -566,7 +570,13 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 nomDeLIndicateur={wording.DUREE_CDD}
                 source={wording.DSN}
               >
-                <GraphiqueDureeCDD blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={wording.DUREE_CDD} />
+                <GraphiqueDureeCDD
+                  blocVigieRHViewModel={blocVigieRHViewModel}
+                  etabFiness={etabFiness}
+                  etabTitle={etabTitle}
+                  nomGraph={wording.DUREE_CDD}
+                  showRefValues={showRefValues}
+                />
               </IndicateurGraphique>
             ) : null
           ], 2)}
@@ -583,7 +593,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-taux-rotation")}
                     source={wording.DSN}
-
                   />
                 }
                 echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-taux-rotation")}
@@ -599,6 +608,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
                   nomGraph={wording.TAUX_ROTATION}
+                  showRefValues={showRefValues}
                 />
               </IndicateurGraphique>
             ) : null,
@@ -609,7 +619,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-departs-embauches")}
                     source={wording.DSN}
-
                   />
                 }
                 echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-embauches")}
@@ -623,6 +632,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   donneesDepartsEmbauchesTrimestriels={blocVigieRHViewModel.donneesDepartsEmbauchesTrimestriels}
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
+                  showRefValues={showRefValues}
                 />
               </IndicateurGraphique>
             ) : null,
@@ -634,7 +644,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-departs-prematures-cdi")}
                     source={wording.DSN}
-
                   />
                 }
                 echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-departs-prematures-cdi")}
@@ -664,7 +673,13 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 nomDeLIndicateur={wording.MOTIFS_RUPTURE_CONTRAT}
                 source={wording.DSN}
               >
-                <GraphiqueMotifsRuptureContrats blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={wording.MOTIFS_RUPTURE_CONTRAT} />
+                <GraphiqueMotifsRuptureContrats
+                  blocVigieRHViewModel={blocVigieRHViewModel}
+                  etabFiness={etabFiness}
+                  etabTitle={etabTitle}
+                  nomGraph={wording.MOTIFS_RUPTURE_CONTRAT}
+                  showRefValues={showRefValues}
+                />
               </IndicateurGraphique>
             ) : null,
           ], 2)}

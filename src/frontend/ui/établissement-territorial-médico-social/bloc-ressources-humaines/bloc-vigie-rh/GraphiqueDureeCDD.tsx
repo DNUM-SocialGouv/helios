@@ -10,9 +10,10 @@ type GraphiqueDureeCDDProps = Readonly<{
   etabTitle: string;
   nomGraph: string;
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel }: GraphiqueDureeCDDProps) => {
+const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewModel, showRefValues }: GraphiqueDureeCDDProps) => {
 
   const { wording } = useDependencies();
 
@@ -32,6 +33,8 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
     return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
+  const transcriptionIdentifiants = showRefValues ? [wording.DUREE_CDD, wording.DUREE_CDD_REF] : [wording.DUREE_CDD];
+
   return (
     <HistogrammeHorizontalAvecRef
       couleursDeLHistogramme={couleursDeLHistogramme}
@@ -39,11 +42,12 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
       epaisseur="EPAIS"
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      identifiants={[wording.DUREE_CDD, wording.DUREE_CDD_REF]}
+      identifiants={transcriptionIdentifiants}
       libelles={blocVigieRHViewModel.lesLibellesDureeCdd}
       nomGraph={nomGraph}
       refsManquants={lesDureesQuiManquentDeRef}
       refsManquantsTitre={wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE}
+      showRefValues={showRefValues}
       valeursDesHistogrammes={donneesEffectifs}
       valeursDesHistogrammesRef={donneesEffectifsRef}
     />

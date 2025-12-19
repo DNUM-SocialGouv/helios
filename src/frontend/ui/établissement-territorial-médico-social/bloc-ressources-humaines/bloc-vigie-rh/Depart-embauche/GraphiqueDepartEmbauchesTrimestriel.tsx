@@ -21,10 +21,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
-  donneesDepartsEmbauches: DepartEmbaucheTrimestrielViewModel[]
+  donneesDepartsEmbauches: DepartEmbaucheTrimestrielViewModel[];
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
+const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDepartsEmbauches, showRefValues }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
@@ -211,13 +212,13 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
       },
       {
         label: "embauches-extension",
-        data: donneesEmbauchesExtension,
+        data: showRefValues ? donneesEmbauchesExtension : [],
         backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
       },
       {
         label: "depart-extension",
-        data: donneesDepartsExtension,
+        data: showRefValues ? donneesDepartsExtension : [],
         backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
       },
@@ -252,9 +253,12 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-
             const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+
+            if (!showRefValues) {
+              return `Valeur: ${valeurText}`;
+            }
+            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
             const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
 
             return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
@@ -333,16 +337,24 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     },
   };
 
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
+    : [wording.DEPARTS, wording.EMBAUCHES];
+
+  const transcriptionValeurs = showRefValues
+    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+
   return (
     <div>
       {/* @ts-ignore */}
-      <Bar data={dataSet} options={options} plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+      <Bar data={dataSet} options={options} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesValeursReferenceManquantes.length > 0 && (
+      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
@@ -354,21 +366,21 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
           { color: couleurDuFondHistogrammeOrangeClair, label: wording.DEPARTS, circle: true },
         ]}
       />
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
-      />
+      />}
       <Transcription
         disabled={false}
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
+        identifiants={transcriptionIdentifiants}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
-        valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
+        valeurs={transcriptionValeurs}
       />
     </div>
   );
