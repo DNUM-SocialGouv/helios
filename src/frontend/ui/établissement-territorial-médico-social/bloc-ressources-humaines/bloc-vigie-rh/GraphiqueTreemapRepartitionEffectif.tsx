@@ -333,10 +333,11 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
       </div>
       <Transcription
         disabled={!transcriptionLibellés.length}
-        entêteLibellé={wording.VIGIE_RH_CATEGORIE}
+        entêteLibellé={wording.FILIERE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
+        isVigieRH={true}
         libellés={transcriptionLibellés}
         nomGraph={wording.REPARTITION_EFFECTIFS}
         valeurs={transcriptionValeurs}

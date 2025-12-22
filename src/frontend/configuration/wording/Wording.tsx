@@ -122,6 +122,7 @@ export interface Wording {
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string;
   readonly TITRE_TRANSCRIPTION: string;
+  readonly DESCRIPTION_TRANSCRIPTION: string;
   readonly ANNÉE: string;
   readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
@@ -624,11 +625,13 @@ export interface Wording {
   readonly EFFECTIFS: string;
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
   readonly EFFECTIFS_TOTAUX: string;
-  readonly VIGIE_RH_CATEGORIE: string;
-  readonly MOIS_ANNEES: string;
+  readonly FILIERE: string;
+  readonly PERIODE: string;
   readonly DEPARTS_EMBAUCHES: string;
   readonly DEPARTS: string;
   readonly EMBAUCHES: string;
+  readonly NOMBRE_SORTIES: string;
+  readonly NOMBRE_ENTREES: string;
   readonly DEPARTS_REF: string;
   readonly EMBAUCHES_REF: string;
   readonly MOYENNE_REF: string;
@@ -640,6 +643,10 @@ export interface Wording {
   readonly TOP_CONTRATS_TITLE: string;
   readonly TOP_CONTRATS_UNIT_LABEL: string;
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string;
+  readonly NOMBRE_CDD: string;
+  readonly NOMBRE_CDI: string;
+  readonly CDD_REF: string;
+  readonly CDI_REF: string;
 
   // Paramétrage aide
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string;
@@ -708,9 +715,11 @@ export interface Wording {
   readonly AIDE_INFO_SEPARATEUR: string;
 
   readonly DUREE_CDD: string;
-  readonly DUREE_CDD_REF: string;
+  readonly NOMBRE_CONTRATS_CDD: string;
+  readonly NOMBRE_CONTRATS_CDD_REF: string;
   readonly MOTIFS_RUPTURE_CONTRAT: string;
-  readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
+  readonly NOMBRE_CONTRATS_ROMPUS: string;
+  readonly NOMBRE_CONTRATS_ROMPUS_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
   readonly NATURE_CONTRATS: string;

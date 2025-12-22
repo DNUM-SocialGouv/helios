@@ -163,7 +163,7 @@ function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: 
 }
 
 const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsAnnuelProps) => {
-  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, false, showRefValues), [donnees, palette]);
+  const { libelles, series } = useMemo(() => preparerSeries(donnees, palette, false, showRefValues), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);
@@ -173,10 +173,9 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
     return trouverValeursManquantes("valeursRef", series, libelles);
   }, [libelles, series]);
 
-  const transcriptionIdentifiants = useMemo(
-    () => natures.flatMap((natureLibelle) => showRefValues ? [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`] : [natureLibelle]),
-    [natures, wording.MOYENNE_REF, showRefValues],
-  );
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.NOMBRE_CDD, wording.CDD_REF, wording.NOMBRE_CDI, wording.CDI_REF]
+    : [wording.NOMBRE_CDD, wording.NOMBRE_CDI];
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
@@ -192,7 +191,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
       series={series}
       showRefValues={showRefValues}
       transcription={{
-        enteteLibelle: wording.ANNÉE,
+        enteteLibelle: wording.PERIODE,
         identifiantUnique: "transcription-nature-contrats-annuel",
         identifiants: transcriptionIdentifiants,
       }}
@@ -201,7 +200,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsTrimestrielProps) => {
-  const { libelles, series, natures } = useMemo(() => preparerSeries(donnees, palette, true, showRefValues), [donnees, palette]);
+  const { libelles, series } = useMemo(() => preparerSeries(donnees, palette, true, showRefValues), [donnees, palette]);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);
@@ -211,10 +210,9 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
     return trouverValeursManquantes("valeursRef", series, libelles);
   }, [libelles, series]);
 
-  const transcriptionIdentifiants = useMemo(
-    () => natures.flatMap((natureLibelle) => showRefValues ? [natureLibelle, `${wording.MOYENNE_REF} - ${natureLibelle}`] : [natureLibelle]),
-    [natures, wording.MOYENNE_REF, showRefValues],
-  );
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.NOMBRE_CDD, wording.CDD_REF, wording.NOMBRE_CDI, wording.CDI_REF]
+    : [wording.NOMBRE_CDD, wording.NOMBRE_CDI];
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
@@ -230,7 +228,7 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
       series={series}
       showRefValues={showRefValues}
       transcription={{
-        enteteLibelle: wording.MOIS_ANNEES,
+        enteteLibelle: wording.PERIODE,
         identifiantUnique: "transcription-nature-contrats-trimestriel",
         identifiants: transcriptionIdentifiants,
       }}

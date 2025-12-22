@@ -120,6 +120,7 @@ export default function CarteTopIndicateur({
         entêteLibellé="Période"
         etabFiness={etabFiness}
         etabTitle={etabTitle}
+        identifiantUnique={`transcription-${identifiant}`}
         identifiants={[`${unitLabel}`, "Variation"]}
         libellés={[`${echelleTemporelle?.valeur}`, pastPeriod]}
         nomGraph={unitLabel}
