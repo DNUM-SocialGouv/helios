@@ -314,8 +314,8 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
   };
 
   const transcriptionIdentifiants = showRefValues
-    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
-    : [wording.DEPARTS, wording.EMBAUCHES];
+    ? [wording.NOMBRE_SORTIES, wording.DEPARTS_REF, wording.NOMBRE_ENTREES, wording.EMBAUCHES_REF]
+    : [wording.NOMBRE_SORTIES, wording.NOMBRE_ENTREES];
 
   const transcriptionValeurs = showRefValues
     ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
@@ -353,10 +353,11 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
       />}
       <Transcription
         disabled={false}
-        entêteLibellé={wording.ANNÉE}
+        entêteLibellé={wording.PERIODE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
+        isVigieRH={true}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
         valeurs={transcriptionValeurs}

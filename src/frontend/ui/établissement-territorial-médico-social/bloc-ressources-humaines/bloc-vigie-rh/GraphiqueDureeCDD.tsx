@@ -33,7 +33,7 @@ const GraphiqueDureeCDD = ({ etabFiness, etabTitle, nomGraph, blocVigieRHViewMod
     return { donneesEffectifs, donneesEffectifsRef, lesDureesQuiManquentDeRef, couleursDeLHistogramme };
   }, [blocVigieRHViewModel.lesDureesCdd]);
 
-  const transcriptionIdentifiants = showRefValues ? [wording.DUREE_CDD, wording.DUREE_CDD_REF] : [wording.DUREE_CDD];
+  const transcriptionIdentifiants = showRefValues ? [wording.NOMBRE_CONTRATS_CDD, wording.NOMBRE_CONTRATS_CDD_REF] : [wording.NOMBRE_CONTRATS_CDD];
 
   return (
     <HistogrammeHorizontalAvecRef

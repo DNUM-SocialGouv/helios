@@ -220,10 +220,11 @@ const HistogrammeVerticalAvecRef = ({
         </MiseEnExergue>
       )}
       <Transcription
-        entêteLibellé={wording.ANNÉE}
+        entêteLibellé={wording.PERIODE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={identifiants}
+        isVigieRH={true}
         libellés={libelles}
         nomGraph={nomGraph}
         valeurs={showRefValues ? [transcriptionValeurs, transcriptionValeursRef] : [transcriptionValeurs]}

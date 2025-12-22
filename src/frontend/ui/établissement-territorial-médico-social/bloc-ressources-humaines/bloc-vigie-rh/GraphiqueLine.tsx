@@ -186,14 +186,15 @@ const LineChart = ({
 
         <Transcription
           disabled={false}
-          entêteLibellé={wording.MOIS_ANNEES}
+          entêteLibellé={wording.PERIODE}
           etabFiness={etabFiness}
           etabTitle={etabTitle}
           identifiantUnique={transcriptionId}
           identifiants={[
             ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
-            ...(multiCategories ?? []).map((c) => capitalize(c.categorie)),
+            ...(multiCategories ?? []).map((c) => 'Effectif de la filière ' + capitalize(c.categorie)),
           ]}
+          isVigieRH={true}
           libellés={labelsTranscription}
           nomGraph={wording.EFFECTIFS}
           valeurs={[

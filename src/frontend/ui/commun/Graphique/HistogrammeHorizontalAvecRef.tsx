@@ -175,6 +175,7 @@ const HistogrammeHorizontalAvecRef = ({
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={identifiants}
+        isVigieRH={true}
         libellés={libelles}
         nomGraph={nomGraph}
         valeurs={showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] : [valeursDesHistogrammes]}
