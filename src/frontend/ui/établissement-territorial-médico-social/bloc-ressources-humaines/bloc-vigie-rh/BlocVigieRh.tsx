@@ -415,6 +415,48 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </IndicateurGraphique>
             ) : null}
 
+            {graphiqueEffectifsGroupesAffichable ? (
+              <IndicateurGraphique
+                contenuInfoBulle={
+                  <ContenuEffectifsCategorieVigieRh
+                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                    dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
+                    source={wording.DSN}
+
+                  />
+                }
+                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
+                identifiant="vr-effectifs-groupes"
+                key="vr-effectifs-groupes"
+                nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+                source={wording.DSN}
+              >
+                <>
+                  <HistogrammeMensuelFilters
+                    ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
+                    activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
+                    handleFrequency={() => undefined}
+                    identifiant="effectifs-groupes"
+                    selectedActivity={filiereSelectionnee}
+                    selectedFrequency={wording.MENSUEL}
+                    setSelectedActivity={setFiliereSelectionnee}
+                    showFrequencySwitch={false}
+                    showYearSelection={false}
+                    wording={wording}
+                  />
+                  <LineChart
+                    afficherSerieTotale={false}
+                    classContainer="fr-mb-4w"
+                    couleurEffectifsTotaux={couleurEffectifsTotaux}
+                    couleursFilieres={paletteGroupes}
+                    dataEffectifs={detailDataEffectifs}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
+                    identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants} />
+                </>
+              </IndicateurGraphique>
+            ) : null}
+
             {renderRow([blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
               <IndicateurGraphique
                 années={{ liste: annees, setAnnéeEnCours: setAnneeEnCours }}
@@ -480,47 +522,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               <></>
             )
             ], 2)}
-            {graphiqueEffectifsGroupesAffichable ? (
-              <IndicateurGraphique
-                contenuInfoBulle={
-                  <ContenuEffectifsCategorieVigieRh
-                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                    dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
-                    source={wording.DSN}
-
-                  />
-                }
-                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
-                identifiant="vr-effectifs-groupes"
-                key="vr-effectifs-groupes"
-                nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
-                source={wording.DSN}
-              >
-                <>
-                  <HistogrammeMensuelFilters
-                    ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
-                    activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
-                    handleFrequency={() => undefined}
-                    identifiant="effectifs-groupes"
-                    selectedActivity={filiereSelectionnee}
-                    selectedFrequency={wording.MENSUEL}
-                    setSelectedActivity={setFiliereSelectionnee}
-                    showFrequencySwitch={false}
-                    showYearSelection={false}
-                    wording={wording}
-                  />
-                  <LineChart
-                    afficherSerieTotale={false}
-                    classContainer="fr-mb-4w"
-                    couleurEffectifsTotaux={couleurEffectifsTotaux}
-                    couleursFilieres={paletteGroupes}
-                    dataEffectifs={detailDataEffectifs}
-                    etabFiness={etabFiness}
-                    etabTitle={etabTitle}
-                    identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants} />
-                </>
-              </IndicateurGraphique>
-            ) : null}
           </div>
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
