@@ -28,15 +28,15 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   public get lesDonnéesActivitéNeSontPasRenseignées(): boolean {
     return (
       !this.activitéEstElleRenseignée ||
-      (!this.leTauxRéalisationActivitéEstIlRenseigné &&
-        !this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
+      (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné &&
         !this.laFileActivePersonnesAccompagnéesEstElleRenseignée &&
         !this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée &&
         !this.leTauxOccupationExternatEstIlRenseigne &&
         !this.leTauxOccupationSemiInternatEstIlRenseigne &&
         !this.leTauxOccupationInternatEstIlRenseigne &&
         !this.leTauxOccupationAutreEstIlRenseigne &&
-        !this.leTauxOccupationSeancesEstIlRenseigne)
+        !this.leTauxOccupationSeancesEstIlRenseigne &&
+        !this.leTauxOccupationGlobalEstIlRenseigne)
     );
   }
 
@@ -60,10 +60,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     if (!this.leTauxOccupationInternatEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_INTERNAT);
     if (!this.leTauxOccupationAutreEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_AUTRE);
     if (!this.leTauxOccupationSeancesEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_SEANCES);
-    if (!this.leTauxRéalisationActivitéEstIlRenseigné) nonRenseignee.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
     if (!this.laFileActivePersonnesAccompagnéesEstElleRenseignée) nonRenseignee.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
     if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlRenseigné) nonRenseignee.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
     if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleRenseignée) nonRenseignee.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+    if (!this.leTauxOccupationGlobalEstIlRenseigne) nonRenseignee.push(this.wording.TAUX_OCCUPATION_GLOBAL);
 
     return nonRenseignee;
   }
@@ -529,10 +529,10 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
     if (!this.leTauxOccupationSemiInternatEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_INTERNAT);
     if (!this.leTauxOccupationAutreEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_AUTRE);
     if (!this.leTauxOccupationSeancesEstIlAutorise) nonAutorisés.push(this.wording.TAUX_OCCUPATION_SEANCES);
-    if (!this.leTauxRéalisationActivitéEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_RÉALISATION_ACTIVITÉ);
     if (!this.laFileActivePersonnesAccompagnéesEstElleAutorisé) nonAutorisés.push(this.wording.FILE_ACTIVE_PERSONNES_ACCOMPAGNÉES);
     if (!this.leNombreMoyenJournéesAbsencePersonnesAccompagnéesEstIlAutorisé) nonAutorisés.push(this.wording.NOMBRE_MOYEN_JOURNÉES_ABSENCE_PERSONNES_ACCOMPAGNÉES);
     if (!this.laDuréeMoyenneSéjourAccompagnementPersonnesSortiesEstElleAutorisé) nonAutorisés.push(this.wording.DURÉE_MOYENNE_SÉJOUR_ACCOMPAGNEMENT_PERSONNES_SORTIES);
+    if (!this.leTauxOccupationGlobalEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_OCCUPATION_GLOBAL);
 
     return nonAutorisés;
   }
@@ -584,5 +584,40 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
 
   private construisLesLibellésDesTicks(libellés: (number | string)[]): TaillePoliceTick[] {
     return libellés.map((année) => (estCeLAnnéePassée(année) ? "bold" : "normal"));
+  }
+
+  public get leTauxOccupationGlobalEstIlRenseigne(): boolean {
+    return this.lIndicateurEstIlRenseigne("tauxOccupationGlobal");
+  }
+
+  public get leTauxOccupationGlobalEstIlAutorisé(): boolean {
+    return this.lIndicateurEstIlAutorise("tauxOccupationGlobal");
+  }
+
+  public tauxOccupationGlobalHistrogramme(etabFiness: string, etabTitle: string): ReactElement {
+    const [valeurs, années] = this.construisLesAnnéesEtSesTaux("tauxOccupationGlobal");
+
+    return (
+      <HistogrammeVertical
+        annéesTotales={5}
+        couleurDesLibelles={this.construisLesLibellésDesValeurs(valeurs)}
+        couleursDeLHistogramme={valeurs.map((valeur: number, index: number) => {
+          return this.construisLaCouleurDeLaBarreVerticale(valeur, années[index]);
+        })}
+        entêteLibellé={this.wording.ANNÉE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        identifiant={this.wording.TAUX_OCCUPATION_GLOBAL}
+        isVigieRh={false}
+        libellés={années}
+        nomGraph={this.wording.TAUX_OCCUPATION_GLOBAL}
+        taillePoliceTicks={this.construisLesLibellésDesTicks(années)}
+        valeurs={valeurs}
+      />
+    );
+  }
+
+  public get dateDeMiseÀJourDuTauxOccupationGlobal(): string {
+    return StringFormater.formatDate(this.établissementTerritorialActivité[0].tauxOccupationGlobal.dateMiseÀJourSource);
   }
 }

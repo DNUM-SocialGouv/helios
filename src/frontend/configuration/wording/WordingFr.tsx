@@ -208,6 +208,7 @@ export class WordingFr implements Wording {
   readonly TAUX_OCCUPATION_INTERNAT: string = "Taux d’occupation internat ";
   readonly TAUX_OCCUPATION_AUTRE: string = "Taux d'occupation Autre 1, 2 et 3";
   readonly TAUX_OCCUPATION_SEANCES: string = "Taux d'occupation séances";
+  readonly TAUX_OCCUPATION_GLOBAL: string = "Taux d'occupation global";
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";

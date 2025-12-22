@@ -49,4 +49,7 @@ export class ActivitéMédicoSocialModel {
 
   @Column({ name: "taux_occupation_seances", nullable: true, type: "float" })
   public tauxOccupationSeances!: number;
+
+  @Column({ name: "taux_occupation_global", nullable: true, type: "float" })
+  public tauxOccupationGlobal!: number;
 }

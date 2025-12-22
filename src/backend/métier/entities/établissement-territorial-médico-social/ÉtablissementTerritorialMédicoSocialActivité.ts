@@ -44,4 +44,8 @@ export type ÉtablissementTerritorialMédicoSocialActivité = Readonly<{
   tauxOccupationSeances: Readonly<{
     value: number | null | string;
   }>;
+  tauxOccupationGlobal: Readonly<{
+    dateMiseÀJourSource: string;
+    value: number | null | string;
+  }>;
 }>;

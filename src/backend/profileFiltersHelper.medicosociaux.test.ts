@@ -85,6 +85,10 @@ function getActiviteMedicoSocial(): ÉtablissementTerritorialMédicoSocialActivi
     },
     tauxOccupationSeances: {
       value: 12,
+    },
+    tauxOccupationGlobal: {
+      dateMiseÀJourSource: "dateMajOccuGlobal",
+      value: 13,
     }
   };
 }
@@ -184,6 +188,7 @@ function getActiviteProfile() {
     tauxOccupationInternat: "ok",
     tauxOccupationAutre: "ok",
     tauxOccupationSeances: "ok",
+    tauxOccupationGlobal: "ok",
   }
 }
 
@@ -727,6 +732,25 @@ describe("Filtre des informations d’activité des etablissement medico-sociaux
     let etabMedicoSocialResult = getFullMedicoSocial();
     const profile = getFullProfile();
     profile.activités.tauxOccupationSeances = "Ko";
+
+    // When
+    etabMedicoSocialResult = filterEtablissementMedicoSocial(etabMedicoSocialResult, profile);
+
+    // Then
+    expect(etabMedicoSocialResult.activités).toEqual([expectedActivity]);
+  });
+
+  it("retire les info sur le taux d’occupation global si il n’y a pas les droits", () => {
+    // Given
+    const rawActivity = getActiviteMedicoSocial();
+    const expectedActivity = {
+      ...rawActivity,
+      tauxOccupationGlobal: { dateMiseÀJourSource: "", value: "" },
+    }
+
+    let etabMedicoSocialResult = getFullMedicoSocial();
+    const profile = getFullProfile();
+    profile.activités.tauxOccupationGlobal = "Ko";
 
     // When
     etabMedicoSocialResult = filterEtablissementMedicoSocial(etabMedicoSocialResult, profile);

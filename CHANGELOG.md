@@ -8,6 +8,8 @@
 
 ### Features
 
+- hel-919: Ajout de l'indicateur de taux d'occupation global
+
 ## [1.7.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.3...release/1.7.4) (2025-12-17)
 
 ### Bug Fixes
