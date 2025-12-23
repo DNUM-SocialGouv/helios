@@ -1,3 +1,5 @@
+
+import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import styles from "./Aide.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import type { DefinitionSection } from "../parametrage-aide/types";
@@ -29,9 +31,9 @@ export function ListeSections({ sections, onSelection }: ListeSectionsProps) {
           </li>
         ))}
       </ul>
-      <p className="fr-text--lg">
-        <span aria-hidden className={`fr-icon-team-line fr-icon fr-icon--sm ${styles["icone"]}`} /> Besoin de formation: <a href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">Faites votre demande</a>
-      </p>
-    </section>
+      <div className={`fr-alert fr-alert--info fr-mt-10w ${styles["formationAlert"]}`} role="alert">
+        <span className="fr-text--lg fr-text--bold">Besoin de formation : </span><a className="fr-link fr-text--lg" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="noreferrer" target="_blank">Faites votre demande</a>
+      </div>
+    </section >
   );
 }
