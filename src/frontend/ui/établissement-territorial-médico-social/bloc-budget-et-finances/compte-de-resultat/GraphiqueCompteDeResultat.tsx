@@ -10,9 +10,10 @@ type BlocBudgetEtFinancesMédicoSocialProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
   compteDeRésultatViewModel: CompteDeResultatViewModel;
+  className: string;
 }>;
 
-export const GraphiqueCompteDeResultat = ({ etabFiness, etabTitle, compteDeRésultatViewModel }: BlocBudgetEtFinancesMédicoSocialProps) => {
+export const GraphiqueCompteDeResultat = ({ etabFiness, etabTitle, compteDeRésultatViewModel, className }: BlocBudgetEtFinancesMédicoSocialProps) => {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(compteDeRésultatViewModel.annéeInitiale);
   const budgetEtFinance = compteDeRésultatViewModel.budgetEtFinanceEnCours(annéeEnCours);
@@ -21,6 +22,7 @@ export const GraphiqueCompteDeResultat = ({ etabFiness, etabTitle, compteDeRésu
   return (
     <IndicateurGraphique
       années={{ liste: annees, setAnnéeEnCours }}
+      className={className}
       contenuInfoBulle={<ContenuCompteDeRésultat dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour} source={wording.CNSA} />}
       dateDeMiseÀJour={compteDeRésultatViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"
