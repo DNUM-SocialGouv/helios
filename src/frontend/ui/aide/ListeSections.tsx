@@ -29,6 +29,9 @@ export function ListeSections({ sections, onSelection }: ListeSectionsProps) {
           </li>
         ))}
       </ul>
+      <p className="fr-text--lg">
+        <span aria-hidden className={`fr-icon-team-line fr-icon fr-icon--sm ${styles["icone"]}`} /> Besoin de formation: <a href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">Faites votre demande</a>
+      </p>
     </section>
   );
 }
