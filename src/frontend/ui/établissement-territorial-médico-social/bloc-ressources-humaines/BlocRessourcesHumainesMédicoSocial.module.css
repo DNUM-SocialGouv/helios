@@ -92,6 +92,11 @@
   margin-top: 1rem;
 }
 
+.vigie-rh-accordion-button {
+  display: flex !important;
+  justify-content: center;
+}
+
 @media (max-width: 36em) {
   .liste-indicateurs {
     display: inherit;

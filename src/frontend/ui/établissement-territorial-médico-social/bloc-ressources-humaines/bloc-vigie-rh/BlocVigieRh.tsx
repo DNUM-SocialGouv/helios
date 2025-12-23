@@ -4,6 +4,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import { DetailsParFiliere } from "./Details-par-filiere/DetailsParFiliere";
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
@@ -168,6 +169,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const annees = donneesPyramides.map((donneeAnnuel) => donneeAnnuel.annee).sort((a, b) => a - b);
   const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const showRefValues = process.env["NEXT_PUBLIC_SHOW_VIGIE_RH_REF"] === 'true';
 
@@ -404,13 +406,13 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 <LineChart
                   classContainer="fr-mb-4w"
                   couleurEffectifsTotaux={couleurEffectifsTotaux}
-                  couleursFilieres={couleursFilieres}
+                  couleursFilieres={[]}
                   dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
                   identifiantLegende="légende-graphique-effectifs"
                   identifiantTranscription="transcription-graphique-effectifs"
-                  multiCategories={indicateurEffectif?.items ?? []}
+                  multiCategories={[]}
                   nomGraph={wording.EFFECTIFS}
                 />
               </IndicateurGraphique>
@@ -528,6 +530,41 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
             ], 2)}
           </div>
+          <section className="fr-accordion">
+            <h3 className={styles["vigie-rh-accordion-button"]}>
+              <button
+                aria-controls="accordion-vigie-rh"
+                aria-expanded={isExpanded}
+                className="fr-btn fr-btn--secondary"
+                onClick={() => setIsExpanded(true)}
+                style={isExpanded ? { display: "none" } : {}}
+              >
+                {wording.SHOW_MORE_BUTTON}
+              </button>
+            </h3>
+            <div
+              className={`fr-collapse ${isExpanded ? "fr-collapse--expanded" : ""}`}
+              id="accordion-vigie-rh"
+            >
+              <h3 className="fr-h3">{wording.EFFECTIFS_PAR_FILIERES_CATEGORIES}</h3>
+              <DetailsParFiliere
+                couleurEffectifsTotaux={couleurEffectifsTotaux}
+                couleursFilieres={couleursFilieres}
+                dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                multiCategories={indicateurEffectif?.items ?? []}
+              />
+              <h3 className={styles["vigie-rh-accordion-button"]}>
+                <button
+                  className="fr-btn fr-btn--secondary"
+                  onClick={() => setIsExpanded(false)}
+                >
+                  {wording.SHOW_LESS_BUTTON}
+                </button>
+              </h3>
+            </div>
+          </section>
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
