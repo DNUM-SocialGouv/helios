@@ -13,6 +13,7 @@
 - hel-919: Ajout de l'indicateur de taux d'occupation global
 - hel-940: Demande de formation sur les page d’aide
 - hel-931: Selection de tous les établissements d’une liste
+- hel-951: Affichage des graphiques sur deux lignes dans la vue tablette
 
 ## [1.7.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.3...release/1.7.4) (2025-12-17)
 
