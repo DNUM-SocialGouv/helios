@@ -38,7 +38,7 @@ export const GraphiqueAutorisationsActivites = ({ entiteJuridiqueAutorisations, 
     >
       <>
         <AutorisationsAmmTagMultiNiveaux activites={entiteJuridiqueAutorisationsAmm.autorisations} />
-        <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} />
+        <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} type="autorisation-activites" />
       </>
     </IndicateurGraphique>
   );

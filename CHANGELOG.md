@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - hel-947: Les libellés des profils sont maintenant obligatoire
+- hel-929: Non affichage du volet d’autorisation
 
 ### Features
 
