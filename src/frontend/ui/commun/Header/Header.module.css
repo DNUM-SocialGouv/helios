@@ -4,6 +4,7 @@
   }
 }
 
+
 .dropdown {
   position: relative;
 }
@@ -78,6 +79,10 @@
   }
 
   .menu {
+    display: none;
+  }
+
+  .dropdown {
     display: none;
   }
 }
