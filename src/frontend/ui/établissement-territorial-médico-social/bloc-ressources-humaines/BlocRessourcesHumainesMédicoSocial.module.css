@@ -14,10 +14,6 @@
   margin-bottom: 1rem;
 }
 
-.liste-indicateurs canvas {
-  margin-bottom: 1rem;
-}
-
 .liste-indicateurs-vr-wrapper {
   display: flex;
   flex-direction: column;
@@ -45,10 +41,6 @@
   flex-direction: column;
   min-height: var(--indicateur-graph-min-height, 420px);
   flex: 1 1 auto;
-}
-
-.liste-indicateurs-vr canvas {
-  margin-bottom: 1rem;
 }
 
 .liste-indicateurs-vr canvas {
@@ -90,6 +82,12 @@
 
 .vigie-rh-top-indicateurs {
   margin-top: 1rem;
+}
+
+@media (max-width: 991px) {
+  .liste-indicateurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 36em) {
