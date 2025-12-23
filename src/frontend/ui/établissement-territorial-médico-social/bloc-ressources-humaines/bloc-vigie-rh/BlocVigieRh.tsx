@@ -655,6 +655,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               >
                 <DepartsPrematuresCdi
                   blocVigieRhViewModel={blocVigieRHViewModel}
+                  etabFiness={etabFiness}
+                  etabTitle={etabTitle}
                 />
               </IndicateurGraphique>
             ) : null,
