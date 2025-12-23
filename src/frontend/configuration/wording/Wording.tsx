@@ -180,6 +180,7 @@ export interface Wording {
   readonly TAUX_OCCUPATION_INTERNAT: string;
   readonly TAUX_OCCUPATION_AUTRE: string;
   readonly TAUX_OCCUPATION_SEANCES: string;
+  readonly TAUX_OCCUPATION_GLOBAL: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
@@ -548,6 +549,7 @@ export interface Wording {
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
   readonly PROFILE_TITLE: string;
+  readonly NEW_PROFILE_LABEL_MANDATORY: string;
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
   readonly PROJECT_TEAM: string;
 

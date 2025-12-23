@@ -106,6 +106,7 @@ export const DefaultProfile = {
       },
       "activités": {
         "tauxRéalisationActivité": "no",
+        "tauxOccupationGlobal": "no",
         "tauxOccupationAccueilDeJour": "no",
         "fileActivePersonnesAccompagnées": "no",
         "tauxOccupationHébergementPermanent": "no",
@@ -247,6 +248,7 @@ export const DefaultProfile = {
       },
       "activités": {
         "tauxRéalisationActivité": "ok",
+        "tauxOccupationGlobal": "no",
         "tauxOccupationAccueilDeJour": "ok",
         "fileActivePersonnesAccompagnées": "ok",
         "tauxOccupationHébergementPermanent": "ok",

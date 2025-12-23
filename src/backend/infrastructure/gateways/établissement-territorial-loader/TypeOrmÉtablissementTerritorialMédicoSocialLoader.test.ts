@@ -152,15 +152,7 @@ describe("Établissement territorial médico-social loader", () => {
       expect(activité).toStrictEqual<ÉtablissementTerritorialMédicoSocial["activités"]>([
         ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({
           année: 2019,
-          nombreMoyenJournéesAbsencePersonnesAccompagnées: {
-            dateMiseÀJourSource: "2022-02-02",
-            value: 80,
-          },
           numéroFinessÉtablissementTerritorial,
-          tauxOccupationAccueilDeJour: {
-            dateMiseÀJourSource: "2022-02-02",
-            value: 80,
-          },
         }),
         ÉtablissementTerritorialTestBuilder.créeUneActivitéMédicoSocial({
           année: 2020,

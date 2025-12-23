@@ -20,7 +20,11 @@ class ColonneHelios(TypedDict):
     "Taux d'occupation Semi-internat Autres ESMS": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
     "Taux d'occupation Internat Autres ESMS": ColonneHelios(nom="taux_occupation_internat", type=float),
     "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": ColonneHelios(nom="taux_occupation_autre", type=float),
+    "Taux d'occupation global ERRD": ColonneHelios(nom="taux_occupation_global_errd", type=float),
+    "Taux d'occupation global Autres ESMS": ColonneHelios(nom="taux_occupation_global_autres_esms", type=float),
+    "Etat taux d'occupation global Autres ESMS": ColonneHelios(nom="etat_taux_occupation_global_autres_esms", type=str),
 }
+
 
 colonnes_à_lire_bloc_activités_ann_errd_ej_et: List[str] = list(équivalences_diamant_ann_errd_ej_et_bloc_activités_helios.keys())
 
@@ -32,7 +36,10 @@ equivalences_diamant_ann_ca_ej_et_bloc_activites_helios: ÉquivalencesDiamantHel
     "Taux d'occupation Semi-internat CA": ColonneHelios(nom="taux_occupation_semi_internat", type=float),
     "Taux d'occupation Internat CA": ColonneHelios(nom="taux_occupation_internat", type=float),
     "Taux d'occupation Autre 1, 2 et 3 CA": ColonneHelios(nom="taux_occupation_autre", type=float),
+    "Taux d'occupation global CA": ColonneHelios(nom="taux_occupation_global_ca", type=float),
+    "Etat taux d'occupation global CA": ColonneHelios(nom="etat_taux_occupation_global_ca", type=str),
 }
+
 
 colonnes_a_lire_bloc_activites_ann_ca_ej_et: List[str] = list(equivalences_diamant_ann_ca_ej_et_bloc_activites_helios.keys())
 

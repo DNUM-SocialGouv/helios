@@ -303,7 +303,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     });
   }
 
-  private async construisLesDonneesVigieRH(models : ModelsBlocVigieRh): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
+  private async construisLesDonneesVigieRH(models: ModelsBlocVigieRh): Promise<EtablissementTerritorialMedicoSocialVigieRH> {
 
     const pyramideAges = models.pyramideAgesModel.map((pyramideModel: VigieRhPyramideAgesModel) => {
       return {
@@ -513,7 +513,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
   async getProfessionsGroupe(numeroFinessET: string, codeFiliere: number): Promise<{ data: ProfessionGroupeData[]; dateDeMiseAJour: string }> {
     const refProfessionGroupe = await (await this.orm).getRepository(VigieRhRefProfessionGroupeModel).find({
       order: { code: "ASC" },
-      where: { filiere:{code: codeFiliere} }
+      where: { filiere: { code: codeFiliere } }
     });
 
     const dateDeMiseAJourProfessionGroupe = await this.chargeLaDateDeMiseÀJourModel(FichierSource.VIGIE_RH_PROFESSION_GROUPE);
@@ -536,7 +536,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     }))).filter((item) => item !== null);
 
     return {
-      data :  data as ProfessionGroupeData[],
+      data: data as ProfessionGroupeData[],
       dateDeMiseAJour: dateDeMiseAJourProfessionGroupe?.dernièreMiseÀJour ?? "",
     };
   }
@@ -727,6 +727,10 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       tauxOccupationSeances: {
         value: établissementTerritorialModel.tauxOccupationSeances,
       },
+      tauxOccupationGlobal: {
+        dateMiseÀJourSource: dateDeMiseAJourAnnErrdEjEtModel.dernièreMiseÀJour,
+        value: établissementTerritorialModel.tauxOccupationGlobal,
+      }
     }));
   }
 

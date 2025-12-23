@@ -4,6 +4,7 @@ import { IndicateurGraphique } from "../../commun/IndicateurGraphique/Indicateur
 import { ContenuTauxOccupationAccueilDeJour } from "../InfoBulle/ContenuTauxOccupationAccueilDeJour";
 import { ContenuTauxOccupationHébergementPermanent } from "../InfoBulle/ContenuTauxOccupationHébergementPermanent";
 import { ContenuTauxOccupationHébergementTemporaire } from "../InfoBulle/ContenuTauxOccupationHébergementTemporaire";
+import { ContenuTauxRéalisationActivité } from "../InfoBulle/ContenuTauxRéalisationActivité";
 
 
 type IndicateursOccupationEHPADProps = Readonly<{
@@ -63,6 +64,22 @@ export const IndicateursOccupationEHPAD = ({ etabFiness, etabTitle, établisseme
           source={wording.CNSA}
         >
           {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationAccueilDeJourHistogramme(etabFiness, etabTitle)}
+        </IndicateurGraphique>
+      ) : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlRenseigné && établissementTerritorialActivitéMédicoSocialViewModel.leTauxRéalisationActivitéEstIlAutorisé ? (
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuTauxRéalisationActivité
+              dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
+              source={wording.TDB_PERF}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxRéalisationActivité}
+          identifiant="activite-5"
+          nomDeLIndicateur={wording.TAUX_RÉALISATION_ACTIVITÉ}
+          source={wording.TDB_PERF}
+        >
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxRéalisationActivitéHistrogramme(etabFiness, etabTitle)}
         </IndicateurGraphique>
       ) : <></>}
     </>

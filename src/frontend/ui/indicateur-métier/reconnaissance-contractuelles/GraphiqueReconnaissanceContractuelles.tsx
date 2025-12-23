@@ -25,7 +25,7 @@ export const GraphiqueReconnaissanceContractuelles = ({ entiteJuridiqueAutorisat
       nomDeLIndicateur={wording.RECONNAISSANCES_CONTRACTUELLES}
       source={Sources(wording.FINESS, wording.ARHGOS)}
     >
-      <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} />
+      <AutorisationsTagMultiNiveaux activites={entiteJuridiqueAutorisations.autorisations} type="reconnaissance-contractuelles" />
     </IndicateurGraphique>
   );
 };
