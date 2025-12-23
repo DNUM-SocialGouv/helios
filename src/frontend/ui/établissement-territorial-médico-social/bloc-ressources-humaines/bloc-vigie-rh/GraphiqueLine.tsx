@@ -5,6 +5,7 @@ import { Line } from "react-chartjs-2";
 import styles from "./GraphiqueLine.module.css";
 import { ProfessionFiliereData, ProfessionGroupeData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { MOIS } from "../../../../utils/constantes";
+import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -36,7 +37,7 @@ interface LineChartProps {
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
   multiCategories: MultiCategorie[];
-  couleursFilieres?: string[];
+  couleursFilieres: string[];
   identifiantLegende: string;
   afficherSerieTotale?: boolean;
   identifiantTranscription?: string;
@@ -88,6 +89,15 @@ const LineChart = ({
   const data = useMemo(() => {
     const datasets: any[] = [];
 
+    const getPointRadius = (context: any) => {
+      const index = context.dataIndex;
+      const mois = dataEffectifs?.dataMoisAnnee?.[index]?.mois;
+      if (mois && [1, 4, 7, 10].includes(mois)) {
+        return 4;
+      }
+      return 1;
+    };
+
     if (afficherSerieTotale) {
       datasets.push({
         label: wording.EFFECTIFS_TOTAUX,
@@ -96,7 +106,7 @@ const LineChart = ({
         backgroundColor: couleurEffectifsTotaux,
         borderWidth: 2,
         fill: false,
-        pointRadius: 1,
+        pointRadius: getPointRadius,
       });
     }
 
@@ -109,7 +119,7 @@ const LineChart = ({
         backgroundColor: color,
         borderWidth: 2,
         fill: false,
-        pointRadius: 1,
+        pointRadius: getPointRadius,
       });
     }
 
@@ -149,7 +159,7 @@ const LineChart = ({
         border: {
           display: false
         },
-        beginAtZero: true,
+        beginAtZero: false,
         grid: {
           drawOnChartArea: true,
           drawTicks: true,
@@ -185,8 +195,13 @@ const LineChart = ({
         <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`}>
           {process.env.NODE_ENV !== "test" && <Line data={data} options={options} />}
         </div>
-        <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id={identifiantLegende} />
-
+        <ColorLabel
+          classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+          items={[
+            ...(afficherSerieTotale ? [{ color: couleurEffectifsTotaux, label: wording.EFFECTIF_TOTAL, circle: true }] : []),
+            ...(multiCategories ?? []).map((c, index) => ({ color: couleursFilieres[index], label: capitalize(c.categorie), circle: true })),
+          ]}
+        />
         <Transcription
           disabled={false}
           entêteLibellé={wording.PERIODE}
