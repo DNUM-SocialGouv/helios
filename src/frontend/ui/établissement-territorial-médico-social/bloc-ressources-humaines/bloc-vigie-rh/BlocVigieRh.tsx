@@ -411,6 +411,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   identifiantLegende="légende-graphique-effectifs"
                   identifiantTranscription="transcription-graphique-effectifs"
                   multiCategories={indicateurEffectif?.items ?? []}
+                  nomGraph={wording.EFFECTIFS}
                 />
               </IndicateurGraphique>
             ) : null}
@@ -452,7 +453,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     dataEffectifs={detailDataEffectifs}
                     etabFiness={etabFiness}
                     etabTitle={etabTitle}
-                    identifiantLegende="légende-graphique-effectifs-groupes" identifiantTranscription="transcription-graphique-effectifs-groupes" multiCategories={groupesCourants} />
+                    identifiantLegende="légende-graphique-effectifs-groupes"
+                    identifiantTranscription="transcription-graphique-effectifs-groupes"
+                    multiCategories={groupesCourants}
+                    nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+                  />
                 </>
               </IndicateurGraphique>
             ) : null}
