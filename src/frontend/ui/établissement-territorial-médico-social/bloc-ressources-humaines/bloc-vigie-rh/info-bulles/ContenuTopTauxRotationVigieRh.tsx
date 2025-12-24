@@ -5,13 +5,14 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
 export const ContenuTopTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, source }: ContenuVigieRhInfoBulleProps) => {
   const { wording } = useDependencies();
-  const formula = `
-\\frac{
-  \\mathrm{(Nombre\\ de\\ nouveaux\\ contrats\\ +\\ Nombre\\ de\\ fins\\ de\\ contrat)}
+  const formula = String.raw`
+\frac{
+  \mathrm{(Nombre\ de\ nouveaux\ contrats\ +\ Nombre\ de\ fins\ de\ contrat)}
 }{
-  2 \\times \\mathrm{Effectif\\ moyen\\ sur\\ le\\ trimestre}
+  2 \times \mathrm{Effectif\ moyen\ sur\ le\ trimestre}
 }
 `;
+
 
   return (
     <>

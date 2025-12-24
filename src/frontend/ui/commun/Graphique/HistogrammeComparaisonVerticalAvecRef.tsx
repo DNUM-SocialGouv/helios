@@ -294,12 +294,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   for (const serie of series) {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
     const refsFormatees = (serie.valeursRef ?? []).map((valeur) => formatValeur(valeur));
-    if (!showRefValues) {
-      valeursTranscription.push(valeursFormatees);
-    } else {
-      valeursTranscription.push(valeursFormatees, refsFormatees);
-
-    }
+    valeursTranscription.push(
+      valeursFormatees,
+      ...(showRefValues ? [refsFormatees] : [])
+    );
   }
 
   const transcriptionIdentifiants =
