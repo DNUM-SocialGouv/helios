@@ -80,6 +80,10 @@
   .menu {
     display: none;
   }
+
+  .dropdown {
+    display: none;
+  }
 }
 
 .sr-only-focusable {}

@@ -6,10 +6,14 @@
 
 - hel-947: Les libellés des profils sont maintenant obligatoire
 - hel-929: Non affichage du volet d’autorisation
+- hel-950: Menu non responsive sur mobile
 
 ### Features
 
 - hel-919: Ajout de l'indicateur de taux d'occupation global
+- hel-940: Demande de formation sur les page d’aide
+- hel-931: Selection de tous les établissements d’une liste
+- hel-951: Affichage des graphiques sur deux lignes dans la vue tablette
 - vr-122: Ajustements définitions
 - vr-108: AJUSTEM Wording Transcription
 - vr-114: Suppression Moyennes Etablissements
@@ -23,6 +27,10 @@
 ### Features
 
 - hel-938: Isolation du batch vigierh
+- hel-911: [Comparaison] Ajout d’un bouton de choix d’indicateur
+- hel-912: [Comparaison] Selection des indicateurs SAN
+- hel-913: [Comparaison] Selection des indicateurs SMS
+- hel-914: [Comparaison] Selection des indicateurs EJ
 - vr-117: RU Ajustements Titres/ légendes DVZ
 - vr-115: AUDIT Ajustements Pyramide des âges
 - vr-112: AUDIT Echelle tronquée

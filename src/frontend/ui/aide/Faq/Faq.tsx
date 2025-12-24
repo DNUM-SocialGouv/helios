@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import style from "./Faq.module.css";
 import "@gouvfr/dsfr/dist/component/accordion/accordion.min.css";
 import type { ReactNode } from "react";
 
@@ -342,18 +341,6 @@ export default function Faq() {
           </section>
         );
       })}
-
-      <div className="fr-callout fr-my-8w">
-        <p className="fr-callout__title">Besoin d’un accompagnement personnalisé ?</p>
-        <p className="fr-callout__text fr-mb-2w">
-          Notre équipe support est joignable pour répondre à vos questions et vous guider dans vos démarches.
-        </p>
-        <div className={`fr-btns-group ${style["center-button-grp"]}`}>
-          <a className={`fr-btn fr-btn--secondary ${style["center-button"]}`} href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">
-            Contacter notre équipe
-          </a>
-        </div>
-      </div>
     </section >
   );
 }
