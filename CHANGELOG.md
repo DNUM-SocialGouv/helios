@@ -6,6 +6,7 @@
 
 - hel-947: Les libellés des profils sont maintenant obligatoire
 - hel-929: Non affichage du volet d’autorisation
+- hel-950: Menu non responsive sur mobile
 
 ### Features
 

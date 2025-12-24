@@ -290,7 +290,77 @@ export const Header = () => {
               <div className="fr-header__menu-links">
                 <ul>
                   <li>
-                    <button onClick={logOut}>{wording.DÉCONNEXION}</button>
+                    <div className={styles["user-name"]}>{data?.user.firstname} {data?.user.name}</div>
+                    <div className={styles["user-email"]}>{data?.user.email}</div>
+                  </li>
+                  <li className={styles["menu-item"]}>
+                    <button
+                      className="fr-btn--icon-left fr-icon-account-line"
+                      onClick={() => {
+                        handleMenuAction(() => router.push("/mon-compte"));
+                      }}
+                    >
+                      Mon compte
+                    </button>
+                  </li>
+                  <li className={styles["menu-item"]}>
+                    <button
+                      className="fr-btn--icon-left fr-icon-menu-fill"
+                      onClick={() => {
+                        handleMenuAction(() => router.push(paths.MES_LISTES));
+                      }}
+                    >
+                      Mes listes ({userContext?.favorisLists?.length})
+                    </button>
+                  </li>
+                  <li className={styles["menu-item"]}>
+                    <button
+                      className="fr-btn--icon-left fr-icon-time-line"
+                      onClick={() => {
+                        handleMenuAction(() => router.push(paths.HISTORY));
+                      }}
+                    >
+                      Historique
+                    </button>
+                  </li>
+                  {data?.user.role === 1 && (
+                    <li className={styles["menu-item"]}>
+                      <button
+                        className="fr-btn--icon-left fr-icon-settings-5-line"
+                        onClick={() => {
+                          handleMenuAction(() => router.push(paths.SETTINGS));
+                        }}
+                      >
+                        Paramétrage
+                      </button>
+                    </li>
+                  )}
+                  {(data?.user.role === 1 || data?.user.role === 2) && (
+                    <li className={styles["menu-item"]}>
+                      <button
+                        className="fr-btn--icon-left fr-icon-user-setting-line"
+                        onClick={() => {
+                          handleMenuAction(() => router.push(paths.USERS_LIST));
+                        }}
+                      >
+                        Console d’administration
+                      </button>
+                    </li>
+                  )}
+                  <li className={styles["menu-item"]}>
+                    <button
+                      className="fr-btn--icon-left fr-icon-question-line"
+                      onClick={() => {
+                        handleMenuAction(() => router.push(paths.AIDE));
+                      }}
+                    >
+                      Aide
+                    </button>
+                  </li>
+                  <li className={styles["menu-item"]}>
+                    <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={() => handleMenuAction(logOut)}>
+                      {wording.DÉCONNEXION}
+                    </button>
                   </li>
                 </ul>
               </div>
