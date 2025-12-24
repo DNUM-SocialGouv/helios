@@ -85,7 +85,7 @@ describe("CompteDeResultat", () => {
 
   it("affiche l’intitulé de l’indicateur - Compte de Resultat", () => {
     // WHEN
-    renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+    renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const titre = graphiqueTest.titre(wording.COMPTE_DE_RÉSULTAT_CF);
@@ -94,7 +94,7 @@ describe("CompteDeResultat", () => {
 
   it("affiche la date de mise à jour du fichier ANCRE", () => {
     // WHEN
-    renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+    renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
     // THEN
     const dateMiseAJour = graphiqueTest.dateMiseAJour("ANCRE", "20/01/2022");
@@ -104,7 +104,7 @@ describe("CompteDeResultat", () => {
   describe("Détails info bulle", () => {
     it("affiche le bouton de détail", () => {
       // WHEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // THEN
       const détails = graphiqueTest.détail;
@@ -114,7 +114,7 @@ describe("CompteDeResultat", () => {
 
     it("affiche le contenu de l’info bulle après avoir cliqué sur le bouton 'détails'", () => {
       // GIVEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // WHEN
       graphiqueTest.ouvreDétail();
@@ -127,7 +127,7 @@ describe("CompteDeResultat", () => {
 
     it("ferme l'info bulle en cliquant sur le bouton 'Fermer'", () => {
       // GIVEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
       graphiqueTest.ouvreDétail();
 
       // WHEN
@@ -142,7 +142,7 @@ describe("CompteDeResultat", () => {
   describe("Transcription", () => {
     it("affiche la transcription", () => {
       // WHEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // THEN
       const transcription = graphiqueTest.boutonAfficherTranscription;
@@ -152,7 +152,7 @@ describe("CompteDeResultat", () => {
 
     it("affiche le contenu de la transcription", async () => {
       // GIVEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // WHEN
       graphiqueTest.afficherLaTranscription();
@@ -185,7 +185,7 @@ describe("CompteDeResultat", () => {
         autorisationsMockData
       );
       // WHEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceVide} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceVide} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // THEN
       const exergue = screen.getByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéeEnCours - 5}, ${annéeEnCours - 3}, ${annéeEnCours - 1}`, { selector: "p" });
@@ -207,7 +207,7 @@ describe("CompteDeResultat", () => {
         autorisationsMockData
       );
       // WHEN
-      renderFakeComponent(<CompteDeResultat entitéJuridiqueBudgetFinanceViewModel={budgetFinanceAnnees} etabFiness={etabFiness} etabTitle={etabTitle} />);
+      renderFakeComponent(<CompteDeResultat className="test" entitéJuridiqueBudgetFinanceViewModel={budgetFinanceAnnees} etabFiness={etabFiness} etabTitle={etabTitle} />);
 
       // THEN
       const exergue = screen.queryByText(`${wording.AUCUNE_DONNÉE_RENSEIGNÉE}`, {

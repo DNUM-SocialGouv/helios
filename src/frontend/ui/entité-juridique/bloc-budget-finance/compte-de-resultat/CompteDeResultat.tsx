@@ -10,9 +10,10 @@ type BlocBudgetFinanceProps = Readonly<{
   etabTitle: string;
   etabFiness: string;
   entitéJuridiqueBudgetFinanceViewModel: EntitéJuridiqueBudgetFinanceViewModel;
+  className: string;
 }>;
 
-export function CompteDeResultat({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel }: BlocBudgetFinanceProps) {
+export function CompteDeResultat({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel, className }: BlocBudgetFinanceProps) {
   const { wording } = useDependencies();
   const [annéeEnCours, setAnnéeEnCours] = useState<number>(entitéJuridiqueBudgetFinanceViewModel.annéeInitiale);
   const budgetEtFinance = entitéJuridiqueBudgetFinanceViewModel.budgetEtFinanceEnCours(annéeEnCours);
@@ -20,6 +21,7 @@ export function CompteDeResultat({ etabTitle, etabFiness, entitéJuridiqueBudget
   return (
     <IndicateurGraphique
       années={{ liste: entitéJuridiqueBudgetFinanceViewModel.lesAnnéesEffectivesDuCompteDeRésultat(), setAnnéeEnCours }}
+      className={className}
       contenuInfoBulle={<ContenuCompteDeRésultatEJ dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour} source={wording.ANCRE} />}
       dateDeMiseÀJour={entitéJuridiqueBudgetFinanceViewModel.dateMiseÀJour}
       identifiant="budget-et-finances-compte-de-résultat"
