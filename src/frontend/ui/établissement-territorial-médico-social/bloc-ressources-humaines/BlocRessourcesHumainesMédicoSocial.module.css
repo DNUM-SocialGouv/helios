@@ -49,9 +49,8 @@
 
 .vigie-rh-header {
   margin-bottom: 2rem;
-  padding-top: .5rem;
+  padding: .5rem 1rem 1rem 1rem;
   border: 1px solid var(--border-default-grey);
-  padding: 1rem;
 }
 
 .vigie-rh-title-block {
