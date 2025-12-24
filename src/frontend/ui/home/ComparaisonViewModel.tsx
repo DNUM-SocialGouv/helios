@@ -129,7 +129,7 @@ function formatNumberValue(value: number | string | null): string {
   if (value === '') return '';
   if (!value) return '-';
   const num = Number(value);
-  if (isNaN(num)) return '-';
+  if (Number.isNaN(num)) return '-';
   return StringFormater.roundFormatInFrench(num);
 }
 

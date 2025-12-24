@@ -418,7 +418,7 @@ export class BlocVigieRHViewModel {
       courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison) + '%',
       precedent: StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison) + '%',
       variation: variation,
-      pastPeriod: period.replace(/(\d{4})/g, (year) => String(Number(year) - 1)),
+      pastPeriod: period.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1)),
       variationText: variationText,
     }
   }
