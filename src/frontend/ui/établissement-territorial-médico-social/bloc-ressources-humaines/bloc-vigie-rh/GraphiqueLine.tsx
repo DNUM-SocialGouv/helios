@@ -41,6 +41,7 @@ interface LineChartProps {
   identifiantLegende: string;
   afficherSerieTotale?: boolean;
   identifiantTranscription?: string;
+  legendeCochable?: boolean;
 }
 
 const LineChart = ({
@@ -55,6 +56,7 @@ const LineChart = ({
   afficherSerieTotale = true,
   identifiantTranscription,
   nomGraph,
+  legendeCochable = false,
 }: LineChartProps) => {
   const { wording } = useDependencies();
 
@@ -195,13 +197,16 @@ const LineChart = ({
         <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`}>
           {process.env.NODE_ENV !== "test" && <Line data={data} options={options} />}
         </div>
-        <ColorLabel
-          classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
-          items={[
-            ...(afficherSerieTotale ? [{ color: couleurEffectifsTotaux, label: wording.EFFECTIF_TOTAL, circle: true }] : []),
-            ...(multiCategories ?? []).map((c, index) => ({ color: couleursFilieres[index], label: capitalize(c.categorie), circle: true })),
-          ]}
-        />
+        {legendeCochable ?
+          <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id={identifiantLegende} />
+          : <ColorLabel
+            classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+            items={[
+              ...(afficherSerieTotale ? [{ color: couleurEffectifsTotaux, label: wording.EFFECTIF_TOTAL, circle: true }] : []),
+              ...(multiCategories ?? []).map((c, index) => ({ color: couleursFilieres[index], label: capitalize(c.categorie), circle: true })),
+            ]}
+          />}
+
         <Transcription
           disabled={false}
           entêteLibellé={wording.PERIODE}
