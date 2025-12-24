@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.7.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.4...release/1.7.5) (TODO)
+## [1.7.6](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.5...release/1.7.6) (TODO)
+
+### Bug Fixes
+
+### Features
+
+## [1.7.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.4...release/1.7.5) (2025-12-24)
 
 ### Bug Fixes
 
@@ -38,7 +44,7 @@
 - vr-105: Transcription Vignettes
 - vr-102: Cohérence affichage temporelle vue T/ vue A
 - vr-64: AJUSTEM Front Top indicateur clé
-- vr-63: DVIZ Top Indicateur clé - CDD courts 
+- vr-63: DVIZ Top Indicateur clé - CDD courts
 
 ## [1.7.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.2...release/1.7.3) (2025-12-11)
 
