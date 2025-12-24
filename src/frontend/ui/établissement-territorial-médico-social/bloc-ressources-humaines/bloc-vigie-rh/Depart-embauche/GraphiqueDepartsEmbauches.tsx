@@ -12,10 +12,11 @@ type GraphiqueDepartEmbauchesProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
   donneesDepartsEmbauches: DepartEmbauche[],
-  donneesDepartsEmbauchesTrimestriels: DepartEmbaucheTrimestrielViewModel[]
+  donneesDepartsEmbauchesTrimestriels: DepartEmbaucheTrimestrielViewModel[],
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels }: GraphiqueDepartEmbauchesProps) => {
+const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauches, donneesDepartsEmbauchesTrimestriels, showRefValues }: GraphiqueDepartEmbauchesProps) => {
 
   const { wording } = useDependencies();
 
@@ -38,9 +39,15 @@ const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauch
           donneesDepartsEmbauches={donneesDepartsEmbauches}
           etabFiness={etabFiness}
           etabTitle={etabTitle}
+          showRefValues={showRefValues}
         />
         :
-        <GraphiqueDepartEmbauchesTrimestriel donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} />
+        <GraphiqueDepartEmbauchesTrimestriel
+          donneesDepartsEmbauches={donneesDepartsEmbauchesTrimestriels}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
+          showRefValues={showRefValues}
+        />
       }
     </div>
   );

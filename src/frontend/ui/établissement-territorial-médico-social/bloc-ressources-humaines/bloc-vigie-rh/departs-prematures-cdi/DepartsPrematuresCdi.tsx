@@ -3,12 +3,15 @@ import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import styles from "./DepartsPrematuresCdi.module.css";
 import { StringFormater } from "../../../../commun/StringFormater";
+import { Transcription } from "../../../../commun/Transcription/Transcription";
 
 type DepartsPrematuresCdiProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
+  etabFiness: string;
+  etabTitle: string;
 }>;
 
-const DepartsPrematuresCdi = ({ blocVigieRhViewModel }: DepartsPrematuresCdiProps) => {
+const DepartsPrematuresCdi = ({ blocVigieRhViewModel, etabFiness, etabTitle }: DepartsPrematuresCdiProps) => {
   const { wording } = useDependencies();
   const donnees = blocVigieRhViewModel.departsPrematuresCdi;
   const libellesValeursManquantes = donnees.filter(({ valeur }) => typeof valeur !== "number" || !Number.isFinite(valeur)).map(({ annee }) => `${annee}`);
@@ -55,6 +58,16 @@ const DepartsPrematuresCdi = ({ blocVigieRhViewModel }: DepartsPrematuresCdiProp
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}</MiseEnExergue>
       )}
+      <Transcription
+        entêteLibellé={wording.PERIODE}
+        etabFiness={etabFiness}
+        etabTitle={etabTitle}
+        identifiants={["Nombre"]}
+        isVigieRH={true}
+        libellés={donnees.map(({ annee }) => annee)}
+        nomGraph={wording.DEPARTS_PREMATURES_CDI}
+        valeurs={[donnees.map(({ valeur }) => formatValeur(valeur))]}
+      />
     </div>
   );
 };

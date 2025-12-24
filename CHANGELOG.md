@@ -14,6 +14,11 @@
 - hel-940: Demande de formation sur les page d’aide
 - hel-931: Selection de tous les établissements d’une liste
 - hel-951: Affichage des graphiques sur deux lignes dans la vue tablette
+- vr-122: Ajustements définitions
+- vr-108: AJUSTEM Wording Transcription
+- vr-114: Suppression Moyennes Etablissements
+- vr-120: Transcription manquante- Départs prématurés avant 6 mois
+- vr-124: Display VR sur existant
 
 ## [1.7.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.3...release/1.7.4) (2025-12-17)
 
@@ -33,7 +38,7 @@
 - vr-105: Transcription Vignettes
 - vr-102: Cohérence affichage temporelle vue T/ vue A
 - vr-64: AJUSTEM Front Top indicateur clé
-- vr-63: DVIZ Top Indicateur clé - CDD courts
+- vr-63: DVIZ Top Indicateur clé - CDD courts 
 
 ## [1.7.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.2...release/1.7.3) (2025-12-11)
 

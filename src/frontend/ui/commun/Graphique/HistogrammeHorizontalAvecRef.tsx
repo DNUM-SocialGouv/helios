@@ -22,6 +22,7 @@ type HistogrammeHorizontalAvecRefProps = {
   refsManquantsTitre?: string;
   refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
+  showRefValues: boolean;
 };
 const HistogrammeHorizontalAvecRef = ({
   etabFiness,
@@ -35,7 +36,8 @@ const HistogrammeHorizontalAvecRef = ({
   libelles,
   refsManquantsTitre,
   refsManquants,
-  identifiants
+  identifiants,
+  showRefValues
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
@@ -54,7 +56,7 @@ const HistogrammeHorizontalAvecRef = ({
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: valeursDesHistogrammesRef,
+        data: showRefValues ? valeursDesHistogrammesRef : [],
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -108,6 +110,10 @@ const HistogrammeHorizontalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeursDesHistogrammes[index];
+            if (!showRefValues) {
+              return `Valeur: ${value}`;
+            }
+
             const refValue = valeursDesHistogrammesRef[index];
             const refValueText = refValue ? `${refValue} ` : 'Non renseignée'
 
@@ -154,24 +160,25 @@ const HistogrammeHorizontalAvecRef = ({
     <>
       <div className={styles["flexContainer"]}>
         {/* @ts-ignore */}
-        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={[valeursRefPlugin]}
+        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
         />
       </div>
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
-      />
-      {refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
+      />}
+      {showRefValues && refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
       <Transcription
         entêteLibellé={enteteLibelle}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={identifiants}
+        isVigieRH={true}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={[valeursDesHistogrammes, valeursDesHistogrammesRef]}
+        valeurs={showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] : [valeursDesHistogrammes]}
       />
     </>
   );

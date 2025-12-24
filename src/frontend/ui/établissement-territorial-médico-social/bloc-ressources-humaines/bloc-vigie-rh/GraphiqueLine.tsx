@@ -31,6 +31,7 @@ type MultiCategorie = ProfessionFiliereData | ProfessionGroupeData;
 interface LineChartProps {
   etabFiness: string;
   etabTitle: string;
+  nomGraph: string;
   classContainer: string;
   couleurEffectifsTotaux: string;
   dataEffectifs: EffectifsData;
@@ -42,7 +43,8 @@ interface LineChartProps {
 }
 
 const LineChart = ({
-  etabFiness, etabTitle,
+  etabFiness,
+  etabTitle,
   classContainer,
   couleurEffectifsTotaux,
   dataEffectifs,
@@ -51,6 +53,7 @@ const LineChart = ({
   identifiantLegende,
   afficherSerieTotale = true,
   identifiantTranscription,
+  nomGraph,
 }: LineChartProps) => {
   const { wording } = useDependencies();
 
@@ -186,16 +189,17 @@ const LineChart = ({
 
         <Transcription
           disabled={false}
-          entêteLibellé={wording.MOIS_ANNEES}
+          entêteLibellé={wording.PERIODE}
           etabFiness={etabFiness}
           etabTitle={etabTitle}
           identifiantUnique={transcriptionId}
           identifiants={[
             ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
-            ...(multiCategories ?? []).map((c) => capitalize(c.categorie)),
+            ...(multiCategories ?? []).map((c) => (nomGraph === wording.EFFECTIFS ? 'Effectif de la filière ' : 'Effectif de la catégorie ') + capitalize(c.categorie)),
           ]}
+          isVigieRH={true}
           libellés={labelsTranscription}
-          nomGraph={wording.EFFECTIFS}
+          nomGraph={nomGraph}
           valeurs={[
             ...(afficherSerieTotale ? [dataEffectifs.dataEtab] : []),
             ...(multiCategories ?? []).map(getSerie),

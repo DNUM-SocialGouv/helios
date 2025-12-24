@@ -13,6 +13,7 @@ import { useDependencies } from "../contexts/useDependencies";
 
 type TableIndicateurProps = Readonly<{
   disabled?: boolean;
+  isVigieRH?: boolean;
   entêteLibellé: string;
   identifiants: string[];
   nomGraph: string;
@@ -23,7 +24,7 @@ type TableIndicateurProps = Readonly<{
   valeurs: (number | string | null)[][];
 }>;
 
-export const Transcription = ({ disabled = false, entêteLibellé, identifiants, nomGraph, etabTitle, etabFiness, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
+export const Transcription = ({ disabled = false, isVigieRH = false, entêteLibellé, identifiants, nomGraph, etabTitle, etabFiness, identifiantUnique = "", libellés, valeurs }: TableIndicateurProps) => {
   const { wording } = useDependencies();
   const { exportExcelTranscription } = useExportExcelTranscription();
   const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -95,6 +96,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
                     {wording.DOWNLOAD_EXCEL}
                   </button>
                 </div>
+                {isVigieRH && <span>{wording.DESCRIPTION_TRANSCRIPTION} {nomGraph}</span>}
                 {tableContent}
               </div>
             </div>
