@@ -10,6 +10,7 @@ import { BoutonActif, SelecteurTableauVignette } from "../../frontend/ui/commun/
 import Spinner from "../../frontend/ui/commun/Spinner/Spinner";
 import { Page404 } from "../../frontend/ui/erreurs/Page404";
 import { useFavoris } from "../../frontend/ui/favoris/useFavoris";
+import { RechercheViewModel } from "../../frontend/ui/home/RechercheViewModel";
 import ExportList from "../../frontend/ui/liste/ExportList";
 import { GrilleListEtablissements } from "../../frontend/ui/liste/GrilleListEtablissements";
 import { ImportListModal } from "../../frontend/ui/liste/ImportListModal";
@@ -96,6 +97,56 @@ export default function Router({ listServer }: RouterProps) {
     setDisplaySucessMessage(true);
   }
 
+  // ----------------------------------------------------------------------------
+  // ------------------------ GESTION SÉLECTION TOTALE --------------------------
+  let isAllSelected = true;
+  for (const etablissement of listServer.userListEtablissements) {
+    if (!selectedRows.has(etablissement.finessNumber)) {
+      isAllSelected = false;
+      break;
+    }
+  };
+
+  async function handleFullSelection() {
+    const newSelected = new Map<string, string>();
+    if (!isAllSelected) {
+      const etabs = await getListData();
+      for (const etab of etabs) {
+        newSelected.set(etab.numéroFiness, etab.type);
+      }
+    }
+    setSelectedRows(newSelected);
+  }
+
+  async function getListData(): Promise<RechercheViewModel[]> {
+    // Réutilisation de forExport pour récupérer tous les établissements de la liste
+    const params = new URLSearchParams({ order: "ASC", orderBy: "dateCreation", forExport: "true" });
+    return fetch(`/api/liste/${listServer.id}/etablissement?${params}`, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data: RechercheViewModel[]) => {
+        return data;
+      }
+      )
+  }
+
+  const selectAllButton = () => {
+    return (
+      <button
+        className="fr-btn fr-btn--tertiary-no-outline"
+        name="selectionner"
+        onClick={() => handleFullSelection()}
+        title="selectionner"
+        type="button"
+      >
+        {isAllSelected ? wording.TOUT_DESELECTIONNER : wording.TOUT_SELECTIONNER}
+      </button>
+    );
+  };
+
+  // ----------------------------------------------------------------------------
 
   const titleHead = <>
     <div className="fr-grid-row">
@@ -103,7 +154,7 @@ export default function Router({ listServer }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} importButton={importButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} fullSelectButton={selectAllButton()} importButton={importButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
