@@ -649,6 +649,10 @@ export interface Wording {
   readonly NOMBRE_CDI: string;
   readonly CDD_REF: string;
   readonly CDI_REF: string;
+  readonly SHOW_MORE_BUTTON: string;
+  readonly SHOW_LESS_BUTTON: string;
+  readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string;
+  readonly EFFECTIF_TOTAL: string;
 
   // Paramétrage aide
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string;

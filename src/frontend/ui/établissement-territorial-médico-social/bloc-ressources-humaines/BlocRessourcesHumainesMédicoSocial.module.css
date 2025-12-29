@@ -83,6 +83,11 @@
   margin-top: 1rem;
 }
 
+.vigie-rh-accordion-button {
+  display: flex !important;
+  justify-content: center;
+}
+
 @media (max-width: 991px) {
   .liste-indicateurs {
     grid-template-columns: repeat(2, 1fr);
