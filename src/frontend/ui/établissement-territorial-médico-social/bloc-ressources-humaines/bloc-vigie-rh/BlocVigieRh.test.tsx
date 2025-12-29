@@ -43,7 +43,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       motifsRuptureContratLibelles: [],
       natureContratsAnnuel: [],
       natureContratsTrimestriel: [],
-      echelleTemporelle:{}
+      echelleTemporelle: {}
     },
     wording,
     { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }
@@ -166,17 +166,16 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(fermer).toBeInTheDocument();
     });
 
-    it("affiche le graphique détaillé des effectifs par catégorie professionnelle", () => {
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { } } statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    it("affiche le graphique détaillé des effectifs par catégorie professionnelle après avoir cliqué sur le bouton afficher le détails par filière", () => {
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
-      const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE), { selector: "h3" }))!;
-      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE);
-      expect(select).toBeInTheDocument();
-      expect(select).toHaveValue("test");
-      const options = within(select).getAllByRole("option");
-      expect(options.map((option) => option.getAttribute("value"))).toContain("test");
+      const afficherPlus = within(sousBlocRhHelios).getByRole("button", { name: wording.SHOW_MORE_BUTTON });
+
+      // WHEN
+      fireEvent.click(afficherPlus);
+      expect(sousBlocRhHelios).toHaveTextContent(wording.EFFECTIFS_PAR_FILIERES_CATEGORIES)
+
     });
 
   });
