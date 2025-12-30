@@ -63,7 +63,6 @@ const DepartsPrematuresCdi = ({ blocVigieRhViewModel, etabFiness, etabTitle }: D
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={["Nombre"]}
-        isVigieRH={true}
         libellés={donnees.map(({ annee }) => annee)}
         nomGraph={wording.DEPARTS_PREMATURES_CDI}
         valeurs={[donnees.map(({ valeur }) => formatValeur(valeur))]}

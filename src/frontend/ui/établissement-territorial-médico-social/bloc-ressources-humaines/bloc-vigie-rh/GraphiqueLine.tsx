@@ -217,7 +217,6 @@ const LineChart = ({
             ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
             ...(multiCategories ?? []).map((c) => (nomGraph === wording.EFFECTIFS ? 'Effectif de la filière ' : 'Effectif de la catégorie ') + capitalize(c.categorie)),
           ]}
-          isVigieRH={true}
           libellés={labelsTranscription}
           nomGraph={nomGraph}
           valeurs={[

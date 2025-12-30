@@ -339,7 +339,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           etabTitle={etabTitle}
           identifiantUnique={transcription.identifiantUnique}
           identifiants={transcriptionIdentifiants}
-          isVigieRH={true}
           libellés={libelles}
           nomGraph={nomGraph}
           valeurs={valeursTranscription}
