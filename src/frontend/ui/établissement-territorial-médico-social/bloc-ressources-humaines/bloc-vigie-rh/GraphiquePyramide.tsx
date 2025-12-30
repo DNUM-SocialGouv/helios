@@ -400,7 +400,6 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={showRefValues ? transcriptionIdentifiantsRef : transcriptionIdentifiants}
-        isVigieRH={true}
         libellés={labels}
         nomGraph={wording.PYRAMIDE_DES_AGES}
         valeurs={showRefValues ? transcriptionValeursRef : transcriptionValeurs}

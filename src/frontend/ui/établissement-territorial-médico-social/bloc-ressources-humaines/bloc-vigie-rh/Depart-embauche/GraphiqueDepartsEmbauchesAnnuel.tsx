@@ -357,7 +357,6 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
-        isVigieRH={true}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
         valeurs={transcriptionValeurs}

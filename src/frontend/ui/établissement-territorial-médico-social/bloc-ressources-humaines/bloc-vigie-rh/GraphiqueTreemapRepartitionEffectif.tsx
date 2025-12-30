@@ -337,7 +337,6 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
-        isVigieRH={true}
         libellés={transcriptionLibellés}
         nomGraph={wording.REPARTITION_EFFECTIFS}
         valeurs={transcriptionValeurs}
