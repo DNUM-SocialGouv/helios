@@ -30,7 +30,7 @@ import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/Indicat
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
 import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi";
-import { MOIS } from "../../../../utils/constantes";
+import { ABB_MOIS, MOIS } from "../../../../utils/constantes";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -158,7 +158,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
     const precedent = Number(totaux[isoIdx]) || 0;
     const pastPeriod = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
-    const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const comparaisonLabel = `à ${ABB_MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const variation = precedent - courant;
     const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
     let variationText = '';
@@ -231,7 +231,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         </div>
         <div className={`fr-grid-row fr-grid-row--gutters ${styles["vigie-rh-top-indicateurs"]}`}>
           {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
                 contenuInfoBulle={
@@ -249,7 +249,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.EFFECTIFS}
                 pastPeriod={indicateurEffectif.pastPeriod}
                 pastValue={indicateurEffectif.precedent}
-                tendance="ASC"
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
               />
@@ -258,7 +257,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <></>
           )}
           {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
                 contenuInfoBulle={
@@ -278,7 +277,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.TOP_CONTRATS_TITLE}
                 pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
-                tendance="DESC"
                 title={wording.TOP_CONTRATS_TITLE}
                 unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
                 variation={blocVigieRHViewModel.topIndicateurContrats.variation}
@@ -289,7 +287,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <></>
           )}
           {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
                 contenuInfoBulle={
@@ -307,7 +305,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.TAUX_ROTATION}
                 pastPeriod={blocVigieRHViewModel.topIndicateurTauxRotation.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurTauxRotation.precedent}
-                tendance="DESC"
                 title={wording.TOP_TAUX_ROTATION_TITLE}
                 unitLabel={wording.TOP_TAUX_ROTATION_UNIT_TITLE}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}

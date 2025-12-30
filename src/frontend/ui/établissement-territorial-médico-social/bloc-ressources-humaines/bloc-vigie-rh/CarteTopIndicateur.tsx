@@ -47,19 +47,13 @@ export default function CarteTopIndicateur({
   pastPeriod,
   identifiant,
   contenuInfoBulle,
-  tendance = "ASC",
   etabFiness,
   etabTitle
 }: CarteIndicateurEffectifProps) {
   const [estCeOuvert, setEstCeOuvert] = useState(false);
   const { wording } = useDependencies()
-  let variationColorClass = 'variationGreen', arrowIcone;
-  const variationEstRouge = (variation > 0 && tendance === "DESC") //Si la valeur de l'indicateur augmente alors que la tendance souhaité est déscendante
-    || (variation < 0 && tendance === "ASC") //Si la valeur de l'indicateur baisse alors que la tendance souhaité est ascendante
-    || (variation === 0 && tendance === "ASC"); //Si la valeur de l'indicateur est stable alors que la tedance souhaité est ascendante 
-  if (variationEstRouge) {
-    variationColorClass = 'variationRed';
-  }
+
+  let arrowIcone;
   if (variation > 0) {
     arrowIcone = 'fr-icon-arrow-right-up-fill';
   } else if (variation < 0) {
@@ -87,7 +81,7 @@ export default function CarteTopIndicateur({
           <div className={`${styles["contenuVignette"]} fr-card__content`}>
             <p className="fr-tag">{title}</p>
             <div className={styles["headerRow"]}>
-              <span aria-hidden className={`${styles[variationColorClass]} ${styles["arrow"]} ${arrowIcone}`}></span>
+              <span aria-hidden className={` ${styles["arrow"]} ${arrowIcone}`}></span>
               <span className={styles["value"]}>{currentValue}</span>
             </div>
 
@@ -95,12 +89,12 @@ export default function CarteTopIndicateur({
 
             <div className={styles["variation"]}>
               {variation === 0 ? (
-                <><span className={`${styles[variationColorClass]}`}>Stable </span><span style={{ color: "#666" }}> par rapport {comparaisonLabel}</span></>
+                <><span>Stable </span><span style={{ color: "#666" }}> par rapport {comparaisonLabel}</span></>
               ) : (
                 (() => {
                   return (
                     <>
-                      <span className={`${styles["variationValue"]} ${styles[variationColorClass]}`}>
+                      <span className={`${styles["variationValue"]}`}>
                         {variationText}
                       </span>
                       <span> par rapport {comparaisonLabel}</span>

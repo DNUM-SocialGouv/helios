@@ -121,6 +121,7 @@ export type EtablissementTerritorialMedicoSocialVigieRH = Readonly<{
 export type EchelleTemporelleVigieRh = Readonly<{
   type: TypeEchelle;
   valeur: string;
+  valeurVignette?: string;
   valeurTranscription?: string;
   dateDonneesArretees?: string;
 }>
