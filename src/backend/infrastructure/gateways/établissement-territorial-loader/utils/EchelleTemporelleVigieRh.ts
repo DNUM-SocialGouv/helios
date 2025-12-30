@@ -17,6 +17,9 @@ const MOIS_LABELS = [
   "Décembre",
 ];
 
+const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Jun", "Jull.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
+
+
 type DernierePeriode = Readonly<{
   annee: number | null;
   mois: number | null;
@@ -171,6 +174,7 @@ export async function construitEchelleTemporelleVigieRh(
     type: "ANNUEL",
     valeur: formatAnnuel(dureePeriod.annee, dureePeriod.mois) ?? "",
     ...(dureeDate ? { dateDonneesArretees: dureeDate } : {}),
+    valeurVignette: formatAnnuelVignette(dureePeriod.annee, dureePeriod.mois) ?? "",
   };
 
   const motifDate = construitDateDernierJour(motifPeriod.annee, motifPeriod.mois);
@@ -265,6 +269,22 @@ function formatAnnuel(annee?: number | null, mois?: number | null): string | nul
   const anneeDebut = fin === 12 ? annee : annee - 1;
 
   return `${MOIS_LABELS[debut - 1]} ${anneeDebut} à ${MOIS_LABELS[fin - 1]} ${annee}`;
+}
+
+function formatAnnuelVignette(annee?: number | null, mois?: number | null): string | null {
+  if (!annee) {
+    return null;
+  }
+
+  if (!mois || mois < 1 || mois > 12) {
+    return `${annee}`;
+  }
+
+  const fin = mois;
+  const debut = fin === 12 ? 1 : fin + 1;
+  const anneeDebut = fin === 12 ? annee : annee - 1;
+
+  return `${ABB_MOIS[debut - 1]} ${anneeDebut} à ${ABB_MOIS[fin - 1]} ${annee}`;
 }
 
 function numeroMoisDepuisTrimestre(trimestre?: number | null): number | null {
