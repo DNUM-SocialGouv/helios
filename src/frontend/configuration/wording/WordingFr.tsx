@@ -710,6 +710,7 @@ export class WordingFr implements Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";

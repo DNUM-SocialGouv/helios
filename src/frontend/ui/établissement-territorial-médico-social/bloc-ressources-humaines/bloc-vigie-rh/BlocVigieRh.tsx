@@ -22,6 +22,7 @@ import { ContenuTauxRotationVigieRh } from "./info-bulles/ContenuTauxRotationVig
 import { ContenuTopContratsCourtsVigieRh } from "./info-bulles/ContenuTopContratsCourtsVigieRh";
 import { ContenuTopEffectifVigieRh } from "./info-bulles/ContenuTopEffectifVigieRh";
 import { ContenuTopTauxRotationVigieRh } from "./info-bulles/ContenuTopTauxRotationVigieRh";
+import { InfoMessage } from "./InfoMessage";
 import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
@@ -217,6 +218,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   return (
     <>
+      <InfoMessage />
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       <section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>
