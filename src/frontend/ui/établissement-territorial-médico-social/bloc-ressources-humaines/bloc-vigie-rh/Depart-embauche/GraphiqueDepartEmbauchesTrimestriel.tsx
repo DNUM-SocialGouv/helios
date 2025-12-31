@@ -247,21 +247,30 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
       },
       tooltip: {
         callbacks: {
+          title: function (context: any) {
+            const periode = context[0]?.label.split('-');
+            if (periode.length === 1)
+              return periode[0];
+            else
+              return `${periode[1]} ${periode[0]}`
+          },
           label: function (context: any) {
             const index = context.dataIndex;
             const datasetLabel = context.dataset.label;
-            const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
+            const embaucheChart = datasetLabel.toLowerCase() === wording.EMBAUCHES.toLowerCase();
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
             const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+            const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             if (!showRefValues) {
-              return `Valeur: ${valeurText}`;
+              return `${label}: ${valeurText}`;
             }
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
             const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
+            return [`${label}: ${valeurText}`,
+            `Valeur de référence: ${valeurRefText}`];
           },
         },
       },

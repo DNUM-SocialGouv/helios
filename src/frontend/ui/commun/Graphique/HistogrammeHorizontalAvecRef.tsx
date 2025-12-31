@@ -110,14 +110,15 @@ const HistogrammeHorizontalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeursDesHistogrammes[index];
+            const label = nomGraph === wording.DUREE_CDD ? "CDD" : `Nombre`;
             if (!showRefValues) {
-              return `Valeur: ${value}`;
+              return `${label}: ${value}`;
             }
 
             const refValue = valeursDesHistogrammesRef[index];
             const refValueText = refValue ? `${refValue} ` : 'Non renseignée'
 
-            return [`Valeur: ${value}`,
+            return [`${label}: ${value}`,
             `Valeur de référence: ${refValueText} `];
           },
         },

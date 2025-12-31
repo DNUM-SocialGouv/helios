@@ -100,17 +100,24 @@ const HistogrammeVerticalAvecRef = ({
       tooltip: {
         filter: (tooltipItem) => tooltipItem.datasetIndex === 0,
         callbacks: {
+          title: function (context: any) {
+            const periode = context[0]?.label.split('-');
+            if (periode.length === 1)
+              return periode[0];
+            else
+              return `${periode[1]} ${periode[0]}`
+          },
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeurs[index];
             const valeurText = Number.isFinite(value as number) ? Math.abs(value as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
             if (!showRefValues) {
-              return `Valeur: ${valeurText}`;
+              return `Taux: ${valeurText}`;
             }
             const refValue = valeursRef[index];
             const valeurRefText = Number.isFinite(refValue as number) ? Math.abs(refValue as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`,
+            return [`Taux: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
           },
         },
