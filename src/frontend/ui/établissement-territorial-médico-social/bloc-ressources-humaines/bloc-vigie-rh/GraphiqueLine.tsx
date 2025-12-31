@@ -176,13 +176,16 @@ const LineChart = ({
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (tooltipItem) => {
-            const index = tooltipItem.dataIndex;
+          title: (tooltipItems) => {
+            const index = tooltipItems[0]?.dataIndex; // Access the first tooltip item
             const moisAnnee = dataEffectifs.dataMoisAnnee[index];
             const moisNom = moisAnnee ? MOIS[moisAnnee.mois - 1] : "N/A";
             const xValue = moisAnnee ? `${moisNom} ${moisAnnee.annee}` : "N/A";
+            return xValue;
+          },
+          label: (tooltipItem) => {
             const yValue = tooltipItem.raw;
-            return ` ${xValue} : ${yValue}`;
+            return `Effectif : ${yValue}`;
           },
         },
       },
