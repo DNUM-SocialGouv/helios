@@ -11,6 +11,11 @@ const etabFiness = "123456789";
 const etabTitle = "etabTitle";
 
 describe("La page établissement sanitaire - bloc ressources humaines", () => {
+  beforeAll(() => {
+    jest.useFakeTimers(); // Use modern fake timers
+    jest.setSystemTime(new Date('2025-09-09')); // Set the frozen date
+  });
+
   const ressourcesHumainesViewModel = new EtablissementTerritorialSanitaireRHViewModel(
     EtablissementTerritorialSanitaireViewModelTestBuilder.ressourcesHumaines, wording
   );

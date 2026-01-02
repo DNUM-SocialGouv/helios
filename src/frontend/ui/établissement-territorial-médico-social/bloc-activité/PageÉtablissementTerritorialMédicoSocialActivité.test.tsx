@@ -58,6 +58,11 @@ const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntit�
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("La page établissement territorial médico-social Sauf EHPAD - bloc activité", () => {
+  beforeAll(() => {
+    jest.useFakeTimers(); // Use modern fake timers
+    jest.setSystemTime(new Date('2025-09-09')); // Set the frozen date
+  });
+
   const établissementTerritorialMédicoSocial = ÉtablissementTerritorialMédicoSocialViewModelTestBuilder.crée(wording, paths);
 
   it.each([

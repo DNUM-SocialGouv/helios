@@ -89,7 +89,5 @@ class TestImportVigieRhMouvements:
                                       0.39105811615848657]
             }
         )
-        
-        
 
         pd.testing.assert_frame_equal(mouvements_enregistres.sort_index(axis=1), mouvements_attendus.sort_index(axis=1))
