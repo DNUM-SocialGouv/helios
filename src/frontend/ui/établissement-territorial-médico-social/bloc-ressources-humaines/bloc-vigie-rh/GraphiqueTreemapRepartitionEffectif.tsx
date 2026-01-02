@@ -288,8 +288,9 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           total,
           padding: 6,
           fontSize: 12,
+          fontFamily: "Marianne",
           lineHeight: 14,
-          fontWeight: "500",
+          fontWeight: "700",
         },
       },
       // Pas d’axes sur un treemap
