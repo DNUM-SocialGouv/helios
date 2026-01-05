@@ -5,6 +5,14 @@
 ### Bug Fixes
 
 ### Features
+- vr-135: Ajustement Wording sur les transcriptions
+- vr-123: DVZ Effectifs en 5 nouveaux graph
+- vr-126: Vérifier FONT Marianne
+- vr-128: Ajustements Vignettes
+- vr-129: Ajustements Tooltip des dvz
+- vr-132: Message d'informations - utilisation des donnée
+- vr-134: Evolution des effectifs par CP en 4 graphiques distincts 
+
 
 ## [1.7.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.4...release/1.7.5) (2025-12-24)
 
