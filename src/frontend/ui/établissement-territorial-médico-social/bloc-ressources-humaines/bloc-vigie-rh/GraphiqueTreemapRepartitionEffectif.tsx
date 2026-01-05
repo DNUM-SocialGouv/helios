@@ -271,12 +271,14 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           bodyColor: "#fff",
           displayColors: true,
           callbacks: {
-            title: () => "", // pas de titre “v”
+            title: (ti: any) => {
+              const d = ti[0].raw?._data;
+              return d?.name ?? "";
+            },
             label: (ti: any) => {
-              const d = ti.raw?._data;
               const v = Number(ti.raw?.v ?? 0);
               const pct = total > 0 ? (v / total) * 100 : 0;
-              return d?.name ? `${d.name} ` : `(${pct.toFixed(1)}%)`;
+              return `Effectif: ${StringFormater.round(pct, 0)}%`;
             },
           },
         },
@@ -286,8 +288,9 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           total,
           padding: 6,
           fontSize: 12,
+          fontFamily: "Marianne",
           lineHeight: 14,
-          fontWeight: "500",
+          fontWeight: "700",
         },
       },
       // Pas d’axes sur un treemap
@@ -337,7 +340,6 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
-        isVigieRH={true}
         libellés={transcriptionLibellés}
         nomGraph={wording.REPARTITION_EFFECTIFS}
         valeurs={transcriptionValeurs}

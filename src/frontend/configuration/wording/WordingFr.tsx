@@ -710,12 +710,13 @@ export class WordingFr implements Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
   readonly EFFECTIF_FEMMES_REF: string = "Moyenne des effectifs Femmes pour des établissements similaires";
   readonly EFFECTIF_HOMMES: string = "Effectif Hommes";
-  readonly EFFECTIFS: string = "Evolution des effectifs par filière";
+  readonly EFFECTIFS: string = "Evolution des effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
   readonly EFFECTIFS_TOTAUX: string = "Total des effectifs";
   readonly FILIERE: string = "Filière";
@@ -751,6 +752,11 @@ export class WordingFr implements Wording {
   readonly PERIODE: string = "Période";
   readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
+  readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière";
+  readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière";
+  readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
+  readonly EFFECTIF_TOTAL: string = "Effectif total";
+
   readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string = "Questionnaire";

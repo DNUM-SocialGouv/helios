@@ -255,19 +255,20 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
           label: function (context: any) {
             const index = context.dataIndex;
             const datasetLabel = context.dataset.label;
-            const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
+            const embaucheChart = datasetLabel.toLowerCase() === wording.EMBAUCHES.toLowerCase();
+            const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
             const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
 
             if (!showRefValues) {
-              return `Valeur: ${valeurText}`;
+              return `${label}: ${valeurText}`;
             }
 
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
             const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`,
+            return [`${label}: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
           },
         },
@@ -357,7 +358,6 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}
-        isVigieRH={true}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
         valeurs={transcriptionValeurs}

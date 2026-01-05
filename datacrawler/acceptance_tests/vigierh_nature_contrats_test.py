@@ -1,3 +1,4 @@
+from freezegun import freeze_time
 import numpy as np
 import pandas as pd
 
@@ -32,6 +33,7 @@ class TestImportVigierhNatureContrats:
         )
         mocked_logger.reset_mock()
 
+    @freeze_time("2025-10-17")
     def test_import_vigie_rh_duree_cdd(self) -> None:
         chemin_local_du_fichier_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_nature_contrats_annuel_2025_10_17.parquet'
         chemin_local_du_fichier_ref_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_ref_nature_contrat_2025_10_17.parquet'

@@ -4,6 +4,7 @@ import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
 import CarteTopIndicateur from "./CarteTopIndicateur";
 import GraphiqueDepartEmbauches from "./Depart-embauche/GraphiqueDepartsEmbauches";
+import { DetailsParFiliere } from "./Details-par-filiere/DetailsParFiliere";
 import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
@@ -12,7 +13,6 @@ import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTre
 import { ContenuDepartsEmbauchesVigieRh } from "./info-bulles/ContenuDepartsEmbauchesVigieRh";
 import { ContenuDepartsPrematuresVigieRh } from "./info-bulles/ContenuDepartsPrematuresVigieRh";
 import { ContenuDureeCddVigieRh } from "./info-bulles/ContenuDureeCddVigieRh";
-import { ContenuEffectifsCategorieVigieRh } from "./info-bulles/ContenuEffectifsCategorieVigieRh";
 import { ContenuEffectifsVigieRh } from "./info-bulles/ContenuEffectifsVigieRh";
 import { ContenuMotifsRuptureVigieRh } from "./info-bulles/ContenuMotifsRuptureVigieRh";
 import { ContenuNatureContratsVigieRh } from "./info-bulles/ContenuNatureContratsVigieRh";
@@ -22,16 +22,16 @@ import { ContenuTauxRotationVigieRh } from "./info-bulles/ContenuTauxRotationVig
 import { ContenuTopContratsCourtsVigieRh } from "./info-bulles/ContenuTopContratsCourtsVigieRh";
 import { ContenuTopEffectifVigieRh } from "./info-bulles/ContenuTopEffectifVigieRh";
 import { ContenuTopTauxRotationVigieRh } from "./info-bulles/ContenuTopTauxRotationVigieRh";
+import { InfoMessage } from "./InfoMessage";
 import GraphiqueNatureContrats from "./NatureContrats";
 import GraphiqueTauxRotation from "./Taux-rotation/GraphiqueTauxRotation";
 import { ProfessionFiliereData } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { HistogrammeMensuelFilters } from "../../../commun/Graphique/HistogrammeMensuelFilters";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
 import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi";
-import { MOIS } from "../../../../utils/constantes";
+import { ABB_MOIS, MOIS } from "../../../../utils/constantes";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -109,58 +109,6 @@ const buildTotalsFromCategories = (categories: ProfessionFiliereData[]): Effecti
   return { dataFiliere: [], dataEtab, dataMoisAnnee };
 };
 
-const useEffectifsGroupes = (blocVigieRHViewModel: BlocVigieRHViewModel) => {
-  const filieresAvecGroupes = useMemo(() => blocVigieRHViewModel.filieresAvecGroupes, [blocVigieRHViewModel]);
-  const [filiereSelectionnee, setFiliereSelectionnee] = useState<string>("");
-
-  useEffect(() => {
-    if (!filieresAvecGroupes.length) {
-      setFiliereSelectionnee("");
-      return;
-    }
-    if (!filiereSelectionnee || !filieresAvecGroupes.some((f: any) => f.categorie === filiereSelectionnee)) {
-      setFiliereSelectionnee(filieresAvecGroupes[0].categorie);
-    }
-  }, [filieresAvecGroupes, filiereSelectionnee]);
-
-  const filiereCourante = useMemo(
-    () => filieresAvecGroupes.find((f: any) => f.categorie === filiereSelectionnee),
-    [filieresAvecGroupes, filiereSelectionnee],
-  );
-
-  const groupesCourants = useMemo(() => filiereCourante?.groupes?.data ?? [], [filiereCourante]);
-
-  const detailDataEffectifs = useMemo<EffectifsData>(() => {
-    if (!filiereCourante) return { dataEtab: [], dataFiliere: [], dataMoisAnnee: [] };
-    const serie = (filiereCourante as any)?.dataCategorie ?? {};
-    let dataMoisAnnee = serie?.dataMoisAnnee ?? [];
-    let dataFiliere = serie?.dataFiliere ?? [];
-
-    if ((!dataMoisAnnee?.length || !dataFiliere?.length) && groupesCourants.length > 0) {
-      const premiereSerieGroupe = (groupesCourants[0] as any)?.dataCategorie ?? {};
-      dataMoisAnnee = premiereSerieGroupe?.dataMoisAnnee ?? [];
-      dataFiliere = premiereSerieGroupe?.dataFiliere ?? [];
-    }
-
-    return {
-      dataEtab: dataFiliere ?? [],
-      dataFiliere: [],
-      dataMoisAnnee: dataMoisAnnee ?? [],
-    };
-  }, [filiereCourante, groupesCourants]);
-
-  const graphiqueEffectifsGroupesAffichable = blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable && filieresAvecGroupes.length > 0;
-
-  return {
-    filieresAvecGroupes,
-    filiereSelectionnee,
-    setFiliereSelectionnee,
-    groupesCourants,
-    detailDataEffectifs,
-    graphiqueEffectifsGroupesAffichable,
-  };
-};
-
 export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: BlocVigieRHProps) => {
   const { wording } = useDependencies();
   const donneesPyramides = blocVigieRHViewModel.lesDonneesPyramideAges;
@@ -168,18 +116,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const annees = donneesPyramides.map((donneeAnnuel) => donneeAnnuel.annee).sort((a, b) => a - b);
   const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const showRefValues = process.env["NEXT_PUBLIC_SHOW_VIGIE_RH_REF"] === 'true';
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;
-  const {
-    filieresAvecGroupes,
-    filiereSelectionnee,
-    setFiliereSelectionnee,
-    groupesCourants,
-    detailDataEffectifs,
-    graphiqueEffectifsGroupesAffichable,
-  } = useEffectifsGroupes(blocVigieRHViewModel);
 
   const couleurEffectifsTotaux = "#ff6600ff"; // orange
   const couleursFilieres = ["#FF8E68", "#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
@@ -218,7 +159,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
     const precedent = Number(totaux[isoIdx]) || 0;
     const pastPeriod = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
-    const comparaisonLabel = `à ${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
+    const comparaisonLabel = `à ${ABB_MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const variation = precedent - courant;
     const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
     let variationText = '';
@@ -277,6 +218,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   return (
     <>
+      <InfoMessage />
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       <section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>
@@ -291,7 +233,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         </div>
         <div className={`fr-grid-row fr-grid-row--gutters ${styles["vigie-rh-top-indicateurs"]}`}>
           {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
                 contenuInfoBulle={
@@ -309,7 +251,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.EFFECTIFS}
                 pastPeriod={indicateurEffectif.pastPeriod}
                 pastValue={indicateurEffectif.precedent}
-                tendance="ASC"
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
               />
@@ -318,7 +259,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <></>
           )}
           {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
                 contenuInfoBulle={
@@ -338,7 +279,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.TOP_CONTRATS_TITLE}
                 pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
-                tendance="DESC"
                 title={wording.TOP_CONTRATS_TITLE}
                 unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
                 variation={blocVigieRHViewModel.topIndicateurContrats.variation}
@@ -349,7 +289,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             <></>
           )}
           {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
-            <div className="fr-col-4">
+            <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
                 contenuInfoBulle={
@@ -367,7 +307,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.TAUX_ROTATION}
                 pastPeriod={blocVigieRHViewModel.topIndicateurTauxRotation.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurTauxRotation.precedent}
-                tendance="DESC"
                 title={wording.TOP_TAUX_ROTATION_TITLE}
                 unitLabel={wording.TOP_TAUX_ROTATION_UNIT_TITLE}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
@@ -404,61 +343,15 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 <LineChart
                   classContainer="fr-mb-4w"
                   couleurEffectifsTotaux={couleurEffectifsTotaux}
-                  couleursFilieres={couleursFilieres}
+                  couleursFilieres={[]}
                   dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                   etabFiness={etabFiness}
                   etabTitle={etabTitle}
                   identifiantLegende="légende-graphique-effectifs"
                   identifiantTranscription="transcription-graphique-effectifs"
-                  multiCategories={indicateurEffectif?.items ?? []}
+                  multiCategories={[]}
                   nomGraph={wording.EFFECTIFS}
                 />
-              </IndicateurGraphique>
-            ) : null}
-
-            {graphiqueEffectifsGroupesAffichable ? (
-              <IndicateurGraphique
-                contenuInfoBulle={
-                  <ContenuEffectifsCategorieVigieRh
-                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                    dateDonneesArretees={recupereDateDonnees("vr-effectifs-groupes")}
-                    source={wording.DSN}
-
-                  />
-                }
-                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs-groupes")}
-                identifiant="vr-effectifs-groupes"
-                key="vr-effectifs-groupes"
-                nomDeLIndicateur={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
-                source={wording.DSN}
-              >
-                <>
-                  <HistogrammeMensuelFilters
-                    ListeActivites={filieresAvecGroupes.map((f: any) => f.categorie)}
-                    activiteLabel={wording.SELECTIONNER_UNE_FILIERE}
-                    handleFrequency={() => undefined}
-                    identifiant="effectifs-groupes"
-                    selectedActivity={filiereSelectionnee}
-                    selectedFrequency={wording.MENSUEL}
-                    setSelectedActivity={setFiliereSelectionnee}
-                    showFrequencySwitch={false}
-                    showYearSelection={false}
-                    wording={wording}
-                  />
-                  <LineChart
-                    afficherSerieTotale={false}
-                    classContainer="fr-mb-4w"
-                    couleurEffectifsTotaux={couleurEffectifsTotaux}
-                    couleursFilieres={paletteGroupes}
-                    dataEffectifs={detailDataEffectifs}
-                    etabFiness={etabFiness}
-                    etabTitle={etabTitle}
-                    identifiantLegende="légende-graphique-effectifs-groupes"
-                    identifiantTranscription="transcription-graphique-effectifs-groupes"
-                    multiCategories={groupesCourants}
-                    nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
-                  />
-                </>
               </IndicateurGraphique>
             ) : null}
 
@@ -528,6 +421,43 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
             ], 2)}
           </div>
+          <section className="fr-accordion">
+            <h3 className={styles["vigie-rh-accordion-button"]}>
+              <button
+                aria-controls="accordion-vigie-rh"
+                aria-expanded={isExpanded}
+                className="fr-btn fr-btn--secondary"
+                onClick={() => setIsExpanded(true)}
+                style={isExpanded ? { display: "none" } : {}}
+              >
+                {wording.SHOW_MORE_BUTTON}
+              </button>
+            </h3>
+            <div
+              className={`fr-collapse ${isExpanded ? "fr-collapse--expanded" : ""}`}
+              id="accordion-vigie-rh"
+            >
+              <h3 className="fr-h3">{wording.EFFECTIFS_PAR_FILIERES_CATEGORIES}</h3>
+              <DetailsParFiliere
+                blocVigieRHViewModel={blocVigieRHViewModel}
+                couleurEffectifsTotaux={couleurEffectifsTotaux}
+                couleursFilieres={couleursFilieres}
+                dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                etabFiness={etabFiness}
+                etabTitle={etabTitle}
+                multiCategories={indicateurEffectif?.items ?? []}
+                paletteGroupes={paletteGroupes}
+              />
+              <h3 className={styles["vigie-rh-accordion-button"]}>
+                <button
+                  className="fr-btn fr-btn--secondary"
+                  onClick={() => setIsExpanded(false)}
+                >
+                  {wording.SHOW_LESS_BUTTON}
+                </button>
+              </h3>
+            </div>
+          </section>
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>

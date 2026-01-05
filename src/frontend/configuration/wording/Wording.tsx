@@ -618,6 +618,7 @@ export interface Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
+  readonly MESSAGE_INFO_VIGIE_RH: string;
   readonly PYRAMIDE_DES_AGES: string;
   readonly TRANCHE_AGE: string;
   readonly EFFECTIF_FEMMES: string;
@@ -649,6 +650,10 @@ export interface Wording {
   readonly NOMBRE_CDI: string;
   readonly CDD_REF: string;
   readonly CDI_REF: string;
+  readonly SHOW_MORE_BUTTON: string;
+  readonly SHOW_LESS_BUTTON: string;
+  readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string;
+  readonly EFFECTIF_TOTAL: string;
 
   // Paramétrage aide
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string;
