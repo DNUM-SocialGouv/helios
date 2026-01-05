@@ -102,10 +102,8 @@ const HistogrammeVerticalAvecRef = ({
         callbacks: {
           title: function (context: any) {
             const periode = context[0]?.label.split('-');
-            if (periode.length === 1)
-              return periode[0];
-            else
-              return `${periode[1]} ${periode[0]}`
+            if (periode.length === 1) { return periode[0]; }
+            else { return `${periode[1]} ${periode[0]}`; }
           },
           label: function (context: any) {
             const index = context.dataIndex;

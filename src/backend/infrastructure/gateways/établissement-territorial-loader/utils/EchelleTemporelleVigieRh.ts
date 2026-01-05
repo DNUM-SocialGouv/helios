@@ -17,7 +17,7 @@ const MOIS_LABELS = [
   "Décembre",
 ];
 
-const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Jun", "Jull.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
+const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Juin", "Juill.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
 
 
 type DernierePeriode = Readonly<{

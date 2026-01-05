@@ -752,8 +752,8 @@ export class WordingFr implements Wording {
   readonly PERIODE: string = "Période";
   readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
-  readonly SHOW_MORE_BUTTON: string = "Afficher le détails par filière";
-  readonly SHOW_LESS_BUTTON: string = "Masquer le détails par filière";
+  readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière";
+  readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière";
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 

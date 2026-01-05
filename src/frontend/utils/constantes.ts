@@ -5,4 +5,4 @@ export const ETB_SANITAIRE = "Sanitaire";
 
 // Mois de l'année
 export const MOIS = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-export const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Jun", "Jull.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
+export const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Juin", "Juill.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
