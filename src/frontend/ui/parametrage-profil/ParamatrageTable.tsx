@@ -107,7 +107,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
       </div>
       <div className="fr-grid-row fr-mt-2w">
         <div className="fr-col">
-          <button className="fr-btn fr-mr-2w" onClick={() => saveButtonClick()}>
+          <button className="fr-btn fr-mr-2w" disabled={creating && codeValue.trim() === ""} onClick={() => saveButtonClick()}>
             Sauvegarder
           </button>
           <button className="fr-btn fr-btn--secondary fr-mr-2w" onClick={() => cancelButtonClick()}>
