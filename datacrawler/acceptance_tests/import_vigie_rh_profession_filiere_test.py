@@ -81,7 +81,7 @@ class TestImportVigiePprofessionFiliere:
             assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_FILIERE, base_de_données_test) == 4
             inserer_nouvelles_donnees(
                 TABLE_PROFESSION_FILIERE,
-                base_de_données_test,
+                connection,
                 base_de_données_test,
                 SOURCE,
                 df_filtré,
