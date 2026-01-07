@@ -48,7 +48,6 @@ data_set/siicea
 data_set/flux_siicea
 data_set/checked_siicea
 data_set/hapi
-data_set/flux_vigierh
 sshd_config
 ssh_key
 
