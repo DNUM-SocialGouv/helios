@@ -54,27 +54,29 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
             donnees_nature_contrats_annuel = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_ANNUEL.value)
             code_list_ref = np.array(referentiel_nature_contrats['nature_contrat_code'].tolist())
             donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_nature_contrats_annuel, code_list_ref, base_de_donnees)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_NATURE_CONTRATS, base_de_donnees, SOURCE, logger)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_NATURE_CONTRATS, base_de_donnees, SOURCE, logger)
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
-                base_de_donnees,
-                SOURCE,
-                referentiel_nature_contrats,
-                logger,
-                FichierSource.VIGIE_RH_REF_CDI_CDD,
-                date_du_fichier_vigierh_ref_cdi_cdd
-            )
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_NATURE_CONTRATS,
-                base_de_donnees,
-                SOURCE,
-                donnees_cdi_cdd_filtrees,
-                logger,
-                FichierSource.VIGIE_RH_CDI_CDD,
-                date_du_fichier_vigierh_donnees_cdi_cdd
-            )
-
+            with base_de_donnees.begin() as connection:
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_NATURE_CONTRATS, connection, SOURCE, logger)
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_NATURE_CONTRATS, connection, SOURCE, logger)
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    referentiel_nature_contrats,
+                    logger,
+                    FichierSource.VIGIE_RH_REF_CDI_CDD,
+                    date_du_fichier_vigierh_ref_cdi_cdd
+                )
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_NATURE_CONTRATS,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    donnees_cdi_cdd_filtrees,
+                    logger,
+                    FichierSource.VIGIE_RH_CDI_CDD,
+                    date_du_fichier_vigierh_donnees_cdi_cdd
+                )
         else:
             logger.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "

@@ -47,10 +47,9 @@ def filtre_les_données_sur_les_n_dernières_années_a_partir_annee_courante(don
     return données_brutes[données_brutes["Année"].between(année_de_départ, année_n)]
 
 
-def supprimer_donnees_existantes(table_name: str, engine: Engine, fournisseur: str, logger: logging.Logger) -> None:
+def supprimer_donnees_existantes(table_name: str, conn: Connection, fournisseur: str, logger: logging.Logger) -> None:
     try:
-        with engine.begin() as conn:
-            conn.execute(text(f"DELETE FROM {table_name};"))
+        conn.execute(text(f"DELETE FROM {table_name};"))
         logger.info(f"[{fournisseur}]✅ Données supprimées avec succès de la table {table_name} !")
     except SQLAlchemyError as exception:
         logger.error(f"[{fournisseur}]❌ Erreur SQL lors de la suppression des données : {exception}")
@@ -59,6 +58,7 @@ def supprimer_donnees_existantes(table_name: str, engine: Engine, fournisseur: s
 
 def inserer_nouvelles_donnees(
     table_name: str,
+    conn: Connection,
     engine: Engine,
     fournisseur: str,
     data_frame: pd.DataFrame,
@@ -80,10 +80,9 @@ def inserer_nouvelles_donnees(
         data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
 
         # Insérer les nouvelles données
-        data_frame.to_sql(table_name, engine, if_exists="append", index=False, chunksize=1000, method="multi")
+        data_frame.to_sql(table_name, conn, if_exists="append", index=False, chunksize=1000, method="multi")
         if fichier and date_de_mise_à_jour:
-            with engine.connect() as connection:
-                mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
+            mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(conn, date_de_mise_à_jour, fichier)
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")
 
     except SQLAlchemyError as exception:  # Capture les erreurs SQLAlchemy
