@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
@@ -68,23 +69,28 @@ export default function Router({
   ]);
 
   return (
-    <UsersListPage
-      etat={etat.toString()}
-      institution={institution}
-      institutionSessionCode={institutionSessionCode}
-      institutions={institutions}
-      itemsPerPageValue={itemsPerPage}
-      keyWord={keyWord}
-      lastElementInPage={lastElementInPage}
-      orderByPage={orderByPage}
-      profile={profile?.toString()}
-      profiles={profiles}
-      role={Number.parseInt(role)}
-      roles={roles}
-      sortDirPage={sortDirPage}
-      userSessionRole={userSessionRole}
-      users={usersPaginatedList}
-    />
+    <main className="fr-container" id="content">
+      <Head>
+        <title>{wording.PAGE_UTILISATEUR_TITRE}</title>
+      </Head>
+      <UsersListPage
+        etat={etat.toString()}
+        institution={institution}
+        institutionSessionCode={institutionSessionCode}
+        institutions={institutions}
+        itemsPerPageValue={itemsPerPage}
+        keyWord={keyWord}
+        lastElementInPage={lastElementInPage}
+        orderByPage={orderByPage}
+        profile={profile?.toString()}
+        profiles={profiles}
+        role={Number.parseInt(role)}
+        roles={roles}
+        sortDirPage={sortDirPage}
+        userSessionRole={userSessionRole}
+        users={usersPaginatedList}
+      />
+    </main>
   );
 }
 
