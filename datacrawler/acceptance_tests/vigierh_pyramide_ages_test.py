@@ -71,21 +71,23 @@ class TestImportVigieRhPyramide:
         inserer_nouvelles_donnees(
             TABLE_REF_TRANCHE_AGE,
             base_de_données_test,
+            base_de_données_test,
             SOURCE,
             df_ref,
             mocked_logger,
             FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-            date_de_mise_a_jour_ref
+            date_de_mise_a_jour_ref,
         )
-        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
-
         inserer_nouvelles_donnees(
             TABLE_TRANCHE_AGE,
+            base_de_données_test,
             base_de_données_test,
             SOURCE,
             df_filtre,
             mocked_logger,
             FichierSource.VIGIE_RH_PYRAMIDE,
-            date_de_mise_a_jour_pyramide
+            date_de_mise_a_jour_pyramide,
         )
+        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
+
         assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121

@@ -73,6 +73,7 @@ class TestImportVigiePprofessionFiliere:
         inserer_nouvelles_donnees(
             TABLE_REF_PROFESSION_FILIERE,
             base_de_données_test,
+            base_de_données_test,
             SOURCE,
             df_ref,
             mocked_logger,
@@ -84,7 +85,9 @@ class TestImportVigiePprofessionFiliere:
         inserer_nouvelles_donnees(
             TABLE_PROFESSION_FILIERE,
             base_de_données_test,
-            SOURCE, df_filtré,
+            base_de_données_test,
+            SOURCE,
+            df_filtré,
             mocked_logger,
             FichierSource.VIGIE_RH_PROFESSION_FILIERE,
             date_de_mise_à_jour_profession_filiere

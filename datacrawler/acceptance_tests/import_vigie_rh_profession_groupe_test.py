@@ -111,6 +111,7 @@ class TestImportVigiePprofessionGroupe:
         inserer_nouvelles_donnees(
             TABLE_REF_PROFESSION_GROUPE,
             base_de_données_test,
+            base_de_données_test,
             SOURCE,
             data_frames[0],
             mocked_logger,
@@ -119,6 +120,7 @@ class TestImportVigiePprofessionGroupe:
         )
         inserer_nouvelles_donnees(
             TABLE_PROFESSION_GROUPE,
+            base_de_données_test,
             base_de_données_test,
             SOURCE,
             data_frames[1],
