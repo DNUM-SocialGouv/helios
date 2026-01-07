@@ -209,7 +209,9 @@ export const Header = () => {
                           Mon compte
                         </button>
                       </li>
-                      <hr className={styles["menu-sperator"]} />
+                      <li>
+                        <hr className={styles["menu-sperator"]} />
+                      </li>
                       <li className={styles["menu-item"]}>
                         <button
                           className="fr-btn--icon-left fr-icon-menu-fill"
@@ -230,7 +232,9 @@ export const Header = () => {
                           Historique
                         </button>
                       </li>
-                      <hr className={styles["menu-sperator"]} />
+                      <li>
+                        <hr className={styles["menu-sperator"]} />
+                      </li>
                       {data?.user.role === 1 && (
                         <li className={styles["menu-item"]}>
                           <button
@@ -255,7 +259,9 @@ export const Header = () => {
                               Console d’administration
                             </button>
                           </li>
-                          <hr className={styles["menu-sperator"]} />
+                          <li>
+                            <hr className={styles["menu-sperator"]} />
+                          </li>
                         </>
                       )}
                       <li className={styles["menu-item"]}>
@@ -268,7 +274,9 @@ export const Header = () => {
                           Aide
                         </button>
                       </li>
-                      <hr className={styles["menu-sperator"]} />
+                      <li>
+                        <hr className={styles["menu-sperator"]} />
+                      </li>
                       <li className={styles["menu-item"]}>
                         <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={() => handleMenuAction(logOut)}>
                           {wording.DÉCONNEXION}
