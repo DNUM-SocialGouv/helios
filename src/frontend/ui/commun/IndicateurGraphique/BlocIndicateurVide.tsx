@@ -7,10 +7,7 @@ export function BlocIndicateurVide({ title, opnedBloc, toggelBlocs }: Readonly<{
   const { wording } = useDependencies();
   return (
     <Bloc opnedBloc={opnedBloc} titre={title} toggelBlocs={toggelBlocs}>
-      <ul>
-        {wording.INDICATEURS_VIDES}
-      </ul>
-
+      {wording.INDICATEURS_VIDES}
     </Bloc>
   );
 }
