@@ -17,6 +17,8 @@ import {
 import { useDependencies } from "../commun/contexts/useDependencies";
 import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
 
+import Head from "next/head";
+
 type InterfaceAideProps = Readonly<{
   contenu: ContenuAide;
   role: IdentifiantRole;
@@ -78,6 +80,9 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
 
   return (
     <main className={`fr-container ${styles["conteneur"]}`} id="content">
+      <Head>
+        <title>{titreSection}</title>
+      </Head>
       <header className="fr-mb-6w">
         <div className="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
           {iconeSection && slugActif && (
