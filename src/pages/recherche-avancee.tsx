@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { useState } from "react";
 
 import { CategoriesFinessModel } from "../../database/models/CategoriesFinessModel";
@@ -62,6 +63,9 @@ export default function RechercheAvancee(props: RouterProps) {
 
   return (
     <main className="fr-container" id="content">
+      <Head>
+        <title>{wording.RECHERCHE_AVANCEE_LABEL}</title>
+      </Head>
       <RechercheAvanceeFormulaire
         categoriesViewModel={categoriesViewModel ?? []}
         isComparaison={false}
