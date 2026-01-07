@@ -31,7 +31,7 @@ export const FavorisPage = () => {
   }
 
   return (
-    <main className="fr-container" id="content">
+    <>
       <div className={styles["actionButton"]}>
         <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-upload-line" data-fr-opened="false"> {wording.IMPORTER_UNE_LISTE} </button>
       </div>
@@ -48,6 +48,6 @@ export const FavorisPage = () => {
           <FavorisBlock currentListId={liste.id} favorisList={liste.userListEtablissements} title={liste.nom} />
         </div>
       ))}
-    </main>
+    </>
   );
 };
