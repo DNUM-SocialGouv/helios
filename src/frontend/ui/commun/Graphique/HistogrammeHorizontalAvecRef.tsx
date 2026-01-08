@@ -1,4 +1,5 @@
 import { BarElement, Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
+import { Context } from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 
 import { couleurDesTraitsRefHistogramme, CouleurHistogramme, couleurIdentifiant } from "./couleursGraphique";
@@ -113,11 +114,11 @@ const HistogrammeHorizontalAvecRef = ({
           },
           pourcentage: {
             align: "end",
-            display: (context: any) => {
-              return !!(valeursAdditionnelles && valeursAdditionnelles[context.dataIndex]);
+            display: (context: Context) => {
+              return (valeursAdditionnelles && valeursAdditionnelles[context.dataIndex]) ? true : false;
             },
-            formatter: (_value: number, context: any) => {
-              return valeursAdditionnelles ? valeursAdditionnelles[context.dataIndex] : "";
+            formatter: (_value: number, context: Context) => {
+              return valeursAdditionnelles?.[context.dataIndex] ?? "";
             },
           },
         },
