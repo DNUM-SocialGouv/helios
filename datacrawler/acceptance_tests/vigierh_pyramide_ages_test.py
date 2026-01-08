@@ -61,31 +61,31 @@ class TestImportVigieRhPyramide:
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_pyramide, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
         df_filtre = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
         assert df_filtre.shape[0] == 121
+        with base_de_données_test.connect() as connection:
+            supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, mocked_logger)
+            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, connection) == 0
+            supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, mocked_logger)
+            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, connection) == 0
+            inserer_nouvelles_donnees(
+                TABLE_REF_TRANCHE_AGE,
+                connection,
+                base_de_données_test,
+                SOURCE,
+                df_ref,
+                mocked_logger,
+                FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
+                date_de_mise_a_jour_ref,
+            )
+            inserer_nouvelles_donnees(
+                TABLE_TRANCHE_AGE,
+                connection,
+                base_de_données_test,
+                SOURCE,
+                df_filtre,
+                mocked_logger,
+                FichierSource.VIGIE_RH_PYRAMIDE,
+                date_de_mise_a_jour_pyramide,
+            )
+            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
 
-        supprimer_donnees_existantes(TABLE_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
-
-        supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
-        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 0
-
-        inserer_nouvelles_donnees(
-            TABLE_REF_TRANCHE_AGE,
-            base_de_données_test,
-            SOURCE,
-            df_ref,
-            mocked_logger,
-            FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-            date_de_mise_a_jour_ref
-        )
-        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
-
-        inserer_nouvelles_donnees(
-            TABLE_TRANCHE_AGE,
-            base_de_données_test,
-            SOURCE,
-            df_filtre,
-            mocked_logger,
-            FichierSource.VIGIE_RH_PYRAMIDE,
-            date_de_mise_a_jour_pyramide
-        )
-        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121
+            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121

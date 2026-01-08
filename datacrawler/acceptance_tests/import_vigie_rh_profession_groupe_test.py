@@ -101,31 +101,35 @@ class TestImportVigiePprofessionGroupe:
         return df_ref_profession_groupe, df_filtré
 
     def _clear_existing_data(self) -> None:
-        supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
-        supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test, SOURCE, mocked_logger)
+        with base_de_données_test.connect() as connection:
+            supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, connection, SOURCE, mocked_logger)
+            supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, connection, SOURCE, mocked_logger)
 
-        assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, base_de_données_test) == 0
-        assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 0
+            assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, connection) == 0
+            assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, connection) == 0
 
     def _insert_new_data(self, data_frames: Tuple[pd.DataFrame, pd.DataFrame], dates: Dict[str, str]) -> None:
-        inserer_nouvelles_donnees(
-            TABLE_REF_PROFESSION_GROUPE,
-            base_de_données_test,
-            SOURCE,
-            data_frames[0],
-            mocked_logger,
-            FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE,
-            dates['ref_profession_groupe']
-        )
-        inserer_nouvelles_donnees(
-            TABLE_PROFESSION_GROUPE,
-            base_de_données_test,
-            SOURCE,
-            data_frames[1],
-            mocked_logger,
-            FichierSource.VIGIE_RH_PROFESSION_GROUPE,
-            dates['profession_groupe']
-        )
+        with base_de_données_test.connect() as connection:
+            inserer_nouvelles_donnees(
+                TABLE_REF_PROFESSION_GROUPE,
+                connection,
+                base_de_données_test,
+                SOURCE,
+                data_frames[0],
+                mocked_logger,
+                FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE,
+                dates['ref_profession_groupe']
+            )
+            inserer_nouvelles_donnees(
+                TABLE_PROFESSION_GROUPE,
+                connection,
+                base_de_données_test,
+                SOURCE,
+                data_frames[1],
+                mocked_logger,
+                FichierSource.VIGIE_RH_PROFESSION_GROUPE,
+                dates['profession_groupe']
+            )
 
         assert compte_nombre_de_lignes(TABLE_REF_PROFESSION_GROUPE, base_de_données_test) == 25
         assert compte_nombre_de_lignes(TABLE_PROFESSION_GROUPE, base_de_données_test) == 200

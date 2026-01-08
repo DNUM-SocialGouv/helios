@@ -97,29 +97,31 @@ if __name__ == "__main__":
 
             data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
             df_filtré = filter_profession_filiere_data(data_frame, code_list_ref, base_de_donnees)
+            with base_de_donnees.begin() as connection:
+                supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
+                supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
 
-            supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, base_de_donnees, SOURCE, logger_helios)
-            supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, base_de_donnees, SOURCE, logger_helios)
+                inserer_nouvelles_donnees(
+                    TABLE_REF_PROFESSION_FILIERE,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    df_ref,
+                    logger_helios,
+                    FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
+                    date_de_mise_à_jour_ref
+                )
 
-            inserer_nouvelles_donnees(
-                TABLE_REF_PROFESSION_FILIERE,
-                base_de_donnees,
-                SOURCE,
-                df_ref,
-                logger_helios,
-                FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
-                date_de_mise_à_jour_ref
-            )
-
-            inserer_nouvelles_donnees(
-                TABLE_PROFESSION_FILIERE,
-                base_de_donnees,
-                SOURCE,
-                df_filtré,
-                logger_helios,
-                FichierSource.VIGIE_RH_PROFESSION_FILIERE,
-                date_de_mise_à_jour_profession_filiere
-            )
+                inserer_nouvelles_donnees(
+                    TABLE_PROFESSION_FILIERE,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    df_filtré,
+                    logger_helios,
+                    FichierSource.VIGIE_RH_PROFESSION_FILIERE,
+                    date_de_mise_à_jour_profession_filiere
+                )
         else:
             logger_helios.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "

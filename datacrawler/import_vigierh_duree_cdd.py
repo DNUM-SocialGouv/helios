@@ -53,26 +53,29 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
             donnees_durre_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.DUREE_CDD.value)
             code_list_ref = np.array(referentiel_duree_cdd['duree_code'].tolist())
             donnees_durre_cdd_filtrees = filtrer_les_donnees_duree_cdd(donnees_durre_cdd, code_list_ref, base_de_donnees)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_DUREE_CDD, base_de_donnees, SOURCE, logger)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_DUREE_CDD, base_de_donnees, SOURCE, logger)
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_REF_DUREE_CDD,
-                base_de_donnees,
-                SOURCE,
-                referentiel_duree_cdd,
-                logger,
-                FichierSource.VIGIE_RH_REF_DUREE_CDD,
-                date_du_fichier_vigierh_ref_duree_cdd
-            )
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_DUREE_CDD,
-                base_de_donnees,
-                SOURCE,
-                donnees_durre_cdd_filtrees,
-                logger,
-                FichierSource.VIGIE_RH_DUREE_CDD,
-                date_du_fichier_vigierh_donnees_duree_cdd
-            )
+            with base_de_donnees.begin() as connection:
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_DUREE_CDD, connection, SOURCE, logger)
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_DUREE_CDD, connection, SOURCE, logger)
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_REF_DUREE_CDD,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    referentiel_duree_cdd,
+                    logger,
+                    FichierSource.VIGIE_RH_REF_DUREE_CDD,
+                    date_du_fichier_vigierh_ref_duree_cdd
+                )
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_DUREE_CDD,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    donnees_durre_cdd_filtrees,
+                    logger,
+                    FichierSource.VIGIE_RH_DUREE_CDD,
+                    date_du_fichier_vigierh_donnees_duree_cdd
+                )
 
         else:
             logger.info(
