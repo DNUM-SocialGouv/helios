@@ -9,7 +9,7 @@ import GraphiqueDureeCDD from "./GraphiqueDureeCDD";
 import LineChart, { EffectifsData } from "./GraphiqueLine";
 import GraphiqueMotifsRuptureContrats from "./GraphiqueMotifsRuptureContrats";
 import PyramidChart from "./GraphiquePyramide";
-import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTreemapRepartitionEffectif";
+import GraphiqueRepartitionEffectif from "./GraphiqueRepartitionEffectifs";
 import { ContenuDepartsEmbauchesVigieRh } from "./info-bulles/ContenuDepartsEmbauchesVigieRh";
 import { ContenuDepartsPrematuresVigieRh } from "./info-bulles/ContenuDepartsPrematuresVigieRh";
 import { ContenuDureeCddVigieRh } from "./info-bulles/ContenuDureeCddVigieRh";
@@ -177,29 +177,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
     return <div>{wording.INDICATEURS_VIDES}</div>;
   }
-
-  // Construit les items du treemap à partir des données d’effectifs par filière
-  // Règles :
-  // - on prend la DERNIÈRE valeur non nulle/non-NaN de la série (dernier mois disponible)
-  // - on met la filière en "Label" avec majuscule initiale
-  // - la "value" est forcée ≥ 0 (sécurise contre valeurs négatives inattendues)
-  const itemsTreemap: TreemapItem[] = (blocVigieRHViewModel.lesDonneesEffectifs.data ?? []).map((c: any) => {
-    // Série temporelle des effectifs pour la filière courante
-    const serie: number[] = c?.dataCategorie?.dataFiliere ?? [];
-
-    // Recherche depuis la fin le dernier point valide (≠ null et convertible en nombre)
-    let i = serie.length - 1;
-    while (i >= 0 && (serie[i] === null || Number.isNaN(Number(serie[i])))) i--;
-
-    // Dernier effectif valide (ou 0 si aucun trouvé)
-    const last = i >= 0 ? Number(serie[i]) : 0;
-
-    // Libellé : première lettre en majuscule (ex. "soins" → "Soins")
-    const label = c.categorie.charAt(0).toUpperCase() + c.categorie.slice(1);
-
-    // On s’assure que la valeur est positive (évite d’écraser le treemap avec une valeur négative)
-    return { label, value: Math.max(0, last) };
-  });
 
   const renderRow = (items: (ReactElement | null | false)[], columns: 2 | 3 = 3) => {
     const visibles = items.filter(Boolean) as ReactElement[];
@@ -408,12 +385,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   nomDeLIndicateur={wording.REPARTITION_EFFECTIFS}
                   source={wording.DSN}
                 >
-                  <GraphiqueTreemapRepartitionEffectif
-                    couleursFilieres={couleursFilieres}
+                  <GraphiqueRepartitionEffectif
+                    blocVigieRHViewModel={blocVigieRHViewModel}
                     etabFiness={etabFiness}
                     etabTitle={etabTitle}
-                    height={420}
-                    items={itemsTreemap.slice(0, 4)}
+                    nomGraph={wording.REPARTITION_EFFECTIFS}
                   />
                 </IndicateurGraphique>
               ) : (

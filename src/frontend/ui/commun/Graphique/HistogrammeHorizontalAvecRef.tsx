@@ -23,6 +23,7 @@ type HistogrammeHorizontalAvecRefProps = {
   refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
   showRefValues: boolean;
+  valeursAdditionnelles?: (string | number)[];
 };
 const HistogrammeHorizontalAvecRef = ({
   etabFiness,
@@ -37,7 +38,8 @@ const HistogrammeHorizontalAvecRef = ({
   refsManquantsTitre,
   refsManquants,
   identifiants,
-  showRefValues
+  showRefValues,
+  valeursAdditionnelles
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
@@ -90,17 +92,34 @@ const HistogrammeHorizontalAvecRef = ({
       intersect: true,
       mode: "index",
     },
+    layout: {
+      padding: {
+        right: valeursAdditionnelles ? 40 : 0,
+      },
+    },
     plugins: {
       datalabels: {
-        align: "start",
         color: "#000",
-        anchor: () => {
-          return "end";
-        },
+        anchor: "end",
         font: {
           family: "Marianne",
           size: 12,
           weight: 700,
+        },
+        labels: {
+          title: {
+            align: "start",
+            formatter: (value: number) => value,
+          },
+          pourcentage: {
+            align: "end",
+            display: (context: any) => {
+              return !!(valeursAdditionnelles && valeursAdditionnelles[context.dataIndex]);
+            },
+            formatter: (_value: number, context: any) => {
+              return valeursAdditionnelles ? valeursAdditionnelles[context.dataIndex] : "";
+            },
+          },
         },
       },
       legend: { display: false },
@@ -157,6 +176,9 @@ const HistogrammeHorizontalAvecRef = ({
     },
   }
 
+  const valeursTranscriptions = showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] :
+    valeursAdditionnelles ? [valeursDesHistogrammes, valeursAdditionnelles] : [valeursDesHistogrammes];
+
   return (
     <>
       <div className={styles["flexContainer"]}>
@@ -178,7 +200,7 @@ const HistogrammeHorizontalAvecRef = ({
         identifiants={identifiants}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] : [valeursDesHistogrammes]}
+        valeurs={valeursTranscriptions}
       />
     </>
   );
