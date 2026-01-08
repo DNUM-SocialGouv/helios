@@ -19,6 +19,7 @@ export enum IndicatorPosition {
 type IndicatorCategory = {
   name: string;
   position: IndicatorPosition;
+  subText?: string;
 }
 
 type IndicatorsState = Map<string, Map<IndicatorCategory, IndicatorStateItem[]>>
@@ -99,7 +100,7 @@ function getInitialIndicatorsState(): IndicatorsState {
   sanitaireIndicators.set(rhSanCategory, sanitaireIndicatorsRessourcesHumaines);
 
   // Bloc Budget et Finances
-  const budgetSanCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const budgetSanCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT, subText: "Pour la campagne sélectionnée, les enveloppes affichées font parties des 3 premières enveloppes attribuées." };
   const sanitaireIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
     { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
     { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
@@ -137,7 +138,7 @@ function getInitialIndicatorsState(): IndicatorsState {
   entiteJuridiqueIndicators.set(rhEJCategory, entiteJuridiqueIndicatorsRessourcesHumaines);
 
   // Bloc Budget et Finances
-  const budgetEJCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT };
+  const budgetEJCategory: IndicatorCategory = { name: "Bloc Budget et Finances", position: IndicatorPosition.RIGHT, subText: "Pour la campagne sélectionnée, les enveloppes affichées font parties des 3 premières enveloppes attribuées." };
   const entiteJuridiqueIndicatorsBudgetEtFinances: IndicatorStateItem[] = [
     { displayName: "Cpte résultat - Charges (principaux)", columnName: "chargesPrincipaux", enabled: true },
     { displayName: "Cpte résultat - Charges (annexes)", columnName: "chargesAnnexes", enabled: true },
@@ -319,6 +320,7 @@ export function useModalSelectionIndicateur(structure: string) {
                 <label className="fr-label fr-ml-5v fr-text--bold fr-text--xl fr-mb-0 fr-pt-1w" htmlFor={`category-checkbox-${category.name}`} >
                   {category.name}
                 </label>
+                {category.subText && (<p className="fr-text--xs fr-mb-3v fr-mt-n1w">{category.subText}</p>)}
                 {pendingItems.map((item) => renderIndicatorItem(category, item))}
               </div>
             </div >
