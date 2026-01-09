@@ -65,15 +65,16 @@ export const PageAccessibilite = () => {
           <li>
             Contacter le délégué du Défenseur des droits dans votre région (<a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues">https://www.defenseurdesdroits.fr/saisir/delegues</a>)
           </li>
-          <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à :</li>
+          <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à :
 
-          <address>
-            Défenseur des droits
-            <br />
-            Libre réponse 71120
-            <br />
-            75342 Paris CEDEX 07
-          </address>
+            <address>
+              Défenseur des droits
+              <br />
+              Libre réponse 71120
+              <br />
+              75342 Paris CEDEX 07
+            </address>
+          </li>
         </ul>
       </div>
     </>

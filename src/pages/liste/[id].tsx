@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 import { ChangeEventHandler, ReactNode, useContext, useEffect, useState } from "react";
 
@@ -170,6 +171,9 @@ export default function Router({ listServer }: RouterProps) {
     <>
       {list ? (
         <main className="fr-container" id="content">
+          <Head>
+            <title>{list.nom}</title>
+          </Head>
           <section aria-label={wording.LISTE_DE_FAVORIS}>
             {titleHead}
             {displaySucessMessage &&

@@ -133,7 +133,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   }
 
   return (
-    <main className="fr-container" id="content">
+    <>
       {user && (
         <>
           <h1 className={styles["title"]}>
@@ -330,6 +330,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
         </>
       )}
       <ConfirmDeleteModalEditPage redirectPage={redirectPage} userCode={user.code} />
-    </main>
+    </>
   );
 };

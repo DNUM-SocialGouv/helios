@@ -1,21 +1,23 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
-import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
+import "@gouvfr/dsfr/dist/component/link/link.min.css";
 
 import styles from "./Aide.module.css";
 import { BlocRessources } from "./BlocRessources";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
 import Faq from "./Faq/Faq";
 import { ListeSections } from "./ListeSections";
 import {
+  IdentifiantRole,
   obtenirSectionNormalisee,
   regrouperRessourcesParType,
   sectionsVisibles,
-  IdentifiantRole,
 } from "./utils";
-import { useDependencies } from "../commun/contexts/useDependencies";
-import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
+
 
 type InterfaceAideProps = Readonly<{
   contenu: ContenuAide;
@@ -78,6 +80,9 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
 
   return (
     <main className={`fr-container ${styles["conteneur"]}`} id="content">
+      <Head>
+        <title>{titreSection}</title>
+      </Head>
       <header className="fr-mb-6w">
         <div className="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
           {iconeSection && slugActif && (

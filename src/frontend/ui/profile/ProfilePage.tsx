@@ -8,16 +8,13 @@ import { Tabs } from "../commun/Tabs/tabs";
 export const ProfilePage = () => {
 
   return (
-    <main className="fr-container" id="content">
-      <Tabs labels={[{ text: "Mes informations", tabId: "1" }, { text: "Mot de passe", tabId: "2" }]}>
-        <TabContent index="1">
-          <UserInfoTab />
-        </TabContent>
-        <TabContent index="2">
-          <ChangePwdPage />
-        </TabContent>
-      </Tabs>
-
-    </main>
+    <Tabs labels={[{ text: "Mes informations", tabId: "1" }, { text: "Mot de passe", tabId: "2" }]}>
+      <TabContent index="1">
+        <UserInfoTab />
+      </TabContent>
+      <TabContent index="2">
+        <ChangePwdPage />
+      </TabContent>
+    </Tabs>
   );
 };

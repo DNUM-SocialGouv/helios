@@ -76,11 +76,13 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées && (
           <GraphiqueEquipementMateriauxLourds entiteJuridiqueEquipementLourds={entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds} />
         )}
-        <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
-          <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
-            {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
-          </button>
-        </div>
+        <li>
+          <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
+            <button className="fr-btn fr-btn--secondary" onClick={handleExport}>
+              {wording.BOUTON_TELECHARGER_AUTORISATIONS_ET_CAPACITES}
+            </button>
+          </div>
+        </li>
       </ul>
     </Bloc >
   );

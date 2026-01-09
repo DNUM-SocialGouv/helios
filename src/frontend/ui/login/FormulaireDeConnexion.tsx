@@ -129,13 +129,13 @@ export const FormulaireDeConnexion = () => {
                 </div>
                 <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages"></div>
                 <p>
-                  <Link className={"fr-link " + styles["links-underline"]} href="/mot-passe-oublie">
+                  <Link className="fr-link" href="/mot-passe-oublie">
                     {wording.FORGET_PASSEWORD}
                   </Link>
                 </p>
                 <p>
                   {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                  <Link className={"fr-link " + styles["links-underline"]} href="/registration">
+                  <Link className="fr-link" href="/registration">
                     S&apos;inscrire
                   </Link>
                 </p>

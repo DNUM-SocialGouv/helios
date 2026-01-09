@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { useMemo, useState } from "react";
@@ -11,8 +12,9 @@ import { getAllProfilesEndpoint } from "../../backend/infrastructure/controllers
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
-import { GestionAide, ContenuAide } from "../../frontend/ui/parametrage-aide";
+import { ContenuAide, GestionAide } from "../../frontend/ui/parametrage-aide";
 import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
+
 
 type TabKey = "profiles" | "aide";
 
@@ -26,7 +28,7 @@ const TAB_QUERY_KEY = "onglet";
 
 export default function SettingsParametragePage({ profiles, aideData, initialTab }: RouterProps) {
   const router = useRouter();
-  const { wording} = useDependencies();
+  const { wording } = useDependencies();
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
 
   const baseBreadcrumb = useMemo(
@@ -56,6 +58,9 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
 
   return (
     <main id="content">
+      <Head>
+        <title>{wording.PARAMETRAGE_TITRE}</title>
+      </Head>
       <div className="fr-container fr-py-9w">
         <div className="fr-tabs">
           <ul className="fr-tabs__list" role="tablist">

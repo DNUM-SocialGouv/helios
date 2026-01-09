@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 
@@ -29,7 +30,14 @@ export default function Router({ favoris }: RouterProps) {
     userContext?.setFavorisLists(favoris);
   }, [])
 
-  return <FavorisPage />;
+  return (
+    <main className="fr-container" id="content">
+      <Head>
+        <title>{wording.FAVORIS_LIST}</title>
+      </Head>
+      <FavorisPage />
+    </main>
+  );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
