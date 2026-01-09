@@ -1,9 +1,9 @@
-import nextTypescript from "eslint-config-next/typescript.js";
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals.js";
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals.js";
+import nextTypescript from "eslint-config-next/typescript.js";
 import jest from "eslint-plugin-jest";
 import jsxA11Y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
@@ -85,6 +85,7 @@ export default [...compat.config(nextTypescript), {
     }],
 
     "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/jsx-curly-brace-presence": "error",
     "react/jsx-sort-props": "error",
