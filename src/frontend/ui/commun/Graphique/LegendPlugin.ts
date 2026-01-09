@@ -25,7 +25,7 @@ export function construisLePluginDeLaLegende() {
         event.preventDefault();
         if (libellé.datasetIndex) chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
         chart.update();
-        document.getElementById(event.target.id).focus();
+        caseÀCocher.focus();
       }
     };
 

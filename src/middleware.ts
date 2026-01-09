@@ -6,14 +6,16 @@ import type { NextRequest } from "next/server";
 export default withAuth(
   function middleware(request: NextRequest) {
     const allowedIps = (process.env["WHITELIST_IP"] as string).split(",");
-    const userIp = request.headers.get("x-forwarded-for") || (request.ip as string);
+    // We get the IP from the X-Forwarded-For set by scalingo with a fall-back to X-Real-Ip
+    // https://doc.scalingo.com/platform/internals/routing
+    const userIp = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip");
 
     // Pour l'environnement de développement
     if (userIp === undefined) {
       return NextResponse.next();
     }
 
-    if (!allowedIps.includes(userIp)) {
+    if (!userIp || !allowedIps.includes(userIp)) {
       const url = request.nextUrl.clone();
       url.pathname = "/inaccessible";
       return NextResponse.rewrite(url);

@@ -26,7 +26,7 @@ export const fakeFrontDependencies: FrontDependencies = {
   isFeatureEnabled: isFeatureEnabled(),
 };
 
-export const trimHtml = (reactElement: ReactElement): string => {
+export const trimHtml = (reactElement: ReactElement<any>): string => {
   let sentence = "";
   if (Array.isArray(reactElement.props.children)) {
     for (const children1 of reactElement.props.children) {
