@@ -1,5 +1,5 @@
-import nextTypescript from "eslint-config-next/typescript";
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript.js";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals.js";
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
@@ -19,7 +19,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-export default [...nextTypescript, {
+export default [...compat.config(nextTypescript), {
   ignores: [
     "public/smarttag.js",
     "**/coverage/",
@@ -28,7 +28,7 @@ export default [...nextTypescript, {
     "public/assets/",
     "**/temp/",
   ]
-}, ...nextCoreWebVitals, ...compat.extends("plugin:react/recommended"), ...compat.extends("plugin:jsx-a11y/recommended"), ...compat.extends("prettier"), {
+}, ...compat.config(nextCoreWebVitals), ...compat.extends("plugin:react/recommended"), ...compat.extends("plugin:jsx-a11y/recommended"), ...compat.extends("prettier"), {
   plugins: {
     react,
     "jsx-a11y": jsxA11Y,
