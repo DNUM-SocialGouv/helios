@@ -1,5 +1,11 @@
 # Changelog d'Helios
 
+## [1.7.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.6...release/1.7.7) (2026-01-08)
+
+### Bug Fixes
+Optimisation cron vigie rh
+### Features
+
 ## [1.7.6](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.5...release/1.7.6) (2026-01-05)
 
 ### Bug Fixes
