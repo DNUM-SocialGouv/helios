@@ -45,6 +45,7 @@ export const config = {
     "/liste/:path*",
     "/api/recherche",
     "/api/revalidate",
-    "/api/liste/:path*"
+    "/api/liste/:path*",
+    "/mes-listes"
   ],
 };
