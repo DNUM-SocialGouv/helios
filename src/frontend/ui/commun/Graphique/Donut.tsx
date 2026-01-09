@@ -6,6 +6,8 @@ import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogra
 import styles from "./Donut.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonut";
 
+import type { JSX } from "react";
+
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), ChartDataLabels);
 
 export function Donut(props: Readonly<{

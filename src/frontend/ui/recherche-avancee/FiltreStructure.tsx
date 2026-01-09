@@ -21,9 +21,9 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   const rechercheAvanceeContext = useContext(isComparaison ? ComparaisonContext : RechercheAvanceeContext);
   const [typeSelected, setTypeSelected] = useState<string[]>(rechercheAvanceeContext?.typeStructure ?? []);
   const [statutJuridiqueSelected, setStatutJuridiqueSelected] = useState<string[]>(rechercheAvanceeContext?.statutJuridiqueStructure ?? []);
-  const checkboxElementPublic = useRef<any>();
-  const checkboxElementPriveL = useRef<any>();
-  const checkboxElementPriveNL = useRef<any>();
+  const checkboxElementPublic = useRef<any>(undefined);
+  const checkboxElementPriveL = useRef<any>(undefined);
+  const checkboxElementPriveNL = useRef<any>(undefined);
   const changedCapacite =
     (rechercheAvanceeContext?.capaciteAgees && rechercheAvanceeContext?.capaciteAgees.length > 0) ||
     (rechercheAvanceeContext?.capaciteHandicap && rechercheAvanceeContext?.capaciteHandicap.length > 0) ||

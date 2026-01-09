@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, type JSX } from "react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";

@@ -8,8 +8,8 @@ type ModalNouvelleSectionProps = Readonly<{
     title: string;
     icon: string;
   };
-  ancre: RefObject<HTMLDialogElement>;
-  champInitial: RefObject<HTMLInputElement>;
+  ancre: RefObject<HTMLDialogElement | null>;
+  champInitial: RefObject<HTMLInputElement | null>;
   surFermeture: () => void;
   surModification: (event: ChangeEvent<HTMLInputElement>) => void;
   surValidation: (event: FormEvent<HTMLFormElement>) => void;

@@ -6,6 +6,8 @@ import { CouleurHistogramme } from "./couleursGraphique";
 import styles from "./DonutNoCenterText.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonutNoCenterText";
 
+import type { JSX } from "react";
+
 ChartJS.register(
   DoughnutController,
   ArcElement,

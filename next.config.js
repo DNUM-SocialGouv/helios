@@ -66,19 +66,19 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withBundleAnalyzer({
-  devIndicators: { buildActivityPosition: "bottom-right" },
+  devIndicators: { position: "bottom-right" },
   async headers() {
     return process.env["NODE_ENV"] !== "development"
       ? [
-          {
-            headers: securityHeaders,
-            source: "/:path*",
-          },
-          {
-            headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
-            source: "/(smarttag.js|favicon.ico|logo.svg)",
-          },
-        ]
+        {
+          headers: securityHeaders,
+          source: "/:path*",
+        },
+        {
+          headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+          source: "/(smarttag.js|favicon.ico|logo.svg)",
+        },
+      ]
       : [];
   },
   poweredByHeader: false,
