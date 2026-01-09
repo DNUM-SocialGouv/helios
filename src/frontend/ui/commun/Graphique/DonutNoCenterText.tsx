@@ -5,7 +5,6 @@ import { Doughnut } from "react-chartjs-2";
 import { CouleurHistogramme } from "./couleursGraphique";
 import styles from "./DonutNoCenterText.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonutNoCenterText";
-
 import type { JSX } from "react";
 
 ChartJS.register(
@@ -74,7 +73,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string, libellés: string[]): 
           }
         }
       },
-      // @ts-ignore
+      // @ts-expect-error custom property
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
     },

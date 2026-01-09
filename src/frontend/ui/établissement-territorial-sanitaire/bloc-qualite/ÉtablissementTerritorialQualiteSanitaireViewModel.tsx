@@ -4,7 +4,7 @@ import {
 } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
 import { transformDataInspections } from "../../../utils/transformDataInspections";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {

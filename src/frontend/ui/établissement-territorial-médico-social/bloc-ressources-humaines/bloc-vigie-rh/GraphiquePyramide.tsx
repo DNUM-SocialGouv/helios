@@ -1,4 +1,4 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData } from "chart.js";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData, ChartOptions } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -326,13 +326,11 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       <div className="fr-grid-row" style={{ height: "300px", alignItems: "stretch" }}>
         <div className="fr-col-5">
           <Bar
-            // @ts-ignore
-            data={menData}
+            data={menData as ChartData<"bar">}
             options={{
               ...options,
               scales: {
                 ...options.scales,
-                // @ts-ignore
                 x: {
                   ...options.scales.x,
                   display: false,
@@ -340,7 +338,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 },
                 y: { ...options.scales.y, display: false },
               }
-            }}
+            } as ChartOptions<"bar">}
             plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
@@ -373,14 +371,13 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
               ...options,
               scales: {
                 ...options.scales,
-                // @ts-ignore
                 x: {
                   ...options.scales.x,
                   display: false,
                 },
                 y: { ...options.scales.y, display: false },
               },
-            }}
+            } as ChartOptions<"bar">}
             plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>

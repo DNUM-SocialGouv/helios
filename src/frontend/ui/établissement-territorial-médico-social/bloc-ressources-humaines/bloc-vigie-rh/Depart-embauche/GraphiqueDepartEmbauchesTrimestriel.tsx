@@ -1,4 +1,4 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend } from "chart.js";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -359,8 +359,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
 
   return (
     <div>
-      {/* @ts-ignore */}
-      <Bar data={dataSet} options={options} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+      <Bar data={dataSet} options={options as ChartOptions<"bar">} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

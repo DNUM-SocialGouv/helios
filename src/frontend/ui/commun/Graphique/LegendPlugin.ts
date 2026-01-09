@@ -9,26 +9,22 @@ export function construisLePluginDeLaLegende() {
     caseÀCocher.type = "checkbox";
     caseÀCocher.id = libellé.text;
     caseÀCocher.name = libellé.text;
-    // @ts-ignore
-    caseÀCocher.checked = chart.isDatasetVisible(libellé.datasetIndex);
+    caseÀCocher.checked = libellé.datasetIndex ? chart.isDatasetVisible(libellé.datasetIndex) : false;
 
     const libelléCaseÀCocher = document.createElement("label");
     libelléCaseÀCocher.classList.add("fr-label");
     libelléCaseÀCocher.htmlFor = libellé.text;
 
     libelléCaseÀCocher.onclick = () => {
-      // @ts-ignore
-      chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+      if (libellé.datasetIndex) chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
       chart.update();
     };
 
     caseÀCocher.onkeydown = (event) => {
       if (event.code === "Space") {
         event.preventDefault();
-        // @ts-ignore
-        chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+        if (libellé.datasetIndex) chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
         chart.update();
-        // @ts-ignore
         document.getElementById(event.target.id).focus();
       }
     };
@@ -48,7 +44,7 @@ export function construisLePluginDeLaLegende() {
   }
 
   return {
-    afterUpdate(chart: ChartJS, _args: Object, options: any) {
+    afterUpdate(chart: ChartJS, _args: object, options: any) {
       const légende = document.getElementById(options.containerID);
 
       if (!légende) return;
@@ -57,13 +53,14 @@ export function construisLePluginDeLaLegende() {
         légende.firstChild.remove();
       }
 
-      // @ts-ignore
-      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
+      if (chart.options.plugins?.legend?.labels?.generateLabels) {
+        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende?.forEach((libellé) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
-        légende.appendChild(libelléDeLégende);
-      });
+        libellésDeLaLégende?.forEach((libellé) => {
+          const libelléDeLégende = créeLeLibelléPourLaLégende(chart, libellé);
+          légende.appendChild(libelléDeLégende);
+        });
+      }
     },
     id: "htmlLegend",
   };

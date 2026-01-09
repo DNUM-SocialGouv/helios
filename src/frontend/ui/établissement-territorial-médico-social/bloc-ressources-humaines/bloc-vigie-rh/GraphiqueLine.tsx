@@ -170,7 +170,7 @@ const LineChart = ({
       },
     },
     plugins: {
-      // @ts-ignore
+      // @ts-expect-error Custom property
       htmlLegend: { containerID: identifiantLegende },
       legend: { display: false },
       tooltip: {

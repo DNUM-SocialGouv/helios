@@ -5,7 +5,7 @@ import { EvenementsIndesirables } from "../../../../../backend/métier/entities/
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../../../commun/Graphique/HistogrammeHorizontalWithToggle";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 import { Tag, TagCliquable } from "../../../commun/Tag";
 import { TagWithLink } from "../../../commun/Tag/TagWithLink";
 

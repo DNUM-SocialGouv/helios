@@ -1,4 +1,4 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend } from "chart.js";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
@@ -326,8 +326,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
         data={dataSet}
-        /* @ts-ignore */
-        options={options}
+        options={options as ChartOptions<"bar">}
         plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>

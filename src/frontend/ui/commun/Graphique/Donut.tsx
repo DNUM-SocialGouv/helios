@@ -5,7 +5,6 @@ import { Doughnut } from "react-chartjs-2";
 import { couleurDeFondDuBloc, couleurDelAbscisse, couleurErreur, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./Donut.module.css";
 import { construisLePluginDeLaLegendeDonut } from "./LegendPluginDonut";
-
 import type { JSX } from "react";
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend, construisLePluginDeTexteAuCentreDuDonut(), ChartDataLabels);
@@ -61,7 +60,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnu
     aspectRatio: 1,
     cutout: "40%",
     elements: {
-      // @ts-ignore
+      // @ts-expect-error custom option used in construisLePluginDeTexteAuCentreDuDonut
       center: {
         color: couleurDelAbscisse,
         fontStyle: "Marianne",
@@ -113,7 +112,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnu
         display: (context: Context) => {
           const dataset = context.dataset;
           const value = dataset.data[context.dataIndex];
-          // @ts-ignore
+          // @ts-expect-error valuesTotal is a custom option declared just before
           return value > 0.1 * context.chart.config.options.valuesTotal;
         },
         font: {
@@ -125,7 +124,7 @@ function optionsDiagrammeDoughnut(idDeLaLégende: string): ChartOptions<"doughnu
           return Math.round((value * 100.0 / context.chart.config.options.valuesTotal)).toLocaleString("fr") + " %";
         },
       },
-      // @ts-ignore
+      // @ts-expect-error Custom plugin options
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
       tooltip: { enabled: false },
@@ -171,7 +170,7 @@ const associeLaCouleurOpaque: Record<string, string> = {
 function construisLePluginDeTexteAuCentreDuDonut() {
   return {
     beforeDraw: function (chart: ChartJS) {
-      // @ts-ignore
+      // @ts-expect-error Custom options declared in optionsDiagrammeDoughnut
       const centerConfig = chart?.config?.options?.elements?.center;
       if (centerConfig) {
         const ctx = chart.ctx;

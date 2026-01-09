@@ -1,6 +1,6 @@
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { annéesManquantes } from "../../../utils/dateUtils";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 export class ResultatNetComptableViewModel {
   private budgetEtFinance: EntitéJuridiqueBudgetFinance[];
@@ -55,12 +55,11 @@ export class ResultatNetComptableViewModel {
   }
 
   public get resultatNetComptableEstIlAutorisé(): boolean {
-    if(
-      this.autorisations && 
-      this.autorisations.budgetEtFinance && 
-      this.autorisations.budgetEtFinance.résultatNetComptable && 
-      this.autorisations.budgetEtFinance.résultatNetComptable === 'ok')
-    {
+    if (
+      this.autorisations &&
+      this.autorisations.budgetEtFinance &&
+      this.autorisations.budgetEtFinance.résultatNetComptable &&
+      this.autorisations.budgetEtFinance.résultatNetComptable === 'ok') {
       return true
     }
     return false

@@ -11,7 +11,7 @@ import { ForgetPasswordLoader } from '../../../métier/gateways/ForgetPasswordLo
 export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
 
-  async forgetPassword(email: string): Promise<Object | null> {
+  async forgetPassword(email: string): Promise<object | null> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() })
     if (user) {
       const APP_URL = process.env["APP_BASE_URL"]

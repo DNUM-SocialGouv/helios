@@ -35,7 +35,7 @@ import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi"
 import { ABB_MOIS, MOIS } from "../../../../utils/constantes";
 import { IDetails } from "../../../commun/IndicateurGraphique/IDetails";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 type BlocVigieRHProps = Readonly<{
   etabFiness: string;

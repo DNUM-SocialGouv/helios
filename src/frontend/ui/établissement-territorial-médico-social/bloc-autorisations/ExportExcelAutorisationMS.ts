@@ -4,7 +4,7 @@ import { ÉtablissementTerritorialMédicoSocialAutorisationsViewModel } from './
 import { AutorisationMédicoSocialDiscipline } from '../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialAutorisation';
 import { ecrireLignesDansSheet, telechargerWorkbook } from '../../../utils/excelUtils';
 import { useDependencies } from '../../commun/contexts/useDependencies';
-import { StringFormater } from '../../commun/StringFormater';
+import StringFormater from '../../commun/StringFormater';
 
 export function getCurrentDate() {
   const today = new Date();

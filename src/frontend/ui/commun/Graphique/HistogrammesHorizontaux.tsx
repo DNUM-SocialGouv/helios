@@ -1,4 +1,4 @@
-import { ChartData } from "chart.js";
+import { ChartData, ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
@@ -33,9 +33,11 @@ function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeu
   return {
     histogrammes: chartsData.map((chartData) => {
       const inputOptions = chartData.optionsHistogramme;
-      const currentFormatter = inputOptions.plugins.datalabels.formatter;
-      const lowValueHandlerInstance = new LowValueHandler(currentFormatter, wording, cacheLesValeursBasse);
-      inputOptions.plugins.datalabels.formatter = lowValueHandlerInstance.hideLowValueFormatter;
+      if (inputOptions.plugins?.datalabels?.formatter) {
+        const currentFormatter = inputOptions.plugins.datalabels.formatter;
+        const lowValueHandlerInstance = new LowValueHandler(currentFormatter, wording, cacheLesValeursBasse);
+        inputOptions.plugins.datalabels.formatter = lowValueHandlerInstance.hideLowValueFormatter;
+      }
 
       return ({
         transcriptionTitles: chartData.transcriptionTitles,
@@ -155,7 +157,7 @@ export class HistogrammeData {
     this.areStacksVisible[index] = isVisible;
   }
 
-  public get optionsHistogramme() {
+  public get optionsHistogramme(): ChartOptions<"bar"> {
     const valeurMax = Math.max(...this.totals.map(Math.abs));
 
     return {
@@ -181,15 +183,16 @@ export class HistogrammeData {
             display: false
           },
           grid: { drawOnChartArea: false, drawTicks: false },
-          ticks: { color: couleurDelAbscisse, font: { weight: ["400"] }, padding: 8 },
+          ticks: { color: couleurDelAbscisse, font: { weight: 400 }, padding: 8 },
         },
       },
       plugins: {
+        // @ts-expect-error Param non standard utilisé
         htmlLegend: { containerID: this.legendId },
         datalabels: {
           align: "end",
           anchor: "end",
-          font: { family: "Marianne", size: 12, weight: "700" },
+          font: { family: "Marianne", size: 12, weight: 700 },
           formatter: (_: number, _context: Context): string => {
             const hasMultipleStacks = this.visibleStacks.length > 1;
             const sum = hasMultipleStacks ? this.totals[_context.dataIndex] : this.visibleStacks[0].data[_context.dataIndex];
@@ -261,9 +264,9 @@ export const HistogrammesHorizontaux = ({
         <div className={styles["container"]}>
           {histogrammes.map((histogramme) => (
             <div className={styles["barContainerWidth"]} key={histogramme.nom}>
-              {/*
-                 // @ts-ignore */}
-              <Bar data={histogramme.chartData} options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
+              <Bar
+                data={histogramme.chartData as ChartData<"bar">}
+                options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
             </div>
           ))}
         </div>

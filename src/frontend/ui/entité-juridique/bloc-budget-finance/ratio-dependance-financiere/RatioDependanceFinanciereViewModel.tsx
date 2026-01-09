@@ -7,7 +7,7 @@ import {
   couleurIdentifiant,
   TaillePoliceTick,
 } from "../../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 type RatioDependanceFinanciere = { ratio: number | null | ''; année: number; dateDeMiseÀJour: string };
 

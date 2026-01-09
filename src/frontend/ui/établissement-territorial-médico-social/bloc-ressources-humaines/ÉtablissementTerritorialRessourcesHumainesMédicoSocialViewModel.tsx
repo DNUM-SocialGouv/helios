@@ -17,7 +17,7 @@ import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type IndicateurAvecUnNombre = Exclude<

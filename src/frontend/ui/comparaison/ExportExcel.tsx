@@ -5,7 +5,7 @@ import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
 import { UserContext } from "../commun/contexts/userContext";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
 const DEFAULT_INDICATORS = ["etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];

@@ -33,7 +33,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   const [firstname, setFirstname] = useState(user.prenom);
   const [lastname, setLastname] = useState(user.nom);
 
-  const [userinfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState({
     profiles: [...user.profils],
   });
 
@@ -41,7 +41,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const { profiles } = userinfo;
+    const { profiles } = userInfo;
 
     if (checked) {
       setUserInfo({
@@ -100,17 +100,21 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     },
   ]);
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { profiles } = userinfo;
-    // @ts-ignore
-    const { institutionId, roleId } = e.target.elements;
+    const { profiles } = userInfo;
+
+    const formData = new FormData(e.currentTarget);
+    const institutionEntry = formData.get("institutionId");
+    const roleEntry = formData.get("roleId");
+    const institutionCode = typeof institutionEntry === "string" ? institutionEntry : "";
+    const roleCode = typeof roleEntry === "string" ? roleEntry : "";
 
     fetch("/api/utilisateurs/update", {
       body: JSON.stringify({
         userCode: user.code,
-        institutionCode: institutionId.value,
-        roleCode: roleId.value,
+        institutionCode,
+        roleCode,
         profilsCode: profiles,
         firstname: firstname,
         lastname: lastname,
@@ -247,20 +251,20 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                 </select>
               </div>
               <div className="fr-select-group fr-mt-3w">
-                <label className={`fr-label ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="select-hint">
+                <label className={`fr-label ${userInfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`} htmlFor="select-hint">
                   Autorisations
                 </label>
                 <div className={styles["boxSelect"]}>
                   {profiles &&
                     profiles.map((item) => (
                       <div
-                        className={`fr-fieldset__element fr-mt-2w ${userinfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
+                        className={`fr-fieldset__element fr-mt-2w ${userInfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
                         key={item.code}
                       >
                         <div className="fr-checkbox-group">
                           <input
                             aria-describedby={`checkboxes-${item.code}-messages`}
-                            checked={userinfo.profiles && userinfo.profiles.includes(item.code)}
+                            checked={userInfo.profiles && userInfo.profiles.includes(item.code)}
                             className={`${styles["input--checkbox--error"]} `}
                             disabled={pageDetails || (item.label === "Consultation administrateur national" && data?.user?.role !== 1)}
                             id={`${item.code}`}
@@ -276,7 +280,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                       </div>
                     ))}
                 </div>
-                {userinfo.profiles.length === 0 && (
+                {userInfo.profiles.length === 0 && (
                   <div aria-live="assertive" className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages">
                     <p className={` fr-message fr-message--error ${styles["fr-fieldset--error"]}`} id="checkboxes-error-message-error">
                       Champ obligatoire
@@ -307,7 +311,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
 
                     <button
                       className={`fr-btn ${styles["float-right"]}`}
-                      disabled={userinfo.profiles.length === 0 || firstname.length === 0 || lastname.length === 0}
+                      disabled={userInfo.profiles.length === 0 || firstname.length === 0 || lastname.length === 0}
                       type="submit"
                     >
                       Sauvegarder

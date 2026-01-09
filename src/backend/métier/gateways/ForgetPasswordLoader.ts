@@ -1,3 +1,3 @@
 export interface ForgetPasswordLoader {
-    forgetPassword(email: string): Promise<Object | null>;
+  forgetPassword(email: string): Promise<object | null>;
 }

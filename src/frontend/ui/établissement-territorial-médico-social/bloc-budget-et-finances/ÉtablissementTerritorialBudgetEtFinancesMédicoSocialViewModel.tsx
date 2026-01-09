@@ -16,7 +16,7 @@ import {
 } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { IndicateurTabulaire, IndicateurTabulaireProps } from "../../commun/IndicateurTabulaire/IndicateurTabulaire";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { TauxDeCafViewModel } from "../../indicateur-métier/taux-de-caf/TauxDeCafViewModel";
 
 export class ÉtablissementTerritorialBudgetEtFinancesMédicoSocialViewModel {

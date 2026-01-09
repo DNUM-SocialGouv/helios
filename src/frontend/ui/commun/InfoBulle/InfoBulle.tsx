@@ -1,5 +1,5 @@
 "use client";
-import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
@@ -9,7 +9,7 @@ type InfoBulleProps = Readonly<{
   children: ReactElement;
   estCeOuvert: boolean;
   identifiant: string;
-  setEstCeOuvert: Function;
+  setEstCeOuvert: Dispatch<SetStateAction<boolean>>;
   titre: ReactNode;
 }>;
 

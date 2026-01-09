@@ -5,7 +5,7 @@ import { catégorisationEnumToString } from "../../../../backend/métier/entitie
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
 export class EtablissementTerritorialMedicoSocialIdentiteViewModel {

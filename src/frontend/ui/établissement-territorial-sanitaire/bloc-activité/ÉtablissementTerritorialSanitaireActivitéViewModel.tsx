@@ -9,7 +9,6 @@ import { NombreDeJourneesUsldViewModel } from "../../indicateur-métier/nombre-j
 import { NombrePassageAuxUrgencesViewModel } from "../../indicateur-métier/nombre-passage-urgence/NombrePassageAuxUrgencesViewModel";
 
 export class EtablissementTerritorialSanitaireActiviteViewModel {
-  // @ts-ignore
   nombreDePassagesAuxUrgencesViewModel: NombrePassageAuxUrgencesViewModel;
   nombreDeSejourMCOViewModel: NombreDeSejourMCOViewModel;
   nombreJourneesPsySSRViewModel: NombreDeJourneesPsySSRViewModel;
@@ -18,7 +17,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
   wording: Wording;
 
   constructor(private readonly établissementTerritorialSanitaireActivités: ÉtablissementTerritorialSanitaire["activités"], wording: Wording) {
-    this.createNombrePassageUrgenceViewModel(wording);
+    this.nombreDePassagesAuxUrgencesViewModel = this.createNombrePassageUrgenceViewModel(wording);
     this.nombreDeJourneesUsldViewModel = this.createNombreDeJourneesUsldViewModel();
     this.nombreDeSejourMCOViewModel = new NombreDeSejourMCOViewModel(établissementTerritorialSanitaireActivités, wording);
     this.nombreJourneesPsySSRViewModel = new NombreDeJourneesPsySSRViewModel(établissementTerritorialSanitaireActivités, wording);
@@ -34,7 +33,7 @@ export class EtablissementTerritorialSanitaireActiviteViewModel {
         value: activité.nombreDePassagesAuxUrgences.value,
       };
     });
-    this.nombreDePassagesAuxUrgencesViewModel = new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
+    return new NombrePassageAuxUrgencesViewModel(indicateurNombrePassage, wording);
   }
 
   private createNombreDeJourneesUsldViewModel() {

@@ -6,7 +6,7 @@ import React, { useMemo } from "react";
 import { Chart } from "react-chartjs-2";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
 // Enregistrer treemap + plugins une seule fois (au chargement du module)

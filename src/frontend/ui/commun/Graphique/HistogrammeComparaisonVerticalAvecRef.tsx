@@ -7,7 +7,7 @@ import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
+import StringFormater from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
@@ -176,7 +176,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
 
   const anneeEnCours = String(new Date().getFullYear());
 
-  // @ts-ignore
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
     animation: false,
@@ -186,7 +185,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       mode: "point",
     },
     plugins: {
-      // @ts-ignore
+      // @ts-expect-error custom property
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
         align: (context: any) => {
@@ -234,7 +233,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           },
         },
       },
-      // @ts-ignore
       rotationRef: { referencesByLabel: referencesParLibelle } as any,
     },
     scales: {

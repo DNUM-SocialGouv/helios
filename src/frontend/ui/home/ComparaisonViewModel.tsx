@@ -1,4 +1,4 @@
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 
 type ValueOrNA = number | null | string;
 

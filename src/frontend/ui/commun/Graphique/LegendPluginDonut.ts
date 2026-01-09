@@ -1,6 +1,6 @@
 import { Chart as ChartJS } from "chart.js";
 
-import { StringFormater } from "../StringFormater";
+import StringFormater from "../StringFormater";
 
 
 export function construisLePluginDeLaLegendeDonut() {
@@ -68,25 +68,26 @@ export function construisLePluginDeLaLegendeDonut() {
           sum += element;
         }
       })
-      // @ts-ignore
+      // @ts-expect-error Propriété non standard utilisée
       chart.config.options.elements.center.text = StringFormater.formatCenterText(StringFormater.transformInRate(sum));
 
-      // @ts-ignore - On stock le nouveau total non formatte pour usage dans les calculs
+      // @ts-expect-error - On stock le nouveau total non formatte pour usage dans les calculs
       chart.config.options.valuesTotal = sum;
     },
-    afterUpdate(chart: ChartJS, _args: Object, options: any) {
+    afterUpdate(chart: ChartJS, _args: object, options: any) {
       const légende = document.getElementById(options.containerID);
 
       if (!légende) return;
       légende.innerHTML = "";
 
-      // @ts-ignore
-      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
+      if (chart.options.plugins?.legend?.labels?.generateLabels) {
+        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende?.forEach((libelle) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(this.deselectedMap, chart, libelle);
-        légende.appendChild(libelléDeLégende);
-      });
+        libellésDeLaLégende?.forEach((libelle) => {
+          const libelléDeLégende = créeLeLibelléPourLaLégende(this.deselectedMap, chart, libelle);
+          légende.appendChild(libelléDeLégende);
+        });
+      }
     },
     id: "htmlLegend",
   };
