@@ -13,6 +13,16 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Helper to fix globals with trailing whitespace (e.g., "AudioWorkletGlobalScope ")
+const fixGlobals = (globalsObj) => {
+  const newGlobals = {};
+  for (const key in globalsObj) {
+    newGlobals[key.trim()] = globalsObj[key];
+  }
+  return newGlobals;
+};
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -38,7 +48,7 @@ export default [...compat.config(nextTypescript), {
 
   languageOptions: {
     globals: {
-      ...globals.browser,
+      ...fixGlobals(globals.browser),
       ...globals.node,
       ...globals.jest,
     },
@@ -47,11 +57,15 @@ export default [...compat.config(nextTypescript), {
     ecmaVersion: 2021,
     sourceType: "module",
 
-    parserOptions: {
-      ecmaFeatures: {
-        jsx: true,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+        // Enable type-aware linting for rules that require type information
+        // Note: this can slow down linting. Adjust project paths if you have multiple tsconfig files.
+        project: ["./tsconfig.json"],
+        tsconfigRootDir: __dirname,
       },
-    },
   },
 
   settings: {
