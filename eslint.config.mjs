@@ -11,8 +11,8 @@ import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 // Helper to fix globals with trailing whitespace (e.g., "AudioWorkletGlobalScope ")
 const fixGlobals = (globalsObj) => {
@@ -24,12 +24,12 @@ const fixGlobals = (globalsObj) => {
 };
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all
 });
 
-export default [...compat.config(nextTypescript), {
+const config = [...compat.config(nextTypescript), {
   ignores: [
     "public/smarttag.js",
     "**/coverage/",
@@ -64,7 +64,7 @@ export default [...compat.config(nextTypescript), {
       // Enable type-aware linting for rules that require type information
       // Note: this can slow down linting. Adjust project paths if you have multiple tsconfig files.
       project: ["./tsconfig.json"],
-      tsconfigRootDir: __dirname,
+      tsconfigRootDir: dirname,
     },
   },
 
@@ -157,3 +157,5 @@ export default [...compat.config(nextTypescript), {
     "jest/prefer-ending-with-an-expect": "off",
   },
 }, ...compat.extends("plugin:testing-library/react").map(config => ({ ...config, files: ["**/*.test.tsx"] }))];
+
+export default config;

@@ -32,7 +32,7 @@
     "resolveJsonModule": true,
     "incremental": true
   },
-  "include": ["next.config.js", "**/*.ts", "**/*.tsx"],
+  "include": ["next.config.js", "**/*.ts", "**/*.tsx", "eslint.config.mjs"],
   "exclude": [".next", "node_modules", "spikes"],
   "ts-node": {
     "swc": true
