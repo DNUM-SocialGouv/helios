@@ -130,7 +130,14 @@ const HistogrammeHorizontalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeursDesHistogrammes[index];
-            const label = nomGraph === wording.DUREE_CDD ? "CDD" : `Nombre`;
+            let label = '';
+            if (nomGraph === wording.DUREE_CDD) {
+              label = "CDD";
+            } else if (nomGraph === wording.REPARTITION_EFFECTIFS) {
+              label = `Effectif`;
+            } else {
+              label = `Nombre`;
+            }
             if (!showRefValues) {
               return `${label}: ${value}`;
             }
