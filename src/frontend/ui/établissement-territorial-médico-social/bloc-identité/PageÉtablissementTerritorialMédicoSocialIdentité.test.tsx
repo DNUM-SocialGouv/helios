@@ -31,12 +31,12 @@ jest.mock<typeof import("chart.js")>("chart.js", () => ({
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
 jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);

@@ -9,7 +9,8 @@ jest.mock<typeof import('../../../../commun/contexts/useDependencies')>('../../.
     wording: {
       REPARTITION_DES_SOUS_ENVELOPPES: 'Mocked Repartition des sous enveloppes',
     },
-  }),
+  } as any),
+  DependenciesProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 const testData = [

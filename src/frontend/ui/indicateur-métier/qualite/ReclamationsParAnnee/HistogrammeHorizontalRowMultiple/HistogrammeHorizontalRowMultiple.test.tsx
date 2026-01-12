@@ -8,7 +8,7 @@ import { HistogrammeHorizontalRowMultiple } from './HistogrammeHorizontalRowMult
 jest.mock<typeof import('./HistogrammeHorizontalRowMultiple.module.css')>('./HistogrammeHorizontalRowMultiple.module.css', () => ({
   "histogramme_horizontal_row_container": "histogramme_horizontal_row_container",
   "barHistogramme": "barHistogramme"
-}));
+} as any));
 
 describe('HistogrammeHorizontalRowMultiple', () => {
 

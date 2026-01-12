@@ -16,12 +16,12 @@ jest.mock<typeof import("chart.js")>("chart.js", () => ({
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
 jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
