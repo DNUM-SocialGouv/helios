@@ -9,21 +9,23 @@ export function construisLePluginDeLaLegende() {
     caseÀCocher.type = "checkbox";
     caseÀCocher.id = libellé.text;
     caseÀCocher.name = libellé.text;
-    caseÀCocher.checked = libellé.datasetIndex ? chart.isDatasetVisible(libellé.datasetIndex) : false;
+    // Si il n’y a pas d’index de dataset, on considère que c’est le premier dataset (0)
+    const index = libellé.datasetIndex || 0;
+    caseÀCocher.checked = chart.isDatasetVisible(index);
 
     const libelléCaseÀCocher = document.createElement("label");
     libelléCaseÀCocher.classList.add("fr-label");
     libelléCaseÀCocher.htmlFor = libellé.text;
 
     libelléCaseÀCocher.onclick = () => {
-      if (libellé.datasetIndex) chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+      chart.setDatasetVisibility(index, !chart.isDatasetVisible(index));
       chart.update();
     };
 
     caseÀCocher.onkeydown = (event) => {
       if (event.code === "Space") {
         event.preventDefault();
-        if (libellé.datasetIndex) chart.setDatasetVisibility(libellé.datasetIndex, !chart.isDatasetVisible(libellé.datasetIndex));
+        chart.setDatasetVisibility(index, !chart.isDatasetVisible(index));
         chart.update();
         caseÀCocher.focus();
       }
