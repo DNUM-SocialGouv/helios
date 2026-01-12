@@ -44,7 +44,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       }
       return response.status(400).json({ 'err': 'error occured while changing password' })
     }
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500)
   }
 }

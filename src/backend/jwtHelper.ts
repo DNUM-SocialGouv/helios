@@ -10,7 +10,7 @@ export const checkToken = (token: string): { email: string } | null => {
     }
     return null;
 
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return null ». Aucune autre action à faire ici
+  } catch {
     return null;
   }
 };

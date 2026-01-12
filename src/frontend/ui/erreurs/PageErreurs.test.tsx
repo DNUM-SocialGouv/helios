@@ -1,5 +1,7 @@
 import { screen } from "@testing-library/react";
 
+// Le changement d’ordre d’import provoque un échec des tests…
+// eslint-disable-next-line import/order
 import { fakeFrontDependencies, renderFakeComponent, trimHtml } from "../../test-helpers/testHelper";
 import { Page404 } from "./Page404";
 import { Page500 } from "./Page500";

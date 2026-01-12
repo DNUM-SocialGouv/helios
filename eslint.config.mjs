@@ -57,15 +57,15 @@ export default [...compat.config(nextTypescript), {
     ecmaVersion: 2021,
     sourceType: "module",
 
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-        // Enable type-aware linting for rules that require type information
-        // Note: this can slow down linting. Adjust project paths if you have multiple tsconfig files.
-        project: ["./tsconfig.json"],
-        tsconfigRootDir: __dirname,
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
       },
+      // Enable type-aware linting for rules that require type information
+      // Note: this can slow down linting. Adjust project paths if you have multiple tsconfig files.
+      project: ["./tsconfig.json"],
+      tsconfigRootDir: __dirname,
+    },
   },
 
   settings: {
@@ -151,5 +151,9 @@ export default [...compat.config(nextTypescript), {
     "jest/max-expects": ["warn", {
       max: 10,
     }],
+    "jest/prefer-importing-jest-globals": "off",
+    "jest/padding-around-all": "off",
+    "jest/padding-around-expect-groups": "off",
+    "jest/prefer-ending-with-an-expect": "off",
   },
 }, ...compat.extends("plugin:testing-library/react").map(config => ({ ...config, files: ["**/*.test.tsx"] }))];

@@ -22,7 +22,6 @@ import { régions } from "../../région/régions";
 import { PageÉtablissementTerritorialMédicoSocial } from "../../établissement-territorial-médico-social/PageÉtablissementTerritorialMédicoSocial";
 import { PageÉtablissementTerritorialSanitaire } from "../../établissement-territorial-sanitaire/PageÉtablissementTerritorialSanitaire";
 
-jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
@@ -39,18 +38,27 @@ const mockSession = {
   expires: "1235"
 }
 
-jest.mock("chart.js", () => ({
-  Chart: {
-    register: jest.fn(),
-  },
-  Tooltip: {},
-  Legend: {},
-}));
+jest.mock<typeof import("chart.js")>("chart.js", () => {
+  const actualChartJs = jest.requireActual("chart.js");
+  return {
+    ...actualChartJs,
+    Chart: {
+      ...actualChartJs.Chart,
+      register: jest.fn(),
+    },
+    Tooltip: {},
+    Legend: {},
+  };
+});
 
-jest.mock("chartjs-chart-treemap", () => ({
-  TreemapController: {},
-  TreemapElement: {},
-}));
+jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => {
+  const actualTreemap = jest.requireActual("chartjs-chart-treemap");
+  return {
+    ...actualTreemap,
+    TreemapController: {},
+    TreemapElement: {},
+  };
+});
 
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);

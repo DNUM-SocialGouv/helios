@@ -3,8 +3,6 @@ import { screen } from "@testing-library/react";
 import TheadTable from "./TheadTable";
 import { renderFakeComponent } from "../../../../../test-helpers/testHelper";
 
-jest.mock("next/router", () => require("next-router-mock"));
-
 describe("En-tête du tableau", () => {
   it("affiche le 'Date de création' dans le th tableau", () => {
     renderFakeComponent(

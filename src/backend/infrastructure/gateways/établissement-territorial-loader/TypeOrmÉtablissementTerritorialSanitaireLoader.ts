@@ -353,7 +353,6 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ReconnaissanceContractuelleSanitaireModel[]> {
     return await (await this.orm).getRepository(ReconnaissanceContractuelleSanitaireModel).find({
-      // eslint-disable-next-line sort-keys
       order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
@@ -361,7 +360,6 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   private async chargeLesAutresActivitésModel(numéroFinessÉtablissementTerritorial: string): Promise<AutreActivitéSanitaireModel[]> {
     return await (await this.orm).getRepository(AutreActivitéSanitaireModel).find({
-      // eslint-disable-next-line sort-keys
       order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });
@@ -369,7 +367,6 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
 
   private async chargeLesAutorisationsModel(numéroFinessÉtablissementTerritorial: string): Promise<AutorisationSanitaireModel[]> {
     return await (await this.orm).getRepository(AutorisationSanitaireModel).find({
-      // eslint-disable-next-line sort-keys
       order: { codeActivité: "ASC", codeModalité: "ASC", codeForme: "ASC" },
       where: { numéroFinessÉtablissementTerritorial },
     });

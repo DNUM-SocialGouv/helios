@@ -5,7 +5,6 @@ import mockRouter from "next-router-mock";
 import { Header } from "./Header";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
-jest.mock("next/router", () => require("next-router-mock"));
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
@@ -24,12 +23,12 @@ const mockSession = {
 
 describe("En-tête de page", () => {
   it("affiche un lien pour accéder à la page d’accueil", () => {
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
     // WHEN
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
@@ -42,7 +41,7 @@ describe("En-tête de page", () => {
   });
 
   it("affiche un menu pour afficher la déconnexion et un pour le moteur de recherche en mobile", () => {
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
@@ -61,7 +60,7 @@ describe("En-tête de page", () => {
   });
 
   it("affiche le formulaire de recherche", () => {
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
@@ -81,7 +80,7 @@ describe("En-tête de page", () => {
   });
 
   it("redirection vers la recherche quand on fait une recherche", () => {
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
@@ -105,13 +104,13 @@ describe("En-tête de page", () => {
 
   it("n’affiche pas le formulaire de recherche quand on est sur l’accueil", () => {
     // GIVEN
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
     const router = mockRouter;
     router.push(paths.ACCUEIL);
-    // @ts-ignore
+    // @ts-expect-error Mock fetch
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: jest.fn().mockResolvedValue([]),
     });
