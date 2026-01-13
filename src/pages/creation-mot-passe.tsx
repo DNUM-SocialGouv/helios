@@ -7,37 +7,40 @@ import Spinner from "../frontend/ui/commun/Spinner/Spinner";
 import { Page404 } from "../frontend/ui/erreurs/Page404";
 
 export default function CreerMotPasse() {
-    const router = useRouter();
-    const [token, setToken] = useState('');
+  const router = useRouter();
+  const [token, setToken] = useState('');
 
-    const {
-        checkTokenService,
-        validToken,
-        isChecking,
-    } = useChangeMdp();
+  const {
+    checkTokenService,
+    validToken,
+    isChecking,
+  } = useChangeMdp();
 
 
-    useEffect(() => {
-        if (router.isReady) {
-            const { loginToken } = router.query;
-            setToken(loginToken as string);
-        }
-    }, [router.isReady]);
+  useEffect(() => {
+    async function setTokenWhenReady() {
+      if (router.isReady) {
+        const { loginToken } = router.query;
+        setToken(loginToken as string);
+      }
+    };
+    setTokenWhenReady();
+  }, [router.isReady]);
 
-    if (token) {
+  if (token) {
 
-        checkTokenService(token);
-        return (
-            <>
-                {isChecking ? <Spinner /> : validToken ? (
-                    <PageCreatePwd />
-                ) : (
-                    <Page404 />
-                )}
-            </>
-        );
-    } else {
-        return null;
+    checkTokenService(token);
+    return (
+      <>
+        {isChecking ? <Spinner /> : validToken ? (
+          <PageCreatePwd />
+        ) : (
+          <Page404 />
+        )}
+      </>
+    );
+  } else {
+    return null;
 
-    }
+  }
 }

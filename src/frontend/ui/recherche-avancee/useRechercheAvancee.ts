@@ -42,25 +42,28 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
   });
 
   useEffect(() => {
-    if (data.laRechercheEtendueEstLancee) {
-      getFavorisLists();
-      setState({
-        ...state,
-        estCeQueLesRésultatsSontReçus: true,
-        résultats: construisLesRésultatsDeLaRecherche(data),
-        nombreRésultats: data.nombreDeRésultats || 0,
-        lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
-      });
-    }
+    async function handleRecherche() {
+      if (data.laRechercheEtendueEstLancee) {
+        getFavorisLists();
+        setState({
+          ...state,
+          estCeQueLesRésultatsSontReçus: true,
+          résultats: construisLesRésultatsDeLaRecherche(data),
+          nombreRésultats: data.nombreDeRésultats || 0,
+          lastPage: data.nombreDeRésultats > 0 ? Math.ceil(data.nombreDeRésultats / take) : 1,
+        });
+      }
 
-    if (!data.laRechercheEtendueEstLancee && !state.estCeQueLaRechercheEstLancee) {
-      setState({
-        ...state,
-        estCeQueLesRésultatsSontReçus: false,
-        résultats: [],
-        nombreRésultats: 0,
-      });
+      if (!data.laRechercheEtendueEstLancee && !state.estCeQueLaRechercheEstLancee) {
+        setState({
+          ...state,
+          estCeQueLesRésultatsSontReçus: false,
+          résultats: [],
+          nombreRésultats: 0,
+        });
+      }
     }
+    handleRecherche();
   }, [data]);
 
   const lancerLaRecherche = (): void => {

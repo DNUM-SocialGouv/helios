@@ -18,7 +18,10 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setContainer(document.body);
+    async function changeContent() {
+      setContainer(document.body);
+    }
+    changeContent();
   }, []);
 
   let className = "fr-modal";

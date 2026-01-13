@@ -250,9 +250,12 @@ const UsersListPage = ({
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
-    const params = getQueryParams();
-    setFilterParams(params);
-    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    async function updateFilterAndRefreshUsers() {
+      const params = getQueryParams();
+      setFilterParams(params);
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    }
+    updateFilterAndRefreshUsers();
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   const roleClasses: any = {

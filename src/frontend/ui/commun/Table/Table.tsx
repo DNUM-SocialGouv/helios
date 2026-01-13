@@ -166,7 +166,10 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
   const [searchItem, setSearchItem] = useState("");
   useEffect(() => {
-    setSearchItem(localStorage.getItem('searchItem') ?? "")
+    async function updateSearchItem() {
+      setSearchItem(localStorage.getItem('searchItem') ?? "")
+    }
+    updateSearchItem();
   }, []);
 
   const couleurLogo = "#000000"; // Logos en noir

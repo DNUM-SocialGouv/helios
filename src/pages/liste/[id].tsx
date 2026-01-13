@@ -43,15 +43,18 @@ export default function Router({ listServer }: RouterProps) {
 
   // Quand la liste des favoris à été changée en local on la recharge depuis le server
   useEffect(() => {
-    setChargement(true);
-    fetch(`/api/liste/${listServer.id}`, {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    }).then((response) => response.json())
-      .then((data) => {
-        setList(data);
-        setChargement(false);
-      });
+    async function reloadFav() {
+      setChargement(true);
+      fetch(`/api/liste/${listServer.id}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      }).then((response) => response.json())
+        .then((data) => {
+          setList(data);
+          setChargement(false);
+        });
+    };
+    reloadFav();
   }, [userContext?.favorisLists])
 
 

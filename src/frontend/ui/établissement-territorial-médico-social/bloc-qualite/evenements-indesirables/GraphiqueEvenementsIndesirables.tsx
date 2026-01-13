@@ -25,12 +25,15 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
 
 
   useEffect(() => {
-    setTotal(
-      data[annéeEnCours][0].evenementsClotures.length +
-      data[annéeEnCours][0].evenementsEncours.length +
-      data[annéeEnCours][1].evenementsClotures.length +
-      data[annéeEnCours][1].evenementsEncours.length
-    );
+    async function updateTotal() {
+      setTotal(
+        data[annéeEnCours][0].evenementsClotures.length +
+        data[annéeEnCours][0].evenementsEncours.length +
+        data[annéeEnCours][1].evenementsClotures.length +
+        data[annéeEnCours][1].evenementsEncours.length
+      );
+    }
+    updateTotal();
   }, [annéeEnCours]);
 
   return (

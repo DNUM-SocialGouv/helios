@@ -28,7 +28,13 @@ class LowValueHandler {
 
 function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeursBasse?: boolean) {
   const [chartsData, setChartsData] = useState(charts);
-  useEffect(() => setChartsData(charts), charts);
+  useEffect(() => {
+    async function changeChartData() {
+      setChartsData(charts)
+    }
+    changeChartData();
+  },
+    charts);
 
   return {
     histogrammes: chartsData.map((chartData) => {

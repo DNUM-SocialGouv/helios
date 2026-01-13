@@ -1,6 +1,6 @@
 import { ChartData, ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
@@ -10,7 +10,6 @@ type Stack = { label?: string; data: number[]; backgroundColor: string[]; isErro
 
 function useChartData(charts: HistogrammeWithToggleData[]) {
   const [chartsData, setChartsData] = useState(charts);
-  useEffect(() => setChartsData(charts), chartsData);
 
   return {
     histogrammes: chartsData.map((chartData) => ({

@@ -94,14 +94,18 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   };
 
   useEffect(() => {
+    async function resetFilter() {
+      setCapaciteAgees(new CapaciteEtablissement("personnes_agees", []));
+      setCapaciteHandicap(new CapaciteEtablissement("publics_en_situation_de_handicap", []));
+      setCapaciteMedicoSociaux(new CapaciteEtablissement("non_classifie", []));
+    }
+
     if (
       rechercheAvanceeContext?.capaciteAgees.length === 0 &&
       rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
       rechercheAvanceeContext?.capaciteMedicoSociaux.length === 0
     ) {
-      setCapaciteAgees(new CapaciteEtablissement("personnes_agees", []));
-      setCapaciteHandicap(new CapaciteEtablissement("publics_en_situation_de_handicap", []));
-      setCapaciteMedicoSociaux(new CapaciteEtablissement("non_classifie", []));
+      resetFilter();
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
