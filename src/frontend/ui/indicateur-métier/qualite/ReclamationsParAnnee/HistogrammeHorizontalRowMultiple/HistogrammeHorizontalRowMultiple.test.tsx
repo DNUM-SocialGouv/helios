@@ -1,6 +1,5 @@
 // HistogrammeHorizontalRowMultiple.test.tsx
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
 import { HistogrammeHorizontalRowMultiple } from './HistogrammeHorizontalRowMultiple';
 

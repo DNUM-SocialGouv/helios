@@ -1,6 +1,5 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
-import React from "react";
 
 import { ResultatNetComptable } from "./ResultatNetComptable";
 import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";

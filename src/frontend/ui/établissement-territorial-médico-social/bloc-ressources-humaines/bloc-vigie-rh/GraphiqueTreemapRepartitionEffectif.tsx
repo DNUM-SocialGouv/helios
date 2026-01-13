@@ -2,7 +2,7 @@
 
 import { Chart as ChartJS, Tooltip, Legend } from "chart.js";
 import { TreemapController, TreemapElement } from "chartjs-chart-treemap";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Chart } from "react-chartjs-2";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";

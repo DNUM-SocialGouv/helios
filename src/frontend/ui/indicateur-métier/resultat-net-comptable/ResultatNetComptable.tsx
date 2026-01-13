@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ContenuRésultatNetComptableEJ } from "./ContenuRésultatNetComptableEJ";
 import { ResultatNetComptableViewModel } from "./ResultatNetComptableViewModel";
 import { useDependencies } from "../../commun/contexts/useDependencies";
