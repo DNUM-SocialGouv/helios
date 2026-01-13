@@ -6,7 +6,6 @@ import { FrontDependencies } from "../configuration/frontDependencies";
 import { Paths } from "../configuration/Paths";
 import { WordingFr } from "../configuration/wording/WordingFr";
 import { DependenciesProvider } from "../ui/commun/contexts/useDependencies";
-import { isFeatureEnabled } from "../utils/featureToggle";
 
 // Cela permet de pouvoir tester ce qu'il y a dans <head>.
 // https://github.com/vercel/next.js/discussions/11060
@@ -23,7 +22,6 @@ export const fakeFrontDependencies: FrontDependencies = {
   breadcrumbHandler: new BreadcrumbHandler(),
   paths: new Paths(),
   wording: new WordingFr(),
-  isFeatureEnabled: isFeatureEnabled(),
 };
 
 export const trimHtml = (reactElement: ReactElement<any>): string => {
