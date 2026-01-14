@@ -139,7 +139,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           cache: pipenv
-          python-version: 3.10.8 # Conserver la même version que celle dans Pipfile
+          python-version: 3.11.14 # Conserver la même version que celle dans Pipfile
       - name: Install dependencies
         run: pipenv install --dev --deploy
       - name: Lint

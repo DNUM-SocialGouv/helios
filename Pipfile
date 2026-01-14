@@ -11,24 +11,23 @@ python-dotenv = "0.20.0"
 pandas = "==1.5.2"
 pyarrow = "==13.0.0"
 lxml = "4.9.1"
+numpy = "==1.26.4"
 
 [dev-packages]
-jupyter = "1.0.0"
-ipykernel = "6.15.0"
 pylint = "==2.16.2"
 mypy = "0.982"
 pytest = "7.1.2"
 pytest-mock = "3.7.0"
-pandas-stubs = "~=1.4.3.220704"
 sqlalchemy-stubs = "~=0.4"
 freezegun = "1.2.1"
 matplotlib = "3.5.2"
 pytest-cov = "4.0.0"
 pytest-watcher = "==0.2.1"
 black = "==23.1.0"
+pandas-stubs = "==1.5.2.230105"
 
 [requires]
-python_full_version = "3.10.8" # Conserver la même version que celle dans helios-ci.yml
+python_full_version = "3.11.14" # Conserver la même version que celle dans helios-ci.yml
 
 [scripts]
 encrypt_diamant = 'python -m datacrawler.test_helpers.chiffre_diamant'

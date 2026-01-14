@@ -46,7 +46,7 @@ min-public-methods = 0
 
 [tool.pylint.exceptions]
 # Exceptions that will emit a warning when caught.
-overgeneral-exceptions = ["BaseException", "Exception"]
+overgeneral-exceptions = ["builtins.BaseException", "builtins.Exception"]
 
 [tool.pylint.format]
 ignore-long-lines = "^[from|import].*|^\\s*(# )?<?https?://\\S+>?$"
