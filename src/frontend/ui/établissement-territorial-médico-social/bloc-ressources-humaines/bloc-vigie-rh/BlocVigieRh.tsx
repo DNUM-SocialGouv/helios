@@ -13,6 +13,7 @@ import GraphiqueTreemapRepartitionEffectif, { TreemapItem } from "./GraphiqueTre
 import { ContenuDepartsEmbauchesVigieRh } from "./info-bulles/ContenuDepartsEmbauchesVigieRh";
 import { ContenuDepartsPrematuresVigieRh } from "./info-bulles/ContenuDepartsPrematuresVigieRh";
 import { ContenuDureeCddVigieRh } from "./info-bulles/ContenuDureeCddVigieRh";
+import { ContenuEffectifsCategorieVigieRh } from "./info-bulles/ContenuEffectifsCategorieVigieRh";
 import { ContenuEffectifsVigieRh } from "./info-bulles/ContenuEffectifsVigieRh";
 import { ContenuMotifsRuptureVigieRh } from "./info-bulles/ContenuMotifsRuptureVigieRh";
 import { ContenuNatureContratsVigieRh } from "./info-bulles/ContenuNatureContratsVigieRh";
@@ -32,6 +33,7 @@ import { NoDataCallout } from "../../../commun/NoDataCallout/NoDataCallout";
 import styles from "../BlocRessourcesHumainesMédicoSocial.module.css";
 import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi";
 import { ABB_MOIS, MOIS } from "../../../../utils/constantes";
+import { IDetails } from "../../../commun/IndicateurGraphique/IDetails";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
 import { StringFormater } from "../../../commun/StringFormater";
 
@@ -117,6 +119,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const [anneeEnCours, setAnneeEnCours] = useState<number>(annees[annees.length - 1]);
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
   const [isExpanded, setIsExpanded] = useState(false);
+
 
   const showRefValues = process.env["NEXT_PUBLIC_SHOW_VIGIE_RH_REF"] === 'true';
 
@@ -399,7 +402,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                       dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                       dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
                       source={wording.DSN}
-
                     />
                   }
                   echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
@@ -437,7 +439,21 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               className={`fr-collapse ${isExpanded ? "fr-collapse--expanded" : ""}`}
               id="accordion-vigie-rh"
             >
-              <h3 className="fr-h3">{wording.EFFECTIFS_PAR_FILIERES_CATEGORIES}</h3>
+              <div className={styles["vigie-rh-section-details-header"]}>
+                <h3 className="fr-m-0 fr-h3">{wording.EFFECTIFS_PAR_FILIERES_CATEGORIES}</h3>
+                <IDetails
+                  contenuInfoBulle={
+                    <ContenuEffectifsCategorieVigieRh
+                      dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                      dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+                      source={wording.DSN}
+                    />
+                  }
+                  identifiant="vr-effectifs-par-filieres-categories"
+                  nomDeLIndicateur={wording.EFFECTIFS_PAR_FILIERES_CATEGORIES}
+                  source={wording.DSN}
+                />
+              </div>
               <DetailsParFiliere
                 blocVigieRHViewModel={blocVigieRHViewModel}
                 couleurEffectifsTotaux={couleurEffectifsTotaux}

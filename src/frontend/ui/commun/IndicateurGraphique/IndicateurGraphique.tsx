@@ -1,9 +1,9 @@
-import { ReactNode, ReactElement, useState } from "react";
+import { ReactNode, ReactElement } from "react";
 
+import { IDetails } from "./IDetails";
 import styles from "./IndicateurGraphique.module.css";
 import { EchelleTemporelleVigieRh } from "../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../contexts/useDependencies";
-import { InfoBulle } from "../InfoBulle/InfoBulle";
 import { SelectionAnneeTags } from "../Tag/SelectionAnneeTags";
 
 import "@gouvfr/dsfr/dist/component/button/button.min.css";
@@ -23,7 +23,6 @@ type IndicateurProps = Readonly<{
 
 export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect, echelleTemporel, className = "" }: IndicateurProps) => {
   const { wording } = useDependencies();
-  const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
     <li className={styles["print-only"] + " " + className}>
@@ -31,31 +30,15 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
         <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
           {nomDeLIndicateur}
         </h3>
-        {!dateDeMiseÀJour && <button
-          aria-controls={`nom-info-bulle-${identifiant}`}
-          className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
-          data-fr-opened={estCeOuvert}
-          onClick={() => setEstCeOuvert(true)}
-          title="Détails de l'indicateur"
-          type="button"
-        >
-          {wording.DÉTAILS}
-        </button>}
+        <IDetails
+          contenuInfoBulle={contenuInfoBulle}
+          dateDeMiseÀJour={dateDeMiseÀJour}
+          identifiant={identifiant}
+          nomDeLIndicateur={nomDeLIndicateur}
+          source={source}
+        />
       </div>
 
-      {dateDeMiseÀJour && source && <div className={styles["mise-a-jour-source"]}>
-        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
-        <button
-          aria-controls={`nom-info-bulle-${identifiant}`}
-          className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
-          data-fr-opened={estCeOuvert}
-          onClick={() => setEstCeOuvert(true)}
-          title="Détails de l'indicateur"
-          type="button"
-        >
-          {wording.DÉTAILS}
-        </button>
-      </div>}
       {echelleTemporel && (
         <p className={styles["donnees-arretees"]}>
           {wording.DONNEES_ARRETEES}{" "}
@@ -69,9 +52,6 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
       {années ? <SelectionAnneeTags annees={années.liste} id={identifiant} prefix={prefixSelect} setAnnéeEnCours={années.setAnnéeEnCours} /> : <></>}
 
       <div className={styles["graphe"]}>{children}</div>
-      <InfoBulle estCeOuvert={estCeOuvert} identifiant={identifiant} setEstCeOuvert={setEstCeOuvert} titre={nomDeLIndicateur}>
-        {contenuInfoBulle}
-      </InfoBulle>
     </li>
   );
 };

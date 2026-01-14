@@ -29,7 +29,7 @@ export const ContenuEffectifsCategorieVigieRh = ({ dateDeMiseAJour, dateDonneesA
                         Filière
                       </th>
                       <th className="fr-col-8" scope="col">
-                        Catégories de profession inclus
+                        Catégories de professions concernées
                       </th>
                     </tr>
                   </thead>
