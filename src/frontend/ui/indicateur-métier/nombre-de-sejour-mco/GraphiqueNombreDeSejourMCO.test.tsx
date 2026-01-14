@@ -1,4 +1,4 @@
-import { within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
 import { GraphiqueNombreDeSejourMCO } from "./GraphiqueNombreDeSejourMCO";
 import { ActivitéMCO } from "./IndicateurDesSejoursMCO";
@@ -122,7 +122,7 @@ describe("Graphique Nombre de Sejour MCO", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      graphiqueTest.fermeDétail();
+      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
 
       // THEN
       const détails = graphiqueTest.détail;

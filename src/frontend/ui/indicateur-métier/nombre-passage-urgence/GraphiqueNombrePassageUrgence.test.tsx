@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { screen, within, fireEvent } from "@testing-library/react";
 
 import { GraphiqueNombrePassageUrgence } from "./GraphiqueNombrePassageUrgence";
 import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
@@ -67,7 +67,7 @@ describe("Graphique Nombre de Passage d'urgence", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      graphiqueTest.fermeDétail();
+      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
 
       // THEN
       const détails = graphiqueTest.détail;

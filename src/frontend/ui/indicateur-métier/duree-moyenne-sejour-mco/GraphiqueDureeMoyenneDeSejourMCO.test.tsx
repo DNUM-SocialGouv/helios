@@ -1,4 +1,4 @@
-import { within } from "@testing-library/react";
+import { within, fireEvent, screen } from "@testing-library/react";
 
 import { DureeMoyenneSejourMCOViewModel } from "./DureeMoyenneDeSejourMCOViewModel";
 import { GraphiqueDureeMoyenneDeSejourMCO } from "./GraphiqueDureeMoyenneDeSejourMCO";
@@ -110,7 +110,7 @@ describe("Graphique Moyenne de Sejour MCO", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      graphiqueTest.fermeDétail();
+      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
 
       // THEN
       const détails = graphiqueTest.détail;

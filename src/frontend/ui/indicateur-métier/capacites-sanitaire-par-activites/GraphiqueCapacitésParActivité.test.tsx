@@ -68,7 +68,7 @@ describe("GraphiqueCapacitésParActivité", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      graphiqueTest.fermeDétail();
+      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
 
       // THEN
       expect(graphiqueTest.détail).toHaveAttribute("data-fr-opened", "false");
