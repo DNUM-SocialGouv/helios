@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -39,11 +39,8 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
 
   const componentRef = useRef(null);
 
-  const onBeforeGetContentResolve = useRef<any>(null);
-
   const handleOnBeforeGetContent = useCallback(() => {
     return new Promise<void>((resolve) => {
-      onBeforeGetContentResolve.current = resolve;
       resolve();
     });
   }, []);
@@ -58,12 +55,6 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     onBeforeGetContent: handleOnBeforeGetContent,
     removeAfterPrint: true,
   });
-
-  useEffect(() => {
-    if (typeof onBeforeGetContentResolve.current === "function") {
-      onBeforeGetContentResolve.current();
-    }
-  }, [onBeforeGetContentResolve.current]);
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 

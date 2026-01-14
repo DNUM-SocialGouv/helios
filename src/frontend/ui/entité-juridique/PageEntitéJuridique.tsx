@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
@@ -38,11 +38,8 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
 
   const componentRef = useRef(null);
 
-  const onBeforeGetContentResolve = useRef<any>(null);
-
   const handleOnBeforeGetContent = useCallback(() => {
     return new Promise<void>((resolve) => {
-      onBeforeGetContentResolve.current = resolve;
       resolve();
     });
   }, []);
@@ -57,12 +54,6 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
     onBeforeGetContent: handleOnBeforeGetContent,
     removeAfterPrint: true,
   });
-
-  useEffect(() => {
-    if (typeof onBeforeGetContentResolve.current === "function") {
-      onBeforeGetContentResolve.current();
-    }
-  }, [onBeforeGetContentResolve.current]);
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3, 0);
 
