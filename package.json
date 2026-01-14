@@ -203,6 +203,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-nibble": "^9.1.1",
     "eslint-plugin-jest": "^29.12.1",
     "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-react": "^7.37.5",
