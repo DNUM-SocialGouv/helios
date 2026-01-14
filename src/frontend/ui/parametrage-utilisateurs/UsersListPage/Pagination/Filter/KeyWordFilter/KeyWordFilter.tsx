@@ -1,5 +1,5 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 import { iPaginationData } from "../../../UsersListPage";
 
@@ -8,22 +8,20 @@ type KeyWordFilterProps = Readonly<{
 }>;
 
 const KeyWordFilter = ({
-  paginationData: { key, itemsPerPage, institutionId, roleId, profileId, etatId, page, orderBy, sortDir, setKey, setPage },
+  paginationData: { key, setKey, setPage },
 }: KeyWordFilterProps) => {
-  const handleChange = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      setKey(e.target.value);
-      setPage(1);
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]
-  );
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setKey(e.target.value);
+    setPage(1);
+  };
+
   return (
     <div>
       <div className="fr-search-bar" id="header-search" role="search">
         <input className="fr-input" onChange={handleChange} placeholder="Rechercher un nom, un prénom ou une adresse mail" type="search" value={key} />
         <button className="fr-btn" title="Rechercher">
-          un nom, un prénom ou une adresse mail
+          Rechercher un nom, un prénom ou une adresse mail
         </button>
       </div>
     </div>

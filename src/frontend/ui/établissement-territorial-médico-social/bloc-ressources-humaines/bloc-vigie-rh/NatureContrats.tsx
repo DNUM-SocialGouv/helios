@@ -163,7 +163,7 @@ function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: 
 }
 
 const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsAnnuelProps) => {
-  const { libelles, series } = useMemo(() => preparerSeries(donnees, palette, false, showRefValues), [donnees, palette]);
+  const { libelles, series } = preparerSeries(donnees, palette, false, showRefValues);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);
@@ -200,7 +200,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
 };
 
 const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsTrimestrielProps) => {
-  const { libelles, series } = useMemo(() => preparerSeries(donnees, palette, true, showRefValues), [donnees, palette]);
+  const { libelles, series } = preparerSeries(donnees, palette, true, showRefValues);
 
   const libellesValeursManquantes = useMemo(() => {
     return trouverValeursManquantes("valeurs", series, libelles);

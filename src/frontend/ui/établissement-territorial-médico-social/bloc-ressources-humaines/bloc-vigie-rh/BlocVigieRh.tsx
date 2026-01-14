@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, useEffect, useMemo, useState } from "react";
+import { CSSProperties, ReactElement, useEffect, useState } from "react";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
@@ -141,7 +141,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
   };
 
-  const indicateurEffectif = useMemo(() => {
+  const buildIndicateurEffectif = () => {
     if (!items.length) return null;
 
     const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
@@ -177,7 +177,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     }
 
     return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle, pastPeriod };
-  }, [donneesEffectifs]);
+  };
+
+  const indicateurEffectif = buildIndicateurEffectif();
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
     return <div>{wording.INDICATEURS_VIDES}</div>;

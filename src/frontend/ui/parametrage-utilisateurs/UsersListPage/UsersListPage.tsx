@@ -386,7 +386,6 @@ const UsersListPage = ({
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>
-                  <div className={`${styles["itemsPerPage-container"]}`}>{/*<ItemsPerPage paginationData={paginationData} />*/}</div>
                 </div>
               </div>
             </div>
