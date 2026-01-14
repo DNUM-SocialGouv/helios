@@ -36,31 +36,49 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     (rechercheAvanceeContext?.activiteUsld && rechercheAvanceeContext?.activiteUsld.length > 0);
 
   useEffect(() => {
-    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+    async function changeTypeSelected() {
       setTypeSelected([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
       rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
+    }
+    if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
+      changeTypeSelected();
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
   useEffect(() => {
-    setTypeSelected(rechercheAvanceeContext?.typeStructure || []);
-    rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
-      if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
-        checkboxElementPublic.current.checked = true;
-      }
-      if (checkboxElementPriveL && AttribuesDefaults.statutPriveLucratif === status) {
-        checkboxElementPriveL.current.checked = true;
-      }
-      if (checkboxElementPriveNL && AttribuesDefaults.statutPriveNonLucratif === status) {
-        checkboxElementPriveNL.current.checked = true;
-      }
-    });
+    async function updateUiIfEJSelected() {
+      setTypeSelected(rechercheAvanceeContext?.typeStructure || []);
+      rechercheAvanceeContext?.statutJuridiqueStructure.forEach((status) => {
+        if (checkboxElementPublic && AttribuesDefaults.statutPublic === status) {
+          checkboxElementPublic.current.checked = true;
+        }
+        if (checkboxElementPriveL && AttribuesDefaults.statutPriveLucratif === status) {
+          checkboxElementPriveL.current.checked = true;
+        }
+        if (checkboxElementPriveNL && AttribuesDefaults.statutPriveNonLucratif === status) {
+          checkboxElementPriveNL.current.checked = true;
+        }
+      });
+    }
+    updateUiIfEJSelected();
   }, [rechercheAvanceeContext?.typeStructure]);
 
-  useEffect(() => {
-    if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
-      emptyStatutJuridiqueCheckboxs();
+  function emptyStatutJuridiqueCheckboxs() {
+    setStatutJuridiqueSelected([]);
+    if (checkboxElementPublic && checkboxElementPriveL && checkboxElementPriveNL) {
+      checkboxElementPublic.current.checked = false;
+      checkboxElementPriveL.current.checked = false;
+      checkboxElementPriveNL.current.checked = false;
     }
+  }
+
+  useEffect(() => {
+    async function emptyStatusCheckboxIfNeeded() {
+      if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
+        emptyStatutJuridiqueCheckboxs();
+      }
+    }
+    emptyStatusCheckboxIfNeeded();
   }, [typeSelected])
 
   function onChangeType(value: any): void {
@@ -103,15 +121,6 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
     rechercheAvanceeContext?.setStatutJuridiqueStructure([]);
     if (setIsChanged) setIsChanged(true);
   };
-
-  function emptyStatutJuridiqueCheckboxs() {
-    setStatutJuridiqueSelected([]);
-    if (checkboxElementPublic && checkboxElementPriveL && checkboxElementPriveNL) {
-      checkboxElementPublic.current.checked = false;
-      checkboxElementPriveL.current.checked = false;
-      checkboxElementPriveNL.current.checked = false;
-    }
-  }
 
   const appliquerButton = () => {
     if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {

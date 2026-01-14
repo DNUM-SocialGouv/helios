@@ -111,6 +111,8 @@ export function HistogrammeVerticalABandes(props: Readonly<{
         return valeur;
       }
       if (props.cacheLesValeursBasse && numValue > 0 && numValue <= MIN_VALUE) {
+        // La valeur est set utilisée uniquement au premier render
+        // eslint-disable-next-line react-hooks/immutability
         hasSomeValuesToHide = true;
         return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
       }
