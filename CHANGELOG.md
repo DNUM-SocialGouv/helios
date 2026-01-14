@@ -7,6 +7,7 @@
 ### Features
 
 - hel-959: Correction des remontées Axe d’accessibilité
+- hel-947: Lors de la création d’un profil, le bouton de validation est inactif si il n’y a pas de libellé
 
 ## [1.7.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.6...release/1.7.7) (2026-01-08)
 
