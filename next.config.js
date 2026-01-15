@@ -83,6 +83,7 @@ const nextConfig = withBundleAnalyzer({
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  reactCompiler: true,
 });
 
 module.exports = nextConfig;
