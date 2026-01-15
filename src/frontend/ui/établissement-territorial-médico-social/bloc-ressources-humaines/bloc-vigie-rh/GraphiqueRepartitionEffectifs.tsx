@@ -50,12 +50,10 @@ const GraphiqueRepartitionEffectif = ({ etabFiness, etabTitle, nomGraph, blocVig
 
     const libelles = [
       ...items.map(d => d.label),
-      'Total'
     ];
 
     const valeursAdditionnelles = [
       ...items.map(d => total !== 0 ? `${Math.round((d.value / total) * 100)} %` : '0 %'),
-      '100 %'
     ];
 
     const couleursDeLHistogramme = items.map(() => {
