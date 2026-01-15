@@ -7127,7 +7127,7 @@ __metadata:
     react-dom: "npm:19.2.3"
     react-emojis: "npm:^1.0.6"
     react-katex: "npm:^3.1.0"
-    react-to-print: "npm:^2.15.1"
+    react-to-print: "npm:^3.2.0"
     ssh2: "npm:^1.9.0"
     ssh2-sftp-client: "npm:^8.0.0"
     stylelint: "npm:^16.26.1"
@@ -10848,13 +10848,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-to-print@npm:^2.15.1":
-  version: 2.15.1
-  resolution: "react-to-print@npm:2.15.1"
+"react-to-print@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "react-to-print@npm:3.2.0"
   peerDependencies:
-    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/0786fd5dd055b5b50f9a0dba99f0ccb30b9407b8e77748f5fc2557446ed0d0c65759e927cc2cdaa9e34f286838bbb230d3b0ba03d20b9754d0469fc4dac7c529
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ~19
+  checksum: 10/f0c3d1b9028cbadd8ca0747e31c91262038583a97e885171f4faa8ba53966e90ee0d9a287c94673ff494429b8e7a9606e2aed45d4ebce4a2c6e07e120657ce05
   languageName: node
   linkType: hard
 

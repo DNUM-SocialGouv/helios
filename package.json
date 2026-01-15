@@ -166,7 +166,7 @@
     "react-dom": "19.2.3",
     "react-emojis": "^1.0.6",
     "react-katex": "^3.1.0",
-    "react-to-print": "^2.15.1",
+    "react-to-print": "^3.2.0",
     "ssh2": "^1.9.0",
     "ssh2-sftp-client": "^8.0.0",
     "tarteaucitronjs": "^1.16.1",

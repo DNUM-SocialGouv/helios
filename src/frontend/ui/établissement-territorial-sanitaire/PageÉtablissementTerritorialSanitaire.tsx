@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BlocRessourcesHumainesEtablissementSanitaire } from "./bloc-ressources-humaines/BlocRessourcesHumainesEtablissementSanitaire";
@@ -39,24 +39,11 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
     },
   ]);
 
-
   const componentRef = useRef(null);
 
-  const handleOnBeforeGetContent = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      resolve();
-    });
-  }, []);
-
-  const reactToPrintContent = useCallback(() => {
-    return componentRef.current;
-  }, [componentRef.current]);
-
   const handlePrint = useReactToPrint({
-    content: reactToPrintContent,
+    contentRef: componentRef,
     documentTitle: établissementTerritorialSanitaireViewModel.titre,
-    onBeforeGetContent: handleOnBeforeGetContent,
-    removeAfterPrint: true,
   });
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
