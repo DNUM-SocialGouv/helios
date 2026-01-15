@@ -32,7 +32,7 @@ export const Breadcrumb = () => {
                   {item.label}
                 </button>
               ) : (
-                <Link className="fr-breadcrumb__link" href={item.path} passHref prefetch={false}>
+                <Link className="fr-breadcrumb__link" href={item.path} prefetch={false}>
                   {item.label}
                 </Link>
               )}

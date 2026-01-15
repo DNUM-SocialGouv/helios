@@ -138,7 +138,7 @@ export const Header = () => {
                   </div>
                 </div>
                 <div className="fr-header__service">
-                  <Link href="/" passHref title={wording.ACCUEIL}>
+                  <Link href="/" title={wording.ACCUEIL}>
                     <p className="fr-header__service-title">{wording.TITRE_DU_SITE}</p>
                   </Link>
                   <p className="fr-header__service-tagline">Données des établissements sanitaires et médico-sociaux</p>

@@ -13,7 +13,7 @@ export const GroupeOutreMerBoutonRegions = ({ regionsList }: GroupeOutreMerBouto
     <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg" style={{ justifyContent: 'center' }}>
       {regionsList.map((region: any) => (
         <li key={region.label}>
-          <Link className="fr-btn" href={paths.RÉGION + "/" + region.key} passHref>
+          <Link className="fr-btn" href={paths.RÉGION + "/" + region.key}>
             {region.text}
           </Link>
         </li>

@@ -20,7 +20,7 @@ export const ListItem = ({ label, lien, logo, hasFocus }: ListItemProps) => {
   return (
     <li className={styles["élément-liste"]}>
       {logo}
-      <Link href={lien} passHref prefetch={false} ref={ref}>
+      <Link href={lien} prefetch={false} ref={ref}>
         {label}
       </Link>
     </li>

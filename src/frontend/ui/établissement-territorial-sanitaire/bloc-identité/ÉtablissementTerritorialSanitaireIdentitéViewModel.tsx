@@ -81,7 +81,7 @@ export class EtablissementTerritorialSanitaireIdentiteViewModel {
     const libellé = `EJ - ${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`;
 
     return (
-      <Link href={lienVersLEntitéJuridique} legacyBehavior passHref prefetch={false}>
+      <Link href={lienVersLEntitéJuridique} prefetch={false}>
         {libellé}
       </Link>
     );

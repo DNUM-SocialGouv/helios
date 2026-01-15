@@ -20,7 +20,7 @@ export const Page500 = () => {
           <p className={`fr-text--sm ${styles["sous-titre"]}`}>{wording.CODE_ERREUR_500}</p>
           <p className={`fr-text--xl ${styles["sous-titre"]}`}>{wording.SOUS_TITRE_ERREUR_500}</p>
           <p className={`fr-text--sm ${styles["sous-titre"]}`}>{wording.DESCRIPTION_ERREUR_500}</p>
-          <Link className="fr-btn" href={paths.ACCUEIL} passHref>
+          <Link className="fr-btn" href={paths.ACCUEIL}>
             {wording.ACCUEIL}
           </Link>
         </div>
