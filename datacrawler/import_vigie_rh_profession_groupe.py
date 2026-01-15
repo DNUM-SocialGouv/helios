@@ -4,7 +4,7 @@ import numpy as np
 from sqlalchemy.engine import create_engine, Engine
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
+from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
@@ -20,7 +20,7 @@ def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, d
 
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(database)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
-
+    annee_max_disponible = trouver_lannee_max_disponible(donnees)
     year_regex = r"(19\d{2}|2\d{3})"
 
     # Convertir 'mois' en nombres entiers après gestion des flottants
@@ -32,6 +32,7 @@ def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, d
         (donnees["numero_finess"].astype(str).str.len() == 9) &
         (donnees["numero_finess"].astype(str).isin(numeros_finess_liste)) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
+        (donnees["annee"].astype(int).between(annee_max_disponible - 2, annee_max_disponible)) &
         (donnees["mois"].astype(str).astype(int).between(1, 12)) &
         (donnees["profession_code"].isin(ref_code))
     ]

@@ -8,7 +8,7 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
-from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
+from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_REF_TRANCHE_AGE, TABLE_TRANCHE_AGE, FichierSource
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
@@ -19,6 +19,7 @@ def filtrer_les_donnees_pyramide(donnees: pd.DataFrame, base_de_donnees: Engine)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
 
     year_regex = r"(19\d{2}|2\d{3})"
+    annee_max_disponible = trouver_lannee_max_disponible(donnees)
 
     # Filtrer les données
     donnees_filtrees = donnees[
@@ -26,8 +27,10 @@ def filtrer_les_donnees_pyramide(donnees: pd.DataFrame, base_de_donnees: Engine)
         (donnees["annee"].astype(str).str.match(year_regex)) &
         (donnees["numero_finess_etablissement_territorial"].astype(str).isin(numeros_finess_liste))
     ]
+    donnees_filtrees_sur_les_3_dernieres_annees = donnees_filtrees[donnees_filtrees["annee"]
+                                                .between(annee_max_disponible - 2, annee_max_disponible)]
 
-    return donnees_filtrees
+    return donnees_filtrees_sur_les_3_dernieres_annees
 
 def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
     date_du_fichier_vigierh_ref_tranche_age = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
