@@ -249,6 +249,25 @@ const FAQ_SECTIONS: FaqCategory[] = [
           </>
         ),
       },
+      ...(process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true'
+        ? [
+          {
+            id: "cnsa-vs-tbp",
+            question: "Quelle est la différence entre les données RH issues du Tableau de Bord de la Performance de l’ATIH ou de la CNSA et celles issues de la Déclaration Sociale Nominative ?",
+            answer: (
+              <>
+                <p className="fr-mb-2w">
+                  Les données issues de la Déclaration Sociale Nominative présentées dans Helios ont fait l’objet d’un retraitement statistique à des fins d’analyse et de pilotage
+                  afin de faciliter les comparaisons entre établissements et dans le temps. À ce titre, les indicateurs RH issus de la Déclaration Sociale Nominative sont fournis
+                  à titre indicatif uniquement et ne sont donc pas directement opposables aux établissements. Ce caractère non opposable distingue ces indicateurs des données RH
+                  obtenues du Tableau de Bord de la Performance ou de la CNSA : ces dernières sont issues directement des déclarations des établissements, sans retraitement particulier
+                  dans le cadre de l’application Helios.
+                </p>
+              </>
+            ),
+          },
+        ]
+        : []),
     ],
   },
   {
