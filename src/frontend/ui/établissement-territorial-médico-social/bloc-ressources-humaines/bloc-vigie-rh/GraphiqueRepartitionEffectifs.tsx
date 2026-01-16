@@ -44,8 +44,7 @@ const GraphiqueRepartitionEffectif = ({ etabFiness, etabTitle, nomGraph, blocVig
   } = useMemo(() => {
     const total = items.reduce((sum, d) => sum + d.value, 0);
     const donneesEffectifs = [
-      ...items.map(d => d.value),
-      total
+      ...items.map(d => d.value)
     ];
 
     const libelles = [
