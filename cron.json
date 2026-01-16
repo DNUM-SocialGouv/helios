@@ -7,6 +7,10 @@
     {
       "command": "0 5 * * 1-5 /app/populateDatabaseVigieRh.sh",
       "size": "2XL"
+    },
+    {
+      "command": "45 5 * * 1-5 /app/populateDatabaseVigieRh2.sh",
+      "size": "2XL"
     }
   ]
 }
