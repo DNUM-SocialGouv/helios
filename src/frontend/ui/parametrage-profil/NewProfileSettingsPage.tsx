@@ -12,9 +12,18 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 export const NewProfileSettingsPage = () => {
   const { wording } = useDependencies();
   const [profileLabel, setProfileLabel] = useState("");
-  const [emptyLabelError, setEmptyLabelError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const inputId = "profile-label";
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileLabel(event.target.value);
+    if (event.target.value.trim() === "") {
+      setErrorMessage(wording.NEW_PROFILE_LABEL_MANDATORY);
+    } else {
+      setErrorMessage("");
+    }
+  };
 
   return (
     <main className="fr-container" id="content">
@@ -26,23 +35,19 @@ export const NewProfileSettingsPage = () => {
           </label>
         </div>
         <div className="fr-col-11 fr-col-md-3">
-          <div className={"fr-input-group" + (emptyLabelError ? " fr-input-group--error" : "")}>
+          <div className={"fr-input-group" + (errorMessage ? " fr-input-group--error" : "")}>
             <input
-              aria-describedby={emptyLabelError ? `${inputId}-error` : undefined}
-              aria-invalid={emptyLabelError}
+              aria-describedby={errorMessage ? `${inputId}-error` : undefined}
+              aria-invalid={!!errorMessage}
               className="fr-input"
               id={inputId}
-              onChange={(event) => {
-                setProfileLabel(event.target.value);
-                setEmptyLabelError(event.target.value.trim() === "");
-              }
-              }
+              onChange={onInputChange}
               required
               value={profileLabel}
             />
-            {emptyLabelError && (
+            {errorMessage && (
               <p className="fr-error-text" id={`${inputId}-error`}>
-                {wording.NEW_PROFILE_LABEL_MANDATORY}
+                {errorMessage}
               </p>
             )}
           </div>
@@ -50,7 +55,7 @@ export const NewProfileSettingsPage = () => {
         </div>
       </div>
       <div className={"fr-table fr-table--blue-ecume fr-mt-8w " + styles["align"]}>
-        <ProfileTable codeValue={profileLabel} creating name={profileLabel} onEmptyLabel={() => setEmptyLabelError(true)} profileValue={DefaultProfile} />
+        <ProfileTable codeValue={profileLabel} creating name={profileLabel} onError={setErrorMessage} profileValue={DefaultProfile} />
       </div>
     </main >
   );
