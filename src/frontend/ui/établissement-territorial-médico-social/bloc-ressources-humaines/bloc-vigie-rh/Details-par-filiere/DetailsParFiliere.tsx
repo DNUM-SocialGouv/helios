@@ -74,7 +74,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
               multiCategories={filieresAvecGroupes[index].groupes?.data ?? []}
-              nomGraph={wording.EFFECTIFS}
+              nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
             />
           </div>
         </div>
