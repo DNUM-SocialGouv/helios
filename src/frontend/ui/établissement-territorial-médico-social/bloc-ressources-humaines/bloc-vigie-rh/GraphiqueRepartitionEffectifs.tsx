@@ -44,18 +44,15 @@ const GraphiqueRepartitionEffectif = ({ etabFiness, etabTitle, nomGraph, blocVig
   } = useMemo(() => {
     const total = items.reduce((sum, d) => sum + d.value, 0);
     const donneesEffectifs = [
-      ...items.map(d => d.value),
-      total
+      ...items.map(d => d.value)
     ];
 
     const libelles = [
       ...items.map(d => d.label),
-      'Total'
     ];
 
     const valeursAdditionnelles = [
       ...items.map(d => total !== 0 ? `${Math.round((d.value / total) * 100)} %` : '0 %'),
-      '100 %'
     ];
 
     const couleursDeLHistogramme = items.map(() => {
