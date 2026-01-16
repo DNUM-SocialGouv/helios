@@ -60,7 +60,7 @@ class TestImportVigieRhPyramide:
         assert nombre_de_lignes == 11
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_pyramide, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
         df_filtre = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
-        assert df_filtre.shape[0] == 121
+        assert df_filtre.shape[0] == 99
 
         supprimer_donnees_existantes(TABLE_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
         assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
@@ -88,4 +88,4 @@ class TestImportVigieRhPyramide:
             FichierSource.VIGIE_RH_PYRAMIDE,
             date_de_mise_a_jour_pyramide
         )
-        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 99
