@@ -1,4 +1,4 @@
-import { within, fireEvent, screen } from "@testing-library/react";
+import { within } from "@testing-library/react";
 
 import { GraphiquePsySSR } from "./GraphiquePsySSR";
 import { NombreDeJourneesPsySSRViewModel } from "./NombreDeJourneesPsySSRViewModel";
@@ -85,7 +85,7 @@ describe("Graphique Psy SSR", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
+      graphiqueTest.fermeDétail();
 
       // THEN
       const détails = graphiqueTest.détail;

@@ -1,4 +1,4 @@
-import { screen, within, fireEvent } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import React from "react";
 
 import { TauxDeCaf } from "./TauxDeCaf";
@@ -93,7 +93,7 @@ describe("Taux de CAF", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
+      graphiqueTest.fermeDétail();
 
       // THEN
       const détails = graphiqueTest.détail;

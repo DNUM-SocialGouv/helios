@@ -1,4 +1,4 @@
-import { screen, within, fireEvent } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import React from "react";
 
@@ -92,7 +92,7 @@ describe("RatioDependanceFinanciere", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
+      graphiqueTest.fermeDétail();
 
       // THEN
       const détails = graphiqueTest.détail;

@@ -1,4 +1,4 @@
-import { screen, within, fireEvent } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 
 import { GraphiqueNombreHAD } from "./GraphiqueNombreHAD";
 import { GraphiqueNombreHADViewModel } from "./GraphiqueNombreHADViewModel";
@@ -67,7 +67,7 @@ describe("Graphique Nombre de HAD", () => {
       graphiqueTest.ouvreDétail();
 
       // WHEN
-      fireEvent.click(screen.getAllByRole("button", { name: wording.FERMER })[0]);
+      graphiqueTest.fermeDétail();
 
       // THEN
       const détails = graphiqueTest.détail;
