@@ -1,6 +1,6 @@
 # Changelog d'Helios
 
-## [1.7.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.7...release/1.7.8) (TODO)
+## [1.7.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.7...release/1.7.8) (2026-01-19)
 
 ### Bug Fixes
 
