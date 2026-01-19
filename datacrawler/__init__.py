@@ -80,7 +80,7 @@ def inserer_nouvelles_donnees(
         data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
 
         # Insérer les nouvelles données
-        data_frame.to_sql(table_name, engine, if_exists="append", index=False, chunksize=1000, method="multi")
+        data_frame.to_sql(table_name, engine, if_exists="append", index=False, chunksize=1000, method=None)
         if fichier and date_de_mise_à_jour:
             with engine.connect() as connection:
                 mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_de_mise_à_jour, fichier)
