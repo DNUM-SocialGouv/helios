@@ -62,9 +62,11 @@ class TestImportVigieRhPyramide:
         assert df_filtre.shape[0] == 99
         with base_de_données_test.begin() as connection:
             supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, mocked_logger)
-            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
+        with base_de_données_test.begin() as connection:
             supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, mocked_logger)
-            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 0
+        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 0
+        with base_de_données_test.begin() as connection:
             inserer_nouvelles_donnees(
                 TABLE_REF_TRANCHE_AGE,
                 connection,
@@ -74,7 +76,8 @@ class TestImportVigieRhPyramide:
                 FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
                 date_de_mise_a_jour_ref
             )
-            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
+        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
+        with base_de_données_test.begin() as connection:
             inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
@@ -84,4 +87,4 @@ class TestImportVigieRhPyramide:
                 FichierSource.VIGIE_RH_PYRAMIDE,
                 date_de_mise_a_jour_pyramide
             )
-            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 99
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 99

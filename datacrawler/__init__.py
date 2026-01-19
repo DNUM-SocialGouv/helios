@@ -6,7 +6,7 @@ import logging
 import pandas as pd
 from pandas.errors import EmptyDataError
 from sqlalchemy.engine import Connection, Engine
-from sqlalchemy import create_engine, text, inspect
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 from datacrawler.load.nom_des_tables import FichierSource
