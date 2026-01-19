@@ -70,16 +70,18 @@ const GraphiqueReclamations = ({ etabFiness, etabTitle, data, dateMiseAJour, ann
           total_encours={data[annéeEnCours]?.total_encours}
         />
       </IndicateurGraphique>
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
-      <Transcription
-        entêteLibellé={wording.RECLAMATIONS}
-        etabFiness={etabFiness}
-        etabTitle={etabTitle}
-        identifiants={identifiants}
-        libellés={libelles}
-        nomGraph={wording.RECLAMATIONS}
-        valeurs={getvalues()}
-      />
+      {listeAnnéesManquantes.length > 0 && <li><MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue></li>}
+      <li>
+        <Transcription
+          entêteLibellé={wording.RECLAMATIONS}
+          etabFiness={etabFiness}
+          etabTitle={etabTitle}
+          identifiants={identifiants}
+          libellés={libelles}
+          nomGraph={wording.RECLAMATIONS}
+          valeurs={getvalues()}
+        />
+      </li>
     </>
   );
 };

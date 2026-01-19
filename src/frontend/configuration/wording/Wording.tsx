@@ -550,6 +550,7 @@ export interface Wording {
   readonly PARAMETRAGE_NEW_PROFILE: string;
   readonly PROFILE_TITLE: string;
   readonly NEW_PROFILE_LABEL_MANDATORY: string;
+  readonly NEW_PROFILE_LABEL_ALREADY_EXISTS: string;
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
   readonly PROJECT_TEAM: string;
 

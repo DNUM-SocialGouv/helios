@@ -9,12 +9,11 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     compte_nombre_de_lignes
 )
-
+from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.import_vigierh_tranches_ages import filtrer_les_donnees_pyramide
-from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
 NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"

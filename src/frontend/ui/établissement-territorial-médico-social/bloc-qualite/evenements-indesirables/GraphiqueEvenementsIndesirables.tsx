@@ -55,7 +55,7 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
           />
         </>
       </IndicateurGraphique>
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {listeAnnéesManquantes.length > 0 && <li><MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue></li>}
     </>
   );
 };

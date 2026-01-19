@@ -4,6 +4,10 @@
   align-items: flex-start;
 }
 
+.text-center {
+  text-align: center !important;
+}
+
 @media print {
     .indicateur {
         break-inside: avoid;

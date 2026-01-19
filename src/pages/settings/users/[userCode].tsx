@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { getSession } from "next-auth/react";
 
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
@@ -35,7 +36,14 @@ export default function Router({ user, institutions, profiles, roles }: RouterPr
       path: "",
     },
   ]);
-  return <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />;
+  return (
+    <main className="fr-container" id="content">
+      <Head>
+        <title>{wording.PAGE_UTILISATEUR_TITRE} - {user.prenom} {user.nom}</title>
+      </Head>
+      <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />
+    </main>
+  );
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {

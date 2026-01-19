@@ -49,7 +49,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
           <tr>
             <th scope="col">{entêteLibellé}</th>
             {identifiants.map((identifiant) => (
-              <th key={identifiant} scope="col">
+              <th className={styles["text-center"]} key={identifiant} scope="col">
                 {identifiant}
               </th>
             ))}
@@ -60,7 +60,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
             <tr key={libellé}>
               <td>{libellé}</td>
               {valeurs.map((valeur, index2) => (
-                <td className={styles["transcriptionData"]} key={valeur[index] + index2.toString()}>
+                <td className={styles["transcriptionData"] + " " + styles["text-center"]} key={valeur[index] + index2.toString()}>
                   {valeur[index] ?? wording.NON_RENSEIGNÉ}
                 </td>
               ))}

@@ -194,87 +194,99 @@ export const Header = () => {
                     Menu
                   </button>
                   {displayMenu ? (
-                    <ul className={styles["menu"]}>
-                      <li>
-                        <div className={styles["user-name"]}>{data?.user.firstname} {data?.user.name}</div>
-                        <div className={styles["user-email"]}>{data?.user.email}</div>
-                      </li>
-                      <li className={styles["menu-item"]}>
-                        <button
-                          className="fr-btn--icon-left fr-icon-account-line"
-                          onClick={() => {
-                            handleMenuAction(() => router.push("/mon-compte"));
-                          }}
-                        >
-                          Mon compte
-                        </button>
-                      </li>
-                      <hr className={styles["menu-sperator"]} />
-                      <li className={styles["menu-item"]}>
-                        <button
-                          className="fr-btn--icon-left fr-icon-menu-fill"
-                          onClick={() => {
-                            handleMenuAction(() => router.push(paths.MES_LISTES));
-                          }}
-                        >
-                          Mes listes ({userContext?.favorisLists?.length})
-                        </button>
-                      </li>
-                      <li className={styles["menu-item"]}>
-                        <button
-                          className="fr-btn--icon-left fr-icon-time-line"
-                          onClick={() => {
-                            handleMenuAction(() => router.push(paths.HISTORY));
-                          }}
-                        >
-                          Historique
-                        </button>
-                      </li>
-                      <hr className={styles["menu-sperator"]} />
-                      {data?.user.role === 1 && (
+                    <div className={styles["menu"]}>
+                      <ul>
+                        <li>
+                          <div className={styles["user-name"]}>{data?.user.firstname} {data?.user.name}</div>
+                          <div className={styles["user-email"]}>{data?.user.email}</div>
+                        </li>
                         <li className={styles["menu-item"]}>
                           <button
-                            className="fr-btn--icon-left fr-icon-settings-5-line"
+                            className="fr-btn--icon-left fr-icon-account-line"
                             onClick={() => {
-                              handleMenuAction(() => router.push(paths.SETTINGS));
+                              handleMenuAction(() => router.push("/mon-compte"));
                             }}
                           >
-                            Paramétrage
+                            Mon compte
                           </button>
                         </li>
+                      </ul>
+                      <hr className={styles["menu-sperator"]} />
+                      <ul>
+                        <li className={styles["menu-item"]}>
+                          <button
+                            className="fr-btn--icon-left fr-icon-menu-fill"
+                            onClick={() => {
+                              handleMenuAction(() => router.push(paths.MES_LISTES));
+                            }}
+                          >
+                            Mes listes ({userContext?.favorisLists?.length})
+                          </button>
+                        </li>
+                        <li className={styles["menu-item"]}>
+                          <button
+                            className="fr-btn--icon-left fr-icon-time-line"
+                            onClick={() => {
+                              handleMenuAction(() => router.push(paths.HISTORY));
+                            }}
+                          >
+                            Historique
+                          </button>
+                        </li>
+                      </ul>
+                      <hr className={styles["menu-sperator"]} />
+                      {data?.user.role === 1 && (
+                        <ul>
+                          <li className={styles["menu-item"]}>
+                            <button
+                              className="fr-btn--icon-left fr-icon-settings-5-line"
+                              onClick={() => {
+                                handleMenuAction(() => router.push(paths.SETTINGS));
+                              }}
+                            >
+                              Paramétrage
+                            </button>
+                          </li>
+                        </ul>
                       )}
                       {(data?.user.role === 1 || data?.user.role === 2) && (
                         <>
-                          <li className={styles["menu-item"]}>
-                            <button
-                              className="fr-btn--icon-left fr-icon-user-setting-line"
-                              onClick={() => {
-                                handleMenuAction(() => router.push(paths.USERS_LIST));
-                              }}
-                            >
-                              Console d’administration
-                            </button>
-                          </li>
+                          <ul>
+                            <li className={styles["menu-item"]}>
+                              <button
+                                className="fr-btn--icon-left fr-icon-user-setting-line"
+                                onClick={() => {
+                                  handleMenuAction(() => router.push(paths.USERS_LIST));
+                                }}
+                              >
+                                Console d’administration
+                              </button>
+                            </li>
+                          </ul>
                           <hr className={styles["menu-sperator"]} />
                         </>
                       )}
-                      <li className={styles["menu-item"]}>
-                        <button
-                          className="fr-btn--icon-left fr-icon-question-line"
-                          onClick={() => {
-                            handleMenuAction(() => router.push(paths.AIDE));
-                          }}
-                        >
-                          Aide
-                        </button>
-                      </li>
+                      <ul>
+                        <li className={styles["menu-item"]}>
+                          <button
+                            className="fr-btn--icon-left fr-icon-question-line"
+                            onClick={() => {
+                              handleMenuAction(() => router.push(paths.AIDE));
+                            }}
+                          >
+                            Aide
+                          </button>
+                        </li>
+                      </ul>
                       <hr className={styles["menu-sperator"]} />
-                      <li className={styles["menu-item"]}>
-                        <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={() => handleMenuAction(logOut)}>
-                          {wording.DÉCONNEXION}
-                        </button>
-                      </li>
-                    </ul>
+                      <ul>
+                        <li className={styles["menu-item"]}>
+                          <button className={"fr-btn--icon-left fr-icon-logout-box-r-line " + styles["logout-icon"]} onClick={() => handleMenuAction(logOut)}>
+                            {wording.DÉCONNEXION}
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   ) : null}
                 </div>
               ) : null}

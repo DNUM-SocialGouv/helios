@@ -120,7 +120,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const [donneesAnneeEnCours, setDonneesAnneeEnCours] = useState<DonneesVigieRh>();
   const [isExpanded, setIsExpanded] = useState(false);
 
-
   const showRefValues = process.env["NEXT_PUBLIC_SHOW_VIGIE_RH_REF"] === 'true';
 
   const donneesEffectifs = blocVigieRHViewModel.lesDonneesEffectifs;

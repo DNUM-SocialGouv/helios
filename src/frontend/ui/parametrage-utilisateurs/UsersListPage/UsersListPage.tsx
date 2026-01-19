@@ -263,7 +263,7 @@ const UsersListPage = ({
   };
 
   return (
-    <main className="fr-container" id="content">
+    <>
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -390,7 +390,7 @@ const UsersListPage = ({
           )}
         </>
       )}
-    </main>
+    </>
   );
 };
 UsersListPage.defaultProps = {

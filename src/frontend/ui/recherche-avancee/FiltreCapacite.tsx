@@ -260,6 +260,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
+                      aria-label={`Informations: ${wording.ETABLISSEMENT_PUBLIC_HANDICAP}`}
                       className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-handicap"
                       name="tooltip-info-handicap"
@@ -333,6 +334,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
+                      aria-label={`Informations: ${wording.ETABLISSEMENT_PERSONNE_AGEES}`}
                       className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-agee"
                       name="tooltip-info-agee"

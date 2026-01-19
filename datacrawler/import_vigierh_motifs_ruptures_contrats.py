@@ -47,8 +47,10 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             )
     else:
         # si les fichiers sont déjà traités, on fait rien
-        ref_traite = verifie_si_le_fichier_est_traite(chemin_local_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
-        donnees_traite =  verifie_si_le_fichier_est_traite(chemin_local_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
+        ref_traite = verifie_si_le_fichier_est_traite(date_du_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
+        donnees_traite =  verifie_si_le_fichier_est_traite(date_du_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
+        logger.info(
+                f"ref_traite {ref_traite} donnees_traite {donnees_traite}")
         if ref_traite & donnees_traite:
             logger.info(
                 f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
@@ -58,26 +60,29 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
             donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
             donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, base_de_donnees, SOURCE, logger)
-            supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, base_de_donnees, SOURCE, logger)
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
-                base_de_donnees,
-                SOURCE,
-                references,
-                logger,
-                FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
-                date_du_fichier_ref
-            )
-            inserer_nouvelles_donnees(
-                TABLE_VIGIE_RH_MOTIFS_RUPTURES,
-                base_de_donnees,
-                SOURCE,
-                donnees,
-                logger,
-                FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
-                date_du_fichier_donnees
-            )
+            with base_de_donnees.begin() as connection:
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, connection, SOURCE, logger)
+                supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, connection, SOURCE, logger)
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    references,
+                    logger,
+                    FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
+                    date_du_fichier_ref
+                )
+                inserer_nouvelles_donnees(
+                    TABLE_VIGIE_RH_MOTIFS_RUPTURES,
+                    connection,
+                    base_de_donnees,
+                    SOURCE,
+                    donnees,
+                    logger,
+                    FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
+                    date_du_fichier_donnees
+                )
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()

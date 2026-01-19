@@ -104,6 +104,7 @@ export const RegistrationForm = () => {
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
+                  aria-label={wording.LASTNAME}
                   className="fr-input"
                   onChange={({ target }) => {
                     setLastName(target.value);
@@ -120,6 +121,7 @@ export const RegistrationForm = () => {
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
+                  aria-label={wording.FIRSTNAME}
                   className="fr-input"
                   onChange={({ target }) => {
                     setFirstName(target.value);
@@ -136,6 +138,7 @@ export const RegistrationForm = () => {
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
+                  aria-label={wording.EMAIL}
                   className="fr-input"
                   onChange={({ target }) => {
                     setEmail(target.value);

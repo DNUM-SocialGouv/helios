@@ -2,6 +2,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { addProfileEndpoint } from "../../../backend/infrastructure/controllers/addProfileEndpoint";
+import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
 
@@ -13,6 +14,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const { label, value, userId } = request.body;
     if (!label || label.trim() === "") {
       return response.status(400).send("Bad request: label is required");
+    }
+
+    const profilesLabels = (await getAllProfilesEndpoint(dependencies)).map((profile) => profile.label.toLowerCase());
+    if (profilesLabels.includes(label.toLowerCase())) {
+      return response.status(400).send("Bad request: label already exists");
     }
     const recherche = await addProfileEndpoint(dependencies, label, value, userId);
     return response.status(200).json(recherche);
