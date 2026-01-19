@@ -61,9 +61,9 @@ class TestImportVigieRhPyramide:
         df_filtre = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
         assert df_filtre.shape[0] == 99
         with base_de_données_test.begin() as connection:
-            supprimer_donnees_existantes(TABLE_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
+            supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, mocked_logger)
             assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
-            supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, base_de_données_test, SOURCE, mocked_logger)
+            supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, mocked_logger)
             assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 0
             inserer_nouvelles_donnees(
                 TABLE_REF_TRANCHE_AGE,
