@@ -66,7 +66,6 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     references,
                     logger,
@@ -76,7 +75,6 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_MOTIFS_RUPTURES,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     donnees,
                     logger,

@@ -59,7 +59,6 @@ def supprimer_donnees_existantes(table_name: str, conn: Connection, fournisseur:
 def inserer_nouvelles_donnees(
     table_name: str,
     conn: Connection,
-    engine: Engine,
     fournisseur: str,
     data_frame: pd.DataFrame,
     logger: logging.Logger,
@@ -72,15 +71,8 @@ def inserer_nouvelles_donnees(
             logger.info(f"[{fournisseur}]⚠️ Aucune donnée à insérer après filtrage.")
             return
 
-        # Récupérer les colonnes de la table SQL
-        inspector = inspect(engine)
-        table_columns = [col["name"] for col in inspector.get_columns(table_name)]
-
-        # Filtrer les colonnes pour ne garder que celles qui existent dans la table
-        data_frame = data_frame[[col for col in data_frame.columns if col in table_columns]]
-
         # Insérer les nouvelles données
-        data_frame.to_sql(table_name, engine, if_exists="append", index=False, chunksize=1000, method=None)
+        data_frame.to_sql(table_name, conn, if_exists="append", index=False, chunksize=1000, method=None)
         if fichier and date_de_mise_à_jour:
             mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(conn, date_de_mise_à_jour, fichier)
         logger.info(f"[{fournisseur}]✅ Données insérées avec succès dans la table {table_name} !")

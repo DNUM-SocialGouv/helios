@@ -59,7 +59,6 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     referentiel_nature_contrats,
                     logger,
@@ -69,7 +68,6 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_NATURE_CONTRATS,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     donnees_cdi_cdd_filtrees,
                     logger,

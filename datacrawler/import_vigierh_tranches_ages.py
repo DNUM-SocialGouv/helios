@@ -58,7 +58,6 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 inserer_nouvelles_donnees(
                 TABLE_REF_TRANCHE_AGE,
                 connection,
-                base_de_donnees,
                 SOURCE,
                 donnees_ref_tranche_age,
                 logger,
@@ -68,7 +67,6 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
-                base_de_donnees,
                 SOURCE,
                 donnees_pyramide_filtrees,
                 logger,

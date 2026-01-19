@@ -68,7 +68,6 @@ class TestImportVigieRhPyramide:
             inserer_nouvelles_donnees(
                 TABLE_REF_TRANCHE_AGE,
                 connection,
-                base_de_données_test,
                 SOURCE,
                 df_ref,
                 mocked_logger,
@@ -79,7 +78,6 @@ class TestImportVigieRhPyramide:
             inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
-                base_de_données_test,
                 SOURCE,
                 df_filtre,
                 mocked_logger,

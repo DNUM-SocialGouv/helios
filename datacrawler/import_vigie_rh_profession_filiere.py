@@ -77,7 +77,6 @@ if __name__ == "__main__":
                 inserer_nouvelles_donnees(
                     TABLE_REF_PROFESSION_FILIERE,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     df_ref,
                     logger_helios,
@@ -87,7 +86,6 @@ if __name__ == "__main__":
                 inserer_nouvelles_donnees(
                     TABLE_PROFESSION_FILIERE,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     df_filtré,
                     logger_helios,

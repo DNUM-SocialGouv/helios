@@ -59,7 +59,6 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_REF_DUREE_CDD,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     referentiel_duree_cdd,
                     logger,
@@ -69,7 +68,6 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
                 inserer_nouvelles_donnees(
                     TABLE_VIGIE_RH_DUREE_CDD,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     donnees_durre_cdd_filtrees,
                     logger,

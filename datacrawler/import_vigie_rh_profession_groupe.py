@@ -114,7 +114,6 @@ if __name__ == "__main__":
                 inserer_nouvelles_donnees(
                     TABLE_REF_PROFESSION_GROUPE,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     df_ref_profession_groupe,
                     logger_helios,
@@ -124,7 +123,6 @@ if __name__ == "__main__":
                 inserer_nouvelles_donnees(
                     TABLE_PROFESSION_GROUPE,
                     connection,
-                    base_de_donnees,
                     SOURCE,
                     df_filtre,
                     logger_helios,
