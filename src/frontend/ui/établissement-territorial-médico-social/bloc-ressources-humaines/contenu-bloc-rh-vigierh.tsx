@@ -30,7 +30,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
     setStatusSousBlocs(newBoolArray);
   };
 
-  const showNewBadge = new Date() <= new Date('2025-10-01');
+  const showNewBadge = new Date() <= new Date('2026-09-30');
 
   return (
     <div>
