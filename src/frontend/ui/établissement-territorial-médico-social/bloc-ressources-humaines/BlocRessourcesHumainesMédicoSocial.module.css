@@ -88,6 +88,13 @@
   justify-content: center;
 }
 
+.vigie-rh-section-details-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--title-spacing);
+}
+
 @media (max-width: 991px) {
   .liste-indicateurs {
     grid-template-columns: repeat(2, 1fr);
