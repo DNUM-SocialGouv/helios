@@ -10,6 +10,7 @@
 - hel-947: Lors de la création d’un profil, le bouton de validation est inactif si il n’y a pas de libellé
 - hel-825: Retrait des deps python Jupyter
 - hel-932: Centrage du contenu de la transcription
+- hel-963: Vérification des label d'autorisation pour éviter les doublons
 
 ## [1.7.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.6...release/1.7.7) (2026-01-08)
 
