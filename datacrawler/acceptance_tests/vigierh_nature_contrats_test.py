@@ -47,7 +47,7 @@ class TestImportVigierhNatureContrats:
             [
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_1,
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 1,
                     "effectif": 3,
                     "effectif_ref": 1,
@@ -55,7 +55,7 @@ class TestImportVigierhNatureContrats:
                 },
                 {
                     "numero_finess_etablissement_territorial": "12345678",
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 3,
                     "effectif": 5,
                     "effectif_ref": 2,
@@ -63,7 +63,7 @@ class TestImportVigierhNatureContrats:
                 },
                 {
                     "numero_finess_etablissement_territorial": "999999999",
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 4,
                     "effectif": 6,
                     "effectif_ref": 3,

@@ -249,6 +249,41 @@ const FAQ_SECTIONS: FaqCategory[] = [
           </>
         ),
       },
+      ...(process.env["NEXT_PUBLIC_SHOW_VIGIE_RH"] === 'true'
+        ? [
+          {
+            id: "dsn-vs-tbp",
+            question: "Quelle est la différence entre les données RH issues du Tableau de Bord de la Performance de l'ATIH ou de la CNSA et celles issues de la Déclaration Sociale Nominative ?",
+            answer: (
+              <>
+                <p className="fr-mb-2w">
+                  Les données issues de la Déclaration Sociale Nominative présentées dans Helios ont fait l’objet d’un retraitement statistique à des fins d’analyse et de pilotage
+                  afin de faciliter les comparaisons entre établissements et dans le temps. À ce titre, les indicateurs RH issus de la Déclaration Sociale Nominative sont fournis
+                  à titre indicatif uniquement et ne sont donc pas directement opposables aux établissements. Ce caractère non opposable distingue ces indicateurs des données RH
+                  obtenues du Tableau de Bord de la Performance ou de la CNSA : ces dernières sont issues directement des déclarations des établissements, sans retraitement particulier
+                  dans le cadre de l&apos;application Helios.
+                </p>
+              </>
+            ),
+          },
+          {
+            id: "temporalite-vigie-rh",
+            question: "Pourquoi les données issues de la déclaration sociale nominative ne sont que sur 3 années ?",
+            answer: (
+              <>
+                <p className="fr-mb-2w">
+                  La Déclaration Sociale Nominative, source des données présentées dans le bloc VigieRH, est une base de données
+                  qui est progressivement montée en charge à partir de 2017 et dont le déploiement complet ne peut être considéré comme
+                  effectif qu&apos;à partir de 2022 uniquement. Pour des questions de qualité des données, il a donc été choisi de ne pas
+                  présenter de données relatives à la période antérieure à l&apos;année 2023. La profondeur historique des données sera enrichie
+                  au fur et à mesure des prochains trimestres afin de construire progressivement une fenêtre d&apos;observation de 5 ans, en cohérence
+                  avec le reste de l&apos;application Helios.
+                </p>
+              </>
+            ),
+          },
+        ]
+        : []),
     ],
   },
   {

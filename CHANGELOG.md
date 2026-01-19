@@ -5,6 +5,17 @@
 ### Bug Fixes
 
 ### Features
+- vr-118: Espacements Titre, date du graph, graph
+- vr-133:  Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
+- vr-136: PERF CRON vigieRH
+- vr-137:  Modification graphique "Répartition des effectifs"
+- vr-138: FAQ Intégration d'une question sur vigieRH
+- vr-139: Ajustement Wording sur les titres des graphiques par profession dans chaque filiière
+- vr-140: idétail partie "Evolution des effectifs par filière et catégorie professionnelle"
+- vr-141: AJUSTEMENT Titres des colonnes des transcriptions sur les graphiques par catégories
+- vr-142: Suppression de la ligne totale dans le graphique répartition par filière
+- vr-144: Modification de la règle de gestion de l'historique des données sur les graphiques vigieRH
+- vr-145: FAQ Intégration d'une question sur la temporalité des données vigieRH
 
 - hel-959: Correction des remontées Axe d’accessibilité
 - hel-947: Lors de la création d’un profil, le bouton de validation est inactif si il n’y a pas de libellé

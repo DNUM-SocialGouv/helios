@@ -1,6 +1,5 @@
 import os
 from logging import Logger
-from datetime import datetime
 
 import pandas as pd
 
@@ -9,7 +8,7 @@ from sqlalchemy.engine import Engine, create_engine
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
-from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
+from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL, FichierSource
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping, index_nature_contrat_trimestriel
@@ -18,10 +17,9 @@ from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etab
 def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
     numeros_finess_liste = numeros_finess_des_etablissements_connus['numero_finess_etablissement_territorial'].astype(str).tolist()
+    annee_max_disponible = trouver_lannee_max_disponible(donnees)
 
     year_regex = r"^(19\d{2}|2\d{3})$"
-    annee_courante = datetime.now().year
-    annee_de_depart = datetime.now().year - 2
 
     # Filtrer les données
     donnees_filtrees = donnees[
@@ -30,7 +28,7 @@ def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, base_de_donnees: Engine) 
         (donnees["numero_finess_etablissement_territorial"].astype(str).isin(numeros_finess_liste))
     ]
     donnees_cdi_cdd_trimestrielles_filtrees_sur_les_3_dernieres_annees = donnees_filtrees[donnees_filtrees["annee"]
-                                                                                                .between(annee_de_depart, annee_courante)]
+                                                                                                .between(annee_max_disponible - 2, annee_max_disponible)]
     return donnees_cdi_cdd_trimestrielles_filtrees_sur_les_3_dernieres_annees.set_index(index_nature_contrat_trimestriel)
 
 

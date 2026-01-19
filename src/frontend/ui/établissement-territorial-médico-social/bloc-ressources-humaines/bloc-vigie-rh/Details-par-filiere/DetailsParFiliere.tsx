@@ -61,7 +61,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
             />
           </div>
           <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
-            <p>Profession du {multiCategorie.categorie}</p>
+            <p>Professions - Filière {multiCategorie.categorie}</p>
             <LineChart
               afficherSerieTotale={false}
               classContainer="fr-mb-4w"
@@ -74,7 +74,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
               multiCategories={filieresAvecGroupes[index].groupes?.data ?? []}
-              nomGraph={wording.EFFECTIFS}
+              nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
             />
           </div>
         </div>

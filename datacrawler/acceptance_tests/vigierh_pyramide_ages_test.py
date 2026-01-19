@@ -9,12 +9,11 @@ from datacrawler.test_helpers import (
     sauvegarde_une_entité_juridique_en_base,
     compte_nombre_de_lignes
 )
-
+from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.import_vigierh_tranches_ages import filtrer_les_donnees_pyramide
-from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
 NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
@@ -60,32 +59,32 @@ class TestImportVigieRhPyramide:
         assert nombre_de_lignes == 11
         data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_pyramide, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
         df_filtre = filtrer_les_donnees_pyramide(data_frame, base_de_données_test)
-        assert df_filtre.shape[0] == 121
-        with base_de_données_test.connect() as connection:
+        assert df_filtre.shape[0] == 99
+        with base_de_données_test.begin() as connection:
             supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, mocked_logger)
-            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, connection) == 0
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 0
+        with base_de_données_test.begin() as connection:
             supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, mocked_logger)
-            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, connection) == 0
+        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 0
+        with base_de_données_test.begin() as connection:
             inserer_nouvelles_donnees(
                 TABLE_REF_TRANCHE_AGE,
                 connection,
-                base_de_données_test,
                 SOURCE,
                 df_ref,
                 mocked_logger,
                 FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-                date_de_mise_a_jour_ref,
+                date_de_mise_a_jour_ref
             )
+        assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
+        with base_de_données_test.begin() as connection:
             inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
-                base_de_données_test,
                 SOURCE,
                 df_filtre,
                 mocked_logger,
                 FichierSource.VIGIE_RH_PYRAMIDE,
-                date_de_mise_a_jour_pyramide,
+                date_de_mise_a_jour_pyramide
             )
-            assert compte_nombre_de_lignes(TABLE_REF_TRANCHE_AGE, base_de_données_test) == 11
-
-            assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 121
+        assert compte_nombre_de_lignes(TABLE_TRANCHE_AGE, base_de_données_test) == 99
