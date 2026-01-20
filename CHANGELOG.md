@@ -16,6 +16,7 @@
 - hel-904: Montée de version Postgres en v15.15
 - hel-972: Renommer colonne Alloc. Ressources en l'absence de données
 - hel-977: Mise à jour du batch de traitement de l’activité medico-sociale
+- hel-966: Affichage responsive des graphiques doubles
 
 ## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (2026-01-22)
 
