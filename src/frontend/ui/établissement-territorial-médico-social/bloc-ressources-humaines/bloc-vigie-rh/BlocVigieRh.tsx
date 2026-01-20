@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, useEffect, useMemo, useState } from "react";
+import { CSSProperties, ReactElement, useEffect, useState } from "react";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
@@ -35,7 +35,7 @@ import DepartsPrematuresCdi from "./departs-prematures-cdi/DepartsPrematuresCdi"
 import { ABB_MOIS, MOIS } from "../../../../utils/constantes";
 import { IDetails } from "../../../commun/IndicateurGraphique/IDetails";
 import { NotAUthorized } from "../../../commun/notAuthorized/Notauthorized";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 type BlocVigieRHProps = Readonly<{
   etabFiness: string;
@@ -128,7 +128,10 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
   const couleursFilieres = ["#FF8E68", "#E3D45C", "#D8A47E", "#E8C882"]; // réutilisées pour treemap + line
   const paletteGroupes = ["#FB926B", "#E2CF58", "#D69E75", "#E7CA8E", "#929359", "#D7D979", "#B9A597"];
   useEffect(() => {
-    setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
+    async function updateAnneeEnCours() {
+      setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
+    }
+    updateAnneeEnCours();
   }, [anneeEnCours]);
   const items = donneesEffectifs.data ?? [];
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
@@ -138,7 +141,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
   };
 
-  const indicateurEffectif = useMemo(() => {
+  const buildIndicateurEffectif = () => {
     if (!items.length) return null;
 
     const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
@@ -174,7 +177,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     }
 
     return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle, pastPeriod };
-  }, [donneesEffectifs]);
+  };
+
+  const indicateurEffectif = buildIndicateurEffectif();
 
   if (blocVigieRHViewModel.lesDonneesVigieRHNeSontPasRenseignees) {
     return <div>{wording.INDICATEURS_VIDES}</div>;

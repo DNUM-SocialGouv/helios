@@ -16,7 +16,7 @@ import {
 } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
   readonly seuilValeurAtypique = 120;
@@ -484,8 +484,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
       }
 
       if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(StringFormater.transformInRate(activité[indicateur].value));
+        valeurs.push(StringFormater.transformInRate(Number(activité[indicateur].value)));
       }
     });
 
@@ -503,8 +502,7 @@ export class ÉtablissementTerritorialMédicoSocialActivitéViewModel {
       }
 
       if (activité[indicateur].value !== null) {
-        // @ts-ignore
-        valeurs.push(activité[indicateur].value);
+        valeurs.push(Number(activité[indicateur].value));
       }
     });
 

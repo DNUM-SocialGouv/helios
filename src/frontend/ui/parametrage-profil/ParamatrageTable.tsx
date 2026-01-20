@@ -35,9 +35,12 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
   const [editableAutreRegionETSANValues, setEditableAutreRegionETSANValues] = useState<any>(profileValue.autreRegion.profilETSanitaire);
 
   useEffect(() => {
-    if (data) {
-      setUserId(data.user.idUser);
+    async function updateUserId() {
+      if (data) {
+        setUserId(data.user.idUser);
+      }
     }
+    updateUserId();
   }, [data]);
 
 

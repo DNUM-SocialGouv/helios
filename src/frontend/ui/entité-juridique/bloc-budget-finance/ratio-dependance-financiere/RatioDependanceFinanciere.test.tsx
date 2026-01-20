@@ -1,6 +1,5 @@
 import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
-import React from "react";
 
 import { RatioDependanceFinanciere } from "./RatioDependanceFinanciere";
 import { RatioDependanceFinanciereViewModel } from "./RatioDependanceFinanciereViewModel";

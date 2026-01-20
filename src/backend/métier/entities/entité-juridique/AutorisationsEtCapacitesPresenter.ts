@@ -19,7 +19,7 @@ import { AutorisationSanitaireModel } from "../../../../../database/models/Autor
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
-import { StringFormater } from "../../../../frontend/ui/commun/StringFormater";
+import StringFormater from "../../../../frontend/ui/commun/StringFormater";
 import { AutorisationsAMMMEJQueryResult } from "../établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation";
 
 class AutorisationsFactory {

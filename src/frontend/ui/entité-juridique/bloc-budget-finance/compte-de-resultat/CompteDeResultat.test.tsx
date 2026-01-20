@@ -1,6 +1,5 @@
 import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
-import React from "react";
 
 import { EntitéJuridiqueBudgetFinance } from "../../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { GraphiqueTest } from "../../../../test-helpers/GraphiqueTest";

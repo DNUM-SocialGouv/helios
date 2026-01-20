@@ -5,7 +5,7 @@ import { CapacitéParActivité } from "../../../../backend/métier/entities/éta
 import { Wording } from "../../../configuration/wording/Wording";
 import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
 export class ÉtablissementTerritorialMédicoSocialAutorisationsViewModel {

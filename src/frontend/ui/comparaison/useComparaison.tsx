@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";

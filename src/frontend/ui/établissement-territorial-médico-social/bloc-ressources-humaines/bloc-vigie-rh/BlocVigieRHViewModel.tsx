@@ -19,7 +19,7 @@ import {
   couleurDuFondHistogrammeOrangeClair,
   couleurExtensionHistogrammeOrangeClair,
 } from "../../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
   annee: number;

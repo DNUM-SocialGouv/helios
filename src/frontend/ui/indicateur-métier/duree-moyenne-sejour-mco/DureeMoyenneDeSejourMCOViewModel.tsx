@@ -5,7 +5,7 @@ import {
   couleurDuFondHistogrammeRougeFoncé,
   couleurDuFondHistogrammeVertFoncé,
 } from "../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 type IndicateurDureeMoyenneDesSejoursMCO = Readonly<{
   dureeMoyenneSejourMedecine: { x: number; y: number | null | '' }[];

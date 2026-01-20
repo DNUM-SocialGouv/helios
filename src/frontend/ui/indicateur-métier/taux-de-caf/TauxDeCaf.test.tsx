@@ -1,5 +1,4 @@
 import { screen, within } from "@testing-library/react";
-import React from "react";
 
 import { TauxDeCaf } from "./TauxDeCaf";
 import { TauxDeCafViewModel } from "./TauxDeCafViewModel";

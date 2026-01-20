@@ -37,22 +37,28 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
     : null;
 
   useEffect(() => {
-    if (!router.isReady) {
-      return;
+    async function updateSlugWhenReady() {
+      if (!router.isReady) {
+        return;
+      }
+      const valeurQuery = router.query["path"];
+      const slug = Array.isArray(valeurQuery) ? valeurQuery[0] : valeurQuery;
+      if (slug && sectionsDisponibles.some((section) => section.slug === slug)) {
+        setSlugActif(slug);
+      } else if (!slug) {
+        setSlugActif(null);
+      }
     }
-    const valeurQuery = router.query["path"];
-    const slug = Array.isArray(valeurQuery) ? valeurQuery[0] : valeurQuery;
-    if (slug && sectionsDisponibles.some((section) => section.slug === slug)) {
-      setSlugActif(slug);
-    } else if (!slug) {
-      setSlugActif(null);
-    }
+    updateSlugWhenReady();
   }, [router.isReady, router.query["path"], sectionsDisponibles]);
 
   useEffect(() => {
-    if (slugActif && !sectionsDisponibles.some((section) => section.slug === slugActif)) {
-      setSlugActif(null);
+    async function removeUnknownSlug() {
+      if (slugActif && !sectionsDisponibles.some((section) => section.slug === slugActif)) {
+        setSlugActif(null);
+      }
     }
+    removeUnknownSlug();
   }, [slugActif, sectionsDisponibles]);
 
   useEffect(() => {

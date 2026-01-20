@@ -15,15 +15,18 @@ export const FavorisPage = () => {
   const [displaySucessMessage, setDisplaySucessMessage] = useState<boolean>(false);
 
   useEffect(() => {
-    let list = userContext?.favorisLists.slice();
-    if (list) {
-      const favorisListIndex = list.findIndex((list) => list.isFavoris);
-      const favorisList = list.splice(favorisListIndex, 1);
-      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
-      list = favorisList.concat(...list);
-    }
+    async function sortList() {
+      let list = userContext?.favorisLists.slice();
+      if (list) {
+        const favorisListIndex = list.findIndex((list) => list.isFavoris);
+        const favorisList = list.splice(favorisListIndex, 1);
+        list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
+        list = favorisList.concat(...list);
+      }
 
-    setSortedFavorisList(list);
+      setSortedFavorisList(list);
+    }
+    sortList();
   }, [userContext?.favorisLists])
 
   const onSucess = () => {

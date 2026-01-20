@@ -6,6 +6,8 @@ import { UserListEtablissementModel } from "../../../../../database/models/UserL
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { clearAllTables, getOrm } from "../../../testHelper";
+// Le changement d’ordre d’import provoque un échec des tests…
+// eslint-disable-next-line import/order
 import { TypeOrmUserListLoader } from "./TypeOrmUserListLoader";
 
 describe("La recherche de liste", () => {
@@ -218,7 +220,6 @@ describe("La recherche de liste", () => {
 
     // THEN
     const dbList = await userListRepository.findOneByOrFail({ id: list.id });
-    expect(dbList).not.toBeNull();
     expect(dbList.nom).toEqual(newListName);
   });
 
@@ -236,7 +237,6 @@ describe("La recherche de liste", () => {
 
     // THEN
     const dbList = await userListRepository.findOneByOrFail({ id: list.id });
-    expect(dbList).not.toBeNull();
     expect(dbList.nom).toEqual(listName);
   });
 

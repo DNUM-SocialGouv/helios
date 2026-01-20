@@ -2,10 +2,9 @@ import { Inspection, InspectionControleDataTheme } from "../../backend/métier/e
 
 export function transformDataInspections(data: Inspection[]) {
 
-  if(data)
-  {
+  if (data) {
     const groupedData: InspectionControleDataTheme[] = [];
-  
+
     // Parcours de chaque élément et regroupement par typeMission
     data.length &&
       data.forEach((item: Inspection) => {
@@ -18,17 +17,16 @@ export function transformDataInspections(data: Inspection[]) {
         // Ajout de l'élément dans le tableau correspondant
         groupedData[item.typeMission as any].data.push(item);
       });
-  
+
     // Tri des éléments par dateVisite
     for (const key in groupedData) {
       groupedData[key].data.sort((a, b) => {
         const dateA = new Date(a.dateVisite);
         const dateB = new Date(b.dateVisite);
-        // @ts-ignore
-        return dateB - dateA;
+        return dateB.getTime() - dateA.getTime();
       });
     }
-  
+
     // Conversion du dictionnaire en tableau
     const result = Object.values(groupedData);
 
@@ -42,5 +40,5 @@ export function transformDataInspections(data: Inspection[]) {
     return result;
   }
   return [];
-  }
-  
+}
+

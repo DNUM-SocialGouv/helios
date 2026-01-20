@@ -7,6 +7,7 @@
 ### Features
 
 - hel-965: Ajout du sous texte dans la catégorie Finance de la selection d’indicateurs sur la page de comparaison
+- hel-956: Montée de version NextJS en v16
 
 ## [1.7.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.7...release/1.7.8) (2026-01-19)
 

@@ -7,7 +7,7 @@ import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/R
 import { EntitéJuridiqueViewModelTestBuilder } from "../../test-helpers/test-builder/EntitéJuridiqueViewModelTestBuilder";
 import { EtablissementsTerritoriauxRattachésTestBuilder } from "../../test-helpers/test-builder/EtablissementsTerritoriauxRattachésTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch } from "../../test-helpers/testHelper";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "./PageEntitéJuridique";

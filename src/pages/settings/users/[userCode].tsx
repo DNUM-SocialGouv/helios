@@ -39,7 +39,7 @@ export default function Router({ user, institutions, profiles, roles }: RouterPr
   return (
     <main className="fr-container" id="content">
       <Head>
-        <title>{wording.PAGE_UTILISATEUR_TITRE} - {user.prenom} {user.nom}</title>
+        <title>{wording.PAGE_UTILISATEUR_TITRE + " - " + user.prenom + " " + user.nom}</title>
       </Head>
       <EditUser institutions={institutions} profiles={profiles} roles={roles} user={user} />
     </main>

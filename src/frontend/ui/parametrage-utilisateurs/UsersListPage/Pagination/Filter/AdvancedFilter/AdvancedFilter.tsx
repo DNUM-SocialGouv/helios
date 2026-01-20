@@ -1,5 +1,5 @@
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 import styles from "./AdvancedFilter.module.css";
 import { iPaginationData } from "../../../UsersListPage";
@@ -13,7 +13,6 @@ type KeyWordFilterProps = Readonly<{
 const AdvancedFilter = ({
   paginationData,
   paginationData: {
-    keyWord,
     institutions,
     profiles,
     roles,
@@ -22,8 +21,6 @@ const AdvancedFilter = ({
     roleId,
     etatId,
     itemsPerPage,
-    orderBy,
-    sortDir,
     setUserData,
     setPage,
     setLastPage,
@@ -45,43 +42,31 @@ const AdvancedFilter = ({
     /* { id: 3, label: "Supprimé", code: "deleted" },*/
   ];
 
-  const handleChangeInstitution = useCallback(
-    async (e: React.ChangeEvent<HTMLSelectElement>) => {
-      e.preventDefault();
-      setInstitutionId(e.target.value as unknown as number);
-      setPage(1);
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
-  );
+  const handleChangeInstitution = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setInstitutionId(e.target.value as unknown as number);
+    setPage(1);
+  };
 
-  const handleChangeRole = useCallback(
-    async (e: React.ChangeEvent<HTMLSelectElement>) => {
-      e.preventDefault();
-      setRoleId(e.target.value as unknown as number);
-      setPage(1);
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
-  );
+  const handleChangeRole = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setRoleId(e.target.value as unknown as number);
+    setPage(1);
+  };
 
-  const handleChangeProfil = useCallback(
-    async (e: React.ChangeEvent<HTMLSelectElement>) => {
-      e.preventDefault();
-      setProfileId(e.target.value);
-      setPage(1);
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
-  );
+  const handleChangeProfil = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setProfileId(e.target.value);
+    setPage(1);
+  };
 
-  const handleChangeEtat = useCallback(
-    async (e: React.ChangeEvent<HTMLSelectElement>) => {
-      e.preventDefault();
-      setEtatId(e.target.value);
-      setPage(1);
-    },
-    [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, sortDir, orderBy]
-  );
+  const handleChangeEtat = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    setEtatId(e.target.value);
+    setPage(1);
+  };
 
-  const handleResetFilter = useCallback(async () => {
+  const handleResetFilter = async () => {
     setKey("");
     setInstitutionId(0);
     setProfileId("");
@@ -96,7 +81,7 @@ const AdvancedFilter = ({
       itemsPerPage: itemsPerPage,
     };
     await getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
-  }, [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord]);
+  };
 
   return (
     <>

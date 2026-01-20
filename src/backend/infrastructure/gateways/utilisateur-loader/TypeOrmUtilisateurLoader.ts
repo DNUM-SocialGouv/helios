@@ -236,7 +236,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
     const take = itemsPerPage || 10;
 
-    // @ts-ignore
     const total = await utilisateurRepo.countBy(conditions);
 
     let orders = {};
@@ -272,7 +271,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
 
     const data = await utilisateurRepo.find({
-      // @ts-ignore
       where: conditions,
       order: orders,
       take,

@@ -250,9 +250,12 @@ const UsersListPage = ({
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
-    const params = getQueryParams();
-    setFilterParams(params);
-    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    async function updateFilterAndRefreshUsers() {
+      const params = getQueryParams();
+      setFilterParams(params);
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    }
+    updateFilterAndRefreshUsers();
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   const roleClasses: any = {
@@ -383,7 +386,6 @@ const UsersListPage = ({
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>
-                  <div className={`${styles["itemsPerPage-container"]}`}>{/*<ItemsPerPage paginationData={paginationData} />*/}</div>
                 </div>
               </div>
             </div>

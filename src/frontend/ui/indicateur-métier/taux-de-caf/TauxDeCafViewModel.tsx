@@ -19,7 +19,7 @@ import {
   CouleurHistogramme,
 } from "../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type TauxDeCaf = Readonly<{ année: number; valeur: number | null | "" }>;
@@ -173,8 +173,7 @@ export class TauxDeCafViewModel {
       <>
         {listeAnnéesManquantes.length < this.nombreDAnnéesParIndicateur && (
           <Bar
-            // @ts-ignore
-            data={data}
+            data={data as ChartData<"bar">}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
           />
         )}
@@ -230,8 +229,12 @@ export class TauxDeCafViewModel {
           },
           ticks: {
             color: couleurDelAbscisse,
-            // @ts-ignore
-            font: { weight: taillePoliceTick },
+            font: {
+              weight: (context: ScriptableScaleContext) => {
+                const index = context && (context as any).tick && typeof (context as any).tick.index === "number" ? (context as any).tick.index : 0;
+                return (taillePoliceTick[index] as any) ?? "normal";
+              },
+            },
             padding: 10,
           },
         },
@@ -263,9 +266,8 @@ export class TauxDeCafViewModel {
               return tickValue === this.seuilDuTauxDeCaf ? `${tickValue} (seuil)` : tickValue;
             },
             color: couleurDelAbscisse,
-            // @ts-ignore
             font: {
-              weight: (context: ScriptableScaleContext) => (context.tick && context.tick.value === this.seuilDuTauxDeCaf ? "bold" : "normal"),
+              weight: (context: ScriptableScaleContext) => ((context && context.tick && context.tick.value === this.seuilDuTauxDeCaf) ? "bold" : "normal"),
             },
             includeBounds: false,
             stepSize: 2,

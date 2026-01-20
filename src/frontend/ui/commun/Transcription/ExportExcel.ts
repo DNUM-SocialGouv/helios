@@ -1,7 +1,7 @@
 import { Workbook } from "exceljs";
 
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../utils/excelUtils";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { useDependencies } from "../contexts/useDependencies";
 
 export function getCurrentDate() {

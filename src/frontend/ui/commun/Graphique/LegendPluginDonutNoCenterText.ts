@@ -2,7 +2,7 @@ import { Chart as ChartJS } from "chart.js";
 
 
 export function construisLePluginDeLaLegendeDonut() {
-  function créeLeLibelléPourLaLégende(/*chart: ChartJS,*/ libellé: any): HTMLLIElement {
+  function créeLeLibelléPourLaLégende(libellé: any): HTMLLIElement {
 
     const conteneur = document.createElement("li");
 
@@ -31,7 +31,7 @@ export function construisLePluginDeLaLegendeDonut() {
   }
 
   return {
-    afterUpdate(chart: ChartJS, _args: Object, options: any) {
+    afterUpdate(chart: ChartJS, _args: object, options: any) {
       const légende = document.getElementById(options.containerID);
 
       if (!légende) return;
@@ -40,13 +40,14 @@ export function construisLePluginDeLaLegendeDonut() {
         légende.firstChild.remove();
       }
 
-      // @ts-ignore
-      const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
+      if (chart.options.plugins?.legend?.labels?.generateLabels) {
+        const libellésDeLaLégende = chart.options.plugins?.legend?.labels.generateLabels(chart);
 
-      libellésDeLaLégende?.forEach((libellé) => {
-        const libelléDeLégende = créeLeLibelléPourLaLégende(/*chart,*/ libellé);
-        légende.appendChild(libelléDeLégende);
-      });
+        libellésDeLaLégende?.forEach((libellé) => {
+          const libelléDeLégende = créeLeLibelléPourLaLégende(libellé);
+          légende.appendChild(libelléDeLégende);
+        });
+      }
     },
     id: "htmlLegend",
   };

@@ -165,16 +165,20 @@ export function useModalSelectionIndicateur(structure: string) {
   // State containing the selected indicators
   const [indicators, setIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
   const [pendingIndicators, setPendingIndicators] = useState<IndicatorsState>(getInitialIndicatorsState());
-  const [enabledIndicators, setEnabledIndicators] = useState<string[]>(getEnabledIndicators());
 
-  // Call this when opening the modal to sync pendingIndicators
-  function openIndicatorSelectionModal() {
-    setPendingIndicators(indicators);
+  function getIndicatorsKey(): string {
+    if (structure === 'Médico-social')
+      return "medicoSocial";
+    else if (structure === 'Sanitaire')
+      return "sanitaire";
+    else if (structure === "Entité juridique")
+      return "entiteJuridique";
+    else return "";
   }
 
-  useEffect(() => {
-    setEnabledIndicators(getEnabledIndicators());
-  }, [indicators, structure]);
+  function getCurrentIndicators(): Map<IndicatorCategory, IndicatorStateItem[]> {
+    return indicators.get(getIndicatorsKey()) ?? new Map();
+  }
 
   function getEnabledIndicators(): string[] {
     const result: string[] = [];
@@ -188,6 +192,21 @@ export function useModalSelectionIndicateur(structure: string) {
     }
     return result;
   };
+
+
+  const [enabledIndicators, setEnabledIndicators] = useState<string[]>(getEnabledIndicators());
+
+  // Call this when opening the modal to sync pendingIndicators
+  function openIndicatorSelectionModal() {
+    setPendingIndicators(indicators);
+  }
+
+  useEffect(() => {
+    async function updateEnabledIndicatorOnIndicatorsChange() {
+      setEnabledIndicators(getEnabledIndicators());
+    }
+    updateEnabledIndicatorOnIndicatorsChange();
+  }, [indicators, structure]);
 
   const toggleIndicator = (category: IndicatorCategory, columnName: string) => {
     setPendingIndicators((prevState) => {
@@ -226,21 +245,6 @@ export function useModalSelectionIndicateur(structure: string) {
       return newState.set(indicatorsKey, newStructureState);
     });
   };
-
-  function getIndicatorsKey(): string {
-    if (structure === 'Médico-social')
-      return "medicoSocial";
-    else if (structure === 'Sanitaire')
-      return "sanitaire";
-    else if (structure === "Entité juridique")
-      return "entiteJuridique";
-    else return "";
-  }
-
-
-  function getCurrentIndicators(): Map<IndicatorCategory, IndicatorStateItem[]> {
-    return indicators.get(getIndicatorsKey()) ?? new Map();
-  }
 
   const getPendingIndicators = (): Map<IndicatorCategory, IndicatorStateItem[]> => {
     return pendingIndicators.get(getIndicatorsKey()) ?? new Map();

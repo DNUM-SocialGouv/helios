@@ -1,6 +1,6 @@
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { AnneeModifiable } from "../capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
 import { IndicateurActivité } from "../IndicateurActivité";
 

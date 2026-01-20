@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useRef, useState, type JSX } from "react";
 
 import styles from "./ListActionsButton.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";

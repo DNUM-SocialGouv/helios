@@ -2,7 +2,7 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import styles from "./DepartsPrematuresCdi.module.css";
-import { StringFormater } from "../../../../commun/StringFormater";
+import StringFormater from "../../../../commun/StringFormater";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 
 type DepartsPrematuresCdiProps = Readonly<{

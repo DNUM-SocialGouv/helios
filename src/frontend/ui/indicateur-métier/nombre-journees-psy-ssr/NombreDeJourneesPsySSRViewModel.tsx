@@ -6,7 +6,7 @@ import {
   couleurDuFondHistogrammeRougeClair,
   couleurDuFondHistogrammeRougeFoncé,
 } from "../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 type DonnéesDeDiagrammeDesJournéesPsyEtSsr = Readonly<{
   nombreJournéesComplètesPsy: { x: number; y: number | null | "" }[];

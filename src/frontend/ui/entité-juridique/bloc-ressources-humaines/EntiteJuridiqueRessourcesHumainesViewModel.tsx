@@ -5,7 +5,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes, estCeLAnnéePassée } from "../../../utils/dateUtils";
 import { couleurDuFond, couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 type IndicateurAvecNombre = Exclude<
   keyof EntiteJuridiqueRessourcesHumaines, "annee"

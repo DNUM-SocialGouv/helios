@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { TauxRotationTrimestriel } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
-import { StringFormater } from "../../../../commun/StringFormater";
+import StringFormater from "../../../../commun/StringFormater";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueTauxRotationAnnuelProps = Readonly<{

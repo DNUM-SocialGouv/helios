@@ -4,7 +4,7 @@ import { Wording } from "../../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../../utils/dateUtils";
 import { couleurDuFondHistogrammePrimaire, couleurDuFondHistogrammeSecondaire } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeData } from "../../../commun/Graphique/HistogrammesHorizontaux";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 export class CompteDeResultatViewModel {
   private readonly nombreDAnnéesParIndicateur = 5;

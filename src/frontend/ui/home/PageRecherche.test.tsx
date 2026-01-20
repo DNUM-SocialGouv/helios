@@ -8,8 +8,6 @@ import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/R
 import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from "../../test-helpers/testHelper";
 import { régions } from "../région/régions";
 
-jest.mock("next/router", () => require("next-router-mock"));
-
 const { paths, wording } = fakeFrontDependencies;
 const mockSession = {
   name: "john",
@@ -110,7 +108,7 @@ describe("La page de d’accueil", () => {
         categorie: '-'
       },
     ];
-    // @ts-ignore
+    // @ts-expect-error Mock
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: () =>
         Promise.resolve<RésultatDeRecherche>({
@@ -164,7 +162,7 @@ describe("La page de d’accueil", () => {
     ];
     const nombreDeRésultats = résultats.length + 1;
 
-    // @ts-ignore
+    // @ts-expect-error Mock
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: () =>
         Promise.resolve<RésultatDeRecherche>({
@@ -203,7 +201,7 @@ describe("La page de d’accueil", () => {
     ];
     const nombreDeRésultats = résultats.length;
 
-    // @ts-ignore
+    // @ts-expect-error Mock
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: () =>
         Promise.resolve<RésultatDeRecherche>({
@@ -259,13 +257,13 @@ describe("La page de d’accueil", () => {
 
     jest
       .spyOn(global, "fetch")
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock de l’appel à la liste des favoris
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve({}),
       })
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock du premier appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
@@ -274,7 +272,7 @@ describe("La page de d’accueil", () => {
             résultats: résultatsPremièrePage,
           }),
       })
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock du deuxieme appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
@@ -340,13 +338,13 @@ describe("La page de d’accueil", () => {
 
     jest
       .spyOn(global, "fetch")
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock de l’appel à la liste des favoris
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve({}),
       })
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock du premier appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
@@ -355,13 +353,13 @@ describe("La page de d’accueil", () => {
             résultats: résultatsPremièreRecherche,
           }),
       })
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock de l’appel à la liste des favoris
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve({}),
       })
-      // @ts-ignore
+      // @ts-expect-error Mock
       // Mock du deuxieme appel à la recherche
       .mockResolvedValueOnce({
         json: () =>
@@ -404,7 +402,7 @@ describe("La page de d’accueil", () => {
 
   it("affiche une phrase explicite si la recherche n’aboutit à aucun résultat", async () => {
     // GIVEN
-    // @ts-ignore
+    // @ts-expect-error Mock
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: () =>
         Promise.resolve<RésultatDeRecherche>({
@@ -437,7 +435,7 @@ describe("La page de d’accueil", () => {
   it("affiche une phrase explicite si le backend ne répond plus", async () => {
     // GIVEN
     jest.spyOn(global, "fetch")
-      // @ts-ignore
+      // @ts-expect-error Mock
       .mockResolvedValueOnce({
         json: () =>
           Promise.resolve({}),
@@ -503,7 +501,7 @@ describe("La page de d’accueil", () => {
 
       },
     ];
-    // @ts-ignore
+    // @ts-expect-error Mock
     jest.spyOn(global, "fetch").mockResolvedValue({
       json: () =>
         Promise.resolve<RésultatDeRecherche>({

@@ -8,7 +8,7 @@ import {
   couleurDuFondHistogrammeVertClair,
   couleurDuFondHistogrammeVertFoncé
 } from "../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 interface ActivitesSanitaireMensuelParAnnee {
   [key: number]: ActiviteSanitaireMensuel[];

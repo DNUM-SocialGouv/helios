@@ -5,7 +5,7 @@ import { catégorisationEnumToString } from "../../../../backend/métier/entitie
 import { ÉtablissementTerritorialSanitaire } from "../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaire";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
 export class EtablissementTerritorialSanitaireIdentiteViewModel {
@@ -81,7 +81,7 @@ export class EtablissementTerritorialSanitaireIdentiteViewModel {
     const libellé = `EJ - ${this.établissementTerritorialSanitaireIdentité.numéroFinessEntitéJuridique.value} - ${nomDeLEntitéJuridique}`;
 
     return (
-      <Link href={lienVersLEntitéJuridique} legacyBehavior passHref prefetch={false}>
+      <Link href={lienVersLEntitéJuridique} prefetch={false}>
         {libellé}
       </Link>
     );
