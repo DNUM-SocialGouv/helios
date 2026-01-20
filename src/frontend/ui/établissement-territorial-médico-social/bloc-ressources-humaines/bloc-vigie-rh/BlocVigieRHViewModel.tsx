@@ -106,7 +106,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsGroupesNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles;
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles && this.lesEffectifsNeSontIlsPasRenseignees;
   }
 
   public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
@@ -176,6 +176,7 @@ export class BlocVigieRHViewModel {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
     if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.REPARTITION_EFFECTIFS);
     if (this.lesEffectifsGroupesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
@@ -291,8 +292,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get filieresAvecGroupes(): ProfessionFiliereData[] {
-    const data = this.lesDonneesEffectifs.data ?? [];
-    return data.filter((item: any) => (item?.groupes?.data ?? []).length > 0);
+    return this.lesDonneesEffectifs.data ?? [];
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {

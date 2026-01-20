@@ -301,7 +301,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
       <div className={styles["liste-indicateurs-vr-wrapper"]}>
         <section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
-            <h2 className="fr-h3 fr-mb-1v">Effectif</h2>
+            <h3 className="fr-h3 fr-mb-1v">Effectif</h3>
           </div>
           <div className={styles["liste-indicateurs-vr-wrapper"]}>
             {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
@@ -398,7 +398,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
             ], 2)}
           </div>
-          <section className="fr-accordion">
+          {!blocVigieRHViewModel.lesEffectifsGroupesNeSontIlsPasRenseignees && <section className="fr-accordion">
             <h3 className={styles["vigie-rh-accordion-button"]}>
               <button
                 aria-controls="accordion-vigie-rh"
@@ -448,7 +448,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 </button>
               </h3>
             </div>
-          </section>
+          </section>}
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>

@@ -22,6 +22,10 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
   const { wording } = useDependencies();
   const filieresAvecGroupes = useMemo(() => blocVigieRHViewModel.filieresAvecGroupes, [blocVigieRHViewModel]);
 
+  const findGroupesForFiliere = (categorie: string) => {
+    return filieresAvecGroupes.find(f => f.categorie === categorie)?.groupes?.data ?? [];
+  }
+
   const calculateEffectifsData = (filiereCourante: any, groupesCourants: any[]): EffectifsData => {
     if (!filiereCourante) return { dataEtab: [], dataFiliere: [], dataMoisAnnee: [] };
     const serie = filiereCourante?.dataCategorie ?? {};
@@ -60,23 +64,23 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               nomGraph={wording.EFFECTIFS}
             />
           </div>
-          <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
+          {findGroupesForFiliere(multiCategorie.categorie).length > 0 && <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>Professions - Filière {multiCategorie.categorie}</p>
             <LineChart
               afficherSerieTotale={false}
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={paletteGroupes}
-              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, filieresAvecGroupes[index].groupes?.data ?? [])}
+              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, filieresAvecGroupes.find(f => f.categorie === multiCategorie.categorie)?.groupes?.data ?? [])}
               etabFiness={etabFiness}
               etabTitle={etabTitle}
               identifiantLegende={`légende-graphique-profession-effectif-${index}`}
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
-              multiCategories={filieresAvecGroupes[index].groupes?.data ?? []}
+              multiCategories={filieresAvecGroupes.find(f => f.categorie === multiCategorie.categorie)?.groupes?.data ?? []}
               nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
             />
-          </div>
+          </div>}
         </div>
       ))}
     </>
