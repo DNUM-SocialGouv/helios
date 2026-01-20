@@ -255,35 +255,54 @@ const FAQ_SECTIONS: FaqCategory[] = [
             id: "dsn-vs-tbp",
             question: "Quelle est la différence entre les données RH issues du Tableau de Bord de la Performance de l'ATIH ou de la CNSA et celles issues de la Déclaration Sociale Nominative ?",
             answer: (
-              <>
-                <p className="fr-mb-2w">
-                  Les données issues de la Déclaration Sociale Nominative présentées dans Helios ont fait l’objet d’un retraitement statistique à des fins d’analyse et de pilotage
-                  afin de faciliter les comparaisons entre établissements et dans le temps. À ce titre, les indicateurs RH issus de la Déclaration Sociale Nominative sont fournis
-                  à titre indicatif uniquement et ne sont donc pas directement opposables aux établissements. Ce caractère non opposable distingue ces indicateurs des données RH
-                  obtenues du Tableau de Bord de la Performance ou de la CNSA : ces dernières sont issues directement des déclarations des établissements, sans retraitement particulier
-                  dans le cadre de l&apos;application Helios.
-                </p>
-              </>
+              <p className="fr-mb-2w">
+                Les données issues de la Déclaration Sociale Nominative présentées dans Helios ont fait l’objet d’un retraitement statistique à des fins d’analyse et de pilotage
+                afin de faciliter les comparaisons entre établissements et dans le temps. À ce titre, les indicateurs RH issus de la Déclaration Sociale Nominative sont fournis
+                à titre indicatif uniquement et ne sont donc pas directement opposables aux établissements. Ce caractère non opposable distingue ces indicateurs des données RH
+                obtenues du Tableau de Bord de la Performance ou de la CNSA : ces dernières sont issues directement des déclarations des établissements, sans retraitement particulier
+                dans le cadre de l&apos;application Helios.
+              </p>
             ),
           },
           {
             id: "temporalite-vigie-rh",
             question: "Pourquoi les données issues de la déclaration sociale nominative ne sont que sur 3 années ?",
             answer: (
-              <>
-                <p className="fr-mb-2w">
-                  La Déclaration Sociale Nominative, source des données présentées dans le bloc VigieRH, est une base de données
-                  qui est progressivement montée en charge à partir de 2017 et dont le déploiement complet ne peut être considéré comme
-                  effectif qu&apos;à partir de 2022 uniquement. Pour des questions de qualité des données, il a donc été choisi de ne pas
-                  présenter de données relatives à la période antérieure à l&apos;année 2023. La profondeur historique des données sera enrichie
-                  au fur et à mesure des prochains trimestres afin de construire progressivement une fenêtre d&apos;observation de 5 ans, en cohérence
-                  avec le reste de l&apos;application Helios.
-                </p>
-              </>
+              <p className="fr-mb-2w">
+                La Déclaration Sociale Nominative, source des données présentées dans le bloc VigieRH, est une base de données
+                qui est progressivement montée en charge à partir de 2017 et dont le déploiement complet ne peut être considéré comme
+                effectif qu&apos;à partir de 2022 uniquement. Pour des questions de qualité des données, il a donc été choisi de ne pas
+                présenter de données relatives à la période antérieure à l&apos;année 2023. La profondeur historique des données sera enrichie
+                au fur et à mesure des prochains trimestres afin de construire progressivement une fenêtre d&apos;observation de 5 ans, en cohérence
+                avec le reste de l&apos;application Helios.
+              </p>
             ),
           },
         ]
         : []),
+    ],
+  },
+  {
+    id: "listes",
+    title: "Listes",
+    questions: [
+      {
+        id: "nombre-listes",
+        question: "Combien de listes est-il possible de créer ?",
+        answer: (
+          <>
+            <p className="fr-mb-1w">Une liste nommée “Favoris” existe par défaut. Je peux créé jusqu&apos;à 10 listes, il est possible d’avoir 11 listes au total.</p>
+            <p className="fr-mb-1w">Le bouton de création d’une nouvelle liste est grisé si 10 listes ont été créés. Une liste créée peut être supprimée, si souhaité.</p>
+          </>
+        ),
+      },
+      {
+        id: "nombre-etab-liste",
+        question: "Une liste peut-être constituer de combien d'établissement ?",
+        answer: (
+          <p className="fr-mb-1w">Une liste peut  être constitué de tous types d&apos;établissements et n’est pas limité en nombre.</p>
+        ),
+      },
     ],
   },
   {
