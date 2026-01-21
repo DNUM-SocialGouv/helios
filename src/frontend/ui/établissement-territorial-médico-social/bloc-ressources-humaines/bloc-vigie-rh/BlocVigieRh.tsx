@@ -231,11 +231,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-effectifs")}
                 etabFiness={etabFiness}
                 etabTitle={etabTitle}
-                title={wording.EFFECTIFS}
                 identifiant="vr-top-effectifs"
                 infoBulleTitle={wording.EVOLUTION_DES_EFFECTIFS}
                 pastPeriod={indicateurEffectif.pastPeriod}
                 pastValue={indicateurEffectif.precedent}
+                title={wording.EFFECTIFS}
                 variation={indicateurEffectif.variation}
                 variationText={indicateurEffectif.variationText}
               />
