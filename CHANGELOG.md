@@ -6,6 +6,8 @@
 
 ### Features
 
+- vr-148: Ajustement wording dans la transcription du graphique des taux de renouvellement de contrats
+
 - hel-965: Ajout du sous texte dans la catégorie Finance de la selection d’indicateurs sur la page de comparaison
 - hel-956: Montée de version NextJS en v16
 - hel-964: Ajout de l’indicateur TO occupation global dans la page de comparaison
