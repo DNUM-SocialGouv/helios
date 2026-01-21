@@ -1,5 +1,12 @@
 # Changelog d'Helios
 
+## [1.7.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.7.9) (TODO)
+
+### Bug Fixes
+- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
+
+### Features
+
 ## [1.7.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.7...release/1.7.8) (2026-01-19)
 
 ### Bug Fixes
