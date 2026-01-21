@@ -350,6 +350,8 @@ export function useComparaison() {
         return wording.TAUX_OCCUPATION_INTERNAT;
       case "autres":
         return wording.TAUX_OCCUPATION_AUTRE;
+      case "global":
+        return wording.TAUX_OCCUPATION_GLOBAL;
       default:
         return wording.TAUX_OCCUPATION_SEANCES
     }
