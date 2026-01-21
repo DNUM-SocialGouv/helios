@@ -9,7 +9,7 @@ export const ContenuTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
   const { wording } = useDependencies();
   const formula = String.raw`
 \frac{
-  \mathrm{(Nombre\ de\ nouveaux\ contrats\ +\ Nombre\ de\ fins\ de\ contrat)}
+  \mathrm{(Nombre\ de\ nouveaux\ contrats\ +\ Nombre\ de\ fins\ de\ contrats)}
 }{
   2 \times \mathrm{Effectif\ moyen\ sur\ le\ trimestre}
 }
