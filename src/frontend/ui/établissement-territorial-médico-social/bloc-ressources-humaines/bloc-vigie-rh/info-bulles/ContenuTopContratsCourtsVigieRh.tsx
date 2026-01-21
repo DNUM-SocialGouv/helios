@@ -14,7 +14,7 @@ export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesAr
           terminés durant les 12 derniers mois glissants.
         </p>
         <p>
-          Permet de repérer la dépendance aux contrats courts.
+          Permet de repérer la fréquence de recours aux contrats courts.
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>

@@ -231,8 +231,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 echelleTemporelle={blocVigieRHViewModel.echelleTemporelle.get("vr-effectifs")}
                 etabFiness={etabFiness}
                 etabTitle={etabTitle}
+                title={wording.EFFECTIFS}
                 identifiant="vr-top-effectifs"
-                infoBulleTitle={wording.EFFECTIFS}
+                infoBulleTitle={wording.EVOLUTION_DES_EFFECTIFS}
                 pastPeriod={indicateurEffectif.pastPeriod}
                 pastValue={indicateurEffectif.precedent}
                 variation={indicateurEffectif.variation}
@@ -260,10 +261,10 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 etabFiness={etabFiness}
                 etabTitle={etabTitle}
                 identifiant="vr-top-duree-cdd"
-                infoBulleTitle={wording.TOP_CONTRATS_TITLE}
+                infoBulleTitle={wording.CONTRATS_COURTS}
                 pastPeriod={blocVigieRHViewModel.topIndicateurContrats.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurContrats.precedent}
-                title={wording.TOP_CONTRATS_TITLE}
+                title={wording.CONTRATS_COURTS}
                 unitLabel={wording.TOP_CONTRATS_UNIT_LABEL}
                 variation={blocVigieRHViewModel.topIndicateurContrats.variation}
                 variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
@@ -291,7 +292,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 infoBulleTitle={wording.TAUX_ROTATION}
                 pastPeriod={blocVigieRHViewModel.topIndicateurTauxRotation.pastPeriod}
                 pastValue={blocVigieRHViewModel.topIndicateurTauxRotation.precedent}
-                title={wording.TOP_TAUX_ROTATION_TITLE}
+                title={wording.MOUVEMENT_DU_PERSONNEL}
                 unitLabel={wording.TOP_TAUX_ROTATION_UNIT_TITLE}
                 variation={blocVigieRHViewModel.topIndicateurTauxRotation.variation}
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
@@ -306,7 +307,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
       <div className={styles["liste-indicateurs-vr-wrapper"]}>
         <section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
-            <h2 className="fr-h3 fr-mb-1v">Effectif</h2>
+            <h2 className="fr-h3 fr-mb-1v">{wording.EFFECTIFS}</h2>
           </div>
           <div className={styles["liste-indicateurs-vr-wrapper"]}>
             {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
@@ -321,7 +322,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
                 identifiant="vr-effectifs"
                 key="vr-effectifs"
-                nomDeLIndicateur={wording.EFFECTIFS}
+                nomDeLIndicateur={wording.EVOLUTION_DES_EFFECTIFS}
                 source={wording.DSN}
               >
                 <LineChart
@@ -334,7 +335,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   identifiantLegende="légende-graphique-effectifs"
                   identifiantTranscription="transcription-graphique-effectifs"
                   multiCategories={[]}
-                  nomGraph={wording.EFFECTIFS}
+                  nomGraph={wording.EVOLUTION_DES_EFFECTIFS}
                 />
               </IndicateurGraphique>
             ) : null}
@@ -457,7 +458,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
-            <h2 className="fr-h3 fr-mb-1v">Contrats courts</h2>
+            <h2 className="fr-h3 fr-mb-1v">{wording.CONTRATS_COURTS}</h2>
           </div>
           {renderRow([
             blocVigieRHViewModel.graphiqueNatureContratsAffichable ? (
@@ -515,7 +516,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
         </section>
         <section aria-label="mouvement" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
-            <h2 className="fr-h3 fr-mb-1v">Mouvement du personnel</h2>
+            <h2 className="fr-h3 fr-mb-1v">{wording.MOUVEMENT_DU_PERSONNEL}</h2>
           </div>
           {renderRow([
             blocVigieRHViewModel.graphiqueRotationsAffichable ? (

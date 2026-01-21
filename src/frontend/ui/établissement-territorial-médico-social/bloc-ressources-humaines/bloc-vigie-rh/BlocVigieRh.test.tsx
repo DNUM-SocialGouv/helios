@@ -138,8 +138,8 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
-      const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" }))!;
+      const titre = within(indicateur).getByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
       expect(détails).toHaveAttribute("aria-controls", "nom-info-bulle-vr-effectifs");
@@ -153,7 +153,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" }))!;
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -161,7 +161,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = screen.getByRole("dialog", { name: wording.EFFECTIFS });
+      const infoBulle = screen.getByRole("dialog", { name: wording.EVOLUTION_DES_EFFECTIFS });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });

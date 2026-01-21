@@ -11,7 +11,7 @@ export const ContenuEffectifsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, 
       <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Nombre de personnes physiques présentes parmi les effectifs durant le mois, ventilé par filières .
+          Nombre de personnes physiques présentes parmi les effectifs durant le mois, ventilé par filière.
         </p>
         <p>
           Les personnes physiques sont identifiées parmi les contrats déclarés par l’établissement en DSN. Cet indicateur ne tient pas compte du temps de

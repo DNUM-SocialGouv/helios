@@ -18,7 +18,7 @@ export const ContenuDureeCddVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, s
           - Plus de 12 mois
         </p>
         <p>Le décompte est réalisé pour les CDD terminés au cours des 12 derniers mois glissants.  </p>
-        <p>Permet de repérer la dépendance aux contrats courts et ajuster la politique d’emploi pour renforcer la stabilité des équipes.</p>
+        <p>Permet de repérer la fréquence de recours aux contrats courts et ajuster la politique d’emploi pour renforcer la stabilité des équipes.</p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>

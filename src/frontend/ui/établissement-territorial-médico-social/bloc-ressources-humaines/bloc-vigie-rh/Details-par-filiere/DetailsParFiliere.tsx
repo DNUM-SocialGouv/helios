@@ -57,7 +57,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               identifiantLegende={`légende-graphique-effectif-${index}`}
               identifiantTranscription={`transcription-graphique-effectifs-${index}`}
               multiCategories={[multiCategorie]}
-              nomGraph={wording.EFFECTIFS}
+              nomGraph={wording.EVOLUTION_DES_EFFECTIFS}
             />
           </div>
           <div className="fr-col-12 fr-col-md-6 fr-mb-4w">

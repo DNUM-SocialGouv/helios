@@ -64,7 +64,7 @@ const GraphiqueRepartitionEffectif = ({ etabFiness, etabTitle, nomGraph, blocVig
     return { donneesEffectifs, couleursDeLHistogramme, libelles, valeursAdditionnelles };
   }, [blocVigieRHViewModel.lesDureesCdd, items]);
 
-  const transcriptionIdentifiants = [wording.EFFECTIFS, wording.POURCENTAGE];
+  const transcriptionIdentifiants = [wording.EFFECTIFS_DE_LA_FILIERE, wording.POURCENTAGE];
 
   return (
     <HistogrammeHorizontalAvecRef
