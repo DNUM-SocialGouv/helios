@@ -40,6 +40,7 @@ export type ResultatSMS = Readonly<{
   internat: number | null | string;
   autres: number | null | string;
   seances: number | null | string;
+  global: number | null | string;
   hebergementPermanent: number | null | string;
   hebergementTemporaire: number | null | string;
   fileActivePersonnesAccompagnes: number | null | string;
