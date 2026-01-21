@@ -48,7 +48,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
   return (
     <>
       {multiCategories.map((multiCategorie, index) => (
-        <div className="fr-grid-row fr-grid-row--gutters" key={index}>
+        <div className="fr-grid-row fr-grid-row--gutters" key={multiCategorie.categorie}>
           <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>{multiCategorie.categorie}</p>
             <LineChart
@@ -71,13 +71,13 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={paletteGroupes}
-              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, filieresAvecGroupes.find(f => f.categorie === multiCategorie.categorie)?.groupes?.data ?? [])}
+              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, findGroupesForFiliere(multiCategorie.categorie))}
               etabFiness={etabFiness}
               etabTitle={etabTitle}
               identifiantLegende={`légende-graphique-profession-effectif-${index}`}
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
-              multiCategories={filieresAvecGroupes.find(f => f.categorie === multiCategorie.categorie)?.groupes?.data ?? []}
+              multiCategories={findGroupesForFiliere(multiCategorie.categorie)}
               nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
             />
           </div>}
