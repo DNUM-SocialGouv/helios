@@ -627,6 +627,9 @@ export interface Wording {
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
+  readonly EVOLUTION_DES_EFFECTIFS: string;
+  readonly CONTRATS_COURTS: string;
+  readonly MOUVEMENT_DU_PERSONNEL: string;
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly FILIERE: string;
@@ -634,8 +637,6 @@ export interface Wording {
   readonly DEPARTS_EMBAUCHES: string;
   readonly DEPARTS: string;
   readonly EMBAUCHES: string;
-  readonly NOMBRE_SORTIES: string;
-  readonly NOMBRE_ENTREES: string;
   readonly DEPARTS_REF: string;
   readonly EMBAUCHES_REF: string;
   readonly MOYENNE_REF: string;
@@ -643,14 +644,13 @@ export interface Wording {
   readonly REPARTITION_EFFECTIFS: string;
   readonly SELECTIONNER_UNE_FILIERE: string;
   readonly TAUX_ROTATION_REFERENCE: string;
-  readonly TOP_TAUX_ROTATION_TITLE: string;
-  readonly TOP_CONTRATS_TITLE: string;
   readonly TOP_CONTRATS_UNIT_LABEL: string;
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string;
   readonly NOMBRE_CDD: string;
   readonly NOMBRE_CDI: string;
   readonly CDD_REF: string;
   readonly CDI_REF: string;
+  readonly EFFECTIFS_DE_LA_FILIERE: string;
   readonly SHOW_MORE_BUTTON: string;
   readonly SHOW_LESS_BUTTON: string;
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string;

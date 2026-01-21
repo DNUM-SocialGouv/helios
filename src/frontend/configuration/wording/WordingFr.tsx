@@ -717,7 +717,10 @@ export class WordingFr implements Wording {
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
   readonly EFFECTIF_FEMMES_REF: string = "Moyenne des effectifs Femmes pour des établissements similaires";
   readonly EFFECTIF_HOMMES: string = "Effectif Hommes";
-  readonly EFFECTIFS: string = "Evolution des effectifs";
+  readonly EVOLUTION_DES_EFFECTIFS: string = "Evolution des effectifs";
+  readonly CONTRATS_COURTS: string = "Contrats courts";
+  readonly MOUVEMENT_DU_PERSONNEL: string = "Mouvement du personnel";
+  readonly EFFECTIFS: string = "Effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
   readonly EFFECTIFS_TOTAUX: string = "Total des effectifs";
   readonly FILIERE: string = "Filière";
@@ -725,18 +728,14 @@ export class WordingFr implements Wording {
   readonly DEPARTS_EMBAUCHES: string = "Entrées et sorties";
   readonly DEPARTS: string = "Fins de contrats";
   readonly EMBAUCHES: string = "Nouveaux contrats";
-  readonly NOMBRE_SORTIES: string = "Nombre de sorties";
-  readonly NOMBRE_ENTREES: string = "Nombre d’entrées";
-  readonly DEPARTS_REF: string = " Moyenne des sorties pour des établissements similaires";
-  readonly EMBAUCHES_REF: string = "Moyenne des entrées pour des établissements similaires";
+  readonly DEPARTS_REF: string = " Moyenne des fins de contrats pour des établissements similaires";
+  readonly EMBAUCHES_REF: string = "Moyenne des nouveaux contrats pour des établissements similaires";
   readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
   readonly TAUX_ROTATION: string = "Taux de renouvellement des contrats";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs par filière";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
   readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des contrats pour des établissements similaires";
-  readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-  readonly TOP_CONTRATS_TITLE: string = "Contrats courts";
-  readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD court < 6 mois";
+  readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
   readonly DUREE_CDD: string = "Contrats CDD par durée effective";
   readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
@@ -745,7 +744,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_CDI: string = "Nombre de CDI et agents titulaires actifs";
   readonly CDD_REF: string = "Moyenne du nombre  de CDD pour des établissements similaires";
   readonly CDI_REF: string = "Moyenne du nombre de CDI pour des établissements similaires";
-  readonly DUREE: string = "Durée";
+  readonly DUREE: string = "Durée effective";
   readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
   readonly NOMBRE_CONTRATS_ROMPUS: string = "Nombre de contrats rompus";
   readonly NOMBRE_CONTRATS_ROMPUS_REF: string = "Moyennes du nombre de contrats rompus pour des établissements similaires";
@@ -753,8 +752,9 @@ export class WordingFr implements Wording {
   readonly PERIODE: string = "Période";
   readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
-  readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière";
-  readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière";
+  readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière et catégorie socio-professionnelle";
+  readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière et catégorie socio-professionnelle";
+  readonly EFFECTIFS_DE_LA_FILIERE: string = "Effectifs de la filière";
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 

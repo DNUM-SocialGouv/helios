@@ -11,7 +11,7 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
         <p>
           Décompte des ruptures de CDI intervenant avant 6 mois d’ancienneté du salarié ou de l’agent dans l’établissement.
         </p>
-        <p>Le décompte est réalisé pour les CDI terminés durant les 12 derniers mois glissants.   </p>
+        <p>Le décompte est réalisé pour les CDI terminés durant l’année.   </p>
         <p>
           Permet d’identifier la proportion de départs précoces parmi les nouveaux recrutements en CDI, indicateur de la qualité de recrutement
           et de l’intégration.
@@ -19,7 +19,7 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Mensuelle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
