@@ -47,7 +47,8 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Taux d’occupation semi-internat", columnName: "semiInternat", enabled: true },
     { displayName: "Taux d’occupation internat", columnName: "internat", enabled: true },
     { displayName: "Taux d’occupation autre 1, 2 et 3", columnName: "autres", enabled: true },
-    { displayName: "Taux d'occupation Séances", columnName: "seances", enabled: true }
+    { displayName: "Taux d'occupation Séances", columnName: "seances", enabled: true },
+    { displayName: "Taux d'occupation global", columnName: "global", enabled: true }
   ];
   medicoSocialIndicators.set(activiteMSCategory, medicoSocialIndicatorsActivite);
 

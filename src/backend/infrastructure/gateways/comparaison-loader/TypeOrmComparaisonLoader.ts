@@ -26,6 +26,7 @@ type ComparaisonSMSTypeOrm = Readonly<{
   taux_occupation_internat: number | 'NA';
   taux_occupation_autres: number | 'NA';
   taux_occupation_seances: number | 'NA';
+  taux_occupation_global: number | 'NA';
   taux_de_caf: number | 'NA';
   taux_de_vetuste_construction: number | 'NA';
   fonds_de_roulement: number | 'NA';
@@ -466,6 +467,10 @@ FROM (
     ELSE 'NA'
     END AS taux_occupation_seances,
     CASE
+          WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $5 = 'ok' THEN CAST(ac.taux_occupation_global AS TEXT)
+    ELSE 'NA'
+    END AS taux_occupation_global,
+    CASE
           WHEN et.code_region = CAST(${codeRegion} AS TEXT) OR $6 = 'ok' THEN CAST(bg.taux_de_caf AS TEXT)
     ELSE 'NA'
     END AS taux_de_caf,
@@ -678,6 +683,7 @@ FROM (
         internat: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_internat === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_internat, 1),
         autres: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_autres === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_autres, 1),
         seances: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_seances === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_seances, 1),
+        global: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_global === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_global, 1),
         hebergementPermanent: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_permanent === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_permanent, 1),
         hebergementTemporaire: resultat.type !== "Médico-social" ? '' : resultat.taux_occupation_en_hebergement_temporaire === 'NA' ? 'NA' : this.transformInRate(resultat.taux_occupation_en_hebergement_temporaire, 1),
         fileActivePersonnesAccompagnes: resultat.type !== "Médico-social" ? '' : resultat.file_active_personnes_accompagnees ? Number(resultat.file_active_personnes_accompagnees) : null,
