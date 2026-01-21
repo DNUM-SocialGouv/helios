@@ -18,10 +18,13 @@ export default function MotPasseOublie() {
 
 
   useEffect(() => {
-    if (router.isReady) {
-      const { loginToken } = router.query;
-      setToken(loginToken as string);
-    }
+    async function setTokenWhenReady() {
+      if (router.isReady) {
+        const { loginToken } = router.query;
+        setToken(loginToken as string);
+      }
+    };
+    setTokenWhenReady();
   }, [router.isReady]);
 
   if (token) {

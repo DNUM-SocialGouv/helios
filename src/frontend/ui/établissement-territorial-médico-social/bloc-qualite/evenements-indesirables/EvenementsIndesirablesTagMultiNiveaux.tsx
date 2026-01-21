@@ -5,7 +5,7 @@ import { EvenementsIndesirables } from "../../../../../backend/métier/entities/
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeBleuFoncé, couleurDuFondHistogrammeOrange } from "../../../commun/Graphique/couleursGraphique";
 import { HistogrammeHorizontalWithToggle, HistogrammeWithToggleData } from "../../../commun/Graphique/HistogrammeHorizontalWithToggle";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 import { Tag, TagCliquable } from "../../../commun/Tag";
 import { TagWithLink } from "../../../commun/Tag/TagWithLink";
 
@@ -72,10 +72,13 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
   const [nonEIGSTotal, setNonEIGSTotal] = useState(0);
 
   useEffect(() => {
-    setFiltredClosedEvents(events.evenementsClotures);
-    setFiltredPenddingEvents(events.evenementsEncours);
-    setEIGSTotal(events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length);
-    setNonEIGSTotal(events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length);
+    async function updateEvents() {
+      setFiltredClosedEvents(events.evenementsClotures);
+      setFiltredPenddingEvents(events.evenementsEncours);
+      setEIGSTotal(events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length);
+      setNonEIGSTotal(events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length);
+    }
+    updateEvents();
   }, [events]);
 
   const valeursDesHistogrammes: HistogrammeWithToggleData[] = useMemo(() => {
@@ -133,13 +136,16 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
   const [showHistogramme, setShowHistogramme] = useState(true);
 
   useEffect(() => {
-    setShowHistogramme(false);
-    const id = setTimeout(() => {
-      setShowHistogramme(true);
-    }, 10);
-    return () => {
-      clearTimeout(id);
-    };
+    async function hideHistogrammeTransition() {
+      setShowHistogramme(false);
+      const id = setTimeout(() => {
+        setShowHistogramme(true);
+      }, 10);
+      return () => {
+        clearTimeout(id);
+      };
+    }
+    hideHistogrammeTransition();
   }, [valeursDesHistogrammes]);
 
   return (

@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import { BlocVigieRHViewModel } from "./BlocVigieRHViewModel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDuFondHistogrammeJaune, couleurExtensionHistogrammeJaune } from "../../../commun/Graphique/couleursGraphique";
@@ -17,21 +15,16 @@ const GraphiqueMotifsRuptureContrats = ({ etabFiness, etabTitle, nomGraph, blocV
 
   const { wording } = useDependencies();
 
-  const {
-    donneesEffectifs, donneesEffectifsRef, lesMotifsQuiManquentDeRef, couleursDeLHistogramme
-  } = useMemo(() => {
-    const donneesEffectifs = blocVigieRHViewModel.lesMotifsRuptureContrat.map(d => d.effectif);
-    const donneesEffectifsRef = blocVigieRHViewModel.lesMotifsRuptureContrat.map(d => d.effectifRef);
-    const lesMotifsQuiManquentDeRef = blocVigieRHViewModel.lesMotifsRuptureContrat.filter((motif) => motif.effectifRef === null)
-      .map((motifRefManquant) => motifRefManquant.motifLibelle);
-    const couleursDeLHistogramme = blocVigieRHViewModel.lesMotifsRuptureContrat.map(() => {
-      return {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      };
-    })
-    return { donneesEffectifs, donneesEffectifsRef, lesMotifsQuiManquentDeRef, couleursDeLHistogramme };
-  }, [blocVigieRHViewModel.lesDureesCdd]);
+  const donneesEffectifs = blocVigieRHViewModel.lesMotifsRuptureContrat.map(d => d.effectif);
+  const donneesEffectifsRef = blocVigieRHViewModel.lesMotifsRuptureContrat.map(d => d.effectifRef);
+  const lesMotifsQuiManquentDeRef = blocVigieRHViewModel.lesMotifsRuptureContrat.filter((motif) => motif.effectifRef === null)
+    .map((motifRefManquant) => motifRefManquant.motifLibelle);
+  const couleursDeLHistogramme = blocVigieRHViewModel.lesMotifsRuptureContrat.map(() => {
+    return {
+      premierPlan: couleurDuFondHistogrammeJaune,
+      secondPlan: couleurExtensionHistogrammeJaune,
+    };
+  })
 
   const transcriptionIdentifiants = showRefValues ? [wording.NOMBRE_CONTRATS_ROMPUS, wording.NOMBRE_CONTRATS_ROMPUS_REF] : [wording.NOMBRE_CONTRATS_ROMPUS];
 

@@ -10,8 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
     const recherche = await getInstitutionsEndpoint(dependencies);
     return response.status(200).json(recherche);
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500);
   }
-
 }

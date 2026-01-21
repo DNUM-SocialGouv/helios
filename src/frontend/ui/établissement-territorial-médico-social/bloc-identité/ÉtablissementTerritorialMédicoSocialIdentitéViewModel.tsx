@@ -5,7 +5,7 @@ import { catégorisationEnumToString } from "../../../../backend/métier/entitie
 import { ÉtablissementTerritorialMédicoSocial } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocial";
 import { Paths } from "../../../configuration/Paths";
 import { Wording } from "../../../configuration/wording/Wording";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 
 export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
@@ -81,7 +81,7 @@ export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
     const libellé = `EJ - ${titreDeLEntitéJuridiqueDeRattachement}`;
 
     return (
-      <Link href={lienVersLEntitéJuridique} legacyBehavior passHref prefetch={false}>
+      <Link href={lienVersLEntitéJuridique} prefetch={false}>
         {libellé}
       </Link>
     );
@@ -141,7 +141,7 @@ export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
       ? this.wording.PRINCIPAL
       : (<>
         <span>{this.wording.SECONDAIRE} ({this.wording.PRINCIPAL} : </span>
-        <Link href={lienVersLETMS} legacyBehavior passHref prefetch={false}>
+        <Link href={lienVersLETMS} prefetch={false}>
           {libelle}
         </Link>
         <span>)</span>

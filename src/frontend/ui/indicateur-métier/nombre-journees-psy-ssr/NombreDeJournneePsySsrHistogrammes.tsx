@@ -26,7 +26,10 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ etabTitle, etabFiness, nom
   const [selectedActivity, setSelectedActivity] = useState(wording.SSR);
 
   useEffect(() => {
-    setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+    async function updateAnnee() {
+      setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
+    }
+    updateAnnee();
   }, [selectedFrequency])
 
   const activitesPsySsr = [wording.SSR, wording.PSYCHIATRIE];

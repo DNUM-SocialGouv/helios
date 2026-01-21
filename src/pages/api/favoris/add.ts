@@ -12,7 +12,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const { finessNumber, type, idUser, commune, departement, socialReason } = request.body;
     const recherche = await addToFavorisEndpoint(dependencies, finessNumber, type, idUser, commune, departement, socialReason);
     return response.status(200).json(recherche);
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500).send("Error: Error in add favoris");
   }
 

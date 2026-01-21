@@ -92,16 +92,20 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
   };
 
   useEffect(() => {
+    async function resetFilter() {
+      setActiviteMco(new ActiviteSanitaire("mco", []));
+      setActivitePsy(new ActiviteSanitaire("psy", []));
+      setActiviteSsr(new ActiviteSanitaire("ssr", []));
+      setActiviteUsld(new ActiviteSanitaire("usld", []));
+    }
+
     if (
       rechercheAvanceeContext?.activiteMco.length === 0 &&
       rechercheAvanceeContext?.activitePsy.length === 0 &&
       rechercheAvanceeContext?.activiteSsr.length === 0 &&
       rechercheAvanceeContext?.activiteUsld.length === 0
     ) {
-      setActiviteMco(new ActiviteSanitaire("mco", []));
-      setActivitePsy(new ActiviteSanitaire("psy", []));
-      setActiviteSsr(new ActiviteSanitaire("ssr", []));
-      setActiviteUsld(new ActiviteSanitaire("usld", []));
+      resetFilter();
     }
   }, [rechercheAvanceeContext?.activiteMco, rechercheAvanceeContext?.activitePsy, rechercheAvanceeContext?.activiteSsr, rechercheAvanceeContext?.activiteUsld]);
 

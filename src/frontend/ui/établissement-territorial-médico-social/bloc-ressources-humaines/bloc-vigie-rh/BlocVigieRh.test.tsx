@@ -10,18 +10,18 @@ const { wording } = fakeFrontDependencies;
 const etabFiness = "123456789";
 const etabTitle = "etabTitle";
 
-jest.mock("chart.js", () => ({
+jest.mock<typeof import("chart.js")>("chart.js", () => ({
   Chart: {
     register: jest.fn(),
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
-jest.mock("chartjs-chart-treemap", () => ({
+jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(

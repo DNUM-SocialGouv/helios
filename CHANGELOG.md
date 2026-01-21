@@ -1,17 +1,22 @@
 # Changelog d'Helios
 
-## [1.7.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.7.9) (TODO)
+## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (TODO)
 
 ### Bug Fixes
-- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
 
+- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
 ### Features
+
+- hel-965: Ajout du sous texte dans la catégorie Finance de la selection d’indicateurs sur la page de comparaison
+- hel-956: Montée de version NextJS en v16
+- hel-964: Ajout de l’indicateur TO occupation global dans la page de comparaison
 
 ## [1.7.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.7...release/1.7.8) (2026-01-19)
 
 ### Bug Fixes
 
 ### Features
+
 - vr-118: Espacements Titre, date du graph, graph
 - vr-133:  Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
 - vr-136: PERF CRON vigieRH

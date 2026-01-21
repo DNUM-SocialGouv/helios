@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
@@ -201,6 +201,7 @@ export function useComparaison() {
       case "internat":
       case "autres":
       case "seances":
+      case "global":
         return {
           contenu: <ContenuDuTauxOccupationESMS dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA} />,
           titre: getTitreModalESMS(name),
@@ -349,6 +350,8 @@ export function useComparaison() {
         return wording.TAUX_OCCUPATION_INTERNAT;
       case "autres":
         return wording.TAUX_OCCUPATION_AUTRE;
+      case "global":
+        return wording.TAUX_OCCUPATION_GLOBAL;
       default:
         return wording.TAUX_OCCUPATION_SEANCES
     }
@@ -381,6 +384,7 @@ export function useComparaison() {
         { label: "TO Internat", nomComplet: "Taux d’occupation internat", key: "internat", info: true, sort: true, orderBy: "taux_occupation_internat" },
         { label: "TO Autre 1, 2 et 3", nomComplet: "Taux d’occupation autre 1, 2 et 3", key: "autres", info: true, sort: true, orderBy: "taux_occupation_autres" },
         { label: "TO Séances", nomComplet: "Taux d'occupation Séances", key: "seances", info: true, sort: true, orderBy: "taux_occupation_seances" },
+        { label: "TO global occupation", nomComplet: "Taux d'occupation global", key: "global", info: true, sort: true, orderBy: "taux_occupation_global" },
         { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
         { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
         { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },

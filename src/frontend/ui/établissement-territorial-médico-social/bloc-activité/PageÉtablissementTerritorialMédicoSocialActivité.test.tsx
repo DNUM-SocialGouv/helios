@@ -41,18 +41,18 @@ const autorisationsMockData = {
     contributionAuxFraisDeSiège: "ok",
   },
 };
-jest.mock("chart.js", () => ({
+jest.mock<typeof import("chart.js")>("chart.js", () => ({
   Chart: {
     register: jest.fn(),
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
-jest.mock("chartjs-chart-treemap", () => ({
+jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);

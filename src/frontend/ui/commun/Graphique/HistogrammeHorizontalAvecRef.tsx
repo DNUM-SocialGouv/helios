@@ -150,7 +150,7 @@ const HistogrammeHorizontalAvecRef = ({
           },
         },
       },
-      // @ts-ignore
+      // @ts-expect-error custom property
       valeursDeReference: { valeursDesHistogrammesRef } as any,
     },
   };
@@ -190,8 +190,8 @@ const HistogrammeHorizontalAvecRef = ({
   return (
     <>
       <div className={styles["flexContainer"]}>
-        {/* @ts-ignore */}
-        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
+        <Bar data={data as ChartData<"bar">}
+          options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
         />
       </div>
       {showRefValues && <ColorLabel

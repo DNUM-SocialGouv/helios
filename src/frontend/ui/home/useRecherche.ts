@@ -107,7 +107,7 @@ export function useRecherche() {
   };
 
   useEffect(() => {
-    if (router.query["terme"]) {
+    async function launchSearch() {
       setState({
         ...state,
         estCeEnAttente: true,
@@ -115,6 +115,10 @@ export function useRecherche() {
         terme: router.query["terme"] as string,
       });
       rechercher(router.query["terme"] as string, pageInitiale);
+
+    }
+    if (router.query["terme"]) {
+      launchSearch();
     }
   }, []);
 

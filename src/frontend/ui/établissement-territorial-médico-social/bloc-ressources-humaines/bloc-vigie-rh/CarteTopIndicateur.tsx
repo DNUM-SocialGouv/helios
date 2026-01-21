@@ -2,7 +2,7 @@
  * CarteIndicateurEffectif
  * Affiche une carte indicateur : effectif total + flèche de tendance + variation (% et/ou valeur) vs iso-période.
  */
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 
 import styles from "./CarteIndicateurEffectif.module.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";

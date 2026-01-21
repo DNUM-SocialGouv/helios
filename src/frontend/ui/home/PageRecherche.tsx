@@ -35,7 +35,7 @@ export const PageRecherche = () => {
   const showNotice = new Date() <= new Date(wording.NOUVELLES_FONCTIONNALITÉS_DATE_FIN);
 
   useEffect(() => {
-    if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
+    async function loadDisplayKind() {
       const storedDisplayTable = (localStorage.getItem('displayTable') ?? 'false') === 'true';
       setDisplayTable(storedDisplayTable);
       localStorage.setItem('FromBackToSearch', 'false');
@@ -46,7 +46,10 @@ export const PageRecherche = () => {
       } else {
         rechercher(terme, pageInitiale, defaultOrder, defaultOrderBy, storedDisplayTable)
       }
+    }
 
+    if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
+      loadDisplayKind();
     }
   }, [])
 

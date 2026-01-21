@@ -25,7 +25,10 @@ export const DureeMoyenneDeSejourMCOHistogrammes = ({ etabFiness, etabtitle, dur
   const [selectedActivity, setSelectedActivity] = useState(wording.MÉDECINE);
 
   useEffect(() => {
-    setAnnéeEnCours(activiteMensuelleViewModel.annees[activiteMensuelleViewModel.annees.length - 1]);
+    async function updateAnnee() {
+      setAnnéeEnCours(activiteMensuelleViewModel.annees[activiteMensuelleViewModel.annees.length - 1]);
+    }
+    updateAnnee();
   }, [selectedFrequency])
 
   const activitesMCO = [wording.MÉDECINE, wording.CHIRURGIE, wording.OBSTÉTRIQUE];

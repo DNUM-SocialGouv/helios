@@ -874,7 +874,7 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
           enveloppe: "",
           sousEnveloppe: "",
           modeDeDélégation: "",
-          montantNotifié: "",
+          montantNotifié: 0,
         }]
       }],
     }

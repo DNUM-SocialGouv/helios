@@ -3,7 +3,7 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import { couleurDuFondHistogrammeSecondaire } from "../../commun/Graphique/couleursGraphique";
 import { HistogrammeData } from "../../commun/Graphique/HistogrammesHorizontaux";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 export interface AnneeModifiable {
   NOMBRE_ANNEES: number;

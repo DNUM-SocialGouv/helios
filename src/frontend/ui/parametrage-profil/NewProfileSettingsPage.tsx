@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import { useState } from "react";

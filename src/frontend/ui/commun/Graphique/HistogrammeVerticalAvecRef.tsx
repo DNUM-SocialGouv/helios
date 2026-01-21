@@ -119,7 +119,8 @@ const HistogrammeVerticalAvecRef = ({
             `Valeur de référence: ${valeurRefText}`];
           },
         },
-      },      // @ts-ignore
+      },
+      // @ts-expect-error Param non standard utilisé
       rotationRef: { valeursRef } as any,
     },
     scales: {
@@ -202,8 +203,7 @@ const HistogrammeVerticalAvecRef = ({
   return (
     <>
       <Bar
-        // @ts-ignore
-        data={data}
+        data={data as ChartData<"bar">}
         options={optionsHistogrammeVertical}
         plugins={showRefValues ? [rotationRefPlugin] : []}
       />

@@ -5,7 +5,7 @@ import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
 import { UserContext } from "../commun/contexts/userContext";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
 
 const DEFAULT_INDICATORS = ["etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
@@ -72,6 +72,7 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       internat: (etab) => etab.internat === 'NA' ? '' : etab.internat ?? '-',
       autres: (etab) => etab.autres === 'NA' ? '' : etab.autres ?? '-',
       seances: (etab) => etab.seances === 'NA' ? '' : etab.seances ?? '-',
+      global: (etab) => etab.seances === 'NA' ? '' : etab.global ?? '-',
       prestationExterne: (etab) => etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
       rotationPersonnel: (etab) => etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
       etpVacant: (etab) => etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
@@ -263,6 +264,7 @@ const getMSHeaders = (dateMiseAJourFiness: string, enabledIndicators: string[]):
     ["internat", "Taux d’occupation internat (en %)"],
     ["autres", "Taux d’occupation autre 1, 2 et 3 (en %)"],
     ["seances", "Taux d'occupation Séances (en %)"],
+    ["global", "Taux d'occupation global (en %)"],
     ["prestationExterne", "Taux de prestations externes sur les prestations directes (en %)"],
     ["rotationPersonnel", "Taux de rotation du personnel sur effectifs réels (en %)"],
     ["etpVacant", "Taux d'ETP vacants au 31/12 (en %)"],

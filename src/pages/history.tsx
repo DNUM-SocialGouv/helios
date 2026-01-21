@@ -34,19 +34,16 @@ export default function Router({ searchHistory }: RouterProps) {
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
-  try {
-    const session = await getSession(context);
+  const session = await getSession(context);
 
-    const resultatRechercheHistorique = await getAllUserSearchHistoryEndpoint(dependencies, session?.user.idUser!);
+  // The page is behind next-auth, the session is guaranteed to be present
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const resultatRechercheHistorique = await getAllUserSearchHistoryEndpoint(dependencies, session?.user.idUser!);
 
-    return {
-      props:
-      {
-        searchHistory: JSON.parse(JSON.stringify(resultatRechercheHistorique))
-      }
-    };
-
-  } catch (error) {
-    throw error;
-  }
+  return {
+    props:
+    {
+      searchHistory: JSON.parse(JSON.stringify(resultatRechercheHistorique))
+    }
+  };
 }

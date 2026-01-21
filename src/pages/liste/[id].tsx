@@ -43,15 +43,18 @@ export default function Router({ listServer }: RouterProps) {
 
   // Quand la liste des favoris à été changée en local on la recharge depuis le server
   useEffect(() => {
-    setChargement(true);
-    fetch(`/api/liste/${listServer.id}`, {
-      headers: { "Content-Type": "application/json" },
-      method: "GET",
-    }).then((response) => response.json())
-      .then((data) => {
-        setList(data);
-        setChargement(false);
-      });
+    async function reloadFav() {
+      setChargement(true);
+      fetch(`/api/liste/${listServer.id}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      }).then((response) => response.json())
+        .then((data) => {
+          setList(data);
+          setChargement(false);
+        });
+    };
+    reloadFav();
   }, [userContext?.favorisLists])
 
 
@@ -236,7 +239,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     } else {
       return { notFound: true };
     }
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return { notFound: true };
   }
 }

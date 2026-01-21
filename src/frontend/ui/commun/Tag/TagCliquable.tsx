@@ -21,9 +21,7 @@ export const TagCliquable = ({ for: identifiant, titre, texteGras = true, colorT
       href="#"
       onClick={(event) => {
         event.preventDefault();
-      }}
-      passHref
-    >
+      }}>
       {titre}
     </Link>
   );

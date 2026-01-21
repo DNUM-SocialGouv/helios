@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { getCookie, setCookie } from "cookies-next";
 import Link from "next/link";
 import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
@@ -69,10 +67,13 @@ export const Cookies = ({
   };
 
   useEffect(() => {
-    setCondition(getCookie("allowed-cookies") === undefined);
-    if (openModal) {
-      setCurrentModal(1);
+    async function refreshDisplayCondition() {
+      setCondition(getCookie("allowed-cookies") === undefined);
+      if (openModal) {
+        setCurrentModal(1);
+      }
     }
+    refreshDisplayCondition();
   }, []);
 
   return (

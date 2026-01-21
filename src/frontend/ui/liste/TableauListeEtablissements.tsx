@@ -51,23 +51,26 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
   };
 
   useEffect(() => {
-    setLoading(true);
-    const queryParams = new URLSearchParams({
-      order: order,
-      orderBy: orderBy,
-      page: String(page),
-      limit: String(PAGE_SIZE),
-    });
-    fetch(`/api/liste/${list.id}/etablissement?${queryParams.toString()}`,
-      {
-        headers: { "Content-Type": "application/json" },
-        method: "GET",
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        setDataOnPage(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
-        setLoading(false);
+    async function updateTable() {
+      setLoading(true);
+      const queryParams = new URLSearchParams({
+        order: order,
+        orderBy: orderBy,
+        page: String(page),
+        limit: String(PAGE_SIZE),
       });
+      fetch(`/api/liste/${list.id}/etablissement?${queryParams.toString()}`,
+        {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          setDataOnPage(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+          setLoading(false);
+        });
+    }
+    updateTable();
   }, [list, page, order, orderBy])
 
   const onOrderChange = (newOrder: string) => {

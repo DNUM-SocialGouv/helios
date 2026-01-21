@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { EntitéJuridique } from "../../../backend/métier/entities/entité-juridique/EntitéJuridique";
 import { Wording } from "../../configuration/wording/Wording";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { ActivitesMensuelViewModel } from "./bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { EntiteJuridiqueActivitesViewModel } from "./bloc-activité/EntitéJuridiqueActivitésViewModel";
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./bloc-autorisations-capacites/EntitéJuridiqueAutorisationsCapacitesViewModel";

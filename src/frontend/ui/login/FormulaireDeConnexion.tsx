@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import React, { useState, FormEvent, useContext } from "react";
+import { useState, FormEvent, useContext } from "react";
 
 import styles from "./Connexion.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";

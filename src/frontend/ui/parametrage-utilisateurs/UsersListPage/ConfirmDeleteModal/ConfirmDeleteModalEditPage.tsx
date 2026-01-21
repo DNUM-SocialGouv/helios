@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 type ConfirmDeleteModalEditPageProps = Readonly<{
   redirectPage: (url: string) => void;
@@ -8,18 +8,15 @@ type ConfirmDeleteModalEditPageProps = Readonly<{
 }>;
 
 const ConfirmDeleteModalEditPage = ({ redirectPage, userCode }: ConfirmDeleteModalEditPageProps) => {
-  const deleteUser = useCallback(
-    async (userCode: string) => {
-      await fetch("/api/utilisateurs/delete", {
-        body: JSON.stringify({ userCode: userCode }),
-        headers: { "Content-Type": "application/json" },
-        method: "DELETE",
-      }).then(async () => {
-        redirectPage("/settings/users?status=deleted_successfully");
-      });
-    },
-    [userCode]
-  );
+  const deleteUser = async (userCode: string) => {
+    await fetch("/api/utilisateurs/delete", {
+      body: JSON.stringify({ userCode: userCode }),
+      headers: { "Content-Type": "application/json" },
+      method: "DELETE",
+    }).then(async () => {
+      redirectPage("/settings/users?status=deleted_successfully");
+    });
+  };
 
   return (
     <dialog aria-labelledby="fr-modal-2-title" className="fr-modal" id="fr-modal-2">

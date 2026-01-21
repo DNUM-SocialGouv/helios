@@ -1,4 +1,4 @@
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 
 type ValueOrNA = number | null | string;
 
@@ -15,6 +15,7 @@ export type ResultatComparaisonSMS = Readonly<{
   internat: number | null | string;
   autres: number | null | string;
   seances: number | null | string;
+  global: number | null | string;
   hebergementPermanent: number | string;
   hebergementTemporaire: number | string;
   fileActivePersonnesAccompagnes: number | string;
@@ -201,6 +202,9 @@ export class ComparaisonSMSViewModel {
   }
   public get seances(): string | null {
     return formatRatio(this.comparaison.seances);
+  }
+  public get global(): string | null {
+    return formatRatio(this.comparaison.global);
   }
   public get prestationExterne(): string | null {
     return formatRatio(this.comparaison.prestationExterne);

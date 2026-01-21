@@ -21,7 +21,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (EndpointResponse === 'profile deleted successefully')
       return response.status(200).json(EndpointResponse);
     else return response.status(500).json(EndpointResponse);
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500);
   }
 };

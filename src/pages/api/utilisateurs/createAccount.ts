@@ -25,7 +25,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     await createAccountEndpoint(dependencies, firstName, lastName, email, institution);
 
     return response.status(200).send({ message: 'user created' });
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500);
   }
 }

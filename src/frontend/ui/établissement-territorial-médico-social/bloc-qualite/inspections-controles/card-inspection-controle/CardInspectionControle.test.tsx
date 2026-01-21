@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
 import CardInspectionControle from './CardInspectionControle';
 import { Inspection } from '../../../../../../backend/métier/entities/ÉtablissementTerritorialQualite';
@@ -53,5 +52,5 @@ describe('CardInspectionControle Component', () => {
     render(<CardInspectionControle data={dataWithMissions as Inspection} />);
     expect(screen.getByText('Hors programme')).toBeInTheDocument();
   });
- 
+
 });
