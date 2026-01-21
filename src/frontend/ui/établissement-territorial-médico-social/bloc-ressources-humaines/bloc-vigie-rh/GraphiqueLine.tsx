@@ -218,7 +218,7 @@ const LineChart = ({
           identifiantUnique={transcriptionId}
           identifiants={[
             ...(afficherSerieTotale ? [wording.EFFECTIFS_TOTAUX] : []),
-            ...(multiCategories ?? []).map((c) => (nomGraph === wording.EFFECTIFS ? 'Effectif de la filière ' : 'Effectif de la catégorie ') + capitalize(c.categorie)),
+            ...(multiCategories ?? []).map((c) => (nomGraph === wording.EVOLUTION_DES_EFFECTIFS ? 'Effectif de la filière ' : 'Effectif de la catégorie ') + capitalize(c.categorie)),
           ]}
           libellés={labelsTranscription}
           nomGraph={nomGraph}

@@ -175,7 +175,7 @@ export class BlocVigieRHViewModel {
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
-    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EVOLUTION_DES_EFFECTIFS);
     if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.REPARTITION_EFFECTIFS);
     if (this.lesEffectifsGroupesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
@@ -191,7 +191,8 @@ export class BlocVigieRHViewModel {
   public get lesDonneesVgRHPasAutorises(): string[] {
     const nonAutorises = [];
     if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
-    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EVOLUTION_DES_EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.REPARTITION_EFFECTIFS);
     if (this.lesEffectifsGroupesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
@@ -379,13 +380,13 @@ export class BlocVigieRHViewModel {
 
     if (variation) {
       variationText = variation > 0
-        ? `+${variation}pts`
-        : `${variation}pts`;
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
     }
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
-      precedent: isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) + '%' : '',
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation)) + '%',
+      precedent: isoPeriodDonneeComparaison ? StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation)) + '%' : '',
       variation: variation,
       pastPeriod: isoPeriodDonneeComparaison ? `T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '',
       variationText: variationText,
@@ -411,13 +412,13 @@ export class BlocVigieRHViewModel {
 
     if (variation) {
       variationText = variation > 0
-        ? `+${variation}pts`
-        : `${variation}pts`;
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
     }
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison) + '%',
-      precedent: StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison) + '%',
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison)) + '%',
+      precedent: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison)) + '%',
       variation: variation,
       pastPeriod: period.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1)),
       variationText: variationText,

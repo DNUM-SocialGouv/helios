@@ -290,8 +290,8 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
   };
 
   const transcriptionIdentifiants = showRefValues
-    ? [wording.NOMBRE_SORTIES, wording.DEPARTS_REF, wording.NOMBRE_ENTREES, wording.EMBAUCHES_REF]
-    : [wording.NOMBRE_SORTIES, wording.NOMBRE_ENTREES];
+    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
+    : [wording.DEPARTS, wording.EMBAUCHES];
 
   const transcriptionValeurs = showRefValues
     ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]

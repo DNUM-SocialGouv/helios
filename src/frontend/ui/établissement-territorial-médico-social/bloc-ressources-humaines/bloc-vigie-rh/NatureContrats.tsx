@@ -174,8 +174,8 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
   }, [libelles, series]);
 
   const transcriptionIdentifiants = showRefValues
-    ? [wording.NOMBRE_CDD, wording.CDD_REF, wording.NOMBRE_CDI, wording.CDI_REF]
-    : [wording.NOMBRE_CDD, wording.NOMBRE_CDI];
+    ? [wording.NOMBRE_CDI, wording.CDI_REF, wording.NOMBRE_CDD, wording.CDD_REF]
+    : [wording.NOMBRE_CDI, wording.NOMBRE_CDD];
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
@@ -211,8 +211,8 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
   }, [libelles, series]);
 
   const transcriptionIdentifiants = showRefValues
-    ? [wording.NOMBRE_CDD, wording.CDD_REF, wording.NOMBRE_CDI, wording.CDI_REF]
-    : [wording.NOMBRE_CDD, wording.NOMBRE_CDI];
+    ? [wording.NOMBRE_CDI, wording.CDI_REF, wording.NOMBRE_CDD, wording.CDD_REF]
+    : [wording.NOMBRE_CDI, wording.NOMBRE_CDD];
 
   return (
     <HistogrammeComparaisonVerticalAvecRef
