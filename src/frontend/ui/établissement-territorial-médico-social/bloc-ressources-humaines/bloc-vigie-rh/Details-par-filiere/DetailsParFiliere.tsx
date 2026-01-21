@@ -22,6 +22,10 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
   const { wording } = useDependencies();
   const filieresAvecGroupes = useMemo(() => blocVigieRHViewModel.filieresAvecGroupes, [blocVigieRHViewModel]);
 
+  const findGroupesForFiliere = (categorie: string) => {
+    return filieresAvecGroupes.find(f => f.categorie === categorie)?.groupes?.data ?? [];
+  }
+
   const calculateEffectifsData = (filiereCourante: any, groupesCourants: any[]): EffectifsData => {
     if (!filiereCourante) return { dataEtab: [], dataFiliere: [], dataMoisAnnee: [] };
     const serie = filiereCourante?.dataCategorie ?? {};
@@ -44,7 +48,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
   return (
     <>
       {multiCategories.map((multiCategorie, index) => (
-        <div className="fr-grid-row fr-grid-row--gutters" key={index}>
+        <div className="fr-grid-row fr-grid-row--gutters" key={multiCategorie.categorie}>
           <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>{multiCategorie.categorie}</p>
             <LineChart
@@ -60,23 +64,23 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               nomGraph={wording.EVOLUTION_DES_EFFECTIFS}
             />
           </div>
-          <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
+          {findGroupesForFiliere(multiCategorie.categorie).length > 0 && <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>Professions - Filière {multiCategorie.categorie}</p>
             <LineChart
               afficherSerieTotale={false}
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={paletteGroupes}
-              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, filieresAvecGroupes[index].groupes?.data ?? [])}
+              dataEffectifs={calculateEffectifsData(multiCategorie.categorie, findGroupesForFiliere(multiCategorie.categorie))}
               etabFiness={etabFiness}
               etabTitle={etabTitle}
               identifiantLegende={`légende-graphique-profession-effectif-${index}`}
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
-              multiCategories={filieresAvecGroupes[index].groupes?.data ?? []}
+              multiCategories={findGroupesForFiliere(multiCategorie.categorie)}
               nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
             />
-          </div>
+          </div>}
         </div>
       ))}
     </>

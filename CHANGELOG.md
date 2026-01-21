@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
 ### Features
 
 - vr-147: Ajustements Wording de différents éléments

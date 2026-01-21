@@ -404,7 +404,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
             ], 2)}
           </div>
-          <section className="fr-accordion">
+          {!blocVigieRHViewModel.lesEffectifsGroupesNeSontIlsPasRenseignees && <section className="fr-accordion">
             <h3 className={styles["vigie-rh-accordion-button"]}>
               <button
                 aria-controls="accordion-vigie-rh"
@@ -454,7 +454,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 </button>
               </h3>
             </div>
-          </section>
+          </section>}
         </section>
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
