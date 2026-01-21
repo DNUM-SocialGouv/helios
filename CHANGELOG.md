@@ -6,6 +6,8 @@
 
 ### Features
 
+- vr-147: Ajustements Wording de différents éléments
+
 - hel-965: Ajout du sous texte dans la catégorie Finance de la selection d’indicateurs sur la page de comparaison
 - hel-956: Montée de version NextJS en v16
 

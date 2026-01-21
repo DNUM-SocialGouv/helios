@@ -172,8 +172,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     if (deltaPct) {
       const rate = StringFormater.transformInRoundedRate(deltaPct);
       variationText = variation > 0
-        ? `+${rate}%`
-        : `${rate}%`;
+        ? `+${StringFormater.formatInFrench(rate)} %`
+        : `${StringFormater.formatInFrench(rate)} %`;
     }
 
     return { items, dataEffectifs, courant, precedent, variation, comparaisonLabel, variationText, periodeLibelle, pastPeriod };

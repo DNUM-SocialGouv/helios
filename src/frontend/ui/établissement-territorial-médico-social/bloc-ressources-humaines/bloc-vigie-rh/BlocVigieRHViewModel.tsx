@@ -379,13 +379,13 @@ export class BlocVigieRHViewModel {
 
     if (variation) {
       variationText = variation > 0
-        ? `+${variation}pts`
-        : `${variation}pts`;
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
     }
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
-      precedent: isoPeriodDonneeComparaison ? StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation) + '%' : '',
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation)) + '%',
+      precedent: isoPeriodDonneeComparaison ? StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation)) + '%' : '',
       variation: variation,
       pastPeriod: isoPeriodDonneeComparaison ? `T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '',
       variationText: variationText,
@@ -411,13 +411,13 @@ export class BlocVigieRHViewModel {
 
     if (variation) {
       variationText = variation > 0
-        ? `+${variation}pts`
-        : `${variation}pts`;
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
     }
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison) + '%',
-      precedent: StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison) + '%',
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison)) + '%',
+      precedent: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison)) + '%',
       variation: variation,
       pastPeriod: period.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1)),
       variationText: variationText,
