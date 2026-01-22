@@ -1,10 +1,17 @@
 # Changelog d'Helios
 
-## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (TODO)
+## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (TODO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (2026-01-22)
 
 ### Bug Fixes
 
 - vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
+
 ### Features
 
 - vr-147: Ajustements Wording de différents éléments
