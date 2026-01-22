@@ -311,33 +311,37 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           </div>
           <div className={styles["liste-indicateurs-vr-wrapper"]}>
             {blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
-              <IndicateurGraphique
-                contenuInfoBulle={
-                  <ContenuEffectifsVigieRh
-                    dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
-                    dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
-                    source={wording.DSN}
-                  />
-                }
-                echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
-                identifiant="vr-effectifs"
-                key="vr-effectifs"
-                nomDeLIndicateur={wording.EVOLUTION_DES_EFFECTIFS}
-                source={wording.DSN}
+              <ul
+                className="indicateurs"
               >
-                <LineChart
-                  classContainer="fr-mb-4w"
-                  couleurEffectifsTotaux={couleurEffectifsTotaux}
-                  couleursFilieres={[]}
-                  dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
-                  etabFiness={etabFiness}
-                  etabTitle={etabTitle}
-                  identifiantLegende="légende-graphique-effectifs"
-                  identifiantTranscription="transcription-graphique-effectifs"
-                  multiCategories={[]}
-                  nomGraph={wording.EVOLUTION_DES_EFFECTIFS}
-                />
-              </IndicateurGraphique>
+                <IndicateurGraphique
+                  contenuInfoBulle={
+                    <ContenuEffectifsVigieRh
+                      dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
+                      dateDonneesArretees={recupereDateDonnees("vr-effectifs")}
+                      source={wording.DSN}
+                    />
+                  }
+                  echelleTemporel={blocVigieRHViewModel.echelleTemporelle?.get("vr-effectifs")}
+                  identifiant="vr-effectifs"
+                  key="vr-effectifs"
+                  nomDeLIndicateur={wording.EVOLUTION_DES_EFFECTIFS}
+                  source={wording.DSN}
+                >
+                  <LineChart
+                    classContainer="fr-mb-4w"
+                    couleurEffectifsTotaux={couleurEffectifsTotaux}
+                    couleursFilieres={[]}
+                    dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                    etabFiness={etabFiness}
+                    etabTitle={etabTitle}
+                    identifiantLegende="légende-graphique-effectifs"
+                    identifiantTranscription="transcription-graphique-effectifs"
+                    multiCategories={[]}
+                    nomGraph={wording.EVOLUTION_DES_EFFECTIFS}
+                  />
+                </IndicateurGraphique>
+              </ul>
             ) : null}
 
             {renderRow([blocVigieRHViewModel.graphiquePyramideAgesAffichable ? (
