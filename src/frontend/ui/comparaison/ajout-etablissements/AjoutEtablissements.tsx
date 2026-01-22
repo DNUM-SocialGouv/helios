@@ -246,6 +246,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
             <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE}</span>
             <div className="fr-select-group">
               <select
+                aria-label="Sélectionnez une liste de favoris"
                 className={"fr-select fr-icon-arrow-down-s-fill " + styles["ListeSelecteur"]}
                 onChange={handleOnChangeListe}>
                 <option selected value=""> Mes listes</option>
