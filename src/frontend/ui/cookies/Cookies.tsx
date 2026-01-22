@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from "cookies-next";
 import Link from "next/link";
-import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 
 import styles from "./Cookies.module.css";
 
@@ -34,35 +34,13 @@ export const Cookies = ({
     setAllowCookies(e.target.value);
   };
 
-  const onClickModal1 = (e: MouseEvent) => {
-    if (!e.currentTarget.classList.contains("fr-modal--opened")) {
-      e.currentTarget.className += " fr-modal--opened";
-    }
-  };
-
-  const onClickModal2 = (e: MouseEvent) => {
-    if (!e.currentTarget.classList.contains("fr-modal--opened")) {
-      if (allowCookies) {
-        setCookie("allowed-cookies", allowCookies);
-      } else {
-        e.currentTarget.className += " fr-modal--opened";
-      }
-    } else {
-      if (allowCookies) {
-        setCookie("allowed-cookies", allowCookies);
-        //e.currentTarget.className = "fr-modal";
-      }
-    }
-  };
-
   const closeModal2 = () => {
     if (allowCookies === "") {
       setCurrentModal(1);
     } else {
-      {
-        setCurrentModal(3);
-        setOpenModal(false);
-      }
+      setCookie("allowed-cookies", allowCookies);
+      setCurrentModal(3);
+      setOpenModal(false);
     }
   };
 
@@ -82,7 +60,6 @@ export const Cookies = ({
         aria-labelledby="fr-modal-cookies-title"
         className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
-        onClick={onClickModal1}
       >
         <div className="fr-container fr-container--fluid fr-container-md ">
           <div className={"fr-grid-row fr-grid-row--left " + styles["cookies-modal"]}>
@@ -127,7 +104,7 @@ export const Cookies = ({
           </div>
         </div>
       </dialog>
-      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy" onClick={onClickModal2}>
+      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy">
         <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8">
