@@ -43,7 +43,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
     documentTitle: entitéJuridiqueViewModel.titre,
   });
 
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 3, 0);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
 
   const { exportEtRattache } = useExportExcelETRattache(entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels);
   return (
