@@ -133,6 +133,7 @@
   },
   "dependencies": {
     "@gouvfr/dsfr": "^1.14.2",
+    "@gouvfr/dsfr-chart": "^2.0.4",
     "@next/bundle-analyzer": "16.1.1",
     "@sentry/nextjs": "7.120.0",
     "@types/bcrypt": "^6.0.0",

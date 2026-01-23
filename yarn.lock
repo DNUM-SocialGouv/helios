@@ -836,6 +836,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gouvfr/dsfr-chart@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@gouvfr/dsfr-chart@npm:2.0.4"
+  checksum: 10/481f953202fcf1aac8cafa2348eb3b604314d1c3eb4d8bc1e9b931271ab02fc7577f34ae4fb0e677efa5be626f175302f0e04b53cdc53f63515ac7e8a042d38b
+  languageName: node
+  linkType: hard
+
 "@gouvfr/dsfr@npm:^1.14.2":
   version: 1.14.2
   resolution: "@gouvfr/dsfr@npm:1.14.2"
@@ -7011,6 +7018,7 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.3.3"
     "@eslint/js": "npm:^9.39.2"
     "@gouvfr/dsfr": "npm:^1.14.2"
+    "@gouvfr/dsfr-chart": "npm:^2.0.4"
     "@lhci/cli": "npm:^0.14.0"
     "@next/bundle-analyzer": "npm:16.1.1"
     "@sentry/nextjs": "npm:7.120.0"

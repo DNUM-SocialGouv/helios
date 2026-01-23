@@ -225,6 +225,7 @@ type HistogrammeHorizontalNewProps = {
   epaisseur?: "FIN" | "EPAIS";
   identifiant?: string;
   cacheLesValeursBasse?: boolean;
+  databoxId: string;
 };
 export const HistogrammesHorizontaux = ({
   etabTitle,
@@ -237,7 +238,8 @@ export const HistogrammesHorizontaux = ({
   légende,
   identifiant,
   epaisseur = "EPAIS",
-  cacheLesValeursBasse
+  cacheLesValeursBasse,
+  databoxId
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, wording, cacheLesValeursBasse);
@@ -265,7 +267,7 @@ export const HistogrammesHorizontaux = ({
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
 
   return (
-    <>
+    <div id={databoxId}>
       {!aucuneDonnées && (
         <div className={styles["container"]}>
           {histogrammes.map((histogramme) => (
@@ -288,7 +290,7 @@ export const HistogrammesHorizontaux = ({
       {annéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${annéesManquantes.join(", ")}`}</MiseEnExergue>}
       {hasSomeValuesToHide && <MiseEnExergue>{`${wording.VALEURS_INFERIEUR_A_5_CACHÉS}`}</MiseEnExergue>}
 
-      <Transcription
+      {/* <Transcription
         disabled={aucuneDonnées}
         entêteLibellé={nom}
         etabFiness={etabFiness}
@@ -298,8 +300,8 @@ export const HistogrammesHorizontaux = ({
         libellés={histogrammes[0].labels}
         nomGraph={nomGraph}
         valeurs={valeursTranscription}
-      />
-    </>
+      /> */}
+    </div>
   );
 };
 

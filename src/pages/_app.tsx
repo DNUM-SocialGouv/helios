@@ -35,6 +35,7 @@ import "@gouvfr/dsfr/dist/component/radio/radio.min.css";
 import "@gouvfr/dsfr/dist/component/notice/notice.min.css";
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
 import "@gouvfr/dsfr/dist/component/segmented/segmented.min.css";
+import "@gouvfr/dsfr-chart/css";
 import "../frontend/ui/commun/global.css";
 
 import { ComparaisonContextProvider } from "../frontend/ui/commun/contexts/ComparaisonContextProvider";
@@ -48,6 +49,11 @@ import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
+
+  useEffect(() => {
+    import("@gouvfr/dsfr-chart")
+    import("@gouvfr/dsfr-chart/css")
+  }, []);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") {

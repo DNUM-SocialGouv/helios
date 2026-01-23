@@ -1,8 +1,5 @@
-import { ContenuNombreDePassagesAuxUrgences } from "./ContenuNombreDePassagesAuxUrgences";
 import { NombrePassageAuxUrgencesViewModel } from "./NombrePassageAuxUrgencesViewModel";
-import { useDependencies } from "../../commun/contexts/useDependencies";
-import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
-import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
+import { IndicateurGraphiqueChartDsfr } from "../../commun/IndicateurGraphique/IndicateuGraphiqueChartDSFR";
 
 type GraphiqueNombrePassageUrgenceProps = Readonly<{
   etabTitle: string;
@@ -11,35 +8,21 @@ type GraphiqueNombrePassageUrgenceProps = Readonly<{
   estEntitéJuridique?: boolean;
 }>;
 export const GraphiqueNombrePassageUrgence = ({ etabTitle, etabFiness, nombrePassageAuxUrgencesViewModel, estEntitéJuridique = false }: GraphiqueNombrePassageUrgenceProps) => {
-  const { wording } = useDependencies();
 
   return (
-    <IndicateurGraphique
-      contenuInfoBulle={
-        <ContenuNombreDePassagesAuxUrgences
-          dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
-          estEntitéJuridique={estEntitéJuridique}
-          source={wording.RPU}
-        />
-      }
-      dateDeMiseÀJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
+    <IndicateurGraphiqueChartDsfr
+
+      couleursDeLHistogramme={nombrePassageAuxUrgencesViewModel.couleursDeLHistogramme}
+      dateDeMiseAJour={nombrePassageAuxUrgencesViewModel.dateMiseAJour}
+      etabFiness={etabFiness}
+      etabTitle={etabTitle}
       identifiant="activite-4"
-      nomDeLIndicateur={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-      source={wording.RPU}
-    >
-      <HistogrammeHorizontal
-        cacheLesValeursBasse={true}
-        couleursDeLHistogramme={nombrePassageAuxUrgencesViewModel.couleursDeLHistogramme}
-        entêteLibellé={wording.ANNÉE}
-        etabFiness={etabFiness}
-        etabTitle={etabTitle}
-        identifiant={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-        libellés={nombrePassageAuxUrgencesViewModel.libellés}
-        libellésDeValeursManquantes={nombrePassageAuxUrgencesViewModel.libellésDeValeursManquantes}
-        nomGraph={wording.NOMBRE_DE_PASSAGES_AUX_URGENCES}
-        nombreDeLibelléTotal={nombrePassageAuxUrgencesViewModel.nombreDeLibelléTotal}
-        valeurs={nombrePassageAuxUrgencesViewModel.valeurs}
-      />
-    </IndicateurGraphique>
+      libellés={nombrePassageAuxUrgencesViewModel.libellés}
+      libellésDeValeursManquantes={nombrePassageAuxUrgencesViewModel.libellésDeValeursManquantes}
+      nombreDeLibelléTotal={nombrePassageAuxUrgencesViewModel.nombreDeLibelléTotal}
+      source="RPU"
+      valeurs={nombrePassageAuxUrgencesViewModel.valeurs}
+
+    />
   );
 };
