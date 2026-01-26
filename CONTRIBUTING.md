@@ -4,17 +4,18 @@
 
 ### Pré-requis
 
-##### Installation du poste de dev
+#### Installation du poste de dev
 
-Les developpement Helios se font au sein d'un conteneur Linux (WSL).
-Pour les developpements, une machine Debian est utilisée par defaut. Le reste de cette fiche d'installation part du principe que les commandes sont lancées dans une machine Debian avec "Bash" comme shell.
+Les développements Helios se font au sein d'un conteneur Linux (WSL).
+Pour les développements, une machine Debian est utilisée par défaut. Le reste de cette fiche d'installation part du principe que les commandes sont lancées dans une machine Debian avec « Bash » comme shell.
 
 Afin de gérer le plus efficacement possible les différentes versions des outils, leur version est centralisée au sein d'un fichier de configuration ".tool-versions", ce fichier étant lu par l'outil "Mise".
 Le code étant stocké au sein de Github, un compte existant et configuré (clef ssh, nom, etc) est nécessaire
-La BDD de test ainsi que les SFTP de simulation pour les batchs sont gérer via docker.
+La BDD de test ainsi que les SFTP de simulation pour les batchs sont gérés via Docker.
 
-###### Création de la machine linux
-La technologie Wsl est active par defaut sur les postes de dev.
+##### Création de la machine linux
+
+La technologie WSL est activée par défaut sur les postes de dev.
 Pour créer la machine Debian, lancez la commande:
 ```wsl --install Debian```
 
@@ -26,7 +27,8 @@ Le systeme doit maintenant être mis à jour
 
 ```sudo apt update && sudo apt upgrade```
 
-###### Installation de docker et docker-compose
+##### Installation de docker et docker-compose
+
 Pour installer docker il faut installer le package "docker.io", le package docker étant un widget de DE.
 
 ```sudo apt install docker.io docker-compose```
@@ -43,31 +45,31 @@ Puis:
 
 ```wsl -d Debian```
 
-###### Installation de curl
+##### Installation de curl
 
 Pour l'installation de Mise et certains tests d'Api, curl est nécessaire.
 
 ```sudo apt install curl```
 
-###### Installation de mise
+##### Installation de mise
 
-Mise doit être installé en suivant les instruction sur le github: https://github.com/jdx/mise#install-mise.
+Mise doit être installé en suivant les instruction sur le github: <https://github.com/jdx/mise#install-mise>.
 
-Le hook de shell est indispensable au bon fonctionnement de l'outils.
+Le hook de shell est indispensable au bon fonctionnement de l'outil.
 
-Pour bash, il faut executer la commande suivante (La commande est indiquée lors de l'installation de mise):
+Pour bash, il faut exécuter la commande suivante (la commande est indiquée lors de l'installation de Mise) :
 
 ```echo "eval \"\$(/home/yelhouakmi/.local/bin/mise activate bash)\"" >> ~/.bashrc```
 
-###### Installation de Gpg
+##### Installation de Gpg
 
 Les fichiers Diamant sont chiffrés via Gpg. Les tests unitaires testent le déchiffrement de fichiers test. L’utilitaire Gpg doit donc être installé.
 
 ```sudo apt install gpg```
 
-###### Installation de la clef ssh
+##### Installation de la clef ssh
 
-Au sein de la machine wsl, le disque c est accessible via le path "/mnt/c/". La clef SSH configurée pour github doit être copiée dans le dossier ~/.ssh pour être utilisée dnas la ligne de commande.
+Au sein de la machine wsl, le disque « C:\ » est accessible via le path "/mnt/c/". La clef SSH configurée pour github doit être copiée dans le dossier ~/.ssh pour être utilisée dans la ligne de commande.
 
 Pour copier par exemple la clef « id_ed25519 » (Il peut être nécessaire de créer le dossier « ~/.ssh » avant):
 
@@ -81,7 +83,7 @@ Ajouter la clef ssh à l’agent:
 
 ```ssh-add```
 
-###### Cloner le projet Helios
+##### Cloner le projet Helios
 
 Il faut créer un dossier pour les projets dans son dossier utilisateur. Le projet doit être cloner dans le disque Linux pour des question de performance. La lecture du disque windows depuis wsl est très lente.
 
@@ -97,17 +99,13 @@ Cloner le dépôt Helios:
 
 ```git clone git@github.com:DNUM-SocialGouv/helios.git```
 
-###### Installer Node et Python
+##### Installer Node et Python
 
-Pour le moment, la branche master n’a pas la configuration « .tool-versions ». Il faut donc se placer sur la branche develop pour installer les outils
-
-```git checkout develop```
-
-Une fois sur la branche « develop », il faut installer les outils via mise.
+Les outils s’installent via mise.
 
 ```mise install```
 
-###### Installer yarn
+##### Installer yarn
 
 Pour l’installation de yarn, nous passons par corepack
 
@@ -126,9 +124,9 @@ Lancer le container postgres
 ```docker-compose up -d postgres```
 
 Lancer l’application manuellement (sans passer par «yarn dev»)
-```node_modules/.bin/next dev```
+```node_modules/.bin/next dev --webpack```
 
-###### Installation de l’environnement python
+##### Installation de l’environnement python
 
 Pour utiliser Python, nous utilisons un environnement virtuel via pipenv.
 
@@ -150,24 +148,22 @@ Lancer les tests python
 
 ## Développement
 
-### Prérequis
-Installer Docker Desktop (choisi le bon OS)
-https://docs.docker.com/desktop/install/mac-install/
+### Lancer les batchs en local
 
-Pour dechiffré le fichier on utilise gpg
-```brew install gpg```
-
-Gpg a besoin d'une clé pour déchiffrer le fichier
-```gpg --import <Path>```
-
-### Lancer l'application en mode développement &#40;avec hot-reload&#41;
 ```sh
-yarn dev
+docker-compose up -d postgres
 yarn populateDatabase:local
 ```
 
-> Visiter : http://localhost:3000
+> Cette commande lance les batchs en local en téléchargeant les données depuis les SFTP locaux
 
+### Lancer l'application en mode développement __avec hot-reload__
+
+```sh
+yarn dev
+```
+
+> Visiter : <http://localhost:3000>
 > Cette commande lance aussi la base de données locale et les migrations associées
 
 ### Lancer l'application en mode production
@@ -232,19 +228,6 @@ Pour le moment, uniquement pour typescript :
 
 ```sh
 yarn deadcode
-```
-
-#### Lancer lighthouse-ci (tests d'accessibilité)
-
-Prérequis :
-
-- avoir installé Chrome
-  - Si WSL alors regarder l'[installation de Jenkins](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md#configure-your-ci-provider)
-- avoir lancé la base de données
-- avoir lancé l'application
-
-```sh
-yarn test:accessibility
 ```
 
 ### Base de données
@@ -431,6 +414,8 @@ yarn encryptDiamant:local
 1. Mettre à jour les fichiers CSV présents dans `data_set/diamant`
 2. Lancer le script pour chiffrer les données
 
+## Structure du projet
+
 ### Arborescence
 
 ```text
@@ -438,7 +423,7 @@ yarn encryptDiamant:local
  ┣ 📂 .github/workflows           ->  Github Actions
  ┣ 📂 node_modules                ->  Dépendances définies du package.json
  ┣ 📂 public                      ->  Assets statiques
- ┣ 📂 datacrawler
+ ┣ 📂 datacrawler                 -> Batch python de transformation et chargement des données
  ┃  ┣ 📂 extract
  ┃  ┣ 📂 transform
  ┃  ┗ 📂 load
@@ -446,7 +431,7 @@ yarn encryptDiamant:local
  ┃  ┣ 📂 migrations               ->  Les migrations
  ┃  ┣ 📂 models                   ->  Définition des modèles des tables
  ┃  ┗ 📜 dataSource.ts            ->  Pont d'entrée de lancement des migrations
- ┣ 📂 download_data_source        ->  Récupération des données des sources externes
+ ┣ 📂 download_data_source        ->  Récupération des données des sources externes (Batch Typescript)
  ┣ 📂 src
  ┃  ┣ 📂 frontend
  ┃  ┃  ┣ 📂 configuration         ->  Ce qui n'est pas React
@@ -466,14 +451,14 @@ yarn encryptDiamant:local
  ┃           ┣ 📂 controllers
  ┃           ┣ 📂 gateways
  ┃           ┗ 📂 use-cases
- ┣ 📜 .buildpacks                 ->  Configuration ESLint
+ ┣ 📜 .buildpacks
  ┣ 📜 .env                        ->  Valeurs par défaut de l'env
  ┣ 📜 .env.local                  ->  Env local
  ┣ 📜 .env.test                   ->  Env de test
- ┣ 📜 .eslintrc                   ->  Configuration ESLint
+ ┣ 📜 eslint.config.mjs           ->  Configuration ESLint
  ┣ 📜 .gitignore                  ->  Fichiers à ne pas commiter
  ┣ 📜 CONTRIBUTING.md             ->  Vous êtes ici
- ┣ 📜 cron.json                   ->  Définition des CRON
+ ┣ 📜 cron.json                   ->  Définition des CRON scalingo
  ┣ 📜 docker-compose.yaml         ->  Pour simuler l'infra de prod
  ┣ 📜 index.d.ts                  ->  Configuration des types de typescript
  ┣ 📜 jest.config.js              ->  Configuration de Jest
@@ -507,10 +492,11 @@ yarn encryptDiamant:local
 
 #### Code
 
-- le code métier est en **français** [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages` et des classes css
+- le code métier est en __français__ [plus de détails dans l'ADR 1](./ADR/ADR-1-les-langues-dans-le-code.md)- on utilise les accents à l'exception des noms de fichier dans le dossier `src/pages` et des classes css
   > le métier et les développeurs sont français
 
 - On suffixe les fichiers par leur nomenclature technique (loader, repository, use case, end point, CRON), sauf pour les entities
+
 > Dans le *datacrawler*, ce suffixe est complété de la manière suivante : (*XXXX**SourceExterne**Loader*, *XXXX**Helios**Repository*) pour distinguer les accès externes / internes.
 
 - Les verbes des noms des méthodes sont à l'impératif (exemple : `sauvegardeLesEntitésJuridiques`)
@@ -521,9 +507,9 @@ yarn encryptDiamant:local
 
 ##### TypeScript
 
-- le **camelCase** est utilisé pour les variables et les fonctions
+- le __camelCase__ est utilisé pour les variables et les fonctions
 
-- Les noms des répertoires sont en **kebab-case** et en français (sans accent pour le répertoire `./src/pages`)
+- Les noms des répertoires sont en __kebab-case__ et en français (sans accent pour le répertoire `./src/pages`)
 
 ```TypeScript
 const nomDeMaVariable = 'valeur'
@@ -532,7 +518,7 @@ const nomDeMaFonction = (paramètre1: type) => {}
 function nomDeMaFonction(paramètre1: type) {}
 ```
 
-- le **PascalCase** est utilisé pour les classes, les interfaces, les types et les composants React
+- le __PascalCase__ est utilisé pour les classes, les interfaces, les types et les composants React
 
 ```TypeScript
 class Foo
@@ -577,7 +563,7 @@ interface Repository<T> {
 
 ##### Python
 
-- le **snake_case** est utilisé pour les variables, les fonctions et les noms des fichiers et des répertoires
+- le __snake_case__ est utilisé pour les variables, les fonctions et les noms des fichiers et des répertoires
 
 ```python
 nom_de_ma_variable = 'valeur'
@@ -586,7 +572,7 @@ def nom_de_ma_fonction(paramètre1: type) -> TypeDeRetour:
   pass
 ```
 
-- le **PascalCase** est utilisé pour les classes
+- le __PascalCase__ est utilisé pour les classes
 
 ```python
 class NomDeMaClasse:
@@ -597,7 +583,7 @@ class NomDeMaClasse:
 
 - pas de texte brut, utiliser l’interface *Wording*
 
-- déporter au maximum l’intelligence des composants graphiques (.tsx) dans des **hooks** pour épurer leur HTML
+- déporter au maximum l’intelligence des composants graphiques (.tsx) dans des __hooks__ pour épurer leur HTML
 
 ##### SQL
 
@@ -610,24 +596,10 @@ class NomDeMaClasse:
 
 - utiliser le DSFR au maximum sinon, écrire le CSS dans un fichier à part (*\<Composant>.module.css*) et l'importer dans le composant
 
-- chaque composant du DSFR doit importer son CSS (minifié) et celui de ses dépendances, le CSS **core** étant déjà importé globalement
+- chaque composant du DSFR doit importer son CSS (minifié) et celui de ses dépendances, le CSS __core__ étant déjà importé globalement
   > Réduire au maximum la taille des fichiers téléchargés
 
 - le javascript du DSFR est importé globalement et la version minifiée est mise dans le dossier public
-
-##### Mettre à jour le design système : 
-Pour mettre à jour le design système il faut :
-- Mettre à jour la dépendance avec yarn 
-- Naviger dans @gouvfr/dsfr/dist/
-- Copier, depuis les node_modules, les fichiers `dsfr.module.min.js` et `dsfr.nomodule.min.js` de la nouvelle version dans le dossier public (on peut également ajouter les sources maps)
-- Si besoin, mettre à jour le lien des scripts dans `_app.tsx`
-- Faire un contrôle visuel de l'appli et des intéractions
-- Consulter les [notes de version](https://www.systeme-de-design.gouv.fr/a-propos/versions-du-dsfr/version-courante#code) pour s'assurer qu'il n'y a pas de breaking changes 
-
-Pour le moment le design système est très éparpillé dans le code. Le html et les classes sont copiés collés un peu partout   
-il faut donc être assez vigilant sur la régression visuelle. Une modification du design system pourra entrainer des rechercher / remplacer dans toute l'app. 
-
-Une solution à mettre en place serait d'isoler les composant du DS dans nos composants React au maximum.
 
 #### Tests
 
