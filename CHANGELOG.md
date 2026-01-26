@@ -3,6 +3,7 @@
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (TODO)
 
 ### Bug Fixes
+- hel-971: [Gestion des listes] Excel intitulet de colonne à revoir
 
 - hel-968: Fix du bug de depliement/repliement des blocs dans les fiches d’établissements
 
