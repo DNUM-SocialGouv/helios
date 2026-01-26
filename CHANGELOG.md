@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 - hel-968: Fix du bug de depliement/repliement des blocs dans les fiches d’établissements
+- hel-970: Afficher le taux global d'occupation uniquement pour les étb PH
 
 ### Features
 
