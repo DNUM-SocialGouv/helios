@@ -94,7 +94,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get dateMiseAJourEvenementsIndesirables(): string {
-    return StringFormater.formatDate(this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0].dateMiseAJourSource as string);
+    return StringFormater.formatDate(this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0]?.dateMiseAJourSource as string);
   }
 
   public get buildEIsData(): any {
