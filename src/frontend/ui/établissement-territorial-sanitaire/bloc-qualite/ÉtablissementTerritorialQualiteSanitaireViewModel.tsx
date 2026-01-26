@@ -65,8 +65,20 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 0;
   }
 
+  public get lesDonneesHASNeSontPasAutorisees(): boolean {
+    return false;
+  }
+
+
+  public get lesDonneesHASNeSontPasRenseignees(): boolean {
+    return false;
+  }
+
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées &&
+      this.lesEvenementsIndesirablesNeSontPasRenseignées &&
+      this.lesInspectionsEtControlesNeSontPasRenseignées &&
+      this.lesDonneesHASNeSontPasRenseignees;
   }
 
   public get lesDonnéesQualitePasRenseignees(): string[] {
@@ -74,6 +86,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     if (this.lesInspectionsEtControlesNeSontPasRenseignées) nonRenseignees.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES);
+    if (this.lesDonneesHASNeSontPasRenseignees) nonRenseignees.push(this.wording.CERTIFICATION_QUALISCOPE);
     return nonRenseignees;
   }
 
@@ -82,6 +95,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES);
+    if (this.lesDonneesHASNeSontPasAutorisees) nonAutorisés.push(this.wording.CERTIFICATION_QUALISCOPE);
     return nonAutorisés;
   }
 
@@ -106,6 +120,16 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public get dateMiseAJourEvenementsIndesirables(): string {
     return StringFormater.formatDate(this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0].dateMiseAJourSource as string);
+  }
+
+  public get dateMiseAJourDonneesHAS(): string {
+    return StringFormater.formatDate("2025-08-20");
+  }
+
+  public get donneesHAS(): any {
+    return {
+      dateCertification: "2024-05-15",
+    };
   }
 
   public get buildEIsData(): any {

@@ -1,5 +1,6 @@
 import { memo } from "react";
 
+import { GraphiqueCertificationQualiscope } from "./CertificationHAS/GraphiqueCertificationQualiscope";
 import { ÉtablissementTerritorialQualiteSanitaireViewModel } from "./ÉtablissementTerritorialQualiteSanitaireViewModel";
 import { convertDateDDMMYYYY } from "../../../utils/dateUtils";
 import { Bloc } from "../../commun/Bloc/Bloc";
@@ -70,6 +71,13 @@ const BlocQualité = ({ etabFiness, etabTitle, etablissementTerritorialQualiteSa
               annéesTotales={5}
               data={etablissementTerritorialQualiteSanitairelViewModel.buildEIsData}
               dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourEvenementsIndesirables}
+            />
+          )}
+        {!etablissementTerritorialQualiteSanitairelViewModel.lesDonneesHASNeSontPasAutorisees &&
+          !etablissementTerritorialQualiteSanitairelViewModel.lesDonneesHASNeSontPasRenseignees && (
+            <GraphiqueCertificationQualiscope
+              data={etablissementTerritorialQualiteSanitairelViewModel.donneesHAS}
+              dateMiseAJour={etablissementTerritorialQualiteSanitairelViewModel.dateMiseAJourDonneesHAS}
             />
           )}
       </ul>
