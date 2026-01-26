@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+
+- hel-969: Comparaison Colonne Taux global d'occupation
+
 ### Features
 
 ## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (2026-01-22)
