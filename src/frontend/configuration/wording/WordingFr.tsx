@@ -288,6 +288,10 @@ export class WordingFr implements Wording {
   readonly AFFICHER_PLUS: string = "Aficher plus";
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
+  readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
+  readonly DONNEES_QUALITE: string = "Données qualité";
+  readonly DATE_CERTIFICATION: string = "Date de certification";
+
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
@@ -464,6 +468,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly HAS_TITLE: string = "Haute Autorité de Santé";
   readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
@@ -481,6 +486,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
