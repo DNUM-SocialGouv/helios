@@ -28,7 +28,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               Helios est accessible uniquement depuis votre ordinateur professionnel, via le VPN de l’ARS ou des Ministères Sociaux.
             </p>
-            <p className="fr-mb-0">L’adresse de connexion est: https://www.helios.ars.sante.fr/</p>
+            <p className="fr-mb-0">L’adresse de connexion est: <a href="https://www.helios.ars.sante.fr/" rel="noreferrer" target="_blank">https://www.helios.ars.sante.fr/</a></p>
           </>
         ),
       },
@@ -317,7 +317,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-1w">Vous pouvez trouver la documentation depuis :</p>
             <p className="fr-mb-1w">- l’application Helios en vous rendant dans le menu Aide puis Guide utilisateurs ou Vidéos tutoriels</p>
             <p className="fr-mb-0">
-              - l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : dnum.scn-helios-support@sg.social.gouv.fr.
+              - l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : <a href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">dnum.scn-helios-support@sg.social.gouv.fr</a>.
             </p>
           </>
         ),

@@ -9,6 +9,7 @@
 ### Features
 
 - hel-954: Ajout de questions relatives aux listes dans la FAQ
+- hel-937: Les liens sont cliquables dans la FAQ
 
 ## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (2026-01-22)
 
