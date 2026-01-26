@@ -132,6 +132,16 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     };
   }
 
+  public get dateMiseAJourDonneesHAS(): string {
+    return StringFormater.formatDate("2025-08-20");
+  }
+
+  public get donneesHAS(): any {
+    return {
+      dateCertification: "2024-05-15",
+    };
+  }
+
   public get buildEIsData(): any {
     const evenementsIndesirables: { [key: number]: EvenementsIndesirables[] } = {};
     this.anneesEIs.forEach((key) => {
