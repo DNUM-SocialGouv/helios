@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+- hel-968: Fix du bug de depliement/repliement des blocs dans les fiches d’établissements
+
 ### Features
 
 - hel-954: Ajout de questions relatives aux listes dans la FAQ
