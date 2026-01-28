@@ -8,7 +8,6 @@
 * [Accès à Hélios](front/acces-helios.md)
 * [Page d'accueil](front/page-accueil.md)
 * [Atlasanté](front/atlasante.md)
-* [Maquettes Figma](front/maquettes-figma.md)
 * [Recherche](front/recherche/README.md)
   * [Recherche simple](front/recherche/recherche-simple.md)
   * [Recherche avancée](front/recherche/recherche-avancee.md)
@@ -55,3 +54,7 @@
 * [Données Qualité](back/donnees-qualite.md)
 * [Données DSN](back/donnees-dsn.md)
 * [Mémento](back/memento.md)
+
+## MISC
+
+* [Maquettes Figma](front/maquettes-figma.md)
