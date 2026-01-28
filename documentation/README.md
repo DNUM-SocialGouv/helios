@@ -45,9 +45,3 @@ Chaque page est pensée pour être lisible par les équipes produit, métier et 
 
 - **[Partie FRONT](front/README.md)** : toutes les fonctionnalités accessibles aux utilisateurs.
 - **[Partie BACK](back/README.md)** : aspects techniques, pipelines de données, et infrastructure.
-
-Consultez le [Sommaire](SUMMARY.md) pour naviguer dans l'ensemble de la documentation.
-
-## Contribution
-
-Voir [Règles de contribution](rules.md) pour les conventions de rédaction et les bonnes pratiques.

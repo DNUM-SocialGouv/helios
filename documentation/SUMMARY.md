@@ -1,7 +1,6 @@
 # Sommaire GitBook
 
 * [Accueil](README.md)
-* [Règles de contribution](rules.md)
 
 ## FRONT - Fonctionnalités utilisateur
 
