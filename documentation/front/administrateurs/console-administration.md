@@ -73,6 +73,10 @@ L'administrateur régional a accès à :
 
 ## Règles et limitations
 
+{% hint style="warning" %}
+**Limitations des administrateurs régionaux** : Les administrateurs régionaux ne peuvent pas modifier les comptes d'autres régions ni créer de nouveaux rôles ou profils. Ces actions sont réservées aux administrateurs nationaux.
+{% endhint %}
+
 - Les administrateurs régionaux ne peuvent pas modifier les comptes d'autres régions
 - Les administrateurs régionaux ne peuvent pas créer de nouveaux rôles ou profils (réservé aux admins nationaux)
 - Toutes les actions sont tracées dans un journal d'audit

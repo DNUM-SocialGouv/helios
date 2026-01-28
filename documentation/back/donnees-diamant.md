@@ -17,6 +17,30 @@ DIAMANT (Décisionnel Inter-ARS pour la Maîtrise et l'Anticipation) est le syst
 
 ## Processus de la réception de la donnée à l'affichage
 
+### Pipeline ETL DIAMANT
+
+```mermaid
+flowchart LR
+    A[SFTP DNUM<br/>DIAMANT/incoming] -->|Fichiers chiffrés| B[Récupération]
+    B --> C{Déchiffrement}
+    C -->|Clés coffre fort| D[Vérification intégrité]
+    D --> E[Transformation<br/>Datacrawler]
+    E --> F[Parse fichiers DIAMANT]
+    F --> G[Normalisation schéma Helios]
+    G --> H[Calcul indicateurs dérivés]
+    H --> I[Vérification cohérence<br/>FINESS, années]
+    I --> J[Rapprochement FINESS]
+    J --> K[Chargement BDD]
+    K --> L[Tables indicateurs]
+    L --> M[Affichage fiches<br/>et comparaisons]
+    
+    style A fill:#e1f5ff
+    style C fill:#fff4e1
+    style E fill:#e8f5e9
+    style K fill:#f3e5f5
+    style M fill:#e8f5e9
+```
+
 ### 1. Récupération
 
 - **Source** : serveur SFTP DNUM
@@ -26,9 +50,15 @@ DIAMANT (Décisionnel Inter-ARS pour la Maîtrise et l'Anticipation) est le syst
 
 ### 2. Déchiffrement
 
+{% hint style="warning" %}
+**Fichiers chiffrés** : Les fichiers DIAMANT sont chiffrés et nécessitent un déchiffrement avec les clés stockées dans un coffre fort sécurisé avant traitement.
+{% endhint %}
+
 - Les fichiers DIAMANT sont chiffrés
 - Déchiffrement avec les clés stockées dans un coffre fort sécurisé
-- Vérification de l'intégrité après déchiffrement
+- {% hint style="tip" %}
+**Vérification d'intégrité** : Après déchiffrement, une vérification de l'intégrité des fichiers est effectuée pour s'assurer que les données n'ont pas été corrompues.
+{% endhint %}
 
 ### 3. Transformation
 
@@ -61,6 +91,10 @@ Les données DIAMANT alimentent :
 - Tableaux de comparaison
 
 ## Fréquence de réception
+
+{% hint style="info" %}
+**ANN_SAE** : Les données SAE sont mises à jour en septembre de l'année. Un rappel est envoyé à DIAMANT pour s'assurer de la réception des données.
+{% endhint %}
 
 - **ANN_SAE** : mise à jour en septembre de l'année (rappel à Diamant de nous envoyer les données)
 - **Autres fichiers** : fréquences variables selon le calendrier DIAMANT

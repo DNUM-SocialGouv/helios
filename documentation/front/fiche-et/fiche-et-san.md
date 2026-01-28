@@ -156,6 +156,10 @@ Le bouton Actions permet :
 
 ## Messages présents auprès des graphiques
 
+{% hint style="info" %}
+**Gestion des données indisponibles** : Chaque indicateur affiche clairement la date de dernière mise à jour et un message explicite si les données sont indisponibles ou non autorisées pour votre profil métier.
+{% endhint %}
+
 Chaque indicateur affiche :
 - La date de dernière mise à jour de la source
 - Un message si les données ne sont pas renseignées

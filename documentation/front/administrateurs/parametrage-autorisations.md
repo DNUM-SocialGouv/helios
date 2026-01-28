@@ -51,6 +51,10 @@ Pour un profil "Financier" :
 
 ## Règles
 
+{% hint style="warning" %}
+**Restrictions de rôles** : Les administrateurs régionaux peuvent uniquement modifier les profils de leur région. Seuls les administrateurs nationaux peuvent modifier tous les profils et créer de nouveaux profils.
+{% endhint %}
+
 - Un indicateur ne peut être visible que si son bloc parent est autorisé
 - Les administrateurs nationaux peuvent modifier tous les profils
 - Les administrateurs régionaux peuvent modifier les profils de leur région uniquement

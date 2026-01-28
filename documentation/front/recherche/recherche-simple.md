@@ -11,6 +11,10 @@ La recherche simple permet de rechercher rapidement un établissement ou une ent
 
 ### Comportement de la recherche
 
+{% hint style="info" %}
+La recherche s'effectue dans la table `recherche` qui est une vue indexée sur plusieurs critères (raison sociale, termes, géographie, type). Cette indexation permet des recherches rapides et performantes.
+{% endhint %}
+
 - La recherche est effectuée en temps réel (suggestions au fur et à mesure de la saisie).
 - La recherche s'effectue dans la table `recherche` qui est indexée sur :
   - Raison sociale courte
@@ -19,6 +23,28 @@ La recherche simple permet de rechercher rapidement un établissement ou une ent
   - Type d'établissement
 - Le filtrage par région est appliqué automatiquement selon le profil de l'utilisateur.
 - Les résultats sont limités et paginés pour garantir les performances.
+
+#### Workflow de recherche
+
+```mermaid
+flowchart TD
+    A[Utilisateur saisit un terme] --> B{Recherche en temps réel}
+    B --> C[Interrogation table recherche indexée]
+    C --> D[Filtrage par région utilisateur]
+    D --> E{Résultats trouvés?}
+    E -->|Oui| F{Affichage suggestions}
+    E -->|Non| G[Message aucun résultat]
+    F --> H[Utilisateur sélectionne ou valide]
+    H --> I[Recherche complète]
+    I --> J[Filtrage par profil utilisateur]
+    J --> K[Tri et pagination]
+    K --> L{Affichage mode}
+    L -->|Vignette| M[Affichage vignettes]
+    L -->|Tableau| N[Affichage tableau]
+    M --> O[Enregistrement dans search_history]
+    N --> O
+    O --> P[Actions disponibles]
+```
 
 ### Suggestions
 
@@ -80,5 +106,7 @@ L'utilisateur peut basculer entre les deux modes d'affichage à tout moment via 
 ## Cas limites
 
 - Aucun résultat trouvé : message explicite affiché avec suggestions de recherche alternative.
-- Trop de résultats : message invitant à utiliser la recherche avancée avec des filtres supplémentaires.
+- {% hint style="tip" %}
+**Trop de résultats** : Si la recherche retourne trop de résultats, utilisez la recherche avancée avec des filtres supplémentaires (type d'établissement, région, département) pour affiner votre recherche.
+{% endhint %}
 - Erreur de recherche : message d'erreur avec possibilité de réessayer.

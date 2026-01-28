@@ -6,6 +6,10 @@ Vigie RH est un bloc spécifique présent sur les fiches d'établissements médi
 
 ## Spécificité EHPAD
 
+{% hint style="info" %}
+**Disponibilité Vigie RH** : Le bloc Vigie RH est disponible uniquement pour les établissements de type EHPAD (Établissements d'Hébergement pour Personnes Âgées Dépendantes). Les données proviennent des déclarations DSN (Déclaration Sociale Nominative).
+{% endhint %}
+
 [Capture écran : bloc Vigie RH sur une fiche EHPAD]
 
 Le bloc Vigie RH affiche des indicateurs de ressources humaines issus des **données DSN** (Déclaration Sociale Nominative). Ces données sont disponibles uniquement pour les établissements de type EHPAD.

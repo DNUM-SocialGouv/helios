@@ -73,17 +73,50 @@ Le bouton "Actions" permet :
 
 ### Limites
 
-- **Limite de sélection** : maximum 30000 établissements par comparaison
+{% hint style="warning" %}
+**Limite de sélection** : maximum 30000 établissements par comparaison. Si vous dépassez cette limite, vous devrez réduire votre sélection.
+{% endhint %}
+
 - **Types mixtes** : si des types différents sont sélectionnés, le système détermine automatiquement le type dominant et adapte l'affichage
 
 ## Règles de fonctionnement
 
 ### Détermination automatique du type
 
+{% hint style="info" %}
+Le système détermine automatiquement le type dominant (sanitaire, médico-social, entité juridique) parmi les établissements sélectionnés et adapte l'interface en conséquence.
+{% endhint %}
+
 Dès que la sélection comporte un type dominant (sanitaire, médico-social, entité juridique), l'interface se réadapte :
 - Grilles de comparaison adaptées
 - Filtres spécifiques au type
 - Wording adapté
+
+#### Workflow de comparaison
+
+```mermaid
+flowchart TD
+    A[Sélection d'établissements] --> B{Source de sélection}
+    B -->|Recherche| C[Depuis résultats recherche]
+    B -->|Favoris| D[Depuis favoris]
+    B -->|Liste| E[Depuis une liste]
+    B -->|Fiche| F[Depuis une fiche établissement]
+    C --> G[Analyse des types sélectionnés]
+    D --> G
+    E --> G
+    F --> G
+    G --> H{Détermination type dominant}
+    H --> I[Adaptation interface selon type]
+    I --> J[Sélection année de référence]
+    J --> K[Récupération années disponibles]
+    K --> L[Calcul indicateurs selon profils]
+    L --> M[Affichage tableau/vignettes]
+    M --> N[Tri et pagination]
+    N --> O{Actions utilisateur}
+    O -->|Export| P[Export Excel]
+    O -->|Ajouter favoris| Q[Ajout aux favoris]
+    O -->|Ajouter liste| R[Ajout à une liste]
+```
 
 ### Cohérence des données
 
@@ -97,6 +130,10 @@ Pour les établissements sanitaires, le système calcule automatiquement les "to
 ## Export Excel
 
 [Capture écran : export Excel]
+
+{% hint style="tip" %}
+L'export Excel est particulièrement utile pour réaliser des analyses approfondies ou partager les résultats de comparaison avec d'autres équipes. Le fichier inclut tous les indicateurs disponibles selon vos profils métiers.
+{% endhint %}
 
 L'export Excel génère un fichier avec :
 - Tous les établissements sélectionnés

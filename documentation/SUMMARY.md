@@ -1,7 +1,6 @@
 # Sommaire GitBook
 
 * [Accueil](README.md)
-* [Vue d'ensemble](overview.md)
 * [Règles de contribution](rules.md)
 
 ## FRONT - Fonctionnalités utilisateur
@@ -10,6 +9,7 @@
 * [Accès à Hélios](front/acces-helios.md)
 * [Page d'accueil](front/page-accueil.md)
 * [Atlasanté](front/atlasante.md)
+* [Maquettes Figma](front/maquettes-figma.md)
 * [Recherche](front/recherche/README.md)
   * [Recherche simple](front/recherche/recherche-simple.md)
   * [Recherche avancée](front/recherche/recherche-avancee.md)

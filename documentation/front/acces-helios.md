@@ -10,13 +10,15 @@ Indiquer ici le lien URL d'accès à Hélios.
 
 ### Conditions préalables
 
-Pour pouvoir créer un compte sur Helios, plusieurs conditions doivent être respectées :
+{% hint style="warning" %}
+**Conditions obligatoires pour créer un compte :**
 
 - **VPN ministère** : l'accès nécessite une connexion au VPN du ministère.
 - **Format d'adresse mail autorisé** : 
   - Pour les utilisateurs ADMIN_CENTR : le domaine doit être `sg.social.gouv.fr`, `sante.gouv.fr` ou `social.gouv.fr`.
   - Pour les autres utilisateurs : format d'email conforme aux règles de l'institution.
 - **PC ministère/ARS** : les PC Mac n'accèdent pas à Helios (limitation technique).
+{% endhint %}
 
 ### Processus de création
 
@@ -39,6 +41,29 @@ L'utilisateur peut créer son propre compte en suivant ces étapes :
    - Attribution du profil par défaut.
    - Activation automatique du compte.
 
+#### Workflow de création de compte
+
+```mermaid
+flowchart TD
+    A[Utilisateur accède à la page d'inscription] --> B{Remplit le formulaire}
+    B --> C[Vérification format email]
+    C --> D{Email valide?}
+    D -->|Non| E[Message d'erreur format]
+    E --> B
+    D -->|Oui| F{Email existe déjà?}
+    F -->|Oui| G[Message d'erreur email existant]
+    G --> B
+    F -->|Non| H[Création du compte]
+    H --> I[Génération mot de passe temporaire]
+    I --> J{Institution = ADMIN_CENTR?}
+    J -->|Oui| K[Attribution rôle ADMIN_CENTR]
+    J -->|Non| L[Attribution rôle USER]
+    K --> M[Attribution profil par défaut]
+    L --> M
+    M --> N[Activation automatique]
+    N --> O[Compte créé et activé]
+```
+
 ### Modification des autorisations et droits
 
 Les administrateurs régionaux et nationaux peuvent modifier les autorisations et droits des utilisateurs :
@@ -52,6 +77,10 @@ Les administrateurs régionaux et nationaux peuvent modifier les autorisations e
 ## Matrice d'habilitation / Profils
 
 [Capture écran : matrice d'habilitation]
+
+{% hint style="info" %}
+La matrice d'habilitation définit les droits d'accès selon les rôles et les priorités. Les rôles avec une priorité plus faible (nombre plus élevé) ont des droits plus restreints.
+{% endhint %}
 
 La matrice d'habilitation définit les droits d'accès selon les rôles :
 
@@ -70,7 +99,9 @@ Les profils métiers déterminent les indicateurs visibles :
 
 ## Comptes inactifs
 
-Un compte est automatiquement désactivé après **6 mois d'inactivité** (basé sur la date de dernière connexion).
+{% hint style="danger" %}
+**Désactivation automatique** : Un compte est automatiquement désactivé après **6 mois d'inactivité** (basé sur la date de dernière connexion `ut_date_last_connection`).
+{% endhint %}
 
 [Capture écran : message de compte désactivé]
 
@@ -94,7 +125,9 @@ Le mot de passe peut être réinitialisé depuis deux points d'entrée :
 3. Envoi d'un email de réinitialisation via Tipimail (service Younsse).
 4. Clic sur le lien dans l'email (lien à durée limitée).
 5. Saisie du nouveau mot de passe :
-   - **Règle importante** : l'ancien mot de passe n'est pas autorisé lors de la création d'un nouveau mot de passe.
+   {% hint style="tip" %}
+   **Règle importante** : l'ancien mot de passe n'est pas autorisé lors de la création d'un nouveau mot de passe. Vous devez choisir un mot de passe différent de l'ancien.
+   {% endhint %}
    - Respect des critères de complexité du mot de passe.
 6. Confirmation et connexion avec le nouveau mot de passe.
 

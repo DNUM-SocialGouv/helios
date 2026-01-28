@@ -10,6 +10,27 @@ Les données FINESS incluent notamment les **autorisations sanitaires** (SI Auto
 
 ## Processus de la réception de la donnée à l'affichage
 
+### Pipeline ETL FINESS
+
+```mermaid
+flowchart LR
+    A[SFTP DNUM<br/>Fichiers FINESS] -->|CS1400101-5<br/>CS1600101-2<br/>AMM_ARHGOS| B[Récupération quotidienne]
+    B --> C[Transformation<br/>Datacrawler]
+    C --> D[Parse XML/CSV]
+    D --> E[Normalisation données]
+    E --> F[Vérification cohérence<br/>FINESS, dates]
+    F --> G[Enrichissement référentiels<br/>catégories, régions]
+    G --> H[Chargement BDD]
+    H --> I[Tables principales<br/>etablissement_territorial<br/>entite_juridique<br/>autorisation_sanitaire_amm]
+    I --> J[Mise à jour table<br/>recherche indexée]
+    J --> K[Affichage fiches<br/>et résultats recherche]
+    
+    style A fill:#e1f5ff
+    style C fill:#e8f5e9
+    style H fill:#f3e5f5
+    style K fill:#e8f5e9
+```
+
 ### 1. Récupération
 
 - **Source** : serveur SFTP DNUM

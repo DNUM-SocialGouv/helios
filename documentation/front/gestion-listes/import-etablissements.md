@@ -11,10 +11,22 @@ L'import d'établissements est disponible depuis :
 
 ## Format du fichier
 
+{% hint style="warning" %}
+**Format requis** : Le fichier à importer doit être au format **Excel (.xlsx)** ou **CSV** et contenir une colonne avec les numéros FINESS (9 caractères). Les autres colonnes seront ignorées.
+{% endhint %}
+
 Le fichier à importer doit être au format **Excel (.xlsx)** ou **CSV** et contenir :
 
 - Une colonne avec les **numéros FINESS** des établissements
 - Le numéro FINESS doit être au format attendu (9 caractères)
+
+**Exemple de format de fichier :**
+
+```csv
+numero_finess
+123456789
+987654321
+```
 
 [Capture écran : exemple de fichier à importer]
 
@@ -56,6 +68,14 @@ Après l'import :
    - La liste des erreurs éventuelles
 
 ## Règles
+
+{% hint style="danger" %}
+**FINESS invalides** : Les numéros FINESS invalides ou absents de la base de données sont automatiquement ignorés lors de l'import. L'import continue même si certains FINESS sont invalides, mais seuls les établissements valides seront ajoutés à la liste.
+{% endhint %}
+
+{% hint style="info" %}
+**Limite d'import** : L'import peut contenir jusqu'à 30000 établissements. Si votre fichier dépasse cette limite, vous devrez le diviser en plusieurs fichiers.
+{% endhint %}
 
 - Les numéros FINESS invalides sont ignorés (pas d'erreur bloquante)
 - Les doublons ne sont pas vérifiés automatiquement
