@@ -11,7 +11,6 @@ import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDownloadRawData";
-import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 import { VigieRhSftpDownloadRawData } from "./gateways/download-raw-data/VigieRhSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
@@ -24,7 +23,6 @@ export type Dependencies = Readonly<{
   DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number;
   environmentVariables: EnvironmentVariables;
   finessDownloadRawData: DownloadRawData;
-  siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
   hapiDownloadRawData: DownloadRawData;
   vigieRhDownloadRawData: DownloadRawData;
@@ -40,7 +38,6 @@ const createDependencies = (): Dependencies => {
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
-  const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
   const cheminDesFichiersSourcesVigieRhSurLeSftpDnum = "VIGIE_RH";
 
@@ -62,13 +59,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesDiamantSurLeSftpDnum,
       environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
-      logger
-    ),
-    siiceaDownloadRawData: new SiiceaSftpDownloadRawData(
-      new Ssh2SftpClient(),
-      environmentVariables,
-      cheminDesFichiersSourcesSiiceaSurLeSftpDnum,
-      environmentVariables.SIICEA_DATA_PATH,
       logger
     ),
     sivssDownloadRawData: new SivssSftpDownloadRawData(
