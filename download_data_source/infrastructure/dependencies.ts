@@ -12,7 +12,6 @@ import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDo
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDownloadRawData";
 import { SiiceaSftpDownloadRawData } from "./gateways/download-raw-data/SiiceaSftpDownloadRawData";
-import { SirecSftpDownloadRawData } from "./gateways/download-raw-data/SirecSftpDownloadRawData";
 import { SivssSftpDownloadRawData } from "./gateways/download-raw-data/SivssSftpDownloadRawData";
 import { VigieRhSftpDownloadRawData } from "./gateways/download-raw-data/VigieRhSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
@@ -25,7 +24,6 @@ export type Dependencies = Readonly<{
   DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number;
   environmentVariables: EnvironmentVariables;
   finessDownloadRawData: DownloadRawData;
-  sirecDownloadRawData: DownloadRawData;
   siiceaDownloadRawData: DownloadRawData;
   sivssDownloadRawData: DownloadRawData;
   hapiDownloadRawData: DownloadRawData;
@@ -42,7 +40,6 @@ const createDependencies = (): Dependencies => {
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
-  const cheminDesFichiersSourcesSirecSurLeSftpDnum = "SIREC";
   const cheminDesFichiersSourcesSiiceaSurLeSftpDnum = "SIICEA";
   const cheminDesFichiersSourcesSivssSurLeSftpDnum = "SIVSS";
   const cheminDesFichiersSourcesVigieRhSurLeSftpDnum = "VIGIE_RH";
@@ -65,13 +62,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesDiamantSurLeSftpDnum,
       environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
-      logger
-    ),
-    sirecDownloadRawData: new SirecSftpDownloadRawData(
-      new Ssh2SftpClient(),
-      environmentVariables,
-      cheminDesFichiersSourcesSirecSurLeSftpDnum,
-      environmentVariables.SIREC_DATA_PATH,
       logger
     ),
     siiceaDownloadRawData: new SiiceaSftpDownloadRawData(
