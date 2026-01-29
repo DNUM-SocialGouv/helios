@@ -26,7 +26,7 @@ def transforme_les_donnees_ann_errd_ej_et(
 
     # Si il y a une valeur « taux_occupation_global_errd » on l’utilise pour créer la colonne « taux_occupation_global »
     if "taux_occupation_global_errd" in donnees_transformees.columns:
-        mask = donnees_transformees["taux_occupation_global_errd"].notnull()
+        mask = donnees_transformees["taux_occupation_global_errd"].notnull() & (donnees_transformees["etat_taux_occupation_global_errd"] != "KO")
         donnees_transformees.loc[mask, "taux_occupation_global"] = donnees_transformees.loc[mask, "taux_occupation_global_errd"]
 
     # Si il n’y a pas de valeur dans « taux_occupation_global », on utilise celle de « taux_occupation_global_autres_esms » si elle n’est pas KO
@@ -38,7 +38,14 @@ def transforme_les_donnees_ann_errd_ej_et(
     # Les colonnes présentes dans le fichier ne sont plus nécessaires. On ignore les erreurs au cas où elles n’existeraient pas dans le fichier.
     return (
         donnees_transformees.drop(
-            ["taux_occupation_global_errd", "taux_occupation_global_autres_esms", "etat_taux_occupation_global_autres_esms"], axis=1, errors="ignore"
+            [
+                "taux_occupation_global_errd",
+                "taux_occupation_global_autres_esms",
+                "etat_taux_occupation_global_autres_esms",
+                "etat_taux_occupation_global_errd",
+            ],
+            axis=1,
+            errors="ignore",
         )
         .dropna(subset=index_des_activités)
         .drop_duplicates(subset=index_des_activités)
