@@ -7,6 +7,7 @@
 - hel-971: [Gestion des listes] Excel intitulet de colonne à revoir
 - hel-969: Comparaison Colonne Taux global d'occupation
 - hel-968: Fix du bug de depliement/repliement des blocs dans les fiches d’établissements
+- hel-970: Afficher le taux global d'occupation uniquement pour les étb PH
 
 ### Features
 
