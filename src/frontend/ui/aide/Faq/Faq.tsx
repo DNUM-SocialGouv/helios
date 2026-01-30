@@ -291,16 +291,16 @@ const FAQ_SECTIONS: FaqCategory[] = [
         question: "Combien de listes est-il possible de créer ?",
         answer: (
           <>
-            <p className="fr-mb-1w">Une liste nommée “Favoris” existe par défaut. Je peux créé jusqu&apos;à 10 listes, il est possible d’avoir 11 listes au total.</p>
+            <p className="fr-mb-1w">Une liste nommée “Favoris” existe par défaut. Je peux créer jusqu&apos;à 10 listes, il est possible d’avoir 11 listes au total.</p>
             <p className="fr-mb-1w">Le bouton de création d’une nouvelle liste est grisé si 10 listes ont été créés. Une liste créée peut être supprimée, si souhaité.</p>
           </>
         ),
       },
       {
         id: "nombre-etab-liste",
-        question: "Une liste peut-être constituer de combien d'établissement ?",
+        question: "Une liste peut-être constituée de combien d'établissements ?",
         answer: (
-          <p className="fr-mb-1w">Une liste peut  être constitué de tous types d&apos;établissements et n’est pas limité en nombre.</p>
+          <p className="fr-mb-1w">Une liste peut être constituée de tous types d&apos;établissements et n’est pas limitée en nombre.</p>
         ),
       },
     ],
