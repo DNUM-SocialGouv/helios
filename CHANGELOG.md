@@ -1,5 +1,13 @@
 # Changelog d'Helios
 
+## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.1) (TODO)
+
+### Bug Fixes
+
+- hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
+
+### Features
+
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (TODO)
 
 ### Bug Fixes
