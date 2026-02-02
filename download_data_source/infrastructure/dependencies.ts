@@ -11,7 +11,6 @@ import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDownloadRawData";
-import { VigieRhSftpDownloadRawData } from "./gateways/download-raw-data/VigieRhSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { SirecSourceExterneLoader } from "./gateways/sirec-soure-externe-loader/sirecSourceExterneLoader";
@@ -23,7 +22,6 @@ export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
   finessDownloadRawData: DownloadRawData;
   hapiDownloadRawData: DownloadRawData;
-  vigieRhDownloadRawData: DownloadRawData;
   unzipRawData: UnzipRawData;
   controleDonneesSirecLoader: ControleDonneesSirecLoader;
   logger: Logger;
@@ -35,8 +33,6 @@ const createDependencies = (): Dependencies => {
   const finessLocalPath = "finess";
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
-
-  const cheminDesFichiersSourcesVigieRhSurLeSftpDnum = "VIGIE_RH";
 
   const cheminDesFichiersSourcesHapiSurLeSftpHapi = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes";
 
@@ -63,13 +59,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesHapiSurLeSftpHapi,
       environmentVariables.HAPI_DATA_PATH,
-      logger
-    ),
-    vigieRhDownloadRawData: new VigieRhSftpDownloadRawData(
-      new Ssh2SftpClient(),
-      environmentVariables,
-      cheminDesFichiersSourcesVigieRhSurLeSftpDnum,
-      environmentVariables.VIGIE_RH_DATA_PATH,
       logger
     ),
     environmentVariables,
