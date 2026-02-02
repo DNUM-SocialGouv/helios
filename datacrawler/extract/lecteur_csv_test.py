@@ -137,6 +137,7 @@ class TestLisLeFichierCsv:
                         8.0,
                     ],
                     "Etat taux d'occupation global Autres ESMS": ["KO", None, "KO", None, "KO", None, "KO", None],
+                    "Etat taux d'occupation global ERRD": [None, "KO", None, "KO", None, "KO", None, "KO"],
                 }
             ),
         )

@@ -26,6 +26,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 }
             ]
         )
@@ -72,6 +73,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": 1.0,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": "KO",
+                    "Etat taux d'occupation global ERRD": None,
                 },
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -81,7 +83,8 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
                     "Taux d'occupation global ERRD": 1.0,
                     "Taux d'occupation global Autres ESMS": 2.0,
-                    "Etat taux d'occupation global Autres ESMS": "KO",
+                    "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": "KO",
                 },
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -92,6 +95,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": "KO",
+                    "Etat taux d'occupation global ERRD": None,
                 },
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -102,6 +106,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 },
             ]
         )
@@ -125,7 +130,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "taux_occupation_accueil_de_jour": 0.48012820512820514,
                     "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
-                    "taux_occupation_global": 1.0,
+                    "taux_occupation_global": 2.0,
                 },
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -160,6 +165,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 }
             ]
         )
@@ -209,6 +215,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": NaN,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 }
             ]
         )
@@ -251,6 +258,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 },
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -261,6 +269,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 3.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 },
             ]
         )
@@ -303,6 +312,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation global ERRD": NaN,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
+                    "Etat taux d'occupation global ERRD": None,
                 }
             ]
         )
