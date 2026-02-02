@@ -50,6 +50,10 @@ class TestVariablesDEnvironnement:
             "DNUM_SFTP_USERNAME": "test",
             "DNUM_SFTP_PRIVATE_KEY": "test",
             "SIREC_DATA_PATH": "test",
+            "HAPI_SFTP_PASSWORD": "test",
+            "HAPI_SFTP_USERNAME": "test",
+            "HAPI_SFTP_PORT": "test",
+            "HAPI_SFTP_HOST": "test",
         }
 
         # WHEN
