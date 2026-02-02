@@ -9,6 +9,27 @@ from paramiko.sftp import SFTPError
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
+REMOTE_PATH = "VIGIE_RH"
+FILE_PREFIX = [
+    "vigierh_table_passage_professions",
+    "vigierh_ref_tranche_age",
+    "vigierh_ref_profession2",
+    "vigierh_ref_profession1",
+    "vigierh_ref_nature_contrat",
+    "vigierh_ref_motifs_ruptures",
+    "vigierh_ref_duree_cdd",
+    "vigierh_pyramide",
+    "vigierh_profession2",
+    "vigierh_profession1",
+    "vigierh_nature_contrats_trimestriel",
+    "vigierh_nature_contrats_annuel",
+    "vigierh_motifs_ruptures",
+    "vigierh_etablissement_trimestriel",
+    "vigierh_etablissement_mensuel",
+    "vigierh_etablissement_annuel",
+    "vigierh_duree_cdd",
+]
+
 
 def connect_sftp(host: str, port: int, username: str, key_filename: str, logger: Logger) -> tuple:
     ssh = paramiko.SSHClient()
@@ -81,27 +102,7 @@ def main() -> None:
     sftp_port = int(variables_d_environnement["DNUM_SFTP_PORT"])
     sftp_username = variables_d_environnement["DNUM_SFTP_USERNAME"]
     sftp_private_key = variables_d_environnement["DNUM_SFTP_PRIVATE_KEY"]
-    remote_path = "VIGIE_RH"
     local_path = Path(variables_d_environnement["VIGIE_RH_DATA_PATH"])
-    file_prefix = [
-        "vigierh_table_passage_professions",
-        "vigierh_ref_tranche_age",
-        "vigierh_ref_profession2",
-        "vigierh_ref_profession1",
-        "vigierh_ref_nature_contrat",
-        "vigierh_ref_motifs_ruptures",
-        "vigierh_ref_duree_cdd",
-        "vigierh_pyramide",
-        "vigierh_profession2",
-        "vigierh_profession1",
-        "vigierh_nature_contrats_trimestriel",
-        "vigierh_nature_contrats_annuel",
-        "vigierh_motifs_ruptures",
-        "vigierh_etablissement_trimestriel",
-        "vigierh_etablissement_mensuel",
-        "vigierh_etablissement_annuel",
-        "vigierh_duree_cdd",
-    ]
 
     # --- Création du répertoire de destination ---
     local_path.mkdir(parents=True, exist_ok=True)
@@ -113,9 +114,9 @@ def main() -> None:
     try:
         ssh, sftp = connect_sftp(sftp_host, sftp_port, sftp_username, sftp_private_key, logger)
 
-        for prefix in file_prefix:
+        for prefix in FILE_PREFIX:
             try:
-                entries = list_siicea_files(sftp, remote_path, prefix)
+                entries = list_siicea_files(sftp, REMOTE_PATH, prefix)
             except (OSError, IOError, SFTPError) as exc:
                 logger.exception("Impossible de lister les fichiers sur le SFTP: %s", exc)
                 return
@@ -133,7 +134,7 @@ def main() -> None:
             logger.info("Fichier le plus récent trouvé : %s", filename)
 
             try:
-                download_remote_file(sftp, remote_path, local_path, filename, logger)
+                download_remote_file(sftp, REMOTE_PATH, local_path, filename, logger)
             except (OSError, IOError, SFTPError) as exc:
                 logger.exception("Une erreur est survenue lors du téléchargement du fichier: %s", exc)
 

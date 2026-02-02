@@ -1,6 +1,5 @@
 import re
 import stat
-import shutil
 from logging import Logger
 from pathlib import Path
 from typing import List, Optional
@@ -31,7 +30,7 @@ def connect_sftp(host: str, port: int, username: str, password: str, logger: Log
     return ssh, sftp
 
 
-def list_hapi_files(sftp: paramiko.SFTPClient, remote_path: str, file_prefix: str) -> List[object]:
+def list_hapi_files(sftp: paramiko.SFTPClient, remote_path: str, file_prefix: str) -> List:
     attrs = sftp.listdir_attr(remote_path)
 
     current_year = datetime.now().year

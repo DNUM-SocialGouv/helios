@@ -46,7 +46,6 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     controleDonneesSirecLoader: {
       checkDowloadedSirecFile: jest.fn(),
     },
-    vigieRhDownloadRawData: { exécute: jest.fn() },
   };
 };
 
