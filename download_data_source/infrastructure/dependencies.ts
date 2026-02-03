@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/nextjs";
-import * as ftp from "basic-ftp";
 import Ssh2SftpClient from "ssh2-sftp-client";
 
 import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSirecLoader";
@@ -10,7 +9,6 @@ import { UnzipRawData } from "../métier/gateways/UnzipRawData";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
 import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
-import { HapiSftpDownloadRawData } from "./gateways/download-raw-data/HapiSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { SirecSourceExterneLoader } from "./gateways/sirec-soure-externe-loader/sirecSourceExterneLoader";
@@ -21,7 +19,6 @@ export type Dependencies = Readonly<{
   DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number;
   environmentVariables: EnvironmentVariables;
   finessDownloadRawData: DownloadRawData;
-  hapiDownloadRawData: DownloadRawData;
   unzipRawData: UnzipRawData;
   controleDonneesSirecLoader: ControleDonneesSirecLoader;
   logger: Logger;
@@ -33,8 +30,6 @@ const createDependencies = (): Dependencies => {
   const finessLocalPath = "finess";
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
-
-  const cheminDesFichiersSourcesHapiSurLeSftpHapi = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes";
 
   const logger = new ConsoleLogger();
   const environmentVariables = new NodeEnvironmentVariables(logger);
@@ -52,13 +47,6 @@ const createDependencies = (): Dependencies => {
       environmentVariables,
       cheminDesFichiersSourcesDiamantSurLeSftpDnum,
       environmentVariables.DIAMANT_ENCRYPTED_DATA_PATH,
-      logger
-    ),
-    hapiDownloadRawData: new HapiSftpDownloadRawData(
-      new ftp.Client(),
-      environmentVariables,
-      cheminDesFichiersSourcesHapiSurLeSftpHapi,
-      environmentVariables.HAPI_DATA_PATH,
       logger
     ),
     environmentVariables,

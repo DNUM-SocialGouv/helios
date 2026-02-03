@@ -40,7 +40,6 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     dnumDownloadRawData: { exécute: jest.fn() },
     environmentVariables,
     finessDownloadRawData: { exécute: jest.fn() },
-    hapiDownloadRawData: { exécute: jest.fn() },
     logger: fakeLogger,
     unzipRawData: { exécute: jest.fn() },
     controleDonneesSirecLoader: {
