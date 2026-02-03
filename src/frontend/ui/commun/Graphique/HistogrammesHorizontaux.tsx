@@ -4,7 +4,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { couleurDelAbscisse, couleurErreur, couleurIdentifiant } from "./couleursGraphique";
-import styles from "./HistogrammeHorizontaux.module.css";
+import styles from "./HistogrammesHorizontaux.module.css";
 import { Wording } from "../../../configuration/wording/Wording";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
