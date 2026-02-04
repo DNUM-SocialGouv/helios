@@ -82,8 +82,8 @@ function ExportToExcel(
 ) {
   const workbook = new Workbook();
   const sheet = workbook.addWorksheet("Comparaison");
-  ecrireLignesDansSheet(data,sheet);
-  telechargerWorkbook(workbook,fileName);
+  ecrireLignesDansSheet(data, sheet);
+  telechargerWorkbook(workbook, fileName);
 }
 
 function TransformeCapacitiesetActivites(
@@ -224,7 +224,7 @@ async function generateAndExportExcel(context: RechercheAvanceeContextValue | un
       "Favoris",
       "Raison Sociale",
       "Cat. FINESS",
-      "Ville",
+      "Commune",
       "Département",
       "FINESS",
       "Rattachement(s)"

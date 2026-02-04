@@ -1,26 +1,29 @@
 # Changelog d'Helios
 
-## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.1) (TODO)
+## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.2) (TODO)
 
 ### Bug Fixes
 
+### Features
 - hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
 
-### Features
-
-## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (TODO)
+## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
 ### Bug Fixes
 
 - hel-971: [Gestion des listes] Excel intitulet de colonne à revoir
 - hel-969: Comparaison Colonne Taux global d'occupation
 - hel-968: Fix du bug de depliement/repliement des blocs dans les fiches d’établissements
+- hel-970: Afficher le taux global d'occupation uniquement pour les étb PH
 
 ### Features
 
 - hel-954: Ajout de questions relatives aux listes dans la FAQ
 - hel-937: Les liens sont cliquables dans la FAQ
 - hel-904: Montée de version Postgres en v15.15
+- hel-972: Renommer colonne Alloc. Ressources en l'absence de données
+- hel-977: Mise à jour du batch de traitement de l’activité medico-sociale
+- hel-966: Affichage responsive des graphiques doubles
 
 ## [1.8.0](https://github.com/DNUM-SocialGouv/helios/compare/release/1.7.8...release/1.8.0) (2026-01-22)
 

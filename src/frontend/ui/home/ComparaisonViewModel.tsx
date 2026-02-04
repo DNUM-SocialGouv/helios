@@ -204,7 +204,7 @@ export class ComparaisonSMSViewModel {
     return formatRatio(this.comparaison.seances);
   }
   public get global(): string | null {
-    return formatRatio(this.comparaison.global);
+    return this.comparaison.categorie !== "500-EHPAD" ? formatRatio(this.comparaison.global) : null;
   }
   public get prestationExterne(): string | null {
     return formatRatio(this.comparaison.prestationExterne);
