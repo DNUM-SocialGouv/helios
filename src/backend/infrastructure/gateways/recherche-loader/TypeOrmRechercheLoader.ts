@@ -26,22 +26,31 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   constructor(private readonly orm: Promise<DataSource>) { }
 
-  cleanAndFuzzify = (str: string) => {
-    const cleaned = str.replace(/['"&|!():*]/g, " ").trim();
-    if (!cleaned) return "";
-    return cleaned.split(/\s+/)
-      .filter(w => w)
-      .map(w => `${w}:*`)
+  cleanAndFuzzify(term: string): string {
+    if (!term?.trim()) return "";
+
+    const tokens = term
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/['’\-]/g, " ")
+      .replace(/[^a-zA-Z0-9\s]/g, " ")
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(t => t.length > 1);
+
+    if (!tokens.length) return "";
+
+    return tokens
+      .map((token, i) =>
+        i === tokens.length - 1 ? `${token}:*` : token
+      )
       .join(" & ");
-  };
+  }
+
+
 
   async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
-    const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll('-', " ");
-
     const termeFuzzy = this.cleanAndFuzzify(terme);
-    const termeSansEspacesFuzzy = this.cleanAndFuzzify(termeSansEspaces);
-    const termeSansTiretsFuzzy = this.cleanAndFuzzify(termeSansTirets);
 
     const queryBuilder = (await this.orm).createQueryBuilder();
 
@@ -56,8 +65,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect(`ts_rank_cd(recherche.termes, to_tsquery('unaccent_helios', :termeFuzzy))`, "rank")
       .from(RechercheModel, "recherche")
       .where("recherche.termes @@ to_tsquery('unaccent_helios', :termeFuzzy)", { termeFuzzy })
-      .orWhere("recherche.termes @@ to_tsquery('unaccent_helios', :termeSansEspacesFuzzy)", { termeSansEspacesFuzzy })
-      .orWhere("recherche.termes @@ to_tsquery('unaccent_helios', :termeSansTiretsFuzzy)", { termeSansTiretsFuzzy })
 
     const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
@@ -130,12 +137,8 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
     const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport } = params;
-    const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll('-', " ");
 
     const termeFuzzy = this.cleanAndFuzzify(terme);
-    const termeSansEspacesFuzzy = this.cleanAndFuzzify(termeSansEspaces);
-    const termeSansTiretsFuzzy = this.cleanAndFuzzify(termeSansTirets);
 
     const zoneParam = this.computeZoneParam(zone, typeZone);
 
@@ -175,13 +178,13 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (terme) {
       requêteDeLaRecherche
-        .addSelect("ts_rank_cd(recherche.termes, to_tsquery('unaccent_helios', :termeFuzzy))", "rank")
+        .addSelect("ts_rank_cd(recherche.termes, to_tsquery('unaccent_helios', :terme))", "rank")
 
       conditions.push(
-        "(recherche.termes @@ to_tsquery('unaccent_helios', :termeFuzzy) OR recherche.termes @@ to_tsquery('unaccent_helios', :termeSansEspacesFuzzy) OR recherche.termes @@ to_tsquery('unaccent_helios', :termeSansTiretsFuzzy))"
+        "(recherche.termes @@ to_tsquery('unaccent_helios', :terme))"
       );
-      parameters.termeFuzzy = termeFuzzy;
-      parameters = { ...parameters, termeSansEspacesFuzzy: termeSansEspacesFuzzy, termeSansTiretsFuzzy: termeSansTiretsFuzzy };
+      parameters.terme = termeFuzzy;
+      parameters = { ...parameters };
     }
 
     requêteDeLaRecherche.from(RechercheModel, "recherche")

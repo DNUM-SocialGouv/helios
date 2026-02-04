@@ -20,11 +20,11 @@ export class UpdateVueRecherche1769680336893 implements MigrationInterface {
           ADD COLUMN termes_de_recherche tsvector GENERATED ALWAYS AS (
               to_tsvector(
                   'unaccent_helios',
-                  coalesce(raison_sociale, '') || ' ' ||
-                  coalesce(raison_sociale_courte, '') || ' ' ||
+                  regexp_replace(coalesce(raison_sociale, ''), '[-–—’'']', ' ', 'g') || ' ' ||
+                  regexp_replace(coalesce(raison_sociale_courte, ''), '[-–—’'']', ' ', 'g') || ' ' ||
                   coalesce(numero_finess_entite_juridique, '') || ' ' ||
-                  coalesce(commune, '') || ' ' ||
-                  coalesce(departement, '')
+                  regexp_replace(coalesce(commune, ''), '[-–—’'']', ' ', 'g') || ' ' ||
+                  regexp_replace(coalesce(departement, ''), '[-–—’'']', ' ', 'g')
               )
           ) STORED;
 
@@ -36,11 +36,11 @@ export class UpdateVueRecherche1769680336893 implements MigrationInterface {
           ADD COLUMN termes_de_recherche tsvector GENERATED ALWAYS AS (
               to_tsvector(
                   'unaccent_helios',
-                  coalesce(raison_sociale, '') || ' ' ||
-                  coalesce(raison_sociale_courte, '') || ' ' ||
+                  regexp_replace(coalesce(raison_sociale, ''), '[-–—’'']', ' ', 'g') || ' ' ||
+                  regexp_replace(coalesce(raison_sociale_courte, ''), '[-–—’'']', ' ', 'g') || ' ' ||
                   coalesce(numero_finess_etablissement_territorial, '') || ' ' ||
-                  coalesce(commune, '') || ' ' ||
-                  coalesce(departement, '')
+                  regexp_replace(coalesce(commune, ''), '[-–—’'']', ' ', 'g') || ' ' ||
+                  regexp_replace(coalesce(departement, ''), '[-–—’'']', ' ', 'g')
               )
           ) STORED;
 
