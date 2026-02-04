@@ -3,6 +3,7 @@
 ## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.2) (TODO)
 
 ### Bug Fixes
+- hel-981: Export Comparaison
 
 ### Features
 
