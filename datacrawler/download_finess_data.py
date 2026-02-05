@@ -104,6 +104,41 @@ def _safe_close(sftp: Optional[paramiko.SFTPClient], ssh: Optional[paramiko.SSHC
         logger.debug("Erreur lors de la fermeture de la connexion SFTP: %s", exc)
 
 
+def download_files_for_subfolder(
+    sftp: paramiko.SFTPClient,
+    subfolder: str,
+    prefixes: list,
+    base_local_path: Path,
+    logger: Logger,
+) -> None:
+    remote_subfolder_path = f"{REMOTE_PATH}/{subfolder}"
+    local_subfolder_path = base_local_path / subfolder
+
+    for prefix in prefixes:
+        try:
+            entries = list_files_with_prefix(sftp, remote_subfolder_path, prefix)
+        except (OSError, IOError, SFTPError) as exc:
+            logger.exception("Impossible de lister les fichiers sur le SFTP dans %s: %s", remote_subfolder_path, exc)
+            continue
+
+        latest = pick_latest_file(entries)
+        if latest is None:
+            logger.warning("Aucun fichier avec le préfixe '%s' trouvé sur le SFTP dans '%s'.", prefix, remote_subfolder_path)
+            continue
+
+        filename = getattr(latest, "filename", None)
+        if not filename:
+            logger.warning("Fichier trouvé sans nom valide.")
+            continue
+
+        logger.info("Fichier le plus récent trouvé : %s", filename)
+
+        try:
+            download_remote_file(sftp, remote_subfolder_path, local_subfolder_path, filename, logger)
+        except (OSError, IOError, SFTPError) as exc:
+            logger.exception("Une erreur est survenue lors du téléchargement du fichier: %s", exc)
+
+
 def main() -> None:
     """Script pour télécharger les données brutes FINESS depuis un serveur SFTP.
 
@@ -136,32 +171,7 @@ def main() -> None:
         ssh, sftp = connect_sftp(sftp_host, sftp_port, sftp_username, sftp_private_key, logger)
 
         for subfolder, prefixes in FILES_TO_DOWNLOAD.items():
-            remote_subfolder_path = f"{REMOTE_PATH}/{subfolder}"
-            local_subfolder_path = base_local_path / subfolder
-
-            for prefix in prefixes:
-                try:
-                    entries = list_files_with_prefix(sftp, remote_subfolder_path, prefix)
-                except (OSError, IOError, SFTPError) as exc:
-                    logger.exception("Impossible de lister les fichiers sur le SFTP dans %s: %s", remote_subfolder_path, exc)
-                    continue
-
-                latest = pick_latest_file(entries)
-                if latest is None:
-                    logger.warning("Aucun fichier avec le préfixe '%s' trouvé sur le SFTP dans '%s'.", prefix, remote_subfolder_path)
-                    continue
-
-                filename = getattr(latest, "filename", None)
-                if not filename:
-                    logger.warning("Fichier trouvé sans nom valide.")
-                    continue
-
-                logger.info("Fichier le plus récent trouvé : %s", filename)
-
-                try:
-                    download_remote_file(sftp, remote_subfolder_path, local_subfolder_path, filename, logger)
-                except (OSError, IOError, SFTPError) as exc:
-                    logger.exception("Une erreur est survenue lors du téléchargement du fichier: %s", exc)
+            download_files_for_subfolder(sftp, subfolder, prefixes, base_local_path, logger)
 
         # --- Décompression ---
         unzip_files(base_local_path, logger)
