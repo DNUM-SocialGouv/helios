@@ -26,6 +26,11 @@ class VariablesDEnvironnement(TypedDict):
     HAPI_SFTP_PORT: str
     HAPI_SFTP_USERNAME: str
     HAPI_SFTP_PASSWORD: str
+    SFTP_HOST: str
+    SFTP_PORT: str
+    SFTP_USERNAME: str
+    SFTP_PRIVATE_KEY: str
+
 
 
 def récupère_les_variables_d_environnement(
@@ -67,4 +72,9 @@ def récupère_les_variables_d_environnement(
         HAPI_SFTP_PORT=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PORT"),
         HAPI_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_USERNAME"),
         HAPI_SFTP_PASSWORD=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PASSWORD"),
+        SFTP_HOST=signale_si_la_variable_n_est_pas_présente("SFTP_HOST"),
+        SFTP_PORT=signale_si_la_variable_n_est_pas_présente("SFTP_PORT"),
+        SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
+        SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("SFTP_PRIVATE_KEY"),
     )
+

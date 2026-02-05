@@ -54,6 +54,10 @@ class TestVariablesDEnvironnement:
             "HAPI_SFTP_USERNAME": "test",
             "HAPI_SFTP_PORT": "test",
             "HAPI_SFTP_HOST": "test",
+            "SFTP_HOST": "test",
+            "SFTP_PORT": "test",
+            "SFTP_USERNAME": "test",
+            "SFTP_PRIVATE_KEY": "test",
         }
 
         # WHEN
