@@ -31,9 +31,9 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     const tokens = term
       .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "")
-      .replace(/['’\-]/g, " ")
-      .replace(/[^a-zA-Z0-9\s]/g, " ")
+      .replaceAll(/\p{Diacritic}/gu, "")
+      .replaceAll(/['’\-]/g, " ")
+      .replaceAll(/[^a-zA-Z0-9\s]/g, " ")
       .toLowerCase()
       .split(/\s+/)
       .filter(t => t.length > 1);
