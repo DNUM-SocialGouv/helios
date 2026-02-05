@@ -292,7 +292,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
         answer: (
           <>
             <p className="fr-mb-1w">Une liste nommée “Favoris” existe par défaut. Je peux créer jusqu&apos;à 10 listes, il est possible d’avoir 11 listes au total.</p>
-            <p className="fr-mb-1w">Le bouton de création d’une nouvelle liste est grisé si 10 listes ont été créés. Une liste créée peut être supprimée, si souhaité.</p>
+            <p className="fr-mb-1w">Le bouton de création d’une nouvelle liste est grisé si 10 listes ont été créées. Une liste créée peut être supprimée, si souhaité.</p>
           </>
         ),
       },

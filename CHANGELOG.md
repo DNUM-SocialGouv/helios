@@ -5,6 +5,8 @@
 ### Bug Fixes
 - hel-981: Export Comparaison
 
+- hel-954: Correction wording FAQ
+
 ### Features
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
