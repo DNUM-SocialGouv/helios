@@ -5,29 +5,22 @@ import { ControleDonneesSirecLoader } from "../métier/gateways/ControleDonnesSi
 import { DownloadRawData } from "../métier/gateways/DownloadRawData";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
 import { Logger } from "../métier/gateways/Logger";
-import { UnzipRawData } from "../métier/gateways/UnzipRawData";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { DnumSftpDownloadRawData } from "./gateways/download-raw-data/DnumSftpDownloadRawData";
-import { FinessSftpDownloadRawData } from "./gateways/download-raw-data/FinessSftpDownloadRawData";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { SirecSourceExterneLoader } from "./gateways/sirec-soure-externe-loader/sirecSourceExterneLoader";
-import { GunzipUnzipRawData } from "./gateways/unzip-raw-data/GunzipUnzipRawData";
 
 export type Dependencies = Readonly<{
   dnumDownloadRawData: DownloadRawData;
   DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: number;
   environmentVariables: EnvironmentVariables;
-  finessDownloadRawData: DownloadRawData;
-  unzipRawData: UnzipRawData;
   controleDonneesSirecLoader: ControleDonneesSirecLoader;
   logger: Logger;
 }>;
 
 const createDependencies = (): Dependencies => {
   dotEnvConfig();
-  const finessSftpPath = "/flux_finess";
-  const finessLocalPath = "finess";
 
   const cheminDesFichiersSourcesDiamantSurLeSftpDnum = "DIAMANT/incoming";
 
@@ -50,10 +43,8 @@ const createDependencies = (): Dependencies => {
       logger
     ),
     environmentVariables,
-    finessDownloadRawData: new FinessSftpDownloadRawData(new Ssh2SftpClient(), finessSftpPath, finessLocalPath, environmentVariables, logger),
     controleDonneesSirecLoader: new SirecSourceExterneLoader(environmentVariables.SIREC_DATA_PATH, environmentVariables.CHECKED_SIREC_DATA_PATH, logger),
     logger,
-    unzipRawData: new GunzipUnzipRawData(environmentVariables, logger),
   };
 };
 

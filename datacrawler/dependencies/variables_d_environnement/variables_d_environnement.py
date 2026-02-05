@@ -32,7 +32,6 @@ class VariablesDEnvironnement(TypedDict):
     SFTP_PRIVATE_KEY: str
 
 
-
 def récupère_les_variables_d_environnement(
     logger: Logger, variables_d_environnement: Dict[str, str], lis_les_variables_d_environnement_du_fichier: Callable
 ) -> VariablesDEnvironnement:
@@ -77,4 +76,3 @@ def récupère_les_variables_d_environnement(
         SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
         SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("SFTP_PRIVATE_KEY"),
     )
-

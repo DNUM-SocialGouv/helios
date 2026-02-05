@@ -124,7 +124,7 @@ def main() -> None:
         shutil.rmtree(base_local_path)
 
     # Création des sous-dossiers
-    for subfolder in FILES_TO_DOWNLOAD.keys():
+    for subfolder in FILES_TO_DOWNLOAD:
         (base_local_path / subfolder).mkdir(parents=True, exist_ok=True)
 
     logger.info("Répertoires de destination prêts dans '%s'.", base_local_path)

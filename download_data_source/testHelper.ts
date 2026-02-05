@@ -39,9 +39,7 @@ export const getFakeDataCrawlerDependencies = (): Dependencies => {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
     dnumDownloadRawData: { exécute: jest.fn() },
     environmentVariables,
-    finessDownloadRawData: { exécute: jest.fn() },
     logger: fakeLogger,
-    unzipRawData: { exécute: jest.fn() },
     controleDonneesSirecLoader: {
       checkDowloadedSirecFile: jest.fn(),
     },
