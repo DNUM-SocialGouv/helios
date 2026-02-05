@@ -9,12 +9,12 @@ services:
         published: 24
     volumes:
       - type: bind
-        source: ${PWD}/data_set
-        target: /home/finess/
-      - type: bind
         source: ${HOME}/.ssh/sftp_local.pub
         target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
+      - type: bind
+        source: ${PWD}/data_set
+        target: /home/finess/
       - type: bind
         source: ${PWD}/sshd_config/sshd_config
         target: /etc/ssh/sshd_config
