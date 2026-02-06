@@ -37,7 +37,6 @@ export function getOrm() {
 export const getFakeDataCrawlerDependencies = (): Dependencies => {
   return {
     DÉLAI_D_ARRÊT_DES_TÂCHES_EN_MS: 1000,
-    dnumDownloadRawData: { exécute: jest.fn() },
     environmentVariables,
     logger: fakeLogger,
     controleDonneesSirecLoader: {
