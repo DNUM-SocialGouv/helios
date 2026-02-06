@@ -68,6 +68,7 @@ populate_vigierh_nature_contrats_trimestriel = 'python -m datacrawler.import_vig
 populate_les_entites_juridiques = 'python -m datacrawler.import_les_entites_juridiques'
 populate_les_etablissements_territoriaux = 'python -m datacrawler.import_les_etablissements_territoriaux'
 populate_ref_categories = 'python -m datacrawler.import_ref_categories'
+populate_qualite_has = 'python -m datacrawler.import_les_donnees_qualite_has'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'
