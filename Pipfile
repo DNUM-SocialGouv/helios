@@ -54,6 +54,7 @@ populate_evenements_indesirables = 'python -m datacrawler.import_evenements_inde
 populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressource_hapi'
 check_downloaded_sivss_file = 'python -m datacrawler.check_downloaded_sivss_file'
 check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_file'
+check_downloaded_sirec_file = 'python -m datacrawler.check_downloaded_sirec_file'
 populate_inspections = 'python -m datacrawler.import_inspections'
 populate_activites_mensuel = 'python -m datacrawler.import_activites_mensuel'
 populate_activites_mensuel_ej = 'python -m datacrawler.import_activites_mensuel_entite_juridique'
