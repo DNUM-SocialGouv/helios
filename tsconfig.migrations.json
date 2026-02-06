@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": [
+    "database/**/*",
+    "download_data_source/**/*"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "download_data_source/testHelper.ts"
+  ]
+}

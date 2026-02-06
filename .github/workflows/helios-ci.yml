@@ -130,6 +130,8 @@ jobs:
           node-version-file: package.json
       - name: Install packages
         run: yarn --immutable
+      - name: build the migrations
+        run: yarn build:migrations
       - name: Run the migrations
         env:
           NODE_ENV: test
