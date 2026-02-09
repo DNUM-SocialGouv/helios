@@ -4,7 +4,16 @@
 // Script de migration pour appliquer ou annuler les migrations de la base de données
 
 import 'reflect-metadata';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+
+// Changement: Charger le fichier .env spécifique à l'environnement si NODE_ENV est défini
+if (process.env['NODE_ENV']) {
+  dotenv.config({ path: `.env.${process.env['NODE_ENV']}` });
+}
+// Chargement du fichier .env par défaut ensuite pour les variables manquantes
+dotenv.config();
+
+console.log('DATABASE_URL:', process.env['DATABASE_URL']);
 import AppDataSource from '../../database/dataSource';
 
 async function main() {

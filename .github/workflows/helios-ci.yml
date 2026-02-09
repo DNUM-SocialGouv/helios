@@ -80,7 +80,7 @@ jobs:
         run: yarn --immutable
       - name: Run the tests
         env:
-          DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
+          NODE_ENV: test
         run: yarn test:typescript:${{ matrix.side }}
 
   build:
@@ -134,7 +134,7 @@ jobs:
         run: yarn bundle:migrations
       - name: Run the migrations
         env:
-          DATABASE_URL: postgres://helios:h3li0s@localhost:5433/helios
+          NODE_ENV: test
         run: yarn migrations:up:bundle
       - name: Install pipenv
         run: pipx install pipenv
