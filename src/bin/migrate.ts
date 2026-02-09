@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 // src/bin/migrate.ts
-// Small migration runner used to produce a single bundled JS file that can run migrations without node_modules
+// Script de migration pour appliquer ou annuler les migrations de la base de données
 
 import 'reflect-metadata';
 import 'dotenv/config';
