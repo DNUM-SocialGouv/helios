@@ -131,7 +131,7 @@ jobs:
       - name: Install packages
         run: yarn --immutable
       - name: build the migrations
-        run: yarn build:migrations
+        run: yarn bundle:migrations
       - name: Run the migrations
         env:
           NODE_ENV: test
