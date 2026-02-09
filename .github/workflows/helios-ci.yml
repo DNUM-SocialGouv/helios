@@ -135,7 +135,7 @@ jobs:
       - name: Run the migrations
         env:
           NODE_ENV: test
-        run: yarn migrations:up
+        run: yarn migrations:up:bundle
       - name: Install pipenv
         run: pipx install pipenv
       - uses: actions/setup-python@v4
