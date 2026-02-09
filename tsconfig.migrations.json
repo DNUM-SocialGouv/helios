@@ -9,7 +9,8 @@
   },
   "include": [
     "database/**/*",
-    "download_data_source/**/*"
+    "download_data_source/**/*",
+    "src/bin/**/*"
   ],
   "exclude": [
     "**/*.test.ts",
