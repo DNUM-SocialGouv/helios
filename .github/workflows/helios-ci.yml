@@ -101,6 +101,7 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           YARN_NODE_LINKER: pnp
+          CI: true
         run: yarn build
 
   python:
