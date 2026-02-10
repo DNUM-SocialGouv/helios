@@ -49,7 +49,8 @@ def list_sirec_files(sftp: paramiko.SFTPClient, remote_path: str, file_prefix: s
 def pick_latest_file(entries: list) -> Optional[object]:
     if not entries:
         return None
-    entries.sort(key=lambda e: getattr(e, "st_mtime", 0), reverse=True)
+    # Try par nom de fichier
+    entries.sort(key=lambda e: getattr(e, "filename", ""), reverse=True)
     return entries[0]
 
 

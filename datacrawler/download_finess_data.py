@@ -73,7 +73,7 @@ def list_files_with_prefix(sftp: paramiko.SFTPClient, remote_path: str, file_pre
 def pick_latest_file(entries: list) -> Optional[object]:
     if not entries:
         return None
-    # Sort by filename descending (assuming consistent date format in filenames)
+    # Try par nom de fichier
     entries.sort(key=lambda e: getattr(e, "filename", ""), reverse=True)
     return entries[0]
 
