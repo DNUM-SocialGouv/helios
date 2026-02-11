@@ -126,9 +126,12 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       redirectPage("/settings/users?status=edit_successfully");
     });
   }
-  //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
+
   const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== Role.ADMIN_NAT) || ((data?.user?.role as number) > Number.parseInt(user.roleId) && data?.user?.idUser !== user.code);
+    // Seul un Administrateur national peut se modifier lui même
+    (data?.user?.idUser === user.code && data?.user?.role !== Role.ADMIN_NAT) ||
+    // Un adminitrateur regional ne peut pas modifier d’administrateur national ou d’administrateur central
+    ((data?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(user.roleId) === Role.ADMIN_NAT || Number.parseInt(user.roleId) === Role.ADMIN_CENTR));
 
   let rolesF;
   if (data?.user?.role === Role.ADMIN_NAT) {
