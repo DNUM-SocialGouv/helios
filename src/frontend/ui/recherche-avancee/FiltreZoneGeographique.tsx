@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef, KeyboardEvent } from "react";
 
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { Role } from "../../../commons/Role";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 
@@ -114,7 +115,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
 
         const maRegion = data?.user.codeRegion;
         const sortedOptions =
-          data?.user.role === 3 || data?.user.role === 2
+          data?.user.role === Role.USER || data?.user.role === Role.ADMIN_REG
             ? sortedAlphabetically.toSorted((a: any, b: any) => {
               const estMaRegionA = a.codeRegion === maRegion;
               const estMaRegionB = b.codeRegion === maRegion;
@@ -231,7 +232,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
                     ))}
                   </ul>
                 )}
-                {(data?.user.role === 3 || data?.user.role === 2) && (
+                {(data?.user.role === Role.USER || data?.user.role === Role.ADMIN_REG) && (
                   <p className={"fr-notice fr-notice--info " + styles["notice"]}>
                     <span aria-hidden="true" className="fr-icon-info-fill">
                       {" "}
