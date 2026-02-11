@@ -18,9 +18,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
 
-    if (!userBeforeChange) {
-      response.status(405).send("User not found");
-    } else {
+    if (userBeforeChange) {
       const userSession = await getServerSession(request, response, authOptions);
 
       if (
@@ -39,6 +37,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       const recherche = await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
 
       return response.status(200).json(recherche);
+    } else {
+      response.status(405).send("User not found");
     }
   } catch {
     return response.status(500);

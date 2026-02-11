@@ -24,9 +24,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (userSession?.user.idUser === userCode) {
       return response.status(405).send("Method not allowed");
     }
-    if (!userBeforeChange) {
-      response.status(405).send("User not found");
-    } else {
+    if (userBeforeChange) {
       if (
         // Un admin central n’a aucun droit sur ce endpoint
         (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
@@ -40,6 +38,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
       const recherche = await deleteUserEndpoint(dependencies, userCode);
       return response.status(200).json(recherche);
+    } else {
+      response.status(405).send("User not found");
     }
   } catch {
     return response.status(500);
