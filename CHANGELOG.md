@@ -3,11 +3,13 @@
 ## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.2) (TODO)
 
 ### Bug Fixes
-- hel-981: Export Comparaison
 
+- hel-981: Export Comparaison
 - hel-954: Correction wording FAQ
 
 ### Features
+
+- hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
@@ -31,7 +33,7 @@
 
 ### Bug Fixes
 
-- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
+- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession
 
 ### Features
 
@@ -49,9 +51,9 @@
 ### Features
 
 - vr-118: Espacements Titre, date du graph, graph
-- vr-133:  Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
+- vr-133: Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
 - vr-136: PERF CRON vigieRH
-- vr-137:  Modification graphique "Répartition des effectifs"
+- vr-137: Modification graphique "Répartition des effectifs"
 - vr-138: FAQ Intégration d'une question sur vigieRH
 - vr-139: Ajustement Wording sur les titres des graphiques par profession dans chaque filiière
 - vr-140: idétail partie "Evolution des effectifs par filière et catégorie professionnelle"
