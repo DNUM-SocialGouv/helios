@@ -14,6 +14,7 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { Role, RoleLabel } from "../../../../commons/Role";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../commun/hooks/useBreadcrumb";
@@ -127,13 +128,14 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
   }
   //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
   const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > Number.parseInt(user.roleId) && data?.user?.idUser !== user.code);
+    (data?.user?.idUser === user.code && data?.user?.role !== Role.ADMIN_NAT) || ((data?.user?.role as number) > Number.parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
   let rolesF;
-  if (data?.user?.role === 1) {
+  if (data?.user?.role === Role.ADMIN_NAT) {
     rolesF = roles;
   } else {
-    rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
+    // Seul les admin nationaux peuvent donner des droits d’admin national et central à un utilisateur
+    rolesF = roles.filter((obj) => obj.code !== RoleLabel.ADMIN_NAT && obj.code !== RoleLabel.ADMIN_CENTR);
   }
 
   return (

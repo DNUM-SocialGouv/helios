@@ -6,6 +6,7 @@ import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controlle
 import { reactivateUserEndpoint } from "../../../backend/infrastructure/controllers/reactivateUserEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { Role } from "../../../commons/Role";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -19,7 +20,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userSession = await getServerSession(request, response, authOptions);
 
-    //no one can reactivate itself
+    // Aucun utilisateur ne peut se réactiver lui même
     if (userSession?.user.idUser === userCode) {
       return response.status(405).send("Method not allowed");
     }
@@ -27,10 +28,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (!userBeforeChange) {
       response.status(405).send("User not found");
     } else {
-      //only "Admin national" can update it self || Admin regional cant update, delete (Admin National)
       if (
-        (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
-        ((userSession?.user?.role as number) > Number.parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
+        // Un admin central n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
+        // Un utilisateur n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.USER ||
+        // Un admin regional ne peut pas réactiver un admin national ou un admin central
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR))
       ) {
         return response.status(405).send("Method not allowed");
       }
