@@ -29,6 +29,18 @@ def _filtrer_qualite_has(
 
     return qualite_has[mask_finess & mask_key]
 
+def _garder_derniere_annee(df: pd.DataFrame) -> pd.DataFrame:
+    idx = (
+        df.groupby(["finess", "key"])["annee"]
+        .apply(lambda s: s.idxmax())
+        .values
+    )
+
+    return (
+        df.loc[idx]
+        .sort_values(["finess", "key"])
+        .reset_index(drop=True)
+    )
 
 def transform_les_donnees_qualite_has(
     qualite_has: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame
@@ -41,12 +53,7 @@ def transform_les_donnees_qualite_has(
     val_date = "value_date"
     val_str = "value_string"
 
-    qualite_has_latest = (
-    qualite_has_filtre
-    .loc[qualite_has_filtre.groupby(["finess", "key"])["annee"].idxmax()]
-    .sort_values(["finess", "key"])
-    .reset_index(drop=True)
-    )
+    qualite_has_latest = _garder_derniere_annee(qualite_has_filtre)
     # pivot par type d'indicateur
     qualite_has_latest_num = (
     qualite_has_latest
