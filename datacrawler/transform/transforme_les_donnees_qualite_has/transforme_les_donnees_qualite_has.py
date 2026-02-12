@@ -7,23 +7,35 @@ from datacrawler.transform.equivalences_has_helios import (
     index_qualite_has,
 )
 
-def transform_les_donnees_qualite_has(
-    qualite_has: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame
+def _filtrer_qualite_has(
+    qualite_has: pd.DataFrame,
+    numeros_finess: pd.DataFrame
 ) -> pd.DataFrame:
-    mask_finess = qualite_has["finess"].isin(
-    numeros_finess_des_etablissements_connus["numero_finess_etablissement_territorial"]
-)
 
-    mask_key = qualite_has["key"].isin([
+    mask_finess = qualite_has["finess"].isin(
+        numeros_finess["numero_finess_etablissement_territorial"]
+    )
+
+    keys = [
         "score_all_rea_ajust_dp",
         "score_all_ajust_dp_ca",
         "mco_dpa_pcd_2018-pcd_resultat",
         "mco_dpa_pcd_2018-pcd_classe",
         "certification_ref_2021_decision",
-        "certification_ref_2021_date_decision"
-    ])
+        "certification_ref_2021_date_decision",
+    ]
 
-    qualite_has_filtre = qualite_has[mask_finess & mask_key]
+    mask_key = qualite_has["key"].isin(keys)
+
+    return qualite_has[mask_finess & mask_key]
+
+
+def transform_les_donnees_qualite_has(
+    qualite_has: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame
+) -> pd.DataFrame:
+    qualite_has_filtre = _filtrer_qualite_has(
+        qualite_has, numeros_finess_des_etablissements_connus
+    )
     val_num = "value_float"
     val_int = "value_integer"
     val_date = "value_date"
