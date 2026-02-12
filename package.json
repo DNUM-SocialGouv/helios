@@ -114,6 +114,8 @@
     "updateNatureContrats:local": "pipenv run populate_vigierh_nature_contrats",
     "updateNatureContratsTrimestriel": "python -m datacrawler.import_vigierh_cdi_cdd_trimestriel",
     "updateNatureContratsTrimestriel:local": "pipenv run populate_vigierh_nature_contrats_trimestriel",
+    "updateQualiteHAS": "python -m datacrawler.import_les_donnees_qualite_has",
+    "updateQualiteHAS:local": "pipenv run populate_qualite_has",
     "start": "next start",
     "start:db": "docker-compose down && docker-compose up -d && bash -c \"while ! docker-compose logs | grep -q 'listening on IPv4 address'; do echo 'Waiting for database'; sleep 0.5; done\"; yarn migrations:up",
     "test": "yarn test:typescript && yarn test:python",

@@ -92,6 +92,7 @@ import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761
 import { AjoutDureeMoyenneSejourDansLesProfils1762435683856 } from "./migrations/1762435683856-AjoutDureeMoyenneSejourDansLesProfils";
 import { SupprimeProfilSansLabel1765967970441 } from "./migrations/1765967970441-SupprimeProfilSansLabel";
 import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal"
+import { AjouteTableQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableQualiteHAS";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -377,7 +378,8 @@ const datasource = new DataSource({
     ModificationTableProfession21762263346352,
     SupressionTableVigierhContrat1763372516438,
     AjouteTypePassageProfessions1764753717478,
-    AjoutTauxOccupationGlobal1765980868528
+    AjoutTauxOccupationGlobal1765980868528,
+    AjouteTableQualiteHAS1770300961088
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

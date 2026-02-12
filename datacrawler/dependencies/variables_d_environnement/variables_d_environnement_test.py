@@ -45,6 +45,7 @@ class TestVariablesDEnvironnement:
             "CHECKED_SIICEA_DATA_PATH": "test",
             "HAPI_DATA_PATH": "test",
             "VIGIE_RH_DATA_PATH": "test",
+            "HAS_DATA_PATH": "test",
         }
 
         # WHEN
