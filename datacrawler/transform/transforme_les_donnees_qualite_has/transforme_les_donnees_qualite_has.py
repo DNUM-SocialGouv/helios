@@ -33,7 +33,6 @@ def _garder_derniere_annee(donnees_filtrees: pd.DataFrame) -> pd.DataFrame:
     idx = (
         donnees_filtrees.groupby(["finess", "key"])["annee"]
         .apply(lambda s: s.idxmax())
-        .values
     )
 
     return (
