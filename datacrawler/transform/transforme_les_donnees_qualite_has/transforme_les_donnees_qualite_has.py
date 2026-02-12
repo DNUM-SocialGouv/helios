@@ -29,15 +29,15 @@ def _filtrer_qualite_has(
 
     return qualite_has[mask_finess & mask_key]
 
-def _garder_derniere_annee(df: pd.DataFrame) -> pd.DataFrame:
+def _garder_derniere_annee(donnees_filtrees: pd.DataFrame) -> pd.DataFrame:
     idx = (
-        df.groupby(["finess", "key"])["annee"]
+        donnees_filtrees.groupby(["finess", "key"])["annee"]
         .apply(lambda s: s.idxmax())
         .values
     )
 
     return (
-        df.loc[idx]
+        donnees_filtrees.loc[idx]
         .sort_values(["finess", "key"])
         .reset_index(drop=True)
     )
