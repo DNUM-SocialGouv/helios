@@ -6,7 +6,13 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { transformDataInspections } from "../../../utils/transformDataInspections";
 import StringFormater from "../../commun/StringFormater";
 
-
+export type QualiteQualiscopeViewModel = Readonly<{
+  appreciationMco: string;
+  appreciationCa: string;
+  PriseEnChargeDouleur: string;
+  dateCertification: string;
+  certification: string;
+}>;
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public wording: Wording;
   public etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite;
@@ -71,7 +77,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
 
   public get lesDonneesHASNeSontPasRenseignees(): boolean {
-    return false;
+    return !this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
@@ -126,19 +132,22 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     return StringFormater.formatDate("2025-08-20");
   }
 
-  public get donneesHAS(): any {
+  public get donneesHAS(): QualiteQualiscopeViewModel {
+    const donneesQualiscopeHAS = this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
     return {
-      dateCertification: "2024-05-15",
-    };
-  }
-
-  public get dateMiseAJourDonneesHAS(): string {
-    return StringFormater.formatDate("2025-08-20");
-  }
-
-  public get donneesHAS(): any {
-    return {
-      dateCertification: "2024-05-15",
+      appreciationMco: donneesQualiscopeHAS?.scoreAppreciationMCO ?
+        `${donneesQualiscopeHAS?.scoreAppreciationMCO} / 100  ${donneesQualiscopeHAS?.classeAppreciationMCO}  `
+        : 'Non renseigné',
+      appreciationCa: donneesQualiscopeHAS?.scoreAppreciationCA ?
+        `${donneesQualiscopeHAS?.scoreAppreciationCA} / 100  ${donneesQualiscopeHAS?.classeAppreciationCA}  `
+        : 'Non renseigné',
+      PriseEnChargeDouleur: donneesQualiscopeHAS?.scorePriseEnChargeDouleur ?
+        `${donneesQualiscopeHAS?.scorePriseEnChargeDouleur} %  ${donneesQualiscopeHAS?.classePriseEnChargeDouleur}  `
+        : 'Non renseigné',
+      dateCertification: donneesQualiscopeHAS?.dateCertification ?
+        StringFormater.formatDate(donneesQualiscopeHAS?.dateCertification)
+        : 'Non renseigné',
+      certification: donneesQualiscopeHAS?.noteCertification ?? ''
     };
   }
 

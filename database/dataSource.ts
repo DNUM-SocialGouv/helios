@@ -151,6 +151,7 @@ import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
+import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
@@ -250,7 +251,8 @@ const datasource = new DataSource({
     VigieRhRefMotifRuptutreContratModel,
     VigieRhRefNatureContrat,
     VigieRhNatureContratsAnnuelModel,
-    VigieRhNatureContratsTrimestrielModel
+    VigieRhNatureContratsTrimestrielModel,
+    QualiteQualiscopeHASModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
