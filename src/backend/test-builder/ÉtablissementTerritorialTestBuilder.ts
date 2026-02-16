@@ -816,7 +816,7 @@ export class ÉtablissementTerritorialTestBuilder {
     },
   };
 
-  private static readonly qualite: ÉtablissementTerritorialQualite = {
+  private static readonly qualiteMS: ÉtablissementTerritorialQualite = {
     reclamations: [
       {
         "année": 2023,
@@ -952,6 +952,155 @@ export class ÉtablissementTerritorialTestBuilder {
           saisineAutre: 3,
         }
       ]
+    },
+  }
+
+  private static readonly qualiteSAN: ÉtablissementTerritorialQualite = {
+    reclamations: [
+      {
+        "année": 2023,
+        "dateMiseÀJourSource": "2022-02-02",
+        "details": [
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_10",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_11",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_12",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_13",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_14",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_15",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_16",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_17",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_18",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_19",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_155",
+          },
+          {
+            "clot": 1,
+            "encours": 1,
+            "motif": "MOTIF_156",
+          },
+        ],
+        "numéroFinessÉtablissementTerritorial": "010000040",
+        "totalClotures": 12,
+        "totalEncours": 12,
+      },
+    ],
+    evenementsIndesirables: [
+      {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsClotures": [
+          {
+            "annee": 2023,
+            "clotDate": null,
+            "clotMotif": null,
+            "est_EIGS": false,
+            "etat": "CLOTURE",
+            "famille": "Evènements indésirables/graves associés aux soins",
+            "nature": "Maltraitance",
+            "numeroSIVSS": "123456",
+          }
+        ],
+        "evenementsEncours": [],
+        "libelle": "Evènements indésirables/graves associés aux soins",
+      }, {
+        "dateMiseAJourSource": "2022-02-02",
+        "evenementsEncours": [],
+        "evenementsClotures": [],
+        "libelle": "Evénements/incidents dans un établissement ou organisme",
+      }
+    ],
+    inspectionsEtControles: {
+      dateMiseAJourSource: '2022-02-02',
+      inspectionsEtControles: [
+        {
+          typeMission: 'Contrôle sur pièces',
+          themeRegional: 'Contrôles sur pièces - PLAN EHPAD 2022 2024',
+          typePlannification: 'Hors programme',
+          statutMission: 'Clôturé',
+          modaliteMission: 'Inopinée',
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreEcart: 5,
+          nombreRemarque: 6,
+          injonction: 2,
+          prescription: 8,
+          recommandation: 1,
+          saisineCng: 7,
+          saisineJuridiction: 1,
+          saisineParquet: 1,
+          saisineAutre: 1,
+        },
+        {
+          typeMission: 'Inspection',
+          themeRegional: 'P23 Contrôle de la sécurité et de la qualité de la prise en charge médicamenteuse des résidents en EHPAD',
+          typePlannification: 'Hors programme',
+          modaliteMission: 'Inopinée',
+          statutMission: 'Clôturé',
+          dateVisite: '2022-12-19',
+          dateRapport: '2023-02-20',
+          nombreEcart: 1,
+          nombreRemarque: 6,
+          injonction: 1,
+          prescription: 1,
+          recommandation: 1,
+          saisineCng: 7,
+          saisineJuridiction: 3,
+          saisineParquet: 3,
+          saisineAutre: 3,
+        }
+      ]
+    },
+    donneesQualiscopeHAS: {
+      scoreAppreciationMCO: 91,
+      classeAppreciationMCO: 'A',
+      scoreAppreciationCA: 91,
+      classeAppreciationCA: 'A',
+      scorePriseEnChargeDouleur: 80,
+      classePriseEnChargeDouleur: 'B',
+      noteCertification: 'Etablissement certifié avec mention. Son niveau de qualité est très satisfaisant sur les objectifs portés par la certification. Une nouvelle visite aura lieu sous 4 ans',
+      dateCertification: '2024-03-20',
     }
   }
 
@@ -1085,9 +1234,16 @@ export class ÉtablissementTerritorialTestBuilder {
     };
   }
 
-  public static créeUnBlocQualité(champsSurchargés?: Partial<ÉtablissementTerritorialQualite>) {
+  public static creeUnBlocQualiteMS(champsSurchargés?: Partial<ÉtablissementTerritorialQualite>) {
     return {
-      ...ÉtablissementTerritorialTestBuilder.qualite,
+      ...ÉtablissementTerritorialTestBuilder.qualiteMS,
+      ...champsSurchargés,
+    };
+  }
+
+  public static creeUnBlocQualiteSAN(champsSurchargés?: Partial<ÉtablissementTerritorialQualite>) {
+    return {
+      ...ÉtablissementTerritorialTestBuilder.qualiteSAN,
       ...champsSurchargés,
     };
   }
