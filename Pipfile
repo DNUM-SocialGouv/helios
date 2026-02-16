@@ -12,6 +12,7 @@ pandas = "==1.5.2"
 pyarrow = "==13.0.0"
 lxml = "4.9.1"
 numpy = "==1.26.4"
+paramiko = "4.0.0"
 
 [dev-packages]
 pylint = "==2.16.2"
@@ -25,6 +26,7 @@ pytest-cov = "4.0.0"
 pytest-watcher = "==0.2.1"
 black = "==23.1.0"
 pandas-stubs = "==1.5.2.230105"
+types-paramiko = ">4.0.0"
 
 [requires]
 python_full_version = "3.11.14" # Conserver la même version que celle dans helios-ci.yml
@@ -52,6 +54,7 @@ populate_evenements_indesirables = 'python -m datacrawler.import_evenements_inde
 populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressource_hapi'
 check_downloaded_sivss_file = 'python -m datacrawler.check_downloaded_sivss_file'
 check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_file'
+check_downloaded_sirec_file = 'python -m datacrawler.check_downloaded_sirec_file'
 populate_inspections = 'python -m datacrawler.import_inspections'
 populate_activites_mensuel = 'python -m datacrawler.import_activites_mensuel'
 populate_activites_mensuel_ej = 'python -m datacrawler.import_activites_mensuel_entite_juridique'
@@ -68,6 +71,12 @@ populate_vigierh_nature_contrats_trimestriel = 'python -m datacrawler.import_vig
 populate_les_entites_juridiques = 'python -m datacrawler.import_les_entites_juridiques'
 populate_les_etablissements_territoriaux = 'python -m datacrawler.import_les_etablissements_territoriaux'
 populate_ref_categories = 'python -m datacrawler.import_ref_categories'
+retrieveSirec = 'python -m datacrawler.download_sirec_data'
+retrieveSiicea = 'python -m datacrawler.download_siicea_data'
+retrieveSivss = 'python -m datacrawler.download_sivss_data'
+retrieveVigierh = 'python -m datacrawler.download_vigierh_data'
+retrieveFiness = 'python -m datacrawler.download_finess_data'
+retrieveDiamant = 'python -m datacrawler.download_diamant_data'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'

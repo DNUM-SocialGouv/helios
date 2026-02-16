@@ -45,6 +45,19 @@ class TestVariablesDEnvironnement:
             "CHECKED_SIICEA_DATA_PATH": "test",
             "HAPI_DATA_PATH": "test",
             "VIGIE_RH_DATA_PATH": "test",
+            "DNUM_SFTP_HOST": "test",
+            "DNUM_SFTP_PORT": "test",
+            "DNUM_SFTP_USERNAME": "test",
+            "DNUM_SFTP_PRIVATE_KEY": "test",
+            "SIREC_DATA_PATH": "test",
+            "HAPI_SFTP_PASSWORD": "test",
+            "HAPI_SFTP_USERNAME": "test",
+            "HAPI_SFTP_PORT": "test",
+            "HAPI_SFTP_HOST": "test",
+            "SFTP_HOST": "test",
+            "SFTP_PORT": "test",
+            "SFTP_USERNAME": "test",
+            "SFTP_PRIVATE_KEY": "test",
         }
 
         # WHEN

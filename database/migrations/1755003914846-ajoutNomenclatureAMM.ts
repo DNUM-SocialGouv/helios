@@ -19,8 +19,9 @@ interface ReferentielRow {
 export class AjoutNomenclatureAMM1755003914846 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        const filePath = path.join(__dirname, "../../data_set/finess/Nomenclature-AMM-V14.csv");
+        const filePath = path.join(process.cwd(), "data_set/finess/Nomenclature-AMM-V14.csv");
         const fileContent = fs.readFileSync(filePath, "utf8");
+
 
         const { data } = Papa.parse<ReferentielRow>(fileContent, {
             header: true,
