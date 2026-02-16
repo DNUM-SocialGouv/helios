@@ -16,10 +16,12 @@ export type QualiteQualiscopeViewModel = Readonly<{
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public wording: Wording;
   public etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite;
+  public autorisations: any;
 
-  constructor(wording: Wording, etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite) {
+  constructor(wording: Wording, etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite, autorisations: any) {
     this.wording = wording;
     this.etablissementTerritorialQualiteSanitaire = etablissementTerritorialQualiteSanitaire;
+    this.autorisations = autorisations;
   }
 
   public get getInspectionsEtControles(): any {
@@ -35,7 +37,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesInspectionsEtControlesNeSontPasAutorisées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.dateMiseAJourSource === "";
+    return this.autorisations.Qualité.DonnéesSiicea === 'no';
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
@@ -43,10 +45,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesReclamationsNeSontPasAutorisées(): boolean {
-    return (
-      this.etablissementTerritorialQualiteSanitaire.reclamations.length === 1 &&
-      this.etablissementTerritorialQualiteSanitaire.reclamations[0].details.length === 0
-    );
+    return this.autorisations.Qualité.DonnéesSirec === 'no';
   }
 
   public get totalAssocieAuxsoins(): number {
@@ -68,11 +67,11 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesEvenementsIndesirablesNeSontPasAutorisées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 0;
+    return this.autorisations.Qualité.DonnéesSivss === 'no';
   }
 
   public get lesDonneesHASNeSontPasAutorisees(): boolean {
-    return false;
+    return this.autorisations.Qualité.DonnéesHas === 'no';
   }
 
 
