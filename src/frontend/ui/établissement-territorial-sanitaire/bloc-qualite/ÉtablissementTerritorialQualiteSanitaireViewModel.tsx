@@ -6,14 +6,22 @@ import { Wording } from "../../../configuration/wording/Wording";
 import { transformDataInspections } from "../../../utils/transformDataInspections";
 import StringFormater from "../../commun/StringFormater";
 
-
+export type QualiteQualiscopeViewModel = Readonly<{
+  appreciationMco: string;
+  appreciationCa: string;
+  PriseEnChargeDouleur: string;
+  dateCertification: string;
+  certification: string;
+}>;
 export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   public wording: Wording;
   public etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite;
+  public autorisations: any;
 
-  constructor(wording: Wording, etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite) {
+  constructor(wording: Wording, etablissementTerritorialQualiteSanitaire: ÉtablissementTerritorialQualite, autorisations: any) {
     this.wording = wording;
     this.etablissementTerritorialQualiteSanitaire = etablissementTerritorialQualiteSanitaire;
+    this.autorisations = autorisations;
   }
 
   public get getInspectionsEtControles(): any {
@@ -29,7 +37,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesInspectionsEtControlesNeSontPasAutorisées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.inspectionsEtControles.dateMiseAJourSource === "";
+    return this.autorisations.Qualité.DonnéesSiicea === 'no';
   }
 
   public get lesReclamationsNeSontPasRenseignées(): boolean {
@@ -37,10 +45,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesReclamationsNeSontPasAutorisées(): boolean {
-    return (
-      this.etablissementTerritorialQualiteSanitaire.reclamations.length === 1 &&
-      this.etablissementTerritorialQualiteSanitaire.reclamations[0].details.length === 0
-    );
+    return this.autorisations.Qualité.DonnéesSirec === 'no';
   }
 
   public get totalAssocieAuxsoins(): number {
@@ -62,11 +67,23 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
   }
 
   public get lesEvenementsIndesirablesNeSontPasAutorisées(): boolean {
-    return this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables.length === 0;
+    return this.autorisations.Qualité.DonnéesSivss === 'no';
+  }
+
+  public get lesDonneesHASNeSontPasAutorisees(): boolean {
+    return this.autorisations.Qualité.DonnéesHas === 'no';
+  }
+
+
+  public get lesDonneesHASNeSontPasRenseignees(): boolean {
+    return !this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées &&
+      this.lesEvenementsIndesirablesNeSontPasRenseignées &&
+      this.lesInspectionsEtControlesNeSontPasRenseignées &&
+      this.lesDonneesHASNeSontPasRenseignees;
   }
 
   public get lesDonnéesQualitePasRenseignees(): string[] {
@@ -74,6 +91,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     if (this.lesInspectionsEtControlesNeSontPasRenseignées) nonRenseignees.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES);
+    if (this.lesDonneesHASNeSontPasRenseignees) nonRenseignees.push(this.wording.CERTIFICATION_QUALISCOPE);
     return nonRenseignees;
   }
 
@@ -82,6 +100,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES);
+    if (this.lesDonneesHASNeSontPasAutorisees) nonAutorisés.push(this.wording.CERTIFICATION_QUALISCOPE);
     return nonAutorisés;
   }
 
@@ -106,6 +125,29 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public get dateMiseAJourEvenementsIndesirables(): string {
     return StringFormater.formatDate(this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0]?.dateMiseAJourSource as string);
+  }
+
+  public get dateMiseAJourDonneesHAS(): string {
+    return StringFormater.formatDate("2025-08-20");
+  }
+
+  public get donneesHAS(): QualiteQualiscopeViewModel {
+    const donneesQualiscopeHAS = this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
+    return {
+      appreciationMco: donneesQualiscopeHAS?.scoreAppreciationMCO ?
+        `${donneesQualiscopeHAS?.scoreAppreciationMCO} / 100  ${donneesQualiscopeHAS?.classeAppreciationMCO}  `
+        : 'Non renseigné',
+      appreciationCa: donneesQualiscopeHAS?.scoreAppreciationCA ?
+        `${donneesQualiscopeHAS?.scoreAppreciationCA} / 100  ${donneesQualiscopeHAS?.classeAppreciationCA}  `
+        : 'Non renseigné',
+      PriseEnChargeDouleur: donneesQualiscopeHAS?.scorePriseEnChargeDouleur ?
+        `${donneesQualiscopeHAS?.scorePriseEnChargeDouleur} %  ${donneesQualiscopeHAS?.classePriseEnChargeDouleur}  `
+        : 'Non renseigné',
+      dateCertification: donneesQualiscopeHAS?.dateCertification ?
+        StringFormater.formatDate(donneesQualiscopeHAS?.dateCertification)
+        : 'Non renseigné',
+      certification: donneesQualiscopeHAS?.noteCertification ?? ''
+    };
   }
 
   public get buildEIsData(): any {

@@ -261,9 +261,9 @@ describe("La récupération d’un établissement territorial sanitaire", () => 
     });
 
     const donneesQualiteDeLÉtablissement = [
-      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
-      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
-      ÉtablissementTerritorialTestBuilder.créeUnBlocQualité(),
+      ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteSAN(),
+      ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteSAN(),
+      ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteSAN(),
     ];
     const mockedDonnesQualite = jest.fn().mockResolvedValueOnce(donneesQualiteDeLÉtablissement);
 

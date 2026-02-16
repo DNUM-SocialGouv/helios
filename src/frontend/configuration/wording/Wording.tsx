@@ -266,6 +266,10 @@ export interface Wording {
   readonly AFFICHER_PLUS: string;
   readonly AFFICHER_MOINS: string;
 
+  readonly CERTIFICATION_QUALISCOPE: string;
+  readonly DONNEES_QUALITE: string;
+  readonly DATE_CERTIFICATION: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -391,6 +395,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly HAS_TITLE: string;
   readonly SI_AUTORISATIONS_TITLE: string;
 
   // Sources courtes
@@ -407,6 +412,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly HAS: ReactElement;
   readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
 

@@ -21,6 +21,12 @@ const autorisationsMockData = {
     tauxDeVétustéConstruction: "ok",
     contributionAuxFraisDeSiège: "ok",
   },
+  Qualité: {
+    DonnéesHas: "ok",
+    DonnéesSirec: "ok",
+    DonnéesSivss: "ok",
+    DonnéesSiicea: "ok",
+  }
 };
 
 

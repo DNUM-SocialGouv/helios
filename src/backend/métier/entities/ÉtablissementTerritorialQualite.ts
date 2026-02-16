@@ -39,6 +39,17 @@ export type Inspection = Readonly<{
   saisineAutre: number;
 }>;
 
+export type QualiteQualiscopeHAS = Readonly<{
+  scoreAppreciationMCO: number;
+  classeAppreciationMCO: string;
+  scoreAppreciationCA: number;
+  classeAppreciationCA: string;
+  scorePriseEnChargeDouleur: number;
+  classePriseEnChargeDouleur: string;
+  noteCertification: string;
+  dateCertification: string;
+}>;
+
 export type InspectionsEtControles = Readonly<{
   inspectionsEtControles: Inspection[];
   dateMiseAJourSource: string;
@@ -48,6 +59,7 @@ export type ÉtablissementTerritorialQualite = Readonly<{
   reclamations: Reclamations[];
   evenementsIndesirables: EvenementsIndesirables[];
   inspectionsEtControles: InspectionsEtControles;
+  donneesQualiscopeHAS?: QualiteQualiscopeHAS;
 }>;
 
 export type InspectionControleDataTheme = {

@@ -584,7 +584,7 @@ describe("Établissement territorial médico-social loader", () => {
 
       // WHEN
       const qualite = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeQualite(numéroFinessÉtablissementTerritorial)
-      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.créeUnBlocQualité());
+      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteMS());
     });
   })
 

@@ -41,6 +41,9 @@ export class NodeEnvironmentVariables implements EnvironmentVariables {
 
   readonly VIGIE_RH_DATA_PATH: string = this.getOrElse("VIGIE_RH_DATA_PATH");
 
+  readonly HAS_DATA_PATH: string = this.getOrElse("HAS_DATA_PATH");
+
+
   private getOrElse(key: string): string {
     if (process.env[key] === "toBeSet") {
       this.logger.error(`----- WARNING ----- La variable d’environnement "${key}" est manquante.`);

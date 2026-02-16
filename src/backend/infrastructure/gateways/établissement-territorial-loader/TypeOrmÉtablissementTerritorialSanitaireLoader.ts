@@ -10,6 +10,7 @@ import { CapacitéAutorisationSanitaireModel } from "../../../../../database/mod
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
+import { QualiteQualiscopeHASModel } from "../../../../../database/models/QualiteQualiscopeHasModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
@@ -168,13 +169,19 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
 
+    const qualiteQualiscope = await (await this.orm)
+      .getRepository(QualiteQualiscopeHASModel)
+      .findOne({ where: { numéroFinessÉtablissementTerritorial } });
+
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
       dateMiseAjourSIVSS.dernièreMiseÀJour,
       inspectionsEtControles,
-      dateMiseAjourSIICEA.dernièreMiseÀJour
+      dateMiseAjourSIICEA.dernièreMiseÀJour,
+      qualiteQualiscope
     );
   }
 
@@ -198,13 +205,15 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     evenementsIndesirables: EvenementIndesirableETModel[],
     dateMiseAjourSIVSS: string,
     inspections: InspectionsControlesETModel[],
-    dateMiseAjourSiicea: string
+    dateMiseAjourSiicea: string,
+    qualiteQualiscope: QualiteQualiscopeHASModel | null
 
   ): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
       evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
-      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea),
+      donneesQualiscopeHAS: this.construisQualiteHas(qualiteQualiscope)
     }
   }
 
@@ -347,6 +356,44 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       }
     })
     return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
+  }
+
+  private readonly getCalssFromScore = (score: number) => {
+    if (score >= 79.7) {
+      return "A";
+    } else if (score >= 76.5 && score < 97.7) {
+      return "B";
+    } else if (score >= 73.1 && score < 76.5) {
+      return "C";
+    } else {
+      return "D";
+    }
+  }
+
+  private readonly getCertificationFromNote = (score: number) => {
+    if (score === 1) {
+      return "Etablissement certifié avec mention. Son niveau de qualité est très satisfaisant sur les objectifs portés par la certification. Une nouvelle visite aura lieu sous 4 ans";
+    } else if (score === 2) {
+      return "Etablissement certifié. La qualité des soins est confirmée. Une nouvelle visite se fera sous 4 ans.";
+    } else if (score === 3) {
+      return "Etablissement certifié sous conditions. La qualité des soins est à améliorer. Une nouvelle visite sera reprogrammée sous 6 à 12 mois.";
+    } else {
+      return "Etablissement non certifié. La qualité des soins est insuffisante. Une nouvelle visite sera reprogrammée sous 12 à 24 mois.";
+    }
+  }
+
+  private readonly construisQualiteHas = (donneesHas: QualiteQualiscopeHASModel | null) => {
+    if (!donneesHas) return undefined;
+    return {
+      scoreAppreciationMCO: donneesHas.scoreAppreciationMco,
+      classeAppreciationMCO: this.getCalssFromScore(donneesHas.scoreAppreciationMco),
+      scoreAppreciationCA: donneesHas.scoreAppreciationCa,
+      classeAppreciationCA: this.getCalssFromScore(donneesHas.scoreAppreciationCa),
+      scorePriseEnChargeDouleur: donneesHas.scorePriseEnChargeDouleur,
+      classePriseEnChargeDouleur: donneesHas.classePriseEnChargeDouleur,
+      noteCertification: this.getCertificationFromNote(donneesHas.noteCertification),
+      dateCertification: donneesHas.dateCertification
+    }
   }
 
   private async chargeLesReconnaissancesContractuellesModel(

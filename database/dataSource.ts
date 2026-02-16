@@ -92,6 +92,8 @@ import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761
 import { AjoutDureeMoyenneSejourDansLesProfils1762435683856 } from "./migrations/1762435683856-AjoutDureeMoyenneSejourDansLesProfils";
 import { SupprimeProfilSansLabel1765967970441 } from "./migrations/1765967970441-SupprimeProfilSansLabel";
 import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal"
+import { AjouteTableQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableQualiteHAS";
+import { AjoutCertificationHasDansLesProfils1770992415603 } from "./migrations/1770992415603-AjoutCertificationHasDansLesProfils";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -150,6 +152,7 @@ import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
+import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
@@ -249,7 +252,8 @@ const datasource = new DataSource({
     VigieRhRefMotifRuptutreContratModel,
     VigieRhRefNatureContrat,
     VigieRhNatureContratsAnnuelModel,
-    VigieRhNatureContratsTrimestrielModel
+    VigieRhNatureContratsTrimestrielModel,
+    QualiteQualiscopeHASModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -377,7 +381,9 @@ const datasource = new DataSource({
     ModificationTableProfession21762263346352,
     SupressionTableVigierhContrat1763372516438,
     AjouteTypePassageProfessions1764753717478,
-    AjoutTauxOccupationGlobal1765980868528
+    AjoutTauxOccupationGlobal1765980868528,
+    AjouteTableQualiteHAS1770300961088,
+    AjoutCertificationHasDansLesProfils1770992415603
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

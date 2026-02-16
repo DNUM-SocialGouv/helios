@@ -11,7 +11,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const autorisationsEtCapacités = filterAutorisationCapaciteMedicoSocial(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
-  const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
+  const qualite = filterQualiteMS(result.qualite, profil.Qualité);
   /* les autorisations pour le bloc Vigie RH sont les mêmes que celles du bloc ressources humaines helios.
       Vu que c'est tout ou rien pour les indicateurs ressources humaines , 
       on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
@@ -69,7 +69,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
   const activités = filterActiviteSanitaire(result.activités, profil.activités);
   const autorisationsEtCapacités = filterAutorisationSanitaire(result.autorisationsEtCapacités, profil.autorisationsEtCapacités);
 
-  const qualite = filterQualiteSanitaireEtMS(result.qualite, profil.Qualité);
+  const qualite = filterQualiteSanitaire(result.qualite, profil.Qualité);
   const allocationRessource = filterBudgetFinanceAllocationRessourcesEJ(result.allocationRessource, profil.budgetEtFinance);
   const budgetFinance = filterBudgetFinanceEJ(result.budgetFinance, profil.budgetEtFinance);
   const ressourcesHumaines = filterRessourcesHumainesSanitaire(result.ressourcesHumaines, profil.ressourcesHumaines);
@@ -222,7 +222,7 @@ const filterRessourcesHumainesSanitaire = (ressourcesHumaines: EtablissementTerr
 }
 
 
-const filterQualiteSanitaireEtMS = (qualite: any, profil: any) => {
+const filterQualiteMS = (qualite: any, profil: any) => {
   const filtredQualite = {
     reclamations: profil.DonnéesSirec === "ok" ? qualite.reclamations : [{ details: [] }],
     evenementsIndesirables: profil.DonnéesSivss === "ok" ? qualite.evenementsIndesirables : [],
@@ -230,6 +230,17 @@ const filterQualiteSanitaireEtMS = (qualite: any, profil: any) => {
   };
   return filtredQualite;
 };
+
+const filterQualiteSanitaire = (qualite: any, profil: any) => {
+  const filtredQualite = {
+    reclamations: profil.DonnéesSirec === "ok" ? qualite.reclamations : [{ details: [] }],
+    evenementsIndesirables: profil.DonnéesSivss === "ok" ? qualite.evenementsIndesirables : [],
+    inspectionsEtControles: profil.DonnéesSiicea === "ok" ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
+    donneesQualiscopeHAS: profil.DonnéesHas === "ok" ? qualite.donneesQualiscopeHAS : {},
+  };
+  return filtredQualite;
+};
+
 
 const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
   if (profil.adresse !== 'ok') {
