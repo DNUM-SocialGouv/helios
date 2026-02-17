@@ -51,7 +51,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") {
-      // @ts-ignore
+      // @ts-expect-error The name is found
       const atPiano = new ATInternet.Tracker.Tag({
         cookieSecure: true,
         sameSiteStrict: true,

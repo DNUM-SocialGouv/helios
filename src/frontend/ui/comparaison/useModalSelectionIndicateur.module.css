@@ -1,0 +1,11 @@
+.modalTitleContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modalIconContainer {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+}

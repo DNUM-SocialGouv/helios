@@ -171,6 +171,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       tauxOccupationSeances: {
         value: 0.562,
       },
+      tauxOccupationGlobal: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 0.689,
+      },
     },
     {
       année: 2021,
@@ -218,6 +222,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       tauxOccupationSeances: {
         value: 0.634,
       },
+      tauxOccupationGlobal: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 1.664,
+      },
     },
     {
       année: 2022,
@@ -264,6 +272,10 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       },
       tauxOccupationSeances: {
         value: 0.634,
+      },
+      tauxOccupationGlobal: {
+        dateMiseÀJourSource: "2021-07-07",
+        value: 0.354,
       },
     },
   ];
@@ -720,7 +732,7 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
     motifsRuptureContratLibelles: [],
     natureContratsAnnuel: [],
     natureContratsTrimestriel: [],
-    echelleTemporelle:{}
+    echelleTemporelle: {}
   };
 
   public static crée(

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactNode, useCallback } from "react";
+import { ReactNode } from "react";
 
 import styles from "./ListItem.module.css";
 
@@ -11,16 +11,16 @@ type ListItemProps = Readonly<{
 }>;
 
 export const ListItem = ({ label, lien, logo, hasFocus }: ListItemProps) => {
-  const ref = useCallback((link: HTMLAnchorElement) => {
+  const ref = (link: HTMLAnchorElement) => {
     if (link && hasFocus) {
       link.focus();
     }
-  }, []);
+  };
 
   return (
     <li className={styles["élément-liste"]}>
       {logo}
-      <Link href={lien} passHref prefetch={false} ref={ref}>
+      <Link href={lien} prefetch={false} ref={ref}>
         {label}
       </Link>
     </li>

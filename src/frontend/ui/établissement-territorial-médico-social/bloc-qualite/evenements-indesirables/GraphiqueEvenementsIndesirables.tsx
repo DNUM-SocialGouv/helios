@@ -25,12 +25,15 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
 
 
   useEffect(() => {
-    setTotal(
-      data[annéeEnCours][0].evenementsClotures.length +
-      data[annéeEnCours][0].evenementsEncours.length +
-      data[annéeEnCours][1].evenementsClotures.length +
-      data[annéeEnCours][1].evenementsEncours.length
-    );
+    async function updateTotal() {
+      setTotal(
+        data[annéeEnCours][0].evenementsClotures.length +
+        data[annéeEnCours][0].evenementsEncours.length +
+        data[annéeEnCours][1].evenementsClotures.length +
+        data[annéeEnCours][1].evenementsEncours.length
+      );
+    }
+    updateTotal();
   }, [annéeEnCours]);
 
   return (
@@ -55,7 +58,7 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
           />
         </>
       </IndicateurGraphique>
-      {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}
+      {listeAnnéesManquantes.length > 0 && <li><MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue></li>}
     </>
   );
 };

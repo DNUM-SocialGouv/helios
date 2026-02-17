@@ -24,6 +24,7 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
   libellesDeValeursManquantesTitre?: string;
   libellesDeValeursDeReferenceManquantes?: (number | string)[];
   libellesDeValeursDeReferenceManquantesTitre?: string;
+  showRefValues: boolean;
 }>;
 
 const HistogrammeVerticalAvecRef = ({
@@ -40,11 +41,14 @@ const HistogrammeVerticalAvecRef = ({
   identifiants,
   libellesDeValeursManquantes = [],
   libellesDeValeursDeReferenceManquantes = [],
+  showRefValues,
 }: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
 
   const transcriptionValeurs = valeurs.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
   const transcriptionValeursRef = valeursRef.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
+
+  const anneeEnCours = String(new Date().getFullYear());
 
   const data: ChartData = {
     datasets: [
@@ -58,7 +62,7 @@ const HistogrammeVerticalAvecRef = ({
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: valeursRef,
+        data: showRefValues ? valeursRef : [],
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -96,18 +100,27 @@ const HistogrammeVerticalAvecRef = ({
       tooltip: {
         filter: (tooltipItem) => tooltipItem.datasetIndex === 0,
         callbacks: {
+          title: function (context: any) {
+            const periode = context[0]?.label.split('-');
+            if (periode.length === 1) { return periode[0]; }
+            else { return `${periode[1]} ${periode[0]}`; }
+          },
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeurs[index];
-            const refValue = valeursRef[index];
             const valeurText = Number.isFinite(value as number) ? Math.abs(value as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
+            if (!showRefValues) {
+              return `Taux: ${valeurText}`;
+            }
+            const refValue = valeursRef[index];
             const valeurRefText = Number.isFinite(refValue as number) ? Math.abs(refValue as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`,
+            return [`Taux: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
           },
         },
-      },      // @ts-ignore
+      },
+      // @ts-expect-error Param non standard utilisé
       rotationRef: { valeursRef } as any,
     },
     scales: {
@@ -124,7 +137,7 @@ const HistogrammeVerticalAvecRef = ({
           color: '#000',
           callback: (_tickValue, index) => tickFormatter(type, index),
           font: function (context: any) {
-            if (context.index === libelles.length - 1) {
+            if (context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: 'bold' };
             }
             return {};
@@ -153,6 +166,8 @@ const HistogrammeVerticalAvecRef = ({
       },
       y: {
         display: false,
+        min: 0,
+        suggestedMax: Math.max(50, ...valeurs.filter((v) => v !== null).filter((v) => Number.isFinite(v))),
       },
     }
   }
@@ -188,36 +203,35 @@ const HistogrammeVerticalAvecRef = ({
   return (
     <>
       <Bar
-        // @ts-ignore
-        data={data}
+        data={data as ChartData<"bar">}
         options={optionsHistogrammeVertical}
-        plugins={[rotationRefPlugin]}
+        plugins={showRefValues ? [rotationRefPlugin] : []}
       />
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
 
         ]}
-      />
+      />}
       {libellesDeValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesDeValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesDeValeursDeReferenceManquantes.length > 0 && (
+      {showRefValues && libellesDeValeursDeReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesDeValeursDeReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
       <Transcription
-        entêteLibellé={wording.ANNÉE}
+        entêteLibellé={wording.PERIODE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={identifiants}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={[transcriptionValeurs, transcriptionValeursRef]}
+        valeurs={showRefValues ? [transcriptionValeurs, transcriptionValeursRef] : [transcriptionValeurs]}
       />
     </>
   );

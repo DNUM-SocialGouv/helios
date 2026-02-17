@@ -1,5 +1,4 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend } from "chart.js";
-import { useMemo } from "react";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 
@@ -21,121 +20,98 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
-  donneesDepartsEmbauches: DepartEmbauche[]
+  donneesDepartsEmbauches: DepartEmbauche[];
+  showRefValues: boolean;
 }>;
 
-const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsEmbauches }: GraphiqueDepartEmbauchesAnnuelProps) => {
+const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsEmbauches, showRefValues }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
 
-  const {
-    libelles,
-    donneesDeparts,
-    donneesEmbauches,
-    donneesDepartsRef,
-    donneesEmbauchesRef,
-    donneesDepartsExtension,
-    donneesEmbauchesExtension,
-    libellesValeursManquantes,
-    libellesValeursReferenceManquantes
-  } = useMemo(() => {
-    const libelles = donneesDepartsEmbauches.map((donnee) => donnee.annee.toString());
+  const libelles = donneesDepartsEmbauches.map((donnee) => donnee.annee.toString());
 
-    const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
-      const valeur = donnee.depart;
-      if (Number.isFinite(valeur)) {
-        return -Math.abs(valeur);
-      }
-      return null;
-    });
-    const donneesEmbauches = donneesDepartsEmbauches.map((donnee) => {
-      const valeur = donnee.embauche;
-      if (Number.isFinite(valeur)) {
-        return valeur;
-      }
-      return null;
-    });
-    const donneesDepartsRef = donneesDepartsEmbauches.map((donnee) => {
-      const valeur = donnee.departRef;
-      if (Number.isFinite(valeur)) {
-        return -Math.abs(valeur);
-      }
-      return null;
-    });
-    const donneesEmbauchesRef = donneesDepartsEmbauches.map((donnee) => {
-      const valeur = donnee.embaucheRef;
-      if (Number.isFinite(valeur)) {
-        return valeur;
-      }
-      return null;
-    });
+  const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
+    const valeur = donnee.depart;
+    if (Number.isFinite(valeur)) {
+      return -Math.abs(valeur);
+    }
+    return null;
+  });
+  const donneesEmbauches = donneesDepartsEmbauches.map((donnee) => {
+    const valeur = donnee.embauche;
+    if (Number.isFinite(valeur)) {
+      return valeur;
+    }
+    return null;
+  });
+  const donneesDepartsRef = donneesDepartsEmbauches.map((donnee) => {
+    const valeur = donnee.departRef;
+    if (Number.isFinite(valeur)) {
+      return -Math.abs(valeur);
+    }
+    return null;
+  });
+  const donneesEmbauchesRef = donneesDepartsEmbauches.map((donnee) => {
+    const valeur = donnee.embaucheRef;
+    if (Number.isFinite(valeur)) {
+      return valeur;
+    }
+    return null;
+  });
 
-    const libellesValeursManquantes: string[] = [];
-    const libellesValeursReferenceManquantes: string[] = [];
+  const libellesValeursManquantes: string[] = [];
+  const libellesValeursReferenceManquantes: string[] = [];
 
-    const ajouterLibellesManquants = (
-      valeurs: (number | null)[],
-      construireLibelle: (index: number) => string,
-      accumulateur: string[]
-    ) => {
-      for (const [index, valeur] of valeurs.entries()) {
-        if (!Number.isFinite(valeur)) {
-          const libelle = construireLibelle(index);
-          if (!accumulateur.includes(libelle)) {
-            accumulateur.push(libelle);
-          }
+  const ajouterLibellesManquants = (
+    valeurs: (number | null)[],
+    construireLibelle: (index: number) => string,
+    accumulateur: string[]
+  ) => {
+    for (const [index, valeur] of valeurs.entries()) {
+      if (!Number.isFinite(valeur)) {
+        const libelle = construireLibelle(index);
+        if (!accumulateur.includes(libelle)) {
+          accumulateur.push(libelle);
         }
       }
-    };
+    }
+  };
 
-    ajouterLibellesManquants(
-      donneesDeparts,
-      (index) => `${wording.DEPARTS}-${libelles[index]}`,
-      libellesValeursManquantes
-    );
-    ajouterLibellesManquants(
-      donneesEmbauches,
-      (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-      libellesValeursManquantes
-    );
-    ajouterLibellesManquants(
-      donneesDepartsRef,
-      (index) => `${wording.DEPARTS}-${libelles[index]}`,
-      libellesValeursReferenceManquantes
-    );
-    ajouterLibellesManquants(
-      donneesEmbauchesRef,
-      (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-      libellesValeursReferenceManquantes
-    );
+  ajouterLibellesManquants(
+    donneesDeparts,
+    (index) => `${wording.DEPARTS}-${libelles[index]}`,
+    libellesValeursManquantes
+  );
+  ajouterLibellesManquants(
+    donneesEmbauches,
+    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
+    libellesValeursManquantes
+  );
+  ajouterLibellesManquants(
+    donneesDepartsRef,
+    (index) => `${wording.DEPARTS}-${libelles[index]}`,
+    libellesValeursReferenceManquantes
+  );
+  ajouterLibellesManquants(
+    donneesEmbauchesRef,
+    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
+    libellesValeursReferenceManquantes
+  );
 
-    const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
-      const valeur = donneesDeparts[idx];
-      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
-        return -Math.max(0, (valeur as number) - (valeurRef as number));
-      }
-      return 0;
-    });
-    const donneesEmbauchesExtension = donneesEmbauchesRef.map((valeurRef, idx) => {
-      const valeur = donneesEmbauches[idx];
-      if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
-        return Math.max(0, (valeurRef as number) - (valeur as number));
-      }
-      return 0;
-    });
-
-    return {
-      libelles,
-      donneesDeparts,
-      donneesEmbauches,
-      donneesDepartsRef,
-      donneesEmbauchesRef,
-      donneesDepartsExtension,
-      donneesEmbauchesExtension,
-      libellesValeursManquantes,
-      libellesValeursReferenceManquantes
-    };
-  }, [donneesDepartsEmbauches]);
+  const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
+    const valeur = donneesDeparts[idx];
+    if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+      return -Math.max(0, (valeur as number) - (valeurRef as number));
+    }
+    return 0;
+  });
+  const donneesEmbauchesExtension = donneesEmbauchesRef.map((valeurRef, idx) => {
+    const valeur = donneesEmbauches[idx];
+    if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
+      return Math.max(0, (valeurRef as number) - (valeur as number));
+    }
+    return 0;
+  });
 
   const valeursNegativesRefPlugin = {
     id: "valeursNegativesRef",
@@ -214,14 +190,14 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
       },
       {
         label: "embauches-extension",
-        data: donneesEmbauchesExtension,
+        data: showRefValues ? donneesEmbauchesExtension : [],
         backgroundColor: couleurExtensionHistogrammeJaune,
         stack: "combined",
         maxBarThickness: 60,
       },
       {
         label: "depart-extension",
-        data: donneesDepartsExtension,
+        data: showRefValues ? donneesDepartsExtension : [],
         backgroundColor: couleurExtensionHistogrammeOrangeClair,
         stack: "combined",
         maxBarThickness: 60,
@@ -254,15 +230,20 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
           label: function (context: any) {
             const index = context.dataIndex;
             const datasetLabel = context.dataset.label;
-            const embaucheChart = datasetLabel.toLowerCase().includes("embauches");
+            const embaucheChart = datasetLabel.toLowerCase() === wording.EMBAUCHES.toLowerCase();
+            const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-
             const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+
+            if (!showRefValues) {
+              return `${label}: ${valeurText}`;
+            }
+
+            const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
             const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`,
+            return [`${label}: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
           },
         },
@@ -308,19 +289,26 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     },
   };
 
+  const transcriptionIdentifiants = showRefValues
+    ? [wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]
+    : [wording.DEPARTS, wording.EMBAUCHES];
+
+  const transcriptionValeurs = showRefValues
+    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
         data={dataSet}
-        /* @ts-ignore */
-        options={options}
-        plugins={[valeursNegativesRefPlugin, valeursPositivesRefPlugin]} />
+        options={options as ChartOptions<"bar">}
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesValeursReferenceManquantes.length > 0 && (
+      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
@@ -330,19 +318,23 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         items={[
           { color: couleurDuFondHistogrammeJaune, label: wording.EMBAUCHES, circle: true },
           { color: couleurDuFondHistogrammeOrangeClair, label: wording.DEPARTS, circle: true },
-          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
-
         ]}
       />
+      {showRefValues && <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+        ]}
+      />}
       <Transcription
         disabled={false}
-        entêteLibellé={wording.ANNÉE}
+        entêteLibellé={wording.PERIODE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.DEPARTS, wording.DEPARTS_REF, wording.EMBAUCHES, wording.EMBAUCHES_REF]}
+        identifiants={transcriptionIdentifiants}
         libellés={libelles}
         nomGraph={wording.DEPARTS_EMBAUCHES}
-        valeurs={[donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]}
+        valeurs={transcriptionValeurs}
       />
     </div>
   );

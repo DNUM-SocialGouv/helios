@@ -8,13 +8,13 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
+import StringFormater from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 const MIN_VALUE = 5;
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, créeLeLibelléDuTooltip?: Function, cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, créeLeLibelléDuTooltip?: (wording: Wording) => (ctx: any) => string | string[], cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
   let tooltip;
   if (créeLeLibelléDuTooltip) {
     tooltip = { callbacks: { label: créeLeLibelléDuTooltip(wording) } }
@@ -49,7 +49,7 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, cr
         offset: -2,
         clamp: true,
       },
-      // @ts-ignore
+      // @ts-expect-error Param non standard utilisé
       htmlLegend: { containerID: idDeLaLégende },
       legend: { display: false },
       tooltip: tooltip,
@@ -87,7 +87,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   libellés: (string | number)[];
   valeurs: (string | null)[][];
   idDeLaLégende: string;
-  créeLeLibelléDuTooltip?: Function;
+  créeLeLibelléDuTooltip?: (wording: Wording) => (ctx: any) => string | string[];
   annéesTotales: number;
   grapheMensuel: boolean;
   cacheLesValeursBasse?: boolean;
@@ -111,6 +111,8 @@ export function HistogrammeVerticalABandes(props: Readonly<{
         return valeur;
       }
       if (props.cacheLesValeursBasse && numValue > 0 && numValue <= MIN_VALUE) {
+        // La valeur est set utilisée uniquement au premier render
+        // eslint-disable-next-line react-hooks/immutability
         hasSomeValuesToHide = true;
         return wording.PLACEHOLDER_VALEUR_INFERIEUR_A_5;
       }

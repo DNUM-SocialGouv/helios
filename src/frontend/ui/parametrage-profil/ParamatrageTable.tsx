@@ -15,15 +15,16 @@ type ProfileTableProps = Readonly<{
   creating: boolean;
   name: string;
   profileId?: number;
+  onError?: (message: string) => void;
 }>;
 
-export const ProfileTable = ({ codeValue, profileValue, creating, name, profileId }: ProfileTableProps) => {
+export const ProfileTable = ({ codeValue, profileValue, creating, name, profileId, onError = () => { } }: ProfileTableProps) => {
   const { wording, paths } = useDependencies();
   const { data } = useSession();
   const router = useRouter();
   const [userId, setUserId] = useState('');
 
-  const { updateProfile, saveProfile } = useParametrage();
+  const { updateProfile, saveProfile, ErrorKind } = useParametrage();
   const [editableInstitutionEJValues, setEditableInstitutionEJValues] = useState<any>(profileValue.institution.profilEJ);
   const [editableAutreRegionEJValues, setEditableAutreRegionEJValues] = useState<any>(profileValue.autreRegion.profilEJ);
 
@@ -34,26 +35,53 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
   const [editableAutreRegionETSANValues, setEditableAutreRegionETSANValues] = useState<any>(profileValue.autreRegion.profilETSanitaire);
 
   useEffect(() => {
-    if (data) {
-      setUserId(data.user.idUser);
+    async function updateUserId() {
+      if (data) {
+        setUserId(data.user.idUser);
+      }
     }
+    updateUserId();
   }, [data]);
 
 
-  const saveButtonClick = () => {
+  const saveButtonClick = async () => {
     if (creating) {
-      saveProfile(userId, codeValue, {
-        institution: {
-          profilEJ: editableInstitutionEJValues,
-          profilMédicoSocial: editableInstitutionETMSValues,
-          profilETSanitaire: editableInstitutionETSANValues,
-        },
-        autreRegion: {
-          profilEJ: editableAutreRegionEJValues,
-          profilMédicoSocial: editableAutreRegionETMSValues,
-          profilETSanitaire: editableAutreRegionETSANValues,
-        },
-      });
+      if (codeValue.trim() === "") {
+        onError(wording.NEW_PROFILE_LABEL_MANDATORY);
+        window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll en haut de page pour voir l'erreur
+      } else {
+        const result = await saveProfile(userId, codeValue, {
+          institution: {
+            profilEJ: editableInstitutionEJValues,
+            profilMédicoSocial: editableInstitutionETMSValues,
+            profilETSanitaire: editableInstitutionETSANValues,
+          },
+          autreRegion: {
+            profilEJ: editableAutreRegionEJValues,
+            profilMédicoSocial: editableAutreRegionETMSValues,
+            profilETSanitaire: editableAutreRegionETSANValues,
+          },
+        });
+
+        switch (result) {
+          case ErrorKind.OK:
+            // On ne devrais pas arriver ici, le router est déjà appelé avant le return
+            break;
+          case ErrorKind.EMPTY_LABEL:
+            onError(wording.NEW_PROFILE_LABEL_MANDATORY);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            break;
+          case ErrorKind.LABEL_ALREADY_EXISTS:
+            onError(wording.NEW_PROFILE_LABEL_ALREADY_EXISTS);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            break;
+          case ErrorKind.UNKNOWN_ERROR:
+          default:
+            onError(wording.SOMETHING_WENT_WRONG);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            break;
+        }
+      }
     } else {
       updateProfile(userId, codeValue, {
         institution: {
@@ -101,7 +129,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
       </div>
       <div className="fr-grid-row fr-mt-2w">
         <div className="fr-col">
-          <button className="fr-btn fr-mr-2w" onClick={() => saveButtonClick()}>
+          <button className="fr-btn fr-mr-2w" disabled={creating && codeValue.trim() === ""} onClick={() => saveButtonClick()}>
             Sauvegarder
           </button>
           <button className="fr-btn fr-btn--secondary fr-mr-2w" onClick={() => cancelButtonClick()}>

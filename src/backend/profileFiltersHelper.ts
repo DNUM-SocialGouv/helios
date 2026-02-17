@@ -323,6 +323,11 @@ const filterActiviteMedicoSocial = (activites: any[], profil: any) => {
       defaultValue: { dateMiseÀJourSource: "", value: "" }
     },
     {
+      field: 'tauxOccupationGlobal',
+      condition: profil.tauxOccupationGlobal === "ok",
+      defaultValue: { dateMiseÀJourSource: "", value: "" }
+    },
+    {
       field: 'tauxOccupationExternat',
       condition: profil.tauxOccupationExternat === "ok",
       defaultValue: { value: "" }
@@ -535,8 +540,7 @@ const filterBudgetFinanceAllocationRessourcesEJ = (allocationRessource: Allocati
       alrSub.enveloppe = profil.allocationDeRessources === "ok" ? alrSub.enveloppe : "";
       alrSub.sousEnveloppe = profil.allocationDeRessources === "ok" ? alrSub.sousEnveloppe : "";
       alrSub.modeDeDélégation = profil.allocationDeRessources === "ok" ? alrSub.modeDeDélégation : "";
-      /*  @ts-ignore */
-      alrSub.montantNotifié = profil.allocationDeRessources === "ok" ? alrSub.montantNotifié : "";
+      alrSub.montantNotifié = profil.allocationDeRessources === "ok" ? alrSub.montantNotifié : 0;
     }
   }
 

@@ -18,14 +18,15 @@ type IndicateurProps = Readonly<{
   source: ReactElement;
   prefixSelect?: string;
   echelleTemporel?: EchelleTemporelleVigieRh;
+  className?: string;
 }>;
 
-export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect, echelleTemporel }: IndicateurProps) => {
+export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateDeMiseÀJour, identifiant, nomDeLIndicateur, source, prefixSelect, echelleTemporel, className = "" }: IndicateurProps) => {
   const { wording } = useDependencies();
   const [estCeOuvert, setEstCeOuvert] = useState(false);
 
   return (
-    <li className={styles["print-only"]}>
+    <li className={styles["print-only"] + " " + className}>
       <div className={styles["mise-a-jour-source"]}>
         <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
           {nomDeLIndicateur}

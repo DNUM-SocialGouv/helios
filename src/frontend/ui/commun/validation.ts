@@ -1,9 +1,9 @@
-export default function isEmail(emailAdress : string) : Boolean{
-    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+export default function isEmail(emailAdress: string): boolean {
+  const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-  if (emailAdress.match(regex)) 
-    return true; 
+  if (emailAdress.match(regex))
+    return true;
 
-   else 
-    return false; 
+  else
+    return false;
 }

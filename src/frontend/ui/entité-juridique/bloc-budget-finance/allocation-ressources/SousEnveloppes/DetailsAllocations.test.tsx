@@ -4,12 +4,13 @@ import React from 'react';
 import { DetailsAllocations } from './DetailsAllocations';
 
 // Mocking the useDependencies hook
-jest.mock('../../../../commun/contexts/useDependencies', () => ({
+jest.mock<typeof import('../../../../commun/contexts/useDependencies')>('../../../../commun/contexts/useDependencies', () => ({
   useDependencies: () => ({
     wording: {
       REPARTITION_DES_SOUS_ENVELOPPES: 'Mocked Repartition des sous enveloppes',
     },
-  }),
+  } as any),
+  DependenciesProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 const testData = [

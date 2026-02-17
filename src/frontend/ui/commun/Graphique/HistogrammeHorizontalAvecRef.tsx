@@ -1,7 +1,8 @@
 import { BarElement, Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
+import { Context } from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
 
-import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
+import { couleurDesTraitsRefHistogramme, CouleurHistogramme, couleurIdentifiant } from "./couleursGraphique";
 import styles from "./HistogrammeHorizontaux.module.css";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
@@ -22,6 +23,8 @@ type HistogrammeHorizontalAvecRefProps = {
   refsManquantsTitre?: string;
   refsManquants: string[];
   epaisseur?: "FIN" | "EPAIS";
+  showRefValues: boolean;
+  valeursAdditionnelles?: (string | number)[];
 };
 const HistogrammeHorizontalAvecRef = ({
   etabFiness,
@@ -35,11 +38,13 @@ const HistogrammeHorizontalAvecRef = ({
   libelles,
   refsManquantsTitre,
   refsManquants,
-  identifiants
+  identifiants,
+  showRefValues,
+  valeursAdditionnelles
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
 
-  const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
+  const ASPECT_RATIO = epaisseur === "EPAIS" ? 11 : 15;
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
 
   const data: ChartData = {
@@ -54,7 +59,7 @@ const HistogrammeHorizontalAvecRef = ({
       },
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.secondPlan),
-        data: valeursDesHistogrammesRef,
+        data: showRefValues ? valeursDesHistogrammesRef : [],
         datalabels: { display: false },
         maxBarThickness: 60,
         type: "bar",
@@ -66,7 +71,7 @@ const HistogrammeHorizontalAvecRef = ({
 
   const optionsHistogramme: ChartOptions<"bar"> = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     animation: false,
     indexAxis: "y",
     scales: {
@@ -78,6 +83,7 @@ const HistogrammeHorizontalAvecRef = ({
         border: {
           display: false
         },
+        ticks: { color: couleurIdentifiant },
         grid: { drawOnChartArea: false, drawTicks: false },
       },
     },
@@ -87,17 +93,34 @@ const HistogrammeHorizontalAvecRef = ({
       intersect: true,
       mode: "index",
     },
+    layout: {
+      padding: {
+        right: valeursAdditionnelles ? 40 : 0,
+      },
+    },
     plugins: {
       datalabels: {
-        align: "start",
         color: "#000",
-        anchor: () => {
-          return "end";
-        },
+        anchor: "end",
         font: {
           family: "Marianne",
           size: 12,
           weight: 700,
+        },
+        labels: {
+          title: {
+            align: "start",
+            formatter: (value: number) => value,
+          },
+          pourcentage: {
+            align: "end",
+            display: (context: Context) => {
+              return (valeursAdditionnelles && valeursAdditionnelles[context.dataIndex]) ? true : false;
+            },
+            formatter: (_value: number, context: Context) => {
+              return valeursAdditionnelles?.[context.dataIndex] ?? "";
+            },
+          },
         },
       },
       legend: { display: false },
@@ -107,15 +130,27 @@ const HistogrammeHorizontalAvecRef = ({
           label: function (context: any) {
             const index = context.dataIndex;
             const value = valeursDesHistogrammes[index];
+            let label = '';
+            if (nomGraph === wording.DUREE_CDD) {
+              label = "CDD";
+            } else if (nomGraph === wording.REPARTITION_EFFECTIFS) {
+              label = `Effectif`;
+            } else {
+              label = `Nombre`;
+            }
+            if (!showRefValues) {
+              return `${label}: ${value}`;
+            }
+
             const refValue = valeursDesHistogrammesRef[index];
             const refValueText = refValue ? `${refValue} ` : 'Non renseignée'
 
-            return [`Valeur: ${value}`,
+            return [`${label}: ${value}`,
             `Valeur de référence: ${refValueText} `];
           },
         },
       },
-      // @ts-ignore
+      // @ts-expect-error custom property
       valeursDeReference: { valeursDesHistogrammesRef } as any,
     },
   };
@@ -149,20 +184,23 @@ const HistogrammeHorizontalAvecRef = ({
     },
   }
 
+  const valeursTranscriptions = showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] :
+    valeursAdditionnelles ? [valeursDesHistogrammes, valeursAdditionnelles] : [valeursDesHistogrammes];
+
   return (
     <>
       <div className={styles["flexContainer"]}>
-        {/* @ts-ignore */}
-        <Bar data={data} options={{ ...optionsHistogramme, aspectRatio }} plugins={[valeursRefPlugin]}
+        <Bar data={data as ChartData<"bar">}
+          options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
         />
       </div>
-      <ColorLabel
+      {showRefValues && <ColorLabel
         classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
         items={[
           { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
         ]}
-      />
-      {refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
+      />}
+      {showRefValues && refsManquants.length > 0 && <MiseEnExergue>{`${refsManquantsTitre} ${refsManquants.join(", ")}`}</MiseEnExergue>}
       <Transcription
         entêteLibellé={enteteLibelle}
         etabFiness={etabFiness}
@@ -170,7 +208,7 @@ const HistogrammeHorizontalAvecRef = ({
         identifiants={identifiants}
         libellés={libelles}
         nomGraph={nomGraph}
-        valeurs={[valeursDesHistogrammes, valeursDesHistogrammesRef]}
+        valeurs={valeursTranscriptions}
       />
     </>
   );

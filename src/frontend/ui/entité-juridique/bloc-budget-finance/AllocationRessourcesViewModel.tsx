@@ -13,7 +13,7 @@ import { annéesManquantes } from "../../../utils/dateUtils";
 import { CouleurHistogramme, noir } from "../../commun/Graphique/couleursGraphique";
 import { DonutNoCenterText, couleurDesArcsDuDonut, getRandomBlueShade } from "../../commun/Graphique/DonutNoCenterText";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 

@@ -2,11 +2,11 @@
 
 import { Chart as ChartJS, Tooltip, Legend } from "chart.js";
 import { TreemapController, TreemapElement } from "chartjs-chart-treemap";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Chart } from "react-chartjs-2";
 
 import { useDependencies } from "../../../commun/contexts/useDependencies";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
 // Enregistrer treemap + plugins une seule fois (au chargement du module)
@@ -271,12 +271,14 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           bodyColor: "#fff",
           displayColors: true,
           callbacks: {
-            title: () => "", // pas de titre “v”
+            title: (ti: any) => {
+              const d = ti[0].raw?._data;
+              return d?.name ?? "";
+            },
             label: (ti: any) => {
-              const d = ti.raw?._data;
               const v = Number(ti.raw?.v ?? 0);
               const pct = total > 0 ? (v / total) * 100 : 0;
-              return d?.name ? `${d.name} ` : `(${pct.toFixed(1)}%)`;
+              return `Effectif: ${StringFormater.round(pct, 0)}%`;
             },
           },
         },
@@ -286,8 +288,9 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           total,
           padding: 6,
           fontSize: 12,
+          fontFamily: "Marianne",
           lineHeight: 14,
-          fontWeight: "500",
+          fontWeight: "700",
         },
       },
       // Pas d’axes sur un treemap
@@ -322,7 +325,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
           <div style={{ marginTop: "1rem" }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               {legendItems.map((entry) => (
-                <div key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.875rem" }}>
+                <div className="fr-label" key={entry.label} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontFamily: FONT_FAMILY, fontSize: "0.8rem" }}>
                   <span aria-hidden style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", backgroundColor: entry.color }} />
                   <span>{entry.label}</span>
                 </div>
@@ -333,7 +336,7 @@ export default function GraphiqueTreemapRepartitionEffectif({ etabFiness, etabTi
       </div>
       <Transcription
         disabled={!transcriptionLibellés.length}
-        entêteLibellé={wording.VIGIE_RH_CATEGORIE}
+        entêteLibellé={wording.FILIERE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         identifiants={transcriptionIdentifiants}

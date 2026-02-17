@@ -24,6 +24,11 @@ describe("La page entité juridique - bloc ressources humaines", () => {
   };
 
   describe("L’indicateur du nombre d’ETP PM", () => {
+    beforeAll(() => {
+      jest.useFakeTimers(); // Use modern fake timers
+      jest.setSystemTime(new Date('2025-09-09')); // Set the frozen date
+    });
+
     it("affiche l’intitulé de l’indicateur du nombre d’ETP PM, avec sa date de mise à jour, sa source et un bouton pour accéder aux détails", () => {
 
       renderFakeComponent(<BlocRessourcesHumainesEntiteJuridique entiteJuridiqueRessourcesHumainesViewModel={ressourcesHumainesViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />);

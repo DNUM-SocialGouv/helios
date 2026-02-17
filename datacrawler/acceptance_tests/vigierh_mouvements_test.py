@@ -1,3 +1,5 @@
+from freezegun import freeze_time
+
 import pandas as pd
 from datacrawler.import_vigie_rh_mouvements_trimestriels import import_donnees_mouvements_rh_trimestriels
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_MOUVEMENTS_RH, TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS
@@ -39,6 +41,7 @@ class TestImportVigieRhMouvements:
             }
         )
         pd.testing.assert_frame_equal(mouvements_enregistres.sort_index(axis=1), mouvements_attendus.sort_index(axis=1))
+    @freeze_time("2025-09-09")
     def test_import_vigie_rh_mouvements_trimestriels(self) -> None:
         chemin_local_du_fichier_mouvements = 'data_test/entrée/vigie_rh/vigierh_etablissement_trimestriel_2025_09_09.parquet'
         import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements, base_de_données_test, mocked_logger )

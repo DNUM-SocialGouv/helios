@@ -45,63 +45,34 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
   const finessNumbersListFromTable = listFinessFromStorage ? JSON.parse(listFinessFromStorage) : [];
 
   useEffect(() => {
-    let list = userContext?.favorisLists.slice();
-    if (list) {
-      const favorisListIndex = list.findIndex((list) => list.isFavoris);
-      const favorisList = list.splice(favorisListIndex, 1);
-      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
-      list = favorisList.concat(...list);
+    async function updateSortedFavorisList() {
+      let list = userContext?.favorisLists.slice();
+      if (list) {
+        const favorisListIndex = list.findIndex((list) => list.isFavoris);
+        const favorisList = list.splice(favorisListIndex, 1);
+        list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
+        list = favorisList.concat(...list);
+      }
+      setSortedFavorisList(list);
     }
-
-    setSortedFavorisList(list);
+    updateSortedFavorisList();
   }, [userContext?.favorisLists])
 
   useEffect(() => {
-    if (isAtBottom && comparaisonContext) {
-      if (comparaisonContext.page < lastPage) {
-        comparaisonContext.setPage(prevPage + 1);
-        setPrevPage(prevPage + 1);
+    async function updatePageDataOnScroll() {
+      if (isAtBottom && comparaisonContext) {
+        if (comparaisonContext.page < lastPage) {
+          comparaisonContext.setPage(prevPage + 1);
+          setPrevPage(prevPage + 1);
+        }
+        setIsAtBottom(false);
       }
-      setIsAtBottom(false);
+      if (resultats) {
+        setCurrentPageData(resultats);
+      }
     }
-    if (resultats) {
-      setCurrentPageData(resultats);
-    }
+    updatePageDataOnScroll();
   }, [resultats, isAtBottom]);
-
-  // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
-  useEffect(() => {
-    if (!arraysAreEqual(currentPageData, listData.slice(-20))) {
-      const collectData = comparaisonContext?.page === 1 ? currentPageData : [...listData, ...currentPageData];
-      setListData(collectData);
-    }
-  }, [currentPageData]);
-
-  // lancer la recherche quand la page change
-  useEffect(() => {
-    lancerLaRecherche();
-    setReload(false);
-  }, [prevPage, reload]);
-
-  // detect filtre(s) changes to update results
-  useEffect(() => {
-    if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite || isChangedCategories || isChangedStructure) {
-      comparaisonContext?.setPage(1);
-      setPrevPage(1);
-      if (isChangedZG || isChangedCapacite || isChangedActivite || isChangedCategories || isChangedStructure) {
-        setIsChangedCapacite(false);
-        setIsChangedZG(false);
-        setIsChangedActivite(false);
-        setIsChangedCategories(false);
-        setIsChangedStructure(false);
-        setReload(true);
-      }
-    }
-  }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
-
-  useEffect(() => {
-    setNewEtablissements([...new Set([...newEtablissementsList, ...newEtablissementsRecherche])])
-  }, [newEtablissementsList, newEtablissementsRecherche])
 
   // check if lits are equals or not
   const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
@@ -112,6 +83,53 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
     }
     return true;
   };
+
+
+  // update la list des resultats ( ajout des resultats de la nouvelle page à la list )
+  useEffect(() => {
+    async function addNewDataOnPageChange() {
+      if (!arraysAreEqual(currentPageData, listData.slice(-20))) {
+        const collectData = comparaisonContext?.page === 1 ? currentPageData : [...listData, ...currentPageData];
+        setListData(collectData);
+      }
+    }
+    addNewDataOnPageChange();
+  }, [currentPageData]);
+
+  // lancer la recherche quand la page change
+  useEffect(() => {
+    async function launchSearchOnPageChange() {
+      lancerLaRecherche();
+      setReload(false);
+    }
+    launchSearchOnPageChange();
+  }, [prevPage, reload]);
+
+  // detect filtre(s) changes to update results
+  useEffect(() => {
+    async function updateResultsOnFilterChange() {
+      if (isChangedZG || isChangedCapacite || comparaisonContext?.terme || isChangedActivite || isChangedCategories || isChangedStructure) {
+        comparaisonContext?.setPage(1);
+        setPrevPage(1);
+        if (isChangedZG || isChangedCapacite || isChangedActivite || isChangedCategories || isChangedStructure) {
+          setIsChangedCapacite(false);
+          setIsChangedZG(false);
+          setIsChangedActivite(false);
+          setIsChangedCategories(false);
+          setIsChangedStructure(false);
+          setReload(true);
+        }
+      }
+    }
+    updateResultsOnFilterChange();
+  }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
+
+  useEffect(() => {
+    async function updateEtablissementsList() {
+      setNewEtablissements([...new Set([...newEtablissementsList, ...newEtablissementsRecherche])])
+    }
+    updateEtablissementsList();
+  }, [newEtablissementsList, newEtablissementsRecherche])
 
   // fonction de la fermeture du composent
   const onClickFermer = () => {
@@ -228,6 +246,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
             <span>{wording.LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE}</span>
             <div className="fr-select-group">
               <select
+                aria-label="Sélectionnez une liste de favoris"
                 className={"fr-select fr-icon-arrow-down-s-fill " + styles["ListeSelecteur"]}
                 onChange={handleOnChangeListe}>
                 <option selected value=""> Mes listes</option>

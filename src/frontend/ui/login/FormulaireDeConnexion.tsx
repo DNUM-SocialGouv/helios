@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import React, { useState, FormEvent, useContext } from "react";
+import { useState, FormEvent, useContext } from "react";
 
 import styles from "./Connexion.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -129,13 +129,13 @@ export const FormulaireDeConnexion = () => {
                 </div>
                 <div aria-live="assertive" className="fr-messages-group" id="password-1758-input-messages"></div>
                 <p>
-                  <Link className={"fr-link " + styles["links-underline"]} href="/mot-passe-oublie">
+                  <Link className="fr-link" href="/mot-passe-oublie">
                     {wording.FORGET_PASSEWORD}
                   </Link>
                 </p>
                 <p>
                   {wording.CONNEXION_MOT_DE_PASSE_OUBLIE}
-                  <Link className={"fr-link " + styles["links-underline"]} href="/registration">
+                  <Link className="fr-link" href="/registration">
                     S&apos;inscrire
                   </Link>
                 </p>

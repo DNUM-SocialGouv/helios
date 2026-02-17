@@ -53,6 +53,7 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
       <ul className={"indicateurs " + styles["budget"]}>
         {peutAfficherCompteDeResultat && (
           <CompteDeResultat
+            className={styles["fullWidth"]}
             entitéJuridiqueBudgetFinanceViewModel={entitéJuridiqueBudgetFinanceViewModel}
             etabFiness={etabFiness}
             etabTitle={etabTitle}

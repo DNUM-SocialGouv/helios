@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import { SessionProvider } from "next-auth/react";
 
@@ -67,7 +67,8 @@ describe("La page établissement territorial sanitaire - ressources humaines", (
     const ressourcesHumaines = screen.getByRole("region", {
       name: wording.TITRE_BLOC_RESSOURCES_HUMAINES,
     });
-    expect(ressourcesHumaines).toBeDefined();
+    const title = within(ressourcesHumaines).getByRole("heading", { level: 2 });
+    expect(title.textContent).toBe(wording.TITRE_BLOC_RESSOURCES_HUMAINES);
   });
 
   it("affiche le bloc ressources humaines pour les établissements privés non lucratifs", () => {
@@ -94,7 +95,8 @@ describe("La page établissement territorial sanitaire - ressources humaines", (
     const ressourcesHumaines = screen.getByRole("region", {
       name: wording.TITRE_BLOC_RESSOURCES_HUMAINES,
     });
-    expect(ressourcesHumaines).toBeDefined();
+    const title = within(ressourcesHumaines).getByRole("heading", { level: 2 });
+    expect(title.textContent).toBe(wording.TITRE_BLOC_RESSOURCES_HUMAINES);
   });
 
   it("n'affiche pas le bloc ressources humaines pour les établissements privés lucratifs", () => {

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, type JSX } from "react";
 
 import { ÉtablissementTerritorialMédicoSocialRessourcesHumaines } from "../../../../backend/métier/entities/établissement-territorial-médico-social/ÉtablissementTerritorialMédicoSocialRessourcesHumaines";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -17,7 +17,7 @@ import { couleurDesArcsDuDonut, Donut } from "../../commun/Graphique/Donut";
 import { HistogrammeHorizontal } from "../../commun/Graphique/HistogrammeHorizontal";
 import { HistogrammeVertical } from "../../commun/Graphique/HistogrammeVertical";
 import { MiseEnExergue } from "../../commun/MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { Transcription } from "../../commun/Transcription/Transcription";
 
 type IndicateurAvecUnNombre = Exclude<

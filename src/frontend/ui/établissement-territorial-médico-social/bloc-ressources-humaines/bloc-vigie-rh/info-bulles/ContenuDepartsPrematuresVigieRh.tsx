@@ -1,26 +1,30 @@
-import { ContenuVigieRhInfoBulleProps, formaterMiseAJourEtDonnees } from "./ContenuVigieRhInfoBulleProps";
+import { ContenuVigieRhInfoBulleProps } from "./ContenuVigieRhInfoBulleProps";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
-export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesArretees }: ContenuVigieRhInfoBulleProps) => {
+export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, source }: ContenuVigieRhInfoBulleProps) => {
   const { wording } = useDependencies();
 
   return (
     <>
-      <p>{formaterMiseAJourEtDonnees(wording, dateDeMiseAJour, dateDonneesArretees)}</p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          <span className="fr-text--bold">Définition :</span> Décompte des fins de CDI intervenant avant 6 mois d’ancienneté du salarié dans l’établissement.
+          Décompte des ruptures de CDI intervenant avant 6 mois d’ancienneté du salarié ou de l’agent dans l’établissement.
         </p>
-        <p>Permet d’identifier la proportion de départs précoces parmi les nouveaux recrutements en CDI, indicateur de la qualité de recrutement et de l’intégration. </p>
+        <p>Le décompte est réalisé pour les CDI terminés durant l’année.   </p>
+        <p>
+          Permet d’identifier la proportion de départs précoces parmi les nouveaux recrutements en CDI, indicateur de la qualité de recrutement
+          et de l’intégration.
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Mensuelle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative)
+          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

@@ -43,6 +43,7 @@ class TestSauvegarde:
                     "taux_occupation_semi_internat": 0.59796577789,
                     "taux_occupation_internat": 0.765494564,
                     "taux_occupation_autre": 0.6597946487,
+                    "taux_occupation_global": 1.0,
                 }
             ],
         ).set_index(index_des_activités)
@@ -72,6 +73,7 @@ class TestSauvegarde:
                     "taux_occupation_internat": 0.765494564,
                     "taux_occupation_autre": 0.6597946487,
                     "taux_occupation_seances": None,
+                    "taux_occupation_global": 1.0,
                 }
             ],
         ).set_index(index_des_activités)

@@ -94,14 +94,18 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   };
 
   useEffect(() => {
+    async function resetFilter() {
+      setCapaciteAgees(new CapaciteEtablissement("personnes_agees", []));
+      setCapaciteHandicap(new CapaciteEtablissement("publics_en_situation_de_handicap", []));
+      setCapaciteMedicoSociaux(new CapaciteEtablissement("non_classifie", []));
+    }
+
     if (
       rechercheAvanceeContext?.capaciteAgees.length === 0 &&
       rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
       rechercheAvanceeContext?.capaciteMedicoSociaux.length === 0
     ) {
-      setCapaciteAgees(new CapaciteEtablissement("personnes_agees", []));
-      setCapaciteHandicap(new CapaciteEtablissement("publics_en_situation_de_handicap", []));
-      setCapaciteMedicoSociaux(new CapaciteEtablissement("non_classifie", []));
+      resetFilter();
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
@@ -260,6 +264,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
+                      aria-label={`Informations: ${wording.ETABLISSEMENT_PUBLIC_HANDICAP}`}
                       className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-handicap"
                       name="tooltip-info-handicap"
@@ -333,6 +338,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
                       {wording.CAPACITE_INSTALLEE_EN_PLACE}
                     </label>
                     <button
+                      aria-label={`Informations: ${wording.ETABLISSEMENT_PERSONNE_AGEES}`}
                       className={"fr-fi-information-line " + styles["info-container-bulle"]}
                       id="button-info-agee"
                       name="tooltip-info-agee"

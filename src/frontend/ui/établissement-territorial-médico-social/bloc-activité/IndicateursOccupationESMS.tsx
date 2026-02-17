@@ -2,6 +2,7 @@ import { ÉtablissementTerritorialMédicoSocialActivitéViewModel } from "./Éta
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { IndicateurGraphique } from "../../commun/IndicateurGraphique/IndicateurGraphique";
 import { ContenuDuTauxOccupationESMS } from "../InfoBulle/ContenuTauxOccupationESMS";
+import { ContenuTauxOccupationGlobal } from "../InfoBulle/ContenuTauxOccupationGlobal";
 
 
 type IndicateursOccupationESMSProps = Readonly<{
@@ -85,6 +86,22 @@ export const IndicateursOccupationESMS = ({ etabFiness, etabTitle, établissemen
       >
         {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationSeancesHistogramme(etabFiness, etabTitle)}
       </IndicateurGraphique> : <></>}
+      {établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationGlobalEstIlRenseigne && établissementTerritorialActivitéMédicoSocialViewModel.leTauxOccupationGlobalEstIlAutorisé ? (
+        <IndicateurGraphique
+          contenuInfoBulle={
+            <ContenuTauxOccupationGlobal
+              dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationGlobal}
+              source={wording.CNSA}
+            />
+          }
+          dateDeMiseÀJour={établissementTerritorialActivitéMédicoSocialViewModel.dateDeMiseÀJourDuTauxOccupationGlobal}
+          identifiant="activite-5"
+          nomDeLIndicateur={wording.TAUX_OCCUPATION_GLOBAL}
+          source={wording.CNSA}
+        >
+          {établissementTerritorialActivitéMédicoSocialViewModel.tauxOccupationGlobalHistrogramme(etabFiness, etabTitle)}
+        </IndicateurGraphique>
+      ) : <></>}
     </>
   );
 };

@@ -15,15 +15,18 @@ export const FavorisPage = () => {
   const [displaySucessMessage, setDisplaySucessMessage] = useState<boolean>(false);
 
   useEffect(() => {
-    let list = userContext?.favorisLists.slice();
-    if (list) {
-      const favorisListIndex = list.findIndex((list) => list.isFavoris);
-      const favorisList = list.splice(favorisListIndex, 1);
-      list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
-      list = favorisList.concat(...list);
-    }
+    async function sortList() {
+      let list = userContext?.favorisLists.slice();
+      if (list) {
+        const favorisListIndex = list.findIndex((list) => list.isFavoris);
+        const favorisList = list.splice(favorisListIndex, 1);
+        list.sort((a: UserListViewModel, b: UserListViewModel) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime());
+        list = favorisList.concat(...list);
+      }
 
-    setSortedFavorisList(list);
+      setSortedFavorisList(list);
+    }
+    sortList();
   }, [userContext?.favorisLists])
 
   const onSucess = () => {
@@ -31,7 +34,7 @@ export const FavorisPage = () => {
   }
 
   return (
-    <main className="fr-container" id="content">
+    <>
       <div className={styles["actionButton"]}>
         <button aria-controls="fr-modal-import-list" className="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-upload-line" data-fr-opened="false"> {wording.IMPORTER_UNE_LISTE} </button>
       </div>
@@ -48,6 +51,6 @@ export const FavorisPage = () => {
           <FavorisBlock currentListId={liste.id} favorisList={liste.userListEtablissements} title={liste.nom} />
         </div>
       ))}
-    </main>
+    </>
   );
 };

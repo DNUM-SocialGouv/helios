@@ -1,17 +1,19 @@
-import { ContenuVigieRhInfoBulleProps, formaterMiseAJourEtDonnees } from "./ContenuVigieRhInfoBulleProps";
+import { ContenuVigieRhInfoBulleProps } from "./ContenuVigieRhInfoBulleProps";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
-export const ContenuNatureContratsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees }: ContenuVigieRhInfoBulleProps) => {
+export const ContenuNatureContratsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, source }: ContenuVigieRhInfoBulleProps) => {
   const { wording } = useDependencies();
 
   return (
     <>
-      <p>{formaterMiseAJourEtDonnees(wording, dateDeMiseAJour, dateDonneesArretees)}</p>
+      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          <span className="fr-text--bold">Définition :</span> Décompte des contrats actifs au dernier mois de la période, classés selon leur nature (CDI, CDD) ! Pour
-          les etab de fonction publique, les agents titulaires sont assimilés à des CDI.
+          Décompte des contrats actifs au dernier mois de la période, ventilés selon leur nature   <br />
+          - CDI et agents titulaires  <br />
+          - CDD  <br />
         </p>
+        <p>Les autres natures de contrat (contrats aidés, alternance, stages, intérim) ne sont pas comptabilisés ici.  </p>
         <p>Permet d’évaluer la durabilité de l’emploi au sein des structures. </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
@@ -21,7 +23,7 @@ export const ContenuNatureContratsVigieRh = ({ dateDeMiseAJour, dateDonneesArret
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative)
+          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

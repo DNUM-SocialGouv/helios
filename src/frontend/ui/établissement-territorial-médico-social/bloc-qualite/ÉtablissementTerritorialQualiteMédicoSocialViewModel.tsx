@@ -1,7 +1,7 @@
 import { EvenementsIndesirables, ÉtablissementTerritorialQualite } from "../../../../backend/métier/entities/ÉtablissementTerritorialQualite";
 import { Wording } from "../../../configuration/wording/Wording";
 import { transformDataInspections } from "../../../utils/transformDataInspections";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 
 
 export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
@@ -94,7 +94,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get dateMiseAJourEvenementsIndesirables(): string {
-    return StringFormater.formatDate(this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0].dateMiseAJourSource as string);
+    return StringFormater.formatDate(this.etablissementTerritorialQualiteMédicoSocial.evenementsIndesirables[0]?.dateMiseAJourSource as string);
   }
 
   public get buildEIsData(): any {

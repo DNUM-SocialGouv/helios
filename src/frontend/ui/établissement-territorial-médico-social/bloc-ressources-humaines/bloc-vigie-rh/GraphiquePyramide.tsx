@@ -1,8 +1,10 @@
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData } from "chart.js";
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData, ChartOptions } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
+import { couleurDesTraitsRefHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../commun/Transcription/Transcription";
 
@@ -17,9 +19,10 @@ type PyramidChartProps = Readonly<{
   effectifHommeRef: number[];
   effectifFemme: number[];
   effectifFemmeRef: number[];
+  showRefValues: boolean;
 }>;
 
-const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef }: PyramidChartProps) => {
+const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, showRefValues }: PyramidChartProps) => {
   const refColor = "#929292";
 
   const { wording } = useDependencies();
@@ -137,7 +140,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       {
         label: "Men Extension",
         backgroundColor: "rgba(255,249,235,255)",
-        data: hommesExtension,
+        data: showRefValues ? hommesExtension : [],
         yAxisID: "y"
 
       },
@@ -156,7 +159,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       },
       {
         label: "Women Extension",
-        data: femmesExtension,
+        data: showRefValues ? femmesExtension : [],
         backgroundColor: "rgba(255,249,235,255)",
         yAxisID: "y"
       },
@@ -199,8 +202,8 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    animation: false,
-    indexAxis: "y",
+    animation: false as const,
+    indexAxis: "y" as const,
     scales: {
       x: {
         border: {
@@ -243,9 +246,20 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
 
             const value = isWomenChart ? effectifFemme[index] : effectifHomme[index];
             const refValue = isWomenChart ? effectifFemmeRef[index] : effectifHommeRef[index];
-
-            return [`Valeur: ${value}`,
-            `Valeur de référence: ${refValue}`];
+            if (!showRefValues) {
+              if (isWomenChart)
+                return `Femmes: ${value}`;
+              else {
+                return `Hommes: ${value}`;
+              }
+            }
+            if (isWomenChart)
+              return [`Femmes: ${value}`,
+              `Valeur de référence: ${refValue}`];
+            else {
+              return [`Hommes: ${value}`,
+              `Valeur de référence: ${refValue}`];
+            }
           },
         },
       },
@@ -266,67 +280,121 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
     },
   };
 
+  const labelPlugin = {
+    id: "labelPlugin",
+    afterDraw: (chart: ChartJS) => {
+      const { ctx, chartArea: { width, left } } = chart;
+      const datasetMeta = chart.getDatasetMeta(0);
 
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "12px Marianne";
+      ctx.fillStyle = "#000";
+
+      datasetMeta.data.forEach((bar: any, index: number) => {
+        const label = labels[index];
+        ctx.fillText(label, left + width / 2, bar.y);
+      });
+      ctx.restore();
+    }
+  };
+
+  const middleData = {
+    labels,
+    datasets: [
+      {
+        data: new Array(labels.length).fill(0),
+        backgroundColor: "transparent",
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const transcriptionIdentifiantsRef = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF];
+  const transcriptionIdentifiants = [wording.EFFECTIF_HOMMES, wording.EFFECTIF_FEMMES];
+  const transcriptionValeursRef = [effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef];
+  const transcriptionValeurs = [effectifHomme, effectifFemme];
 
   return (
     <>
-      <div className="fr-grid-row" style={{ paddingRight: "50px", minHeight: "220px" }}>
-        <div className="fr-col-6">
+      <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
+        <div className="fr-col-5" style={{ textAlign: "center", fontWeight: "bold" }}>Hommes</div>
+        <div className="fr-col-2" style={{ textAlign: "center", fontWeight: "bold" }}></div>
+        <div className="fr-col-5" style={{ textAlign: "center", fontWeight: "bold" }}>Femmes</div>
+      </div>
+      <div className="fr-grid-row" style={{ height: "300px", alignItems: "stretch" }}>
+        <div className="fr-col-5">
           <Bar
-            // @ts-ignore
-            data={menData}
+            data={menData as ChartData<"bar">}
             options={{
               ...options,
               scales: {
                 ...options.scales,
-                // @ts-ignore
                 x: {
                   ...options.scales.x,
+                  display: false,
                   reverse: true,
-                  title: {
-                    align: "center",
-                    color: "#000",
-                    display: true,
-                    font: { weight: "bold" },
-                    text: "Hommes",
-                  },
                 },
-                y: { ...options.scales.y, ticks: { ...options.scales.y.ticks, color: "white" } },
+                y: { ...options.scales.y, display: false },
               }
-            }}
-            plugins={[verticalLinePlugin]}
+            } as ChartOptions<"bar">}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
-        <div className="fr-col-6">
+        <div className="fr-col-2">
+          <Bar
+            data={middleData}
+            options={{
+              ...options,
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+                datalabels: { display: false },
+              },
+              scales: {
+                x: { display: false },
+                y: {
+                  ...options.scales.y,
+                  display: false,
+                },
+              },
+              events: [],
+            }}
+            plugins={[labelPlugin]}
+          />
+        </div>
+        <div className="fr-col-5">
           <Bar
             data={womenData}
             options={{
               ...options,
               scales: {
                 ...options.scales,
-                // @ts-ignore
                 x: {
                   ...options.scales.x,
-                  title: {
-                    align: "center",
-                    color: "#000",
-                    display: true,
-                    font: { weight: "bold" },
-                    text: "Femmes",
-                  },
+                  display: false,
                 },
+                y: { ...options.scales.y, display: false },
               },
-            }}
-            plugins={[verticalLinePlugin]}
+            } as ChartOptions<"bar">}
+            plugins={showRefValues ? [verticalLinePlugin] : []}
           />
         </div>
       </div>
+      {showRefValues && <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+
+        ]}
+      />}
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {libellesValeursReferenceManquantes.length > 0 && (
+      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
@@ -336,10 +404,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         entêteLibellé={wording.TRANCHE_AGE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        identifiants={[wording.EFFECTIF_HOMMES, wording.EFFECTIF_HOMMES_REF, wording.EFFECTIF_FEMMES, wording.EFFECTIF_FEMMES_REF]}
+        identifiants={showRefValues ? transcriptionIdentifiantsRef : transcriptionIdentifiants}
         libellés={labels}
         nomGraph={wording.PYRAMIDE_DES_AGES}
-        valeurs={[effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef]}
+        valeurs={showRefValues ? transcriptionValeursRef : transcriptionValeurs}
       />
     </>
   );

@@ -1,21 +1,23 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
-import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/card/card.min.css";
+import "@gouvfr/dsfr/dist/component/link/link.min.css";
 
 import styles from "./Aide.module.css";
 import { BlocRessources } from "./BlocRessources";
+import { useDependencies } from "../commun/contexts/useDependencies";
+import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
 import Faq from "./Faq/Faq";
 import { ListeSections } from "./ListeSections";
 import {
+  IdentifiantRole,
   obtenirSectionNormalisee,
   regrouperRessourcesParType,
   sectionsVisibles,
-  IdentifiantRole,
 } from "./utils";
-import { useDependencies } from "../commun/contexts/useDependencies";
-import type { ContenuAide, DefinitionSection } from "../parametrage-aide/types";
+
 
 type InterfaceAideProps = Readonly<{
   contenu: ContenuAide;
@@ -35,22 +37,28 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
     : null;
 
   useEffect(() => {
-    if (!router.isReady) {
-      return;
+    async function updateSlugWhenReady() {
+      if (!router.isReady) {
+        return;
+      }
+      const valeurQuery = router.query["path"];
+      const slug = Array.isArray(valeurQuery) ? valeurQuery[0] : valeurQuery;
+      if (slug && sectionsDisponibles.some((section) => section.slug === slug)) {
+        setSlugActif(slug);
+      } else if (!slug) {
+        setSlugActif(null);
+      }
     }
-    const valeurQuery = router.query["path"];
-    const slug = Array.isArray(valeurQuery) ? valeurQuery[0] : valeurQuery;
-    if (slug && sectionsDisponibles.some((section) => section.slug === slug)) {
-      setSlugActif(slug);
-    } else if (!slug) {
-      setSlugActif(null);
-    }
+    updateSlugWhenReady();
   }, [router.isReady, router.query["path"], sectionsDisponibles]);
 
   useEffect(() => {
-    if (slugActif && !sectionsDisponibles.some((section) => section.slug === slugActif)) {
-      setSlugActif(null);
+    async function removeUnknownSlug() {
+      if (slugActif && !sectionsDisponibles.some((section) => section.slug === slugActif)) {
+        setSlugActif(null);
+      }
     }
+    removeUnknownSlug();
   }, [slugActif, sectionsDisponibles]);
 
   useEffect(() => {
@@ -78,6 +86,9 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
 
   return (
     <main className={`fr-container ${styles["conteneur"]}`} id="content">
+      <Head>
+        <title>{titreSection}</title>
+      </Head>
       <header className="fr-mb-6w">
         <div className="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
           {iconeSection && slugActif && (

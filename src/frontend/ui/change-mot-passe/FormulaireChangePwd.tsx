@@ -36,13 +36,14 @@ export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePasswo
             {updated && <div className={"fr-mb-5w " + styles["success"]}> votre mot de passe a été changé avec succès</div>}
             <div className="fr-grid-row ">
               <div className="fr-col-12 fr-col-md-4">
-                <label className="fr-label">
+                <label className="fr-label" htmlFor="oldPwd">
                   {wording.OLD_MOT_DE_PASSE}
                 </label>
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
                   className="fr-input"
+                  id="oldPwd"
                   onChange={oldPasswordValueOnChange}
                   required
                   type="password"
@@ -52,13 +53,14 @@ export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePasswo
             </div>
             <div className="fr-grid-row fr-mt-5w">
               <div className="fr-col-12 fr-col-md-4">
-                <label className="fr-label">
+                <label className="fr-label" htmlFor="newPwd">
                   {wording.MOT_DE_PASSE}
                 </label>
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
                   className="fr-input"
+                  id="newPwd"
                   onChange={passwordValueOnChange}
                   onFocus={() => setPasswordInputFocus(true)}
                   required
@@ -87,13 +89,14 @@ export const FormulaireChangeMdp = ({ criteriaNewPassword, annuler, changePasswo
             </div>
             <div className="fr-grid-row  fr-mt-5w">
               <div className="fr-col-12 fr-col-md-4">
-                <label className="fr-label">
+                <label className="fr-label" htmlFor="confirmPwd">
                   {wording.CONFIRMER_MOT_DE_PASSE}
                 </label>
               </div>
               <div className="fr-col-11 fr-col-md-8">
                 <input
                   className="fr-input"
+                  id="confirmPwd"
                   onChange={confirmPasswordValueOnChange}
                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{12,}"
                   required

@@ -4,7 +4,7 @@ import { EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel } from
 import { AutorisationsAMMSanitaire, AutorisationSanitaireActivité } from '../../../../backend/métier/entities/établissement-territorial-sanitaire/ÉtablissementTerritorialSanitaireAutorisation';
 import { ecrireLignesDansSheet, telechargerWorkbook } from '../../../utils/excelUtils';
 import { useDependencies } from '../../commun/contexts/useDependencies';
-import { StringFormater } from '../../commun/StringFormater';
+import StringFormater from '../../commun/StringFormater';
 
 export function getCurrentDate() {
   const today = new Date();

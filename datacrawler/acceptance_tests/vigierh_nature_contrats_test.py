@@ -1,3 +1,4 @@
+from freezegun import freeze_time
 import numpy as np
 import pandas as pd
 
@@ -32,6 +33,7 @@ class TestImportVigierhNatureContrats:
         )
         mocked_logger.reset_mock()
 
+    @freeze_time("2025-10-17")
     def test_import_vigie_rh_duree_cdd(self) -> None:
         chemin_local_du_fichier_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_nature_contrats_annuel_2025_10_17.parquet'
         chemin_local_du_fichier_ref_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_ref_nature_contrat_2025_10_17.parquet'
@@ -45,7 +47,7 @@ class TestImportVigierhNatureContrats:
             [
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_1,
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 1,
                     "effectif": 3,
                     "effectif_ref": 1,
@@ -53,7 +55,7 @@ class TestImportVigierhNatureContrats:
                 },
                 {
                     "numero_finess_etablissement_territorial": "12345678",
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 3,
                     "effectif": 5,
                     "effectif_ref": 2,
@@ -61,7 +63,7 @@ class TestImportVigierhNatureContrats:
                 },
                 {
                     "numero_finess_etablissement_territorial": "999999999",
-                    "annee": "2024",
+                    "annee": 2024,
                     "nature_contrat_code": 4,
                     "effectif": 6,
                     "effectif_ref": 3,

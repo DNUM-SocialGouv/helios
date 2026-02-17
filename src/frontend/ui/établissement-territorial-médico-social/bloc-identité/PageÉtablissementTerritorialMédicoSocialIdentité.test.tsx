@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { ÉtablissementTerritorialMédicoSocialViewModelTestBuilder } from "../../../test-helpers/test-builder/ÉtablissementTerritorialMédicoSocialViewModelTestBuilder";
 import { fakeFrontDependencies, renderFakeComponent, textMatch, trimHtml } from "../../../test-helpers/testHelper";
-import { StringFormater } from "../../commun/StringFormater";
+import StringFormater from "../../commun/StringFormater";
 import { CatégorisationViewModel } from "../../entité-juridique/catégorisation/CatégorisationViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageÉtablissementTerritorialMédicoSocial } from "../PageÉtablissementTerritorialMédicoSocial";
@@ -25,18 +25,18 @@ const mockSession = {
   expires: "1235",
 };
 
-jest.mock("chart.js", () => ({
+jest.mock<typeof import("chart.js")>("chart.js", () => ({
   Chart: {
     register: jest.fn(),
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
-jest.mock("chartjs-chart-treemap", () => ({
+jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntité({ numéroFiness: "000000000" });
 const rechercheViewModel = new RechercheViewModel(result, paths);

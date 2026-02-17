@@ -17,7 +17,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
 
-    const userSession = await await getServerSession(request, response, authOptions);
+    const userSession = await getServerSession(request, response, authOptions);
 
     //no one can reactivate itself
     if (userSession?.user.idUser === userCode) {
@@ -38,7 +38,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       const recherche = await reactivateUserEndpoint(dependencies, userCode);
       return response.status(200).json(recherche);
     }
-  } catch (error) { // NOSONAR l’erreur est gérée dans le catch via le « return ». Aucune autre action à faire ici
+  } catch {
     return response.status(500);
   }
 };

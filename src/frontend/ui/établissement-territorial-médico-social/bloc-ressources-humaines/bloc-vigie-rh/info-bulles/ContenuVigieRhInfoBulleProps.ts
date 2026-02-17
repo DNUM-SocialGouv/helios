@@ -1,10 +1,13 @@
+import { ReactElement } from "react";
+
 import { Wording } from "../../../../../configuration/wording/Wording";
-import { StringFormater } from "../../../../commun/StringFormater";
+import StringFormater from "../../../../commun/StringFormater";
 
 export type ContenuVigieRhInfoBulleProps = Readonly<{
   dateDeMiseAJour: string;
   dateDonneesArretees?: string | null;
   periodeGlissante?: string | null;
+  source: ReactElement;
 }>;
 
 export const formaterMiseAJourEtDonnees = (

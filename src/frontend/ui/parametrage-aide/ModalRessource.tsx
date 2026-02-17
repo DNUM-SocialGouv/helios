@@ -7,8 +7,8 @@ type ModalRessourceProps = Readonly<{
   ouverte: boolean;
   valeurs: RessourceFormulaire;
   editionEnCours: boolean;
-  ancre: RefObject<HTMLDialogElement>;
-  champInitial: RefObject<HTMLInputElement>;
+  ancre: RefObject<HTMLDialogElement | null>;
+  champInitial: RefObject<HTMLInputElement | null>;
   surFermeture: () => void;
   surChangement: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
   surValidation: (event: FormEvent<HTMLFormElement>) => void;

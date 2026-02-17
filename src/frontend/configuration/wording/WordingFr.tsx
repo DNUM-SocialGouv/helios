@@ -146,6 +146,7 @@ export class WordingFr implements Wording {
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string = "Afficher la transcription";
   readonly TITRE_TRANSCRIPTION: string = "Transcription du graphique";
+  readonly DESCRIPTION_TRANSCRIPTION: string = "Titre du graphique:";
   readonly ANNÉE: string = "Année";
   readonly MOIS: string = "Mois";
   readonly INDICATEURS_VIDES: string = "Aucune donnée pour cet établissement.";
@@ -208,6 +209,7 @@ export class WordingFr implements Wording {
   readonly TAUX_OCCUPATION_INTERNAT: string = "Taux d’occupation internat ";
   readonly TAUX_OCCUPATION_AUTRE: string = "Taux d'occupation Autre 1, 2 et 3";
   readonly TAUX_OCCUPATION_SEANCES: string = "Taux d'occupation séances";
+  readonly TAUX_OCCUPATION_GLOBAL: string = "Taux d'occupation global";
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string = "Nombre de séjours Médecine, Chirurgie et Obstétrique en Hospitalisation Complète et Hospitalisation Partielle";
@@ -370,7 +372,7 @@ export class WordingFr implements Wording {
   readonly TITRE_IV: string = "Titre IV";
   readonly ALLOCATION_DE_RESSOURCES: string = "Allocation de ressources";
 
-  readonly POURCENTAGE: string = "Pourcentage";
+  readonly POURCENTAGE: string = "Part dans l’effectif total";
   readonly REPARTITION_DES_ENVELOPPES: string = "Répartition des enveloppes";
   readonly REPARTITION_DES_SOUS_ENVELOPPES: string = "Répartition des sous-enveloppes";
   readonly REPARTITION_DES_MODES_DELEGATION: string = "Modes de délégation:";
@@ -462,7 +464,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
-  readonly VIGIE_RH_TITLE: string = "texte ... (VIGIE RH)";
+  readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
   // Sources courtes
@@ -479,7 +481,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
-  readonly VIGIE_RH: ReactElement = (<abbr title={this.VIGIE_RH_TITLE}>VIGIE RH</abbr>);
+  readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
   // Inaccessible
@@ -635,6 +637,8 @@ export class WordingFr implements Wording {
   readonly CREATION_DATE: string = "Date de création";
   readonly PROFILE_CODE: string = "Code";
   readonly PROFILE_TITLE: string = "Libellé de l'autorisation";
+  readonly NEW_PROFILE_LABEL_MANDATORY: string = "Veuillez renseigner un libellé.";
+  readonly NEW_PROFILE_LABEL_ALREADY_EXISTS: string = "Veuillez saisir un autre libellé d’autorisation.";
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string = "Vous n'avez aucun profil";
   readonly PROJECT_TEAM: string = "Équipe projet";
 
@@ -695,6 +699,7 @@ export class WordingFr implements Wording {
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string = "Ajouter un ou plusieurs établissements";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string = "A partir d'une recherche";
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string = "A partir d'une liste existante";
+  readonly BOUTON_CHOIX_INDICATEURS: string = "Choix des indicateurs";
 
   //Page d’une liste de favoris
   readonly LISTE_DE_FAVORIS = "Liste de favoris";
@@ -706,41 +711,58 @@ export class WordingFr implements Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
+  readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
-  readonly EFFECTIF_FEMMES: string = "Effectif des femmes";
-  readonly EFFECTIF_FEMMES_REF: string = "Effectif de référence des femmes";
-  readonly EFFECTIF_HOMMES: string = "Effectif des hommes";
+  readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
+  readonly EFFECTIF_FEMMES_REF: string = "Moyenne des effectifs Femmes pour des établissements similaires";
+  readonly EFFECTIF_HOMMES: string = "Effectif Hommes";
+  readonly EVOLUTION_DES_EFFECTIFS: string = "Evolution des effectifs";
+  readonly CONTRATS_COURTS: string = "Contrats courts";
+  readonly MOUVEMENT_DU_PERSONNEL: string = "Mouvement du personnel";
   readonly EFFECTIFS: string = "Effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
-  readonly EFFECTIFS_TOTAUX: string = "Total";
-  readonly VIGIE_RH_CATEGORIE: string = "Catégorie";
-  readonly EFFECTIF_HOMMES_REF: string = "Effectif de référence des hommes";
-  readonly DEPARTS_EMBAUCHES: string = "Départs / Embauches";
-  readonly DEPARTS: string = "Départs";
-  readonly EMBAUCHES: string = "Embauches";
-  readonly DEPARTS_REF: string = "Moyenne des départs";
-  readonly EMBAUCHES_REF: string = "Moyenne des embauches";
-  readonly MOYENNE_REF: string = "Moyenne des établissements similaires";
-  readonly TAUX_ROTATION: string = "Taux de Rotation";
-  readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs";
+  readonly EFFECTIFS_TOTAUX: string = "Total des effectifs";
+  readonly FILIERE: string = "Filière";
+  readonly EFFECTIF_HOMMES_REF: string = "Moyenne des effectifs Hommes pour des établissements similaires";
+  readonly DEPARTS_EMBAUCHES: string = "Entrées et sorties";
+  readonly DEPARTS: string = "Fins de contrats";
+  readonly EMBAUCHES: string = "Nouveaux contrats";
+  readonly DEPARTS_REF: string = " Moyenne des fins de contrats pour des établissements similaires";
+  readonly EMBAUCHES_REF: string = "Moyenne des nouveaux contrats pour des établissements similaires";
+  readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
+  readonly TAUX_ROTATION: string = "Taux de renouvellement des contrats";
+  readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs par filière";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
-  readonly TAUX_ROTATION_REFERENCE: string = "Taux de Rotation de référence";
-  readonly TOP_TAUX_ROTATION_TITLE: string = "Mouvements de personnel";
-  readonly DUREE_CDD: string = "Durée effective des CDD";
-  readonly DUREE_CDD_REF: string = "Moyenne des durées effectives des CDD";
-  readonly DUREE: string = "Durée";
+  readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des contrats pour des établissements similaires";
+  readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
+  readonly DUREE_CDD: string = "Contrats CDD par durée effective";
+  readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
+  readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
+  readonly NOMBRE_CDD: string = "Nombre de CDD actifs";
+  readonly NOMBRE_CDI: string = "Nombre de CDI et agents titulaires actifs";
+  readonly CDD_REF: string = "Moyenne du nombre  de CDD pour des établissements similaires";
+  readonly CDI_REF: string = "Moyenne du nombre de CDI pour des établissements similaires";
+  readonly DUREE: string = "Durée effective";
   readonly MOTIFS_RUPTURE_CONTRAT: string = "Motifs de rupture de contrat";
-  readonly MOTIFS_RUPTURE_CONTRAT_REF: string = "Moyenne des motifs de rupture de contrat";
+  readonly NOMBRE_CONTRATS_ROMPUS: string = "Nombre de contrats rompus";
+  readonly NOMBRE_CONTRATS_ROMPUS_REF: string = "Moyennes du nombre de contrats rompus pour des établissements similaires";
   readonly MOTIF: string = "Motif";
-  readonly MOIS_ANNEES: string = "Mois / Années";
+  readonly PERIODE: string = "Période";
+  readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
+  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
+  readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière et catégorie socio-professionnelle";
+  readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière et catégorie socio-professionnelle";
+  readonly EFFECTIFS_DE_LA_FILIERE: string = "Effectifs de la filière";
+  readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
+  readonly EFFECTIF_TOTAL: string = "Effectif total";
+
   readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
   readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string = "Questionnaire";
   readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://forms.office.com/e/wXN1pQd20j";
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-01-30";
-  readonly NATURE_CONTRATS: string = "Contrats CDI et CDD";
-  readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI de moins de 6 mois";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =

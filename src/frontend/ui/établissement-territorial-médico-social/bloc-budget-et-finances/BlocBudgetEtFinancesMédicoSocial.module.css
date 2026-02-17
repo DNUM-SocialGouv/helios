@@ -1,10 +1,6 @@
 .liste-indicateurs {
   display: grid;
   gap: 1rem;
-  grid-template-areas:
-    "graph1 graph1 graph1"
-    "graph2 graph3 graph4"
-    "graph5 graph6 vide";
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -14,32 +10,22 @@
   justify-content: flex-start;
 }
 
-.liste-indicateurs>li:nth-child(1) {
-  grid-area: graph1;
-}
-
-.liste-indicateurs>li:nth-child(2) {
-  grid-area: graph2;
-}
-
-.liste-indicateurs>li:nth-child(3) {
-  grid-area: graph3;
-}
-
-.liste-indicateurs>li:nth-child(4) {
-  grid-area: graph4;
-}
-
-.liste-indicateurs>li:nth-child(5) {
-  grid-area: graph5;
-}
-
-.liste-indicateurs>li:nth-child(6) {
-  grid-area: graph6;
+.fullWidth {
+  grid-column: span 3;
 }
 
 .liste-indicateurs canvas {
   margin-bottom: 1rem;
+}
+
+@media (max-width: 991px) {
+  .liste-indicateurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fullWidth {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 36em) {

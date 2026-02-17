@@ -1,14 +1,13 @@
 // HistogrammeHorizontalRowMultiple.test.tsx
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
 import { HistogrammeHorizontalRowMultiple } from './HistogrammeHorizontalRowMultiple';
 
 // Mock des styles pour éviter les erreurs liées aux modules CSS
-jest.mock('./HistogrammeHorizontalRowMultiple.module.css', () => ({
+jest.mock<typeof import('./HistogrammeHorizontalRowMultiple.module.css')>('./HistogrammeHorizontalRowMultiple.module.css', () => ({
   "histogramme_horizontal_row_container": "histogramme_horizontal_row_container",
   "barHistogramme": "barHistogramme"
-}));
+} as any));
 
 describe('HistogrammeHorizontalRowMultiple', () => {
 

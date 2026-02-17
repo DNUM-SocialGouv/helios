@@ -122,6 +122,7 @@ export interface Wording {
   // Indicateurs
   readonly AFFICHER_LA_TRANSCRIPTION: string;
   readonly TITRE_TRANSCRIPTION: string;
+  readonly DESCRIPTION_TRANSCRIPTION: string;
   readonly ANNÉE: string;
   readonly MOIS: string;
   readonly INDICATEURS_VIDES: string;
@@ -179,6 +180,7 @@ export interface Wording {
   readonly TAUX_OCCUPATION_INTERNAT: string;
   readonly TAUX_OCCUPATION_AUTRE: string;
   readonly TAUX_OCCUPATION_SEANCES: string;
+  readonly TAUX_OCCUPATION_GLOBAL: string;
 
   // Bloc Activité Sanitaire
   readonly NOMBRE_DE_SÉJOUR_MCO: string;
@@ -405,7 +407,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
-  readonly VIGIE_RH: ReactElement;
+  readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
 
 
@@ -459,6 +461,7 @@ export interface Wording {
   readonly TITRE_AJOUTER_DES_ETABLISSEMENTS: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS_LISTE: string;
   readonly LIBELLE_AJOUTER_DES_ETABLISSEMENTS: string;
+  readonly BOUTON_CHOIX_INDICATEURS: string;
   //--Alert-comparaison
   readonly ALERTE_TYPE_DIFFERENT_TITRE: string;
   readonly ALERTE_TYPE_DIFFERENT_CORPS: string;
@@ -546,6 +549,8 @@ export interface Wording {
   readonly PROFILE_CODE: string;
   readonly PARAMETRAGE_NEW_PROFILE: string;
   readonly PROFILE_TITLE: string;
+  readonly NEW_PROFILE_LABEL_MANDATORY: string;
+  readonly NEW_PROFILE_LABEL_ALREADY_EXISTS: string;
   readonly VOUS_NAVEZ_AUCUN_PROFIL: string;
   readonly PROJECT_TEAM: string;
 
@@ -614,6 +619,7 @@ export interface Wording {
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
+  readonly MESSAGE_INFO_VIGIE_RH: string;
   readonly PYRAMIDE_DES_AGES: string;
   readonly TRANCHE_AGE: string;
   readonly EFFECTIF_FEMMES: string;
@@ -621,10 +627,13 @@ export interface Wording {
   readonly EFFECTIF_HOMMES: string;
   readonly EFFECTIF_HOMMES_REF: string;
   readonly EFFECTIFS: string;
+  readonly EVOLUTION_DES_EFFECTIFS: string;
+  readonly CONTRATS_COURTS: string;
+  readonly MOUVEMENT_DU_PERSONNEL: string;
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
   readonly EFFECTIFS_TOTAUX: string;
-  readonly VIGIE_RH_CATEGORIE: string;
-  readonly MOIS_ANNEES: string;
+  readonly FILIERE: string;
+  readonly PERIODE: string;
   readonly DEPARTS_EMBAUCHES: string;
   readonly DEPARTS: string;
   readonly EMBAUCHES: string;
@@ -635,7 +644,17 @@ export interface Wording {
   readonly REPARTITION_EFFECTIFS: string;
   readonly SELECTIONNER_UNE_FILIERE: string;
   readonly TAUX_ROTATION_REFERENCE: string;
-  readonly TOP_TAUX_ROTATION_TITLE: string;
+  readonly TOP_CONTRATS_UNIT_LABEL: string;
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string;
+  readonly NOMBRE_CDD: string;
+  readonly NOMBRE_CDI: string;
+  readonly CDD_REF: string;
+  readonly CDI_REF: string;
+  readonly EFFECTIFS_DE_LA_FILIERE: string;
+  readonly SHOW_MORE_BUTTON: string;
+  readonly SHOW_LESS_BUTTON: string;
+  readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string;
+  readonly EFFECTIF_TOTAL: string;
 
   // Paramétrage aide
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string;
@@ -704,9 +723,11 @@ export interface Wording {
   readonly AIDE_INFO_SEPARATEUR: string;
 
   readonly DUREE_CDD: string;
-  readonly DUREE_CDD_REF: string;
+  readonly NOMBRE_CONTRATS_CDD: string;
+  readonly NOMBRE_CONTRATS_CDD_REF: string;
   readonly MOTIFS_RUPTURE_CONTRAT: string;
-  readonly MOTIFS_RUPTURE_CONTRAT_REF: string;
+  readonly NOMBRE_CONTRATS_ROMPUS: string;
+  readonly NOMBRE_CONTRATS_ROMPUS_REF: string;
   readonly MOTIF: string;
   readonly DUREE: string;
   readonly NATURE_CONTRATS: string;

@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
@@ -29,6 +29,7 @@ import { ContenuFondDeRoulementNetGlobal } from "../établissement-territorial-m
 import { ContenuRésultatNetComptable } from "../établissement-territorial-médico-social/InfoBulle/ContenuRésultatNetComptable";
 import { ContenuTauxDeVétustéConstruction } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxDeVétustéConstruction";
 import { ContenuDuTauxOccupationESMS } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxOccupationESMS";
+import { ContenuTauxOccupationGlobal } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxOccupationGlobal";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
 import { ContenuNombreDeJournéesPSYetSSR } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { ContenuNombreDeSéjourMCO } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
@@ -204,6 +205,11 @@ export function useComparaison() {
         return {
           contenu: <ContenuDuTauxOccupationESMS dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA} />,
           titre: getTitreModalESMS(name),
+        };
+      case "global":
+        return {
+          contenu: <ContenuTauxOccupationGlobal dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_cnsa)} source={wording.CNSA} />,
+          titre: wording.TAUX_OCCUPATION_GLOBAL,
         };
       case "prestationExterne":
         return {
@@ -381,6 +387,7 @@ export function useComparaison() {
         { label: "TO Internat", nomComplet: "Taux d’occupation internat", key: "internat", info: true, sort: true, orderBy: "taux_occupation_internat" },
         { label: "TO Autre 1, 2 et 3", nomComplet: "Taux d’occupation autre 1, 2 et 3", key: "autres", info: true, sort: true, orderBy: "taux_occupation_autres" },
         { label: "TO Séances", nomComplet: "Taux d'occupation Séances", key: "seances", info: true, sort: true, orderBy: "taux_occupation_seances" },
+        { label: "TO global", nomComplet: "Taux d'occupation global", key: "global", info: true, sort: true, orderBy: "taux_occupation_global" },
         { label: "Tx de prest ext sur les prest directes", nomComplet: "Taux de prestations externes sur les prestations directes", key: "prestationExterne", info: true, sort: true, orderBy: "taux_prestation_externes" },
         { label: "Tx de rotation du personnel sur effectifs réels", nomComplet: "Taux de rotation du personnel sur effectifs réels", key: "rotationPersonnel", info: true, sort: true, orderBy: "taux_rotation_personnel" },
         { label: "Tx d'ETP vacants au 31/12", nomComplet: "Taux d'ETP vacants au 31/12", key: "etpVacant", info: true, sort: true, orderBy: "taux_etp_vacants" },
@@ -413,9 +420,9 @@ export function useComparaison() {
         { label: "Résultat net comptable", nomComplet: "Résultat net comptable", key: "resultatNetComptableEj", info: true, sort: true, orderBy: "resultat_net_comptable_san" },
         { label: "Tx CAF", nomComplet: "Taux de CAF", key: "tauxCafEj", info: true, sort: true, orderBy: "taux_de_caf_nette_san" },
         { label: "Ratio de dépendance financière", nomComplet: "Ratio de dépendance financière", key: "ratioDependanceFinanciere", info: true, sort: true, orderBy: "ratio_dependance_financiere" },
-        { label: `Alloc. ressources: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
-        { label: `Alloc. ressources: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
-        { label: `Alloc. ressources: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: `Alloc. ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
     }
     else
@@ -438,9 +445,9 @@ export function useComparaison() {
         { label: "Dépenses intérim PM", nomComplet: "Dépenses d’intérim PM", key: "depensesInterimPm", info: true, sort: true, orderBy: "depenses_interim_pm" },
         { label: "Jours d’absentéisme PM", nomComplet: "Jours d’absentéisme PM", key: "joursAbsenteismePm", info: true, sort: true, orderBy: "jours_absenteisme_pm" },
         { label: "Jours d’absentéisme PNM", nomComplet: "Jours d’absentéisme PNM", key: "joursAbsenteismePnm", info: true, sort: true, orderBy: "jours_absenteisme_pnm" },
-        { label: `Alloc. ressources: ${topEnveloppes[0]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0]}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
-        { label: `Alloc. ressources: ${topEnveloppes[1]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1]}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
-        { label: `Alloc. ressources: ${topEnveloppes[2]}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2]}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: `Alloc. ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
+        { label: `Alloc. ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
+        { label: `Alloc. ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
       ]
   };
 

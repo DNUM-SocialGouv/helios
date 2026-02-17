@@ -22,14 +22,14 @@ def supprime(connection: Connection, table: str, cle_primaire: str, liste_cle: T
     if not liste_cle:
         return  # Skip if empty list
 
-    placeholders = ','.join(["%s"] * len(liste_cle))
+    placeholders = ",".join(["%s"] * len(liste_cle))
     sql = f"DELETE FROM {table} WHERE {cle_primaire} IN ({placeholders})"
     connection.execute(sql, liste_cle)
 
 
 def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donnees: DataFrame) -> None:
     donnees = donnees.reset_index()
-    db_columns = donnees.columns
+    db_columns = donnees.columns.astype(str).tolist()
 
     columns = ", ".join(db_columns)
     placeholders = ", ".join(["%s"] * len(db_columns))
@@ -40,7 +40,7 @@ def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donn
             ON CONFLICT ({cle_primaire}) DO UPDATE SET
             {update_str};"""
 
-    donnees= donnees.fillna('')
+    donnees = donnees.fillna("")
     for _, row in donnees.iterrows():
         values = [row[col] for col in db_columns]
         base_de_donnees.execute(sql, values)

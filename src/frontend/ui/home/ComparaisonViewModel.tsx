@@ -1,4 +1,4 @@
-import { StringFormater } from "../commun/StringFormater";
+import StringFormater from "../commun/StringFormater";
 
 type ValueOrNA = number | null | string;
 
@@ -15,6 +15,7 @@ export type ResultatComparaisonSMS = Readonly<{
   internat: number | null | string;
   autres: number | null | string;
   seances: number | null | string;
+  global: number | null | string;
   hebergementPermanent: number | string;
   hebergementTemporaire: number | string;
   fileActivePersonnesAccompagnes: number | string;
@@ -129,7 +130,7 @@ function formatNumberValue(value: number | string | null): string {
   if (value === '') return '';
   if (!value) return '-';
   const num = Number(value);
-  if (isNaN(num)) return '-';
+  if (Number.isNaN(num)) return '-';
   return StringFormater.roundFormatInFrench(num);
 }
 
@@ -201,6 +202,9 @@ export class ComparaisonSMSViewModel {
   }
   public get seances(): string | null {
     return formatRatio(this.comparaison.seances);
+  }
+  public get global(): string | null {
+    return this.comparaison.categorie !== "500-EHPAD" ? formatRatio(this.comparaison.global) : null;
   }
   public get prestationExterne(): string | null {
     return formatRatio(this.comparaison.prestationExterne);

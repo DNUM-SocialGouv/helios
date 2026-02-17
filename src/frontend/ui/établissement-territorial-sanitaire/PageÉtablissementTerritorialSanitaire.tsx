@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { BlocRessourcesHumainesEtablissementSanitaire } from "./bloc-ressources-humaines/BlocRessourcesHumainesEtablissementSanitaire";
@@ -39,37 +39,14 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
     },
   ]);
 
-
   const componentRef = useRef(null);
 
-  const onBeforeGetContentResolve = useRef<any>(null);
-
-  const handleOnBeforeGetContent = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      onBeforeGetContentResolve.current = resolve;
-      resolve();
-    });
-  }, []);
-
-  const reactToPrintContent = useCallback(() => {
-    return componentRef.current;
-  }, [componentRef.current]);
-
   const handlePrint = useReactToPrint({
-    content: reactToPrintContent,
+    contentRef: componentRef,
     documentTitle: établissementTerritorialSanitaireViewModel.titre,
-    onBeforeGetContent: handleOnBeforeGetContent,
-    removeAfterPrint: true,
   });
 
-  useEffect(() => {
-    if (typeof onBeforeGetContentResolve.current === "function") {
-      onBeforeGetContentResolve.current();
-    }
-  }, [onBeforeGetContentResolve.current]);
-
-
-  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
+  const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 5, 0);
 
   return (
     <main className="fr-container" id="content">

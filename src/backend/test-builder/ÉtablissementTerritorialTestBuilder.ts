@@ -219,6 +219,10 @@ export class ÉtablissementTerritorialTestBuilder {
     tauxOccupationSeances: {
       value: 0.8,
     },
+    tauxOccupationGlobal: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: 80,
+    },
   };
 
   private static readonly activitéSanitaire: ÉtablissementTerritorialSanitaireActivité = {

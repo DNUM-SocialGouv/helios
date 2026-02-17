@@ -34,10 +34,13 @@ def transforme_les_activites_des_etablissements_medico_sociaux(
     les_donnees_occupations['taux_occupation_internat_y'])
     les_donnees_occupations["taux_occupation_autre"] = les_donnees_occupations['taux_occupation_autre_x'].fillna(
     les_donnees_occupations['taux_occupation_autre_y'])
+    les_donnees_occupations["taux_occupation_global"] = les_donnees_occupations['taux_occupation_global_x'].fillna(
+    les_donnees_occupations['taux_occupation_global_y'])
     les_donnees_occupations = les_donnees_occupations.drop(columns=['taux_occupation_externat_x', 'taux_occupation_externat_y',
     'taux_occupation_autre_x','taux_occupation_autre_y',
     'taux_occupation_semi_internat_x','taux_occupation_semi_internat_y',
-    'taux_occupation_internat_x','taux_occupation_internat_y'])
+    'taux_occupation_internat_x','taux_occupation_internat_y',
+    'taux_occupation_global_x','taux_occupation_global_y'])
     les_donnees_occupations_filtrees = les_donnees_occupations.dropna(
     subset=index_des_activités).drop_duplicates(subset=index_des_activités).set_index(index_des_activités)
     return les_donnees_occupations_filtrees.join(

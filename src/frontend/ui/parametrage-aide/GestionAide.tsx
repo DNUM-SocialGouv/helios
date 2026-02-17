@@ -161,14 +161,17 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
   );
 
   useEffect(() => {
-    if (!slugSelectionne && definitionsSections[0]) {
-      setSlugSelectionne(definitionsSections[0].slug);
-      return;
-    }
+    async function handleSlugChange() {
+      if (!slugSelectionne && definitionsSections[0]) {
+        setSlugSelectionne(definitionsSections[0].slug);
+        return;
+      }
 
-    if (slugSelectionne && !contenu[slugSelectionne] && definitionsSections[0]) {
-      setSlugSelectionne(definitionsSections[0].slug);
+      if (slugSelectionne && !contenu[slugSelectionne] && definitionsSections[0]) {
+        setSlugSelectionne(definitionsSections[0].slug);
+      }
     }
+    handleSlugChange();
   }, [definitionsSections, contenu, slugSelectionne]);
 
   const sectionActive: SectionNormalisee | undefined = slugSelectionne

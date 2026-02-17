@@ -2,10 +2,10 @@ import { ForgetPasswordUseCase } from "../../métier/use-cases/forgetPasswordUse
 import { Dependencies } from "../dependencies";
 
 
-export async function forgetPasswordEndPoint(dependencies: Dependencies, email: string): Promise<Object | null> {
-  try {    
+export async function forgetPasswordEndPoint(dependencies: Dependencies, email: string): Promise<object | null> {
+  try {
     const forgetPasswordUseCase = new ForgetPasswordUseCase(dependencies.forgetPasswordLoader);
-           
+
     return await forgetPasswordUseCase.exécute(email);
   } catch (error) {
     return error

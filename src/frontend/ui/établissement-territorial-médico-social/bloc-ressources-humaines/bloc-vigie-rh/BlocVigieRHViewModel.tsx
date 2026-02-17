@@ -19,7 +19,7 @@ import {
   couleurDuFondHistogrammeOrangeClair,
   couleurExtensionHistogrammeOrangeClair,
 } from "../../../commun/Graphique/couleursGraphique";
-import { StringFormater } from "../../../commun/StringFormater";
+import StringFormater from "../../../commun/StringFormater";
 
 export type DonneesVigieRh = {
   annee: number;
@@ -106,7 +106,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsGroupesNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles;
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles && this.lesEffectifsNeSontIlsPasRenseignees;
   }
 
   public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
@@ -149,11 +149,14 @@ export class BlocVigieRHViewModel {
     return !this.lesEffectifsNeSontIlsPasRenseignees && !this.lesEffectifsNeSontIlsPasAutorisee
   }
 
+  public get graphiqueDureeCddAffichable(): boolean {
+    return !this.lesDureesCDDNeSontEllesPasRenseignees && !this.lesDureesCDDNeSontEllesPasAutorisee
+  }
   public get graphiqueEffectifsGroupesAffichable(): boolean {
     return !this.lesEffectifsGroupesNeSontIlsPasRenseignees && !this.lesEffectifsGroupesNeSontIlsPasAutorisee;
   }
 
-  public get graphiqueDepartsEmbauchesAffichable():boolean {
+  public get graphiqueDepartsEmbauchesAffichable(): boolean {
     return !this.lesDepartsEmbauchesNeSontIlsPasRenseignees && !this.lesDepartsEmbauchesNeSontIlsPasAutorisee
   }
 
@@ -172,7 +175,8 @@ export class BlocVigieRHViewModel {
   public get lesDonneesVgRHPasRenseignees(): string[] {
     const nonRenseignees = [];
     if (this.lesAgesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.PYRAMIDE_DES_AGES);
-    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EVOLUTION_DES_EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.REPARTITION_EFFECTIFS);
     if (this.lesEffectifsGroupesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasRenseignees) nonRenseignees.push(this.wording.TAUX_ROTATION);
@@ -187,7 +191,8 @@ export class BlocVigieRHViewModel {
   public get lesDonneesVgRHPasAutorises(): string[] {
     const nonAutorises = [];
     if (this.lesAgesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.PYRAMIDE_DES_AGES);
-    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EVOLUTION_DES_EFFECTIFS);
+    if (this.lesEffectifsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.REPARTITION_EFFECTIFS);
     if (this.lesEffectifsGroupesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE);
     if (this.lesDepartsEmbauchesNeSontIlsPasAutorisee) nonAutorises.push(this.wording.DEPARTS_EMBAUCHES);
     if (this.lesRotationsNeSontIlsPasAutorisee) nonAutorises.push(this.wording.TAUX_ROTATION);
@@ -288,12 +293,20 @@ export class BlocVigieRHViewModel {
   }
 
   public get filieresAvecGroupes(): ProfessionFiliereData[] {
-    const data = this.lesDonneesEffectifs.data ?? [];
-    return data.filter((item: any) => (item?.groupes?.data ?? []).length > 0);
+    return this.lesDonneesEffectifs.data ?? [];
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? [];
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+        .filter(departEmbauche => departEmbauche.annee !== maxAnnee);
+    }
   }
 
   public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
@@ -320,7 +333,17 @@ export class BlocVigieRHViewModel {
   }
 
   public get donneesTauxRotation(): TauxRotation[] {
-    return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.tauxRotation.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.tauxRotation
+        .filter(rotation => rotation.annee !== maxAnnee);
+    }
+
   }
 
   public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
@@ -357,14 +380,47 @@ export class BlocVigieRHViewModel {
 
     if (variation) {
       variationText = variation > 0
-        ? `+${variation}pts`
-        : `${variation}pts`;
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
     }
     return {
       comparaisonLabel,
-      courant: StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation) + '%',
-      precedent: isoPeriodDonneeComparaison?.rotation ?? '',
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison?.rotation)) + '%',
+      precedent: isoPeriodDonneeComparaison ? StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison?.rotation)) + '%' : '',
       variation: variation,
+      pastPeriod: isoPeriodDonneeComparaison ? `T${isoPeriodDonneeComparaison.trimestre}-${isoPeriodDonneeComparaison.annee}` : '',
+      variationText: variationText,
+    }
+  }
+
+  sommeDesEffectifs = (cddCourts: DureeCDD[], predicate: (item: DureeCDD) => boolean,): number => {
+    return cddCourts.reduce((total: number, item: DureeCDD) => {
+      return predicate(item) ? total + item.effectif : total;
+    }, 0);
+  }
+
+  public get topIndicateurContrats() {
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur ?? '';
+    const periodAbbr = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
+    const maxAnnee = Math.max(...durees.map(d => d.annee));
+    const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
+    const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
+    const comparaisonLabel = `à (${periodAbbr.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1))})`;
+    const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
+    let variationText = '';
+
+    if (variation) {
+      variationText = variation > 0
+        ? `+${StringFormater.formatInFrench(variation)} pts`
+        : `${StringFormater.formatInFrench(variation)} pts`;
+    }
+    return {
+      comparaisonLabel,
+      courant: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(derniereDonneeComparaison)) + '%',
+      precedent: StringFormater.formatInFrench(StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison)) + '%',
+      variation: variation,
+      pastPeriod: period.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1)),
       variationText: variationText,
     }
   }
@@ -395,11 +451,20 @@ export class BlocVigieRHViewModel {
       .sort((a, b) => a.motifCode - b.motifCode);
   }
 
-  public get natureContratsAnnuel():NatureContratsAnnuel[]{
-    return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+  public get natureContratsAnnuel(): NatureContratsAnnuel[] {
+    // si l'année en cours n'est pas complète, on ne l'affiche pas
+    // si le nombre des trimestres (pour une nature de contrats) n'est pas divisible pas 4, l'année n'est pas complète
+    const complete = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.length % 4 === 0;
+    if (complete)
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
+    else {
+      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.map(m => m.annee));
+      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel
+        .filter(contrat => contrat.annee !== maxAnnee);
+    }
   }
 
-  public get natureContratsTrimestriel():NatureContratsTrimestriel[]{
+  public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
     return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
   }
 

@@ -63,6 +63,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       const rechercheResult = await rechercheParmiLesEntitésEtÉtablissementsEndpoint(dependencies, numeroFiness, 1);
 
+      // The page is behind next-auth, the session is guaranteed to be present
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       saveSearchHistoryEndpoint(dependencies, etablissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
         etablissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_SANITAIRE);
 

@@ -250,9 +250,12 @@ const UsersListPage = ({
   const queryParams = new URLSearchParams(getQueryParams());
 
   useEffect(() => {
-    const params = getQueryParams();
-    setFilterParams(params);
-    getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    async function updateFilterAndRefreshUsers() {
+      const params = getQueryParams();
+      setFilterParams(params);
+      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+    }
+    updateFilterAndRefreshUsers();
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   const roleClasses: any = {
@@ -263,7 +266,7 @@ const UsersListPage = ({
   };
 
   return (
-    <main className="fr-container" id="content">
+    <>
       {userData && (
         <>
           <h1 className={`fr-mb-4w ${styles["title"]}`}>{wording.PAGE_UTILISATEUR_TITRE}</h1>
@@ -383,14 +386,13 @@ const UsersListPage = ({
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>
-                  <div className={`${styles["itemsPerPage-container"]}`}>{/*<ItemsPerPage paginationData={paginationData} />*/}</div>
                 </div>
               </div>
             </div>
           )}
         </>
       )}
-    </main>
+    </>
   );
 };
 UsersListPage.defaultProps = {

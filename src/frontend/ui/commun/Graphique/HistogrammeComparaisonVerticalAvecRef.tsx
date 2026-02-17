@@ -4,15 +4,16 @@ import { Bar } from "react-chartjs-2";
 
 import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./HistogrammeComparaisonVerticalAvecRef.module.css";
+import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
+import StringFormater from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 export type HistogrammeComparaisonVerticalAvecRefSerie = Readonly<{
   label: string;
   valeurs: (number | null)[];
-  valeursRef: (number | null)[];
+  valeursRef?: (number | null)[];
   couleurHistogramme: CouleurHistogramme;
   datalabelColor?: string;
 }>;
@@ -36,6 +37,7 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   highlightLastLabel?: boolean;
   libellesValeursManquantes?: string[];
   libellesValeursRefManquantes?: string[];
+  showRefValues: boolean;
 }>;
 
 const valeurFormateeParDefaut = (valeur: number | null): string | null => {
@@ -60,6 +62,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   highlightLastLabel = false,
   libellesValeursManquantes,
   libellesValeursRefManquantes,
+  showRefValues
 }: HistogrammeComparaisonVerticalAvecRefProps) => {
   const { wording } = useDependencies();
   const valeursManquantes = libellesValeursManquantes ?? [];
@@ -88,7 +91,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   };
 
   for (const serie of series) {
-    referencesParLibelle[serie.label] = serie.valeursRef;
+    referencesParLibelle[serie.label] = serie.valeursRef ?? [];
     valeursParLibelle[serie.label] = serie.valeurs;
   }
 
@@ -173,7 +176,6 @@ const HistogrammeComparaisonVerticalAvecRef = ({
 
   const anneeEnCours = String(new Date().getFullYear());
 
-  // @ts-ignore
   const chartOptions: ChartOptions<"bar"> = {
     maintainAspectRatio: true,
     animation: false,
@@ -183,7 +185,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       mode: "point",
     },
     plugins: {
-      // @ts-ignore
+      // @ts-expect-error custom property
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
         align: (context: any) => {
@@ -215,19 +217,22 @@ const HistogrammeComparaisonVerticalAvecRef = ({
         callbacks: {
           label(context: any) {
             const rawValue = context.raw;
+            const label = context.dataset.label;
             const valeur = typeof rawValue === "number" ? rawValue : null;
+            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
+            if (!showRefValues) {
+              return `${label}: ${valeurText}`;
+            }
+
             const labelValue = typeof context.dataset.label === "string" ? context.dataset.label : "";
             const referenceValues = labelValue ? (referencesParLibelle[labelValue] ?? []) : [];
             const valeurRef = referenceValues[context.dataIndex] ?? null;
-
-            const valeurText = formatValeur(valeur) ?? wording.NON_RENSEIGNÉ;
             const valeurRefText = formatValeur(valeurRef) ?? wording.NON_RENSEIGNÉ;
 
-            return [`Valeur: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
+            return [`${label}: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
           },
         },
       },
-      // @ts-ignore
       rotationRef: { referencesByLabel: referencesParLibelle } as any,
     },
     scales: {
@@ -244,10 +249,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesPrincipaux[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === libelles.length - 1) {
-              return { weight: "bold" };
-            }
-            if (String(libelles[context.index]).includes(anneeEnCours)) {
+            if (highlightLastLabel && context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
               return { weight: "bold" };
             }
             return {};
@@ -270,13 +272,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           color: "#000",
           callback: (_value, index) => libellesSecondaires[index] ?? "",
           font: (context: any) => {
-            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire) {
-              return { weight: "bold" };
-            }
             const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
-            if (tickLabel === anneeEnCours) {
+            if (highlightLastLabel && context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
               return { weight: "bold" };
             }
+
             return {};
           },
           maxRotation: 0,
@@ -292,8 +292,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const valeursTranscription: (string | null)[][] = [];
   for (const serie of series) {
     const valeursFormatees = serie.valeurs.map((valeur) => formatValeur(valeur));
-    const refsFormatees = serie.valeursRef.map((valeur) => formatValeur(valeur));
-    valeursTranscription.push(valeursFormatees, refsFormatees);
+    const refsFormatees = (serie.valeursRef ?? []).map((valeur) => formatValeur(valeur));
+    valeursTranscription.push(
+      valeursFormatees,
+      ...(showRefValues ? [refsFormatees] : [])
+    );
   }
 
   const transcriptionIdentifiants =
@@ -309,23 +312,25 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const legend = (
     <div className={styles["legendContainer"]}>
       <menu className={`fr-checkbox-group ${styles["legend"]}`} id={legendContainerId} />
-      <div aria-hidden="true" className={styles["referenceLegend"]}>
-        <span className={styles["referenceLine"]} style={{ backgroundColor: couleurDesTraitsRefHistogramme }} />
-        <span>{legendReferenceLabel}</span>
-      </div>
     </div>
   );
 
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={[rotationRefPlugin]} />
+        <Bar data={chartData} options={chartOptions} plugins={showRefValues ? [rotationRefPlugin] : []} />
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}
-      {valeursRefManquantes.length > 0 && (
+      {showRefValues && valeursRefManquantes.length > 0 && (
         <MiseEnExergue>{`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${valeursRefManquantes.join(", ")}`}</MiseEnExergue>
       )}
+      {showRefValues && <ColorLabel
+        classContainer="fr-mb-1w fr-mt-2w fr-ml-1w"
+        items={[
+          { color: couleurDesTraitsRefHistogramme, label: wording.MOYENNE_REF, circle: false }
+        ]}
+      />}
       {transcription && (
         <Transcription
           entêteLibellé={transcription.enteteLibelle}

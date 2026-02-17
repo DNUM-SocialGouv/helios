@@ -1,4 +1,4 @@
-import { ChartData, ChartOptions } from "chart.js";
+import { ChartData, ChartOptions, ScriptableScaleContext } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
 import { ReactElement } from "react";
 import { Bar } from "react-chartjs-2";
@@ -9,7 +9,7 @@ import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TailleP
 import { annéesManquantes, annéesManquantesVigieRh } from "../../../utils/dateUtils";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
-import { StringFormater } from "../StringFormater";
+import StringFormater from "../StringFormater";
 import { Transcription } from "../Transcription/Transcription";
 
 export function HistogrammeVertical(props: Readonly<{
@@ -73,8 +73,7 @@ export function HistogrammeVertical(props: Readonly<{
     <>
       {listeAnnéesManquantes.length < props.annéesTotales && (
         <Bar
-          // @ts-ignore
-          data={data}
+          data={data as ChartData<"bar">}
           options={optionsHistogrammeVertical(props.taillePoliceTicks)}
         />
       )}
@@ -116,7 +115,6 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
       legend: { display: false },
       tooltip: { enabled: false },
     },
-    radius: false,
     scales: {
       x: {
         grid: {
@@ -126,8 +124,12 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
         stacked: true,
         ticks: {
           color: couleurDelAbscisse,
-          // @ts-ignore
-          font: { weight: grosseursDePoliceDesLibellés },
+          font: {
+            weight: (context: ScriptableScaleContext) => {
+              const index = context && (context as any).tick && typeof (context as any).tick.index === "number" ? (context as any).tick.index : 0;
+              return (grosseursDePoliceDesLibellés[index] as any) ?? "normal";
+            }
+          },
           padding: 10,
         },
         border: {

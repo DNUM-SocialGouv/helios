@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { TauxRotation } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
-import { StringFormater } from "../../../../commun/StringFormater";
+import StringFormater from "../../../../commun/StringFormater";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 
 type GraphiqueTauxRotationAnnuelProps = Readonly<{
@@ -12,9 +12,10 @@ type GraphiqueTauxRotationAnnuelProps = Readonly<{
   nomGraph: string;
   donneesTauxRotation: TauxRotation[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, blocVigieRHViewModel }: GraphiqueTauxRotationAnnuelProps) => {
+const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, blocVigieRHViewModel, showRefValues }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
@@ -46,11 +47,12 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
       couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotation)}
       etabFiness={etabFiness}
       etabTitle={etabTitle}
-      identifiants={[wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE]}
+      identifiants={showRefValues ? [wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE] : [wording.TAUX_ROTATION]}
       libelles={libelles}
       libellesDeValeursDeReferenceManquantes={valeursRefManquantes}
       libellesDeValeursManquantes={valeursManquantes}
       nomGraph={nomGraph}
+      showRefValues={showRefValues}
       tickFormatter={blocVigieRHViewModel.tickFormatter}
       tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
       type={wording.ANNUEL}

@@ -14,10 +14,6 @@
   margin-bottom: 1rem;
 }
 
-.liste-indicateurs canvas {
-  margin-bottom: 1rem;
-}
-
 .liste-indicateurs-vr-wrapper {
   display: flex;
   flex-direction: column;
@@ -51,17 +47,19 @@
   margin-bottom: 1rem;
 }
 
-.liste-indicateurs-vr canvas {
-  margin-bottom: 1rem;
-}
-
 .vigie-rh-header {
   margin-bottom: 2rem;
-  padding-top: .5rem;
+  padding: .5rem 1rem 1rem 1rem;
+  border: 1px solid var(--border-default-grey);
 }
 
 .vigie-rh-title-block {
   margin-bottom: 1rem;
+}
+
+.vigie-rh-block-border {
+  padding: 1rem;
+  border: 1px solid var(--border-default-grey);
 }
 
 .vigie-rh-caption {
@@ -83,6 +81,24 @@
 
 .vigie-rh-top-indicateurs {
   margin-top: 1rem;
+}
+
+.vigie-rh-accordion-button {
+  display: flex !important;
+  justify-content: center;
+}
+
+.vigie-rh-section-details-header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin: var(--title-spacing);
+}
+
+@media (max-width: 991px) {
+  .liste-indicateurs {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 36em) {

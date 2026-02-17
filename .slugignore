@@ -1,3 +1,7 @@
 /.next/cache
 /.git
-/.yarn/cache
+/.yarn
+/.mypy_cache
+/data_set/hapi/*
+/data_set/flux_vigierh
+/data_test/entrée/vigie_rh

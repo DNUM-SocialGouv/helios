@@ -10,18 +10,18 @@ const { wording } = fakeFrontDependencies;
 const etabFiness = "123456789";
 const etabTitle = "etabTitle";
 
-jest.mock("chart.js", () => ({
+jest.mock<typeof import("chart.js")>("chart.js", () => ({
   Chart: {
     register: jest.fn(),
   },
   Tooltip: {},
   Legend: {},
-}));
+} as any));
 
-jest.mock("chartjs-chart-treemap", () => ({
+jest.mock<typeof import("chartjs-chart-treemap")>("chartjs-chart-treemap", () => ({
   TreemapController: {},
   TreemapElement: {},
-}));
+} as any));
 
 describe("La page établissement territorial - bloc vigie rh", () => {
   const ressourcesHumainesViewModel = new ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel(
@@ -43,7 +43,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       motifsRuptureContratLibelles: [],
       natureContratsAnnuel: [],
       natureContratsTrimestriel: [],
-      echelleTemporelle:{}
+      echelleTemporelle: {}
     },
     wording,
     { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }
@@ -138,8 +138,8 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
-      const titre = within(indicateur).getByText(textMatch(wording.EFFECTIFS), { selector: "h3" });
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" }))!;
+      const titre = within(indicateur).getByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" });
       expect(titre).toBeInTheDocument();
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
       expect(détails).toHaveAttribute("aria-controls", "nom-info-bulle-vr-effectifs");
@@ -153,7 +153,7 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       expect(sousBlocRhHelios).toBeInTheDocument();
       expect(sousBlocRhHelios).toHaveTextContent(wording.INDICATEURS_VIGIERH_BLOC_TITLE)
       const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS), { selector: "h3" }))!;
+      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EVOLUTION_DES_EFFECTIFS), { selector: "h3" }))!;
       const détails = within(indicateur).getByRole("button", { name: wording.DÉTAILS });
 
       // WHEN
@@ -161,22 +161,21 @@ describe("La page établissement territorial - bloc vigie rh", () => {
 
       // THEN
       expect(détails).toHaveAttribute("data-fr-opened", "true");
-      const infoBulle = screen.getByRole("dialog", { name: wording.EFFECTIFS });
+      const infoBulle = screen.getByRole("dialog", { name: wording.EVOLUTION_DES_EFFECTIFS });
       const fermer = within(infoBulle).getByRole("button", { name: wording.FERMER });
       expect(fermer).toBeInTheDocument();
     });
 
-    it("affiche le graphique détaillé des effectifs par catégorie professionnelle", () => {
-      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { } } statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
+    it("affiche le graphique détaillé des effectifs par catégorie professionnelle après avoir cliqué sur le bouton afficher le détails par filière", () => {
+      renderFakeComponent(<BlocRessourcesHumainesMédicoSocial blocVigieRhViewModel={blocVigieRhViewModel} categorie={EHPAD_CATEGORIE} etabFiness="" etabTitle="" setStatusSousBlocs={() => { }} statusSousBlocs={[]} établissementTerritorialMédicoSocialRessourcesHumainesViewModel={ressourcesHumainesViewModel} />);
 
       const sousBlocRhHelios = screen.getByTestId('sous-bloc-vigie-rh');
-      const indicateurs = within(sousBlocRhHelios).getAllByRole("listitem");
-      const indicateur = indicateurs.find((item) => within(item).queryByText(textMatch(wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE), { selector: "h3" }))!;
-      const select = within(indicateur).getByLabelText(wording.SELECTIONNER_UNE_FILIERE);
-      expect(select).toBeInTheDocument();
-      expect(select).toHaveValue("test");
-      const options = within(select).getAllByRole("option");
-      expect(options.map((option) => option.getAttribute("value"))).toContain("test");
+      const afficherPlus = within(sousBlocRhHelios).getByRole("button", { name: wording.SHOW_MORE_BUTTON });
+
+      // WHEN
+      fireEvent.click(afficherPlus);
+      expect(sousBlocRhHelios).toHaveTextContent(wording.EFFECTIFS_PAR_FILIERES_CATEGORIES)
+
     });
 
   });

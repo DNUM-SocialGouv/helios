@@ -1,4 +1,4 @@
-import { MouseEvent, memo, useCallback } from "react";
+import { MouseEvent, memo } from "react";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 
 import "@gouvfr/dsfr/dist/component/table/table.min.css";
@@ -13,26 +13,23 @@ type PaginationBtnProps = Readonly<{
 }>;
 
 const PaginationBtn = ({
-  paginationData: { lastPage, page, setPage, ...props },
+  paginationData: { lastPage, page, setPage },
 }: PaginationBtnProps) => {
   const intervalRecursive = (x: number, y: number, accum = []): never[] => {
     if (x + 1 === y) return accum;
     return intervalRecursive(x + 1, y, accum.concat((x + 1) as never));
   };
 
-  const changePage = useCallback(
-    async (e: MouseEvent, page: number, disable = false) => {
-      e.preventDefault();
+  const changePage = async (e: MouseEvent, page: number, disable = false) => {
+    e.preventDefault();
 
-      if (disable === true) {
-        return null;
-      }
-      setPage(page);
+    if (disable === true) {
+      return null;
+    }
+    setPage(page);
 
-      return true;
-    },
-    [props]
-  );
+    return true;
+  };
 
   return (
     <div className={styles["pagination_container"]}>

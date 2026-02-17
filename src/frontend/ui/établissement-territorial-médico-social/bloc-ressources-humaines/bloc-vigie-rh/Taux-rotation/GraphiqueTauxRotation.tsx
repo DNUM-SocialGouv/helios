@@ -15,9 +15,10 @@ type GraphiqueTauxRotationProps = Readonly<{
   donneesTauxRotation: TauxRotation[],
   donneesTauxRotationTrimestriels: TauxRotationTrimestriel[],
   blocVigieRHViewModel: BlocVigieRHViewModel;
+  showRefValues: boolean;
 }>;
 
-const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel }: GraphiqueTauxRotationProps) => {
+const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, donneesTauxRotationTrimestriels, blocVigieRHViewModel, showRefValues }: GraphiqueTauxRotationProps) => {
 
   const { wording } = useDependencies();
 
@@ -36,9 +37,9 @@ const GraphiqueTauxRotation = ({ etabFiness, etabTitle, nomGraph, donneesTauxRot
         selectedFrequency={selectedFrequency}
       />
       {selectedFrequency === wording.ANNUEL ?
-        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
+        <GraphiqueTauxRotationAnnuel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotation={donneesTauxRotation} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} showRefValues={showRefValues} />
         :
-        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} />
+        <GraphiqueTauxRotationTrimestriel blocVigieRHViewModel={blocVigieRHViewModel} donneesTauxRotationTrimestriels={donneesTauxRotationTrimestriels} etabFiness={etabFiness} etabTitle={etabTitle} nomGraph={nomGraph} showRefValues={showRefValues} />
       }
     </div>
   );
