@@ -2,10 +2,12 @@ import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEf
 
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import StringFormater from "../../../frontend/ui/commun/StringFormater";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { ListeRiche } from "../commun/ListeRiche/ListeRiche";
+
 
 
 type FiltresForComparaisonProps = Readonly<{
@@ -27,10 +29,10 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
 
   const filtrerLesCategories = () => {
     if (terme !== "") {
-      const termeRecheche = terme.replaceAll('.', '').toLowerCase();
+      const termeRecheche = StringFormater.supprimeLesAccents(terme.replaceAll('.', '').toLowerCase());
       setFiltredCategories(categoriesViewModel.filter((option) => option.categorieCode.includes(terme) ||
-        option.categorieLibelleRecherche.includes(termeRecheche) ||
-        option.categorieLibelleCourtRecherche.includes(termeRecheche)))
+        StringFormater.supprimeLesAccents(option.categorieLibelleRecherche).includes(termeRecheche) ||
+        StringFormater.supprimeLesAccents(option.categorieLibelleCourtRecherche).includes(termeRecheche)))
     }
   }
 
