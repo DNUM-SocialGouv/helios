@@ -5,6 +5,7 @@ import { getSession } from "next-auth/react";
 import { ProfileValue } from "../../../../database/models/ProfilModel";
 import { getProfileByCodeEndpoint } from "../../../backend/infrastructure/controllers/getProfileByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { Role } from "../../../commons/Role";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ParametrageProfilPage } from "../../../frontend/ui/parametrage-profil/ParametrageProfilPage";
@@ -47,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const session = await getSession(context);
 
     // if current user is not a National admin
-    if (session?.user?.role !== 1) {
+    if (session?.user?.role !== Role.ADMIN_NAT) {
       return {
         redirect: {
           permanent: false,

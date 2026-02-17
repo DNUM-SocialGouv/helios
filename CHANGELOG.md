@@ -14,6 +14,8 @@
 
 - hel-974: Changement du comportement de la page de récupération de mot de passe
 
+- hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
+
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
 ### Bug Fixes

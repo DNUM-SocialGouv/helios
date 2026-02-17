@@ -6,6 +6,7 @@ import { deleteUserEndpoint } from "../../../backend/infrastructure/controllers/
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { Role } from "../../../commons/Role";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -19,23 +20,26 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userSession = await getServerSession(request, response, authOptions);
 
-    //no one can delete itself
+    // Aucun utilisateur ne peut se supprimer lui même
     if (userSession?.user.idUser === userCode) {
       return response.status(405).send("Method not allowed");
     }
-    if (!userBeforeChange) {
-      response.status(405).send("User not found");
-    } else {
-      //only "Admin national" can update it self || Admin regional cant update, delete to (Admin National)
+    if (userBeforeChange) {
       if (
-        (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
-        ((userSession?.user?.role as number) > Number.parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
+        // Un admin central n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
+        // Un utilisateur n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.USER ||
+        // Un admin regional ne peut pas supprimer un admin national ou un admin central
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR))
       ) {
         return response.status(405).send("Method not allowed");
       }
 
       const recherche = await deleteUserEndpoint(dependencies, userCode);
       return response.status(200).json(recherche);
+    } else {
+      response.status(405).send("User not found");
     }
   } catch {
     return response.status(500);

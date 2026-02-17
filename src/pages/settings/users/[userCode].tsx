@@ -11,6 +11,7 @@ import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controllers/getUserByCodeEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { Role } from "../../../commons/Role";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import { EditUser } from "../../../frontend/ui/parametrage-utilisateurs/EditUser/EditUser";
@@ -51,8 +52,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
     const { params } = context;
     const session = await getSession(context);
 
-    // if current user has role 'utilisateur' redirect to page inaccessible
-    if (session?.user?.role === 3) {
+    // Si l’utilisateur est un utilisateur simple ou un administrateur central, on le redirige vers la page d’inaccessibilité
+    const currentUserRole = session?.user?.role;
+    if (currentUserRole === Role.USER || currentUserRole === Role.ADMIN_CENTR) {
       return {
         redirect: {
           permanent: false,

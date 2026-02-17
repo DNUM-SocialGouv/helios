@@ -10,6 +10,7 @@ import { ProfilModel } from "../../../database/models/ProfilModel";
 import { getAideEndpoint } from "../../backend/infrastructure/controllers/getAideEndpoint";
 import { getAllProfilesEndpoint } from "../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
+import { Role } from "../../commons/Role";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ContenuAide, GestionAide } from "../../frontend/ui/parametrage-aide";
@@ -123,7 +124,7 @@ export async function getServerSideProps(
   try {
     const session = await getSession(context);
 
-    if (session?.user?.role !== 1) {
+    if (session?.user?.role !== Role.ADMIN_NAT) {
       return {
         redirect: {
           destination: "/inaccessible",

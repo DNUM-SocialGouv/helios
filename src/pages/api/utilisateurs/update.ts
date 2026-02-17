@@ -6,6 +6,7 @@ import { getUserByCodeEndpoint } from "../../../backend/infrastructure/controlle
 import { updateUserEndpoint } from "../../../backend/infrastructure/controllers/updateUserEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { Role } from "../../../commons/Role";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -17,15 +18,18 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
 
-    if (!userBeforeChange) {
-      response.status(405).send("User not found");
-    } else {
+    if (userBeforeChange) {
       const userSession = await getServerSession(request, response, authOptions);
 
-      //only "Admin national" can update it self || Admin regional cant update, delete (Admin National)
       if (
-        (userSession?.user?.idUser === userCode && userSession?.user?.role !== 1) ||
-        ((userSession?.user?.role as number) > Number.parseInt(userBeforeChange.roleId) && userSession?.user?.idUser !== userCode)
+        // Un admin central n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
+        // Un utilisateur n’a aucun droit sur ce endpoint
+        (userSession?.user?.role as number) === Role.USER ||
+        // Seul admin national peut se mettre à jour lui même
+        (userSession?.user?.idUser === userCode && userSession?.user?.role !== Role.ADMIN_NAT) ||
+        // Un admin regional ne peut pas mettre à jour un admin national ou un admin central
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR))
       ) {
         return response.status(405).send("Method not allowed");
       }
@@ -33,6 +37,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       const recherche = await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
 
       return response.status(200).json(recherche);
+    } else {
+      response.status(405).send("User not found");
     }
   } catch {
     return response.status(500);
