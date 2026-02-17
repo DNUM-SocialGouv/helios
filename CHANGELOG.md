@@ -8,6 +8,7 @@
 - hel-954: Correction wording FAQ
 
 ### Features
+- hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
 
 - hel-967: Réécriture des batch typescript en python
 

@@ -261,21 +261,20 @@ describe("La recherche d’entités et d’établissements", () => {
 
   it("retourne des résultats même s’il y a des espaces dans la recherche demandée", async () => {
     // GIVEN
-    const numéroFinessEntitéJuridique = "010 018 407";
     const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée();
     await entitéJuridiqueRepository.insert(entitéJuridiqueModel);
 
     const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
 
     // WHEN
-    const recherche = await typeOrmRechercheLoader.recherche(numéroFinessEntitéJuridique, premièrePage);
+    const recherche = await typeOrmRechercheLoader.recherche('CH DU HAUT BUGEY', premièrePage);
 
     // THEN
     expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
       {
         commune: "OYONNAX",
         département: "AIN",
-        numéroFiness: numéroFinessEntitéJuridique.replaceAll(" ", ""),
+        numéroFiness: numéroFinessEntitéJuridique,
         raisonSocialeCourte: "CH DU HAUT BUGEY",
         type: "Entité juridique",
         rattachement: "",
@@ -302,6 +301,31 @@ describe("La recherche d’entités et d’établissements", () => {
         département: "AIN",
         numéroFiness: "010018407",
         raisonSocialeCourte: "CH DU HAUT BUGEY",
+        type: "Entité juridique",
+        rattachement: "",
+        categorie: '-'
+      },
+    ]);
+  });
+
+  it("retourne des résultats en auto complétion", async () => {
+    // GIVEN
+    const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ raisonSocialeCourte: "SAS LES MAISONNEES DE FRANCE" });
+    await entitéJuridiqueRepository.insert(entitéJuridiqueModel);
+
+    const typeOrmRechercheLoader = new TypeOrmRechercheLoader(orm);
+
+    // WHEN
+    const recherche = await typeOrmRechercheLoader.recherche("maisonnee", premièrePage);
+
+    // THEN
+    expect(recherche.nombreDeRésultats).toBe(1);
+    expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
+      {
+        commune: "OYONNAX",
+        département: "AIN",
+        numéroFiness: numéroFinessEntitéJuridique,
+        raisonSocialeCourte: "SAS LES MAISONNEES DE FRANCE",
         type: "Entité juridique",
         rattachement: "",
         categorie: '-'
@@ -637,7 +661,7 @@ describe("La recherche d’entités et d’établissements", () => {
   });
 
   describe("Par catégorie d’établissement", () => {
-    it("retourne un résultat quand le libellé de la catégorie de l’établissement territorial est connu", async () => {
+    it("ne retourne pas un résultat quand le libellé de la catégorie de l’établissement territorial est connu", async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique });
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel);
@@ -655,13 +679,11 @@ describe("La recherche d’entités et d’établissements", () => {
       const recherche = await typeOrmRechercheLoader.recherche("etablissement privé ssr", premièrePage);
 
       // THEN
-      expect(recherche.nombreDeRésultats).toBe(1);
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-C.H.' }),
-      ]);
+      expect(recherche.nombreDeRésultats).toBe(0);
+
     });
 
-    it("retourne un résultat quand le libellé court de la catégorie de l’établissement territorial est connu", async () => {
+    it("ne retourne pas un résultat quand le libellé court de la catégorie de l’établissement territorial est connu", async () => {
       // GIVEN
       const entitéJuridiqueModel = EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique });
       await entitéJuridiqueRepository.insert(entitéJuridiqueModel);
@@ -679,10 +701,8 @@ describe("La recherche d’entités et d’établissements", () => {
       const recherche = await typeOrmRechercheLoader.recherche("soin suite readap", premièrePage);
 
       // THEN
-      expect(recherche.nombreDeRésultats).toBe(1);
-      expect(recherche.résultats).toStrictEqual<RésultatDeRecherche["résultats"]>([
-        RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheÉtablissementSanitaire({ numéroFiness: numéroFinessÉtablissementTerritorial, categorie: '365-Soins suite réadap' }),
-      ]);
+      expect(recherche.nombreDeRésultats).toBe(0);
+
     });
   });
 
