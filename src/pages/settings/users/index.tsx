@@ -98,8 +98,9 @@ export default function Router({
 export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetStaticPropsResult<RouterProps>> {
   const session = await getSession(context);
 
-  // if current user has role 'utilisateur' redirect to page inaccessible
-  if (session?.user?.role === Role.USER) {
+  // if current user has role 'utilisateur' or 'admin central' redirect to page inaccessible
+  const currentUserRole = session?.user?.role;
+  if (currentUserRole === Role.USER || currentUserRole === Role.ADMIN_CENTR) {
     return {
       redirect: {
         permanent: false,
