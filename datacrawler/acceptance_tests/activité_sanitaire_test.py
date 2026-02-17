@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 from freezegun import freeze_time
 from numpy import NaN
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activites_des_etablissements_sanitaires
@@ -73,13 +74,13 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activite_enregistree, activite_attendue)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
@@ -151,13 +152,13 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activite_enregistree, activite_attendue)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
@@ -208,12 +209,12 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(table_activite, activite_existante)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_RPU.value)

@@ -5,6 +5,7 @@ from datetime import date
 
 import pandas as pd
 from numpy import NaN
+from sqlalchemy import text
 
 from datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux import ajoute_les_autorisations_des_établissements_médico_sociaux
 from datacrawler.load.nom_des_tables import (
@@ -57,9 +58,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "capacite_autorisee_totale": NaN,
                     "capacite_installee_totale": NaN,
                     "clientele": "700",
-                    "date_autorisation": None,
-                    "date_derniere_installation": None,
-                    "date_mise_a_jour_autorisation": None,
+                    "date_autorisation": pd.NaT,
+                    "date_derniere_installation": pd.NaT,
+                    "date_mise_a_jour_autorisation": pd.NaT,
                     "discipline_equipement": "925",
                     "est_installee": True,
                     "libelle_activite": "Hébergement Complet Internat",
@@ -72,9 +73,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "capacite_autorisee_totale": 75,
                     "capacite_installee_totale": 15,
                     "clientele": "810",
-                    "date_autorisation": date(2016, 10, 7),
-                    "date_derniere_installation": date(2018, 4, 16),
-                    "date_mise_a_jour_autorisation": date(2019, 12, 28),
+                    "date_autorisation": pd.Timestamp(date(2016, 10, 7)),
+                    "date_derniere_installation": pd.Timestamp(date(2018, 4, 16)),
+                    "date_mise_a_jour_autorisation": pd.Timestamp(date(2019, 12, 28)),
                     "discipline_equipement": "957",
                     "est_installee": True,
                     "libelle_activite": "Hébergement Complet Internat",
@@ -87,9 +88,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "capacite_autorisee_totale": 8,
                     "capacite_installee_totale": 8,
                     "clientele": "110",
-                    "date_autorisation": date(2017, 1, 3),
-                    "date_derniere_installation": date(2016, 11, 29),
-                    "date_mise_a_jour_autorisation": date(2017, 4, 21),
+                    "date_autorisation": pd.Timestamp(date(2017, 1, 3)),
+                    "date_derniere_installation": pd.Timestamp(date(2016, 11, 29)),
+                    "date_mise_a_jour_autorisation": pd.Timestamp(date(2017, 4, 21)),
                     "discipline_equipement": "901",
                     "est_installee": True,
                     "libelle_activite": "Hébergement Complet Internat",
@@ -102,9 +103,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "capacite_autorisee_totale": 21,
                     "capacite_installee_totale": 21,
                     "clientele": "110",
-                    "date_autorisation": date(2017, 1, 3),
-                    "date_derniere_installation": date(2016, 11, 29),
-                    "date_mise_a_jour_autorisation": date(2017, 4, 21),
+                    "date_autorisation": pd.Timestamp(date(2017, 1, 3)),
+                    "date_derniere_installation": pd.Timestamp(date(2016, 11, 29)),
+                    "date_mise_a_jour_autorisation": pd.Timestamp(date(2017, 4, 21)),
                     "discipline_equipement": "901",
                     "est_installee": True,
                     "libelle_activite": "Semi-Internat",
@@ -117,9 +118,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "capacite_autorisee_totale": 6,
                     "capacite_installee_totale": 6,
                     "clientele": "500",
-                    "date_autorisation": date(2017, 1, 3),
-                    "date_derniere_installation": date(2016, 11, 29),
-                    "date_mise_a_jour_autorisation": date(2017, 4, 21),
+                    "date_autorisation": pd.Timestamp(date(2017, 1, 3)),
+                    "date_derniere_installation": pd.Timestamp(date(2016, 11, 29)),
+                    "date_mise_a_jour_autorisation": pd.Timestamp(date(2017, 4, 21)),
                     "discipline_equipement": "901",
                     "est_installee": False,
                     "libelle_activite": "Semi-Internat",
@@ -157,7 +158,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
         pd.testing.assert_frame_equal(autorisations_enregistrées, autorisations_attendues)
 
-        date_du_fichier_finess_cs1400105 = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400105.value}'"""
+        date_du_fichier_finess_cs1400105 = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400105.value}'""")
         )
         assert date_du_fichier_finess_cs1400105.fetchone() == (date(2021, 12, 14), FichierSource.FINESS_CS1400105.value)

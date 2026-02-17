@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 from numpy import NaN
 from freezegun import freeze_time
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_les_autorisations_des_établissements_sanitaires import (
@@ -140,27 +141,36 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["16", "16", "16", "16", "50"],
                     "code_forme": ["00", "14", "00", "00", "02"],
                     "code_modalite": ["42", "44", "46", "45", "78"],
-                    "date_autorisation": [
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                        None,
-                    ],
-                    "date_fin": [
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                        None,
-                    ],
-                    "date_mise_en_oeuvre": [
-                        date(2008, 12, 4),
-                        date(2009, 11, 9),
-                        date(2008, 12, 4),
-                        date(2008, 12, 4),
-                        None,
-                    ],
+                    "date_autorisation": pd.Series(
+                        [
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_fin": pd.Series(
+                        [
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_mise_en_oeuvre": pd.Series(
+                        [
+                            date(2008, 12, 4),
+                            date(2009, 11, 9),
+                            date(2008, 12, 4),
+                            date(2008, 12, 4),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
                     "libelle_activite": [
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
@@ -245,8 +255,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
 
             # THEN
-            date_du_fichier_finess_cs1400103 = base_de_données_test.execute(
-                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'"
+            date_du_fichier_finess_cs1400103 = base_de_données_test.connect().execute(
+                text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'")
             )
             assert date_du_fichier_finess_cs1400103.fetchone() == (
                 date(2021, 12, 14),
@@ -285,24 +295,33 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["16", "16", "16", "16"],
                     "code_forme": ["00", "14", "00", "00"],
                     "code_modalite": ["42", "44", "46", "45"],
-                    "date_autorisation": [
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                        date(2005, 10, 11),
-                    ],
-                    "date_fin": [
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                        date(2026, 5, 3),
-                    ],
-                    "date_mise_en_oeuvre": [
-                        date(2008, 12, 4),
-                        date(2009, 11, 9),
-                        date(2008, 12, 4),
-                        date(2008, 12, 4),
-                    ],
+                    "date_autorisation": pd.Series(
+                        [
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                            date(2005, 10, 11),
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_fin": pd.Series(
+                        [
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                            date(2026, 5, 3),
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_mise_en_oeuvre": pd.Series(
+                        [
+                            date(2008, 12, 4),
+                            date(2009, 11, 9),
+                            date(2008, 12, 4),
+                            date(2008, 12, 4),
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
                     "libelle_activite": [
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
@@ -348,8 +367,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(autorisations_enregistrées, autorisations_attendues)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2021, 12, 14),
@@ -367,6 +386,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.FINESS_CS1400103, base_de_données_test)
             autorisation_sanitaire_existante = pd.DataFrame([helios_autorisation_sanitaire_builder()])
+            autorisation_sanitaire_existante["date_autorisation"] = pd.to_datetime(autorisation_sanitaire_existante["date_autorisation"])
+            autorisation_sanitaire_existante["date_fin"] = pd.to_datetime(autorisation_sanitaire_existante["date_fin"])
+            autorisation_sanitaire_existante["date_mise_en_oeuvre"] = pd.to_datetime(autorisation_sanitaire_existante["date_mise_en_oeuvre"])
             sauvegarde_une_autorisation_sanitaire_en_base(autorisation_sanitaire_existante, base_de_données_test)
 
             mocked_sauvegarde.side_effect = ValueError()
@@ -396,8 +418,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(autorisations_enregistrées, autorisation_sanitaire_existante)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400103.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2020, 1, 1),
@@ -444,13 +466,16 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             équipements_matériels_lourds_attendus = pd.DataFrame(
                 {
                     "code_equipement_materiel_lourd": ["05602", "06201", "05701"],
-                    "date_autorisation": [date(2007, 11, 6), date(2006, 5, 2), None],
-                    "date_fin": [date(2029, 1, 1), date(2027, 2, 16), None],
-                    "date_mise_en_oeuvre": [
-                        date(2011, 10, 19),
-                        date(2009, 1, 20),
-                        None,
-                    ],
+                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2), None], dtype="datetime64[ns]"),
+                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16), None], dtype="datetime64[ns]"),
+                    "date_mise_en_oeuvre": pd.Series(
+                        [
+                            date(2011, 10, 19),
+                            date(2009, 1, 20),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
                     "libelle_eml": [
                         "Scanographe à utilisation médicale",
                         "Appareil d'IRM à utilisation clinique",
@@ -521,8 +546,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
 
             # THEN
-            date_du_fichier_finess_cs1400104 = base_de_données_test.execute(
-                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'"
+            date_du_fichier_finess_cs1400104 = base_de_données_test.connect().execute(
+                text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'")
             )
             assert date_du_fichier_finess_cs1400104.fetchone() == (
                 date(2021, 12, 14),
@@ -558,9 +583,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             équipements_matériels_lourds_attendus = pd.DataFrame(
                 {
                     "code_equipement_materiel_lourd": ["05602", "06201"],
-                    "date_autorisation": [date(2007, 11, 6), date(2006, 5, 2)],
-                    "date_fin": [date(2029, 1, 1), date(2027, 2, 16)],
-                    "date_mise_en_oeuvre": [date(2011, 10, 19), date(2009, 1, 20)],
+                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2)], dtype="datetime64[ns]"),
+                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16)], dtype="datetime64[ns]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2011, 10, 19), date(2009, 1, 20)], dtype="datetime64[ns]"),
                     "libelle_eml": [
                         "Scanographe à utilisation médicale",
                         "Appareil d'IRM à utilisation clinique",
@@ -589,8 +614,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 équipements_matériels_lourds_enregistrés,
             )
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2021, 12, 14),
@@ -608,6 +633,13 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.FINESS_CS1400104, base_de_données_test)
             équipement_matériel_lourd_sanitaire_existante = pd.DataFrame([helios_équipement_matériel_lourd_sanitaire_builder()])
+            équipement_matériel_lourd_sanitaire_existante["date_autorisation"] = pd.to_datetime(
+                équipement_matériel_lourd_sanitaire_existante["date_autorisation"]
+            )
+            équipement_matériel_lourd_sanitaire_existante["date_fin"] = pd.to_datetime(équipement_matériel_lourd_sanitaire_existante["date_fin"])
+            équipement_matériel_lourd_sanitaire_existante["date_mise_en_oeuvre"] = pd.to_datetime(
+                équipement_matériel_lourd_sanitaire_existante["date_mise_en_oeuvre"]
+            )
             sauvegarde_un_équipement_matériel_lourd_en_base(équipement_matériel_lourd_sanitaire_existante, base_de_données_test)
 
             mocked_sauvegarde.side_effect = ValueError()
@@ -640,8 +672,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 équipements_matériels_lourds_enregistrés,
             )
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1400104.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2020, 1, 1),
@@ -690,9 +722,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["A1", "A1", "A0"],
                     "code_forme": ["00", "00", "15"],
                     "code_modalite": ["M0", "M2", "00"],
-                    "date_autorisation": [date(2019, 6, 3), date(2019, 6, 3), None],
-                    "date_fin": [date(2024, 8, 31), date(2024, 8, 31), None],
-                    "date_mise_en_oeuvre": [date(2019, 6, 3), date(2019, 6, 3), None],
+                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[ns]"),
+                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31), None], dtype="datetime64[ns]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[ns]"),
                     "libelle_activite": [
                         "Dépôt de sang",
                         "Dépôt de sang",
@@ -762,8 +794,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
 
             # THEN
-            date_du_fichier_finess_cs1600101 = base_de_données_test.execute(
-                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'"
+            date_du_fichier_finess_cs1600101 = base_de_données_test.connect().execute(
+                text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'")
             )
             assert date_du_fichier_finess_cs1600101.fetchone() == (
                 date(2021, 12, 14),
@@ -801,9 +833,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["A1", "A1"],
                     "code_forme": ["00", "00"],
                     "code_modalite": ["M0", "M2"],
-                    "date_autorisation": [date(2019, 6, 3), date(2019, 6, 3)],
-                    "date_fin": [date(2024, 8, 31), date(2024, 8, 31)],
-                    "date_mise_en_oeuvre": [date(2019, 6, 3), date(2019, 6, 3)],
+                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[ns]"),
+                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31)], dtype="datetime64[ns]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[ns]"),
                     "libelle_activite": ["Dépôt de sang", "Dépôt de sang"],
                     "libelle_forme": ["Pas de forme", "Pas de forme"],
                     "libelle_modalite": ["Dépôt d'urgence", "Dépôt relais"],
@@ -826,8 +858,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(autres_activités_attendues, autres_activités_enregistrées)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2021, 12, 14),
@@ -845,6 +877,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.FINESS_CS1600101, base_de_données_test)
             autre_activité_sanitaire_existante = pd.DataFrame([helios_autre_activité_sanitaire_builder()])
+            autre_activité_sanitaire_existante["date_autorisation"] = pd.to_datetime(autre_activité_sanitaire_existante["date_autorisation"])
+            autre_activité_sanitaire_existante["date_fin"] = pd.to_datetime(autre_activité_sanitaire_existante["date_fin"])
+            autre_activité_sanitaire_existante["date_mise_en_oeuvre"] = pd.to_datetime(autre_activité_sanitaire_existante["date_mise_en_oeuvre"])
             sauvegarde_une_autre_activité_sanitaire_en_base(autre_activité_sanitaire_existante, base_de_données_test)
 
             mocked_sauvegarde.side_effect = ValueError()
@@ -874,8 +909,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(autre_activité_sanitaire_existante, autres_activités_enregistrées)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600101.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2020, 1, 1),
@@ -925,24 +960,33 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["R7", "R4", "S6", "R7"],
                     "code_forme": ["01", "00", "00", "01"],
                     "code_modalite": ["N8", "N4", "B3", "09"],
-                    "date_effet_asr": [
-                        date(2013, 11, 30),
-                        date(2013, 1, 1),
-                        None,
-                        None,
-                    ],
-                    "date_effet_cpom": [
-                        date(2013, 12, 1),
-                        date(2013, 12, 1),
-                        date(2019, 4, 1),
-                        None,
-                    ],
-                    "date_fin_cpom": [
-                        date(2018, 11, 30),
-                        date(2018, 11, 30),
-                        date(2023, 12, 31),
-                        None,
-                    ],
+                    "date_effet_asr": pd.Series(
+                        [
+                            date(2013, 11, 30),
+                            date(2013, 1, 1),
+                            None,
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_effet_cpom": pd.Series(
+                        [
+                            date(2013, 12, 1),
+                            date(2013, 12, 1),
+                            date(2019, 4, 1),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_fin_cpom": pd.Series(
+                        [
+                            date(2018, 11, 30),
+                            date(2018, 11, 30),
+                            date(2023, 12, 31),
+                            None,
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
                     "numero_cpom": [
                         "01-00-C00000",
                         "01-00-C00001",
@@ -1033,8 +1077,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
 
             # THEN
-            date_du_fichier_finess_cs1600102 = base_de_données_test.execute(
-                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'"
+            date_du_fichier_finess_cs1600102 = base_de_données_test.connect().execute(
+                text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'")
             )
             assert date_du_fichier_finess_cs1600102.fetchone() == (
                 date(2021, 12, 14),
@@ -1073,17 +1117,23 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["R7", "R4", "S6"],
                     "code_forme": ["01", "00", "00"],
                     "code_modalite": ["N8", "N4", "B3"],
-                    "date_effet_asr": [date(2013, 11, 30), date(2013, 1, 1), None],
-                    "date_effet_cpom": [
-                        date(2013, 12, 1),
-                        date(2013, 12, 1),
-                        date(2019, 4, 1),
-                    ],
-                    "date_fin_cpom": [
-                        date(2018, 11, 30),
-                        date(2018, 11, 30),
-                        date(2023, 12, 31),
-                    ],
+                    "date_effet_asr": pd.Series([date(2013, 11, 30), date(2013, 1, 1), None], dtype="datetime64[ns]"),
+                    "date_effet_cpom": pd.Series(
+                        [
+                            date(2013, 12, 1),
+                            date(2013, 12, 1),
+                            date(2019, 4, 1),
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
+                    "date_fin_cpom": pd.Series(
+                        [
+                            date(2018, 11, 30),
+                            date(2018, 11, 30),
+                            date(2023, 12, 31),
+                        ],
+                        dtype="datetime64[ns]",
+                    ),
                     "numero_cpom": ["01-00-C00000", "01-00-C00001", "01-00-C00002"],
                     "libelle_activite": [
                         "Surveillance continue",
@@ -1128,8 +1178,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 reconnaissances_contractuelles_enregistrées,
             )
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2021, 12, 14),
@@ -1147,6 +1197,15 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
             sauvegarde_une_date_de_mise_à_jour_de_fichier_source("20200101", FichierSource.FINESS_CS1600102, base_de_données_test)
             reconnaissance_contractuelle_sanitaire_existante = pd.DataFrame([helios_reconnaissance_contractuelle_sanitaire_builder()])
+            reconnaissance_contractuelle_sanitaire_existante["date_effet_asr"] = pd.to_datetime(
+                reconnaissance_contractuelle_sanitaire_existante["date_effet_asr"]
+            )
+            reconnaissance_contractuelle_sanitaire_existante["date_effet_cpom"] = pd.to_datetime(
+                reconnaissance_contractuelle_sanitaire_existante["date_effet_cpom"]
+            )
+            reconnaissance_contractuelle_sanitaire_existante["date_fin_cpom"] = pd.to_datetime(
+                reconnaissance_contractuelle_sanitaire_existante["date_fin_cpom"]
+            )
             sauvegarde_une_reconnaissance_contractuelle_en_base(reconnaissance_contractuelle_sanitaire_existante, base_de_données_test)
 
             mocked_sauvegarde.side_effect = ValueError()
@@ -1179,8 +1238,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 reconnaissances_contractuelles_enregistrées,
             )
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.FINESS_CS1600102.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2020, 1, 1),
@@ -1278,8 +1337,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             )
 
             # THEN
-            date_du_fichier_ann_sae = base_de_données_test.execute(
-                f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"
+            date_du_fichier_ann_sae = base_de_données_test.connect().execute(
+                text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'")
             )
             assert date_du_fichier_ann_sae.fetchone() == (
                 date(2022, 8, 3),
@@ -1351,8 +1410,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(capacités_attendues, capacités_enregistrées)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2022, 8, 3),
@@ -1394,8 +1453,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
 
             pd.testing.assert_frame_equal(capacités_sanitaires_existantes, capacités_enregistrées)
 
-            date_du_fichier_de_données = base_de_données_test.execute(
-                f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'"""
+            date_du_fichier_de_données = base_de_données_test.connect().execute(
+                text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_SAE.value}'""")
             )
             assert date_du_fichier_de_données.fetchone() == (
                 date(2020, 1, 1),

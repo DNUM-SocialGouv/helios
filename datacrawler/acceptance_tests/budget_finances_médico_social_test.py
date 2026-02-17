@@ -5,6 +5,7 @@ from freezegun import freeze_time
 import pandas as pd
 import pytest
 from numpy import NaN
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux import ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux
@@ -201,18 +202,18 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
         )
 
         # THEN
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ca_ej_et = base_de_données_test.execute(
-            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'"
+        date_du_fichier_ann_ca_ej_et = base_de_données_test.connect().execute(
+            text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'")
         )
         assert date_du_fichier_ann_ca_ej_et.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_CA_EJ_ET.value)
 
-        date_du_fichier_ann_errd_ej = base_de_données_test.execute(
-            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ.value}'"
+        date_du_fichier_ann_errd_ej = base_de_données_test.connect().execute(
+            text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ.value}'")
         )
         assert date_du_fichier_ann_errd_ej.fetchone() == (date(2022, 9, 1), FichierSource.DIAMANT_ANN_ERRD_EJ.value)
 
@@ -447,12 +448,12 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
             ).sort_index(axis=1),
         )
 
-        date_du_fichier_de_données_errd = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_de_données_errd = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_de_données_errd.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_de_données_ca = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'"""
+        date_du_fichier_de_données_ca = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_CA_EJ_ET.value}'""")
         )
         assert date_du_fichier_de_données_ca.fetchone() == (date(2020, 2, 2), FichierSource.DIAMANT_ANN_CA_EJ_ET.value)

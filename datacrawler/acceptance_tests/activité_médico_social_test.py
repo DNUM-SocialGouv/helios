@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 from freezegun import freeze_time
 from numpy import NaN
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activites_des_etablissements_medico_sociaux
@@ -128,13 +129,13 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
@@ -169,13 +170,13 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         # THEN
         pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
@@ -223,12 +224,12 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(table_activite, table_activite_existante)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
