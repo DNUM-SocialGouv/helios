@@ -26,6 +26,7 @@ pytest-watcher = "==0.2.1"
 black = "==23.1.0"
 pandas-stubs = "==2.3.3.260113"
 types-paramiko = ">4.0.0"
+sqlalchemy-stubs = "==0.4"
 
 [requires]
 python_full_version = "3.11.14" # Conserver la même version que celle dans helios-ci.yml
