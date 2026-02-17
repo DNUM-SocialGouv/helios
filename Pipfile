@@ -16,7 +16,7 @@ paramiko = "4.0.0"
 
 [dev-packages]
 pylint = "==2.16.2"
-mypy = "0.982"
+mypy = "1.19.1"
 pytest = "7.1.2"
 pytest-mock = "3.7.0"
 freezegun = "1.2.1"
