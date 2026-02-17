@@ -600,7 +600,7 @@ export class WordingFr implements Wording {
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
   readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
-  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Si votre identifiant est correct, un lien de réinitialisation de votre mot de passe vient de vous être transmis sur l'adresse mail que vous nous avez communiquée. Rendez vous dans votre boite mail.";
 
   // Changement de mot de passe
   readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Mot de passe";
