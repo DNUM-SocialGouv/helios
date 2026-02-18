@@ -29,7 +29,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
 
@@ -41,7 +41,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
 
@@ -61,7 +61,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
 
@@ -118,7 +118,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -172,7 +172,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -211,7 +211,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -283,7 +283,7 @@ describe("La page de d’accueil", () => {
       });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -370,7 +370,7 @@ describe("La page de d’accueil", () => {
       });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const termeDeLaPremièreRecherche = "hospitalier";
@@ -412,7 +412,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -444,7 +444,7 @@ describe("La page de d’accueil", () => {
 
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -513,7 +513,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche />
+        <PageRecherche passwordStatus={{ 'status': "ok" }} />
       </SessionProvider>
     );
 
