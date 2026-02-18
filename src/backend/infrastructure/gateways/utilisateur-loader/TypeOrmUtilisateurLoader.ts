@@ -57,8 +57,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
+    // if password is expired, then the user is inactif
+    const passwordStatus = await this.checkPasswordStatus(email);
+    if (passwordStatus.status === 'expired') return false;
+
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
-    // Pa
+
     // if user is not addmin
     if (user && ![1, 2].includes(Number.parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
