@@ -7,7 +7,7 @@ export const PasswordWarnningNotice = ({ daysLeft }: { daysLeft: number }) => {
   return (
     removeNotice ? null :
       <div className="fr-alert fr-alert--warning fr-mb-1w">
-        <p>Votre mot de passe ne sera plus valide dans {daysLeft} jours. Pensez à le modifier <Link href="/mon-compte">en cliquant ici</Link></p>
+        <p>Votre mot de passe ne sera plus valide dans {daysLeft} jours. Pensez à le modifier <Link href="/mon-compte#2">en cliquant ici</Link></p>
         <button className="fr-btn--close fr-btn" onClick={() => setRemoveNotice(true)} title="Masquer le message" />
       </div>
   );
