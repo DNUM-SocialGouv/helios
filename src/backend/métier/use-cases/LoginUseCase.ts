@@ -1,6 +1,6 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { Institution } from "../entities/Utilisateur/Institution";
-import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class LoginUseCase {
@@ -12,6 +12,10 @@ export class LoginUseCase {
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
     return await this.utilisateurLoader.checkUserIsNotAdminAndInactif(email);
+  }
+
+  async checkPasswordStatus(email: string): Promise<PasswordStatus> {
+    return await this.utilisateurLoader.checkPasswordStatus(email);
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {
