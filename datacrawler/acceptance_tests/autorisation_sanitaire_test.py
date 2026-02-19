@@ -149,7 +149,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2005, 10, 11),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_fin": pd.Series(
                         [
@@ -159,7 +159,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2026, 5, 3),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_mise_en_oeuvre": pd.Series(
                         [
@@ -169,7 +169,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2008, 12, 4),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "libelle_activite": [
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
@@ -302,7 +302,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2005, 10, 11),
                             date(2005, 10, 11),
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_fin": pd.Series(
                         [
@@ -311,7 +311,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2026, 5, 3),
                             date(2026, 5, 3),
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_mise_en_oeuvre": pd.Series(
                         [
@@ -320,7 +320,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2008, 12, 4),
                             date(2008, 12, 4),
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "libelle_activite": [
                         "Traitement de l'insuffisance rénale chronique par épuration extrarénale",
@@ -466,15 +466,15 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             équipements_matériels_lourds_attendus = pd.DataFrame(
                 {
                     "code_equipement_materiel_lourd": ["05602", "06201", "05701"],
-                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2), None], dtype="datetime64[ns]"),
-                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16), None], dtype="datetime64[ns]"),
+                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2), None], dtype="datetime64[s]"),
+                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16), None], dtype="datetime64[s]"),
                     "date_mise_en_oeuvre": pd.Series(
                         [
                             date(2011, 10, 19),
                             date(2009, 1, 20),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "libelle_eml": [
                         "Scanographe à utilisation médicale",
@@ -491,7 +491,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         numéro_finess_avec_valeurs_manquantes,
                     ],
-                    "date_ouverture": [None, None, None],
+                    "date_ouverture": pd.Series([None, None, None], dtype=pd.StringDtype(na_value=NaN)),
                 },
             )
 
@@ -583,9 +583,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             équipements_matériels_lourds_attendus = pd.DataFrame(
                 {
                     "code_equipement_materiel_lourd": ["05602", "06201"],
-                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2)], dtype="datetime64[ns]"),
-                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16)], dtype="datetime64[ns]"),
-                    "date_mise_en_oeuvre": pd.Series([date(2011, 10, 19), date(2009, 1, 20)], dtype="datetime64[ns]"),
+                    "date_autorisation": pd.Series([date(2007, 11, 6), date(2006, 5, 2)], dtype="datetime64[s]"),
+                    "date_fin": pd.Series([date(2029, 1, 1), date(2027, 2, 16)], dtype="datetime64[s]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2011, 10, 19), date(2009, 1, 20)], dtype="datetime64[s]"),
                     "libelle_eml": [
                         "Scanographe à utilisation médicale",
                         "Appareil d'IRM à utilisation clinique",
@@ -595,7 +595,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                     ],
-                    "date_ouverture": [None, None],
+                    "date_ouverture": pd.Series([None, None], dtype=pd.StringDtype(na_value=NaN)),
                 },
             )
 
@@ -639,6 +639,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             équipement_matériel_lourd_sanitaire_existante["date_fin"] = pd.to_datetime(équipement_matériel_lourd_sanitaire_existante["date_fin"])
             équipement_matériel_lourd_sanitaire_existante["date_mise_en_oeuvre"] = pd.to_datetime(
                 équipement_matériel_lourd_sanitaire_existante["date_mise_en_oeuvre"]
+            )
+            équipement_matériel_lourd_sanitaire_existante["date_ouverture"] = équipement_matériel_lourd_sanitaire_existante["date_ouverture"].astype(
+                pd.StringDtype(na_value=NaN)
             )
             sauvegarde_un_équipement_matériel_lourd_en_base(équipement_matériel_lourd_sanitaire_existante, base_de_données_test)
 
@@ -722,9 +725,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["A1", "A1", "A0"],
                     "code_forme": ["00", "00", "15"],
                     "code_modalite": ["M0", "M2", "00"],
-                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[ns]"),
-                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31), None], dtype="datetime64[ns]"),
-                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[ns]"),
+                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[s]"),
+                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31), None], dtype="datetime64[s]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3), None], dtype="datetime64[s]"),
                     "libelle_activite": [
                         "Dépôt de sang",
                         "Dépôt de sang",
@@ -833,9 +836,9 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["A1", "A1"],
                     "code_forme": ["00", "00"],
                     "code_modalite": ["M0", "M2"],
-                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[ns]"),
-                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31)], dtype="datetime64[ns]"),
-                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[ns]"),
+                    "date_autorisation": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[s]"),
+                    "date_fin": pd.Series([date(2024, 8, 31), date(2024, 8, 31)], dtype="datetime64[s]"),
+                    "date_mise_en_oeuvre": pd.Series([date(2019, 6, 3), date(2019, 6, 3)], dtype="datetime64[s]"),
                     "libelle_activite": ["Dépôt de sang", "Dépôt de sang"],
                     "libelle_forme": ["Pas de forme", "Pas de forme"],
                     "libelle_modalite": ["Dépôt d'urgence", "Dépôt relais"],
@@ -967,7 +970,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             None,
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_effet_cpom": pd.Series(
                         [
@@ -976,7 +979,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2019, 4, 1),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_fin_cpom": pd.Series(
                         [
@@ -985,7 +988,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2023, 12, 31),
                             None,
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "numero_cpom": [
                         "01-00-C00000",
@@ -1117,14 +1120,14 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "code_activite": ["R7", "R4", "S6"],
                     "code_forme": ["01", "00", "00"],
                     "code_modalite": ["N8", "N4", "B3"],
-                    "date_effet_asr": pd.Series([date(2013, 11, 30), date(2013, 1, 1), None], dtype="datetime64[ns]"),
+                    "date_effet_asr": pd.Series([date(2013, 11, 30), date(2013, 1, 1), None], dtype="datetime64[s]"),
                     "date_effet_cpom": pd.Series(
                         [
                             date(2013, 12, 1),
                             date(2013, 12, 1),
                             date(2019, 4, 1),
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "date_fin_cpom": pd.Series(
                         [
@@ -1132,7 +1135,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                             date(2018, 11, 30),
                             date(2023, 12, 31),
                         ],
-                        dtype="datetime64[ns]",
+                        dtype="datetime64[s]",
                     ),
                     "numero_cpom": ["01-00-C00000", "01-00-C00001", "01-00-C00002"],
                     "libelle_activite": [

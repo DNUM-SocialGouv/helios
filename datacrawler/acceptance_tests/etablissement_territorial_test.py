@@ -144,7 +144,7 @@ class TestSauvegardeLesEtablissementsTerritoriaux:
                     [
                         date(2012, 3, 21),
                     ],
-                    dtype="datetime64[ns]",
+                    dtype="datetime64[s]",
                 ),
             },
         )
