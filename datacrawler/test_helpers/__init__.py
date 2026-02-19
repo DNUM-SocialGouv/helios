@@ -87,7 +87,6 @@ def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_donné
               """
             )
         )
-        connection.commit()
 
 
 def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str, base_de_données: Engine) -> None:
@@ -128,7 +127,6 @@ def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, num
             """
             )
         )
-        connection.commit()
 
 
 def supprime_les_données_des_tables(base_de_données: Engine) -> None:
@@ -191,7 +189,6 @@ def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: 
                 VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
             )
         )
-        connection.commit()
 
 
 def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFrame, base_de_données: Engine) -> None:
