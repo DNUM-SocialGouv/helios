@@ -14,12 +14,14 @@ def transforme_les_données_des_capacités(données_diamant_ann_sae: pd.DataFram
     est_dans_finess = données_diamant_ann_sae["Finess"].isin(numéros_finess_des_établissements_connus)
     logger.info(f"[DIAMANT] {est_dans_finess.sum()} capacités sont liées à un ET trouvé en base dans le fichier ann_sae")
 
+    # Appliquer le masque d'abord sur le DataFrame original pour éviter l'avertissement de réindexation des séries booléennes
+    données_filtrées_par_finess = données_diamant_ann_sae[est_dans_finess]
+
     données_n_dernieres_annees = filtre_les_données_sur_les_n_dernières_années(
-        données_diamant_ann_sae, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
+        données_filtrées_par_finess, NOMBRE_D_ANNÉES_MAX_D_ANTÉRIORITÉ_DES_DONNÉES_SANITAIRES
     )
     return (
-        données_n_dernieres_annees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_sae_helios))
+        données_n_dernieres_annees.rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_sae_helios))
         .dropna(subset=index_des_capacités_sanitaires)
         .sort_values(by=["annee"], ascending=False)
         .set_index(index_des_capacités_sanitaires)
