@@ -63,4 +63,7 @@ export class UtilisateurModel {
 
   @Column({ name: "ut_modifie_par", nullable: true })
   public modifiePar!: number;
+
+  @Column({ name: "ut_last_pwd_change_date", type: "date" })
+  public lastPwdChangeDate!: string;
 }

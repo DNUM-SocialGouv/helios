@@ -12,6 +12,7 @@ export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
     const salt = await genSalt(10);
     const hashedPassword = await hash(password, salt);
     user.password = hashedPassword;
+    user.lastPwdChangeDate = new Date();
 
     if (![1, 2].includes(Number.parseInt(user.roleId))) {
       //update lastConnectionDate for current user

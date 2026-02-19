@@ -14,7 +14,7 @@ import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
@@ -57,7 +57,12 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
+    // if password is expired, then the user is inactif
+    const passwordStatus = await this.checkPasswordStatus(email);
+    if (passwordStatus.status === 'expired') return false;
+
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
+
     // if user is not addmin
     if (user && ![1, 2].includes(Number.parseInt(user.roleId))) {
       const NMonthsAgo = new Date();
@@ -69,6 +74,31 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       }
     }
     return true;
+  }
+
+  async checkPasswordStatus(email: string): Promise<PasswordStatus> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
+    const changedAt = new Date(user?.lastPwdChangeDate || "");
+    const today = new Date();
+
+    const expirationDate = new Date(changedAt);
+    expirationDate.setMonth(expirationDate.getMonth() + 9);
+
+    const warningDate = new Date(expirationDate);
+    warningDate.setDate(warningDate.getDate() - 30);
+
+    if (today >= expirationDate) {
+      return { status: "expired" };
+    }
+
+    if (today >= warningDate) {
+      const diffTime = expirationDate.getTime() - today.getTime();
+      const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return { status: "warning", daysLeft };
+    }
+
+    return { status: "ok" };
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {
@@ -117,6 +147,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.profils = [profileToSave.code];
         account.actif = true;
         account.dateCreation = new Date();
+        account.lastPwdChangeDate = new Date().toISOString().split('T')[0];
       }
 
       await (await this.orm)

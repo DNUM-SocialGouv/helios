@@ -9,8 +9,8 @@
 
 ### Features
 - hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
-
 - hel-967: Réécriture des batch typescript en python
+- hel-976: [Connexion] Renouvellement du mot de passe
 
 - hel-974: Changement du comportement de la page de récupération de mot de passe
 
