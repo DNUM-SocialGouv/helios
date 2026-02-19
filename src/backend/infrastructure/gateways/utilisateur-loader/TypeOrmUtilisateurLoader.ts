@@ -147,6 +147,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         account.profils = [profileToSave.code];
         account.actif = true;
         account.dateCreation = new Date();
+        account.lastPwdChangeDate = new Date().toISOString().split('T')[0];
       }
 
       await (await this.orm)
