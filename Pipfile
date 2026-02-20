@@ -4,29 +4,29 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sqlalchemy = "==1.4.37"
+sqlalchemy = "2.0.46"
 psycopg2 = "2.9.3"
-sentry-sdk = "1.16.0"
+sentry-sdk = "2.53.0"
 python-dotenv = "0.20.0"
-pandas = "==1.5.2"
-pyarrow = "==13.0.0"
+pandas = "==3.0.1"
+pyarrow = "23.0.1"
 lxml = "4.9.1"
-numpy = "==1.26.4"
+numpy = "2.4.2"
 paramiko = "4.0.0"
 
 [dev-packages]
 pylint = "==2.16.2"
-mypy = "0.982"
+mypy = "1.19.1"
 pytest = "7.1.2"
 pytest-mock = "3.7.0"
-sqlalchemy-stubs = "~=0.4"
 freezegun = "1.2.1"
 matplotlib = "3.5.2"
 pytest-cov = "4.0.0"
 pytest-watcher = "==0.2.1"
 black = "==23.1.0"
-pandas-stubs = "==1.5.2.230105"
+pandas-stubs = "==2.3.3.260113"
 types-paramiko = ">4.0.0"
+sqlalchemy-stubs = "==0.4"
 
 [requires]
 python_full_version = "3.11.14" # Conserver la même version que celle dans helios-ci.yml

@@ -4,7 +4,8 @@ from unittest.mock import Mock, patch
 import pandas as pd
 import pytest
 from freezegun import freeze_time
-from numpy import NaN
+from numpy import nan
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_médico_sociaux import ajoute_les_activites_des_etablissements_medico_sociaux
@@ -75,27 +76,27 @@ data_frame_attendu = pd.DataFrame(
             0.926075462629176,
         ],
         "taux_occupation_semi_internat": [
-            NaN,
-            NaN,
-            NaN,
-            NaN,
+            nan,
+            nan,
+            nan,
+            nan,
         ],
         "taux_occupation_internat": [
-            NaN,
-            NaN,
-            NaN,
-            NaN,
+            nan,
+            nan,
+            nan,
+            nan,
         ],
         "taux_occupation_autre": [
-            NaN,
-            NaN,
-            NaN,
-            NaN,
+            nan,
+            nan,
+            nan,
+            nan,
         ],
         "taux_occupation_seances": [
-            NaN,
-            NaN,
-            NaN,
+            nan,
+            nan,
+            nan,
             0.79774305555555558,
         ],
         "taux_occupation_global": [
@@ -128,13 +129,13 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
@@ -150,11 +151,11 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
             {
                 "annee": [2018, 2019],
                 "numero_finess_etablissement_territorial": ["010003598", "010003598"],
-                "taux_occupation_accueil_de_jour": [0.48012820512820510, NaN],
-                "taux_occupation_en_hebergement_temporaire": [0.93698630136986300, NaN],
-                "taux_occupation_en_hebergement_permanent": [0.99779299847793000, NaN],
+                "taux_occupation_accueil_de_jour": [0.48012820512820510, nan],
+                "taux_occupation_en_hebergement_temporaire": [0.93698630136986300, nan],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793000, nan],
                 "taux_realisation_activite": [0.8990, 1.0182],
-                "file_active_personnes_accompagnees": [120.0, NaN],
+                "file_active_personnes_accompagnees": [120.0, nan],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [17.80, 18.52],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.80, 2226.21],
             }
@@ -169,13 +170,13 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
         # THEN
         pd.testing.assert_frame_equal(pd.read_sql_table(TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX, base_de_données_test), data_frame_attendu)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)
 
@@ -190,22 +191,22 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
             {
                 "annee": [2018, 2019],
                 "numero_finess_etablissement_territorial": ["010003598", "010003598"],
-                "taux_occupation_accueil_de_jour": [0.48012820512820514, NaN],
-                "taux_occupation_en_hebergement_temporaire": [0.93698630136986305, NaN],
-                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, NaN],
+                "taux_occupation_accueil_de_jour": [0.48012820512820514, nan],
+                "taux_occupation_en_hebergement_temporaire": [0.93698630136986305, nan],
+                "taux_occupation_en_hebergement_permanent": [0.99779299847793002, nan],
                 "taux_realisation_activite": [0.8993, 1.0182],
-                "file_active_personnes_accompagnees": [121.0, NaN],
+                "file_active_personnes_accompagnees": [121.0, nan],
                 "nombre_moyen_journees_absence_personnes_accompagnees": [17.86, 18.52],
                 "duree_moyenne_sejour_accompagnement_personnes_sorties": [2359.81, 2226.21],
                 "taux_occupation_externat": [
                     1.000817111271329,
                     1.000817111271329,
                 ],
-                "taux_occupation_semi_internat": [NaN, NaN],
-                "taux_occupation_internat": [NaN, NaN],
-                "taux_occupation_autre": [NaN, NaN],
-                "taux_occupation_seances": [NaN, NaN],
-                "taux_occupation_global": [NaN, 2.0],
+                "taux_occupation_semi_internat": [nan, nan],
+                "taux_occupation_internat": [nan, nan],
+                "taux_occupation_autre": [nan, nan],
+                "taux_occupation_seances": [nan, nan],
+                "taux_occupation_global": [nan, 2.0],
             }
         )
         sauvegarde_une_activité_en_base(table_activite_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX)
@@ -223,12 +224,12 @@ class TestAjouteLesActivitesDesEtablissementsMedicoSociaux:
 
         pd.testing.assert_frame_equal(table_activite, table_activite_existante)
 
-        date_du_fichier_ann_errd_ej_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'"""
+        date_du_fichier_ann_errd_ej_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value}'""")
         )
         assert date_du_fichier_ann_errd_ej_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)
 
-        date_du_fichier_ann_ms_tdp_et = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'"""
+        date_du_fichier_ann_ms_tdp_et = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_MS_TDP_ET.value}'""")
         )
         assert date_du_fichier_ann_ms_tdp_et.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_MS_TDP_ET.value)

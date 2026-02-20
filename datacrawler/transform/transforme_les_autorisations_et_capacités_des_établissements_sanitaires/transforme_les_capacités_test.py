@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from freezegun import freeze_time
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
@@ -28,7 +28,7 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
                 "nombre_places_chirurgie": [7.0],
                 "nombre_places_obstétrique": [1.0],
                 "nombre_places_médecine": [7.0],
-                "nombre_places_ssr": [NaN],
+                "nombre_places_ssr": [nan],
                 "nombre_lits_chirurgie": [26.0],
                 "nombre_lits_obstétrique": [20.0],
                 "nombre_lits_médecine": [62.0],
@@ -83,7 +83,7 @@ class TestTransformeLesDonnéesDesCapacitésSanitaires:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_diamant_ann_sae = pd.DataFrame([csv_ann_sae_builder({"Finess": NaN})])
+        données_diamant_ann_sae = pd.DataFrame([csv_ann_sae_builder({"Finess": nan})])
         numéros_finess_connus = [NUMÉRO_FINESS_ÉTABLISSEMENT]
 
         # WHEN

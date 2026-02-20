@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Dict, Optional
 
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE
 
@@ -80,8 +80,8 @@ def helios_ann_ca_ej_et_budget_et_finances_builder(champs_surcharges: Optional[D
         "cadre_budgetaire": "CA_PH",
         "taux_de_caf": 0.16,
         "taux_de_vetuste_construction": 0.53,
-        "produits": NaN,
-        "charges": NaN,
+        "produits": nan,
+        "charges": nan,
     }
     if champs_surcharges:
         return {**budget_et_finances, **champs_surcharges}

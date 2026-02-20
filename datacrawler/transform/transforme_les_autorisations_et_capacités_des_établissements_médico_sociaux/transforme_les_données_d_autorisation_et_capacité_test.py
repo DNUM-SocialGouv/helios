@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.finess_builder import xml_contenu_finess_cs1400105_builder
@@ -12,7 +12,7 @@ from datacrawler.transform.équivalences_finess_helios import index_des_autorisa
 
 class TestTransformeLesDonnéesFinessCs1400105:
     autorisation_finess_avec_indicateur_de_suppression_non_rempli = xml_contenu_finess_cs1400105_builder(
-        {"indsupinst": NaN, "libde": "indicateur suppression non rempli"}
+        {"indsupinst": nan, "libde": "indicateur suppression non rempli"}
     )
     autorisation_finess_installée_mais_non_autorisée = xml_contenu_finess_cs1400105_builder(
         {"indsupinst": "N", "indsupaut": "O", "libde": "installée mais non autorisée"}
@@ -63,7 +63,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"nofinesset": NaN}), xml_contenu_finess_cs1400105_builder()])
+        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"nofinesset": nan}), xml_contenu_finess_cs1400105_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -99,7 +99,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_discipline_d_équipement(self) -> None:
         # GIVEN
-        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"de": NaN}), xml_contenu_finess_cs1400105_builder()])
+        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"de": nan}), xml_contenu_finess_cs1400105_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -135,7 +135,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_activité(self) -> None:
         # GIVEN
-        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"ta": NaN}), xml_contenu_finess_cs1400105_builder()])
+        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"ta": nan}), xml_contenu_finess_cs1400105_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -171,7 +171,7 @@ class TestTransformeLesDonnéesFinessCs1400105:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_clientèle(self) -> None:
         # GIVEN
-        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"client": NaN}), xml_contenu_finess_cs1400105_builder()])
+        données_finess_cs1400105 = pd.DataFrame([xml_contenu_finess_cs1400105_builder({"client": nan}), xml_contenu_finess_cs1400105_builder()])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {

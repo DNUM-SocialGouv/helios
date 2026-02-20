@@ -20,5 +20,6 @@ def transforme_les_données_men_pmsi_annuel(
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_men_pmsi_annuel_helios))
         .dropna(subset=index_des_activités)
         .drop_duplicates(subset=index_des_activités)
+        .assign(annee=lambda df: df["annee"].astype("int64"))
         .set_index(index_des_activités)
     )

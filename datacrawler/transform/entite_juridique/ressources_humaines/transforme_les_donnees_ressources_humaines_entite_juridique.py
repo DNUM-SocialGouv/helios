@@ -4,7 +4,7 @@ from datacrawler import filtre_les_données_sur_les_n_dernières_années
 from datacrawler.transform.équivalences_diamant_helios import (
     extrais_l_equivalence_des_noms_des_colonnes,
     index_du_bloc_ressources_humaines_ej,
-    equivalences_diamant_quo_san_ressources_humaines_helios
+    equivalences_diamant_quo_san_ressources_humaines_helios,
 )
 
 NOMBRE_D_ANNEES_RESSOURCES_HUMAINE = 5
@@ -14,11 +14,13 @@ def transform_les_donnees_ressources_humaines_entite_juridique(
     donnees_quo_san_finance: pd.DataFrame, numeros_finess_des_entites_juridiques_connues: pd.DataFrame
 ) -> pd.DataFrame:
     est_dans_finess = donnees_quo_san_finance["Finess EJ"].isin(numeros_finess_des_entites_juridiques_connues["numero_finess_entite_juridique"])
-    donnees_dernieres_5_annees = filtre_les_données_sur_les_n_dernières_années(donnees_quo_san_finance, NOMBRE_D_ANNEES_RESSOURCES_HUMAINE
-)
+
+    # Appliquer le masque d'abord sur le DataFrame original pour éviter l'avertissement de réindexation des séries booléennes
+    donnees_filtrees_par_finess = donnees_quo_san_finance[est_dans_finess]
+
+    donnees_dernieres_5_annees = filtre_les_données_sur_les_n_dernières_années(donnees_filtrees_par_finess, NOMBRE_D_ANNEES_RESSOURCES_HUMAINE)
     return (
-        donnees_dernieres_5_annees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios))
+        donnees_dernieres_5_annees.rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios))
         .drop_duplicates(subset=index_du_bloc_ressources_humaines_ej)
         .set_index(index_du_bloc_ressources_humaines_ej)
     )

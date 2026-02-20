@@ -12,14 +12,13 @@ from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL,
 )
 from datacrawler.import_les_etablissements_territoriaux import import_etablissements_territoriaux
-from datacrawler.test_helpers.helios_builder import (
-    helios_etablissement_territorial_builder,
-    helios_entite_juridique_builder
-)
+from datacrawler.test_helpers.helios_builder import helios_etablissement_territorial_builder, helios_entite_juridique_builder
+
 
 class TestSauvegardeLesEtablissementsTerritoriaux:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
+
     def test_import_etablissements_territoriaux(self, tmp_path: Path) -> None:
         # GIVEN - Create test XML files
         et_xml = tmp_path / "finess_cs1400102_stock_20211214-0333.xml"
@@ -128,28 +127,25 @@ class TestSauvegardeLesEtablissementsTerritoriaux:
         with base_de_données_test.begin() as connection:
             entite_juridique.to_sql(TABLE_ENTITES_JURIDIQUES, connection, if_exists="append", index=False)
         # WHEN
-        import_etablissements_territoriaux(
-            str(et_xml),
-            str(cat_xml),
-            CHEMIN_FICHIER_ANN_MS_TDP_ET,
-            base_de_données_test,
-            mocked_logger
-        )
+        import_etablissements_territoriaux(str(et_xml), str(cat_xml), CHEMIN_FICHIER_ANN_MS_TDP_ET, base_de_données_test, mocked_logger)
         # THEN
-        etablissements_territoriaux_attendus = pd.DataFrame([
-            helios_etablissement_territorial_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})
-            ])
+        etablissements_territoriaux_attendus = pd.DataFrame(
+            [helios_etablissement_territorial_builder({"numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL})]
+        )
         etablissements_territoriaux_sauvegardes = pd.read_sql(TABLE_ETABLISSEMENTS_TERRITORIAUX, base_de_données_test)
-        etablissements_territoriaux_sauvegardes = etablissements_territoriaux_sauvegardes.drop('termes_de_recherche', axis=1)
-        pd.testing.assert_frame_equal(etablissements_territoriaux_attendus.sort_index(axis=1),
-                                      etablissements_territoriaux_sauvegardes.sort_index(axis=1),
-                                      check_dtype=False)
+        etablissements_territoriaux_sauvegardes = etablissements_territoriaux_sauvegardes.drop("termes_de_recherche", axis=1)
+        pd.testing.assert_frame_equal(
+            etablissements_territoriaux_attendus.sort_index(axis=1), etablissements_territoriaux_sauvegardes.sort_index(axis=1), check_dtype=False
+        )
         cpom_attendus = pd.DataFrame(
             {
                 "numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL],
-                "date_d_entree_en_vigueur": [
-                    date(2012, 3, 21),
-                ],
+                "date_d_entree_en_vigueur": pd.Series(
+                    [
+                        date(2012, 3, 21),
+                    ],
+                    dtype="datetime64[s]",
+                ),
             },
         )
 

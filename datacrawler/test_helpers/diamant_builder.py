@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT
 
@@ -114,9 +114,9 @@ def csv_ann_ca_ej_et_budget_et_finances_builder(
             "MS Résultat net comptable CA PH": 50.0,
             "Taux de CAF CA PH": 0.16,
             "Taux vétusté Construction CA": 0.53,
-            "MS Résultat net comptable CA PA": NaN,
-            "Charges CA PA": NaN,
-            "Produits CA PA": NaN,
+            "MS Résultat net comptable CA PA": nan,
+            "Charges CA PA": nan,
+            "Produits CA PA": nan,
             "Recettes Groupe I CA": 150.0,
             "Recettes Groupe II CA": 150.0,
             "Recettes Groupe III CA": 350.0,
@@ -128,18 +128,18 @@ def csv_ann_ca_ej_et_budget_et_finances_builder(
         else {
             "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
             "Année": 2020,
-            "MS Résultat net comptable CA PH": NaN,
+            "MS Résultat net comptable CA PH": nan,
             "Taux de CAF CA PH": 0.16,
             "Taux vétusté Construction CA": 0.53,
             "MS Résultat net comptable CA PA": 100.0,
             "Charges CA PA": -200.0,
             "Produits CA PA": 300,
-            "Recettes Groupe I CA": NaN,
-            "Recettes Groupe II CA": NaN,
-            "Recettes Groupe III CA": NaN,
-            "Dépenses Groupe I CA": NaN,
-            "Dépenses Groupe II CA": NaN,
-            "Dépenses Groupe III CA": NaN,
+            "Recettes Groupe I CA": nan,
+            "Recettes Groupe II CA": nan,
+            "Recettes Groupe III CA": nan,
+            "Dépenses Groupe I CA": nan,
+            "Dépenses Groupe II CA": nan,
+            "Dépenses Groupe III CA": nan,
         }
     )
     if champs_surcharges:
@@ -154,7 +154,7 @@ def csv_ann_sae_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, s
         "Nombre de places de chirurgie": 7.0,
         "Nombre de places d'obstétrique": 1.0,
         "Nombre de places de médecine": 7.0,
-        "Nombre de places de SSR": NaN,
+        "Nombre de places de SSR": nan,
         "Nombre de lits de chirurgie": 26.0,
         "Nombre de lits d'obstétrique": 20.0,
         "Nombre de lits de médecine": 62.0,

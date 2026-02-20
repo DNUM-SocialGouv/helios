@@ -25,7 +25,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES,
     TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE,
     TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE,
-    TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE
+    TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
     index_des_activités,
@@ -35,7 +35,7 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_du_bloc_ressources_humaines,
     index_du_bloc_budget_et_finances_entite_juridique,
     index_du_bloc_ressources_humaines_ej,
-    index_du_bloc_ressources_humaines_etsan
+    index_du_bloc_ressources_humaines_etsan,
 )
 from datacrawler.transform.équivalences_finess_helios import (
     index_des_autorisations_sanitaires,
@@ -60,89 +60,98 @@ CHEMIN_FICHIER_MEN_PMSI_ANNUEL = "data_test/entrée/diamant/MEN_PMSI_ANNUEL_2022
 CHEMIN_FICHIER_ANN_RPU = "data_test/entrée/diamant/ANN_RPU_2022_06_23.CSV"
 CHEMIN_FICHIER_ANN_SAE = "data_test/entrée/diamant/ANN_SAE_2022_08_03.CSV"
 
+
 def sauvegarde_une_entité_juridique_en_base(numéro_finess: str, base_de_données: Engine) -> None:
-    base_de_données.execute(
-        f"""INSERT INTO entite_juridique (
-    numero_finess_entite_juridique,
-    raison_sociale,
-    adresse_acheminement,
-    adresse_numero_voie,
-    adresse_type_voie,
-    adresse_voie,
-    libelle_statut_juridique,
-    telephone
-  ) VALUES (
-    '{numéro_finess}',
-    'rs',
-    '00000 VILLE',
-    '12',
-    'R',
-    'nom de rue',
-    'Public',
-    '0123456789'
-  );
-"""
-    )
+    with base_de_données.begin() as connection:
+        connection.execute(
+            text(
+                f"""INSERT INTO entite_juridique (
+                numero_finess_entite_juridique,
+                raison_sociale,
+                adresse_acheminement,
+                adresse_numero_voie,
+                adresse_type_voie,
+                adresse_voie,
+                libelle_statut_juridique,
+                telephone
+                ) VALUES (
+                '{numéro_finess}',
+                'rs',
+                '00000 VILLE',
+                '12',
+                'R',
+                'nom de rue',
+                'Public',
+                '0123456789'
+              );
+              """
+            )
+        )
 
 
 def sauvegarde_un_établissement_en_base(numéro_finess_établissement: str, numéro_finess_entité_juridique: str, base_de_données: Engine) -> None:
-    base_de_données.execute(
-        f"""INSERT INTO etablissement_territorial (
-    adresse_acheminement,
-    adresse_numero_voie,
-    adresse_type_voie,
-    adresse_voie,
-    cat_etablissement,
-    courriel,
-    numero_finess_entite_juridique,
-    numero_finess_etablissement_principal,
-    numero_finess_etablissement_territorial,
-    raison_sociale,
-    telephone,
-    type_etablissement,
-    libelle_categorie_etablissement,
-    domaine
-  ) VALUES (
-    '00000 VILLE',
-    '12',
-    'R',
-    'nom de rue',
-    '100',
-    '',
-    '{numéro_finess_entité_juridique}',
-    '',
-    '{numéro_finess_établissement}',
-    'rs',
-    '',
-    'P',
-    'catégorie',
-    'Médico-social'
-  );
-"""
-    )
+    with base_de_données.begin() as connection:
+        connection.execute(
+            text(
+                f"""INSERT INTO etablissement_territorial (
+                adresse_acheminement,
+                adresse_numero_voie,
+                adresse_type_voie,
+                adresse_voie,
+                cat_etablissement,
+                courriel,
+                numero_finess_entite_juridique,
+                numero_finess_etablissement_principal,
+                numero_finess_etablissement_territorial,
+                raison_sociale,
+                telephone,
+                type_etablissement,
+                libelle_categorie_etablissement,
+                domaine
+                ) VALUES (
+                '00000 VILLE',
+                '12',
+                'R',
+                'nom de rue',
+                '100',
+                '',
+                '{numéro_finess_entité_juridique}',
+                '',
+                '{numéro_finess_établissement}',
+                'rs',
+                '',
+                'P',
+                'catégorie',
+                'Médico-social'
+              );
+            """
+            )
+        )
 
 
 def supprime_les_données_des_tables(base_de_données: Engine) -> None:
-    base_de_données.execute("DELETE FROM entite_juridique;")
-    base_de_données.execute("DELETE FROM etablissement_territorial;")
-    base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
-    base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
-    base_de_données.execute(f"DELETE FROM {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES};")
-    base_de_données.execute(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_CPOM};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};")
-    base_de_données.execute(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE};")
-    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL};")
-    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS};")
-    base_de_données.execute(f"DELETE FROM {TABLE_VIGIE_RH_REF_NATURE_CONTRATS};")
+    with base_de_données.begin() as connection:
+        connection.execute(text("DELETE FROM entite_juridique;"))
+        connection.execute(text("DELETE FROM etablissement_territorial;"))
+        connection.execute(text(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};"))
+        connection.execute(text(f"DELETE FROM {TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};"))
+        connection.execute(text(f"DELETE FROM {TABLE_DES_ACTIVITÉS_SANITAIRES_DES_ENTITES_JURIDIQUES};"))
+        connection.execute(text(f"DELETE FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_AUTORISATIONS_DES_ÉTABLISSEMENTS_SANITAIRES};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_ÉQUIPEMENTS_MATÉRIELS_LOURDS_DES_ÉTABLISSEMENTS};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_AUTRES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_RECONNAISSANCES_CONTRACTUELLES_DES_ÉTABLISSEMENTS_SANITAIRES};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_CAPACITÉS_DES_ÉTABLISSEMENTS_SANITAIRES};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_CPOM};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_MÉDICO_SOCIAL};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL};"))
+        connection.execute(text(f"DELETE FROM {TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE};"))
+        connection.execute(text(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL};"))
+        connection.execute(text(f"DELETE FROM {TABLE_VIGIE_RH_NATURE_CONTRATS};"))
+        connection.execute(text(f"DELETE FROM {TABLE_VIGIE_RH_REF_NATURE_CONTRATS};"))
+
 
 def sauvegarde_une_activité_en_base(activité: pd.DataFrame, base_de_données: Engine, table: str) -> None:
     activité.set_index(index_des_activités).to_sql(name=table, con=base_de_données, index=True, if_exists="append")
@@ -173,10 +182,13 @@ def sauvegarde_une_reconnaissance_contractuelle_en_base(autorisation: pd.DataFra
 
 
 def sauvegarde_une_date_de_mise_à_jour_de_fichier_source(date_de_mise_à_jour: str, fichier_source: FichierSource, base_de_données: Engine) -> None:
-    base_de_données.execute(
-        f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
-            VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
-    )
+    with base_de_données.begin() as connection:
+        connection.execute(
+            text(
+                f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
+                VALUES ('{date_de_mise_à_jour}', '{fichier_source.value}');"""
+            )
+        )
 
 
 def sauvegarde_les_capacités_sanitaires_en_base(capacités_sanitaire: pd.DataFrame, base_de_données: Engine) -> None:
@@ -208,17 +220,20 @@ def sauvegarde_les_indicateurs_ressources_humaines_en_base(indicateurs_ressource
         name=TABLES_DES_RESSOURCES_HUMAINES_MÉDICO_SOCIAL, con=base_de_données, index=True, if_exists="append"
     )
 
+
 def sauvegarde_les_indicateurs_ressources_humaines_en_base_entite_juridique(indicateurs_ressources_humaines: pd.DataFrame, base_de_données: Engine) -> None:
     indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines_ej).to_sql(
         name=TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE, con=base_de_données, index=True, if_exists="append"
     )
 
+
 def sauvegarde_les_indicateurs_ressources_humaines_en_base_etablissement_sanitaire(
-        indicateurs_ressources_humaines: pd.DataFrame,
-        base_de_données: Engine) -> None:
+    indicateurs_ressources_humaines: pd.DataFrame, base_de_données: Engine
+) -> None:
     indicateurs_ressources_humaines.set_index(index_du_bloc_ressources_humaines_etsan).to_sql(
         name=TABLES_DES_RESSOURCES_HUMAINES_ETABLISSEMENT_SANITAIRE, con=base_de_données, index=True, if_exists="append"
     )
+
 
 def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
     with open(chemin_du_fichier, "w+", encoding="utf-8") as fichier:
@@ -230,7 +245,7 @@ def crée_le_fichier_xml(chemin_du_fichier: str, contenu: str) -> None:
         )
 
 
-def compte_nombre_de_lignes(table_name: str , base_de_données: Engine) -> int:
-    with base_de_données.connect() as connexion:
+def compte_nombre_de_lignes(table_name: str, base_de_données: Engine) -> int:
+    with base_de_données.begin() as connexion:
         result = connexion.execute(text(f"SELECT COUNT(*) FROM {table_name};"))
         return result.scalar()
