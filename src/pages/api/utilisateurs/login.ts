@@ -10,11 +10,14 @@ export default async function handler(request: NextApiRequest, response: NextApi
   try {
     const { email, password } = request.body;
     const resp = await loginEndpoint(dependencies, email, password);
-    if (resp) {
+    if (typeof resp !== "string") {
       delete resp.utilisateur?.password;
       return response.status(200).json(resp);
     } else {
-      return response.status(400).json(resp);
+      if (resp === 'blocked account')
+        return response.status(401).json({ message: resp });
+      else
+        return response.status(423).json({ message: resp });
     }
   } catch {
     return response.status(500);

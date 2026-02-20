@@ -25,16 +25,50 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
+    const MAX_ATTEMPTS = 3;
+    const LOCK_TIME_MIN = 5;
+
     const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
 
     if (user) {
+
+      if (user?.lockUntil && user.lockUntil > new Date()) {
+        return 'blocked account'
+      }
+
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+
+      if (await compare(password, user.password) || hashedPassword === user.password) {
+
+        user.failedAttemps = 0;
+        user.lockUntil = null;
+        (await this.orm).getRepository(UtilisateurModel).save(user);
+
+        return { utilisateur: user }
+
+      } else {
+
+        user.failedAttemps += 1;
+        if (user.failedAttemps >= MAX_ATTEMPTS) {
+          user.lockUntil = new Date(Date.now() + LOCK_TIME_MIN * 60 * 1000);
+        }
+        (await this.orm).getRepository(UtilisateurModel).save(user);
+
+        return 'wrong credentials';
+      }
     } else {
-      return null;
+      return 'wrong credentials';
     }
+  }
+
+  async getLoginError(email: string): Promise<string> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
+    if (user?.lockUntil && user.lockUntil > new Date()) {
+      return 'blocked account'
+    }
+    return 'wrong credentials';
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {

@@ -63,4 +63,10 @@ export class UtilisateurModel {
 
   @Column({ name: "ut_modifie_par", nullable: true })
   public modifiePar!: number;
+
+  @Column({ name: "failed_attempts", type: "integer", default: 0 })
+  public failedAttemps!: number;
+
+  @Column({ name: "lock_until", type: "timestamp", nullable: true })
+  public lockUntil!: Date | null;
 }
