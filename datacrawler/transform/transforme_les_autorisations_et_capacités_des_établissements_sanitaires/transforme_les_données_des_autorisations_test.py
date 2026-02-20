@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.finess_builder import xml_contenu_finess_cs1400103_builder
@@ -46,7 +46,7 @@ class TestTransformeLesDonnéesDesAutorisationSanitaires:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"nofinesset": NaN})])
+        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"nofinesset": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {
@@ -63,7 +63,7 @@ class TestTransformeLesDonnéesDesAutorisationSanitaires:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_activité(self) -> None:
         # GIVEN
-        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"activite": NaN})])
+        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"activite": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {
@@ -80,7 +80,7 @@ class TestTransformeLesDonnéesDesAutorisationSanitaires:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_modalité(self) -> None:
         # GIVEN
-        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"modalite": NaN})])
+        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"modalite": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {
@@ -97,7 +97,7 @@ class TestTransformeLesDonnéesDesAutorisationSanitaires:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_la_forme(self) -> None:
         # GIVEN
-        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"forme": NaN})])
+        données_finess_cs1400103 = pd.DataFrame([xml_contenu_finess_cs1400103_builder({"forme": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {

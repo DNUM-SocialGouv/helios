@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 import pandas as pd
 from freezegun import freeze_time
 import pytest
-from numpy import NaN
+from numpy import nan
 from sqlalchemy import text
 import datacrawler
 from datacrawler.load.nom_des_tables import TABLES_DES_RESSOURCES_HUMAINES_ENTITE_JURIDIQUE, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
@@ -41,8 +41,8 @@ class TestAjouteBlocRessourcesHumainesEntiteJuridique:
                 "nombre_etp_pm": [69.51012, 2.00004, 76.15980, 1.61004, 4.09992],
                 "nombre_etp_pnm": [595.33764, 219.59028, 591.46980, 134.24976, 122.34984],
                 "depenses_interim_pm": [0.00, 0.00, 654731.25, 0.00, 0.00],
-                "jours_absenteisme_pm": [NaN, NaN, 451.0, NaN, NaN],
-                "jours_absenteisme_pnm": [NaN, NaN, 17533.0, NaN, NaN],
+                "jours_absenteisme_pm": [nan, nan, 451.0, nan, nan],
+                "jours_absenteisme_pnm": [nan, nan, 17533.0, nan, nan],
             }
         )
 
@@ -81,8 +81,8 @@ class TestAjouteBlocRessourcesHumainesEntiteJuridique:
                 "nombre_etp_pm": [69.51012, 2.00004, 76.15980, 1.61004, 4.09992],
                 "nombre_etp_pnm": [595.33764, 219.59028, 591.46980, 134.24976, 122.34984],
                 "depenses_interim_pm": [0.00, 0.00, 654731.25, 0.00, 0.00],
-                "jours_absenteisme_pm": [NaN, NaN, 451.0, NaN, NaN],
-                "jours_absenteisme_pnm": [NaN, NaN, 17533.0, NaN, NaN],
+                "jours_absenteisme_pm": [nan, nan, 451.0, nan, nan],
+                "jours_absenteisme_pnm": [nan, nan, 17533.0, nan, nan],
             }
         )
 

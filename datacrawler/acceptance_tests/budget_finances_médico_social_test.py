@@ -4,7 +4,7 @@ from freezegun import freeze_time
 
 import pandas as pd
 import pytest
-from numpy import NaN
+from numpy import nan
 from sqlalchemy import text
 
 import datacrawler
@@ -71,7 +71,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [-22312.0, 0.0, 0.0, 0.0, NaN, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [-22312.0, 0.0, 0.0, 0.0, nan, nan, nan, nan],
                 "depenses_groupe_i": [
                     -105389.53,
                     -161786,
@@ -79,8 +79,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -85102.530010000002,
                     -16062.690000000001,
                     -16114.09,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "depenses_groupe_ii": [
                     -506251.12999999995,
@@ -89,8 +89,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -442475.08000000007,
                     -482402.46000000008,
                     -522700.76999999996,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "depenses_groupe_iii": [
                     -88214.989999999991,
@@ -99,8 +99,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -9134.2200000000012,
                     -44491.319999999992,
                     -44619.190000000002,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "recettes_groupe_i": [
                     628872.06999999995,
@@ -109,8 +109,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     543015.84999999998,
                     588568.68999999994,
                     583376.64000000001,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "recettes_groupe_ii": [
                     46843.48,
@@ -119,10 +119,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     9410.4599999999991,
                     782.12,
                     511.08999999999997,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
-                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
+                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, nan, nan],
                 "resultat_net_comptable": [
                     3034.3799999998928,
                     7289.9200000003912,
@@ -141,8 +141,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.12519374136642053,
                     0.11776359918113584,
                     0.049315762194766362,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "taux_de_vetuste_construction": [
                     0.38845089702004892,
@@ -150,22 +150,22 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.56203591359317973,
                     0.56203591359317973,
                     0.51376936316695354,
-                    NaN,
+                    nan,
                     0.31154835988672847,
-                    NaN,
+                    nan,
                 ],
                 "fonds_de_roulement": [
                     2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
                     3988284.410000000100000000,
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
+                    nan,
+                    nan,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [nan, nan, nan, nan, nan, nan, -177631.38999999998, -207285.97000000003],
+                "produits": [nan, nan, nan, nan, nan, nan, 196518.51999999999, 219272.62],
             },
         )
 
@@ -266,7 +266,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     numéro_finess_établissement_ca_pa,
                     numéro_finess_établissement_ca_pa,
                 ],
-                "contribution_frais_de_siege_groupement": [-22312.0, 0.0, 0.0, 0.0, NaN, NaN, NaN, NaN],
+                "contribution_frais_de_siege_groupement": [-22312.0, 0.0, 0.0, 0.0, nan, nan, nan, nan],
                 "depenses_groupe_i": [
                     -105389.53,
                     -161786,
@@ -274,8 +274,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -85102.530010000002,
                     -16062.690000000001,
                     -16114.09,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "depenses_groupe_ii": [
                     -506251.12999999995,
@@ -284,8 +284,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -442475.08000000007,
                     -482402.46000000008,
                     -522700.76999999996,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "depenses_groupe_iii": [
                     -88214.989999999991,
@@ -294,8 +294,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     -9134.2200000000012,
                     -44491.319999999992,
                     -44619.190000000002,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "recettes_groupe_i": [
                     628872.06999999995,
@@ -304,8 +304,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     543015.84999999998,
                     588568.68999999994,
                     583376.64000000001,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "recettes_groupe_ii": [
                     46843.48,
@@ -314,10 +314,10 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     9410.4599999999991,
                     782.12,
                     511.08999999999997,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
-                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, NaN, NaN],
+                "recettes_groupe_iii": [27174.48, 0, 12830, 12830, 26733.739999999998, 24276.970000000001, nan, nan],
                 "resultat_net_comptable": [
                     3034.3799999998928,
                     7289.9200000003912,
@@ -336,8 +336,8 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.12519374136642053,
                     0.11776359918113584,
                     0.049315762194766362,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
                 "taux_de_vetuste_construction": [
                     0.38845089702004892,
@@ -345,22 +345,22 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     0.56203591359317973,
                     0.56203591359317973,
                     0.51376936316695354,
-                    NaN,
+                    nan,
                     0.31154835988672847,
-                    NaN,
+                    nan,
                 ],
                 "fonds_de_roulement": [
                     2206969.259999999800000000,
                     1057217.929999999900000000,
                     3988284.410000000100000000,
                     3988284.410000000100000000,
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
+                    nan,
+                    nan,
                 ],
-                "charges": [NaN, NaN, NaN, NaN, NaN, NaN, -177631.38999999998, -207285.97000000003],
-                "produits": [NaN, NaN, NaN, NaN, NaN, NaN, 196518.51999999999, 219272.62],
+                "charges": [nan, nan, nan, nan, nan, nan, -177631.38999999998, -207285.97000000003],
+                "produits": [nan, nan, nan, nan, nan, nan, 196518.51999999999, 219272.62],
             },
         )
 
@@ -430,7 +430,7 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                 {
                     "numero_finess_etablissement_territorial": [numéro_finess_établissement_errd, numéro_finess_établissement_ca_ph],
                     "annee": [2020, 2020],
-                    "contribution_frais_de_siege_groupement": [-300.0, NaN],
+                    "contribution_frais_de_siege_groupement": [-300.0, nan],
                     "depenses_groupe_i": [-100.0, -100.0],
                     "depenses_groupe_ii": [-200.0, -200.0],
                     "depenses_groupe_iii": [-300.0, -300.0],
@@ -441,9 +441,9 @@ class TestAjouteLeBudgetEtFinancesDesÉtablissementsMédicoSociaux:
                     "cadre_budgetaire": ["ERRD", "CA_PH"],
                     "taux_de_caf": [0.071600138178413528, 0.16],
                     "taux_de_vetuste_construction": [0.45555983373892417, 0.53],
-                    "fonds_de_roulement": [2206969.259999999800000000, NaN],
-                    "produits": [NaN, NaN],
-                    "charges": [NaN, NaN],
+                    "fonds_de_roulement": [2206969.259999999800000000, nan],
+                    "produits": [nan, nan],
+                    "charges": [nan, nan],
                 }
             ).sort_index(axis=1),
         )

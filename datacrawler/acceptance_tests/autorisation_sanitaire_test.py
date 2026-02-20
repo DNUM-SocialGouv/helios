@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
-from numpy import NaN
+from numpy import nan
 from freezegun import freeze_time
 from sqlalchemy import text
 
@@ -491,7 +491,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         numéro_finess_avec_valeurs_manquantes,
                     ],
-                    "date_ouverture": pd.Series([None, None, None], dtype=pd.StringDtype(na_value=NaN)),
+                    "date_ouverture": pd.Series([None, None, None], dtype=pd.StringDtype(na_value=nan)),
                 },
             )
 
@@ -595,7 +595,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                     ],
-                    "date_ouverture": pd.Series([None, None], dtype=pd.StringDtype(na_value=NaN)),
+                    "date_ouverture": pd.Series([None, None], dtype=pd.StringDtype(na_value=nan)),
                 },
             )
 
@@ -641,7 +641,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                 équipement_matériel_lourd_sanitaire_existante["date_mise_en_oeuvre"]
             )
             équipement_matériel_lourd_sanitaire_existante["date_ouverture"] = équipement_matériel_lourd_sanitaire_existante["date_ouverture"].astype(
-                pd.StringDtype(na_value=NaN)
+                pd.StringDtype(na_value=nan)
             )
             sauvegarde_un_équipement_matériel_lourd_en_base(équipement_matériel_lourd_sanitaire_existante, base_de_données_test)
 
@@ -959,7 +959,7 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             # THEN
             reconnaissances_contractuelles_attendues = pd.DataFrame(
                 {
-                    "capacite_autorisee": [4, 1, 0, NaN],
+                    "capacite_autorisee": [4, 1, 0, nan],
                     "code_activite": ["R7", "R4", "S6", "R7"],
                     "code_forme": ["01", "00", "00", "01"],
                     "code_modalite": ["N8", "N4", "B3", "09"],
@@ -1286,11 +1286,11 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "nombre_lits_chirurgie": [26, 12, 21, 30, 26, 30],
                     "nombre_lits_médecine": [62, 20, 60, 20, 60, 20],
                     "nombre_lits_obstétrique": [20, 8, 21, 8, 21, 8],
-                    "nombre_lits_ssr": [30.0, NaN, 30.0, NaN, 30.0, NaN],
+                    "nombre_lits_ssr": [30.0, nan, 30.0, nan, 30.0, nan],
                     "nombre_places_chirurgie": [7, 6, 7, 6, 7, 6],
                     "nombre_places_médecine": [7, 2, 7, 2, 7, 2],
-                    "nombre_places_obstétrique": [1.0, NaN, 1.0, NaN, 1.0, NaN],
-                    "nombre_places_ssr": [3.0, NaN, 3.0, NaN, 3.0, NaN],
+                    "nombre_places_obstétrique": [1.0, nan, 1.0, nan, 1.0, nan],
+                    "nombre_places_ssr": [3.0, nan, 3.0, nan, 3.0, nan],
                     "numero_finess_etablissement_territorial": [
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         autre_numéro_finess_sanitaire,
@@ -1300,8 +1300,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         autre_numéro_finess_sanitaire,
                     ],
                     "nombre_lits_usld": [15, 10, 15, 10, 15, 10],
-                    "nombre_lits_ou_places_psy_complet": [NaN, 5.0, NaN, 5.0, NaN, 5.0],
-                    "nombre_places_psy_partiel": [NaN, 13.0, NaN, 13.0, NaN, 13.0],
+                    "nombre_lits_ou_places_psy_complet": [nan, 5.0, nan, 5.0, nan, 5.0],
+                    "nombre_places_psy_partiel": [nan, 13.0, nan, 13.0, nan, 13.0],
                     "annee": [2020, 2020, 2019, 2019, 2018, 2018],
                 }
             )
@@ -1386,11 +1386,11 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                     "nombre_lits_chirurgie": [26, 12, 21, 30, 26, 30],
                     "nombre_lits_médecine": [62, 20, 60, 20, 60, 20],
                     "nombre_lits_obstétrique": [20, 8, 21, 8, 21, 8],
-                    "nombre_lits_ssr": [30.0, NaN, 30.0, NaN, 30.0, NaN],
+                    "nombre_lits_ssr": [30.0, nan, 30.0, nan, 30.0, nan],
                     "nombre_places_chirurgie": [7, 6, 7, 6, 7, 6],
                     "nombre_places_médecine": [7, 2, 7, 2, 7, 2],
-                    "nombre_places_obstétrique": [1.0, NaN, 1.0, NaN, 1.0, NaN],
-                    "nombre_places_ssr": [3.0, NaN, 3.0, NaN, 3.0, NaN],
+                    "nombre_places_obstétrique": [1.0, nan, 1.0, nan, 1.0, nan],
+                    "nombre_places_ssr": [3.0, nan, 3.0, nan, 3.0, nan],
                     "numero_finess_etablissement_territorial": [
                         NUMÉRO_FINESS_ÉTABLISSEMENT_SANITAIRE,
                         autre_numéro_finess_sanitaire,
@@ -1400,8 +1400,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
                         autre_numéro_finess_sanitaire,
                     ],
                     "nombre_lits_usld": [15, 10, 15, 10, 15, 10],
-                    "nombre_lits_ou_places_psy_complet": [NaN, 5.0, NaN, 5.0, NaN, 5.0],
-                    "nombre_places_psy_partiel": [NaN, 13.0, NaN, 13.0, NaN, 13.0],
+                    "nombre_lits_ou_places_psy_complet": [nan, 5.0, nan, 5.0, nan, 5.0],
+                    "nombre_places_psy_partiel": [nan, 13.0, nan, 13.0, nan, 13.0],
                     "annee": [2020, 2020, 2019, 2019, 2018, 2018],
                 }
             )

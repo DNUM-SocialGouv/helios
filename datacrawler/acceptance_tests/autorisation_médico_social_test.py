@@ -4,7 +4,7 @@ import shutil
 from datetime import date
 
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from sqlalchemy import text
 
 from datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux import ajoute_les_autorisations_des_établissements_médico_sociaux
@@ -55,8 +55,8 @@ class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
             [
                 {
                     "activite": "11",
-                    "capacite_autorisee_totale": NaN,
-                    "capacite_installee_totale": NaN,
+                    "capacite_autorisee_totale": nan,
+                    "capacite_installee_totale": nan,
                     "clientele": "700",
                     "date_autorisation": pd.NaT,
                     "date_derniere_installation": pd.NaT,

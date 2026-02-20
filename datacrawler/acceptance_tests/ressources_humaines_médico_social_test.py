@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 import pandas as pd
 from freezegun import freeze_time
 import pytest
-from numpy import NaN
+from numpy import nan
 from sqlalchemy import text
 
 import datacrawler
@@ -66,18 +66,18 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                     numéro_finess_ca,
                 ],
                 "annee": [2019, 2018, 2021, 2020, 2019, 2018, 2019, 2018],
-                "nombre_cdd_remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, NaN, NaN],
-                "taux_etp_vacants": [0.1197, 0.0483, 0.0, 0.0, 0.0, 0.0, NaN, NaN],
-                "taux_prestation_externes": [0.0232, NaN, 0.0164, 0.0164, 0.0082, 0.0164, NaN, NaN],
-                "taux_rotation_personnel": [0.1923, 0.1429, 0.0352, 0.0352, 0.0141, 0.0352, NaN, NaN],
-                "taux_absenteisme_maladie_courte_duree": [0.0028, 0.0021, 0.0083, 0.0083, 0.0125, 0.0083, NaN, NaN],
-                "taux_absenteisme_maladie_moyenne_duree": [0.0465, 0.0717, 0.0166, 0.0166, 0.0149, 0.0166, NaN, NaN],
-                "taux_absenteisme_maladie_longue_duree": [0.0, 0.1194, 0.0089, 0.0089, 0.0319, 0.0089, NaN, NaN],
-                "taux_absenteisme_maternite_paternite": [0.0, 0.0, 0.0128, 0.0128, 0.0005, 0.0128, NaN, NaN],
-                "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0246, 0.0085, 0.0085, 0.0088, 0.0085, NaN, NaN],
-                "taux_absenteisme_conges_speciaux": [0.0109, 0.0, 0.0004, 0.0004, 0.0, 0.0004, NaN, NaN],
-                "taux_absenteisme_hors_formation": [0.0609, 0.2179, 0.0554, 0.0554, 0.0685, 0.0554, NaN, NaN],
-                "nombre_etp_realises": [NaN, NaN, 188.5, 50.64999999999999, 17.19, 4.55, 9.71, 10.34],
+                "nombre_cdd_remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, nan, nan],
+                "taux_etp_vacants": [0.1197, 0.0483, 0.0, 0.0, 0.0, 0.0, nan, nan],
+                "taux_prestation_externes": [0.0232, nan, 0.0164, 0.0164, 0.0082, 0.0164, nan, nan],
+                "taux_rotation_personnel": [0.1923, 0.1429, 0.0352, 0.0352, 0.0141, 0.0352, nan, nan],
+                "taux_absenteisme_maladie_courte_duree": [0.0028, 0.0021, 0.0083, 0.0083, 0.0125, 0.0083, nan, nan],
+                "taux_absenteisme_maladie_moyenne_duree": [0.0465, 0.0717, 0.0166, 0.0166, 0.0149, 0.0166, nan, nan],
+                "taux_absenteisme_maladie_longue_duree": [0.0, 0.1194, 0.0089, 0.0089, 0.0319, 0.0089, nan, nan],
+                "taux_absenteisme_maternite_paternite": [0.0, 0.0, 0.0128, 0.0128, 0.0005, 0.0128, nan, nan],
+                "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0246, 0.0085, 0.0085, 0.0088, 0.0085, nan, nan],
+                "taux_absenteisme_conges_speciaux": [0.0109, 0.0, 0.0004, 0.0004, 0.0, 0.0004, nan, nan],
+                "taux_absenteisme_hors_formation": [0.0609, 0.2179, 0.0554, 0.0554, 0.0685, 0.0554, nan, nan],
+                "nombre_etp_realises": [nan, nan, 188.5, 50.64999999999999, 17.19, 4.55, 9.71, 10.34],
             },
         )
 
@@ -177,7 +177,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                 "annee": [2019, 2018, 2021, 2020, 2019, 2018],
                 "nombre_cdd_remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0],
                 "taux_etp_vacants": [0.1197, 0.0483, 0.0, 0.0, 0.0, 0.0],
-                "taux_prestation_externes": [0.0232, NaN, 0.0164, 0.0164, 0.0082, 0.0164],
+                "taux_prestation_externes": [0.0232, nan, 0.0164, 0.0164, 0.0082, 0.0164],
                 "taux_rotation_personnel": [0.1923, 0.1429, 0.0352, 0.0352, 0.0141, 0.0352],
                 "taux_absenteisme_maladie_courte_duree": [0.0028, 0.0021, 0.0083, 0.0083, 0.0125, 0.0083],
                 "taux_absenteisme_maladie_moyenne_duree": [0.0465, 0.0717, 0.0166, 0.0166, 0.0149, 0.0166],
@@ -186,7 +186,7 @@ class TestAjouteLeBlocDesRessourcesHumainesMédicoSocial:
                 "taux_absenteisme_accident_maladie_professionnelle": [0.0008, 0.0246, 0.0085, 0.0085, 0.0088, 0.0085],
                 "taux_absenteisme_conges_speciaux": [0.0109, 0.0, 0.0004, 0.0004, 0.0, 0.0004],
                 "taux_absenteisme_hors_formation": [0.0609, 0.2179, 0.0554, 0.0554, 0.0685, 0.0554],
-                "nombre_etp_realises": [NaN, NaN, 188.5, 50.64999999999999, 17.19, 4.55],
+                "nombre_etp_realises": [nan, nan, 188.5, 50.64999999999999, 17.19, 4.55],
             }
         )
 

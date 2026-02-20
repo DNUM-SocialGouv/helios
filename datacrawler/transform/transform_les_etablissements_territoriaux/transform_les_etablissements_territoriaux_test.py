@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import(
     extrais_les_etablissements_territoriaux_recemment_fermes,
@@ -46,7 +46,7 @@ class TestTransformeLesDonneesEtablissementTerritorial:
         "libcommune": "DIVONNE LES BAINS",
         "libdepartement": "AIN",
         "dateouv": "2009-01-01",
-        "datefermeture": NaN,
+        "datefermeture": nan,
         "ligneacheminement": "01220 DIVONNE LES BAINS",
         "categetab": "412",
         "codemft": "03",
@@ -54,7 +54,7 @@ class TestTransformeLesDonneesEtablissementTerritorial:
         "libcategetab": "Centre Hospitalier (C.H.)",
         "libcourtcategetab": "C.H.",
         "libmft": "ARS établissements Publics de santé dotation globale",
-        "nofinessppal": NaN,
+        "nofinessppal": nan,
         "siret": "5483216f6",
         "typeet": "P",
         "telephone": "0450201235",
@@ -70,7 +70,7 @@ class TestTransformeLesDonneesEtablissementTerritorial:
         "libcommune": "DIVONNE LES BAINS",
         "libdepartement": "AIN",
         "dateouv": "2009-01-01",
-        "datefermeture": NaN,
+        "datefermeture": nan,
         "ligneacheminement": "01220 DIVONNE LES BAINS",
         "categetab": "355",
         "codemft": "03",
@@ -78,7 +78,7 @@ class TestTransformeLesDonneesEtablissementTerritorial:
         "libcategetab": "Centre Hospitalier (C.H.)",
         "libcourtcategetab": "C.H.",
         "libmft": "ARS établissements Publics de santé dotation globale",
-        "nofinessppal": NaN,
+        "nofinessppal": nan,
         "siret": "5483216f6",
         "typeet": "P",
         "telephone": "0450201235",

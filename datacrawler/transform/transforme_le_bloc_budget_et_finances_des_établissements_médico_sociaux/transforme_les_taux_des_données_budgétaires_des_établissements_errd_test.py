@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, NUMÉRO_FINESS_ÉTABLISSEMENT_MÉDICO_SOCIAL, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_errd_ej_builder, csv_ann_per_errd_eprd_builder
@@ -129,22 +129,22 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         données_ann_errd_ej = pd.DataFrame(
             [
                 csv_ann_errd_ej_builder(
-                    {"Id Dépôt": dépôt, "Taux de CAF ERRD": NaN, "Taux vétusté Construction ERRD": NaN, "Fonds de roulement net global ERRD": NaN}
+                    {"Id Dépôt": dépôt, "Taux de CAF ERRD": nan, "Taux vétusté Construction ERRD": nan, "Fonds de roulement net global ERRD": nan}
                 ),
                 csv_ann_errd_ej_builder(
                     {
                         "Id Dépôt": dépôt,
                         "Taux de CAF ERRD": 0.071600138178413528,
-                        "Taux vétusté Construction ERRD": NaN,
-                        "Fonds de roulement net global ERRD": NaN,
+                        "Taux vétusté Construction ERRD": nan,
+                        "Fonds de roulement net global ERRD": nan,
                     }
                 ),
                 csv_ann_errd_ej_builder(
                     {
                         "Id Dépôt": dépôt,
-                        "Taux de CAF ERRD": NaN,
+                        "Taux de CAF ERRD": nan,
                         "Taux vétusté Construction ERRD": 0.45555983373892417,
-                        "Fonds de roulement net global ERRD": NaN,
+                        "Fonds de roulement net global ERRD": nan,
                     }
                 ),
             ]
@@ -162,7 +162,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         budget_et_finances_attendu = pd.DataFrame(
             [
                 helios_ann_errd_ej_budget_et_finances_builder(
-                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "fonds_de_roulement": NaN}
+                    {"taux_de_caf": 0.071600138178413528, "taux_de_vetuste_construction": 0.45555983373892417, "fonds_de_roulement": nan}
                 )
             ]
         )
@@ -178,7 +178,7 @@ class TestTransformeLesTauxDesDonnéesBudgétairesDesÉtablissementsErrd:
         données_ann_errd_ej = pd.DataFrame(
             [
                 csv_ann_errd_ej_builder({"Id Dépôt": dépôt}),
-                csv_ann_errd_ej_builder({"Id Dépôt": NaN}),
+                csv_ann_errd_ej_builder({"Id Dépôt": nan}),
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame({"numero_finess_etablissement_territorial": [NUMÉRO_FINESS_ÉTABLISSEMENT]})
