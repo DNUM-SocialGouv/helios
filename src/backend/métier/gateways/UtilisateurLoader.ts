@@ -5,6 +5,7 @@ import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 
 export interface UtilisateurLoader {
   login(email: string, password: string): Promise<RésultatLogin>;
+  getLoginError(email: string): Promise<string>;
   checkIfEmailExists(email: string): Promise<boolean>;
   getInstitutions(): Promise<Institution[]>;
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
