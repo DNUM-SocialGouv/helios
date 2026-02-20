@@ -8,13 +8,12 @@
 - hel-954: Correction wording FAQ
 
 ### Features
+
 - hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
-
 - hel-967: Réécriture des batch typescript en python
-
 - hel-974: Changement du comportement de la page de récupération de mot de passe
-
 - hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
+- hel-978: Mise à jour de dependances python (Pandas, Numpy, SQLAlchemy)
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
