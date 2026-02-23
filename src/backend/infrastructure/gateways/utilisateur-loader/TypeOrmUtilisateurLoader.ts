@@ -14,7 +14,7 @@ import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { PasswordStatus, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, PasswordStatusEnum, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
@@ -88,17 +88,17 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     warningDate.setDate(warningDate.getDate() - 30);
 
     if (today >= expirationDate) {
-      return { status: "expired" };
+      return { status: PasswordStatusEnum.EXPIRED };
     }
 
     if (today >= warningDate) {
       const diffTime = expirationDate.getTime() - today.getTime();
       const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      return { status: "warning", daysLeft };
+      return { status: PasswordStatusEnum.WARNING, daysLeft };
     }
 
-    return { status: "ok" };
+    return { status: PasswordStatusEnum.OK };
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {

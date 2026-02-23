@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { Breadcrumb } from "./Breadcrumb";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
+import { PasswordStatusEnum } from "../../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import PageDAccueil from "../../../../pages";
 import Accessibilité from "../../../../pages/accessibilite";
@@ -69,7 +70,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageDAccueil passwordStatus={{ 'status': "ok" }} />
+        <PageDAccueil passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
       </>
     );
 
