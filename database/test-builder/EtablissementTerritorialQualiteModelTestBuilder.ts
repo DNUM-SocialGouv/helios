@@ -75,12 +75,6 @@ export class ÉtablissementTerritorialQualitéModelTestBuilder {
   public static créeCertificationQualiscope(champsSurchargés?: Partial<QualiteQualiscopeHASModel>): QualiteQualiscopeHASModel {
     const etablissementTerritorialQualiscopeModel = new QualiteQualiscopeHASModel();
     etablissementTerritorialQualiscopeModel.numéroFinessÉtablissementTerritorial = champsSurchargés?.numéroFinessÉtablissementTerritorial || '010000040';
-    etablissementTerritorialQualiscopeModel.scoreAppreciationMco = champsSurchargés?.scoreAppreciationMco || 91;
-    etablissementTerritorialQualiscopeModel.scoreAppreciationCa = champsSurchargés?.scoreAppreciationCa || 91;
-    etablissementTerritorialQualiscopeModel.scorePriseEnChargeDouleur = champsSurchargés?.scorePriseEnChargeDouleur || 80;
-    etablissementTerritorialQualiscopeModel.classePriseEnChargeDouleur = champsSurchargés?.classePriseEnChargeDouleur || 'B';
-    etablissementTerritorialQualiscopeModel.noteCertification = champsSurchargés?.noteCertification || 1;
-    etablissementTerritorialQualiscopeModel.dateCertification = champsSurchargés?.dateCertification || '2024-03-20'
     return etablissementTerritorialQualiscopeModel;
   }
 }

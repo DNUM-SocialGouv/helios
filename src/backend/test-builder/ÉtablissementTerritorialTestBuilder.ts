@@ -1092,16 +1092,6 @@ export class ÉtablissementTerritorialTestBuilder {
         }
       ]
     },
-    donneesQualiscopeHAS: {
-      scoreAppreciationMCO: 91,
-      classeAppreciationMCO: 'A',
-      scoreAppreciationCA: 91,
-      classeAppreciationCA: 'A',
-      scorePriseEnChargeDouleur: 80,
-      classePriseEnChargeDouleur: 'B',
-      noteCertification: 'Etablissement certifié avec mention. Son niveau de qualité est très satisfaisant sur les objectifs portés par la certification. Une nouvelle visite aura lieu sous 4 ans',
-      dateCertification: '2024-03-20',
-    }
   }
 
   private static readonly vigieRh: EtablissementTerritorialMedicoSocialVigieRH = {
