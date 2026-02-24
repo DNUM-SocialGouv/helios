@@ -5,3 +5,8 @@
 /data_set/hapi/*
 /data_set/flux_vigierh
 /data_test/entrée/vigie_rh
+/.next/diagnostics/
+/.next/types/
+/.next/server/
+/.next/static/
+/node_modules/

@@ -26,9 +26,31 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
   constructor(private readonly orm: Promise<DataSource>) { }
 
+  cleanAndFuzzify(term: string): string {
+    if (!term?.trim()) return "";
+
+    const tokens = term
+      .normalize("NFD")
+      .replaceAll(/\p{Diacritic}/gu, "")
+      .replaceAll(/['’\-]/g, " ")
+      .replaceAll(/[^a-zA-Z0-9\s]/g, " ")
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(t => t.length > 1);
+
+    if (!tokens.length) return "";
+
+    return tokens
+      .map((token, i) =>
+        i === tokens.length - 1 ? `${token}:*` : token
+      )
+      .join(" & ");
+  }
+
+
+
   async recherche(terme: string, page: number, orderBy?: string, order?: OrderDir, displayTable?: boolean): Promise<RésultatDeRecherche> {
-    const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll('-', " ");
+    const termeFuzzy = this.cleanAndFuzzify(terme);
 
     const queryBuilder = (await this.orm).createQueryBuilder();
 
@@ -40,14 +62,9 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .addSelect("recherche.type", "type")
       .addSelect("recherche.commune", "commune")
       .addSelect("recherche.departement", "departement")
-      .addSelect("CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact")
-      .addSelect("CASE WHEN recherche.departement ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_dep")
-      .addSelect("CASE WHEN recherche.commune ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_com")
-      .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
+      .addSelect(`ts_rank_cd(recherche.termes, to_tsquery('unaccent_helios', :termeFuzzy))`, "rank")
       .from(RechercheModel, "recherche")
-      .where("recherche.termes @@ plainto_tsquery('unaccent_helios', :terme)", { terme })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces)", { termeSansEspaces })
-      .orWhere("recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets)", { termeSansTirets })
+      .where("recherche.termes @@ to_tsquery('unaccent_helios', :termeFuzzy)", { termeFuzzy })
 
     const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
@@ -78,9 +95,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         .addGroupBy("entite_juridique.raison_sociale_courte")
         .addGroupBy("recherche.categorie")
         .addGroupBy("recherche.libelle_categorie")
-        .orderBy("is_exact", "DESC")
-        .addOrderBy("is_exact_dep", "DESC")
-        .addOrderBy("is_exact_com", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
@@ -89,9 +103,6 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     } else {
       requêteDeLaRecherche
         .addSelect("recherche.rattachement", "rattachement")
-        .orderBy("is_exact", "DESC")
-        .addOrderBy("is_exact_dep", "DESC")
-        .addOrderBy("is_exact_com", "DESC")
         .addOrderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC")
@@ -127,8 +138,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
   async rechercheAvancee(params: ParametreDeRechercheAvancee): Promise<RésultatDeRecherche> {
     const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport } = params;
 
-    const termeSansEspaces = terme.replaceAll(/\s/g, "");
-    const termeSansTirets = terme.replaceAll('-', " ");
+    const termeFuzzy = this.cleanAndFuzzify(terme);
 
     const zoneParam = this.computeZoneParam(zone, typeZone);
 
@@ -168,16 +178,13 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (terme) {
       requêteDeLaRecherche
-        .addSelect(`CASE WHEN recherche.raison_sociale_courte ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END`, "is_exact")
-        .addSelect("CASE WHEN recherche.departement ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_dep")
-        .addSelect("CASE WHEN recherche.commune ILIKE '%' || :terme || '%' THEN 1 ELSE 0 END", "is_exact_com")
-        .addSelect("ts_rank_cd(recherche.termes, plainto_tsquery('unaccent_helios', :terme))", "rank")
+        .addSelect("ts_rank_cd(recherche.termes, to_tsquery('unaccent_helios', :terme))", "rank")
 
       conditions.push(
-        "(recherche.termes @@ plainto_tsquery('unaccent_helios', :terme) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansEspaces) OR recherche.termes @@ plainto_tsquery('unaccent_helios', :termeSansTirets))"
+        "(recherche.termes @@ to_tsquery('unaccent_helios', :terme))"
       );
-      parameters.terme = terme;
-      parameters = { ...parameters, termeSansEspaces: termeSansEspaces, termeSansTirets: termeSansTirets };
+      parameters.terme = termeFuzzy;
+      parameters = { ...parameters };
     }
 
     requêteDeLaRecherche.from(RechercheModel, "recherche")
@@ -433,10 +440,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     if (orderBy && order) {
       query.orderBy(orderBy, order);
     } else if (terme) {
-      query.orderBy("is_exact", "DESC")
-        .addOrderBy("is_exact_dep", "DESC")
-        .addOrderBy("is_exact_com", "DESC")
-        .addOrderBy("rank", "DESC")
+      query.orderBy("rank", "DESC")
         .addOrderBy("type", "ASC")
         .addOrderBy("numero_finess", "ASC");
     } else {

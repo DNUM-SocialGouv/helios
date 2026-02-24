@@ -45,7 +45,8 @@
   "exclude": [
     ".next",
     "node_modules",
-    "spikes"
+    "spikes",
+    "dist"
   ],
   "ts-node": {
     "swc": true

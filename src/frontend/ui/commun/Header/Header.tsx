@@ -9,6 +9,7 @@ import "@gouvfr/dsfr/dist/component/logo/logo.min.css";
 import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
+import { Role } from "../../../../commons/Role";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -235,7 +236,7 @@ export const Header = () => {
                         </li>
                       </ul>
                       <hr className={styles["menu-sperator"]} />
-                      {data?.user.role === 1 && (
+                      {data?.user.role === Role.ADMIN_NAT && (
                         <ul>
                           <li className={styles["menu-item"]}>
                             <button
@@ -249,7 +250,7 @@ export const Header = () => {
                           </li>
                         </ul>
                       )}
-                      {(data?.user.role === 1 || data?.user.role === 2) && (
+                      {(data?.user.role === Role.ADMIN_NAT || data?.user.role === Role.ADMIN_REG) && (
                         <>
                           <ul>
                             <li className={styles["menu-item"]}>
@@ -335,7 +336,7 @@ export const Header = () => {
                       Historique
                     </button>
                   </li>
-                  {data?.user.role === 1 && (
+                  {data?.user.role === Role.ADMIN_NAT && (
                     <li className={styles["menu-item"]}>
                       <button
                         className="fr-btn--icon-left fr-icon-settings-5-line"
@@ -347,7 +348,7 @@ export const Header = () => {
                       </button>
                     </li>
                   )}
-                  {(data?.user.role === 1 || data?.user.role === 2) && (
+                  {(data?.user.role === Role.ADMIN_NAT || data?.user.role === Role.ADMIN_REG) && (
                     <li className={styles["menu-item"]}>
                       <button
                         className="fr-btn--icon-left fr-icon-user-setting-line"

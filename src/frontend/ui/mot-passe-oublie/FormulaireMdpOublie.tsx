@@ -29,7 +29,7 @@ export const FormulaireMdpOublie = ({ annuler, emailSent, emailValue, emailValue
         {emailSent ?
           (
             <form className="fr-col-6 fr-col-sm-6" onSubmit={envoyerEmail}>
-              {!isLoading && <div className={styles["success"]}>{wording.MOT_PASSE_OUBLIE_SUCCESS_MESSAGE + emailValue}</div>}
+              {!isLoading && <div className={styles["success"]}>{wording.MOT_PASSE_OUBLIE_SUCCESS_MESSAGE}</div>}
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
                   <li>
