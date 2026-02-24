@@ -12,7 +12,7 @@ export const ContenuTauxDeCafEJ = ({ dateDeMiseÀJour, source }: ContenuTauxDeCa
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur mesure la capacité de l’établissement à autofinancer ses investissements. Il mesure la part de CAF qui reste disponible après

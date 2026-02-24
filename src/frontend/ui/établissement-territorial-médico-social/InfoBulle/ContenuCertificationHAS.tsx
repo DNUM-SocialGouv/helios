@@ -3,16 +3,15 @@ import { ReactElement } from "react";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuCertificationHASProps = Readonly<{
-  dateDeMiseÀJour: string;
   source: ReactElement;
 }>;
 
-export const ContenuCertificationHAS = ({ dateDeMiseÀJour, source }: ContenuCertificationHASProps) => {
+export const ContenuCertificationHAS = ({ source }: ContenuCertificationHASProps) => {
   const { wording } = useDependencies();
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
       </section>
       <section aria-label={wording.FRÉQUENCE}>

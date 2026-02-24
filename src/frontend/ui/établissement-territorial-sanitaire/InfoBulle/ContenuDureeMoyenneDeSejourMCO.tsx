@@ -12,7 +12,7 @@ export const ContenuDureeMoyenneDeSejourMCO = ({ annuel, dateDeMiseÀJour, sourc
   const { wording } = useDependencies();
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Synthétise la sur ou sous performance de l’organisation médicale de l’établissement en médecine (hors ambulatoire), de l’activité de chirurgie (hors ambulatoire), de l’activité de l’obstétrique (hors ambulatoire)</p>
       </section>

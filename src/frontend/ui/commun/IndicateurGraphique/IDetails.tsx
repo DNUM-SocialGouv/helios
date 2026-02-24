@@ -32,7 +32,7 @@ export const IDetails = ({ contenuInfoBulle, dateDeMiseÀJour, identifiant, nomD
       </button>}
 
       {dateDeMiseÀJour && source && <div className={styles["mise-a-jour-source"]}>
-        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
         <button
           aria-controls={`nom-info-bulle-${identifiant}`}
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"

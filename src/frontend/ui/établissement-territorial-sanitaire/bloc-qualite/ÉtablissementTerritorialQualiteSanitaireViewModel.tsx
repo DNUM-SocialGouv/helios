@@ -76,7 +76,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
 
   public get lesDonneesHASNeSontPasRenseignees(): boolean {
-    return !this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
+    return !!this.etablissementTerritorialQualiteSanitaire.pasDonneesQualiscopeHAS;
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
@@ -129,25 +129,6 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
   public get dateMiseAJourDonneesHAS(): string {
     return StringFormater.formatDate("2025-08-20");
-  }
-
-  public get donneesHAS(): QualiteQualiscopeViewModel {
-    const donneesQualiscopeHAS = this.etablissementTerritorialQualiteSanitaire.donneesQualiscopeHAS;
-    return {
-      appreciationMco: donneesQualiscopeHAS?.scoreAppreciationMCO ?
-        `${donneesQualiscopeHAS?.scoreAppreciationMCO} / 100  ${donneesQualiscopeHAS?.classeAppreciationMCO}  `
-        : 'Non renseigné',
-      appreciationCa: donneesQualiscopeHAS?.scoreAppreciationCA ?
-        `${donneesQualiscopeHAS?.scoreAppreciationCA} / 100  ${donneesQualiscopeHAS?.classeAppreciationCA}  `
-        : 'Non renseigné',
-      PriseEnChargeDouleur: donneesQualiscopeHAS?.scorePriseEnChargeDouleur ?
-        `${donneesQualiscopeHAS?.scorePriseEnChargeDouleur} %  ${donneesQualiscopeHAS?.classePriseEnChargeDouleur}  `
-        : 'Non renseigné',
-      dateCertification: donneesQualiscopeHAS?.dateCertification ?
-        StringFormater.formatDate(donneesQualiscopeHAS?.dateCertification)
-        : 'Non renseigné',
-      certification: donneesQualiscopeHAS?.noteCertification ?? ''
-    };
   }
 
   public get buildEIsData(): any {

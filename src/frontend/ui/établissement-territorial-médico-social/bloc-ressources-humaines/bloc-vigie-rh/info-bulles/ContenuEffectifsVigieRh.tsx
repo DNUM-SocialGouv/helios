@@ -8,7 +8,7 @@ export const ContenuEffectifsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, 
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Nombre de personnes physiques présentes parmi les effectifs durant le mois, ventilé par filière.

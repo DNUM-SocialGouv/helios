@@ -6,7 +6,7 @@ export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesAr
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Part des CDD ayant eu une durée effective strictement inférieure à 6

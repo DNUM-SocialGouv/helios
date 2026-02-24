@@ -6,7 +6,7 @@ export const ContenuNatureContratsVigieRh = ({ dateDeMiseAJour, dateDonneesArret
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Décompte des contrats actifs au dernier mois de la période, ventilés selon leur nature   <br />

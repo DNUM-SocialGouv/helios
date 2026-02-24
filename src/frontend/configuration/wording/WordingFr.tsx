@@ -122,10 +122,11 @@ export class WordingFr implements Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string = (date: string): string => `Mise à jour : ${date}`;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => (
-    <>
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement = (source: ReactElement, date?: string): ReactElement => (
+    <>{date ? <>
       {this.miseÀJour(date)}
       {" - "}
+    </> : <></>}
       Source : {source}
     </>
   );

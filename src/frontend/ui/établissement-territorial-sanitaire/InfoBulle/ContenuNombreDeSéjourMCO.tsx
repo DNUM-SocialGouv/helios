@@ -13,7 +13,7 @@ export const ContenuNombreDeSéjourMCO = ({ dateDeMiseÀJour, source, estEntité
   const { wording } = useDependencies();
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         {estComparaison && <p> Total hospitalisation: complète + partielle</p>}
         <p>Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge ambulatoires.</p>

@@ -12,7 +12,7 @@ export const ContenuTauxDeVétustéConstruction = ({ dateDeMiseÀJour, source }:
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur permet d’estimer le degré d’amortissement des constructions sur la base des éléments comptables. Plus le taux est élevé, plus les

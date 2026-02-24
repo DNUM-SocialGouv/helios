@@ -12,7 +12,7 @@ export const ContenuMontantDeLaContributionAuxFraisDeSiège = ({ dateDeMiseÀJou
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Le montant de la contribution aux frais de siège et/ou de groupement correspond aux charges du compte 655 « Quotes-parts de résultat sur opérations

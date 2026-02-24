@@ -104,7 +104,7 @@ export interface Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement;
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement;
   readonly NON_RENSEIGNÉ: string;
   readonly OUI: string;
   readonly NON: string;

@@ -12,7 +12,7 @@ export const ContenuTauxRéalisationActivité = ({ dateDeMiseÀJour, source }: C
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Permet de mesurer le niveau d’activité de la structure.</p>
       </section>
