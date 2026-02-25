@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees_entite_juridique import(
     extrais_les_entites_juridiques_recemment_fermees,
@@ -45,7 +45,7 @@ class TestTransformeLesDonneesEntiteJuridique:
                                 {"code": '70',"codeagr2": '2200',"codeagr1": '2000'}])
         entites_juridiques_categorisees_attendues = pd.DataFrame([{
         "datecrea": "2009-01-01",
-        "datefermeture": NaN,
+        "datefermeture": nan,
         "departement": "01",
         "libcommune": "DIVONNE LES BAINS",
         "libdepartement": "AIN",
@@ -65,7 +65,7 @@ class TestTransformeLesDonneesEntiteJuridique:
         "categorisation": "prive_lucratif"
         },{
         "datecrea": "2009-01-01",
-        "datefermeture": NaN,
+        "datefermeture": nan,
         "departement": "01",
         "libcommune": "DIVONNE LES BAINS",
         "libdepartement": "AIN",

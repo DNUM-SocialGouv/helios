@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from pandas import NA
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
@@ -23,7 +23,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation Semi-internat Autres ESMS": 0.99779299847793002,
                     "Taux d'occupation Internat Autres ESMS": 0.99779299847793002,
                     "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
@@ -65,7 +65,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
         donnees_ann_errd_ej_et = pd.DataFrame(
             [
                 {
-                    "Finess": NaN,
+                    "Finess": nan,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
@@ -92,7 +92,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": "KO",
                     "Etat taux d'occupation global ERRD": None,
@@ -103,7 +103,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
@@ -138,7 +138,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "taux_occupation_accueil_de_jour": 0.48012820512820514,
                     "taux_occupation_en_hebergement_temporaire": 0.93698630136986305,
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
-                    "taux_occupation_global": NaN,
+                    "taux_occupation_global": nan,
                 },
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -162,7 +162,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
@@ -209,11 +209,11 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "Année": 2018,
-                    "Taux d'occupation des lits autorisés en accueil de jour": NaN,
-                    "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
-                    "Taux d'occupation des places autorisées en hébergement permanent": NaN,
-                    "Taux d'occupation global ERRD": NaN,
-                    "Taux d'occupation global Autres ESMS": NaN,
+                    "Taux d'occupation des lits autorisés en accueil de jour": nan,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": nan,
+                    "Taux d'occupation des places autorisées en hébergement permanent": nan,
+                    "Taux d'occupation global ERRD": nan,
+                    "Taux d'occupation global Autres ESMS": nan,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
                 }
@@ -236,10 +236,10 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
-                    "taux_occupation_accueil_de_jour": NaN,
-                    "taux_occupation_en_hebergement_temporaire": NaN,
-                    "taux_occupation_en_hebergement_permanent": NaN,
-                    "taux_occupation_global": NaN,
+                    "taux_occupation_accueil_de_jour": nan,
+                    "taux_occupation_en_hebergement_temporaire": nan,
+                    "taux_occupation_en_hebergement_permanent": nan,
+                    "taux_occupation_global": nan,
                 }
             ],
         )
@@ -253,9 +253,9 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "Année": 2018,
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
-                    "Taux d'occupation des lits autorisés en hébergement temporaire": NaN,
+                    "Taux d'occupation des lits autorisés en hébergement temporaire": nan,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
@@ -263,10 +263,10 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                 {
                     "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "Année": 2018,
-                    "Taux d'occupation des lits autorisés en accueil de jour": NaN,
+                    "Taux d'occupation des lits autorisés en accueil de jour": nan,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
-                    "Taux d'occupation des places autorisées en hébergement permanent": NaN,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation des places autorisées en hébergement permanent": nan,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 3.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,
@@ -291,7 +291,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2018,
                     "taux_occupation_accueil_de_jour": 0.48012820512820514,
-                    "taux_occupation_en_hebergement_temporaire": NaN,
+                    "taux_occupation_en_hebergement_temporaire": nan,
                     "taux_occupation_en_hebergement_permanent": 0.99779299847793002,
                     "taux_occupation_global": 2.0,
                 }
@@ -309,7 +309,7 @@ class TestTransformeLesDonneesAnnErrdEjEt:
                     "Taux d'occupation des lits autorisés en accueil de jour": 0.48012820512820514,
                     "Taux d'occupation des lits autorisés en hébergement temporaire": 0.93698630136986305,
                     "Taux d'occupation des places autorisées en hébergement permanent": 0.99779299847793002,
-                    "Taux d'occupation global ERRD": NaN,
+                    "Taux d'occupation global ERRD": nan,
                     "Taux d'occupation global Autres ESMS": 2.0,
                     "Etat taux d'occupation global Autres ESMS": None,
                     "Etat taux d'occupation global ERRD": None,

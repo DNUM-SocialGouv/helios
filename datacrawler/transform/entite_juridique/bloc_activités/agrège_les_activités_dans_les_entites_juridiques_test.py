@@ -1,4 +1,4 @@
-from numpy import NaN
+from numpy import nan
 
 import pandas as pd
 
@@ -191,17 +191,17 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "annee": ["2020", "2020"],
                 "numero_finess_entite_juridique": ["111111111", "111111111"],
                 "numero_finess_etablissement_territorial": ["222222222", "333333333"],
-                "nombre_sejours_partiels_medecine": [NaN, NaN],
-                "nombre_passages_urgences": [NaN, NaN],
-                "nombre_sejours_partiels_obstetrique": [NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN, NaN],
-                "nombre_sejours_complets_medecine": [NaN, NaN],
-                "nombre_sejours_complets_chirurgie": [NaN, NaN],
-                "nombre_sejours_complets_obstetrique": [NaN, NaN],
-                "nombre_journees_completes_ssr": [NaN, NaN],
-                "nombre_journees_partiels_ssr": [NaN, NaN],
-                "nombre_journees_complete_psy": [NaN, NaN],
-                "nombre_journées_partielles_psy": [NaN, NaN],
+                "nombre_sejours_partiels_medecine": [nan, nan],
+                "nombre_passages_urgences": [nan, nan],
+                "nombre_sejours_partiels_obstetrique": [nan, nan],
+                "nombre_sejours_partiels_chirurgie": [nan, nan],
+                "nombre_sejours_complets_medecine": [nan, nan],
+                "nombre_sejours_complets_chirurgie": [nan, nan],
+                "nombre_sejours_complets_obstetrique": [nan, nan],
+                "nombre_journees_completes_ssr": [nan, nan],
+                "nombre_journees_partiels_ssr": [nan, nan],
+                "nombre_journees_complete_psy": [nan, nan],
+                "nombre_journées_partielles_psy": [nan, nan],
             }
         )
 
@@ -213,17 +213,17 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
             {
                 "annee": ["2020"],
                 "numero_finess_entite_juridique": ["111111111"],
-                "nombre_sejours_partiels_medecine": [NaN],
-                "nombre_passage_urgence": [NaN],
-                "nombre_sejours_partiels_obstetrique": [NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN],
-                "nombre_sejours_complets_medecine": [NaN],
-                "nombre_sejours_complets_chirurgie": [NaN],
-                "nombre_sejours_complets_obstetrique": [NaN],
-                "nombre_journees_completes_ssr": [NaN],
-                "nombre_journees_partiels_ssr": [NaN],
-                "nombre_journees_complete_psy": [NaN],
-                "nombre_journées_partielles_psy": [NaN],
+                "nombre_sejours_partiels_medecine": [nan],
+                "nombre_passage_urgence": [nan],
+                "nombre_sejours_partiels_obstetrique": [nan],
+                "nombre_sejours_partiels_chirurgie": [nan],
+                "nombre_sejours_complets_medecine": [nan],
+                "nombre_sejours_complets_chirurgie": [nan],
+                "nombre_sejours_complets_obstetrique": [nan],
+                "nombre_journees_completes_ssr": [nan],
+                "nombre_journees_partiels_ssr": [nan],
+                "nombre_journees_complete_psy": [nan],
+                "nombre_journées_partielles_psy": [nan],
             }
         ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(activités_agrégées, activités_agrégées_attendues)
@@ -235,17 +235,17 @@ class TestAgrègeLesActivitesDansLesEntitesJuridiques:
                 "annee": ["2020", "2020"],
                 "numero_finess_entite_juridique": ["111111111", "111111111"],
                 "numero_finess_etablissement_territorial": ["222222222", "333333333"],
-                "nombre_sejours_partiels_medecine": [NaN, 1],
-                "nombre_passages_urgences": [NaN, 2],
-                "nombre_sejours_partiels_obstetrique": [NaN, 3],
-                "nombre_sejours_partiels_chirurgie": [NaN, 4],
-                "nombre_sejours_complets_medecine": [NaN, 5],
-                "nombre_sejours_complets_chirurgie": [NaN, 6],
-                "nombre_sejours_complets_obstetrique": [NaN, 7],
-                "nombre_journees_completes_ssr": [NaN, 8],
-                "nombre_journees_partiels_ssr": [NaN, 9],
-                "nombre_journees_complete_psy": [NaN, 0],
-                "nombre_journées_partielles_psy": [NaN, 1],
+                "nombre_sejours_partiels_medecine": [nan, 1],
+                "nombre_passages_urgences": [nan, 2],
+                "nombre_sejours_partiels_obstetrique": [nan, 3],
+                "nombre_sejours_partiels_chirurgie": [nan, 4],
+                "nombre_sejours_complets_medecine": [nan, 5],
+                "nombre_sejours_complets_chirurgie": [nan, 6],
+                "nombre_sejours_complets_obstetrique": [nan, 7],
+                "nombre_journees_completes_ssr": [nan, 8],
+                "nombre_journees_partiels_ssr": [nan, 9],
+                "nombre_journees_complete_psy": [nan, 0],
+                "nombre_journées_partielles_psy": [nan, 1],
             }
         )
 

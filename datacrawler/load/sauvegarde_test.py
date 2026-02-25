@@ -1,6 +1,7 @@
 from datetime import date
 
 import pandas as pd
+from sqlalchemy import text
 
 from datacrawler.load.nom_des_tables import (
     TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_MÉDICO_SOCIAUX,
@@ -114,9 +115,11 @@ class TestSauvegarde:
         nouvelle_date_de_mise_a_jour = "20220728"
 
         # WHEN
-        with base_de_données_test.connect() as connection:
+        with base_de_données_test.begin() as connection:
             mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, nouvelle_date_de_mise_a_jour, fichier_source)
 
         # THEN
-        date_sauvee = base_de_données_test.execute(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{fichier_source.value}'""")
+        date_sauvee = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{fichier_source.value}'""")
+        )
         assert date_sauvee.fetchone() == (date(2022, 7, 28), FichierSource.DIAMANT_ANN_ERRD_EJ_ET.value)

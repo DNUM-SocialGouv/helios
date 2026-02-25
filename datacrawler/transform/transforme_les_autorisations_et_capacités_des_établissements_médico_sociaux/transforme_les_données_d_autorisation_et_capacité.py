@@ -25,10 +25,13 @@ def transforme_les_données_finess_cs1400105(
 ) -> pd.DataFrame:
     est_dans_finess = données_finess_cs1400105["nofinesset"].isin(numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"])
     logger.info(f"[FINESS] {est_dans_finess.sum()} autorisations sont liées à un ET trouvé en base dans le fichier finess_cs1400105")
-    autorisationsfiltree = filtrer_les_autorisations(données_finess_cs1400105)
+
+    # Appliquer le masque d'abord sur le DataFrame original pour éviter l'avertissement de réindexation des séries booléennes
+    autorisationsfiltree = données_finess_cs1400105[est_dans_finess]
+    autorisationsfiltree = filtrer_les_autorisations(autorisationsfiltree)
+
     autorisations = (
-        autorisationsfiltree[est_dans_finess]
-        .sort_values(by=["indsupinst", "indsupaut"])[colonnes_à_garder_finess_cs1400105]
+        autorisationsfiltree.sort_values(by=["indsupinst", "indsupaut"])[colonnes_à_garder_finess_cs1400105]
         .rename(columns=équivalences_finess_cs1400105_helios)
         .drop_duplicates(subset=index_des_autorisations_médico_sociaux, keep="first")
         .dropna(subset=index_des_autorisations_médico_sociaux)

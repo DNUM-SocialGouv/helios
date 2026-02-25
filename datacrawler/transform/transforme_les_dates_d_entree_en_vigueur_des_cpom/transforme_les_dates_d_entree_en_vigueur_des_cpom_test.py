@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.transform.transforme_les_dates_d_entree_en_vigueur_des_cpom.transforme_les_dates_d_entree_en_vigueur_des_cpom import (
@@ -81,7 +81,7 @@ class TestTransformeLesDatesDEntreeEnVigueurDesCpom:
             {
                 "Finess": [NUMÉRO_FINESS_ÉTABLISSEMENT],
                 "Année": [2021],
-                "Date d'entrée en vigueur du CPOM": [NaN],
+                "Date d'entrée en vigueur du CPOM": [nan],
             }
         )
         numeros_finess_connus = pd.DataFrame(

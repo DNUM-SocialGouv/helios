@@ -1,6 +1,7 @@
 from typing import Tuple
 
 from pandas import DataFrame
+from sqlalchemy import text
 from sqlalchemy.engine import Connection
 from datacrawler.load.nom_des_tables import TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES, FichierSource
 
@@ -11,10 +12,12 @@ def sauvegarde(base_de_donnees: Connection, table: str, donnees: DataFrame) -> N
 
 def mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(base_de_donnees: Connection, date_de_mise_a_jour: str, fichier_source: FichierSource) -> None:
     base_de_donnees.execute(
-        f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
+        text(
+            f"""INSERT INTO {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} (derniere_mise_a_jour, fichier)
             VALUES ('{date_de_mise_a_jour}', '{fichier_source.value}')
             ON CONFLICT (fichier) DO UPDATE
             SET derniere_mise_a_jour = '{date_de_mise_a_jour}';"""
+        )
     )
 
 
@@ -32,7 +35,7 @@ def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donn
     db_columns = donnees.columns.astype(str).tolist()
 
     columns = ", ".join(db_columns)
-    placeholders = ", ".join(["%s"] * len(db_columns))
+    placeholders = ", ".join([f":{col}" for col in db_columns])
     update_str = ", ".join([f"{col}=excluded.{col}" for col in db_columns if col != cle_primaire])
 
     sql = f"""INSERT INTO {table} ({columns})
@@ -42,5 +45,5 @@ def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donn
 
     donnees = donnees.fillna("")
     for _, row in donnees.iterrows():
-        values = [row[col] for col in db_columns]
-        base_de_donnees.execute(sql, values)
+        values = {col: row[col] for col in db_columns}
+        base_de_donnees.execute(text(sql), values)

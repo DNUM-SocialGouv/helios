@@ -27,7 +27,7 @@ def écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
     fichiers_mis_à_jour: List[Tuple[FichierSource, str]],
     logger: Logger,
 ) -> None:
-    connection.execute(f"DELETE FROM {table};")
+    connection.execute(text(f"DELETE FROM {table};"))
     logger.info(f"[{fournisseur}] Ancien-nes {nom_de_la_donnée} supprimé-es")
     sauvegarde(connection, table, données)
     for fichier, date_de_mise_à_jour in fichiers_mis_à_jour:
