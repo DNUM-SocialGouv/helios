@@ -267,8 +267,7 @@ export interface Wording {
   readonly AFFICHER_MOINS: string;
 
   readonly CERTIFICATION_QUALISCOPE: string;
-  readonly DONNEES_QUALITE: string;
-  readonly DATE_CERTIFICATION: string;
+  readonly HAS_FICHE_PATH: string;
 
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;

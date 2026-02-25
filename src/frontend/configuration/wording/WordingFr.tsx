@@ -290,8 +290,7 @@ export class WordingFr implements Wording {
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
   readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
-  readonly DONNEES_QUALITE: string = "Données qualité";
-  readonly DATE_CERTIFICATION: string = "Date de certification";
+  readonly HAS_FICHE_PATH: string = "www.has-sante.fr/fiche-etablissement/";
 
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
@@ -487,7 +486,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
-  readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS</abbr>);
+  readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS-Qualiscope</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
