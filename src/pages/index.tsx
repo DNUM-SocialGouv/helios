@@ -4,15 +4,12 @@ import { getSession } from "next-auth/react";
 import { checkPasswordStatusEndpoint } from "../backend/infrastructure/controllers/checkPasswordStatusEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
 import { PasswordStatus } from "../backend/métier/entities/Utilisateur/RésultatLogin";
-import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
 import { PageRecherche } from "../frontend/ui/home/PageRecherche";
 
 
 type RouterProps = Readonly<{ passwordStatus: PasswordStatus }>;
 
 export default function Router({ passwordStatus }: RouterProps) {
-  useBreadcrumb([]);
-
   return <PageRecherche passwordStatus={passwordStatus} />;
 }
 

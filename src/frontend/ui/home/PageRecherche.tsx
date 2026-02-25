@@ -9,6 +9,7 @@ import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
 import { PasswordStatus, PasswordStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
 import { PasswordWarnningNotice } from "../commun/PasswordWarningNotice/PasswordWarningNotice";
 
@@ -19,6 +20,8 @@ type PageRechercheProps = {
 export const PageRecherche = ({ passwordStatus }: PageRechercheProps) => {
   const { wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(false);
+
+  useBreadcrumb([]);
 
   const {
     estCeEnAttente,
