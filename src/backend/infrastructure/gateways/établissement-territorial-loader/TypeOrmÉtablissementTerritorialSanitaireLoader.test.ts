@@ -859,7 +859,9 @@ describe("Établissement territorial sanitaire loader", () => {
 
       // WHEN
       const qualite = await typeOrmÉtablissementTerritorialLoader.chargeQualite(numéroFinessÉtablissementTerritorial);
-      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteSAN());
+      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteSAN(
+        { pasDonneesQualiscopeHAS: { numeroFiness: '010000040' } }
+      ));
     });
   });
 

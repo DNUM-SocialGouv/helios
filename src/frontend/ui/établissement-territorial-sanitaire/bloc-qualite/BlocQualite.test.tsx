@@ -35,13 +35,19 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
         dateMiseAJourSource: '2024-03-15'
       }],
       inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] },
+      pasDonneesQualiscopeHAS: { numeroFiness: "010000040" }
     },
     autorisationsMockData
   );
 
   const qualiteEIViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(
     wording,
-    { reclamations: [], evenementsIndesirables: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite.evenementsIndesirables, inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
+    {
+      reclamations: [],
+      evenementsIndesirables: EtablissementTerritorialSanitaireViewModelTestBuilder.qualite.evenementsIndesirables,
+      inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] },
+      pasDonneesQualiscopeHAS: { numeroFiness: "010000040" }
+    },
     autorisationsMockData
   );
 
@@ -62,7 +68,8 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
       }],
       inspectionsEtControles: {
         dateMiseAJourSource: '202-02-02', inspectionsEtControles: [],
-      }
+      },
+      pasDonneesQualiscopeHAS: { numeroFiness: "010000040" }
     },
     autorisationsMockData
   );

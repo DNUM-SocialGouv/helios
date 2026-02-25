@@ -970,7 +970,7 @@ describe("Filtre les informations qualite des etablissement sanitaire par rappor
     const rawQuality = getQualitéSanitaire();
     const expectedQuality = {
       ...rawQuality,
-      donneesQualiscopeHAS: {},
+      pasDonneesQualiscopeHAS: {},
     }
 
     let etabSanitaireResult = getFullSanitaire();
