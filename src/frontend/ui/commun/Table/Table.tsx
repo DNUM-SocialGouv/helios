@@ -3,11 +3,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import styles from "./Table.module.css";
+import { TableData } from "./TableData";
 import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
-import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
-import { RechercheViewModel } from "../../home/RechercheViewModel";
-import { SearchHistoryViewModel } from "../../search-history/SearchHistoryViewModel";
+import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
@@ -24,7 +23,7 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[] | SearchHistoryViewModel[];
+  data: TableData[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   selectedRows?: Map<string, string>;
@@ -39,7 +38,7 @@ interface DataTableProps {
   onClickInfobull?: (name: string) => void;
   handleSelectAll?: () => void;
   isAllSelected?: boolean;
-  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel | SearchHistoryViewModel) => void;
+  onClickDelete: (element: TableData) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -60,13 +59,13 @@ interface TableHeaderProps {
 interface TableBodyProps {
   headers: Header[];
   selectedRows?: Map<string, string>;
-  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[] | SearchHistoryViewModel[];
+  data: TableData[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
-  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel | SearchHistoryViewModel) => void;
+  onClickDelete: (element: TableData) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -254,7 +253,7 @@ export const Table = ({
   handleInfoBullMoyenne,
   isSimpleSearchTable,
 }: DataTableProps) => {
-  const handleSelectRow = (row: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
+  const handleSelectRow = (row: TableData) => {
     if (selectedRows && setSelectedRows) {
       const newSelected = new Map(selectedRows);
       if (selectedRows.has(row.numéroFiness)) {
