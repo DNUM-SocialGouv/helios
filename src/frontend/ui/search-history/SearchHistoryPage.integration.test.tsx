@@ -21,16 +21,16 @@ const mockSession = {
 };
 
 const rows = [
-  { numéroFiness: "200", socialReason: "Beta", date: "01/01/2026 10:00", rawDate: "2026-01-01T10:00:00.000Z", type: "B" },
-  { numéroFiness: "100", socialReason: "Alpha", date: "02/01/2026 09:00", rawDate: "2026-01-02T09:00:00.000Z", type: "A" },
-  { numéroFiness: "300", socialReason: "Charlie", date: "03/01/2026 08:00", rawDate: "2026-01-03T08:00:00.000Z", type: "C" },
+  { finessNumber: "200", title: "Beta", date: "2026-01-01T10:00:00.000Z", type: "B" },
+  { finessNumber: "100", title: "Alpha", date: "2026-01-02T09:00:00.000Z", type: "A" },
+  { finessNumber: "300", title: "Charlie", date: "2026-01-03T08:00:00.000Z", type: "C" },
 ];
 
-function renderPage(props: any = {}) {
+function renderPage() {
   return renderFakeComponent(
     <SessionProvider session={mockSession}>
       <SearchHistoryPage
-        searchHistory={props.searchHistory ?? rows.map(r => ({ title: r.socialReason, date: r.rawDate, finessNumber: r.numéroFiness, type: r.type }))}
+        searchHistory={rows}
       />
     </SessionProvider>
   );
