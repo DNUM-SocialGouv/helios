@@ -13,7 +13,7 @@ interface SearchHistoryProps {
 }
 
 type SearchHistoryRow = {
-  numéroFiness: string;
+  numeroFiness: string;
   socialReason: string;
   date: string;
   rawDate: string;
@@ -24,7 +24,7 @@ enum OrderByValue {
   DATE = "date",
   TYPE = "type",
   SOCIAL_REASON = "socialReason",
-  NUMERO_FINESS = "numero_finess",
+  NUMERO_FINESS = "numeroFiness",
 }
 
 export function sortSearchHistoryRows(rows: SearchHistoryRow[], order: string, orderBy: string): SearchHistoryRow[] {
@@ -33,15 +33,14 @@ export function sortSearchHistoryRows(rows: SearchHistoryRow[], order: string, o
   sorted.sort((a: SearchHistoryRow, b: SearchHistoryRow) => {
     let comparison = 0;
     if (orderBy === OrderByValue.DATE) {
-      const ta = a.rawDate ? new Date(a.rawDate).getTime() : 0;
-      const tb = b.rawDate ? new Date(b.rawDate).getTime() : 0;
-      comparison = ta - tb;
+      // les rawDates sont des timestamps, on les compare directement
+      comparison = a.rawDate.localeCompare(b.rawDate);
     } else if (orderBy === OrderByValue.TYPE) {
       comparison = (a.type || "").localeCompare(b.type || "");
     } else if (orderBy === OrderByValue.SOCIAL_REASON) {
       comparison = (a.socialReason || "").localeCompare(b.socialReason || "");
     } else if (orderBy === OrderByValue.NUMERO_FINESS) {
-      comparison = (a.numéroFiness || "").localeCompare(b.numéroFiness || "");
+      comparison = (a.numeroFiness || "").localeCompare(b.numeroFiness || "");
     } else {
       // Si le orderBy n'est pas reconnu, on ne change pas l'ordre
     }
@@ -59,12 +58,12 @@ export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
   const headers = [
     { label: wording.ETABLISSEMENT_CONSULTE, nomComplet: wording.ETABLISSEMENT_CONSULTE, key: "socialReason", sort: true, orderBy: OrderByValue.SOCIAL_REASON },
     { label: wording.CATEGORIES_FINESS, nomComplet: wording.CATEGORIES_FINESS, key: "etsLogo", sort: true, orderBy: OrderByValue.TYPE },
-    { label: wording.IMPORT_LIST_FINESS_HEADER, nomComplet: wording.IMPORT_LIST_FINESS_HEADER, key: "numéroFiness", sort: true, orderBy: OrderByValue.NUMERO_FINESS },
+    { label: wording.IMPORT_LIST_FINESS_HEADER, nomComplet: wording.IMPORT_LIST_FINESS_HEADER, key: "numeroFiness", sort: true, orderBy: OrderByValue.NUMERO_FINESS },
     { label: wording.DATE, nomComplet: wording.DATE, key: "date", sort: true, orderBy: OrderByValue.DATE },
   ];
 
   const mapped: SearchHistoryRow[] = (searchHistory || []).map((h) => ({
-    numéroFiness: h.finessNumber,
+    numeroFiness: h.finessNumber,
     socialReason: h.title,
     date: formatDateAndHours(h.date),
     rawDate: h.date,
