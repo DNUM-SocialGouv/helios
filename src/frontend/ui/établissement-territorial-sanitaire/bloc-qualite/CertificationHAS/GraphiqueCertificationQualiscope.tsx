@@ -3,10 +3,10 @@ import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/Indicat
 import { ContenuCertificationHAS } from "../../../établissement-territorial-médico-social/InfoBulle/ContenuCertificationHAS";
 
 type GraphiqueCertificationQualiscopeProps = Readonly<{
-  finess: string;
+  hasFichePath: string;
 }>;
 
-export const GraphiqueCertificationQualiscope = ({ finess }: GraphiqueCertificationQualiscopeProps) => {
+export const GraphiqueCertificationQualiscope = ({ hasFichePath }: GraphiqueCertificationQualiscopeProps) => {
   const { wording } = useDependencies();
 
   return (
@@ -17,8 +17,8 @@ export const GraphiqueCertificationQualiscope = ({ finess }: GraphiqueCertificat
         nomDeLIndicateur={wording.CERTIFICATION_QUALISCOPE}
         source={wording.HAS}
       >
-        <a className="fr-link fr-link--sm" href={"https://www.has-sante.fr/fiche-etablissement/" + finess} rel="noopener external noreferrer" target="_blank" title="Lien vers HAS">
-          {wording.HAS_FICHE_PATH}{finess}
+        <a className="fr-link fr-link--sm" href={hasFichePath} rel="noopener external noreferrer" target="_blank" title="Lien vers HAS">
+          {hasFichePath}
         </a>
       </IndicateurGraphique>
     </div>

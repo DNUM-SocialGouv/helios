@@ -290,7 +290,8 @@ export class WordingFr implements Wording {
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
   readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
-  readonly HAS_FICHE_PATH: string = "www.has-sante.fr/fiche-etablissement/";
+  readonly HAS_FICHE_SAN_PATH: string = "https://www.has-sante.fr/fiche-etablissement/";
+  readonly HAS_FICHE_MS_PATH: string = "https://www.has-sante.fr/fiche-essms/";
 
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";

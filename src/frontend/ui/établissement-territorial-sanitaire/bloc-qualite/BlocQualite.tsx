@@ -76,7 +76,7 @@ const BlocQualité = ({ etabFiness, etabTitle, etablissementTerritorialQualiteSa
         {!etablissementTerritorialQualiteSanitairelViewModel.lesDonneesHASNeSontPasAutorisees &&
           !etablissementTerritorialQualiteSanitairelViewModel.lesDonneesHASNeSontPasRenseignees && (
             <GraphiqueCertificationQualiscope
-              finess={etabFiness}
+              hasFichePath={wording.HAS_FICHE_SAN_PATH + etabFiness}
             />
           )}
       </ul>
