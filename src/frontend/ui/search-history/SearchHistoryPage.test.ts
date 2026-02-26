@@ -2,9 +2,9 @@ import { sortSearchHistoryRows } from "./SearchHistoryPage";
 
 describe("sortSearchHistoryRows", () => {
   const rows = [
-    { numeroFiness: "200", socialReason: "Beta", date: "01/01/2026 10:00", rawDate: "2026-01-01T10:00:00Z", type: "B" },
-    { numeroFiness: "100", socialReason: "Alpha", date: "02/01/2026 09:00", rawDate: "2026-01-02T09:00:00Z", type: "A" },
-    { numeroFiness: "300", socialReason: "Charlie", date: "03/01/2026 08:00", rawDate: "2026-01-03T08:00:00Z", type: "C" },
+    { numéroFiness: "200", socialReason: "Beta", date: "01/01/2026 10:00", rawDate: "2026-01-01T10:00:00Z", type: "B" },
+    { numéroFiness: "100", socialReason: "Alpha", date: "02/01/2026 09:00", rawDate: "2026-01-02T09:00:00Z", type: "A" },
+    { numéroFiness: "300", socialReason: "Charlie", date: "03/01/2026 08:00", rawDate: "2026-01-03T08:00:00Z", type: "C" },
   ];
 
   it("sorts by date ascending", () => {
@@ -31,14 +31,14 @@ describe("sortSearchHistoryRows", () => {
 
   it("sorts by numéro finess (string) ascending", () => {
     const shuffled = [rows[2], rows[0], rows[1]]; // 300,200,100
-    const sorted = sortSearchHistoryRows(shuffled, "ASC", "numero_finess");
-    expect(sorted.map(r => r.numeroFiness)).toEqual(["100", "200", "300"]);
+    const sorted = sortSearchHistoryRows(shuffled, "ASC", "numeroFiness");
+    expect(sorted.map(r => r.numéroFiness)).toEqual(["100", "200", "300"]);
   });
 
   it("sorts by numéro finess (string) descending", () => {
     const shuffled = [rows[1], rows[0], rows[2]];
-    const sorted = sortSearchHistoryRows(shuffled, "DESC", "numero_finess");
-    expect(sorted.map(r => r.numeroFiness)).toEqual(["300", "200", "100"]);
+    const sorted = sortSearchHistoryRows(shuffled, "DESC", "numeroFiness");
+    expect(sorted.map(r => r.numéroFiness)).toEqual(["300", "200", "100"]);
   });
 
   it("sorts by type descending", () => {

@@ -7,6 +7,7 @@ import { TableExtensionCalculMoyenne } from "./TableExtensionCalculMoyenne";
 import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/LogoEntitéJuridique";
 import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel, MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
+import { SearchHistoryViewModel } from "../../search-history/SearchHistoryViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
@@ -23,7 +24,7 @@ interface Header {
 
 interface DataTableProps {
   headers: Header[];
-  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
+  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[] | SearchHistoryViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   selectedRows?: Map<string, string>;
@@ -38,7 +39,7 @@ interface DataTableProps {
   onClickInfobull?: (name: string) => void;
   handleSelectAll?: () => void;
   isAllSelected?: boolean;
-  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel | SearchHistoryViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }
@@ -59,13 +60,13 @@ interface TableHeaderProps {
 interface TableBodyProps {
   headers: Header[];
   selectedRows?: Map<string, string>;
-  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[];
+  data: RechercheViewModel[] | ComparaisonSMSViewModel[] | ComparaisonEJViewModel[] | ComparaisonSANViewModel[] | SearchHistoryViewModel[];
   forMoyenne?: MoyenneResultatComparaison;
   total?: number;
   handleSelectRow: (valeurs: any) => void;
   isShowAvrage: boolean;
   isCenter: boolean;
-  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => void;
+  onClickDelete: (element: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel | SearchHistoryViewModel) => void;
   handleInfoBullMoyenne?: Dispatch<SetStateAction<boolean>>;
   isSimpleSearchTable?: boolean;
 }

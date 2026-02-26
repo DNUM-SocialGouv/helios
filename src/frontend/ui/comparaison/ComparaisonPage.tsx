@@ -18,6 +18,7 @@ import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
+import { SearchHistoryViewModel } from "../search-history/SearchHistoryViewModel";
 
 const DEFAULT_INDICATORS = ["delete", "etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
 
@@ -190,7 +191,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
+  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel | SearchHistoryViewModel) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
     const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
