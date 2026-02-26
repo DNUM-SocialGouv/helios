@@ -59,7 +59,7 @@ export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
   const headers = [
     { label: wording.ETABLISSEMENT_CONSULTE, nomComplet: wording.ETABLISSEMENT_CONSULTE, key: "socialReason", sort: true, orderBy: OrderByValue.SOCIAL_REASON },
     { label: wording.CATEGORIES_FINESS, nomComplet: wording.CATEGORIES_FINESS, key: "etsLogo", sort: true, orderBy: OrderByValue.TYPE },
-    { label: wording.IMPORT_LIST_FINESS_HEADER, nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: OrderByValue.NUMERO_FINESS },
+    { label: wording.IMPORT_LIST_FINESS_HEADER, nomComplet: wording.IMPORT_LIST_FINESS_HEADER, key: "numéroFiness", sort: true, orderBy: OrderByValue.NUMERO_FINESS },
     { label: wording.DATE, nomComplet: wording.DATE, key: "date", sort: true, orderBy: OrderByValue.DATE },
   ];
 
