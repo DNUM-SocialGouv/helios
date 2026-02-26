@@ -127,10 +127,6 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
     return StringFormater.formatDate(this.etablissementTerritorialQualiteSanitaire.evenementsIndesirables[0]?.dateMiseAJourSource as string);
   }
 
-  public get dateMiseAJourDonneesHAS(): string {
-    return StringFormater.formatDate("2025-08-20");
-  }
-
   public get buildEIsData(): any {
     const evenementsIndesirables: { [key: number]: EvenementsIndesirables[] } = {};
     this.anneesEIs.forEach((key) => {

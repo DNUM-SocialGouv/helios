@@ -17,11 +17,9 @@ export const GraphiqueCertificationQualiscope = ({ finess }: GraphiqueCertificat
         nomDeLIndicateur={wording.CERTIFICATION_QUALISCOPE}
         source={wording.HAS}
       >
-        <>
-          <a className="fr-link fr-link--sm" href={"https://www.has-sante.fr/fiche-etablissement/" + finess} rel="noopener external noreferrer" target="_blank" title="Lien vers HAS">
-            {wording.HAS_FICHE_PATH}{finess}
-          </a>
-        </>
+        <a className="fr-link fr-link--sm" href={"https://www.has-sante.fr/fiche-etablissement/" + finess} rel="noopener external noreferrer" target="_blank" title="Lien vers HAS">
+          {wording.HAS_FICHE_PATH}{finess}
+        </a>
       </IndicateurGraphique>
     </div>
   );
