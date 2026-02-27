@@ -60,10 +60,14 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {
-    return this.lesReclamationsNeSontPasRenseignées && this.lesEvenementsIndesirablesNeSontPasRenseignées && this.lesInspectionsEtControlesNeSontPasRenseignées;
+    return this.lesReclamationsNeSontPasRenseignées &&
+      this.lesEvenementsIndesirablesNeSontPasRenseignées &&
+      this.lesInspectionsEtControlesNeSontPasRenseignées &&
+      this.lesDonneesHASNeSontPasRenseignees;
   }
 
   public get lesDonneesHASNeSontPasRenseignees(): boolean {
+    console.log(this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS, !this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS)
     return !!this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS;
   }
 
@@ -77,6 +81,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     if (this.lesInspectionsEtControlesNeSontPasRenseignées) nonRenseignees.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasRenseignées) nonRenseignees.push(this.wording.RECLAMATIONS);
     if (this.lesEvenementsIndesirablesNeSontPasRenseignées) nonRenseignees.push(this.wording.EVENEMENTS_INDESIRABLES_NON_RENSEIGNES)
+    if (this.lesDonneesHASNeSontPasRenseignees) nonRenseignees.push(this.wording.CERTIFICATION_QUALISCOPE)
     return nonRenseignees;
   }
 
@@ -84,7 +89,9 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
     const nonAutorisés: string[] = [];
     if (this.lesInspectionsEtControlesNeSontPasAutorisées) nonAutorisés.push(this.wording.INSPECTIONS_CONTROLES);
     if (this.lesReclamationsNeSontPasAutorisées) nonAutorisés.push(this.wording.RECLAMATIONS);
-    if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES)
+    if (this.lesEvenementsIndesirablesNeSontPasAutorisées) nonAutorisés.push(this.wording.EVENEMENTS_INDESIRABLES);
+    if (this.lesDonneesHASNeSontPasAutorisees) nonAutorisés.push(this.wording.CERTIFICATION_QUALISCOPE);
+
     return nonAutorisés;
   }
 

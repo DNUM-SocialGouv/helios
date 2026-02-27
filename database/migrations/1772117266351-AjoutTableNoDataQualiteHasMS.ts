@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class AjouteTableNoDataQualiteHAS1770300961088 implements MigrationInterface {
+export class AjoutTableNoDataQualiteHasMS1772117266351 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-        CREATE TABLE no_data_qualite_has_et(
+        CREATE TABLE no_data_qualite_has_ms(
         numero_finess_etablissement_territorial VARCHAR(9) NOT NULL,
 
         PRIMARY KEY (numero_finess_etablissement_territorial),
@@ -19,7 +19,7 @@ export class AjouteTableNoDataQualiteHAS1770300961088 implements MigrationInterf
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      DROP TABLE no_data_qualite_has_et;
+      DROP TABLE no_data_qualite_has_ms;
     `);
   }
 

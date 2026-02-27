@@ -13,18 +13,10 @@ export const ContenuCertificationHAS = ({ source }: ContenuCertificationHASProps
     <>
       <p>{wording.miseÀJourEtSource(source)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
-      </section>
-      <section aria-label={wording.FRÉQUENCE}>
-        <p>
-          <span className="fr-text--bold">Fréquence :</span>
-        </p>
-      </section>
-      <section aria-label={wording.SOURCES}>
-        <p>
-          <span className="fr-text--bold">Source(s) :</span>
-        </p>
-      </section>
-      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        Qualiscope vous permet de consulter les résultats de l’évaluation des établissements de santé,
+        ou ceux des établissements et services sociaux et médico-sociaux. Ces deux types d’évaluation sont
+        réalisés selon des méthodes différentes, mais partagent un même objectif : informer les usagers et
+        les professionnels sur la qualité des soins et des accompagnements.
       </section>
     </>
   );

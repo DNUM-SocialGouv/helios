@@ -227,6 +227,7 @@ const filterQualiteMS = (qualite: any, profil: any) => {
     reclamations: profil.DonnéesSirec === "ok" ? qualite.reclamations : [{ details: [] }],
     evenementsIndesirables: profil.DonnéesSivss === "ok" ? qualite.evenementsIndesirables : [],
     inspectionsEtControles: profil.DonnéesSiicea === "ok" ? qualite.inspectionsEtControles : { dateMiseAJourSource: "", inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: qualite.pasDonneesQualiscopeHAS ? (qualite.pasDonneesQualiscopeHAS) : null,
   };
   return filtredQualite;
 };
