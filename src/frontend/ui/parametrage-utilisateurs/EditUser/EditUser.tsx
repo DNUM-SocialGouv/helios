@@ -271,7 +271,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                             aria-describedby={`checkboxes-${item.code}-messages`}
                             checked={userInfo.profiles && userInfo.profiles.includes(item.code)}
                             className={`${styles["input--checkbox--error"]} `}
-                            disabled={pageDetails || (item.label === "Consultation administrateur national" && data?.user?.role !== Role.ADMIN_NAT)}
+                            disabled={pageDetails || (item.label === "Consultation administrateur national" && data?.user?.role !== Role.ADMIN_NAT) || (item.label === "Consultation Administration Centrale" && (data?.user?.role !== Role.ADMIN_NAT && data?.user?.role !== Role.ADMIN_CENTR))}
                             id={`${item.code}`}
                             name="profiles"
                             onChange={handleChange}
