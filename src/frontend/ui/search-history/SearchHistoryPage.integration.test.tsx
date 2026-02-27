@@ -21,9 +21,9 @@ const mockSession = {
 };
 
 const rows = [
-  { finessNumber: "200", title: "Beta", date: "2026-01-01T10:00:00.000Z", type: "B" },
-  { finessNumber: "100", title: "Alpha", date: "2026-01-02T09:00:00.000Z", type: "A" },
-  { finessNumber: "300", title: "Charlie", date: "2026-01-03T08:00:00.000Z", type: "C" },
+  { finessNumber: "200", title: "Beta", date: "2026-01-01T10:00:00.000Z", type: "B", categorie: "2-two", libelleCategorie: "libelle2" },
+  { finessNumber: "100", title: "Alpha", date: "2026-01-02T09:00:00.000Z", type: "A", categorie: "1-one", libelleCategorie: "libelle1" },
+  { finessNumber: "300", title: "Charlie", date: "2026-01-03T08:00:00.000Z", type: "C", categorie: "3-three", libelleCategorie: "libelle3" },
 ];
 
 function renderPage() {
@@ -46,6 +46,7 @@ describe("SearchHistoryPage integration", () => {
     expect(columnHeaders.some(h => h.getAttribute("title") === wording.CATEGORIES_FINESS)).toBeTruthy();
     expect(columnHeaders.some(h => h.getAttribute("title") === wording.ETABLISSEMENT_CONSULTE)).toBeTruthy();
     expect(columnHeaders.some(h => h.getAttribute("title") === wording.DATE)).toBeTruthy();
+    expect(columnHeaders.some(h => h.getAttribute("title") === "")).toBeTruthy();
 
     // Vérification de l’affichage des lignes
     expect(screen.getByText("Alpha")).toBeInTheDocument();
@@ -110,14 +111,14 @@ describe("SearchHistoryPage integration", () => {
 
     // On vérifie que le tri ASC est appliqué et que la première ligne est Alpha (type A)
     const firstRow = screen.getAllByRole("row")[1];
-    expect(firstRow).toHaveTextContent("Alpha");
+    expect(firstRow).toHaveTextContent("1-one");
 
     // On tri la catégorie par ordre DESC
     fireEvent.click(catSortButton);
 
     // On vérifie que le tri DESC est appliqué et que la première ligne est Charlie (type C)
     const firstRowDesc = screen.getAllByRole("row")[1];
-    expect(firstRowDesc).toHaveTextContent("Charlie");
+    expect(firstRowDesc).toHaveTextContent("3-three");
   });
 
   it("clicking N° FINESS header sorts the table by numéro finess", () => {

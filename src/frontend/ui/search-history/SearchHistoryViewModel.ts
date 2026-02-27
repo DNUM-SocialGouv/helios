@@ -4,5 +4,6 @@ export type SearchHistoryViewModel = {
   date: string;
   rawDate: string;
   type: string;
+  categorie: string;
 };
 

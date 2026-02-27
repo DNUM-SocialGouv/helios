@@ -18,6 +18,7 @@ enum OrderByValue {
   TYPE = "type",
   SOCIAL_REASON = "socialReason",
   NUMERO_FINESS = "numeroFiness",
+  CATEGORIE = "categorie",
 }
 
 export function sortSearchHistoryRows(rows: SearchHistoryViewModel[], order: string, orderBy: string): SearchHistoryViewModel[] {
@@ -34,6 +35,8 @@ export function sortSearchHistoryRows(rows: SearchHistoryViewModel[], order: str
       comparison = (a.socialReason || "").localeCompare(b.socialReason || "");
     } else if (orderBy === OrderByValue.NUMERO_FINESS) {
       comparison = (a.numéroFiness || "").localeCompare(b.numéroFiness || "");
+    } else if (orderBy === OrderByValue.CATEGORIE) {
+      comparison = (a.categorie || "").localeCompare(b.categorie || "");
     } else {
       // Si le orderBy n'est pas reconnu, on ne change pas l'ordre
     }
@@ -49,8 +52,9 @@ export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
   const [orderBy, setOrderBy] = useState<string>(OrderByValue.DATE);
 
   const headers = [
+    { label: "", nomComplet: "", key: "etsLogo", sort: false, orderBy: OrderByValue.TYPE },
     { label: wording.ETABLISSEMENT_CONSULTE, nomComplet: wording.ETABLISSEMENT_CONSULTE, key: "socialReason", sort: true, orderBy: OrderByValue.SOCIAL_REASON },
-    { label: wording.CATEGORIES_FINESS, nomComplet: wording.CATEGORIES_FINESS, key: "etsLogo", sort: true, orderBy: OrderByValue.TYPE },
+    { label: wording.CATEGORIES_FINESS, nomComplet: wording.CATEGORIES_FINESS, key: "categorie", sort: true, orderBy: OrderByValue.CATEGORIE },
     { label: wording.IMPORT_LIST_FINESS_HEADER, nomComplet: wording.IMPORT_LIST_FINESS_HEADER, key: "numéroFiness", sort: true, orderBy: OrderByValue.NUMERO_FINESS },
     { label: wording.DATE, nomComplet: wording.DATE, key: "date", sort: true, orderBy: OrderByValue.DATE },
   ];
@@ -61,6 +65,7 @@ export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
     date: formatDateAndHours(h.date),
     rawDate: h.date,
     type: h.type,
+    categorie: h.categorie,
   }));
 
   const data = useMemo(() => sortSearchHistoryRows(mapped, order, orderBy), [mapped, order, orderBy]);
@@ -74,7 +79,7 @@ export const SearchHistoryPage = ({ searchHistory }: SearchHistoryProps) => {
         <Table
           data={data}
           headers={headers}
-          isCenter={true}
+          isCenter={false}
           isShowAvrage={false}
           isSimpleSearchTable={true}
           isVScroll={false}
