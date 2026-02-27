@@ -67,8 +67,7 @@ export class ÉtablissementTerritorialQualiteMédicoSocialViewModel {
   }
 
   public get lesDonneesHASNeSontPasRenseignees(): boolean {
-    console.log(this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS, !this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS)
-    return !!this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS;
+    return !!this.etablissementTerritorialQualiteMédicoSocial.pasDonneesQualiscopeHAS?.numeroFiness;
   }
 
   public get lesDonneesHASNeSontPasAutorisees(): boolean {

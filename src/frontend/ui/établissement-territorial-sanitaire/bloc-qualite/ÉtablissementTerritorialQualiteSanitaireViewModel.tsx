@@ -76,7 +76,7 @@ export class ÉtablissementTerritorialQualiteSanitaireViewModel {
 
 
   public get lesDonneesHASNeSontPasRenseignees(): boolean {
-    return !!this.etablissementTerritorialQualiteSanitaire.pasDonneesQualiscopeHAS;
+    return !!this.etablissementTerritorialQualiteSanitaire.pasDonneesQualiscopeHAS?.numeroFiness;
   }
 
   public get lesDonneesQualiteNeSontPasRenseignées(): boolean {

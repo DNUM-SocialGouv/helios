@@ -65,7 +65,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       saveSearchHistoryEndpoint(dependencies, etablissementTerritorial.identité.raisonSocialeCourte.value, session?.user.idUser!,
         etablissementTerritorial.identité.numéroFinessÉtablissementTerritorial.value, ETB_MEDICO_SOCIAL);
 
-      return { props: { établissementTerritorial: etablissementTerritorial, rechercheResult: rechercheResult, autorisations: etablissementTerritorial.autorisations } };
+      return {
+        props:
+        {
+          établissementTerritorial: JSON.parse(JSON.stringify(etablissementTerritorial)),
+          rechercheResult: rechercheResult,
+          autorisations: etablissementTerritorial.autorisations
+        }
+      };
     } else {
       return { notFound: true };
     }

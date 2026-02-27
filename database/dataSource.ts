@@ -96,6 +96,7 @@ import { UpdateVueRecherche1769680336893 } from "./migrations/1769680336893-Upda
 import { AjouteTableNoDataQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableNoDataQualiteHAS";
 import { AjoutCertificationHasDansLesProfils1770992415603 } from "./migrations/1770992415603-AjoutCertificationHasDansLesProfils";
 import { AjoutTableNoDataQualiteHasMS1772117266351 } from "./migrations/1772117266351-AjoutTableNoDataQualiteHasMS";
+import { AjoutHasAuProfilMedicoSocial1772196772012 } from "./migrations/1772196772012-AjoutHasAuProfilMedicoSocial";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -389,7 +390,8 @@ const datasource = new DataSource({
     AjouteTableNoDataQualiteHAS1770300961088,
     AjoutCertificationHasDansLesProfils1770992415603,
     UpdateVueRecherche1769680336893,
-    AjoutTableNoDataQualiteHasMS1772117266351
+    AjoutTableNoDataQualiteHasMS1772117266351,
+    AjoutHasAuProfilMedicoSocial1772196772012
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
