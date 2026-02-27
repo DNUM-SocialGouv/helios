@@ -35,7 +35,7 @@ describe("La page établissement territorial Sanitaire - bloc qualité", () => {
         dateMiseAJourSource: '2024-03-15'
       }],
       inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] },
-      pasDonneesQualiscopeHAS: { numeroFiness: "010000040" }
+      pasDonneesQualiscopeHAS: { numeroFiness: "123456789" }
     },
     autorisationsMockData
   );
