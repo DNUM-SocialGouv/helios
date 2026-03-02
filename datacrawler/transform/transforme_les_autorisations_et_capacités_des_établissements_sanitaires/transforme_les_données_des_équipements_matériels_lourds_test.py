@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.finess_builder import xml_contenu_finess_cs1400104_builder
@@ -42,7 +42,7 @@ class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"nofinesset": NaN})])
+        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"nofinesset": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {
@@ -59,7 +59,7 @@ class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_équipement_matériel_lourd(self) -> None:
         # GIVEN
-        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"eml": NaN})])
+        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"eml": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {
@@ -76,7 +76,7 @@ class TestTransformeLesDonnéesDesÉquipementsMatérielsLourds:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_d_autorisation_arhgos(self) -> None:
         # GIVEN
-        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"noautorarhgos": NaN})])
+        données_finess_cs1400104 = pd.DataFrame([xml_contenu_finess_cs1400104_builder({"noautorarhgos": nan})])
         numéros_finess_connus = pd.DataFrame(
             [
                 {

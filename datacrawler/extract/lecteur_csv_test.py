@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.extract.lecteur_csv import lis_le_fichier_csv
 from datacrawler.test_helpers.config_path import get_absolute_file_path
@@ -54,7 +54,7 @@ class TestLisLeFichierCsv:
                         0.9953224189776144,
                         0.3,
                         0.847100319908129,
-                        NaN,
+                        nan,
                     ],
                     "Taux d'occupation des lits autorisés en hébergement temporaire": [
                         0.936986301369863,
@@ -74,7 +74,7 @@ class TestLisLeFichierCsv:
                         0.8486301369863014,
                         1.2,
                         0.181060606060606,
-                        NaN,
+                        nan,
                     ],
                     "Taux d'occupation Externat Autres ESMS": [
                         1.000817111271329,
@@ -83,38 +83,38 @@ class TestLisLeFichierCsv:
                         0.926075462629176,
                         0.738503688092729,
                         0.738503688092729,
-                        NaN,
-                        NaN,
+                        nan,
+                        nan,
                     ],
                     "Taux d'occupation Semi-internat Autres ESMS": [
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
                     ],
                     "Taux d'occupation Internat Autres ESMS": [
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
                     ],
                     "Taux d'occupation Autre 1, 2 et 3 Autres ESMS": [
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
-                        NaN,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
+                        nan,
                     ],
                     "Taux d'occupation global ERRD": [
                         1.0,
@@ -160,8 +160,8 @@ class TestLisLeFichierCsv:
                     "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
                     "Durée moyenne de séjour/d'accompagnement": [5729.5, 6008.33, 2351.81, 2352.81, 2226.21, 2359.81, 0.0],
                     "Taux de réalisation de l’activité Tout ESMS (Hors services CAMSP et CMPP)": [1.052, 1.0458, 0.8993, 0.8993, 1.0182, 0.8993, 0.7772],
-                    "Taux de réalisation de l’activité CAMSP et CMPP": [NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11, 17.86, 17.86, 18.52, 17.86, NaN],
+                    "Taux de réalisation de l’activité CAMSP et CMPP": [nan, nan, nan, nan, nan, nan, nan],
+                    "Nombre moyen de journées d'absence des personnes accompagnées sur la période": [31.41, 32.11, 17.86, 17.86, 18.52, 17.86, nan],
                     "File active des personnes accompagnées sur la période": [59.0, 55.0, 121.0, 121.0, 119.0, 121.0, 101.0],
                 }
             ),
@@ -181,20 +181,20 @@ class TestLisLeFichierCsv:
             {
                 "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "010005239", "111111111", "010786259", "010005239", "010786259"],
                 "Année": [2016, 2017, 2018, 2019, 2019, 2021, 2017, 2017, 2020, 2020],
-                "Nombre de séjours HTP/AMBU Médecine": [4.0, 1.0, 3.0, 4.0, 4.0, 4.0, 14.0, NaN, 4.0, 1.0],
-                "Nombre de séjours HTP/AMBU Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nombre de séjours HTP/AMBU Chirurgie": [NaN, 20.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 20],
-                "Nombre de séjours HC Médecine": [231.0, 255.0, 232.0, 231.0, 231.0, 231.0, 2.0, NaN, 231.0, 255.0],
-                "Nombre de séjours HC Chirurgie": [9.0, 6.0, 10.0, 9.0, 9.0, 9.0, 8.0, NaN, 9.0, 6.0],
-                "Nombre de séjours HC Obstétrique": [NaN, 10.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 10.0],
-                "Nombre de journées hospit complète SSR": [NaN, 1074.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1074.0],
-                "Nombre de journées HTP SSR": [NaN, 100.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 100],
-                "Nombre total de séjours HAD": [NaN, 1674.0, 1103.0, 1087.0, NaN, NaN, NaN, NaN, NaN, 1674.0],
-                "Nb journées hospit complète PSY": [NaN, 200.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "Nb journées HTP PSY": [NaN, 300.0, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 300],
-                "DMS MCO Médecine": [1, 4, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "DMS MCO Chirurgie": [2, 5, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                "DMS MCO Obstétrique": [3, 6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de séjours HTP/AMBU Médecine": [4.0, 1.0, 3.0, 4.0, 4.0, 4.0, 14.0, nan, 4.0, 1.0],
+                "Nombre de séjours HTP/AMBU Obstétrique": [nan, 10.0, nan, nan, nan, nan, nan, nan, nan, nan],
+                "Nombre de séjours HTP/AMBU Chirurgie": [nan, 20.0, nan, nan, nan, nan, nan, nan, nan, 20],
+                "Nombre de séjours HC Médecine": [231.0, 255.0, 232.0, 231.0, 231.0, 231.0, 2.0, nan, 231.0, 255.0],
+                "Nombre de séjours HC Chirurgie": [9.0, 6.0, 10.0, 9.0, 9.0, 9.0, 8.0, nan, 9.0, 6.0],
+                "Nombre de séjours HC Obstétrique": [nan, 10.0, nan, nan, nan, nan, nan, nan, nan, 10.0],
+                "Nombre de journées hospit complète SSR": [nan, 1074.0, 1103.0, 1087.0, nan, nan, nan, nan, nan, 1074.0],
+                "Nombre de journées HTP SSR": [nan, 100.0, nan, nan, nan, nan, nan, nan, nan, 100],
+                "Nombre total de séjours HAD": [nan, 1674.0, 1103.0, 1087.0, nan, nan, nan, nan, nan, 1674.0],
+                "Nb journées hospit complète PSY": [nan, 200.0, nan, nan, nan, nan, nan, nan, nan, nan],
+                "Nb journées HTP PSY": [nan, 300.0, nan, nan, nan, nan, nan, nan, nan, 300],
+                "DMS MCO Médecine": [1, 4, nan, nan, nan, nan, nan, nan, nan, nan],
+                "DMS MCO Chirurgie": [2, 5, nan, nan, nan, nan, nan, nan, nan, nan],
+                "DMS MCO Obstétrique": [3, 6, nan, nan, nan, nan, nan, nan, nan, nan],
             }
         )
         pd.testing.assert_frame_equal(
@@ -239,7 +239,7 @@ class TestLisLeFichierCsv:
                 "Finess": ["010005239", "010005239", "010005239", "010005239", "010005239", "2A0000154", "2A0000154", "2A0000154", "2A0000154", "2A0000154"],
                 "Année": [2020, 2019, 2018, 2017, 2016, 2020, 2019, 2018, 2017, 2016],
                 "Nombre de places de chirurgie": [7.0, 7, 7, 7, 7, 6, 6, 6, 6, 6],
-                "Nombre de places d'obstétrique": [1.0, 1, 1, 1, 1, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de places d'obstétrique": [1.0, 1, 1, 1, 1, nan, nan, nan, nan, nan],
                 "Nombre de places de médecine": [7.0, 7, 7, 7, 7, 2, 2, 2, 2, 2],
                 "Nombre de places de SSR": [
                     3.0,
@@ -247,19 +247,19 @@ class TestLisLeFichierCsv:
                     3,
                     3,
                     3,
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
+                    nan,
+                    nan,
+                    nan,
                 ],
                 "Nombre de lits de chirurgie": [26.0, 21, 26, 26, 26, 12, 30, 30, 30, 30],
                 "Nombre de lits d'obstétrique": [20.0, 21, 21, 21, 21, 8, 8, 8, 8, 8],
                 "Nombre de lits de médecine": [62.0, 60, 60, 68, 76, 20, 20, 20, 20, 20],
-                "Nombre de lits de SSR": [30.0, 30, 30, 30, 30, NaN, NaN, NaN, NaN, NaN],
+                "Nombre de lits de SSR": [30.0, 30, 30, 30, 30, nan, nan, nan, nan, nan],
                 "Nombre de lits USLD": [15.0, 15, 15, 15, 15, 10, 10, 10, 10, 10],
-                "Nb de lits et places PSY PeC temps complet": [NaN, NaN, NaN, NaN, NaN, 5, 5, 5, 5, 5],
-                "Nb de places PSY PeC temps partiel hors ambu": [NaN, NaN, NaN, NaN, NaN, 13, 13, 13, 13, 13],
+                "Nb de lits et places PSY PeC temps complet": [nan, nan, nan, nan, nan, 5, 5, 5, 5, 5],
+                "Nb de places PSY PeC temps partiel hors ambu": [nan, nan, nan, nan, nan, 13, 13, 13, 13, 13],
             }
         )
         pd.testing.assert_frame_equal(
@@ -283,7 +283,7 @@ class TestLisLeFichierCsv:
                 {
                     "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                     "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
-                    "Date d'entrée en vigueur du CPOM": [NaN, NaN, "21/03/2012", "21/03/2012", "21/03/2012", NaN, "01/01/2015"],
+                    "Date d'entrée en vigueur du CPOM": [nan, nan, "21/03/2012", "21/03/2012", "21/03/2012", nan, "01/01/2015"],
                 }
             ),
         )
@@ -302,7 +302,7 @@ class TestLisLeFichierCsv:
             {
                 "Finess": ["010001261", "010001261", "010003598", "010003598", "010003598", "010003598", "111111111"],
                 "Année": [2019, 2018, 2021, 2020, 2019, 2018, 2019],
-                "Nombre de CDD de remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, NaN],
+                "Nombre de CDD de remplacement": [2.0, 19.0, 5.0, 5.0, 5.0, 5.0, nan],
                 "Taux d'ETP vacants au 31/12": [
                     0.1197,
                     0.0483,
@@ -314,7 +314,7 @@ class TestLisLeFichierCsv:
                 ],
                 "Taux de prestations externes sur les prestations directes": [
                     0.0232,
-                    NaN,
+                    nan,
                     0.0164,
                     0.0164,
                     0.0082,
@@ -337,7 +337,7 @@ class TestLisLeFichierCsv:
                     0.0083,
                     0.0125,
                     0.0083,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme pour maladie moyenne durée": [
                     0.0465,
@@ -346,7 +346,7 @@ class TestLisLeFichierCsv:
                     0.0166,
                     0.0149,
                     0.0166,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme pour maladie longue durée": [
                     0.0,
@@ -355,7 +355,7 @@ class TestLisLeFichierCsv:
                     0.0089,
                     0.0319,
                     0.0089,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme pour maternité/paternité": [
                     0.0,
@@ -364,7 +364,7 @@ class TestLisLeFichierCsv:
                     0.0128,
                     0.0005,
                     0.0128,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme pour accident du travail / maladie professionnelle": [
                     0.0008,
@@ -373,7 +373,7 @@ class TestLisLeFichierCsv:
                     0.0085,
                     0.0088,
                     0.0085,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme pour congés spéciaux dont sans solde": [
                     0.0109,
@@ -382,7 +382,7 @@ class TestLisLeFichierCsv:
                     0.0004,
                     0.0,
                     0.0004,
-                    NaN,
+                    nan,
                 ],
                 "Taux d'absentéisme (hors formation)": [
                     0.0609,
@@ -391,7 +391,7 @@ class TestLisLeFichierCsv:
                     0.0554,
                     0.0685,
                     0.0554,
-                    NaN,
+                    nan,
                 ],
             }
         )
@@ -449,8 +449,8 @@ class TestLisLeFichierCsv:
                     188.49999999999997,
                     55.249999999999993,
                     142.06,
-                    NaN,
-                    NaN,
+                    nan,
+                    nan,
                 ],
             }
         )
@@ -472,7 +472,7 @@ class TestLisLeFichierCsv:
         donnees_des_quo_san_finance_attendues = pd.DataFrame(
             {
                 "Finess EJ": ["010008407", "010008407", "010008407", "010008407", "010008407"],
-                "Finess ET": ["350039574", "010003598", "010005239", NaN, NaN],
+                "Finess ET": ["350039574", "010003598", "010005239", nan, nan],
                 "Année": [2022, 2021, 2020, 2019, 2017],
                 "Dépenses Titre I Budget global": [-38315470.489920005, -8855071.9100400023, -39714875.189880006, -6388587.3598799994, -5932308.5200800011],
                 "Dépenses Titre II Budget global": [-7262125.2101999987, -1702097.3504400002, -9714938.7098399997, -759828.06984000001, -406173.92999999999],

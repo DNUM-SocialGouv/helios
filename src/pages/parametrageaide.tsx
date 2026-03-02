@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 
 import { getAideEndpoint } from "../backend/infrastructure/controllers/getAideEndpoint";
 import { dependencies } from "../backend/infrastructure/dependencies";
+import { Role } from "../commons/Role";
 import { GestionAide } from "../frontend/ui/parametrage-aide";
 import type { ContenuAide } from "../frontend/ui/parametrage-aide";
 
@@ -20,7 +21,7 @@ export async function getServerSideProps(
 ): Promise<GetServerSidePropsResult<PageParametrageAideProps>> {
   try {
     const session = await getSession(contexte);
-    if (session?.user?.role !== 1) {
+    if (session?.user?.role !== Role.ADMIN_NAT) {
       return {
         redirect: {
           permanent: false,

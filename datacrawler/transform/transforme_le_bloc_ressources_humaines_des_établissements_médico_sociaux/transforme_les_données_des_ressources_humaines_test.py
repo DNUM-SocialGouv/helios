@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.diamant_builder import (
@@ -54,7 +54,7 @@ class TestTransformeLesDonnéesDesTauxDAbsentéismes:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": NaN})])
+        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Finess": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -71,7 +71,7 @@ class TestTransformeLesDonnéesDesTauxDAbsentéismes:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
-        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Année": NaN})])
+        données_ann_ms_tdp_et = pd.DataFrame([csv_ann_ms_tdp_et_ressources_humaines_builder({"Année": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -92,17 +92,17 @@ class TestTransformeLesDonnéesDesTauxDAbsentéismes:
             [
                 csv_ann_ms_tdp_et_ressources_humaines_builder(
                     {
-                        "Nombre de CDD de remplacement": NaN,
-                        "Taux d'ETP vacants au 31/12": NaN,
-                        "Taux de prestations externes sur les prestations directes": NaN,
-                        "Taux de rotation du personnel sur effectifs réels": NaN,
-                        "Taux d'absentéisme pour maladie ordinaire/courte durée": NaN,
-                        "Taux d'absentéisme pour maladie moyenne durée": NaN,
-                        "Taux d'absentéisme pour maladie longue durée": NaN,
-                        "Taux d'absentéisme pour maternité/paternité": NaN,
-                        "Taux d'absentéisme pour accident du travail / maladie professionnelle": NaN,
-                        "Taux d'absentéisme pour congés spéciaux dont sans solde": NaN,
-                        "Taux d'absentéisme (hors formation)": NaN,
+                        "Nombre de CDD de remplacement": nan,
+                        "Taux d'ETP vacants au 31/12": nan,
+                        "Taux de prestations externes sur les prestations directes": nan,
+                        "Taux de rotation du personnel sur effectifs réels": nan,
+                        "Taux d'absentéisme pour maladie ordinaire/courte durée": nan,
+                        "Taux d'absentéisme pour maladie moyenne durée": nan,
+                        "Taux d'absentéisme pour maladie longue durée": nan,
+                        "Taux d'absentéisme pour maternité/paternité": nan,
+                        "Taux d'absentéisme pour accident du travail / maladie professionnelle": nan,
+                        "Taux d'absentéisme pour congés spéciaux dont sans solde": nan,
+                        "Taux d'absentéisme (hors formation)": nan,
                     }
                 )
             ]
@@ -124,17 +124,17 @@ class TestTransformeLesDonnéesDesTauxDAbsentéismes:
                 {
                     "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                     "annee": 2019,
-                    "nombre_cdd_remplacement": NaN,
-                    "taux_etp_vacants": NaN,
-                    "taux_prestation_externes": NaN,
-                    "taux_rotation_personnel": NaN,
-                    "taux_absenteisme_maladie_courte_duree": NaN,
-                    "taux_absenteisme_maladie_moyenne_duree": NaN,
-                    "taux_absenteisme_maladie_longue_duree": NaN,
-                    "taux_absenteisme_maternite_paternite": NaN,
-                    "taux_absenteisme_accident_maladie_professionnelle": NaN,
-                    "taux_absenteisme_conges_speciaux": NaN,
-                    "taux_absenteisme_hors_formation": NaN,
+                    "nombre_cdd_remplacement": nan,
+                    "taux_etp_vacants": nan,
+                    "taux_prestation_externes": nan,
+                    "taux_rotation_personnel": nan,
+                    "taux_absenteisme_maladie_courte_duree": nan,
+                    "taux_absenteisme_maladie_moyenne_duree": nan,
+                    "taux_absenteisme_maladie_longue_duree": nan,
+                    "taux_absenteisme_maternite_paternite": nan,
+                    "taux_absenteisme_accident_maladie_professionnelle": nan,
+                    "taux_absenteisme_conges_speciaux": nan,
+                    "taux_absenteisme_hors_formation": nan,
                 }
             ],
         )

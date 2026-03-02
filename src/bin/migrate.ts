@@ -13,7 +13,6 @@ if (process.env['NODE_ENV']) {
 // Chargement du fichier .env par défaut ensuite pour les variables manquantes
 dotenv.config();
 
-console.log('DATABASE_URL:', process.env['DATABASE_URL']);
 import AppDataSource from '../../database/dataSource';
 
 async function main() {

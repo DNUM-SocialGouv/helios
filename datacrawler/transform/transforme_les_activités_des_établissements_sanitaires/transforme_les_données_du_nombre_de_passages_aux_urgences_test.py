@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from pandas import NA
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
@@ -82,7 +82,7 @@ class TestTransformeLesDonnéesAnnRpu:
             [
                 csv_ann_rpu_builder(
                     {
-                        "Nombre de passages aux urgences": NaN,
+                        "Nombre de passages aux urgences": nan,
                     }
                 ),
             ]
@@ -104,7 +104,7 @@ class TestTransformeLesDonnéesAnnRpu:
                 [
                     helios_ann_rpu_builder(
                         {
-                            "nombre_passages_urgences": NaN,
+                            "nombre_passages_urgences": nan,
                         }
                     )
                 ],
@@ -122,7 +122,7 @@ class TestTransformeLesDonnéesAnnRpu:
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
-                        "Nombre de passages aux urgences": NaN,
+                        "Nombre de passages aux urgences": nan,
                     }
                 ),
                 csv_ann_rpu_builder(
@@ -153,7 +153,7 @@ class TestTransformeLesDonnéesAnnRpu:
                         {
                             "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                             "annee": 2018,
-                            "nombre_passages_urgences": NaN,
+                            "nombre_passages_urgences": nan,
                         }
                     )
                 ],

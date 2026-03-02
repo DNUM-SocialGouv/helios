@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 
 import styles from "./Profile.module.css";
+import { Role } from "../../../commons/Role";
 import { useDependencies } from "../commun/contexts/useDependencies";
 
 
@@ -32,19 +33,19 @@ export const UserInfoTab = () => {
         <fieldset className="fr-fieldset fr-mt-4w">
           <legend className="fr-fieldset__legend--regular fr-fieldset__legend">{wording.ROLE}</legend>
           <div className="fr-fieldset__element">
-            <input checked={data?.user?.role === 1} id="superAdmin" readOnly type="checkbox" value={wording.SUPER_ADMIN} />
+            <input checked={data?.user?.role === Role.ADMIN_NAT} id="superAdmin" readOnly type="checkbox" value={wording.SUPER_ADMIN} />
             <label htmlFor="superAdmin"> {wording.SUPER_ADMIN}</label>
           </div>
           <div className="fr-fieldset__element">
-            <input checked={data?.user?.role === 2} id="adminRegional" readOnly type="checkbox" value={wording.ADMIN_REGIONAL} />
+            <input checked={data?.user?.role === Role.ADMIN_REG} id="adminRegional" readOnly type="checkbox" value={wording.ADMIN_REGIONAL} />
             <label htmlFor="adminRegional"> {wording.ADMIN_REGIONAL}</label>
           </div>
           <div className="fr-fieldset__element">
-            <input checked={data?.user?.role === 4} id="adminCentrale" readOnly type="checkbox" value={wording.ADMINISTRATION_CENTRALE} />
+            <input checked={data?.user?.role === Role.ADMIN_CENTR} id="adminCentrale" readOnly type="checkbox" value={wording.ADMINISTRATION_CENTRALE} />
             <label htmlFor="adminCentrale"> {wording.ADMINISTRATION_CENTRALE}</label>
           </div>
           <div className="fr-fieldset__element">
-            <input checked={data?.user?.role === 3} id="user" readOnly type="checkbox" value={wording.USER} />
+            <input checked={data?.user?.role === Role.USER} id="user" readOnly type="checkbox" value={wording.USER} />
             <label htmlFor="user" > {wording.USER}</label>
           </div>
         </fieldset>

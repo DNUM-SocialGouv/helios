@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.diamant_builder import (
@@ -76,20 +76,20 @@ class TestTransformeLesDonnéesBudgétairesEtFinancières:
                         numéro_finess_ca_pa,
                     ],
                     "annee": [2019, 2019, 2019, 2020, 2020],
-                    "depenses_groupe_i": [-100.0, -100.0, NaN, -100.0, NaN],
-                    "depenses_groupe_ii": [-200.0, -200.0, NaN, -200.0, NaN],
-                    "depenses_groupe_iii": [-300.0, -300.0, NaN, -300.0, NaN],
-                    "recettes_groupe_i": [150.0, 150.0, NaN, 150.0, NaN],
-                    "recettes_groupe_ii": [150.0, 150.0, NaN, 150.0, NaN],
-                    "recettes_groupe_iii": [350.0, 350.0, NaN, 350.0, NaN],
-                    "resultat_net_comptable": [50.0, 50.0, NaN, 50.0, 100.0],
+                    "depenses_groupe_i": [-100.0, -100.0, nan, -100.0, nan],
+                    "depenses_groupe_ii": [-200.0, -200.0, nan, -200.0, nan],
+                    "depenses_groupe_iii": [-300.0, -300.0, nan, -300.0, nan],
+                    "recettes_groupe_i": [150.0, 150.0, nan, 150.0, nan],
+                    "recettes_groupe_ii": [150.0, 150.0, nan, 150.0, nan],
+                    "recettes_groupe_iii": [350.0, 350.0, nan, 350.0, nan],
+                    "resultat_net_comptable": [50.0, 50.0, nan, 50.0, 100.0],
                     "cadre_budgetaire": ["ERRD", "ERRD", "ERRD", "CA_PH", "CA_PA"],
-                    "taux_de_caf": [0.071600138178413528, NaN, 0.071600138178413528, 0.16, 0.16],
-                    "taux_de_vetuste_construction": [0.45555983373892417, NaN, 0.45555983373892417, 0.53, 0.53],
-                    "fonds_de_roulement": [2206969.259999999800000000, NaN, 2206969.259999999800000000, NaN, NaN],
-                    "produits": [NaN, NaN, NaN, NaN, 300.0],
-                    "charges": [NaN, NaN, NaN, NaN, -200.0],
-                    "contribution_frais_de_siege_groupement": [-300.0, -300.0, NaN, NaN, NaN],
+                    "taux_de_caf": [0.071600138178413528, nan, 0.071600138178413528, 0.16, 0.16],
+                    "taux_de_vetuste_construction": [0.45555983373892417, nan, 0.45555983373892417, 0.53, 0.53],
+                    "fonds_de_roulement": [2206969.259999999800000000, nan, 2206969.259999999800000000, nan, nan],
+                    "produits": [nan, nan, nan, nan, 300.0],
+                    "charges": [nan, nan, nan, nan, -200.0],
+                    "contribution_frais_de_siege_groupement": [-300.0, -300.0, nan, nan, nan],
                 }
             )
             .set_index(index_du_bloc_budget_et_finances)
@@ -127,8 +127,8 @@ class TestTransformeLesDonnéesBudgétairesEtFinancières:
                     "taux_de_caf": [0.071600138178413528],
                     "taux_de_vetuste_construction": [0.45555983373892417],
                     "fonds_de_roulement": [2206969.259999999800000000],
-                    "produits": [NaN],
-                    "charges": [NaN],
+                    "produits": [nan],
+                    "charges": [nan],
                     "contribution_frais_de_siege_groupement": [-300.0],
                 }
             )
