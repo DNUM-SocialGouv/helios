@@ -2,6 +2,7 @@ from datetime import date
 
 import pandas as pd
 from freezegun import freeze_time
+from sqlalchemy import text
 
 from datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques import ajoute_le_bloc_budget_et_finances_des_entite_juridiques
 from datacrawler.load.nom_des_tables import TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE, FichierSource, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES
@@ -82,7 +83,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
 
         # THEN
         bloc_budget_finance_enregistrees = pd.read_sql_query(
-            f"SELECT * from {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE} " f"WHERE numero_finess_entite_juridique = '{numero_finess_existant_en_base}'",
+            f"SELECT * from {TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE} WHERE numero_finess_entite_juridique = '{numero_finess_existant_en_base}'",
             base_de_données_test,
         )
 
@@ -97,7 +98,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
         ajoute_le_bloc_budget_et_finances_des_entite_juridiques(quo_san_finance_file_path, base_de_données_test, mocked_logger)
 
         # THEN
-        date_du_fichier_quo_san_finance = base_de_données_test.execute(
-            f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_QUO_SAN_FINANCE.value}'"
+        date_du_fichier_quo_san_finance = base_de_données_test.connect().execute(
+            text(f"SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_QUO_SAN_FINANCE.value}'")
         )
         assert date_du_fichier_quo_san_finance.fetchone() == (date(2023, 1, 20), FichierSource.DIAMANT_QUO_SAN_FINANCE.value)

@@ -4,7 +4,8 @@ from unittest.mock import Mock, patch
 import pandas as pd
 import pytest
 from freezegun import freeze_time
-from numpy import NaN
+from numpy import nan
+from sqlalchemy import text
 
 import datacrawler
 from datacrawler.ajoute_les_activités_des_établissements_sanitaires import ajoute_les_activites_des_etablissements_sanitaires
@@ -51,21 +52,21 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "annee": [2017, 2018, 2019, 2020, 2021],
                 "numero_finess_etablissement_territorial": ["010005239", "010005239", "010005239", "010005239", "010005239"],
                 "nombre_sejours_partiels_medecine": [1.0, 3.0, 4.0, 4.0, 4.0],
-                "nombre_sejours_partiels_obstetrique": [10.0, NaN, NaN, NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [20.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_partiels_obstetrique": [10.0, nan, nan, nan, nan],
+                "nombre_sejours_partiels_chirurgie": [20.0, nan, nan, nan, nan],
                 "nombre_sejours_complets_medecine": [255.0, 232.0, 231.0, 231.0, 231.0],
-                "nombre_sejours_complets_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_obstetrique": [10.0, nan, nan, nan, nan],
                 "nombre_sejours_complets_chirurgie": [6.0, 10.0, 9.0, 9.0, 9.0],
-                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, NaN, NaN],
-                "nombre_journees_partiels_ssr": [100.0, NaN, NaN, NaN, NaN],
-                "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
-                "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
+                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, nan, nan],
+                "nombre_journees_partiels_ssr": [100.0, nan, nan, nan, nan],
+                "nombre_journees_complete_psy": [200.0, nan, nan, nan, nan],
+                "nombre_journées_partielles_psy": [300.0, nan, nan, nan, nan],
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
-                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
-                "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, NaN],
-                "duree_moyenne_sejour_medecine": [4, NaN, NaN, NaN, NaN],
-                "duree_moyenne_sejour_chirurgie": [5, NaN, NaN, NaN, NaN],
-                "duree_moyenne_sejour_obstetrique": [6, NaN, NaN, NaN, NaN],
+                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, nan, nan],
+                "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, nan],
+                "duree_moyenne_sejour_medecine": [4, nan, nan, nan, nan],
+                "duree_moyenne_sejour_chirurgie": [5, nan, nan, nan, nan],
+                "duree_moyenne_sejour_obstetrique": [6, nan, nan, nan, nan],
             }
         )
 
@@ -73,13 +74,13 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activite_enregistree, activite_attendue)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
@@ -99,15 +100,15 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "annee": [2017],
                 "numero_finess_etablissement_territorial": ["010005239"],
                 "nombre_sejours_partiels_medecine": [1.0],
-                "nombre_sejours_partiels_obstetrique": [NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN],
+                "nombre_sejours_partiels_obstetrique": [nan],
+                "nombre_sejours_partiels_chirurgie": [nan],
                 "nombre_sejours_complets_medecine": [255.0],
                 "nombre_sejours_complets_obstetrique": [3.0],
                 "nombre_sejours_complets_chirurgie": [6.0],
                 "nombre_journees_completes_ssr": [1074.0],
-                "nombre_journees_partiels_ssr": [NaN],
+                "nombre_journees_partiels_ssr": [nan],
                 "nombre_journees_complete_psy": [4.0],
-                "nombre_journées_partielles_psy": [NaN],
+                "nombre_journées_partielles_psy": [nan],
                 "nombre_passages_urgences": [10],
                 "nombre_sejours_had": [100],
                 "nombre_journees_usld": [15484],
@@ -129,21 +130,21 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
                 "annee": [2017, 2018, 2019, 2020, 2021],
                 "numero_finess_etablissement_territorial": ["010005239", "010005239", "010005239", "010005239", "010005239"],
                 "nombre_sejours_partiels_medecine": [1.0, 3.0, 4.0, 4.0, 4.0],
-                "nombre_sejours_partiels_obstetrique": [10.0, NaN, NaN, NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [20.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_partiels_obstetrique": [10.0, nan, nan, nan, nan],
+                "nombre_sejours_partiels_chirurgie": [20.0, nan, nan, nan, nan],
                 "nombre_sejours_complets_medecine": [255.0, 232.0, 231.0, 231.0, 231.0],
-                "nombre_sejours_complets_obstetrique": [10.0, NaN, NaN, NaN, NaN],
+                "nombre_sejours_complets_obstetrique": [10.0, nan, nan, nan, nan],
                 "nombre_sejours_complets_chirurgie": [6.0, 10.0, 9.0, 9.0, 9.0],
-                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, NaN, NaN],
-                "nombre_journees_partiels_ssr": [100.0, NaN, NaN, NaN, NaN],
-                "nombre_journees_complete_psy": [200.0, NaN, NaN, NaN, NaN],
-                "nombre_journées_partielles_psy": [300.0, NaN, NaN, NaN, NaN],
+                "nombre_journees_completes_ssr": [1074.0, 1103.0, 1087.0, nan, nan],
+                "nombre_journees_partiels_ssr": [100.0, nan, nan, nan, nan],
+                "nombre_journees_complete_psy": [200.0, nan, nan, nan, nan],
+                "nombre_journées_partielles_psy": [300.0, nan, nan, nan, nan],
                 "nombre_passages_urgences": [10296.0, 24032.0, 23987.0, 23087.0, 25987.0],
-                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, NaN, NaN],
-                "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, NaN],
-                "duree_moyenne_sejour_medecine": [4, NaN, NaN, NaN, NaN],
-                "duree_moyenne_sejour_chirurgie": [5, NaN, NaN, NaN, NaN],
-                "duree_moyenne_sejour_obstetrique": [6, NaN, NaN, NaN, NaN],
+                "nombre_sejours_had": [1674.0, 1103.0, 1087.0, nan, nan],
+                "nombre_journees_usld": [10048.0, 12248.0, 12458.0, 15248.0, nan],
+                "duree_moyenne_sejour_medecine": [4, nan, nan, nan, nan],
+                "duree_moyenne_sejour_chirurgie": [5, nan, nan, nan, nan],
+                "duree_moyenne_sejour_obstetrique": [6, nan, nan, nan, nan],
             }
         )
 
@@ -151,13 +152,13 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(activite_enregistree, activite_attendue)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2022, 6, 7), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2022, 6, 23), FichierSource.DIAMANT_ANN_RPU.value)
 
@@ -175,22 +176,22 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
             {
                 "annee": [2017, 2018],
                 "numero_finess_etablissement_territorial": ["010003598", "010003598"],
-                "nombre_sejours_partiels_medecine": [1.0, NaN],
-                "nombre_sejours_partiels_obstetrique": [NaN, NaN],
-                "nombre_sejours_partiels_chirurgie": [NaN, NaN],
-                "nombre_sejours_complets_medecine": [255.0, NaN],
-                "nombre_sejours_complets_obstetrique": [NaN, NaN],
-                "nombre_sejours_complets_chirurgie": [6.0, NaN],
-                "nombre_journees_completes_ssr": [1074.0, NaN],
-                "nombre_journees_partiels_ssr": [NaN, NaN],
-                "nombre_journees_complete_psy": [NaN, NaN],
-                "nombre_journées_partielles_psy": [NaN, NaN],
-                "nombre_passages_urgences": [NaN, NaN],
-                "nombre_sejours_had": [NaN, NaN],
-                "nombre_journees_usld": [NaN, NaN],
-                "duree_moyenne_sejour_medecine": [NaN, NaN],
-                "duree_moyenne_sejour_chirurgie": [NaN, NaN],
-                "duree_moyenne_sejour_obstetrique": [NaN, NaN],
+                "nombre_sejours_partiels_medecine": [1.0, nan],
+                "nombre_sejours_partiels_obstetrique": [nan, nan],
+                "nombre_sejours_partiels_chirurgie": [nan, nan],
+                "nombre_sejours_complets_medecine": [255.0, nan],
+                "nombre_sejours_complets_obstetrique": [nan, nan],
+                "nombre_sejours_complets_chirurgie": [6.0, nan],
+                "nombre_journees_completes_ssr": [1074.0, nan],
+                "nombre_journees_partiels_ssr": [nan, nan],
+                "nombre_journees_complete_psy": [nan, nan],
+                "nombre_journées_partielles_psy": [nan, nan],
+                "nombre_passages_urgences": [nan, nan],
+                "nombre_sejours_had": [nan, nan],
+                "nombre_journees_usld": [nan, nan],
+                "duree_moyenne_sejour_medecine": [nan, nan],
+                "duree_moyenne_sejour_chirurgie": [nan, nan],
+                "duree_moyenne_sejour_obstetrique": [nan, nan],
             }
         )
         sauvegarde_une_activité_en_base(activite_existante, base_de_données_test, TABLE_DES_ACTIVITÉS_DES_ÉTABLISSEMENTS_SANITAIRES)
@@ -208,12 +209,12 @@ class TestAjouteLesActivitesDesEtablissementsSanitaires:
 
         pd.testing.assert_frame_equal(table_activite, activite_existante)
 
-        date_du_fichier_men_pmsi_annuel = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'"""
+        date_du_fichier_men_pmsi_annuel = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value}'""")
         )
         assert date_du_fichier_men_pmsi_annuel.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_MEN_PMSI_ANNUEL.value)
 
-        date_du_fichier_ann_rpu = base_de_données_test.execute(
-            f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'"""
+        date_du_fichier_ann_rpu = base_de_données_test.connect().execute(
+            text(f"""SELECT * FROM {TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES} WHERE fichier = '{FichierSource.DIAMANT_ANN_RPU.value}'""")
         )
         assert date_du_fichier_ann_rpu.fetchone() == (date(2020, 1, 1), FichierSource.DIAMANT_ANN_RPU.value)

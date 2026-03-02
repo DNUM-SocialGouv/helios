@@ -575,7 +575,7 @@ class TestLisLeFichierXml:
                 {"integer": 4, "float": 4, "string": "4"},
             ]
         )
-        dataframe_attendue = dataframe_attendue.astype(type_de_la_colonne, copy=False)
+        dataframe_attendue = dataframe_attendue.astype(type_de_la_colonne)
 
         # WHEN
         données_lues = lis_le_fichier_xml_en_stream(
@@ -608,7 +608,7 @@ class TestLisLeFichierXml:
         xml_tag = "alltype"
         type_colonnes: Dict = {"integer": int, "float": float, "string": "string"}
         dataframe_attendue = pd.DataFrame([{"integer": 123456789, "float": 1.23456789, "string": "0123456789"}])
-        dataframe_attendue = dataframe_attendue.astype(type_colonnes, copy=False)
+        dataframe_attendue = dataframe_attendue.astype(type_colonnes)
 
         # WHEN
         données_lues = lis_le_fichier_xml_en_stream(
@@ -644,7 +644,7 @@ class TestLisLeFichierXml:
             {
                 "echappe": ["670014604", None],
             }
-        ).astype(type_de_la_colonne, copy=False)
+        ).astype(type_de_la_colonne)
 
         # WHEN
         données_lues = lis_le_fichier_xml_en_stream(
@@ -680,7 +680,7 @@ class TestLisLeFichierXml:
             {
                 "child": ["into"],
             }
-        ).astype(type_de_la_colonne, copy=False)
+        ).astype(type_de_la_colonne)
 
         # WHEN
         données_lues = lis_le_fichier_xml_en_stream(

@@ -17,10 +17,12 @@ def transforme_les_donnees_ressources_humaines(
         numeros_finess_des_entites_etablissement_sanitaires_connus["numero_finess_etablissement_territorial"]
     )
 
-    donnees_dernieres_5_annees = filtre_les_données_sur_les_n_dernières_années(donnees_quo_san_finance, NOMBRE_D_ANNEES_RESSOURCES_HUMAINE)
+    # Appliquer le masque d'abord sur le DataFrame original pour éviter l'avertissement de réindexation des séries booléennes
+    donnees_filtrees_par_finess = donnees_quo_san_finance[est_dans_finess]
+
+    donnees_dernieres_5_annees = filtre_les_données_sur_les_n_dernières_années(donnees_filtrees_par_finess, NOMBRE_D_ANNEES_RESSOURCES_HUMAINE)
     return (
-        donnees_dernieres_5_annees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios))
+        donnees_dernieres_5_annees.rename(columns=extrais_l_equivalence_des_noms_des_colonnes(equivalences_diamant_quo_san_ressources_humaines_helios))
         .drop_duplicates(subset=index_du_bloc_ressources_humaines_etsan)
         .set_index(index_du_bloc_ressources_humaines_etsan)
     )

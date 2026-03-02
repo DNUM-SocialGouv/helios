@@ -64,6 +64,14 @@ const StringFormater = {
   formatNumberForExcel(value: string): string {
     return value?.replaceAll(/\s/g, '');
   },
+
+  supprimeLesAccents(str: string) {
+    return str
+      ?.normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
 }
 
 export default StringFormater;
