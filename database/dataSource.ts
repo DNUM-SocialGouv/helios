@@ -93,6 +93,7 @@ import { AjoutDureeMoyenneSejourDansLesProfils1762435683856 } from "./migrations
 import { SupprimeProfilSansLabel1765967970441 } from "./migrations/1765967970441-SupprimeProfilSansLabel";
 import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal"
 import { UpdateVueRecherche1769680336893 } from "./migrations/1769680336893-UpdateVueRecherche";
+import { AjoutLastPwdChangeDate1771324698360 } from "./migrations/1771324698360-AjoutLastPwdChangeDate";
 import { AjouteTableNoDataQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableNoDataQualiteHAS";
 import { AjoutCertificationHasDansLesProfils1770992415603 } from "./migrations/1770992415603-AjoutCertificationHasDansLesProfils";
 import { AjoutTableNoDataQualiteHasMS1772117266351 } from "./migrations/1772117266351-AjoutTableNoDataQualiteHasMS";
@@ -387,6 +388,7 @@ const datasource = new DataSource({
     SupressionTableVigierhContrat1763372516438,
     AjouteTypePassageProfessions1764753717478,
     AjoutTauxOccupationGlobal1765980868528,
+    AjoutLastPwdChangeDate1771324698360,
     AjouteTableNoDataQualiteHAS1770300961088,
     AjoutCertificationHasDansLesProfils1770992415603,
     UpdateVueRecherche1769680336893,

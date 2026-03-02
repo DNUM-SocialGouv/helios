@@ -15,6 +15,7 @@
 - hel-974: Changement du comportement de la page de récupération de mot de passe
 - hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
 - hel-978: Mise à jour de dependances python (Pandas, Numpy, SQLAlchemy)
+- hel-976: [Connexion] Renouvellement du mot de passe
 
 - hel-934: ET MS - Ajout des données de l'évaluation Qualiscope
 - hel-988: ET MS - Qualiscope - Gestion des données en back
