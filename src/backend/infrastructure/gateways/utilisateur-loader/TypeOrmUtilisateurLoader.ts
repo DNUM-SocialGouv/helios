@@ -80,10 +80,11 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
     const changedAt = new Date(user?.lastPwdChangeDate || "");
     const today = new Date();
+    const EXPIRATION_MONTHS = process.env["APP_PASSWORD_EXPIRATION_MONTHS"] ? parseInt(process.env["APP_PASSWORD_EXPIRATION_MONTHS"]) : 9;
+
 
     const expirationDate = new Date(changedAt);
-    expirationDate.setMonth(expirationDate.getMonth() + 9);
-
+    expirationDate.setMonth(expirationDate.getMonth() + EXPIRATION_MONTHS);
     const warningDate = new Date(expirationDate);
     warningDate.setDate(warningDate.getDate() - 30);
 
