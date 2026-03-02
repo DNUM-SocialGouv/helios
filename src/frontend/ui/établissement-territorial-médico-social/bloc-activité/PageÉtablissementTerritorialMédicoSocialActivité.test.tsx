@@ -40,6 +40,12 @@ const autorisationsMockData = {
     tauxDeVétustéConstruction: "ok",
     contributionAuxFraisDeSiège: "ok",
   },
+  Qualité: {
+    DonnéesHas: "ok",
+    DonnéesSirec: "ok",
+    DonnéesSivss: "ok",
+    DonnéesSiicea: "ok",
+  }
 };
 jest.mock<typeof import("chart.js")>("chart.js", () => ({
   Chart: {
@@ -333,7 +339,22 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             natureContratsTrimestriel: [],
             echelleTemporelle: {}
           },
-          qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
+          qualite: {
+            reclamations: [],
+            evenementsIndesirables: [{
+              libelle: 'Evènements indésirables/graves associés aux soins',
+              evenementsEncours: [],
+              evenementsClotures: [],
+              dateMiseAJourSource: '2024-03-15'
+            }, {
+              libelle: 'Evénements/incidents dans un établissement ou organisme',
+              evenementsEncours: [],
+              evenementsClotures: [],
+              dateMiseAJourSource: '2024-03-15'
+            }],
+            inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] },
+            pasDonneesQualiscopeHAS: { numeroFiness: "010003598" }
+          },
           autorisations: autorisationsMockData,
         },
         wording,
@@ -545,7 +566,22 @@ describe("La page établissement territorial médico-social Sauf EHPAD - bloc ac
             natureContratsAnnuel: [],
             natureContratsTrimestriel: [],
             echelleTemporelle: {}
-          }, qualite: { reclamations: [], evenementsIndesirables: [], inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] } },
+          }, qualite: {
+            reclamations: [],
+            evenementsIndesirables: [{
+              libelle: 'Evènements indésirables/graves associés aux soins',
+              evenementsEncours: [],
+              evenementsClotures: [],
+              dateMiseAJourSource: '2024-03-15'
+            }, {
+              libelle: 'Evénements/incidents dans un établissement ou organisme',
+              evenementsEncours: [],
+              evenementsClotures: [],
+              dateMiseAJourSource: '2024-03-15'
+            }],
+            inspectionsEtControles: { dateMiseAJourSource: '202-02-02', inspectionsEtControles: [] },
+            // pasDonneesQualiscopeHAS: { numeroFiness: "010003598" }
+          },
           autorisations: autorisationsMockData,
         },
         wording,

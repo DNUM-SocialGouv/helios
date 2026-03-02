@@ -6,7 +6,7 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Décompte des ruptures de CDI intervenant avant 6 mois d’ancienneté du salarié ou de l’agent dans l’établissement.

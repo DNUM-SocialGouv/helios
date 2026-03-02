@@ -32,7 +32,7 @@ export class EtablissementTerritorialSanitaireViewModel {
       établissementTerritorial.autorisationsEtCapacités,
       wording
     );
-    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(wording, établissementTerritorial.qualite);
+    this.etablissementTerritorialSanitaireQualiteViewModel = new ÉtablissementTerritorialQualiteSanitaireViewModel(wording, établissementTerritorial.qualite, autorisations);
     this.entitéJuridiqueBudgetFinanceViewModel = new EntitéJuridiqueBudgetFinanceViewModel(
       établissementTerritorial.budgetFinance,
       établissementTerritorial.allocationRessource,

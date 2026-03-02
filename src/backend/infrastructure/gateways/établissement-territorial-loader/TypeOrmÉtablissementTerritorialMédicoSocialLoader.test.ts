@@ -9,6 +9,7 @@ import { DateMiseÀJourFichierSourceModel } from "../../../../../database/models
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
+import { QualiteQualiscopeHasMsModel } from "../../../../../database/models/QualiteQualiscopeHasMsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { ÉtablissementTerritorialIdentitéModel } from "../../../../../database/models/ÉtablissementTerritorialIdentitéModel";
@@ -44,6 +45,7 @@ describe("Établissement territorial médico-social loader", () => {
   let reclamtionsModelRepository: Repository<ReclamationETModel>;
   let evenementsIndesirablesModelRepository: Repository<EvenementIndesirableETModel>;
   let inspectionsEtControlesModelRepository: Repository<InspectionsControlesETModel>;
+  let certificationQualiscopeRepository: Repository<QualiteQualiscopeHasMsModel>;
 
   beforeAll(async () => {
     activitéMédicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
@@ -56,7 +58,8 @@ describe("Établissement territorial médico-social loader", () => {
     ressourcesHumainesModelRepository = (await orm).getRepository(RessourcesHumainesMédicoSocialModel);
     reclamtionsModelRepository = (await orm).getRepository(ReclamationETModel);
     evenementsIndesirablesModelRepository = (await orm).getRepository(EvenementIndesirableETModel);
-    inspectionsEtControlesModelRepository = (await orm).getRepository(InspectionsControlesETModel);;
+    inspectionsEtControlesModelRepository = (await orm).getRepository(InspectionsControlesETModel);
+    certificationQualiscopeRepository = (await orm).getRepository(QualiteQualiscopeHasMsModel);
   });
 
   beforeEach(async () => {
@@ -580,11 +583,18 @@ describe("Établissement territorial médico-social loader", () => {
         })
       ]);
 
+      await certificationQualiscopeRepository.insert([
+        ÉtablissementTerritorialQualitéModelTestBuilder.créeCertificationQualiscope({ numéroFinessÉtablissementTerritorial })
+      ])
+
       const typeOrmÉtablissementTerritorialMédicoSocialLoader = new TypeOrmÉtablissementTerritorialMédicoSocialLoader(orm);
 
       // WHEN
       const qualite = await typeOrmÉtablissementTerritorialMédicoSocialLoader.chargeQualite(numéroFinessÉtablissementTerritorial)
-      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.créeUnBlocQualité());
+      expect(qualite).toStrictEqual<ÉtablissementTerritorialQualite>(ÉtablissementTerritorialTestBuilder.creeUnBlocQualiteMS(
+        { pasDonneesQualiscopeHAS: { numeroFiness: numéroFinessÉtablissementTerritorial } }
+
+      ));
     });
   })
 

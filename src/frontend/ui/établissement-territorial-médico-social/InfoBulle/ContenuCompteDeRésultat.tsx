@@ -12,7 +12,7 @@ export const ContenuCompteDeRésultat = ({ dateDeMiseÀJour, source }: ContenuCo
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           L’Etat Réalisé des Recettes et des Dépenses (ERRD) remplace le Compte Administratif (CA) pour les ESMS qui sont passés sous le régime de l’Etat

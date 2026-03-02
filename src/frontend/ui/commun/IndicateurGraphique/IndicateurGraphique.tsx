@@ -31,7 +31,7 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
         <h3 className={`fr-m-0 fr-text--bold ${styles["intitule"]} fr-h6`}>
           {nomDeLIndicateur}
         </h3>
-        {!dateDeMiseÀJour && <button
+        {!dateDeMiseÀJour && !source && <button
           aria-controls={`nom-info-bulle-${identifiant}`}
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"
           data-fr-opened={estCeOuvert}
@@ -43,8 +43,8 @@ export const IndicateurGraphique = ({ années, children, contenuInfoBulle, dateD
         </button>}
       </div>
 
-      {dateDeMiseÀJour && source && <div className={styles["mise-a-jour-source"]}>
-        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      {source && <div className={styles["mise-a-jour-source"]}>
+        <p className={`fr-text--xs ${styles["titraille"]}`}>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
         <button
           aria-controls={`nom-info-bulle-${identifiant}`}
           className="fr-btn fr-fi-information-line fr-btn--icon-left fr-btn--tertiary-no-outline fr-btn--sm"

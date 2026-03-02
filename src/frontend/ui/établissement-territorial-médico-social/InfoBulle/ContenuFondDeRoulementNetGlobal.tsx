@@ -12,7 +12,7 @@ export const ContenuFondDeRoulementNetGlobal = ({ dateDeMiseÀJour, source }: Co
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Le fonds de roulement représente les ressources dont dispose l’ESMS pour financier son cycle d’exploitation et son cycle d’investissement. Si cet

@@ -17,6 +17,11 @@
 - hel-978: Mise à jour de dependances python (Pandas, Numpy, SQLAlchemy)
 - hel-976: [Connexion] Renouvellement du mot de passe
 
+- hel-934: ET MS - Ajout des données de l'évaluation Qualiscope
+- hel-988: ET MS - Qualiscope - Gestion des données en back
+- hel-933: ET SAN - Ajout des données de certification Qualiscope
+- hel-960: ET SAN - Qualiscope - Gestion des données en back
+
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
 ### Bug Fixes

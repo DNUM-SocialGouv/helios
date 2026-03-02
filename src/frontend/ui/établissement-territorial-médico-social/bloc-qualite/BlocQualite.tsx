@@ -10,6 +10,7 @@ import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicat
 import { NoDataCallout } from "../../commun/NoDataCallout/NoDataCallout";
 import { NotAUthorized } from "../../commun/notAuthorized/Notauthorized";
 import GraphiqueReclamations from "../../indicateur-métier/qualite/GraphiqueReclamations";
+import { GraphiqueCertificationQualiscope } from "../../établissement-territorial-sanitaire/bloc-qualite/CertificationHAS/GraphiqueCertificationQualiscope";
 
 type BlocQualitéProps = Readonly<{
   etabFiness: string;
@@ -66,6 +67,12 @@ const BlocQualité = ({ etabFiness, etabTitle, etablissementTerritorialQualiteM�
               annéesTotales={3}
               data={etablissementTerritorialQualiteMédicoSocialViewModel.buildEIsData}
               dateMiseAJour={etablissementTerritorialQualiteMédicoSocialViewModel.dateMiseAJourEvenementsIndesirables}
+            />
+          )}
+        {!etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesHASNeSontPasAutorisees &&
+          !etablissementTerritorialQualiteMédicoSocialViewModel.lesDonneesHASNeSontPasRenseignees && (
+            <GraphiqueCertificationQualiscope
+              hasFichePath={wording.HAS_FICHE_MS_PATH + etabFiness}
             />
           )}
       </ul>
