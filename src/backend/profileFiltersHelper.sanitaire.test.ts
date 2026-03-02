@@ -167,6 +167,7 @@ function getQualitéSanitaire(): ÉtablissementTerritorialQualite {
     ],
     evenementsIndesirables: [{ libelle: "libEvIndesi", evenementsEncours: ["envCours"], evenementsClotures: ["evClot"], dateMiseAJourSource: "dateMajDetail" }],
     inspectionsEtControles: { dateMiseAJourSource: "dateMajInspection", inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: { numeroFiness: "finessQualiscope" },
   }
 }
 
@@ -258,6 +259,7 @@ function getQualiteProfile() {
     DonnéesSirec: "ok",
     DonnéesSivss: "ok",
     DonnéesSiicea: "ok",
+    DonnéesHas: "ok",
   }
 }
 
@@ -956,6 +958,25 @@ describe("Filtre les informations qualite des etablissement sanitaire par rappor
     let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.Qualité.DonnéesSiicea = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
+  })
+
+  it("retire les info de qualité qualiscope si n’y a pas les droits", () => {
+    // Given
+    const rawQuality = getQualitéSanitaire();
+    const expectedQuality = {
+      ...rawQuality,
+      pasDonneesQualiscopeHAS: {}
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.Qualité.DonnéesHas = "Ko";
 
     // When
     etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);

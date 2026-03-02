@@ -16,7 +16,7 @@ export const ContenuTopTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArre
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Ce taux s’exprime comme : </p>
         <BlockMath math={formula} />

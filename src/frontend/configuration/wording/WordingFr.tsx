@@ -122,10 +122,11 @@ export class WordingFr implements Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string = (date: string): string => `Mise à jour : ${date}`;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => (
-    <>
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement = (source: ReactElement, date?: string): ReactElement => (
+    <>{date ? <>
       {this.miseÀJour(date)}
       {" - "}
+    </> : <></>}
       Source : {source}
     </>
   );
@@ -287,6 +288,10 @@ export class WordingFr implements Wording {
   readonly TYPE_DE_MISSION: string = "Type de mission";
   readonly AFFICHER_PLUS: string = "Aficher plus";
   readonly AFFICHER_MOINS: string = "Afficher moins";
+
+  readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
+  readonly HAS_FICHE_SAN_PATH: string = "https://www.has-sante.fr/fiche-etablissement/";
+  readonly HAS_FICHE_MS_PATH: string = "https://www.has-sante.fr/fiche-essms/";
 
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
@@ -464,6 +469,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly HAS_TITLE: string = "Haute Autorité de Santé";
   readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
@@ -481,6 +487,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS-Qualiscope</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 

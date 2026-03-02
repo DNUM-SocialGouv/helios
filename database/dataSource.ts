@@ -93,6 +93,10 @@ import { AjoutDureeMoyenneSejourDansLesProfils1762435683856 } from "./migrations
 import { SupprimeProfilSansLabel1765967970441 } from "./migrations/1765967970441-SupprimeProfilSansLabel";
 import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal"
 import { UpdateVueRecherche1769680336893 } from "./migrations/1769680336893-UpdateVueRecherche";
+import { AjouteTableNoDataQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableNoDataQualiteHAS";
+import { AjoutCertificationHasDansLesProfils1770992415603 } from "./migrations/1770992415603-AjoutCertificationHasDansLesProfils";
+import { AjoutTableNoDataQualiteHasMS1772117266351 } from "./migrations/1772117266351-AjoutTableNoDataQualiteHasMS";
+import { AjoutHasAuProfilMedicoSocial1772196772012 } from "./migrations/1772196772012-AjoutHasAuProfilMedicoSocial";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -151,6 +155,8 @@ import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
+import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
+import { QualiteQualiscopeHasMsModel } from "./models/QualiteQualiscopeHasMsModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
@@ -250,7 +256,9 @@ const datasource = new DataSource({
     VigieRhRefMotifRuptutreContratModel,
     VigieRhRefNatureContrat,
     VigieRhNatureContratsAnnuelModel,
-    VigieRhNatureContratsTrimestrielModel
+    VigieRhNatureContratsTrimestrielModel,
+    QualiteQualiscopeHASModel,
+    QualiteQualiscopeHasMsModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -379,7 +387,11 @@ const datasource = new DataSource({
     SupressionTableVigierhContrat1763372516438,
     AjouteTypePassageProfessions1764753717478,
     AjoutTauxOccupationGlobal1765980868528,
-    UpdateVueRecherche1769680336893
+    AjouteTableNoDataQualiteHAS1770300961088,
+    AjoutCertificationHasDansLesProfils1770992415603,
+    UpdateVueRecherche1769680336893,
+    AjoutTableNoDataQualiteHasMS1772117266351,
+    AjoutHasAuProfilMedicoSocial1772196772012
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

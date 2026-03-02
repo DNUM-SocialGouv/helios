@@ -10,6 +10,7 @@ import { CapacitéAutorisationSanitaireModel } from "../../../../../database/mod
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
+import { QualiteQualiscopeHASModel } from "../../../../../database/models/QualiteQualiscopeHasModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
@@ -168,13 +169,18 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
 
+    const qualiteQualiscope = await (await this.orm)
+      .getRepository(QualiteQualiscopeHASModel)
+      .findOne({ where: { numéroFinessÉtablissementTerritorial } });
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
       dateMiseAjourSIVSS.dernièreMiseÀJour,
       inspectionsEtControles,
-      dateMiseAjourSIICEA.dernièreMiseÀJour
+      dateMiseAjourSIICEA.dernièreMiseÀJour,
+      qualiteQualiscope
     );
   }
 
@@ -198,13 +204,15 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     evenementsIndesirables: EvenementIndesirableETModel[],
     dateMiseAjourSIVSS: string,
     inspections: InspectionsControlesETModel[],
-    dateMiseAjourSiicea: string
+    dateMiseAjourSiicea: string,
+    qualiteQualiscope: QualiteQualiscopeHASModel | null
 
   ): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
       evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
-      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea),
+      pasDonneesQualiscopeHAS: this.construisQualiteHas(qualiteQualiscope)
     }
   }
 
@@ -347,6 +355,14 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       }
     })
     return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
+  }
+
+  private readonly construisQualiteHas = (donneesHas: QualiteQualiscopeHASModel | null) => {
+    if (!donneesHas) return undefined;
+    return {
+      numeroFiness: donneesHas.numéroFinessÉtablissementTerritorial,
+
+    }
   }
 
   private async chargeLesReconnaissancesContractuellesModel(

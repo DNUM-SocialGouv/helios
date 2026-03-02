@@ -13,7 +13,7 @@ export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source, compar
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         {comparaison && <p>
           Pour la campagne et le type d’établissement sélectionnés, cette enveloppe fait partie des 3 premières enveloppes attribuées.

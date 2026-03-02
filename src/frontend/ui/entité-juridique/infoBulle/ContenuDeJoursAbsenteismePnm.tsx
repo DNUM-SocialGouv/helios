@@ -12,7 +12,7 @@ export const ContenuDeJoursAbsenteismePnm = ({ dateDeMiseÀJour, source }: Conte
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
       </section>
       <section aria-label={wording.FRÉQUENCE}>

@@ -7,6 +7,7 @@ import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/mode
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
+import { QualiteQualiscopeHasMsModel } from "../../../../../database/models/QualiteQualiscopeHasMsModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { RessourcesHumainesMédicoSocialModel } from "../../../../../database/models/RessourcesHumainesMédicoSocialModel";
 import { VigieRhRefDureeCddModel } from "../../../../../database/models/vigie_rh/referentiel/VigieRhRefDureeCddModel";
@@ -578,13 +579,18 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
 
+    const qualiteQualiscope = await (await this.orm)
+      .getRepository(QualiteQualiscopeHasMsModel)
+      .findOne({ where: { numéroFinessÉtablissementTerritorial } });
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
       dateMiseAjourSIVSS.dernièreMiseÀJour,
       inspectionsEtControles,
-      dateMiseAjourSIICEA.dernièreMiseÀJour
+      dateMiseAjourSIICEA.dernièreMiseÀJour,
+      qualiteQualiscope
     );
   }
 
@@ -834,11 +840,20 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     };
   }
 
-  private construitsQualite(reclamations: ReclamationETModel[], dateMisAJour: string, evenementsIndesirables: EvenementIndesirableETModel[], dateMiseAjourSIVSS: string, inspections: InspectionsControlesETModel[], dateMiseAjourSiicea: string): ÉtablissementTerritorialQualite {
+  private construitsQualite(
+    reclamations: ReclamationETModel[],
+    dateMisAJour: string,
+    evenementsIndesirables: EvenementIndesirableETModel[],
+    dateMiseAjourSIVSS: string,
+    inspections: InspectionsControlesETModel[],
+    dateMiseAjourSiicea: string,
+    qualiteQualiscope: QualiteQualiscopeHasMsModel | null
+  ): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
       evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
-      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea),
+      pasDonneesQualiscopeHAS: this.construisQualiteHas(qualiteQualiscope)
     }
   }
 
@@ -979,6 +994,13 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       }
     })
     return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
+  }
+
+  private readonly construisQualiteHas = (donneesHas: QualiteQualiscopeHasMsModel | null) => {
+    if (!donneesHas) return undefined;
+    return {
+      numeroFiness: donneesHas.numéroFinessÉtablissementTerritorial,
+    }
   }
 
   private construisLeBudgetEtFinances(

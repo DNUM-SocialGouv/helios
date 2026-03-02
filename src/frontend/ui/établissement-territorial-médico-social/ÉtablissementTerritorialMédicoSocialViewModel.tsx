@@ -46,7 +46,8 @@ export class EtablissementTerritorialMedicoSocialViewModel {
     );
     this.établissementTerritorialQualiteMédicoSocialViewModel = new ÉtablissementTerritorialQualiteMédicoSocialViewModel(
       wording,
-      établissementTerritorial.qualite
+      établissementTerritorial.qualite,
+      autorisations
     );
     this.blocVigieRHViewModel = new BlocVigieRHViewModel(établissementTerritorial.vigieRh, wording, autorisations);
   }

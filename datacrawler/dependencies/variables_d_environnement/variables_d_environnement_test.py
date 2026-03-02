@@ -45,6 +45,8 @@ class TestVariablesDEnvironnement:
             "CHECKED_SIICEA_DATA_PATH": "test",
             "HAPI_DATA_PATH": "test",
             "VIGIE_RH_DATA_PATH": "test",
+            "HAS_DATA_PATH": "test",
+            "MS_NO_HAS_DATA_PATH": "test",
             "DNUM_SFTP_HOST": "test",
             "DNUM_SFTP_PORT": "test",
             "DNUM_SFTP_USERNAME": "test",

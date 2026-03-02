@@ -12,7 +12,7 @@ export const ContenuNombreHAD = ({ dateDeMiseÀJour, source }: ContenuNombreHADP
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Permet d’observer l’évolution de l’activité de l’établissement et le développement des prises en charge sur leur lieu de vie de malades atteints de
