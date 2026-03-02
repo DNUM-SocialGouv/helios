@@ -29,7 +29,7 @@ export class TypeOrmSearchHistoryLoader implements SearchHistoryLoader {
     // Supprime les 10 entrées les plus anciennes
     await ds.query(
       `DELETE FROM search_history WHERE id IN (
-           SELECT id FROM search_history WHERE user_id = $1 ORDER BY date DESC, id DESC OFFSET 10
+           SELECT id FROM search_history WHERE user_id = $1 ORDER BY date DESC, id DESC OFFSET 30
          )`,
       [idUser]
     );
