@@ -167,6 +167,7 @@ function getQualitéSanitaire(): ÉtablissementTerritorialQualite {
     ],
     evenementsIndesirables: [{ libelle: "libEvIndesi", evenementsEncours: ["envCours"], evenementsClotures: ["evClot"], dateMiseAJourSource: "dateMajDetail" }],
     inspectionsEtControles: { dateMiseAJourSource: "dateMajInspection", inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: { numeroFiness: "finessQualiscope" },
   }
 }
 
@@ -970,7 +971,7 @@ describe("Filtre les informations qualite des etablissement sanitaire par rappor
     const rawQuality = getQualitéSanitaire();
     const expectedQuality = {
       ...rawQuality,
-      pasDonneesQualiscopeHAS: {},
+      pasDonneesQualiscopeHAS: {}
     }
 
     let etabSanitaireResult = getFullSanitaire();

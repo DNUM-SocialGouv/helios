@@ -24,6 +24,12 @@ const autorisationsMockData = {
     tauxDeVétustéConstruction: "ok",
     contributionAuxFraisDeSiège: "ok",
   },
+  Qualité: {
+    DonnéesHas: "ok",
+    DonnéesSirec: "ok",
+    DonnéesSivss: "ok",
+    DonnéesSiicea: "ok",
+  }
 };
 
 export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
@@ -639,7 +645,8 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
       evenementsClotures: [],
       dateMiseAJourSource: '2024-03-15'
     }],
-    inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] }
+    inspectionsEtControles: { dateMiseAJourSource: '2023-02-02', inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: { numeroFiness: '010003598' }
   };
 
   public static vigierh: ÉtablissementTerritorialMédicoSocial["vigieRh"] = {
