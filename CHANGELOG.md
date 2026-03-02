@@ -7,6 +7,7 @@
 - hel-981: Export Comparaison
 - hel-954: Correction wording FAQ
 - hel-990: Bug dans le maintient de l’historique à 10 entrées max
+- hel-991: Mise à jour de la page d’historique de consultation
 
 ### Features
 
