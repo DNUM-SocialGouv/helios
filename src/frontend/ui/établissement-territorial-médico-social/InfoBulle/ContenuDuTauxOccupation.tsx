@@ -12,7 +12,7 @@ export const ContenuDuTauxOccupation = ({ dateDeMiseÀJour, source }: ContenuDuT
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           C’est une donnée qui mesure l’activité réalisée au regard de la capacité totale de l’établissement. Il permet de mettre en lumière le niveau de

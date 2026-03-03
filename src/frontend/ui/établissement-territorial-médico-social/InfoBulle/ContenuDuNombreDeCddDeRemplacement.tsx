@@ -12,7 +12,7 @@ export const ContenuDuNombreDeCddDeRemplacement = ({ dateDeMiseÀJour, source }:
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
           <span className="fr-text--bold">Fréquence :</span> Annuelle

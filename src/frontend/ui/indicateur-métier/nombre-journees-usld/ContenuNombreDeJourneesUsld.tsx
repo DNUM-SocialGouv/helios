@@ -13,7 +13,7 @@ export const ContenuNombreDeJourneesUsld = ({ dateDeMiseÀJour, source, estEntit
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Permet d’observer l’évolution de l’activité de l’unité de soins longue durée (USLD).

@@ -69,4 +69,6 @@ export class UtilisateurModel {
 
   @Column({ name: "lock_until", type: "timestamp", nullable: true })
   public lockUntil!: Date | null;
+  @Column({ name: "ut_last_pwd_change_date", type: "date" })
+  public lastPwdChangeDate!: string;
 }

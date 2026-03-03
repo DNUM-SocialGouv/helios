@@ -6,7 +6,7 @@ export const ContenuDureeCddVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, s
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Répartition des CDD selon leur durée effective (nombre de jours de contrat) :  <br />

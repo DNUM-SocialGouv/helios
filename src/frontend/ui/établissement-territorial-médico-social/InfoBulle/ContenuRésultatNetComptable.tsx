@@ -12,7 +12,7 @@ export const ContenuRésultatNetComptable = ({ dateDeMiseÀJour, source }: Conte
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Le résultat de l’exercice consiste en la différence entre les recettes/produits et les dépenses/charges comptabilisés au cours de l’exercice toutes

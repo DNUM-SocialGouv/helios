@@ -6,6 +6,8 @@
 
 - hel-981: Export Comparaison
 - hel-954: Correction wording FAQ
+- hel-990: Bug dans le maintient de l’historique à 10 entrées max
+- hel-991: Mise à jour de la page d’historique de consultation
 
 ### Features
 
@@ -15,6 +17,11 @@
 - hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
 - hel-975: Limiter les tentatives de connexion si mot de passe erroné
 - hel-978: Mise à jour de dependances python (Pandas, Numpy, SQLAlchemy)
+- hel-976: [Connexion] Renouvellement du mot de passe
+- hel-934: ET MS - Ajout des données de l'évaluation Qualiscope
+- hel-988: ET MS - Qualiscope - Gestion des données en back
+- hel-933: ET SAN - Ajout des données de certification Qualiscope
+- hel-960: ET SAN - Qualiscope - Gestion des données en back
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 

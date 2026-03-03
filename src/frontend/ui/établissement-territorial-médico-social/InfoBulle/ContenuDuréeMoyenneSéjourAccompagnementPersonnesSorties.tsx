@@ -15,7 +15,7 @@ export const ContenuDuréeMoyenneSéjourAccompagnementPersonnesSorties = ({
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur permet de compléter les indicateurs relatifs au taux d’occupation. L’appellation « personne accompagnée » est le terme actuellement

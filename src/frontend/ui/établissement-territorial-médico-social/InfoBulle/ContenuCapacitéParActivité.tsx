@@ -12,7 +12,7 @@ export const ContenuCapacitéParActivité = ({ dateDeMiseÀJour, source }: Conte
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Les établissements sont caractérisés dans FINESS par les activités, ou disciplines, qu’ils sont autorisés à exercer. Ces informations sont la

@@ -104,7 +104,7 @@ export interface Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement;
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement;
   readonly NON_RENSEIGNÉ: string;
   readonly OUI: string;
   readonly NON: string;
@@ -266,6 +266,10 @@ export interface Wording {
   readonly AFFICHER_PLUS: string;
   readonly AFFICHER_MOINS: string;
 
+  readonly CERTIFICATION_QUALISCOPE: string;
+  readonly HAS_FICHE_SAN_PATH: string;
+  readonly HAS_FICHE_MS_PATH: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -391,6 +395,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly HAS_TITLE: string;
   readonly SI_AUTORISATIONS_TITLE: string;
 
   // Sources courtes
@@ -407,6 +412,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly HAS: ReactElement;
   readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
 

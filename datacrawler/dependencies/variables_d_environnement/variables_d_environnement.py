@@ -17,6 +17,8 @@ class VariablesDEnvironnement(TypedDict):
     CHECKED_SIICEA_DATA_PATH: str
     HAPI_DATA_PATH: str
     VIGIE_RH_DATA_PATH: str
+    HAS_DATA_PATH: str
+    MS_NO_HAS_DATA_PATH: str
     DNUM_SFTP_HOST: str
     DNUM_SFTP_PORT: str
     DNUM_SFTP_USERNAME: str
@@ -62,6 +64,8 @@ def récupère_les_variables_d_environnement(
         CHECKED_SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIICEA_DATA_PATH"),
         HAPI_DATA_PATH=signale_si_la_variable_n_est_pas_présente("HAPI_DATA_PATH"),
         VIGIE_RH_DATA_PATH=signale_si_la_variable_n_est_pas_présente("VIGIE_RH_DATA_PATH"),
+        HAS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("HAS_DATA_PATH"),
+        MS_NO_HAS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("MS_NO_HAS_DATA_PATH"),
         DNUM_SFTP_HOST=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_HOST"),
         DNUM_SFTP_PORT=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_PORT"),
         DNUM_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_USERNAME"),

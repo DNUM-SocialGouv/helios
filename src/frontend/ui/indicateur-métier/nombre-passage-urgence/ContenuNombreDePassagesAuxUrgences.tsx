@@ -13,7 +13,7 @@ export const ContenuNombreDePassagesAuxUrgences = ({ dateDeMiseÀJour, source, e
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Un résumé de passages aux urgences (RPU) est un recueil standardisé de données médico-administratives pour chaque passage aux urgences. La

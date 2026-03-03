@@ -6,7 +6,7 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Nombre de nouveaux contrats et de fins de contrats enregistrés dans la

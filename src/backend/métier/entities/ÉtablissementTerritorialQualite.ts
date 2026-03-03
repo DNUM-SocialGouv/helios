@@ -39,6 +39,10 @@ export type Inspection = Readonly<{
   saisineAutre: number;
 }>;
 
+export type NODataQualiteQualiscopeHAS = Readonly<{
+  numeroFiness: string;
+}>;
+
 export type InspectionsEtControles = Readonly<{
   inspectionsEtControles: Inspection[];
   dateMiseAJourSource: string;
@@ -48,6 +52,7 @@ export type ÉtablissementTerritorialQualite = Readonly<{
   reclamations: Reclamations[];
   evenementsIndesirables: EvenementsIndesirables[];
   inspectionsEtControles: InspectionsEtControles;
+  pasDonneesQualiscopeHAS?: NODataQualiteQualiscopeHAS;
 }>;
 
 export type InspectionControleDataTheme = {

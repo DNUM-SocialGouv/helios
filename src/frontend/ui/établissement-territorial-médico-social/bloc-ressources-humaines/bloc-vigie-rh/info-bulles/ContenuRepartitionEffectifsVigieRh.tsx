@@ -7,7 +7,7 @@ export const ContenuRepartitionEffectifsVigieRh = ({ dateDeMiseAJour, dateDonnee
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Part relative des effectifs de chaque filière parmi l’effectif total.

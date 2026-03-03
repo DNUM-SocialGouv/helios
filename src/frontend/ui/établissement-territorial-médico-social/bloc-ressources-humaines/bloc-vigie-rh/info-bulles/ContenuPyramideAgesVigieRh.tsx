@@ -6,7 +6,7 @@ export const ContenuPyramideAgesVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Répartition du nombre de personnes physiques présentes parmi les effectifs, selon des tranches d’âge standardisées. Les effectifs sont

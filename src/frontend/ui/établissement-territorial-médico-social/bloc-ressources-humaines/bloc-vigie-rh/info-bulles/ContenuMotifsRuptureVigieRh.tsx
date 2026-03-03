@@ -6,7 +6,7 @@ export const ContenuMotifsRuptureVigieRh = ({ dateDeMiseAJour, dateDonneesArrete
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Répartition des fins de contrat selon les motifs déclarés dans la DSN.

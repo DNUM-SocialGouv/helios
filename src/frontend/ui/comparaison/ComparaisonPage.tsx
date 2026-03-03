@@ -12,9 +12,8 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
+import { TableData } from "../commun/Table/TableData";
 import { SelectionAnneeTags, SelectionTags } from "../commun/Tag";
-import { ComparaisonEJViewModel, ComparaisonSANViewModel, ComparaisonSMSViewModel } from "../home/ComparaisonViewModel";
-import { RechercheViewModel } from "../home/RechercheViewModel";
 import { ListActionsButton } from "../liste/ListActionsButton";
 import { CategoriesFinessViewModel } from "../recherche-avancee/model/CategoriesFinessViewModel";
 import { TableFooter } from "../recherche-avancee/resultat-recherche-avancee/resultat-recherche-avancee-footer/TableFooter";
@@ -190,7 +189,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
     setSelectedRows(newSelected);
   };
 
-  const onClickDelete = async (etablissementASupprimer: RechercheViewModel | ComparaisonSMSViewModel | ComparaisonEJViewModel | ComparaisonSANViewModel) => {
+  const onClickDelete = async (etablissementASupprimer: TableData) => {
     const listFiness = sessionStorage.getItem("listFinessNumbers");
     const listFinessArray: string[] = listFiness ? JSON.parse(listFiness) : [];
     const indexElementToDelete = listFinessArray.indexOf(etablissementASupprimer.numéroFiness);
