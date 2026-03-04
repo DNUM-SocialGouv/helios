@@ -90,16 +90,17 @@ export const FavorisPopup = ({
 
 
       <div>
-        {!displayNewListInput
-          ? <button className={"fr-btn fr-btn--sm fr-btn--secondary fr-mt-2w fr-mb-2w " + styles['full-width-button']} disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE_BOUTON}</button>
-          :
-          <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
+        {displayNewListInput
+          ? <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
             <label className="fr-label fr-text--lead fr-text--bold fr-my-1w fr-p-0" htmlFor="new-list-form">Nouvelle liste</label>
             <input aria-describedby={newListError ? "new-list-error-message" : undefined} autoFocus className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
             <div className="fr-messages-group">
               {newListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="new-list-error-message">{newListErrorMessage}</p>}
+              {newListName?.trim().length > 0 && userContext?.favorisLists?.some(list => list.nom.trim().toLowerCase() === newListName.trim().toLowerCase()) &&
+                <p className={"fr-message fr-message--info " + styles['error-message']} id="new-list-duplicate-message">{wording.ETOILE_NOUVELLE_LISTE_EXISTANTE}</p>}
             </div>
           </div>
+          : <button className={"fr-btn fr-btn--sm fr-btn--secondary fr-mt-2w fr-mb-2w " + styles['full-width-button']} disabled={userContext && userContext.favorisLists.length >= 11} onClick={() => setDisplayNewListInput(true)}>{wording.ETOILE_NOUVELLE_LISTE_BOUTON}</button>
         }
       </div>
 

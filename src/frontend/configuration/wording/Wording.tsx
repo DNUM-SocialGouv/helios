@@ -490,6 +490,7 @@ export interface Wording {
   readonly ETOILE_MES_LISTES: string;
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string;
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string;
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string;
   readonly ETOILE_MAX_LISTE_ATTEINT: string;
   readonly ETOILE_ERREUR_MODIF_ETAB: string;
 
