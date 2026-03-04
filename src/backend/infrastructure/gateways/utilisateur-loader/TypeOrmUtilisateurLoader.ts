@@ -14,7 +14,7 @@ import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { PasswordStatus, PasswordStatusEnum, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, PasswordStatusEnum, RésultatLogin, LoginStatusEnum } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
@@ -33,7 +33,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     if (user) {
 
       if (user?.lockUntil && user.lockUntil > new Date()) {
-        return 'blocked account'
+        return LoginStatusEnum.BLOCKED;
       }
 
       const hashing = createHash("sha256");
@@ -56,19 +56,19 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         }
         (await this.orm).getRepository(UtilisateurModel).save(user);
 
-        return 'wrong credentials';
+        return LoginStatusEnum.WRONG_CREDENTIALS;
       }
     } else {
-      return 'wrong credentials';
+      return LoginStatusEnum.WRONG_CREDENTIALS;
     }
   }
 
-  async getLoginError(email: string): Promise<string> {
+  async getLoginError(email: string): Promise<LoginStatusEnum> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
     if (user?.lockUntil && user.lockUntil > new Date()) {
-      return 'blocked account'
+      return LoginStatusEnum.BLOCKED;
     }
-    return 'wrong credentials';
+    return LoginStatusEnum.WRONG_CREDENTIALS;
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {

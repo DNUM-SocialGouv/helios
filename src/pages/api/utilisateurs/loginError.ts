@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { loginErrorEndpoint } from "../../../backend/infrastructure/controllers/loginErrorEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
@@ -11,7 +12,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const { email } = request.body;
     const resp = await loginErrorEndpoint(dependencies, email);
 
-    if (resp === 'blocked account')
+    if (resp === LoginStatusEnum.BLOCKED)
       return response.status(401).json({ message: resp });
     else
       return response.status(423).json({ message: resp });
