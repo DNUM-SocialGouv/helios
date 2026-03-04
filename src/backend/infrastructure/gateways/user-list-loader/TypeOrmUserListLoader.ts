@@ -1,6 +1,5 @@
 import { DataSource } from "typeorm";
 
-import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { InformationSurListe } from "../../../métier/entities/liste/InformationSurListe";
 import { UserListLoader } from "../../../métier/gateways/UserListLoader";
@@ -28,14 +27,14 @@ export class TypeOrmUserListLoader implements UserListLoader {
       .createQueryBuilder("list")
       .leftJoinAndSelect(
         "list.userListEtablissements",
-        "ule"
+        "ule",
+        `EXISTS (
+        SELECT 1
+        FROM recherche r
+        WHERE r.numero_finess = ule.numero_finess
+      )`
       )
-      .innerJoin(
-        RechercheModel,
-        "recherche",
-        "ule.finessNumber = recherche.numero_finess"
-      )
-      .where("list.userId = :idUser", { idUser })
+      .where("list.userId = :idUser", { idUser });
 
     return requete.getMany();
   }
@@ -46,12 +45,12 @@ export class TypeOrmUserListLoader implements UserListLoader {
       .createQueryBuilder("list")
       .leftJoinAndSelect(
         "list.userListEtablissements",
-        "ule"
-      )
-      .innerJoin(
-        RechercheModel,
-        "recherche",
-        "ule.finessNumber = recherche.numero_finess"
+        "ule",
+        `EXISTS (
+        SELECT 1
+        FROM recherche r
+        WHERE r.numero_finess = ule.numero_finess
+      )`
       )
       .where("list.id = :idList", { idList })
       .andWhere("list.userId = :idUser", { idUser })
