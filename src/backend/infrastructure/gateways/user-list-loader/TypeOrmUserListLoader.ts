@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 
+import { RechercheModel } from "../../../../../database/models/RechercheModel";
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { InformationSurListe } from "../../../métier/entities/liste/InformationSurListe";
 import { UserListLoader } from "../../../métier/gateways/UserListLoader";
@@ -22,10 +23,40 @@ export class TypeOrmUserListLoader implements UserListLoader {
     return { ...userListModel, ...insertResult.generatedMaps[0] };
   }
   async getAll(idUser: string): Promise<UserListModel[]> {
-    return await (await this.orm).getRepository(UserListModel).findBy({ userId: idUser });
+    const requete = await (await this.orm)
+      .getRepository(UserListModel)
+      .createQueryBuilder("list")
+      .leftJoinAndSelect(
+        "list.userListEtablissements",
+        "ule"
+      )
+      .innerJoin(
+        RechercheModel,
+        "recherche",
+        "ule.finessNumber = recherche.numero_finess"
+      )
+      .where("list.userId = :idUser", { idUser })
+
+    return requete.getMany();
   }
   async getById(idUser: string, idList: number): Promise<UserListModel | null> {
-    return await (await this.orm).getRepository(UserListModel).findOneBy({ id: idList, userId: idUser });
+
+    const requete = await (await this.orm)
+      .getRepository(UserListModel)
+      .createQueryBuilder("list")
+      .leftJoinAndSelect(
+        "list.userListEtablissements",
+        "ule"
+      )
+      .innerJoin(
+        RechercheModel,
+        "recherche",
+        "ule.finessNumber = recherche.numero_finess"
+      )
+      .where("list.id = :idList", { idList })
+      .andWhere("list.userId = :idUser", { idUser })
+
+    return requete.getOne();
   }
   async getAllIdAndName(idUser: string): Promise<InformationSurListe[]> {
     const requêteDeLaRecherche = (await this.orm)
