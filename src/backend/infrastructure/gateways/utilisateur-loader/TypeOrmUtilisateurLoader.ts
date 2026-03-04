@@ -14,7 +14,7 @@ import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { PasswordStatus, PasswordStatusEnum, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, PasswordStatusEnum, RésultatLogin, LoginStatusEnum } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
@@ -25,16 +25,50 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
+    const MAX_ATTEMPTS = 3;
+    const LOCK_TIME_MIN = 5;
+
     const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
 
     if (user) {
+
+      if (user?.lockUntil && user.lockUntil > new Date()) {
+        return LoginStatusEnum.BLOCKED;
+      }
+
       const hashing = createHash("sha256");
       hashing.update(password);
       const hashedPassword = hashing.digest("hex");
-      return (await compare(password, user.password)) || hashedPassword === user.password ? { utilisateur: user } : null;
+
+      if (await compare(password, user.password) || hashedPassword === user.password) {
+
+        user.failedAttemps = 0;
+        user.lockUntil = null;
+        (await this.orm).getRepository(UtilisateurModel).save(user);
+
+        return { utilisateur: user }
+
+      } else {
+
+        user.failedAttemps += 1;
+        if (user.failedAttemps >= MAX_ATTEMPTS) {
+          user.lockUntil = new Date(Date.now() + LOCK_TIME_MIN * 60 * 1000);
+        }
+        (await this.orm).getRepository(UtilisateurModel).save(user);
+
+        return LoginStatusEnum.WRONG_CREDENTIALS;
+      }
     } else {
-      return null;
+      return LoginStatusEnum.WRONG_CREDENTIALS;
     }
+  }
+
+  async getLoginError(email: string): Promise<LoginStatusEnum> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
+    if (user?.lockUntil && user.lockUntil > new Date()) {
+      return LoginStatusEnum.BLOCKED;
+    }
+    return LoginStatusEnum.WRONG_CREDENTIALS;
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {

@@ -10,6 +10,10 @@ export class LoginUseCase {
     return await this.utilisateurLoader.login(email, password);
   }
 
+  async getLoginError(email: string): Promise<string> {
+    return await this.utilisateurLoader.getLoginError(email);
+  }
+
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
     return await this.utilisateurLoader.checkUserIsNotAdminAndInactif(email);
   }

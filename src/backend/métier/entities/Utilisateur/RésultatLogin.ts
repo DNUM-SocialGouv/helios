@@ -1,8 +1,13 @@
 import { Utilisateur } from "./Utilisateur";
 
+export enum LoginStatusEnum {
+  BLOCKED = "blocked account",
+  WRONG_CREDENTIALS = "wrong credentials",
+}
+
 export type RésultatLogin = {
-  utilisateur: Utilisateur | null;
-} | null;
+  utilisateur: Utilisateur;
+} | LoginStatusEnum;
 
 export enum PasswordStatusEnum {
   OK = "ok",
