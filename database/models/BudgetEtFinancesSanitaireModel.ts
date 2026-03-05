@@ -61,4 +61,13 @@ export class BudgetEtFinancesSanitaireModel {
 
   @Column({ name: "ratio_dependance_financiere", nullable: true, type: "float" })
   public ratioDependanceFinanciere!: number;
+
+  @Column({ name: "fonds_de_roulement", nullable: true, type: "float" })
+  public fondsDeRoulement!: number;
+
+  @Column({ name: "besoin_fonds_de_roulement", nullable: true, type: "float" })
+  public besoinFondsDeRoulement!: number;
+
+  @Column({ name: "tresorerie", nullable: true, type: "float" })
+  public tresorerie!: number;
 }
