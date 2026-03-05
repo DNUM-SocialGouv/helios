@@ -26,11 +26,11 @@ def reforme_les_donnees_indesirables(donnees_evenements_indesirables: pd.DataFra
     donnees_evenements_indesirables["FINESS"] = donnees_evenements_indesirables.apply(build_finess, axis=1)
     donnees_evenements_indesirables.drop(columns=["DECLARANT_ORGANISME_NUMERO_FINESS", "SCC_ORGANISME_FINESS"], inplace=True)
     donnees_evenements_indesirables["DATE_RECEPTION"] = year_column
-    donnees_evenements_indesirables["ETAT"].replace(
-        {"Initial": "EN_COURS", "En gestion": "EN_COURS", "A qualifier": "EN_COURS", "A réguler": "EN_COURS", "A valider": "EN_COURS", "Clôturé": "CLOTURE"},
-        inplace=True,
+    donnees_evenements_indesirables["ETAT"] = donnees_evenements_indesirables["ETAT"].replace(
+        {"Initial": "EN_COURS", "En gestion": "EN_COURS", "A qualifier": "EN_COURS", "A réguler": "EN_COURS", "A valider": "EN_COURS", "Clôturé": "CLOTURE"}
     )
     return donnees_evenements_indesirables
+
 
 def transform_les_donnees_evenements_indesirables_etablissements(
     donnees_evenements_indesirables: pd.DataFrame, numéros_finess_des_établissements_connus: pd.DataFrame, logger: Logger

@@ -31,4 +31,6 @@ python -m datacrawler.download_finess_data &&
 	python -m datacrawler.check_downloaded_siicea_file &&
 	python -m datacrawler.import_inspections &&
 	python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_entites_juridiques &&
-	python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_etablissements_sanitaires
+	python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_etablissements_sanitaires &&
+	python -m datacrawler.import_les_donnees_qualite_has &&
+	python -m datacrawler.import_les_ms_pas_qualite_has

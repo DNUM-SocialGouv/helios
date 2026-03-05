@@ -1,8 +1,10 @@
 # Changelog d'Helios
 
-## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.3) (TODO)
+## [1.8.2.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.2.1) (2026-03-05)
 
 ### Bug Fixes
+
+- hel-1002: Erreur dans un batch suite à la montée de version SQLAlchemy
 
 ### Features
 
@@ -14,6 +16,7 @@
 - hel-954: Correction wording FAQ
 - hel-990: Bug dans le maintient de l’historique à 10 entrées max
 - hel-991: Mise à jour de la page d’historique de consultation
+- hel-973: Retrait des accents avant recherche de la catégorie finess
 
 ### Features
 
