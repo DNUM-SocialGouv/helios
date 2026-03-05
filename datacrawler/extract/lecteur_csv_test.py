@@ -492,6 +492,9 @@ class TestLisLeFichierCsv:
                 "SAN Résultat net comptable": [24315.749399994413, -247544.77019999945, -487130.65967999981, -330217.60992000037, -119190.18984000012],
                 "SAN Taux de CAF nette": [2.1120000000000003e-2, -9.2399999999999982e-3, 0.00396, -5.7600000000000012e-3, 4.4400000000000004e-3],
                 "Ratio de dépendance financière": [0.44184000000000007, 0.34164, 0.72671999999999981, 0, 0.17579999999999998],
+                "FRNG": [nan, nan, nan, nan, nan],
+                "BFR": [nan, nan, nan, nan, nan],
+                "Trésorerie": [nan, nan, nan, nan, nan],
             }
         )
 
