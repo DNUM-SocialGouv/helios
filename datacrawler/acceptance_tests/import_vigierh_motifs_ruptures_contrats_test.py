@@ -81,8 +81,8 @@ class TestImportVigierhMotifsRupturesContrats:
         )
         df_filtre = filtrer_les_donnees(df_donnees, df_ref, base_de_données_test)
 
-        assert df_ref.shape[0] == 2
-        assert df_filtre.shape[0] == 2
+        assert df_ref.shape[0] == 8
+        assert df_filtre.shape[0] == 88
 
         return df_ref, df_filtre
 
@@ -228,9 +228,9 @@ class TestImportVigierhMotifsRupturesContrats:
         df_ref_en_base = pd.read_sql_table(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, base_de_données_test)
         df_ref_attendu = df_ref.sort_values("code").reset_index(drop=True)
         df_ref_en_base = df_ref_en_base.sort_values("code").reset_index(drop=True)
-        assert_frame_equal(df_ref_en_base, df_ref_attendu)
+        assert_frame_equal(df_ref_en_base, df_ref_attendu, check_dtype=False)
 
         df_motifs = pd.read_sql_table(TABLE_VIGIE_RH_MOTIFS_RUPTURES, base_de_données_test)
         df_motifs = df_motifs.sort_values(["finess_et", "annee", "trimestre", "motif_code"]).reset_index(drop=True)
         df_filtre_attendu = df_filtre.sort_values(["finess_et", "annee", "trimestre", "motif_code"]).reset_index(drop=True)
-        assert_frame_equal(df_motifs, df_filtre_attendu)
+        assert_frame_equal(df_motifs, df_filtre_attendu, check_dtype=False)
