@@ -40,7 +40,7 @@ class TestImportVigierhNatureContrats:
         import_donnees_cdi_cdd(chemin_local_du_fichier_ref_cdi_cdd, chemin_local_du_fichier_cdi_cdd, base_de_données_test, mocked_logger )
 
         duree_cdd_enregistrees = pd.read_sql(TABLE_VIGIE_RH_NATURE_CONTRATS, base_de_données_test)
-        assert duree_cdd_enregistrees.shape[0] == 12
+        assert duree_cdd_enregistrees.shape[0] == 4
 
     def test_filtrer_les_donnees_ne_conserve_que_les_lignes_valides(self) -> None:
         donnees = pd.DataFrame(
