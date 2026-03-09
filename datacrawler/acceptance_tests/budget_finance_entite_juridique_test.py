@@ -3,6 +3,7 @@ from datetime import date
 import pandas as pd
 from freezegun import freeze_time
 from sqlalchemy import text
+from numpy import nan
 
 from datacrawler.ajoute_le_bloc_budget_et_finances_des_entite_juridiques import ajoute_le_bloc_budget_et_finances_des_entite_juridiques
 from datacrawler.load.nom_des_tables import TABLES_DES_BUDGETS_ET_FINANCES_ENTITE_JURIDIQUE, FichierSource, TABLE_DES_MISES_À_JOUR_DES_FICHIERS_SOURCES
@@ -55,6 +56,9 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
                 "resultat_net_comptable_san": [-330217.60992000037],
                 "taux_de_caf_nette_san": [-5.7600000000000012e-3],
                 "ratio_dependance_financiere": [0.0],
+                "FRNG": [nan, nan],
+                "BFR":  [nan, nan],
+                "Trésorerie": [nan, nan],
             }
         )
 

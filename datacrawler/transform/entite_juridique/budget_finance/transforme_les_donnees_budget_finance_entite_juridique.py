@@ -53,7 +53,7 @@ def extrais_les_donnees_entites_juridiques(data: pd.DataFrame) -> pd.DataFrame:
     df_filtre = data_frame.loc[data_frame["numero_finess_etablissement_territorial"].isna() | (data_frame["numero_finess_etablissement_territorial"] == "")]
 
     # Supprimer la colonne spécifiée
-    df_filtre.drop(columns=["numero_finess_etablissement_territorial", "fonds_de_roulement", "besoin_fonds_de_roulement", "tresorerie"], inplace=True)
+    df_filtre.drop(columns=["numero_finess_etablissement_territorial"], inplace=True)
 
     return df_filtre
 

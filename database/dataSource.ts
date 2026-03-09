@@ -397,7 +397,7 @@ const datasource = new DataSource({
     UpdateVueRecherche1769680336893,
     AjoutTableNoDataQualiteHasMS1772117266351,
     AjoutHasAuProfilMedicoSocial1772196772012,
-    AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578
+    AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
