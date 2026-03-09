@@ -57,7 +57,7 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
                 "taux_de_caf_nette_san": [-5.7600000000000012e-3],
                 "ratio_dependance_financiere": [0.0],
                 "fonds_de_roulement": [nan],
-                "besoin_fonds_de_roulement":  [nan],
+                "besoin_fonds_de_roulement": [2.0],
                 "tresorerie": [nan],
             }
         )
