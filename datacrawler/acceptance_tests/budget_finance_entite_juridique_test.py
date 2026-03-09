@@ -56,9 +56,9 @@ class TestSauvegardeBudgetFinanceDesEntitesJuridiques:
                 "resultat_net_comptable_san": [-330217.60992000037],
                 "taux_de_caf_nette_san": [-5.7600000000000012e-3],
                 "ratio_dependance_financiere": [0.0],
-                "FRNG": [nan],
-                "BFR":  [nan],
-                "Trésorerie": [nan],
+                "fonds_de_roulement": [nan],
+                "besoin_fonds_de_roulement":  [nan],
+                "tresorerie": [nan],
             }
         )
 
