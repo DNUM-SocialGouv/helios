@@ -10,7 +10,7 @@ from datacrawler.test_helpers import (
 )
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010004059"
 
 class TestImportVigieRhMouvements:
     def setup_method(self) -> None:
@@ -25,4 +25,4 @@ class TestImportVigieRhMouvements:
         import_donnees_duree_cdd(chemin_local_du_fichier_ref_duree_cdd, chemin_local_du_fichier_duree_cdd, base_de_données_test, mocked_logger )
 
         duree_cdd_enregistrees = pd.read_sql(TABLE_VIGIE_RH_DUREE_CDD, base_de_données_test)
-        assert duree_cdd_enregistrees.shape[0] == 84
+        assert duree_cdd_enregistrees.shape[0] == 66
