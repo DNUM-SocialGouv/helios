@@ -1,4 +1,5 @@
 import { AllocationRessourcesViewModel } from "./AllocationRessourcesViewModel";
+import { FondsDeRoulementViewModel } from "./fonds-de-roulement/FondsDeRoulementViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
 import { IAllocationRessources } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
@@ -20,6 +21,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
   public NOMBRE_ANNEES = 5;
   public ratioDependanceFinanciere: RatioDependanceFinanciereViewModel;
   public tauxDeCafViewModel: TauxDeCafViewModel;
+  public fondsDeRoulement: FondsDeRoulementViewModel;
   public autorisations: any;
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], allocationRessources: IAllocationRessources, wording: Wording, autorisations: any) {
@@ -31,6 +33,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
     this.resultatNetComptable = new ResultatNetComptableViewModel(budgetFinance, autorisations);
     this.ratioDependanceFinanciere = new RatioDependanceFinanciereViewModel(budgetFinance, autorisations);
     this.tauxDeCafViewModel = TauxDeCafViewModel.fromBudgetFinanceEntiteJuridique(budgetFinance, autorisations, wording);
+    this.fondsDeRoulement = new FondsDeRoulementViewModel(budgetFinance, autorisations);
     this.autorisations = autorisations;
   }
 
@@ -51,7 +54,8 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       (this.compteDeResultatVide() &&
         !this.resultatNetComptable.auMoinsUnResultatNetRenseigné() &&
         !this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné() &&
-        !this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné)
+        !this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné &&
+        !this.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné())
     );
   }
 
@@ -62,6 +66,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       if (!this.resultatNetComptable.auMoinsUnResultatNetRenseigné()) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
       if (!this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné()) nonRenseignees.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
+      if (!this.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné()) nonRenseignees.push(this.wording.FONDS_DE_ROULEMENT);
     }
 
     if (this.allocationRessources.vide()) nonRenseignees.push(this.wording.ALLOCATION_DE_RESSOURCES);
@@ -75,6 +80,7 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       if (!this.resultatNetComptable.resultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
       if (!this.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé) nonAutorisés.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
+      if (!this.fondsDeRoulement.fondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.FONDS_DE_ROULEMENT);
     }
 
     if (!this.allocationRessources.estIlAutorisé) nonAutorisés.push(this.wording.ALLOCATION_DE_RESSOURCES);

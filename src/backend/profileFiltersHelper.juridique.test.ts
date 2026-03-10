@@ -121,6 +121,7 @@ function getBudgetFinanceJuridique(): EntitéJuridiqueBudgetFinance {
     resultatNetComptable: 30,
     ratioDependanceFinanciere: 31,
     tauxDeCafNetSan: 32,
+    fondsDeRoulement: 33,
   }
 }
 
@@ -203,6 +204,7 @@ function getBudgetFinanceProfile() {
     ratioDépendanceFinancière: "ok",
     tauxDeCafNette: "ok",
     allocationDeRessources: "ok",
+    fondsDeRoulement: "ok",
   }
 }
 
@@ -686,6 +688,25 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
     let entiteJuridiqueResult = getFullEntiteJuridique();
     const profile = getFullProfile();
     profile.budgetEtFinance.tauxDeCafNette = "Ko";
+
+    // When
+    entiteJuridiqueResult = filterEntiteJuridique(entiteJuridiqueResult, profile);
+
+    // Then
+    expect(entiteJuridiqueResult.budgetFinance).toEqual([expectedBudgetAndFinance]);
+  })
+
+  it("retire les info sur les fonds de roulement si il n’y a pas les droits", () => {
+    // Given
+    const rawBudgetAndFinance = getBudgetFinanceJuridique();
+    const expectedBudgetAndFinance = {
+      ...rawBudgetAndFinance,
+      fondsDeRoulement: "",
+    }
+
+    let entiteJuridiqueResult = getFullEntiteJuridique();
+    const profile = getFullProfile();
+    profile.budgetEtFinance.fondsDeRoulement = "Ko";
 
     // When
     entiteJuridiqueResult = filterEntiteJuridique(entiteJuridiqueResult, profile);

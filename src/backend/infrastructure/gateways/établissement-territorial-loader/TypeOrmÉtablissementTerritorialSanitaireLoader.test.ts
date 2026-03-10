@@ -897,6 +897,8 @@ describe("Établissement territorial sanitaire loader", () => {
       budgetEtFinancesSanitaire.resultatNetComptableSan = 0.1;
       budgetEtFinancesSanitaire.tauxDeCafNetteSan = 0.2;
       budgetEtFinancesSanitaire.ratioDependanceFinanciere = 0.3;
+      budgetEtFinancesSanitaire.fondsDeRoulement = 0.4;
+
 
       await budgetEtFinancesSanitaireRepository.insert(budgetEtFinancesSanitaire);
 
@@ -950,6 +952,8 @@ describe("Établissement territorial sanitaire loader", () => {
           ratioDependanceFinanciere: 0.3,
 
           tauxDeCafNetSan: 0.2,
+
+          fondsDeRoulement: 0.4,
         } as EntitéJuridiqueBudgetFinance,
       ]);
     });

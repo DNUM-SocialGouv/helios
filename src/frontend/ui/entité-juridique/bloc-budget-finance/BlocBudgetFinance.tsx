@@ -2,6 +2,7 @@ import { AllocationRessources } from "./allocation-ressources/AllocationRessourc
 import styles from "./BlocBudgetFinance.module.css";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { FondsDeRoulement } from "./fonds-de-roulement/FondsDeRoulement";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -39,7 +40,7 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
     return null;
   };
 
-  const renderBudgetEtFinances = () => {
+  const renderBudgetEtFinancesFirstSection = () => {
     if (!estEntiteJuridiqueOuPnL) {
       return null;
     }
@@ -100,11 +101,28 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
     );
   };
 
+  const renderBlocBudgetEtFinancesSecondSection = () => {
+    const peutAfficherFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.fondsDeRoulementEstIlAutorisé;
+
+    return (
+      <ul className={"indicateurs " + styles["budget"]}>
+        {peutAfficherFondsDeRoulement && (
+          <FondsDeRoulement
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            fondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement}
+          />
+        )}
+      </ul>
+    );
+  }
+
   return (
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
       {renderBlocMessages()}
-      {renderBudgetEtFinances()}
+      {renderBudgetEtFinancesFirstSection()}
       {renderAllocationRessources()}
+      {renderBlocBudgetEtFinancesSecondSection()}
     </Bloc>
   );
 };

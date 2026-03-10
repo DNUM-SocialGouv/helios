@@ -369,6 +369,7 @@ export class WordingFr implements Wording {
   readonly GROUPE_III: string = "Groupe III";
   readonly TAUX_DE_CAF: string = "Taux de CAF";
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
+  readonly FONDS_DE_ROULEMENT: string = "Fonds de roulement";
 
   // Bloc Buget Finance Entite Juridique
   readonly TITRE_I: string = "Titre I";

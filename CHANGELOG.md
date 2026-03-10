@@ -6,11 +6,15 @@
 
 ### Features
 
+- hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
+- hel-997: Ajout du graphique horizontal concernant les fonds de roulement
+
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
 ### Bug Fixes
 
 ### Features
+
 - vr-152: Renommage des colonnes de plusieurs tables
 
 ## [1.8.2.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.2.1) (2026-03-05)

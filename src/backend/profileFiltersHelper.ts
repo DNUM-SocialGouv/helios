@@ -540,6 +540,7 @@ const filterBudgetFinanceEJ = (budgetFinance: any, profil: any) => {
     budget.resultatNetComptable = profil.résultatNetComptable === "ok" ? budget.resultatNetComptable : "";
     budget.ratioDependanceFinanciere = profil.ratioDépendanceFinancière === "ok" ? budget.ratioDependanceFinanciere : "";
     budget.tauxDeCafNetSan = profil.tauxDeCafNette === "ok" ? budget.tauxDeCafNetSan : "";
+    budget.fondsDeRoulement = profil.fondsDeRoulement === "ok" ? budget.fondsDeRoulement : "";
   }
 
   return budgetFinance;
