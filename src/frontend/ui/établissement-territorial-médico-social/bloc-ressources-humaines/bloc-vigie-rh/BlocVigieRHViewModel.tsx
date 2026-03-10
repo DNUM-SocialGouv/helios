@@ -210,7 +210,7 @@ export class BlocVigieRHViewModel {
 
   public get lesDonneesPyramideAges(): DonneesVigieRh[] {
     const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
-    if (this.etablissementTerritorialVRMedicoSocial.pyramideAges !== null)
+    if (this.etablissementTerritorialVRMedicoSocial.pyramideAges)
       return Object.values(
         this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
           const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
