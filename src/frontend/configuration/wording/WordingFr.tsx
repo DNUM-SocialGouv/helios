@@ -738,12 +738,12 @@ export class WordingFr implements Wording {
   readonly DEPARTS_REF: string = " Moyenne des fins de contrats pour des établissements similaires";
   readonly EMBAUCHES_REF: string = "Moyenne des nouveaux contrats pour des établissements similaires";
   readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
-  readonly TAUX_ROTATION: string = "Taux de renouvellement des contrats";
+  readonly TAUX_ROTATION: string = "Taux de renouvellement des effectifs";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs par filière";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
-  readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des contrats pour des établissements similaires";
+  readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des effectifs pour des établissements similaires";
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
-  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des effectifs";
   readonly DUREE_CDD: string = "Contrats CDD par durée effective";
   readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
   readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
