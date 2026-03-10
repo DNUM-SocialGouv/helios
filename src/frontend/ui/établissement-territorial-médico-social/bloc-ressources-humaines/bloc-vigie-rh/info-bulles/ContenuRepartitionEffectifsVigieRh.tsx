@@ -12,7 +12,7 @@ export const ContenuRepartitionEffectifsVigieRh = ({ dateDeMiseAJour, dateDonnee
         <p>
           Part relative des effectifs de chaque filière parmi l’effectif total.
         </p>
-        <p>Permet de visualiser le poids de chaque filière dans l’effectif total et repérer les déséquilibres structurels ou les filières en tension.  </p>
+        <p>Permet de visualiser le poids de chaque filière dans l’effectif total et repérer les déséquilibres structurels et/ou les filières en tension.  </p>
         <div className="fr-table fr-table--layout-fixed fr-table--no-scroll">
           <div className={`fr-table--caption-bottom fr-mb-2w ${styles["centredCaption"]}`}>
             Découpage en filières et catégories de profession
