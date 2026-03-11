@@ -26,7 +26,7 @@ export function ContenuFondsDeRoulement(props: Readonly<{ dateDeMiseÀJour: any;
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence :</span> Annuelle
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne
         </p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
