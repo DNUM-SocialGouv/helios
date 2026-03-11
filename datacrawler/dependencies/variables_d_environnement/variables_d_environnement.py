@@ -79,4 +79,8 @@ def récupère_les_variables_d_environnement(
         SFTP_PORT=signale_si_la_variable_n_est_pas_présente("SFTP_PORT"),
         SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
         SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("SFTP_PRIVATE_KEY"),
+        TIPIMAIL_SENDER_NAME=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_NAME"),
+        TIPIMAIL_SENDER_ADDRESS=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_ADDRESS"),
+        TIPIMAIL_APIUSER=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIUSER"),
+        TIPIMAIL_APIKEY=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIKEY")
     )

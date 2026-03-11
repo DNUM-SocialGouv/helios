@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import pandas as pd
 import numpy as np
 from sqlalchemy.engine import create_engine, Engine
@@ -34,7 +35,7 @@ def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, 
 
     return donnees_filtrees
 
-if __name__ == "__main__":
+def main() -> dict:
     # Initialisations
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
@@ -64,8 +65,13 @@ if __name__ == "__main__":
     if traite_profession_filiere and traite_ref:
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_FILIERE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
+        return {
+            "table": "profession_filiere",
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"}
     else:
         if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
+            start = datetime.now()
             df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
             code_list_ref = np.array(df_ref['code'].tolist())
 
@@ -92,9 +98,24 @@ if __name__ == "__main__":
                     FichierSource.VIGIE_RH_PROFESSION_FILIERE,
                     date_de_mise_à_jour_profession_filiere
                 )
+                duration = (datetime.now() - start).total_seconds()
+                return {
+                "table": "profession_filiere",
+                "rows_in_file": data_frame.shape[0],
+                "rows": df_filtré.shape[0],
+                "taux": f"{df_filtré.shape[0]/data_frame.shape[0]*100:.2f}%",
+                "duration": duration,
+                }
         else:
             logger_helios.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_PROFESSION_FILIERE.value}, "
                 f"{FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value})"
             )
+            return {
+            "table": "profession_filiere",
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
+
+if __name__ == "__main__":
+    main()

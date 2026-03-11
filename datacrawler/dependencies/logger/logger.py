@@ -5,12 +5,13 @@ from logging import Logger
 def crée_le_logger() -> Logger:
     logger = logging.getLogger("Helios")
     logger.setLevel(logging.INFO)
+    if not logger.handlers:
 
-    formatter = logging.Formatter("[%(name)s] [%(levelname)s] %(message)s")
+        formatter = logging.Formatter("[%(name)s] [%(levelname)s] %(message)s")
 
-    handler = logging.StreamHandler()
-    handler.setFormatter(formatter)
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
 
-    logger.addHandler(handler)
+        logger.addHandler(handler)
 
     return logger

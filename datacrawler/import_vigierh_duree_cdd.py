@@ -1,4 +1,6 @@
 from logging import Logger
+from datetime import datetime
+
 import os
 import numpy as np
 import pandas as pd
@@ -31,7 +33,7 @@ def filtrer_les_donnees_duree_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndar
 
     return donnees_filtrees
 
-def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_vigierh_ref_duree_cdd = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     date_du_fichier_vigierh_donnees_duree_cdd = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     traite_ref_duree_cdd = verifie_si_le_fichier_est_traite(
@@ -46,9 +48,15 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
     )
     if traite_ref_duree_cdd and traite_donnees_duree_cdd:
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_DUREE_CDD.value} et {FichierSource.VIGIE_RH_REF_DUREE_CDD.value} ont été déjà traités")
+        return {
+            "table": "duree cdd",
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"
+        }
     else:
         if len({date_du_fichier_vigierh_ref_duree_cdd,
         date_du_fichier_vigierh_donnees_duree_cdd}) == 1:
+            start = datetime.now()
             referentiel_duree_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_DUREE_CDD.value)
             donnees_durre_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.DUREE_CDD.value)
             code_list_ref = np.array(referentiel_duree_cdd['duree_code'].tolist())
@@ -74,6 +82,14 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
                     FichierSource.VIGIE_RH_DUREE_CDD,
                     date_du_fichier_vigierh_donnees_duree_cdd
                 )
+            duration = (datetime.now() - start).total_seconds()
+            return {
+            "table": "duree cdd",
+            "rows_in_file": donnees_durre_cdd.shape[0],
+            "rows": donnees_durre_cdd_filtrees.shape[0],
+            "taux": f"{donnees_durre_cdd_filtrees.shape[0]/donnees_durre_cdd.shape[0]*100:.2f}%",
+            "duration": duration,
+            }
 
         else:
             logger.info(
@@ -81,7 +97,13 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
                 f"({FichierSource.VIGIE_RH_DUREE_CDD.value}, "
                 f"{FichierSource.VIGIE_RH_REF_DUREE_CDD.value})"
             )
-if __name__ == "__main__":
+            return {
+            "table": "duree cdd",
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
+            }        
+            
+def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
@@ -95,4 +117,9 @@ if __name__ == "__main__":
         vigierh_data_path,
         trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_DUREE_CDD.value, logger_helios))
 
-    import_donnees_duree_cdd(chemin_local_du_fichier_ref_duree_cdd, chemin_local_du_fichier_duree_cdd, base_de_donnees_helios, logger_helios)
+    result = import_donnees_duree_cdd(chemin_local_du_fichier_ref_duree_cdd, chemin_local_du_fichier_duree_cdd, base_de_donnees_helios, logger_helios)
+    return result
+
+if __name__ == "__main__":
+    main()
+    
