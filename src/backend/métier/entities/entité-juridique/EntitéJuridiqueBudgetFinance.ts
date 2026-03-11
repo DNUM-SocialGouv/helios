@@ -46,4 +46,6 @@ export type EntitéJuridiqueBudgetFinance = {
   fondsDeRoulement: number | null;
 
   besoinFondsDeRoulement: number | null;
+
+  tresorerie: number | null;
 };

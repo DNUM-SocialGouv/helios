@@ -371,6 +371,7 @@ export class WordingFr implements Wording {
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
   readonly FONDS_DE_ROULEMENT: string = "Fonds de roulement";
   readonly BESOIN_FONDS_DE_ROULEMENT: string = "Besoin en fonds de roulement";
+  readonly TRESORERIE: string = "Trésorerie";
 
   // Bloc Buget Finance Entite Juridique
   readonly TITRE_I: string = "Titre I";

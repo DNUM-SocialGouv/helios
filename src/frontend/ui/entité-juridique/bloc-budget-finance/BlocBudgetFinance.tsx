@@ -2,6 +2,7 @@ import { AllocationRessources } from "./allocation-ressources/AllocationRessourc
 import styles from "./BlocBudgetFinance.module.css";
 import { BesoinFondsDeRoulement } from "./besoin-fonds-de-roulement/BesoinFondsDeRoulement";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
+import { Tresorerie } from "./tresorerie/Tresorerie";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 import { FondsDeRoulement } from "./fonds-de-roulement/FondsDeRoulement";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
@@ -105,6 +106,7 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
   const renderBlocBudgetEtFinancesSecondSection = () => {
     const peutAfficherFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.fondsDeRoulementEstIlAutorisé;
     const peutAfficherBesoinFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.auMoinsUnBesoinFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.besoinFondsDeRoulementEstIlAutorisé;
+    const peutAfficherTresorerie = entitéJuridiqueBudgetFinanceViewModel.tresorerie.auMoinsUneTresorerieRenseignée() && entitéJuridiqueBudgetFinanceViewModel.tresorerie.tresorerieEstIlAutorisé;
 
     return (
       <ul className={"indicateurs " + styles["budget"]}>
@@ -120,6 +122,13 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
             besoinFondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement}
             etabFiness={etabFiness}
             etabTitle={etabTitle}
+          />
+        )}
+        {peutAfficherTresorerie && (
+          <Tresorerie
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            tresorerieViewModel={entitéJuridiqueBudgetFinanceViewModel.tresorerie}
           />
         )}
       </ul>

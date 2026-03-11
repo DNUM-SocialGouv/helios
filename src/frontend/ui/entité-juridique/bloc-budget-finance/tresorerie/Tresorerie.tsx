@@ -1,19 +1,19 @@
 import { ReactElement } from "react";
 
-import { BesoinFondsDeRoulementViewModel } from "./BesoinFondsDeRoulementViewModel";
+import { TresorerieViewModel } from "./TresorerieViewModel";
 import { annéesManquantes } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { HistogrammeHorizontal } from "../../../commun/Graphique/HistogrammeHorizontal";
 import { IndicateurGraphique } from "../../../commun/IndicateurGraphique/IndicateurGraphique";
 import StringFormater from "../../../commun/StringFormater";
 
-type BesoinFondsDeRoulementProps = Readonly<{
+type TresorerieProps = Readonly<{
   etabFiness: string;
   etabTitle: string;
-  besoinFondsDeRoulementViewModel: BesoinFondsDeRoulementViewModel;
+  tresorerieViewModel: TresorerieViewModel;
 }>;
 
-export function ContenuBesoinFondsDeRoulement(props: Readonly<{ dateDeMiseÀJour: any; source: ReactElement }>): ReactElement {
+export function ContenuTresorerie(props: Readonly<{ dateDeMiseÀJour: any; source: ReactElement }>): ReactElement {
   const { wording } = useDependencies();
 
   return (
@@ -21,7 +21,7 @@ export function ContenuBesoinFondsDeRoulement(props: Readonly<{ dateDeMiseÀJour
       <p>{wording.miseÀJourEtSource(props.source, props.dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Le Besoin en Fonds de Roulement (BFR) traduit le besoin de financement du cycle d’exploitation.
+          La trésorerie désigne les liquidités ou quasi liquidités dont dispose l’établissement à un moment donné.
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
@@ -33,7 +33,7 @@ export function ContenuBesoinFondsDeRoulement(props: Readonly<{ dateDeMiseÀJour
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
         </p>
-        <p>Différence entre l’actif circulant et le passif circulant</p>
+        <p>Trésorerie = Fonds de roulement - Besoin en fonds de roulement</p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
@@ -48,32 +48,32 @@ export function ContenuBesoinFondsDeRoulement(props: Readonly<{ dateDeMiseÀJour
   );
 }
 
-export function BesoinFondsDeRoulement({ etabFiness, etabTitle, besoinFondsDeRoulementViewModel }: BesoinFondsDeRoulementProps): ReactElement {
+export function Tresorerie({ etabFiness, etabTitle, tresorerieViewModel }: TresorerieProps): ReactElement {
   const { wording } = useDependencies();
-  const infoBulleContenu = <ContenuBesoinFondsDeRoulement dateDeMiseÀJour={besoinFondsDeRoulementViewModel.dateMiseÀJour} source={wording.ANCRE} />;
+  const infoBulleContenu = <ContenuTresorerie dateDeMiseÀJour={tresorerieViewModel.dateMiseÀJour} source={wording.ANCRE} />;
   const sourceName = wording.ANCRE;
-  const anneesManquantes: number[] = annéesManquantes(besoinFondsDeRoulementViewModel.années, 5);
+  const anneesManquantes: number[] = annéesManquantes(tresorerieViewModel.années, 5);
 
-  return besoinFondsDeRoulementViewModel.auMoinsUnBesoinFondsDeRoulementRenseigné() ? (
+  return tresorerieViewModel.auMoinsUneTresorerieRenseignée() ? (
     <IndicateurGraphique
       contenuInfoBulle={infoBulleContenu}
-      dateDeMiseÀJour={besoinFondsDeRoulementViewModel.dateMiseÀJour}
-      identifiant="budget-et-finances-besoin-fonds-de-roulement"
-      nomDeLIndicateur={wording.BESOIN_FONDS_DE_ROULEMENT}
+      dateDeMiseÀJour={tresorerieViewModel.dateMiseÀJour}
+      identifiant="budget-et-finances-tresorerie"
+      nomDeLIndicateur={wording.TRESORERIE}
       source={sourceName}
     >
       <HistogrammeHorizontal
-        couleursDeLHistogramme={besoinFondsDeRoulementViewModel.couleursDeLHistogramme}
+        couleursDeLHistogramme={tresorerieViewModel.couleursDeLHistogramme}
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
         formateur={StringFormater.roundFormatInFrench}
-        identifiant={wording.BESOIN_FONDS_DE_ROULEMENT}
-        libellés={besoinFondsDeRoulementViewModel.années.map(String)}
+        identifiant={wording.TRESORERIE}
+        libellés={tresorerieViewModel.années.map(String)}
         libellésDeValeursManquantes={anneesManquantes}
-        nomGraph={wording.BESOIN_FONDS_DE_ROULEMENT}
+        nomGraph={wording.TRESORERIE}
         nombreDeLibelléTotal={5}
-        valeurs={besoinFondsDeRoulementViewModel.valeurs}
+        valeurs={tresorerieViewModel.valeurs}
       />
     </IndicateurGraphique>
   ) : (
