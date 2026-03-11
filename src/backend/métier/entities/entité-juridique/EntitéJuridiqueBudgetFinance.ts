@@ -44,4 +44,6 @@ export type EntitéJuridiqueBudgetFinance = {
   tauxDeCafNetSan: number | null;
 
   fondsDeRoulement: number | null;
+
+  besoinFondsDeRoulement: number | null;
 };

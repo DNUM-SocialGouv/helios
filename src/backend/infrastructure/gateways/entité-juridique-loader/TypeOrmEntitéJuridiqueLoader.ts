@@ -344,6 +344,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
       tauxDeCafNetSan: budget.tauxDeCafNetteSan,
       fondsDeRoulement: budget.fondsDeRoulement,
+      besoinFondsDeRoulement: budget.besoinFondsDeRoulement,
     }));
   }
 

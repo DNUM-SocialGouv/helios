@@ -20,6 +20,8 @@ const autorisationsMockData = {
     résultatNetComptable: "ok",
     ratioDépendanceFinancière: "ok",
     allocationDeRessources: "ok",
+    fondsDeRoulement: "ok",
+    besoinFondsDeRoulement: "ok",
   },
   budgetEtFinances: {
     tauxDeCafNette: "ok",
@@ -113,6 +115,24 @@ describe("Bloc Budget et Finance", () => {
 
     // THEN
     const titre = screen.getAllByText(wording.TAUX_DE_CAF);
+    expect(titre).not.toHaveLength(0);
+  });
+
+  it("affiche l'indicateur besoin en fonds de roulement s'il y a des données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        besoinFondsDeRoulement: 500,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.BESOIN_FONDS_DE_ROULEMENT);
     expect(titre).not.toHaveLength(0);
   });
 });

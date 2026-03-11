@@ -1152,6 +1152,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
       tauxDeCafNetSan: budget.tauxDeCafNetteSan,
       fondsDeRoulement: budget.fondsDeRoulement,
+      besoinFondsDeRoulement: budget.besoinFondsDeRoulement,
     }));
   }
 

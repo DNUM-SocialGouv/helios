@@ -311,6 +311,7 @@ describe("Entité juridique loader", () => {
       budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
       budgetFinanceEntiteJuridique.ratioDependanceFinanciere = 0.3;
       budgetFinanceEntiteJuridique.fondsDeRoulement = 0.4;
+      budgetFinanceEntiteJuridique.besoinFondsDeRoulement = 0.5;
 
       await budgetFinanceEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
 
@@ -366,6 +367,8 @@ describe("Entité juridique loader", () => {
           tauxDeCafNetSan: 0.2,
 
           fondsDeRoulement: 0.4,
+
+          besoinFondsDeRoulement: 0.5,
         } as EntitéJuridiqueBudgetFinance,
       ]);
     });

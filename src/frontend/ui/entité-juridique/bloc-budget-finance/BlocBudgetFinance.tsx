@@ -1,5 +1,6 @@
 import { AllocationRessources } from "./allocation-ressources/AllocationRessources";
 import styles from "./BlocBudgetFinance.module.css";
+import { BesoinFondsDeRoulement } from "./besoin-fonds-de-roulement/BesoinFondsDeRoulement";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 import { FondsDeRoulement } from "./fonds-de-roulement/FondsDeRoulement";
@@ -103,6 +104,7 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
 
   const renderBlocBudgetEtFinancesSecondSection = () => {
     const peutAfficherFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.fondsDeRoulementEstIlAutorisé;
+    const peutAfficherBesoinFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.auMoinsUnBesoinFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.besoinFondsDeRoulementEstIlAutorisé;
 
     return (
       <ul className={"indicateurs " + styles["budget"]}>
@@ -111,6 +113,13 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
             etabFiness={etabFiness}
             etabTitle={etabTitle}
             fondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement}
+          />
+        )}
+        {peutAfficherBesoinFondsDeRoulement && (
+          <BesoinFondsDeRoulement
+            besoinFondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
           />
         )}
       </ul>

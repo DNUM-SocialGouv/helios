@@ -314,6 +314,7 @@ export interface Wording {
   readonly TAUX_DE_CAF: string;
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string;
   readonly FONDS_DE_ROULEMENT: string;
+  readonly BESOIN_FONDS_DE_ROULEMENT: string;
 
   // Bloc budget et finance entité juridique
   readonly TITRE_I: string;
