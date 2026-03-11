@@ -1,11 +1,11 @@
 import { AllocationRessources } from "./allocation-ressources/AllocationRessources";
-import styles from "./BlocBudgetFinance.module.css";
 import { BesoinFondsDeRoulement } from "./besoin-fonds-de-roulement/BesoinFondsDeRoulement";
+import styles from "./BlocBudgetFinance.module.css";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
-import { Tresorerie } from "./tresorerie/Tresorerie";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
 import { FondsDeRoulement } from "./fonds-de-roulement/FondsDeRoulement";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
+import { Tresorerie } from "./tresorerie/Tresorerie";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
