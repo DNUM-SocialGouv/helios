@@ -118,6 +118,24 @@ describe("Bloc Budget et Finance", () => {
     expect(titre).not.toHaveLength(0);
   });
 
+  it("affiche l'indicateur fonds de roulement s'il y a des données", () => {
+    // GIVEN
+    const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
+      {
+        année: 2022,
+        fondsDeRoulement: 400,
+      } as EntitéJuridiqueBudgetFinance,
+    ];
+    const viewModel = new EntitéJuridiqueBudgetFinanceViewModel(budgetFinance, allocationRessourceMockData, wording, autorisationsMockData);
+
+    // WHEN
+    renderFakeComponent(<BlocBudgetFinance entitéJuridiqueBudgetFinanceViewModel={viewModel} etabFiness={etabFiness} etabTitle={etabTitle} type="EJ" />);
+
+    // THEN
+    const titre = screen.getAllByText(wording.FONDS_DE_ROULEMENT);
+    expect(titre).not.toHaveLength(0);
+  });
+
   it("affiche l'indicateur besoin en fonds de roulement s'il y a des données", () => {
     // GIVEN
     const budgetFinance: EntitéJuridiqueBudgetFinance[] = [
