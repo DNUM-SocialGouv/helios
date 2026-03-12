@@ -1,5 +1,7 @@
 from datetime import datetime
 import os
+from logging import Logger
+
 import traceback
 import pandas as pd
 import numpy as np
@@ -68,7 +70,7 @@ def import_vigie_rh_profession_groupe(
     chemin_local_du_fichier_ref_profession_groupe: str,
     chemin_local_du_fichier_passage_profession: str,
     base_de_donnees: Engine,
-    logger_helios
+    logger_helios:Logger
     ) -> dict:
     date_de_mise_à_jour_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_groupe)
     traite_profession_groupe = verifie_si_le_fichier_est_traite(
