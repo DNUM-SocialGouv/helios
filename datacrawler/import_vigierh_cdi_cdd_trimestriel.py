@@ -54,14 +54,13 @@ def import_donnees_nature_contrats_trimestriel(
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
-    else:
-        if len({date_du_fichier_vigierh_ref_nature_contrats,
-        date_du_fichier_vigierh_donnees_nature_contrats}) == 1:
-            start = datetime.now()
-            donnees_cdi_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_TRIMESTRIEL.value)
-            donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_cdi_cdd, base_de_donnees )
-            with base_de_donnees.begin() as connection:
-                écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+    if len({date_du_fichier_vigierh_ref_nature_contrats,
+    date_du_fichier_vigierh_donnees_nature_contrats}) == 1:
+        start = datetime.now()
+        donnees_cdi_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_TRIMESTRIEL.value)
+        donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_cdi_cdd, base_de_donnees )
+        with base_de_donnees.begin() as connection:
+            écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
                     "indicateurs nature contrats trimestriels",
                     SOURCE,
                     connection,
@@ -69,26 +68,25 @@ def import_donnees_nature_contrats_trimestriel(
                     donnees_cdi_cdd_filtrees,
                     [(FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL, date_du_fichier_vigierh_donnees_nature_contrats)],
                     logger,
-                )
-            duration = (datetime.now() - start).total_seconds()
-            return {
+            )
+        duration = (datetime.now() - start).total_seconds()
+        return {
             "table": "nature contrats trimestriel",
             "rows_in_file": donnees_cdi_cdd.shape[0],
             "rows": donnees_cdi_cdd_filtrees.shape[0],
             "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_cdi_cdd.shape[0]*100:.2f}%",
             "duration": duration,
-            }
-        else:
-            logger.info(
+        }
+    logger.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value}, "
                 f"{FichierSource.VIGIE_RH_REF_CDI_CDD.value})"
-            )
-            return{
+    )
+    return{
             "table": "nature contrats trimestriel",
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
-            }
+    }
 
 def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
@@ -116,6 +114,5 @@ def main() -> dict:
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de nature contrats trimestriel : {error_text}"
         }
-   
 if __name__ == "__main__":
     main()

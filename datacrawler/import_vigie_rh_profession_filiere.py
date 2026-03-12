@@ -36,6 +36,75 @@ def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, 
 
     return donnees_filtrees
 
+def import_vigie_rh_profession_filiere(
+    chemin_local_du_fichier_profession_filiere: str,
+    chemin_local_du_fichier_ref: str,
+    base_de_donnees: Engine,
+    logger_helios
+    ) -> dict:
+    date_de_mise_à_jour_profession_filiere = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
+    traite_profession_filiere = verifie_si_le_fichier_est_traite(
+            date_de_mise_à_jour_profession_filiere,
+            base_de_donnees,
+            FichierSource.VIGIE_RH_PROFESSION_FILIERE.value
+    )
+
+    date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
+    traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value)
+
+    # Traitements des données
+    if traite_profession_filiere and traite_ref:
+        logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_FILIERE.value} a été déjà traité")
+        logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
+        return {
+                "table": "profession_filiere",
+                "duration": 0,
+                "commentaires": "Les fichiers ont été déjà traités"}
+    if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
+        start = datetime.now()
+        df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
+        code_list_ref = np.array(df_ref['code'].tolist())
+
+        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
+        df_filtré = filter_profession_filiere_data(data_frame, code_list_ref, base_de_donnees)
+        with base_de_donnees.begin() as connection:
+            supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
+            inserer_nouvelles_donnees(
+                        TABLE_REF_PROFESSION_FILIERE,
+                        connection,
+                        SOURCE,
+                        df_ref,
+                        logger_helios,
+                        FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
+                        date_de_mise_à_jour_ref
+                )
+            inserer_nouvelles_donnees(
+                        TABLE_PROFESSION_FILIERE,
+                        connection,
+                        SOURCE,
+                        df_filtré,
+                        logger_helios,
+                        FichierSource.VIGIE_RH_PROFESSION_FILIERE,
+                        date_de_mise_à_jour_profession_filiere
+                )
+        return {
+                    "table": "profession_filiere",
+                    "rows_in_file": data_frame.shape[0],
+                    "rows": df_filtré.shape[0],
+                    "taux": f"{df_filtré.shape[0]/data_frame.shape[0]*100:.2f}%",
+                    "duration": (datetime.now() - start).total_seconds(),
+        }
+    logger_helios.info(
+                    f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
+                    f"({FichierSource.VIGIE_RH_PROFESSION_FILIERE.value}, "
+                    f"{FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value})"
+    )
+    return {
+        "table": "profession_filiere",
+        "duration": 0,
+        "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
+
 def main() -> dict:
     # Initialisations
     logger_helios, variables_d_environnement = initialise_les_dépendances()
@@ -52,77 +121,13 @@ def main() -> dict:
             vegie_rh_data_path,
             trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value, logger_helios)
         )
-        date_de_mise_à_jour_profession_filiere = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_filiere)
-        traite_profession_filiere = verifie_si_le_fichier_est_traite(
-            date_de_mise_à_jour_profession_filiere,
-            base_de_donnees,
-            FichierSource.VIGIE_RH_PROFESSION_FILIERE.value
-        )
-
-        date_de_mise_à_jour_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
-        traite_ref = verifie_si_le_fichier_est_traite(date_de_mise_à_jour_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value)
-
-        # Traitements des données
-        if traite_profession_filiere and traite_ref:
-            logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_FILIERE.value} a été déjà traité")
-            logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
-            return {
-                "table": "profession_filiere",
-                "duration": 0,
-                "commentaires": "Les fichiers ont été déjà traités"}
-        else:
-            if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
-                start = datetime.now()
-                df_ref = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_PROFESSION_FILIERE.value)
-                code_list_ref = np.array(df_ref['code'].tolist())
-
-                data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_filiere, ColumMapping.PROFESSION_FILIERE.value)
-                df_filtré = filter_profession_filiere_data(data_frame, code_list_ref, base_de_donnees)
-                with base_de_donnees.begin() as connection:
-                    supprimer_donnees_existantes(TABLE_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
-                    supprimer_donnees_existantes(TABLE_REF_PROFESSION_FILIERE, connection, SOURCE, logger_helios)
-                    inserer_nouvelles_donnees(
-                        TABLE_REF_PROFESSION_FILIERE,
-                        connection,
-                        SOURCE,
-                        df_ref,
-                        logger_helios,
-                        FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE,
-                        date_de_mise_à_jour_ref
-                    )
-                    inserer_nouvelles_donnees(
-                        TABLE_PROFESSION_FILIERE,
-                        connection,
-                        SOURCE,
-                        df_filtré,
-                        logger_helios,
-                        FichierSource.VIGIE_RH_PROFESSION_FILIERE,
-                        date_de_mise_à_jour_profession_filiere
-                    )
-                    duration = (datetime.now() - start).total_seconds()
-                    return {
-                    "table": "profession_filiere",
-                    "rows_in_file": data_frame.shape[0],
-                    "rows": df_filtré.shape[0],
-                    "taux": f"{df_filtré.shape[0]/data_frame.shape[0]*100:.2f}%",
-                    "duration": duration,
-                    }
-            else:
-                logger_helios.info(
-                    f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
-                    f"({FichierSource.VIGIE_RH_PROFESSION_FILIERE.value}, "
-                    f"{FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value})"
-                )
-                return {
-                "table": "profession_filiere",
-                "duration": 0,
-                "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
+        result = import_vigie_rh_profession_filiere(chemin_local_du_fichier_profession_filiere, chemin_local_du_fichier_ref, base_de_donnees, logger_helios)
+        return result
     except Exception as error: # pylint: disable=broad-exception-caught
-        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": "profession_filiere",
             "duration": 0,
-            "commentaires": f"Une erreur est survenue lors de l'import des données de la profession filière : {error_text}"
+            "commentaires": ''.join(traceback.format_exception(type(error), error, error.__traceback__))
         }
 
 if __name__ == "__main__":

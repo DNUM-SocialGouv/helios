@@ -52,54 +52,52 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
         }
-    else:
-        # si les fichiers sont déjà traités, on fait rien
-        ref_traite = verifie_si_le_fichier_est_traite(date_du_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
-        donnees_traite =  verifie_si_le_fichier_est_traite(date_du_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
-        if ref_traite & donnees_traite:
-            logger.info(
+    # si les fichiers sont déjà traités, on fait rien
+    ref_traite = verifie_si_le_fichier_est_traite(date_du_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
+    donnees_traite =  verifie_si_le_fichier_est_traite(date_du_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
+    if ref_traite & donnees_traite:
+        logger.info(
                 f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
-            return {
+        return {
             "table": "motifs ruptures contrats",
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
-            }
-        else:
-            start = datetime.now()
-            logger.info(f"Début de traitement des fichiers"
-                        f" {chemin_local_fichier_ref}  et {chemin_local_fichier_donnees}")
-            references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
-            donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
-            donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, connection, SOURCE, logger)
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, connection, SOURCE, logger)
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
-                    connection,
-                    SOURCE,
-                    references,
-                    logger,
-                    FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
-                    date_du_fichier_ref
-                )
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_MOTIFS_RUPTURES,
-                    connection,
-                    SOURCE,
-                    donnees,
-                    logger,
-                    FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
-                    date_du_fichier_donnees
-                )
-            duration = (datetime.now() - start).total_seconds()
-            return {
-            "table": "motifs ruptures contrats",
-            "rows_in_file": donnees_brutes.shape[0],
-            "rows": donnees.shape[0],
-            "taux": f"{donnees.shape[0]/donnees_brutes.shape[0]*100:.2f}%",
-            "duration": duration,
-        }              
+        }
+    start = datetime.now()
+    logger.info(f"Début de traitement des fichiers"
+                f" {chemin_local_fichier_ref}  et {chemin_local_fichier_donnees}")
+    references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
+    donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
+    donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
+    with base_de_donnees.begin() as connection:
+        supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, connection, SOURCE, logger)
+        supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, connection, SOURCE, logger)
+        inserer_nouvelles_donnees(
+            TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
+            connection,
+            SOURCE,
+            references,
+            logger,
+            FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
+            date_du_fichier_ref
+        )
+        inserer_nouvelles_donnees(
+            TABLE_VIGIE_RH_MOTIFS_RUPTURES,
+            connection,
+            SOURCE,
+            donnees,
+            logger,
+            FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
+            date_du_fichier_donnees
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
+        "table": "motifs ruptures contrats",
+        "rows_in_file": donnees_brutes.shape[0],
+        "rows": donnees.shape[0],
+        "taux": f"{donnees.shape[0]/donnees_brutes.shape[0]*100:.2f}%",
+        "duration": duration,
+    }
 def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])

@@ -1,8 +1,8 @@
 import os
+import traceback
 from logging import Logger
 from datetime import datetime
 import pandas as pd
-import traceback
 
 from sqlalchemy.engine import Engine, create_engine
 
@@ -47,34 +47,32 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
             "table": "tranches_ages",
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
-    else:
-        # si les fichiers sont déjà traités, on fait rien
-        traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
-        traite_donnees = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_pyramide, base_de_donnees, FichierSource.VIGIE_RH_PYRAMIDE.value)
-        if traite_ref & traite_donnees:
-            logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_PYRAMIDE.value}  ont été déjà traités")
-            return {
+    # si les fichiers sont déjà traités, on fait rien
+    traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
+    traite_donnees = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_pyramide, base_de_donnees, FichierSource.VIGIE_RH_PYRAMIDE.value)
+    if traite_ref & traite_donnees:
+        logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_PYRAMIDE.value}  ont été déjà traités")
+        return {
             "table": "tranches_ages",
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"}
-        else:
-            start = datetime.now()
-            donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
-            donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
-            donnees_pyramide_filtrees = filtrer_les_donnees_pyramide(donnees_pyramide, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, logger)
-                supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, logger)
-                inserer_nouvelles_donnees(
-                TABLE_REF_TRANCHE_AGE,
-                connection,
-                SOURCE,
-                donnees_ref_tranche_age,
-                logger,
-                FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-                date_du_fichier_vigierh_ref_tranche_age
-                )
-                inserer_nouvelles_donnees(
+    start = datetime.now()
+    donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
+    donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
+    donnees_pyramide_filtrees = filtrer_les_donnees_pyramide(donnees_pyramide, base_de_donnees)
+    with base_de_donnees.begin() as connection:
+        supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, logger)
+        supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, logger)
+        inserer_nouvelles_donnees(
+            TABLE_REF_TRANCHE_AGE,
+            connection,
+            SOURCE,
+            donnees_ref_tranche_age,
+            logger,
+            FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
+            date_du_fichier_vigierh_ref_tranche_age
+        )
+        inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
                 SOURCE,
@@ -82,15 +80,15 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 logger,
                 FichierSource.VIGIE_RH_PYRAMIDE,
                 date_du_fichier_vigierh_donnees_pyramide
-                )
-            duration = (datetime.now() - start).total_seconds()
-            return {
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
             "table": "tranches_ages",
             "rows_in_file": donnees_pyramide.shape[0],
             "rows": donnees_pyramide_filtrees.shape[0],
             "taux": f"{donnees_pyramide_filtrees.shape[0]/donnees_pyramide.shape[0]*100:.2f}%",
             "duration": duration,
-            }
+    }
 
 def main()-> dict:
     try:
