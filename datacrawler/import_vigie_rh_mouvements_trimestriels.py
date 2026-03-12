@@ -1,6 +1,7 @@
 import os
 from logging import Logger
 from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -72,13 +73,20 @@ def main() -> dict:
 
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
+    try:
+        chemin_local_du_fichier_mouvements_rh= os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value, logger_helios))
 
-    chemin_local_du_fichier_mouvements_rh= os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value, logger_helios))
-
-    result = import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
-    return result
+        result = import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": "mouvements trimestriels",
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de mouvements rh trimestriels : {error_text}"
+        }
 
 if __name__ == "__main__":
     main()

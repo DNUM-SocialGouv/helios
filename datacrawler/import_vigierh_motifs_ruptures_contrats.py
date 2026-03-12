@@ -1,6 +1,7 @@
 import os
 from logging import Logger
 from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -98,24 +99,30 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             "rows": donnees.shape[0],
             "taux": f"{donnees.shape[0]/donnees_brutes.shape[0]*100:.2f}%",
             "duration": duration,
-        }
-                
+        }              
 def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
+    try:
+        vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+        fichiers = os.listdir(vigierh_data_path)
 
-    vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vigierh_data_path)
+        chemin_fichier_ref = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value, logger_helios))
+        chemin_fichier_donnees = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value, logger_helios))
 
-    chemin_fichier_ref = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value, logger_helios))
-    chemin_fichier_donnees = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value, logger_helios))
-
-    result = import_donnees_motifs_ruptures(chemin_fichier_ref,chemin_fichier_donnees,base_de_donnees_helios,logger_helios)
-    return result
+        result = import_donnees_motifs_ruptures(chemin_fichier_ref,chemin_fichier_donnees,base_de_donnees_helios,logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": "motifs ruptures contrats",
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de motifs ruptures contrats : {error_text}"
+        }
 
 if __name__ == "__main__":
     main()

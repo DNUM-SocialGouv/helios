@@ -2,6 +2,7 @@ from logging import Logger
 from datetime import datetime
 
 import os
+import traceback
 import numpy as np
 import pandas as pd
 from sqlalchemy.engine import Engine, create_engine
@@ -101,8 +102,7 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
             "table": "duree cdd",
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
-            }        
-            
+            }           
 def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
@@ -110,16 +110,23 @@ def main() -> dict:
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
 
-    chemin_local_du_fichier_ref_duree_cdd = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_DUREE_CDD.value, logger_helios))
-    chemin_local_du_fichier_duree_cdd = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_DUREE_CDD.value, logger_helios))
+    try:
+        chemin_local_du_fichier_ref_duree_cdd = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_DUREE_CDD.value, logger_helios))
+        chemin_local_du_fichier_duree_cdd = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_DUREE_CDD.value, logger_helios))
 
-    result = import_donnees_duree_cdd(chemin_local_du_fichier_ref_duree_cdd, chemin_local_du_fichier_duree_cdd, base_de_donnees_helios, logger_helios)
-    return result
+        result = import_donnees_duree_cdd(chemin_local_du_fichier_ref_duree_cdd, chemin_local_du_fichier_duree_cdd, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": "duree cdd",
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de la durée des CDD : {error_text}"
+        }
 
 if __name__ == "__main__":
-    main()
-    
+    main() 

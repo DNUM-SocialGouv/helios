@@ -2,6 +2,7 @@ import os
 from logging import Logger
 from datetime import datetime
 import pandas as pd
+import traceback
 
 from sqlalchemy.engine import Engine, create_engine
 
@@ -92,21 +93,29 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
             }
 
 def main()-> dict:
-    logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
+    try:
+        logger_helios, variables_d_environnement = initialise_les_dépendances()
+        base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
-    vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vigierh_data_path)
+        vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+        fichiers = os.listdir(vigierh_data_path)
 
-    chemin_local_du_fichier_ref_tranche_age = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
-    chemin_local_du_fichier_pyramide = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
+        chemin_local_du_fichier_ref_tranche_age = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
+        chemin_local_du_fichier_pyramide = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
 
-    result  = import_donnees_pyramide(chemin_local_du_fichier_ref_tranche_age, chemin_local_du_fichier_pyramide, base_de_donnees_helios, logger_helios)
-    return result
+        result  = import_donnees_pyramide(chemin_local_du_fichier_ref_tranche_age, chemin_local_du_fichier_pyramide, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": "tranches_ages",
+            "duration": 0,
+            "commentaires": str(error_text)
+        }
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 import os
 from logging import Logger
 from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -94,19 +95,27 @@ def main() -> dict:
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
-    chemin_local_du_fichier_ref_nature_contrats = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
+    try:
+        chemin_local_du_fichier_ref_nature_contrats = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
 
-    chemin_local_du_fichier_nature_contrats= os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value, logger_helios))
+        chemin_local_du_fichier_nature_contrats= os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value, logger_helios))
 
-    result =import_donnees_nature_contrats_trimestriel(chemin_local_du_fichier_nature_contrats,
-                                               chemin_local_du_fichier_ref_nature_contrats,
-                                               base_de_donnees_helios,
-                                               logger_helios)
-    return result
+        result =import_donnees_nature_contrats_trimestriel(chemin_local_du_fichier_nature_contrats,
+                                                chemin_local_du_fichier_ref_nature_contrats,
+                                                base_de_donnees_helios,
+                                                logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": "nature contrats trimestriel",
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de nature contrats trimestriel : {error_text}"
+        }
    
 if __name__ == "__main__":
     main()
