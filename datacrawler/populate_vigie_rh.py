@@ -13,6 +13,5 @@ results.append(import_vigierh_duree_cdd.main())
 results.append(import_vigierh_cdd_cdi.main())
 results.append(import_vigierh_cdi_cdd_trimestriel.main())
 
-
 HTML_BODY = generate_report(results)
 send_email(HTML_BODY)
