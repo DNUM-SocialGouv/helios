@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -10,8 +12,12 @@ def send_email( report_html):
     sender_name = variables_d_environnement["TIPIMAIL_SENDER_NAME"]
     api_user = variables_d_environnement["TIPIMAIL_APIUSER"]
     api_key = variables_d_environnement["TIPIMAIL_APIKEY"]
+    recipients = json.loads(
+            variables_d_environnement.get("TIPIMAIL_TO_ADDRESSES", "[]")
+        )
+    
     body = {
-        "to": [{"address": 'sanachlaifa@gmail.com'}],
+        "to": [{"address": email} for email in recipients],
         "msg": {
             "from": {
                 "personalName": sender_name,
