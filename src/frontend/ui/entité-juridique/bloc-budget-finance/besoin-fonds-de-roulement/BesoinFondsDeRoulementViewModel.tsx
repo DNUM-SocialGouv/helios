@@ -18,7 +18,7 @@ export class BesoinFondsDeRoulementViewModel {
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any) {
     this.besoinFondsDeRoulement = budgetFinance
-      .filter((budget) => budget.besoinFondsDeRoulement !== null && budget.besoinFondsDeRoulement !== undefined)
+      .filter((budget) => budget.besoinFondsDeRoulement !== null && budget.besoinFondsDeRoulement !== undefined && budget.besoinFondsDeRoulement !== 0)
       .map((budget) => ({
         année: budget.année,
         valeur: budget.besoinFondsDeRoulement,

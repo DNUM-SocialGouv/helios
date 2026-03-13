@@ -18,7 +18,7 @@ export class TresorerieViewModel {
 
   constructor(budgetFinance: EntitéJuridiqueBudgetFinance[], autorisations: any) {
     this.tresorerie = budgetFinance
-      .filter((budget) => budget.tresorerie !== null && budget.tresorerie !== undefined)
+      .filter((budget) => budget.tresorerie !== null && budget.tresorerie !== undefined && budget.tresorerie !== 0)
       .map((budget) => ({
         année: budget.année,
         valeur: budget.tresorerie,
