@@ -59,7 +59,7 @@ def import_vigie_rh_profession_filiere(
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_FILIERE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
         return {
-                "table": "profession_filiere",
+                "table": FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value,
                 "duration": 0,
                 "commentaires": "Les fichiers ont été déjà traités"}
     if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
@@ -91,7 +91,7 @@ def import_vigie_rh_profession_filiere(
                         date_de_mise_à_jour_profession_filiere
                 )
         return {
-                    "table": "profession_filiere",
+                    "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
                     "rows_in_file": data_frame.shape[0],
                     "rows": df_filtré.shape[0],
                     "taux": f"{df_filtré.shape[0]/data_frame.shape[0]*100:.2f}%",
@@ -103,7 +103,7 @@ def import_vigie_rh_profession_filiere(
                     f"{FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value})"
     )
     return {
-        "table": "profession_filiere",
+        "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
         "duration": 0,
         "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
 
@@ -127,7 +127,7 @@ def main() -> dict:
         return result
     except Exception as error: # pylint: disable=broad-exception-caught
         return {
-            "table": "profession_filiere",
+            "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
             "duration": 0,
             "commentaires": ''.join(traceback.format_exception(type(error), error, error.__traceback__))
         }

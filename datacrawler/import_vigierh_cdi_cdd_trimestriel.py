@@ -49,7 +49,7 @@ def import_donnees_nature_contrats_trimestriel(
     if fichier_traite:
         logger.info(f"Le fichier {FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value} a été déjà traité")
         return{
-            "table": "nature contrats trimestriel",
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -70,7 +70,7 @@ def import_donnees_nature_contrats_trimestriel(
             )
         duration = (datetime.now() - start).total_seconds()
         return {
-            "table": "nature contrats trimestriel",
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
             "rows_in_file": donnees_cdi_cdd.shape[0],
             "rows": donnees_cdi_cdd_filtrees.shape[0],
             "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_cdi_cdd.shape[0]*100:.2f}%",
@@ -82,7 +82,7 @@ def import_donnees_nature_contrats_trimestriel(
                 f"{FichierSource.VIGIE_RH_REF_CDI_CDD.value})"
     )
     return{
-            "table": "nature contrats trimestriel",
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
     }
@@ -109,7 +109,7 @@ def main() -> dict:
     except Exception as error: # pylint: disable=broad-exception-caught
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
-            "table": "nature contrats trimestriel",
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de nature contrats trimestriel : {error_text}"
         }

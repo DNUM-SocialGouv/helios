@@ -44,7 +44,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 f"{FichierSource.VIGIE_RH_PYRAMIDE.value})."
             )
         return {
-            "table": "tranches_ages",
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
     # si les fichiers sont déjà traités, on fait rien
@@ -53,7 +53,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
     if traite_ref & traite_donnees:
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_PYRAMIDE.value}  ont été déjà traités")
         return {
-            "table": "tranches_ages",
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"}
     start = datetime.now()
@@ -83,7 +83,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
         )
     duration = (datetime.now() - start).total_seconds()
     return {
-            "table": "tranches_ages",
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "rows_in_file": donnees_pyramide.shape[0],
             "rows": donnees_pyramide_filtrees.shape[0],
             "taux": f"{donnees_pyramide_filtrees.shape[0]/donnees_pyramide.shape[0]*100:.2f}%",
@@ -110,7 +110,7 @@ def main()-> dict:
     except Exception as error: # pylint: disable=broad-exception-caught
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
-            "table": "tranches_ages",
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
             "commentaires": str(error_text)
         }

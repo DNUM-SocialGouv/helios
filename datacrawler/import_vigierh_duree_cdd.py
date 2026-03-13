@@ -50,7 +50,7 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
     if traite_ref_duree_cdd and traite_donnees_duree_cdd:
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_DUREE_CDD.value} et {FichierSource.VIGIE_RH_REF_DUREE_CDD.value} ont été déjà traités")
         return {
-            "table": "duree cdd",
+            "table": FichierSource.VIGIE_RH_DUREE_CDD.value,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -84,7 +84,7 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
             )
         duration = (datetime.now() - start).total_seconds()
         return {
-            "table": "duree cdd",
+            "table": FichierSource.VIGIE_RH_DUREE_CDD.value,
             "rows_in_file": donnees_durre_cdd.shape[0],
             "rows": donnees_durre_cdd_filtrees.shape[0],
             "taux": f"{donnees_durre_cdd_filtrees.shape[0]/donnees_durre_cdd.shape[0]*100:.2f}%",
@@ -96,7 +96,7 @@ def import_donnees_duree_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_f
         f"{FichierSource.VIGIE_RH_REF_DUREE_CDD.value})"
     )
     return {
-        "table": "duree cdd",
+        "table": FichierSource.VIGIE_RH_DUREE_CDD.value,
         "duration": 0,
         "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
     }
@@ -120,7 +120,7 @@ def main() -> dict:
     except Exception as error: # pylint: disable=broad-exception-caught
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
-            "table": "duree cdd",
+            "table": FichierSource.VIGIE_RH_DUREE_CDD.value,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de la durée des CDD : {error_text}"
         }
