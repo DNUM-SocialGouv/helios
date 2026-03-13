@@ -14,6 +14,7 @@ lxml = "4.9.1"
 numpy = "2.4.2"
 paramiko = "4.0.0"
 requests = "*"
+types-requests = "*"
 
 [dev-packages]
 pylint = "==2.16.2"

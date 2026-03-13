@@ -32,6 +32,11 @@ class VariablesDEnvironnement(TypedDict):
     SFTP_PORT: str
     SFTP_USERNAME: str
     SFTP_PRIVATE_KEY: str
+    TIPIMAIL_SENDER_ADDRESS: str
+    TIPIMAIL_SENDER_NAME: str
+    TIPIMAIL_APIUSER: str
+    TIPIMAIL_APIKEY: str
+    TIPIMAIL_TO_ADDRESSES: str
 
 
 def récupère_les_variables_d_environnement(

@@ -1,4 +1,6 @@
-def generate_report(results):
+from typing import List, Dict, Any
+
+def generate_report(results: List[Dict[str, Any]]) -> str:
     text_lines = []
     html_rows = []
 

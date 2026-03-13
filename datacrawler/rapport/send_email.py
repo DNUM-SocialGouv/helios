@@ -1,3 +1,4 @@
+from typing import Dict, Any
 import json
 
 import requests
@@ -5,7 +6,8 @@ import requests
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
 
-def send_email( report_html):
+def send_email(report_html: str)-> Dict[str, Any]:
+
     logger_helios, variables_d_environnement = initialise_les_dépendances()
 
     sender_address = variables_d_environnement["TIPIMAIL_SENDER_ADDRESS"]
@@ -15,7 +17,6 @@ def send_email( report_html):
     recipients = json.loads(
             variables_d_environnement.get("TIPIMAIL_TO_ADDRESSES", "[]")
         )
-    
     body = {
         "to": [{"address": email} for email in recipients],
         "msg": {
