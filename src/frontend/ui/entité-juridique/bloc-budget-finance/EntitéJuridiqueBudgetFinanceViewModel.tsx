@@ -1,8 +1,8 @@
 import { AllocationRessourcesViewModel } from "./AllocationRessourcesViewModel";
 import { BesoinFondsDeRoulementViewModel } from "./besoin-fonds-de-roulement/BesoinFondsDeRoulementViewModel";
 import { FondsDeRoulementViewModel } from "./fonds-de-roulement/FondsDeRoulementViewModel";
-import { TresorerieViewModel } from "./tresorerie/TresorerieViewModel";
 import { RatioDependanceFinanciereViewModel } from "./ratio-dependance-financiere/RatioDependanceFinanciereViewModel";
+import { TresorerieViewModel } from "./tresorerie/TresorerieViewModel";
 import { IAllocationRessources } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueAllocationRessources";
 import { EntitéJuridiqueBudgetFinance } from "../../../../backend/métier/entities/entité-juridique/EntitéJuridiqueBudgetFinance";
 import { Wording } from "../../../configuration/wording/Wording";
@@ -74,12 +74,13 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       if (!this.resultatNetComptable.auMoinsUnResultatNetRenseigné()) nonRenseignees.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlRenseigné) nonRenseignees.push(this.wording.TAUX_DE_CAF);
       if (!this.ratioDependanceFinanciere.auMoinsUnRatioRenseigné()) nonRenseignees.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
-      if (!this.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné()) nonRenseignees.push(this.wording.FONDS_DE_ROULEMENT);
-      if (!this.besoinFondsDeRoulement.auMoinsUnBesoinFondsDeRoulementRenseigné()) nonRenseignees.push(this.wording.BESOIN_FONDS_DE_ROULEMENT);
-      if (!this.tresorerie.auMoinsUneTresorerieRenseignée()) nonRenseignees.push(this.wording.TRESORERIE);
     }
 
     if (this.allocationRessources.vide()) nonRenseignees.push(this.wording.ALLOCATION_DE_RESSOURCES);
+    if (!this.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné()) nonRenseignees.push(this.wording.FONDS_DE_ROULEMENT);
+    if (!this.besoinFondsDeRoulement.auMoinsUnBesoinFondsDeRoulementRenseigné()) nonRenseignees.push(this.wording.BESOIN_FONDS_DE_ROULEMENT);
+    if (!this.tresorerie.auMoinsUneTresorerieRenseignée()) nonRenseignees.push(this.wording.TRESORERIE);
+
     return nonRenseignees;
   }
 
@@ -90,12 +91,12 @@ export class EntitéJuridiqueBudgetFinanceViewModel {
       if (!this.resultatNetComptable.resultatNetComptableEstIlAutorisé) nonAutorisés.push(this.wording.RÉSULTAT_NET_COMPTABLE);
       if (!this.tauxDeCafViewModel.leTauxDeCafEstIlAutorisé) nonAutorisés.push(this.wording.TAUX_DE_CAF);
       if (!this.ratioDependanceFinanciere.ratioDependanceFinanciereEstIlAutorisé) nonAutorisés.push(this.wording.RATIO_DEPENDANCE_FINANCIERE);
-      if (!this.fondsDeRoulement.fondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.FONDS_DE_ROULEMENT);
-      if (!this.besoinFondsDeRoulement.besoinFondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.BESOIN_FONDS_DE_ROULEMENT);
-      if (!this.tresorerie.tresorerieEstIlAutorisé) nonAutorisés.push(this.wording.TRESORERIE);
     }
 
     if (!this.allocationRessources.estIlAutorisé) nonAutorisés.push(this.wording.ALLOCATION_DE_RESSOURCES);
+    if (!this.fondsDeRoulement.fondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.FONDS_DE_ROULEMENT);
+    if (!this.besoinFondsDeRoulement.besoinFondsDeRoulementEstIlAutorisé) nonAutorisés.push(this.wording.BESOIN_FONDS_DE_ROULEMENT);
+    if (!this.tresorerie.tresorerieEstIlAutorisé) nonAutorisés.push(this.wording.TRESORERIE);
 
     return nonAutorisés;
   }
