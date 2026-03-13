@@ -8,6 +8,8 @@
 
 - hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
 - hel-997: Ajout du graphique horizontal concernant les fonds de roulement
+- hel-998: Ajout du graphique horizontal concernant le besoin en fonds de roulement
+- hel-999: Ajout du graphique horizontal concernant la trésorerie
 
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
