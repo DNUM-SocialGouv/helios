@@ -40,7 +40,6 @@ def import_donnees_nature_contrats_trimestriel(
     chemin_local_du_fichier_ref: str,
     base_de_donnees: Engine,
     logger: Logger) -> dict:
-    print("MAIN")
     date_du_fichier_vigierh_donnees_nature_contrats = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     date_du_fichier_vigierh_ref_nature_contrats = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     fichier_traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_nature_contrats,
