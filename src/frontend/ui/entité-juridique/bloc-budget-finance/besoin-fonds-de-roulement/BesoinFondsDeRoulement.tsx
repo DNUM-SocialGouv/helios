@@ -67,7 +67,7 @@ export function BesoinFondsDeRoulement({ etabFiness, etabTitle, besoinFondsDeRou
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        formateur={StringFormater.roundFormatInFrench}
+        formateur={StringFormater.formatInEuro}
         identifiant={wording.BESOIN_FONDS_DE_ROULEMENT}
         libellés={besoinFondsDeRoulementViewModel.années.map(String)}
         libellésDeValeursManquantes={anneesManquantes}

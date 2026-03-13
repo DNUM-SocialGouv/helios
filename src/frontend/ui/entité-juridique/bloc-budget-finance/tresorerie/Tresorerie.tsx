@@ -67,7 +67,7 @@ export function Tresorerie({ etabFiness, etabTitle, tresorerieViewModel }: Treso
         entêteLibellé={wording.ANNÉE}
         etabFiness={etabFiness}
         etabTitle={etabTitle}
-        formateur={StringFormater.roundFormatInFrench}
+        formateur={StringFormater.formatInEuro}
         identifiant={wording.TRESORERIE}
         libellés={tresorerieViewModel.années.map(String)}
         libellésDeValeursManquantes={anneesManquantes}
