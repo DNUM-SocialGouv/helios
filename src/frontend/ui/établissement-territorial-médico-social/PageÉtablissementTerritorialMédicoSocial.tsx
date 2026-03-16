@@ -17,6 +17,7 @@ import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { EtablissementTerritorialMedicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
+import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
 type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialViewModel: EtablissementTerritorialMedicoSocialViewModel;
@@ -105,6 +106,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           toggelBlocs={() => toggelBlocs(4)}
         />
       </div>
+      <BoutonRetourHaut />
     </main>
   );
 };
