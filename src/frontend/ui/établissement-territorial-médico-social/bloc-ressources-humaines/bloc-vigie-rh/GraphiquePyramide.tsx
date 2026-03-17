@@ -264,6 +264,15 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         },
       },
       datalabels: {
+        align: (context: any) => {
+          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+          const valeurBrute = donnees[context.dataIndex];
+          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
+          if (valeurNumerique !== null && valeurNumerique <= 0) {
+            return context.dataset.label === "Men" ? "start" : "end";
+          }
+          return "center";
+        },
         display: (context: any) => {
           // Afficher les labels uniquement pour les datasets principaux
           return context.dataset.label === "Men" || context.dataset.label === "Women";
