@@ -24,7 +24,7 @@ type IndicatorCategory = {
 
 type IndicatorsState = Map<string, Map<IndicatorCategory, IndicatorStateItem[]>>
 
-function getInitialIndicatorsState(): IndicatorsState {
+export function getInitialIndicatorsState(): IndicatorsState {
   // ################################## Medico-social indicators ##################################
   const medicoSocialIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
 
