@@ -25,11 +25,11 @@ export const BoutonRetourHaut = () => {
   return (
     <button
       aria-label="Retour en haut de page"
-      className={`fr-btn fr-btn--secondary fr-btn--icon-only ${styles["bouton"]}`}
+      className={`fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-arrow-up-line ${styles["bouton"]}`}
       onClick={scrollToTop}
       type="button"
     >
-      <span aria-hidden="true" className="fr-icon-arrow-up-line" />  Haut de page
+      Haut de page
     </button>
   );
 };
