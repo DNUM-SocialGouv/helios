@@ -1,4 +1,8 @@
+from datetime import datetime
 import os
+from logging import Logger
+
+import traceback
 import pandas as pd
 import numpy as np
 from sqlalchemy.engine import create_engine, Engine
@@ -39,28 +43,35 @@ def filter_profession_groupe_data(donnees: pd.DataFrame, ref_code: np.ndarray, d
 
     return donnees_filtrees
 
-if __name__ == "__main__":
+def construire_le_dataframe_ref_profession_groupe(
+    chemin_local_du_fichier_ref_profession_groupe: str,
+    chemin_local_du_fichier_passage_profession: str
+    ) -> pd.DataFrame:
+    df_ref_profession_groupe = lis_le_fichier_parquet(chemin_local_du_fichier_ref_profession_groupe, ColumMapping.REF_PROFESSION_GROUPE.value)
 
-    # Initialisations
-    logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
-
-    vegie_rh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vegie_rh_data_path)
-
-    chemin_local_du_fichier_profession_groupe = os.path.join(
-        vegie_rh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PROFESSION_GROUPE.value, logger_helios)
+    df_passage_professions = lis_le_fichier_parquet(
+        chemin_local_du_fichier_passage_profession,
+        ColumMapping.PASSAGE_GROUPE_FILIERE.value
     )
-    chemin_local_du_fichier_ref_profession_groupe = os.path.join(
-        vegie_rh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value, logger_helios)
-    )
-    chemin_local_du_fichier_passage_profession = os.path.join(
-        vegie_rh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value, logger_helios)
-    )
+    df_passage_professions.rename(columns={"profession_code": "code"}, inplace=True)
 
+    df_ref_profession_groupe = df_ref_profession_groupe.merge(
+        df_passage_professions,
+        on="code",
+        how="left"
+    )
+    df_ref_profession_groupe["code_filiere"] = pd.to_numeric(
+        df_ref_profession_groupe["code_filiere"], errors="coerce"
+    ).astype("Int64")
+    return df_ref_profession_groupe
+
+def import_vigie_rh_profession_groupe(
+    chemin_local_du_fichier_profession_groupe: str,
+    chemin_local_du_fichier_ref_profession_groupe: str,
+    chemin_local_du_fichier_passage_profession: str,
+    base_de_donnees: Engine,
+    logger_helios:Logger
+    ) -> dict:
     date_de_mise_à_jour_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_profession_groupe)
     traite_profession_groupe = verifie_si_le_fichier_est_traite(
         date_de_mise_à_jour_profession_groupe,
@@ -70,9 +81,9 @@ if __name__ == "__main__":
 
     date_de_mise_à_jour_ref_profession_groupe = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref_profession_groupe)
     traite_ref_profession_groupe = verifie_si_le_fichier_est_traite(
-        date_de_mise_à_jour_ref_profession_groupe,
-        base_de_donnees,
-        FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value
+            date_de_mise_à_jour_ref_profession_groupe,
+            base_de_donnees,
+            FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value
     )
     date_de_mise_a_jour_passage_profession = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_passage_profession)
 
@@ -81,58 +92,100 @@ if __name__ == "__main__":
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_PROFESSION_GROUPE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value} a été déjà traité")
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value} a été déjà traité")
-    else:
-        if len({
-            date_de_mise_à_jour_profession_groupe,
-            date_de_mise_à_jour_ref_profession_groupe,
-            date_de_mise_a_jour_passage_profession
-        }) == 1:
+        return {
+            "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"}
+    if len({
+        date_de_mise_à_jour_profession_groupe,
+        date_de_mise_à_jour_ref_profession_groupe,
+        date_de_mise_a_jour_passage_profession
+    }) == 1:
+        start = datetime.now()
+        df_ref_profession_groupe = construire_le_dataframe_ref_profession_groupe(
+            chemin_local_du_fichier_ref_profession_groupe,
+            chemin_local_du_fichier_passage_profession
+        )
 
-            df_ref_profession_groupe = lis_le_fichier_parquet(chemin_local_du_fichier_ref_profession_groupe, ColumMapping.REF_PROFESSION_GROUPE.value)
-            code_list_ref_profession_groupe = np.array(df_ref_profession_groupe['code'].tolist())
-
-            df_passage_professions = lis_le_fichier_parquet(
-                chemin_local_du_fichier_passage_profession,
-                ColumMapping.PASSAGE_GROUPE_FILIERE.value
+        data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
+        df_filtre = filter_profession_groupe_data(data_frame, np.array(df_ref_profession_groupe['code'].tolist()), base_de_donnees)
+        with base_de_donnees.begin() as connection:
+            supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, connection, SOURCE, logger_helios)
+            supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, connection, SOURCE, logger_helios)
+            inserer_nouvelles_donnees(
+                TABLE_REF_PROFESSION_GROUPE,
+                connection,
+                SOURCE,
+                df_ref_profession_groupe,
+                logger_helios,
+                FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE,
+                date_de_mise_à_jour_ref_profession_groupe
             )
-            df_passage_professions.rename(columns={"profession_code": "code"}, inplace=True)
-
-            df_ref_profession_groupe = df_ref_profession_groupe.merge(
-                df_passage_professions,
-                on="code",
-                how="left"
+            inserer_nouvelles_donnees(
+                TABLE_PROFESSION_GROUPE,
+                connection,
+                SOURCE,
+                df_filtre,
+                logger_helios,
+                FichierSource.VIGIE_RH_PROFESSION_GROUPE,
+                date_de_mise_à_jour_profession_groupe
             )
-            df_ref_profession_groupe["code_filiere"] = pd.to_numeric(
-                df_ref_profession_groupe["code_filiere"], errors="coerce"
-            ).astype("Int64")
-
-            data_frame = lis_le_fichier_parquet(chemin_local_du_fichier_profession_groupe, ColumMapping.PROFESSION_GROUPE.value)
-            df_filtre = filter_profession_groupe_data(data_frame, code_list_ref_profession_groupe, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_PROFESSION_GROUPE, connection, SOURCE, logger_helios)
-                supprimer_donnees_existantes(TABLE_REF_PROFESSION_GROUPE, connection, SOURCE, logger_helios)
-                inserer_nouvelles_donnees(
-                    TABLE_REF_PROFESSION_GROUPE,
-                    connection,
-                    SOURCE,
-                    df_ref_profession_groupe,
-                    logger_helios,
-                    FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE,
-                    date_de_mise_à_jour_ref_profession_groupe
-                )
-                inserer_nouvelles_donnees(
-                    TABLE_PROFESSION_GROUPE,
-                    connection,
-                    SOURCE,
-                    df_filtre,
-                    logger_helios,
-                    FichierSource.VIGIE_RH_PROFESSION_GROUPE,
-                    date_de_mise_à_jour_profession_groupe
-                )
-        else:
-            logger_helios.info(
+        return {
+            "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
+            "rows_in_file": data_frame.shape[0],
+            "rows": df_filtre.shape[0],
+            "taux": f"{df_filtre.shape[0]/data_frame.shape[0]*100:.2f}%",
+            "duration": (datetime.now() - start).total_seconds(),
+        }
+    logger_helios.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_PROFESSION_GROUPE.value}, "
                 f"{FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value}, "
                 f"{FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value})"
-            )
+    )
+    return {
+        "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
+        "duration": 0,
+        "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
+    }
+
+
+def main() -> dict:
+    # Initialisations
+    logger_helios, variables_d_environnement = initialise_les_dépendances()
+    base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
+
+    vegie_rh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+    fichiers = os.listdir(vegie_rh_data_path)
+    try:
+        chemin_local_du_fichier_profession_groupe = os.path.join(
+            vegie_rh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PROFESSION_GROUPE.value, logger_helios)
+        )
+        chemin_local_du_fichier_ref_profession_groupe = os.path.join(
+            vegie_rh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PROFESSION_GROUPE.value, logger_helios)
+        )
+        chemin_local_du_fichier_passage_profession = os.path.join(
+            vegie_rh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value, logger_helios)
+        )
+        result = import_vigie_rh_profession_groupe(
+            chemin_local_du_fichier_profession_groupe,
+            chemin_local_du_fichier_ref_profession_groupe,
+            chemin_local_du_fichier_passage_profession,
+            base_de_donnees,
+            logger_helios
+        )
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors du traitement des fichiers de profession groupe : {error_text}"
+        }
+
+if __name__ == "__main__":
+    main()
+    

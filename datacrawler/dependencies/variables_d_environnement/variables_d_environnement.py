@@ -32,6 +32,11 @@ class VariablesDEnvironnement(TypedDict):
     SFTP_PORT: str
     SFTP_USERNAME: str
     SFTP_PRIVATE_KEY: str
+    TIPIMAIL_SENDER_ADDRESS: str
+    TIPIMAIL_SENDER_NAME: str
+    TIPIMAIL_APIUSER: str
+    TIPIMAIL_APIKEY: str
+    TIPIMAIL_TO_ADDRESSES: str
 
 
 def récupère_les_variables_d_environnement(
@@ -79,4 +84,9 @@ def récupère_les_variables_d_environnement(
         SFTP_PORT=signale_si_la_variable_n_est_pas_présente("SFTP_PORT"),
         SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
         SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("SFTP_PRIVATE_KEY"),
+        TIPIMAIL_SENDER_NAME=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_NAME"),
+        TIPIMAIL_SENDER_ADDRESS=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_ADDRESS"),
+        TIPIMAIL_APIUSER=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIUSER"),
+        TIPIMAIL_APIKEY=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIKEY"),
+        TIPIMAIL_TO_ADDRESSES=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_TO_ADDRESSES"),
     )
