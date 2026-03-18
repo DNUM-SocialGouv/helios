@@ -94,11 +94,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   private get effectifsGroupesDisponibles(): boolean {
@@ -110,31 +110,31 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesRotationsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesDureesCDDNeSontEllesPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesMotifsNeSontIlsPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesNaturesContratsNeSontPasAutorisees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesDepartsPrematuresCdiPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get graphiqueMotifsAffichable(): boolean {
