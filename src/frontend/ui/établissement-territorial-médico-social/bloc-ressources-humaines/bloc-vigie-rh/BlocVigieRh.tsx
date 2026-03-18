@@ -165,7 +165,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     const precedent = Number(totaux[isoIdx]) || 0;
     const pastPeriod = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const comparaisonLabel = `à ${ABB_MOIS[ref.mois - 1]} ${ref.annee - 1}`;
-    const variation = precedent - courant;
+    const variation = courant - precedent;
     const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
     let variationText = '';
 
@@ -273,7 +273,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           ) : (
             <></>
           )}
-          {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
+          {blocVigieRHViewModel.graphiqueRotationsAffichable ? (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
