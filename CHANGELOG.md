@@ -6,11 +6,14 @@
 
 ### Features
 
+- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
 ### Bug Fixes
 
 ### Features
+
 - vr-152: Renommage des colonnes de plusieurs tables
 
 ## [1.8.2.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.2.1) (2026-03-05)
