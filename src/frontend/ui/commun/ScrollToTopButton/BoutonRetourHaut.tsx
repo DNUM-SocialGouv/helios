@@ -29,7 +29,7 @@ export const BoutonRetourHaut = () => {
       onClick={scrollToTop}
       type="button"
     >
-      <span aria-hidden="true" className="fr-icon-arrow-up-line" />
+      <span aria-hidden="true" className="fr-icon-arrow-up-line" />  Haut de page
     </button>
   );
 };
