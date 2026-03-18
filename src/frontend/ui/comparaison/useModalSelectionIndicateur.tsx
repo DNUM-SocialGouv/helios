@@ -106,6 +106,9 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
     { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
     { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
+    { displayName: "Fonds de roulement", columnName: "fondsDeRoulement", enabled: true },
+    { displayName: "Besoin en fonds de roulement", columnName: "besoinFondsDeRoulement", enabled: true },
+    { displayName: "Trésorerie", columnName: "tresorerie", enabled: true },
   ];
   sanitaireIndicators.set(budgetSanCategory, sanitaireIndicatorsBudgetEtFinances);
   // ##########################################################################################
@@ -151,6 +154,9 @@ function getInitialIndicatorsState(): IndicatorsState {
     { displayName: "Allocation de ressources: 1ᵉʳ enveloppe", columnName: 'enveloppe1', enabled: true },
     { displayName: "Allocation de ressources: 2ᵉᵐᵉ enveloppe", columnName: 'enveloppe2', enabled: true },
     { displayName: "Allocation de ressources: 3ᵉᵐᵉ enveloppe", columnName: 'enveloppe3', enabled: true },
+    { displayName: "Fonds de roulement", columnName: "fondsDeRoulement", enabled: true },
+    { displayName: "Besoin en fonds de roulement", columnName: "besoinFondsDeRoulement", enabled: true },
+    { displayName: "Trésorerie", columnName: "tresorerie", enabled: true },
   ];
   entiteJuridiqueIndicators.set(budgetEJCategory, entiteJuridiqueIndicatorsBudgetEtFinances);
   // ##########################################################################################
@@ -373,4 +379,3 @@ export function useModalSelectionIndicateur(structure: string) {
 
   return { generateModal, enabledIndicators, openIndicatorSelectionModal };
 }
-

@@ -47,6 +47,9 @@ export type ResultatComparaisonEJ = Readonly<{
   resultatNetComptableEj: number | null | string;
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
+  fondsDeRoulement: number | null | string;
+  besoinFondsDeRoulement: number | null | string;
+  tresorerie: number | null | string;
   sejoursHad: number | null | string;
   nombreEtpPm: number | null | string;
   nombreEtpPnm: number | null | string;
@@ -77,6 +80,9 @@ export type ResultatComparaisonSAN = Readonly<{
   depensesInterimPm: number | null | string;
   joursAbsenteismePm: number | null | string;
   joursAbsenteismePnm: number | null | string;
+  fondsDeRoulement: number | null | string;
+  besoinFondsDeRoulement: number | null | string;
+  tresorerie: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -314,6 +320,18 @@ export class ComparaisonSANViewModel {
     return formatCurrency(this.comparaison.depensesInterimPm);
   }
 
+  public get fondsDeRoulement(): string {
+    return formatCurrency(this.comparaison.fondsDeRoulement);
+  }
+
+  public get besoinFondsDeRoulement(): string {
+    return formatCurrency(this.comparaison.besoinFondsDeRoulement);
+  }
+
+  public get tresorerie(): string {
+    return formatCurrency(this.comparaison.tresorerie);
+  }
+
   public get joursAbsenteismePm(): string {
     return formatNumberValue(this.comparaison.joursAbsenteismePm);
   }
@@ -380,6 +398,18 @@ export class ComparaisonEJViewModel {
 
   public get ratioDependanceFinanciere(): string | null {
     return formatRatio(this.comparaison.ratioDependanceFinanciere);
+  }
+
+  public get fondsDeRoulement(): string {
+    return formatCurrency(this.comparaison.fondsDeRoulement);
+  }
+
+  public get besoinFondsDeRoulement(): string {
+    return formatCurrency(this.comparaison.besoinFondsDeRoulement);
+  }
+
+  public get tresorerie(): string {
+    return formatCurrency(this.comparaison.tresorerie);
   }
 
   public get sejoursHad(): number | string | null {
