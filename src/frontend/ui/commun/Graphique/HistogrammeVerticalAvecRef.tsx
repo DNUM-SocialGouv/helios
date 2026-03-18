@@ -76,6 +76,11 @@ const HistogrammeVerticalAvecRef = ({
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
+    layout: {
+      padding: {
+      top: 20,
+      },
+    },
     // intersect : false  avec mode : "index" => au survol du segment, on affiche la même tooltip.
     // on affiche la tooltip qui correspond à la valeur , donc index 0 . Et on ignore la tooltip de la barre Référence (pour cela on ajout 'filter' dans tooltip)
     interaction: {
@@ -85,10 +90,9 @@ const HistogrammeVerticalAvecRef = ({
     plugins: {
       datalabels: {
         align: "end",
-        anchor: (context: any) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value > 0 ? "start" : "end";
-        },
+        anchor: "end",
+        clip: false,
+        offset: -4,
         font: {
           family: "Marianne",
           size: 12,
