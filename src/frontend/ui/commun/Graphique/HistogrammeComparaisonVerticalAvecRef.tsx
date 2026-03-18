@@ -181,6 +181,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     maintainAspectRatio: true,
     animation: false,
     responsive: true,
+    layout: {
+      padding: {
+      top: 20,
+      },
+    },
     interaction: {
       intersect: false,
       mode: "point",
@@ -191,6 +196,8 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       datalabels: {
         align: "end",
         anchor: "end",
+        clip: false,
+        offset: -4,
         font: {
           family: "Marianne",
           size: 12,
