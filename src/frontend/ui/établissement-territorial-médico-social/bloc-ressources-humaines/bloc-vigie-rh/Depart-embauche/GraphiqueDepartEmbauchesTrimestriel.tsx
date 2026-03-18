@@ -32,6 +32,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
     const valeur = donnee.depart;
     if (Number.isFinite(valeur)) {
+      if (valeur === 0) return -0.000001;
       return -Math.abs(valeur);
     }
     return null;
@@ -206,6 +207,20 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     animation: false,
     plugins: {
       datalabels: {
+        align: (context: any) => {
+          const value = context.dataset.data[context.dataIndex];
+          if (Math.abs(value) < 0.001) {
+            return context.dataset.label === wording.DEPARTS ? "start" : "end";
+          }
+          return "center";
+        },
+        anchor: (context: any) => {
+          const value = context.dataset.data[context.dataIndex];
+          if (Math.abs(value) < 0.001) {
+            return context.dataset.label === wording.DEPARTS ? "start" : "end";
+          }
+          return "center";
+        },
         color: "#000",
         font: {
           family: "Marianne",
@@ -217,7 +232,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
           return context.dataset.label === wording.DEPARTS || context.dataset.label === wording.EMBAUCHES;
         },
         formatter: (value: number) => {
-          return Math.abs(value)
+          return Math.round(Math.abs(value))
         },
       },
       tooltip: {
@@ -238,14 +253,14 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             const embaucheChart = datasetLabel.toLowerCase() === wording.EMBAUCHES.toLowerCase();
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurText = Number.isFinite(value) ? Math.round(Math.abs(value as number)).toString() : wording.NON_RENSEIGNÉ;
             const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             if (!showRefValues) {
               return `${label}: ${valeurText}`;
             }
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-            const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurRefText = Number.isFinite(refValue) ? Math.round(Math.abs(refValue as number)).toString() : wording.NON_RENSEIGNÉ;
 
             return [`${label}: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
