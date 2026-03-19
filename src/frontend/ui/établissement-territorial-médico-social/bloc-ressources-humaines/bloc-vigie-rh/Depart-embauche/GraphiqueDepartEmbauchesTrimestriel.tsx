@@ -205,21 +205,23 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
+    layout: {
+      padding: {
+      top: 20,
+        },
+    },
     plugins: {
       datalabels: {
         align: (context: any) => {
-          const value = context.dataset.data[context.dataIndex];
-          if (Math.abs(value) < 0.001) {
-            return context.dataset.label === wording.DEPARTS ? "start" : "end";
-          }
-          return "center";
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
         },
         anchor: (context: any) => {
-          const value = context.dataset.data[context.dataIndex];
-          if (Math.abs(value) < 0.001) {
-            return context.dataset.label === wording.DEPARTS ? "start" : "end";
-          }
-          return "center";
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
+        },
+        clip: false,
+        clamp: true,
+        offset: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? -1 : -4;
         },
         color: "#000",
         font: {
@@ -245,7 +247,6 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             else {
               return `${periode[1]} ${periode[0]}`;
             }
-
           },
           label: function (context: any) {
             const index = context.dataIndex;
@@ -320,6 +321,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         }
       },
       y: {
+        grace: '10%',
         stacked: true,
         beginAtZero: true,
         grid: {
