@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
@@ -185,15 +185,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     return <div>{wording.INDICATEURS_VIDES}</div>;
   }
 
-  const renderRow = (items: (ReactElement | null | false)[], columns: 2 | 3 = 3) => {
+  const renderRow = (items: (ReactElement | null | false)[]) => {
     const visibles = items.filter(Boolean) as ReactElement[];
     if (!visibles.length) return null;
-    const colCount = Math.min(columns, visibles.length);
-    const style = { ["--vigie-rh-cols" as const]: colCount } as CSSProperties;
     return (
       <ul
         className={`indicateurs ${styles["liste-indicateurs-vr"]}`}
-        style={style}
       >
         {visibles}
       </ul>
@@ -406,7 +403,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               ) : (
               <></>
             )
-            ], 2)}
+            ])}
           </div>
           {!blocVigieRHViewModel.lesEffectifsGroupesNeSontIlsPasRenseignees && <section className="fr-accordion">
             <h3 className={styles["vigie-rh-accordion-button"]}>
@@ -516,7 +513,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null
-          ], 2)}
+          ])}
         </section>
         <section aria-label="mouvement" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
@@ -621,7 +618,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null,
-          ], 2)}
+          ])}
         </section>
       </div>
     </>
