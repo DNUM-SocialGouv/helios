@@ -158,6 +158,9 @@ const LineChart = ({
         },
       },
       y: {
+        ticks: {
+          precision: 0
+        },
         border: {
           display: false
         },
