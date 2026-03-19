@@ -491,7 +491,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null,
-            blocVigieRHViewModel.graphiqueMotifsAffichable ? (
+            blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
               <IndicateurGraphique
                 contenuInfoBulle={
                   <ContenuDureeCddVigieRh
