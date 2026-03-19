@@ -25,7 +25,7 @@
   display: grid;
   gap: 1rem;
   width: 100%;
-  grid-template-columns: repeat(var(--vigie-rh-cols, 3), minmax(0, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   --indicateur-graph-min-height: 420px;
 }
 
