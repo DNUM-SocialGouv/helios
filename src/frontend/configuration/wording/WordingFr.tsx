@@ -48,6 +48,7 @@ export class WordingFr implements Wording {
   readonly TITRE_PAGE_GESTION_COOKIES: string = "Gestion des cookies - Helios";
   readonly TITRE_PAGE_INACCESSIBLE: string = "Accès refusé - Helios";
   readonly TITRE_PAGE_ECO_CONCEPTION: string = "Eco-Conception - Helios";
+  readonly TITRE_PAGE_CGU: string = "Conditions Générales d’Utilisation - Helios";
 
   // Breadcrumb
   readonly VOUS_ÊTES_ICI: string = "Vous êtes ici :";
@@ -558,6 +559,7 @@ export class WordingFr implements Wording {
   readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
   readonly SAVOIR_PLUS: string = "En savoir plus";
   readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
+  readonly CGU: string = "CGU";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
