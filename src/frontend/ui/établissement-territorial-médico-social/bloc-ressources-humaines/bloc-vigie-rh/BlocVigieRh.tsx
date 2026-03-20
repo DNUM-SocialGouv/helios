@@ -370,6 +370,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                         etabFiness={etabFiness}
                         etabTitle={etabTitle}
                         labels={libelles}
+                        annees={annees}
                         showRefValues={showRefValues}
                       />
                     )}

@@ -35,7 +35,7 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   transcription?: TranscriptionOptions;
   formatValeur?: (valeur: number | null) => string | null;
   highlightLastLabel?: boolean;
-  libellesValeursManquantes?: string[];
+  libellesValeursManquantes?: (number | string)[];
   libellesValeursRefManquantes?: string[];
   showRefValues: boolean;
 }>;

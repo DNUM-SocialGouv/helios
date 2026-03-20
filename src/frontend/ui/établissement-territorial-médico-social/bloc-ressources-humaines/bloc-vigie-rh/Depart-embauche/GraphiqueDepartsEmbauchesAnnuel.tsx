@@ -14,6 +14,7 @@ import {
 } from "../../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -60,44 +61,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     return null;
   });
 
-  const libellesValeursManquantes: string[] = [];
-  const libellesValeursReferenceManquantes: string[] = [];
-
-  const ajouterLibellesManquants = (
-    valeurs: (number | null)[],
-    construireLibelle: (index: number) => string,
-    accumulateur: string[]
-  ) => {
-    for (const [index, valeur] of valeurs.entries()) {
-      if (!Number.isFinite(valeur)) {
-        const libelle = construireLibelle(index);
-        if (!accumulateur.includes(libelle)) {
-          accumulateur.push(libelle);
-        }
-      }
-    }
-  };
-
-  ajouterLibellesManquants(
-    donneesDeparts,
-    (index) => `${wording.DEPARTS}-${libelles[index]}`,
-    libellesValeursManquantes
-  );
-  ajouterLibellesManquants(
-    donneesEmbauches,
-    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-    libellesValeursManquantes
-  );
-  ajouterLibellesManquants(
-    donneesDepartsRef,
-    (index) => `${wording.DEPARTS}-${libelles[index]}`,
-    libellesValeursReferenceManquantes
-  );
-  ajouterLibellesManquants(
-    donneesEmbauchesRef,
-    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-    libellesValeursReferenceManquantes
-  );
+  const libellesValeursManquantes = annéesManquantesVigieRh(libelles, 3);
 
   const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
     const valeur = donneesDeparts[idx];
@@ -324,11 +288,6 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
-        </MiseEnExergue>
-      )}
-      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
-        <MiseEnExergue>
-          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
       <ColorLabel
