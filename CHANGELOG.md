@@ -1,14 +1,24 @@
 # Changelog d'Helios
 
+## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (TODO)
+
+### Bug Fixes
+
+### Features
+
+- hel-1004: Ajout d’une page de CGU
+
 ## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
 
 ### Bug Fixes
+
 - vr-156: Correction du calcul du taux de variation dans la vignette "Effectifs"
 - vr-157: Position du libellé en cas de valeur nulle dans le graphique "Entrées et sorties"
 - vr-158: Taille des graphiques lorsque graphiques manquants dans un bloc
 - vr-159: Affichage de certains graphiques avec des données manquantes
 
 ### Features
+
 - vr-146: Modification de la taille des points trimestriels sur les graphiques par filière et catégorie
 - vr-150: Wording détail effectifs par filière
 - vr-151: Nommage des sorties Excel effectifs par filière

@@ -47,6 +47,7 @@ export class WordingFr implements Wording {
   readonly TITRE_PAGE_GESTION_COOKIES: string = "Gestion des cookies - Helios";
   readonly TITRE_PAGE_INACCESSIBLE: string = "Accès refusé - Helios";
   readonly TITRE_PAGE_ECO_CONCEPTION: string = "Eco-Conception - Helios";
+  readonly TITRE_PAGE_CGU: string = "Conditions Générales d’Utilisation - Helios";
 
   // Breadcrumb
   readonly VOUS_ÊTES_ICI: string = "Vous êtes ici :";
@@ -536,6 +537,7 @@ export class WordingFr implements Wording {
   readonly LICENCE_ETALAB: string = "licence etalab-2.0";
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
+  readonly CGU: string = "CGU";
   readonly COOKIES: string = "Gestion des Cookies";
 
   // Accessibilité
