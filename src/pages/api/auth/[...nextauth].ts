@@ -32,6 +32,7 @@ export const authOptions: NextAuthOptions = {
             institutionId: utilisateur.institution.id,
             codeRegion: utilisateur.institution.codeGeo,
             codeProfiles: utilisateur.profils,
+            cgu: utilisateur.cgu,
           };
         } catch {
           return null;
@@ -41,7 +42,7 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env["NEXTAUTH_SECRET"],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, trigger, session }) {
       if (account && user) {
         return {
           ...token,
@@ -53,6 +54,13 @@ export const authOptions: NextAuthOptions = {
           institutionId: user.institutionId,
           codeRegion: user.codeRegion,
           codeProfiles: user.codeProfiles,
+          cgu: user.cgu,
+        };
+      }
+      if (trigger === "update" && typeof session?.cgu === "boolean") {
+        return {
+          ...token,
+          cgu: session.cgu,
         };
       }
       return token;
@@ -65,6 +73,7 @@ export const authOptions: NextAuthOptions = {
       session.user.institutionId = token["institutionId"] as number;
       session.user.codeRegion = token["codeRegion"] as number;
       session.user.codeProfiles = token["codeProfiles"] as string[];
+      session.user.cgu = token["cgu"] as boolean;
       return session;
     },
   },

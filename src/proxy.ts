@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
+import { Paths } from "./frontend/configuration/Paths";
 import type { NextRequest } from "next/server";
+import type { NextRequestWithAuth } from "next-auth/middleware";
+
+const PATHS = new Paths();
 
 export default withAuth(
   function proxy(request: NextRequest) {
@@ -14,6 +18,17 @@ export default withAuth(
       const url = request.nextUrl.clone();
       url.pathname = "/inaccessible";
       return NextResponse.rewrite(url);
+    }
+
+    const token = (request as NextRequestWithAuth).nextauth.token as { cgu?: boolean } | null;
+
+    const isCguPage = request.nextUrl.pathname === PATHS.VALIDER_CGU;
+    const hasAcceptedCgu = token?.cgu === true;
+
+    if (!hasAcceptedCgu && !isCguPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = PATHS.VALIDER_CGU;
+      return NextResponse.redirect(url);
     }
 
     return NextResponse.next();
@@ -39,6 +54,7 @@ export const config = {
     "/comparaison",
     "/history",
     "/change-mot-passe",
+    "/valider-cgu",
     "/liste/:path*",
     "/api/recherche",
     "/api/revalidate",

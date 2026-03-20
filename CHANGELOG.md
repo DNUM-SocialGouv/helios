@@ -7,6 +7,7 @@
 ### Features
 
 - hel-1004: Ajout d’une page de CGU
+- hel-1005: Ajout d’un formulaire de validation des CGU obligatoire
 
 ## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
 

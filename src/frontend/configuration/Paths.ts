@@ -10,6 +10,7 @@ export class Paths {
   readonly RÉGION: string = "/region";
   readonly ECO_CONCEPTION: string = "/eco-conception";
   readonly CGU: string = "/cgu";
+  readonly VALIDER_CGU: string = "/valider-cgu";
   readonly GESTION_DES_COOKIES: string = "/gestion-des-cookies";
   readonly AIDE: string = "/aide";
   readonly MES_LISTES: string = "/mes-listes"
