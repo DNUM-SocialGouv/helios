@@ -18,7 +18,7 @@ from datacrawler.import_vigie_rh_profession_filiere import filter_profession_fil
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010006799"
 NUMÉRO_FINESS_ÉTABLISSEMENT_2 = "470001702"
 NUMÉRO_FINESS_ÉTABLISSEMENT_3 = "470005356"
 

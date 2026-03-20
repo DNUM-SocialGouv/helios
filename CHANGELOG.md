@@ -1,10 +1,24 @@
 # Changelog d'Helios
 
-## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-09)
+## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
 
 ### Bug Fixes
+- vr-156: Correction du calcul du taux de variation dans la vignette "Effectifs"
+- vr-157: Position du libellé en cas de valeur nulle dans le graphique "Entrées et sorties"
+- vr-158: Taille des graphiques lorsque graphiques manquants dans un bloc
+- vr-159: Affichage de certains graphiques avec des données manquantes
 
 ### Features
+- vr-146: Modification de la taille des points trimestriels sur les graphiques par filière et catégorie
+- vr-150: Wording détail effectifs par filière
+- vr-151: Nommage des sorties Excel effectifs par filière
+- vr-153: Optimisation et garantie des performances de l’ingestion des fichiers Parquet depuis le SFTP
+- vr-154: Modifier le titre de la dataviz "Taux de renouvellement des contrats" en "Taux de renouvellement des effectifs"
+- vr-160: Position des libellés de valeur pour les graphiques de diagramme en barres horizontales
+- vr-161: Positionnement des libellés de valeur pour les diagrammes en barres verticales
+- vr-162: Echelle de l'axe des ordonnées dans les graphiques d'effectif
+- vr-164: Placement des étiquettes de valeur sur les graphiques en barres verticales
+- vr-165: Modifications des couleurs des étiquettes de pourcentage dans le graphique répartition des effectifs
 
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 

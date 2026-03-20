@@ -95,7 +95,7 @@ const LineChart = ({
       const index = context.dataIndex;
       const mois = dataEffectifs?.dataMoisAnnee?.[index]?.mois;
       if (mois && [1, 4, 7, 10].includes(mois)) {
-        return 4;
+        return 2.5;
       }
       return 1;
     };
@@ -158,6 +158,9 @@ const LineChart = ({
         },
       },
       y: {
+        ticks: {
+          precision: 0
+        },
         border: {
           display: false
         },

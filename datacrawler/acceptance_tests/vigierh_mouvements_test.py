@@ -14,7 +14,7 @@ from datacrawler.test_helpers import (
 from datacrawler.import_vigie_rh_mouvements import import_donnees_mouvements_rh
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "470001702"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010006799"
 
 class TestImportVigieRhMouvements:
     def setup_method(self) -> None:
@@ -30,15 +30,15 @@ class TestImportVigieRhMouvements:
         mouvements_enregistres = pd.read_sql(TABLE_VIGIE_RH_MOUVEMENTS_RH, base_de_données_test)
         mouvements_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": ["470001702", "470001702"],
+                "numero_finess_etablissement_territorial": ["010006799", "010006799"],
                 "annee": [2023, 2024],
-                "nouveaux_contrats": [10, 3],
+                "nouveaux_contrats": [24, 19],
                 "nouveaux_contrats_ref": [18, 18],
-                "fins_contrats": [6, 6],
+                "fins_contrats": [17, 24],
                 "fins_contrats_ref": [15, 16],
-                "taux_rotation": [0.21621621621621623, 0.125],
+                "taux_rotation": [0.21808510638297873, 0.22395833333333334],
                 "taux_rotation_ref": [0.23779819710663033, 0.23906828005469072],
-                "departs_prematures_cdi": [8, 7],
+                "departs_prematures_cdi": [15, 9],
             }
         )
         pd.testing.assert_frame_equal(mouvements_enregistres.sort_index(axis=1), mouvements_attendus.sort_index(axis=1))
@@ -49,48 +49,47 @@ class TestImportVigieRhMouvements:
         mouvements_enregistres = pd.read_sql(TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS, base_de_données_test)
         mouvements_attendus = pd.DataFrame(
             {
-                "numero_finess_etablissement_territorial": ["470001702", 
-                                                            "470001702", 
-                                                            "470001702",
-                                                            "470001702",
-                                                            "470001702",
-                                                            "470001702", 
-                                                            "470001702",
-                                                            "470001702",
-                                                            "470001702",
-                                                            "470001702", 
-                                                            "470001702",
-                                                            "470001702"],
+                "numero_finess_etablissement_territorial": ["010006799", 
+                                                            "010006799", 
+                                                            "010006799",
+                                                            "010006799",
+                                                            "010006799",
+                                                            "010006799", 
+                                                            "010006799",
+                                                            "010006799",
+                                                            "010006799",
+                                                            "010006799", 
+                                                            "010006799",
+                                                            "010006799"],
                 "annee": [2023, 2023, 2023, 2023, 2024, 2024, 2024, 2024, 2025, 2025, 2025, 2025],
                 "trimestre": [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4],
-                "nouveaux_contrats": [3, 2, 1, 3, 1, 2, 3, 4, 5, 4, 7, nan],
-                "nouveaux_contrats_ref": [7,7, 8, 7, 8, 7,8, 8, 7, 7, 7, nan],
-                "fins_contrats": [2,1, 0,2,1,2,0, 1,3, 2, 3,  nan],
-                "fins_contrats_ref": [5,6, 5, 5, 5, 6, 5, 5, 5, 7, 5, nan],
-                "taux_rotation": [0.06578947368421052, 
-                                  0.04285714285714286,
-                                  0.014285714285714285,
-                                  0.06756756756756757,
-                                  0.02702702702702703,
-                                  0.05405405405405406,
-                                  0.04285714285714286,
-                                  0.07142857142857142,
-                                  0.10810810810810811,
-                                  0.08571428571428572,
-                                  0.13513513513513514,
-                                  nan],
-                "taux_rotation_ref": [0.08548067003416823,
-                                      0.09569511496691935,
-                                      0.09191264198162609,
-                                      0.09374879097201824,
-                                      0.08982652744713017,
-                                      0.09261338996088486,
-                                      0.08988518242335894,
-                                      0.09797036157094868,
-                                      0.0872562824225277,
-                                      0.09824909285514648,
-                                      0.08661166599514693,
-                                      nan]
+                "nouveaux_contrats": [4, 2, 3, 7, 5, 6, 7, 5, 8, 7, 6, nan],
+                "nouveaux_contrats_ref": [4,4, 4, 4, 5, 4,4, 4, 4, 4, 4, nan],
+                "fins_contrats": [3,7, 5,5,5,3,3, 6,4, 8, 2,  nan],
+                "fins_contrats_ref": [3,4, 3, 3, 3, 4, 3, 3, 3, 4, 3, nan],
+                "taux_rotation": [0.0660377358490566,
+                                    0.08333333333333333,
+                                    0.08, 0.11538461538461539,
+                                    0.09615384615384616,
+                                    0.08490566037735849,
+                                    0.08771929824561403,
+                                    0.09821428571428571,
+                                    0.10526315789473684,
+                                    0.1271186440677966,
+                                    0.07142857142857142,
+                                    nan],
+                "taux_rotation_ref": [0.09126998217898374,
+                                    0.09561785237259132,
+                                    0.08988306838054962,
+                                    0.09549675214494868,
+                                    0.09754089964230647,
+                                    0.0978391031263635,
+                                    0.091508191458823,
+                                    0.09934672096321481,
+                                    0.09584577559539656,
+                                    0.10413678532069742,
+                                    0.09241925193148197,
+                                    nan]
             }
         )
 

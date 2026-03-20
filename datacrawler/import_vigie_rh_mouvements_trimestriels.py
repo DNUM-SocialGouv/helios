@@ -1,5 +1,7 @@
 import os
 from logging import Logger
+from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -32,7 +34,7 @@ def filtrer_les_donnees_mouvements_rh(donnees: pd.DataFrame, base_de_donnees: En
     return donnees_mouvements_rh_trimestrielles_filtrees_sur_les_3_dernieres_annees.set_index(index_des_mouvements_rh_trimestriel)
 
 
-def import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_vigierh_donnees_mouvements_rh = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     fichier_traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_mouvements_rh,
                                                       base_de_donnees,
@@ -40,29 +42,50 @@ def import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_donnees: s
                                                       )
     if fichier_traite:
         logger.info(f"Le fichier {FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value} a été déjà traité")
-    else:
-        donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH_TRIMESTRIEL.value)
-        donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
-        with base_de_donnees.begin() as connection:
-            écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
-                "indicateurs mouvements rh trimestriels",
-                SOURCE,
-                connection,
-                TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS,
-                donnees_mouvements_rh_filtrees,
-                [(FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL, date_du_fichier_vigierh_donnees_mouvements_rh)],
-                logger,
-            )
-
-if __name__ == "__main__":
+        return {
+            "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"}
+    start = datetime.now()
+    donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH_TRIMESTRIEL.value)
+    donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
+    with base_de_donnees.begin() as connection:
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs mouvements rh trimestriels",
+            SOURCE,
+            connection,
+            TABLE_VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIELS,
+            donnees_mouvements_rh_filtrees,
+            [(FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL, date_du_fichier_vigierh_donnees_mouvements_rh)],
+            logger,
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
+        "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value,
+         "rows_in_file": donnees_mouvements_rh.shape[0],
+         "rows": donnees_mouvements_rh_filtrees.shape[0],
+        "taux": f"{donnees_mouvements_rh_filtrees.shape[0]/donnees_mouvements_rh.shape[0]*100:.2f}%",
+        "duration": duration}    
+def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
+    try:
+        chemin_local_du_fichier_mouvements_rh= os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value, logger_helios))
 
-    chemin_local_du_fichier_mouvements_rh= os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value, logger_helios))
+        result = import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH_TRIMESTRIEL.value,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de mouvements rh trimestriels : {error_text}"
+        }
 
-    import_donnees_mouvements_rh_trimestriels(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
+if __name__ == "__main__":
+    main()

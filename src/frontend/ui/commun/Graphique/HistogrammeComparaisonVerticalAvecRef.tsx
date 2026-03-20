@@ -161,6 +161,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           const xLeft = barElement.x - barElement.width / 2;
           const xRight = barElement.x + barElement.width / 2;
 
+
           ctx.save();
           ctx.beginPath();
           ctx.moveTo(xLeft, yPos);
@@ -180,6 +181,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     maintainAspectRatio: true,
     animation: false,
     responsive: true,
+    layout: {
+      padding: {
+      top: 20,
+      },
+    },
     interaction: {
       intersect: false,
       mode: "point",
@@ -188,18 +194,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       // @ts-expect-error custom property
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
-        align: (context: any) => {
-          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
-          const valeurBrute = donnees[context.dataIndex];
-          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
-          return valeurNumerique !== null && valeurNumerique < 0 ? "end" : "start";
-        },
-        anchor: (context: any) => {
-          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
-          const valeurBrute = donnees[context.dataIndex];
-          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
-          return valeurNumerique !== null && valeurNumerique < 0 ? "start" : "end";
-        },
+        align: "end",
+        anchor: "end",
+        clip: false,
+        offset: -4,
         font: {
           family: "Marianne",
           size: 12,

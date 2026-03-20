@@ -60,6 +60,11 @@ class TestVariablesDEnvironnement:
             "SFTP_PORT": "test",
             "SFTP_USERNAME": "test",
             "SFTP_PRIVATE_KEY": "test",
+            "TIPIMAIL_SENDER_NAME": "test",
+            "TIPIMAIL_SENDER_ADDRESS": "test",
+            "TIPIMAIL_APIUSER": "test",
+            "TIPIMAIL_APIKEY": "test",
+            "TIPIMAIL_TO_ADDRESSES": "test"
         }
 
         # WHEN

@@ -1,5 +1,7 @@
 import os
 from logging import Logger
+from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -13,6 +15,7 @@ from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichie
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL, FichierSource
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping, index_nature_contrat_trimestriel
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
+
 
 def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, base_de_donnees: Engine) -> pd.DataFrame:
     numeros_finess_des_etablissements_connus = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees)
@@ -36,7 +39,7 @@ def import_donnees_nature_contrats_trimestriel(
     chemin_local_du_fichier_donnees: str,
     chemin_local_du_fichier_ref: str,
     base_de_donnees: Engine,
-    logger: Logger) -> None:
+    logger: Logger) -> dict:
     date_du_fichier_vigierh_donnees_nature_contrats = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     date_du_fichier_vigierh_ref_nature_contrats = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     fichier_traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_nature_contrats,
@@ -45,13 +48,18 @@ def import_donnees_nature_contrats_trimestriel(
                                                       )
     if fichier_traite:
         logger.info(f"Le fichier {FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value} a été déjà traité")
-    else:
-        if len({date_du_fichier_vigierh_ref_nature_contrats,
-        date_du_fichier_vigierh_donnees_nature_contrats}) == 1:
-            donnees_cdi_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_TRIMESTRIEL.value)
-            donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_cdi_cdd, base_de_donnees )
-            with base_de_donnees.begin() as connection:
-                écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+        return{
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"
+        }
+    if len({date_du_fichier_vigierh_ref_nature_contrats,
+    date_du_fichier_vigierh_donnees_nature_contrats}) == 1:
+        start = datetime.now()
+        donnees_cdi_cdd = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_TRIMESTRIEL.value)
+        donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_cdi_cdd, base_de_donnees )
+        with base_de_donnees.begin() as connection:
+            écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
                     "indicateurs nature contrats trimestriels",
                     SOURCE,
                     connection,
@@ -59,29 +67,51 @@ def import_donnees_nature_contrats_trimestriel(
                     donnees_cdi_cdd_filtrees,
                     [(FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL, date_du_fichier_vigierh_donnees_nature_contrats)],
                     logger,
-                )
-        else:
-            logger.info(
+            )
+        duration = (datetime.now() - start).total_seconds()
+        return {
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
+            "rows_in_file": donnees_cdi_cdd.shape[0],
+            "rows": donnees_cdi_cdd_filtrees.shape[0],
+            "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_cdi_cdd.shape[0]*100:.2f}%",
+            "duration": duration,
+        }
+    logger.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value}, "
                 f"{FichierSource.VIGIE_RH_REF_CDI_CDD.value})"
-            )
+    )
+    return{
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
+    }
 
-if __name__ == "__main__":
+def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
-    chemin_local_du_fichier_ref_nature_contrats = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
+    try:
+        chemin_local_du_fichier_ref_nature_contrats = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
 
-    chemin_local_du_fichier_nature_contrats= os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value, logger_helios))
+        chemin_local_du_fichier_nature_contrats= os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value, logger_helios))
 
-    import_donnees_nature_contrats_trimestriel(chemin_local_du_fichier_nature_contrats,
-                                               chemin_local_du_fichier_ref_nature_contrats,
-                                               base_de_donnees_helios,
-                                               logger_helios)
+        result =import_donnees_nature_contrats_trimestriel(chemin_local_du_fichier_nature_contrats,
+                                                chemin_local_du_fichier_ref_nature_contrats,
+                                                base_de_donnees_helios,
+                                                logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de nature contrats trimestriel : {error_text}"
+        }
+if __name__ == "__main__":
+    main()

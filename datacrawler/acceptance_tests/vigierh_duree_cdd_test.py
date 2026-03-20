@@ -10,7 +10,7 @@ from datacrawler.test_helpers import (
 )
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010004059"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010006799"
 
 class TestImportVigieRhMouvements:
     def setup_method(self) -> None:

@@ -33,6 +33,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
   const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
     const valeur = donnee.depart;
     if (Number.isFinite(valeur)) {
+      if (valeur === 0) return -0.000001;
       return -Math.abs(valeur);
     }
     return null;
@@ -209,8 +210,25 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
+     layout: {
+      padding: {
+      top: 20,
+      bottom: 20
+      },
+    },
     plugins: {
       datalabels: {
+        align: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
+        },
+        anchor: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
+        },
+        clip: false,
+        clamp: true,
+        offset: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? -1 : -4;
+        },
         color: "#000",
         font: {
           family: "Marianne",
@@ -222,7 +240,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
           return context.dataset.label === wording.DEPARTS || context.dataset.label === wording.EMBAUCHES;
         },
         formatter: (value: number) => {
-          return Math.abs(value)
+          return Math.round(Math.abs(value))
         },
       },
       tooltip: {
@@ -234,15 +252,14 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
             const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurText = Number.isFinite(value) ? Math.round(Math.abs(value as number)).toString() : wording.NON_RENSEIGNÉ;
 
             if (!showRefValues) {
               return `${label}: ${valeurText}`;
             }
 
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-            const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
-
+            const valeurRefText = Number.isFinite(refValue) ? Math.round(Math.abs(refValue as number)).toString() : wording.NON_RENSEIGNÉ;
             return [`${label}: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
           },
@@ -270,6 +287,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         }
       },
       y: {
+        grace: '10%',
         stacked: true,
         beginAtZero: true,
         grid: {
