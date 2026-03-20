@@ -5,6 +5,7 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 
 type GraphiqueTauxRotationAnnuelProps = Readonly<{
   etabFiness: string;
@@ -20,14 +21,10 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
     const libelles = donneesTauxRotation.map((donnee) => donnee.annee);
-    const valeursManquantes: (number | string)[] = [];
+    const valeursManquantes = annéesManquantesVigieRh(libelles, 3);
     const valeursRefManquantes: (number | string)[] = [];
     const valeurs = donneesTauxRotation.map((donnee) => {
       const valeur = donnee.rotation;
-      if (!Number.isFinite(valeur)) {
-        valeursManquantes.push(donnee.annee);
-        return null;
-      }
       return StringFormater.transformInRoundedRate(valeur);
     });
     const valeursRef = donneesTauxRotation.map((donnee) => {
