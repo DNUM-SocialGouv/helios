@@ -637,6 +637,7 @@ export interface Wording {
   readonly CONTRATS_COURTS: string;
   readonly MOUVEMENT_DU_PERSONNEL: string;
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
+  readonly EFFECTIFS_PAR_CATEGORIE_EXCEL_FILE: (filiere: string) => string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly FILIERE: string;
   readonly PERIODE: string;

@@ -729,6 +729,7 @@ export class WordingFr implements Wording {
   readonly MOUVEMENT_DU_PERSONNEL: string = "Mouvement du personnel";
   readonly EFFECTIFS: string = "Effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
+  readonly EFFECTIFS_PAR_CATEGORIE_EXCEL_FILE: (filiere: string) => string = (filiere: string) => `Effectifs Filière  ${filiere}`;
   readonly EFFECTIFS_TOTAUX: string = "Total des effectifs";
   readonly FILIERE: string = "Filière";
   readonly EFFECTIF_HOMMES_REF: string = "Moyenne des effectifs Hommes pour des établissements similaires";
