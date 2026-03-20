@@ -26,6 +26,7 @@ export interface UtilisateurLoader {
   ): Promise<ResultatRechercheUtilisateur>;
   getUserByCode(code: string): Promise<RechercheUtilisateur | null>;
   updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[], firstname: string, lastname: string): Promise<void>;
+  updateCgu(userCode: string, cguAccepted: boolean): Promise<void>;
   deleteUser(userCode: string): Promise<string | void>;
   reactivateUser(userCode: string): Promise<string | void>;
 }

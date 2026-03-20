@@ -71,4 +71,7 @@ export class UtilisateurModel {
   public lockUntil!: Date | null;
   @Column({ name: "ut_last_pwd_change_date", type: "date" })
   public lastPwdChangeDate!: string;
+
+  @Column({ name: "ut_cgu", type: "boolean", default: false })
+  public cgu!: boolean;
 }

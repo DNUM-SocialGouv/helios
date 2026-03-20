@@ -103,6 +103,7 @@ import { AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578 } from ".
 import { AjoutProfilFondDeRoulement1773072615839 } from "./migrations/1773072615839-AjoutProfilFondDeRoulement";
 import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773152515839-AjoutProfilBesoinFondDeRoulement";
 import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
+import { AjoutCguDansUtilisateur1774024704472 } from "./migrations/1774024704472-AjoutCguDansUtilisateur";
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
@@ -373,6 +374,7 @@ const datasource = new DataSource({
     ClefEtrangereListEts1743596937227,
     AjoutNombreJourneeUSLDActivitesSanitaires1745321952709,
     AjoutLesJourneesUsldDansLesProfils1799501916707,
+    AjoutCguDansUtilisateur1774024704472,
     ReferentielCategoriesFiness1747831401347,
     AjoutCategorieRecherche1748009262073,
     AjoutLaColonneDomaineAuReferentielCategories1748332500947,
