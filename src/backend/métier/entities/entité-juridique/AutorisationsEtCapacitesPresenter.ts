@@ -149,14 +149,14 @@ class AutorisationsFactory {
     return etablissement;
   }
 
-  private static findOrAddModaliteAmm(activiteAmm: AutorisationDActivitesAmm, autorisationAmmSanitaire: { code_modalite: string; libelle_modalite: string }): AutorisationsAMMModalite {
+  private static findOrAddModaliteAmm(activiteAmm: AutorisationDActivitesAmm, autorisationAmmSanitaire: { code_modalite: string; libelle_modalite: string | null }): AutorisationsAMMModalite {
     let modalite = activiteAmm.modalites.find((m) => m.code === autorisationAmmSanitaire.code_modalite);
 
     if (!modalite) {
       modalite = {
         mentions: [],
         code: autorisationAmmSanitaire.code_modalite,
-        libelle: autorisationAmmSanitaire.libelle_modalite,
+        libelle: autorisationAmmSanitaire.libelle_modalite ?? "",
       };
       activiteAmm.modalites.push(modalite);
     }
@@ -164,14 +164,14 @@ class AutorisationsFactory {
     return modalite;
   }
 
-  private static findOrAddMentionAmm(modaliteAmm: AutorisationsAMMModalite, autorisationAmmSanitaire: { code_mention: string; libelle_mention: string }): AutorisationsAMMMention {
+  private static findOrAddMentionAmm(modaliteAmm: AutorisationsAMMModalite, autorisationAmmSanitaire: { code_mention: string; libelle_mention: string | null }): AutorisationsAMMMention {
     let mention = modaliteAmm.mentions.find((m) => m.code === autorisationAmmSanitaire.code_mention);
 
     if (!mention) {
       mention = {
         pratiques: [],
         code: autorisationAmmSanitaire.code_mention,
-        libelle: autorisationAmmSanitaire.libelle_mention,
+        libelle: autorisationAmmSanitaire.libelle_mention ?? "",
       };
       modaliteAmm.mentions.push(mention);
     }
@@ -179,14 +179,14 @@ class AutorisationsFactory {
     return mention;
   }
 
-  private static findOrAddPratiqueAmm(mentionAmm: AutorisationsAMMMention, autorisationAmmSanitaire: { code_pratique_therapeutique_specifique: string; libelle_pratique_therapeutique_specifique: string }): AutorisationsAMMPratique {
+  private static findOrAddPratiqueAmm(mentionAmm: AutorisationsAMMMention, autorisationAmmSanitaire: { code_pratique_therapeutique_specifique: string; libelle_pratique_therapeutique_specifique: string | null }): AutorisationsAMMPratique {
     let pratique = mentionAmm.pratiques.find((p) => p.code === autorisationAmmSanitaire.code_pratique_therapeutique_specifique);
 
     if (!pratique) {
       pratique = {
         declarations: [],
         code: autorisationAmmSanitaire.code_pratique_therapeutique_specifique,
-        libelle: autorisationAmmSanitaire.libelle_pratique_therapeutique_specifique,
+        libelle: autorisationAmmSanitaire.libelle_pratique_therapeutique_specifique ?? "",
       };
       mentionAmm.pratiques.push(pratique);
     }
@@ -194,14 +194,14 @@ class AutorisationsFactory {
     return pratique;
   }
 
-  private static findOrAddDeclarationAmm(pratiqueAmm: AutorisationsAMMPratique, autorisationAmmSanitaire: { code_declaration: string; libelle_declaration: string }): AutorisationsAMMDeclaration {
+  private static findOrAddDeclarationAmm(pratiqueAmm: AutorisationsAMMPratique, autorisationAmmSanitaire: { code_declaration: string; libelle_declaration: string | null }): AutorisationsAMMDeclaration {
     let declaration = pratiqueAmm.declarations.find((d) => d.code === autorisationAmmSanitaire.code_declaration);
 
     if (!declaration) {
       declaration = {
         autorisationAmmEtablissments: [],
         code: autorisationAmmSanitaire.code_declaration,
-        libelle: autorisationAmmSanitaire.libelle_declaration,
+        libelle: autorisationAmmSanitaire.libelle_declaration ?? "",
       };
       pratiqueAmm.declarations.push(declaration);
     }
@@ -285,14 +285,14 @@ class AutorisationsFactory {
 
   private static findOrAddActiviteAmm(
     autorisationAmmActivites: AutorisationDActivitesAmm[],
-    autorisationAmmSanitaire: { libelle_activite: string; code_activite: string }
+    autorisationAmmSanitaire: { libelle_activite: string | null; code_activite: string }
   ): AutorisationDActivitesAmm {
     let activite = autorisationAmmActivites.find((a) => a.code === autorisationAmmSanitaire.code_activite);
 
     if (!activite) {
       activite = {
         modalites: [],
-        libelle: autorisationAmmSanitaire.libelle_activite,
+        libelle: autorisationAmmSanitaire.libelle_activite ?? "",
         code: autorisationAmmSanitaire.code_activite,
       };
       autorisationAmmActivites.push(activite);

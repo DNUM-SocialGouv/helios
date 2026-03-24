@@ -107,14 +107,20 @@ type_des_colonnes_finess_cs1600101 = {
 
 equivalences_finess_amm_arhgos_helios = {
     "activite": "code_activite",
+    "lib_activite": "lib_activite",
     "modalite": "code_modalite",
+    "lib_modalite": "lib_modalite",
     "mention": "code_mention",
+    "lib_mention": "lib_mention",
     "pts": "code_pratique",
+    "lib_pts": "lib_pts",
     "declaration": "code_declaration",
+    "lib_declaration": "lib_declaration",
     "codeautorarhgos": "code_autorisation_arhgos",
     "dateautor": "date_autorisation",
     "datefin": "date_fin",
     "datemeo": "date_mise_en_oeuvre",
+    "statut_autorisation_code": "statut_autorisation_code",
     "nofinesset": "numero_finess_etablissement_territorial",
 }
 colonnes_a_garder_finess_amm_arhgos = list(equivalences_finess_amm_arhgos_helios.keys())
@@ -130,6 +136,12 @@ type_des_colonnes_amm_arhgos = {
     "dateautor": "string",
     "datefin": "string",
     "datemeo": "string",
+    "lib_activite": "string",
+    "lib_modalite": "string",
+    "lib_mention": "string",
+    "lib_pts": "string",
+    "lib_declaration": "string",
+    "statut_autorisation_code": "string",
 }
 
 index_autorisations_amm_sanitaires: List[str] = [
@@ -305,9 +317,7 @@ equivalences_finess_cs1400102_helios = {
 colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())
 
 
-index_des_etablissements_territorriaux: List[str] = [
-    "numero_finess_etablissement_territorial"
-]
+index_des_etablissements_territorriaux: List[str] = ["numero_finess_etablissement_territorial"]
 
 XML_TAG_FINESS_CS1500106 = "nomenclcategorieETavecagr"
 type_des_colonnes_finess_cs1500106 = {"code": "string", "domaine": "string"}
