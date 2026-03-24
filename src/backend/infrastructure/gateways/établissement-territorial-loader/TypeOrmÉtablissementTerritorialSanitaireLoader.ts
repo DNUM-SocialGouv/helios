@@ -1151,6 +1151,9 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       resultatNetComptable: budget.resultatNetComptableSan,
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
       tauxDeCafNetSan: budget.tauxDeCafNetteSan,
+      fondsDeRoulement: budget.fondsDeRoulement,
+      besoinFondsDeRoulement: budget.besoinFondsDeRoulement,
+      tresorerie: budget.tresorerie,
     }));
   }
 

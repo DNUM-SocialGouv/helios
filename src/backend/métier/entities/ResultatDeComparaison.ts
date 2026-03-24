@@ -14,6 +14,9 @@ export type ResultatEJ = Readonly<{
   resultatNetComptableEj: number | null | string;
   tauxCafEj: number | null | string;
   ratioDependanceFinanciere: number | null | string;
+  fondsDeRoulement: number | null | string;
+  besoinFondsDeRoulement: number | null | string;
+  tresorerie: number | null | string;
   sejoursHad: number | null | string;
   nombreEtpPm: number | null | string;
   nombreEtpPnm: number | null | string;
@@ -72,6 +75,9 @@ export type ResultatSAN = Readonly<{
   depensesInterimPm: number | null | string;
   joursAbsenteismePm: number | null | string;
   joursAbsenteismePnm: number | null | string;
+  fondsDeRoulement: number | null | string;
+  besoinFondsDeRoulement: number | null | string;
+  tresorerie: number | null | string;
   enveloppe1: number | null | string;
   enveloppe2: number | null | string;
   enveloppe3: number | null | string;
@@ -101,4 +107,3 @@ export type EnveloppesResult = {
   topEnveloppesEj: Enveloppes;
   topEnveloppesSan: Enveloppes;
 };
-

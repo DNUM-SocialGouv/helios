@@ -8,6 +8,7 @@ import { AllocationRessourceETModel } from "../../../../../database/models/Alloc
 import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
+import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RessourcesHumainesEntiteJuridiqueModel } from "../../../../../database/models/RessourcesHumainesEntiteJuridiqueModel";
@@ -32,6 +33,7 @@ describe("La comparaison des établissements", () => {
   let ressourcesHumainesEJModelRepository: Repository<RessourcesHumainesEntiteJuridiqueModel>;
   let ressourcesHumainesETSANModelRepository: Repository<RessourcesHumainesEtablissementSanitaireModel>;
   let budgetEtFinancesMedicoSocialModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
+  let budgetEtFinancesSanitaireModelRepository: Repository<BudgetEtFinancesSanitaireModel>;
   let activiteeMedicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>;
   let autorisationMedicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
   let activiteSanitaireRepository: Repository<ActivitéSanitaireModel>;
@@ -86,6 +88,7 @@ describe("La comparaison des établissements", () => {
     ressourcesHumainesEJModelRepository = (await orm).getRepository(RessourcesHumainesEntiteJuridiqueModel);
     ressourcesHumainesETSANModelRepository = (await orm).getRepository(RessourcesHumainesEtablissementSanitaireModel);
     budgetEtFinancesMedicoSocialModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
+    budgetEtFinancesSanitaireModelRepository = (await orm).getRepository(BudgetEtFinancesSanitaireModel);
     activiteeMedicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
     autorisationMedicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
     activiteSanitaireRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -296,6 +299,23 @@ describe("La comparaison des établissements", () => {
       })
     ])
 
+    await budgetEtFinancesSanitaireModelRepository.insert([
+      {
+        année: 2022,
+        numéroFinessEtablissementTerritorial: "200000000",
+        fondsDeRoulement: 11000,
+        besoinFondsDeRoulement: 12000,
+        tresorerie: 13000,
+      },
+      {
+        année: 2022,
+        numéroFinessEtablissementTerritorial: "200000001",
+        fondsDeRoulement: 21000,
+        besoinFondsDeRoulement: 22000,
+        tresorerie: 23000,
+      },
+    ]);
+
     const budgetFinanceEntiteJuridique = new BudgetEtFinancesEntiteJuridiqueModel();
     budgetFinanceEntiteJuridique.numéroFinessEntitéJuridique = "000000000";
     budgetFinanceEntiteJuridique.année = 2022;
@@ -317,6 +337,9 @@ describe("La comparaison des établissements", () => {
     budgetFinanceEntiteJuridique.resultatNetComptableSan = 0.1;
     budgetFinanceEntiteJuridique.tauxDeCafNetteSan = 0.2;
     budgetFinanceEntiteJuridique.ratioDependanceFinanciere = 0.3;
+    budgetFinanceEntiteJuridique.fondsDeRoulement = 1000;
+    budgetFinanceEntiteJuridique.besoinFondsDeRoulement = 2000;
+    budgetFinanceEntiteJuridique.tresorerie = 3000;
 
     await budgetEtFinancesEntiteJuridiqueRepository.insert(budgetFinanceEntiteJuridique);
 
@@ -524,6 +547,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: 40,
         nombreEtpPm: 10,
         nombreEtpPnm: 20,
+        fondsDeRoulement: 11000,
+        besoinFondsDeRoulement: 12000,
+        tresorerie: 13000,
       },
       {
         numéroFiness: "200000001",
@@ -547,6 +573,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: 45,
         nombreEtpPm: 15,
         nombreEtpPnm: 25,
+        fondsDeRoulement: 21000,
+        besoinFondsDeRoulement: 22000,
+        tresorerie: 23000,
       },
       {
         numéroFiness: "299999999",
@@ -570,6 +599,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: null,
         nombreEtpPm: null,
         nombreEtpPnm: null,
+        fondsDeRoulement: null,
+        besoinFondsDeRoulement: null,
+        tresorerie: null,
       },
       {
         numéroFiness: "000000000",
@@ -593,6 +625,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: '',
         nombreEtpPm: '',
         nombreEtpPnm: '',
+        fondsDeRoulement: '',
+        besoinFondsDeRoulement: '',
+        tresorerie: '',
       },
     ]);
   });
@@ -635,6 +670,9 @@ describe("La comparaison des établissements", () => {
         resultatNetComptableEj: 0.1,
         tauxCafEj: 20,
         ratioDependanceFinanciere: 30,
+        fondsDeRoulement: 1000,
+        besoinFondsDeRoulement: 2000,
+        tresorerie: 3000,
         sejoursHad: 12,
         enveloppe1: null,
         enveloppe2: null,
@@ -670,6 +708,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: '',
         nombreEtpPm: '',
         nombreEtpPnm: '',
+        fondsDeRoulement: '',
+        besoinFondsDeRoulement: '',
+        tresorerie: '',
       },
       {
         numéroFiness: "200000001",
@@ -696,6 +737,9 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: '',
         nombreEtpPm: '',
         nombreEtpPnm: '',
+        fondsDeRoulement: '',
+        besoinFondsDeRoulement: '',
+        tresorerie: '',
       },
       {
         numéroFiness: "299999999",
@@ -722,9 +766,10 @@ describe("La comparaison des établissements", () => {
         joursAbsenteismePnm: '',
         nombreEtpPm: '',
         nombreEtpPnm: '',
+        fondsDeRoulement: '',
+        besoinFondsDeRoulement: '',
+        tresorerie: '',
       },
     ]);
   });
 });
-
-
