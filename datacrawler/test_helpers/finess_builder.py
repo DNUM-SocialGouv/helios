@@ -225,3 +225,28 @@ def xml_contenu_finess_cs1600102_builder(champs_surcharges: Optional[Dict] = Non
     if champs_surcharges:
         return {**finess_cs1600102, **champs_surcharges}
     return finess_cs1600102
+
+
+def xml_contenu_finess_amm_arhgos_builder(champs_surcharges: Optional[Dict] = None) -> Dict[str, str | object]:
+    finess_amm_arhgos = {
+        "nofinesset": NUMÉRO_FINESS_ÉTABLISSEMENT,
+        "activite": "QA015",
+        "lib_activite": "Activité QA015",
+        "modalite": "MO007",
+        "lib_modalite": "Modalité MO007",
+        "mention": "ME023",
+        "lib_mention": "Mention ME023",
+        "pts": "PTS00",
+        "lib_pts": "Pas de pratique therapeutique specifique",
+        "declaration": "D01",
+        "lib_declaration": "Hospitalisation a temps complet",
+        "codeautorarhgos": "AMM-01-0001",
+        "dateautor": "2024-01-01",
+        "datefin": nan,
+        "datemeo": "2024-01-15",
+        "statut_autorisation_code": "02",
+        "statut_autorisation_lib": "Active",
+    }
+    if champs_surcharges:
+        return {**finess_amm_arhgos, **champs_surcharges}
+    return finess_amm_arhgos

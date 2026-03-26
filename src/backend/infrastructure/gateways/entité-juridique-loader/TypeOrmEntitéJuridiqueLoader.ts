@@ -417,15 +417,15 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     return (await this.orm).query(`
       SELECT
         autorisation_sanitaire_amm.code_activite,
-        ref.libelle_activite, 
+        autorisation_sanitaire_amm.lib_activite AS libelle_activite,
         autorisation_sanitaire_amm.code_modalite,
-        ref.libelle_modalite,
+        autorisation_sanitaire_amm.lib_modalite AS libelle_modalite,
         autorisation_sanitaire_amm.code_mention,
-        ref.libelle_mention,
+        autorisation_sanitaire_amm.lib_mention AS libelle_mention,
         autorisation_sanitaire_amm.code_pratique AS code_pratique_therapeutique_specifique,
-        ref.libelle_pratique_therapeutique_specifique,
+        autorisation_sanitaire_amm.lib_pts AS libelle_pratique_therapeutique_specifique,
         autorisation_sanitaire_amm.code_declaration,
-        ref.libelle_declaration,
+        autorisation_sanitaire_amm.lib_declaration AS libelle_declaration,
         autorisation_sanitaire_amm.code_autorisation_arhgos,
         autorisation_sanitaire_amm.date_autorisation,
         autorisation_sanitaire_amm.date_fin,
@@ -433,16 +433,11 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
         autorisation_sanitaire_amm.numero_finess_etablissement_territorial,
         etablissement_territorial.raison_sociale_courte
       FROM autorisation_sanitaire_amm
-      JOIN referentiel_nomenclature_amm ref
-        ON autorisation_sanitaire_amm.code_activite = ref.code_activite
-      AND autorisation_sanitaire_amm.code_modalite = ref.code_modalite
-      AND autorisation_sanitaire_amm.code_mention = ref.code_mention
-      AND autorisation_sanitaire_amm.code_pratique = ref.code_pratique_therapeutique_specifique
-      AND autorisation_sanitaire_amm.code_declaration = ref.code_declaration
       Left Join etablissement_territorial
       on autorisation_sanitaire_amm.numero_finess_etablissement_territorial = etablissement_territorial.numero_finess_etablissement_territorial
-      where numero_finess_entite_juridique = '${numeoFinessEntiteJuridique}'`
-    )
+      WHERE numero_finess_entite_juridique = $1`,
+      [numeoFinessEntiteJuridique]
+    );
   }
 
   private async chargeLaDateDeMiseÀJourModel(fichierSource: FichierSource): Promise<DateMiseÀJourFichierSourceModel | null> {
@@ -542,4 +537,3 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     return entiteJuridiqueRessourcesHumaines;
   }
 }
-

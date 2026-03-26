@@ -16,6 +16,8 @@ import {
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 
+const MENTION_LIB_LONGUEUR_MAX = 75;
+
 export type TagMultiNiveauxProps = {
   activites: AutorisationActivites[];
   type: string;
@@ -112,9 +114,14 @@ const ModaliteAmm = ({ modalite, codeActivite }: { codeActivite: string; modalit
 };
 const MentionAmm = ({ mention, codeActivite, codeModalite }: { codeActivite: string; codeModalite: string, mention: MentionAmmType }): ReactElement => {
   const id = `autorisations-accordion-${codeActivite}-${codeModalite}-${mention.code}`;
+  const popTitle = `${mention.libelle} [${mention.code}]`;
+  let titre = popTitle;
+  if (mention.libelle.length > MENTION_LIB_LONGUEUR_MAX) {
+    titre = mention.libelle.substring(0, MENTION_LIB_LONGUEUR_MAX) + "..." + ` [${mention.code}]`;
+  }
   return (
     <li>
-      <TagCliquable for={id} texteGras={false} titre={`${mention.libelle} [${mention.code}]`} />
+      <TagCliquable for={id} popTitle={popTitle} texteGras={false} titre={titre} />
       <ul className={"fr-collapse niveau2 " + style["modalites"]} id={id}>
         {mention.pratiques.map((pratique) => (
           pratique.declarations.map((declaration) => (

@@ -165,15 +165,15 @@ export type ÉtablissementTerritorialSanitaireAutorisationEtCapacité = Readonly
 
 export type AutorisationsAMMMQueryResult = Readonly<{
   code_activite: string;
-  libelle_activite: string;
+  libelle_activite: string | null;
   code_modalite: string;
-  libelle_modalite: string;
+  libelle_modalite: string | null;
   code_mention: string;
-  libelle_mention: string;
+  libelle_mention: string | null;
   code_pratique_therapeutique_specifique: string;
-  libelle_pratique_therapeutique_specifique: string;
+  libelle_pratique_therapeutique_specifique: string | null;
   code_declaration: string;
-  libelle_declaration: string;
+  libelle_declaration: string | null;
   code_autorisation_arhgos: string;
   date_autorisation: string | null;
   date_fin: string | null;
@@ -183,15 +183,15 @@ export type AutorisationsAMMMQueryResult = Readonly<{
 
 export type AutorisationsAMMMEJQueryResult = Readonly<{
   code_activite: string;
-  libelle_activite: string;
+  libelle_activite: string | null;
   code_modalite: string;
-  libelle_modalite: string;
+  libelle_modalite: string | null;
   code_mention: string;
-  libelle_mention: string;
+  libelle_mention: string | null;
   code_pratique_therapeutique_specifique: string;
-  libelle_pratique_therapeutique_specifique: string;
+  libelle_pratique_therapeutique_specifique: string | null;
   code_declaration: string;
-  libelle_declaration: string;
+  libelle_declaration: string | null;
   code_autorisation_arhgos: string;
   date_autorisation: string | null;
   date_fin: string | null;
