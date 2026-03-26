@@ -104,6 +104,7 @@ import { AjoutProfilFondDeRoulement1773072615839 } from "./migrations/1773072615
 import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773152515839-AjoutProfilBesoinFondDeRoulement";
 import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
+import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -405,7 +406,8 @@ const datasource = new DataSource({
     AjoutProfilFondDeRoulement1773072615839,
     AjoutProfilBesoinFondDeRoulement1773152515839,
     AjoutProfilTresorerie1773223041788,
-    AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368
+    AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368,
+    SuppressionNomenclatureAMM1774521749651
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
