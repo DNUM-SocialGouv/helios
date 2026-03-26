@@ -7,9 +7,10 @@ type ActionneurDAccordéonProps = Readonly<{
   texteGras?: boolean;
   titre: string;
   colorTiltle?: string;
+  popTitle?: string;
 }>;
 
-export const TagCliquable = ({ for: identifiant, titre, texteGras = true, colorTiltle = "" }: ActionneurDAccordéonProps) => {
+export const TagCliquable = ({ for: identifiant, titre, texteGras = true, colorTiltle = "", popTitle }: ActionneurDAccordéonProps) => {
   return (
     <Link
       aria-controls={identifiant}
@@ -21,7 +22,8 @@ export const TagCliquable = ({ for: identifiant, titre, texteGras = true, colorT
       href="#"
       onClick={(event) => {
         event.preventDefault();
-      }}>
+      }}
+      title={popTitle ?? titre}>
       {titre}
     </Link>
   );

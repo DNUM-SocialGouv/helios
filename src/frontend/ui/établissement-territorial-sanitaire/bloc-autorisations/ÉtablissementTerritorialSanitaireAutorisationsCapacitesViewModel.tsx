@@ -7,6 +7,8 @@ import StringFormater from "../../commun/StringFormater";
 import { Tag, TAG_SIZE, TagCliquable, TagGroup } from "../../commun/Tag";
 import { GraphiqueCapacitésParActivitéViewModel } from "../../indicateur-métier/capacites-sanitaire-par-activites/GraphiqueCapacitésParActivitéViewModel";
 
+const MENTION_LIB_LONGUEUR_MAX = 75;
+
 export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
   public graphiqueCapacitésParActivitéViewModel: GraphiqueCapacitésParActivitéViewModel;
 
@@ -331,52 +333,60 @@ export class EtablissementTerritorialSanitaireAutorisationsCapacitesViewModel {
                     titre={`${modalite.libelle} [${modalite.code}]`}
                   />
                   <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}`}>
-                    {modalite.mentions.map((mention) => (
-                      <li className="fr-ml-2w" key={`mention-${mention.code}`}>
-                        <TagCliquable
-                          for={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}
-                          texteGras={false}
-                          titre={`${mention.libelle} [${mention.code}]`}
-                        />
-                        <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}>
-                          {mention.pratiques.map((pratique) => (
-                            pratique.declarations.map((declaration) => {
-                              return (
-                                <li key={`pratique-${pratique.code}-declaration-${declaration.code}`}>
-                                  <TagGroup label="pratique-declaration">
-                                    <Tag label={`${pratique.libelle} [${pratique.code}]`} size={TAG_SIZE.SM} withArrow />
-                                    <Tag label={`${declaration.libelle} [${declaration.code}]`} size={TAG_SIZE.SM} withArrow />
-                                  </TagGroup>
-                                  <div className="fr-ml-2w">
-                                    <TagGroup label="autorisation_amm" >
-                                      <Tag
-                                        label={`${this.wording.NUMÉRO_AUTORISATION} : ${declaration.codeAutorisationArhgos ? declaration.codeAutorisationArhgos : "N/A"}`}
-                                        size={TAG_SIZE.SM}
-                                      />
-                                      <Tag
-                                        label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${declaration.dateMiseEnOeuvre ? StringFormater.formatDate(declaration.dateMiseEnOeuvre) : "N/A"
-                                          }`}
-                                        size={TAG_SIZE.SM}
-                                      />
-                                      <Tag
-                                        label={`${this.wording.DATE_DE_FIN} : ${declaration.dateFin ? StringFormater.formatDate(declaration.dateFin) : "N/A"
-                                          }`}
-                                        size={TAG_SIZE.SM}
-                                      />
-                                      <Tag
-                                        label={`${this.wording.DATE_D_AUTORISATION} : ${declaration.dateAutorisation ? StringFormater.formatDate(declaration.dateAutorisation) : "N/A"
-                                          }`}
-                                        size={TAG_SIZE.SM}
-                                      />
+                    {modalite.mentions.map((mention) => {
+                      const popTitle = `${mention.libelle} [${mention.code}]`;
+                      let titre = popTitle;
+                      if (mention.libelle.length > MENTION_LIB_LONGUEUR_MAX) {
+                        titre = mention.libelle.substring(0, MENTION_LIB_LONGUEUR_MAX) + "..." + ` [${mention.code}]`;
+                      }
+                      return (
+                        <li className="fr-ml-2w" key={`mention-${mention.code}`}>
+                          <TagCliquable
+                            for={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}
+                            popTitle={popTitle}
+                            texteGras={false}
+                            titre={titre}
+                          />
+                          <ul className="fr-collapse niveau2" id={`autorisation_amm-accordion-${activite.code}-${modalite.code}-${mention.code}`}>
+                            {mention.pratiques.map((pratique) => (
+                              pratique.declarations.map((declaration) => {
+                                return (
+                                  <li key={`pratique-${pratique.code}-declaration-${declaration.code}`}>
+                                    <TagGroup label="pratique-declaration">
+                                      <Tag label={`${pratique.libelle} [${pratique.code}]`} size={TAG_SIZE.SM} withArrow />
+                                      <Tag label={`${declaration.libelle} [${declaration.code}]`} size={TAG_SIZE.SM} withArrow />
                                     </TagGroup>
-                                  </div>
-                                </li>
-                              );
-                            })
-                          ))}
-                        </ul>
-                      </li>
-                    ))}
+                                    <div className="fr-ml-2w">
+                                      <TagGroup label="autorisation_amm" >
+                                        <Tag
+                                          label={`${this.wording.NUMÉRO_AUTORISATION} : ${declaration.codeAutorisationArhgos ? declaration.codeAutorisationArhgos : "N/A"}`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_DE_MISE_EN_OEUVRE} : ${declaration.dateMiseEnOeuvre ? StringFormater.formatDate(declaration.dateMiseEnOeuvre) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_DE_FIN} : ${declaration.dateFin ? StringFormater.formatDate(declaration.dateFin) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                        <Tag
+                                          label={`${this.wording.DATE_D_AUTORISATION} : ${declaration.dateAutorisation ? StringFormater.formatDate(declaration.dateAutorisation) : "N/A"
+                                            }`}
+                                          size={TAG_SIZE.SM}
+                                        />
+                                      </TagGroup>
+                                    </div>
+                                  </li>
+                                );
+                              })
+                            ))}
+                          </ul>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </li>
               ))}
