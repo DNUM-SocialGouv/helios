@@ -16,7 +16,8 @@ const mockSession = {
     institution: {},
     institutionId: 1,
     codeRegion: 84,
-    codeProfiles: [""]
+    codeProfiles: [""],
+    cgu: true,
   },
   expires: "1235"
 }

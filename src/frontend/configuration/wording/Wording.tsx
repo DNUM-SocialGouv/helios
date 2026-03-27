@@ -37,6 +37,7 @@ export interface Wording {
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string;
   readonly TITRE_PAGE_INACCESSIBLE: string;
   readonly TITRE_PAGE_ECO_CONCEPTION: string;
+  readonly TITRE_PAGE_CGU: string;
   readonly TITRE_PAGE_GESTION_COOKIES: string;
 
   // Breadcrumb
@@ -447,6 +448,7 @@ export interface Wording {
   readonly LICENCE_ETALAB: string;
   readonly NOUVELLE_FENÊTRE: string;
   readonly ECO_CONCEPTION: string;
+  readonly CGU: string;
   readonly COOKIES: string;
 
   // Accessibilité

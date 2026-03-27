@@ -391,6 +391,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     }
   }
 
+  async updateCgu(userCode: string, cguAccepted: boolean): Promise<void> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.cgu = cguAccepted;
+    await (await this.orm).getRepository(UtilisateurModel).save(user);
+  }
+
   async deleteUser(userCode: string): Promise<string | void> {
     try {
       const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });

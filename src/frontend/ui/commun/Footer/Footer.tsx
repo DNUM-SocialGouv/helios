@@ -86,6 +86,11 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={paths.CGU}>
+                {wording.CGU}
+              </Link>
+            </li>
+            <li className="fr-footer__bottom-item">
               <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES}>
                 {wording.MENTIONS_LÉGALES}
               </Link>
