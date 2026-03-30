@@ -7,12 +7,12 @@ import {
   NatureContratsTrimestriel
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import type { Wording } from "../../../../configuration/wording/Wording";
+import { annéesManquantesVigieRh, trimestresManquantsVigieRh } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import type { CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import HistogrammeComparaisonVerticalAvecRef, {
   HistogrammeComparaisonVerticalAvecRefSerie
 } from "../../../commun/Graphique/HistogrammeComparaisonVerticalAvecRef";
-import { annéesManquantesVigieRh, trimestresManquantsVigieRh } from "../../../../utils/dateUtils";
 
 type GraphiqueNatureContratsProps = Readonly<{
   etabFiness: string;

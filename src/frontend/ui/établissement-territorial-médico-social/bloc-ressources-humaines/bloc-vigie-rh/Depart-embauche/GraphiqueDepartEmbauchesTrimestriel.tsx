@@ -1,7 +1,7 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-
+import { trimestresManquantsVigieRh } from "../../../../../utils/dateUtils";
 import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
@@ -14,7 +14,6 @@ import {
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 import { DepartEmbaucheTrimestrielViewModel } from "../BlocVigieRHViewModel";
-import { trimestresManquantsVigieRh } from "../../../../../utils/dateUtils";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

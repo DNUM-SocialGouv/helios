@@ -2,9 +2,9 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import styles from "./DepartsPrematuresCdi.module.css";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 import StringFormater from "../../../../commun/StringFormater";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 
 type DepartsPrematuresCdiProps = Readonly<{
   blocVigieRhViewModel: BlocVigieRHViewModel;
