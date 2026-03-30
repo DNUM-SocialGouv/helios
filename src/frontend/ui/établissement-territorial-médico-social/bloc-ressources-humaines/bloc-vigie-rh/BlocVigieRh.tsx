@@ -134,6 +134,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     updateAnneeEnCours();
   }, [anneeEnCours]);
   const items = donneesEffectifs.data ?? [];
+      
+  const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
   const recupereDateDonnees = (identifiant: string) => blocVigieRHViewModel.dateDonneesArrete(identifiant);
   const recuperePeriodeGlissante = (identifiant: string) => {
@@ -143,8 +146,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   const buildIndicateurEffectif = () => {
     if (!items.length) return null;
-
-    const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+    
     const mois = dataEffectifs.dataMoisAnnee ?? [];
     const totaux = dataEffectifs.dataEtab ?? [];
     if (!mois.length || !totaux.length) return null;
@@ -329,7 +331,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={[]}
-                    dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                    dataEffectifs={dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                     etabFiness={etabFiness}
                     etabTitle={etabTitle}
                     identifiantLegende="légende-graphique-effectifs"
@@ -378,7 +380,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
               : (
                 <></>
-              ), blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+              ), blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
                 <IndicateurGraphique
                   contenuInfoBulle={
                     <ContenuRepartitionEffectifsVigieRh
@@ -440,10 +442,10 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 blocVigieRHViewModel={blocVigieRHViewModel}
                 couleurEffectifsTotaux={couleurEffectifsTotaux}
                 couleursFilieres={couleursFilieres}
-                dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                dataEffectifs={dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                 etabFiness={etabFiness}
                 etabTitle={etabTitle}
-                multiCategories={indicateurEffectif?.items ?? []}
+                multiCategories={items ?? []}
                 paletteGroupes={paletteGroupes}
               />
               <h3 className={styles["vigie-rh-accordion-button"]}>
