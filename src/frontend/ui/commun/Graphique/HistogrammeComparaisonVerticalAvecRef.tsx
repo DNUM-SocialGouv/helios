@@ -47,7 +47,7 @@ const valeurFormateeParDefaut = (valeur: number | null): string | null => {
   return StringFormater.formatInFrench(valeur);
 };
 
-const expressionReguliereTrimestre = /^T(\d)\s+(\d{4})$/;
+const expressionReguliereTrimestre = /^(\d{4})-T([1-4])$/;
 
 const HistogrammeComparaisonVerticalAvecRef = ({
   etabFiness,
@@ -79,7 +79,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     const libelleNettoye = label.trim();
     const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
     if (correspondanceTrimestre) {
-      return { principal: `T${correspondanceTrimestre[1]}`, secondaire: correspondanceTrimestre[2] };
+      return { principal: `T${correspondanceTrimestre[2]}`, secondaire: correspondanceTrimestre[1] };
     }
 
     const segments = libelleNettoye.split(/\s+/);
