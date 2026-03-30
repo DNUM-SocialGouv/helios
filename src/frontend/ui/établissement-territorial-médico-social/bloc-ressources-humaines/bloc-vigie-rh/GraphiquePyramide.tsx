@@ -2,12 +2,12 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Titl
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { annéesManquantesVigieRh } from "../../../../utils/dateUtils";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDesTraitsRefHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../commun/Transcription/Transcription";
-import { annéesManquantesVigieRh } from "../../../../utils/dateUtils";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Title);
 
@@ -89,7 +89,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       femmesExtension: womenExtension,
       libellesValeursManquantes,
     };
-  }, [effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, labels, wording.EFFECTIF_FEMMES, wording.EFFECTIF_HOMMES]);
+  }, [effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, labels, wording.EFFECTIF_FEMMES, wording.EFFECTIF_HOMMES, annees]);
 
   const menData: ChartData = {
     datasets: [

@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
 import { TauxRotation } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 
 type GraphiqueTauxRotationAnnuelProps = Readonly<{
   etabFiness: string;

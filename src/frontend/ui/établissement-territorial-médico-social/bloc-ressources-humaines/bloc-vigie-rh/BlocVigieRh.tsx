@@ -363,6 +363,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     donneesAnneeEnCours?.effectifFemme &&
                     donneesAnneeEnCours?.effectifHommeRef && (
                       <PyramidChart
+                        annees={annees}
                         effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
                         effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                         effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
@@ -370,7 +371,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                         etabFiness={etabFiness}
                         etabTitle={etabTitle}
                         labels={libelles}
-                        annees={annees}
                         showRefValues={showRefValues}
                       />
                     )}
