@@ -471,12 +471,12 @@ export class BlocVigieRHViewModel {
   public get paletteNatureContrats(): CouleurHistogramme[] {
     return [
       {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },
-      {
         premierPlan: couleurDuFondHistogrammeOrangeClair,
         secondPlan: couleurExtensionHistogrammeOrangeClair,
+      },
+      {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
       },
     ];
   }
