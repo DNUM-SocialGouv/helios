@@ -7,6 +7,7 @@ import {
   NatureContratsTrimestriel
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import type { Wording } from "../../../../configuration/wording/Wording";
+import { annéesManquantesVigieRh, trimestresManquantsVigieRh } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import type { CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import HistogrammeComparaisonVerticalAvecRef, {
@@ -90,7 +91,7 @@ const construitLibelleCategorie = (valeur: NatureContratsAnnuel | NatureContrats
   return { key: valeur.annee.toString(), label: valeur.annee.toString() };
 };
 
-const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean, showRefValues: boolean): Serie => {
+const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean, showRefValues: boolean): Serie => {  
   const sortedDonnees = [...donnees].sort((a, b) => {
     if (isTrimestriel && estTrimestriel(a) && estTrimestriel(b)) {
       const aKey = a.annee * 10 + a.trimestre;
@@ -141,36 +142,16 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
     };
   });
 
-  const libelles = categories.map(({ label }) => label);
+  const libelles = categories.map(({ key }) => key);
 
   return { libelles, series, natures };
 };
-
-function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: HistogrammeComparaisonVerticalAvecRefSerie[], libelles: string[]) {
-  const valeursRefManquantes: string[] = [];
-  for (const serie of series) {
-    for (const [index, valeur] of serie[typeValeur]?.entries() ?? []) {
-      if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-        const annee = libelles[index];
-        const libelleComplet = `${serie.label} - ${annee}`;
-        if (!valeursRefManquantes.includes(libelleComplet)) {
-          valeursRefManquantes.push(libelleComplet);
-        }
-      }
-    }
-  }
-  return valeursRefManquantes;
-}
 
 const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsAnnuelProps) => {
   const { libelles, series } = preparerSeries(donnees, palette, false, showRefValues);
 
   const libellesValeursManquantes = useMemo(() => {
-    return trouverValeursManquantes("valeurs", series, libelles);
-  }, [libelles, series]);
-
-  const libellesValeursRefManquantes = useMemo(() => {
-    return trouverValeursManquantes("valeursRef", series, libelles);
+    return annéesManquantesVigieRh(libelles, 3);
   }, [libelles, series]);
 
   const transcriptionIdentifiants = showRefValues
@@ -186,7 +167,6 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
       libellesValeursManquantes={libellesValeursManquantes}
-      libellesValeursRefManquantes={libellesValeursRefManquantes}
       nomGraph={nomGraph}
       series={series}
       showRefValues={showRefValues}
@@ -202,13 +182,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
 const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsTrimestrielProps) => {
   const { libelles, series } = preparerSeries(donnees, palette, true, showRefValues);
 
-  const libellesValeursManquantes = useMemo(() => {
-    return trouverValeursManquantes("valeurs", series, libelles);
-  }, [libelles, series]);
-
-  const libellesValeursRefManquantes = useMemo(() => {
-    return trouverValeursManquantes("valeursRef", series, libelles);
-  }, [libelles, series]);
+  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles, 3)
 
   const transcriptionIdentifiants = showRefValues
     ? [wording.NOMBRE_CDI, wording.CDI_REF, wording.NOMBRE_CDD, wording.CDD_REF]
@@ -223,7 +197,6 @@ const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, d
       legendReferenceLabel={wording.MOYENNE_REF}
       libelles={libelles}
       libellesValeursManquantes={libellesValeursManquantes}
-      libellesValeursRefManquantes={libellesValeursRefManquantes}
       nomGraph={nomGraph}
       series={series}
       showRefValues={showRefValues}
