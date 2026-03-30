@@ -91,7 +91,7 @@ const construitLibelleCategorie = (valeur: NatureContratsAnnuel | NatureContrats
   return { key: valeur.annee.toString(), label: valeur.annee.toString() };
 };
 
-const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean, showRefValues: boolean): Serie => {
+const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestriel)[], palette: CouleurHistogramme[], isTrimestriel: boolean, showRefValues: boolean): Serie => {  
   const sortedDonnees = [...donnees].sort((a, b) => {
     if (isTrimestriel && estTrimestriel(a) && estTrimestriel(b)) {
       const aKey = a.annee * 10 + a.trimestre;
@@ -142,27 +142,10 @@ const preparerSeries = (donnees: (NatureContratsAnnuel | NatureContratsTrimestri
     };
   });
 
-  const libelles = categories.map(({ label }) => label);
+  const libelles = categories.map(({ key }) => key);
 
   return { libelles, series, natures };
 };
-
-function trouverValeursManquantes(typeValeur: "valeursRef" | "valeurs", series: HistogrammeComparaisonVerticalAvecRefSerie[], libelles: string[]) {
-  console.log("make it to here !!!")
-  const valeursRefManquantes: string[] = [];
-  for (const serie of series) {
-    for (const [index, valeur] of serie[typeValeur]?.entries() ?? []) {
-      if (typeof valeur !== "number" || Number.isNaN(valeur)) {
-        const annee = libelles[index];
-        const libelleComplet = `${serie.label} - ${annee}`;
-        if (!valeursRefManquantes.includes(libelleComplet)) {
-          valeursRefManquantes.push(libelleComplet);
-        }
-      }
-    }
-  }
-  return valeursRefManquantes;
-}
 
 const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsAnnuelProps) => {
   const { libelles, series } = preparerSeries(donnees, palette, false, showRefValues);
