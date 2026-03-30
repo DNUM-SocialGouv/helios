@@ -1,6 +1,28 @@
 version: '3.9'
 
 services:
+  ftps-hapi:
+    image: stilliard/pure-ftpd:hardened
+    container_name: helios_ftps_hapi
+    env_file:
+      - .env.local
+    ports:
+      - target: 21
+        published: 2121
+      - "30000-30009:30000-30009"
+    environment:
+      FTP_USER_NAME: ${HAPI_FTPS_USERNAME:-infocentre_helios}
+      FTP_USER_PASS: ${HAPI_FTPS_PASSWORD:-passwordforhapi}
+      FTP_USER_HOME: /home/${HAPI_FTPS_USERNAME:-infocentre_helios}
+      ADDED_FLAGS: "--tls=1 --createhomedir --chrooteveryone"
+    volumes:
+      - type: bind
+        source: ${PWD}/data_set/flux_hapi
+        target: "/home/${HAPI_FTPS_USERNAME:-infocentre_helios}/ftps/Infocentre/Production/download/STARS FIR"
+      - type: bind
+        source: ${PWD}/data_set/ftps_certs/pure-ftpd.pem
+        target: /etc/ssl/private/pure-ftpd.pem
+
   sftp-finess:
     image: atmoz/sftp
     container_name: helios_sftp_finess

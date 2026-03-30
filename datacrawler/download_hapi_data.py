@@ -1,88 +1,96 @@
 import re
-import stat
+import socket
+import ssl
+from ftplib import FTP, FTP_TLS, all_errors
 from logging import Logger
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from datetime import datetime
-
-import paramiko
-from paramiko import SSHException
-from paramiko.sftp import SFTPError
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
 
-def connect_sftp(host: str, port: int, username: str, password: str, logger: Logger) -> tuple:
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+class _SessionReuseFTPTLS(FTP_TLS):
+    """Subclass of FTP_TLS that reuses the control channel TLS session on the
+    data channel. Required by servers (e.g. pure-ftpd) that enforce session reuse."""
 
-    ssh.connect(
-        hostname=host,
-        port=port,
-        username=username,
-        password=password,
-        allow_agent=False,
-        look_for_keys=False,
-    )
-
-    sftp = ssh.open_sftp()
-    logger.info("Connexion SFTP à %s réussie.", host)
-    return ssh, sftp
+    def ntransfercmd(self, cmd: str, rest: Optional[int] = None) -> Tuple[socket.socket, Optional[int]]:  # type: ignore[override]
+        conn, size = FTP.ntransfercmd(self, cmd, rest)
+        if self._prot_p:  # type: ignore[attr-defined]
+            conn = self.context.wrap_socket(  # type: ignore[attr-defined]
+                conn,
+                server_side=False,
+                server_hostname=self.host,
+                session=self.sock.session,  # type: ignore[union-attr]
+            )
+        return conn, size
 
 
-def list_hapi_files(sftp: paramiko.SFTPClient, remote_path: str, file_prefix: str) -> List:
-    attrs = sftp.listdir_attr(remote_path)
+def connect_ftps(host: str, port: int, username: str, password: str, logger: Logger) -> FTP_TLS:
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
 
+    ftps = _SessionReuseFTPTLS(context=ssl_context)
+    ftps.connect(host=host, port=port)
+    ftps.login(user=username, passwd=password)
+    ftps.prot_p()
+    logger.info("Connexion FTPS à %s réussie.", host)
+    return ftps
+
+
+def list_hapi_files(ftps: FTP_TLS, remote_path: str) -> List[str]:
     current_year = datetime.now().year
-    pattern = re.compile(rf"^{re.escape(file_prefix)}_(\d{{4}})_\d{{14}}")
+    pattern = re.compile(r"^(\d{4})_engagements_exporter_(\d{8})\.csv$")
 
-    entries = []
-    for entry in attrs:
-        filename = getattr(entry, "filename", None)
-        st_mode = getattr(entry, "st_mode", None)
-        if not filename or not isinstance(st_mode, int):
-            continue
-        if not stat.S_ISREG(st_mode):
+    # For each year keep only the most recent file (highest yyyyMMDD date).
+    # Format: {year: (filename, full_date_str)}
+    best_per_year: dict[int, tuple[str, str]] = {}
+
+    for name, facts in ftps.mlsd(remote_path):
+        if facts.get("type") != "file":
             continue
 
-        match = pattern.match(filename)
+        match = pattern.match(name)
         if not match:
             continue
 
         try:
             year = int(match.group(1))
+            date_str = match.group(2)
         except (ValueError, TypeError):
             continue
 
         if year < current_year - 4 or year > current_year:
             continue
 
-        entries.append(entry)
+        # Lexicographic comparison is correct for yyyyMMDD strings
+        if year not in best_per_year or date_str > best_per_year[year][1]:
+            best_per_year[year] = (name, date_str)
 
-    return entries
+    return [filename for filename, _ in best_per_year.values()]
 
 
-def download_remote_file(sftp: paramiko.SFTPClient, remote_path: str, local_path: Path, filename: str, logger: Logger) -> None:
-    remote_file_path = f"{remote_path}/{filename}"
+def download_remote_file(ftps: FTP_TLS, remote_path: str, local_path: Path, filename: str, logger: Logger) -> None:
+    remote_file_path = f"{remote_path.rstrip('/')}/{filename}"
     local_file_path = local_path / filename
-    sftp.get(remote_file_path, str(local_file_path))
+    with open(local_file_path, "wb") as file:
+        ftps.retrbinary(f"RETR {remote_file_path}", file.write)
     logger.info("Le fichier '%s' a été téléchargé avec succès vers '%s'.", filename, local_file_path)
 
 
-def _safe_close(sftp: Optional[paramiko.SFTPClient], ssh: Optional[paramiko.SSHClient], logger: Logger) -> None:
+def _safe_close(ftps: Optional[FTP_TLS], logger: Logger) -> None:
     try:
-        if sftp:
-            sftp.close()
-        if ssh:
-            ssh.close()
-    except (OSError, SSHException, SFTPError) as exc:
-        logger.debug("Erreur lors de la fermeture de la connexion SFTP: %s", exc)
+        if ftps:
+            ftps.quit()
+    except all_errors as exc:
+        logger.debug("Erreur lors de la fermeture de la connexion FTPS: %s", exc)
 
 
 def main() -> None:
-    """Script pour télécharger les données brutes HAPI depuis un serveur SFTP.
+    """Script pour télécharger les données brutes HAPI depuis un serveur FTPS.
 
-    Ce script se connecte à un serveur SFTP en utilisant les informations
+    Ce script se connecte à un serveur FTPS en utilisant les informations
     d'identification fournies dans les variables d'environnement. Il recherche
     les fichiers portant le préfixe configuré et datant des 5 dernières années,
     les télécharge dans un répertoire local (récréé à zéro), puis se déconnecte.
@@ -90,52 +98,45 @@ def main() -> None:
     logger, variables_d_environnement = initialise_les_dépendances()
 
     # --- Configuration ---
-    sftp_host = variables_d_environnement["HAPI_SFTP_HOST"]
-    sftp_port = int(variables_d_environnement["HAPI_SFTP_PORT"])
-    sftp_username = variables_d_environnement["HAPI_SFTP_USERNAME"]
-    sftp_password = variables_d_environnement["HAPI_SFTP_PASSWORD"]
-    remote_path = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes"
+    ftps_host = variables_d_environnement["HAPI_FTPS_HOST"]
+    ftps_port = int(variables_d_environnement["HAPI_FTPS_PORT"])
+    ftps_username = variables_d_environnement["HAPI_FTPS_USERNAME"]
+    ftps_password = variables_d_environnement["HAPI_FTPS_PASSWORD"]
+    remote_path = "/ftps/Infocentre/Production/download/STARS FIR"
     local_path = Path(variables_d_environnement["HAPI_DATA_PATH"])
-    file_prefix = "ENGAGEMENTS_PAR_BENEFICIAIRE"
 
     # --- Création du répertoire de destination ---
     local_path.mkdir(parents=True, exist_ok=True)
     logger.info("Répertoire de destination '%s' prêt.", local_path)
 
-    ssh = None
-    sftp = None
+    ftps = None
 
     try:
-        ssh, sftp = connect_sftp(sftp_host, sftp_port, sftp_username, sftp_password, logger)
+        ftps = connect_ftps(ftps_host, ftps_port, ftps_username, ftps_password, logger)
 
         try:
-            entries = list_hapi_files(sftp, remote_path, file_prefix)
-        except (OSError, IOError, SFTPError) as exc:
-            logger.exception("Impossible de lister les fichiers sur le SFTP: %s", exc)
+            filenames = list_hapi_files(ftps, remote_path)
+        except all_errors as exc:
+            logger.exception("Impossible de lister les fichiers sur le FTPS: %s", exc)
             return
 
-        if not entries:
-            logger.warning("Aucun fichier HAPI correspondant trouvé sur le SFTP.")
+        if not filenames:
+            logger.warning("Aucun fichier HAPI correspondant trouvé sur le FTPS.")
             return
 
-        for entry in entries:
-            filename = getattr(entry, "filename", None)
-            if not filename:
-                logger.warning("Entrée trouvée sans nom valide.")
-                continue
-
+        for filename in filenames:
             try:
-                download_remote_file(sftp, remote_path, local_path, filename, logger)
-            except (OSError, IOError, SFTPError) as exc:
+                download_remote_file(ftps, remote_path, local_path, filename, logger)
+            except all_errors as exc:
                 logger.exception("Une erreur est survenue lors du téléchargement du fichier '%s': %s", filename, exc)
                 # Stop on first error to mimic TypeScript behavior where errors are bubbled up
                 return
 
-    except (SSHException, OSError) as exc:
-        logger.exception("Une erreur est survenue lors de la connexion SFTP: %s", exc)
+    except all_errors as exc:
+        logger.exception("Une erreur est survenue lors de la connexion FTPS: %s", exc)
     finally:
-        _safe_close(sftp, ssh, logger)
-        logger.info("Déconnexion du SFTP.")
+        _safe_close(ftps, logger)
+        logger.info("Déconnexion du FTPS.")
 
 
 if __name__ == "__main__":
