@@ -369,6 +369,9 @@ export class WordingFr implements Wording {
   readonly GROUPE_III: string = "Groupe III";
   readonly TAUX_DE_CAF: string = "Taux de CAF";
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
+  readonly FONDS_DE_ROULEMENT: string = "Fonds de roulement";
+  readonly BESOIN_FONDS_DE_ROULEMENT: string = "Besoin en fonds de roulement";
+  readonly TRESORERIE: string = "Trésorerie";
 
   // Bloc Buget Finance Entite Juridique
   readonly TITRE_I: string = "Titre I";
@@ -574,6 +577,7 @@ export class WordingFr implements Wording {
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string = "Une liste avec ce nom existe déjà.";
   readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 

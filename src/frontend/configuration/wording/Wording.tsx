@@ -313,6 +313,9 @@ export interface Wording {
   readonly GROUPE_III: string;
   readonly TAUX_DE_CAF: string;
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string;
+  readonly FONDS_DE_ROULEMENT: string;
+  readonly BESOIN_FONDS_DE_ROULEMENT: string;
+  readonly TRESORERIE: string;
 
   // Bloc budget et finance entité juridique
   readonly TITRE_I: string;
@@ -490,6 +493,7 @@ export interface Wording {
   readonly ETOILE_MES_LISTES: string;
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string;
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string;
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string;
   readonly ETOILE_MAX_LISTE_ATTEINT: string;
   readonly ETOILE_ERREUR_MODIF_ETAB: string;
 

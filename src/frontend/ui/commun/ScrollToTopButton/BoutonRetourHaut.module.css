@@ -1,0 +1,11 @@
+.bouton {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  background-color: white;
+}
+
+.bouton:hover {
+  background-color: revert;
+}

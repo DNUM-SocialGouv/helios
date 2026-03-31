@@ -8,7 +8,7 @@ from datacrawler.transform.équivalences_finess_helios import (
     équivalences_finess_cs1400103_helios,
     colonnes_a_garder_finess_amm_arhgos,
     index_autorisations_amm_sanitaires,
-    equivalences_finess_amm_arhgos_helios
+    equivalences_finess_amm_arhgos_helios,
 )
 
 
@@ -31,12 +31,15 @@ def transforme_les_donnees_des_autorisations_amm(
     donnees_des_autorisations_amm: pd.DataFrame, numeros_finess_des_etablissements_connus: pd.DataFrame, logger: Logger
 ) -> pd.DataFrame:
     est_dans_finess = donnees_des_autorisations_amm["nofinesset"].isin(numeros_finess_des_etablissements_connus["numero_finess_etablissement_territorial"])
+    est_autorisation_active = donnees_des_autorisations_amm["statut_autorisation_code"] == "02"
     logger.info(f"[FINESS] {est_dans_finess.sum()} autorisations amm sont liées à un ET trouvé en base dans le fichier amm_arhgos")
+    logger.info(f"[FINESS] {est_autorisation_active.sum()} autorisations amm actives trouvées (statut_autorisation_code=02)")
 
     return (
-        donnees_des_autorisations_amm[est_dans_finess][colonnes_a_garder_finess_amm_arhgos]
+        donnees_des_autorisations_amm[est_dans_finess & est_autorisation_active][colonnes_a_garder_finess_amm_arhgos]
         .rename(columns=equivalences_finess_amm_arhgos_helios)
         .dropna(subset=index_autorisations_amm_sanitaires)
         .drop_duplicates(subset=index_autorisations_amm_sanitaires)
+        .drop(columns=["statut_autorisation_code"])
         .set_index(index_autorisations_amm_sanitaires)
     )

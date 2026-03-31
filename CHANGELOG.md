@@ -8,18 +8,27 @@
 - vr-167: Inversion des couleurs dans le graphique "Nature des contrats"
 - vr-168: Symétrie de l'échelle entre les hommes et les femmes sur le graphique "Pyramide des âges"
 
-
 ### Features
+
+- hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
+- hel-997: Ajout du graphique horizontal concernant les fonds de roulement
+- hel-998: Ajout du graphique horizontal concernant le besoin en fonds de roulement
+- hel-999: Ajout du graphique horizontal concernant la trésorerie
+- hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
+- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+- hel-989: Message d’information en cas de nom de liste en doublon
 
 ## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
 
 ### Bug Fixes
+
 - vr-156: Correction du calcul du taux de variation dans la vignette "Effectifs"
 - vr-157: Position du libellé en cas de valeur nulle dans le graphique "Entrées et sorties"
 - vr-158: Taille des graphiques lorsque graphiques manquants dans un bloc
 - vr-159: Affichage de certains graphiques avec des données manquantes
 
 ### Features
+
 - vr-146: Modification de la taille des points trimestriels sur les graphiques par filière et catégorie
 - vr-150: Wording détail effectifs par filière
 - vr-151: Nommage des sorties Excel effectifs par filière
@@ -36,6 +45,7 @@
 ### Bug Fixes
 
 ### Features
+
 - vr-152: Renommage des colonnes de plusieurs tables
 
 ## [1.8.2.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.2.1) (2026-03-05)

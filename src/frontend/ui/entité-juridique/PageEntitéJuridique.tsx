@@ -20,6 +20,7 @@ import { useExportExcelETRattache } from "./ExportExcelETRattaches";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
+import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
 type EntitéJuridiqueProps = Readonly<{
   entitéJuridiqueViewModel: EntiteJuridiqueViewModel;
@@ -95,6 +96,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
           toggelBlocs={() => toggelBlocs(3)}
           type="EJ" />
       </div>
+      <BoutonRetourHaut />
     </main>
   );
 };

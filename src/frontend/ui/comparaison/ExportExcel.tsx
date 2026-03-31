@@ -110,6 +110,9 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       enveloppe1: (etab) => etab.enveloppe1 ?? "-",
       enveloppe2: (etab) => etab.enveloppe2 ?? "-",
       enveloppe3: (etab) => etab.enveloppe3 ?? "-",
+      fondsDeRoulement: (etab) => etab.fondsDeRoulement ?? "-",
+      besoinFondsDeRoulement: (etab) => etab.besoinFondsDeRoulement ?? "-",
+      tresorerie: (etab) => etab.tresorerie ?? "-",
     };
 
     return data.resultat.map((etab: ResultatSAN) =>
@@ -143,6 +146,9 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       enveloppe1: (etab) => etab.enveloppe1 ?? '-',
       enveloppe2: (etab) => etab.enveloppe2 ?? '-',
       enveloppe3: (etab) => etab.enveloppe3 ?? '-',
+      fondsDeRoulement: (etab) => etab.fondsDeRoulement ?? '-',
+      besoinFondsDeRoulement: (etab) => etab.besoinFondsDeRoulement ?? '-',
+      tresorerie: (etab) => etab.tresorerie ?? '-',
     };
 
     return data.resultat.map((etab: ResultatEJ) =>
@@ -301,7 +307,10 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
     ["enveloppe1", `Allocation de ressources: ${enveloppes[0] ? enveloppes[0] : 'Non renseigné'}`],
     ["enveloppe2", `Allocation de ressources: ${enveloppes[1] ? enveloppes[1] : 'Non renseigné'}`],
-    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`]
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`],
+    ["fondsDeRoulement", "Fonds de roulement"],
+    ["besoinFondsDeRoulement", "Besoin en fonds de roulement"],
+    ["tresorerie", "Trésorerie"],
   ]);
 
   return Array.from(headersSan.entries())
@@ -333,7 +342,10 @@ const getEJHeaders = (enabledIndicators: string[], enveloppes: string[]): string
     ["ratioDependanceFinanciere", "Ratio de dépendance financière"],
     ["enveloppe1", `Allocation de ressources: ${enveloppes[0] ? enveloppes[0] : 'Non renseigné'}`],
     ["enveloppe2", `Allocation de ressources: ${enveloppes[1] ? enveloppes[1] : 'Non renseigné'}`],
-    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`]
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`],
+    ["fondsDeRoulement", "Fonds de roulement"],
+    ["besoinFondsDeRoulement", "Besoin en fonds de roulement"],
+    ["tresorerie", "Trésorerie"],
   ]);
 
   return Array.from(headersEJ.entries())
