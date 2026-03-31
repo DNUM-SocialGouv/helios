@@ -1,7 +1,7 @@
 import re
 import socket
 import ssl
-from ftplib import FTP, FTP_TLS, all_errors
+from ftplib import FTP, FTP_TLS, all_errors, error_perm
 from logging import Logger
 from pathlib import Path
 from typing import List, Optional, Tuple
@@ -37,9 +37,7 @@ def connect_ftps(host: str, port: int, username: str, password: str, logger: Log
     ftps = _SessionReuseFTPTLS(context=ssl_context)
 
     if port == _IMPLICIT_FTPS_PORT:
-        # Implicit FTPS: TLS must wrap the socket BEFORE the welcome banner is read.
-        # ftps.connect() reads the banner in plaintext first, so we build the
-        # connection manually: raw TCP → TLS wrap → then read the welcome banner.
+        # Implicit FTPS: The mode use currently
         ftps.host = host
         ftps.port = port
         raw_sock = socket.create_connection((host, port), timeout=ftps.timeout)
@@ -48,7 +46,7 @@ def connect_ftps(host: str, port: int, username: str, password: str, logger: Log
         ftps.file = ftps.sock.makefile("r", encoding=ftps.encoding)
         ftps.welcome = ftps.getresp()
     else:
-        # Explicit FTPS (FTPES): Used on the dev server
+        # Explicit FTPS (FTPES): In case of change
         ftps.connect(host=host, port=port)
 
     ftps.login(user=username, passwd=password)
@@ -65,8 +63,16 @@ def list_hapi_files(ftps: FTP_TLS, remote_path: str) -> List[str]:
     # Format: {year: (filename, full_date_str)}
     best_per_year: dict[int, tuple[str, str]] = {}
 
-    for name, facts in ftps.mlsd(remote_path):
-        if facts.get("type") != "file":
+    try:
+        # La commande MLSD n’est pas implementée sur tous les servers
+        entries: List[tuple[str, dict[str, str]]] = list(ftps.mlsd(remote_path))
+    except error_perm:
+        # On passe à la commande NLSD qui est plus largement supportée mais ne fournit pas de facts (type, size, etc.)
+        entries = [(Path(raw).name, {}) for raw in ftps.nlst(remote_path)]
+
+    for name, facts in entries:
+        # Skip directories when type info is available; regex is the guard otherwise.
+        if facts.get("type") == "dir":
             continue
 
         match = pattern.match(name)
