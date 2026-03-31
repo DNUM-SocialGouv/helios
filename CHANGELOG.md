@@ -1,14 +1,30 @@
 # Changelog d'Helios
 
+## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (TODO)
+
+### Bug Fixes
+
+### Features
+
+- hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
+- hel-997: Ajout du graphique horizontal concernant les fonds de roulement
+- hel-998: Ajout du graphique horizontal concernant le besoin en fonds de roulement
+- hel-999: Ajout du graphique horizontal concernant la trésorerie
+- hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
+- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+- hel-989: Message d’information en cas de nom de liste en doublon
+
 ## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
 
 ### Bug Fixes
+
 - vr-156: Correction du calcul du taux de variation dans la vignette "Effectifs"
 - vr-157: Position du libellé en cas de valeur nulle dans le graphique "Entrées et sorties"
 - vr-158: Taille des graphiques lorsque graphiques manquants dans un bloc
 - vr-159: Affichage de certains graphiques avec des données manquantes
 
 ### Features
+
 - vr-146: Modification de la taille des points trimestriels sur les graphiques par filière et catégorie
 - vr-150: Wording détail effectifs par filière
 - vr-151: Nommage des sorties Excel effectifs par filière
@@ -19,14 +35,6 @@
 - vr-162: Echelle de l'axe des ordonnées dans les graphiques d'effectif
 - vr-164: Placement des étiquettes de valeur sur les graphiques en barres verticales
 - vr-165: Modifications des couleurs des étiquettes de pourcentage dans le graphique répartition des effectifs
-
-- hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
-- hel-997: Ajout du graphique horizontal concernant les fonds de roulement
-- hel-998: Ajout du graphique horizontal concernant le besoin en fonds de roulement
-- hel-999: Ajout du graphique horizontal concernant la trésorerie
-- hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
-
-- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
 
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
@@ -67,7 +75,6 @@
 - hel-988: ET MS - Qualiscope - Gestion des données en back
 - hel-933: ET SAN - Ajout des données de certification Qualiscope
 - hel-960: ET SAN - Qualiscope - Gestion des données en back
-- hel-989: Message d’information en cas de nom de liste en doublon
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
