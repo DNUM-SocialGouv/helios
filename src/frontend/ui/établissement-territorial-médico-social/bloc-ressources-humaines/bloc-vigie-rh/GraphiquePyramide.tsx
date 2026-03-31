@@ -288,6 +288,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
   const transcriptionValeursRef = [effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef];
   const transcriptionValeurs = [effectifHomme, effectifFemme];
 
+  // Calculer la valeur maximale pour une échelle commune
+  const allValues = [...effectifHomme, ...effectifFemme, ...effectifHommeRef, ...effectifFemmeRef].filter(Number.isFinite);
+  const maxValue = allValues.length > 0 ? Math.max(...allValues) : 0;
+
   return (
     <>
       <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
@@ -307,6 +311,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                   ...options.scales.x,
                   display: false,
                   reverse: true,
+                  max: maxValue,
                 },
                 y: { ...options.scales.y, display: false },
               }
@@ -346,6 +351,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 x: {
                   ...options.scales.x,
                   display: false,
+                  max: maxValue,
                 },
                 y: { ...options.scales.y, display: false },
               },
