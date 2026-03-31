@@ -26,6 +26,8 @@
 - hel-999: Ajout du graphique horizontal concernant la trésorerie
 - hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
 
+- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+
 ## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
 ### Bug Fixes

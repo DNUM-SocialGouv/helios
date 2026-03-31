@@ -66,7 +66,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withBundleAnalyzer({
-  devIndicators: { position: "bottom-right" },
+  devIndicators: { position: "bottom-left" },
   output: 'standalone',
   async headers() {
     return process.env["NODE_ENV"] !== "development"

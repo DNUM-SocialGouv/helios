@@ -2,9 +2,16 @@ import Head from "next/head";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
+import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
+import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
+import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
+import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesEtablissementSanitaire } from "./bloc-ressources-humaines/BlocRessourcesHumainesEtablissementSanitaire";
+import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
+import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
+import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 import { SeparatorHorizontal } from "../commun/Separateur/SeparatorHorizontal";
 import { Titre } from "../commun/Titre/Titre";
 import { ToggelMultipleBlocs } from "../commun/toggelMultipleBlocs/ToggelMultipleBlocs";
@@ -12,12 +19,6 @@ import useToggelMultipleBlocs from "../commun/toggelMultipleBlocs/useToggelMulti
 import { ActivitesMensuelViewModel } from "../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { BlocBudgetFinance } from "../entité-juridique/bloc-budget-finance/BlocBudgetFinance";
 import { RechercheViewModel } from "../home/RechercheViewModel";
-import { BlocActivitéSanitaire } from "./bloc-activité/BlocActivitéSanitaire";
-import { BlocAutorisationEtCapacitéSanitaire } from "./bloc-autorisations/BlocAutorisationEtCapacitéSanitaire";
-import { BlocIdentitéSanitaire } from "./bloc-identité/BlocIdentitéSanitaire";
-import BlocQualite from "./bloc-qualite/BlocQualite";
-import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
-import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
 
 type ÉtablissementTerritorialProps = Readonly<{
   établissementTerritorialSanitaireViewModel: EtablissementTerritorialSanitaireViewModel;
@@ -122,6 +123,7 @@ export const PageÉtablissementTerritorialSanitaire = ({ rechercheViewModel, ét
         />
 
       </div>
+      <BoutonRetourHaut />
     </main >
   );
 };
