@@ -574,6 +574,7 @@ export class WordingFr implements Wording {
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string = "Une liste avec ce nom existe déjà.";
   readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 
