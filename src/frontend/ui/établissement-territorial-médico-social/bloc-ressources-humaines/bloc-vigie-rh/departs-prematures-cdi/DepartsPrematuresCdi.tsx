@@ -2,6 +2,7 @@ import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { BlocVigieRHViewModel } from "../BlocVigieRHViewModel";
 import styles from "./DepartsPrematuresCdi.module.css";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 import StringFormater from "../../../../commun/StringFormater";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
 
@@ -14,7 +15,9 @@ type DepartsPrematuresCdiProps = Readonly<{
 const DepartsPrematuresCdi = ({ blocVigieRhViewModel, etabFiness, etabTitle }: DepartsPrematuresCdiProps) => {
   const { wording } = useDependencies();
   const donnees = blocVigieRhViewModel.departsPrematuresCdi;
-  const libellesValeursManquantes = donnees.filter(({ valeur }) => typeof valeur !== "number" || !Number.isFinite(valeur)).map(({ annee }) => `${annee}`);
+  const annees = donnees.map(item => item.annee);
+
+  const libellesValeursManquantes = annéesManquantesVigieRh(annees, 3);
   const anneeCourante = new Date().getFullYear();
   const anneeMax = donnees.reduce<number | null>((accum, { annee }) => {
     if (accum === null) {
@@ -56,7 +59,7 @@ const DepartsPrematuresCdi = ({ blocVigieRhViewModel, etabFiness, etabTitle }: D
         </p>
       )}
       {libellesValeursManquantes.length > 0 && (
-        <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}</MiseEnExergue>
+        <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellesValeursManquantes.join(", ")}`}</MiseEnExergue>
       )}
       <Transcription
         entêteLibellé={wording.PERIODE}

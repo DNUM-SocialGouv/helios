@@ -2,6 +2,7 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Titl
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 
+import { annéesManquantesVigieRh } from "../../../../utils/dateUtils";
 import { ColorLabel } from "../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import { couleurDesTraitsRefHistogramme } from "../../../commun/Graphique/couleursGraphique";
@@ -19,10 +20,11 @@ type PyramidChartProps = Readonly<{
   effectifHommeRef: number[];
   effectifFemme: number[];
   effectifFemmeRef: number[];
+  annees:  number[];
   showRefValues: boolean;
 }>;
 
-const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, showRefValues }: PyramidChartProps) => {
+const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, annees, showRefValues }: PyramidChartProps) => {
   const refColor = "#929292";
 
   const { wording } = useDependencies();
@@ -31,7 +33,6 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
     hommesExtension,
     femmesExtension,
     libellesValeursManquantes,
-    libellesValeursReferenceManquantes,
   } = useMemo(() => {
     const valeursEffectifHomme = effectifHomme.map((valeur) => {
       if (Number.isFinite(valeur)) {
@@ -61,44 +62,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       return null;
     });
 
-    const libellesValeursManquantes: string[] = [];
-    const libellesValeursReferenceManquantes: string[] = [];
-
-    const ajouterLibellesManquants = (
-      valeurs: (number | null)[],
-      construireLibelle: (index: number) => string,
-      accumulateur: string[]
-    ) => {
-      for (const [index, valeur] of valeurs.entries()) {
-        if (!Number.isFinite(valeur)) {
-          const libelle = construireLibelle(index);
-          if (!accumulateur.includes(libelle)) {
-            accumulateur.push(libelle);
-          }
-        }
-      }
-    };
-
-    ajouterLibellesManquants(
-      valeursEffectifHomme,
-      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
-      libellesValeursManquantes
-    );
-    ajouterLibellesManquants(
-      valeursEffectifFemme,
-      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
-      libellesValeursManquantes
-    );
-    ajouterLibellesManquants(
-      valeursEffectifHommeRef,
-      (index) => `${wording.EFFECTIF_HOMMES}-${labels[index]}`,
-      libellesValeursReferenceManquantes
-    );
-    ajouterLibellesManquants(
-      valeursEffectifFemmeRef,
-      (index) => `${wording.EFFECTIF_FEMMES}-${labels[index]}`,
-      libellesValeursReferenceManquantes
-    );
+    const libellesValeursManquantes = annéesManquantesVigieRh(annees, 3);
 
     const menExtension = valeursEffectifHommeRef.map((valeurRef, index) => {
       const valeur = valeursEffectifHomme[index];
@@ -124,9 +88,8 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       hommesExtension: menExtension,
       femmesExtension: womenExtension,
       libellesValeursManquantes,
-      libellesValeursReferenceManquantes,
     };
-  }, [effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, labels, wording.EFFECTIF_FEMMES, wording.EFFECTIF_HOMMES]);
+  }, [effectifFemme, effectifFemmeRef, effectifHomme, effectifHommeRef, labels, wording.EFFECTIF_FEMMES, wording.EFFECTIF_HOMMES, annees]);
 
   const menData: ChartData = {
     datasets: [
@@ -325,6 +288,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
   const transcriptionValeursRef = [effectifHomme, effectifHommeRef, effectifFemme, effectifFemmeRef];
   const transcriptionValeurs = [effectifHomme, effectifFemme];
 
+  // Calculer la valeur maximale pour une échelle commune
+  const allValues = [...effectifHomme, ...effectifFemme, ...effectifHommeRef, ...effectifFemmeRef].filter(Number.isFinite);
+  const maxValue = allValues.length > 0 ? Math.max(...allValues) : 0;
+
   return (
     <>
       <div className="fr-grid-row fr-mb-1w" style={{ alignItems: "center" }}>
@@ -344,6 +311,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                   ...options.scales.x,
                   display: false,
                   reverse: true,
+                  max: maxValue,
                 },
                 y: { ...options.scales.y, display: false },
               }
@@ -383,6 +351,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
                 x: {
                   ...options.scales.x,
                   display: false,
+                  max: maxValue,
                 },
                 y: { ...options.scales.y, display: false },
               },
@@ -400,14 +369,10 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       />}
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
-          {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
+          {`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${libellesValeursManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
-      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
-        <MiseEnExergue>
-          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
-        </MiseEnExergue>
-      )}
+
       <Transcription
         disabled={false}
         entêteLibellé={wording.TRANCHE_AGE}

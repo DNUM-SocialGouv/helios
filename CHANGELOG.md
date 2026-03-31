@@ -3,6 +3,10 @@
 ## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (TODO)
 
 ### Bug Fixes
+- vr-163: Etiquettes des dates à afficher dans les encarts "Aucune donnée renseignée :"
+- vr-166: Calcul des valeurs annuelles à afficher dans les graphiques à vue trimestrielle + annuelle
+- vr-167: Inversion des couleurs dans le graphique "Nature des contrats"
+- vr-168: Symétrie de l'échelle entre les hommes et les femmes sur le graphique "Pyramide des âges"
 
 ### Features
 

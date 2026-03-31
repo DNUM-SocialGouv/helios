@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { TauxRotationTrimestriel } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { trimestresManquantsVigieRh } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
@@ -20,14 +21,10 @@ const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, don
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
     const libelles = donneesTauxRotationTrimestriels.map((donnee) => `${donnee.annee}-T${donnee.trimestre}`);
-    const valeursManquantes: string[] = [];
+    const valeursManquantes = trimestresManquantsVigieRh(libelles, 3)
     const valeursRefManquantes: string[] = [];
     const valeurs = donneesTauxRotationTrimestriels.map((donnee) => {
       const valeur = donnee.rotation;
-      if (!Number.isFinite(valeur)) {
-        valeursManquantes.push(`${donnee.annee}-T${donnee.trimestre}`);
-        return null;
-      }
       return StringFormater.transformInRoundedRate(valeur);
     });
     const valeursRef = donneesTauxRotationTrimestriels.map((donnee) => {

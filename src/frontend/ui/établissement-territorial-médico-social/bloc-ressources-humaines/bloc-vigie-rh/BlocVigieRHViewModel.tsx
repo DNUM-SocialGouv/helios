@@ -297,16 +297,15 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
-        .filter(departEmbauche => departEmbauche.annee !== maxAnnee);
-    }
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
+
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? []).filter(departEmbauche => anneesCompletes.has(departEmbauche.annee));
   }
 
   public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
@@ -333,17 +332,15 @@ export class BlocVigieRHViewModel {
   }
 
   public get donneesTauxRotation(): TauxRotation[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.tauxRotation.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.tauxRotation
-        .filter(rotation => rotation.annee !== maxAnnee);
-    }
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
 
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 4).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? []).filter(rotation => anneesCompletes.has(rotation.annee));
   }
 
   public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
@@ -452,16 +449,16 @@ export class BlocVigieRHViewModel {
   }
 
   public get natureContratsAnnuel(): NatureContratsAnnuel[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour une nature de contrats) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel
-        .filter(contrat => contrat.annee !== maxAnnee);
-    }
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
+
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel ?? []).filter(natureContrat => anneesCompletes.has(natureContrat.annee));
+
   }
 
   public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
@@ -471,12 +468,12 @@ export class BlocVigieRHViewModel {
   public get paletteNatureContrats(): CouleurHistogramme[] {
     return [
       {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },
-      {
         premierPlan: couleurDuFondHistogrammeOrangeClair,
         secondPlan: couleurExtensionHistogrammeOrangeClair,
+      },
+      {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
       },
     ];
   }
