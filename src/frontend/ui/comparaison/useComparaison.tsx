@@ -4,8 +4,11 @@ import { DatesMisAjourSources } from "../../../backend/métier/entities/Resultat
 import { useDependencies } from "../commun/contexts/useDependencies";
 import StringFormater from "../commun/StringFormater";
 import { ContenuAllocationRessourcesEJ } from "../entité-juridique/bloc-budget-finance/allocation-ressources/ContenuAllocationRessourcesEJ";
+import { ContenuBesoinFondsDeRoulement } from "../entité-juridique/bloc-budget-finance/besoin-fonds-de-roulement/BesoinFondsDeRoulement";
 import { ContenuCompteDeRésultatEJ } from "../entité-juridique/bloc-budget-finance/compte-de-resultat/ContenuCompteDeRésultatEJ";
+import { ContenuFondsDeRoulement } from "../entité-juridique/bloc-budget-finance/fonds-de-roulement/FondsDeRoulement";
 import { ContenuRatioDependanceFinancière } from "../entité-juridique/bloc-budget-finance/ratio-dependance-financiere/RatioDependanceFinanciere";
+import { ContenuTresorerie } from "../entité-juridique/bloc-budget-finance/tresorerie/Tresorerie";
 import { ContenuDeDepensesInterimPm } from "../entité-juridique/infoBulle/ContenuDeDepensesInterimPm";
 import { ContenuDeJoursAbsenteismePm } from "../entité-juridique/infoBulle/ContenuDeJoursAbsenteismePm";
 import { ContenuDeJoursAbsenteismePnm } from "../entité-juridique/infoBulle/ContenuDeJoursAbsenteismePnm";
@@ -305,6 +308,21 @@ export function useComparaison() {
           contenu: <ContenuRatioDependanceFinancière dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
           titre: wording.RATIO_DEPENDANCE_FINANCIERE,
         };
+      case "fondsDeRoulement":
+        return {
+          contenu: <ContenuFondsDeRoulement dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.FONDS_DE_ROULEMENT,
+        };
+      case "besoinFondsDeRoulement":
+        return {
+          contenu: <ContenuBesoinFondsDeRoulement dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.BESOIN_FONDS_DE_ROULEMENT,
+        };
+      case "tresorerie":
+        return {
+          contenu: <ContenuTresorerie dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_ancre)} source={wording.ANCRE} />,
+          titre: wording.TRESORERIE,
+        };
       case "totalHosptMedecine":
       case "totalHosptChirurgie":
       case "totalHosptObstetrique":
@@ -423,6 +441,10 @@ export function useComparaison() {
         { label: `Alloc. ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
         { label: `Alloc. ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
         { label: `Alloc. ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: "Fonds de roulement", nomComplet: "Fonds de roulement", key: "fondsDeRoulement", info: true, sort: true, orderBy: "fonds_de_roulement" },
+        { label: "BFR", nomComplet: "Besoin en fonds de roulement", key: "besoinFondsDeRoulement", info: true, sort: true, orderBy: "besoin_fonds_de_roulement" },
+        { label: "Trésorerie", nomComplet: "Trésorerie", key: "tresorerie", info: true, sort: true, orderBy: "tresorerie" },
+
       ]
     }
     else
@@ -448,6 +470,9 @@ export function useComparaison() {
         { label: `Alloc. ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[0] ? topEnveloppes[0] : "Non renseigné"}`, key: 'enveloppe1', info: true, sort: true, orderBy: "enveloppe_1" },
         { label: `Alloc. ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[1] ? topEnveloppes[1] : "Non renseigné"}`, key: 'enveloppe2', info: true, sort: true, orderBy: "enveloppe_2" },
         { label: `Alloc. ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, nomComplet: `Allocation de ressources: ${topEnveloppes[2] ? topEnveloppes[2] : "Non renseigné"}`, key: 'enveloppe3', info: true, sort: true, orderBy: "enveloppe_3" },
+        { label: "Fonds de roulement", nomComplet: "Fonds de roulement", key: "fondsDeRoulement", info: true, sort: true, orderBy: "fonds_de_roulement" },
+        { label: "BFR", nomComplet: "Besoin en fonds de roulement", key: "besoinFondsDeRoulement", info: true, sort: true, orderBy: "besoin_fonds_de_roulement" },
+        { label: "Trésorerie", nomComplet: "Trésorerie", key: "tresorerie", info: true, sort: true, orderBy: "tresorerie" },
       ]
   };
 
