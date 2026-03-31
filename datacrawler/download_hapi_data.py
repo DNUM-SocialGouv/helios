@@ -26,16 +26,34 @@ class _SessionReuseFTPTLS(FTP_TLS):
         return conn, size
 
 
+_IMPLICIT_FTPS_PORT = 990
+
+
 def connect_ftps(host: str, port: int, username: str, password: str, logger: Logger) -> FTP_TLS:
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
 
     ftps = _SessionReuseFTPTLS(context=ssl_context)
-    ftps.connect(host=host, port=port)
+
+    if port == _IMPLICIT_FTPS_PORT:
+        # Implicit FTPS: TLS must wrap the socket BEFORE the welcome banner is read.
+        # ftps.connect() reads the banner in plaintext first, so we build the
+        # connection manually: raw TCP → TLS wrap → then read the welcome banner.
+        ftps.host = host
+        ftps.port = port
+        raw_sock = socket.create_connection((host, port), timeout=ftps.timeout)
+        ftps.sock = ssl_context.wrap_socket(raw_sock, server_hostname=host)
+        ftps.af = ftps.sock.family
+        ftps.file = ftps.sock.makefile("r", encoding=ftps.encoding)
+        ftps.welcome = ftps.getresp()
+    else:
+        # Explicit FTPS (FTPES): Used on the dev server
+        ftps.connect(host=host, port=port)
+
     ftps.login(user=username, passwd=password)
     ftps.prot_p()
-    logger.info("Connexion FTPS à %s réussie.", host)
+    logger.info("Connexion FTPS à %s (port %d, mode %s) réussie.", host, port, "implicite" if port == _IMPLICIT_FTPS_PORT else "explicite")
     return ftps
 
 
