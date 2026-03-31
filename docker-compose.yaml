@@ -2,26 +2,26 @@ version: '3.9'
 
 services:
   ftps-hapi:
-    image: stilliard/pure-ftpd:hardened
+    image: lhauspie/vsftpd-alpine
     container_name: helios_ftps_hapi
     env_file:
       - .env.local
     ports:
-      - target: 21
-        published: 2121
+      - target: 990
+        published: 990
       - "30000-30009:30000-30009"
     environment:
-      FTP_USER_NAME: ${HAPI_FTPS_USERNAME:-infocentre_helios}
-      FTP_USER_PASS: ${HAPI_FTPS_PASSWORD:-passwordforhapi}
-      FTP_USER_HOME: /home/${HAPI_FTPS_USERNAME:-infocentre_helios}
-      ADDED_FLAGS: "--tls=1 --createhomedir --chrooteveryone"
+      FTP_USER: ${HAPI_FTPS_USERNAME:-infocentre_helios}
+      FTP_PASS: ${HAPI_FTPS_PASSWORD:-passwordforhapi}
+      FTP_MODE: ftps_implicit
+      PASV_ADDRESS: "127.0.0.1"
+      PASV_MIN_PORT: "30000"
+      PASV_MAX_PORT: "30009"
+      LOG_STDOUT: "YES"
     volumes:
       - type: bind
         source: ${PWD}/data_set/flux_hapi
-        target: "/home/${HAPI_FTPS_USERNAME:-infocentre_helios}/ftps/Infocentre/Production/download/STARS FIR"
-      - type: bind
-        source: ${PWD}/data_set/ftps_certs/pure-ftpd.pem
-        target: /etc/ssl/private/pure-ftpd.pem
+        target: "/home/vsftpd/${HAPI_FTPS_USERNAME:-infocentre_helios}/ftps/Infocentre/Production/download/STARS FIR"
 
   sftp-finess:
     image: atmoz/sftp
