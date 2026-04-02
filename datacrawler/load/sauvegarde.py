@@ -48,3 +48,37 @@ def mets_a_jour(base_de_donnees: Connection, table: str, cle_primaire: str, donn
     for _, row in donnees.iterrows():
         values = {col: row[col] for col in db_columns}
         base_de_donnees.execute(text(sql), values)
+
+
+def supprime_les_donnees_pour_l_annee(connection: Connection, table: str, annee: int) -> None:
+    connection.execute(text(f"DELETE FROM {table} WHERE annee = :annee"), {"annee": annee})
+
+
+def mets_a_jour_les_montants_engagements(
+    connection: Connection,
+    table: str,
+    finess_col: str,
+    donnees: DataFrame,
+) -> None:
+    if donnees.empty:
+        return
+    df = donnees.reset_index()
+    for _, row in df.iterrows():
+        connection.execute(
+            text(
+                f"""UPDATE {table}
+                SET montant = :montant, mode_delegation = :mode_delegation
+                WHERE {finess_col} = :finess
+                  AND annee = :annee
+                  AND enveloppe = :enveloppe
+                  AND sous_enveloppe = :sous_enveloppe"""
+            ),
+            {
+                "montant": row["montant"],
+                "mode_delegation": row["mode_delegation"],
+                "finess": row[finess_col],
+                "annee": row["annee"],
+                "enveloppe": row["enveloppe"],
+                "sous_enveloppe": row["sous_enveloppe"],
+            },
+        )

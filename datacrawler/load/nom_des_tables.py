@@ -49,8 +49,8 @@ TABLE_VIGIE_RH_DUREE_CDD = "vigierh_duree_cdd"
 
 TABLE_ENTITES_JURIDIQUES = "entite_juridique"
 TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
-CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = 'numero_finess_entite_juridique'
-CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX = 'numero_finess_etablissement_territorial'
+CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = "numero_finess_entite_juridique"
+CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX = "numero_finess_etablissement_territorial"
 TABLE_REF_CATEGORIES = "referentiel_categories"
 
 # motifs de ruptures de contrats
@@ -61,6 +61,7 @@ TABLE_VIGIE_RH_MOTIFS_RUPTURES = "vigierh_motifs_ruptures"
 TABLE_VIGIE_RH_REF_NATURE_CONTRATS = "vigierh_referentiel_nature_contrat"
 TABLE_VIGIE_RH_NATURE_CONTRATS = "vigierh_nature_contrats_annuel"
 TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
+
 
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
