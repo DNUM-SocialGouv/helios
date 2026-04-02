@@ -36,9 +36,10 @@ def _make_session_factory(port: int) -> type:
 
     class _ImplicitFTPSSession(_SessionReuseFTPTLS):
         def __init__(self, host: str, user: str, password: str) -> None:
-            ssl_context = ssl.create_default_context()
+            ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
             ssl_context.check_hostname = False
             ssl_context.verify_mode = ssl.CERT_NONE
+            ssl_context.set_ciphers("DEFAULT@SECLEVEL=1")
             super().__init__(context=ssl_context)
             if port == _IMPLICIT_FTPS_PORT:
                 self.host = host
@@ -97,6 +98,7 @@ def main() -> None:
     logger.info("Répertoire de destination '%s' prêt.", local_path)
 
     try:
+        logger.info("Tentative de connexion au FTPS à %s (port %d)...", ftps_host, ftps_port)
         with ftputil.FTPHost(ftps_host, ftps_username, ftps_password, session_factory=_make_session_factory(ftps_port)) as ftp_host:
             mode = "implicite" if ftps_port == _IMPLICIT_FTPS_PORT else "explicite"
             logger.info("Connexion FTPS à %s (port %d, mode %s) réussie.", ftps_host, ftps_port, mode)
