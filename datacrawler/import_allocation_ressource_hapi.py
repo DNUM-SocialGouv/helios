@@ -85,7 +85,9 @@ if __name__ == "__main__":
     # Find the most recent engagements file
     fichiers_engagements = [f for f in fichiers if "engagements_exporter" in f]
     if not fichiers_engagements:
-        raise FileNotFoundError(f"Aucun fichier engagements trouvé dans {hapi_data_path}")
+        logger_helios.warning(f"Aucun fichier engagements trouvé dans {hapi_data_path}")
+        exit(0)
     fichier_le_plus_recent = sorted(fichiers_engagements, reverse=True)[0]
 
+    logger_helios.info("Traitement du fichier engagements le plus récent : %s", fichier_le_plus_recent)
     import_engagements_allocation_ressource(fichier_le_plus_recent, hapi_data_path, base_de_données_helios, logger_helios)
