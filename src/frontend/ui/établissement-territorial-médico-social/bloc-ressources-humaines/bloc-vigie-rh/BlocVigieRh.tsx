@@ -139,10 +139,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
   const recupereDateDonnees = (identifiant: string) => blocVigieRHViewModel.dateDonneesArrete(identifiant);
-  const recuperePeriodeGlissante = (identifiant: string) => {
-    const echelle = blocVigieRHViewModel.echelleTemporelle?.get(identifiant);
-    return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
-  };
 
   const buildIndicateurEffectif = () => {
     if (!items.length) return null;

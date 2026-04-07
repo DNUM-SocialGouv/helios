@@ -18,9 +18,6 @@ const MOIS_LABELS = [
   "Décembre",
 ];
 
-const ABB_MOIS = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Juin", "Juill.", "Août", "Sept.", "Oct.", "Nov.", "Déc."];
-
-
 type DernierePeriode = Readonly<{
   annee: number | null;
   mois: number | null;
@@ -165,6 +162,7 @@ export async function construitEchelleTemporelleVigieRh(
   echelle["vr-duree-cdd"] = {
     type: "TRIMESTRIEL",
     valeur: dureeTrimestreFormat?.valeur ?? "",
+    ...(dureeTrimestrielPeriod?.annee && dureeTrimestrielPeriod?.trimestre ? { valeurVignette: `au T${dureeTrimestrielPeriod.trimestre}-${dureeTrimestrielPeriod.annee - 1}` } : {}),
     ...(dureeTrimestreFormat?.transcription ? { valeurTranscription: dureeTrimestreFormat.transcription } : {}),
     ...(dureeDate ? { dateDonneesArretees: StringFormater.formatDate(dureeDate) } : {}),
   };
@@ -248,38 +246,6 @@ function formatTrimestriel(
     valeur: `T${trimestre} ${annee}`,
     transcription,
   };
-}
-
-function formatAnnuel(annee?: number | null, mois?: number | null): string | null {
-  if (!annee) {
-    return null;
-  }
-
-  if (!mois || mois < 1 || mois > 12) {
-    return `${annee}`;
-  }
-
-  const fin = mois;
-  const debut = fin === 12 ? 1 : fin + 1;
-  const anneeDebut = fin === 12 ? annee : annee - 1;
-
-  return `${MOIS_LABELS[debut - 1]} ${anneeDebut} à ${MOIS_LABELS[fin - 1]} ${annee}`;
-}
-
-function formatAnnuelVignette(annee?: number | null, mois?: number | null): string | null {
-  if (!annee) {
-    return null;
-  }
-
-  if (!mois || mois < 1 || mois > 12) {
-    return `${annee}`;
-  }
-
-  const fin = mois;
-  const debut = fin === 12 ? 1 : fin + 1;
-  const anneeDebut = fin === 12 ? annee : annee - 1;
-
-  return `${ABB_MOIS[debut - 1]} ${anneeDebut} à ${ABB_MOIS[fin - 1]} ${annee}`;
 }
 
 function numeroMoisDepuisTrimestre(trimestre?: number | null): number | null {
