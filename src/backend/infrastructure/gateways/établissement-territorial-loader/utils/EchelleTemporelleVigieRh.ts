@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { EchelleTemporelleVigieRh } from "../../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import StringFormater from "../../../../../frontend/ui/commun/StringFormater";
 
 const MOIS_LABELS = [
   "Janvier",
@@ -99,16 +100,6 @@ export async function construitEchelleTemporelleVigieRh(
     }),
   ]);
 
-  const dureePeriod = {
-    annee: dureeTrimestrielPeriod.annee,
-    mois: numeroMoisDepuisTrimestre(dureeTrimestrielPeriod.trimestre),
-  };
-
-  const motifPeriod = {
-    annee: motifTrimestrielPeriod.annee,
-    mois: numeroMoisDepuisTrimestre(motifTrimestrielPeriod.trimestre),
-  };
-
   const globalPeriod = {
     annee: globalTrimestrielPeriod.annee,
     mois: numeroMoisDepuisTrimestre(globalTrimestrielPeriod.trimestre),
@@ -120,7 +111,7 @@ export async function construitEchelleTemporelleVigieRh(
   echelle["vr-pyramide-ages"] = {
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
-    ...(dateGlobal ? { dateDonneesArretees: dateGlobal } : {}),
+    ...(dateGlobal ? { dateDonneesArretees: StringFormater.formatDate(dateGlobal) } : {}),
   };
 
   const departsTrimestreFormat = formatTrimestriel(departsTrimestrielPeriod.annee, departsTrimestrielPeriod.trimestre);
@@ -129,27 +120,27 @@ export async function construitEchelleTemporelleVigieRh(
     type: "TRIMESTRIEL",
     valeur: departsTrimestreFormat?.valeur ?? "",
     ...(departsTrimestreFormat?.transcription ? { valeurTranscription: departsTrimestreFormat.transcription } : {}),
-    ...(departsDate ? { dateDonneesArretees: departsDate } : {}),
+    ...(departsDate ? { dateDonneesArretees: StringFormater.formatDate(departsDate) } : {}),
   };
   echelle["vr-taux-rotation"] = {
     type: "TRIMESTRIEL",
     valeur: departsTrimestreFormat?.valeur ?? "",
     ...(departsTrimestreFormat?.transcription ? { valeurTranscription: departsTrimestreFormat.transcription } : {}),
-    ...(departsDate ? { dateDonneesArretees: departsDate } : {}),
+    ...(departsDate ? { dateDonneesArretees: StringFormater.formatDate(departsDate) } : {}),
   };
 
   const effectifsDate = construitDateDernierJour(effectifsPeriod.annee, effectifsPeriod.mois);
   echelle["vr-effectifs"] = {
     type: "MENSUEL",
     valeur: formatMensuel(effectifsPeriod.annee, effectifsPeriod.mois) ?? "",
-    ...(effectifsDate ? { dateDonneesArretees: effectifsDate } : {}),
+    ...(effectifsDate ? { dateDonneesArretees: StringFormater.formatDate(effectifsDate) } : {}),
   };
 
   const effectifsGroupesDate = construitDateDernierJour(effectifsGroupesPeriod.annee, effectifsGroupesPeriod.mois);
   echelle["vr-effectifs-groupes"] = {
     type: "MENSUEL",
     valeur: formatMensuel(effectifsGroupesPeriod.annee, effectifsGroupesPeriod.mois) ?? "",
-    ...(effectifsGroupesDate ? { dateDonneesArretees: effectifsGroupesDate } : {}),
+    ...(effectifsGroupesDate ? { dateDonneesArretees: StringFormater.formatDate(effectifsGroupesDate) } : {}),
   };
 
   const natureTrimestreFormat = formatTrimestriel(natureTrimestrielPeriod.annee, natureTrimestrielPeriod.trimestre);
@@ -158,7 +149,7 @@ export async function construitEchelleTemporelleVigieRh(
     type: "TRIMESTRIEL",
     valeur: natureTrimestreFormat?.valeur ?? "",
     ...(natureTrimestreFormat?.transcription ? { valeurTranscription: natureTrimestreFormat.transcription } : {}),
-    ...(natureDate ? { dateDonneesArretees: natureDate } : {}),
+    ...(natureDate ? { dateDonneesArretees: StringFormater.formatDate(natureDate) } : {}),
   };
 
   const departsPrematuresDate = construitDateDernierJour(globalPeriod.annee, globalPeriod.mois);
@@ -166,29 +157,33 @@ export async function construitEchelleTemporelleVigieRh(
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
     valeurTranscription: formatMoisDepuisJanvier(globalPeriod.mois) ?? "",
-    ...(departsPrematuresDate ? { dateDonneesArretees: departsPrematuresDate } : {}),
+    ...(departsPrematuresDate ? { dateDonneesArretees: StringFormater.formatDate(departsPrematuresDate) } : {}),
   };
 
-  const dureeDate = construitDateDernierJour(dureePeriod.annee, dureePeriod.mois);
+  const dureeTrimestreFormat = formatTrimestriel(dureeTrimestrielPeriod.annee, dureeTrimestrielPeriod.trimestre);
+  const dureeDate = construitDateDepuisTrimestre(dureeTrimestrielPeriod.annee, dureeTrimestrielPeriod.trimestre);
   echelle["vr-duree-cdd"] = {
-    type: "ANNUEL",
-    valeur: formatAnnuel(dureePeriod.annee, dureePeriod.mois) ?? "",
-    ...(dureeDate ? { dateDonneesArretees: dureeDate } : {}),
-    valeurVignette: formatAnnuelVignette(dureePeriod.annee, dureePeriod.mois) ?? "",
+    type: "TRIMESTRIEL",
+    valeur: dureeTrimestreFormat?.valeur ?? "",
+    ...(dureeTrimestreFormat?.transcription ? { valeurTranscription: dureeTrimestreFormat.transcription } : {}),
+    ...(dureeDate ? { dateDonneesArretees: StringFormater.formatDate(dureeDate) } : {}),
   };
 
-  const motifDate = construitDateDernierJour(motifPeriod.annee, motifPeriod.mois);
+  const motifsTrimestreFormat = formatTrimestriel(motifTrimestrielPeriod.annee, motifTrimestrielPeriod.trimestre);
+  const motifDate = construitDateDepuisTrimestre(motifTrimestrielPeriod.annee, motifTrimestrielPeriod.trimestre);
   echelle["vr-motif-rupture"] = {
-    type: "ANNUEL",
-    valeur: formatAnnuel(motifPeriod.annee, motifPeriod.mois) ?? "",
-    ...(motifDate ? { dateDonneesArretees: motifDate } : {}),
+    type: "TRIMESTRIEL",
+    valeur: motifsTrimestreFormat?.valeur ?? "",
+    ...(motifsTrimestreFormat?.transcription ? { valeurTranscription: motifsTrimestreFormat.transcription } : {}),
+    ...(motifDate ? { dateDonneesArretees: StringFormater.formatDate(motifDate) } : {}),
+   
   };
 
   const indicateursGlobalDate = construitDateDernierJour(globalPeriod.annee, globalPeriod.mois);
   echelle["vr-indicateurs-global"] = {
     type: "MENSUEL",
     valeur: formatMensuel(globalPeriod.annee, globalPeriod.mois) ?? "",
-    ...(indicateursGlobalDate ? { dateDonneesArretees: indicateursGlobalDate } : {}),
+    ...(indicateursGlobalDate ? { dateDonneesArretees: StringFormater.formatDate(indicateursGlobalDate) } : {}),
   };
 
   return echelle;

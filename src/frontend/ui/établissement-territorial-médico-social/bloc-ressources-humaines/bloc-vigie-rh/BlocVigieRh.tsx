@@ -250,7 +250,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuTopContratsCourtsVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
 
                   />
@@ -497,7 +496,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuDureeCddVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
                   />
                 }
@@ -602,7 +600,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuMotifsRuptureVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-motif-rupture")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-motif-rupture")}
                     source={wording.DSN}
                   />
                 }
