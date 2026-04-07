@@ -36,7 +36,7 @@ export const PageRégion = ({ région }: { région: string }) => {
         <h1 className="fr-container">{labelDeLaRégion}</h1>
         {labelDeLaRégion !== 'France métropolitaine' && <GroupeOutreMerBoutonRegions regionsList={arsRegions} />}
         <BandeauCookies texte={wording.COOKIES_ATLASSANTÉ} />
-        <iframe allowFullScreen height="650" src={régions[région].source} title={wording.régionAtlasSanté(régions[région].label)} width="100%" />
+        <iframe allowFullScreen height="700" src={régions[région].source} title={wording.régionAtlasSanté(régions[région].label)} width="700" />
       </section>
     </main>
   );
