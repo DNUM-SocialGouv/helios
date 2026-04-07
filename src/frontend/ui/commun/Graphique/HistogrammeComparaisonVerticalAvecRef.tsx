@@ -213,6 +213,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       tooltip: {
         filter: (tooltipItem) => tooltipItem.raw !== null && tooltipItem.raw !== undefined,
         callbacks: {
+          title: function (context: any) {
+            // Utilise le label principal et secondaire pour la tooltip
+            const index = context[0]?.dataIndex ?? 0;
+            const principal = libellesPrincipaux[index] ?? "";
+            const secondaire = libellesSecondaires[index] ?? "";
+            return secondaire ? `${principal} ${secondaire}` : principal;
+          },
           label(context: any) {
             const rawValue = context.raw;
             const label = context.dataset.label;
