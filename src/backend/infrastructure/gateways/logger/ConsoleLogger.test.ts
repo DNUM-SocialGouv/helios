@@ -13,7 +13,7 @@ describe("Logger", () => {
     logger.audit(message);
 
     // THEN
-    expect(console.info).toHaveBeenCalledWith(message);
+    expect(console.info).toHaveBeenCalledWith(`[Helios] [Audit] ${message}`);
   });
 
   it("affiche un message de debug", () => {
