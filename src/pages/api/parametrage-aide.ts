@@ -66,6 +66,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const contenuMisAJour = applyChangeset(contenuActuel, filteredChanges);
 
       await useCase.enregistrerContenu(contenuMisAJour);
+
+      const actorEmail = userSession?.user?.email;
+      filteredChanges.forEach((change) => {
+        if (change.type === Operation.ADD) {
+          dependencies.logger.audit(`${actorEmail}: Création d'une aide "${change.key}"`);
+        } else if (change.type === Operation.UPDATE) {
+          dependencies.logger.audit(`${actorEmail}: Modification de l'aide "${change.key}, modification du champ: ${change.changes?.map(c => c.key).join(", ")}`);
+        } else if (change.type === Operation.REMOVE) {
+          dependencies.logger.audit(`${actorEmail}: Suppression de l'aide "${change.key}"`);
+        }
+      });
+
       return res.status(200).json(contenuMisAJour);
     } catch (error: any) {
       return res.status(500).json({ message: error?.message ?? "Une erreur est survenue lors de l’enregistrement." });
