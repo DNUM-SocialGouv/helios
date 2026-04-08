@@ -37,6 +37,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       }
 
       const recherche = await deleteUserEndpoint(dependencies, userCode);
+      dependencies.logger.audit(`${userSession?.user?.email}: Suppression de l'utilisateur "${userBeforeChange.email}"`);
       return response.status(200).json(recherche);
     } else {
       response.status(405).send("User not found");
