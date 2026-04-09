@@ -304,7 +304,7 @@ export class BlocVigieRHViewModel {
       return acc;
     }, {} as Record<number, number>);
 
-    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
     return (this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? []).filter(departEmbauche => anneesCompletes.has(departEmbauche.annee));
   }
 
@@ -455,7 +455,7 @@ export class BlocVigieRHViewModel {
       return acc;
     }, {} as Record<number, number>);
 
-    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
     return (this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel ?? []).filter(natureContrat => anneesCompletes.has(natureContrat.annee));
 
   }

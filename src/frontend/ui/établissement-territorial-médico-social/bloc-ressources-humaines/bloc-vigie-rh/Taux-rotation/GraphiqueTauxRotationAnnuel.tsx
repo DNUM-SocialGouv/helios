@@ -50,9 +50,6 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
       libellesDeValeursManquantes={valeursManquantes}
       nomGraph={nomGraph}
       showRefValues={showRefValues}
-      tickFormatter={blocVigieRHViewModel.tickFormatter}
-      tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
-      type={wording.ANNUEL}
       valeurs={valeurs}
       valeursRef={valeursRef}
     />

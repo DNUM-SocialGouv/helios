@@ -50,9 +50,6 @@ const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, don
       libellesDeValeursManquantes={valeursManquantes}
       nomGraph={nomGraph}
       showRefValues={showRefValues}
-      tickFormatter={blocVigieRHViewModel.tickFormatter}
-      tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
-      type={wording.TRIMESTRIEL}
       valeurs={valeurs}
       valeursRef={valeursRef}
     />

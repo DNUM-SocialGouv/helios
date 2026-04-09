@@ -59,7 +59,40 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     return null;
   });
 
+  const expressionReguliereTrimestre = /^(\d{4})-T([1-4])$/;
+
   const libellesValeursManquantes = trimestresManquantsVigieRh(libelles, 3)
+
+  const decomposerLibelle = (label: number | string): { principal: string; secondaire: string } => {
+    if (typeof label === "number") {
+      const libelleTexte = String(label);
+      return { principal: libelleTexte, secondaire: "" };
+    }
+    const libelleNettoye = label.trim();
+    const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
+    if (correspondanceTrimestre) {
+      return { principal: `T${correspondanceTrimestre[2]}`, secondaire: correspondanceTrimestre[1] };
+    }
+    const segments = libelleNettoye.split(/\s+/);
+    if (segments.length > 1) {
+      return { principal: segments.slice(0, -1).join(" "), secondaire: segments.at(-1) ?? "" };
+    }
+    return { principal: libelleNettoye, secondaire: "" };
+  };
+
+  const libellesDecomposes = libelles.map(decomposerLibelle);
+  const libellesPrincipaux = libellesDecomposes.map(({ principal }) => principal);
+  const libellesSecondaires = libellesDecomposes.map(({ secondaire }, index) => {
+    if (!secondaire) {
+      return "";
+    }
+    const libelleSecondairePrecedent = index > 0 ? libellesDecomposes.at(index - 1)?.secondaire ?? "" : "";
+    return libelleSecondairePrecedent === secondaire ? "" : secondaire;
+  });
+  const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
+  const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
+  const anneeEnCours = String(new Date().getFullYear());
+  const highlightLastLabel = libelles.length > 0 && String(libelles[libelles.length - 1]).includes(anneeEnCours);
 
   const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
     const valeur = donneesDeparts[idx];
@@ -203,13 +236,11 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
       tooltip: {
         callbacks: {
           title: function (context: any) {
-            const periode = context[0]?.label.split('-');
-            if (periode.length === 1) {
-              return periode[0];
-            }
-            else {
-              return `${periode[1]} ${periode[0]}`;
-            }
+            // Utilise le label principal et secondaire pour la tooltip
+            const index = context[0]?.dataIndex ?? 0;
+            const principal = libellesPrincipaux[index] ?? "";
+            const secondaire = libellesSecondaires[index] ?? "";
+            return secondaire ? `${principal} ${secondaire}` : principal;
           },
           label: function (context: any) {
             const index = context.dataIndex;
@@ -245,19 +276,18 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         type: 'category',
         position: 'bottom',
         ticks: {
-          color: '#000',
-          callback: function (index: number) {
-            return libelles[index].split('-')[1];
-          },
-          font: function (context: any) {
-            if (context.index === libelles.length - 1) {
-              return { weight: 'bold' };
+          color: "#000",
+          callback: (_value: any, index: number) => libellesPrincipaux[index] ?? "",
+          font: (context: any) => {
+            if (highlightLastLabel && context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
+              return { weight: "bold" };
             }
             return {};
-          },
-        }
+          }, 
+        },
       },
       xAxis2: {
+        display: presenceLibellesSecondaires,
         border: {
           display: false
         },
@@ -265,20 +295,14 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         position: 'bottom',
         grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
-          color: '#000',
-          callback: function (index: number) {
-            const [annee, trimestre] = libelles[index].split('-');
-            if (trimestre === 'T1') {
-              return annee;
+          color: "#000",
+          callback: (_tickValue: any, index: number) => libellesSecondaires[index] ?? "",
+          font: (context: any) => {
+            const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
+            if (context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
+              return { weight: "bold" };
             }
-            return '';
-          },
-          font: function (context: any) {
-            if (context.tick.label === new Date().getFullYear().toString()) {
-              return { weight: 'bold' };
-            }
-            return {};
-          },
+            return {};},
           maxRotation: 0,
           autoSkip: false
         }
