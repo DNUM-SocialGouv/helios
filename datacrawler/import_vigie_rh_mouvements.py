@@ -45,7 +45,9 @@ def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_d
         return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
             "duration": 0,
-            "commentaires": "Les fichiers ont été déjà traités"}
+            "commentaires": "Les fichiers ont été déjà traités",
+            "changed": "ko"
+        }
     start = datetime.now()
     donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH.value)
     donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
@@ -62,6 +64,7 @@ def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_d
     duration = (datetime.now() - start).total_seconds()
     return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "changed": "ok",
             "rows_in_file": donnees_mouvements_rh.shape[0],
             "rows": donnees_mouvements_rh_filtrees.shape[0],
             "taux": f"{donnees_mouvements_rh_filtrees.shape[0]/donnees_mouvements_rh.shape[0]*100:.2f}%",
@@ -84,6 +87,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "changed": "ok",
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données des mouvements RH : {error_text}"
         }
