@@ -2,7 +2,7 @@ from datacrawler import  import_vigie_rh_profession_groupe
 from datacrawler.rapport.generate_report import generate_report
 from datacrawler.rapport.send_email import send_email
 
-def main():
+def main() -> None:
     results = []
     results.append(import_vigie_rh_profession_groupe.main())
     if any(r.get('changed') == 'ok' for r in results):

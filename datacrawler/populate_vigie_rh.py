@@ -3,7 +3,7 @@ from datacrawler.rapport.generate_report import generate_report
 from datacrawler.rapport.send_email import send_email
 
 
-def main():
+def main() -> None:
     results = []
     results.append(import_vigierh_tranches_ages.main())
     results.append(import_vigie_rh_profession_filiere.main())
