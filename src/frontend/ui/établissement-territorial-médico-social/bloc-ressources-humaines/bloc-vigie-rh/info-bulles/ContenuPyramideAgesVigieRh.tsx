@@ -9,7 +9,7 @@ export const ContenuPyramideAgesVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Répartition des personnes physiques par tranches d’âge, calculée à partir de l'effectif observé au dernier jour de l’année.  
+          Répartition des personnes physiques par tranches dâge, calculée à partir de l’effectif observé au dernier jour de l’année.  
         </p>
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
