@@ -140,6 +140,14 @@ export class WordingFr implements Wording {
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = "Éléments de compréhension";
   readonly FRÉQUENCE: string = "Fréquence";
+  readonly INDICATION_VARIATION: string = "Indication de variation";
+  readonly LECTURE_INTERPRETATION: string = "Lecture et interprétation";
+  readonly POPULATION: string = "Population";
+  readonly EXCLUSIONS: string = "Exclusions";
+  readonly UNITE: string = "Unité";
+  readonly VARIATION: string = "Variation";
+  readonly DATE_OBSERVATION: string = "Date d'observation";
+  readonly PRESENCE_PERIODE: string = "Présence dans la période";
   readonly MODE_DE_CALCUL: string = "Mode de calcul";
   readonly SOURCES: string = "Sources";
   readonly INFOS_COMPLÉMENTAIRES: string = "Informations complémentaires";
@@ -749,7 +757,7 @@ export class WordingFr implements Wording {
   readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des effectifs pour des établissements similaires";
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des effectifs";
-  readonly DUREE_CDD: string = "Contrats CDD par durée effective";
+  readonly DUREE_CDD: string = "Durée effective des CDD terminés";
   readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
   readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
   readonly NOMBRE_CDD: string = "Nombre de CDD actifs";
@@ -762,7 +770,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_CONTRATS_ROMPUS_REF: string = "Moyennes du nombre de contrats rompus pour des établissements similaires";
   readonly MOTIF: string = "Motif";
   readonly PERIODE: string = "Période";
-  readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
+  readonly NATURE_CONTRATS: string = "Nature des nouveaux contrats";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
   readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière et catégorie socio-professionnelle";
   readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière et catégorie socio-professionnelle";

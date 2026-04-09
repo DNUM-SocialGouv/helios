@@ -114,6 +114,14 @@ export interface Wording {
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string;
+  readonly INDICATION_VARIATION: string;
+  readonly LECTURE_INTERPRETATION: string;
+  readonly POPULATION: string;
+  readonly EXCLUSIONS: string;
+  readonly UNITE: string;
+  readonly VARIATION: string;
+  readonly DATE_OBSERVATION: string;
+  readonly PRESENCE_PERIODE: string;
   readonly FRÉQUENCE: string;
   readonly MODE_DE_CALCUL: string;
   readonly SOURCES: string;

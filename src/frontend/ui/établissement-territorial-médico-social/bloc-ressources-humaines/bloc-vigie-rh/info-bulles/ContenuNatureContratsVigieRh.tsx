@@ -9,16 +9,39 @@ export const ContenuNatureContratsVigieRh = ({ dateDeMiseAJour, dateDonneesArret
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Décompte des contrats actifs au dernier mois de la période, ventilés selon leur nature   <br />
-          - CDI et agents titulaires  <br />
-          - CDD  <br />
+          Nombre de contrats débutés pendant la période, répartis entre postes permanents (CDI et fonctionnaires titulaires) et CDD.  
         </p>
-        <p>Les autres natures de contrat (contrats aidés, alternance, stages, intérim) ne sont pas comptabilisés ici.  </p>
-        <p>Permet d’évaluer la durabilité de l’emploi au sein des structures. </p>
+        <p>
+          Exemple : un même salarié ou agent ayant débuté 2 CDD sur la période se traduira par le décompte de 2 nouveaux CDD.  
+        </p>
+      </section>
+      <section aria-label={wording.LECTURE_INTERPRETATION}>
+        <p>
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span> 
+          Indicateur de stabilité contractuelle et de structure de l’emploi.     
+        </p>
+      </section>
+      <section aria-label={wording.POPULATION}>
+        <p>
+          <span className="fr-text--bold">{wording.POPULATION} : </span> 
+          Contrats débutés, CDI et assimilés (fonctionnaires titulaires) et CDD uniquement.    
+        </p>
+      </section>
+      <section aria-label={wording.EXCLUSIONS}>
+        <p>
+          <span className="fr-text--bold">{wording.EXCLUSIONS} : </span> 
+          Intérim, alternance, stages, contrats aidés.    
+        </p>
+      </section>
+      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        <p>
+          <span className="fr-text--bold">{wording.UNITE} : </span> 
+           Nombre de nouveaux contrats         
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle ou annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
