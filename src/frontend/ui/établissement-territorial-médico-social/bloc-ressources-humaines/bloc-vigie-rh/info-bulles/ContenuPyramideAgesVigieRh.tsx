@@ -9,8 +9,31 @@ export const ContenuPyramideAgesVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Répartition du nombre de personnes physiques présentes parmi les effectifs, selon des tranches d’âge standardisées. Les effectifs sont
-          calculés en moyenne sur l’année considérée, à partir des effectifs mensuels.
+          Répartition des personnes physiques par tranches d’âge, calculée à partir de l'effectif observé au dernier jour de l’année.  
+        </p>
+      </section>
+      <section aria-label={wording.LECTURE_INTERPRETATION}>
+        <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span> 
+        <p>
+          Indicateur démographique permettant d’anticiper les besoins de renouvellement, les   
+          départs liés à l’âge et les déséquilibres générationnels.    
+        </p>
+      </section>
+      <section aria-label={wording.POPULATION}>
+        <p>
+          <span className="fr-text--bold">{wording.POPULATION} : </span> 
+          Personnes physiques   
+        </p>
+      </section>
+      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        <p>
+          <span className="fr-text--bold">{wording.UNITE} : </span> 
+           Nombre de personnes       
+        </p>
+      </section>
+     <section aria-label={wording.DATE_OBSERVATION}>
+        <p>
+          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>  Dernier jour de l’année 
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>

@@ -10,9 +10,12 @@ export const ContenuRepartitionEffectifsVigieRh = ({ dateDeMiseAJour, dateDonnee
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Part relative des effectifs de chaque filière parmi l’effectif total.
+          Part relative, en pourcentage, des effectifs de chaque catégorie de métiers parmi l’effectif total.  
         </p>
-        <p>Permet de visualiser le poids de chaque filière dans l’effectif total et repérer les déséquilibres structurels et/ou les filières en tension.  </p>
+        <p>Les effectifs sont mesurés par le nombre de personnes physiques présentes le dernier jour du mois. </p>
+        <p>
+          Cet indicateur ne tient pas compte du temps de travail de chaque poste (concept distinct de l’emploi en ETP par exemple).
+        </p>
         <div className="fr-table fr-table--layout-fixed fr-table--no-scroll">
           <div className={`fr-table--caption-bottom fr-mb-2w ${styles["centredCaption"]}`}>
             Découpage en filières et catégories de profession
@@ -76,6 +79,28 @@ export const ContenuRepartitionEffectifsVigieRh = ({ dateDeMiseAJour, dateDonnee
             </div>
           </div>
         </div>
+      </section>
+      <section aria-label={wording.LECTURE_INTERPRETATION}>
+        <p>
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span> 
+          Permet de visualiser la structure professionnelle de l’effectif total de l’établissement.     
+        </p>
+      </section>
+      <section aria-label={wording.POPULATION}>
+        <p>
+          <span className="fr-text--bold">{wording.POPULATION} : </span> 
+           Personnes physiques        
+        </p>
+      </section>
+      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        <p>
+          <span className="fr-text--bold">{wording.UNITE} : </span>  Pourcentage (%)        
+        </p>
+      </section>
+      <section aria-label={wording.DATE_OBSERVATION}>
+        <p>
+          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>  Dernier jour du mois  
+        </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
