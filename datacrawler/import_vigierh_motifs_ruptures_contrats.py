@@ -49,6 +49,7 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
             )
         return {
             "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "changed": "ok",
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
         }
@@ -60,6 +61,7 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
                 f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
         return {
             "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "changed": "ko",
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -93,6 +95,7 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
     duration = (datetime.now() - start).total_seconds()
     return {
         "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+        "changed": "ok",
         "rows_in_file": donnees_brutes.shape[0],
         "rows": donnees.shape[0],
         "taux": f"{donnees.shape[0]/donnees_brutes.shape[0]*100:.2f}%",
@@ -118,6 +121,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "changed": "ok",
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de motifs ruptures contrats : {error_text}"
         }

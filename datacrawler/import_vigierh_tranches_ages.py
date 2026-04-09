@@ -46,7 +46,9 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
         return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
-            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes"}
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes",
+            "changed": "ok"
+        }
     # si les fichiers sont déjà traités, on fait rien
     traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
     traite_donnees = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_pyramide, base_de_donnees, FichierSource.VIGIE_RH_PYRAMIDE.value)
@@ -55,7 +57,8 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
         return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
-            "commentaires": "Les fichiers ont été déjà traités"}
+            "commentaires": "Les fichiers ont été déjà traités",
+            "changed": "ko"}
     start = datetime.now()
     donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
     donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
@@ -84,6 +87,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
     duration = (datetime.now() - start).total_seconds()
     return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
+            "changed": "ok",
             "rows_in_file": donnees_pyramide.shape[0],
             "rows": donnees_pyramide_filtrees.shape[0],
             "taux": f"{donnees_pyramide_filtrees.shape[0]/donnees_pyramide.shape[0]*100:.2f}%",
@@ -112,6 +116,7 @@ def main()-> dict:
         return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
+            "changed": "ok",
             "commentaires": str(error_text)
         }
 

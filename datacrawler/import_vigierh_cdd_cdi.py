@@ -51,6 +51,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_CDI_CDD.value} et {FichierSource.VIGIE_RH_REF_CDI_CDD.value} ont été déjà traités")
         return{
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "changed": "ko",
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -85,6 +86,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
         duration = (datetime.now() - start).total_seconds()
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "changed": "ok",
             "rows_in_file": donnees_nature_contrats_annuel.shape[0],
             "rows": donnees_cdi_cdd_filtrees.shape[0],
             "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_nature_contrats_annuel.shape[0]*100:.2f}%",
@@ -97,6 +99,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
     )
     return{
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "changed": "ok",
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
     }
@@ -120,9 +123,9 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "changed": "ok",
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de la nature des contrats annuels : {error_text}"
         }
 if __name__ == "__main__":
     main()
-    

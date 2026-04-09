@@ -2,16 +2,23 @@ from datacrawler import import_vigie_rh_mouvements_trimestriels, import_vigie_rh
 from datacrawler.rapport.generate_report import generate_report
 from datacrawler.rapport.send_email import send_email
 
-results = []
 
-results.append(import_vigierh_tranches_ages.main())
-results.append(import_vigie_rh_profession_filiere.main())
-results.append(import_vigie_rh_mouvements.main())
-results.append(import_vigie_rh_mouvements_trimestriels.main())
-results.append(import_vigierh_motifs_ruptures_contrats.main())
-results.append(import_vigierh_duree_cdd.main())
-results.append(import_vigierh_cdd_cdi.main())
-results.append(import_vigierh_cdi_cdd_trimestriel.main())
+def main() -> None:
+    results = []
+    results.append(import_vigierh_tranches_ages.main())
+    results.append(import_vigie_rh_profession_filiere.main())
+    results.append(import_vigie_rh_mouvements.main())
+    results.append(import_vigie_rh_mouvements_trimestriels.main())
+    results.append(import_vigierh_motifs_ruptures_contrats.main())
+    results.append(import_vigierh_duree_cdd.main())
+    results.append(import_vigierh_cdd_cdi.main())
+    results.append(import_vigierh_cdi_cdd_trimestriel.main())
+    if any(r.get('changed') == 'ok' for r in results):
+        html_body = generate_report(results)
+        send_email(html_body)
+    else:
+        print("No changes detected, report and email not sent.")
 
-HTML_BODY = generate_report(results)
-send_email(HTML_BODY)
+
+if __name__ == "__main__":
+    main()
