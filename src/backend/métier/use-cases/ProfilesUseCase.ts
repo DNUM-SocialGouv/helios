@@ -12,6 +12,10 @@ export class ProfilesUseCase {
     return await this.profileLoader.getProfileByCode(code);
   }
 
+  async getProfileById(idProfile: number): Promise<ProfilModel | null> {
+    return await this.profileLoader.getProfileById(idProfile);
+  }
+
   async updateProfile(code: string, value: ProfileValue, name: string): Promise<void> {
     return await this.profileLoader.updateProfileValue(code, value, name);
   }

@@ -38,6 +38,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       }
 
       const recherche = await reactivateUserEndpoint(dependencies, userCode);
+      dependencies.logger.audit(`${userSession?.user?.email}: Réactivation de l'utilisateur "${userBeforeChange.email}"`);
       return response.status(200).json(recherche);
     } else {
       response.status(405).send("User not found");

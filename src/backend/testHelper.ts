@@ -50,6 +50,7 @@ export function getOrm(): Promise<DataSource> {
 }
 
 export const fakeLogger: Logger = {
+  audit: jest.fn(),
   debug: jest.fn(),
   error: jest.fn(),
   info: jest.fn(),
