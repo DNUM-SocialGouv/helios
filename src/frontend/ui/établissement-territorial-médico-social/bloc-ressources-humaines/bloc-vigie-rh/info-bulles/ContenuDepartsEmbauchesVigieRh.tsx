@@ -9,19 +9,52 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Nombre de nouveaux contrats et de fins de contrats enregistrés dans la
-          DSN au cours du trimestre.
-        </p>
-        <p>Permet de mesurer la dynamique de recrutement et de départs afin de suivre les pratiques de recrutement.  </p>
-        <p>Exemple : 1 même salarié qui réalise 2 contrats courts sur le trimestre, compte pour 2 entrées et 2 sorties.  </p>
-        <p>
-          La notion de contrat renvoie ici à toutes les formes d’exercice d’emploi (CDI,
-          CDD, agents titulaires, contrats aidés, alternances, stages) hors interim.
+          Mesure le nombre de personnes physiques ayant rejoint ou quitté l’établissement entre   
+          deux périodes consécutives (trimestre ou année), à partir de la comparaison des personnes   
+          présentes au dernier jour de chaque période.  
         </p>
       </section>
+      <section aria-label={wording.LECTURE_INTERPRETATION}>
+        <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>
+        <p>
+          <br/> 
+          Indicateur décrivant la dynamique des effectifs en personnes entre deux périodes.  
+          Il permet d’identifier les arrivées, les départs, et la variation nette d’effectif.     
+        <br/>
+          Cet indicateur porte uniquement sur les personnes et ne dépend pas du nombre de contrats   
+          successifs détenus par un même salarié ou agent.    
+        </p>
+      </section>
+      <section aria-label={wording.PRESENCE_PERIODE}>
+        <span className="fr-text--bold">{wording.PRESENCE_PERIODE} : </span> 
+        <p>
+          <br/>
+          Une personne est considérée comme présente dans une période si elle possède un contrat   
+          actif à la date de fin de la période (dernier jour du trimestre ou de l’année).   
+          <br/>
+          Les mouvements sont calculés par comparaison entre les personnes présentes/absentes au   
+          dernier jour de deux périodes consécutives.
+          <br/>
+         Entrée : personne absente au dernier jour de T-1/N−1 et présente au dernier jour de T/N.   
+           <br/>
+          Sortie : personne présente au dernier jour de T-1/N−1 et absente au dernier jour de T/N.  
+        </p>
+      </section>
+      <section aria-label={wording.POPULATION}>
+        <p>
+          <span className="fr-text--bold">{wording.POPULATION} : </span> Personnes physiques       
+        </p>
+      </section>
+      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        <p>
+          <span className="fr-text--bold">{wording.UNITE} : </span>  Nombre de personnes         
+        </p>
+      </section>
+
+
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle  ou annuelle  
         </p>
       </section>
       <section aria-label={wording.SOURCES}>

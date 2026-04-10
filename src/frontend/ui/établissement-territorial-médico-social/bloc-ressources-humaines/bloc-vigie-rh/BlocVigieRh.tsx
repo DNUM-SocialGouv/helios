@@ -139,10 +139,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
   const recupereDateDonnees = (identifiant: string) => blocVigieRHViewModel.dateDonneesArrete(identifiant);
-  const recuperePeriodeGlissante = (identifiant: string) => {
-    const echelle = blocVigieRHViewModel.echelleTemporelle?.get(identifiant);
-    return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
-  };
 
   const buildIndicateurEffectif = () => {
     if (!items.length) return null;
@@ -250,7 +246,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuTopContratsCourtsVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
 
                   />
@@ -497,7 +492,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuDureeCddVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
                   />
                 }
@@ -602,7 +596,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuMotifsRuptureVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-motif-rupture")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-motif-rupture")}
                     source={wording.DSN}
                   />
                 }

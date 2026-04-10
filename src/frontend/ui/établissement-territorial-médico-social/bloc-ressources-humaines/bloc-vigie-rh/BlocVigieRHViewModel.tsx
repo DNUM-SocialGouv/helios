@@ -304,7 +304,7 @@ export class BlocVigieRHViewModel {
       return acc;
     }, {} as Record<number, number>);
 
-    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
     return (this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? []).filter(departEmbauche => anneesCompletes.has(departEmbauche.annee));
   }
 
@@ -398,12 +398,11 @@ export class BlocVigieRHViewModel {
 
   public get topIndicateurContrats() {
     const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
-    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur ?? '';
-    const periodAbbr = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
+    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur.replace(' ','-') ?? '';
+    const comparaisonLabel = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
     const maxAnnee = Math.max(...durees.map(d => d.annee));
     const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
     const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
-    const comparaisonLabel = `à (${periodAbbr.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1))})`;
     const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
     let variationText = '';
 
@@ -456,7 +455,7 @@ export class BlocVigieRHViewModel {
       return acc;
     }, {} as Record<number, number>);
 
-    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count % 4 === 0).map(([annee]) => Number(annee)));
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
     return (this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel ?? []).filter(natureContrat => anneesCompletes.has(natureContrat.annee));
 
   }
@@ -483,6 +482,6 @@ export class BlocVigieRHViewModel {
   }
 
   public dateDonneesArrete(indicateurId: string): string | null {
-    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.dateDonneesArretees ?? null;
+    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.valeur ?? null;
   }
 }

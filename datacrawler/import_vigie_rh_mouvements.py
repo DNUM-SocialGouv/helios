@@ -13,6 +13,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_MOUVEMENTS_RH, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping, index_des_mouvements_rh_annuel
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
@@ -45,7 +46,9 @@ def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_d
         return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
             "duration": 0,
-            "commentaires": "Les fichiers ont été déjà traités"}
+            "commentaires": "Les fichiers ont été déjà traités",
+            "report_status": NOT_SEND_REPORT
+        }
     start = datetime.now()
     donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH.value)
     donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
@@ -62,6 +65,7 @@ def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_d
     duration = (datetime.now() - start).total_seconds()
     return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "report_status": SEND_REPORT,
             "rows_in_file": donnees_mouvements_rh.shape[0],
             "rows": donnees_mouvements_rh_filtrees.shape[0],
             "taux": f"{donnees_mouvements_rh_filtrees.shape[0]/donnees_mouvements_rh.shape[0]*100:.2f}%",
@@ -84,6 +88,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données des mouvements RH : {error_text}"
         }
