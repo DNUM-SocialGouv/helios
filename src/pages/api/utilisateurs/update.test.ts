@@ -11,7 +11,14 @@ import { Role, RoleLabel } from "../../../commons/Role";
 jest.mock("next-auth", (): { getServerSession: typeof getServerSession } => ({ getServerSession: jest.fn(), }));
 jest.mock("../../../backend/infrastructure/controllers/getUserByCodeEndpoint");
 jest.mock("../../../backend/infrastructure/controllers/updateUserEndpoint");
-jest.mock("../../../backend/infrastructure/dependencies", (): { dependencies: Dependencies } => ({ dependencies: {} as Dependencies, }));
+jest.mock("../../../backend/infrastructure/dependencies", (): { dependencies: Dependencies } => ({ 
+  dependencies: { 
+    logger: {
+      error: jest.fn(),
+      audit: jest.fn(),
+    }
+  } as unknown as Dependencies,
+}));
 jest.mock("../../../checkAdminMiddleware");
 jest.mock("../auth/[...nextauth]", (): { authOptions: NextAuthOptions } => ({ authOptions: {} as NextAuthOptions, }));
 
@@ -152,7 +159,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.USER, "ARS-01", ["profil1"], "John", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.USER, "ARS-01", ["profil1"], "John", "Doe");
     });
 
     it("should allow ADMIN_REG to assign ADMIN_REG role with regional institution", async () => {
@@ -169,7 +176,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.ADMIN_REG, "ARS-01", ["profil1"], "John", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.ADMIN_REG, "ARS-01", ["profil1"], "John", "Doe");
     });
 
     it("should allow ADMIN_REG to update user with existing SCN institution", async () => {
@@ -198,7 +205,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.USER, "SCN", ["profil1"], "Jean", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.USER, "SCN", ["profil1"], "Jean", "Doe");
     });
 
     it("should allow ADMIN_REG to update user with existing ADMIN_CENTR institution", async () => {
@@ -227,7 +234,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.USER, "ADMIN_CENTR", ["profil1"], "Jane", "Smith");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.USER, "ADMIN_CENTR", ["profil1"], "Jane", "Smith");
     });
   });
 
@@ -252,7 +259,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.ADMIN_NAT, "SCN", ["profil1"], "John", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.ADMIN_NAT, "SCN", ["profil1"], "John", "Doe");
     });
 
     it("should allow ADMIN_NAT to assign ADMIN_CENTR role", async () => {
@@ -269,7 +276,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.ADMIN_CENTR, "ADMIN_CENTR", ["profil1"], "John", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.ADMIN_CENTR, "ADMIN_CENTR", ["profil1"], "John", "Doe");
     });
 
     it("should allow ADMIN_NAT to assign SCN institution", async () => {
@@ -286,7 +293,7 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
       await handler(req, res as unknown as NextApiResponse);
 
       expect(res._status).toBe(200);
-      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith({}, "target-user", RoleLabel.ADMIN_REG, "SCN", ["profil1"], "John", "Doe");
+      expect(mockUpdateUserEndpoint).toHaveBeenCalledWith(expect.objectContaining({ logger: expect.any(Object) }), "target-user", RoleLabel.ADMIN_REG, "SCN", ["profil1"], "John", "Doe");
     });
   });
 });

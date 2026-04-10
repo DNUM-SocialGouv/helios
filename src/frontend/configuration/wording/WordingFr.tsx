@@ -778,11 +778,7 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 
-  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string = "Questionnaire";
-  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://forms.office.com/e/wXN1pQd20j";
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-01-30";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-05-19";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =

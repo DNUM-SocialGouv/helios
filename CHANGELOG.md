@@ -12,10 +12,11 @@
 
 - hel-1011: Ajout de log d’audit sur les action d’administration
 - hel-1008: Modification de la dimension de la carte
+- hel-1013: Ajout du nouveau message d’actualité
 - vr-170: Date d'arrêt des données - Graphique "CDD par durée effective" et "Motifs de rupture des contrats"
 - vr-171: Affichage de la date de référence dans la vignette "Contrats Courts"
-- vr-172:  [AJUSTEMENT] Wording des éléments "Détails"
-- vr-173:  Modification du comportement du CRON produisant les rapports d'ingestion
+- vr-172: [AJUSTEMENT] Wording des éléments "Détails"
+- vr-173: Modification du comportement du CRON produisant les rapports d'ingestion
 
 ## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
 
