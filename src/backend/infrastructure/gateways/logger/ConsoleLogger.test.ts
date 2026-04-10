@@ -4,6 +4,18 @@ import { ConsoleLogger } from "./ConsoleLogger";
 describe("Logger", () => {
   const message = "any message";
 
+  it("affiche un message d'audit", () => {
+    // GIVEN
+    jest.spyOn(console, "info").mockImplementation();
+    const logger = new ConsoleLogger();
+
+    // WHEN
+    logger.audit(message);
+
+    // THEN
+    expect(console.info).toHaveBeenCalledWith(`[Helios] [Audit] ${message}`);
+  });
+
   it("affiche un message de debug", () => {
     // GIVEN
     jest.spyOn(console, "debug").mockImplementation();

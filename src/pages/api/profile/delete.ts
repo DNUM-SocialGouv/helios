@@ -1,9 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
 import { deleteProfileEndpoint } from "../../../backend/infrastructure/controllers/deleteProfileEndpoint";
+import { getProfileByIdEndpoint } from "../../../backend/infrastructure/controllers/getProfileByIdEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
+import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
@@ -17,9 +20,13 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
       return response.status(405).send("Method not allowed");
     }
 
+    const profileToDelete = await getProfileByIdEndpoint(dependencies, profileId);
     const EndpointResponse = await deleteProfileEndpoint(dependencies, profileId);
-    if (EndpointResponse === 'profile deleted successefully')
+    if (EndpointResponse === 'profile deleted successefully') {
+      const session = await getServerSession(request, response, authOptions);
+      dependencies.logger.audit(`${session?.user?.email}: Suppression du profil "${profileToDelete?.label ?? profileId}"`);
       return response.status(200).json(EndpointResponse);
+    }
     else return response.status(500).json(EndpointResponse);
   } catch {
     return response.status(500);

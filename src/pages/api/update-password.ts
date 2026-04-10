@@ -1,6 +1,8 @@
 import Joi from 'joi';
 import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 
+import { authOptions } from "./auth/[...nextauth]";
 import { updatePasswordEndpoint } from "../../backend/infrastructure/controllers/updatePasswordEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 
@@ -34,6 +36,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
     const result = await updatePasswordEndpoint(dependencies, email, password, oldPassword);
     if (result === 'user updated') {
+      const session = await getServerSession(request, response, authOptions);
+      const actorEmail = session?.user?.email ?? email;
+      dependencies.logger.audit(`${actorEmail}: Modification du mot de passe de l'utilisateur "${email}"`);
       return response.status(200).json(result);
     } else {
       if (result === 'same password') {
