@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+- hel-1014: Ajout dans le back de toutes les vérifications pour éviter une escalade de privilèges lors de la mise à jour d’un utilisateur
+
 ### Features
 
 ## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
