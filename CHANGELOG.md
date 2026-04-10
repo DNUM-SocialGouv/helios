@@ -1,8 +1,15 @@
 # Changelog d'Helios
 
-## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (TODO)
+## [1.8.6](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.5...release/1.8.6) (TODO)
 
 ### Bug Fixes
+
+### Features
+
+## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
+
+### Bug Fixes
+
 - vr-163: Etiquettes des dates à afficher dans les encarts "Aucune donnée renseignée :"
 - vr-166: Calcul des valeurs annuelles à afficher dans les graphiques à vue trimestrielle + annuelle
 - vr-167: Inversion des couleurs dans le graphique "Nature des contrats"
@@ -16,6 +23,7 @@
 - hel-999: Ajout du graphique horizontal concernant la trésorerie
 - hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
 - hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+- hel-1000: Prise en compte des nouvelles informations dans le fichier des AMM
 - hel-989: Message d’information en cas de nom de liste en doublon
 
 ## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
