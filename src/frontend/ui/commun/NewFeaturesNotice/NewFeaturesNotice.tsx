@@ -1,11 +1,10 @@
 import { useState } from "react";
+import Emoji from "react-emojis"
 
 import styles from "./NewFeaturesNotice.module.css";
-import { useDependencies } from "../contexts/useDependencies";
 
 
 export const NewFeaturesNotice = () => {
-  const { wording } = useDependencies();
   const [removeNotice, setRemoveNotice] = useState(false);
   return (
     removeNotice ? null :
@@ -14,18 +13,15 @@ export const NewFeaturesNotice = () => {
           <div className="fr-notice__body">
             <p>
               <span className="fr-notice__title">
-                <span className={styles["notice-badge"] + " fr-badge fr-badge--new fr-badge--no-icon"}>{wording.NOUVELLES_FONCTIONNALITÉS_TAG}</span>
+                <span className={styles["notice-badge"] + " fr-badge fr-badge--new fr-badge--no-icon"}>Nouveau</span>
               </span>
-              <span className="fr-notice__desc">{wording.NOUVELLES_FONCTIONNALITÉS_TEXT}</span>
-
-              <a
-                href={wording.NOUVELLES_FONCTIONNALITÉS_LIEN}
-                rel="external noopener noreferrer"
-                target="_blank"
-                title='En savoir plus'
-              >
-                {wording.NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN}
-              </a>
+              <p>
+                <span className="fr-notice__desc">
+                  Les blocs Qualité et Budget et Finances évoluent :  accédez aux fiches Qualiscope de la HAS et à de nouveaux indicateurs.
+                  <br />
+                  Sécurité <Emoji emoji="locked" />: Mot de passe à renouveler régulièrement.
+                </span>
+              </p>
             </p>
             <button className="fr-btn--close fr-btn" onClick={() => setRemoveNotice(true)} title="Masquer le message" />
           </div>
