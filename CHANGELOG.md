@@ -8,6 +8,8 @@
 
 ### Features
 
+- hel-1011: Ajout de log d’audit sur les action d’administration
+
 ## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
 
 ### Bug Fixes
