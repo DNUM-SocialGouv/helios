@@ -482,6 +482,6 @@ export class BlocVigieRHViewModel {
   }
 
   public dateDonneesArrete(indicateurId: string): string | null {
-    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.dateDonneesArretees ?? null;
+    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.valeur ?? null;
   }
 }
