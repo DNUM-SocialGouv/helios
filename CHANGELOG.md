@@ -9,6 +9,7 @@
 ### Features
 
 - hel-1011: Ajout de log d’audit sur les action d’administration
+- hel-1008: Modification de la dimension de la carte
 
 ## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
 
