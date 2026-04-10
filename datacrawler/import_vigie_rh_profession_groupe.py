@@ -17,6 +17,7 @@ from datacrawler.load.nom_des_tables import (
     TABLE_PROFESSION_GROUPE,
     TABLE_REF_PROFESSION_GROUPE,
 )
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
 
 
@@ -94,7 +95,7 @@ def import_vigie_rh_profession_groupe(
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PASSAGE_GROUPE_FILIERE.value} a été déjà traité")
         return {
             "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
-            "changed": "ko",
+            "report_status": NOT_SEND_REPORT,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"}
     if len({
@@ -133,7 +134,7 @@ def import_vigie_rh_profession_groupe(
             )
         return {
             "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "rows_in_file": data_frame.shape[0],
             "rows": df_filtre.shape[0],
             "taux": f"{df_filtre.shape[0]/data_frame.shape[0]*100:.2f}%",
@@ -147,7 +148,7 @@ def import_vigie_rh_profession_groupe(
     )
     return {
         "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
-        "changed": "ok",
+        "report_status": SEND_REPORT,
         "duration": 0,
         "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
     }
@@ -185,7 +186,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_PROFESSION_GROUPE.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors du traitement des fichiers de profession groupe : {error_text}"
         }

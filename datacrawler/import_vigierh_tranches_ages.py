@@ -12,6 +12,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_REF_TRANCHE_AGE, TABLE_TRANCHE_AGE, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
@@ -47,7 +48,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes",
-            "changed": "ok"
+            "report_status": SEND_REPORT
         }
     # si les fichiers sont déjà traités, on fait rien
     traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
@@ -58,7 +59,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités",
-            "changed": "ko"}
+            "report_status": NOT_SEND_REPORT}
     start = datetime.now()
     donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
     donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
@@ -87,7 +88,7 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
     duration = (datetime.now() - start).total_seconds()
     return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "rows_in_file": donnees_pyramide.shape[0],
             "rows": donnees_pyramide_filtrees.shape[0],
             "taux": f"{donnees_pyramide_filtrees.shape[0]/donnees_pyramide.shape[0]*100:.2f}%",
@@ -116,7 +117,7 @@ def main()-> dict:
         return {
             "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
             "duration": 0,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "commentaires": str(error_text)
         }
 

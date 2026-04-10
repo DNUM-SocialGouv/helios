@@ -1,19 +1,21 @@
 import os
+import traceback
+from datetime import datetime
 from logging import Logger
 
-from datetime import datetime
-import traceback
-import pandas as pd
 import numpy as np
-from sqlalchemy.engine import create_engine, Engine
-from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
+import pandas as pd
+from sqlalchemy.engine import Engine, create_engine
+
+from datacrawler import inserer_nouvelles_donnees, supprimer_donnees_existantes, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
-from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
-from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
-from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
-from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
+from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
+from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
+from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
+from datacrawler.load.nom_des_tables import FichierSource, TABLE_PROFESSION_FILIERE, TABLE_REF_PROFESSION_FILIERE
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
+from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 
 def filter_profession_filiere_data(donnees: pd.DataFrame, ref_code: np.ndarray, database: Engine) -> pd.DataFrame:
     # Récupérer les numéros FINESS des établissements connus
@@ -60,7 +62,7 @@ def import_vigie_rh_profession_filiere(
         logger_helios.info(f"Le fichier {FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value} a été déjà traité")
         return {
                 "table": FichierSource.VIGIE_RH_REF_PROFESSION_FILIERE.value,
-                "changed": "ko",
+                "report_status": NOT_SEND_REPORT,
                 "duration": 0,
                 "commentaires": "Les fichiers ont été déjà traités"}
     if date_de_mise_à_jour_profession_filiere == date_de_mise_à_jour_ref:
@@ -93,7 +95,7 @@ def import_vigie_rh_profession_filiere(
                 )
         return {
                     "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
-                    "changed": "ok",
+                    "report_status": SEND_REPORT,
                     "rows_in_file": data_frame.shape[0],
                     "rows": df_filtré.shape[0],
                     "taux": f"{df_filtré.shape[0]/data_frame.shape[0]*100:.2f}%",
@@ -108,7 +110,7 @@ def import_vigie_rh_profession_filiere(
         "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
         "duration": 0,
         "commentaires": "Les dates des fichiers sources ne sont pas cohérentes",
-        "changed": "ok"
+        "report_status": SEND_REPORT
     }
 
 def main() -> dict:
@@ -134,7 +136,7 @@ def main() -> dict:
             "table": FichierSource.VIGIE_RH_PROFESSION_FILIERE.value,
             "duration": 0,
             "commentaires": ''.join(traceback.format_exception(type(error), error, error.__traceback__)),
-            "changed": "ok",
+            "report_status": SEND_REPORT,
         }
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_NATURE_CONTRATS, TABLE_VIGIE_RH_REF_NATURE_CONTRATS, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 
 def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndarray, database : Engine) -> pd.DataFrame:
@@ -51,7 +52,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_CDI_CDD.value} et {FichierSource.VIGIE_RH_REF_CDI_CDD.value} ont été déjà traités")
         return{
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
-            "changed": "ko",
+            "report_status": NOT_SEND_REPORT,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -86,7 +87,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
         duration = (datetime.now() - start).total_seconds()
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "rows_in_file": donnees_nature_contrats_annuel.shape[0],
             "rows": donnees_cdi_cdd_filtrees.shape[0],
             "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_nature_contrats_annuel.shape[0]*100:.2f}%",
@@ -99,7 +100,7 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
     )
     return{
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
     }
@@ -123,7 +124,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de la nature des contrats annuels : {error_text}"
         }

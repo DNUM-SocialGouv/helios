@@ -13,6 +13,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping, index_nature_contrat_trimestriel
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
@@ -50,7 +51,7 @@ def import_donnees_nature_contrats_trimestriel(
         logger.info(f"Le fichier {FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value} a été déjà traité")
         return{
             "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
-            "changed": "ko",
+            "report_status": NOT_SEND_REPORT,
             "duration": 0,
             "commentaires": "Les fichiers ont été déjà traités"
         }
@@ -72,7 +73,7 @@ def import_donnees_nature_contrats_trimestriel(
         duration = (datetime.now() - start).total_seconds()
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "rows_in_file": donnees_cdi_cdd.shape[0],
             "rows": donnees_cdi_cdd_filtrees.shape[0],
             "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_cdi_cdd.shape[0]*100:.2f}%",
@@ -85,7 +86,7 @@ def import_donnees_nature_contrats_trimestriel(
     )
     return{
             "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
     }
@@ -113,7 +114,7 @@ def main() -> dict:
         error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
         return {
             "table": FichierSource.VIGIE_RH_CDI_CDD_TRIMESTRIEL.value,
-            "changed": "ok",
+            "report_status": SEND_REPORT,
             "duration": 0,
             "commentaires": f"Une erreur est survenue lors de l'import des données de nature contrats trimestriel : {error_text}"
         }
