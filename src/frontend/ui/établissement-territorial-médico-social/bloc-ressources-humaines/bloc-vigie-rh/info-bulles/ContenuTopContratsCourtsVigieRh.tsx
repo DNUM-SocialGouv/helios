@@ -19,7 +19,7 @@ export const ContenuTopContratsCourtsVigieRh = ({ dateDeMiseAJour, dateDonneesAr
       </section>
       <section aria-label={wording.INDICATION_VARIATION}>
         <p>
-          <span className="fr-text--bold">{wording.INDICATION_VARIATION} : </span> 
+          <span className="fr-text--bold">{wording.INDICATION_VARIATION} :</span>{" "}
           Evolution absolue en points de pourcentage par rapport à la même période de l’année   
           précédente
         </p>
