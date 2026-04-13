@@ -87,36 +87,36 @@ export const ContenuEffectifsVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, 
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
-          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span> 
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} :</span>{" "} 
           Indicateur central pour suivre la dynamique des effectifs réels, repérer les hausses ou   
           baisses d’activité et situer les tendances d’évolution de l’établissement.   
         </p>
       </section>
       <section aria-label={wording.POPULATION}>
         <p>
-          <span className="fr-text--bold">{wording.POPULATION} : </span> 
+          <span className="fr-text--bold">{wording.POPULATION} :</span>{" "} 
           Personnes physiques en fin de mois     
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          <span className="fr-text--bold">{wording.UNITE} : </span> 
+          <span className="fr-text--bold">{wording.UNITE} :</span>{" "} 
            Nombre de personnes       
         </p>
       </section>
      <section aria-label={wording.DATE_OBSERVATION}>
         <p>
-          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>  Dernier jour du mois  
+          <span className="fr-text--bold">{wording.DATE_OBSERVATION} :</span>{" "}  Dernier jour du mois  
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Mensuelle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span>{" "}Mensuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
+          <span className="fr-text--bold">{wording.SOURCES} :</span>{" "}DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

@@ -39,7 +39,7 @@ export const ContenuTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
-          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} :</span>{" "}
           <br/> 
           Un taux élevé peut traduire une forte mobilité, un renouvellement important ou des   
           ajustements rapides de main d’œuvre. Il permet d’apprécier la stabilité ou la volatilité de   
@@ -51,7 +51,7 @@ export const ContenuTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
       </section>
       <section aria-label={wording.PRESENCE_PERIODE}>
         <p>
-          <span className="fr-text--bold">{wording.PRESENCE_PERIODE} : </span> 
+          <span className="fr-text--bold">{wording.PRESENCE_PERIODE} :</span>{" "} 
           <br/>
           Une personne est considérée comme présente dans une période si elle possède un contrat   
           actif à la date de fin de la période (dernier jour du trimestre).  
@@ -66,22 +66,22 @@ export const ContenuTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
       </section>
       <section aria-label={wording.POPULATION}>
         <p>
-          <span className="fr-text--bold">{wording.POPULATION} : </span> Personnes physiques       
+          <span className="fr-text--bold">{wording.POPULATION} :</span>{" "} Personnes physiques       
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          <span className="fr-text--bold">{wording.UNITE} : </span> Pourcentage (%)        
+          <span className="fr-text--bold">{wording.UNITE} :</span>{" "} Pourcentage (%)        
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle ou annuelle  
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span>{" "} Trimestrielle ou annuelle  
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
+          <span className="fr-text--bold">{wording.SOURCES} :</span>{" "}DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

@@ -14,41 +14,41 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
       </section>
           <section aria-label={wording.INDICATION_VARIATION}>
         <p>
-          <span className="fr-text--bold">{wording.INDICATION_VARIATION} : </span> 
+          <span className="fr-text--bold">{wording.INDICATION_VARIATION} : </span>{" "}
           Évolution relative en pourcentage par rapport au même mois de l’année précédente  
         </p>
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
-          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span> 
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>{" "}
           Indicateur de qualité de recrutement et d’intégration : un nombre élevé de contrats CDI   
           terminés prématurément peut traduire un problème dans l’accueil et/ou l’adéquation au poste.    
         </p>
       </section>
       <section aria-label={wording.POPULATION}>
         <p>
-          <span className="fr-text--bold">{wording.POPULATION} : </span> 
+          <span className="fr-text--bold">{wording.POPULATION} : </span>{" "}
            CDI terminés durant l’année       
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          <span className="fr-text--bold">{wording.UNITE} : </span> Nombre de CDI       
+          <span className="fr-text--bold">{wording.UNITE} : </span>{" "}Nombre de CDI       
         </p>
       </section>
      <section aria-label={wording.DATE_OBSERVATION}>
         <p>
-          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>  De janvier à décembre   
+          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>{" "}De janvier à décembre   
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Annuelle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span>{" "}Annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
+          <span className="fr-text--bold">{wording.SOURCES} :</span>{" "}DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

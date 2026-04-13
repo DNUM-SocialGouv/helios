@@ -15,7 +15,7 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
         </p>
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
-        <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>
+        <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} :</span>{" "}
         <p>
           <br/> 
           Indicateur décrivant la dynamique des effectifs en personnes entre deux périodes.  
@@ -26,7 +26,7 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
         </p>
       </section>
       <section aria-label={wording.PRESENCE_PERIODE}>
-        <span className="fr-text--bold">{wording.PRESENCE_PERIODE} : </span> 
+        <span className="fr-text--bold">{wording.PRESENCE_PERIODE} :</span>{" "}
         <p>
           <br/>
           Une personne est considérée comme présente dans une période si elle possède un contrat   
@@ -42,24 +42,24 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
       </section>
       <section aria-label={wording.POPULATION}>
         <p>
-          <span className="fr-text--bold">{wording.POPULATION} : </span> Personnes physiques       
+          <span className="fr-text--bold">{wording.POPULATION} :</span>{" "} Personnes physiques       
         </p>
       </section>
       <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
         <p>
-          <span className="fr-text--bold">{wording.UNITE} : </span>  Nombre de personnes         
+          <span className="fr-text--bold">{wording.UNITE} :</span>{" "}Nombre de personnes         
         </p>
       </section>
 
 
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Trimestrielle  ou annuelle  
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span>{" "}Trimestrielle  ou annuelle  
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
+          <span className="fr-text--bold">{wording.SOURCES} :</span>{" "}DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>
