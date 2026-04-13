@@ -11,7 +11,6 @@ export const NewFeaturesNotice = () => {
       <div className="fr-notice fr-notice--info">
         <div className="fr-container">
           <div className="fr-notice__body">
-            <p>
               <span className="fr-notice__title">
                 <span className={styles["notice-badge"] + " fr-badge fr-badge--new fr-badge--no-icon"}>Nouveau</span>
               </span>
@@ -22,7 +21,6 @@ export const NewFeaturesNotice = () => {
                   Sécurité <Emoji emoji="locked" />: Mot de passe à renouveler régulièrement.
                 </span>
               </p>
-            </p>
             <button className="fr-btn--close fr-btn" onClick={() => setRemoveNotice(true)} title="Masquer le message" />
           </div>
         </div>
