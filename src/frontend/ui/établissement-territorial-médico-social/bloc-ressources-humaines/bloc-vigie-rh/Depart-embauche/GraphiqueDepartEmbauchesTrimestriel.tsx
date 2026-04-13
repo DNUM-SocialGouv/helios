@@ -333,8 +333,8 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     : [wording.DEPARTS, wording.EMBAUCHES];
 
   const transcriptionValeurs = showRefValues
-    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
-    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+    ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
   return (
     <div>

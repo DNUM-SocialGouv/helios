@@ -211,7 +211,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           </p>
         </div>
         <div className={`fr-grid-row fr-grid-row--gutters ${styles["vigie-rh-top-indicateurs"]}`}>
-          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
@@ -235,10 +235,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={indicateurEffectif.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
+          {blocVigieRHViewModel.graphiqueDureeCddAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
@@ -264,10 +262,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueRotationsAffichable ? (
+          {blocVigieRHViewModel.graphiqueRotationsAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
@@ -292,9 +288,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
               />
             </div>
-          ) : (
-            <></>
-          )}
+          ) }
         </div>
       </section>
 

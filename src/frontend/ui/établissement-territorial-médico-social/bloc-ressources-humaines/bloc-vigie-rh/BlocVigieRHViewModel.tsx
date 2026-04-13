@@ -244,7 +244,10 @@ export class BlocVigieRHViewModel {
       this.lesEffectifsGroupesNeSontIlsPasRenseignees &&
       this.lesDepartsEmbauchesNeSontIlsPasRenseignees &&
       this.lesDureesCDDNeSontEllesPasRenseignees &&
-      this.lesMotifsNeSontIlsPasRenseignes
+      this.lesMotifsNeSontIlsPasRenseignes &&
+      this.lesDepartsPrematuresCdiPasRenseignes &&
+      this.lesNaturesContratsNeSontPasReseignees &&
+      this.lesRotationsNeSontIlsPasRenseignees 
     );
   }
 
@@ -297,8 +300,9 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
+    const donneesTrimestrielles = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels ?? [];
     // Vérifier les années complètes (avec les 4 trimestres)
-    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.reduce((acc, item) => {
+    const trimestresParAnnee = donneesTrimestrielles.reduce((acc, item) => {
       if (!acc[item.annee]) acc[item.annee] = 0;
       acc[item.annee]++;
       return acc;
@@ -397,10 +401,10 @@ export class BlocVigieRHViewModel {
   }
 
   public get topIndicateurContrats() {
-    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
     const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur.replace(' ','-') ?? '';
     const comparaisonLabel = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
-    const maxAnnee = Math.max(...durees.map(d => d.annee));
+    const maxAnnee = Math.max(...durees?.map(d => d.annee));
     const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
     const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
     const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
