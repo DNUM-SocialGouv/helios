@@ -14,8 +14,8 @@ export const ContenuDureeCddVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, s
       </p>
       <p>
         La durée effective correspond au nombre de jours calendaires entre la date de début et la date de fin du contrat, connue avec 
-        certitude lorsque le contrat se termine. En cas de rupture anticipée, la date réelle de fin, et non la date prévisionnelle, 
-        déclarée lors de la création du contrat, est prise en compte.  
+        certitude lorsque le contrat se termine. En cas de rupture anticipée, la date réelle de fin de contrat est prise en compte, 
+        et non la date prévisionnelle déclarée lors de la création du contrat.  
       </p>
       <div className="fr-table fr-table--layout-fixed fr-table--no-scroll">
           <div className="fr-table__wrapper">
@@ -90,7 +90,7 @@ export const ContenuDureeCddVigieRh = ({ dateDeMiseAJour, dateDonneesArretees, s
       <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
           <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} :</span>{" "} 
-          Permet d’observer l’usage des durées de contrat et la part des CDD très courts.      
+          Permet d’observer la répartition des durées effectives de contrats à durée déterminée et notamment la part des CDD très courts.    
         </p>
       </section>
       <section aria-label={wording.POPULATION}>
