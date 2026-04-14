@@ -16,6 +16,7 @@ export const InfoMessage = () => {
               <span className="fr-notice__title"></span>
               <span className="fr-notice__desc">{wording.MESSAGE_INFO_VIGIE_RH}</span>
               <br />
+              <br />
               <span className="fr-notice__desc">{wording.MESSAGE_INFO_VIGIE_RH_DETAIL}</span>
             </p>
             <button className="fr-btn--close fr-btn" onClick={() => setRemoveNotice(true)} title="Masquer le message" />
