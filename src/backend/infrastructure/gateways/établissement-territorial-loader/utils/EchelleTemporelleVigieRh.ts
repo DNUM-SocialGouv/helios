@@ -26,8 +26,6 @@ type DernierePeriode = Readonly<{
 
 type RequeteDernierePeriode = Readonly<{
   table: string;
-  numeroFinessColumn: string;
-  numeroFinessET: string;
   anneeColumn: string;
   moisColumn?: string;
   trimestreColumn?: string;
@@ -35,7 +33,6 @@ type RequeteDernierePeriode = Readonly<{
 
 export async function construitEchelleTemporelleVigieRh(
   orm: Promise<DataSource>,
-  numeroFinessET: string
 ): Promise<Record<string, EchelleTemporelleVigieRh>> {
   const [
     effectifsPeriod,
@@ -49,49 +46,35 @@ export async function construitEchelleTemporelleVigieRh(
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
       moisColumn: "mois",
-      numeroFinessColumn: "numero_finess",
-      numeroFinessET,
       table: "vigierh_profession_filiere",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
       moisColumn: "mois",
-      numeroFinessColumn: "numero_finess",
-      numeroFinessET,
       table: "vigierh_profession_groupe",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
-      numeroFinessColumn: "numero_finess_etablissement_territorial",
-      numeroFinessET,
       table: "vigierh_mouvements_trimestriel",
       trimestreColumn: "trimestre",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
-      numeroFinessColumn: "numero_finess_etablissement_territorial",
-      numeroFinessET,
       table: "vigierh_nature_contrats_trimestriel",
       trimestreColumn: "trimestre",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
-      numeroFinessColumn: "numero_finess_etablissement_territorial",
-      numeroFinessET,
       table: "vigierh_duree_cdd",
       trimestreColumn: "trimestre",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
-      numeroFinessColumn: "finess_et",
-      numeroFinessET,
       table: "vigierh_motifs_ruptures",
       trimestreColumn: "trimestre",
     }),
     recupereDernierePeriode(orm, {
       anneeColumn: "annee",
-      numeroFinessColumn: "numero_finess_etablissement_territorial",
-      numeroFinessET,
       table: "vigierh_mouvements_trimestriel",
       trimestreColumn: "trimestre",
     }),
@@ -204,12 +187,11 @@ async function recupereDernierePeriode(orm: Promise<DataSource>, params: Requete
   const query = `
       SELECT ${selectParts.join(", ")}
       FROM ${params.table}
-      WHERE ${params.numeroFinessColumn} = $1
       ORDER BY ${orderParts.join(", ")}
       LIMIT 1
     `;
 
-  const resultat = (await (await orm).query(query, [params.numeroFinessET]))[0] ?? null;
+  const resultat = (await (await orm).query(query))[0] ?? null;
 
   return {
     annee: convertToNumber(resultat?.annee),
