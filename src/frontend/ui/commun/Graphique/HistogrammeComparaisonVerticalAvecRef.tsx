@@ -107,6 +107,9 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
   const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
 
+  const libellesTooltipSecondaires = libellesDecomposes.map(({ secondaire }) => secondaire || "");
+
+
   const chartData: ChartData<"bar"> = {
     labels: libelles,
     datasets: series.map((serie) => ({
@@ -217,7 +220,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
             // Utilise le label principal et secondaire pour la tooltip
             const index = context[0]?.dataIndex ?? 0;
             const principal = libellesPrincipaux[index] ?? "";
-            const secondaire = libellesSecondaires[index] ?? "";
+            const secondaire = libellesTooltipSecondaires[index] ?? "";
             return secondaire ? `${principal} ${secondaire}` : principal;
           },
           label(context: any) {
