@@ -323,6 +323,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   source={wording.DSN}
                 >
                   <LineChart
+                    beginAtZero={false}
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={[]}
