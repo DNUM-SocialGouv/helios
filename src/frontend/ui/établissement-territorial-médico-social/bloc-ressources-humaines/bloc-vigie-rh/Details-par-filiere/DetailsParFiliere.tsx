@@ -68,8 +68,8 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
           {findGroupesForFiliere(multiCategorie.categorie).length > 0 && <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>Professions - Filière {multiCategorie.categorie}</p>
             <LineChart
-              beginAtZero={true}
               afficherSerieTotale={false}
+              beginAtZero={true}
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={paletteGroupes}
