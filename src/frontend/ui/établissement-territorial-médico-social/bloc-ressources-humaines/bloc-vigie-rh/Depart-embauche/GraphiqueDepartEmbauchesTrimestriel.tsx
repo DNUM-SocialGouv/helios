@@ -94,6 +94,9 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   const anneeEnCours = String(new Date().getFullYear());
   const highlightLastLabel = libelles.length > 0 && String(libelles[libelles.length - 1]).includes(anneeEnCours);
 
+  const libellesTooltipSecondaires = libellesDecomposes.map(({ secondaire }) => secondaire || "");
+
+
   const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
     const valeur = donneesDeparts[idx];
     if (Number.isFinite(valeur) && Number.isFinite(valeurRef)) {
@@ -239,7 +242,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             // Utilise le label principal et secondaire pour la tooltip
             const index = context[0]?.dataIndex ?? 0;
             const principal = libellesPrincipaux[index] ?? "";
-            const secondaire = libellesSecondaires[index] ?? "";
+            const secondaire = libellesTooltipSecondaires[index] ?? "";
             return secondaire ? `${principal} ${secondaire}` : principal;
           },
           label: function (context: any) {

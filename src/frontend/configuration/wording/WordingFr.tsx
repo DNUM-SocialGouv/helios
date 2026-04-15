@@ -759,10 +759,10 @@ export class WordingFr implements Wording {
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des effectifs";
   readonly DUREE_CDD: string = "Durée effective des CDD terminés";
-  readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
+  readonly NOMBRE_CONTRATS_CDD: string = "CDD (contrats terminés)";
   readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
-  readonly NOMBRE_CDD: string = "Nombre de CDD actifs";
-  readonly NOMBRE_CDI: string = "Nombre de CDI et agents titulaires actifs";
+  readonly NOMBRE_CDD: string = "CDD (nouveaux contrats)";
+  readonly NOMBRE_CDI: string = "CDI et agents titulaires (nouveaux contrats)";
   readonly CDD_REF: string = "Moyenne du nombre  de CDD pour des établissements similaires";
   readonly CDI_REF: string = "Moyenne du nombre de CDI pour des établissements similaires";
   readonly DUREE: string = "Durée effective";
