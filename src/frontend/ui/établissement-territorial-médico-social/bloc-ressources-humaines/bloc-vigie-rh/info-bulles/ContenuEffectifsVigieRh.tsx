@@ -1,6 +1,5 @@
 import { ContenuVigieRhInfoBulleProps } from "./ContenuVigieRhInfoBulleProps";
 import styles from "./InfoBulles.module.css";
-
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 
 

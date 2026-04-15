@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 
-import { EchelleTemporelleVigieRh } from "../../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import StringFormater from "../../../../../frontend/ui/commun/StringFormater";
+import { EchelleTemporelleVigieRh } from "../../../../métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 
 const MOIS_LABELS = [
   "Janvier",

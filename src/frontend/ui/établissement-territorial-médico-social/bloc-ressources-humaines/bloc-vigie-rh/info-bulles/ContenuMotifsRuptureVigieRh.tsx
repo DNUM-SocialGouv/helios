@@ -9,7 +9,7 @@ export const ContenuMotifsRuptureVigieRh = ({ dateDeMiseAJour, dateDonneesArrete
       <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Répartition des fins de contrat selon le motif déclaré de fin de contrat au cours du dernier trimestre disponible.  
+          Répartition des fins de contrat selon le motif déclaré au cours du dernier trimestre disponible.  
         </p>
       </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
