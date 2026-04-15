@@ -731,6 +731,7 @@ export class WordingFr implements Wording {
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
   readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
+  readonly MESSAGE_INFO_VIGIE_RH_DETAIL: string = "Dans certains cas peu fréquents, il est encore à ce stade difficile d'identifier correctement dans la DSN l'ensemble des contrats relatifs à un établissement géographique donné. De ce fait les décomptes d'effectifs et de contrats pour ces établissements mal identifiés apparaissent comme extrêmement faibles et ne doivent pas être considérés comme complets.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
