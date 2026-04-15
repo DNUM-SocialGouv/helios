@@ -35,9 +35,9 @@ export const ContenuDepartsEmbauchesVigieRh = ({ dateDeMiseAJour, source, dateDo
           Les mouvements sont calculés par comparaison entre les personnes présentes/absentes au   
           dernier jour de deux périodes consécutives.
           <br/>
-         Entrée : personne absente au dernier jour de T-1/N−1 et présente au dernier jour de T/N.   
+          Entrée : personne absente au dernier jour de T-1 (ou N−1) et présente au dernier jour de T (ou N).   
            <br/>
-          Sortie : personne présente au dernier jour de T-1/N−1 et absente au dernier jour de T/N.  
+          Sortie : personne présente au dernier jour de T-1 (ou N−1)  et absente au dernier jour de T (ou N).  
         </p>
       </section>
       <section aria-label={wording.POPULATION}>
