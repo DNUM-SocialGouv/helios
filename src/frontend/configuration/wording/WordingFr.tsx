@@ -731,6 +731,7 @@ export class WordingFr implements Wording {
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
   readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
+  readonly MESSAGE_INFO_VIGIE_RH_DETAIL: string = "Dans certains cas peu fréquents, il est encore à ce stade difficile d'identifier correctement dans la DSN l'ensemble des contrats relatifs à un établissement géographique donné. De ce fait les décomptes d'effectifs et de contrats pour ces établissements mal identifiés apparaissent comme extrêmement faibles et ne doivent pas être considérés comme complets.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
@@ -758,10 +759,10 @@ export class WordingFr implements Wording {
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
   readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des effectifs";
   readonly DUREE_CDD: string = "Durée effective des CDD terminés";
-  readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
+  readonly NOMBRE_CONTRATS_CDD: string = "CDD (contrats terminés)";
   readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
-  readonly NOMBRE_CDD: string = "Nombre de CDD actifs";
-  readonly NOMBRE_CDI: string = "Nombre de CDI et agents titulaires actifs";
+  readonly NOMBRE_CDD: string = "CDD (nouveaux contrats)";
+  readonly NOMBRE_CDI: string = "CDI et agents titulaires (nouveaux contrats)";
   readonly CDD_REF: string = "Moyenne du nombre  de CDD pour des établissements similaires";
   readonly CDI_REF: string = "Moyenne du nombre de CDI pour des établissements similaires";
   readonly DUREE: string = "Durée effective";

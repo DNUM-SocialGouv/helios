@@ -12,12 +12,6 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
          Ruptures de contrats à durée indéterminée (CDI) durant l’année ayant eu une durée effective inférieure à six mois.  
         </p>
       </section>
-          <section aria-label={wording.INDICATION_VARIATION}>
-        <p>
-          <span className="fr-text--bold">{wording.INDICATION_VARIATION} : </span>{" "}
-          Évolution relative en pourcentage par rapport au même mois de l’année précédente  
-        </p>
-      </section>
       <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
           <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>{" "}

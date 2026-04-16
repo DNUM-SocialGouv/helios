@@ -42,6 +42,7 @@ interface LineChartProps {
   afficherSerieTotale?: boolean;
   identifiantTranscription?: string;
   legendeCochable?: boolean;
+  beginAtZero: boolean;
 }
 
 const LineChart = ({
@@ -57,6 +58,7 @@ const LineChart = ({
   identifiantTranscription,
   nomGraph,
   legendeCochable = false,
+  beginAtZero
 }: LineChartProps) => {
   const { wording } = useDependencies();
 
@@ -164,7 +166,7 @@ const LineChart = ({
         border: {
           display: false
         },
-        beginAtZero: false,
+        beginAtZero: beginAtZero,
         grid: {
           drawOnChartArea: true,
           drawTicks: true,
@@ -188,7 +190,11 @@ const LineChart = ({
           },
           label: (tooltipItem) => {
             const yValue = tooltipItem.raw;
-            return `Effectif : ${yValue}`;
+            const datasetLabel = tooltipItem.dataset.label;
+            if(datasetLabel === wording.EFFECTIFS_TOTAUX) {
+              return [`Effectif total : ${yValue}`];
+            }
+            return [`Effectif : ${yValue}`, `${datasetLabel}`];
           },
         },
       },

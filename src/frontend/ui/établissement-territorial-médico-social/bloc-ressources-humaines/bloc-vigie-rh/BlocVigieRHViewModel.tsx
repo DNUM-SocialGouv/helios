@@ -205,11 +205,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesTranchesAges(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles ?? [];
   }
 
   public get lesDonneesPyramideAges(): DonneesVigieRh[] {
-    const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
+    const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles ?? [];
     if (this.etablissementTerritorialVRMedicoSocial.pyramideAges)
       return Object.values(
         this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
@@ -244,7 +244,10 @@ export class BlocVigieRHViewModel {
       this.lesEffectifsGroupesNeSontIlsPasRenseignees &&
       this.lesDepartsEmbauchesNeSontIlsPasRenseignees &&
       this.lesDureesCDDNeSontEllesPasRenseignees &&
-      this.lesMotifsNeSontIlsPasRenseignes
+      this.lesMotifsNeSontIlsPasRenseignes &&
+      this.lesDepartsPrematuresCdiPasRenseignes &&
+      this.lesNaturesContratsNeSontPasReseignees &&
+      this.lesRotationsNeSontIlsPasRenseignees 
     );
   }
 
@@ -297,14 +300,15 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
+    const donneesTrimestrielles = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels ?? [];
     // Vérifier les années complètes (avec les 4 trimestres)
-    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.reduce((acc, item) => {
+    const trimestresParAnnee = donneesTrimestrielles.reduce((acc, item) => {
       if (!acc[item.annee]) acc[item.annee] = 0;
       acc[item.annee]++;
       return acc;
     }, {} as Record<number, number>);
 
-    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 4).map(([annee]) => Number(annee)));
     return (this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? []).filter(departEmbauche => anneesCompletes.has(departEmbauche.annee));
   }
 
@@ -322,18 +326,19 @@ export class BlocVigieRHViewModel {
   }
 
   public get departsPrematuresCdi(): DepartPrematuresCdiViewModel[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+    const donnees = this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? [];
+    return donnees
       .map(({ annee, departsPrematuresCdi }) => ({ annee, valeur: departsPrematuresCdi ?? null }))
       .sort((a, b) => b.annee - a.annee);
   }
 
   private get departsPrematuresCdiDisponibles(): boolean {
-    return this.departsPrematuresCdi.some(({ valeur }) => valeur !== null && valeur !== undefined);
+    return this.departsPrematuresCdi?.some(({ valeur }) => valeur !== null && valeur !== undefined);
   }
 
   public get donneesTauxRotation(): TauxRotation[] {
     // Vérifier les années complètes (avec les 4 trimestres)
-    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.reduce((acc, item) => {
+    const trimestresParAnnee = (this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel ?? []).reduce((acc, item) => {
       if (!acc[item.annee]) acc[item.annee] = 0;
       acc[item.annee]++;
       return acc;
@@ -397,10 +402,10 @@ export class BlocVigieRHViewModel {
   }
 
   public get topIndicateurContrats() {
-    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
     const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur.replace(' ','-') ?? '';
     const comparaisonLabel = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
-    const maxAnnee = Math.max(...durees.map(d => d.annee));
+    const maxAnnee = Math.max(...durees?.map(d => d.annee));
     const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
     const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
     const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
@@ -422,11 +427,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesDureeCdd(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.dureesCddLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.dureesCddLibelles ?? [];
   }
 
   public get lesDureesCdd(): DureeCDD[] {
-    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
     const maxAnnee = Math.max(...durees.map(d => d.annee));
 
     return durees
@@ -435,11 +440,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesMotifsRupture(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.motifsRuptureContratLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.motifsRuptureContratLibelles ?? [];
   }
 
   public get lesMotifsRuptureContrat(): MotifsRuptureContrat[] {
-    const motifs = this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat;
+    const motifs = this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat ?? [];
     const maxAnnee = Math.max(...motifs.map(m => m.annee));
 
     return motifs
@@ -449,7 +454,7 @@ export class BlocVigieRHViewModel {
 
   public get natureContratsAnnuel(): NatureContratsAnnuel[] {
     // Vérifier les années complètes (avec les 4 trimestres)
-    const trimestresParAnnee = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.reduce((acc, item) => {
+    const trimestresParAnnee = (this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel ?? []).reduce((acc, item) => {
       if (!acc[item.annee]) acc[item.annee] = 0;
       acc[item.annee]++;
       return acc;
@@ -461,7 +466,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
-    return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
+    return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel ?? [];
   }
 
   public get paletteNatureContrats(): CouleurHistogramme[] {

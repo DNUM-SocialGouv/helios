@@ -287,7 +287,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
     const natureContratsAnnuel = await (await this.orm).getRepository(VigieRhNatureContratsAnnuelModel).find({ where: { numeroFiness: numeroFinessET } });
     const natureContratsTrimestriel = await (await this.orm).getRepository(VigieRhNatureContratsTrimestrielModel).find({ where: { numeroFiness: numeroFinessET } });
     const professionFiliereModel = professionFiliere as unknown as ProfessionFiliere;
-    const echelleTemporelle = await construitEchelleTemporelleVigieRh(this.orm, numeroFinessET);
+    const echelleTemporelle = await construitEchelleTemporelleVigieRh(this.orm);
     return this.construisLesDonneesVigieRH({
       pyramideAgesModel: pyramideAges,
       tranchesAgeModel: tranchesAge,

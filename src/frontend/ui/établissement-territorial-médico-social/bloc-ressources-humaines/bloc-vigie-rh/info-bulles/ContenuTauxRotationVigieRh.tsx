@@ -41,27 +41,24 @@ export const ContenuTauxRotationVigieRh = ({ dateDeMiseAJour, dateDonneesArretee
         <p>
           <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} :</span>{" "}
           <br/> 
-          Un taux élevé peut traduire une forte mobilité, un renouvellement important ou des   
-          ajustements rapides de main d’œuvre. Il permet d’apprécier la stabilité ou la volatilité de   
-          l’effectif.     
+          Un taux élevé peut traduire une forte mobilité, un renouvellement important ou des ajustements rapides de main d’œuvre. Il permet 
+          d’apprécier la stabilité ou la volatilité de l’effectif.     
         <br/>
-          Cet indicateur porte uniquement sur les personnes et ne dépend pas du nombre de contrats   
-          successifs détenus par un même salarié ou agent.  
+          Cet indicateur porte uniquement sur les personnes et ne dépend pas du nombre de contrats successifs détenus par un même salarié ou agent. 
         </p>
       </section>
       <section aria-label={wording.PRESENCE_PERIODE}>
         <p>
           <span className="fr-text--bold">{wording.PRESENCE_PERIODE} :</span>{" "} 
           <br/>
-          Une personne est considérée comme présente dans une période si elle possède un contrat   
-          actif à la date de fin de la période (dernier jour du trimestre).  
+          Une personne est considérée comme présente dans une période si elle possède un contrat actif à la date de fin de la période (dernier jour du trimestre). 
+        </p>
+        <p>
+          Les mouvements sont calculés par comparaison entre les personnes présentes/absentes au dernier jour de deux périodes consécutives.  
           <br/>
-          Les mouvements sont calculés par comparaison entre les personnes présentes/absentes au   
-          dernier jour de deux périodes consécutives.  
-          <br/>
-          Entrée : personne absente au dernier jour de T-1/N−1 et présente au dernier jour de T/N.   
+          Entrée : personne absente au dernier jour de T-1 (ou N−1) et présente au dernier jour de T (ou N).   
            <br/>
-          Sortie : personne présente au dernier jour de T-1/N−1 et absente au dernier jour de T/N.  
+          Sortie : personne présente au dernier jour de T-1 (ou N−1) et absente au dernier jour de T (ou N).  
         </p>
       </section>
       <section aria-label={wording.POPULATION}>

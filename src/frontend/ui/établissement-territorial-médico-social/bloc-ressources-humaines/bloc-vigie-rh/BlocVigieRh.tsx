@@ -199,7 +199,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     <>
       <InfoMessage />
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
-      <section className={styles["vigie-rh-header"]}>
+      { ((blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif )|| blocVigieRHViewModel.graphiqueDureeCddAffichable || blocVigieRHViewModel.graphiqueRotationsAffichable) && (<section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>
           <h2 className="fr-h3 fr-mb-1v">Indicateurs clés</h2>
           <p className={styles["vigie-rh-caption"]}>
@@ -211,7 +211,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           </p>
         </div>
         <div className={`fr-grid-row fr-grid-row--gutters ${styles["vigie-rh-top-indicateurs"]}`}>
-          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
@@ -235,10 +235,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={indicateurEffectif.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
+          {blocVigieRHViewModel.graphiqueDureeCddAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
@@ -264,10 +262,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueRotationsAffichable ? (
+          {blocVigieRHViewModel.graphiqueRotationsAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
@@ -292,14 +288,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
               />
             </div>
-          ) : (
-            <></>
-          )}
+          ) }
         </div>
-      </section>
+      </section>)}
 
       <div className={styles["liste-indicateurs-vr-wrapper"]}>
-        <section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
+        {(blocVigieRHViewModel.graphiqueEffectifsAffichable || blocVigieRHViewModel.graphiquePyramideAgesAffichable || blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable ) && (<section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.EFFECTIFS}</h2>
           </div>
@@ -323,6 +317,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   source={wording.DSN}
                 >
                   <LineChart
+                    beginAtZero={false}
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={[]}
@@ -403,7 +398,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
             ])}
           </div>
-          {!blocVigieRHViewModel.lesEffectifsGroupesNeSontIlsPasRenseignees && <section className="fr-accordion">
+          {blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable && <section className="fr-accordion">
             <h3 className={styles["vigie-rh-accordion-button"]}>
               <button
                 aria-controls="accordion-vigie-rh"
@@ -454,7 +449,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </h3>
             </div>
           </section>}
-        </section>
+        </section>)}
+        {(blocVigieRHViewModel.graphiqueNatureContratsAffichable || blocVigieRHViewModel.graphiqueDureeCddAffichable) && (
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.CONTRATS_COURTS}</h2>
@@ -511,7 +507,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </IndicateurGraphique>
             ) : null
           ])}
-        </section>
+        </section>)}
+        {(blocVigieRHViewModel.graphiqueRotationsAffichable || blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable || blocVigieRHViewModel.graphiqueDepartsPrematuresCdiAffichable || blocVigieRHViewModel.graphiqueMotifsAffichable) && (
         <section aria-label="mouvement" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.MOUVEMENT_DU_PERSONNEL}</h2>
@@ -615,7 +612,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </IndicateurGraphique>
             ) : null,
           ])}
-        </section>
+        </section>)}
       </div>
     </>
   );
