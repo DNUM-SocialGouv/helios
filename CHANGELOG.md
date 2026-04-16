@@ -1,5 +1,31 @@
 # Changelog d'Helios
 
+## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (TODO)
+
+### Bug Fixes
+
+
+### Features
+
+
+## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
+
+### Bug Fixes
+
+- vr-175: Erreur transcript sur le graphique Entrées/Sorties
+- vr-178: Absence d'affichage des données annuelles alors que les données trimestrielles sont complètes
+
+### Features
+
+- vr-155: Cohérence des mentions "Données Arrêtées"
+- vr-174: ajout de texte dans l'info bulle
+- vr-176: Ajustements sur les graphiques des effectifs par profession
+- vr-177: Renommage de colonnes dans les transcripts
+- vr-179: Modification dans les info-bulles "Détails"
+- vr-180: Détails graphique "Départs prématurés des CDI"
+- vr-181: Suppression des blocs quand aucun graphique ne s'affiche
+- vr-182: Reprise du wording des graphiques "Taux de renouvellement des effectifs" et "Entrées et sorties"
+
 ## [1.8.6](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.5...release/1.8.6) (2026-04-13)
 
 ### Bug Fixes
