@@ -405,7 +405,7 @@ export class BlocVigieRHViewModel {
     const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
     const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur.replace(' ','-') ?? '';
     const comparaisonLabel = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
-    const maxAnnee = Math.max(...durees?.map(d => d.annee));
+    const maxAnnee = Math.max(...durees.map(d => d.annee));
     const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
     const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
     const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
