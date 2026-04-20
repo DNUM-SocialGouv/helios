@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChangeEvent, useState, useEffect } from "react";
 
 import styles from "./Cookies.module.css";
+import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const Cookies = ({
   currentModal,
@@ -17,6 +18,7 @@ export const Cookies = ({
 }) => {
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
+  const { wording } = useDependencies();
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
@@ -95,8 +97,8 @@ export const Cookies = ({
                   </ul>
                 </div>
                 <div className={styles["politique_link"]}>
-                  <Link className="fr-text--xs" href="/donnees-personnelles">
-                    Politique de confidentialité
+                  <Link className="fr-text--xs" href="/donnees-personnelles" title={wording.POLITIQUE_CONFIDENTIALITE}>
+                    {wording.POLITIQUE_CONFIDENTIALITE}
                   </Link>
                 </div>
               </div>
@@ -240,16 +242,16 @@ export const Cookies = ({
                       {allowCookies === "true" ? "autorisé" : "interdit"}
                       <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
-                      <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank">
-                        En savoir plus
+                      <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank" title={`${wording.SAVOIR_PLUS} - ${wording.NOUVELLE_FENÊTRE}`}>
+                       {wording.SAVOIR_PLUS}
                       </Link>
                       -{" "}
-                      <Link className="fr-ml-1w" href="https://www.atinternet.com" target="_blank">
-                        Voir le site Officiel
+                      <Link className="fr-ml-1w" href="https://www.atinternet.com" target="_blank" title={`${wording.VOIR_SITE_OFFICIEL} - ${wording.NOUVELLE_FENÊTRE}`}>
+                        {wording.VOIR_SITE_OFFICIEL}
                       </Link>{" "}
                       <br /> <br /> <br />
-                      <Link href="https://tarteaucitron.io/fr/" target="_blank">
-                        Site officiel de Tarte au citron
+                      <Link href="https://tarteaucitron.io/fr/" target="_blank" title={`${wording.TARTE_CITRON} - ${wording.NOUVELLE_FENÊTRE}`}>
+                        {wording.TARTE_CITRON}
                       </Link>
                     </p>
                   </div>

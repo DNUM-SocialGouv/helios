@@ -1,4 +1,7 @@
+import { useDependencies } from "../commun/contexts/useDependencies";
+
 export const PageEcoConception = () => {
+    const { wording } = useDependencies();
   return (
     <>
       <h1>
@@ -28,11 +31,11 @@ export const PageEcoConception = () => {
         </li>
         <li className="fr-mb-2w">
           Nous faisons des audits express via{" "}
-          <a className="fr-link" href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr">
+          <a className="fr-link" href="https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr" title="Lighthouse">
             Lighthouse
           </a>{" "}
           et l’extension{" "}
-          <a className="fr-link" href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr">
+          <a className="fr-link" href="https://chrome.google.com/webstore/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr" title="Green IT Analysis">
             Green IT Analysis
           </a>{" "}
           pour identifier rapidement les leviers d’optimisation en écodéveloppement et intégration au backlog.
@@ -71,6 +74,7 @@ export const PageEcoConception = () => {
           href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/"
           rel="external noopener noreferrer"
           target="_blank"
+          title={`${wording.RGESN} - ${wording.NOUVELLE_FENÊTRE}`}
         >(RGESN)</a>.{" "}
         Ce référentiel a été conçu dans le cadre de la mission interministérielle co-pilotée par la DNUM, le Ministère de la Transition Écologique, l’ADEME et
         l’Institut du Numérique Responsable.

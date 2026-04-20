@@ -6,7 +6,7 @@
 
 
 ### Features
-
+- hel-1016: Mise en conformité liens explicite
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 

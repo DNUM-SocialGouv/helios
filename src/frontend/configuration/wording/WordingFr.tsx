@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { Wording } from "./Wording";
 
 export class WordingFr implements Wording {
+  readonly HELIOS_URL: string = "www.helios.ars.sante.fr";
   // Abréviations
   readonly CPOM_TITLE: string = "Contrat Pluriannuel d’Objectifs et de Moyens";
   readonly CPOM: ReactElement = (<abbr title={this.CPOM_TITLE}>CPOM</abbr>);
@@ -545,6 +546,10 @@ export class WordingFr implements Wording {
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
   readonly COOKIES: string = "Gestion des Cookies";
+  readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
+  readonly TARTE_CITRON: string= "Site officiel de Tarte au citron";
+  readonly SAVOIR_PLUS: string = "En savoir plus";
+  readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
@@ -557,8 +562,12 @@ export class WordingFr implements Wording {
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";
   readonly PROPRIÉTÉ_INTELLECTUELLE: string = "Propriété intellectuelle";
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
+  readonly SCALINGO: string = "scalingo.com";
+  readonly CATAMANIA: string = "catamania.com";
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
+
+  readonly RGESN: string = "RGESN";
 
   // Comparaison
   readonly COMPARAISON: string = "Comparaison";
