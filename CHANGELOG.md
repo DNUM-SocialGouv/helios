@@ -7,6 +7,8 @@
 
 ### Features
 
+- hel-1015: Export Fiche EJ - ajouter la cat FINESS das ET rattachés
+
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 
