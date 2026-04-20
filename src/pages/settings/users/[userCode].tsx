@@ -76,6 +76,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
       };
     }
 
+    // Un admin regional n’a pas accès au utilisateurs d’une autre region
+    if (currentUserRole === Role.ADMIN_REG && user.institutionId !== session?.user?.institutionId) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/inaccessible",
+        },
+      };
+    }
+
     const institutions = await getInstitutionsEndpoint(dependencies);
     const profiles = await getAllProfilesEndpoint(dependencies);
     const roles = await getAllRolesEndpoint(dependencies);
