@@ -9,8 +9,8 @@ import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/L
 import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
-import { StarButtonList } from "../StarButtonList/StarButtonList";
 import { useDependencies } from "../contexts/useDependencies";
+import { StarButtonList } from "../StarButtonList/StarButtonList";
 
 interface Header {
   label: string;
