@@ -36,9 +36,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.status(405).send("Method not allowed");
       }
 
-      const recherche = await deleteUserEndpoint(dependencies, userCode);
+      const message = await deleteUserEndpoint(dependencies, userCode);
       dependencies.logger.audit(`${userSession?.user?.email}: Suppression de l'utilisateur "${userBeforeChange.email}"`);
-      return response.status(200).json(recherche);
+      return response.status(200).json(message);
     } else {
       response.status(405).send("User not found");
     }
