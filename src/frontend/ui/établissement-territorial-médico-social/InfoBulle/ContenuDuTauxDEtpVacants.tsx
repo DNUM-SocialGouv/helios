@@ -12,7 +12,7 @@ export const ContenuDuTauxDEtpVacants = ({ dateDeMiseÀJour, source }: ContenuDu
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Les postes vacants font référence aux postes non pourvus et aux postes pourvus grâce à une prestation externe, libérale ou conventionnelle.</p>
       </section>

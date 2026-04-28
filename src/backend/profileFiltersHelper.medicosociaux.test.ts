@@ -143,6 +143,8 @@ function getQualitéMedicoSocial(): ÉtablissementTerritorialQualite {
     ],
     evenementsIndesirables: [{ libelle: "libEvIndesi", evenementsEncours: ["envCours"], evenementsClotures: ["evClot"], dateMiseAJourSource: "dateMajDetail" }],
     inspectionsEtControles: { dateMiseAJourSource: "dateMajInspection", inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: { numeroFiness: "finessQualiscope" },
+
   }
 }
 
@@ -226,6 +228,7 @@ function getQualiteProfile() {
     DonnéesSirec: "ok",
     DonnéesSivss: "ok",
     DonnéesSiicea: "ok",
+    DonnéesHas: "ok",
   }
 }
 
@@ -1154,5 +1157,25 @@ describe("Filtre les informations qualite des etablissement medico-sociaux par r
 
     // Then
     expect(etabMedicoSocialResult.qualite).toEqual(expectedQuality);
+  })
+
+
+  it("retire les info de qualité qualiscope si n’y a pas les droits", () => {
+    // Given
+    const rawQuality = getQualitéMedicoSocial();
+    const expectedQuality = {
+      ...rawQuality,
+      pasDonneesQualiscopeHAS: {}
+    }
+
+    let etabSanitaireResult = getFullMedicoSocial();
+    const profile = getFullProfile();
+    profile.Qualité.DonnéesHas = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementMedicoSocial(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
   })
 })

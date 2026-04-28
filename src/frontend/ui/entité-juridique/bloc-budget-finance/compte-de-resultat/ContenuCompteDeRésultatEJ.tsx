@@ -12,7 +12,7 @@ export const ContenuCompteDeRésultatEJ = ({ dateDeMiseÀJour, source }: Contenu
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Le plan comptable officiel des établissements publics de santé (EPS) et des établissements de santé privé d’intérêt collectif (ESPIC), dénommé M21,

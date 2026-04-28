@@ -109,11 +109,48 @@ const HistogrammeHorizontalAvecRef = ({
         },
         labels: {
           title: {
-            align: "start",
+            align: (context: any) => {
+              const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+              const valeurBrute = donnees[context.dataIndex];
+              const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : 0;
+              const chart = context.chart;
+              const xScale = chart.scales?.x;
+
+              if (valeurNumerique !== null && xScale) {
+                const pixelVal = xScale.getPixelForValue(valeurNumerique);
+                const pixelZero = xScale.getPixelForValue(0);
+
+                if (Number.isFinite(pixelVal) && Number.isFinite(pixelZero) && Math.abs(pixelVal - pixelZero) < 25) {
+                  return "end";
+                }
+              }
+
+              return "start";
+            },
             formatter: (value: number) => value,
           },
           pourcentage: {
             align: "end",
+            anchor: "end",
+            color: "#666",
+            offset: (context: any) => {
+              const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
+              const valeurBrute = donnees[context.dataIndex];
+              const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : 0;
+              const chart = context.chart;
+              const xScale = chart.scales?.x;
+
+              if (valeurNumerique !== null && xScale) {
+                const pixelVal = xScale.getPixelForValue(valeurNumerique);
+                const pixelZero = xScale.getPixelForValue(0);
+
+                if (Number.isFinite(pixelVal) && Number.isFinite(pixelZero) && Math.abs(pixelVal - pixelZero) < 25) {
+                  return 25;
+                }
+              }
+
+              return 4; // Default offset
+            },
             display: (context: Context) => {
               return (valeursAdditionnelles && valeursAdditionnelles[context.dataIndex]) ? true : false;
             },

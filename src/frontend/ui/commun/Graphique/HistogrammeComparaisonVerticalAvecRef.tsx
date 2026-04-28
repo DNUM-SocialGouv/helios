@@ -35,7 +35,7 @@ type HistogrammeComparaisonVerticalAvecRefProps = Readonly<{
   transcription?: TranscriptionOptions;
   formatValeur?: (valeur: number | null) => string | null;
   highlightLastLabel?: boolean;
-  libellesValeursManquantes?: string[];
+  libellesValeursManquantes?: (number | string)[];
   libellesValeursRefManquantes?: string[];
   showRefValues: boolean;
 }>;
@@ -47,7 +47,7 @@ const valeurFormateeParDefaut = (valeur: number | null): string | null => {
   return StringFormater.formatInFrench(valeur);
 };
 
-const expressionReguliereTrimestre = /^T(\d)\s+(\d{4})$/;
+const expressionReguliereTrimestre = /^(\d{4})-T([1-4])$/;
 
 const HistogrammeComparaisonVerticalAvecRef = ({
   etabFiness,
@@ -79,7 +79,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     const libelleNettoye = label.trim();
     const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
     if (correspondanceTrimestre) {
-      return { principal: `T${correspondanceTrimestre[1]}`, secondaire: correspondanceTrimestre[2] };
+      return { principal: `T${correspondanceTrimestre[2]}`, secondaire: correspondanceTrimestre[1] };
     }
 
     const segments = libelleNettoye.split(/\s+/);
@@ -106,6 +106,9 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   });
   const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
   const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
+
+  const libellesTooltipSecondaires = libellesDecomposes.map(({ secondaire }) => secondaire || "");
+
 
   const chartData: ChartData<"bar"> = {
     labels: libelles,
@@ -161,6 +164,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           const xLeft = barElement.x - barElement.width / 2;
           const xRight = barElement.x + barElement.width / 2;
 
+
           ctx.save();
           ctx.beginPath();
           ctx.moveTo(xLeft, yPos);
@@ -180,6 +184,11 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     maintainAspectRatio: true,
     animation: false,
     responsive: true,
+    layout: {
+      padding: {
+      top: 20,
+      },
+    },
     interaction: {
       intersect: false,
       mode: "point",
@@ -188,18 +197,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       // @ts-expect-error custom property
       htmlLegend: { containerID: legendContainerId },
       datalabels: {
-        align: (context: any) => {
-          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
-          const valeurBrute = donnees[context.dataIndex];
-          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
-          return valeurNumerique !== null && valeurNumerique < 0 ? "end" : "start";
-        },
-        anchor: (context: any) => {
-          const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
-          const valeurBrute = donnees[context.dataIndex];
-          const valeurNumerique = typeof valeurBrute === "number" ? valeurBrute : null;
-          return valeurNumerique !== null && valeurNumerique < 0 ? "start" : "end";
-        },
+        align: "end",
+        anchor: "end",
+        clip: false,
+        offset: -4,
         font: {
           family: "Marianne",
           size: 12,
@@ -215,6 +216,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       tooltip: {
         filter: (tooltipItem) => tooltipItem.raw !== null && tooltipItem.raw !== undefined,
         callbacks: {
+          title: function (context: any) {
+            // Utilise le label principal et secondaire pour la tooltip
+            const index = context[0]?.dataIndex ?? 0;
+            const principal = libellesPrincipaux[index] ?? "";
+            const secondaire = libellesTooltipSecondaires[index] ?? "";
+            return secondaire ? `${principal} ${secondaire}` : principal;
+          },
           label(context: any) {
             const rawValue = context.raw;
             const label = context.dataset.label;

@@ -13,7 +13,7 @@ export const ContenuReconnaissancesContractuelles = ({ dateDeMiseÀJour, source,
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Une activité soumise à reconnaissance contractuelle est une activité non soumise au régime juridique des autorisations mais soumise à reconnaissance contractuelle par l’ARS dans le cadre et la durée du CPOM (contrat pluriannuel d’objectif et de moyens).</p>
         <p>Les reconnaissances contractuelles sont délivrées à une entité juridique pour une mise en œuvre au sein d’un établissement géographique. Seules les reconnaissances contractuelles en cours sont actuellement affichées.</p>

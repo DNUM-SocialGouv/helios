@@ -1,10 +1,130 @@
 # Changelog d'Helios
 
-## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.2) (TODO)
+## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (TODO)
+
+### Bug Fixes
+
+
+### Features
+
+
+## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
+
+### Bug Fixes
+
+- vr-175: Erreur transcript sur le graphique Entrées/Sorties
+- vr-178: Absence d'affichage des données annuelles alors que les données trimestrielles sont complètes
+
+### Features
+
+- vr-155: Cohérence des mentions "Données Arrêtées"
+- vr-174: ajout de texte dans l'info bulle
+- vr-176: Ajustements sur les graphiques des effectifs par profession
+- vr-177: Renommage de colonnes dans les transcripts
+- vr-179: Modification dans les info-bulles "Détails"
+- vr-180: Détails graphique "Départs prématurés des CDI"
+- vr-181: Suppression des blocs quand aucun graphique ne s'affiche
+- vr-182: Reprise du wording des graphiques "Taux de renouvellement des effectifs" et "Entrées et sorties"
+
+## [1.8.6](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.5...release/1.8.6) (2026-04-13)
+
+### Bug Fixes
+
+- hel-1014: Ajout dans le back de toutes les vérifications pour éviter une escalade de privilèges lors de la mise à jour d’un utilisateur
+- hel-1012: Ajout des informations sur les nouveaux indicateurs de budget dans le fichier d'export de comparaison
+- vr-169: Affichage des étiquettes d'année dans les vues trimestrielles incomplètes
+
+### Features
+
+- hel-1011: Ajout de log d’audit sur les action d’administration
+- hel-1008: Modification de la dimension de la carte
+- hel-1013: Ajout du nouveau message d’actualité
+- vr-170: Date d'arrêt des données - Graphique "CDD par durée effective" et "Motifs de rupture des contrats"
+- vr-171: Affichage de la date de référence dans la vignette "Contrats Courts"
+- vr-172: [AJUSTEMENT] Wording des éléments "Détails"
+- vr-173: Modification du comportement du CRON produisant les rapports d'ingestion
+
+## [1.8.5](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.4...release/1.8.5) (2026-03-31)
+
+### Bug Fixes
+
+- vr-163: Etiquettes des dates à afficher dans les encarts "Aucune donnée renseignée :"
+- vr-166: Calcul des valeurs annuelles à afficher dans les graphiques à vue trimestrielle + annuelle
+- vr-167: Inversion des couleurs dans le graphique "Nature des contrats"
+- vr-168: Symétrie de l'échelle entre les hommes et les femmes sur le graphique "Pyramide des âges"
+
+### Features
+
+- hel-996: Ajout des données concernant les fonds de roulement, les besoins en fonds de roulement et la trésorerie
+- hel-997: Ajout du graphique horizontal concernant les fonds de roulement
+- hel-998: Ajout du graphique horizontal concernant le besoin en fonds de roulement
+- hel-999: Ajout du graphique horizontal concernant la trésorerie
+- hel-1007: Ajout des nouvelles informations de budget dans la page de comparaison
+- hel-1003: Ajout d’un bouton de retour en hait de page dans les page d’établissement
+- hel-1000: Prise en compte des nouvelles informations dans le fichier des AMM
+- hel-989: Message d’information en cas de nom de liste en doublon
+
+## [1.8.4](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.3...release/1.8.4) (2026-03-20)
+
+### Bug Fixes
+
+- vr-156: Correction du calcul du taux de variation dans la vignette "Effectifs"
+- vr-157: Position du libellé en cas de valeur nulle dans le graphique "Entrées et sorties"
+- vr-158: Taille des graphiques lorsque graphiques manquants dans un bloc
+- vr-159: Affichage de certains graphiques avec des données manquantes
+
+### Features
+
+- vr-146: Modification de la taille des points trimestriels sur les graphiques par filière et catégorie
+- vr-150: Wording détail effectifs par filière
+- vr-151: Nommage des sorties Excel effectifs par filière
+- vr-153: Optimisation et garantie des performances de l’ingestion des fichiers Parquet depuis le SFTP
+- vr-154: Modifier le titre de la dataviz "Taux de renouvellement des contrats" en "Taux de renouvellement des effectifs"
+- vr-160: Position des libellés de valeur pour les graphiques de diagramme en barres horizontales
+- vr-161: Positionnement des libellés de valeur pour les diagrammes en barres verticales
+- vr-162: Echelle de l'axe des ordonnées dans les graphiques d'effectif
+- vr-164: Placement des étiquettes de valeur sur les graphiques en barres verticales
+- vr-165: Modifications des couleurs des étiquettes de pourcentage dans le graphique répartition des effectifs
+
+## [1.8.3](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2.1...release/1.8.3) (2026-03-09)
 
 ### Bug Fixes
 
 ### Features
+
+- vr-152: Renommage des colonnes de plusieurs tables
+
+## [1.8.2.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.2...release/1.8.2.1) (2026-03-05)
+
+### Bug Fixes
+
+- hel-1002: Erreur dans un batch suite à la montée de version SQLAlchemy
+
+### Features
+
+## [1.8.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.1...release/1.8.2) (2026-03-04)
+
+### Bug Fixes
+
+- hel-981: Export Comparaison
+- hel-954: Correction wording FAQ
+- hel-990: Bug dans le maintient de l’historique à 10 entrées max
+- hel-991: Mise à jour de la page d’historique de consultation
+- hel-973: Retrait des accents avant recherche de la catégorie finess
+
+### Features
+
+- hel-798: [Recherche simple] Investigation sur les règles de fonctionnement
+- hel-967: Réécriture des batch typescript en python
+- hel-974: Changement du comportement de la page de récupération de mot de passe
+- hel-979: Remise à niveau des droit de modifications en lien avec le rôle d’administrateur central
+- hel-975: Limiter les tentatives de connexion si mot de passe erroné
+- hel-978: Mise à jour de dependances python (Pandas, Numpy, SQLAlchemy)
+- hel-976: [Connexion] Renouvellement du mot de passe
+- hel-934: ET MS - Ajout des données de l'évaluation Qualiscope
+- hel-988: ET MS - Qualiscope - Gestion des données en back
+- hel-933: ET SAN - Ajout des données de certification Qualiscope
+- hel-960: ET SAN - Qualiscope - Gestion des données en back
 
 ## [1.8.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.0...release/1.8.1) (2026-02-03)
 
@@ -28,7 +148,7 @@
 
 ### Bug Fixes
 
-- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession  
+- vr-143: Gestion de l'absence de graphique pour une filière ou une catégorie de profession
 
 ### Features
 
@@ -46,9 +166,9 @@
 ### Features
 
 - vr-118: Espacements Titre, date du graph, graph
-- vr-133:  Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
+- vr-133: Ajouter Tag Nouveau Bloc "Données issues de la Déclaration Sociale Nominative"
 - vr-136: PERF CRON vigieRH
-- vr-137:  Modification graphique "Répartition des effectifs"
+- vr-137: Modification graphique "Répartition des effectifs"
 - vr-138: FAQ Intégration d'une question sur vigieRH
 - vr-139: Ajustement Wording sur les titres des graphiques par profession dans chaque filiière
 - vr-140: idétail partie "Evolution des effectifs par filière et catégorie professionnelle"

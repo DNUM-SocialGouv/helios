@@ -6,25 +6,43 @@ export const ContenuDepartsPrematuresVigieRh = ({ dateDeMiseAJour, dateDonneesAr
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseAJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseAJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
-          Décompte des ruptures de CDI intervenant avant 6 mois d’ancienneté du salarié ou de l’agent dans l’établissement.
+         Ruptures de contrats à durée indéterminée (CDI) durant l’année ayant eu une durée effective inférieure à six mois.  
         </p>
-        <p>Le décompte est réalisé pour les CDI terminés durant l’année.   </p>
+      </section>
+      <section aria-label={wording.LECTURE_INTERPRETATION}>
         <p>
-          Permet d’identifier la proportion de départs précoces parmi les nouveaux recrutements en CDI, indicateur de la qualité de recrutement
-          et de l’intégration.
+          <span className="fr-text--bold">{wording.LECTURE_INTERPRETATION} : </span>{" "}
+          Indicateur de qualité de recrutement et d’intégration : un nombre élevé de contrats CDI   
+          terminés prématurément peut traduire un problème dans l’accueil et/ou l’adéquation au poste.    
+        </p>
+      </section>
+      <section aria-label={wording.POPULATION}>
+        <p>
+          <span className="fr-text--bold">{wording.POPULATION} : </span>{" "}
+           CDI terminés durant l’année       
+        </p>
+      </section>
+      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
+        <p>
+          <span className="fr-text--bold">{wording.UNITE} : </span>{" "}Nombre de CDI       
+        </p>
+      </section>
+     <section aria-label={wording.DATE_OBSERVATION}>
+        <p>
+          <span className="fr-text--bold">{wording.DATE_OBSERVATION} : </span>{" "}De janvier à décembre   
         </p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span> Annuelle
+          <span className="fr-text--bold">{wording.FRÉQUENCE} :</span>{" "}Annuelle
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">{wording.SOURCES} :</span> DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
+          <span className="fr-text--bold">{wording.SOURCES} :</span>{" "}DSN (Déclaration Sociale Nominative) - Données arrêtées :  {dateDonneesArretees}
         </p>
       </section>
     </>

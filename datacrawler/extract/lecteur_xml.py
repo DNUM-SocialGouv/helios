@@ -41,7 +41,7 @@ def lis_le_fichier_xml_en_stream(
     logger.info("[Pandas] Début de la conversion en dataframe")
     start = time.perf_counter()
     etablissements = pd.DataFrame(data)
-    etablissements = etablissements.astype(types_des_colonnes, copy=False)
+    etablissements = etablissements.astype(types_des_colonnes)
 
     elapsed = time.perf_counter() - start
     logger.info(f"[Pandas] Fin de la conversion en dataframe en {elapsed}s")

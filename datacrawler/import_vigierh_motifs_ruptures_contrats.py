@@ -1,11 +1,13 @@
 import os
 from logging import Logger
+from datetime import datetime
+import traceback
 
 import pandas as pd
 
 from sqlalchemy.engine import Engine, create_engine
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, TABLE_VIGIE_RH_MOTIFS_RUPTURES, FichierSource
-
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler import supprimer_donnees_existantes, inserer_nouvelles_donnees, verifie_si_le_fichier_est_traite
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_vigie_rh
@@ -35,7 +37,7 @@ def filtrer_les_donnees(donnees: pd.DataFrame, references: pd.DataFrame, base_de
     return donnees_filtrees
 
 
-def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_ref = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_fichier_ref)
     date_du_fichier_donnees = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_fichier_donnees)
     # si les fichiers ref et données ne sont pas de même date, on fait rien
@@ -45,55 +47,84 @@ def import_donnees_motifs_ruptures(chemin_local_fichier_ref: str, chemin_local_f
                 f"({FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value}, "
                 f"{FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value})."
             )
-    else:
-        # si les fichiers sont déjà traités, on fait rien
-        ref_traite = verifie_si_le_fichier_est_traite(date_du_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
-        donnees_traite =  verifie_si_le_fichier_est_traite(date_du_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
+        return {
+            "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "report_status": SEND_REPORT,
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérents"
+        }
+    # si les fichiers sont déjà traités, on fait rien
+    ref_traite = verifie_si_le_fichier_est_traite(date_du_fichier_ref, base_de_donnees, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value)
+    donnees_traite =  verifie_si_le_fichier_est_traite(date_du_fichier_donnees, base_de_donnees, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value)
+    if ref_traite & donnees_traite:
         logger.info(
-                f"ref_traite {ref_traite} donnees_traite {donnees_traite}")
-        if ref_traite & donnees_traite:
-            logger.info(
                 f"Les fichiers {FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value} et {FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value}  ont été déjà traités")
-        else:
-            logger.info(f"Début de traitement des fichiers"
-                        f" {chemin_local_fichier_ref}  et {chemin_local_fichier_donnees}")
-            references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
-            donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
-            donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, connection, SOURCE, logger)
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, connection, SOURCE, logger)
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
-                    connection,
-                    SOURCE,
-                    references,
-                    logger,
-                    FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
-                    date_du_fichier_ref
-                )
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_MOTIFS_RUPTURES,
-                    connection,
-                    SOURCE,
-                    donnees,
-                    logger,
-                    FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
-                    date_du_fichier_donnees
-                )
-
-if __name__ == "__main__":
+        return {
+            "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "report_status": NOT_SEND_REPORT,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"
+        }
+    start = datetime.now()
+    logger.info(f"Début de traitement des fichiers"
+                f" {chemin_local_fichier_ref}  et {chemin_local_fichier_donnees}")
+    references =  lis_le_fichier_parquet(chemin_local_fichier_ref, ColumMapping.REF_MOTIFS_RUPTURES.value)
+    donnees_brutes = lis_le_fichier_parquet(chemin_local_fichier_donnees, ColumMapping.MOTIFS_RUPTURES.value)
+    donnees = filtrer_les_donnees(donnees_brutes, references, base_de_donnees)
+    with base_de_donnees.begin() as connection:
+        supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, connection, SOURCE, logger)
+        supprimer_donnees_existantes(TABLE_VIGIE_RH_MOTIFS_RUPTURES, connection, SOURCE, logger)
+        inserer_nouvelles_donnees(
+            TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES,
+            connection,
+            SOURCE,
+            references,
+            logger,
+            FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES,
+            date_du_fichier_ref
+        )
+        inserer_nouvelles_donnees(
+            TABLE_VIGIE_RH_MOTIFS_RUPTURES,
+            connection,
+            SOURCE,
+            donnees,
+            logger,
+            FichierSource.VIGIE_RH_MOTIFS_RUPTURES,
+            date_du_fichier_donnees
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
+        "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+        "report_status": SEND_REPORT,
+        "rows_in_file": donnees_brutes.shape[0],
+        "rows": donnees.shape[0],
+        "taux": f"{donnees.shape[0]/donnees_brutes.shape[0]*100:.2f}%",
+        "duration": duration,
+    }
+def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
+    try:
+        vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+        fichiers = os.listdir(vigierh_data_path)
 
-    vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vigierh_data_path)
+        chemin_fichier_ref = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value, logger_helios))
+        chemin_fichier_donnees = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value, logger_helios))
 
-    chemin_fichier_ref = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_MOTIFS_RUPTURES.value, logger_helios))
-    chemin_fichier_donnees = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value, logger_helios))
+        result = import_donnees_motifs_ruptures(chemin_fichier_ref,chemin_fichier_donnees,base_de_donnees_helios,logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_MOTIFS_RUPTURES.value,
+            "report_status": SEND_REPORT,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de motifs ruptures contrats : {error_text}"
+        }
 
-    import_donnees_motifs_ruptures(chemin_fichier_ref,chemin_fichier_donnees,base_de_donnees_helios,logger_helios)
+if __name__ == "__main__":
+    main()

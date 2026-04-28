@@ -17,6 +17,26 @@ class VariablesDEnvironnement(TypedDict):
     CHECKED_SIICEA_DATA_PATH: str
     HAPI_DATA_PATH: str
     VIGIE_RH_DATA_PATH: str
+    HAS_DATA_PATH: str
+    MS_NO_HAS_DATA_PATH: str
+    DNUM_SFTP_HOST: str
+    DNUM_SFTP_PORT: str
+    DNUM_SFTP_USERNAME: str
+    DNUM_SFTP_PRIVATE_KEY: str
+    SIREC_DATA_PATH: str
+    HAPI_SFTP_HOST: str
+    HAPI_SFTP_PORT: str
+    HAPI_SFTP_USERNAME: str
+    HAPI_SFTP_PASSWORD: str
+    SFTP_HOST: str
+    SFTP_PORT: str
+    SFTP_USERNAME: str
+    SFTP_PRIVATE_KEY: str
+    TIPIMAIL_SENDER_ADDRESS: str
+    TIPIMAIL_SENDER_NAME: str
+    TIPIMAIL_APIUSER: str
+    TIPIMAIL_APIKEY: str
+    TIPIMAIL_TO_ADDRESSES: str
 
 
 def récupère_les_variables_d_environnement(
@@ -49,4 +69,24 @@ def récupère_les_variables_d_environnement(
         CHECKED_SIICEA_DATA_PATH=signale_si_la_variable_n_est_pas_présente("CHECKED_SIICEA_DATA_PATH"),
         HAPI_DATA_PATH=signale_si_la_variable_n_est_pas_présente("HAPI_DATA_PATH"),
         VIGIE_RH_DATA_PATH=signale_si_la_variable_n_est_pas_présente("VIGIE_RH_DATA_PATH"),
+        HAS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("HAS_DATA_PATH"),
+        MS_NO_HAS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("MS_NO_HAS_DATA_PATH"),
+        DNUM_SFTP_HOST=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_HOST"),
+        DNUM_SFTP_PORT=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_PORT"),
+        DNUM_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_USERNAME"),
+        DNUM_SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_PRIVATE_KEY"),
+        SIREC_DATA_PATH=signale_si_la_variable_n_est_pas_présente("SIREC_DATA_PATH"),
+        HAPI_SFTP_HOST=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_HOST"),
+        HAPI_SFTP_PORT=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PORT"),
+        HAPI_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_USERNAME"),
+        HAPI_SFTP_PASSWORD=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PASSWORD"),
+        SFTP_HOST=signale_si_la_variable_n_est_pas_présente("SFTP_HOST"),
+        SFTP_PORT=signale_si_la_variable_n_est_pas_présente("SFTP_PORT"),
+        SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
+        SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("SFTP_PRIVATE_KEY"),
+        TIPIMAIL_SENDER_NAME=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_NAME"),
+        TIPIMAIL_SENDER_ADDRESS=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_SENDER_ADDRESS"),
+        TIPIMAIL_APIUSER=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIUSER"),
+        TIPIMAIL_APIKEY=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIKEY"),
+        TIPIMAIL_TO_ADDRESSES=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_TO_ADDRESSES"),
     )

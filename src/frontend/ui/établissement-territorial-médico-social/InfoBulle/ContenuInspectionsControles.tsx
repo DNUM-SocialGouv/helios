@@ -12,7 +12,7 @@ export const ContenuInspectionsControles = ({ dateDeMiseÀJour, source }: Conten
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <p>
         Les ARS mènent des missions d&#39;inspection, contrôle et évaluation sur l&#39;ensemble de leurs champs de compétence. Ces contrôles et inspections
         visent à constater un dysfonctionnement, un écart à la réglementation et aux bonnes pratiques puis ordonner ou recommander des solutions pour y

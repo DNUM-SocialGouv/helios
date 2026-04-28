@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_ca_ej_et_ressources_humaines_builder, csv_ann_errd_ej_et_ressources_humaines_builder
@@ -50,7 +50,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsErrd:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": NaN})])
+        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -69,7 +69,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsErrd:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
-        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Année": NaN})])
+        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Année": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -88,7 +88,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsErrd:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_nombre_d_etp_réalisés(self) -> None:
         # GIVEN
-        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Nombre ETP total réalisé ERRD": NaN})])
+        données_ann_errd_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Nombre ETP total réalisé ERRD": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -110,7 +110,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsErrd:
         données_ann_errd_ej_et_ressources_humaines = pd.DataFrame(
             [
                 csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé ERRD": 80.0}),
-                csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé ERRD": NaN}),
+                csv_ann_errd_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé ERRD": nan}),
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(
@@ -197,7 +197,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsCa:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_numéro_finess(self) -> None:
         # GIVEN
-        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": NaN})])
+        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -216,7 +216,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsCa:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_l_année(self) -> None:
         # GIVEN
-        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Année": NaN})])
+        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_errd_ej_et_ressources_humaines_builder({"Année": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -235,7 +235,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsCa:
 
     def test_supprime_les_lignes_ne_mentionnant_pas_le_nombre_d_etp_réalisés(self) -> None:
         # GIVEN
-        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_ca_ej_et_ressources_humaines_builder({"Nombre ETP total réalisé CA": NaN})])
+        données_ann_ca_ej_et_ressources_humaines = pd.DataFrame([csv_ann_ca_ej_et_ressources_humaines_builder({"Nombre ETP total réalisé CA": nan})])
         numéros_finess_des_établissements_connus = pd.DataFrame(
             [
                 {
@@ -257,7 +257,7 @@ class TestTransformeLeNombreDEtpRéalisésDesÉtablissementsCa:
         données_ann_ca_ej_et_ressources_humaines = pd.DataFrame(
             [
                 csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé CA": 80.0}),
-                csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé CA": NaN}),
+                csv_ann_ca_ej_et_ressources_humaines_builder({"Finess": NUMÉRO_FINESS_ÉTABLISSEMENT, "Année": 2020, "Nombre ETP total réalisé CA": nan}),
             ]
         )
         numéros_finess_des_établissements_connus = pd.DataFrame(

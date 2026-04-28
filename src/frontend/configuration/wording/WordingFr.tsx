@@ -122,10 +122,11 @@ export class WordingFr implements Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string = (date: string): string => `Mise à jour : ${date}`;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement = (date: string, source: ReactElement): ReactElement => (
-    <>
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement = (source: ReactElement, date?: string): ReactElement => (
+    <>{date ? <>
       {this.miseÀJour(date)}
       {" - "}
+    </> : <></>}
       Source : {source}
     </>
   );
@@ -139,6 +140,14 @@ export class WordingFr implements Wording {
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string = "Éléments de compréhension";
   readonly FRÉQUENCE: string = "Fréquence";
+  readonly INDICATION_VARIATION: string = "Indication de variation";
+  readonly LECTURE_INTERPRETATION: string = "Lecture et interprétation";
+  readonly POPULATION: string = "Population";
+  readonly EXCLUSIONS: string = "Exclusions";
+  readonly UNITE: string = "Unité";
+  readonly VARIATION: string = "Variation";
+  readonly DATE_OBSERVATION: string = "Date d'observation";
+  readonly PRESENCE_PERIODE: string = "Présence dans la période";
   readonly MODE_DE_CALCUL: string = "Mode de calcul";
   readonly SOURCES: string = "Sources";
   readonly INFOS_COMPLÉMENTAIRES: string = "Informations complémentaires";
@@ -288,6 +297,10 @@ export class WordingFr implements Wording {
   readonly AFFICHER_PLUS: string = "Aficher plus";
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
+  readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
+  readonly HAS_FICHE_SAN_PATH: string = "https://www.has-sante.fr/fiche-etablissement/";
+  readonly HAS_FICHE_MS_PATH: string = "https://www.has-sante.fr/fiche-essms/";
+
   // Bloc Autorisation médico-social
   readonly MISE_À_JOUR_AUTORISATION: string = "Mise à jour d’autorisation";
   readonly DERNIÈRE_INSTALLATION: string = "Dernière installation";
@@ -364,6 +377,9 @@ export class WordingFr implements Wording {
   readonly GROUPE_III: string = "Groupe III";
   readonly TAUX_DE_CAF: string = "Taux de CAF";
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string = "Fond de roulement net global";
+  readonly FONDS_DE_ROULEMENT: string = "Fonds de roulement";
+  readonly BESOIN_FONDS_DE_ROULEMENT: string = "Besoin en fonds de roulement";
+  readonly TRESORERIE: string = "Trésorerie";
 
   // Bloc Buget Finance Entite Juridique
   readonly TITRE_I: string = "Titre I";
@@ -464,6 +480,7 @@ export class WordingFr implements Wording {
   readonly SIREC_TITLE: string = "Système d'Information Réclamations (SI REC)";
   readonly SIVSS_TITLE: string = "Système d'Information de Veille et de Sécurité Sanitaire (SI VSS)";
   readonly SIICEA_TITLE: string = "Système d'Information pour les Inspections Contrôles Evaluations et Audits (SIICEA)";
+  readonly HAS_TITLE: string = "Haute Autorité de Santé";
   readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
 
@@ -481,6 +498,7 @@ export class WordingFr implements Wording {
   readonly SIREC: ReactElement = (<abbr title={this.SIREC_TITLE}>SIREC</abbr>);
   readonly SIVSS: ReactElement = (<abbr title={this.SIVSS_TITLE}>SIVSS</abbr>);
   readonly SIICEA: ReactElement = (<abbr title={this.SIICEA_TITLE}>SIICEA</abbr>);
+  readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS-Qualiscope</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
 
@@ -567,6 +585,7 @@ export class WordingFr implements Wording {
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string = "Une liste avec ce nom existe déjà.";
   readonly ETOILE_MAX_LISTE_ATTEINT: string = "Votre liste ne peut pas être créée. Vous avez atteint le nombre maximum de 10 listes.";
   readonly ETOILE_ERREUR_MODIF_ETAB: string = "Votre enregistrement n’a pas été pris en compte, veuillez réessayer.";
 
@@ -600,7 +619,7 @@ export class WordingFr implements Wording {
   // Mot de passe oublié
   readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
   readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
-  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à ";
+  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Si votre identifiant est correct, un lien de réinitialisation de votre mot de passe vient de vous être transmis sur l'adresse mail que vous nous avez communiquée.";
 
   // Changement de mot de passe
   readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Mot de passe";
@@ -712,6 +731,7 @@ export class WordingFr implements Wording {
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string = "Indicateurs issus du TdB Performance et de la CNSA";
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string = "Indicateurs issus de la Déclaration Sociale Nominative";
   readonly MESSAGE_INFO_VIGIE_RH: string = "Les données présentées ci-dessous ont fait l'objet de retraitements à des fins d'analyse et de pilotage. À ce titre, elles sont fournies à titre indicatif et ne sont pas opposables aux établissements.";
+  readonly MESSAGE_INFO_VIGIE_RH_DETAIL: string = "Dans certains cas peu fréquents, il est encore à ce stade difficile d'identifier correctement dans la DSN l'ensemble des contrats relatifs à un établissement géographique donné. De ce fait les décomptes d'effectifs et de contrats pour ces établissements mal identifiés apparaissent comme extrêmement faibles et ne doivent pas être considérés comme complets.";
   readonly PYRAMIDE_DES_AGES: string = "Pyramide des âges";
   readonly TRANCHE_AGE: string = "Tranche d'âge";
   readonly EFFECTIF_FEMMES: string = "Effectif Femmes";
@@ -722,6 +742,7 @@ export class WordingFr implements Wording {
   readonly MOUVEMENT_DU_PERSONNEL: string = "Mouvement du personnel";
   readonly EFFECTIFS: string = "Effectifs";
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string = "Effectifs par catégorie professionnelle";
+  readonly EFFECTIFS_PAR_CATEGORIE_EXCEL_FILE: (filiere: string) => string = (filiere: string) => `Effectifs Filière  ${filiere}`;
   readonly EFFECTIFS_TOTAUX: string = "Total des effectifs";
   readonly FILIERE: string = "Filière";
   readonly EFFECTIF_HOMMES_REF: string = "Moyenne des effectifs Hommes pour des établissements similaires";
@@ -731,17 +752,17 @@ export class WordingFr implements Wording {
   readonly DEPARTS_REF: string = " Moyenne des fins de contrats pour des établissements similaires";
   readonly EMBAUCHES_REF: string = "Moyenne des nouveaux contrats pour des établissements similaires";
   readonly MOYENNE_REF: string = "Valeur de référence (Moyenne des établissements similaires)";
-  readonly TAUX_ROTATION: string = "Taux de renouvellement des contrats";
+  readonly TAUX_ROTATION: string = "Taux de renouvellement des effectifs";
   readonly REPARTITION_EFFECTIFS: string = "Répartition des effectifs par filière";
   readonly SELECTIONNER_UNE_FILIERE: string = "Sélectionner une filière";
-  readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des contrats pour des établissements similaires";
+  readonly TAUX_ROTATION_REFERENCE: string = "Moyenne du taux de renouvellement des effectifs pour des établissements similaires";
   readonly TOP_CONTRATS_UNIT_LABEL: string = "CDD < 6 mois";
-  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des contrats";
-  readonly DUREE_CDD: string = "Contrats CDD par durée effective";
-  readonly NOMBRE_CONTRATS_CDD: string = "Nombre de contrats CDD";
+  readonly TOP_TAUX_ROTATION_UNIT_TITLE: string = "Taux de renouvellement des effectifs";
+  readonly DUREE_CDD: string = "Durée effective des CDD terminés";
+  readonly NOMBRE_CONTRATS_CDD: string = "CDD (contrats terminés)";
   readonly NOMBRE_CONTRATS_CDD_REF: string = "Moyenne du nombre de contrats CDD pour des établissements similaires";
-  readonly NOMBRE_CDD: string = "Nombre de CDD actifs";
-  readonly NOMBRE_CDI: string = "Nombre de CDI et agents titulaires actifs";
+  readonly NOMBRE_CDD: string = "CDD (nouveaux contrats)";
+  readonly NOMBRE_CDI: string = "CDI et agents titulaires (nouveaux contrats)";
   readonly CDD_REF: string = "Moyenne du nombre  de CDD pour des établissements similaires";
   readonly CDI_REF: string = "Moyenne du nombre de CDI pour des établissements similaires";
   readonly DUREE: string = "Durée effective";
@@ -750,7 +771,7 @@ export class WordingFr implements Wording {
   readonly NOMBRE_CONTRATS_ROMPUS_REF: string = "Moyennes du nombre de contrats rompus pour des établissements similaires";
   readonly MOTIF: string = "Motif";
   readonly PERIODE: string = "Période";
-  readonly NATURE_CONTRATS: string = "Nature des contrats actifs";
+  readonly NATURE_CONTRATS: string = "Nature des nouveaux contrats";
   readonly DEPARTS_PREMATURES_CDI: string = "Départs prématurés des CDI avant 6 mois";
   readonly SHOW_MORE_BUTTON: string = "Afficher le détail par filière et catégorie socio-professionnelle";
   readonly SHOW_LESS_BUTTON: string = "Masquer le détail par filière et catégorie socio-professionnelle";
@@ -758,11 +779,7 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 
-  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string = "Votre avis compte";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string = "Construisons Helios ensemble : partagez votre avis en 2 minutes.";
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string = "Questionnaire";
-  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string = "https://forms.office.com/e/wXN1pQd20j";
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-01-30";
+  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-05-19";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =

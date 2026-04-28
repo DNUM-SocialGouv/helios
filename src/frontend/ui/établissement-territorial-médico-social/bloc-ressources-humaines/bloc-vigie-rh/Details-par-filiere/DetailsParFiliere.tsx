@@ -52,6 +52,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
           <div className="fr-col-12 fr-col-md-6 fr-mb-4w">
             <p>{multiCategorie.categorie}</p>
             <LineChart
+              beginAtZero={true}
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={[couleursFilieres[index]]}
@@ -68,6 +69,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
             <p>Professions - Filière {multiCategorie.categorie}</p>
             <LineChart
               afficherSerieTotale={false}
+              beginAtZero={true}
               classContainer="fr-mb-4w"
               couleurEffectifsTotaux={couleurEffectifsTotaux}
               couleursFilieres={paletteGroupes}
@@ -78,7 +80,7 @@ export const DetailsParFiliere = ({ etabFiness, etabTitle, couleurEffectifsTotau
               identifiantTranscription={`transcription-graphique-profession-effectifs-${index}`}
               legendeCochable={true}
               multiCategories={findGroupesForFiliere(multiCategorie.categorie)}
-              nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE}
+              nomGraph={wording.EFFECTIFS_PAR_CATEGORIE_EXCEL_FILE(multiCategorie.categorie)}
             />
           </div>}
         </div>

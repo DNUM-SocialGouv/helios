@@ -1,7 +1,7 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-
+import { trimestresManquantsVigieRh } from "../../../../../utils/dateUtils";
 import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
@@ -32,6 +32,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   const donneesDeparts = donneesDepartsEmbauches.map((donnee) => {
     const valeur = donnee.depart;
     if (Number.isFinite(valeur)) {
+      if (valeur === 0) return -0.000001;
       return -Math.abs(valeur);
     }
     return null;
@@ -58,44 +59,43 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     return null;
   });
 
-  const libellesValeursManquantes: string[] = [];
-  const libellesValeursReferenceManquantes: string[] = [];
+  const expressionReguliereTrimestre = /^(\d{4})-T([1-4])$/;
 
-  const ajouterLibellesManquants = (
-    valeurs: (number | null)[],
-    construireLibelle: (index: number) => string,
-    accumulateur: string[]
-  ) => {
-    for (const [index, valeur] of valeurs.entries()) {
-      if (!Number.isFinite(valeur)) {
-        const libelle = construireLibelle(index);
-        if (!accumulateur.includes(libelle)) {
-          accumulateur.push(libelle);
-        }
-      }
+  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles, 3)
+
+  const decomposerLibelle = (label: number | string): { principal: string; secondaire: string } => {
+    if (typeof label === "number") {
+      const libelleTexte = String(label);
+      return { principal: libelleTexte, secondaire: "" };
     }
+    const libelleNettoye = label.trim();
+    const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
+    if (correspondanceTrimestre) {
+      return { principal: `T${correspondanceTrimestre[2]}`, secondaire: correspondanceTrimestre[1] };
+    }
+    const segments = libelleNettoye.split(/\s+/);
+    if (segments.length > 1) {
+      return { principal: segments.slice(0, -1).join(" "), secondaire: segments.at(-1) ?? "" };
+    }
+    return { principal: libelleNettoye, secondaire: "" };
   };
 
-  ajouterLibellesManquants(
-    donneesDeparts,
-    (index) => `${wording.DEPARTS}-${libelles[index]}`,
-    libellesValeursManquantes
-  );
-  ajouterLibellesManquants(
-    donneesEmbauches,
-    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-    libellesValeursManquantes
-  );
-  ajouterLibellesManquants(
-    donneesDepartsRef,
-    (index) => `${wording.DEPARTS}-${libelles[index]}`,
-    libellesValeursReferenceManquantes
-  );
-  ajouterLibellesManquants(
-    donneesEmbauchesRef,
-    (index) => `${wording.EMBAUCHES}-${libelles[index]}`,
-    libellesValeursReferenceManquantes
-  );
+  const libellesDecomposes = libelles.map(decomposerLibelle);
+  const libellesPrincipaux = libellesDecomposes.map(({ principal }) => principal);
+  const libellesSecondaires = libellesDecomposes.map(({ secondaire }, index) => {
+    if (!secondaire) {
+      return "";
+    }
+    const libelleSecondairePrecedent = index > 0 ? libellesDecomposes.at(index - 1)?.secondaire ?? "" : "";
+    return libelleSecondairePrecedent === secondaire ? "" : secondaire;
+  });
+  const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
+  const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
+  const anneeEnCours = String(new Date().getFullYear());
+  const highlightLastLabel = libelles.length > 0 && String(libelles[libelles.length - 1]).includes(anneeEnCours);
+
+  const libellesTooltipSecondaires = libellesDecomposes.map(({ secondaire }) => secondaire || "");
+
 
   const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
     const valeur = donneesDeparts[idx];
@@ -204,8 +204,24 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
+    layout: {
+      padding: {
+      top: 20,
+        },
+    },
     plugins: {
       datalabels: {
+        align: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
+        },
+        anchor: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? "start" : "end";
+        },
+        clip: false,
+        clamp: true,
+        offset: (context: any) => {
+          return context.dataset.label === wording.DEPARTS ? -1 : -4;
+        },
         color: "#000",
         font: {
           family: "Marianne",
@@ -217,20 +233,17 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
           return context.dataset.label === wording.DEPARTS || context.dataset.label === wording.EMBAUCHES;
         },
         formatter: (value: number) => {
-          return Math.abs(value)
+          return Math.round(Math.abs(value))
         },
       },
       tooltip: {
         callbacks: {
           title: function (context: any) {
-            const periode = context[0]?.label.split('-');
-            if (periode.length === 1) {
-              return periode[0];
-            }
-            else {
-              return `${periode[1]} ${periode[0]}`;
-            }
-
+            // Utilise le label principal et secondaire pour la tooltip
+            const index = context[0]?.dataIndex ?? 0;
+            const principal = libellesPrincipaux[index] ?? "";
+            const secondaire = libellesTooltipSecondaires[index] ?? "";
+            return secondaire ? `${principal} ${secondaire}` : principal;
           },
           label: function (context: any) {
             const index = context.dataIndex;
@@ -238,14 +251,14 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
             const embaucheChart = datasetLabel.toLowerCase() === wording.EMBAUCHES.toLowerCase();
 
             const value = embaucheChart ? donneesEmbauches[index] : donneesDeparts[index];
-            const valeurText = Number.isFinite(value) ? Math.abs(value as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurText = Number.isFinite(value) ? Math.round(Math.abs(value as number)).toString() : wording.NON_RENSEIGNÉ;
             const label = embaucheChart ? wording.EMBAUCHES : wording.DEPARTS;
 
             if (!showRefValues) {
               return `${label}: ${valeurText}`;
             }
             const refValue = embaucheChart ? donneesEmbauchesRef[index] : donneesDepartsRef[index];
-            const valeurRefText = Number.isFinite(refValue) ? Math.abs(refValue as number).toString() : wording.NON_RENSEIGNÉ;
+            const valeurRefText = Number.isFinite(refValue) ? Math.round(Math.abs(refValue as number)).toString() : wording.NON_RENSEIGNÉ;
 
             return [`${label}: ${valeurText}`,
             `Valeur de référence: ${valeurRefText}`];
@@ -266,19 +279,18 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         type: 'category',
         position: 'bottom',
         ticks: {
-          color: '#000',
-          callback: function (index: number) {
-            return libelles[index].split('-')[1];
-          },
-          font: function (context: any) {
-            if (context.index === libelles.length - 1) {
-              return { weight: 'bold' };
+          color: "#000",
+          callback: (_value: any, index: number) => libellesPrincipaux[index] ?? "",
+          font: (context: any) => {
+            if (highlightLastLabel && context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
+              return { weight: "bold" };
             }
             return {};
-          },
-        }
+          }, 
+        },
       },
       xAxis2: {
+        display: presenceLibellesSecondaires,
         border: {
           display: false
         },
@@ -286,25 +298,20 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         position: 'bottom',
         grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
-          color: '#000',
-          callback: function (index: number) {
-            const [annee, trimestre] = libelles[index].split('-');
-            if (trimestre === 'T1') {
-              return annee;
+          color: "#000",
+          callback: (_tickValue: any, index: number) => libellesSecondaires[index] ?? "",
+          font: (context: any) => {
+            const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
+            if (context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
+              return { weight: "bold" };
             }
-            return '';
-          },
-          font: function (context: any) {
-            if (context.tick.label === new Date().getFullYear().toString()) {
-              return { weight: 'bold' };
-            }
-            return {};
-          },
+            return {};},
           maxRotation: 0,
           autoSkip: false
         }
       },
       y: {
+        grace: '10%',
         stacked: true,
         beginAtZero: true,
         grid: {
@@ -329,8 +336,8 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     : [wording.DEPARTS, wording.EMBAUCHES];
 
   const transcriptionValeurs = showRefValues
-    ? [donneesDeparts.map(v => Math.abs(v as number)), donneesDepartsRef.map(v => Math.abs(v as number)), donneesEmbauches, donneesEmbauchesRef]
-    : [donneesDeparts.map(v => Math.abs(v as number)), donneesEmbauches];
+    ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
+    : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
   return (
     <div>
@@ -338,11 +345,6 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
-        </MiseEnExergue>
-      )}
-      {showRefValues && libellesValeursReferenceManquantes.length > 0 && (
-        <MiseEnExergue>
-          {`${wording.AUCUNE_DONNEE_REF_RENSEIGNEE_GENERIQUE} ${libellesValeursReferenceManquantes.join(", ")}`}
         </MiseEnExergue>
       )}
       <ColorLabel

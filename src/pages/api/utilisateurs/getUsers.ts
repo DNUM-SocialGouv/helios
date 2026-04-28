@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
+import { Role } from "../../../commons/Role";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -15,8 +16,18 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
 
     const userSession = await getServerSession(request, response, authOptions);
 
+    if (
+      // Un admin central n’a aucun droit sur ce endpoint
+      (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
+      // Un utilisateur n’a aucun droit sur ce endpoint
+      (userSession?.user?.role as number) === Role.USER
+    ) {
+      return response.status(405).send("Method not allowed");
+    }
+
+
     //if current user is not Admin National => forced institutionId_fiter to be institutionId of current user
-    const institutionIdSession = (userSession?.user.role as unknown as number) !== 1 ? userSession?.user.institutionId : 0;
+    const institutionIdSession = (userSession?.user?.role as number) === Role.ADMIN_NAT ? 0 : userSession?.user.institutionId;
 
     const key = request.query["key"] as string | "";
     const orderBy = request.query["orderBy"] as string | "";

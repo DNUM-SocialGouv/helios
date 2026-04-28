@@ -11,7 +11,7 @@ class ColumMapping(Enum):
         'year': 'annee',
         'month': 'mois',
         'profession1_code': 'profession_code',
-        'effectif': 'effectif_filiere',
+        'postes': 'effectif_filiere',
     }
     REF_PROFESSION_FILIERE = {
         'profession1_code': 'code',
@@ -24,7 +24,7 @@ class ColumMapping(Enum):
         'year': 'annee',
         'month': 'mois',
         'profession2_code': 'profession_code',
-        'effectif': 'effectif',
+        'postes': 'effectif',
 
     }
     REF_PROFESSION_GROUPE = {
@@ -44,19 +44,19 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
         'tranche_age_code': 'tranche_code',
-        'effectif_homme': 'effectif_homme',
-        'effectif_femme': 'effectif_femme',
-        'effectif_homme_ref': 'effectif_homme_ref',
-        'effectif_femme_ref': 'effectif_femme_ref'
+        'postes_hommes': 'effectif_homme',
+        'postes_femmes': 'effectif_femme',
+        'postes_hommes_ref': 'effectif_homme_ref',
+        'postes_femmes_ref': 'effectif_femme_ref'
     }
     # mouvements rh
     MOUVEMENTS_RH = {
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
-        'nouveaux_contrats': 'nouveaux_contrats',
-        'nouveaux_contrats_ref': 'nouveaux_contrats_ref',
-        'fins_contrats': 'fins_contrats',
-        'fins_contrats_ref': 'fins_contrats_ref',
+        'entrees_postes': 'nouveaux_contrats',
+        'entrees_postes_ref': 'nouveaux_contrats_ref',
+        'sorties_postes': 'fins_contrats',
+        'sorties_postes_ref': 'fins_contrats_ref',
         'taux_rotation': 'taux_rotation',
         'taux_rotation_ref': 'taux_rotation_ref',
         'departs_prematures_cdi': 'departs_prematures_cdi'
@@ -65,10 +65,10 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
         'quarter': 'trimestre',
-        'nouveaux_contrats': 'nouveaux_contrats',
-        'nouveaux_contrats_ref': 'nouveaux_contrats_ref',
-        'fins_contrats': 'fins_contrats',
-        'fins_contrats_ref': 'fins_contrats_ref',
+        'entrees_postes': 'nouveaux_contrats',
+        'entrees_postes_ref': 'nouveaux_contrats_ref',
+        'sorties_postes': 'fins_contrats',
+        'sorties_postes_ref': 'fins_contrats_ref',
         'taux_rotation': 'taux_rotation',
         'taux_rotation_ref': 'taux_rotation_ref'
     }
@@ -81,16 +81,16 @@ class ColumMapping(Enum):
         'year':'annee',
         'quarter':'trimestre',
         'motif_code':'motif_code',
-        'effectif':'effectif',
-        'effectif_ref':'effectif_ref'
+        'contrats':'effectif',
+        'contrats_ref':'effectif_ref'
     }
     DUREE_CDD = {
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
         'quarter': 'trimestre',
         'duree_code': 'duree_code',
-        'effectif': 'effectif',
-        'effectif_ref': 'effectif_ref'
+        'contrats': 'effectif',
+        'contrats_ref': 'effectif_ref'
     }
     REF_DUREE_CDD = {
         'duree_code': 'duree_code',
@@ -104,16 +104,16 @@ class ColumMapping(Enum):
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
         'nature_contrat_code': 'nature_contrat_code',
-        'effectif': 'effectif',
-        'effectif_ref': 'effectif_ref'
+        'contrats': 'effectif',
+        'contrats_ref': 'effectif_ref'
     }
     NATURE_CONTRAT_TRIMESTRIEL = {
         'finess_et': 'numero_finess_etablissement_territorial',
         'year': 'annee',
         'quarter': 'trimestre',
         'nature_contrat_code': 'nature_contrat_code',
-        'effectif': 'effectif',
-        'effectif_ref': 'effectif_ref'
+        'contrats': 'effectif',
+        'contrats_ref': 'effectif_ref'
     }
 
 index_des_mouvements_rh_annuel: List[str] = ["numero_finess_etablissement_territorial", "annee"]

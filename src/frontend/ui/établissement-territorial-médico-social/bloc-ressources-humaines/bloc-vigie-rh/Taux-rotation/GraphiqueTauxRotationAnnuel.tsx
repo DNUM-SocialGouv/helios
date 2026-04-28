@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { TauxRotation } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
@@ -20,14 +21,10 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
     const libelles = donneesTauxRotation.map((donnee) => donnee.annee);
-    const valeursManquantes: (number | string)[] = [];
+    const valeursManquantes = annéesManquantesVigieRh(libelles, 3);
     const valeursRefManquantes: (number | string)[] = [];
     const valeurs = donneesTauxRotation.map((donnee) => {
       const valeur = donnee.rotation;
-      if (!Number.isFinite(valeur)) {
-        valeursManquantes.push(donnee.annee);
-        return null;
-      }
       return StringFormater.transformInRoundedRate(valeur);
     });
     const valeursRef = donneesTauxRotation.map((donnee) => {
@@ -53,9 +50,6 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
       libellesDeValeursManquantes={valeursManquantes}
       nomGraph={nomGraph}
       showRefValues={showRefValues}
-      tickFormatter={blocVigieRHViewModel.tickFormatter}
-      tickX2Formatter={blocVigieRHViewModel.tickX2Formatter}
-      type={wording.ANNUEL}
       valeurs={valeurs}
       valeursRef={valeursRef}
     />

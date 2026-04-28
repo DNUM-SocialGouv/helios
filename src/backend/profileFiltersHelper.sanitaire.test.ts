@@ -134,6 +134,9 @@ function getBudgetFinanceSanitaire(): EntitéJuridiqueBudgetFinance {
     resultatNetComptable: 30,
     ratioDependanceFinanciere: 31,
     tauxDeCafNetSan: 32,
+    fondsDeRoulement: 33,
+    besoinFondsDeRoulement: 34,
+    tresorerie: 35,
   }
 }
 
@@ -167,6 +170,7 @@ function getQualitéSanitaire(): ÉtablissementTerritorialQualite {
     ],
     evenementsIndesirables: [{ libelle: "libEvIndesi", evenementsEncours: ["envCours"], evenementsClotures: ["evClot"], dateMiseAJourSource: "dateMajDetail" }],
     inspectionsEtControles: { dateMiseAJourSource: "dateMajInspection", inspectionsEtControles: [] },
+    pasDonneesQualiscopeHAS: { numeroFiness: "finessQualiscope" },
   }
 }
 
@@ -240,6 +244,9 @@ function getBudgetFinanceProfile() {
     ratioDépendanceFinancière: "ok",
     tauxDeCafNette: "ok",
     allocationDeRessources: "ok",
+    fondsDeRoulement: "ok",
+    besoinFondsDeRoulement: "ok",
+    tresorerie: "ok",
   }
 }
 
@@ -258,6 +265,7 @@ function getQualiteProfile() {
     DonnéesSirec: "ok",
     DonnéesSivss: "ok",
     DonnéesSiicea: "ok",
+    DonnéesHas: "ok",
   }
 }
 
@@ -863,6 +871,63 @@ describe("Filtre les informations de budget et finance des etablissement juridiq
     expect(etabSanitaireResult.budgetFinance).toEqual([expectedBudgetAndFinance]);
   })
 
+  it("retire les info sur les fonds de roulement si il n’y a pas les droits", () => {
+    // Given
+    const rawBudgetAndFinance = getBudgetFinanceSanitaire();
+    const expectedBudgetAndFinance = {
+      ...rawBudgetAndFinance,
+      fondsDeRoulement: "",
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.budgetEtFinance.fondsDeRoulement = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.budgetFinance).toEqual([expectedBudgetAndFinance]);
+  })
+
+  it("retire les info sur le besoin en fonds de roulement si il n’y a pas les droits", () => {
+    // Given
+    const rawBudgetAndFinance = getBudgetFinanceSanitaire();
+    const expectedBudgetAndFinance = {
+      ...rawBudgetAndFinance,
+      besoinFondsDeRoulement: "",
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.budgetEtFinance.besoinFondsDeRoulement = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.budgetFinance).toEqual([expectedBudgetAndFinance]);
+  })
+
+  it("retire les info sur la trésorerie si il n’y a pas les droits", () => {
+    // Given
+    const rawBudgetAndFinance = getBudgetFinanceSanitaire();
+    const expectedBudgetAndFinance = {
+      ...rawBudgetAndFinance,
+      tresorerie: "",
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.budgetEtFinance.tresorerie = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.budgetFinance).toEqual([expectedBudgetAndFinance]);
+  })
+
   it("retire les info d’allocation de ressource si il n’y a pas les droits", () => {
     // Given
     const rawAllocation = getAllocationRessource();
@@ -956,6 +1021,25 @@ describe("Filtre les informations qualite des etablissement sanitaire par rappor
     let etabSanitaireResult = getFullSanitaire();
     const profile = getFullProfile();
     profile.Qualité.DonnéesSiicea = "Ko";
+
+    // When
+    etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);
+
+    // Then
+    expect(etabSanitaireResult.qualite).toEqual(expectedQuality);
+  })
+
+  it("retire les info de qualité qualiscope si n’y a pas les droits", () => {
+    // Given
+    const rawQuality = getQualitéSanitaire();
+    const expectedQuality = {
+      ...rawQuality,
+      pasDonneesQualiscopeHAS: {}
+    }
+
+    let etabSanitaireResult = getFullSanitaire();
+    const profile = getFullProfile();
+    profile.Qualité.DonnéesHas = "Ko";
 
     // When
     etabSanitaireResult = filterEtablissementSanitaire(etabSanitaireResult, profile);

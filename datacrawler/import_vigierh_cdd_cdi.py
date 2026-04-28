@@ -1,5 +1,8 @@
 from logging import Logger
+from datetime import datetime
+
 import os
+import traceback
 import numpy as np
 import pandas as pd
 from sqlalchemy.engine import Engine, create_engine
@@ -10,6 +13,7 @@ from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_NATURE_CONTRATS, TABLE_VIGIE_RH_REF_NATURE_CONTRATS, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 
 def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndarray, database : Engine) -> pd.DataFrame:
@@ -31,7 +35,7 @@ def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndarra
 
     return donnees_filtrees
 
-def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_vigierh_ref_cdi_cdd = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     date_du_fichier_vigierh_donnees_cdi_cdd = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     traite_ref_cdi_cdd = verifie_si_le_fichier_est_traite(
@@ -46,52 +50,83 @@ def import_donnees_cdi_cdd(chemin_local_du_fichier_ref: str, chemin_local_du_fic
     )
     if traite_donnees_cdi_cdd and traite_ref_cdi_cdd:
         logger.info(f"Les fichiers {FichierSource.VIGIE_RH_CDI_CDD.value} et {FichierSource.VIGIE_RH_REF_CDI_CDD.value} ont été déjà traités")
-    else:
-        if len({date_du_fichier_vigierh_ref_cdi_cdd,
-        date_du_fichier_vigierh_donnees_cdi_cdd}) == 1:
-            referentiel_nature_contrats = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_NATURE_CONTRAT.value)
-            donnees_nature_contrats_annuel = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_ANNUEL.value)
-            code_list_ref = np.array(referentiel_nature_contrats['nature_contrat_code'].tolist())
-            donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_nature_contrats_annuel, code_list_ref, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_NATURE_CONTRATS, connection, SOURCE, logger)
-                supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_NATURE_CONTRATS, connection, SOURCE, logger)
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
-                    connection,
-                    SOURCE,
-                    referentiel_nature_contrats,
-                    logger,
-                    FichierSource.VIGIE_RH_REF_CDI_CDD,
-                    date_du_fichier_vigierh_ref_cdi_cdd
-                )
-                inserer_nouvelles_donnees(
-                    TABLE_VIGIE_RH_NATURE_CONTRATS,
-                    connection,
-                    SOURCE,
-                    donnees_cdi_cdd_filtrees,
-                    logger,
-                    FichierSource.VIGIE_RH_CDI_CDD,
-                    date_du_fichier_vigierh_donnees_cdi_cdd
-                )
-        else:
-            logger.info(
+        return{
+            "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "report_status": NOT_SEND_REPORT,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités"
+        }
+    if len({date_du_fichier_vigierh_ref_cdi_cdd,
+    date_du_fichier_vigierh_donnees_cdi_cdd}) == 1:
+        start = datetime.now()
+        referentiel_nature_contrats = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_NATURE_CONTRAT.value)
+        donnees_nature_contrats_annuel = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.NATURE_CONTRAT_ANNUEL.value)
+        code_list_ref = np.array(referentiel_nature_contrats['nature_contrat_code'].tolist())
+        donnees_cdi_cdd_filtrees = filtrer_les_donnees_cdi_cdd(donnees_nature_contrats_annuel, code_list_ref, base_de_donnees)
+        with base_de_donnees.begin() as connection:
+            supprimer_donnees_existantes(TABLE_VIGIE_RH_NATURE_CONTRATS, connection, SOURCE, logger)
+            supprimer_donnees_existantes(TABLE_VIGIE_RH_REF_NATURE_CONTRATS, connection, SOURCE, logger)
+            inserer_nouvelles_donnees(
+                TABLE_VIGIE_RH_REF_NATURE_CONTRATS,
+                connection,
+                SOURCE,
+                referentiel_nature_contrats,
+                logger,
+                FichierSource.VIGIE_RH_REF_CDI_CDD,
+                date_du_fichier_vigierh_ref_cdi_cdd
+            )
+            inserer_nouvelles_donnees(
+                TABLE_VIGIE_RH_NATURE_CONTRATS,
+                connection,
+                SOURCE,
+                donnees_cdi_cdd_filtrees,
+                logger,
+                FichierSource.VIGIE_RH_CDI_CDD,
+                date_du_fichier_vigierh_donnees_cdi_cdd
+            )
+        duration = (datetime.now() - start).total_seconds()
+        return {
+            "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "report_status": SEND_REPORT,
+            "rows_in_file": donnees_nature_contrats_annuel.shape[0],
+            "rows": donnees_cdi_cdd_filtrees.shape[0],
+            "taux": f"{donnees_cdi_cdd_filtrees.shape[0]/donnees_nature_contrats_annuel.shape[0]*100:.2f}%",
+            "duration": duration,
+            }
+    logger.info(
                 f"[{SOURCE}]❌ Les dates des fichiers sources ne sont pas cohérentes. "
                 f"({FichierSource.VIGIE_RH_CDI_CDD.value}, "
                 f"{FichierSource.VIGIE_RH_REF_CDI_CDD.value})"
-            )
-if __name__ == "__main__":
+    )
+    return{
+            "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "report_status": SEND_REPORT,
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes."
+    }
+def main() -> dict:
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
     vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
     fichiers = os.listdir(vigierh_data_path)
+    try:
+        chemin_local_du_fichier_ref_cdi_cdd = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
+        chemin_local_du_fichier_cdi_cdd = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD.value, logger_helios))
 
-    chemin_local_du_fichier_ref_cdi_cdd = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_CDI_CDD.value, logger_helios))
-    chemin_local_du_fichier_cdi_cdd = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_CDI_CDD.value, logger_helios))
-
-    import_donnees_cdi_cdd(chemin_local_du_fichier_ref_cdi_cdd, chemin_local_du_fichier_cdi_cdd, base_de_donnees_helios, logger_helios)
+        result = import_donnees_cdi_cdd(chemin_local_du_fichier_ref_cdi_cdd, chemin_local_du_fichier_cdi_cdd, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_CDI_CDD.value,
+            "report_status": SEND_REPORT,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données de la nature des contrats annuels : {error_text}"
+        }
+if __name__ == "__main__":
+    main()

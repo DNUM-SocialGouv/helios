@@ -13,7 +13,7 @@ export const ContenuÉquipementsMatérielsLourds = ({ dateDeMiseÀJour, source, 
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Une autorisation d’équipement matériel lourd est une décision administrative,

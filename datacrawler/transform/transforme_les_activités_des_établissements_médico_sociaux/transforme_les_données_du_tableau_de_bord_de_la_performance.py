@@ -38,5 +38,6 @@ def transforme_les_donnees_ann_ms_tdp_et(
         .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_ann_ms_tdp_et_helios))
         .dropna(subset=index_des_activités)
         .drop_duplicates(subset=index_des_activités)
+        .assign(annee=lambda df: df["annee"].astype("int64"))
         .set_index(index_des_activités)
     )

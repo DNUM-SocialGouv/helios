@@ -1,5 +1,7 @@
 import os
 from logging import Logger
+from datetime import datetime
+import traceback
 
 import pandas as pd
 
@@ -11,6 +13,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_VIGIE_RH_MOUVEMENTS_RH, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping, index_des_mouvements_rh_annuel
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
@@ -32,7 +35,7 @@ def filtrer_les_donnees_mouvements_rh(donnees: pd.DataFrame, base_de_donnees: En
     return donnees_mouvements_rh_filtrees_sur_les_3_dernieres_annees.set_index(index_des_mouvements_rh_annuel)
 
 
-def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_vigierh_donnees_mouvements_rh = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     fichier_traite = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_mouvements_rh,
                                                       base_de_donnees,
@@ -40,29 +43,55 @@ def import_donnees_mouvements_rh(chemin_local_du_fichier_donnees: str, base_de_d
                                                       )
     if fichier_traite:
         logger.info(f"Le fichier {FichierSource.VIGIE_RH_MOUVEMENTS_RH.value} a été déjà traité")
-    else:
-        donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH.value)
-        donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
-        with base_de_donnees.begin() as connection:
-            écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
-                "indicateurs mouvements rh",
-                SOURCE,
-                connection,
-                TABLE_VIGIE_RH_MOUVEMENTS_RH,
-                donnees_mouvements_rh_filtrees,
-                [(FichierSource.VIGIE_RH_MOUVEMENTS_RH, date_du_fichier_vigierh_donnees_mouvements_rh)],
-                logger,
-            )
+        return {
+            "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités",
+            "report_status": NOT_SEND_REPORT
+        }
+    start = datetime.now()
+    donnees_mouvements_rh = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.MOUVEMENTS_RH.value)
+    donnees_mouvements_rh_filtrees = filtrer_les_donnees_mouvements_rh(donnees_mouvements_rh, base_de_donnees )
+    with base_de_donnees.begin() as connection:
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs mouvements rh",
+            SOURCE,
+            connection,
+            TABLE_VIGIE_RH_MOUVEMENTS_RH,
+            donnees_mouvements_rh_filtrees,
+            [(FichierSource.VIGIE_RH_MOUVEMENTS_RH, date_du_fichier_vigierh_donnees_mouvements_rh)],
+            logger,
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
+            "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "report_status": SEND_REPORT,
+            "rows_in_file": donnees_mouvements_rh.shape[0],
+            "rows": donnees_mouvements_rh_filtrees.shape[0],
+            "taux": f"{donnees_mouvements_rh_filtrees.shape[0]/donnees_mouvements_rh.shape[0]*100:.2f}%",
+            "duration": duration,
+        }
+def main() -> dict:
+    logger_helios, variables_d_environnement = initialise_les_dépendances()
+    base_de_donnees = create_engine(variables_d_environnement["DATABASE_URL"])
+
+    vegie_rh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+    fichiers = os.listdir(vegie_rh_data_path)
+    try:
+        chemin_local_du_fichier_mouvements_rh= os.path.join(
+            vegie_rh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH.value, logger_helios))
+
+        resultat = import_donnees_mouvements_rh(chemin_local_du_fichier_mouvements_rh, base_de_donnees, logger_helios)
+        return resultat
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_MOUVEMENTS_RH.value,
+            "report_status": SEND_REPORT,
+            "duration": 0,
+            "commentaires": f"Une erreur est survenue lors de l'import des données des mouvements RH : {error_text}"
+        }
 
 if __name__ == "__main__":
-    logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-
-    vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vigierh_data_path)
-
-    chemin_local_du_fichier_mouvements_rh= os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_MOUVEMENTS_RH.value, logger_helios))
-
-    import_donnees_mouvements_rh(chemin_local_du_fichier_mouvements_rh, base_de_donnees_helios, logger_helios)
+    main()

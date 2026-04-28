@@ -12,7 +12,7 @@ export const ContenuDuTauxDeRotationDuPersonnel = ({ dateDeMiseÀJour, source }:
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur permet d’estimer la stabilité des effectifs CDI ou titulaires ainsi que l’importance du renouvellement des équipes. Ainsi, plus le taux

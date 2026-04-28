@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import { useState, FormEvent, useContext } from "react";
 
 import styles from "./Connexion.module.css";
+import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
@@ -22,6 +23,7 @@ export const FormulaireDeConnexion = () => {
     if (isEmail(email)) {
       setLoading(true);
       userContext?.setPasswordCreated(false);
+
       const res = await signIn("credentials", {
         email,
         password,
@@ -29,7 +31,18 @@ export const FormulaireDeConnexion = () => {
       });
 
       if (res?.error) {
-        setError("L'identifiant et/ou le mot de passe sont incorrects.");
+        const loginErrorRes = await fetch("/api/utilisateurs/loginError", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        })
+        const loginErrorMessage = await loginErrorRes.json();
+        if (loginErrorMessage.message === LoginStatusEnum.BLOCKED) {
+          setError("Après 3 tentatives de connexion erronées, votre compte est bloqué pour une durée de 5 min.");
+        } else {
+          setError("L'identifiant et/ou le mot de passe sont incorrects.");
+        }
+
         setLoading(false);
       } else {
         await fetch("/api/utilisateurs/checkUserIsNotAdminAndInactif", {

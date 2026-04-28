@@ -12,7 +12,7 @@ export const ContenuFileActivePersonnesAccompagnées = ({ dateDeMiseÀJour, sour
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           A la différence du nombre de places autorisé pour la structure, la file active permet d’identifier le nombre de personnes vues pendant l’année

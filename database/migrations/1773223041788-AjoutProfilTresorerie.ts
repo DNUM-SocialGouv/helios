@@ -1,0 +1,66 @@
+import { MigrationInterface, QueryRunner } from "typeorm";
+
+export class AjoutProfilTresorerie1773223041788 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb),
+            '{autreRegion,profilEJ,budgetEtFinance}',
+            COALESCE(profil_value->'autreRegion'->'profilEJ'->'budgetEtFinance', '{}'::jsonb) || jsonb_build_object(
+                'tresorerie', 'no'
+            ),
+            true
+        );
+
+        UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb),
+            '{institution,profilEJ,budgetEtFinance}',
+            COALESCE(profil_value->'institution'->'profilEJ'->'budgetEtFinance', '{}'::jsonb) || jsonb_build_object(
+                'tresorerie', 'no'
+            ),
+            true
+        );
+
+        UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb),
+            '{autreRegion,profilETSanitaire,budgetEtFinance}',
+            COALESCE(profil_value->'autreRegion'->'profilETSanitaire'->'budgetEtFinance', '{}'::jsonb) || jsonb_build_object(
+                'tresorerie', 'no'
+            ),
+            true
+        );
+
+        UPDATE profil
+        SET profil_value = jsonb_set(
+            COALESCE(profil_value, '{}'::jsonb),
+            '{institution,profilETSanitaire,budgetEtFinance}',
+            COALESCE(profil_value->'institution'->'profilETSanitaire'->'budgetEtFinance', '{}'::jsonb) || jsonb_build_object(
+                'tresorerie', 'no'
+            ),
+            true
+        );
+
+    `);
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+      UPDATE profil
+      SET profil_value = profil_value #- '{autreRegion,profilEJ,budgetEtFinance,tresorerie}';
+
+      UPDATE profil
+      SET profil_value = profil_value #- '{institution,profilEJ,budgetEtFinance,tresorerie}';
+
+      UPDATE profil
+      SET profil_value = profil_value #- '{autreRegion,profilETSanitaire,budgetEtFinance,tresorerie}';
+
+      UPDATE profil
+      SET profil_value = profil_value #- '{institution,profilETSanitaire,budgetEtFinance,tresorerie}';
+
+    `);
+  }
+
+}

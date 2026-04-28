@@ -16,7 +16,7 @@ export function ContenuRatioDependanceFinancière(props: Readonly<{ dateDeMiseÀ
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(props.dateDeMiseÀJour, props.source)}</p>
+      <p>{wording.miseÀJourEtSource(props.source, props.dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur mesure le poids que représente l’endettement de l’établissement dans les capitaux permanents (ressources du fonds de roulement hors

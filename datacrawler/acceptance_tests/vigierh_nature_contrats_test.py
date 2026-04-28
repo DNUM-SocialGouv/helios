@@ -17,7 +17,7 @@ from datacrawler.test_helpers import (
 
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010006799"
 NUMÉRO_FINESS_ÉTABLISSEMENT_2 = "470001702"
 
 
@@ -34,13 +34,13 @@ class TestImportVigierhNatureContrats:
         mocked_logger.reset_mock()
 
     @freeze_time("2025-10-17")
-    def test_import_vigie_rh_duree_cdd(self) -> None:
+    def test_import_vigie_rh_nature_contrats(self) -> None:
         chemin_local_du_fichier_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_nature_contrats_annuel_2025_10_17.parquet'
         chemin_local_du_fichier_ref_cdi_cdd = 'data_test/entrée/vigie_rh/vigierh_ref_nature_contrat_2025_10_17.parquet'
         import_donnees_cdi_cdd(chemin_local_du_fichier_ref_cdi_cdd, chemin_local_du_fichier_cdi_cdd, base_de_données_test, mocked_logger )
 
         duree_cdd_enregistrees = pd.read_sql(TABLE_VIGIE_RH_NATURE_CONTRATS, base_de_données_test)
-        assert duree_cdd_enregistrees.shape[0] == 12
+        assert duree_cdd_enregistrees.shape[0] == 4
 
     def test_filtrer_les_donnees_ne_conserve_que_les_lignes_valides(self) -> None:
         donnees = pd.DataFrame(

@@ -16,9 +16,6 @@ type HistogrammeVerticalAvecRefProps = Readonly<{
   valeursRef: (number | null)[];
   couleursDeLHistogramme: CouleurHistogramme[];
   libelles: (number | string)[];
-  type: string;
-  tickFormatter: (type: string, index: number) => string;
-  tickX2Formatter: (type: string, index: number) => string;
   identifiants: string[];
   libellesDeValeursManquantes?: (number | string)[];
   libellesDeValeursManquantesTitre?: string;
@@ -35,9 +32,6 @@ const HistogrammeVerticalAvecRef = ({
   valeursRef,
   couleursDeLHistogramme,
   libelles,
-  type,
-  tickFormatter,
-  tickX2Formatter,
   identifiants,
   libellesDeValeursManquantes = [],
   libellesDeValeursDeReferenceManquantes = [],
@@ -48,7 +42,41 @@ const HistogrammeVerticalAvecRef = ({
   const transcriptionValeurs = valeurs.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
   const transcriptionValeursRef = valeursRef.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
 
+
   const anneeEnCours = String(new Date().getFullYear());
+
+  // Découpage des labels en principal/secondaire (similaire à HistogrammeComparaisonVerticalAvecRef)
+  const expressionReguliereTrimestre = /^([0-9]{4})-T([1-4])$/;
+  const decomposerLibelle = (label: number | string): { principal: string; secondaire: string } => {
+    if (typeof label === "number") {
+      const libelleTexte = String(label);
+      return { principal: libelleTexte, secondaire: "" };
+    }
+    const libelleNettoye = label.trim();
+    const correspondanceTrimestre = expressionReguliereTrimestre.exec(libelleNettoye);
+    if (correspondanceTrimestre) {
+      return { principal: `T${correspondanceTrimestre[2]}`, secondaire: correspondanceTrimestre[1] };
+    }
+    const segments = libelleNettoye.split(/\s+/);
+    if (segments.length > 1) {
+      return { principal: segments.slice(0, -1).join(" "), secondaire: segments.at(-1) ?? "" };
+    }
+    return { principal: libelleNettoye, secondaire: "" };
+  };
+
+  const libellesDecomposes = libelles.map(decomposerLibelle);
+  const libellesPrincipaux = libellesDecomposes.map(({ principal }) => principal);
+  const libellesSecondaires = libellesDecomposes.map(({ secondaire }, index) => {
+    if (!secondaire) {
+      return "";
+    }
+    const libelleSecondairePrecedent = index > 0 ? libellesDecomposes.at(index - 1)?.secondaire ?? "" : "";
+    return libelleSecondairePrecedent === secondaire ? "" : secondaire;
+  });
+  const presenceLibellesSecondaires = libellesSecondaires.some((libelle) => libelle !== "");
+  const indiceDernierLibelleSecondaire = libellesSecondaires.reduce((dernierIndice, libelle, index) => (libelle ? index : dernierIndice), -1);
+
+  const libellesTooltipSecondaires = libellesDecomposes.map(({ secondaire }) => secondaire || "");
 
   const data: ChartData = {
     datasets: [
@@ -76,8 +104,11 @@ const HistogrammeVerticalAvecRef = ({
     responsive: true,
     maintainAspectRatio: true,
     animation: false,
-    // intersect : false  avec mode : "index" => au survol du segment, on affiche la même tooltip.
-    // on affiche la tooltip qui correspond à la valeur , donc index 0 . Et on ignore la tooltip de la barre Référence (pour cela on ajout 'filter' dans tooltip)
+    layout: {
+      padding: {
+        top: 20,
+      },
+    },
     interaction: {
       intersect: false,
       mode: "index",
@@ -85,10 +116,9 @@ const HistogrammeVerticalAvecRef = ({
     plugins: {
       datalabels: {
         align: "end",
-        anchor: (context: any) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value > 0 ? "start" : "end";
-        },
+        anchor: "end",
+        clip: false,
+        offset: -4,
         font: {
           family: "Marianne",
           size: 12,
@@ -101,9 +131,11 @@ const HistogrammeVerticalAvecRef = ({
         filter: (tooltipItem) => tooltipItem.datasetIndex === 0,
         callbacks: {
           title: function (context: any) {
-            const periode = context[0]?.label.split('-');
-            if (periode.length === 1) { return periode[0]; }
-            else { return `${periode[1]} ${periode[0]}`; }
+            // Utilise le label principal et secondaire pour la tooltip
+            const index = context[0]?.dataIndex ?? 0;
+            const principal = libellesPrincipaux[index] ?? "";
+            const secondaire = libellesTooltipSecondaires[index] ?? "";
+            return secondaire ? `${principal} ${secondaire}` : principal;
           },
           label: function (context: any) {
             const index = context.dataIndex;
@@ -114,9 +146,7 @@ const HistogrammeVerticalAvecRef = ({
             }
             const refValue = valeursRef[index];
             const valeurRefText = Number.isFinite(refValue as number) ? Math.abs(refValue as number).toLocaleString("fr") : wording.NON_RENSEIGNÉ;
-
-            return [`Taux: ${valeurText}`,
-            `Valeur de référence: ${valeurRefText}`];
+            return [`Taux: ${valeurText}`, `Valeur de référence: ${valeurRefText}`];
           },
         },
       },
@@ -126,7 +156,7 @@ const HistogrammeVerticalAvecRef = ({
     scales: {
       x: {
         border: {
-          display: false
+          display: false,
         },
         grid: {
           drawOnChartArea: false,
@@ -134,43 +164,45 @@ const HistogrammeVerticalAvecRef = ({
         },
         stacked: true,
         ticks: {
-          color: '#000',
-          callback: (_tickValue, index) => tickFormatter(type, index),
-          font: function (context: any) {
+          color: "#000",
+          callback: (_tickValue: any, index: number) => libellesPrincipaux[index] ?? "",
+          font: (context: any) => {
             if (context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
-              return { weight: 'bold' };
+              return { weight: "bold" };
             }
             return {};
           },
-        }
+        },
       },
       xAxis2: {
-        type: 'category',
-        position: 'bottom',
+        type: "category",
+        position: "bottom",
         border: {
-          display: false
+          display: false,
         },
+        display: presenceLibellesSecondaires,
         grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
-          color: '#000',
-          callback: (_tickValue, index) => tickX2Formatter(type, index),
-          font: function (context: any) {
-            if (context.tick.label === new Date().getFullYear().toString()) {
-              return { weight: 'bold' };
+          color: "#000",
+          callback: (_tickValue: any, index: number) => libellesSecondaires[index] ?? "",
+          font: (context: any) => {
+            const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";
+            if (context.index === indiceDernierLibelleSecondaire && tickLabel === anneeEnCours) {
+              return { weight: "bold" };
             }
             return {};
           },
           maxRotation: 0,
-          autoSkip: false
-        }
+          autoSkip: false,
+        },
       },
       y: {
         display: false,
         min: 0,
         suggestedMax: Math.max(50, ...valeurs.filter((v) => v !== null).filter((v) => Number.isFinite(v))),
       },
-    }
-  }
+    },
+  };
 
   const rotationRefPlugin = {
     id: "rotationRef",

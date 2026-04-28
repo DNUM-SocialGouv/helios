@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from pandas.testing import assert_frame_equal
+from sqlalchemy import text
 
 from datacrawler.import_vigierh_motifs_ruptures_contrats import (
     filtrer_les_donnees,
@@ -26,22 +27,19 @@ from datacrawler.transform.equivalence_vigierh_helios import ColumMapping
 
 
 NUMÉRO_FINESS_ENTITÉ_JURIDIQUE = "010008407"
-NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010002228"
+NUMÉRO_FINESS_ÉTABLISSEMENT_1 = "010006799"
 NUMÉRO_FINESS_ÉTABLISSEMENT_2 = "470001702"
 
 
 class TestImportVigierhMotifsRupturesContrats:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
-        base_de_données_test.execute(f"DELETE FROM {TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES};")
-        base_de_données_test.execute(f"DELETE FROM {TABLE_VIGIE_RH_MOTIFS_RUPTURES};")
+        with base_de_données_test.begin() as connexion:
+            connexion.execute(text(f"DELETE FROM {TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES};"))
+            connexion.execute(text(f"DELETE FROM {TABLE_VIGIE_RH_MOTIFS_RUPTURES};"))
         sauvegarde_une_entité_juridique_en_base(NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
-        sauvegarde_un_établissement_en_base(
-            NUMÉRO_FINESS_ÉTABLISSEMENT_1, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test
-        )
-        sauvegarde_un_établissement_en_base(
-            NUMÉRO_FINESS_ÉTABLISSEMENT_2, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test
-        )
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_1, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
+        sauvegarde_un_établissement_en_base(NUMÉRO_FINESS_ÉTABLISSEMENT_2, NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, base_de_données_test)
         mocked_logger.reset_mock()
 
     def _setup_file_paths(self, vegie_rh_data_path: str) -> dict:
@@ -66,14 +64,8 @@ class TestImportVigierhMotifsRupturesContrats:
         }
 
     def _assert_file_paths(self, file_paths: dict) -> None:
-        assert (
-            file_paths["donnees"]
-            == "data_test/entrée/vigie_rh/vigierh_motifs_ruptures_2025_07_03.parquet"
-        )
-        assert (
-            file_paths["ref"]
-            == "data_test/entrée/vigie_rh/vigierh_ref_motifs_ruptures_2025_07_03.parquet"
-        )
+        assert file_paths["donnees"] == "data_test/entrée/vigie_rh/vigierh_motifs_ruptures_2025_07_03.parquet"
+        assert file_paths["ref"] == "data_test/entrée/vigie_rh/vigierh_ref_motifs_ruptures_2025_07_03.parquet"
 
     def _extract_dates(self, file_paths: dict) -> dict:
         return {
@@ -89,8 +81,8 @@ class TestImportVigierhMotifsRupturesContrats:
         )
         df_filtre = filtrer_les_donnees(df_donnees, df_ref, base_de_données_test)
 
-        assert df_ref.shape[0] == 2
-        assert df_filtre.shape[0] == 2
+        assert df_ref.shape[0] == 8
+        assert df_filtre.shape[0] == 88
 
         return df_ref, df_filtre
 
@@ -236,11 +228,9 @@ class TestImportVigierhMotifsRupturesContrats:
         df_ref_en_base = pd.read_sql_table(TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES, base_de_données_test)
         df_ref_attendu = df_ref.sort_values("code").reset_index(drop=True)
         df_ref_en_base = df_ref_en_base.sort_values("code").reset_index(drop=True)
-        assert_frame_equal(df_ref_en_base, df_ref_attendu)
+        assert_frame_equal(df_ref_en_base, df_ref_attendu, check_dtype=False)
 
         df_motifs = pd.read_sql_table(TABLE_VIGIE_RH_MOTIFS_RUPTURES, base_de_données_test)
         df_motifs = df_motifs.sort_values(["finess_et", "annee", "trimestre", "motif_code"]).reset_index(drop=True)
-        df_filtre_attendu = df_filtre.sort_values(
-            ["finess_et", "annee", "trimestre", "motif_code"]
-        ).reset_index(drop=True)
-        assert_frame_equal(df_motifs, df_filtre_attendu)
+        df_filtre_attendu = df_filtre.sort_values(["finess_et", "annee", "trimestre", "motif_code"]).reset_index(drop=True)
+        assert_frame_equal(df_motifs, df_filtre_attendu, check_dtype=False)

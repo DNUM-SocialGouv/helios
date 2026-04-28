@@ -1,7 +1,7 @@
 import dotenv from "dotenv-defaults";
 
 export const dotEnvConfig = () => {
-  if (process.env.NODE_ENV === "test") {
+  if (process.env['NODE_ENV'] === "test") {
     dotenv.config({
       defaults: "./.env",
       encoding: "utf8",
@@ -9,7 +9,7 @@ export const dotEnvConfig = () => {
     });
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env['NODE_ENV'] !== "production") {
     dotenv.config({
       defaults: "./.env",
       encoding: "utf8",

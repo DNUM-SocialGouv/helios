@@ -4,8 +4,8 @@ import { SessionProvider } from "next-auth/react";
 
 import { Breadcrumb } from "./Breadcrumb";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
+import { PasswordStatusEnum } from "../../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
-import PageDAccueil from "../../../../pages";
 import Accessibilité from "../../../../pages/accessibilite";
 import DonnéesPersonnelles from "../../../../pages/donnees-personnelles";
 import MentionsLégales from "../../../../pages/mentions-legales";
@@ -16,6 +16,7 @@ import { EtablissementTerritorialSanitaireViewModelTestBuilder } from "../../../
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 import { ActivitesMensuelViewModel } from "../../entité-juridique/bloc-activité/EntitéJuridiqueActivitésMensuelsViewModel";
 import { PageEntitéJuridique } from "../../entité-juridique/PageEntitéJuridique";
+import { PageRecherche } from "../../home/PageRecherche";
 import { RechercheViewModel } from "../../home/RechercheViewModel";
 import { PageRégion } from "../../région/PageRégion";
 import { régions } from "../../région/régions";
@@ -64,12 +65,12 @@ const result = RésultatDeRechercheTestBuilder.créeUnRésultatDeRechercheEntit�
 const rechercheViewModel = new RechercheViewModel(result, paths);
 
 describe("Le fil d’Ariane (breadcrumb)", () => {
-  it("ne s’affiche pas sur la page d’accueil", () => {
+  it("ne s’affiche pas sur la page d’accueil", async () => {
     // WHEN
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageDAccueil />
+        <PageRecherche passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
       </>
     );
 

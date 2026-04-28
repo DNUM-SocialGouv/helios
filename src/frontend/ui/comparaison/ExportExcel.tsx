@@ -72,7 +72,7 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       internat: (etab) => etab.internat === 'NA' ? '' : etab.internat ?? '-',
       autres: (etab) => etab.autres === 'NA' ? '' : etab.autres ?? '-',
       seances: (etab) => etab.seances === 'NA' ? '' : etab.seances ?? '-',
-      global: (etab) => etab.seances === 'NA' ? '' : etab.global ?? '-',
+      global: (etab) => etab.global === 'NA' ? '' : etab.categorie === "500-EHPAD" ? '-' : etab.global ?? '-',
       prestationExterne: (etab) => etab.prestationExterne === 'NA' ? '' : etab.prestationExterne ?? '-',
       rotationPersonnel: (etab) => etab.rotationPersonnel === 'NA' ? '' : etab.rotationPersonnel ?? '-',
       etpVacant: (etab) => etab.etpVacant === 'NA' ? '' : etab.etpVacant ?? '-',
@@ -110,6 +110,9 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       enveloppe1: (etab) => etab.enveloppe1 ?? "-",
       enveloppe2: (etab) => etab.enveloppe2 ?? "-",
       enveloppe3: (etab) => etab.enveloppe3 ?? "-",
+      fondsDeRoulement: (etab) => etab.fondsDeRoulement ?? "-",
+      besoinFondsDeRoulement: (etab) => etab.besoinFondsDeRoulement ?? "-",
+      tresorerie: (etab) => etab.tresorerie ?? "-",
     };
 
     return data.resultat.map((etab: ResultatSAN) =>
@@ -143,6 +146,9 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       enveloppe1: (etab) => etab.enveloppe1 ?? '-',
       enveloppe2: (etab) => etab.enveloppe2 ?? '-',
       enveloppe3: (etab) => etab.enveloppe3 ?? '-',
+      fondsDeRoulement: (etab) => etab.fondsDeRoulement ?? '-',
+      besoinFondsDeRoulement: (etab) => etab.besoinFondsDeRoulement ?? '-',
+      tresorerie: (etab) => etab.tresorerie ?? '-',
     };
 
     return data.resultat.map((etab: ResultatEJ) =>
@@ -299,9 +305,12 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     ["depensesInterimPm", "Dépenses intérim PM"],
     ["joursAbsenteismePm", "Jours d’absentéisme PM"],
     ["joursAbsenteismePnm", "Jours d’absentéisme PNM"],
-    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
-    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
-    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0] ? enveloppes[0] : 'Non renseigné'}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1] ? enveloppes[1] : 'Non renseigné'}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`],
+    ["fondsDeRoulement", "Fonds de roulement"],
+    ["besoinFondsDeRoulement", "Besoin en fonds de roulement"],
+    ["tresorerie", "Trésorerie"],
   ]);
 
   return Array.from(headersSan.entries())
@@ -331,9 +340,12 @@ const getEJHeaders = (enabledIndicators: string[], enveloppes: string[]): string
     ["resultatNetComptableEj", "Résultat net comptable"],
     ["tauxCafEj", "Taux de CAF"],
     ["ratioDependanceFinanciere", "Ratio de dépendance financière"],
-    ["enveloppe1", `Allocation de ressources: ${enveloppes[0]}`],
-    ["enveloppe2", `Allocation de ressources: ${enveloppes[1]}`],
-    ["enveloppe3", `Allocation de ressources: ${enveloppes[2]}`]
+    ["enveloppe1", `Allocation de ressources: ${enveloppes[0] ? enveloppes[0] : 'Non renseigné'}`],
+    ["enveloppe2", `Allocation de ressources: ${enveloppes[1] ? enveloppes[1] : 'Non renseigné'}`],
+    ["enveloppe3", `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`],
+    ["fondsDeRoulement", "Fonds de roulement"],
+    ["besoinFondsDeRoulement", "Besoin en fonds de roulement"],
+    ["tresorerie", "Trésorerie"],
   ]);
 
   return Array.from(headersEJ.entries())

@@ -1,6 +1,7 @@
 import os
+import traceback
 from logging import Logger
-
+from datetime import datetime
 import pandas as pd
 
 from sqlalchemy.engine import Engine, create_engine
@@ -11,6 +12,7 @@ from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_dat
 from datacrawler.extract.lecteur_parquet import lis_le_fichier_parquet, trouver_lannee_max_disponible
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
 from datacrawler.load.nom_des_tables import TABLE_REF_TRANCHE_AGE, TABLE_TRANCHE_AGE, FichierSource
+from datacrawler.rapport.send_report_status import NOT_SEND_REPORT, SEND_REPORT
 from datacrawler.transform.equivalence_vigierh_helios import SOURCE, ColumMapping
 from datacrawler.extract.lecteur_sql import recupere_les_numeros_finess_des_etablissements_de_la_base
 
@@ -32,7 +34,7 @@ def filtrer_les_donnees_pyramide(donnees: pd.DataFrame, base_de_donnees: Engine)
 
     return donnees_filtrees_sur_les_3_dernieres_annees
 
-def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> None:
+def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fichier_donnees: str, base_de_donnees: Engine, logger: Logger) -> dict:
     date_du_fichier_vigierh_ref_tranche_age = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_ref)
     date_du_fichier_vigierh_donnees_pyramide = extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_local_du_fichier_donnees)
     # si les fichiers ref et données ne sont pas de même date, on fait rien
@@ -42,29 +44,39 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 f"({FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value}, "
                 f"{FichierSource.VIGIE_RH_PYRAMIDE.value})."
             )
-    else:
-        # si les fichiers sont déjà traités, on fait rien
-        traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
-        traite_donnees = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_pyramide, base_de_donnees, FichierSource.VIGIE_RH_PYRAMIDE.value)
-        if traite_ref & traite_donnees:
-            logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_PYRAMIDE.value}  ont été déjà traités")
-        else:
-            donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
-            donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
-            donnees_pyramide_filtrees = filtrer_les_donnees_pyramide(donnees_pyramide, base_de_donnees)
-            with base_de_donnees.begin() as connection:
-                supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, logger)
-                supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, logger)
-                inserer_nouvelles_donnees(
-                TABLE_REF_TRANCHE_AGE,
-                connection,
-                SOURCE,
-                donnees_ref_tranche_age,
-                logger,
-                FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
-                date_du_fichier_vigierh_ref_tranche_age
-                )
-                inserer_nouvelles_donnees(
+        return {
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
+            "duration": 0,
+            "commentaires": "Les dates des fichiers sources ne sont pas cohérentes",
+            "report_status": SEND_REPORT
+        }
+    # si les fichiers sont déjà traités, on fait rien
+    traite_ref = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_ref_tranche_age, base_de_donnees, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value)
+    traite_donnees = verifie_si_le_fichier_est_traite(date_du_fichier_vigierh_donnees_pyramide, base_de_donnees, FichierSource.VIGIE_RH_PYRAMIDE.value)
+    if traite_ref & traite_donnees:
+        logger.info(f"Les fichiers {FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value} et  {FichierSource.VIGIE_RH_PYRAMIDE.value}  ont été déjà traités")
+        return {
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
+            "duration": 0,
+            "commentaires": "Les fichiers ont été déjà traités",
+            "report_status": NOT_SEND_REPORT}
+    start = datetime.now()
+    donnees_ref_tranche_age = lis_le_fichier_parquet(chemin_local_du_fichier_ref, ColumMapping.REF_TRANCHE_AGE.value)
+    donnees_pyramide = lis_le_fichier_parquet(chemin_local_du_fichier_donnees, ColumMapping.PYRAMIDE_TRANCHE_AGE.value)
+    donnees_pyramide_filtrees = filtrer_les_donnees_pyramide(donnees_pyramide, base_de_donnees)
+    with base_de_donnees.begin() as connection:
+        supprimer_donnees_existantes(TABLE_TRANCHE_AGE, connection, SOURCE, logger)
+        supprimer_donnees_existantes(TABLE_REF_TRANCHE_AGE, connection, SOURCE, logger)
+        inserer_nouvelles_donnees(
+            TABLE_REF_TRANCHE_AGE,
+            connection,
+            SOURCE,
+            donnees_ref_tranche_age,
+            logger,
+            FichierSource.VIGIE_RH_REF_TRANCHE_AGE,
+            date_du_fichier_vigierh_ref_tranche_age
+        )
+        inserer_nouvelles_donnees(
                 TABLE_TRANCHE_AGE,
                 connection,
                 SOURCE,
@@ -72,21 +84,42 @@ def import_donnees_pyramide(chemin_local_du_fichier_ref: str, chemin_local_du_fi
                 logger,
                 FichierSource.VIGIE_RH_PYRAMIDE,
                 date_du_fichier_vigierh_donnees_pyramide
-                )
+        )
+    duration = (datetime.now() - start).total_seconds()
+    return {
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
+            "report_status": SEND_REPORT,
+            "rows_in_file": donnees_pyramide.shape[0],
+            "rows": donnees_pyramide_filtrees.shape[0],
+            "taux": f"{donnees_pyramide_filtrees.shape[0]/donnees_pyramide.shape[0]*100:.2f}%",
+            "duration": duration,
+    }
 
+def main()-> dict:
+    try:
+        logger_helios, variables_d_environnement = initialise_les_dépendances()
+        base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
+
+        vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
+        fichiers = os.listdir(vigierh_data_path)
+
+        chemin_local_du_fichier_ref_tranche_age = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
+        chemin_local_du_fichier_pyramide = os.path.join(
+            vigierh_data_path,
+            trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
+
+        result  = import_donnees_pyramide(chemin_local_du_fichier_ref_tranche_age, chemin_local_du_fichier_pyramide, base_de_donnees_helios, logger_helios)
+        return result
+    except Exception as error: # pylint: disable=broad-exception-caught
+        error_text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
+        return {
+            "table": FichierSource.VIGIE_RH_PYRAMIDE.value,
+            "duration": 0,
+            "report_status": SEND_REPORT,
+            "commentaires": str(error_text)
+        }
 
 if __name__ == "__main__":
-    logger_helios, variables_d_environnement = initialise_les_dépendances()
-    base_de_donnees_helios = create_engine(variables_d_environnement["DATABASE_URL"])
-
-    vigierh_data_path = variables_d_environnement["VIGIE_RH_DATA_PATH"]
-    fichiers = os.listdir(vigierh_data_path)
-
-    chemin_local_du_fichier_ref_tranche_age = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_REF_TRANCHE_AGE.value, logger_helios))
-    chemin_local_du_fichier_pyramide = os.path.join(
-        vigierh_data_path,
-        trouve_le_nom_du_fichier(fichiers, FichierSource.VIGIE_RH_PYRAMIDE.value, logger_helios))
-
-    import_donnees_pyramide(chemin_local_du_fichier_ref_tranche_age, chemin_local_du_fichier_pyramide, base_de_donnees_helios, logger_helios)
+    main()

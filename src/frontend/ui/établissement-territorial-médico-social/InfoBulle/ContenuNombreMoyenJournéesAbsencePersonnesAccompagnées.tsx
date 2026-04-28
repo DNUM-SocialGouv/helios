@@ -15,7 +15,7 @@ export const ContenuNombreMoyenJournéesAbsencePersonnesAccompagnées = ({
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur est à lire avec le niveau d’activité de la structure et au regard du profil des personnes accompagnées.

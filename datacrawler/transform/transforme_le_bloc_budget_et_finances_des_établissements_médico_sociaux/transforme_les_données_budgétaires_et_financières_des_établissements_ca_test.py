@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from pandas import NA
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
@@ -61,12 +61,12 @@ class TestTransformeLesDonnéesBudgétairesEtFinancièresDesÉtablissementsCa:
                         "resultat_net_comptable": 100.0,
                         "charges": -200.0,
                         "produits": 300.0,
-                        "recettes_groupe_i": NaN,
-                        "recettes_groupe_ii": NaN,
-                        "recettes_groupe_iii": NaN,
-                        "depenses_groupe_i": NaN,
-                        "depenses_groupe_ii": NaN,
-                        "depenses_groupe_iii": NaN,
+                        "recettes_groupe_i": nan,
+                        "recettes_groupe_ii": nan,
+                        "recettes_groupe_iii": nan,
+                        "depenses_groupe_i": nan,
+                        "depenses_groupe_ii": nan,
+                        "depenses_groupe_iii": nan,
                         "cadre_budgetaire": "CA_PA",
                     }
                 ),

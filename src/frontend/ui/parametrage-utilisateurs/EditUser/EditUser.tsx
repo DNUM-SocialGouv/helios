@@ -14,6 +14,7 @@ import { InstitutionModel } from "../../../../../database/models/InstitutionMode
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { Role, RoleLabel } from "../../../../commons/Role";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../commun/hooks/useBreadcrumb";
@@ -125,16 +126,34 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       redirectPage("/settings/users?status=edit_successfully");
     });
   }
-  //only "Admin national" can update it self || Admin regional cant update, delete, to (Admin National)
-  const pageDetails =
-    (data?.user?.idUser === user.code && data?.user?.role !== 1) || ((data?.user?.role as number) > Number.parseInt(user.roleId) && data?.user?.idUser !== user.code);
 
-  let rolesF;
-  if (data?.user?.role === 1) {
-    rolesF = roles;
-  } else {
-    rolesF = roles.filter((obj) => obj.code !== "ADMIN_NAT");
-  }
+  const pageDetails =
+    // Seul un Administrateur national peut se modifier lui même
+    (data?.user?.idUser === user.code && data?.user?.role !== Role.ADMIN_NAT) ||
+    // Un adminitrateur regional ne peut pas modifier d’administrateur national ou d’administrateur central
+    ((data?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(user.roleId) === Role.ADMIN_NAT || Number.parseInt(user.roleId) === Role.ADMIN_CENTR));
+
+  const filteredRoles = roles.filter((role) => {
+    if (data?.user?.role !== Role.ADMIN_NAT) {
+      return role.code !== RoleLabel.ADMIN_NAT && role.code !== RoleLabel.ADMIN_CENTR
+    }
+    return true;
+  });
+
+  const isProfileDisabled = (profil: ProfilModel) => {
+    if (data?.user?.role !== Role.ADMIN_NAT) {
+      return profil.label === "Consultation administrateur national" || profil.label === "Consultation Administration Centrale";
+    }
+    return false;
+  };
+
+  const filteredInstitutions = institutions.filter((institution) => {
+    if (data?.user?.role !== Role.ADMIN_NAT) {
+      // Si un utilisateur est déjà dans une institution supérieur, on la garde dans la liste affichée
+      return user.institutionId === institution.id || (institution.code !== "SCN" && institution.code !== "ADMIN_CENTR");
+    }
+    return true;
+  });
 
   return (
     <>
@@ -209,13 +228,6 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
               </label>
             </div>
 
-            {/*<div className={styles["field_container"]}>
-              <label className="fr-label">
-                <div className={styles["label-field"]}>Date de dernière connexion : </div>
-                {user.lastConnectionDate && formatDateAndHours(user.lastConnectionDate.toString())}
-              </label>
-            </div>*/}
-
             <form onSubmit={handleSubmit}>
               <div className="fr-select-group fr-mt-3w">
                 <label className="fr-label" htmlFor="institutionId">
@@ -226,12 +238,11 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                     Selectionnez une option
                   </option>
 
-                  {institutions &&
-                    institutions.map((item) => (
-                      <option key={item.id} selected={user.institutionId === item.id} value={item.code}>
-                        {item.libelle}
-                      </option>
-                    ))}
+                  {filteredInstitutions?.map((item) => (
+                    <option key={item.id} selected={user.institutionId === item.id} value={item.code}>
+                      {item.libelle}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="fr-select-group fr-mt-3w">
@@ -242,12 +253,11 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   <option disabled hidden selected value="">
                     Selectionnez une option
                   </option>
-                  {rolesF &&
-                    rolesF.map((item) => (
-                      <option key={item.id} selected={Number.parseInt(user.roleId) === item.id} value={item.code}>
-                        {item.libelle}
-                      </option>
-                    ))}
+                  {filteredRoles?.map((item) => (
+                    <option key={item.id} selected={Number.parseInt(user.roleId) === item.id} value={item.code}>
+                      {item.libelle}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="fr-select-group fr-mt-3w">
@@ -255,30 +265,29 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
                   Autorisations
                 </label>
                 <div className={styles["boxSelect"]}>
-                  {profiles &&
-                    profiles.map((item) => (
-                      <div
-                        className={`fr-fieldset__element fr-mt-2w ${userInfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""}`}
-                        key={item.code}
-                      >
-                        <div className="fr-checkbox-group">
-                          <input
-                            aria-describedby={`checkboxes-${item.code}-messages`}
-                            checked={userInfo.profiles && userInfo.profiles.includes(item.code)}
-                            className={`${styles["input--checkbox--error"]} `}
-                            disabled={pageDetails || (item.label === "Consultation administrateur national" && data?.user?.role !== 1)}
-                            id={`${item.code}`}
-                            name="profiles"
-                            onChange={handleChange}
-                            type="checkbox"
-                            value={`${item.code}`}
-                          />
-                          <label className="fr-label" htmlFor={`${item.code}`}>
-                            {item.label}
-                          </label>
-                        </div>
+                  {profiles?.map((item) => (
+                    <div
+                      className={`fr-fieldset__element fr-mt-2w ${userInfo.profiles.length === 0 ? styles["fr-fieldset--error"] : ""} ${isProfileDisabled(item) ? "fr-hidden" : ""}`}
+                      key={item.code}
+                    >
+                      <div className="fr-checkbox-group">
+                        <input
+                          aria-describedby={`checkboxes-${item.code}-messages`}
+                          checked={userInfo.profiles?.includes(item.code)}
+                          className={`${styles["input--checkbox--error"]} `}
+                          disabled={pageDetails || isProfileDisabled(item)}
+                          id={`${item.code}`}
+                          name="profiles"
+                          onChange={handleChange}
+                          type="checkbox"
+                          value={`${item.code}`}
+                        />
+                        <label className="fr-label" htmlFor={`${item.code}`}>
+                          {item.label}
+                        </label>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
                 {userInfo.profiles.length === 0 && (
                   <div aria-live="assertive" className={` fr-mt-2w fr-messages-group  ${styles["fr-fieldset--error"]}`} id="checkboxes-error-messages">

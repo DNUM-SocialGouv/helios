@@ -12,7 +12,7 @@ export const ContenuTauxOccupationGlobal = ({ dateDeMiseÀJour, source }: Conten
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>Le taux d’occupation est un indicateur permettant d’évaluer l’utilisation réelle des places disponibles dans un Établissement ou Service Médico-Social (ESMS).
           Il est couramment utilisé pour mesurer l’adéquation entre l’offre et la demande dans ces structures.</p>

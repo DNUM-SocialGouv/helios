@@ -14,6 +14,13 @@
   <mention>ME051</mention>
   <pts>PTS00</pts>
   <declaration>DE000</declaration>
+  <lib_activite>Soins de suite et de réadaptation non spécialisés</lib_activite>
+  <lib_modalite>Juvénile (âge >= 6 ans et &lt; 18 ans)</lib_modalite>
+  <lib_mention>Prise en charge des conduites addictives</lib_mention>
+  <lib_pts>Pas de pratique thérapeutique spécifique</lib_pts>
+  <lib_declaration>Hospitalisation à temps partiel de jour ou de nuit</lib_declaration>
+  <statut_autorisation_code>02</statut_autorisation_code>
+  <statut_autorisation_lib>Autorisée</statut_autorisation_lib>
   <codeautorarhgos>24-24-1370</codeautorarhgos>
   <dateautor>2010-07-30</dateautor>
   <daterenouv>2023-01-27</daterenouv>

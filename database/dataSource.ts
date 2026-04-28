@@ -86,12 +86,25 @@ import { ModificationProfilJoursAbsPnmRhEj1758555147382 } from "./migrations/175
 import { AjoutTableRessourcesHumainesETSAN1758618772544 } from "./migrations/1758618772544-AjoutTableRessourcesHumainesETSAN";
 import { ModificationProfilRessourcesHumainesETSAN1758618803617 } from "./migrations/1758618803617-ModificationProfilRessourcesHumainesETSAN";
 import { AjoutTableParametrageJson1759416645736 } from "./migrations/1759416645736-AjoutTableParametrageJson";
-import { AjoutDmsActiviteMensuel1759826053430 } from "./migrations/1759826053430-AjoutDmsActiviteMensuel"
-import { AjoutDmsActiviteSanitaire1759845977685 } from "./migrations/1759845977685-AjoutDmsActiviteSanitaire"
+import { AjoutDmsActiviteMensuel1759826053430 } from "./migrations/1759826053430-AjoutDmsActiviteMensuel";
+import { AjoutDmsActiviteSanitaire1759845977685 } from "./migrations/1759845977685-AjoutDmsActiviteSanitaire";
 import { AjoutColonneDepartsPrematuresCdi1761819265202 } from "./migrations/1761819265202-AjoutColonneDepartsPrematuresCdi";
 import { AjoutDureeMoyenneSejourDansLesProfils1762435683856 } from "./migrations/1762435683856-AjoutDureeMoyenneSejourDansLesProfils";
 import { SupprimeProfilSansLabel1765967970441 } from "./migrations/1765967970441-SupprimeProfilSansLabel";
-import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal"
+import { AjoutTauxOccupationGlobal1765980868528 } from "./migrations/1765980868528-AjoutTauxOccupationGlobal";
+import { UpdateVueRecherche1769680336893 } from "./migrations/1769680336893-UpdateVueRecherche";
+import { AjouteTableNoDataQualiteHAS1770300961088 } from "./migrations/1770300961088-AjouteTableNoDataQualiteHAS";
+import { AjoutCertificationHasDansLesProfils1770992415603 } from "./migrations/1770992415603-AjoutCertificationHasDansLesProfils";
+import { AjoutLastPwdChangeDate1771324698360 } from "./migrations/1771324698360-AjoutLastPwdChangeDate";
+import { AjouterFailedAttemptsEtLockUntil1771495505819 } from "./migrations/1771495505819-AjouterFailedAttemptsEtLockUntil";
+import { AjoutTableNoDataQualiteHasMS1772117266351 } from "./migrations/1772117266351-AjoutTableNoDataQualiteHasMS";
+import { AjoutHasAuProfilMedicoSocial1772196772012 } from "./migrations/1772196772012-AjoutHasAuProfilMedicoSocial";
+import { AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578 } from "./migrations/1772702784578-AjoutFondsRoulementEtTresorerieDansBudgetFinance";
+import { AjoutProfilFondDeRoulement1773072615839 } from "./migrations/1773072615839-AjoutProfilFondDeRoulement";
+import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773152515839-AjoutProfilBesoinFondDeRoulement";
+import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
+import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
+import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -150,6 +163,8 @@ import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
+import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
+import { QualiteQualiscopeHasMsModel } from "./models/QualiteQualiscopeHasMsModel";
 import { RechercheModel } from "./models/RechercheModel";
 import { ReclamationETModel } from "./models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "./models/ReconnaissanceContractuelleSanitaireModel";
@@ -249,7 +264,9 @@ const datasource = new DataSource({
     VigieRhRefMotifRuptutreContratModel,
     VigieRhRefNatureContrat,
     VigieRhNatureContratsAnnuelModel,
-    VigieRhNatureContratsTrimestrielModel
+    VigieRhNatureContratsTrimestrielModel,
+    QualiteQualiscopeHASModel,
+    QualiteQualiscopeHasMsModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -377,7 +394,20 @@ const datasource = new DataSource({
     ModificationTableProfession21762263346352,
     SupressionTableVigierhContrat1763372516438,
     AjouteTypePassageProfessions1764753717478,
-    AjoutTauxOccupationGlobal1765980868528
+    AjoutTauxOccupationGlobal1765980868528,
+    AjouterFailedAttemptsEtLockUntil1771495505819,
+    AjoutLastPwdChangeDate1771324698360,
+    AjouteTableNoDataQualiteHAS1770300961088,
+    AjoutCertificationHasDansLesProfils1770992415603,
+    UpdateVueRecherche1769680336893,
+    AjoutTableNoDataQualiteHasMS1772117266351,
+    AjoutHasAuProfilMedicoSocial1772196772012,
+    AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578,
+    AjoutProfilFondDeRoulement1773072615839,
+    AjoutProfilBesoinFondDeRoulement1773152515839,
+    AjoutProfilTresorerie1773223041788,
+    AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368,
+    SuppressionNomenclatureAMM1774521749651
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

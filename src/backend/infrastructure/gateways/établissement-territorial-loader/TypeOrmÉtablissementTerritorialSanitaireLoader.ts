@@ -10,6 +10,7 @@ import { CapacitéAutorisationSanitaireModel } from "../../../../../database/mod
 import { DateMiseÀJourFichierSourceModel, FichierSource } from "../../../../../database/models/DateMiseÀJourFichierSourceModel";
 import { EvenementIndesirableETModel } from "../../../../../database/models/EvenementIndesirableModel";
 import { InspectionsControlesETModel } from "../../../../../database/models/InspectionsModel";
+import { QualiteQualiscopeHASModel } from "../../../../../database/models/QualiteQualiscopeHasModel";
 import { ReclamationETModel } from "../../../../../database/models/ReclamationETModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { RessourcesHumainesEtablissementSanitaireModel } from "../../../../../database/models/RessourcesHumainesEtablissementSanitaireModel";
@@ -168,13 +169,18 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       .getRepository(DateMiseÀJourFichierSourceModel)
       .findOneBy({ fichier: FichierSource.SIICEA })) as DateMiseÀJourFichierSourceModel;
 
+    const qualiteQualiscope = await (await this.orm)
+      .getRepository(QualiteQualiscopeHASModel)
+      .findOne({ where: { numéroFinessÉtablissementTerritorial } });
+
     return this.construitsQualite(
       reclamations,
       dateMisAJour.dernièreMiseÀJour,
       evenementsIndesirables,
       dateMiseAjourSIVSS.dernièreMiseÀJour,
       inspectionsEtControles,
-      dateMiseAjourSIICEA.dernièreMiseÀJour
+      dateMiseAjourSIICEA.dernièreMiseÀJour,
+      qualiteQualiscope
     );
   }
 
@@ -198,13 +204,15 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     evenementsIndesirables: EvenementIndesirableETModel[],
     dateMiseAjourSIVSS: string,
     inspections: InspectionsControlesETModel[],
-    dateMiseAjourSiicea: string
+    dateMiseAjourSiicea: string,
+    qualiteQualiscope: QualiteQualiscopeHASModel | null
 
   ): ÉtablissementTerritorialQualite {
     return {
       reclamations: this.construitsReclamations(reclamations, dateMisAJour),
       evenementsIndesirables: this.construitsEvenementsIndesirables(evenementsIndesirables, dateMiseAjourSIVSS),
-      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea)
+      inspectionsEtControles: this.construisInspections(inspections, dateMiseAjourSiicea),
+      pasDonneesQualiscopeHAS: this.construisQualiteHas(qualiteQualiscope)
     }
   }
 
@@ -349,6 +357,14 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     return { dateMiseAJourSource: dateMisAJour, inspectionsEtControles: inspectionsEtControles };
   }
 
+  private readonly construisQualiteHas = (donneesHas: QualiteQualiscopeHASModel | null) => {
+    if (!donneesHas) return undefined;
+    return {
+      numeroFiness: donneesHas.numéroFinessÉtablissementTerritorial,
+
+    }
+  }
+
   private async chargeLesReconnaissancesContractuellesModel(
     numéroFinessÉtablissementTerritorial: string
   ): Promise<ReconnaissanceContractuelleSanitaireModel[]> {
@@ -376,29 +392,25 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
     const autorisationsAMMMQueryResult = await (await this.orm).query(`
       SELECT
         autorisation_sanitaire_amm.code_activite,
-        ref.libelle_activite, 
+        autorisation_sanitaire_amm.lib_activite AS libelle_activite,
         autorisation_sanitaire_amm.code_modalite,
-        ref.libelle_modalite,
+        autorisation_sanitaire_amm.lib_modalite AS libelle_modalite,
         autorisation_sanitaire_amm.code_mention,
-        ref.libelle_mention,
+        autorisation_sanitaire_amm.lib_mention AS libelle_mention,
         autorisation_sanitaire_amm.code_pratique AS code_pratique_therapeutique_specifique,
-        ref.libelle_pratique_therapeutique_specifique,
+        autorisation_sanitaire_amm.lib_pts AS libelle_pratique_therapeutique_specifique,
         autorisation_sanitaire_amm.code_declaration,
-        ref.libelle_declaration,
+        autorisation_sanitaire_amm.lib_declaration AS libelle_declaration,
         autorisation_sanitaire_amm.code_autorisation_arhgos,
         autorisation_sanitaire_amm.date_autorisation,
         autorisation_sanitaire_amm.date_fin,
         autorisation_sanitaire_amm.date_mise_en_oeuvre,
         autorisation_sanitaire_amm.numero_finess_etablissement_territorial
       FROM autorisation_sanitaire_amm
-      JOIN referentiel_nomenclature_amm ref
-        ON autorisation_sanitaire_amm.code_activite = ref.code_activite
-      AND autorisation_sanitaire_amm.code_modalite = ref.code_modalite
-      AND autorisation_sanitaire_amm.code_mention = ref.code_mention
-      AND autorisation_sanitaire_amm.code_pratique = ref.code_pratique_therapeutique_specifique
-      AND autorisation_sanitaire_amm.code_declaration = ref.code_declaration
-      where autorisation_sanitaire_amm.numero_finess_etablissement_territorial = '${numéroFinessÉtablissementTerritorial}'
-      ORDER BY ref.code_activite,  ref.code_modalite, ref.code_mention, ref.code_declaration `)
+      WHERE autorisation_sanitaire_amm.numero_finess_etablissement_territorial = $1
+      ORDER BY autorisation_sanitaire_amm.code_activite, autorisation_sanitaire_amm.code_modalite, autorisation_sanitaire_amm.code_mention, autorisation_sanitaire_amm.code_declaration`,
+      [numéroFinessÉtablissementTerritorial]
+    );
     return autorisationsAMMMQueryResult;
   }
 
@@ -731,7 +743,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   private construisLActiviteAmmDUneAutorisation(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaire {
     return {
       code: autorisationAmmModel.code_activite,
-      libelle: autorisationAmmModel.libelle_activite,
+      libelle: autorisationAmmModel.libelle_activite ?? "",
       modalites: [this.construisLaModaliteDUneAutorisationAmm(autorisationAmmModel)],
     };
   }
@@ -739,7 +751,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   private construisLaModaliteDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireModalite {
     return {
       code: autorisationAmmModel.code_modalite,
-      libelle: autorisationAmmModel.libelle_modalite,
+      libelle: autorisationAmmModel.libelle_modalite ?? "",
       mentions: [this.construisLaMentionDUneAutorisationAmm(autorisationAmmModel)],
     };
   }
@@ -747,7 +759,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   private construisLaMentionDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireMention {
     return {
       code: autorisationAmmModel.code_mention,
-      libelle: autorisationAmmModel.libelle_mention,
+      libelle: autorisationAmmModel.libelle_mention ?? "",
       pratiques: [this.construisLaPratiqueDUneAutorisationAmm(autorisationAmmModel)],
     };
   }
@@ -755,7 +767,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   private construisLaPratiqueDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitairePratique {
     return {
       code: autorisationAmmModel.code_pratique_therapeutique_specifique,
-      libelle: autorisationAmmModel.libelle_pratique_therapeutique_specifique,
+      libelle: autorisationAmmModel.libelle_pratique_therapeutique_specifique ?? "",
       declarations: [this.construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel)],
     };
   }
@@ -763,7 +775,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
   private construisLaDeclarationDUneAutorisationAmm(autorisationAmmModel: AutorisationsAMMMQueryResult): AutorisationsAMMSanitaireDeclaration {
     return {
       code: autorisationAmmModel.code_declaration,
-      libelle: autorisationAmmModel.libelle_declaration,
+      libelle: autorisationAmmModel.libelle_declaration ?? "",
       codeAutorisationArhgos: autorisationAmmModel.code_autorisation_arhgos,
       dateFin: autorisationAmmModel.date_fin,
       dateAutorisation: autorisationAmmModel.date_autorisation,
@@ -1135,6 +1147,9 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       resultatNetComptable: budget.resultatNetComptableSan,
       ratioDependanceFinanciere: budget.ratioDependanceFinanciere,
       tauxDeCafNetSan: budget.tauxDeCafNetteSan,
+      fondsDeRoulement: budget.fondsDeRoulement,
+      besoinFondsDeRoulement: budget.besoinFondsDeRoulement,
+      tresorerie: budget.tresorerie,
     }));
   }
 

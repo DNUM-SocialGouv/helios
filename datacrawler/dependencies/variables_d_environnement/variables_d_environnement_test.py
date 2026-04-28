@@ -45,6 +45,26 @@ class TestVariablesDEnvironnement:
             "CHECKED_SIICEA_DATA_PATH": "test",
             "HAPI_DATA_PATH": "test",
             "VIGIE_RH_DATA_PATH": "test",
+            "HAS_DATA_PATH": "test",
+            "MS_NO_HAS_DATA_PATH": "test",
+            "DNUM_SFTP_HOST": "test",
+            "DNUM_SFTP_PORT": "test",
+            "DNUM_SFTP_USERNAME": "test",
+            "DNUM_SFTP_PRIVATE_KEY": "test",
+            "SIREC_DATA_PATH": "test",
+            "HAPI_SFTP_PASSWORD": "test",
+            "HAPI_SFTP_USERNAME": "test",
+            "HAPI_SFTP_PORT": "test",
+            "HAPI_SFTP_HOST": "test",
+            "SFTP_HOST": "test",
+            "SFTP_PORT": "test",
+            "SFTP_USERNAME": "test",
+            "SFTP_PRIVATE_KEY": "test",
+            "TIPIMAIL_SENDER_NAME": "test",
+            "TIPIMAIL_SENDER_ADDRESS": "test",
+            "TIPIMAIL_APIUSER": "test",
+            "TIPIMAIL_APIKEY": "test",
+            "TIPIMAIL_TO_ADDRESSES": "test"
         }
 
         # WHEN

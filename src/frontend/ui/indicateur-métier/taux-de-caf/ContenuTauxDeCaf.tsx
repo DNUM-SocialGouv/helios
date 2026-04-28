@@ -12,7 +12,7 @@ export const ContenuTauxDeCaf = ({ dateDeMiseÀJour, source }: ContenuTauxDeCafP
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur traduit la capacité de l’établissement à dégager annuellement, grâce à son exploitation, les fonds nécessaires aux investissements. Le

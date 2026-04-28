@@ -94,11 +94,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   private get effectifsGroupesDisponibles(): boolean {
@@ -110,31 +110,31 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesRotationsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesDureesCDDNeSontEllesPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko'
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
   }
 
   public get lesMotifsNeSontIlsPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesNaturesContratsNeSontPasAutorisees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get lesDepartsPrematuresCdiPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ko';
+    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
   }
 
   public get graphiqueMotifsAffichable(): boolean {
@@ -205,12 +205,12 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesTranchesAges(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles ?? [];
   }
 
   public get lesDonneesPyramideAges(): DonneesVigieRh[] {
-    const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles;
-    if (this.etablissementTerritorialVRMedicoSocial.pyramideAges !== null)
+    const labels = this.etablissementTerritorialVRMedicoSocial.tranchesAgesLibelles ?? [];
+    if (this.etablissementTerritorialVRMedicoSocial.pyramideAges)
       return Object.values(
         this.etablissementTerritorialVRMedicoSocial.pyramideAges.reduce((acc: { [key: number]: DonneesVigieRh }, item) => {
           const { annee, trancheLibelle, effectifHomme, effectifFemme, effectifHommeRef, effectifFemmeRef } = item;
@@ -244,7 +244,10 @@ export class BlocVigieRHViewModel {
       this.lesEffectifsGroupesNeSontIlsPasRenseignees &&
       this.lesDepartsEmbauchesNeSontIlsPasRenseignees &&
       this.lesDureesCDDNeSontEllesPasRenseignees &&
-      this.lesMotifsNeSontIlsPasRenseignes
+      this.lesMotifsNeSontIlsPasRenseignes &&
+      this.lesDepartsPrematuresCdiPasRenseignes &&
+      this.lesNaturesContratsNeSontPasReseignees &&
+      this.lesRotationsNeSontIlsPasRenseignees 
     );
   }
 
@@ -297,16 +300,16 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesDonneesDepartsEmbauches(): DepartEmbauche[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches;
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
-        .filter(departEmbauche => departEmbauche.annee !== maxAnnee);
-    }
+    const donneesTrimestrielles = this.etablissementTerritorialVRMedicoSocial.departsEmbauchesTrimestriels ?? [];
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = donneesTrimestrielles.reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
+
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 4).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? []).filter(departEmbauche => anneesCompletes.has(departEmbauche.annee));
   }
 
   public get donneesDepartsEmbauchesTrimestriels(): DepartEmbaucheTrimestrielViewModel[] {
@@ -323,27 +326,26 @@ export class BlocVigieRHViewModel {
   }
 
   public get departsPrematuresCdi(): DepartPrematuresCdiViewModel[] {
-    return this.etablissementTerritorialVRMedicoSocial.departsEmbauches
+    const donnees = this.etablissementTerritorialVRMedicoSocial.departsEmbauches ?? [];
+    return donnees
       .map(({ annee, departsPrematuresCdi }) => ({ annee, valeur: departsPrematuresCdi ?? null }))
       .sort((a, b) => b.annee - a.annee);
   }
 
   private get departsPrematuresCdiDisponibles(): boolean {
-    return this.departsPrematuresCdi.some(({ valeur }) => valeur !== null && valeur !== undefined);
+    return this.departsPrematuresCdi?.some(({ valeur }) => valeur !== null && valeur !== undefined);
   }
 
   public get donneesTauxRotation(): TauxRotation[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour le départ/embauche) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.tauxRotation.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? [];
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.tauxRotation
-        .filter(rotation => rotation.annee !== maxAnnee);
-    }
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = (this.etablissementTerritorialVRMedicoSocial.tauxRotationTrimestriel ?? []).reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
 
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 4).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.tauxRotation ?? []).filter(rotation => anneesCompletes.has(rotation.annee));
   }
 
   public get donneesTauxRotationTrimestrielles(): TauxRotationTrimestriel[] {
@@ -400,13 +402,12 @@ export class BlocVigieRHViewModel {
   }
 
   public get topIndicateurContrats() {
-    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
-    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur ?? '';
-    const periodAbbr = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
+    const period = this.echelleTemporelle?.get("vr-duree-cdd")?.valeur.replace(' ','-') ?? '';
+    const comparaisonLabel = this.echelleTemporelle?.get("vr-duree-cdd")?.valeurVignette ?? '';
     const maxAnnee = Math.max(...durees.map(d => d.annee));
     const derniereDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee)) * 100;
     const isoPeriodDonneeComparaison = (this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1 && duree.dureeCode < 5) / this.sommeDesEffectifs(durees, (duree) => duree.annee === maxAnnee - 1)) * 100;
-    const comparaisonLabel = `à (${periodAbbr.replaceAll(/(\d{4})/g, (year) => String(Number(year) - 1))})`;
     const variation = StringFormater.transformInRoundedRate(StringFormater.transformInRoundedRate(derniereDonneeComparaison) - StringFormater.transformInRoundedRate(isoPeriodDonneeComparaison));
     let variationText = '';
 
@@ -426,11 +427,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesDureeCdd(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.dureesCddLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.dureesCddLibelles ?? [];
   }
 
   public get lesDureesCdd(): DureeCDD[] {
-    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd;
+    const durees = this.etablissementTerritorialVRMedicoSocial.dureesCdd ?? [];
     const maxAnnee = Math.max(...durees.map(d => d.annee));
 
     return durees
@@ -439,11 +440,11 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesLibellesMotifsRupture(): string[] {
-    return this.etablissementTerritorialVRMedicoSocial.motifsRuptureContratLibelles;
+    return this.etablissementTerritorialVRMedicoSocial.motifsRuptureContratLibelles ?? [];
   }
 
   public get lesMotifsRuptureContrat(): MotifsRuptureContrat[] {
-    const motifs = this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat;
+    const motifs = this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat ?? [];
     const maxAnnee = Math.max(...motifs.map(m => m.annee));
 
     return motifs
@@ -452,31 +453,31 @@ export class BlocVigieRHViewModel {
   }
 
   public get natureContratsAnnuel(): NatureContratsAnnuel[] {
-    // si l'année en cours n'est pas complète, on ne l'affiche pas
-    // si le nombre des trimestres (pour une nature de contrats) n'est pas divisible pas 4, l'année n'est pas complète
-    const complete = this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel.length % 4 === 0;
-    if (complete)
-      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel;
-    else {
-      const maxAnnee = Math.max(...this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.map(m => m.annee));
-      return this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel
-        .filter(contrat => contrat.annee !== maxAnnee);
-    }
+    // Vérifier les années complètes (avec les 4 trimestres)
+    const trimestresParAnnee = (this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel ?? []).reduce((acc, item) => {
+      if (!acc[item.annee]) acc[item.annee] = 0;
+      acc[item.annee]++;
+      return acc;
+    }, {} as Record<number, number>);
+
+    const anneesCompletes = new Set(Object.entries(trimestresParAnnee).filter(([, count]) => count === 8).map(([annee]) => Number(annee)));
+    return (this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel ?? []).filter(natureContrat => anneesCompletes.has(natureContrat.annee));
+
   }
 
   public get natureContratsTrimestriel(): NatureContratsTrimestriel[] {
-    return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel;
+    return this.etablissementTerritorialVRMedicoSocial.natureContratsTrimestriel ?? [];
   }
 
   public get paletteNatureContrats(): CouleurHistogramme[] {
     return [
       {
-        premierPlan: couleurDuFondHistogrammeJaune,
-        secondPlan: couleurExtensionHistogrammeJaune,
-      },
-      {
         premierPlan: couleurDuFondHistogrammeOrangeClair,
         secondPlan: couleurExtensionHistogrammeOrangeClair,
+      },
+      {
+        premierPlan: couleurDuFondHistogrammeJaune,
+        secondPlan: couleurExtensionHistogrammeJaune,
       },
     ];
   }
@@ -486,6 +487,6 @@ export class BlocVigieRHViewModel {
   }
 
   public dateDonneesArrete(indicateurId: string): string | null {
-    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.dateDonneesArretees ?? null;
+    return this.etablissementTerritorialVRMedicoSocial.echelleTemporelle?.[indicateurId]?.valeur ?? null;
   }
 }

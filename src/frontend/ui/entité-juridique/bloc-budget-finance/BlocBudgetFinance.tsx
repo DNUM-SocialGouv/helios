@@ -1,8 +1,11 @@
 import { AllocationRessources } from "./allocation-ressources/AllocationRessources";
+import { BesoinFondsDeRoulement } from "./besoin-fonds-de-roulement/BesoinFondsDeRoulement";
 import styles from "./BlocBudgetFinance.module.css";
 import { CompteDeResultat } from "./compte-de-resultat/CompteDeResultat";
 import { EntitéJuridiqueBudgetFinanceViewModel } from "./EntitéJuridiqueBudgetFinanceViewModel";
+import { FondsDeRoulement } from "./fonds-de-roulement/FondsDeRoulement";
 import { RatioDependanceFinanciere } from "./ratio-dependance-financiere/RatioDependanceFinanciere";
+import { Tresorerie } from "./tresorerie/Tresorerie";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -39,7 +42,7 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
     return null;
   };
 
-  const renderBudgetEtFinances = () => {
+  const renderBudgetEtFinancesFirstSection = () => {
     if (!estEntiteJuridiqueOuPnL) {
       return null;
     }
@@ -100,11 +103,44 @@ export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudge
     );
   };
 
+  const renderBlocBudgetEtFinancesSecondSection = () => {
+    const peutAfficherFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.auMoinsUnFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement.fondsDeRoulementEstIlAutorisé;
+    const peutAfficherBesoinFondsDeRoulement = entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.auMoinsUnBesoinFondsDeRoulementRenseigné() && entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement.besoinFondsDeRoulementEstIlAutorisé;
+    const peutAfficherTresorerie = entitéJuridiqueBudgetFinanceViewModel.tresorerie.auMoinsUneTresorerieRenseignée() && entitéJuridiqueBudgetFinanceViewModel.tresorerie.tresorerieEstIlAutorisé;
+
+    return (
+      <ul className={"indicateurs " + styles["budget"]}>
+        {peutAfficherFondsDeRoulement && (
+          <FondsDeRoulement
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            fondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.fondsDeRoulement}
+          />
+        )}
+        {peutAfficherBesoinFondsDeRoulement && (
+          <BesoinFondsDeRoulement
+            besoinFondsDeRoulementViewModel={entitéJuridiqueBudgetFinanceViewModel.besoinFondsDeRoulement}
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+          />
+        )}
+        {peutAfficherTresorerie && (
+          <Tresorerie
+            etabFiness={etabFiness}
+            etabTitle={etabTitle}
+            tresorerieViewModel={entitéJuridiqueBudgetFinanceViewModel.tresorerie}
+          />
+        )}
+      </ul>
+    );
+  }
+
   return (
     <Bloc opnedBloc={opnedBloc} titre={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs}>
       {renderBlocMessages()}
-      {renderBudgetEtFinances()}
+      {renderBudgetEtFinancesFirstSection()}
       {renderAllocationRessources()}
+      {renderBlocBudgetEtFinancesSecondSection()}
     </Bloc>
   );
 };

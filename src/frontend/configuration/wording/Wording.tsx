@@ -104,7 +104,7 @@ export interface Wording {
 
   // Fiches
   readonly miseÀJour: (date: string) => string;
-  readonly miseÀJourEtSource: (date: string, source: ReactElement) => ReactElement;
+  readonly miseÀJourEtSource: (source: ReactElement, date?: string) => ReactElement;
   readonly NON_RENSEIGNÉ: string;
   readonly OUI: string;
   readonly NON: string;
@@ -114,6 +114,14 @@ export interface Wording {
 
   // Info bulle
   readonly ÉLÉMENTS_DE_COMPRÉHENSION: string;
+  readonly INDICATION_VARIATION: string;
+  readonly LECTURE_INTERPRETATION: string;
+  readonly POPULATION: string;
+  readonly EXCLUSIONS: string;
+  readonly UNITE: string;
+  readonly VARIATION: string;
+  readonly DATE_OBSERVATION: string;
+  readonly PRESENCE_PERIODE: string;
   readonly FRÉQUENCE: string;
   readonly MODE_DE_CALCUL: string;
   readonly SOURCES: string;
@@ -266,6 +274,10 @@ export interface Wording {
   readonly AFFICHER_PLUS: string;
   readonly AFFICHER_MOINS: string;
 
+  readonly CERTIFICATION_QUALISCOPE: string;
+  readonly HAS_FICHE_SAN_PATH: string;
+  readonly HAS_FICHE_MS_PATH: string;
+
   // Bloc Autorisation Sanitaire
   readonly AUTRES_ACTIVITÉS: string;
   readonly AUTRES_ACTIVITÉS_SAN: string;
@@ -309,6 +321,9 @@ export interface Wording {
   readonly GROUPE_III: string;
   readonly TAUX_DE_CAF: string;
   readonly FONDS_DE_ROULEMENT_NET_GLOBAL: string;
+  readonly FONDS_DE_ROULEMENT: string;
+  readonly BESOIN_FONDS_DE_ROULEMENT: string;
+  readonly TRESORERIE: string;
 
   // Bloc budget et finance entité juridique
   readonly TITRE_I: string;
@@ -391,6 +406,7 @@ export interface Wording {
   readonly SIREC_TITLE: string;
   readonly SIVSS_TITLE: string;
   readonly SIICEA_TITLE: string;
+  readonly HAS_TITLE: string;
   readonly SI_AUTORISATIONS_TITLE: string;
 
   // Sources courtes
@@ -407,6 +423,7 @@ export interface Wording {
   readonly SIREC: ReactElement;
   readonly SIVSS: ReactElement;
   readonly SIICEA: ReactElement;
+  readonly HAS: ReactElement;
   readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
 
@@ -484,6 +501,7 @@ export interface Wording {
   readonly ETOILE_MES_LISTES: string;
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string;
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string;
+  readonly ETOILE_NOUVELLE_LISTE_EXISTANTE: string;
   readonly ETOILE_MAX_LISTE_ATTEINT: string;
   readonly ETOILE_ERREUR_MODIF_ETAB: string;
 
@@ -610,16 +628,13 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TAG: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_TEXT_LIEN: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_LIEN: string;
   readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
   readonly INDICATEURS_VIGIERH_BLOC_TITLE: string;
   readonly MESSAGE_INFO_VIGIE_RH: string;
+  readonly MESSAGE_INFO_VIGIE_RH_DETAIL: string;
   readonly PYRAMIDE_DES_AGES: string;
   readonly TRANCHE_AGE: string;
   readonly EFFECTIF_FEMMES: string;
@@ -631,6 +646,7 @@ export interface Wording {
   readonly CONTRATS_COURTS: string;
   readonly MOUVEMENT_DU_PERSONNEL: string;
   readonly EFFECTIFS_PAR_CATEGORIE_PROFESSIONNELLE: string;
+  readonly EFFECTIFS_PAR_CATEGORIE_EXCEL_FILE: (filiere: string) => string;
   readonly EFFECTIFS_TOTAUX: string;
   readonly FILIERE: string;
   readonly PERIODE: string;

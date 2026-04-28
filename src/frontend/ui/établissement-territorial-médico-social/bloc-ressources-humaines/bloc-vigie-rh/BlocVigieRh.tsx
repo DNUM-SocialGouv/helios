@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 import { BlocVigieRHViewModel, DonneesVigieRh } from "./BlocVigieRHViewModel";
@@ -134,17 +134,15 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     updateAnneeEnCours();
   }, [anneeEnCours]);
   const items = donneesEffectifs.data ?? [];
+      
+  const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+
   const periodeIndicateursGlobal = blocVigieRHViewModel.echelleTemporelle.get("vr-indicateurs-global")?.valeur ?? "—";
   const recupereDateDonnees = (identifiant: string) => blocVigieRHViewModel.dateDonneesArrete(identifiant);
-  const recuperePeriodeGlissante = (identifiant: string) => {
-    const echelle = blocVigieRHViewModel.echelleTemporelle?.get(identifiant);
-    return echelle?.valeurTranscription ?? echelle?.valeur ?? null;
-  };
 
   const buildIndicateurEffectif = () => {
     if (!items.length) return null;
-
-    const dataEffectifs: EffectifsData = buildTotalsFromCategories(items);
+    
     const mois = dataEffectifs.dataMoisAnnee ?? [];
     const totaux = dataEffectifs.dataEtab ?? [];
     if (!mois.length || !totaux.length) return null;
@@ -165,7 +163,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     const precedent = Number(totaux[isoIdx]) || 0;
     const pastPeriod = `${MOIS[ref.mois - 1]} ${ref.annee - 1}`;
     const comparaisonLabel = `à ${ABB_MOIS[ref.mois - 1]} ${ref.annee - 1}`;
-    const variation = precedent - courant;
+    const variation = courant - precedent;
     const deltaPct = precedent && precedent !== 0 ? (variation / precedent) * 100 : null;
     let variationText = '';
 
@@ -185,15 +183,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     return <div>{wording.INDICATEURS_VIDES}</div>;
   }
 
-  const renderRow = (items: (ReactElement | null | false)[], columns: 2 | 3 = 3) => {
+  const renderRow = (items: (ReactElement | null | false)[]) => {
     const visibles = items.filter(Boolean) as ReactElement[];
     if (!visibles.length) return null;
-    const colCount = Math.min(columns, visibles.length);
-    const style = { ["--vigie-rh-cols" as const]: colCount } as CSSProperties;
     return (
       <ul
         className={`indicateurs ${styles["liste-indicateurs-vr"]}`}
-        style={style}
       >
         {visibles}
       </ul>
@@ -204,7 +199,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     <>
       <InfoMessage />
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
-      <section className={styles["vigie-rh-header"]}>
+      { ((blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif )|| blocVigieRHViewModel.graphiqueDureeCddAffichable || blocVigieRHViewModel.graphiqueRotationsAffichable) && (<section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>
           <h2 className="fr-h3 fr-mb-1v">Indicateurs clés</h2>
           <p className={styles["vigie-rh-caption"]}>
@@ -216,7 +211,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
           </p>
         </div>
         <div className={`fr-grid-row fr-grid-row--gutters ${styles["vigie-rh-top-indicateurs"]}`}>
-          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+          {blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={indicateurEffectif.comparaisonLabel}
@@ -240,10 +235,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={indicateurEffectif.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
+          {blocVigieRHViewModel.graphiqueDureeCddAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurContrats.comparaisonLabel}
@@ -251,7 +244,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuTopContratsCourtsVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
 
                   />
@@ -270,10 +262,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurContrats.variationText}
               />
             </div>
-          ) : (
-            <></>
           )}
-          {blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable ? (
+          {blocVigieRHViewModel.graphiqueRotationsAffichable && (
             <div className="fr-col-12 fr-col-md-4">
               <CarteTopIndicateur
                 comparaisonLabel={blocVigieRHViewModel.topIndicateurTauxRotation.comparaisonLabel}
@@ -298,14 +288,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 variationText={blocVigieRHViewModel.topIndicateurTauxRotation.variationText}
               />
             </div>
-          ) : (
-            <></>
-          )}
+          ) }
         </div>
-      </section>
+      </section>)}
 
       <div className={styles["liste-indicateurs-vr-wrapper"]}>
-        <section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
+        {(blocVigieRHViewModel.graphiqueEffectifsAffichable || blocVigieRHViewModel.graphiquePyramideAgesAffichable || blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable ) && (<section aria-label="effectif" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.EFFECTIFS}</h2>
           </div>
@@ -329,10 +317,11 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   source={wording.DSN}
                 >
                   <LineChart
+                    beginAtZero={false}
                     classContainer="fr-mb-4w"
                     couleurEffectifsTotaux={couleurEffectifsTotaux}
                     couleursFilieres={[]}
-                    dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                    dataEffectifs={dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                     etabFiness={etabFiness}
                     etabTitle={etabTitle}
                     identifiantLegende="légende-graphique-effectifs"
@@ -366,6 +355,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                     donneesAnneeEnCours?.effectifFemme &&
                     donneesAnneeEnCours?.effectifHommeRef && (
                       <PyramidChart
+                        annees={annees}
                         effectifFemme={donneesAnneeEnCours?.effectifFemme ?? []}
                         effectifFemmeRef={donneesAnneeEnCours?.effectifFemmeRef}
                         effectifHomme={donneesAnneeEnCours?.effectifHomme ?? []}
@@ -381,7 +371,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
             )
               : (
                 <></>
-              ), blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif ? (
+              ), blocVigieRHViewModel.graphiqueEffectifsAffichable ? (
                 <IndicateurGraphique
                   contenuInfoBulle={
                     <ContenuRepartitionEffectifsVigieRh
@@ -406,9 +396,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               ) : (
               <></>
             )
-            ], 2)}
+            ])}
           </div>
-          {!blocVigieRHViewModel.lesEffectifsGroupesNeSontIlsPasRenseignees && <section className="fr-accordion">
+          {blocVigieRHViewModel.graphiqueEffectifsGroupesAffichable && <section className="fr-accordion">
             <h3 className={styles["vigie-rh-accordion-button"]}>
               <button
                 aria-controls="accordion-vigie-rh"
@@ -443,10 +433,10 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 blocVigieRHViewModel={blocVigieRHViewModel}
                 couleurEffectifsTotaux={couleurEffectifsTotaux}
                 couleursFilieres={couleursFilieres}
-                dataEffectifs={indicateurEffectif?.dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
+                dataEffectifs={dataEffectifs ?? { dataFiliere: [], dataEtab: [], dataMoisAnnee: [] }}
                 etabFiness={etabFiness}
                 etabTitle={etabTitle}
-                multiCategories={indicateurEffectif?.items ?? []}
+                multiCategories={items ?? []}
                 paletteGroupes={paletteGroupes}
               />
               <h3 className={styles["vigie-rh-accordion-button"]}>
@@ -459,7 +449,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
               </h3>
             </div>
           </section>}
-        </section>
+        </section>)}
+        {(blocVigieRHViewModel.graphiqueNatureContratsAffichable || blocVigieRHViewModel.graphiqueDureeCddAffichable) && (
         <section aria-label="contrats-courts" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.CONTRATS_COURTS}</h2>
@@ -491,13 +482,12 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null,
-            blocVigieRHViewModel.graphiqueMotifsAffichable ? (
+            blocVigieRHViewModel.graphiqueDureeCddAffichable ? (
               <IndicateurGraphique
                 contenuInfoBulle={
                   <ContenuDureeCddVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-duree-cdd")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-duree-cdd")}
                     source={wording.DSN}
                   />
                 }
@@ -516,8 +506,9 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null
-          ], 2)}
-        </section>
+          ])}
+        </section>)}
+        {(blocVigieRHViewModel.graphiqueRotationsAffichable || blocVigieRHViewModel.graphiqueDepartsEmbauchesAffichable || blocVigieRHViewModel.graphiqueDepartsPrematuresCdiAffichable || blocVigieRHViewModel.graphiqueMotifsAffichable) && (
         <section aria-label="mouvement" className={styles["vigie-rh-block-border"]}>
           <div className={styles["vigie-rh-title-block"]}>
             <h2 className="fr-h3 fr-mb-1v">{wording.MOUVEMENT_DU_PERSONNEL}</h2>
@@ -602,7 +593,6 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                   <ContenuMotifsRuptureVigieRh
                     dateDeMiseAJour={blocVigieRHViewModel.dateDeMiseAJourEffectifs}
                     dateDonneesArretees={recupereDateDonnees("vr-motif-rupture")}
-                    periodeGlissante={recuperePeriodeGlissante("vr-motif-rupture")}
                     source={wording.DSN}
                   />
                 }
@@ -621,8 +611,8 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
                 />
               </IndicateurGraphique>
             ) : null,
-          ], 2)}
-        </section>
+          ])}
+        </section>)}
       </div>
     </>
   );

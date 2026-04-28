@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 from pandas import NA
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
@@ -82,7 +82,7 @@ class TestTransformeLesDonneesUSLD:
             [
                 csv_ann_sae_activite_builder(
                     {
-                        "Nombre journées USLD": NaN,
+                        "Nombre journées USLD": nan,
                     }
                 ),
             ]
@@ -104,7 +104,7 @@ class TestTransformeLesDonneesUSLD:
                 [
                     helios_ann_sae_activite_builder(
                         {
-                            "nombre_journees_usld": NaN,
+                            "nombre_journees_usld": nan,
                         }
                     )
                 ],
@@ -122,7 +122,7 @@ class TestTransformeLesDonneesUSLD:
                     {
                         "Finess": NUMÉRO_FINESS_ÉTABLISSEMENT,
                         "Année": 2018,
-                        "Nombre journées USLD": NaN,
+                        "Nombre journées USLD": nan,
                     }
                 ),
                 csv_ann_sae_activite_builder(
@@ -153,7 +153,7 @@ class TestTransformeLesDonneesUSLD:
                         {
                             "numero_finess_etablissement_territorial": NUMÉRO_FINESS_ÉTABLISSEMENT,
                             "annee": 2018,
-                            "nombre_journees_usld": NaN,
+                            "nombre_journees_usld": nan,
                         }
                     )
                 ],

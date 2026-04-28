@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.transform.entite_juridique.bloc_autorisations_capacités.agrège_les_capacités_dans_les_entites_juridiques import (
     agrège_les_capacités_dans_les_entites_juridiques,
@@ -182,16 +182,16 @@ class TestAgrègeLesCapacitésDansLesEntitesJuridiques:
                 "annee": ["2020", "2020"],
                 "numero_finess_entite_juridique": ["111111111", "111111111"],
                 "numero_finess_etablissement_territorial": ["222222222", "333333333"],
-                "nombre_lits_chirurgie": [NaN, NaN],
-                "nombre_lits_médecine": [NaN, NaN],
-                "nombre_lits_obstétrique": [NaN, NaN],
-                "nombre_lits_ssr": [NaN, NaN],
-                "nombre_places_chirurgie": [NaN, NaN],
-                "nombre_places_obstétrique": [NaN, NaN],
-                "nombre_places_ssr": [NaN, NaN],
-                "nombre_lits_usld": [NaN, NaN],
-                "nombre_lits_ou_places_psy_complet": [NaN, NaN],
-                "nombre_places_psy_partiel": [NaN, NaN],
+                "nombre_lits_chirurgie": [nan, nan],
+                "nombre_lits_médecine": [nan, nan],
+                "nombre_lits_obstétrique": [nan, nan],
+                "nombre_lits_ssr": [nan, nan],
+                "nombre_places_chirurgie": [nan, nan],
+                "nombre_places_obstétrique": [nan, nan],
+                "nombre_places_ssr": [nan, nan],
+                "nombre_lits_usld": [nan, nan],
+                "nombre_lits_ou_places_psy_complet": [nan, nan],
+                "nombre_places_psy_partiel": [nan, nan],
             }
         )
 
@@ -203,16 +203,16 @@ class TestAgrègeLesCapacitésDansLesEntitesJuridiques:
             {
                 "annee": ["2020"],
                 "numero_finess_entite_juridique": ["111111111"],
-                "nombre_lits_chirurgie": [NaN],
-                "nombre_lits_médecine": [NaN],
-                "nombre_lits_obstétrique": [NaN],
-                "nombre_lits_ssr": [NaN],
-                "nombre_places_chirurgie": [NaN],
-                "nombre_places_obstétrique": [NaN],
-                "nombre_places_ssr": [NaN],
-                "nombre_lits_usld": [NaN],
-                "nombre_lits_ou_places_psy_complet": [NaN],
-                "nombre_places_psy_partiel": [NaN],
+                "nombre_lits_chirurgie": [nan],
+                "nombre_lits_médecine": [nan],
+                "nombre_lits_obstétrique": [nan],
+                "nombre_lits_ssr": [nan],
+                "nombre_places_chirurgie": [nan],
+                "nombre_places_obstétrique": [nan],
+                "nombre_places_ssr": [nan],
+                "nombre_lits_usld": [nan],
+                "nombre_lits_ou_places_psy_complet": [nan],
+                "nombre_places_psy_partiel": [nan],
             }
         ).set_index(["annee", "numero_finess_entite_juridique"])
         pd.testing.assert_frame_equal(capacités_agrégées, capacités_agrégées_attendues)
@@ -224,16 +224,16 @@ class TestAgrègeLesCapacitésDansLesEntitesJuridiques:
                 "annee": ["2020", "2020"],
                 "numero_finess_entite_juridique": ["111111111", "111111111"],
                 "numero_finess_etablissement_territorial": ["222222222", "333333333"],
-                "nombre_lits_chirurgie": [NaN, 1],
-                "nombre_lits_médecine": [NaN, 2],
-                "nombre_lits_obstétrique": [NaN, 3],
-                "nombre_lits_ssr": [NaN, 4],
-                "nombre_places_chirurgie": [NaN, 5],
-                "nombre_places_obstétrique": [NaN, 6],
-                "nombre_places_ssr": [NaN, 7],
-                "nombre_lits_usld": [NaN, 8],
-                "nombre_lits_ou_places_psy_complet": [NaN, 9],
-                "nombre_places_psy_partiel": [NaN, 0],
+                "nombre_lits_chirurgie": [nan, 1],
+                "nombre_lits_médecine": [nan, 2],
+                "nombre_lits_obstétrique": [nan, 3],
+                "nombre_lits_ssr": [nan, 4],
+                "nombre_places_chirurgie": [nan, 5],
+                "nombre_places_obstétrique": [nan, 6],
+                "nombre_places_ssr": [nan, 7],
+                "nombre_lits_usld": [nan, 8],
+                "nombre_lits_ou_places_psy_complet": [nan, 9],
+                "nombre_places_psy_partiel": [nan, 0],
             }
         )
 

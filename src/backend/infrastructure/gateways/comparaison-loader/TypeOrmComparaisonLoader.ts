@@ -64,6 +64,9 @@ type ComparaisonEJTypeOrm = Readonly<{
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
+  fonds_de_roulement: number;
+  besoin_fonds_de_roulement: number;
+  tresorerie: number;
 }>;
 
 type ComparaisonSANTypeOrm = Readonly<{
@@ -89,6 +92,9 @@ type ComparaisonSANTypeOrm = Readonly<{
   enveloppe_1: number;
   enveloppe_2: number;
   enveloppe_3: number;
+  fonds_de_roulement: number;
+  besoin_fonds_de_roulement: number;
+  tresorerie: number;
 }>;
 
 export class TypeOrmComparaisonLoader implements ComparaisonLoader {
@@ -319,6 +325,9 @@ FROM (
     bg.resultat_net_comptable_san,
     bg.taux_de_caf_nette_san,
     bg.ratio_dependance_financiere,
+    bg.fonds_de_roulement,
+    bg.besoin_fonds_de_roulement,
+    bg.tresorerie,
     acs.nombre_sejours_had,
     rhej.nombre_etp_pm,
     rhej.nombre_etp_pnm,
@@ -350,6 +359,9 @@ FROM (
     enveloppe_1,
     enveloppe_2,
     enveloppe_3,
+    bg.fonds_de_roulement,
+    bg.besoin_fonds_de_roulement,
+    bg.tresorerie,
     CASE
         WHEN bg.depenses_titre_i_global IS NULL AND bg.depenses_titre_ii_global IS NULL AND bg.depenses_titre_iii_global IS NULL AND bg.depenses_titre_iv_global IS NULL THEN NULL
         ELSE COALESCE(bg.depenses_titre_i_global, 0)  + COALESCE(bg.depenses_titre_ii_global, 0) + COALESCE(bg.depenses_titre_iii_global, 0) + COALESCE(bg.depenses_titre_iv_global, 0)
@@ -567,6 +579,8 @@ FROM (
     const compareEtSanQueryBody = ` from recherche et
     LEFT JOIN activite_sanitaire acs
     on et.numero_finess = acs.numero_finess_etablissement_territorial and acs.annee = ${annee}
+    LEFT JOIN budget_et_finances_sanitaire bg
+    on et.numero_finess = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
     LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe2} on et.numero_finess  = ar2.numero_finess_etablissement_territorial
     LEFT JOIN ${compareEnveloppe3} on et.numero_finess  = ar3.numero_finess_etablissement_territorial
@@ -611,7 +625,10 @@ FROM (
     rhs.jours_absenteisme_pnm,
     enveloppe_1,
     enveloppe_2,
-    enveloppe_3 ${compareEtSanQueryBody}`;
+    enveloppe_3,
+    bg.fonds_de_roulement,
+    bg.besoin_fonds_de_roulement,
+    bg.tresorerie ${compareEtSanQueryBody}`;
 
     const limitForExport = forExport ? "" : `LIMIT ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE} OFFSET ${this.NOMBRE_DE_RÉSULTATS_MAX_PAR_PAGE * (page - 1)}`;
     const paginatedCompareETSanQuery =
@@ -717,6 +734,9 @@ FROM (
         resultatNetComptableEj: resultat.type === "Entité juridique" ? resultat.resultat_net_comptable_san : '',
         tauxCafEj: resultat.type === "Entité juridique" ? this.transformInRate(resultat.taux_de_caf_nette_san, 1) : '',
         ratioDependanceFinanciere: resultat.type === "Entité juridique" ? this.transformInRate(resultat.ratio_dependance_financiere, 1) : '',
+        fondsDeRoulement: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.fonds_de_roulement, 0) : '',
+        besoinFondsDeRoulement: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.besoin_fonds_de_roulement, 0) : '',
+        tresorerie: resultat.type === "Entité juridique" ? this.makeNumberArrondi(resultat.tresorerie, 0) : '',
         sejoursHad: resultat.type === "Entité juridique" ? resultat.nombre_sejours_had : '',
         nombreEtpPm: resultat.type === "Entité juridique" ? resultat.nombre_etp_pm : '',
         nombreEtpPnm: resultat.type === "Entité juridique" ? resultat.nombre_etp_pnm : '',
@@ -753,7 +773,10 @@ FROM (
         joursAbsenteismePnm: resultat.type === "Sanitaire" ? resultat.jours_absenteisme_pnm : '',
         enveloppe1: resultat.type === "Sanitaire" ? resultat.enveloppe_1 : '',
         enveloppe2: resultat.type === "Sanitaire" ? resultat.enveloppe_2 : '',
-        enveloppe3: resultat.type === "Sanitaire" ? resultat.enveloppe_3 : ''
+        enveloppe3: resultat.type === "Sanitaire" ? resultat.enveloppe_3 : '',
+        fondsDeRoulement: resultat.type === "Sanitaire" ? this.makeNumberArrondi(resultat.fonds_de_roulement, 0) : '',
+        besoinFondsDeRoulement: resultat.type === "Sanitaire" ? this.makeNumberArrondi(resultat.besoin_fonds_de_roulement, 0) : '',
+        tresorerie: resultat.type === "Sanitaire" ? this.makeNumberArrondi(resultat.tresorerie, 0) : '',
       };
     });
   }

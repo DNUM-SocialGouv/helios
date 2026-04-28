@@ -1,5 +1,5 @@
 import pandas as pd
-from numpy import NaN
+from numpy import nan
 
 from datacrawler.test_helpers import NUMÉRO_FINESS_ÉTABLISSEMENT, mocked_logger
 from datacrawler.test_helpers.diamant_builder import csv_ann_errd_ej_builder, csv_ann_errd_ej_et_budget_et_finances_builder, csv_ann_per_errd_eprd_builder
@@ -59,9 +59,9 @@ class TestTransformeEtFusionneLesDonnéesBudgétairesAvecLesTauxDesÉtablissemen
                     {
                         **helios_ann_errd_ej_budget_et_finances_builder(
                             {
-                                "taux_de_caf": NaN,
-                                "taux_de_vetuste_construction": NaN,
-                                "fonds_de_roulement": NaN,
+                                "taux_de_caf": nan,
+                                "taux_de_vetuste_construction": nan,
+                                "fonds_de_roulement": nan,
                             }
                         ),
                         **helios_ann_errd_ej_et_budget_et_finances_builder({"annee": 2019}),
@@ -70,14 +70,14 @@ class TestTransformeEtFusionneLesDonnéesBudgétairesAvecLesTauxDesÉtablissemen
                     {
                         **helios_ann_errd_ej_et_budget_et_finances_builder(
                             {
-                                "contribution_frais_de_siege_groupement": NaN,
-                                "depenses_groupe_i": NaN,
-                                "depenses_groupe_ii": NaN,
-                                "depenses_groupe_iii": NaN,
-                                "recettes_groupe_i": NaN,
-                                "recettes_groupe_ii": NaN,
-                                "recettes_groupe_iii": NaN,
-                                "resultat_net_comptable": NaN,
+                                "contribution_frais_de_siege_groupement": nan,
+                                "depenses_groupe_i": nan,
+                                "depenses_groupe_ii": nan,
+                                "depenses_groupe_iii": nan,
+                                "recettes_groupe_i": nan,
+                                "recettes_groupe_ii": nan,
+                                "recettes_groupe_iii": nan,
+                                "resultat_net_comptable": nan,
                             }
                         ),
                         **helios_ann_errd_ej_budget_et_finances_builder({"annee": 2020}),

@@ -12,7 +12,7 @@ export const ContenuDePrestationsExternes = ({ dateDeMiseÀJour, source }: Conte
 
   return (
     <>
-      <p>{wording.miseÀJourEtSource(dateDeMiseÀJour, source)}</p>
+      <p>{wording.miseÀJourEtSource(source, dateDeMiseÀJour)}</p>
       <section aria-label={wording.ÉLÉMENTS_DE_COMPRÉHENSION}>
         <p>
           Cet indicateur permet d’estimer l’importance financière de l’externalisation de prestations directes. Il vient compléter les indicateurs RH internes

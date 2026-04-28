@@ -1,15 +1,17 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { Institution } from "../entities/Utilisateur/Institution";
-import { RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
+import { RésultatLogin, PasswordStatus } from "../entities/Utilisateur/RésultatLogin";
 
 export interface UtilisateurLoader {
   login(email: string, password: string): Promise<RésultatLogin>;
+  getLoginError(email: string): Promise<string>;
   checkIfEmailExists(email: string): Promise<boolean>;
   getInstitutions(): Promise<Institution[]>;
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
   checkUserIsNotAdminAndInactif(email: string): Promise<boolean>;
+  checkPasswordStatus(email: string): Promise<PasswordStatus>;
   updateLastConnectionDate(email: string): Promise<boolean>;
   getUsersListPaginated(
     key: string,

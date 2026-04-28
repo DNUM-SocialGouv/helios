@@ -7,12 +7,21 @@ import { RechercheCassée } from "./RechercheCassée";
 import { RechercheEnAttente } from "./RechercheEnAttente";
 import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
+import { PasswordStatus, PasswordStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
+import { PasswordWarnningNotice } from "../commun/PasswordWarningNotice/PasswordWarningNotice";
 
-export const PageRecherche = () => {
+type PageRechercheProps = {
+  passwordStatus: PasswordStatus;
+};
+
+export const PageRecherche = ({ passwordStatus }: PageRechercheProps) => {
   const { wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(false);
+
+  useBreadcrumb([]);
 
   const {
     estCeEnAttente,
@@ -33,6 +42,7 @@ export const PageRecherche = () => {
   } = useRecherche();
 
   const showNotice = new Date() <= new Date(wording.NOUVELLES_FONCTIONNALITÉS_DATE_FIN);
+  const showPasswordWarning = passwordStatus.status === PasswordStatusEnum.WARNING;
 
   useEffect(() => {
     async function loadDisplayKind() {
@@ -58,8 +68,9 @@ export const PageRecherche = () => {
       <Head>
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
-      {showNotice ? <NewFeaturesNotice /> : null}
       <div className="fr-container">
+        {showPasswordWarning ? <PasswordWarnningNotice daysLeft={passwordStatus.daysLeft} /> : null}
+        {showNotice ? <NewFeaturesNotice /> : null}
         <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={(e) => lancerLaRecherche(e, displayTable)} rechercheOnChange={rechercheOnChange} terme={terme} />
 
         {estCeEnAttente && <RechercheEnAttente />}
