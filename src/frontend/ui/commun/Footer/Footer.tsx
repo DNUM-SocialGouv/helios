@@ -96,9 +96,8 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <Link
+              <button
                 className="fr-footer__bottom-link"
-                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   setOpenModal(true);
@@ -106,7 +105,7 @@ export const Footer = () => {
                 }}
               >
                 {wording.COOKIES}
-              </Link>
+              </button>
             </li>
             <li className="fr-footer__bottom-item">
               <Link
