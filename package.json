@@ -50,6 +50,8 @@
         "retrieveSivss:local": "pipenv run retrieveSivss",
         "retrieveVigieRh": "python -m datacrawler.download_vigierh_data",
         "retrieveVigieRh:local": "pipenv run retrieveVigierh",
+        "retrieveStarsFIR": "python -m datacrawler.download_starsfir_data",
+        "retrieveStarsFIR:local": "pipenv run retrieveStarsFIR",
         "updateEJ": "python -m datacrawler.import_les_entites_juridiques",
         "updateEJ:local": "pipenv run populate_les_entites_juridiques",
         "updateET": "python -m datacrawler.import_les_etablissements_territoriaux",

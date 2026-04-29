@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 import ftputil.error
 
-from datacrawler.download_hapi_data import list_hapi_files, main
+from datacrawler.download_starsfir_data import list_starsfir_files, main
 
 
 def _make_ftp_host_mock(listdir_return: list[str]) -> MagicMock:
@@ -26,7 +26,7 @@ def _env_vars(tmp_path: Path) -> dict[str, str]:
     }
 
 
-class TestListHapiFiles:
+class TestListStarsFIRFiles:
     def test_returns_most_recent_file_per_year(self) -> None:
         # Given
         current_year = datetime.now().year
@@ -36,7 +36,7 @@ class TestListHapiFiles:
         mock_ftp_host.listdir.return_value = [older, newer]
 
         # When
-        result = list_hapi_files(mock_ftp_host, "/some/path")
+        result = list_starsfir_files(mock_ftp_host, "/some/path")
 
         # Then
         assert len(result) == 1
@@ -50,7 +50,7 @@ class TestListHapiFiles:
         mock_ftp_host.listdir.return_value = files
 
         # When
-        result = list_hapi_files(mock_ftp_host, "/some/path")
+        result = list_starsfir_files(mock_ftp_host, "/some/path")
 
         # Then
         assert len(result) == 5
@@ -67,7 +67,7 @@ class TestListHapiFiles:
         mock_ftp_host.listdir.return_value = [too_old, future, valid]
 
         # When
-        result = list_hapi_files(mock_ftp_host, "/some/path")
+        result = list_starsfir_files(mock_ftp_host, "/some/path")
 
         # Then
         assert result == [valid]
@@ -85,7 +85,7 @@ class TestListHapiFiles:
         mock_ftp_host.listdir.return_value = non_matching
 
         # When
-        result = list_hapi_files(mock_ftp_host, "/some/path")
+        result = list_starsfir_files(mock_ftp_host, "/some/path")
 
         # Then
         assert result == []
@@ -96,7 +96,7 @@ class TestListHapiFiles:
         mock_ftp_host.listdir.return_value = ["other.csv", "archive.zip"]
 
         # When
-        result = list_hapi_files(mock_ftp_host, "/some/path")
+        result = list_starsfir_files(mock_ftp_host, "/some/path")
 
         # Then
         assert result == []
@@ -114,11 +114,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_hapi_data.initialise_les_dépendances",
+                "datacrawler.download_starfirs_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_hapi_data._make_session_factory"),
+            patch("datacrawler.download_starfirs_data._make_session_factory"),
         ):
             # When
             main()
@@ -135,11 +135,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_hapi_data.initialise_les_dépendances",
+                "datacrawler.download_starfirs_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_hapi_data._make_session_factory"),
+            patch("datacrawler.download_starfirs_data._make_session_factory"),
         ):
             # When
             main()
@@ -154,14 +154,14 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_hapi_data.initialise_les_dépendances",
+                "datacrawler.download_starfirs_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch(
                 "ftputil.FTPHost",
                 side_effect=ftputil.error.FTPError("connection refused"),
             ),
-            patch("datacrawler.download_hapi_data._make_session_factory"),
+            patch("datacrawler.download_starfirs_data._make_session_factory"),
         ):
             # When
             main()
@@ -179,11 +179,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_hapi_data.initialise_les_dépendances",
+                "datacrawler.download_starfirs_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_hapi_data._make_session_factory"),
+            patch("datacrawler.download_starfirs_data._make_session_factory"),
         ):
             # When
             main()
@@ -204,11 +204,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_hapi_data.initialise_les_dépendances",
+                "datacrawler.download_starfirs_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_hapi_data._make_session_factory"),
+            patch("datacrawler.download_starfirs_data._make_session_factory"),
         ):
             # When
             main()
