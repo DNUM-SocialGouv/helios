@@ -38,11 +38,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.status(403).send("Forbidden");
       }
 
-      const recherche = await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
+      await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
 
       dependencies.logger.audit(`${userSession?.user?.email}: Modification de l'utilisateur "${userBeforeChange.email}"`);
 
-      return response.status(200).json(recherche);
+      return response.status(200).json({});
     } else {
       response.status(404).send("User not found");
     }
