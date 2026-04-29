@@ -8,6 +8,7 @@
 - hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
 
 ### Features
+- Hel-1018: [RGAA] Mise en conformité script 7.1
 
 - hel-1027: [Sécurité] Renforcer la politique Content-Security-Policy (CSP)
 - hel-1015: Export Fiche EJ - ajouter la cat FINESS das ET rattachés
