@@ -70,6 +70,16 @@ const securityHeaders = [
     key: "X-Frame-Options",
     value: "SAMEORIGIN",
   },
+  /**
+   * X-XSS-Protection, see: https://scotthelme.co.uk/hardening-your-http-response-headers/
+   * This header enables the Cross-site scripting (XSS) filter built into most recent web browsers.
+   *
+   * CHOICE: The value "0" disables the XSS filter. This is because modern browsers have better built-in XSS protection and this header can sometimes cause issues with legitimate content.
+   **/
+  {
+    key: "X-XSS-Protection",
+    value: "0",
+  },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
