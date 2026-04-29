@@ -43,12 +43,6 @@ export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source, compar
           <span className="fr-text--bold">Source(s) :</span> HAPI (HArmonisation et Partage d’Information) - Autres champs, STARS FIR.
         </p>
       </section>
-      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
-        <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
-          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
-        </p>
-      </section>
     </>
   );
 };
