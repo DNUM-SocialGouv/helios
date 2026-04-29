@@ -28,7 +28,10 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               Helios est accessible uniquement depuis votre ordinateur professionnel, via le VPN de l’ARS ou des Ministères Sociaux.
             </p>
-            <p className="fr-mb-0">L’adresse de connexion est: <a href="https://www.helios.ars.sante.fr/" rel="noreferrer" target="_blank">https://www.helios.ars.sante.fr/</a></p>
+            <p className="fr-mb-0">L’adresse de connexion est: <a href="https://www.helios.ars.sante.fr/" rel="noreferrer" target="_blank" title="https://www.helios.ars.sante.fr/ - nouvelle Fenêtre">
+                https://www.helios.ars.sante.fr/
+              </a>
+            </p>
           </>
         ),
       },

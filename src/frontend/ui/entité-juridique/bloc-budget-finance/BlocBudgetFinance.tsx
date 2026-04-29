@@ -25,12 +25,19 @@ type BlocBudgetFinanceProps = Readonly<{
 export const BlocBudgetFinance = ({ etabTitle, etabFiness, entitéJuridiqueBudgetFinanceViewModel, type, opnedBloc, toggelBlocs }: BlocBudgetFinanceProps) => {
   const { wording } = useDependencies();
   const estEntiteJuridiqueOuPnL = type === 'EJ' || type === 'ET_PNL';
+
   const donneesNonAutorisees = entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasAutorisés(type);
   const donneesNonRenseignees = entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetairePasRenseignee(type);
 
   if (estEntiteJuridiqueOuPnL && entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées && entitéJuridiqueBudgetFinanceViewModel.allocationRessources.vide()) {
     return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
   }
+
+   if (!estEntiteJuridiqueOuPnL && entitéJuridiqueBudgetFinanceViewModel.lesDonnéesBudgetEtFinanceNeSontPasRenseignées ) {
+    return <BlocIndicateurVide opnedBloc={opnedBloc} title={wording.TITRE_BLOC_BUDGET_ET_FINANCES} toggelBlocs={toggelBlocs} />;
+  }
+
+
 
   const renderBlocMessages = () => {
     if (donneesNonAutorisees.length !== 0) {

@@ -32,7 +32,7 @@ export const TuileEtablissement = ({
         <div className="fr-tile__body fr-enlarge-link">
           <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
-              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien(isSimpleSearch)} rel="noreferrer">
+              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien(isSimpleSearch)} rel="noreferrer" title={rechercheViewModel.socialReason}>
                 {rechercheViewModel.titre}
               </a>
             </h2>

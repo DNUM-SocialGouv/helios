@@ -1,6 +1,8 @@
 import { ReactElement } from "react";
 
 export interface Wording {
+  readonly HELIOS_URL: string;
+
   // Abréviations
   readonly CPOM_TITLE: string;
   readonly CPOM: ReactElement;
@@ -456,6 +458,10 @@ export interface Wording {
   readonly NOUVELLE_FENÊTRE: string;
   readonly ECO_CONCEPTION: string;
   readonly COOKIES: string;
+  readonly POLITIQUE_CONFIDENTIALITE: string;
+  readonly TARTE_CITRON: string;
+  readonly SAVOIR_PLUS: string;
+  readonly VOIR_SITE_OFFICIEL: string;
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string;
@@ -468,8 +474,12 @@ export interface Wording {
   readonly ÉDITEUR_DU_SITE: string;
   readonly PROPRIÉTÉ_INTELLECTUELLE: string;
   readonly LIMITES_DE_RESPONSABILITÉ: string;
+  readonly SCALINGO: string;
+  readonly CATAMANIA: string;
 
   readonly EN_CONSTRUCTION: string;
+
+  readonly RGESN: string;
 
   // Comparaison
   readonly COMPARAISON: string;

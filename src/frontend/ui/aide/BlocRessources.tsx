@@ -40,6 +40,7 @@ export function BlocRessources({ ressources }: BlocRessourcesProps) {
                         href={ressource.lien}
                         rel="noopener noreferrer"
                         target="_blank"
+                        title={`${ressource.nom} - ${wording.NOUVELLE_FENÊTRE}`}
                       >
                         {ressource.nom}
                       </a>
