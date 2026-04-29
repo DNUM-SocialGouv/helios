@@ -1,5 +1,6 @@
 import os
 from logging import Logger
+import sys
 
 from sqlalchemy.engine import Engine, create_engine
 
@@ -16,7 +17,6 @@ from datacrawler.extract.lecteur_sql import (
 from datacrawler.load.nom_des_tables import TABLE_RESSOURCE_ALLOCATION_EJ, TABLE_RESSOURCE_ALLOCATION_ET, FichierSource
 from datacrawler.load.sauvegarde import (
     mets_a_jour_la_date_de_mise_a_jour_du_fichier_source,
-    mets_a_jour_les_montants_engagements,
     sauvegarde,
     supprime_les_donnees_pour_l_annee,
 )
@@ -39,7 +39,6 @@ def import_engagements_allocation_ressource(
 ) -> None:
     chemin = os.path.join(hapi_data_path, fichier)
     annee_fichier = extrais_l_annee_du_nom_de_fichier_engagements_hapi(chemin)
-    date_fichier = extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin)
 
     types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_engagements_hapi_allocation_ressource_ej_helios)
     donnees = lis_le_fichier_engagements_hapi_csv(chemin, colonnes_a_lire_allocation_ressource_engagements, types_des_colonnes)
@@ -50,7 +49,7 @@ def import_engagements_allocation_ressource(
     donnees_ej = transforme_les_donnees_engagements_ej(donnees, finess_ej, logger)
     donnees_et = transforme_les_donnees_engagements_et(donnees, finess_et, logger)
 
-    # On sépare les données de l'année courante (pour lesquelles on fera une suppression+insertion) des années précédentes (pour lesquelles on fera une mise à jour)
+    # On sépare les données de l'année courante (pour lesquelles on fera une suppression+insertion) des années précédentes (pour mise à jour)
     donnees_ej_annee_courante = donnees_ej[donnees_ej.index.get_level_values("annee") == annee_fichier]
     # donnees_ej_annees_precedentes = donnees_ej[donnees_ej.index.get_level_values("annee") != annee_fichier]
     donnees_et_annee_courante = donnees_et[donnees_et.index.get_level_values("annee") == annee_fichier]
@@ -72,7 +71,9 @@ def import_engagements_allocation_ressource(
         # )
         # logger.info("[HAPI ENGAGEMENTS] Années précédentes: mise à jour effectuée")
 
-        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_fichier, FichierSource.DIAMANT_MEN_HAPI)
+        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(
+            connection, extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin), FichierSource.DIAMANT_MEN_HAPI
+        )
 
     logger.info(f"[HAPI ENGAGEMENTS] Import terminé: {donnees_ej.shape[0]} EJ, {donnees_et.shape[0]} ET")
 
@@ -81,14 +82,14 @@ if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
-    hapi_data_path = variables_d_environnement["HAPI_DATA_PATH"]
-    fichiers = os.listdir(hapi_data_path)
+    hapi_data_dir = variables_d_environnement["HAPI_DATA_PATH"]
+    fichiers = os.listdir(hapi_data_dir)
     # Find the most recent engagements file
     fichiers_engagements = [f for f in fichiers if "engagements_exporter" in f]
     if not fichiers_engagements:
-        logger_helios.warning(f"Aucun fichier engagements trouvé dans {hapi_data_path}")
-        exit(0)
+        logger_helios.warning(f"Aucun fichier engagements trouvé dans {hapi_data_dir}")
+        sys.exit(0)
     fichier_le_plus_recent = sorted(fichiers_engagements, reverse=True)[0]
 
     logger_helios.info("Traitement du fichier engagements le plus récent : %s", fichier_le_plus_recent)
-    import_engagements_allocation_ressource(fichier_le_plus_recent, hapi_data_path, base_de_données_helios, logger_helios)
+    import_engagements_allocation_ressource(fichier_le_plus_recent, hapi_data_dir, base_de_données_helios, logger_helios)

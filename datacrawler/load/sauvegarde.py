@@ -62,8 +62,8 @@ def mets_a_jour_les_montants_engagements(
 ) -> None:
     if donnees.empty:
         return
-    df = donnees.reset_index()
-    for _, row in df.iterrows():
+    data_frame = donnees.reset_index()
+    for _, row in data_frame.iterrows():
         connection.execute(
             text(
                 f"""UPDATE {table}

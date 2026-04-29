@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock
 
 import pandas as pd
-import pytest
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import (
     extrais_la_date_du_nom_de_fichier_engagements_hapi,
