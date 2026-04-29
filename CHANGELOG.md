@@ -33,6 +33,7 @@
 - hel-1014: Ajout dans le back de toutes les vérifications pour éviter une escalade de privilèges lors de la mise à jour d’un utilisateur
 - hel-1012: Ajout des informations sur les nouveaux indicateurs de budget dans le fichier d'export de comparaison
 - vr-169: Affichage des étiquettes d'année dans les vues trimestrielles incomplètes
+- hel-995: Etablissement fermé non affiché dans liste et historique
 
 ### Features
 
