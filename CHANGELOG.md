@@ -4,10 +4,16 @@
 
 ### Bug Fixes
 
+- hel-1024: Retrait des informations non nécessaire du retour back des informations utilisateur
+- hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
 
 ### Features
 - hel-1028: [Fiche] Erreur de message
-
+- Hel-1018: [RGAA] Mise en conformité script 7.1
+- hel-1027: [Sécurité] Renforcer la politique Content-Security-Policy (CSP)
+- hel-1015: Export Fiche EJ - ajouter la cat FINESS das ET rattachés
+- hel-1016: Mise en conformité liens explicite
+- hel-1025: [Sécurité] Ajouter l'entête X-Xss-Protection
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 
@@ -34,6 +40,7 @@
 - hel-1014: Ajout dans le back de toutes les vérifications pour éviter une escalade de privilèges lors de la mise à jour d’un utilisateur
 - hel-1012: Ajout des informations sur les nouveaux indicateurs de budget dans le fichier d'export de comparaison
 - vr-169: Affichage des étiquettes d'année dans les vues trimestrielles incomplètes
+- hel-995: Etablissement fermé non affiché dans liste et historique
 
 ### Features
 

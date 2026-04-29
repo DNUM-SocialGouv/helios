@@ -28,6 +28,8 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
         numéroFiness: établissementTerritorialModel.numéroFinessÉtablissementTerritorial,
         raisonSocialeCourte: établissementTerritorialModel.raisonSocialeCourte,
         libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
+        libelleCourtCategorieEtablissement: établissementTerritorialModel.libelléCourtCatégorieÉtablissement,
+        categorieEtablissementCode: établissementTerritorialModel.catégorieÉtablissement,
       };
     });
   }

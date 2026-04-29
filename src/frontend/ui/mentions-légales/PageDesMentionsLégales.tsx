@@ -8,7 +8,7 @@ export const PageDesMentionsLégales = () => {
       <section aria-label={wording.ÉDITEUR_DU_SITE}>
         <h2>Éditeur du site</h2>
         <p>
-          Le site <a href="www.helios.ars.sante.fr">www.helios.ars.sante.fr</a> est édité par les Ministères des Solidarités et de la Santé - 14 avenue Duquesne
+          Le site <a href="https://www.helios.ars.sante.fr" rel="external noopener noreferrer" title={wording.HELIOS_URL}>{wording.HELIOS_URL}</a> est édité par les Ministères des Solidarités et de la Santé - 14 avenue Duquesne
           75007 Paris - 01 40 56 60 00 (standard). Le directeur de publication est Pierre Pribile, Secrétaire Général des Ministères Chargés des Affaires
           Sociales (SGMCAS).
         </p>
@@ -17,8 +17,8 @@ export const PageDesMentionsLégales = () => {
           Scalingo SAS <br />
           15 Avenue du Rhin <br />
           67100 Strasbourg <br />
-          <a href="https://scalingo.com/fr" rel="external noopener noreferrer" target="_blank">
-            scalingo.com
+          <a href="https://scalingo.com/fr" rel="external noopener noreferrer" target="_blank" title={`${wording.SCALINGO} - ${wording.NOUVELLE_FENÊTRE}`}>
+            {wording.SCALINGO}
           </a>
         </p>
         <p>
@@ -26,8 +26,8 @@ export const PageDesMentionsLégales = () => {
           Cat-amania  <br />
           31 rue Bobby Sands <br />
           44800 Saint Herblain  <br />
-          <a href="https://www.cat-amania.com/" rel="external noopener noreferrer" target="_blank">
-            Cat-amania.com
+          <a href="https://www.cat-amania.com/" rel="external noopener noreferrer" target="_blank" title={`${wording.CATAMANIA} - ${wording.NOUVELLE_FENÊTRE}`}>
+            {wording.CATAMANIA}
           </a>
         </p>
         <p>

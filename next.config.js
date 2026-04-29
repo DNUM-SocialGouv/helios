@@ -1,3 +1,16 @@
+const isDev = process.env.NODE_ENV === 'development'
+const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''};
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data:;
+    font-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+`;
 const securityHeaders = [
   /**
    * Strict-Transport-Security, see: https://scotthelme.co.uk/hsts-the-missing-link-in-tls/
@@ -13,7 +26,7 @@ const securityHeaders = [
    **/
   {
     key: "Content-Security-Policy",
-    value: "default-src https: 'unsafe-inline'; script-src https: 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
+    value: cspHeader.replace(/\n/g, ''),
   },
   /**
    * Permissions-Policy, see: https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/
@@ -56,6 +69,16 @@ const securityHeaders = [
   {
     key: "X-Frame-Options",
     value: "SAMEORIGIN",
+  },
+  /**
+   * X-XSS-Protection, see: https://scotthelme.co.uk/hardening-your-http-response-headers/
+   * This header enables the Cross-site scripting (XSS) filter built into most recent web browsers.
+   *
+   * CHOICE: The value "0" disables the XSS filter. This is because modern browsers have better built-in XSS protection and this header can sometimes cause issues with legitimate content.
+   **/
+  {
+    key: "X-XSS-Protection",
+    value: "0",
   },
 ];
 

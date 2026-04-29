@@ -1,10 +1,12 @@
 import { Repository } from "typeorm";
 
+import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
 import { UserListEtablissementModel } from "../../../../../database/models/UserListEtablissementModel";
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { EntitéJuridiqueModelTestBuilder } from "../../../../../database/test-builder/EntitéJuridiqueModelTestBuilder";
 import { clearAllTables, getOrm } from "../../../testHelper";
 // Le changement d’ordre d’import provoque un échec des tests…
 // eslint-disable-next-line import/order
@@ -20,6 +22,8 @@ describe("La recherche de liste", () => {
   let utilisateurRepository: Repository<UtilisateurModel>;
   let userListEtablissementRepository: Repository<UserListEtablissementModel>;
   let userListRepository: Repository<UserListModel>;
+  let entitéJuridiqueRepository: Repository<EntitéJuridiqueModel>;
+
 
   let institutionId: number;
   let roleId: number;
@@ -30,6 +34,7 @@ describe("La recherche de liste", () => {
     utilisateurRepository = (await orm).getRepository(UtilisateurModel);
     userListEtablissementRepository = (await orm).getRepository(UserListEtablissementModel);
     userListRepository = (await orm).getRepository(UserListModel);
+    entitéJuridiqueRepository = (await orm).getRepository(EntitéJuridiqueModel);
   });
 
   beforeEach(async () => {
@@ -169,6 +174,7 @@ describe("La recherche de liste", () => {
 
     const listName = "listName";
     const finess = "finess";
+    await entitéJuridiqueRepository.insert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: finess }));
 
     const list = await createList(listName, userUuid);
     await addEtablishmentToList(list.id, finess);

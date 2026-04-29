@@ -26,6 +26,8 @@ export const Header = () => {
 
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const ref = useOutsideClick(() => setDisplayMenu(false));
 
@@ -73,27 +75,27 @@ export const Header = () => {
 
   return (
     <>
-      <header className="fr-header">
+    <header className="fr-header">
         <div className="fr-header__body">
           <div className="fr-container">
             <div className={"fr-skiplinks fr-sr-only " + styles["sr-only-focusable"]}>
               <nav aria-label="Accès rapide" className="fr-container" role="navigation">
                 <ul className="fr-skiplinks__list">
                   <li>
-                    <a className="fr-link" href="#content">Contenu</a>
+                    <a className="fr-link" href="#content" title="Contenu">Contenu</a>
                   </li>
                   {shouldDisplayMenu() && (
                     <li>
-                      <a className="fr-link" href="#menu-btn">Menu</a>
+                      <a className="fr-link" href="#menu-btn" title="Menu">Menu</a>
                     </li>
                   )}
                   {isAuthenticated() && (
                     <li>
-                      <a className="fr-link" href="#search-input">Recherche</a>
+                      <a className="fr-link" href="#search-input" title="Recherche">Recherche</a>
                     </li>
                   )}
                   <li>
-                    <a className="fr-link" href="#footer">Pied de page</a>
+                    <a className="fr-link" href="#footer" title="Pied de page">Pied de page</a>
                   </li>
                 </ul>
               </nav>
@@ -115,9 +117,11 @@ export const Header = () => {
                       router.pathname !== paths.REGISTRATION && (
                         <button
                           aria-controls="modal-541"
+                          aria-expanded={isSearchOpen}
                           className="fr-btn--search fr-btn"
-                          data-fr-opened="false"
+                          data-fr-opened={isSearchOpen}
                           id="button-542"
+                          onClick={() => setIsSearchOpen(!isSearchOpen)}
                           title={wording.RECHERCHE_LABEL}
                         >
                           {wording.RECHERCHE_LABEL}
@@ -126,10 +130,12 @@ export const Header = () => {
                     {status !== "unauthenticated" && (
                       <button
                         aria-controls="modal-833"
+                        aria-expanded={isMobileMenuOpen}
                         aria-haspopup="menu"
                         className="fr-btn--menu fr-btn"
-                        data-fr-opened="false"
+                        data-fr-opened={isMobileMenuOpen}
                         id="fr-btn-menu-mobile"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         title={wording.MENU}
                         type="button"
                       >
@@ -147,9 +153,9 @@ export const Header = () => {
               </div>
               <div className="fr-header__tools">
                 {shouldDisplaySearchBar() && (
-                  <div className="fr-header__search fr-modal" id="modal-541">
+                  <div aria-labelledby="button-542" className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
-                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" onClick={() => setIsSearchOpen(false)} title="Fermer">
                         {wording.FERMER}
                       </button>
                       <form action="/recherche" className="fr-search-bar" id="search" role="search">
@@ -297,7 +303,7 @@ export const Header = () => {
         {status !== "unauthenticated" && (
           <div aria-labelledby="fr-btn-menu-mobile" className="fr-header__menu fr-modal" id="modal-833">
             <div className="fr-container">
-              <button aria-controls="modal-833" className="fr-link--close fr-link" type="button">
+              <button aria-controls="modal-833" className="fr-link--close fr-link" onClick={() => setIsMobileMenuOpen(false)} type="button">
                 {wording.FERMER}
               </button>
               <div className="fr-header__menu-links">
@@ -384,7 +390,7 @@ export const Header = () => {
       <div className="fr-grid-row fr-container">
         <Breadcrumb />
         <BtnRetourRecherche />
-      </div>
-    </>
+      </div> 
+ </>
   );
 };

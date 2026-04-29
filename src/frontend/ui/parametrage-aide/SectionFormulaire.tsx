@@ -99,7 +99,19 @@ export function SectionFormulaire({
         />
       </div>
       <div className="fr-input-group">
-        <label className="fr-label" htmlFor="section-icone"><a className="fr-link fr-link--sm" href="https://www.systeme-de-design.gouv.fr/version-courante/fr/fondamentaux/icone#selection-d-icones" id="link-icone-dsfr" rel="noopener external noreferrer" target="_blank" title="Lien vers la liste des icônes du DSFR">{wording.PARAMETRAGE_AIDE_LABEL_ICONE_SECTION}</a></label>
+        <label
+         className="fr-label" 
+         htmlFor="section-icone">
+          <a className="fr-link fr-link--sm" 
+          href="https://www.systeme-de-design.gouv.fr/version-courante/fr/fondamentaux/icone#selection-d-icones" 
+          id="link-icone-dsfr" 
+          rel="noopener external noreferrer" 
+          target="_blank" 
+          title={`Lien vers la liste des icônes du DSFR - ${wording.NOUVELLE_FENÊTRE}`}
+          >
+            {wording.PARAMETRAGE_AIDE_LABEL_ICONE_SECTION}
+            </a>
+            </label>
         <input
           className="fr-input"
           id="section-icone"
