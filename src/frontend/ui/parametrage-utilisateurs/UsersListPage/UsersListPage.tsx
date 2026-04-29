@@ -308,17 +308,17 @@ const UsersListPage = ({
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.nom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]} key={`${user.id}-prenom`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.prenom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]} key={`${user.id}-email`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.email}
                               </a>
                             </td>

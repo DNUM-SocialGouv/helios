@@ -80,20 +80,20 @@ export const Header = () => {
               <nav aria-label="Accès rapide" className="fr-container" role="navigation">
                 <ul className="fr-skiplinks__list">
                   <li>
-                    <a className="fr-link" href="#content">Contenu</a>
+                    <a className="fr-link" href="#content" title="Contenu">Contenu</a>
                   </li>
                   {shouldDisplayMenu() && (
                     <li>
-                      <a className="fr-link" href="#menu-btn">Menu</a>
+                      <a className="fr-link" href="#menu-btn" title="Menu">Menu</a>
                     </li>
                   )}
                   {isAuthenticated() && (
                     <li>
-                      <a className="fr-link" href="#search-input">Recherche</a>
+                      <a className="fr-link" href="#search-input" title="Recherche">Recherche</a>
                     </li>
                   )}
                   <li>
-                    <a className="fr-link" href="#footer">Pied de page</a>
+                    <a className="fr-link" href="#footer" title="Pied de page">Pied de page</a>
                   </li>
                 </ul>
               </nav>

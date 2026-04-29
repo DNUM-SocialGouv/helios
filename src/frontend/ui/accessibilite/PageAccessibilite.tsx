@@ -1,4 +1,7 @@
+import { useDependencies } from "../commun/contexts/useDependencies";
+
 export const PageAccessibilite = () => {
+    const { wording } = useDependencies();
   return (
     <>
       <h1>Accessibilité</h1>
@@ -23,8 +26,13 @@ export const PageAccessibilite = () => {
         <p>À cette fin, elle rédige la stratégie et le plan d’action à mettre en œuvre.</p>
         <p>
           Cette déclaration d’accessibilité s’applique à{" "}
-          <a className="fr-link" href="https://www.helios.ars.sante.fr/" rel="external noopener noreferrer" target="_blank">
-            www.helios.ars.sante.fr/
+          <a className="fr-link" 
+          href="https://www.helios.ars.sante.fr/" 
+          rel="external noopener noreferrer"
+          target="_blank" 
+          title={`${wording.HELIOS_URL} - ${wording.NOUVELLE_FENÊTRE}`}
+          >
+            {wording.HELIOS_URL}
           </a>
         </p>
       </div>
@@ -32,8 +40,13 @@ export const PageAccessibilite = () => {
         <h3 className="fr-h6">État de conformité</h3>
         <p>
           Le site{" "}
-          <a className="fr-link" href="https://www.helios.ars.sante.fr/" rel="external noopener noreferrer" target="_blank">
-            www.helios.ars.sante.fr/
+          <a className="fr-link" 
+          href="https://www.helios.ars.sante.fr/" 
+          rel="external noopener noreferrer" 
+          target="_blank" 
+          title={`${wording.HELIOS_URL} - ${wording.NOUVELLE_FENÊTRE}`}
+           >
+            {wording.HELIOS_URL}
           </a>{" "}
           est non conforme avec le référentiel général d’amélioration de l’accessibilité (RGAA) car l’audit n’a pas encore été effectué.
         </p>
@@ -60,10 +73,10 @@ export const PageAccessibilite = () => {
         </p>
         <ul>
           <li>
-            Écrire un message au Défenseur des droits (<a className="fr-link" href="https://formulaire.defenseurdesdroits.fr/">https://formulaire.defenseurdesdroits.fr/</a>)
+            Écrire un message au Défenseur des droits (<a className="fr-link" href="https://formulaire.defenseurdesdroits.fr/" title="https://formulaire.defenseurdesdroits.fr/">https://formulaire.defenseurdesdroits.fr/</a>)
           </li>
           <li>
-            Contacter le délégué du Défenseur des droits dans votre région (<a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues">https://www.defenseurdesdroits.fr/saisir/delegues</a>)
+            Contacter le délégué du Défenseur des droits dans votre région (<a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues" title="https://www.defenseurdesdroits.fr/saisir/delegues">https://www.defenseurdesdroits.fr/saisir/delegues</a>)
           </li>
           <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à :
 
