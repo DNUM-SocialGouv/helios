@@ -1,95 +1,76 @@
 import os
 from logging import Logger
-import sys
+from typing import List
 
+import pandas as pd
 from sqlalchemy.engine import Engine, create_engine
 
+from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
-from datacrawler.extract.extrais_la_date_du_nom_de_fichier import (
-    extrais_l_annee_du_nom_de_fichier_engagements_hapi,
-    extrais_la_date_du_nom_de_fichier_engagements_hapi,
-)
-from datacrawler.extract.lecteur_csv import lis_le_fichier_engagements_hapi_csv
+from datacrawler.extract.extrais_la_date_du_nom_de_fichier import extrais_la_date_du_nom_de_fichier_hapi
+from datacrawler.extract.lecteur_csv import lis_le_fichier_hapi_csv
 from datacrawler.extract.lecteur_sql import (
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
     recupere_les_numeros_finess_des_etablissements_de_la_base,
 )
 from datacrawler.load.nom_des_tables import TABLE_RESSOURCE_ALLOCATION_EJ, TABLE_RESSOURCE_ALLOCATION_ET, FichierSource
-from datacrawler.load.sauvegarde import (
-    mets_a_jour_la_date_de_mise_a_jour_du_fichier_source,
-    sauvegarde,
-    supprime_les_donnees_pour_l_annee,
-)
 from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import (
-    transforme_les_donnees_engagements_ej,
-    transforme_les_donnees_engagements_et,
+    transforme_les_donnees_allocation_ressource_ej,
+    transforme_les_donnees_allocation_ressource_et,
 )
 from datacrawler.transform.équivalences_diamant_helios import (
-    colonnes_a_lire_allocation_ressource_engagements,
+    colonnes_a_lire_allocation_ressource,
     extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_engagements_hapi_allocation_ressource_ej_helios,
+    équivalences_diamant_men_hapi_allocation_ressource_helios,
 )
 
 
-def import_engagements_allocation_ressource(
-    fichier: str,
-    hapi_data_path: str,
-    base_de_données: Engine,
-    logger: Logger,
-) -> None:
-    chemin = os.path.join(hapi_data_path, fichier)
-    annee_fichier = extrais_l_annee_du_nom_de_fichier_engagements_hapi(chemin)
-
-    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_engagements_hapi_allocation_ressource_ej_helios)
-    donnees = lis_le_fichier_engagements_hapi_csv(chemin, colonnes_a_lire_allocation_ressource_engagements, types_des_colonnes)
-
-    finess_ej = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
-    finess_et = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
-
-    donnees_ej = transforme_les_donnees_engagements_ej(donnees, finess_ej, logger)
-    donnees_et = transforme_les_donnees_engagements_et(donnees, finess_et, logger)
-
-    # On sépare les données de l'année courante (pour lesquelles on fera une suppression+insertion) des années précédentes (pour mise à jour)
-    donnees_ej_annee_courante = donnees_ej[donnees_ej.index.get_level_values("annee") == annee_fichier]
-    # donnees_ej_annees_precedentes = donnees_ej[donnees_ej.index.get_level_values("annee") != annee_fichier]
-    donnees_et_annee_courante = donnees_et[donnees_et.index.get_level_values("annee") == annee_fichier]
-    # donnees_et_annees_precedentes = donnees_et[donnees_et.index.get_level_values("annee") != annee_fichier]
-
+def import_allocation_ressource(fichiers_param: List[str], men_hapi_data_path_param: str, base_de_données: Engine, logger: Logger) -> None:
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios)
+    dataframes = []
+    for fichier in fichiers_param:
+        chemin_local_du_fichier_men_hapi = os.path.join(men_hapi_data_path_param, fichier)
+        donnees_allocation_ressource_par_annee = lis_le_fichier_hapi_csv(
+            chemin_local_du_fichier_men_hapi, colonnes_a_lire_allocation_ressource, types_des_colonnes
+        )
+        dataframes.append(donnees_allocation_ressource_par_annee)
+    donnees_allocation_ressource = pd.concat(dataframes, ignore_index=True)
+    transform_donnees_allocation_ressource = transforme_les_donnees_allocation_ressource_ej(
+        donnees_allocation_ressource, recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données), logger
+    )
+    transform_donnees_allocation_ressource_et = transforme_les_donnees_allocation_ressource_et(
+        donnees_allocation_ressource, recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données), logger
+    )
+    chemin_local_du_dernier_fichier_men_hapi = os.path.join(men_hapi_data_path_param, sorted(fichiers_param, reverse=True)[0])
+    date_du_fichier_men_hapi = extrais_la_date_du_nom_de_fichier_hapi(chemin_local_du_dernier_fichier_men_hapi)
     with base_de_données.begin() as connection:
-        # Pour l’année en cours on est sur un annule et remplace complet
-        supprime_les_donnees_pour_l_annee(connection, TABLE_RESSOURCE_ALLOCATION_EJ, annee_fichier)
-        supprime_les_donnees_pour_l_annee(connection, TABLE_RESSOURCE_ALLOCATION_ET, annee_fichier)
-        sauvegarde(connection, TABLE_RESSOURCE_ALLOCATION_EJ, donnees_ej_annee_courante)
-        sauvegarde(connection, TABLE_RESSOURCE_ALLOCATION_ET, donnees_et_annee_courante)
-        logger.info(f"[HAPI ENGAGEMENTS] Année courante {annee_fichier}: suppression+insertion EJ/ET effectuée")
-
-        # Pour les années précédentes, on met à jour uniquement les montants des engagements uniquement
-        # La démarche de distinction entre les nouvelles et les anciennes données n’étant pas fixée, on met en pause
-        # mets_a_jour_les_montants_engagements(connection, TABLE_RESSOURCE_ALLOCATION_EJ, "numero_finess_entite_juridique", donnees_ej_annees_precedentes)
-        # mets_a_jour_les_montants_engagements(
-        #     connection, TABLE_RESSOURCE_ALLOCATION_ET, "numero_finess_etablissement_territorial", donnees_et_annees_precedentes
-        # )
-        # logger.info("[HAPI ENGAGEMENTS] Années précédentes: mise à jour effectuée")
-
-        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(
-            connection, extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin), FichierSource.DIAMANT_MEN_HAPI
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs allocation ressource entité juridique",
+            "HAPI",
+            connection,
+            TABLE_RESSOURCE_ALLOCATION_EJ,
+            transform_donnees_allocation_ressource,
+            [(FichierSource.DIAMANT_MEN_HAPI, date_du_fichier_men_hapi)],
+            logger,
         )
 
-    logger.info(f"[HAPI ENGAGEMENTS] Import terminé: {donnees_ej.shape[0]} EJ, {donnees_et.shape[0]} ET")
+    with base_de_données.begin() as connection:
+        écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour(
+            "indicateurs allocation ressource établissement sanitaire",
+            "HAPI",
+            connection,
+            TABLE_RESSOURCE_ALLOCATION_ET,
+            transform_donnees_allocation_ressource_et,
+            [(FichierSource.DIAMANT_MEN_HAPI, date_du_fichier_men_hapi)],
+            logger,
+        )
 
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
     base_de_données_helios = create_engine(variables_d_environnement["DATABASE_URL"])
 
-    hapi_data_dir = variables_d_environnement["HAPI_DATA_PATH"]
-    fichiers = os.listdir(hapi_data_dir)
-    # Find the most recent engagements file
-    fichiers_engagements = [f for f in fichiers if "engagements_exporter" in f]
-    if not fichiers_engagements:
-        logger_helios.warning(f"Aucun fichier engagements trouvé dans {hapi_data_dir}")
-        sys.exit(0)
-    fichier_le_plus_recent = sorted(fichiers_engagements, reverse=True)[0]
+    men_hapi_data_path = variables_d_environnement["HAPI_DATA_PATH"]
+    fichiers = os.listdir(men_hapi_data_path)
 
-    logger_helios.info("Traitement du fichier engagements le plus récent : %s", fichier_le_plus_recent)
-    import_engagements_allocation_ressource(fichier_le_plus_recent, hapi_data_dir, base_de_données_helios, logger_helios)
+    import_allocation_ressource(fichiers, men_hapi_data_path, base_de_données_helios, logger_helios)

@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 import pandas as pd
 
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import (
-    extrais_la_date_du_nom_de_fichier_engagements_hapi,
-    extrais_l_annee_du_nom_de_fichier_engagements_hapi,
+    extrais_la_date_du_nom_de_fichier_engagements_starsfir,
+    extrais_l_annee_du_nom_de_fichier_engagements_starsfir,
 )
 from datacrawler.transform.transforme_les_donnees_allocation_ressource.transforme_les_donnees_allocation_ressource import (
     transforme_les_donnees_engagements_ej,
@@ -169,7 +169,7 @@ class TestExtraisLaDateDuNomDeFichierEngagementsHapi:
         chemin = "/some/path/2026_engagements_exporter_20260318.csv"
 
         # WHEN
-        date = extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin)
+        date = extrais_la_date_du_nom_de_fichier_engagements_starsfir(chemin)
 
         # THEN
         assert date == "20260318"
@@ -179,7 +179,7 @@ class TestExtraisLaDateDuNomDeFichierEngagementsHapi:
         chemin = "2026_engagements_exporter_20261231.csv"
 
         # WHEN
-        date = extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin)
+        date = extrais_la_date_du_nom_de_fichier_engagements_starsfir(chemin)
 
         # THEN
         assert date == "20261231"
@@ -191,7 +191,7 @@ class TestExtraisLAnnee:
         chemin = "/data/2026_engagements_exporter_20260318.csv"
 
         # WHEN
-        annee = extrais_l_annee_du_nom_de_fichier_engagements_hapi(chemin)
+        annee = extrais_l_annee_du_nom_de_fichier_engagements_starsfir(chemin)
 
         # THEN
         assert annee == 2026
@@ -202,7 +202,7 @@ class TestExtraisLAnnee:
         chemin = "/data/2027_engagements_exporter_20270515.csv"
 
         # WHEN
-        annee = extrais_l_annee_du_nom_de_fichier_engagements_hapi(chemin)
+        annee = extrais_l_annee_du_nom_de_fichier_engagements_starsfir(chemin)
 
         # THEN
         assert annee == 2027

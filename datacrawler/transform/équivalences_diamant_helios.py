@@ -317,7 +317,7 @@ index_allocation_ressource_et: List[str] = ["numero_finess_etablissement_territo
 COLONNE_SOURCE_MODE_DELEGATION_ENGAGEMENTS = "Mode de délégation délégué"
 VALEUR_FORCEE_MODE_DELEGATION = "Intervention (Ex. cour.)"
 
-équivalences_engagements_hapi_allocation_ressource_ej_helios: ÉquivalencesDiamantHelios = {
+équivalences_engagements_starsfir_allocation_ressource_ej_helios: ÉquivalencesDiamantHelios = {
     "ID Bénéficiaire (Finess ou Code interne)": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
     "Type de Bénéficiaire": ColonneHelios(nom="type_beneficiaire", type=str),
     "Campagne": ColonneHelios(nom="annee", type=int),
@@ -327,7 +327,7 @@ VALEUR_FORCEE_MODE_DELEGATION = "Intervention (Ex. cour.)"
     "Montant Notifié": ColonneHelios(nom="montant", type=float),
 }
 
-équivalences_engagements_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
+équivalences_engagements_starsfir_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
     "ID Bénéficiaire (Finess ou Code interne)": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "Type de Bénéficiaire": ColonneHelios(nom="type_beneficiaire", type=str),
     "Campagne": ColonneHelios(nom="annee", type=int),
@@ -337,7 +337,7 @@ VALEUR_FORCEE_MODE_DELEGATION = "Intervention (Ex. cour.)"
     "Montant Notifié": ColonneHelios(nom="montant", type=float),
 }
 
-colonnes_a_lire_allocation_ressource_engagements: List[str] = list(équivalences_engagements_hapi_allocation_ressource_ej_helios.keys())
+colonnes_a_lire_allocation_ressource_engagements: List[str] = list(équivalences_engagements_starsfir_allocation_ressource_ej_helios.keys())
 index_allocation_ressource_engagements_ej: List[str] = ["numero_finess_entite_juridique", "annee"]
 index_allocation_ressource_engagements_et: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 

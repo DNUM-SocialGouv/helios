@@ -41,13 +41,13 @@ def extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_du_ficher: str) -> str:
     raise ValueError("Le nom du fichier ne contient pas de date valide.")
 
 
-def extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin_du_fichier: str) -> str:
+def extrais_la_date_du_nom_de_fichier_engagements_starsfir(chemin_du_fichier: str) -> str:
     # Pattern: "2026_engagements_exporter_20260318.csv" → "20260318"
     nom = Path(chemin_du_fichier).stem  # "2026_engagements_exporter_20260318"
     return nom.split("_")[-1]  # "20260318" (already YYYYMMDD)
 
 
-def extrais_l_annee_du_nom_de_fichier_engagements_hapi(chemin_du_fichier: str) -> int:
+def extrais_l_annee_du_nom_de_fichier_engagements_starsfir(chemin_du_fichier: str) -> int:
     # Returns the integer year: "20260318" → 2026
-    date_str = extrais_la_date_du_nom_de_fichier_engagements_hapi(chemin_du_fichier)
+    date_str = extrais_la_date_du_nom_de_fichier_engagements_starsfir(chemin_du_fichier)
     return int(date_str[:4])

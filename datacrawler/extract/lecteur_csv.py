@@ -15,7 +15,7 @@ def lis_le_fichier_hapi_csv(chemin_du_fichier: str, colonnes: List[str], types_d
     return pd.read_csv(chemin_du_fichier, usecols=colonnes, dtype=types_des_colonnes, delimiter="|", encoding="utf-8")  # type: ignore
 
 
-def lis_le_fichier_engagements_hapi_csv(chemin_du_fichier: str, colonnes: List[str], types_des_colonnes: Dict[str, Any]) -> pd.DataFrame:
+def lis_le_fichier_engagements_starsfir_csv(chemin_du_fichier: str, colonnes: List[str], types_des_colonnes: Dict[str, Any]) -> pd.DataFrame:
     return cast(
         pd.DataFrame,
         pd.read_csv(

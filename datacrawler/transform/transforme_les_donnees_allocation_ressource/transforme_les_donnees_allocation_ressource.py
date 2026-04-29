@@ -12,8 +12,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_allocation_ressource_engagements_et,
     équivalences_diamant_men_hapi_allocation_ressource_helios,
     équivalences_diamant_men_hapi_allocation_ressource_et_helios,
-    équivalences_engagements_hapi_allocation_ressource_ej_helios,
-    équivalences_engagements_hapi_allocation_ressource_et_helios,
+    équivalences_engagements_starsfir_allocation_ressource_ej_helios,
+    équivalences_engagements_starsfir_allocation_ressource_et_helios,
 )
 
 TYPE_BENEFICIAIRE_STARFIR = "Etablissement sanitaire"
@@ -69,7 +69,7 @@ def transforme_les_donnees_engagements_ej(
     filtrees = filtrees.drop(columns=["Type de Bénéficiaire"])
     return (
         filtrees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_engagements_hapi_allocation_ressource_ej_helios))
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_engagements_starsfir_allocation_ressource_ej_helios))
         .set_index(index_allocation_ressource_engagements_ej)
     )
 
@@ -88,6 +88,6 @@ def transforme_les_donnees_engagements_et(
     filtrees = filtrees.drop(columns=["Type de Bénéficiaire"])
     return (
         filtrees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_engagements_hapi_allocation_ressource_et_helios))
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_engagements_starsfir_allocation_ressource_et_helios))
         .set_index(index_allocation_ressource_engagements_et)
     )
