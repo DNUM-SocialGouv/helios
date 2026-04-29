@@ -8,6 +8,8 @@
 - hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
 
 ### Features
+
+- hel-1015: Export Fiche EJ - ajouter la cat FINESS das ET rattachés
 - hel-1016: Mise en conformité liens explicite
 - hel-1025: [Sécurité] Ajouter l'entête X-Xss-Protection
 
