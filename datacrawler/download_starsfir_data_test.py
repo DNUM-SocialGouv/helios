@@ -114,11 +114,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_starfirs_data.initialise_les_dépendances",
+                "datacrawler.download_starsfir_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_starfirs_data._make_session_factory"),
+            patch("datacrawler.download_starsfir_data._make_session_factory"),
         ):
             # When
             main()
@@ -135,11 +135,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_starfirs_data.initialise_les_dépendances",
+                "datacrawler.download_starsfir_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_starfirs_data._make_session_factory"),
+            patch("datacrawler.download_starsfir_data._make_session_factory"),
         ):
             # When
             main()
@@ -154,14 +154,14 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_starfirs_data.initialise_les_dépendances",
+                "datacrawler.download_starsfir_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch(
                 "ftputil.FTPHost",
                 side_effect=ftputil.error.FTPError("connection refused"),
             ),
-            patch("datacrawler.download_starfirs_data._make_session_factory"),
+            patch("datacrawler.download_starsfir_data._make_session_factory"),
         ):
             # When
             main()
@@ -179,11 +179,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_starfirs_data.initialise_les_dépendances",
+                "datacrawler.download_starsfir_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_starfirs_data._make_session_factory"),
+            patch("datacrawler.download_starsfir_data._make_session_factory"),
         ):
             # When
             main()
@@ -204,11 +204,11 @@ class TestMain:
 
         with (
             patch(
-                "datacrawler.download_starfirs_data.initialise_les_dépendances",
+                "datacrawler.download_starsfir_data.initialise_les_dépendances",
                 return_value=(mock_logger, _env_vars(tmp_path)),
             ),
             patch("ftputil.FTPHost", return_value=mock_ftp_host),
-            patch("datacrawler.download_starfirs_data._make_session_factory"),
+            patch("datacrawler.download_starsfir_data._make_session_factory"),
         ):
             # When
             main()
