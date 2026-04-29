@@ -59,7 +59,7 @@ class TestTransformeLesDocumentsEngagementsEj:
         result = transforme_les_donnees_engagements_ej(donnees, finess_ej, logger)
 
         # THEN
-        assert (result["mode_delegation"] == "test_wip").all()
+        assert (result["mode_delegation"] == "Intervention (Ex. cour.)").all()
 
     def test_exclut_les_finess_inconnus(self) -> None:
         # GIVEN
@@ -123,7 +123,7 @@ class TestTransformeLesDocumentsEngagementsEt:
         result = transforme_les_donnees_engagements_et(donnees, finess_et, logger)
 
         # THEN
-        assert (result["mode_delegation"] == "test_wip").all()
+        assert (result["mode_delegation"] == "Intervention (Ex. cour.)").all()
 
     def test_exclut_les_finess_inconnus(self) -> None:
         # GIVEN
