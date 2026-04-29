@@ -26,12 +26,14 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     }
     if (userBeforeChange) {
       if (
-        // Un admin central n’a aucun droit sur ce endpoint
+        // Un admin central n'a aucun droit sur ce endpoint
         (userSession?.user?.role as number) === Role.ADMIN_CENTR ||
-        // Un utilisateur n’a aucun droit sur ce endpoint
+        // Un utilisateur n'a aucun droit sur ce endpoint
         (userSession?.user?.role as number) === Role.USER ||
         // Un admin regional ne peut pas supprimer un admin national ou un admin central
-        ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR))
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR)) ||
+        // Un admin régional ne peut pas supprimer les utilisateurs d'autres régions
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && userBeforeChange.institutionId !== userSession?.user?.institutionId)
       ) {
         return response.status(405).send("Method not allowed");
       }
