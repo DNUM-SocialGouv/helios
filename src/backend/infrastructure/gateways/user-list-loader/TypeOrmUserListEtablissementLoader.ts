@@ -38,7 +38,7 @@ export class TypeOrmUserListEtablissementLoader implements UserListEtablissement
         "rattachement"
       )
       .from(UserListEtablissementModel, "userListEtab")
-      .leftJoin("recherche", "recherche", "userListEtab.numero_finess = recherche.numero_finess")
+      .innerJoin("recherche", "recherche", "userListEtab.numero_finess = recherche.numero_finess")
       .leftJoin("user_list", "userList", "userListEtab.list_id = userList.id")
       .leftJoin("entite_juridique", "entite_juridique", "recherche.rattachement = entite_juridique.numero_finess_entite_juridique")
       .leftJoin("etablissement_territorial", "etablissement_territorial", "etablissement_territorial.numero_finess_entite_juridique = recherche.numero_finess")

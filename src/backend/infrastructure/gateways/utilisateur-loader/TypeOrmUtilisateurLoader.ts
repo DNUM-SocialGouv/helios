@@ -3,7 +3,7 @@ import { createHash } from "crypto";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
-import { DataSource, ILike, ArrayContains, LessThan, MoreThan, IsNull, Not } from "typeorm";
+import { ArrayContains, DataSource, ILike, IsNull, LessThan, MoreThan, Not } from "typeorm";
 
 import { FavorisModel } from "../../../../../database/models/FavorisModel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
@@ -13,15 +13,21 @@ import { SearchHistoryModel } from "../../../../../database/models/SearchHistory
 import { UserListModel } from "../../../../../database/models/UserListModel";
 import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
 import { generateToken } from "../../../jwtHelper";
+import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../../../métier/entities/ResultatRechercheUtilisateur";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { PasswordStatus, PasswordStatusEnum, RésultatLogin, LoginStatusEnum } from "../../../métier/entities/Utilisateur/RésultatLogin";
+import { LoginStatusEnum, PasswordStatus, PasswordStatusEnum, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
-  async getUserByCode(code: string): Promise<UtilisateurModel | null> {
-    return await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code }, relations: ["institution"] });
+  async getUserByCode(code: string): Promise<RechercheUtilisateur | null> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code }, relations: ["institution"] });
+    if (!user) return null;
+    // Le retrait des champs via destructuring est plus «propre» que le «delete»
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, failedAttemps, lockUntil, lastPwdChangeDate, ...safeUser } = user;
+    return safeUser as RechercheUtilisateur;
   }
 
   async login(email: string, password: string): Promise<RésultatLogin> {
@@ -253,7 +259,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     itemsPerPage: number,
     orderBy: string = "nom",
     sortDir: string = "DESC"
-  ): Promise<any> {
+  ): Promise<ResultatRechercheUtilisateur> {
     const utilisateurRepo = (await this.orm).getRepository(UtilisateurModel);
 
     const NMonthsAgo = new Date();
@@ -347,8 +353,13 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       },
     });
 
+    // On retire les champs inutiles
+    const sanitizedData = data.map(({ password: _password, failedAttemps: _failedAttemps, lockUntil: _lockUntil, lastPwdChangeDate: _lastPwdChangeDate, ...safeUser }) => {
+      return safeUser;
+    }) as RechercheUtilisateur[];
+
     return {
-      data,
+      data: sanitizedData,
       total,
       keyWord: key,
       currentPage: currentPageA,

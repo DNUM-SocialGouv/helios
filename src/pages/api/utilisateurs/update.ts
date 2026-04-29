@@ -30,6 +30,8 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         (userSession?.user?.idUser === userCode && userSession?.user?.role !== Role.ADMIN_NAT) ||
         // Un admin regional ne peut pas mettre à jour un admin national ou un admin central
         ((userSession?.user?.role as number) === Role.ADMIN_REG && (Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_NAT || Number.parseInt(userBeforeChange.roleId) === Role.ADMIN_CENTR)) ||
+        // Un admin regional ne peut modifier que les utilisateurs de sa region
+        ((userSession?.user?.role as number) === Role.ADMIN_REG && userBeforeChange.institutionId !== userSession?.user?.institutionId) ||
         // Un admin régional ne peut pas attribuer le rôle d'admin national ou d'admin central
         (userSession?.user?.role as number) === Role.ADMIN_REG && (roleCode === RoleLabel.ADMIN_NAT || roleCode === RoleLabel.ADMIN_CENTR) ||
         // Un admin régional ne peut pas attribuer une institution nationale ou centrale, mais la mise à jour n’est pas bloquée si l’institution n’est pas modifiée
@@ -38,11 +40,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.status(403).send("Forbidden");
       }
 
-      const recherche = await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
+      await updateUserEndpoint(dependencies, userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
 
       dependencies.logger.audit(`${userSession?.user?.email}: Modification de l'utilisateur "${userBeforeChange.email}"`);
 
-      return response.status(200).json(recherche);
+      return response.status(200).json({});
     } else {
       response.status(404).send("User not found");
     }
