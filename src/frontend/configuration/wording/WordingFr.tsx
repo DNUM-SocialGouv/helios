@@ -484,6 +484,7 @@ export class WordingFr implements Wording {
   readonly HAS_TITLE: string = "Haute Autorité de Santé";
   readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
+  readonly STARS_FIR_TITLE: string = "STARS FIR";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -502,6 +503,7 @@ export class WordingFr implements Wording {
   readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS-Qualiscope</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
+  readonly STARS_FIR: ReactElement = (<abbr title={this.STARS_FIR_TITLE}>STARS FIR</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -547,7 +549,7 @@ export class WordingFr implements Wording {
   readonly ECO_CONCEPTION: string = "Eco-Conception";
   readonly COOKIES: string = "Gestion des Cookies";
   readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
-  readonly TARTE_CITRON: string= "Site officiel de Tarte au citron";
+  readonly TARTE_CITRON: string = "Site officiel de Tarte au citron";
   readonly SAVOIR_PLUS: string = "En savoir plus";
   readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
 
