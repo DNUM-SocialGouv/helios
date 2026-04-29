@@ -30,7 +30,7 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
     const header = [entiteJuridiqueViewModel.numéroFiness, entiteJuridiqueViewModel.nomDeLEntitéJuridique];
     const etabSan = formatEtSanForExport();
     const etabMedSoc = formatEtMedSocForExport();
-    const etabHeader = [["Type d’établissement", "Catégorie FINESS", "FINESS", "Raison sociale"]]
+    const etabHeader = [["Type d’établissement", "Cat. FINESS", "N° FINESS", "Raison sociale"]]
 
     const workbook = new Workbook();
     const sheet = workbook.addWorksheet("Etablissements rattachés");
