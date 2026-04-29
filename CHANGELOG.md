@@ -7,6 +7,7 @@
 
 ### Features
 
+- hel-1027: [Sécurité] Renforcer la politique Content-Security-Policy (CSP)
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 
