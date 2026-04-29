@@ -52,9 +52,9 @@ def import_engagements_allocation_ressource(
 
     # On sépare les données de l'année courante (pour lesquelles on fera une suppression+insertion) des années précédentes (pour lesquelles on fera une mise à jour)
     donnees_ej_annee_courante = donnees_ej[donnees_ej.index.get_level_values("annee") == annee_fichier]
-    donnees_ej_annees_precedentes = donnees_ej[donnees_ej.index.get_level_values("annee") != annee_fichier]
+    # donnees_ej_annees_precedentes = donnees_ej[donnees_ej.index.get_level_values("annee") != annee_fichier]
     donnees_et_annee_courante = donnees_et[donnees_et.index.get_level_values("annee") == annee_fichier]
-    donnees_et_annees_precedentes = donnees_et[donnees_et.index.get_level_values("annee") != annee_fichier]
+    # donnees_et_annees_precedentes = donnees_et[donnees_et.index.get_level_values("annee") != annee_fichier]
 
     with base_de_données.begin() as connection:
         # Pour l’année en cours on est sur un annule et remplace complet
@@ -65,11 +65,12 @@ def import_engagements_allocation_ressource(
         logger.info(f"[HAPI ENGAGEMENTS] Année courante {annee_fichier}: suppression+insertion EJ/ET effectuée")
 
         # Pour les années précédentes, on met à jour uniquement les montants des engagements uniquement
-        mets_a_jour_les_montants_engagements(connection, TABLE_RESSOURCE_ALLOCATION_EJ, "numero_finess_entite_juridique", donnees_ej_annees_precedentes)
-        mets_a_jour_les_montants_engagements(
-            connection, TABLE_RESSOURCE_ALLOCATION_ET, "numero_finess_etablissement_territorial", donnees_et_annees_precedentes
-        )
-        logger.info("[HAPI ENGAGEMENTS] Années précédentes: mise à jour effectuée")
+        # La démarche de distinction entre les nouvelles et les anciennes données n’étant pas fixée, on met en pause
+        # mets_a_jour_les_montants_engagements(connection, TABLE_RESSOURCE_ALLOCATION_EJ, "numero_finess_entite_juridique", donnees_ej_annees_precedentes)
+        # mets_a_jour_les_montants_engagements(
+        #     connection, TABLE_RESSOURCE_ALLOCATION_ET, "numero_finess_etablissement_territorial", donnees_et_annees_precedentes
+        # )
+        # logger.info("[HAPI ENGAGEMENTS] Années précédentes: mise à jour effectuée")
 
         mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_fichier, FichierSource.DIAMANT_MEN_HAPI)
 
