@@ -410,6 +410,7 @@ export interface Wording {
   readonly SIICEA_TITLE: string;
   readonly HAS_TITLE: string;
   readonly SI_AUTORISATIONS_TITLE: string;
+  readonly STARS_FIR_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -428,6 +429,7 @@ export interface Wording {
   readonly HAS: ReactElement;
   readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
+  readonly STARS_FIR: ReactElement;
 
 
   // Inaccessible

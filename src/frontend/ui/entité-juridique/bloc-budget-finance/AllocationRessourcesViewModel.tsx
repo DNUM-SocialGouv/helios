@@ -262,9 +262,11 @@ export class AllocationRessourcesViewModel {
 
   public lesAnnéesEffectivesDuAllocationRessources(): number[] {
     if (this.allocationRessourcesData && this.allocationRessourcesData.data) {
+      const currentYear = new Date().getFullYear();
+      const minYear = currentYear - (this.NOMBRE_ANNEES - 1); // On garde cette année et les 4dernières
       return this.allocationRessourcesData.data
-        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
-        .map((allocationRessources) => allocationRessources.année);
+        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources) && allocationRessources.année <= currentYear && allocationRessources.année >= minYear)
+        .map((allocationRessources) => allocationRessources.année)
     }
     return [];
   }

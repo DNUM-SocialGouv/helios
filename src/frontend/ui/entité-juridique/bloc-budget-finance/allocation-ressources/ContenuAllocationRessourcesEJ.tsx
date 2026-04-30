@@ -22,28 +22,25 @@ export const ContenuAllocationRessourcesEJ = ({ dateDeMiseÀJour, source, compar
           L’application HAPI « Autres champs » outille le processus de gestion et d’attribution des ressources liées aux enveloppes MIGAC, DAF, USLD, Forfait et
           FMESPP d’une part, et, le pilotage et l’ordonnancement des dépenses du fonds d’intervention régional (FIR) d’autre part.
         </p>
+        <p>STARS FIR est l’outil national de gestion entre les ARS et leurs partenaires des demandes de subvention du Fonds d’Intervention Régional (FIR).</p>
+        <p>Les données de ressources des années antérieures à 2024 proviennent de l’application HAPI.</p>
+        <p><strong>En 2025, HAPI est remplacé par STARS FIR.</strong> La campagne 2025 est en cours de traitement et n’est pas disponible.</p>
       </section>
       <section aria-label={wording.MODE_DE_CALCUL}>
         <p>
           <span className="fr-text--bold">Mode de calcul : </span>
         </p>
-
-        <p>Montant des crédits alloués par enveloppes, sous enveloppes et mode délégation, par campagne budgétaire.</p>
+        <p>HAPI : Montant des crédits alloués par enveloppes, sous enveloppes et mode délégation, par campagne budgétaire.</p>
+        <p>STARS FIR : Montant des crédits alloués par enveloppe et sous enveloppes par campagne budgétaire.</p>
       </section>
       <section aria-label={wording.FRÉQUENCE}>
         <p>
-          <span className="fr-text--bold">Fréquence :</span> Quotidienne
+          <span className="fr-text--bold">Fréquence :</span> Quotidienne pour les données de la campagne 2026 issues de STARS FIR
         </p>
       </section>
       <section aria-label={wording.SOURCES}>
         <p>
-          <span className="fr-text--bold">Source(s) :</span> HAPI (HArmonisation et Partage d’Information) - Autres champs.
-        </p>
-      </section>
-      <section aria-label={wording.INFOS_COMPLÉMENTAIRES}>
-        <p>
-          Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de
-          pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.
+          <span className="fr-text--bold">Source(s) :</span> HAPI (HArmonisation et Partage d’Information) - Autres champs, STARS FIR.
         </p>
       </section>
     </>
