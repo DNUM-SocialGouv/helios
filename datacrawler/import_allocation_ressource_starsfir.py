@@ -2,7 +2,9 @@ import os
 from logging import Logger
 import sys
 
+from pandas import DataFrame
 from sqlalchemy.engine import Engine, create_engine
+from sqlalchemy import text
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.extrais_la_date_du_nom_de_fichier import (
@@ -30,6 +32,13 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_engagements_starsfir_allocation_ressource_ej_helios,
 )
 
+YEARS_TO_KEEP = 5
+
+
+def read_csv(chemin: str) -> DataFrame:
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_engagements_starsfir_allocation_ressource_ej_helios)
+    return lis_le_fichier_engagements_starsfir_csv(chemin, colonnes_a_lire_allocation_ressource_engagements, types_des_colonnes)
+
 
 def import_engagements_allocation_ressource(
     fichier: str,
@@ -40,8 +49,7 @@ def import_engagements_allocation_ressource(
     chemin = os.path.join(hapi_data_path, fichier)
     annee_fichier = extrais_l_annee_du_nom_de_fichier_engagements_starsfir(chemin)
 
-    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_engagements_starsfir_allocation_ressource_ej_helios)
-    donnees = lis_le_fichier_engagements_starsfir_csv(chemin, colonnes_a_lire_allocation_ressource_engagements, types_des_colonnes)
+    donnees = read_csv(chemin)
 
     finess_ej = recupere_les_numeros_finess_des_entites_juridiques_de_la_base(base_de_données)
     finess_et = recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_données)
@@ -55,7 +63,16 @@ def import_engagements_allocation_ressource(
     donnees_et_annee_courante = donnees_et[donnees_et.index.get_level_values("annee") == annee_fichier]
     # donnees_et_annees_precedentes = donnees_et[donnees_et.index.get_level_values("annee") != annee_fichier]
 
+    # Supprimer les campagnes plus anciennes que YEARS_TO_KEEP
+    limite_campagne = annee_fichier - YEARS_TO_KEEP
+
     with base_de_données.begin() as connection:
+        # Supprimer les anciennes campagnes (plus anciennes que YEARS_TO_KEEP)
+        if limite_campagne is not None:
+            connection.execute(text(f"DELETE FROM {TABLE_RESSOURCE_ALLOCATION_EJ} WHERE annee <= :limite"), {"limite": limite_campagne})
+            connection.execute(text(f"DELETE FROM {TABLE_RESSOURCE_ALLOCATION_ET} WHERE annee <= :limite"), {"limite": limite_campagne})
+            logger.info(f"[STARSFIR ENGAGEMENTS] Suppression des annee antérieures à {limite_campagne} effectuée")
+
         # Pour l’année en cours on est sur un annule et remplace complet
         supprime_les_donnees_pour_l_annee(connection, TABLE_RESSOURCE_ALLOCATION_EJ, annee_fichier)
         supprime_les_donnees_pour_l_annee(connection, TABLE_RESSOURCE_ALLOCATION_ET, annee_fichier)
