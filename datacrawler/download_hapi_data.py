@@ -90,10 +90,10 @@ def main() -> None:
     logger, variables_d_environnement = initialise_les_dépendances()
 
     # --- Configuration ---
-    sftp_host = variables_d_environnement["HAPI_SFTP_HOST"]
-    sftp_port = int(variables_d_environnement["HAPI_SFTP_PORT"])
-    sftp_username = variables_d_environnement["HAPI_SFTP_USERNAME"]
-    sftp_password = variables_d_environnement["HAPI_SFTP_PASSWORD"]
+    sftp_host = variables_d_environnement["HAPI_FTPS_HOST"]
+    sftp_port = int(variables_d_environnement["HAPI_FTPS_PORT"])
+    sftp_username = variables_d_environnement["HAPI_FTPS_USERNAME"]
+    sftp_password = variables_d_environnement["HAPI_FTPS_PASSWORD"]
     remote_path = "ftps/Infocentre/Production/download/HAPI/anciennes_campagnes"
     local_path = Path(variables_d_environnement["HAPI_DATA_PATH"])
     file_prefix = "ENGAGEMENTS_PAR_BENEFICIAIRE"

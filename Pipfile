@@ -15,6 +15,7 @@ numpy = "2.4.2"
 paramiko = "4.0.0"
 requests = ">=2.31,<3"
 types-requests = ">=2.31,<3"
+ftputil = ">=5.1.0,<6"
 
 [dev-packages]
 pylint = "==2.16.2"
@@ -83,6 +84,7 @@ retrieveSivss = 'python -m datacrawler.download_sivss_data'
 retrieveVigierh = 'python -m datacrawler.download_vigierh_data'
 retrieveFiness = 'python -m datacrawler.download_finess_data'
 retrieveDiamant = 'python -m datacrawler.download_diamant_data'
+retrieveStarsFIR = "python -m datacrawler.download_starsfir_data"
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'

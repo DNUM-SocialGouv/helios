@@ -22,10 +22,10 @@ export interface EnvironmentVariables {
   readonly DNUM_SFTP_USERNAME: string;
 
   readonly HAPI_DATA_PATH: string;
-  readonly HAPI_SFTP_HOST: string;
-  readonly HAPI_SFTP_PORT: string;
-  readonly HAPI_SFTP_PASSWORD: string;
-  readonly HAPI_SFTP_USERNAME: string;
+  readonly HAPI_FTPS_HOST: string;
+  readonly HAPI_FTPS_PORT: string;
+  readonly HAPI_FTPS_PASSWORD: string;
+  readonly HAPI_FTPS_USERNAME: string;
 
   readonly VIGIE_RH_DATA_PATH: string;
 }

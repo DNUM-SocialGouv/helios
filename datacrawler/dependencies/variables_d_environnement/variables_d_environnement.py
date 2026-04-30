@@ -24,10 +24,10 @@ class VariablesDEnvironnement(TypedDict):
     DNUM_SFTP_USERNAME: str
     DNUM_SFTP_PRIVATE_KEY: str
     SIREC_DATA_PATH: str
-    HAPI_SFTP_HOST: str
-    HAPI_SFTP_PORT: str
-    HAPI_SFTP_USERNAME: str
-    HAPI_SFTP_PASSWORD: str
+    HAPI_FTPS_HOST: str
+    HAPI_FTPS_PORT: str
+    HAPI_FTPS_USERNAME: str
+    HAPI_FTPS_PASSWORD: str
     SFTP_HOST: str
     SFTP_PORT: str
     SFTP_USERNAME: str
@@ -76,10 +76,10 @@ def récupère_les_variables_d_environnement(
         DNUM_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_USERNAME"),
         DNUM_SFTP_PRIVATE_KEY=signale_si_la_variable_n_est_pas_présente("DNUM_SFTP_PRIVATE_KEY"),
         SIREC_DATA_PATH=signale_si_la_variable_n_est_pas_présente("SIREC_DATA_PATH"),
-        HAPI_SFTP_HOST=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_HOST"),
-        HAPI_SFTP_PORT=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PORT"),
-        HAPI_SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_USERNAME"),
-        HAPI_SFTP_PASSWORD=signale_si_la_variable_n_est_pas_présente("HAPI_SFTP_PASSWORD"),
+        HAPI_FTPS_HOST=signale_si_la_variable_n_est_pas_présente("HAPI_FTPS_HOST"),
+        HAPI_FTPS_PORT=signale_si_la_variable_n_est_pas_présente("HAPI_FTPS_PORT"),
+        HAPI_FTPS_USERNAME=signale_si_la_variable_n_est_pas_présente("HAPI_FTPS_USERNAME"),
+        HAPI_FTPS_PASSWORD=signale_si_la_variable_n_est_pas_présente("HAPI_FTPS_PASSWORD"),
         SFTP_HOST=signale_si_la_variable_n_est_pas_présente("SFTP_HOST"),
         SFTP_PORT=signale_si_la_variable_n_est_pas_présente("SFTP_PORT"),
         SFTP_USERNAME=signale_si_la_variable_n_est_pas_présente("SFTP_USERNAME"),
