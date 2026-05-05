@@ -228,7 +228,8 @@
     "resolutions": {
         "got": "^11.8.5",
         "@types/react": "19.2.8",
-        "@types/react-dom": "19.2.3"
+        "@types/react-dom": "19.2.3",
+        "@tootallnate/once": "3.0.1"
     },
     "engines": {
         "node": "22.14"
