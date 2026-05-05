@@ -149,6 +149,7 @@
     "dependencies": {
         "@gouvfr/dsfr": "^1.14.2",
         "@next/bundle-analyzer": "16.2.4",
+        "@opentelemetry/core": "^2.7.1",
         "@sentry/nextjs": "10.51.0",
         "@types/bcrypt": "^6.0.0",
         "@types/joi": "^17.2.3",

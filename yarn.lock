@@ -1874,7 +1874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/core@npm:2.7.1, @opentelemetry/core@npm:^2.0.0, @opentelemetry/core@npm:^2.6.1":
+"@opentelemetry/core@npm:2.7.1, @opentelemetry/core@npm:^2.0.0, @opentelemetry/core@npm:^2.6.1, @opentelemetry/core@npm:^2.7.1":
   version: 2.7.1
   resolution: "@opentelemetry/core@npm:2.7.1"
   dependencies:
@@ -6829,6 +6829,7 @@ __metadata:
     "@eslint/js": "npm:^9.39.2"
     "@gouvfr/dsfr": "npm:^1.14.2"
     "@next/bundle-analyzer": "npm:16.2.4"
+    "@opentelemetry/core": "npm:^2.7.1"
     "@sentry/nextjs": "npm:10.51.0"
     "@swc/core": "npm:^1.15.8"
     "@testing-library/dom": "npm:^10.4.1"
