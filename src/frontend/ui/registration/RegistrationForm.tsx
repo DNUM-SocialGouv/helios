@@ -24,7 +24,6 @@ export const RegistrationForm = () => {
   const createAccount = async (e: FormEvent) => {
     e.preventDefault();
     setClickBtnSend(true);
-    console.log( "email", email.length);
     fetch("/api/utilisateurs/createAccount", {
       body: JSON.stringify({ firstName, lastName, email, institution }),
       headers: { "Content-Type": "application/json" },
