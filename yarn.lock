@@ -6068,7 +6068,7 @@ __metadata:
     jsonwebtoken: "npm:^9.0.3"
     katex: "npm:^0.16.27"
     next: "npm:16.1.1"
-    next-auth: "npm:^4.24.13"
+    next-auth: "npm:^4.24.14"
     next-router-mock: "npm:^1.0.5"
     nuqs: "npm:^1.20.0"
     papaparse: "npm:^5.5.2"
@@ -8141,9 +8141,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.24.13":
-  version: 4.24.13
-  resolution: "next-auth@npm:4.24.13"
+"next-auth@npm:^4.24.14":
+  version: 4.24.14
+  resolution: "next-auth@npm:4.24.14"
   dependencies:
     "@babel/runtime": "npm:^7.20.13"
     "@panva/hkdf": "npm:^1.0.2"
@@ -8165,7 +8165,7 @@ __metadata:
       optional: true
     nodemailer:
       optional: true
-  checksum: 10/019ad687c41c4ef5fa86a1b7e5df89f85350e801eec4d818c997336279430afa85eafc0ac7ec262c4d044f4b07d1aeddf7a8f981c5619f73a0d216f5fea05763
+  checksum: 10/ae8e3b5a84c580b34217a7cd273cc43ec3e8336f971856f2b6ded5eddf73544def04bfe64f6577bb3f9b4973e74a30e4ca3d4a2aca595b65e0ded654f83a81c0
   languageName: node
   linkType: hard
 
