@@ -149,7 +149,7 @@
     "dependencies": {
         "@gouvfr/dsfr": "^1.14.2",
         "@next/bundle-analyzer": "16.2.4",
-        "@sentry/nextjs": "8.55.2",
+        "@sentry/nextjs": "9.47.1",
         "@types/bcrypt": "^6.0.0",
         "@types/joi": "^17.2.3",
         "@types/papaparse": "^5.3.15",
