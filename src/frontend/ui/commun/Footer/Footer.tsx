@@ -21,7 +21,7 @@ export const Footer = () => {
               className="fr-footer__brand-link"
               href={paths.ACCUEIL}
               title={wording.ACCUEIL}>
-              <Image alt="Logo Helios" height="100" src="/logo.svg" width="100" />
+              <Image alt={wording.ACCUEIL} height="100" src="/logo.svg" width="100" />
             </Link>
           </div>
           <div className="fr-footer__content">
