@@ -113,6 +113,7 @@ const nextConfig = withBundleAnalyzer({
 });
 
 const nextWithSentryConfig = withSentryConfig(nextConfig, {
+  telemetry: false,
   webpack: {
     treeshake: {
       removeDebugLogging: true
