@@ -179,7 +179,7 @@
         "react-emojis": "^1.0.6",
         "react-katex": "^3.1.0",
         "react-to-print": "^3.2.0",
-        "tarteaucitronjs": "^1.16.1",
+        "tarteaucitronjs": "^1.32.0",
         "typeorm": "^0.3.20"
     },
     "devDependencies": {

@@ -6083,7 +6083,7 @@ __metadata:
     react-to-print: "npm:^3.2.0"
     reflect-metadata: "npm:^0.2.2"
     stylelint: "npm:^16.26.1"
-    tarteaucitronjs: "npm:^1.16.1"
+    tarteaucitronjs: "npm:^1.32.0"
     ts-node: "npm:^10.9.2"
     ts-prune: "npm:^0.10.3"
     typeorm: "npm:^0.3.20"
@@ -10274,10 +10274,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tarteaucitronjs@npm:^1.16.1":
-  version: 1.16.1
-  resolution: "tarteaucitronjs@npm:1.16.1"
-  checksum: 10/4e2ac32bae008c120d7fbc88d202fcb33e9ba606fe4ff94afa97d19b431f535fbe1281a0751bcdc75697c72bd636cc35a7304d739925165f686e7c2771024a4f
+"tarteaucitronjs@npm:^1.32.0":
+  version: 1.32.0
+  resolution: "tarteaucitronjs@npm:1.32.0"
+  checksum: 10/bdefbbc8f90fb3725cab5d52c9130f77ac06f333d4e46d8b26d4f1602418e35c6b157edd5820b3b307022b60f437f69d3be4254b28f57439ab7cf68f958b04a2
   languageName: node
   linkType: hard
 
