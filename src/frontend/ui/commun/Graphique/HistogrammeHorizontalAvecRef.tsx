@@ -227,7 +227,9 @@ const HistogrammeHorizontalAvecRef = ({
   return (
     <>
       <div className={styles["flexContainer"]}>
-        <Bar data={data as ChartData<"bar">}
+        <Bar 
+          aria-labelledby={`Graphique ${nomGraph}`}
+          data={data as ChartData<"bar">}
           options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
         />
       </div>

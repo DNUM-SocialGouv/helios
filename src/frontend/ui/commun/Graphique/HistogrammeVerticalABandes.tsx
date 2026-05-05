@@ -135,7 +135,11 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)} />
+          <Bar 
+          aria-labelledby={`Graphique ${props.nomGraph}`}
+          data={props.data}
+          options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
+          />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>
       ) : null}
