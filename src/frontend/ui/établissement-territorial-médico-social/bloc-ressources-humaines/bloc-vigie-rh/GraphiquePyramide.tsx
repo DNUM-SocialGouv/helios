@@ -302,6 +302,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       <div className="fr-grid-row" style={{ height: "300px", alignItems: "stretch" }}>
         <div className="fr-col-5">
           <Bar
+            aria-labelledby={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
             data={menData as ChartData<"bar">}
             options={{
               ...options,
@@ -321,6 +322,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         </div>
         <div className="fr-col-2">
           <Bar
+            aria-labelledby={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
             data={middleData}
             options={{
               ...options,
@@ -343,6 +345,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         </div>
         <div className="fr-col-5">
           <Bar
+            aria-labelledby={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
             data={womenData}
             options={{
               ...options,

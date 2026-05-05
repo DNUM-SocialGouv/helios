@@ -42,7 +42,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
           <>
             <p className="fr-mb-2w">Le navigateur internet à privilégier pour accéder à Helios est Microsoft Edge.</p>
             <p className="fr-mb-2w">Google Chrome et Mozilla Firefox sont également fonctionnels.</p>
-            <Image alt="" height={40} src="/assets/faq/navigateurs.png" width={160} />
+            <Image alt="Logos des navigateurs compatibles" height={40} src="/assets/faq/navigateurs.png" width={160} />
           </>
         ),
       },
@@ -84,7 +84,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               Ces critères sont rappelés sous le champ de saisie de votre mot de passe. Lorsque le format est respecté, les conditions deviennent vertes.
             </p>
-            <Image alt="" height={80} src="/assets/faq/criteres_mdp.png" width={154} />
+            <Image alt="Critères de mot de passe" height={80} src="/assets/faq/criteres_mdp.png" width={154} />
           </>
         ),
       },
@@ -133,7 +133,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               Si elle ne s’affiche pas ou si un message d’erreur apparait, vérifiez que les cookies tiers Atlasanté sont autorisés dans votre navigateur Internet (pour cela, cliquez sur le symbole de l’œil).
             </p>
-            <Image alt="" height={260} src="/assets/faq/cookies.png" width={855} />
+            <Image alt="Cliquez sur l’icône en forme d’œil, en haut à droite dans la barre d’adresse, pour autoriser les cookies tiers Atlasanté" height={260} src="/assets/faq/cookies.png" width={855} />
             <p className="fr-mt-2w fr-mb-0">Le site helios.ars.sante.fr doit être autorisé.</p>
           </>
         ),
@@ -192,7 +192,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
         answer: (
           <>
             <p className="fr-mb-2w">Les sources des données disponibles dans Helios sont indiquées sous chaque intitulé d’indicateur.</p>
-            <Image alt="" height={23} src="/assets/faq/source.png" width={72} />
+            <Image alt="Exemple de source des données" height={23} src="/assets/faq/source.png" width={72} />
           </>
         ),
       },
@@ -204,7 +204,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               La dernière date de mise à jour des données disponibles dans Helios, est indiquée sous chaque intitulé d’indicateur.
             </p>
-            <Image alt="" height={29} src="/assets/faq/date_maj.png" width={152} />
+            <Image alt="Exemple de date de mise à jour des données" height={29} src="/assets/faq/date_maj.png" width={152} />
           </>
         ),
       },
@@ -216,7 +216,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-2w">
               Les méthodologies de calcul et détail des données disponibles dans Helios, sont accessibles en cliquant sur le bouton .
             </p>
-            <Image alt="" height={17} src="/assets/faq/details.png" width={63} />
+            <Image alt="Bouton « Détails » permettant d’afficher plus d’informations" height={17} src="/assets/faq/details.png" width={63} />
           </>
         ),
       },

@@ -28,7 +28,7 @@ export function BlocRessources({ ressources }: BlocRessourcesProps) {
           <section className={`fr-card fr-card--no-border fr-card--shadow fr-p-4w fr-mb-4w ${styles["carteRessource"]}`} key={type}>
             <div className="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
               <div className="fr-col-auto">
-                <Image alt="" aria-hidden height={72} src={icone} style={{ height: "4.5rem", width: "4.5rem" }} width={72} />
+                <Image alt={`Icône de la ressource ${titre}`} aria-hidden height={72} src={icone} style={{ height: "4.5rem", width: "4.5rem" }} width={72} />
               </div>
               <div className="fr-col">
                 <h2 className="fr-h4 fr-m-0 fr-text-title--blue-france">{titre}</h2>

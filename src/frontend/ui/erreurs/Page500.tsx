@@ -25,7 +25,7 @@ export const Page500 = () => {
           </Link>
         </div>
         <div className="fr-col-5 fr-pl-15w">
-          <Image alt="" height="300" src={erreur} width="300" />
+          <Image alt={wording.ERREUR_INATTENDUE_500} height="300" src={erreur} width="300" />
         </div>
       </div>
     </main>
