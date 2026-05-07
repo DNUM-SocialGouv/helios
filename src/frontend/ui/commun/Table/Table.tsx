@@ -79,7 +79,7 @@ interface TriProps {
   headerKey: string;
 }
 
-const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
+export const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   if (order === "ASC" && headerKey === orderBy) {
     return (
       <button
