@@ -3,6 +3,7 @@ import gzip
 import os
 import shutil
 from datetime import date
+from collections.abc import Generator
 from unittest.mock import Mock, patch
 
 import pandas as pd
@@ -64,41 +65,54 @@ fichier_de_donnees_amm_arghos = os.path.join("data_test", "entrée", "flux_fines
 
 fichier_de_données_diamant_ann_sae = os.path.join("data_test", "entrée", "diamant", "ANN_SAE_2022_08_03.CSV")
 
+archives_de_données_finess_de_test = [
+    (
+        archive_de_données_finess_cs1400103_de_test,
+        fichier_de_données_finess_cs1400103_de_test,
+    ),
+    (
+        archive_de_données_finess_cs1400104_de_test,
+        fichier_de_données_finess_cs1400104_de_test,
+    ),
+    (
+        archive_de_données_finess_cs1600101_de_test,
+        fichier_de_données_finess_cs1600101_de_test,
+    ),
+    (
+        archive_de_données_finess_cs1600102_de_test,
+        fichier_de_données_finess_cs1600102_de_test,
+    ),
+]
+
+fichiers_de_données_finess_de_test = [
+    fichier_de_données_finess_cs1400103_de_test,
+    fichier_de_données_finess_cs1400104_de_test,
+    fichier_de_données_finess_cs1600101_de_test,
+    fichier_de_données_finess_cs1600102_de_test,
+]
+
+
+def prépare_les_données_de_test_autorisations_sanitaires() -> None:
+    supprime_les_données_des_tables(base_de_données_test)
+    for archive_de_données, fichier_de_données in archives_de_données_finess_de_test:
+        with gzip.open(archive_de_données, "rb") as archive:
+            with open(fichier_de_données, "wb") as fichier_xml:
+                shutil.copyfileobj(archive, fichier_xml)
+
+
+def nettoie_les_données_de_test_autorisations_sanitaires() -> None:
+    for fichier_de_données in fichiers_de_données_finess_de_test:
+        os.remove(fichier_de_données)
+
+
+@pytest.fixture(autouse=True)
+def prépare_les_données_de_test_autorisations_sanitaires_fixture() -> Generator[None, None, None]:
+    prépare_les_données_de_test_autorisations_sanitaires()
+    yield
+    nettoie_les_données_de_test_autorisations_sanitaires()
+
 
 class TestAjouteLesAutorisationsDesÉtablissementsMédicoSociaux:
-    def setup_method(self) -> None:
-        supprime_les_données_des_tables(base_de_données_test)
-        for archive_de_données, fichier_de_données in [
-            (
-                archive_de_données_finess_cs1400103_de_test,
-                fichier_de_données_finess_cs1400103_de_test,
-            ),
-            (
-                archive_de_données_finess_cs1400104_de_test,
-                fichier_de_données_finess_cs1400104_de_test,
-            ),
-            (
-                archive_de_données_finess_cs1600101_de_test,
-                fichier_de_données_finess_cs1600101_de_test,
-            ),
-            (
-                archive_de_données_finess_cs1600102_de_test,
-                fichier_de_données_finess_cs1600102_de_test,
-            ),
-        ]:
-            with gzip.open(archive_de_données, "rb") as archive:
-                with open(fichier_de_données, "wb") as fichier_xml:
-                    shutil.copyfileobj(archive, fichier_xml)
-
-    def teardown_method(self) -> None:
-        for fichier_de_données in [
-            fichier_de_données_finess_cs1400103_de_test,
-            fichier_de_données_finess_cs1400104_de_test,
-            fichier_de_données_finess_cs1600101_de_test,
-            fichier_de_données_finess_cs1600102_de_test,
-        ]:
-            os.remove(fichier_de_données)
-
     class TestAjouteLesAutorisationsDesÉtablissementsSanitaires:
         def test_sauvegarde_les_autorisations_installées_des_établissements_sanitaires(
             self,

@@ -19,7 +19,11 @@ describe('HistogrammeHorizontalRowMultiple', () => {
 
   it('renders correctly with valid props', () => {
     const realPercentage = 50;
-    const ListeCouleursSousEnveloppes: string[] = [];
+    const ListeCouleursSousEnveloppes = [
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+      'rgb(0, 0, 0)',
+    ];
     render(<HistogrammeHorizontalRowMultiple ListeCouleursSousEnveloppes={ListeCouleursSousEnveloppes} data={data} realPercentage={realPercentage} />);
 
     // Vérifie que le conteneur est rendu avec la bonne largeur

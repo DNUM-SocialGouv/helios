@@ -1,3 +1,5 @@
+const { withSentryConfig } = require("@sentry/nextjs");
+
 const isDev = process.env.NODE_ENV === 'development'
 const cspHeader = `
     default-src 'self';
@@ -110,4 +112,13 @@ const nextConfig = withBundleAnalyzer({
   reactCompiler: true,
 });
 
-module.exports = nextConfig;
+const nextWithSentryConfig = withSentryConfig(nextConfig, {
+  telemetry: false,
+  webpack: {
+    treeshake: {
+      removeDebugLogging: true
+    }
+  }
+});
+
+module.exports = nextWithSentryConfig;
