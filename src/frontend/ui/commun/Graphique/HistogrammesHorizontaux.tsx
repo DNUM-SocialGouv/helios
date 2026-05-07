@@ -271,8 +271,10 @@ export const HistogrammesHorizontaux = ({
           {histogrammes.map((histogramme) => (
             <div className={styles["barContainerWidth"]} key={histogramme.nom}>
               <Bar
+                aria-labelledby={`Graphique ${nomGraph}`}
                 data={histogramme.chartData as ChartData<"bar">}
-                options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
+                options={{ ...histogramme.optionsHistogramme, aspectRatio }}
+                />
             </div>
           ))}
         </div>

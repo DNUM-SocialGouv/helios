@@ -341,7 +341,12 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
 
   return (
     <div>
-      <Bar data={dataSet} options={options as ChartOptions<"bar">} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+      <Bar 
+        aria-labelledby={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        data={dataSet}
+        options={options as ChartOptions<"bar">} 
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+      />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

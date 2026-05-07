@@ -235,6 +235,7 @@ const HistogrammeVerticalAvecRef = ({
   return (
     <>
       <Bar
+        aria-labelledby={`Graphique ${nomGraph}`}
         data={data as ChartData<"bar">}
         options={optionsHistogrammeVertical}
         plugins={showRefValues ? [rotationRefPlugin] : []}

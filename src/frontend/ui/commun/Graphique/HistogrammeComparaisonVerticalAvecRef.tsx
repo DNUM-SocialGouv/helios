@@ -326,7 +326,12 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={showRefValues ? [rotationRefPlugin] : []} />
+        <Bar                
+          aria-labelledby={`Graphique ${nomGraph}`}
+          data={chartData} 
+          options={chartOptions}
+          plugins={showRefValues ? [rotationRefPlugin] : []}
+        />
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}

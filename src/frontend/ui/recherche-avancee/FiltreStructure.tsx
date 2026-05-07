@@ -176,7 +176,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.entiteJuridque}
                       />
                       <label className="fr-label" htmlFor="checkboxe-ej">
-                        <Image alt="" height="22" src={LogoEntitéJuridiqueNoir} width="22" />
+                        <Image alt="Logo Entité Juridique" height="22" src={LogoEntitéJuridiqueNoir} width="22" />
                         <span style={{ marginLeft: "8px" }}>{wording.ENTITES_JURIDIQUES}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-ej"></div>
@@ -193,7 +193,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.etablissementSanitaire}
                       />
                       <label className="fr-label" htmlFor="checkboxe-es">
-                        <Image alt="" height="22" src={LogoÉtablissementTerritorialSanitaire} width="22" />
+                        <Image alt="Logo Établissement Sanitaire" height="22" src={LogoÉtablissementTerritorialSanitaire} width="22" />
                         <span style={{ marginLeft: "8px" }}>{wording.ETABLISSEMENTS_SANITAIRES}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-es"></div>
@@ -210,7 +210,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.etablissementMedicoSocial}
                       />
                       <label className="fr-label" htmlFor="checkboxe-esms">
-                        <Image alt="" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
+                        <Image alt="Logo Établissement Médico-Social" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
                         <span style={{ marginLeft: "8px" }}>{wording.ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-esms"></div>

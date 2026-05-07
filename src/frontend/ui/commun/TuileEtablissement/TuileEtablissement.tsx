@@ -40,7 +40,7 @@ export const TuileEtablissement = ({
           </div>
         </div>
         <div>
-          <Image alt="" className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
+          <Image alt={`Logo d'un établissement ${rechercheViewModel.type}`} className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
         </div>
       </div>
       <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}>
