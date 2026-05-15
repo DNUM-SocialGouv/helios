@@ -459,7 +459,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];;
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[0];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -497,7 +497,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[0];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_CAF });
       expect(annéeLigneDEnTête).toBeInTheDocument();
@@ -601,7 +601,7 @@ describe("La page établissement territorial - bloc budget et finances", () => {
       renderFakeComponent(<BlocBudgetEtFinancesMédicoSocial etabFiness={etabFiness} etabTitle={etabTitle} établissementTerritorialMédicoSocialBudgetEtFinancesViewModel={budgetFinanceViewModel} />);
 
       // THEN
-      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[2];
+      const tableau = screen.getAllByRole('table', { name: 'tableau transcription' })[1];
       const annéeLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.ANNÉE });
       const indicateurLigneDEnTête = within(tableau).getByRole("columnheader", { name: wording.TAUX_DE_VÉTUSTÉ_CONSTRUCTION });
       expect(annéeLigneDEnTête).toBeInTheDocument();
