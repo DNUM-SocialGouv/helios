@@ -113,8 +113,7 @@ export const PageDesDonnéesPersonnelles = () => {
         </tbody>
       </table>
       <p>
-        Au sein du ministère des solidarités et de la santé, vous pouvez vous adresser à Mme la Déléguée à la protection des données des ministères sociaux -
-        14, avenue Duquesne, 75007 PARIS.
+        Au sein du ministère des solidarités et de la santé, vous pouvez vous adresser <b>au correspondant RGPD de la DNUM</b> : <a href="mailto:rgpd-dnum@sg.social.gouv.fr">rgpd-dnum@sg.social.gouv.fr</a>.
       </p>
       <p>
         Enfin, si vous estimez, après nous avoir contactés, que vos droits sur vos données ne sont pas respectés, vous pouvez adresser une réclamation auprès de
