@@ -94,11 +94,9 @@ export function useRechercheAvanceeComparaison() {
     activiteSAN: ActiviteSanitaire[] | undefined,
     page: number | undefined
   ) => {
-    const csrfRes = await fetch("/api/csrf");
-    const { csrfToken } = await csrfRes.json();
     fetch("/api/recherche-avancee", {
       body: JSON.stringify({ page, terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN }),
-      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
+      headers: { "Content-Type": "application/json" },
       method: "POST",
     })
       .then((response) => response.json())

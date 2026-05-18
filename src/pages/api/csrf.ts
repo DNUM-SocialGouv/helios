@@ -1,8 +1,9 @@
 import { generateCsrfToken } from "../../lib/csrf";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+
 export default function handler(
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse
 ) {
   const csrfToken = generateCsrfToken();

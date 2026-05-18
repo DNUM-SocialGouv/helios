@@ -38,11 +38,9 @@ export function useFavoris() {
   }
 
   const getFavorisLists = async () => {
-    const csrfRes = await fetch("/api/csrf");
-    const { csrfToken } = await csrfRes.json();
     fetch("/api/liste",
       {
-        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
+        headers: { "Content-Type": "application/json" },
         method: "GET",
       })
       .then((response) => response.json())

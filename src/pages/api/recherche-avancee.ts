@@ -3,15 +3,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { rechercheAvanceeParmiLesEntitésEtÉtablissementsEndpoint } from "../../backend/infrastructure/controllers/rechercheAvanceeEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { ParametreDeRechercheAvancee } from "../../backend/métier/entities/ParametresDeRechercheAvancee";
-import { requireCsrf } from "../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
     return response.status(405).send("Method not allowed");
-  }
-
-  if (!requireCsrf(request, response)) {
-    return;
   }
 
   const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport = false } = request.body;

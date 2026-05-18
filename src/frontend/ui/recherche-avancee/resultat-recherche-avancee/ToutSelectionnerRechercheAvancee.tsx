@@ -21,12 +21,9 @@ async function getData(context: RechercheAvanceeContextValue) {
     { classification: "usld", ranges: activiteUsld || [] },
   ].filter((activite) => activite.ranges && activite.ranges.length > 0);
 
-  const csrfRes = await fetch("/api/csrf");
-  const { csrfToken } = await csrfRes.json();
-
   return fetch("/api/recherche-avancee", {
     body: JSON.stringify({ terme, zone: zoneGeo, zoneD: zoneGeoD, typeZone: zoneGeoType, type: typeStructure, statutJuridique: statutJuridiqueStructure, capaciteSMS: capacites, activiteSAN: activites, categories, orderBy, order, forExport: true }),
-    headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
+    headers: { "Content-Type": "application/json" },
     method: "POST",
   })
     .then((response) => response.json())
