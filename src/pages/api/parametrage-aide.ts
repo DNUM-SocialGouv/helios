@@ -5,6 +5,7 @@ import { authOptions } from "./auth/[...nextauth]";
 import { dependencies } from "../../backend/infrastructure/dependencies";
 import { AideUseCase } from "../../backend/métier/use-cases/AideUseCase";
 import { checkNationalAdminRole } from "../../checkNationalAdminMiddleware";
+import { requireCsrf } from "../../lib/require-csrf";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const useCase = new AideUseCase(dependencies.aideLoader);
@@ -20,6 +21,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === "POST") {
+    if (!requireCsrf(req, res)) {
+      return;
+    }
     try {
       const userSession = await getServerSession(req, res, authOptions);
       const user = userSession?.user;

@@ -30,11 +30,13 @@ export function useMdpOublie() {
     });
   };
 
-  const envoyerEmailService = (emailValue: string) => {
+  const envoyerEmailService = async (emailValue: string) => {
     setState({ ...state, isLoading: true })
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch("/api/mot-passe-oublie", {
       body: JSON.stringify({ emailValue }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     })
       .then((response) => response.json())

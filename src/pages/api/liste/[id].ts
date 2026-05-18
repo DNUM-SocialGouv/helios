@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 
 import { deleteList, getById, updateName } from "../../../backend/infrastructure/controllers/userListEndpoint";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -10,10 +11,16 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const idUser = userSession?.user?.idUser;
     if (idUser) {
       if (request.method === "POST") {
+        if (!requireCsrf(request, response)) {
+          return;
+        }
         return doUpdate(request, response, idUser);
       } else if (request.method === "GET") {
         return doGetById(request, response, idUser);
       } else if (request.method === "DELETE") {
+         if (!requireCsrf(request, response)) {
+          return;
+        }
         return doDelete(request, response, idUser);
       } else {
         return response.status(405).send("Method not allowed");

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "./auth/[...nextauth]";
 import { countLists, create, getAll } from "../../backend/infrastructure/controllers/userListEndpoint";
+import { requireCsrf } from "../../lib/require-csrf";
 
 //Nombre max de list = 10 + favoris
 const MAX_LIST = 11;
@@ -14,6 +15,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
     if (idUser) {
       if (request.method === "POST") {
+        if (!requireCsrf(request, response)) {
+          return;
+        }
         return doCreate(request, response, idUser);
       } else if (request.method === "GET") {
         return doGetAll(response, idUser);

@@ -75,10 +75,12 @@ export function useRecherche() {
     });
   };
 
-  const rechercher = (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
+  const rechercher = async (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch("/api/recherche", {
       body: JSON.stringify({ page, terme, order, orderBy, displayTable }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     })
       .then((response) => response.json())

@@ -6,12 +6,16 @@ import { deleteProfileEndpoint } from "../../../backend/infrastructure/controlle
 import { getProfileByIdEndpoint } from "../../../backend/infrastructure/controllers/getProfileByIdEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
     if (request.method !== "DELETE") {
-      response.status(405).send("Method not allowed");
+      return response.status(405).send("Method not allowed");
+    }
+    if (!requireCsrf(request, response)) {
+      return;
     }
     const { profileId } = request.body;
 

@@ -30,10 +30,13 @@ export const FormulaireDeConnexion = () => {
         redirect: false,
       });
 
+
       if (res?.error) {
+        const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
         const loginErrorRes = await fetch("/api/utilisateurs/loginError", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken, },
           body: JSON.stringify({ email, password }),
         })
         const loginErrorMessage = await loginErrorRes.json();
@@ -45,9 +48,11 @@ export const FormulaireDeConnexion = () => {
 
         setLoading(false);
       } else {
+        const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
         await fetch("/api/utilisateurs/checkUserIsNotAdminAndInactif", {
           body: JSON.stringify({ email: email }),
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken, },
           method: "POST",
         }).then(async (rep) => {
           if (rep.status === 401) {
@@ -56,9 +61,11 @@ export const FormulaireDeConnexion = () => {
             setLoading(false);
           } else {
             setError(null);
+            const csrfRes = await fetch("/api/csrf");
+            const { csrfToken } = await csrfRes.json();
             await fetch("/api/utilisateurs/updateLastConnectionDate", {
               body: JSON.stringify({ email: email }),
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
               method: "POST",
             }).then(async (rep) => {
               if (rep.status === 200) window.location.href = "/";

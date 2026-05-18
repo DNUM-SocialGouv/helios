@@ -17,10 +17,12 @@ export function useParametrage() {
   const router = useRouter();
   const { paths } = useDependencies();
 
-  const updateProfile = (userId: string, code: string, value: ProfileValue, name: string) => {
+  const updateProfile = async (userId: string, code: string, value: ProfileValue, name: string) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch("/api/profile/update", {
       body: JSON.stringify({ userId, code, value, name }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     }).then((response) => {
       if (response.status === 200)
@@ -30,9 +32,11 @@ export function useParametrage() {
 
   const saveProfile = async (userId: string, label: string, profile: ProfileValue) => {
     let statusCode = 0;
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     return fetch("/api/profile/add", {
       body: JSON.stringify({ userId, label, value: profile }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     }).then((response) => {
       statusCode = response.status;

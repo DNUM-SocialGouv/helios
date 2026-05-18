@@ -5,13 +5,19 @@ import { getServerSession } from "next-auth";
 import { updateProfileEndpoint } from "../../../backend/infrastructure/controllers/updateProfileEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
     if (request.method !== "POST") {
-      response.status(405).send("Method not allowed");
+      return response.status(405).send("Method not allowed");
     }
+
+    if (!requireCsrf(request, response)) {
+      return;
+    }
+      
     const { code, value, name } = request.body;
     const recherche = await updateProfileEndpoint(dependencies, code, value, name);
     const session = await getServerSession(request, response, authOptions);

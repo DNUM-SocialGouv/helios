@@ -9,9 +9,12 @@ type ConfirmDeleteModalEditPageProps = Readonly<{
 
 const ConfirmDeleteModalEditPage = ({ redirectPage, userCode }: ConfirmDeleteModalEditPageProps) => {
   const deleteUser = async (userCode: string) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
+    
     await fetch("/api/utilisateurs/delete", {
       body: JSON.stringify({ userCode: userCode }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "DELETE",
     }).then(async () => {
       redirectPage("/settings/users?status=deleted_successfully");
