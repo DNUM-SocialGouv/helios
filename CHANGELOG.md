@@ -20,6 +20,7 @@
 - hel-1009: Traitement des retours dependabot
 - hel-1020: [RGAA] Mise en conformité Image 1.1
 - hel-1021: [RGAA] Mise en conformité Navigation 12.9
+- hel-1031: [Sécurité] Restreindre l'accès à la page d'accueil au RIE
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 
