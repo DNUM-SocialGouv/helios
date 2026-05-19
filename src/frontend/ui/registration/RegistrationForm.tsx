@@ -24,9 +24,11 @@ export const RegistrationForm = () => {
   const createAccount = async (e: FormEvent) => {
     e.preventDefault();
     setClickBtnSend(true);
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch("/api/utilisateurs/createAccount", {
       body: JSON.stringify({ firstName, lastName, email, institution }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     })
       .then((response) => response.json())

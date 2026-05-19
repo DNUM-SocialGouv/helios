@@ -67,11 +67,13 @@ export function useReinitialisationMdp() {
         }
     }
 
-    const changePasswordService = () => {
+    const changePasswordService = async () => {
         setIsLoading(true)
+        const csrfRes = await fetch("/api/csrf");
+        const { csrfToken } = await csrfRes.json();
         fetch("/api/change-mot-passe", {
             body: JSON.stringify({ loginToken: loginToken, password: passwordValue }),
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
             method: "POST",
         })
             .then(async (response) => {
