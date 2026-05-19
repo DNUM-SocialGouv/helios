@@ -17,7 +17,7 @@ export const checkToken = (token: string): { email: string } | null => {
 
 export const generateToken = (payload: string, timeout: string): string | null => {
   if (JWT_SECRET_KEY) {
-    const options: SignOptions = { expiresIn: timeout as unknown as SignOptions["expiresIn"] };
+    const options: SignOptions = { expiresIn: timeout };
     return jwt.sign({ email: payload }, JWT_SECRET_KEY, options);
   }
   return null;
