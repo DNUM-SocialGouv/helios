@@ -569,6 +569,9 @@ export interface Wording {
   readonly PARAMETRAGE_TITRE: string;
   readonly PARAMETRAGE_AUTORISATIONS_TITRE: string;
   readonly PARAMETRAGE_AIDE_TITRE: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_TITRE: string;
+  readonly PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;
@@ -740,6 +743,7 @@ export interface Wording {
   readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string;
   readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string;
   readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string;
 
   // Aide
   readonly AIDE_TITRE_PAGE: string;

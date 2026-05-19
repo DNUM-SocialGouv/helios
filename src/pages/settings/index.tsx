@@ -14,10 +14,11 @@ import { Role } from "../../commons/Role";
 import { useDependencies } from "../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../frontend/ui/commun/hooks/useBreadcrumb";
 import { ContenuAide, GestionAide } from "../../frontend/ui/parametrage-aide";
+import { ParametrageMsgAccueil } from "../../frontend/ui/parametrage-messsage-accueil/ParametrageMsgAccueil";
 import { ParametragePage } from "../../frontend/ui/parametrage-profil/ParametragePage";
 
 
-type TabKey = "profiles" | "aide";
+type TabKey = "profiles" | "aide" | "message-accueil";
 
 type RouterProps = Readonly<{
   profiles: ProfilModel[];
@@ -91,6 +92,19 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
                 {wording.PARAMETRAGE_AIDE_TITRE}
               </button>
             </li>
+            <li>
+              <button
+                aria-controls="tabpanel-message-accueil"
+                aria-selected={activeTab === "message-accueil"}
+                className={`fr-tabs__tab${activeTab === "message-accueil" ? " fr-tabs__tab--selected" : ""}`}
+                id="tab-message-accueil"
+                onClick={() => handleTabChange("message-accueil")}
+                role="tab"
+                type="button"
+              >
+                {wording.PARAMETRAGE_MESSAGE_ACCUEIL_TITRE}
+              </button>
+            </li>
           </ul>
 
           <div
@@ -111,6 +125,15 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
             role="tabpanel"
           >
             <GestionAide contenuInitial={aideData} envelopperDansMain={false} />
+          </div>
+          <div
+            aria-labelledby="tab-message-accueil"
+            className={`fr-tabs__panel${activeTab === "message-accueil" ? " fr-tabs__panel--selected" : ""}`}
+            hidden={activeTab !== "message-accueil"}
+            id="tabpanel-message-accueil"
+            role="tabpanel"
+          >
+              <ParametrageMsgAccueil  />
           </div>
         </div>
       </div>
