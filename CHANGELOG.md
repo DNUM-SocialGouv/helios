@@ -6,6 +6,7 @@
 
 ### Features
 
+- hel-1044: Ajouter la donnée etablissement principale/secondaire dans l’export des EJ
 
 ## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-19)
 
@@ -13,7 +14,7 @@
 
 - hel-1024: Retrait des informations non nécessaire du retour back des informations utilisateur
 - hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
--hel-1038: [Comparaison] Tag Année absence de 2026 
+- hel-1038: [Comparaison] Tag Année absence de 2026
 
 ### Features
 
