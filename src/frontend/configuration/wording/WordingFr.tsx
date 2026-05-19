@@ -298,7 +298,7 @@ export class WordingFr implements Wording {
   readonly AFFICHER_PLUS: string = "Aficher plus";
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
-  readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
+  readonly CERTIFICATION_QUALISCOPE: string = "Evaluation HAS";
   readonly HAS_FICHE_SAN_PATH: string = "https://www.has-sante.fr/fiche-etablissement/";
   readonly HAS_FICHE_MS_PATH: string = "https://www.has-sante.fr/fiche-essms/";
 
