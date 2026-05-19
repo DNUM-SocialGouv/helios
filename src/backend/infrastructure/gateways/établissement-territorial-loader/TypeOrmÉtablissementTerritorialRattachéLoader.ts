@@ -5,7 +5,7 @@ import { ÉtablissementTerritorialRattaché } from "../../../métier/entities/en
 import { ÉtablissementTerritorialRattachéLoader } from "../../../métier/gateways/ÉtablissementTerritorialRattachéLoader";
 
 export class TypeOrmÉtablissementTerritorialRattachéLoader implements ÉtablissementTerritorialRattachéLoader {
-  constructor(private readonly orm: Promise<DataSource>) {}
+  constructor(private readonly orm: Promise<DataSource>) { }
 
   async chargeLesÉtablissementsDeLEntitéJuridiqueDeRattachement(numéroFinessEntitéJuridique: string): Promise<ÉtablissementTerritorialRattaché[]> {
     const établissementsTerritoriauxModels = await this.chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique);
@@ -16,7 +16,7 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
   private async chargeLesÉtablissementsRattachésÀLEntitéJuridique(numéroFinessEntitéJuridique: string) {
     return await (await this.orm)
       .getRepository(ÉtablissementTerritorialIdentitéModel)
-      .find({ order: { domaine: "ASC", libelléCatégorieÉtablissement: "ASC" , numéroFinessÉtablissementTerritorial: "ASC" }, where: { numéroFinessEntitéJuridique } });
+      .find({ order: { domaine: "ASC", libelléCatégorieÉtablissement: "ASC", numéroFinessÉtablissementTerritorial: "ASC" }, where: { numéroFinessEntitéJuridique } });
   }
 
   private construisLesÉtablissementsTerritoriauxRattachés(
@@ -30,6 +30,8 @@ export class TypeOrmÉtablissementTerritorialRattachéLoader implements Établis
         libelléCatégorieÉtablissement: établissementTerritorialModel.libelléCatégorieÉtablissement,
         libelleCourtCategorieEtablissement: établissementTerritorialModel.libelléCourtCatégorieÉtablissement,
         categorieEtablissementCode: établissementTerritorialModel.catégorieÉtablissement,
+        typeÉtablissement: établissementTerritorialModel.typeÉtablissement,
+        numeroFinessEtablissementPrincipal: établissementTerritorialModel.numéroFinessÉtablissementPrincipal,
       };
     });
   }
