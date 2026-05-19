@@ -82,6 +82,8 @@ describe("Établissement territorial rattaché loader", () => {
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
         libelleCourtCategorieEtablissement: "C.H.",
         categorieEtablissementCode: "159",
+        typeÉtablissement: "S",
+        numeroFinessEtablissementPrincipal: "010018407"
       },
       {
         domaine: DomaineÉtablissementTerritorial.MÉDICO_SOCIAL,
@@ -90,6 +92,8 @@ describe("Établissement territorial rattaché loader", () => {
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
         libelleCourtCategorieEtablissement: "C.H.",
         categorieEtablissementCode: "365",
+        typeÉtablissement: "P",
+        numeroFinessEtablissementPrincipal: ""
       },
       {
         domaine: DomaineÉtablissementTerritorial.SANITAIRE,
@@ -98,6 +102,8 @@ describe("Établissement territorial rattaché loader", () => {
         libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
         libelleCourtCategorieEtablissement: "C.H.",
         categorieEtablissementCode: "365",
+        typeÉtablissement: "P",
+        numeroFinessEtablissementPrincipal: ""
       },
     ];
     expect(établissementsTerritoriaux).toStrictEqual(établissementsTerritoriauxAttendus);
