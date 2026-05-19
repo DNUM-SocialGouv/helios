@@ -1,7 +1,7 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 const CSRF_SECRET = process.env["CSRF_SECRET"]!;
-const TOKEN_EXPIRY_MS = 3600_000; // 1 hour
+const TOKEN_EXPIRY_MS = 3_600_000; // 1 hour
 
 export function generateCsrfToken(): string {
   const nonce = crypto.randomBytes(32).toString("hex");
