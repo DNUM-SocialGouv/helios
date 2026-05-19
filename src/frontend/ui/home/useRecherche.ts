@@ -75,7 +75,7 @@ export function useRecherche() {
     });
   };
 
-  const rechercher = (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
+  const rechercher = async (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
     fetch("/api/recherche", {
       body: JSON.stringify({ page, terme, order, orderBy, displayTable }),
       headers: { "Content-Type": "application/json" },

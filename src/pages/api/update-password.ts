@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 import { updatePasswordEndpoint } from "../../backend/infrastructure/controllers/updatePasswordEndpoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
+import { requireCsrf } from '../../lib/require-csrf';
 
 const validateInputs = (email: string, password: string, oldPassword: string) => {
   const validEmail = Joi.string().required().email({ tlds: { allow: false } }).validate(email);
@@ -26,6 +27,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
   try {
     if (request.method !== "POST") {
       return response.status(405).send("Method not allowed");
+    }
+
+    if (!requireCsrf(request, response)) {
+      return;
     }
 
     const { email, password, oldPassword } = request.body;

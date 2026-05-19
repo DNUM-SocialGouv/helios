@@ -26,16 +26,18 @@ export function useFavoris() {
   };
 
   const createFavorisList = async (listName: string, isFavoris: boolean) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     return fetch("/api/liste",
       {
         body: JSON.stringify({ listName: listName, isFavoris: isFavoris }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
       })
 
   }
 
-  const getFavorisLists = () => {
+  const getFavorisLists = async () => {
     fetch("/api/liste",
       {
         headers: { "Content-Type": "application/json" },
@@ -47,11 +49,13 @@ export function useFavoris() {
       });
   };
 
-  const updateListName = (listId: number, listName: string) => {
+  const updateListName = async (listId: number, listName: string) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch(`/api/liste/${listId}`,
       {
         body: JSON.stringify({ listName }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
       })
       .then((response) => response.json())
@@ -61,10 +65,12 @@ export function useFavoris() {
       });
   };
 
-  const deleteList = (listId: number) => {
+  const deleteList = async (listId: number) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch(`/api/liste/${listId}`,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "DELETE",
       })
       .then(() => {
@@ -74,10 +80,12 @@ export function useFavoris() {
   };
 
   const removeFromFavorisList = async (numerosFiness: string[], listId: number) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     return fetch(`/api/liste/${listId}/etablissement`,
       {
         body: JSON.stringify({ finessNumbers: numerosFiness }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "DELETE",
       })
       .then((data) => {
@@ -95,10 +103,12 @@ export function useFavoris() {
   };
 
   const addToFavorisList = async (numeroFiness: string, listId: number) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     return fetch(`/api/liste/${listId}/etablissement`,
       {
         body: JSON.stringify({ finessNumber: numeroFiness }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
       });
   };

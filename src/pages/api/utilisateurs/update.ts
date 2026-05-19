@@ -7,13 +7,19 @@ import { updateUserEndpoint } from "../../../backend/infrastructure/controllers/
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
 import { Role, RoleLabel } from "../../../commons/Role";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   try {
     if (request.method !== "POST") {
-      response.status(405).send("Method not allowed");
+      return response.status(405).send("Method not allowed");
     }
+
+    if (!requireCsrf(request, response)) {
+      return;
+    }
+      
     const { userCode, roleCode, institutionCode, profilsCode, firstname, lastname } = request.body;
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);

@@ -6,6 +6,7 @@ import { addProfileEndpoint } from "../../../backend/infrastructure/controllers/
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkNationalAdminRole } from "../../../checkNationalAdminMiddleware";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -13,6 +14,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (request.method !== "POST") {
       return response.status(405).send("Method not allowed");
     }
+
+    if (!requireCsrf(request, response)) {
+        return;
+    }
+    
     const { label, value, userId } = request.body;
     if (!label || label.trim() === "") {
       return response.status(400).send("Bad request: label is required");

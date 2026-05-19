@@ -33,9 +33,11 @@ async function getComparaisonData(annee: string, type: string, order = "", order
   } catch (e) {
     alert("Error :" + e);
   }
+  const csrfRes = await fetch("/api/csrf");
+  const { csrfToken } = await csrfRes.json();
   return fetch("/api/comparaison/compare", {
     body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles, enveloppe1, enveloppe2, enveloppe3 }),
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
     method: "POST",
   })
     .then((response) => response.json())

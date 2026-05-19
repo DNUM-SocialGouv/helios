@@ -486,10 +486,13 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
       };
     }
 
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
+
     let responseOk = false;
     await fetch("/api/parametrage-aide", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken, },
       body: JSON.stringify(chargeUtile),
     })
       .then((response) => {

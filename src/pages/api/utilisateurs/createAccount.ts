@@ -3,11 +3,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { checkIfEmailExistsEndpoint } from '../../../backend/infrastructure/controllers/checkIfEmailExistsEndpoint';
 import { createAccountEndpoint } from "../../../backend/infrastructure/controllers/createAccountEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
-    response.status(405).send("Method not allowed");
+    return response.status(405).send("Method not allowed");
   }
+
+  if (!requireCsrf(request, response)) {
+      return;
+  }
+  
   try {
     const { firstName, lastName, email, institution } = request.body;
 
