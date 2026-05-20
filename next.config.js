@@ -28,7 +28,7 @@ const securityHeaders = [
    **/
   {
     key: "Content-Security-Policy",
-    value: cspHeader.replaceAll(/\n/g, ''),
+    value: cspHeader.replaceAll('\n', ''),
   },
   /**
    * Permissions-Policy, see: https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/
