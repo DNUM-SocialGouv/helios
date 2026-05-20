@@ -7,7 +7,7 @@
 ### Features
 
 
-## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-19)
+## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
 
 ### Bug Fixes
 
