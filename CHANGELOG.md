@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+- hel-1045: Erreur consultation vignette
 - hel-1024: Retrait des informations non nécessaire du retour back des informations utilisateur
 - hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
 
