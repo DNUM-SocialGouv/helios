@@ -168,7 +168,12 @@ export async function getServerSideProps(
     }
 
     const tabParam = context.query[TAB_QUERY_KEY];
-    const initialTab = tabParam === "aide" ? "aide" : "profiles";
+    let initialTab: TabKey = "profiles";
+    if (tabParam === "aide") {
+      initialTab = "aide";
+    } else if (tabParam === "message-accueil") {
+      initialTab = "message-accueil";
+    }
 
     return {
       props: {

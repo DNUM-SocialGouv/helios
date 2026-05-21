@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { DefinirMsgForm } from "./DefinirMsgForm";
 import { MenuSections } from "./MenuSections";
 import { useDependencies } from "../commun/contexts/useDependencies";
 
@@ -28,8 +29,15 @@ export function ParametrageMsgAccueil() {
           />
         </aside>
          <section className="fr-col-12 fr-col-md-9">
-          {slugSelectionne === wording.PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL && <div>{wording.PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL}</div>}
-          {slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE && <div>{wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE}</div>}  
+           <div className="fr-card fr-card--shadow fr-card--no-border" style={{ border: "1px solid #e5e5f4", borderRadius: "0.5rem", padding: "1rem 1.5rem" }}>
+            <header className="fr-mb-4w">
+              <div className="fr-grid-row fr-grid-row--middle fr-grid-row--gutters">
+                  <h2 className="fr-h3 fr-m-0">{slugSelectionne}</h2>
+              </div>
+            </header>
+            {slugSelectionne === wording.PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL && <DefinirMsgForm />}
+            {slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE && <div>{wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE}</div>}  
+          </div>
          </section>
        </div>
     </div>
