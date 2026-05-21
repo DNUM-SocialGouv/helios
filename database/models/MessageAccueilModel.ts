@@ -14,10 +14,10 @@ export class MessageAccueilModel {
   @Column({ name: "date_fin", type: "date", nullable: true })
   public dateFin!: string | null;
 
-  @Column({ name: "badge_type", length: 50, nullable: true })
+  @Column({ name: "badge_type", type: "varchar", length: 50, nullable: true })
   public badgeType!: string | null;
 
-  @Column({ name: "badge_libelle", length: 255, nullable: true })
+  @Column({ name: "badge_libelle", type: "varchar", length: 255, nullable: true })
   public badgeLibelle!: string | null;
 
   @Column({ name: "date_creation", type: "timestamp", default: () => "now()" })

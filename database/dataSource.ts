@@ -162,6 +162,7 @@ import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel"
 import { FavorisModel } from "./models/FavorisModel";
 import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { MessageAccueilModel } from "./models/MessageAccueilModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
@@ -267,7 +268,8 @@ const datasource = new DataSource({
     VigieRhNatureContratsAnnuelModel,
     VigieRhNatureContratsTrimestrielModel,
     QualiteQualiscopeHASModel,
-    QualiteQualiscopeHasMsModel
+    QualiteQualiscopeHasMsModel,
+    MessageAccueilModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,

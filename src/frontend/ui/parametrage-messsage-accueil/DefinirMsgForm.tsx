@@ -12,6 +12,8 @@ export function DefinirMsgForm() {
   const [badgeStatus, setBadgeStatus] = useState("");
   const [badgeLibelle, setBadgeLibelle] = useState("");
   const [errors, setErrors] = useState<{ message?: string; dateDebut?: string; dateFin?: string }>({});
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const todayISO = new Date().toISOString().split("T")[0];
 
   const validate = (): boolean => {
@@ -35,13 +37,54 @@ export function DefinirMsgForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
-    if (validate()) {
+  const handleSubmit = async () => {
+    if (!validate()) return;
+
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/message-accueil", {
+        body: JSON.stringify({
+          badgeLibelle: badgeLibelle || null,
+          badgeType: badgeStatus || null,
+          contenu: message,
+          dateDebut,
+          dateFin: dateFin || null,
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Votre message est enregistré avec succès.");
+        setMessage("");
+        setDateDebut("");
+        setDateFin("");
+        setBadgeStatus("");
+        setBadgeLibelle("");
+        setErrors({});
+
+      } else {
+        setErrorMessage("Erreur lors de l'enregistrement.");
+      }
+    } catch {
+      setErrorMessage("Erreur lors de l'enregistrement.");
     }
   };
 
    return (
     <div> 
+        {successMessage && (
+          <div className="fr-alert fr-alert--success fr-alert--sm fr-mb-3w">
+            <p>{successMessage}</p>
+          </div>
+        )}
+        {errorMessage && (
+          <div className="fr-alert fr-alert--error fr-alert--sm fr-mb-3w">
+            <p>{errorMessage}</p>
+          </div>
+        )}
         <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
             <label className="fr-label">
                 Badge:
@@ -68,7 +111,7 @@ export function DefinirMsgForm() {
         </div>
         <div className={`fr-mb-4w ${errors.message ? "fr-input-group--error" : ""}`}>
             <label className="fr-label" htmlFor="message-texte">
-                Message <span className="fr-hint-text">*</span>
+                Message 
             </label>
             <textarea
                 aria-required="true"
@@ -86,7 +129,7 @@ export function DefinirMsgForm() {
             </label>
             <div className={`${styles["flex-input"]} ${errors.dateDebut ? "fr-input-group--error" : ""}`}>
                 <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="date-debut" >
-                    Du <span className="fr-hint-text">*</span>
+                    Du
                 </label>
                 <input
                     aria-required="true"
