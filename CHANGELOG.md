@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 ### Features
+hel-1050: Ajout d’event Matomo lors de l’export
 
 ## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (2026-06-15)
 
