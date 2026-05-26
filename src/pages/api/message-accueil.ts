@@ -6,6 +6,15 @@ import { MessageAccueilUseCase } from "../../backend/métier/use-cases/MessageAc
 const useCase = new MessageAccueilUseCase(dependencies.messageAccueilLoader);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === "GET") {
+    try {
+      const message = await dependencies.messageAccueilLoader.getLastMessage();
+      return res.status(200).json(message);
+    } catch (error) {
+      return res.status(500).json({ message: "Erreur lors de la récupération du message." + (error instanceof Error ? ` Détails : ${error.message}` : "") });
+    }
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }

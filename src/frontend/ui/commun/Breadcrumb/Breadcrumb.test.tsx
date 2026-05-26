@@ -70,7 +70,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageRecherche passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
       </>
     );
 
