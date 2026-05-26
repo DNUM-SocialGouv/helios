@@ -11,7 +11,8 @@ export class AjoutTableMessageAccueil1779354621997 implements MigrationInterface
                 date_fin date,
                 badge_type varchar(50),
                 badge_libelle varchar(255),
-                date_creation timestamp not null default now()
+                date_creation timestamp not null default now(),
+                is_affiche boolean not null default true
             );
         `);
   }
