@@ -643,7 +643,6 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;

@@ -152,11 +152,11 @@ export function DefinirMsgForm() {
                 </label>
                 <select aria-describedby="select-hint-messages" className="fr-select" id="select-status" name="select-hint" onChange={(e) => setBadgeStatus(e.target.value)} value={badgeStatus}>
                     <option disabled hidden value="">Sélectionner une option</option>
-                    <option value="Succès">Succès</option>
-                    <option value="Avertissement">Avertissement</option>
-                    <option value="Erreur">Erreur</option>
-                    <option value="Information">Information</option>
-                    <option value="Nouveauté">Nouveauté</option>
+                    <option value="success">Succès</option>
+                    <option value="warning">Avertissement</option>
+                    <option value="error">Erreur</option>
+                    <option value="info">Information</option>
+                    <option value="new">Nouveauté</option>
                 </select>
             </div>
             <div className={styles["flex-input"]}>

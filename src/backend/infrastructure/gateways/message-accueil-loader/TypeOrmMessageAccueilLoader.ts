@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 
 import { MessageAccueilModel } from "../../../../../database/models/MessageAccueilModel";
-import { MessageAccueilChevauchement, MessageAccueilLoader } from "../../../métier/gateways/MessageAccueilLoader";
+import { MessageAccueil, MessageAccueilLoader, MessageAccueilChevauchement } from "../../../métier/gateways/MessageAccueilLoader";
 
 export class TypeOrmMessageAccueilLoader implements MessageAccueilLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
@@ -45,5 +45,13 @@ export class TypeOrmMessageAccueilLoader implements MessageAccueilLoader {
       .set({ isAffiche: false })
       .whereInIds(ids)
       .execute();
+  }
+  
+  async getLastMessage(): Promise<MessageAccueil | null> {
+    const results = await (await this.orm).getRepository(MessageAccueilModel).find({
+      order: { dateCreation: "DESC" },
+      take: 1,
+    });
+    return results[0] || null;
   }
 }
