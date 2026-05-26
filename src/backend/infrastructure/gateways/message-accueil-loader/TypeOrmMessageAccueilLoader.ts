@@ -48,10 +48,16 @@ export class TypeOrmMessageAccueilLoader implements MessageAccueilLoader {
   }
   
   async getLastMessage(): Promise<MessageAccueil | null> {
-    const results = await (await this.orm).getRepository(MessageAccueilModel).find({
-      order: { dateCreation: "DESC" },
-      take: 1,
-    });
+    const today = new Date().toISOString().split("T")[0];
+    const repository = (await this.orm).getRepository(MessageAccueilModel);
+    const results = await repository
+      .createQueryBuilder("m")
+      .where("m.is_affiche = true")
+      .andWhere("m.date_debut <= :today", { today })
+      .andWhere("m.date_fin >= :today", { today })
+      .orderBy("m.date_creation", "DESC")
+      .limit(1)
+      .getMany();
     return results[0] || null;
   }
 }
