@@ -11,8 +11,8 @@ export class MessageAccueilModel {
   @Column({ name: "date_debut", type: "date" })
   public dateDebut!: string;
 
-  @Column({ name: "date_fin", type: "date", nullable: true })
-  public dateFin!: string | null;
+  @Column({ name: "date_fin", type: "date" })
+  public dateFin!: string ;
 
   @Column({ name: "badge_type", type: "varchar", length: 50, nullable: true })
   public badgeType!: string | null;
@@ -22,4 +22,7 @@ export class MessageAccueilModel {
 
   @Column({ name: "date_creation", type: "timestamp", default: () => "now()" })
   public dateCreation!: Date;
+
+  @Column({ name: "is_affiche", type: "boolean", default: true })
+  public isAffiche!: boolean;
 }

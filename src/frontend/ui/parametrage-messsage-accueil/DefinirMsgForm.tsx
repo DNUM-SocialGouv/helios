@@ -3,6 +3,12 @@ import { useState } from "react";
 import styles from "./ParametrageMsgAccueil.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
 
+interface MessageChevauchement {
+  id: number;
+  contenu: string;
+  dateDebut: string;
+  dateFin: string | null;
+}
 
 export function DefinirMsgForm() {
   const { wording } = useDependencies();
@@ -14,6 +20,8 @@ export function DefinirMsgForm() {
   const [errors, setErrors] = useState<{ message?: string; dateDebut?: string; dateFin?: string }>({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [chevauchements, setChevauchements] = useState<MessageChevauchement[]>([]);
+  const [showChevauchementAlert, setShowChevauchementAlert] = useState(false);
   const todayISO = new Date().toISOString().split("T")[0];
 
   const validate = (): boolean => {
@@ -30,18 +38,21 @@ export function DefinirMsgForm() {
         newErrors.dateDebut = "La date de début doit être supérieure ou égale à la date du jour.";
       }
     }
-    if (dateFin && dateDebut && new Date(dateFin) <= new Date(dateDebut)) {
+    if (!dateFin) {
+      newErrors.dateFin = "La date de fin est obligatoire.";
+    } else if (dateDebut && new Date(dateFin) <= new Date(dateDebut)) {
       newErrors.dateFin = "La date de fin doit être supérieure à la date de début.";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (forcerEnregistrement = false, desactiverIds: number[] = []) => {
     if (!validate()) return;
 
     setSuccessMessage("");
     setErrorMessage("");
+    setShowChevauchementAlert(false);
 
     try {
       const response = await fetch("/api/message-accueil", {
@@ -50,7 +61,9 @@ export function DefinirMsgForm() {
           badgeType: badgeStatus || null,
           contenu: message,
           dateDebut,
-          dateFin: dateFin || null,
+          dateFin,
+          desactiverIds,
+          forcerEnregistrement,
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -64,13 +77,27 @@ export function DefinirMsgForm() {
         setBadgeStatus("");
         setBadgeLibelle("");
         setErrors({});
-
+        setChevauchements([]);
+      } else if (response.status === 409) {
+        const data = await response.json();
+        setChevauchements(data.chevauchements);
+        setShowChevauchementAlert(true);
       } else {
         setErrorMessage("Erreur lors de l'enregistrement.");
       }
     } catch {
       setErrorMessage("Erreur lors de l'enregistrement.");
     }
+  };
+
+  const handleChoisirNouveauMessage = () => {
+    const idsADesactiver = chevauchements.map((c) => c.id);
+    handleSubmit(true, idsADesactiver);
+  };
+
+  const handleAnnulerChevauchement = () => {
+    setShowChevauchementAlert(false);
+    setChevauchements([]);
   };
 
    return (
@@ -83,6 +110,36 @@ export function DefinirMsgForm() {
         {errorMessage && (
           <div className="fr-alert fr-alert--error fr-alert--sm fr-mb-3w">
             <p>{errorMessage}</p>
+          </div>
+        )}
+        {showChevauchementAlert && (
+          <div className="fr-alert fr-alert--warning fr-mb-3w">
+            <p>
+              Un seul message peut être affiché sur une même période. Veuillez sélectionner le message que vous souhaitez afficher ou modifier les dates de début et de fin du message en cours de création.
+            </p>
+            <ul className="fr-mt-2w">
+              {chevauchements.map((c) => (
+                <li key={c.id}>
+                  &laquo; {c.contenu} &raquo; (du {c.dateDebut} au {c.dateFin || "—"})
+                </li>
+              ))}
+            </ul>
+            <div className="fr-mt-2w">
+              <button
+                className="fr-btn fr-btn--sm fr-mr-2w"
+                onClick={handleChoisirNouveauMessage}
+                type="button"
+              >
+                Afficher le nouveau message
+              </button>
+              <button
+                className="fr-btn fr-btn--sm fr-btn--secondary"
+                onClick={handleAnnulerChevauchement}
+                type="button"
+              >
+                Modifier les dates
+              </button>
+            </div>
           </div>
         )}
         <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
@@ -149,6 +206,7 @@ export function DefinirMsgForm() {
                     au
                 </label>
                 <input
+                    aria-required="true"
                     className={`fr-col fr-input ${errors.dateFin ? "fr-input--error" : ""}`}
                     id="date-fin"
                     min={dateDebut || todayISO}
@@ -170,7 +228,7 @@ export function DefinirMsgForm() {
             </button>
             <button
               className="fr-btn"
-              onClick={handleSubmit}
+              onClick={() => handleSubmit()}
               type="button"
             >
               {wording.PARAMETRAGE_AIDE_BOUTON_ENREGISTRER}
