@@ -101,7 +101,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     },
   ]);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { profiles } = userInfo;
 
@@ -110,6 +110,9 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     const roleEntry = formData.get("roleId");
     const institutionCode = typeof institutionEntry === "string" ? institutionEntry : "";
     const roleCode = typeof roleEntry === "string" ? roleEntry : "";
+
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
 
     fetch("/api/utilisateurs/update", {
       body: JSON.stringify({
@@ -120,7 +123,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
         firstname: firstname,
         lastname: lastname,
       }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     }).then(() => {
       redirectPage("/settings/users?status=edit_successfully");

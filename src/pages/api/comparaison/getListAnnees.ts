@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { getAnneesComparaisonEndpoint } from "../../../backend/infrastructure/controllers/getAnneesComparaisonEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
@@ -10,6 +11,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if (request.method !== "POST") {
       return response.status(405).send("Method not allowed");
     }
+
+     if (!requireCsrf(request, response)) {
+        return;
+      }
 
     if (numeroFiness.length > 30000) {
       return response.status(405).send("Authorized limit exceeded");

@@ -1,11 +1,20 @@
 # Changelog d'Helios
 
-## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (TODO)
+## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (TODO)
 
 ### Bug Fixes
 
+### Features
+
+
+## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
+
+### Bug Fixes
+
+- hel-1045: Erreur consultation vignette
 - hel-1024: Retrait des informations non nécessaire du retour back des informations utilisateur
 - hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
+-hel-1038: [Comparaison] Tag Année absence de 2026 
 
 ### Features
 
@@ -20,6 +29,8 @@
 - hel-1009: Traitement des retours dependabot
 - hel-1020: [RGAA] Mise en conformité Image 1.1
 - hel-1021: [RGAA] Mise en conformité Navigation 12.9
+- hel-1031: [Sécurité] Restreindre l'accès à la page d'accueil au RIE
+- hel-1030: [Sécurité] Ajouter une vérification des jetons anti-CSRF dans des requêtes
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 

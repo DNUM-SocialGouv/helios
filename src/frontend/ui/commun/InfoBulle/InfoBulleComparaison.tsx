@@ -52,7 +52,6 @@ export const InfoBulleComparaison = ({ children, estCeOuvert, identifiant, setEs
       id={`nom-info-bulle-${identifiant}`}
       onCancel={fermelInfoBulle}
       ref={dialogRef}
-      role='dialog'
     >
       <div className="fr-container fr-container--fluid fr-container-md">
         <div className="fr-grid-row fr-grid-row--center">

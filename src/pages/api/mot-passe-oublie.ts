@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { forgetPasswordEndPoint } from "../../backend/infrastructure/controllers/forgetPasswordEndPoint";
 import { dependencies } from "../../backend/infrastructure/dependencies";
+import { requireCsrf } from '../../lib/require-csrf';
 
 const validateInputs = (email: string) => {
   const valid = Joi.string().required().email({ tlds: { allow: false } }).validate(email);
@@ -15,8 +16,13 @@ const validateInputs = (email: string) => {
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
-    response.status(405).send("Method not allowed");
+    return response.status(405).send("Method not allowed");
   }
+
+  if (!requireCsrf(request, response)) {
+    return;
+  }
+    
   const { emailValue } = request.body;
 
   if (!validateInputs(emailValue)) {

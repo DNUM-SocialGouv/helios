@@ -74,9 +74,11 @@ export function useComparaison() {
     setTopEnveloppes(enveloppes);
     setState({ ...state, loading: true });
     if (numerosFiness && numerosFiness.length > 0) {
+      const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
       fetch("/api/comparaison/compare", {
         body: JSON.stringify({ type, numerosFiness, annee, page, order, orderBy, forExport: false, codeRegion, enveloppe1: enveloppes[0], enveloppe2: enveloppes[1], enveloppe3: enveloppes[2], codeProfiles }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
       })
         .then((response) => response.json())
@@ -106,8 +108,10 @@ export function useComparaison() {
   }
 
   const getListAnnees = async (type: string, numeroFiness: string[]): Promise<number[]> => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     const response = await fetch(`/api/comparaison/getListAnnees`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
       body: JSON.stringify({ numeroFiness, type }),
     });
@@ -117,8 +121,10 @@ export function useComparaison() {
 
   const getcomparedTypes = async (numeroFiness: string[]): Promise<string[]> => {
     if (numeroFiness.length > 0) {
+      const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
       const response = await fetch('/api/comparaison/getTypesFromFiness', {
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
         body: JSON.stringify({ numeroFiness }),
       });
@@ -139,6 +145,7 @@ export function useComparaison() {
 
     if (savedEnveloppesEjString === null || savedEnveloppesSanString === null || savedEnveloppesDateString !== today) {
       try {
+
         const response = await fetch("/api/comparaison/getTopEnveloppes", {
           headers: { "Content-Type": "application/json" },
           method: "GET",

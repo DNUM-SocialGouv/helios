@@ -34,7 +34,7 @@ export const BlocBudgetEtFinancesMédicoSocial = ({ etabFiness, etabTitle, étab
       {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés.length !== 0 ? <NotAUthorized indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasAutorisés} /> :
         établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees.length !== 0 ? <NoDataCallout indicateurs={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.lesDonnéesBudgetairesPasRenseignees} /> : <></>}
       <ul className={`indicateurs ${styles["liste-indicateurs"]}`}>
-        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leCompteDeRésultatEstIlAutorisé ?
+        {établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.leCompteDeRésultatEstIlAutorisé && établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel.leCompteDeRésultatEstIlRenseigné ?
           <GraphiqueCompteDeResultat className={styles["fullWidth"]} compteDeRésultatViewModel={établissementTerritorialMédicoSocialBudgetEtFinancesViewModel.compteDeResultatViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
           : <></>
         }

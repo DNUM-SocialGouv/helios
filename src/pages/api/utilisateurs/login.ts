@@ -8,6 +8,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
   if (request.method !== "POST") {
     return response.status(405).send("Method not allowed");
   }
+  
   try {
     const { email, password } = request.body;
     const resp = await loginEndpoint(dependencies, email, password);
