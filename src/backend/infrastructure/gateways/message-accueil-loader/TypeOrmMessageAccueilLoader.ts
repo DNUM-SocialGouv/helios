@@ -60,4 +60,16 @@ export class TypeOrmMessageAccueilLoader implements MessageAccueilLoader {
       .getMany();
     return results[0] || null;
   }
+
+  async getAllMessages(): Promise<MessageAccueil[]> {
+    const repository = (await this.orm).getRepository(MessageAccueilModel);
+    const dateLimite = new Date();
+    dateLimite.setMonth(dateLimite.getMonth() - 18);
+
+    return await repository
+      .createQueryBuilder("m")
+      .where("m.date_creation >= :dateLimite", { dateLimite: dateLimite.toISOString() })
+      .orderBy("m.date_creation", "DESC")
+      .getMany();
+  }
 }

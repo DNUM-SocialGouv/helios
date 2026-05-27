@@ -857,6 +857,8 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string = "Sections du message d'accueil";
   readonly PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL: string = "Définir un message";
   readonly PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE: string = "Historique";
+  readonly PERIODE_AFFICHAGE: string = "Période d'affichage";
+  readonly MESSAGE: string = "Message";
 
   readonly AIDE_TITRE_PAGE: string = "Aide";
   readonly AIDE_MESSAGE_SECTIONS_VIDES: string = "Aucun contenu d’aide n’est disponible pour le moment.";

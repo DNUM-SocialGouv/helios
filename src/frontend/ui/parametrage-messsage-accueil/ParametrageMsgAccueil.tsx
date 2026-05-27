@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { DefinirMsgForm } from "./DefinirMsgForm";
 import { MenuSections } from "./MenuSections";
+import { TableauHistorique, MessageHistorique } from "./TableauHistorique";
 import { useDependencies } from "../commun/contexts/useDependencies";
-
-
 
 export function ParametrageMsgAccueil() {
   const { wording } = useDependencies();
+  const [messages, setMessages] = useState<MessageHistorique[] | null>(null);
   
   const ParametrageMsgAccueilSelections = [wording.PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL, wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE];
   
   const [slugSelectionne, setSlugSelectionne] = useState<string>(ParametrageMsgAccueilSelections[0]);
+
+  useEffect(() => {
+    if (slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE) {
+      fetch("/api/messages-accueil")
+        .then((res) => res.ok ? res.json() : [])
+        .then((data) => setMessages(data));
+    }
+  }, [slugSelectionne, wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE]);
   
 
   return <main id="content">
@@ -36,7 +44,7 @@ export function ParametrageMsgAccueil() {
               </div>
             </header>
             {slugSelectionne === wording.PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL && <DefinirMsgForm />}
-            {slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE && <div>{wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE}</div>}  
+            {slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE && <TableauHistorique messages={messages} />}  
           </div>
          </section>
        </div>

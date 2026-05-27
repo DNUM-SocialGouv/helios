@@ -20,4 +20,5 @@ export interface MessageAccueilLoader {
   findChevauchements(dateDebut: string, dateFin: string): Promise<MessageAccueilChevauchement[]>;
   desactiverMessages(ids: number[]): Promise<void>;
   getLastMessage(): Promise<MessageAccueil | null>;
+  getAllMessages(): Promise<MessageAccueil[]>;
 }

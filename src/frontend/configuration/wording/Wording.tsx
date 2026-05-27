@@ -743,6 +743,8 @@ export interface Wording {
   readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string;
   readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string;
   readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string;
+  readonly PERIODE_AFFICHAGE: string;
+  readonly MESSAGE: string;
 
   // Aide
   readonly AIDE_TITRE_PAGE: string;
