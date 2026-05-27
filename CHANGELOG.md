@@ -7,6 +7,7 @@
 ### Features
 
 - hel-1033: Retrait du message d’erreur en cas de compte existant dans le formulaire de création de compte
+- hel-1044: Ajouter la donnée etablissement principale/secondaire dans l’export des EJ
 
 ## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
 

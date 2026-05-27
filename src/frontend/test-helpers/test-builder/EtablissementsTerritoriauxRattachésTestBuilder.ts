@@ -6,7 +6,7 @@ import { EtablissementsTerritoriauxRattachésViewModel } from "../../ui/entité-
 export class EtablissementsTerritoriauxRattachésTestBuilder {
   private établissements: ÉtablissementTerritorialRattaché[] = [];
 
-  constructor(private wording: Wording) {}
+  constructor(private wording: Wording) { }
 
   avecEtablissementSanitaire(champsSurchargés?: Partial<ÉtablissementTerritorialRattaché>): this {
     this.avecEtablissement(établissementSanitaire, champsSurchargés);
@@ -52,6 +52,8 @@ const établissementMédicoSocial: ÉtablissementTerritorialRattaché = {
   libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
   libelleCourtCategorieEtablissement: "C.H.",
   categorieEtablissementCode: "355",
+  typeÉtablissement: "P",
+  numeroFinessEtablissementPrincipal: "",
 };
 
 const établissementSanitaire: ÉtablissementTerritorialRattaché = {
@@ -61,4 +63,6 @@ const établissementSanitaire: ÉtablissementTerritorialRattaché = {
   libelléCatégorieÉtablissement: "Centre Hospitalier (C.H.)",
   libelleCourtCategorieEtablissement: "C.H.",
   categorieEtablissementCode: "355",
+  typeÉtablissement: "P",
+  numeroFinessEtablissementPrincipal: "",
 };

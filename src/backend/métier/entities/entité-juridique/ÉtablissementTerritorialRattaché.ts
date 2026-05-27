@@ -7,4 +7,6 @@ export type ÉtablissementTerritorialRattaché = Readonly<{
   libelléCatégorieÉtablissement: string;
   libelleCourtCategorieEtablissement: string;
   categorieEtablissementCode: string;
+  typeÉtablissement: string;
+  numeroFinessEtablissementPrincipal: string;
 }>;
