@@ -6,9 +6,9 @@ export class AjoutTableMessageAccueil1779354621997 implements MigrationInterface
         await queryRunner.query(`
             CREATE TABLE message_accueil(
                 id serial primary key,
-                contenu varchar(255) not null,
+                contenu text not null,
                 date_debut date not null,
-                date_fin date,
+                date_fin date not null,
                 badge_type varchar(50),
                 badge_libelle varchar(255),
                 date_creation timestamp not null default now(),

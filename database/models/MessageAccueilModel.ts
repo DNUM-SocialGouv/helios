@@ -5,7 +5,7 @@ export class MessageAccueilModel {
   @PrimaryGeneratedColumn({ name: "id" })
   public id!: number;
 
-  @Column({ name: "contenu", length: 255 })
+  @Column({ name: "contenu", type: "text" })
   public contenu!: string;
 
   @Column({ name: "date_debut", type: "date" })
