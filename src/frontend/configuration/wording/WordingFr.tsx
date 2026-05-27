@@ -65,8 +65,7 @@ export class WordingFr implements Wording {
   // Inscription
   readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
   readonly SEND: string = "Envoyer";
-  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
-  readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
+  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à l'adresse mail indiquée, si elle n'est pas encore associée à un compte existant.";
   readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
