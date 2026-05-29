@@ -5,6 +5,9 @@
 ### Bug Fixes
 
 ### Features
+- hel-1023: [Paramétrage]Historique des messages
+- hel-1022: [Paramétrage] Mise à jour du message d'accueil
+- hel-1026: [Paramétrage]Affichage du message
 
 
 ## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
