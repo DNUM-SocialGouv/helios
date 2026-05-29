@@ -105,6 +105,7 @@ import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773
 import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
+import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -161,6 +162,7 @@ import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel"
 import { FavorisModel } from "./models/FavorisModel";
 import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { MessageAccueilModel } from "./models/MessageAccueilModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
@@ -266,7 +268,8 @@ const datasource = new DataSource({
     VigieRhNatureContratsAnnuelModel,
     VigieRhNatureContratsTrimestrielModel,
     QualiteQualiscopeHASModel,
-    QualiteQualiscopeHasMsModel
+    QualiteQualiscopeHasMsModel,
+    MessageAccueilModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -407,7 +410,8 @@ const datasource = new DataSource({
     AjoutProfilBesoinFondDeRoulement1773152515839,
     AjoutProfilTresorerie1773223041788,
     AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368,
-    SuppressionNomenclatureAMM1774521749651
+    SuppressionNomenclatureAMM1774521749651,
+    AjoutTableMessageAccueil1779354621997
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

@@ -656,6 +656,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_TITRE: string = "Paramétrage";
   readonly PARAMETRAGE_AUTORISATIONS_TITRE: string = "Paramétrage des autorisations";
   readonly PARAMETRAGE_AIDE_TITRE: string = "Paramétrage de l'aide";
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_TITRE: string = "Paramétrage du message d'accueil";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
@@ -789,7 +790,6 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-05-19";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
@@ -852,6 +852,12 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string = "Descendre la ressource";
   readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string = "Modifier";
   readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string = "Supprimer";
+
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string = "Sections du message d'accueil";
+  readonly PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL: string = "Définir un message";
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE: string = "Historique";
+  readonly PERIODE_AFFICHAGE: string = "Période d'affichage";
+  readonly MESSAGE: string = "Message";
 
   readonly AIDE_TITRE_PAGE: string = "Aide";
   readonly AIDE_MESSAGE_SECTIONS_VIDES: string = "Aucun contenu d’aide n’est disponible pour le moment.";

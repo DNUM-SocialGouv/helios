@@ -5,6 +5,9 @@
 ### Bug Fixes
 
 ### Features
+- hel-1023: [Paramétrage]Historique des messages
+- hel-1022: [Paramétrage] Mise à jour du message d'accueil
+- hel-1026: [Paramétrage]Affichage du message
 
 - hel-1033: Retrait du message d’erreur en cas de compte existant dans le formulaire de création de compte
 - hel-1044: Ajouter la donnée etablissement principale/secondaire dans l’export des EJ

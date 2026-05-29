@@ -34,6 +34,8 @@ import { CategoriesFinessLoader } from "../métier/gateways/CategoriesFinessLoad
 import { TypeOrmCategoriesFinessLoader } from "./gateways/categories-finess-loader/TypeOrmCategoriesFinessLoader";
 import { TypeOrmParametrageJsonLoader } from "./gateways/parametrage-json/TypeOrmParametrageJsonLoader";
 import { ParametrageJsonLoader } from "../métier/gateways/ParametrageJsonLoader";
+import { TypeOrmMessageAccueilLoader } from "./gateways/message-accueil-loader/TypeOrmMessageAccueilLoader";
+import { MessageAccueilLoader } from "../métier/gateways/MessageAccueilLoader";
 
 export type Dependencies = Readonly<{
   environmentVariables: EnvironmentVariables;
@@ -56,6 +58,7 @@ export type Dependencies = Readonly<{
   userListEtablissementLoader: TypeOrmUserListEtablissementLoader;
   categoriesFinessLoader: CategoriesFinessLoader;
   aideLoader: ParametrageJsonLoader;
+  messageAccueilLoader: MessageAccueilLoader;
 }>;
 
 const createDependencies = (): Dependencies => {
@@ -84,7 +87,8 @@ const createDependencies = (): Dependencies => {
     userListLoader: new TypeOrmUserListLoader(orm),
     userListEtablissementLoader: new TypeOrmUserListEtablissementLoader(orm),
     categoriesFinessLoader: new TypeOrmCategoriesFinessLoader(orm),
-    aideLoader: new TypeOrmParametrageJsonLoader(orm)
+    aideLoader: new TypeOrmParametrageJsonLoader(orm),
+    messageAccueilLoader: new TypeOrmMessageAccueilLoader(orm),
   };
 };
 
