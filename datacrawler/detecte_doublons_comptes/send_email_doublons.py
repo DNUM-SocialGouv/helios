@@ -52,6 +52,7 @@ def send_email_doublons(doublons: List) -> None:
             "X-Tipimail-ApiKey": variables_d_environnement["TIPIMAIL_APIKEY"],
         },
         json=body,
+        timeout=30,
     )
 
     if response.status_code != 200:
