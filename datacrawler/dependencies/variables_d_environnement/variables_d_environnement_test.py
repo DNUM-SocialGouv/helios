@@ -64,7 +64,8 @@ class TestVariablesDEnvironnement:
             "TIPIMAIL_SENDER_ADDRESS": "test",
             "TIPIMAIL_APIUSER": "test",
             "TIPIMAIL_APIKEY": "test",
-            "TIPIMAIL_TO_ADDRESSES": "test"
+            "TIPIMAIL_TO_ADDRESSES": "test",
+            "SUPPORT_EMAIL": "test"
         }
 
         # WHEN
