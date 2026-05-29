@@ -11,6 +11,10 @@
     {
       "command": "45 5 * * 1-5 /app/populateProfessionGroupes.sh",
       "size": "2XL"
+    },
+    {
+      "command": "0 0 * * 4 /app/detectDuplicateAccounts.sh",
+      "size": "M"
     }
   ]
 }

@@ -37,6 +37,7 @@ class VariablesDEnvironnement(TypedDict):
     TIPIMAIL_APIUSER: str
     TIPIMAIL_APIKEY: str
     TIPIMAIL_TO_ADDRESSES: str
+    SUPPORT_EMAIL: str
 
 
 def récupère_les_variables_d_environnement(
@@ -89,4 +90,5 @@ def récupère_les_variables_d_environnement(
         TIPIMAIL_APIUSER=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIUSER"),
         TIPIMAIL_APIKEY=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIKEY"),
         TIPIMAIL_TO_ADDRESSES=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_TO_ADDRESSES"),
+        SUPPORT_EMAIL=signale_si_la_variable_n_est_pas_présente("SUPPORT_EMAIL"),
     )
