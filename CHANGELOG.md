@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 ### Features
+- hel-1059: [Compte doublon] Mise en place d'un cron pour vérifier la création
 
 - hel-1023: [Paramétrage]Historique des messages
 - hel-1022: [Paramétrage] Mise à jour du message d'accueil

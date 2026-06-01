@@ -39,6 +39,8 @@
         "populateProfessionGroupes:local": "yarn retrieveVigieRh && yarn updateVigieRhProfessionGroupe:local",
         "populateDatabaseUsers": "python -m datacrawler.import_utilisateurs",
         "populateDatabaseUsers:local": "pipenv run populate_app_users",
+        "detectDuplicateAccounts": "python -m datacrawler.detecte_doublons_comptes",
+        "detectDuplicateAccounts:local": "pipenv run detect_duplicate_accounts",
         "retrieveFiness": "python -m datacrawler.download_finess_data",
         "retrieveFiness:local": "pipenv run retrieveFiness",
         "retrieveDiamant": "python -m datacrawler.download_diamant_data",
