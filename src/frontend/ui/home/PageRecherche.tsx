@@ -43,7 +43,7 @@ export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheP
     defaultOrderBy
   } = useRecherche();
 
-  const showNotice = messageAccueil && new Date() >= new Date(messageAccueil.dateDebut) && (messageAccueil.dateFin === null || new Date() <= new Date(messageAccueil.dateFin));
+  const showNotice = messageAccueil && new Date() >= new Date(messageAccueil.dateDebut) && new Date() <= new Date(messageAccueil.dateFin);
   const showPasswordWarning = passwordStatus.status === PasswordStatusEnum.WARNING;
 
   useEffect(() => {

@@ -12,7 +12,7 @@ export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageA
         <div className="fr-container">
           <div className="fr-notice__body">
               <span className="fr-notice__title">
-                <span className={`fr-mr-2w fr-badge ${badgeClass} fr-badge--no-icon`}>Nouveau</span>
+                {messageAccueil.badgeType && messageAccueil.badgeLibelle && <span className={`fr-mr-2w fr-badge ${badgeClass} fr-badge--no-icon`}>{messageAccueil.badgeLibelle}</span>}
               </span>
               <p>
                 <span className="fr-notice__desc">

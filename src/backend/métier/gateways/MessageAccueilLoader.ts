@@ -2,7 +2,7 @@ export interface MessageAccueil {
   id: number;
   contenu: string;
   dateDebut: string;
-  dateFin: string | null;
+  dateFin: string;
   badgeType: string | null;
   badgeLibelle: string | null;
   dateCreation: Date;

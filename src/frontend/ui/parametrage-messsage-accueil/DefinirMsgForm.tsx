@@ -148,7 +148,7 @@ export function DefinirMsgForm() {
             </label>
             <div className={styles["flex-input"]}>
                 <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="select-status" >
-                    Status:
+                    Statut:
                 </label>
                 <select aria-describedby="select-hint-messages" className="fr-select" id="select-status" name="select-hint" onChange={(e) => setBadgeStatus(e.target.value)} value={badgeStatus}>
                     <option disabled hidden value="">Sélectionner une option</option>
