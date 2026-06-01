@@ -143,9 +143,9 @@ export function DefinirMsgForm() {
           </div>
         )}
         <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
-            <label className="fr-label">
+            <span className="fr-label">
                 Badge:
-            </label>
+            </span>
             <div className={styles["flex-input"]}>
                 <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="select-status" >
                     Statut:
@@ -181,9 +181,9 @@ export function DefinirMsgForm() {
             {errors.message && <p className="fr-error-text" id="message-texte-error">{errors.message}</p>}
          </div>
         <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
-            <label className="fr-label">
+            <span className="fr-label">
                 Période d&apos;affichage:
-            </label>
+            </span>
             <div className={`${styles["flex-input"]} ${errors.dateDebut ? "fr-input-group--error" : ""}`}>
                 <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="date-debut" >
                     Du
