@@ -1,12 +1,17 @@
 # Changelog d'Helios
 
-## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (TODO)
+## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (TODO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
 
 ### Bug Fixes
 
 ### Features
 - hel-1059: [Compte doublon] Mise en place d'un cron pour vérifier la création
-
 - hel-1023: [Paramétrage]Historique des messages
 - hel-1022: [Paramétrage] Mise à jour du message d'accueil
 - hel-1026: [Paramétrage]Affichage du message
