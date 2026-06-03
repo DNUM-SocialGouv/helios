@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import styles from "./NewFeatureNotice.module.css";
 import { MessageAccueil } from "../../../../backend/métier/gateways/MessageAccueilLoader";
 
 export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageAccueil }) => {
@@ -14,7 +15,7 @@ export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageA
               <span className="fr-notice__title">
                 {messageAccueil.badgeType && messageAccueil.badgeLibelle && <span className={`fr-mr-2w fr-badge ${badgeClass} fr-badge--no-icon`}>{messageAccueil.badgeLibelle}</span>}
               </span>
-              <p>
+              <p className={styles["text-align"]}>
                 <span className="fr-notice__desc">
                   {messageAccueil.contenu}
                 </span>
