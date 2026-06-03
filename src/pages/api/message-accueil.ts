@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { contenu, dateDebut, dateFin, badgeType, badgeLibelle, forcerEnregistrement, desactiverIds } = req.body;
+    const { contenu, dateDebut, dateFin, badgeType, badgeLibelle, lienUrl, lienLibelle, forcerEnregistrement, desactiverIds } = req.body;
 
     if (!contenu || !dateDebut || !dateFin) {
       return res.status(400).json({ message: "Le message, la date de début et la date de fin sont obligatoires." });
@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await useCase.desactiverMessages(desactiverIds);
     }
 
-    await useCase.execute(contenu, dateDebut, dateFin, badgeType || null, badgeLibelle || null);
+    await useCase.execute(contenu, dateDebut, dateFin, badgeType || null, badgeLibelle || null, lienUrl || null, lienLibelle || null);
     return res.status(201).json({ message: "Message enregistré avec succès." });
   } catch (error) {
     return res.status(500).json({ message: "Erreur lors de l'enregistrement du message." + (error instanceof Error ? ` Détails : ${error.message}` : "") });

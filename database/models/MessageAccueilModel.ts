@@ -20,6 +20,12 @@ export class MessageAccueilModel {
   @Column({ name: "badge_libelle", type: "varchar", length: 255, nullable: true })
   public badgeLibelle!: string | null;
 
+  @Column({ name: "lien_url", type: "text", nullable: true })
+  public lienUrl!: string | null;
+
+  @Column({ name: "lien_libelle", type: "text", nullable: true })
+  public lienLibelle!: string | null;
+
   @Column({ name: "date_creation", type: "timestamp", default: () => "now()" })
   public dateCreation!: Date;
 

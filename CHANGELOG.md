@@ -6,6 +6,9 @@
 
 ### Features
 
+
+- hel-1067: [Paramétrage] Insérer un lien hypertexte dans le message
+
 ## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
 
 ### Bug Fixes

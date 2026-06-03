@@ -2,6 +2,18 @@ import { useState } from "react";
 
 import { MessageAccueil } from "../../../../backend/métier/gateways/MessageAccueilLoader";
 
+const renderMessageWithLink = (contenu: string, lienUrl: string | null, lienLibelle: string | null) => {
+  if (!lienUrl || !lienLibelle) {
+    return contenu;
+  }
+
+  return (
+    <>
+      {contenu} <a href={lienUrl} rel="noopener noreferrer" target="_blank">{lienLibelle}</a>
+    </>
+  );
+};
+
 export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageAccueil }) => {
   const [removeNotice, setRemoveNotice] = useState(false);
 
@@ -16,7 +28,7 @@ export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageA
               </span>
               <p>
                 <span className="fr-notice__desc">
-                  {messageAccueil.contenu}
+                  {renderMessageWithLink(messageAccueil.contenu, messageAccueil.lienUrl, messageAccueil.lienLibelle)}
                 </span>
               </p>
             <button className="fr-btn--close fr-btn" onClick={() => setRemoveNotice(true)} title="Masquer le message" />
