@@ -8,9 +8,8 @@
 ### Features
 - hel-1067: [Paramétrage] Insérer un lien hypertexte dans le message
 - hel-1061: [RGAA] suite de la mise en conformité script 7.1
-
-
 - hel-1063: [RGAA] Mise en conformité Présentation  information 10.9
+- hel-1064: [RGAA] Mise en conformité Image 1.6
 
 ## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
 
