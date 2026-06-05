@@ -231,6 +231,7 @@ const HistogrammeHorizontalAvecRef = ({
           aria-labelledby={`Graphique ${nomGraph}`}
           data={data as ChartData<"bar">}
           options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
+          title={`Graphique ${nomGraph}`}
         />
       </div>
       {showRefValues && <ColorLabel

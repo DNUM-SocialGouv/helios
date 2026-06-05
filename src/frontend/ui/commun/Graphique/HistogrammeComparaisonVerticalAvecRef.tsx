@@ -331,6 +331,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
           data={chartData} 
           options={chartOptions}
           plugins={showRefValues ? [rotationRefPlugin] : []}
+          title={`Graphique ${nomGraph}`}
         />
         {legend}
       </div>

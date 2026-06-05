@@ -139,6 +139,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
           aria-labelledby={`Graphique ${props.nomGraph}`}
           data={props.data}
           options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
+          title={`Graphique ${props.nomGraph}`}
           />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>

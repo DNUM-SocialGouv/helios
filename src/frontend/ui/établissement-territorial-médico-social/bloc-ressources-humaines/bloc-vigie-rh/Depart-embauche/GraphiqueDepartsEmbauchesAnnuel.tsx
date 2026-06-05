@@ -285,7 +285,9 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         aria-labelledby={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
         data={dataSet}
         options={options as ChartOptions<"bar">}
-        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+        title={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

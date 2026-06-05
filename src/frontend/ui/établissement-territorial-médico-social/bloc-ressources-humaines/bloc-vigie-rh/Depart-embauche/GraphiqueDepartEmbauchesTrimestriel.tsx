@@ -346,6 +346,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
         data={dataSet}
         options={options as ChartOptions<"bar">} 
         plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+        title={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
       />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>

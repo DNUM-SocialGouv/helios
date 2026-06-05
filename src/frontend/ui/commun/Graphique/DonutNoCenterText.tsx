@@ -49,6 +49,7 @@ export function DonutNoCenterText(props: {
             data={data}
             options={optionsDiagrammeDoughnut(props.idDeLaLégende, props.libellés)}
             plugins={[construisLePluginDeLaLegendeDonut()]}
+            title={`Graphique ${props.title || ""}`}
           />
         </div>
         <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />

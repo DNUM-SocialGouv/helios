@@ -176,6 +176,7 @@ export class TauxDeCafViewModel {
             aria-labelledby={`Graphique ${this.wording.TAUX_DE_CAF}`}
             data={data as ChartData<"bar">}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
+            title={`Graphique ${this.wording.TAUX_DE_CAF}`}
           />
         )}
         {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${this.wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

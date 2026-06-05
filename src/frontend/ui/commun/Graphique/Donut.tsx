@@ -34,7 +34,13 @@ export function Donut(props: Readonly<{
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut aria-labelledby="Graphique Taux d’absentéisme" data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
+        <Doughnut 
+          aria-labelledby="Graphique Taux d’absentéisme"
+          data={data} 
+          options={optionsDiagrammeDoughnut(props.idDeLaLégende)}
+          plugins={[construisLePluginDeLaLegendeDonut()]} 
+          title="Graphique Taux d’absentéisme" 
+         />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>

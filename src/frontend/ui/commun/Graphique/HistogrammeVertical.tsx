@@ -76,6 +76,7 @@ export function HistogrammeVertical(props: Readonly<{
           aria-labelledby={`Graphique ${props.nomGraph}`}
           data={data as ChartData<"bar">}
           options={optionsHistogrammeVertical(props.taillePoliceTicks)}
+          title={`Graphique ${props.nomGraph}`}
         />
       )}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

@@ -274,6 +274,7 @@ export const HistogrammesHorizontaux = ({
                 aria-labelledby={`Graphique ${nomGraph}`}
                 data={histogramme.chartData as ChartData<"bar">}
                 options={{ ...histogramme.optionsHistogramme, aspectRatio }}
+                title={`Graphique ${nomGraph}`}
                 />
             </div>
           ))}

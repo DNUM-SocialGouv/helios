@@ -107,7 +107,13 @@ export const Header = () => {
                     <p className="fr-logo">{wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}</p>
                   </div>
                   <div className="fr-header__operator">
-                    <Image alt="Logo Helios" height="80" src="/logo.svg" width="80" />
+                    <Image 
+                      alt="Logo Helios" 
+                      height={80} 
+                      src="/logo.svg" 
+                      title="Logo Helios" 
+                      width={80} 
+                    />
                   </div>
                   <div className="fr-header__navbar">
                     {router.pathname !== paths.ACCUEIL &&

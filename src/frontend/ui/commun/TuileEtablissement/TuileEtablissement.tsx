@@ -40,7 +40,14 @@ export const TuileEtablissement = ({
           </div>
         </div>
         <div>
-          <Image alt={`Logo d'un établissement ${rechercheViewModel.type}`} className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
+          <Image 
+            alt={`Logo d'un établissement ${rechercheViewModel.type}`} 
+            className={styles["logo"]} 
+            height="40" 
+            src={rechercheViewModel.afficheLeLogo()} 
+            title={`Logo d'un établissement ${rechercheViewModel.type}`}
+            width="40" 
+          />
         </div>
       </div>
       <div 

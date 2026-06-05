@@ -318,6 +318,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
               }
             } as ChartOptions<"bar">}
             plugins={showRefValues ? [verticalLinePlugin] : []}
+            title={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
           />
         </div>
         <div className="fr-col-2">
@@ -341,6 +342,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
               events: [],
             }}
             plugins={[labelPlugin]}
+            title={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
           />
         </div>
         <div className="fr-col-5">
@@ -360,6 +362,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
               },
             } as ChartOptions<"bar">}
             plugins={showRefValues ? [verticalLinePlugin] : []}
+            title={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
           />
         </div>
       </div>
