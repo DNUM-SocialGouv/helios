@@ -3,15 +3,16 @@ import { useState } from "react";
 import { MessageAccueil } from "../../../../backend/métier/gateways/MessageAccueilLoader";
 
 const renderMessageWithLink = (contenu: string, lienUrl: string | null, lienLibelle: string | null) => {
-  if (!lienUrl || !lienLibelle) {
-    return contenu;
-  }
-
-  return (
+  if (lienUrl && lienLibelle) {
+    return (
     <>
       {contenu} <a href={lienUrl} rel="noopener noreferrer" target="_blank">{lienLibelle}</a>
     </>
   );
+  }
+
+  return contenu;
+
 };
 
 export const NewFeaturesNotice = ({ messageAccueil }: { messageAccueil: MessageAccueil }) => {
