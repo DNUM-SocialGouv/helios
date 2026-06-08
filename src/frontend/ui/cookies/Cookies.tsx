@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from "cookies-next";
 import Link from "next/link";
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, useRef } from "react";
 
 import styles from "./Cookies.module.css";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -19,6 +19,10 @@ export const Cookies = ({
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
   const { wording } = useDependencies();
+  
+  const modal1Ref = useRef<HTMLDialogElement>(null);
+  const modal2Ref = useRef<HTMLDialogElement>(null);
+  const closeBtn2Ref = useRef<HTMLButtonElement>(null);
 
   const onAccept = () => {
     setCookie("allowed-cookies", "true");
@@ -56,12 +60,35 @@ export const Cookies = ({
     refreshDisplayCondition();
   }, []);
 
+  // Gestion de l'ouverture/fermeture du premier modal (gestion des cookies)
+  useEffect(() => {
+    if (currentModal === 1 && (condition || openModal)) {
+      modal1Ref.current?.showModal();
+    } else {
+      modal1Ref.current?.close();
+    }
+  }, [currentModal, condition, openModal]);
+
+  // Gestion de l'ouverture/fermeture du deuxième modal (personnaliser) et focus
+  useEffect(() => {
+    if (currentModal === 2) {
+      modal2Ref.current?.showModal();
+      // Placer le focus sur le bouton fermer
+      setTimeout(() => {
+        closeBtn2Ref.current?.focus();
+      }, 0);
+    } else {
+      modal2Ref.current?.close();
+    }
+  }, [currentModal]);
+
   return (
     <>
       <dialog
         aria-labelledby="fr-modal-cookies-title"
         className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
+        ref={modal1Ref}
       >
         <div className="fr-container fr-container--fluid fr-container-md ">
           <div className={"fr-grid-row fr-grid-row--left " + styles["cookies-modal"]}>
@@ -106,7 +133,7 @@ export const Cookies = ({
           </div>
         </div>
       </dialog>
-      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy">
+      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy" ref={modal2Ref}>
         <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8">
@@ -115,6 +142,7 @@ export const Cookies = ({
                   <button
                     aria-controls={allowCookies === "" ? "fr-modal-cookies" : "fr-modal-privacyPolicy"}
                     className="fr-btn--close fr-btn"
+                    ref={closeBtn2Ref}
                     title="Fermer la fenêtre modale"
                     {...(condition ? { "data-fr-opened": "true" } : {})}
                     onClick={closeModal2}
