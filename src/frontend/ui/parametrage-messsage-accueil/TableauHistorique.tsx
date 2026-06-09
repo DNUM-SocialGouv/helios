@@ -7,6 +7,8 @@ export interface MessageHistorique {
   dateFin: string ;
   badgeType?: string | null;
   badgeLibelle?: string | null;
+  lienUrl?: string | null;
+  lienLibelle?: string | null;
   dateCreation?: string;
 }
 
@@ -58,7 +60,16 @@ export function TableauHistorique({ messages }: TableauHistoriqueProps) {
                                 </span>
                             </>
                             )}
-                            <div>Texte: {message.contenu}</div> 
+                            <div>Texte: {message.contenu} {message.lienUrl && (
+                            <a 
+                              href={message.lienUrl}
+                              rel="noopener noreferrer" 
+                              target="_blank"
+                            >
+                                {message.lienLibelle}
+                            </a>
+                            )}</div>
+                            
                         </>
                     </td>
                 </tr>

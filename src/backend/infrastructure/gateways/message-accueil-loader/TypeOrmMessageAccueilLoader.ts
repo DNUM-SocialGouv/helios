@@ -6,13 +6,15 @@ import { MessageAccueil, MessageAccueilLoader, MessageAccueilChevauchement } fro
 export class TypeOrmMessageAccueilLoader implements MessageAccueilLoader {
   constructor(private readonly orm: Promise<DataSource>) {}
 
-  async save(contenu: string, dateDebut: string, dateFin: string , badgeType: string | null, badgeLibelle: string | null): Promise<void> {
+  async save(contenu: string, dateDebut: string, dateFin: string , badgeType: string | null, badgeLibelle: string | null, lienUrl: string | null, lienLibelle: string | null): Promise<void> {
     const messageAccueil = new MessageAccueilModel();
     messageAccueil.contenu = contenu;
     messageAccueil.dateDebut = dateDebut;
     messageAccueil.dateFin = dateFin;
     messageAccueil.badgeType = badgeType;
     messageAccueil.badgeLibelle = badgeLibelle;
+    messageAccueil.lienUrl = lienUrl;
+    messageAccueil.lienLibelle = lienLibelle;
     messageAccueil.isAffiche = true;
     await (await this.orm).getRepository(MessageAccueilModel).save(messageAccueil);
   }

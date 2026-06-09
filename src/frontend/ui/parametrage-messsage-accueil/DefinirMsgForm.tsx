@@ -17,7 +17,9 @@ export function DefinirMsgForm() {
   const [dateFin, setDateFin] = useState("");
   const [badgeStatus, setBadgeStatus] = useState("");
   const [badgeLibelle, setBadgeLibelle] = useState("");
-  const [errors, setErrors] = useState<{ message?: string; dateDebut?: string; dateFin?: string }>({});
+  const [lienUrl, setLienUrl] = useState("");
+  const [lienLibelle, setLienLibelle] = useState("");
+  const [errors, setErrors] = useState<{ message?: string; dateDebut?: string; dateFin?: string; lienUrl?: string; lienLibelle?: string }>({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [chevauchements, setChevauchements] = useState<MessageChevauchement[]>([]);
@@ -25,7 +27,7 @@ export function DefinirMsgForm() {
   const todayISO = new Date().toISOString().split("T")[0];
 
   const validate = (): boolean => {
-    const newErrors: { message?: string; dateDebut?: string; dateFin?: string } = {};
+    const newErrors: { message?: string; dateDebut?: string; dateFin?: string; lienUrl?: string; lienLibelle?: string } = {};
     if (!message.trim()) {
       newErrors.message = "Le message est obligatoire.";
     }
@@ -42,6 +44,12 @@ export function DefinirMsgForm() {
       newErrors.dateFin = "La date de fin est obligatoire.";
     } else if (dateDebut && new Date(dateFin) <= new Date(dateDebut)) {
       newErrors.dateFin = "La date de fin doit être supérieure à la date de début.";
+    }
+    if (lienUrl.trim() && !lienLibelle.trim()) {
+      newErrors.lienLibelle = "Un texte cliquable est requis si une URL est fournie.";
+    }
+    if (lienLibelle.trim() && !lienUrl.trim()) {
+      newErrors.lienUrl = "Une URL est requise si un texte cliquable est fourni.";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -64,6 +72,8 @@ export function DefinirMsgForm() {
           dateFin,
           desactiverIds,
           forcerEnregistrement,
+          lienUrl: lienUrl || null,
+          lienLibelle: lienLibelle || null,
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -76,6 +86,8 @@ export function DefinirMsgForm() {
         setDateFin("");
         setBadgeStatus("");
         setBadgeLibelle("");
+        setLienUrl("");
+        setLienLibelle("");
         setErrors({});
         setChevauchements([]);
       } else if (response.status === 409) {
@@ -163,7 +175,14 @@ export function DefinirMsgForm() {
                 <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="libelle" >
                     Libellé:
                 </label>
-                <input className="fr-input" id="libelle" name="libelle" onChange={(e) => setBadgeLibelle(e.target.value)} type="text" value={badgeLibelle} />
+                <input 
+                className={`fr-input ${styles["full-width"]}`} 
+                id="libelle" 
+                name="libelle"
+                 onChange={(e) => setBadgeLibelle(e.target.value)} 
+                 type="text" 
+                 value={badgeLibelle} 
+                 />
             </div>
         </div>
         <div className={`fr-mb-4w ${errors.message ? "fr-input-group--error" : ""}`}>
@@ -180,6 +199,39 @@ export function DefinirMsgForm() {
             />
             {errors.message && <p className="fr-error-text" id="message-texte-error">{errors.message}</p>}
          </div>
+        <div className={`fr-mb-4w ${errors.lienUrl ? "fr-input-group--error" : ""}`}>
+            <span className="fr-label fr-mb-2w">
+              Lien hypertexte:
+            </span>
+            <label className="fr-label" htmlFor="lien-url">
+                URL du lien hypertexte:
+            </label>
+            <textarea 
+              className={`fr-input ${errors.lienUrl ? "fr-input--error" : ""}`}
+              id="lien-url" 
+              name="lien-url" 
+              onChange={(e) => setLienUrl(e.target.value)} 
+              rows={3} 
+              value={lienUrl} 
+            />
+            {errors.lienUrl && <p className="fr-error-text" id="lien-url-error">{errors.lienUrl}</p>}
+        </div>
+        <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+            <div className={`${styles["flex-input"]} ${styles["full-width"]} ${errors.lienLibelle ? "fr-input-group--error" : ""}`}>
+                <label className="fr-label fr-ml-2w fr-mr-2w" htmlFor="lien-libelle" >
+                    Texte cliquable du lien hypertexte:
+                </label>
+                <input 
+                  className={`fr-input ${styles["full-width"]} ${errors.lienLibelle ? "fr-input--error" : ""}`}
+                  id="lien-libelle" 
+                  name="lien-libelle" 
+                  onChange={(e) => setLienLibelle(e.target.value)} 
+                  type="text" 
+                  value={lienLibelle} 
+                />
+                {errors.lienLibelle && <p className="fr-error-text" id="lien-libelle-error">{errors.lienLibelle}</p>}
+            </div>
+        </div>
         <div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
             <span className="fr-label">
                 Période d&apos;affichage:
