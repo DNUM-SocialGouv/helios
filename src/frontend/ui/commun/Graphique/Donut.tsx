@@ -15,6 +15,7 @@ export function Donut(props: Readonly<{
   couleursDuDoughnut: CouleurHistogramme[];
   couleursLibelle: string[];
   idDeLaLégende: string;
+  idDeLaTranscription: string;
 }>): JSX.Element {
   const data: ChartData<"doughnut", number[], string> = {
     datasets: [
@@ -34,13 +35,7 @@ export function Donut(props: Readonly<{
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut 
-          aria-labelledby="Graphique Taux d’absentéisme"
-          data={data} 
-          options={optionsDiagrammeDoughnut(props.idDeLaLégende)}
-          plugins={[construisLePluginDeLaLegendeDonut()]} 
-          title="Graphique Taux d’absentéisme" 
-         />
+        <Doughnut aria-labelledby={props.idDeLaTranscription} data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>

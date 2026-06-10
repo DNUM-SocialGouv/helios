@@ -131,12 +131,14 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     legendStyle.gridTemplateRows = "repeat(1, 1fr)";
   }
 
+  const idDeLaTranscription = props.identifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar 
-          aria-labelledby={`Graphique ${props.nomGraph}`}
+          aria-labelledby={idDeLaTranscription}
           data={props.data}
           options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
           title={`Graphique ${props.nomGraph}`}

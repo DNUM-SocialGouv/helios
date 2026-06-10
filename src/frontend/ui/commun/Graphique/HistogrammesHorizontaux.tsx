@@ -263,6 +263,7 @@ export const HistogrammesHorizontaux = ({
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
   const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
+  const idDeLaTranscription = (identifiant ? identifiant : transcriptionTitles()[0])?.replaceAll(/\s/g, "");
 
   return (
     <>
@@ -271,7 +272,7 @@ export const HistogrammesHorizontaux = ({
           {histogrammes.map((histogramme) => (
             <div className={styles["barContainerWidth"]} key={histogramme.nom}>
               <Bar
-                aria-labelledby={`Graphique ${nomGraph}`}
+                aria-labelledby={idDeLaTranscription}
                 data={histogramme.chartData as ChartData<"bar">}
                 options={{ ...histogramme.optionsHistogramme, aspectRatio }}
                 title={`Graphique ${nomGraph}`}

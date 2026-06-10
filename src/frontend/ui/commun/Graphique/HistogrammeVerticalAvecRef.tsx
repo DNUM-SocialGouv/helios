@@ -232,10 +232,12 @@ const HistogrammeVerticalAvecRef = ({
     },
   }
 
+  const idDeLaTranscription = identifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <>
       <Bar
-        aria-labelledby={`Graphique ${nomGraph}`}
+        aria-labelledby={idDeLaTranscription}
         data={data as ChartData<"bar">}
         options={optionsHistogrammeVertical}
         plugins={showRefValues ? [rotationRefPlugin] : []}

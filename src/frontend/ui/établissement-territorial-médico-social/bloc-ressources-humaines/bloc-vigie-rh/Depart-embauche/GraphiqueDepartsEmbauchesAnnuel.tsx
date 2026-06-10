@@ -279,10 +279,12 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
     : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
+  const idDeLaTranscription = transcriptionIdentifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
-        aria-labelledby={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        aria-labelledby={idDeLaTranscription}
         data={dataSet}
         options={options as ChartOptions<"bar">}
         plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 

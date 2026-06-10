@@ -168,12 +168,13 @@ export class TauxDeCafViewModel {
       labels: années,
     };
     const listeAnnéesManquantes = annéesManquantes(années, this.nombreDAnnéesParIndicateur);
+    const idDeLaTranscription = this.wording.TAUX_DE_CAF.replaceAll(/\s/g, "");
 
     return (
       <>
         {listeAnnéesManquantes.length < this.nombreDAnnéesParIndicateur && (
           <Bar
-            aria-labelledby={`Graphique ${this.wording.TAUX_DE_CAF}`}
+            aria-labelledby={idDeLaTranscription}
             data={data as ChartData<"bar">}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
             title={`Graphique ${this.wording.TAUX_DE_CAF}`}
