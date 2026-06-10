@@ -36,6 +36,8 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
+    const _paq = window._paq = window._paq || [];
+    _paq.push(['trackEvent', 'Comparaison', 'Start', 'fromListButton']);
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     router.push("/comparaison");
   }
