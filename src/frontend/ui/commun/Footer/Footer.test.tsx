@@ -3,6 +3,14 @@ import { screen } from "@testing-library/react";
 import { Footer } from "./Footer";
 import { fakeFrontDependencies, renderFakeComponent } from "../../../test-helpers/testHelper";
 
+// Mock HTMLDialogElement methods for jsdom compatibility
+// jsdom does not implement these methods, so we must add them to the prototype before spying
+HTMLDialogElement.prototype.showModal = function () {};
+HTMLDialogElement.prototype.close = function () {};
+
+jest.spyOn(HTMLDialogElement.prototype, "showModal").mockImplementation();
+jest.spyOn(HTMLDialogElement.prototype, "close").mockImplementation();
+
 const { paths, wording } = fakeFrontDependencies;
 
 describe("Le pied de page", () => {

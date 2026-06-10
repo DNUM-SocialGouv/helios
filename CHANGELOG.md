@@ -6,9 +6,9 @@
 - hel-1066: [Paramétrage] Message affiché en dehors de l'encadré
 
 ### Features
-
-
 - hel-1067: [Paramétrage] Insérer un lien hypertexte dans le message
+- hel-1061: [RGAA] suite de la mise en conformité script 7.1
+
 
 ## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
 
