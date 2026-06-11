@@ -284,7 +284,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
-        aria-labelledby={idDeLaTranscription}
+        aria-describedby={idDeLaTranscription}
         data={dataSet}
         options={options as ChartOptions<"bar">}
         plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 

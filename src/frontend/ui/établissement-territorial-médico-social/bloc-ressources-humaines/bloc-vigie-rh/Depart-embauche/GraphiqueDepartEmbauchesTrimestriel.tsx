@@ -344,7 +344,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
   return (
     <div>
       <Bar 
-        aria-labelledby={idDeLaTranscription}
+        aria-describedby={idDeLaTranscription}
         data={dataSet}
         options={options as ChartOptions<"bar">} 
         plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 

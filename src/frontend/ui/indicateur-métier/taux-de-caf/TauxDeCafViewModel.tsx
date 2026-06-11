@@ -174,7 +174,7 @@ export class TauxDeCafViewModel {
       <>
         {listeAnnéesManquantes.length < this.nombreDAnnéesParIndicateur && (
           <Bar
-            aria-labelledby={idDeLaTranscription}
+            aria-describedby={idDeLaTranscription}
             data={data as ChartData<"bar">}
             options={this.construisLesOptionsDeLHistogrammeDuTauxDeCaf(couleursDeLHistogramme, taillePoliceTick, maxDeLHistogramme, minDeLHistogramme)}
             title={`Graphique ${this.wording.TAUX_DE_CAF}`}

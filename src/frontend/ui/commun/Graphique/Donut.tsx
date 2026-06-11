@@ -35,7 +35,7 @@ export function Donut(props: Readonly<{
   return (
     <div className={styles["donut-wrapper"]}>
       <div>
-        <Doughnut aria-labelledby={props.idDeLaTranscription} data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
+        <Doughnut aria-describedby={props.idDeLaTranscription} data={data} options={optionsDiagrammeDoughnut(props.idDeLaLégende)} plugins={[construisLePluginDeLaLegendeDonut()]} />
       </div>
       <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />
     </div>

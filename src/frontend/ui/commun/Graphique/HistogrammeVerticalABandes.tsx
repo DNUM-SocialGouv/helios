@@ -138,7 +138,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
           <Bar 
-          aria-labelledby={idDeLaTranscription}
+          aria-describedby={idDeLaTranscription}
           data={props.data}
           options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
           title={`Graphique ${props.nomGraph}`}

@@ -46,7 +46,7 @@ export function DonutNoCenterText(props: {
       <div className={styles["donut-wrapper"]}>
         <div>
           <Doughnut
-            aria-labelledby={props.idDeLaTranscription}
+            aria-describedby={props.idDeLaTranscription}
             data={data}
             options={optionsDiagrammeDoughnut(props.idDeLaLégende, props.libellés)}
             plugins={[construisLePluginDeLaLegendeDonut()]}

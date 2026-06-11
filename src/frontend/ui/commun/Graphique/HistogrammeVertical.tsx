@@ -74,7 +74,7 @@ export function HistogrammeVertical(props: Readonly<{
     <>
       {listeAnnéesManquantes.length < props.annéesTotales && (
         <Bar
-          aria-labelledby={idDeLaTranscription}
+          aria-describedby={idDeLaTranscription}
           data={data as ChartData<"bar">}
           options={optionsHistogrammeVertical(props.taillePoliceTicks)}
           title={`Graphique ${props.nomGraph}`}

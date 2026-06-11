@@ -331,7 +331,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     <>
       <div>
         <Bar                
-          aria-labelledby={idDeLaTranscription}
+          aria-describedby={idDeLaTranscription}
           data={chartData} 
           options={chartOptions}
           plugins={showRefValues ? [rotationRefPlugin] : []}

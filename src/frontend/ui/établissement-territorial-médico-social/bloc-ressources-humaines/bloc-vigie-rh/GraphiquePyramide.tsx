@@ -303,7 +303,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       <div className="fr-grid-row" style={{ height: "300px", alignItems: "stretch" }}>
         <div className="fr-col-5">
           <Bar
-            aria-labelledby={idDeLaTranscription}
+            aria-describedby={idDeLaTranscription}
             data={menData as ChartData<"bar">}
             options={{
               ...options,
@@ -324,7 +324,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         </div>
         <div className="fr-col-2">
           <Bar
-            aria-labelledby={idDeLaTranscription}
+            aria-describedby={idDeLaTranscription}
             data={middleData}
             options={{
               ...options,
@@ -348,7 +348,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
         </div>
         <div className="fr-col-5">
           <Bar
-            aria-labelledby={idDeLaTranscription}
+            aria-describedby={idDeLaTranscription}
             data={womenData}
             options={{
               ...options,
