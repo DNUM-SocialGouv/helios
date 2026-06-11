@@ -10,6 +10,8 @@
 - hel-1061: [RGAA] suite de la mise en conformité script 7.1
 
 
+- hel-1063: [RGAA] Mise en conformité Présentation  information 10.9
+
 ## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
 
 ### Bug Fixes

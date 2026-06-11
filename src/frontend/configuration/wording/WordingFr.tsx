@@ -583,15 +583,15 @@ export class WordingFr implements Wording {
   readonly COMPARER: string = "Comparer";
   readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
   readonly EXPORTER: string = "Exporter";
-  readonly DANS_FAVORIS: string = "Dans les favoris";
+  readonly DANS_FAVORIS: string = "Etablissement ajouté à une ou plusieurs de mes listes";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
   readonly IMPORTER_UNE_LISTE: string = "Importer une liste";
   readonly IMPORTER_DES_ETABLISSEMENTS: string = "Importer une liste";
 
 
   // Etoile des Favoris
-  readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
-  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
+  readonly ETOILE_ETAB_DANS_LISTE: string = "Etablissement ajouté à une ou plusieurs de mes listes - Cliquer pour modifier";
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Etablissement non ajouté à mes listes - Cliquer pour ajouter";
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
