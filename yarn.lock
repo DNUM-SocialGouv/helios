@@ -3013,6 +3013,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@socialgouv/matomo-next@npm:^1.13":
+  version: 1.13.1
+  resolution: "@socialgouv/matomo-next@npm:1.13.1"
+  peerDependencies:
+    next: ">= 13.0.0"
+    react: ">= 18.0.0"
+  checksum: 10/5712a5498b1d7d959279fb748cbb963ac7b84d462c014d0cdf0c948e345854905a4b1cde8b6c671482cece43740bb2d4befc90b46f9febea1ec3e6a1e5b6f0ab
+  languageName: node
+  linkType: hard
+
 "@sqltools/formatter@npm:^1.2.5":
   version: 1.2.5
   resolution: "@sqltools/formatter@npm:1.2.5"
@@ -6739,6 +6749,7 @@ __metadata:
     "@opentelemetry/instrumentation": "npm:0.214.0"
     "@opentelemetry/sdk-trace-base": "npm:2.7.1"
     "@sentry/nextjs": "npm:10.51.0"
+    "@socialgouv/matomo-next": "npm:^1.13"
     "@swc/core": "npm:^1.15.8"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"

@@ -46,6 +46,8 @@ import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
+import { trackPagesRouter } from "@socialgouv/matomo-next";
+
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
 
@@ -83,6 +85,14 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       window.addEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
+  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
+
+  useEffect(() => {
+    trackPagesRouter({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+  }, []);
+
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
@@ -118,6 +128,18 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
                     </Script>
                     <Script src={`${process.env["NEXT_PUBLIC_MATOMO_URL"]}/matomo.js`} strategy="afterInteractive" />
                   </>
+                )}
+                {process.env.NODE_ENV !== "developmenta" && process.env["NEXT_PUBLIC_MATOMO_URL"] && process.env["NEXT_PUBLIC_MATOMO_CONTAINER_ID"] && (
+                  <Script id="matomo-tag-manager" strategy="afterInteractive">
+                    {`
+                      var _mtm = window._mtm = window._mtm || [];
+                      _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+                      (function() {
+                        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                        g.async=true; g.src='${process.env["NEXT_PUBLIC_MATOMO_URL"]}/js/container_${process.env["NEXT_PUBLIC_MATOMO_CONTAINER_ID"]}.js'; s.parentNode.insertBefore(g,s);
+                      })();
+                    `}
+                  </Script>
                 )}
               </DependenciesProvider>
             </ComparaisonContextProvider>

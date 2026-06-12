@@ -1,3 +1,4 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import { useRouter } from "next/router";
 import React, { ReactNode, useRef, useState, type JSX } from "react";
 
@@ -36,8 +37,11 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
-    const _paq = window._paq = window._paq || [];
-    _paq.push(['trackEvent', 'Comparaison', 'Start', 'fromListButton']);
+    sendEvent({
+      category: 'Comparaison',
+      action: 'Start',
+      name: 'FromListButton'
+    });
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     router.push("/comparaison");
   }
