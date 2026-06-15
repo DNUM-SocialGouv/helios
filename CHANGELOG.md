@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (TODO)
+## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.10...release/1.8.11) (TODO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (2026-06-15)
 
 ### Bug Fixes
 - hel-1066: [Paramétrage] Message affiché en dehors de l'encadré
