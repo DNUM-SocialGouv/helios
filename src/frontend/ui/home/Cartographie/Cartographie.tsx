@@ -22,7 +22,7 @@ export const Cartographie = () => {
           </div>
         </div>
         <div>
-          <Image alt='Carte de France' height="300" src={carteFrance} width="300" />
+          <Image alt='Carte de France' height="300" src={carteFrance} title="Carte de France" width="300" />
         </div>
       </div>
     </section>

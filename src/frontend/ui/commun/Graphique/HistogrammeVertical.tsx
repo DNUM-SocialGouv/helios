@@ -68,14 +68,16 @@ export function HistogrammeVertical(props: Readonly<{
     labels: props.libellés,
   };
   const listeAnnéesManquantes = props.isVigieRh ? annéesManquantesVigieRh(props.libellés, props.annéesTotales) : annéesManquantes(props.libellés, props.annéesTotales);
+  const idDeLaTranscription = props.identifiant?.replaceAll(/\s/g, "");
 
   return (
     <>
       {listeAnnéesManquantes.length < props.annéesTotales && (
         <Bar
-          aria-labelledby={`Graphique ${props.nomGraph}`}
+          aria-describedby={idDeLaTranscription}
           data={data as ChartData<"bar">}
           options={optionsHistogrammeVertical(props.taillePoliceTicks)}
+          title={`Graphique ${props.nomGraph}`}
         />
       )}
       {listeAnnéesManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNÉE_RENSEIGNÉE} ${listeAnnéesManquantes.join(", ")}`}</MiseEnExergue>}

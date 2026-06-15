@@ -224,13 +224,16 @@ const HistogrammeHorizontalAvecRef = ({
   const valeursTranscriptions = showRefValues ? [valeursDesHistogrammes, valeursDesHistogrammesRef] :
     valeursAdditionnelles ? [valeursDesHistogrammes, valeursAdditionnelles] : [valeursDesHistogrammes];
 
+  const idDeLaTranscription = identifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <>
       <div className={styles["flexContainer"]}>
         <Bar 
-          aria-labelledby={`Graphique ${nomGraph}`}
+          aria-describedby={idDeLaTranscription}
           data={data as ChartData<"bar">}
           options={{ ...optionsHistogramme, aspectRatio }} plugins={showRefValues ? [valeursRefPlugin] : []}
+          title={`Graphique ${nomGraph}`}
         />
       </div>
       {showRefValues && <ColorLabel

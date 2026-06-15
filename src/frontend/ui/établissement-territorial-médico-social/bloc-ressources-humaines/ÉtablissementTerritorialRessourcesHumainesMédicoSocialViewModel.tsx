@@ -345,6 +345,7 @@ export class ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel {
             couleursDuDoughnut={couleursDuDoughnut}
             couleursLibelle={couleursDesLibelles}
             idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_TAUX_D_ABSENTÉISMES}
+            idDeLaTranscription={this.wording.TAUX.replaceAll(/\s/g, "")}
             libellés={motifsDesTauxDAbsentéismes}
             valeurs={valeursDesTauxDAbsentéismes}
           />

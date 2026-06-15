@@ -203,11 +203,13 @@ const LineChart = ({
     },
   };
 
+  const idDeLaTranscription = (transcriptionId ? transcriptionId : nomGraph)?.replaceAll(/\s/g, "");
+
   return (
     <div className={classContainer}>
       <div className={styles["chartLineDiv"]}>
         <div className={`${styles["chartLineDiv"]} ${styles["chartLineBody"]}`}>
-          {process.env.NODE_ENV !== "test" && <Line aria-labelledby={`Graphique ${nomGraph}`} data={data} options={options} />}
+          {process.env.NODE_ENV !== "test" && <Line aria-describedby={idDeLaTranscription} data={data} options={options} />}
         </div>
         {legendeCochable ?
           <menu className={"fr-checkbox-group " + styles['graphique-effectif-legende']} id={identifiantLegende} />

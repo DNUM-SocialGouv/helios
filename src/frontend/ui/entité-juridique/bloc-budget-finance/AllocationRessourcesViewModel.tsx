@@ -337,6 +337,7 @@ export class AllocationRessourcesViewModel {
               couleursDuDoughnut={couleursDuDoughnut}
               couleursLibelle={couleursDesLibelles}
               idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES}
+              idDeLaTranscription={this.wording.REPARTITION_DES_ENVELOPPES.replaceAll(/\s/g, "")}
               libellés={motifsDesAllocationDeRessourceWithPourcentage}
               title={this.wording.REPARTITION_DES_ENVELOPPES}
               total={1}

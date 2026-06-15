@@ -279,13 +279,17 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
     : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
+  const idDeLaTranscription = transcriptionIdentifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
-        aria-labelledby={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        aria-describedby={idDeLaTranscription}
         data={dataSet}
         options={options as ChartOptions<"bar">}
-        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+        title={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}
