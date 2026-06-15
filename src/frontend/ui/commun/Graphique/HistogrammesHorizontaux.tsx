@@ -263,7 +263,7 @@ export const HistogrammesHorizontaux = ({
   const aucuneDonnées = annéesManquantes.length >= nombreDAnnéeTotale;
   const ASPECT_RATIO = epaisseur === "EPAIS" ? 5 : 7;
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
-  const idDeLaTranscription = (identifiant ? identifiant : transcriptionTitles()[0])?.replaceAll(/\s/g, "");
+  const idDeLaTranscription = identifiant || transcriptionTitles()[0]?.replaceAll(/\s/g, "");
 
   return (
     <>

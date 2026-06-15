@@ -318,7 +318,7 @@ const HistogrammeComparaisonVerticalAvecRef = ({
     })();
 
   const idDeLaTranscription = transcription
-    ? (transcription.identifiantUnique ? transcription.identifiantUnique : transcriptionIdentifiants[0])?.replaceAll(/\s/g, "")
+    ? transcription.identifiantUnique || transcriptionIdentifiants[0]?.replaceAll(/\s/g, "")
     : undefined;
 
   const legend = (

@@ -203,7 +203,7 @@ const LineChart = ({
     },
   };
 
-  const idDeLaTranscription = (transcriptionId ? transcriptionId : nomGraph)?.replaceAll(/\s/g, "");
+  const idDeLaTranscription = transcriptionId || nomGraph.replaceAll(/\s/g, "");
 
   return (
     <div className={classContainer}>
