@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { ReactNode, useRef, useState, type JSX } from "react";
 
 import styles from "./ListActionsButton.module.css";
+import { COMPARAISON_LANCER_LISTE, COMPARAISON_LANCER_RECHERCHE_AVANCEE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FavorisPopup, POPUP_WIDTH } from "../commun/FavorisPopup/FavorisPopup";
 import { useFavoris } from "../favoris/useFavoris";
@@ -21,9 +22,10 @@ type ListActionsButtonProps = Readonly<{
   fullSelectButton?: ReactNode;
   importButton?: ReactNode;
   indicatorChoiceButton?: ReactNode;
+  calledFrom?: string;
 }>;
 
-export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton, importButton, indicatorChoiceButton }: ListActionsButtonProps) => {
+export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAddToFavorisSuccess, exportButton, fullSelectButton, importButton, indicatorChoiceButton, calledFrom }: ListActionsButtonProps) => {
 
   const { wording } = useDependencies();
   const router = useRouter();
@@ -37,11 +39,16 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
 
 
   const lancerComparaison = () => {
-    sendEvent({
-      category: 'Comparaison',
-      action: 'Start',
-      name: 'FromListButton'
-    });
+    switch(calledFrom) {
+      case "liste":
+        sendEvent(COMPARAISON_LANCER_LISTE);
+        break;
+      case "recherche avancee":
+        sendEvent(COMPARAISON_LANCER_RECHERCHE_AVANCEE);
+        break;
+      default:
+        break;
+    }
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
     router.push("/comparaison");
   }

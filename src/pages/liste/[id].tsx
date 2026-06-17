@@ -158,7 +158,7 @@ export default function Router({ listServer }: RouterProps) {
         <ListNameButton id={list.id} name={list.nom} /> :
         <h1>{list?.nom}</h1>
       }
-      {list && displayTable && <ListActionsButton disabledExport={isListEmpty()} exportButton={exportButton} fullSelectButton={selectAllButton()} importButton={importButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
+      {list && displayTable && <ListActionsButton calledFrom="liste" disabledExport={isListEmpty()} exportButton={exportButton} fullSelectButton={selectAllButton()} importButton={importButton} listId={list.id} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />}
     </div>
     <div className="fr-grid-row fr-mt-2w">
       <div className="fr-col">
