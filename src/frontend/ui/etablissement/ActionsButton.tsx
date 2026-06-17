@@ -1,7 +1,9 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import styles from "./ActionsButton.module.css";
+import { COMPARAISON_LANCER_FICHE_ETABLISSEMENT } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 
 type ActionsButtonProps = Readonly<{
@@ -17,6 +19,7 @@ export const ActionsButton = ({ finess, downloadPDF, exportET }: ActionsButtonPr
   const [displayActions, setDisplayActions] = useState<boolean>(false);
 
   const lancerComparaison = () => {
+    sendEvent(COMPARAISON_LANCER_FICHE_ETABLISSEMENT);
     sessionStorage.setItem("listFinessNumbers", JSON.stringify([finess]));
     router.push("/comparaison");
   }
