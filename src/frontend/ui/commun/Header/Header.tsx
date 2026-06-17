@@ -1,3 +1,4 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,6 +11,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
+import { CONSOLE_ADMIN } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -269,6 +271,7 @@ export const Header = () => {
                               <button
                                 className="fr-btn--icon-left fr-icon-user-setting-line"
                                 onClick={() => {
+                                  sendEvent(CONSOLE_ADMIN);
                                   handleMenuAction(() => router.push(paths.USERS_LIST));
                                 }}
                               >
@@ -365,6 +368,7 @@ export const Header = () => {
                       <button
                         className="fr-btn--icon-left fr-icon-user-setting-line"
                         onClick={() => {
+                          sendEvent(CONSOLE_ADMIN);
                           handleMenuAction(() => router.push(paths.USERS_LIST));
                         }}
                       >

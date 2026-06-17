@@ -7,3 +7,5 @@ export const COMPARAISON_LANCER_FICHE_ETABLISSEMENT = { category: 'comparaison',
 export const EXPORT = (source: string) => {
   return { category: 'export', action: 'lancer', name: source };
 }
+
+export const CONSOLE_ADMIN = {category: 'navigation', action: 'console admin'};
