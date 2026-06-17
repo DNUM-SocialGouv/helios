@@ -1,3 +1,4 @@
+import { trackPagesRouter } from "@socialgouv/matomo-next";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -45,8 +46,6 @@ import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextP
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
-
-import { trackPagesRouter } from "@socialgouv/matomo-next";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();

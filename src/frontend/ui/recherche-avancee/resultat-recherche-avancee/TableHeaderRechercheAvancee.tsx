@@ -24,7 +24,7 @@ export const TableHeaderRechercheAvancee = ({ selectedRows, onAddToFavorisSucces
         <p className="fr-table__detail">{`${selectedRows.size} ${selectedRows.size > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`}</p>
       </div>
       <div className="fr-col--right fr-mb-1w">
-        <ListActionsButton exportButton={exportButton} fullSelectButton={fullSelectButton} onAddToFavorisSuccess={onAddToFavorisSuccess} selectedRows={selectedRows} />
+        <ListActionsButton calledFrom="recherche avancee" exportButton={exportButton} fullSelectButton={fullSelectButton} onAddToFavorisSuccess={onAddToFavorisSuccess} selectedRows={selectedRows} />
       </div>
     </div>
   );
