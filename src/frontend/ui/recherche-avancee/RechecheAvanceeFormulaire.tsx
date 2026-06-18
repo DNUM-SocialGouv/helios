@@ -1,3 +1,4 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useState } from "react";
 
 import { FiltreActiviteSanitaire } from "./FiltreActiviteSanitaire";
@@ -8,6 +9,7 @@ import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import { AttribuesDefaults, typeStructureTranscodage } from "./model/Attribues";
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { RECHERCHE_REINITIALISER } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -129,6 +131,7 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const eraseAll = () => {
+    sendEvent(RECHERCHE_REINITIALISER);
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);

@@ -1,6 +1,8 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import Image from "next/image";
 import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
+import { FILTRE_STATUT_JURIDIQUE_PL, FILTRE_STATUT_JURIDIQUE_PNL, FILTRE_STATUT_JURIDIQUE_PUBLIC, FILTRE_STRUCTURE_EJ, FILTRE_STRUCTURE_MS, FILTRE_STRUCTURE_SAN, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_STRUCTURE } from "../../utils/nomenclature-matomo";
 import { Badge } from "../commun/Badge/Badge";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -123,6 +125,26 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   };
 
   const appliquerButton = () => {
+    sendEvent(RECHERCHE_AVANCEE);
+    sendEvent(RECHERCHE_AVANCEE_FILTRE_STRUCTURE);
+    if(typeSelected.includes(AttribuesDefaults.entiteJuridque) ){
+      sendEvent(FILTRE_STRUCTURE_EJ);
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPublic) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PUBLIC);
+      }
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPriveLucratif) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PL);
+      }
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPriveNonLucratif) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PNL);
+      }
+    }
+    if(typeSelected.includes(AttribuesDefaults.etablissementSanitaire) ){
+      sendEvent(FILTRE_STRUCTURE_SAN);
+    }
+    if(typeSelected.includes(AttribuesDefaults.etablissementMedicoSocial) ){
+      sendEvent(FILTRE_STRUCTURE_MS);
+    }
     if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
       emptyStatutJuridiqueCheckboxs();
     }
