@@ -7,6 +7,7 @@
 ### Features
 hel-1050: Ajout d’event Matomo lors de l’export
 hel-1057: Ajout d'event Matomo lors de la consultation de la console admin
+hel-1054: Ajout d'event Matomo lors de la consultation de la cartographie
 
 ## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (2026-06-15)
 
@@ -25,7 +26,6 @@ hel-1057: Ajout d'event Matomo lors de la consultation de la console admin
 
 ### Features
 - hel-1059: [Compte doublon] Mise en place d'un cron pour vérifier la création
-
 - hel-1023: [Paramétrage]Historique des messages
 - hel-1022: [Paramétrage] Mise à jour du message d'accueil
 - hel-1026: [Paramétrage]Affichage du message

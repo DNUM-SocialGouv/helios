@@ -111,35 +111,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
                 <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
                 <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
                 {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
-                {process.env.NODE_ENV !== "development" && process.env["NEXT_PUBLIC_MATOMO_URL"] && (
-                  <>
-                    <Script id="matomo-init" strategy="afterInteractive">
-                      {`
-                        var _paq = window._paq = window._paq || [];
-                        _paq.push(['trackPageView']);
-                        _paq.push(['enableLinkTracking']);
-                        (function() {
-                          var u="${process.env["NEXT_PUBLIC_MATOMO_URL"]}/";
-                          _paq.push(['setTrackerUrl', u+'matomo.php']);
-                          _paq.push(['setSiteId', '${process.env["NEXT_PUBLIC_MATOMO_SITE_ID"]}']);
-                        })();
-                      `}
-                    </Script>
-                    <Script src={`${process.env["NEXT_PUBLIC_MATOMO_URL"]}/matomo.js`} strategy="afterInteractive" />
-                  </>
-                )}
-                {process.env.NODE_ENV !== "development" && process.env["NEXT_PUBLIC_MATOMO_URL"] && process.env["NEXT_PUBLIC_MATOMO_CONTAINER_ID"] && (
-                  <Script id="matomo-tag-manager" strategy="afterInteractive">
-                    {`
-                      var _mtm = window._mtm = window._mtm || [];
-                      _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-                      (function() {
-                        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                        g.async=true; g.src='${process.env["NEXT_PUBLIC_MATOMO_URL"]}/js/container_${process.env["NEXT_PUBLIC_MATOMO_CONTAINER_ID"]}.js'; s.parentNode.insertBefore(g,s);
-                      })();
-                    `}
-                  </Script>
-                )}
               </DependenciesProvider>
             </ComparaisonContextProvider>
           </RechecheAvanceeContextProvider>
