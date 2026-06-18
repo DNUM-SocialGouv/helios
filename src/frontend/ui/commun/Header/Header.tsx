@@ -11,11 +11,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
-<<<<<<< HEAD
-import { CONSOLE_ADMIN } from "../../../utils/nomenclature-matomo";
-=======
-import { RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
->>>>>>> 095cba6b ((hel-1053) implementation evenement recherche simple)
+import { CONSOLE_ADMIN, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
