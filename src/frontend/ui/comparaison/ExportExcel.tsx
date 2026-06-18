@@ -1,9 +1,12 @@
+import { sendEvent } from "@socialgouv/matomo-next";
 import ExcelJS from "exceljs";
 import { useContext } from "react";
 
 import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
+import { EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 import { UserContext } from "../commun/contexts/userContext";
 import StringFormater from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
@@ -210,7 +213,7 @@ function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Workshe
 async function generateAndExportExcel(
   year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any, enabledIndicators: string[]
 ) {
-
+  sendEvent(EXPORT(SourceMatomo.COMPARAISON));
 
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
   const enveloppes = await getTopEnveloppes(year, structure);

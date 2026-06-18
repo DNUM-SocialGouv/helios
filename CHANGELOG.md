@@ -13,6 +13,7 @@
 - hel-1044: Ajouter la donnée etablissement principale/secondaire dans l’export des EJ
 - hel-1036: [RGPD] exercer les droits en matière de données personnelles
 - hel-1039: Ajout de Matomo
+- hel-1050: Ajout d’event Matomo lors de l’export
 
 ## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
 
