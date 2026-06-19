@@ -1,8 +1,7 @@
 import pandas as pd
-from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from sqlalchemy.engine import Engine, create_engine
 import requests
-
+from datacrawler.dependencies.dépendances import initialise_les_dépendances
 
 def get_inactive_users(engine: Engine) -> int:
     query = """
@@ -11,9 +10,9 @@ def get_inactive_users(engine: Engine) -> int:
         WHERE ut_date_last_connection < NOW() - INTERVAL '6 months'
     """
 
-    df = pd.read_sql(query, engine)
+    result = pd.read_sql(query, engine)
 
-    return int(df["inactive_users"].iloc[0])
+    return int(result["inactive_users"].iloc[0])
 
 def send_matomo_event(value: int, token_auth: str, site_id: int, matomo_url: str) -> None:
     payload = {

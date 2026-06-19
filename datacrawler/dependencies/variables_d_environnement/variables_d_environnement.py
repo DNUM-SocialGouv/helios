@@ -40,7 +40,7 @@ class VariablesDEnvironnement(TypedDict):
     SUPPORT_EMAIL: str
     MATOMO_API_TOKEN: str
     NEXT_PUBLIC_MATOMO_SITE_ID: str
-    NEXT_PUBLIC_MATOMO_URL: str 
+    NEXT_PUBLIC_MATOMO_URL: str
 
 
 def récupère_les_variables_d_environnement(
