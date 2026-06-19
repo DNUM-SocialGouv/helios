@@ -38,6 +38,9 @@ class VariablesDEnvironnement(TypedDict):
     TIPIMAIL_APIKEY: str
     TIPIMAIL_TO_ADDRESSES: str
     SUPPORT_EMAIL: str
+    MATOMO_API_TOKEN: str
+    NEXT_PUBLIC_MATOMO_SITE_ID: str
+    NEXT_PUBLIC_MATOMO_URL: str 
 
 
 def récupère_les_variables_d_environnement(
@@ -91,4 +94,7 @@ def récupère_les_variables_d_environnement(
         TIPIMAIL_APIKEY=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_APIKEY"),
         TIPIMAIL_TO_ADDRESSES=signale_si_la_variable_n_est_pas_présente("TIPIMAIL_TO_ADDRESSES"),
         SUPPORT_EMAIL=signale_si_la_variable_n_est_pas_présente("SUPPORT_EMAIL"),
+        MATOMO_API_TOKEN=signale_si_la_variable_n_est_pas_présente("MATOMO_API_TOKEN"),
+        NEXT_PUBLIC_MATOMO_SITE_ID=signale_si_la_variable_n_est_pas_présente("NEXT_PUBLIC_MATOMO_SITE_ID"),
+        NEXT_PUBLIC_MATOMO_URL=signale_si_la_variable_n_est_pas_présente("NEXT_PUBLIC_MATOMO_URL")
     )
