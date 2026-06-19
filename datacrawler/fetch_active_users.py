@@ -45,6 +45,6 @@ if __name__ == "__main__":
     send_matomo_event(
         value=active_users,
         token_auth=variables_d_environnement["MATOMO_API_TOKEN"],
-        site_id=variables_d_environnement["NEXT_PUBLIC_MATOMO_SITE_ID"],
+        site_id=int(variables_d_environnement["NEXT_PUBLIC_MATOMO_SITE_ID"]),
         matomo_url=variables_d_environnement["NEXT_PUBLIC_MATOMO_URL"]
     )
