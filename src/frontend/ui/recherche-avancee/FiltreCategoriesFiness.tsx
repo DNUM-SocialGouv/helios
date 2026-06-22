@@ -57,8 +57,10 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
   }
 
   const mettreAJourCriteresDeRecherche = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_AVANCEE);
     sendEvent(RECHERCHE_AVANCEE_FILTRE_CATEGORIES);
+    }
     if (rechercheAvanceeContext) {
       rechercheAvanceeContext?.setCategories(categoriesSelectedList.map((categorie => { return categorie.categorieCode })));
       rechercheAvanceeContext?.setCategoriesDomaines(categoriesSelectedList.map((categorie => { return categorie.categorieDomaine })))

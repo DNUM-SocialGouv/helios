@@ -131,7 +131,9 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const eraseAll = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_REINITIALISER);
+    }
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
@@ -243,7 +245,7 @@ export const RechercheAvanceeFormulaire = ({
           isComparaison={isComparaison}
           setIsChanged={setIsChangedZG}
           setZoneGeoType={setZoneGeoType}
-          setZoneGeoValue={setZoneGeoValue}
+          setZoneGeoValue={setZoneGeoValue}   
           zoneGeoType={zoneGeoType}
           zoneGeoValue={zoneGeoValue}
         />

@@ -125,8 +125,10 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   }
 
   const appliquerButton = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_AVANCEE);
     sendEvent(RECHERCHE_AVANCEE_FILTRE_CAPACITE);
+    }
     if (rechercheAvanceeContext) {
       rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
       rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);

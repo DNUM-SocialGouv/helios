@@ -178,8 +178,10 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
   };
 
   const applyZoneGeoValue = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_AVANCEE);
     sendEvent(RECHERCHE_AVANCEE_FILTRE_GEO);
+    }
     rechercheAvanceeContext?.setZoneGeoD(zoneGeoType === "C" ? zoneGeoSelected?.departement.nom : "");
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);

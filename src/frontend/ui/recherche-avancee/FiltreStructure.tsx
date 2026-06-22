@@ -125,8 +125,10 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   };
 
   const appliquerButton = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_AVANCEE);
     sendEvent(RECHERCHE_AVANCEE_FILTRE_STRUCTURE);
+    }
     if(typeSelected.includes(AttribuesDefaults.entiteJuridque) ){
       sendEvent(FILTRE_STRUCTURE_EJ);
       if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPublic) ){

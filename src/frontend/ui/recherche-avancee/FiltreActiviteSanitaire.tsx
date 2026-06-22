@@ -125,8 +125,10 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
   }
 
   const appliquerButton = () => {
+    if(!isComparaison){
     sendEvent(RECHERCHE_AVANCEE);
     sendEvent(RECHERCHE_AVANCEE_FILTRE_ACTIVITE);
+    }
     if (rechercheAvanceeContext) {
       rechercheAvanceeContext?.setActiviteMco(activiteMco.ranges);
       rechercheAvanceeContext?.setActivitePsy(activitePsy.ranges);
