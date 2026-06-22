@@ -15,3 +15,5 @@ export const CARTOGRAPHIE = {category: 'navigation', action: 'cartographie'};
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
 
+// création de liste
+export const CREATION_LISTE = {category: 'liste', action: 'creer'};
