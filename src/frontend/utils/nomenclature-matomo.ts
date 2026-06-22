@@ -11,6 +11,7 @@ export const EXPORT = (source: string) => {
 // Navigation
 export const CONSOLE_ADMIN = {category: 'navigation', action: 'console_admin'};
 export const CARTOGRAPHIE = {category: 'navigation', action: 'cartographie'};
+export const HISTORIQUE = {category: 'navigation', action: 'historique'};
 
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
