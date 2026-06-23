@@ -15,3 +15,6 @@ export const CARTOGRAPHIE = {category: 'navigation', action: 'cartographie'};
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
 
+// Connexion
+export const CONNEXION = {category: 'session', action: 'connexion'};
+
