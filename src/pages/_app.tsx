@@ -1,3 +1,4 @@
+import { trackPagesRouter } from "@socialgouv/matomo-next";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -83,6 +84,14 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
       window.addEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
+  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
+
+  useEffect(() => {
+    trackPagesRouter({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+  }, []);
+
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
@@ -102,23 +111,6 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
                 <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
                 <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
                 {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
-                {process.env.NODE_ENV !== "development" && process.env["NEXT_PUBLIC_MATOMO_URL"] && (
-                  <>
-                    <Script id="matomo-init" strategy="afterInteractive">
-                      {`
-                        var _paq = window._paq = window._paq || [];
-                        _paq.push(['trackPageView']);
-                        _paq.push(['enableLinkTracking']);
-                        (function() {
-                          var u="${process.env["NEXT_PUBLIC_MATOMO_URL"]}/";
-                          _paq.push(['setTrackerUrl', u+'matomo.php']);
-                          _paq.push(['setSiteId', '${process.env["NEXT_PUBLIC_MATOMO_SITE_ID"]}']);
-                        })();
-                      `}
-                    </Script>
-                    <Script src={`${process.env["NEXT_PUBLIC_MATOMO_URL"]}/matomo.js`} strategy="afterInteractive" />
-                  </>
-                )}
               </DependenciesProvider>
             </ComparaisonContextProvider>
           </RechecheAvanceeContextProvider>
