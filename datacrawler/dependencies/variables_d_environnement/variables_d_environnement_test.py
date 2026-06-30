@@ -65,7 +65,10 @@ class TestVariablesDEnvironnement:
             "TIPIMAIL_APIUSER": "test",
             "TIPIMAIL_APIKEY": "test",
             "TIPIMAIL_TO_ADDRESSES": "test",
-            "SUPPORT_EMAIL": "test"
+            "SUPPORT_EMAIL": "test",
+            "MATOMO_API_TOKEN": "test",
+            "NEXT_PUBLIC_MATOMO_SITE_ID": "test",
+            "NEXT_PUBLIC_MATOMO_URL": "test"
         }
 
         # WHEN
