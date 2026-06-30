@@ -2,10 +2,11 @@ const { withSentryConfig } = require("@sentry/nextjs");
 
 const isDev = process.env.NODE_ENV === 'development'
 const matomoUrl = process.env.NEXT_PUBLIC_MATOMO_URL;
+const sentryUrl = process.env.SENTRY_URL;
 const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} ${matomoUrl};
-    connect-src 'self' ${matomoUrl};
+    connect-src 'self' ${matomoUrl} ${sentryUrl};
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: ${matomoUrl};
     font-src 'self';
