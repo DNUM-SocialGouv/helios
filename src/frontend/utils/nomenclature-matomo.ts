@@ -16,6 +16,9 @@ export const AIDE = {category: 'navigation', action: 'aide'};
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
 
+// Connexion
+export const CONNEXION = {category: 'session', action: 'connexion'};
+
 /** Recheche avancée */
 export const RECHERCHE_REINITIALISER = {category: 'recherche', action: 'reinitialiser'};
 export const RECHERCHE_AVANCEE = {category: 'recherche', action: 'avancee'};
