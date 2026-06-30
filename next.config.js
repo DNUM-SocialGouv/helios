@@ -98,18 +98,16 @@ const nextConfig = withBundleAnalyzer({
   devIndicators: { position: "bottom-left" },
   output: 'standalone',
   async headers() {
-    return process.env["NODE_ENV"] !== "development"
-      ? [
-        {
-          headers: securityHeaders,
-          source: "/:path*",
-        },
-        {
-          headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
-          source: "/(smarttag.js|favicon.ico|logo.svg)",
-        },
-      ]
-      : [];
+    return [
+      {
+        headers: securityHeaders,
+        source: "/:path*",
+      },
+      {
+        headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+        source: "/(smarttag.js|favicon.ico|logo.svg)",
+      },
+    ];
   },
   poweredByHeader: false,
   reactStrictMode: true,
