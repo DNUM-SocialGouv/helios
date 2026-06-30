@@ -11,7 +11,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
-import { CONSOLE_ADMIN, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
+import { AIDE, CONSOLE_ADMIN, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -288,6 +288,7 @@ export const Header = () => {
                           <button
                             className="fr-btn--icon-left fr-icon-question-line"
                             onClick={() => {
+                              sendEvent(AIDE);
                               handleMenuAction(() => router.push(paths.AIDE));
                             }}
                           >
@@ -381,6 +382,7 @@ export const Header = () => {
                     <button
                       className="fr-btn--icon-left fr-icon-question-line"
                       onClick={() => {
+                        sendEvent(AIDE);
                         handleMenuAction(() => router.push(paths.AIDE));
                       }}
                     >

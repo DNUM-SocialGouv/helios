@@ -11,6 +11,7 @@ export const EXPORT = (source: string) => {
 // Navigation
 export const CONSOLE_ADMIN = {category: 'navigation', action: 'console_admin'};
 export const CARTOGRAPHIE = {category: 'navigation', action: 'cartographie'};
+export const AIDE = {category: 'navigation', action: 'aide'};
 
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
@@ -32,6 +33,5 @@ export const FILTRE_STATUT_JURIDIQUE_PUBLIC = {category: 'filtre', action: 'vale
 export const FILTRE_STATUT_JURIDIQUE_PL= {category: 'filtre', action: 'valeur_statut_juridique', name: 'prive_lucratif'};
 export const FILTRE_STATUT_JURIDIQUE_PNL = {category: 'filtre', action: 'valeur_statut_juridique', name: 'prive_non_lucratif'};
 
-
-
-
+// création de liste
+export const CREATION_LISTE = {category: 'liste', action: 'creer'};
