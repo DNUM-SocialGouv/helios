@@ -1,16 +1,20 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 
 const isDev = process.env.NODE_ENV === 'development'
+const matomoUrl = process.env.NEXT_PUBLIC_MATOMO_URL;
+const sentryUrl = process.env.SENTRY_URL;
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''};
+    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} ${matomoUrl};
+    connect-src 'self' ${matomoUrl} ${sentryUrl};
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data:;
+    img-src 'self' blob: data: ${matomoUrl};
     font-src 'self';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
+    frame-src 'self' https://carto.atlasante.fr/;
     upgrade-insecure-requests;
 `;
 const securityHeaders = [
@@ -94,18 +98,16 @@ const nextConfig = withBundleAnalyzer({
   devIndicators: { position: "bottom-left" },
   output: 'standalone',
   async headers() {
-    return process.env["NODE_ENV"] !== "development"
-      ? [
-        {
-          headers: securityHeaders,
-          source: "/:path*",
-        },
-        {
-          headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
-          source: "/(smarttag.js|favicon.ico|logo.svg)",
-        },
-      ]
-      : [];
+    return [
+      {
+        headers: securityHeaders,
+        source: "/:path*",
+      },
+      {
+        headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+        source: "/(smarttag.js|favicon.ico|logo.svg)",
+      },
+    ];
   },
   poweredByHeader: false,
   reactStrictMode: true,
