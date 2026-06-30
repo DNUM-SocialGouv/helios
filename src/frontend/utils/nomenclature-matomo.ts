@@ -16,3 +16,5 @@ export const AIDE = {category: 'navigation', action: 'aide'};
 // Recherche 
 export const RECHERCHE_SIMPLE = {category: 'recherche', action: 'simple'};
 
+// création de liste
+export const CREATION_LISTE = {category: 'liste', action: 'creer'};
