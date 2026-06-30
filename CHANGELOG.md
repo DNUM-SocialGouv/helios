@@ -9,12 +9,15 @@
 ## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (2026-06-15)
 
 ### Bug Fixes
+
 - hel-1066: [Paramétrage] Message affiché en dehors de l'encadré
+- hel-1074: Ajout des directives CSP nécessaires pour Matomo et Atlasanté
 
 ### Features
+
 - hel-1067: [Paramétrage] Insérer un lien hypertexte dans le message
 - hel-1061: [RGAA] suite de la mise en conformité script 7.1
-- hel-1063: [RGAA] Mise en conformité Présentation  information 10.9
+- hel-1063: [RGAA] Mise en conformité Présentation information 10.9
 - hel-1064: [RGAA] Mise en conformité Image 1.6
 
 ## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
@@ -22,6 +25,7 @@
 ### Bug Fixes
 
 ### Features
+
 - hel-1059: [Compte doublon] Mise en place d'un cron pour vérifier la création
 - hel-1023: [Paramétrage]Historique des messages
 - hel-1022: [Paramétrage] Mise à jour du message d'accueil
