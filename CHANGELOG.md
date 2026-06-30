@@ -1,8 +1,10 @@
 # Changelog d'Helios
 
-## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.10...release/1.8.11) (TODO)
+## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.10...release/1.8.11) (2026-06-30)
 
 ### Bug Fixes
+- hel-1074: Ajout des directives CSP nécessaires pour Matomo et Atlasanté
+- hel-1070: [Connexion] Call-to-action sur boutons et hyperlien KO en préprod
 
 ### Features
 - hel-1050: Ajout d’event Matomo lors de l’export
@@ -21,7 +23,6 @@
 ### Bug Fixes
 
 - hel-1066: [Paramétrage] Message affiché en dehors de l'encadré
-- hel-1074: Ajout des directives CSP nécessaires pour Matomo et Atlasanté
 
 ### Features
 
