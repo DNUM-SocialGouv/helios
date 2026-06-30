@@ -9,6 +9,7 @@
 - hel-1057: Ajout d'event Matomo lors de la consultation de la console admin
 - hel-1054: Ajout d'event Matomo lors de la consultation de la cartographie
 - hel-1053: Ajout d'event Matomo lors de la recherche simple
+- hel-1052: [Matomo] Indicateur Nb d'utilisateurs actifs/inactifs
 - hel-1051: Ajout d'event Matomo lors de la recherche avancée
 - hel-1056: Ajout d'event Matomo lors de la consultation de la page aide
 - hel-1048: Ajout d'event Matomo lors de la création d'une liste
