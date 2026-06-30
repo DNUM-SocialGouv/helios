@@ -19,7 +19,7 @@ export const Cookies = ({
   const [allowCookies, setAllowCookies] = useState("");
   const [condition, setCondition] = useState<string | boolean>("");
   const { wording } = useDependencies();
-  
+
   const modal1Ref = useRef<HTMLDialogElement>(null);
   const modal2Ref = useRef<HTMLDialogElement>(null);
   const closeBtn2Ref = useRef<HTMLButtonElement>(null);
@@ -115,7 +115,6 @@ export const Cookies = ({
                       <button
                         aria-controls="fr-modal-privacyPolicy"
                         className="fr-btn  fr-btn--secondary"
-                        {...(condition ? { "data-fr-opened": "true" } : {})}
                         onClick={() => setCurrentModal(2)}
                       >
                         Personnaliser
@@ -133,19 +132,18 @@ export const Cookies = ({
           </div>
         </div>
       </dialog>
-      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""}  `} id="fr-modal-privacyPolicy" ref={modal2Ref}>
+      <dialog className={`fr-modal ${currentModal === 2 ? "fr-modal--opened" : ""} `} id="fr-modal-privacyPolicy" ref={modal2Ref}>
         <div className="fr-container fr-container--fluid fr-container-md">
           <div className="fr-grid-row fr-grid-row--center">
             <div className="fr-col-12 fr-col-md-8">
               <div className="fr-modal__body">
                 <div className="fr-modal__header">
                   <button
-                    aria-controls={allowCookies === "" ? "fr-modal-cookies" : "fr-modal-privacyPolicy"}
+                    aria-controls="fr-modal-privacyPolicy"
                     className="fr-btn--close fr-btn"
+                    onClick={closeModal2}
                     ref={closeBtn2Ref}
                     title="Fermer la fenêtre modale"
-                    {...(condition ? { "data-fr-opened": "true" } : {})}
-                    onClick={closeModal2}
                   >
                     Fermer
                   </button>
@@ -271,7 +269,7 @@ export const Cookies = ({
                       <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
                       <br />
                       <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank" title={`${wording.SAVOIR_PLUS} - ${wording.NOUVELLE_FENÊTRE}`}>
-                       {wording.SAVOIR_PLUS}
+                        {wording.SAVOIR_PLUS}
                       </Link>
                       -{" "}
                       <Link className="fr-ml-1w" href="https://www.atinternet.com" target="_blank" title={`${wording.VOIR_SITE_OFFICIEL} - ${wording.NOUVELLE_FENÊTRE}`}>

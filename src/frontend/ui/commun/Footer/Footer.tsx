@@ -97,7 +97,7 @@ export const Footer = () => {
             </li>
             <li className="fr-footer__bottom-item">
               <button
-                aria-controls="fr-modal-cookies"
+                aria-controls="fr-modal-privacyPolicy"
                 aria-expanded={openModal}
                 aria-haspopup="dialog"
                 className="fr-footer__bottom-link"
