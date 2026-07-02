@@ -1,8 +1,8 @@
-import { getCookie, setCookie } from "cookies-next";
 import Link from "next/link";
 import { ChangeEvent, useState, useEffect, useRef } from "react";
 
 import styles from "./Cookies.module.css";
+import { AnalyticsConsentValue, getAnalyticsConsent, setAnalyticsConsent } from "../../utils/analyticsConsent";
 import { useDependencies } from "../commun/contexts/useDependencies";
 
 export const Cookies = ({
@@ -17,23 +17,26 @@ export const Cookies = ({
   setOpenModal: any;
 }) => {
   const [allowCookies, setAllowCookies] = useState("");
-  const [condition, setCondition] = useState<string | boolean>("");
+  const [shouldDisplayCookieModal, setShouldDisplayCookieModal] = useState(false);
   const { wording } = useDependencies();
 
   const modal1Ref = useRef<HTMLDialogElement>(null);
   const modal2Ref = useRef<HTMLDialogElement>(null);
   const closeBtn2Ref = useRef<HTMLButtonElement>(null);
 
-  const onAccept = () => {
-    setCookie("allowed-cookies", "true");
+  const appliqueLeConsentementAnalytics = (value: AnalyticsConsentValue) => {
+    setAnalyticsConsent(value);
+    setAllowCookies(value);
     setCurrentModal(3);
     setOpenModal(false);
   };
 
+  const onAccept = () => {
+    appliqueLeConsentementAnalytics("true");
+  };
+
   const onDeny = () => {
-    setCookie("allowed-cookies", "false");
-    setCurrentModal(3);
-    setOpenModal(false);
+    appliqueLeConsentementAnalytics("false");
   };
 
   const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,30 +47,37 @@ export const Cookies = ({
     if (allowCookies === "") {
       setCurrentModal(1);
     } else {
-      setCookie("allowed-cookies", allowCookies);
-      setCurrentModal(3);
-      setOpenModal(false);
+      appliqueLeConsentementAnalytics(allowCookies as "true" | "false");
     }
   };
 
   useEffect(() => {
-    async function refreshDisplayCondition() {
-      setCondition(getCookie("allowed-cookies") === undefined);
+    function refreshDisplayCondition() {
+      const consentement = getAnalyticsConsent();
+
+      setShouldDisplayCookieModal(consentement === undefined);
+      if (consentement === "true") {
+        setAllowCookies("true");
+      }
+      if (consentement === "false") {
+        setAllowCookies("false");
+      }
       if (openModal) {
         setCurrentModal(1);
       }
     }
+
     refreshDisplayCondition();
   }, []);
 
   // Gestion de l'ouverture/fermeture du premier modal (gestion des cookies)
   useEffect(() => {
-    if (currentModal === 1 && (condition || openModal)) {
+    if (currentModal === 1 && (shouldDisplayCookieModal || openModal)) {
       modal1Ref.current?.showModal();
     } else {
       modal1Ref.current?.close();
     }
-  }, [currentModal, condition, openModal]);
+  }, [currentModal, openModal, shouldDisplayCookieModal]);
 
   // Gestion de l'ouverture/fermeture du deuxième modal (personnaliser) et focus
   useEffect(() => {
@@ -86,7 +96,7 @@ export const Cookies = ({
     <>
       <dialog
         aria-labelledby="fr-modal-cookies-title"
-        className={`fr-modal ${currentModal === 1 && (condition || openModal) ? " fr-modal--opened " : ""} `}
+        className={`fr-modal ${currentModal === 1 && (shouldDisplayCookieModal || openModal) ? " fr-modal--opened " : ""} `}
         id="fr-modal-cookies"
         ref={modal1Ref}
       >
@@ -158,15 +168,15 @@ export const Cookies = ({
                           <input
                             checked={allowCookies === "true"}
                             className={`${styles["fr-radio-groupInputRadio"]} }`}
-                            id="radio-inline-1"
-                            name="radio-inline"
+                            id="cookies-all-allow"
+                            name="cookies-all"
                             onChange={onOptionChange}
                             type="radio"
                             value="true"
                           />
                           <label
                             className={`${styles["fr-radio-groupInputRadioLabel"]} ${allowCookies === "true" ? styles["InputRadioChecked"] : ""}`}
-                            htmlFor="radio-inline-1"
+                            htmlFor="cookies-all-allow"
                           >
                             Tout accepter
                           </label>
@@ -180,15 +190,15 @@ export const Cookies = ({
                           <input
                             checked={allowCookies === "false"}
                             className={styles["fr-radio-groupInputRadio"]}
-                            id="radio-inline-2"
-                            name="radio-inline"
+                            id="cookies-all-deny"
+                            name="cookies-all"
                             onChange={onOptionChange}
                             type="radio"
                             value="false"
                           />
                           <label
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "false" ? styles["InputRadioChecked"] : ""}`}
-                            htmlFor="radio-inline-2"
+                            htmlFor="cookies-all-deny"
                           >
                             Tout refuser
                           </label>
@@ -225,16 +235,17 @@ export const Cookies = ({
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
                         <div className={styles["fr-radio-group"]}>
                           <input
+                            checked={allowCookies === "true"}
                             className={`${styles["fr-radio-groupInputRadio"]}  }`}
-                            id="radio-inline-1"
-                            name="radio-inline"
+                            id="cookies-analytics-allow"
+                            name="cookies-analytics"
                             onChange={onOptionChange}
                             type="radio"
                             value="true"
                           />
                           <label
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "true" ? styles["InputRadioChecked"] : ""}`}
-                            htmlFor="radio-inline-1"
+                            htmlFor="cookies-analytics-allow"
                           >
                             Autoriser
                           </label>
@@ -246,16 +257,17 @@ export const Cookies = ({
                       <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
                         <div className={styles["fr-radio-group"]}>
                           <input
+                            checked={allowCookies === "false"}
                             className={styles["fr-radio-groupInputRadio"]}
-                            id="radio-inline-2"
-                            name="radio-inline"
+                            id="cookies-analytics-deny"
+                            name="cookies-analytics"
                             onChange={onOptionChange}
                             type="radio"
                             value="false"
                           />
                           <label
                             className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "false" ? styles["InputRadioChecked"] : ""}`}
-                            htmlFor="radio-inline-2"
+                            htmlFor="cookies-analytics-deny"
                           >
                             Interdire
                           </label>
@@ -263,22 +275,18 @@ export const Cookies = ({
                       </div>
                     </fieldset>
                     <p className={styles["label_input"]}>
-                      <span className={`${styles["textBold"]} `}>AT internet</span>
+                      <span className={`${styles["textBold"]} `}>Matomo</span>
                       <br />
                       {allowCookies === "true" ? "autorisé" : "interdit"}
-                      <br />- {allowCookies === "true" ? "Ce service n'a installé aucun cookie" : "Ce service peut déposer 4 cookies."}
+                      <br />- {allowCookies === "true" ? "Ce service peut déposer des cookies de mesure d’audience." : "Ce service est désactivé."}
                       <br />
-                      <Link className="fr-mr-1w" href="https://tarteaucitron.io/en/service/atinternet" target="_blank" title={`${wording.SAVOIR_PLUS} - ${wording.NOUVELLE_FENÊTRE}`}>
+                      <Link className="fr-mr-1w" href="https://matomo.org/faq/general/faq_146/" target="_blank" title={`${wording.SAVOIR_PLUS} - ${wording.NOUVELLE_FENÊTRE}`}>
                         {wording.SAVOIR_PLUS}
                       </Link>
                       -{" "}
-                      <Link className="fr-ml-1w" href="https://www.atinternet.com" target="_blank" title={`${wording.VOIR_SITE_OFFICIEL} - ${wording.NOUVELLE_FENÊTRE}`}>
+                      <Link className="fr-ml-1w" href="https://matomo.org/" target="_blank" title={`${wording.VOIR_SITE_OFFICIEL} - ${wording.NOUVELLE_FENÊTRE}`}>
                         {wording.VOIR_SITE_OFFICIEL}
                       </Link>{" "}
-                      <br /> <br /> <br />
-                      <Link href="https://tarteaucitron.io/fr/" target="_blank" title={`${wording.TARTE_CITRON} - ${wording.NOUVELLE_FENÊTRE}`}>
-                        {wording.TARTE_CITRON}
-                      </Link>
                     </p>
                   </div>
                 </div>
