@@ -1,7 +1,7 @@
 // Comparaison
-export const COMPARAISON_LANCER_RECHERCHE_AVANCEE = { category: 'comparaison', action: 'lancer', name: 'recherche avancee' };
+export const COMPARAISON_LANCER_RECHERCHE_AVANCEE = { category: 'comparaison', action: 'lancer', name: 'recherche_avancee' };
 export const COMPARAISON_LANCER_LISTE = { category: 'comparaison', action: 'lancer', name: 'liste' };
-export const COMPARAISON_LANCER_FICHE_ETABLISSEMENT = { category: 'comparaison', action: 'lancer', name: 'fiche etablissement' };
+export const COMPARAISON_LANCER_FICHE_ETABLISSEMENT = { category: 'comparaison', action: 'lancer', name: 'fiche_et' };
 
 // Export
 export const EXPORT = (source: string) => {
@@ -23,9 +23,9 @@ export const CONNEXION = {category: 'session', action: 'connexion'};
 /** Recheche avancée */
 export const RECHERCHE_REINITIALISER = {category: 'recherche', action: 'reinitialiser'};
 export const RECHERCHE_AVANCEE = {category: 'recherche', action: 'avancee'};
-export const RECHERCHE_AVANCEE_FILTRE_GEO = {category: 'filtre', action: 'appliquer', name: 'zone geo'};
-export const RECHERCHE_AVANCEE_FILTRE_STRUCTURE = {category: 'filtre', action: 'appliquer', name: 'type structure'};
-export const RECHERCHE_AVANCEE_FILTRE_CATEGORIES = {category: 'filtre', action: 'appliquer', name: 'categorie finess'};
+export const RECHERCHE_AVANCEE_FILTRE_GEO = {category: 'filtre', action: 'appliquer', name: 'zone_geo'};
+export const RECHERCHE_AVANCEE_FILTRE_STRUCTURE = {category: 'filtre', action: 'appliquer', name: 'type_structure'};
+export const RECHERCHE_AVANCEE_FILTRE_CATEGORIES = {category: 'filtre', action: 'appliquer', name: 'categorie_finess'};
 export const RECHERCHE_AVANCEE_FILTRE_CAPACITE = {category: 'filtre', action: 'appliquer', name: 'capacites'};
 export const RECHERCHE_AVANCEE_FILTRE_ACTIVITE = {category: 'filtre', action: 'appliquer', name: 'activites'};
 /** Filtre structure */
