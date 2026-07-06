@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 - hel-1084: [Technique] Fichier FINESS vide - Ajustement des batch
+- hel-1041: fix retours matomo 
 
 ### Features
 
