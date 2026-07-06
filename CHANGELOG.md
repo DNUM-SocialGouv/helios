@@ -1,5 +1,12 @@
 # Changelog d'Helios
 
+## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.11...release/1.8.12) (2026-07-06)
+
+### Bug Fixes
+- hel-1084: [Technique] Fichier FINESS vide - Ajustement des batch
+
+### Features
+
 ## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.10...release/1.8.11) (2026-06-30)
 
 ### Bug Fixes
