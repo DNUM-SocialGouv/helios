@@ -15,7 +15,6 @@ python -m datacrawler.download_finess_data &&
 	python -m datacrawler.import_activites_mensuel &&
 	python -m datacrawler.import_activites_mensuel_entite_juridique &&
 	python -m datacrawler.ajoute_les_autorisations_des_établissements_médico_sociaux &&
-	python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires &&
 	python -m datacrawler.ajoute_le_bloc_budget_et_finances_des_établissements_médico_sociaux &&
 	python -m datacrawler.ajoute_le_bloc_ressources_humaines_des_établissements_médico_sociaux &&
 	python -m datacrawler.agrégation_activité_sanitaire &&
@@ -35,4 +34,5 @@ python -m datacrawler.download_finess_data &&
 	python -m datacrawler.import_les_donnees_qualite_has &&
 	python -m datacrawler.import_les_ms_pas_qualite_has &&
 	python -m datacrawler.download_starsfir_data &&
-	python -m datacrawler.import_allocation_ressource_starsfir
+	python -m datacrawler.import_allocation_ressource_starsfir &&
+	python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires
