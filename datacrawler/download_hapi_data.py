@@ -25,7 +25,7 @@ class _SessionReuseFTPTLS(FTP_TLS):
                 server_hostname=self.host,
                 session=self.sock.session,  # type: ignore[union-attr]
             )
-        return conn, size   
+        return conn, size
 
 
 _IMPLICIT_FTPS_PORT = 990
