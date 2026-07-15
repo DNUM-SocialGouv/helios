@@ -31,7 +31,7 @@ def transforme_les_donnees_allocation_ressource_ej(
         numéros_finess_des_entites_juridiques_connues["numero_finess_entite_juridique"]
     )
     logger.info(f"[HAPI] {est_dans_finess.sum()} allocations de ressource sont liées à une EJ trouvé en base dans les fichiers hapi")
-    donnees_allocation_ressource_filtrees = donnees_allocation_ressource_filtrees.drop(columns=["TYPE_BENEFICIAIRE"], axis=1)
+    donnees_allocation_ressource_filtrees = donnees_allocation_ressource_filtrees.drop(columns=["TYPE_BENEFICIAIRE"])
 
     return (
         donnees_allocation_ressource_filtrees[est_dans_finess]
@@ -48,7 +48,7 @@ def transforme_les_donnees_allocation_ressource_et(
         numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"]
     )
     logger.info(f"[HAPI] {est_dans_finess.sum()} allocations de ressource sont liées à un ET trouvé en base dans les fichiers hapi")
-    donnees_allocation_ressource_filtrees = donnees_allocation_ressource_filtrees.drop(columns=["TYPE_BENEFICIAIRE"], axis=1)
+    donnees_allocation_ressource_filtrees = donnees_allocation_ressource_filtrees.drop(columns=["TYPE_BENEFICIAIRE"])
 
     return (
         donnees_allocation_ressource_filtrees[est_dans_finess]

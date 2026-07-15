@@ -93,6 +93,8 @@
         "updateEvenementsIndesirables:local": "pipenv run populate_evenements_indesirables",
         "updateAllocationRessource": "python -m datacrawler.import_allocation_ressource_starsfir",
         "updateAllocationRessource:local": "pipenv run populate_allocation_ressource",
+        "updateAllocationRessourceHapi": "python -m datacrawler.import_allocation_ressource_hapi",
+        "updateAllocationRessourceHapi:local": "pipenv run populate_allocation_ressource_hapi",
         "checkEvenementsIndesirables": "python -m datacrawler.check_downloaded_sivss_file",
         "checkEvenementsIndesirables:local": "pipenv run check_downloaded_sivss_file",
         "retreieveAndCheckAndUpdateEvenementsIndesirables": "yarn retrieveSivss && yarn checkEvenementsIndesirables && yarn updateEvenementsIndesirables",
