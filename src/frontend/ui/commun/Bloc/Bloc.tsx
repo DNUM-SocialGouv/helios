@@ -16,7 +16,7 @@ export const Bloc = ({ children, isMain = false, titre, isExpandable = true, opn
   const contenuBloc = isMain ? styles["contenu-bloc-main"] : styles["contenu-bloc"];
   const classeDuTitre = isMain ? styles["titre-bloc-main"] : styles["titre-bloc-secondary"];
   const classesContent = (isExpandable ? "fr-collapse " : "") + contenuBloc;
-  const contentId = "accordion-" + titre.toLowerCase().split(" ").join("_");
+  const contentId = "accordion-" + titre.toLowerCase().replaceAll(" ", "_");
 
   return (
     <section aria-label={titre}>

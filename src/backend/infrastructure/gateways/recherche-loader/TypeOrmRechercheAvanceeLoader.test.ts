@@ -113,7 +113,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("4");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(4);
   });
 
   it("par terme de recherche et département", async () => {
@@ -126,7 +126,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("4");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(4);
   });
 
   it("par terme de recherche et région", async () => {
@@ -139,7 +139,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("3");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(3);
   });
 
   it("par terme de recherche, région et catégories", async () => {
@@ -152,7 +152,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(1);
   });
 
   it("par terme de recherche, commune et structure", async () => {
@@ -164,7 +164,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(1);
   });
 
   it("par commune et structure", async () => {
@@ -177,7 +177,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
 
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("2");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(2);
   });
 
   it("par terme de recherche, commune , structure et type", async () => {
@@ -189,7 +189,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(1);
   });
 
   it("par terme de recherche, structure et type", async () => {
@@ -201,7 +201,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("2");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(2);
   });
 
   it("par commune  et capacité", async () => {
@@ -235,7 +235,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("2");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(2);
   });
 
   it("par terme de recherche, commune et capacité", async () => {
@@ -251,7 +251,7 @@ describe("La recherche avancée d’entités et d’établissements", () => {
     const rechercheAvancee = await typeOrmRechercheLoader.rechercheAvancee(params);
 
     //THEN
-    expect(rechercheAvancee.nombreDeRésultats).toBe("1");
+    expect(rechercheAvancee.nombreDeRésultats).toBe(1);
   });
 
   it("par commune, structure  et activité", async () => {

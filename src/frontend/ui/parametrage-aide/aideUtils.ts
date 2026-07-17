@@ -64,11 +64,10 @@ export const reindexerRessources = (ressources: RessourceAide[]): RessourceAide[
 const nettoyerSlug = (valeur: string) =>
   valeur
     .toLowerCase()
-    .replaceAll(/\s+/gu, "-")
-    .replaceAll(/[^a-z0-9-]/gu, "")
-    .replaceAll(/-+/gu, "-")
-    .replace(/^-+/u, "")
-    .replace(/-+$/u, "");
+    .replaceAll(/\s+/g, "-")
+    .replaceAll(/[^a-z0-9-]/g, "")
+    .replaceAll(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 export const creerSlug = (valeur: string) => {
   const base = valeur.trim();
