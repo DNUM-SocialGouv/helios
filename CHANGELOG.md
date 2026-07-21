@@ -9,6 +9,7 @@
 ### Features
 - hel-1071: [Footer] Gestion des cookies -mise à jour
 - hel-1081: [Qualité du code] Reliability
+- hel-1078: [Securité] Elements bloqués en raison de la politique CSP renforcée
 
 
 ## [1.8.12](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.11...release/1.8.12) (2026-07-06)
