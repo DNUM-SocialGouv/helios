@@ -6,7 +6,7 @@ const sentryUrl = process.env.SENTRY_URL;
 const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} ${matomoUrl};
-    connect-src 'self' ${matomoUrl} ${sentryUrl};
+    connect-src 'self' ${matomoUrl} ${sentryUrl} https://geo.api.gouv.fr;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: ${matomoUrl};
     font-src 'self';
