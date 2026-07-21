@@ -6813,7 +6813,6 @@ __metadata:
     react-to-print: "npm:^3.2.0"
     reflect-metadata: "npm:^0.2.2"
     stylelint: "npm:^16.26.1"
-    tarteaucitronjs: "npm:^1.32.0"
     ts-node: "npm:^10.9.2"
     typeorm: "npm:^0.3.20"
     typescript: "npm:^5.9.3"
@@ -10885,13 +10884,6 @@ __metadata:
     minizlib: "npm:^3.1.0"
     yallist: "npm:^5.0.0"
   checksum: 10/4399a2cedf42cf8fbc24b1d732a0bc709ed5cda6bef5bd8b60ccbff94d213bf33f81afb5b99e849dd51626954c048062631b23f6619255be9199a3ceb5950cad
-  languageName: node
-  linkType: hard
-
-"tarteaucitronjs@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "tarteaucitronjs@npm:1.32.0"
-  checksum: 10/bdefbbc8f90fb3725cab5d52c9130f77ac06f333d4e46d8b26d4f1602418e35c6b157edd5820b3b307022b60f437f69d3be4254b28f57439ab7cf68f958b04a2
   languageName: node
   linkType: hard
 

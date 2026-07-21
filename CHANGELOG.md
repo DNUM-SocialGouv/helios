@@ -7,6 +7,8 @@
 - hel-1086: [PROD] [PPROD] Recherche avancée étb sanitaire - résultat avec etb MS
 
 ### Features
+- hel-1071: [Footer] Gestion des cookies -mise à jour
+
 
 ## [1.8.12](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.11...release/1.8.12) (2026-07-06)
 
