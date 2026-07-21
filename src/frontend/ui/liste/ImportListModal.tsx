@@ -1,4 +1,3 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { KeyboardEvent as KeyboardEventReact, useContext, useState } from "react";
 
 import styles from "./ImportListModal.module.css";
@@ -6,7 +5,7 @@ import { ImportListViewModel } from "./ImportListModalViewModel";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css"
 import { RechercheModel } from "../../../../database/models/RechercheModel";
-import { CREATION_LISTE } from "../../utils/nomenclature-matomo";
+import { sendEvent, CREATION_LISTE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import { useFavoris } from "../favoris/useFavoris";

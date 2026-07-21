@@ -1,8 +1,7 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import Image from "next/image";
 import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
-import { FILTRE_STATUT_JURIDIQUE_PL, FILTRE_STATUT_JURIDIQUE_PNL, FILTRE_STATUT_JURIDIQUE_PUBLIC, FILTRE_STRUCTURE_EJ, FILTRE_STRUCTURE_MS, FILTRE_STRUCTURE_SAN, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_STRUCTURE } from "../../utils/nomenclature-matomo";
+import { sendEvent, FILTRE_STATUT_JURIDIQUE_PL, FILTRE_STATUT_JURIDIQUE_PNL, FILTRE_STATUT_JURIDIQUE_PUBLIC, FILTRE_STRUCTURE_EJ, FILTRE_STRUCTURE_MS, FILTRE_STRUCTURE_SAN, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_STRUCTURE } from "../../utils/nomenclature-matomo";
 import { Badge } from "../commun/Badge/Badge";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";

@@ -1,11 +1,10 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import DOMPurify from 'dompurify';
 import Link from "next/link";
 import "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.min.css";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
 
-import { CARTOGRAPHIE } from "../../../utils/nomenclature-matomo";
+import { sendEvent, CARTOGRAPHIE } from "../../../utils/nomenclature-matomo";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { régions, outreMerRegionsList } from "../../région/régions";
 

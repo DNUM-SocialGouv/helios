@@ -1,10 +1,9 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { useSession } from "next-auth/react";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState, useRef, KeyboardEvent } from "react";
 
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { Role } from "../../../commons/Role";
-import { RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_GEO } from "../../utils/nomenclature-matomo";
+import { sendEvent, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_GEO } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 

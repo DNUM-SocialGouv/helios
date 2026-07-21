@@ -1,10 +1,9 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { Workbook } from "exceljs";
 
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
-import { EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 
 export function getCurrentDate() {

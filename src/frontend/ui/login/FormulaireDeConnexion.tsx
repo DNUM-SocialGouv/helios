@@ -1,11 +1,10 @@
-import { sendEvent, push  } from "@socialgouv/matomo-next";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useState, FormEvent, useContext, useEffect } from "react";
 
 import styles from "./Connexion.module.css";
 import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
-import { CONNEXION } from "../../utils/nomenclature-matomo";
+import { sendEvent, push, CONNEXION } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
