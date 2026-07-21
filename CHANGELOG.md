@@ -1,5 +1,12 @@
 # Changelog d'Helios
 
+## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (TO-DO)
+
+### Bug Fixes
+- hel-1035: [HAPI FIR] Incohérence des montants affichés sur l'enveloppe FIR en prod
+
+### Features
+
 ## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.11...release/1.8.12) (2026-07-06)
 
 ### Bug Fixes
