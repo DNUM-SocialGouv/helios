@@ -1,3 +1,22 @@
+import { sendEvent as matomoSendEvent, push as matomoPush } from "@socialgouv/matomo-next";
+
+const isAnalyticsEnabled = "false";
+
+export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
+  if (!isAnalyticsEnabled) {
+    return;
+  }
+
+  matomoSendEvent(...args);
+}
+
+export function push(...args: Parameters<typeof matomoPush>) {
+  if (!isAnalyticsEnabled) return;
+
+  matomoPush(...args);
+}
+
+
 // Comparaison
 export const COMPARAISON_LANCER_RECHERCHE_AVANCEE = { category: 'comparaison', action: 'lancer', name: 'recherche_avancee' };
 export const COMPARAISON_LANCER_LISTE = { category: 'comparaison', action: 'lancer', name: 'liste' };

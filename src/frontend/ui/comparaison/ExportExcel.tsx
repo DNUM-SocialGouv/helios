@@ -1,11 +1,10 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import ExcelJS from "exceljs";
 import { useContext } from "react";
 
 import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
-import { EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 import { UserContext } from "../commun/contexts/userContext";
 import StringFormater from "../commun/StringFormater";

@@ -1,11 +1,10 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { WordingFr } from "../../configuration/wording/WordingFr";
-import { RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_CAPACITE } from "../../utils/nomenclature-matomo";
+import { sendEvent, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_CAPACITE } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";

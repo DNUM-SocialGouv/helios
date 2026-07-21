@@ -1,9 +1,8 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { useRouter } from "next/router";
 import React, { ReactNode, useRef, useState, type JSX } from "react";
 
 import styles from "./ListActionsButton.module.css";
-import { COMPARAISON_LANCER_LISTE, COMPARAISON_LANCER_RECHERCHE_AVANCEE } from "../../utils/nomenclature-matomo";
+import { sendEvent, COMPARAISON_LANCER_LISTE, COMPARAISON_LANCER_RECHERCHE_AVANCEE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { FavorisPopup, POPUP_WIDTH } from "../commun/FavorisPopup/FavorisPopup";
 import { useFavoris } from "../favoris/useFavoris";

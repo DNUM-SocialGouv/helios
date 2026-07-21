@@ -1,10 +1,9 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useState } from "react";
 
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import StringFormater from "../../../frontend/ui/commun/StringFormater";
-import { RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_CATEGORIES } from "../../utils/nomenclature-matomo";
+import { sendEvent, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_CATEGORIES } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";

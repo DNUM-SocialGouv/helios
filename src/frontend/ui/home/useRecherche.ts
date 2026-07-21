@@ -1,10 +1,9 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import { useRouter } from "next/router";
 import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
 import { RechercheViewModel } from "./RechercheViewModel";
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
-import { RECHERCHE_SIMPLE } from "../../utils/nomenclature-matomo";
+import { sendEvent, RECHERCHE_SIMPLE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useFavoris } from "../favoris/useFavoris";
 

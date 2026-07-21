@@ -1,12 +1,11 @@
 
 
-import { sendEvent } from "@socialgouv/matomo-next";
 import { Workbook } from "exceljs";
 import { useContext } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../utils/excelUtils";
-import { EXPORT } from "../../../utils/nomenclature-matomo";
+import { sendEvent,EXPORT } from "../../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../../utils/SourceMatomo";
 import { RechercheAvanceeContext, RechercheAvanceeContextValue } from "../../commun/contexts/RechercheAvanceeContext";
 import { UserContext } from "../../commun/contexts/userContext";

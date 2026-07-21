@@ -77,7 +77,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.addEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
 
@@ -85,7 +85,8 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
 
   useEffect(() => {
-    if (!analyticsConsent || !MATOMO_URL || !MATOMO_SITE_ID || matomoInitialise.current) {
+    const isAnalyticsEnabled = "false";
+    if (!analyticsConsent || !MATOMO_URL || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled ) {
       return;
     }
 

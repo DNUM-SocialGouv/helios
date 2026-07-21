@@ -1,4 +1,3 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,7 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
-import { CONSOLE_ADMIN, HISTORIQUE, AIDE, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
+import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";

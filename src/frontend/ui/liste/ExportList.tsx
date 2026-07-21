@@ -1,12 +1,8 @@
-
-
-
-import { sendEvent } from "@socialgouv/matomo-next";
 import { Workbook } from "exceljs";
 
 import { Paths } from "../../configuration/Paths";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
-import { EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../home/RechercheViewModel";

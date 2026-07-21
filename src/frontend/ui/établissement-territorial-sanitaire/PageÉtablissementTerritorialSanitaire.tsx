@@ -1,4 +1,3 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import Head from "next/head";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -10,7 +9,7 @@ import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesEtablissementSanitaire } from "./bloc-ressources-humaines/BlocRessourcesHumainesEtablissementSanitaire";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-sanitaire";
 import { EtablissementTerritorialSanitaireViewModel } from "./ÉtablissementTerritorialSanitaireViewModel";
-import { EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";

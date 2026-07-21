@@ -1,4 +1,3 @@
-import { sendEvent } from "@socialgouv/matomo-next";
 import Head from "next/head";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -21,7 +20,7 @@ import { useExportExcelETRattache } from "./ExportExcelETRattaches";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
-import { EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent , EXPORT } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
