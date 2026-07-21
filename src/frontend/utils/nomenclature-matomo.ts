@@ -1,6 +1,6 @@
 import { sendEvent as matomoSendEvent, push as matomoPush } from "@socialgouv/matomo-next";
 
-const isAnalyticsEnabled = "false";
+const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] || "false";
 
 export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
   if (!isAnalyticsEnabled) {
