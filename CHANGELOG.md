@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (TO-DO)
+## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (2026-07-21)
 
 ### Bug Fixes
 - hel-1035: [HAPI FIR] Incohérence des montants affichés sur l'enveloppe FIR en prod
@@ -16,6 +22,7 @@
 
 ### Bug Fixes
 - hel-1084: [Technique] Fichier FINESS vide - Ajustement des batch
+- hel-1082: [Technique] Fichier FINESS vide - Ajustement des batch
 - hel-1041: fix retours matomo 
 
 ### Features
