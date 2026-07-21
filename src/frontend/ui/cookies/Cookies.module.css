@@ -14,19 +14,27 @@
   padding: 0 2rem 1rem 2rem;
 }
 
+.preferences_row {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
 .label_input {
+  display: block;
   margin-bottom: 0;
 }
 
 .fr-fieldset {
-  align-items: flex-end;
+  align-items: center;
   border: 0;
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 -12px 1rem 1rem;
-  float: right;
+  margin: 0;
   padding-top: 0;
+  gap: 2rem;
 }
 
 .fr-fieldset__element {
@@ -39,6 +47,7 @@
 
 .fr-fieldset__element--inline {
   flex: 0 0 auto;
+  margin-bottom: 0;
 }
 
 .fr-fieldset__sep {
@@ -103,4 +112,9 @@
 
 .fr-modal__title {
   font-size: 1.6rem;
+}
+
+.preferences-buttons {
+  display: flex;
+  gap: 1rem;
 }
