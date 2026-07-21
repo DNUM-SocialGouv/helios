@@ -66,7 +66,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .from(RechercheModel, "recherche")
       .where("recherche.termes @@ to_tsquery('unaccent_helios', :termeFuzzy)", { termeFuzzy })
 
-    const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
+    const nombreDeRésultats = displayTable ? Number((await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count) : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
     if (displayTable) {
       requêteDeLaRecherche
@@ -291,7 +291,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (capaciteSMS.length === 0 && activiteSAN.length === 0) {
       finalQuery = standardQuery;
-      nombreDeRésultats = nombreDeRésultatsStandard.count;
+      nombreDeRésultats = Number(nombreDeRésultatsStandard.count);
     } else {
       const hasCapacite = capaciteSMS.length !== 0;
       const hasActivite = activiteSAN.length !== 0;
@@ -355,7 +355,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         nombreDeRésultats = Number(nombreDeRésultatsActivite.count) + Number(nombreDeRésultatsCapacite.count);
       } else {
         finalQuery = hasCapacite ? capaciteQuery : activiteQuery;
-        nombreDeRésultats = hasCapacite ? nombreDeRésultatsCapacite.count : nombreDeRésultatsActivite.count;
+        nombreDeRésultats = hasCapacite ? Number(nombreDeRésultatsCapacite.count) : Number(nombreDeRésultatsActivite.count);
 
       }
     }
