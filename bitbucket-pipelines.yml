@@ -24,7 +24,7 @@ definitions:
           - yarn install
           - yarn dedupe
           - yarn build
-          - pipe: sonarsource/sonarcloud-scan:2.0.0
+          - pipe: sonarsource/sonarcloud-scan:4.1.0
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
 
