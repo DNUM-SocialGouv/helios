@@ -36,7 +36,7 @@
         "populateDatabaseVigieRh": "yarn retrieveVigieRh && yarn updateTranchesDesAges && yarn updateVigieRhProfessionFiliere && yarn updateMouvementsRH && yarn updateMouvementsTrimestrielsRH && yarn updateVigieRhMotifsRuptures && yarn updateDureeCdd && yarn updateNatureContrats && yarn updateNatureContratsTrimestriel",
         "populateDatabaseVigieRh:local": "yarn retrieveVigieRh:local && yarn updateTranchesDesAges:local && yarn updateVigieRhProfessionFiliere:local && yarn updateMouvementsRH:local && yarn updateMouvementsTrimestrielsRH:local && yarn updateVigieRhMotifsRuptures:local && yarn updateDureeCdd:local && yarn updateNatureContrats:local && yarn updateNatureContratsTrimestriel:local",
         "populateProfessionGroupes": "yarn retrieveVigieRh && yarn updateVigieRhProfessionGroupe",
-        "populateProfessionGroupes:local": "yarn retrieveVigieRh && yarn updateVigieRhProfessionGroupe:local",
+        "populateProfessionGroupes:local": "yarn retrieveVigieRh:local && yarn updateVigieRhProfessionGroupe:local",
         "populateDatabaseUsers": "python -m datacrawler.import_utilisateurs",
         "populateDatabaseUsers:local": "pipenv run populate_app_users",
         "detectDuplicateAccounts": "python -m datacrawler.detecte_doublons_comptes",
