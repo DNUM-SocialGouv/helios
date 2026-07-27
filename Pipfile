@@ -51,6 +51,7 @@ populate_ressoures_humaines_etablissements_sanitaires = 'python -m datacrawler.a
 populate_activites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_activité_sanitaire'
 populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agrégation_capacité_sanitaire'
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
+create_test_user = 'python -m onboarding.create_test_user'
 populate_reclamations = 'python -m datacrawler.import_reclamations'
 populate_evenements_indesirables = 'python -m datacrawler.import_evenements_indesirables'
 populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressource_starsfir'
