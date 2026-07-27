@@ -317,6 +317,10 @@ const HistogrammeComparaisonVerticalAvecRef = ({
       return identifiants;
     })();
 
+  const idDeLaTranscription = transcription
+    ? transcription.identifiantUnique || transcriptionIdentifiants[0]?.replaceAll(/\s/g, "")
+    : undefined;
+
   const legend = (
     <div className={styles["legendContainer"]}>
       <menu className={`fr-checkbox-group ${styles["legend"]}`} id={legendContainerId} />
@@ -326,7 +330,13 @@ const HistogrammeComparaisonVerticalAvecRef = ({
   return (
     <>
       <div>
-        <Bar data={chartData} options={chartOptions} plugins={showRefValues ? [rotationRefPlugin] : []} />
+        <Bar                
+          aria-describedby={idDeLaTranscription}
+          data={chartData} 
+          options={chartOptions}
+          plugins={showRefValues ? [rotationRefPlugin] : []}
+          title={`Graphique ${nomGraph}`}
+        />
         {legend}
       </div>
       {valeursManquantes.length > 0 && <MiseEnExergue>{`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${valeursManquantes.join(", ")}`}</MiseEnExergue>}

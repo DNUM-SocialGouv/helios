@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -9,14 +8,14 @@ import { useDependencies } from "../commun/contexts/useDependencies";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
 
 export const RegistrationForm = () => {
-  const { paths, wording } = useDependencies();
+  const { wording } = useDependencies();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [institutionList, setInstitutionsList] = useState<Institution[]>([]);
-  const [institution, setInstitution] = useState(institutionList[0]?.code);
+  const [institutionsList, setInstitutionsList] = useState<Institution[]>([]);
+  const [institution, setInstitution] = useState(institutionsList[0]?.code);
   const [emailSent, setEmailSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [clickBtnSend, setClickBtnSend] = useState(false);
@@ -24,28 +23,25 @@ export const RegistrationForm = () => {
   const createAccount = async (e: FormEvent) => {
     e.preventDefault();
     setClickBtnSend(true);
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
     fetch("/api/utilisateurs/createAccount", {
       body: JSON.stringify({ firstName, lastName, email, institution }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.err === "Email already used") {
-          setErrorMessage("EMAIL_ALREADY_USED");
+        if (data.err === "Can't use this email for this institution") {
+          setErrorMessage("NOT_AUTORIZED_EMAIL");
           setEmailSent(false);
         } else {
-          if (data.err === "Can't use this email for this institution") {
-            setErrorMessage("NOT_AUTORIZED_EMAIL");
-            setEmailSent(false);
-          } else {
-            setInstitution(institutionList[0]?.code);
-            setFirstName("");
-            setLastName("");
-            setEmail("");
-            setEmailSent(true);
-            setErrorMessage("");
-          }
+          setInstitution(institutionsList[0]?.code);
+          setFirstName("");
+          setLastName("");
+          setEmail("");
+          setEmailSent(true);
+          setErrorMessage("");
         }
         setClickBtnSend(false);
       })
@@ -81,16 +77,6 @@ export const RegistrationForm = () => {
       <h1>{wording.REGISTRATION_PAGE_TITLE}</h1>
       <div className="fr-grid-row fr-grid-row--center fr-mt-8w">
         <div className="fr-col-12 fr-col-md-8 fr-mt-5w">
-          {errorMessage && errorMessage === "EMAIL_ALREADY_USED" && (
-            <div className={"fr-mb-5w " + styles["error"]}>
-              {" "}
-              {wording.EMAIL_ALREADY_USED}{" "}
-              <Link className={styles["forget-email-link"]} href={paths.FORGET_PASSWORD}>
-                {" "}
-                ici{" "}
-              </Link>{" "}
-            </div>
-          )}
           {errorMessage && errorMessage === "NOT_AUTORIZED_EMAIL" && (
             <div className={"fr-mb-5w " + styles["error"]}>
               {wording.NOT_AUTORIZED_EMAIL}
@@ -160,7 +146,7 @@ export const RegistrationForm = () => {
                   <option disabled hidden selected value="">
                     Selectionnez votre institution
                   </option>
-                  {institutionList.map((institution) => (
+                  {institutionsList.map((institution) => (
                     <option key={institution.id} value={institution.code}>
                       {" "}
                       {institution.libelle}

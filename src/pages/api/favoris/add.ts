@@ -2,12 +2,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { addToFavorisEndpoint } from "../../../backend/infrastructure/controllers/addToFavorisEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
     if (request.method !== "POST") {
       response.status(405).send("Method not allowed");
     }
+
+     if (!requireCsrf(request, response)) {
+        return;
+      }
 
     const { finessNumber, type, idUser, commune, departement, socialReason } = request.body;
     const recherche = await addToFavorisEndpoint(dependencies, finessNumber, type, idUser, commune, departement, socialReason);

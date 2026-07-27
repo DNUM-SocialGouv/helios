@@ -32,7 +32,8 @@ export function ListeSections({ sections, onSelection }: ListeSectionsProps) {
         ))}
       </ul>
       <div className={`fr-alert fr-alert--info fr-mt-10w ${styles["formationAlert"]}`} role="alert">
-        <span className="fr-text--lg fr-text--bold">Besoin de formation : </span><a className="fr-link fr-text--lg" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="noreferrer" target="_blank">Faites votre demande</a>
+        <span className="fr-text--lg fr-text--bold">Besoin de formation : </span>
+        <a className="fr-link fr-text--lg" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="noreferrer" target="_blank" title="Envoyer un email à dnum.scn-helios-support@sg.social.gouv.fr - ouvre un nouvelle fenêtre">Faites votre demande</a>
       </div>
     </section >
   );

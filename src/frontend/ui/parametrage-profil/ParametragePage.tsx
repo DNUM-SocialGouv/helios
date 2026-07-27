@@ -46,7 +46,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
                   {profiles?.map((profile: any) => (
                     <tr key={profile.id}>
                       <td>
-                        <a className="fr-raw-link" href={`/settings/profiles/${profile.code}`}>
+                        <a className="fr-raw-link" href={`/settings/profiles/${profile.code}`} title={profile.label}>
                           {profile.label}
                         </a>
                       </td>

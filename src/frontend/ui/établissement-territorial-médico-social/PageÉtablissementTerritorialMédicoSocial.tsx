@@ -17,6 +17,8 @@ import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { EtablissementTerritorialMedicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
 type ÉtablissementTerritorialProps = Readonly<{
@@ -45,6 +47,11 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     documentTitle: établissementTerritorialViewModel.titre,
   });
 
+   const downloadPDF = () => {
+      sendEvent(EXPORT(SourceMatomo.FICHE_ETABLISSEMENT));
+      handlePrint();
+    };
+
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 
   return (
@@ -53,7 +60,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
         <title>{établissementTerritorialViewModel.titre}</title>
       </Head>
       <div className="print-content" ref={componentRef}>
-        <Titre downloadPDF={handlePrint} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={downloadPDF} logo={LogoÉtablissementTerritorial} rechercheViewModel={rechercheViewModel}>
           {établissementTerritorialViewModel.titre}
         </Titre>
 

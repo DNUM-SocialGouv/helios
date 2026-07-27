@@ -180,6 +180,11 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
     });
 
     it("should allow ADMIN_REG to update user with existing SCN institution", async () => {
+      // Mock the ADMIN_REG session with matching institutionId
+      mockGetServerSession.mockResolvedValueOnce({
+        user: { role: Role.ADMIN_REG, idUser: "admin-reg-user", institutionId: 1 },
+      } as any);
+
       const req = createMockRequest({
         userCode: "target-user",
         roleCode: RoleLabel.USER,
@@ -209,6 +214,11 @@ describe("PUT /api/utilisateurs/update - privilege escalation prevention", () =>
     });
 
     it("should allow ADMIN_REG to update user with existing ADMIN_CENTR institution", async () => {
+      // Mock the ADMIN_REG session with matching institutionId
+      mockGetServerSession.mockResolvedValueOnce({
+        user: { role: Role.ADMIN_REG, idUser: "admin-reg-user", institutionId: 2 },
+      } as any);
+
       const req = createMockRequest({
         userCode: "target-user",
         roleCode: RoleLabel.USER,

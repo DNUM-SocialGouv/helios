@@ -47,6 +47,7 @@ export const StarButtonList = ({ numeroFiness, parent }: StarButtonProps) => {
   return (
     <>
       <button
+        aria-label={isInFavoris() ? wording.ETOILE_ETAB_DANS_LISTE : wording.ETOILE_ETAB_PAS_DANS_LISTE}
         className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " : "fr-icon-star-line .fr-icon--lg	") + styles[buttonStyle]}
         onClick={handleDisplayPopup}
         ref={buttonRef}

@@ -1,0 +1,7 @@
+.flex-input {
+    display: flex;
+    align-items: center;
+}
+.full-width {
+    width: 100%;
+}

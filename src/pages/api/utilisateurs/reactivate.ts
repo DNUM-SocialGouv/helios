@@ -7,6 +7,7 @@ import { reactivateUserEndpoint } from "../../../backend/infrastructure/controll
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { checkAdminRole } from "../../../checkAdminMiddleware";
 import { Role } from "../../../commons/Role";
+import { requireCsrf } from "../../../lib/require-csrf";
 import { authOptions } from "../auth/[...nextauth]";
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -14,6 +15,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     if (request.method !== "POST") {
       response.status(405).send("Method not allowed");
     }
+
+    if (!requireCsrf(request, response)) {
+      return;
+    }
+      
     const { userCode } = request.body;
 
     const userBeforeChange = await getUserByCodeEndpoint(dependencies, userCode);
@@ -37,9 +43,9 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         return response.status(405).send("Method not allowed");
       }
 
-      const recherche = await reactivateUserEndpoint(dependencies, userCode);
+      const message = await reactivateUserEndpoint(dependencies, userCode);
       dependencies.logger.audit(`${userSession?.user?.email}: Réactivation de l'utilisateur "${userBeforeChange.email}"`);
-      return response.status(200).json(recherche);
+      return response.status(200).json(message);
     } else {
       response.status(405).send("User not found");
     }

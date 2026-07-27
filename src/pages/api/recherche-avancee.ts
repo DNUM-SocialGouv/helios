@@ -6,9 +6,8 @@ import { ParametreDeRechercheAvancee } from "../../backend/métier/entities/Para
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
-    response.status(405).send("Method not allowed");
+    return response.status(405).send("Method not allowed");
   }
-
 
   const { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport = false } = request.body;
   const params = { terme, zone, zoneD, typeZone, type, statutJuridique, categories, capaciteSMS, activiteSAN, orderBy, order, page, forExport } as ParametreDeRechercheAvancee;

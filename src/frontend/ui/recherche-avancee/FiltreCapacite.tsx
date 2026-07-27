@@ -4,9 +4,11 @@ import { CapaciteEtablissement } from "./model/CapaciteEtablissement";
 import { classificationTypes } from "./model/ClassificationTypes";
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { WordingFr } from "../../configuration/wording/WordingFr";
+import { sendEvent, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_CAPACITE } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import "@gouvfr/dsfr/dist/component/tooltip/tooltip.css";
+
 
 type FiltresForComparaisonProps = Readonly<{
   isComparaison: boolean;
@@ -122,6 +124,10 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
   }
 
   const appliquerButton = () => {
+    if(!isComparaison){
+    sendEvent(RECHERCHE_AVANCEE);
+    sendEvent(RECHERCHE_AVANCEE_FILTRE_CAPACITE);
+    }
     if (rechercheAvanceeContext) {
       rechercheAvanceeContext?.setCapaciteMedicoSociaux(capaciteMedicoSociaux.ranges);
       rechercheAvanceeContext?.setCapaciteHandicap(capaciteHandicap.ranges);

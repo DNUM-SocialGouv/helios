@@ -25,7 +25,13 @@ export const Page404 = () => {
           </Link>
         </div>
         <div className="fr-col-5 fr-pl-15w">
-          <Image alt="" height="300" src={erreur} width="300" />
+          <Image 
+            alt={wording.PAGE_NON_TROUVÉE_404} 
+            height={300} 
+            src={erreur} 
+            title={wording.PAGE_NON_TROUVÉE_404} 
+            width={300} 
+          />
         </div>
       </div>
     </main>

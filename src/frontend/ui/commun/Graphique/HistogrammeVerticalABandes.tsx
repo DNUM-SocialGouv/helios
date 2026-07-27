@@ -131,11 +131,18 @@ export function HistogrammeVerticalABandes(props: Readonly<{
     legendStyle.gridTemplateRows = "repeat(1, 1fr)";
   }
 
+  const idDeLaTranscription = props.identifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <>
       {!aucuneDonnee || props.grapheMensuel ? (
         <>
-          <Bar data={props.data} options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)} />
+          <Bar 
+          aria-describedby={idDeLaTranscription}
+          data={props.data}
+          options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
+          title={`Graphique ${props.nomGraph}`}
+          />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
         </>
       ) : null}

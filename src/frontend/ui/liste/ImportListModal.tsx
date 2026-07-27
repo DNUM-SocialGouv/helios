@@ -5,6 +5,7 @@ import { ImportListViewModel } from "./ImportListModalViewModel";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css"
 import { RechercheModel } from "../../../../database/models/RechercheModel";
+import { sendEvent, CREATION_LISTE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import { useFavoris } from "../favoris/useFavoris";
@@ -34,13 +35,15 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
     setFinessAImporter(e.target.value);
   };
 
-  const importEts = () => {
+  const importEts = async () => {
     const finessList = finessAImporter.split(/\r?\n/).filter(ligne => ligne.trim() !== "");
 
     if (finessList && finessList.length > 0) {
+      const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
       fetch("/api/recherche-par-finess", {
         body: JSON.stringify({ finessNumber: finessList }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
         method: "POST",
       }).then((response) => response.json())
         .then((data: RechercheModel[]) => {
@@ -132,6 +135,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   };
 
   const handleListCreation = async () => {
+    sendEvent(CREATION_LISTE);
     setNewListError(false);
     setAddToListError(false);
 

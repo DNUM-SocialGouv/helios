@@ -10,6 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
+import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -26,6 +27,8 @@ export const Header = () => {
 
   const [terme, setTerme] = useState<string>("");
   const [displayMenu, setDisplayMenu] = useState<boolean>(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const ref = useOutsideClick(() => setDisplayMenu(false));
 
@@ -73,27 +76,27 @@ export const Header = () => {
 
   return (
     <>
-      <header className="fr-header">
+    <header className="fr-header">
         <div className="fr-header__body">
           <div className="fr-container">
             <div className={"fr-skiplinks fr-sr-only " + styles["sr-only-focusable"]}>
               <nav aria-label="Accès rapide" className="fr-container" role="navigation">
                 <ul className="fr-skiplinks__list">
                   <li>
-                    <a className="fr-link" href="#content">Contenu</a>
+                    <a className="fr-link" href="#content" title="Contenu">Contenu</a>
                   </li>
                   {shouldDisplayMenu() && (
                     <li>
-                      <a className="fr-link" href="#menu-btn">Menu</a>
+                      <a className="fr-link" href="#menu-btn" title="Menu">Menu</a>
                     </li>
                   )}
                   {isAuthenticated() && (
                     <li>
-                      <a className="fr-link" href="#search-input">Recherche</a>
+                      <a className="fr-link" href="#search-input" title="Recherche">Recherche</a>
                     </li>
                   )}
                   <li>
-                    <a className="fr-link" href="#footer">Pied de page</a>
+                    <a className="fr-link" href="#footer" title="Pied de page">Pied de page</a>
                   </li>
                 </ul>
               </nav>
@@ -105,7 +108,13 @@ export const Header = () => {
                     <p className="fr-logo">{wording.INTITULÉ_RÉPUBLIQUE_FRANÇAISE}</p>
                   </div>
                   <div className="fr-header__operator">
-                    <Image alt="" height="80" src="/logo.svg" width="80" />
+                    <Image 
+                      alt="Logo Helios" 
+                      height={80} 
+                      src="/logo.svg" 
+                      title="Logo Helios" 
+                      width={80} 
+                    />
                   </div>
                   <div className="fr-header__navbar">
                     {router.pathname !== paths.ACCUEIL &&
@@ -115,9 +124,11 @@ export const Header = () => {
                       router.pathname !== paths.REGISTRATION && (
                         <button
                           aria-controls="modal-541"
+                          aria-expanded={isSearchOpen}
                           className="fr-btn--search fr-btn"
-                          data-fr-opened="false"
+                          data-fr-opened={isSearchOpen}
                           id="button-542"
+                          onClick={() => setIsSearchOpen(!isSearchOpen)}
                           title={wording.RECHERCHE_LABEL}
                         >
                           {wording.RECHERCHE_LABEL}
@@ -126,10 +137,12 @@ export const Header = () => {
                     {status !== "unauthenticated" && (
                       <button
                         aria-controls="modal-833"
+                        aria-expanded={isMobileMenuOpen}
                         aria-haspopup="menu"
                         className="fr-btn--menu fr-btn"
-                        data-fr-opened="false"
+                        data-fr-opened={isMobileMenuOpen}
                         id="fr-btn-menu-mobile"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         title={wording.MENU}
                         type="button"
                       >
@@ -147,9 +160,9 @@ export const Header = () => {
               </div>
               <div className="fr-header__tools">
                 {shouldDisplaySearchBar() && (
-                  <div className="fr-header__search fr-modal" id="modal-541">
+                  <div aria-labelledby="button-542" className="fr-header__search fr-modal" id="modal-541">
                     <div className="fr-container fr-container-lg--fluid">
-                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" title="Fermer">
+                      <button aria-controls="modal-541" className="fr-btn--close fr-btn" onClick={() => setIsSearchOpen(false)} title="Fermer">
                         {wording.FERMER}
                       </button>
                       <form action="/recherche" className="fr-search-bar" id="search" role="search">
@@ -168,6 +181,7 @@ export const Header = () => {
                         <button
                           className="fr-btn"
                           onClick={(event) => {
+                            sendEvent(RECHERCHE_SIMPLE);
                             event.preventDefault();
                             localStorage.setItem("searchItem", encodeURIComponent(terme));
                             router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
@@ -228,6 +242,7 @@ export const Header = () => {
                           <button
                             className="fr-btn--icon-left fr-icon-time-line"
                             onClick={() => {
+                              sendEvent(HISTORIQUE);
                               handleMenuAction(() => router.push(paths.HISTORY));
                             }}
                           >
@@ -257,6 +272,7 @@ export const Header = () => {
                               <button
                                 className="fr-btn--icon-left fr-icon-user-setting-line"
                                 onClick={() => {
+                                  sendEvent(CONSOLE_ADMIN);
                                   handleMenuAction(() => router.push(paths.USERS_LIST));
                                 }}
                               >
@@ -272,6 +288,7 @@ export const Header = () => {
                           <button
                             className="fr-btn--icon-left fr-icon-question-line"
                             onClick={() => {
+                              sendEvent(AIDE);
                               handleMenuAction(() => router.push(paths.AIDE));
                             }}
                           >
@@ -297,7 +314,7 @@ export const Header = () => {
         {status !== "unauthenticated" && (
           <div aria-labelledby="fr-btn-menu-mobile" className="fr-header__menu fr-modal" id="modal-833">
             <div className="fr-container">
-              <button aria-controls="modal-833" className="fr-link--close fr-link" type="button">
+              <button aria-controls="modal-833" className="fr-link--close fr-link" onClick={() => setIsMobileMenuOpen(false)} type="button">
                 {wording.FERMER}
               </button>
               <div className="fr-header__menu-links">
@@ -330,6 +347,7 @@ export const Header = () => {
                     <button
                       className="fr-btn--icon-left fr-icon-time-line"
                       onClick={() => {
+                         sendEvent(HISTORIQUE);
                         handleMenuAction(() => router.push(paths.HISTORY));
                       }}
                     >
@@ -353,6 +371,7 @@ export const Header = () => {
                       <button
                         className="fr-btn--icon-left fr-icon-user-setting-line"
                         onClick={() => {
+                          sendEvent(CONSOLE_ADMIN);
                           handleMenuAction(() => router.push(paths.USERS_LIST));
                         }}
                       >
@@ -364,6 +383,7 @@ export const Header = () => {
                     <button
                       className="fr-btn--icon-left fr-icon-question-line"
                       onClick={() => {
+                        sendEvent(AIDE);
                         handleMenuAction(() => router.push(paths.AIDE));
                       }}
                     >
@@ -384,7 +404,7 @@ export const Header = () => {
       <div className="fr-grid-row fr-container">
         <Breadcrumb />
         <BtnRetourRecherche />
-      </div>
-    </>
+      </div> 
+ </>
   );
 };

@@ -5,27 +5,19 @@ import { getSession } from "next-auth/react";
 import { InstitutionModel } from "../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../database/models/RoleModel";
-import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { getAllProfilesEndpoint } from "../../../backend/infrastructure/controllers/getAllProfilesEndpoint";
 import { getAllRolesEndpoint } from "../../../backend/infrastructure/controllers/getAllRolesEndpoint";
 import { getInstitutionsEndpoint } from "../../../backend/infrastructure/controllers/getInstitutionsEndpoint";
 import { getUsersListPaginatedEndpoint } from "../../../backend/infrastructure/controllers/getUsersListPaginatedEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
+import { ResultatRechercheUtilisateur } from "../../../backend/métier/entities/ResultatRechercheUtilisateur";
 import { Role } from "../../../commons/Role";
 import { useDependencies } from "../../../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../../../frontend/ui/commun/hooks/useBreadcrumb";
 import UsersListPage from "../../../frontend/ui/parametrage-utilisateurs/UsersListPage/UsersListPage";
 
-interface IUsersPaginatedList {
-  data: UtilisateurModel[];
-  total: number;
-  currentPage: number;
-  keyWord: string;
-  lastPage: number;
-}
-
 type RouterProps = Readonly<{
-  usersPaginatedList: IUsersPaginatedList;
+  usersPaginatedList: ResultatRechercheUtilisateur;
   keyWord: string;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];

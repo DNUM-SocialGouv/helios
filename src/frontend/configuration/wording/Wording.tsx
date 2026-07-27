@@ -1,6 +1,8 @@
 import { ReactElement } from "react";
 
 export interface Wording {
+  readonly HELIOS_URL: string;
+
   // Abréviations
   readonly CPOM_TITLE: string;
   readonly CPOM: ReactElement;
@@ -56,7 +58,6 @@ export interface Wording {
   readonly REGISTRATION_PAGE_TITLE: string;
   readonly SEND: string;
   readonly REGISTRARTION_SUCCESS_MESSAGE: string;
-  readonly EMAIL_ALREADY_USED: string;
   readonly NOT_AUTORIZED_EMAIL: string;
 
   // Connexion
@@ -408,6 +409,7 @@ export interface Wording {
   readonly SIICEA_TITLE: string;
   readonly HAS_TITLE: string;
   readonly SI_AUTORISATIONS_TITLE: string;
+  readonly STARS_FIR_TITLE: string;
 
   // Sources courtes
   readonly FINESS: ReactElement;
@@ -426,6 +428,7 @@ export interface Wording {
   readonly HAS: ReactElement;
   readonly DSN: ReactElement;
   readonly SI_AUTORISATIONS: ReactElement;
+  readonly STARS_FIR: ReactElement;
 
 
   // Inaccessible
@@ -456,6 +459,10 @@ export interface Wording {
   readonly NOUVELLE_FENÊTRE: string;
   readonly ECO_CONCEPTION: string;
   readonly COOKIES: string;
+  readonly POLITIQUE_CONFIDENTIALITE: string;
+  readonly TARTE_CITRON: string;
+  readonly SAVOIR_PLUS: string;
+  readonly VOIR_SITE_OFFICIEL: string;
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string;
@@ -468,8 +475,12 @@ export interface Wording {
   readonly ÉDITEUR_DU_SITE: string;
   readonly PROPRIÉTÉ_INTELLECTUELLE: string;
   readonly LIMITES_DE_RESPONSABILITÉ: string;
+  readonly SCALINGO: string;
+  readonly CATAMANIA: string;
 
   readonly EN_CONSTRUCTION: string;
+
+  readonly RGESN: string;
 
   // Comparaison
   readonly COMPARAISON: string;
@@ -557,6 +568,9 @@ export interface Wording {
   readonly PARAMETRAGE_TITRE: string;
   readonly PARAMETRAGE_AUTORISATIONS_TITRE: string;
   readonly PARAMETRAGE_AIDE_TITRE: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_TITRE: string;
+  readonly PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE: string;
   readonly PARAMETRAGE_EJ_TAB: string;
   readonly PARAMETRAGE_ET_MS_TAB: string;
   readonly PARAMETRAGE_ET_SAN_TAB: string;
@@ -628,7 +642,6 @@ export interface Wording {
   readonly LISTE_NON_TROUVÉE: string;
   //Callout page d'acceuil
   readonly NOUVEAU: string;
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string;
 
   //Vigie RH
   readonly INDICATEURS_HELIOS_BLOC_TITLE: string;
@@ -728,6 +741,9 @@ export interface Wording {
   readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string;
   readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string;
   readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string;
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string;
+  readonly PERIODE_AFFICHAGE: string;
+  readonly MESSAGE: string;
 
   // Aide
   readonly AIDE_TITRE_PAGE: string;

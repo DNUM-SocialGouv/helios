@@ -1,9 +1,9 @@
 "use client";
 
-import "@gouvfr/dsfr/dist/component/table/table.min.css";
+import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 import "@gouvfr/dsfr/dist/component/pagination/pagination.min.css";
 import "@gouvfr/dsfr/dist/component/select/select.min.css";
-import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
+import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -13,7 +13,7 @@ import styles from "./EditUser.module.css";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
-import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { RechercheUtilisateur } from "../../../../backend/métier/entities/ResultatRechercheUtilisateur";
 import { Role, RoleLabel } from "../../../../commons/Role";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
@@ -21,7 +21,7 @@ import { useBreadcrumb } from "../../commun/hooks/useBreadcrumb";
 import ConfirmDeleteModalEditPage from "../UsersListPage/ConfirmDeleteModal/ConfirmDeleteModalEditPage";
 
 type UsersListPageProps = Readonly<{
-  user: UtilisateurModel;
+  user: RechercheUtilisateur;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
   roles: RoleModel[];
@@ -101,7 +101,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     },
   ]);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const { profiles } = userInfo;
 
@@ -110,6 +110,9 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
     const roleEntry = formData.get("roleId");
     const institutionCode = typeof institutionEntry === "string" ? institutionEntry : "";
     const roleCode = typeof roleEntry === "string" ? roleEntry : "";
+
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
 
     fetch("/api/utilisateurs/update", {
       body: JSON.stringify({
@@ -120,7 +123,7 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
         firstname: firstname,
         lastname: lastname,
       }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "POST",
     }).then(() => {
       redirectPage("/settings/users?status=edit_successfully");

@@ -8,6 +8,7 @@ import { RechercheEnAttente } from "./RechercheEnAttente";
 import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
 import { PasswordStatus, PasswordStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
+import { MessageAccueil } from "../../../backend/métier/gateways/MessageAccueilLoader";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
@@ -15,9 +16,10 @@ import { PasswordWarnningNotice } from "../commun/PasswordWarningNotice/Password
 
 type PageRechercheProps = {
   passwordStatus: PasswordStatus;
+  messageAccueil: MessageAccueil | null;
 };
 
-export const PageRecherche = ({ passwordStatus }: PageRechercheProps) => {
+export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheProps) => {
   const { wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(false);
 
@@ -41,7 +43,7 @@ export const PageRecherche = ({ passwordStatus }: PageRechercheProps) => {
     defaultOrderBy
   } = useRecherche();
 
-  const showNotice = new Date() <= new Date(wording.NOUVELLES_FONCTIONNALITÉS_DATE_FIN);
+  const showNotice = messageAccueil && new Date() >= new Date(messageAccueil.dateDebut) && new Date() <= new Date(messageAccueil.dateFin);
   const showPasswordWarning = passwordStatus.status === PasswordStatusEnum.WARNING;
 
   useEffect(() => {
@@ -70,7 +72,8 @@ export const PageRecherche = ({ passwordStatus }: PageRechercheProps) => {
       </Head>
       <div className="fr-container">
         {showPasswordWarning ? <PasswordWarnningNotice daysLeft={passwordStatus.daysLeft} /> : null}
-        {showNotice ? <NewFeaturesNotice /> : null}
+        {showNotice ? <NewFeaturesNotice messageAccueil={messageAccueil} /> : null}
+
         <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={(e) => lancerLaRecherche(e, displayTable)} rechercheOnChange={rechercheOnChange} terme={terme} />
 
         {estCeEnAttente && <RechercheEnAttente />}

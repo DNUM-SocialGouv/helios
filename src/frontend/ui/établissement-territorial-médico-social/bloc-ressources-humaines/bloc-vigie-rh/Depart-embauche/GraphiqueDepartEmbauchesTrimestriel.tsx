@@ -339,9 +339,17 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
     ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
     : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
+  const idDeLaTranscription = transcriptionIdentifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <div>
-      <Bar data={dataSet} options={options as ChartOptions<"bar">} plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+      <Bar 
+        aria-describedby={idDeLaTranscription}
+        data={dataSet}
+        options={options as ChartOptions<"bar">} 
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+        title={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+      />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

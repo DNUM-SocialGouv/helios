@@ -3,6 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState,
 
 import styles from "./RechercheAvanceeFormulaire.module.css";
 import { Role } from "../../../commons/Role";
+import { sendEvent, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_GEO } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 
@@ -176,6 +177,10 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
   };
 
   const applyZoneGeoValue = () => {
+    if(!isComparaison){
+    sendEvent(RECHERCHE_AVANCEE);
+    sendEvent(RECHERCHE_AVANCEE_FILTRE_GEO);
+    }
     rechercheAvanceeContext?.setZoneGeoD(zoneGeoType === "C" ? zoneGeoSelected?.departement.nom : "");
     rechercheAvanceeContext?.setZoneGeo(zoneGeoType === "R" ? zoneGeoSelected?.codeRegion : zoneGeoValue);
     rechercheAvanceeContext?.setZoneGeoType(zoneGeoType);

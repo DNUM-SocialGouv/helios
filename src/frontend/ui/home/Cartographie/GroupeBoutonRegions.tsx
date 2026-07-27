@@ -4,6 +4,7 @@ import "@gouvfr/dsfr/dist/component/sidemenu/sidemenu.min.css";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
 
+import { sendEvent, CARTOGRAPHIE } from "../../../utils/nomenclature-matomo";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { régions, outreMerRegionsList } from "../../région/régions";
 
@@ -12,6 +13,7 @@ export const GroupeBoutonRegions = () => {
   const router = useRouter()
 
   const handleOnChangeOutreMerRegions = (e: ChangeEvent<HTMLSelectElement>) => {
+    sendEvent(CARTOGRAPHIE)
     const sanitizedValue = DOMPurify.sanitize(e.target.value);
     router.push(sanitizedValue);
   }
@@ -19,7 +21,7 @@ export const GroupeBoutonRegions = () => {
   return (
     <ul className="fr-btns-group fr-btns-group--inline-reverse fr-btns-group--inline-lg">
       <li>
-        <Link className="fr-btn" href={paths.RÉGION + "/france-metropolitaine"}>
+        <Link className="fr-btn" href={paths.RÉGION + "/france-metropolitaine"} onClick={() => sendEvent(CARTOGRAPHIE)}>
           {régions["france-metropolitaine"].label}
         </Link>
       </li>

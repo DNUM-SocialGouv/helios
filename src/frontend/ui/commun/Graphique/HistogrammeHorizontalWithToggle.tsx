@@ -191,8 +191,11 @@ export const HistogrammeHorizontalWithToggle = ({
         {histogrammes.map((histogramme) => (
           <div className={styles["barWithToggleWidth"]} key={histogramme.nom}>
             <Bar
+              aria-labelledby="Graphique répartition des événements indésirables associés aux soins entre EIGS et non EIGS"
               data={histogramme.chartData as ChartData<"bar">}
-              options={{ ...histogramme.optionsHistogramme, aspectRatio }} />
+              options={{ ...histogramme.optionsHistogramme, aspectRatio }} 
+              title="Graphique répartition des événements indésirables associés aux soins entre EIGS et non EIGS"
+              />
           </div>
         ))}
       </div>

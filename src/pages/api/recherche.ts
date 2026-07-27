@@ -5,7 +5,7 @@ import { dependencies } from "../../backend/infrastructure/dependencies";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
-    response.status(405).send("Method not allowed");
+    return response.status(405).send("Method not allowed");
   }
 
   const { terme, page, order, orderBy, displayTable } = request.body;

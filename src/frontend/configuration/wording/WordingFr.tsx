@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { Wording } from "./Wording";
 
 export class WordingFr implements Wording {
+  readonly HELIOS_URL: string = "www.helios.ars.sante.fr";
   // Abréviations
   readonly CPOM_TITLE: string = "Contrat Pluriannuel d’Objectifs et de Moyens";
   readonly CPOM: ReactElement = (<abbr title={this.CPOM_TITLE}>CPOM</abbr>);
@@ -64,8 +65,7 @@ export class WordingFr implements Wording {
   // Inscription
   readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
   readonly SEND: string = "Envoyer";
-  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à votre adresse email.";
-  readonly EMAIL_ALREADY_USED: string = "L'adresse mail saisie est déjà rattachée à un compte. Si vous avez oublié votre mot de passe, cliquez ";
+  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à l'adresse mail indiquée, si elle n'est pas encore associée à un compte existant.";
   readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
   readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
@@ -297,7 +297,7 @@ export class WordingFr implements Wording {
   readonly AFFICHER_PLUS: string = "Aficher plus";
   readonly AFFICHER_MOINS: string = "Afficher moins";
 
-  readonly CERTIFICATION_QUALISCOPE: string = "Certification HAS";
+  readonly CERTIFICATION_QUALISCOPE: string = "Evaluation HAS";
   readonly HAS_FICHE_SAN_PATH: string = "https://www.has-sante.fr/fiche-etablissement/";
   readonly HAS_FICHE_MS_PATH: string = "https://www.has-sante.fr/fiche-essms/";
 
@@ -483,6 +483,7 @@ export class WordingFr implements Wording {
   readonly HAS_TITLE: string = "Haute Autorité de Santé";
   readonly DSN_TITLE: string = "Déclaration Sociale Nominative";
   readonly SI_AUTORISATIONS_TITLE: string = "SI-Autorisations";
+  readonly STARS_FIR_TITLE: string = "STARS FIR";
 
   // Sources courtes
   readonly FINESS: ReactElement = (<abbr title={this.FINESS_TITLE}>FINESS</abbr>);
@@ -501,6 +502,7 @@ export class WordingFr implements Wording {
   readonly HAS: ReactElement = (<abbr title={this.HAS_TITLE}>HAS-Qualiscope</abbr>);
   readonly DSN: ReactElement = (<abbr title={this.DSN_TITLE}>DSN</abbr>);
   readonly SI_AUTORISATIONS: ReactElement = (<abbr title={this.SI_AUTORISATIONS_TITLE}>SI-Autorisations</abbr >);
+  readonly STARS_FIR: ReactElement = (<abbr title={this.STARS_FIR_TITLE}>STARS FIR</abbr >);
 
   // Inaccessible
   readonly ACCÈS_REFUSÉ: string = "Accès refusé";
@@ -545,6 +547,10 @@ export class WordingFr implements Wording {
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
   readonly COOKIES: string = "Gestion des Cookies";
+  readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
+  readonly TARTE_CITRON: string = "Site officiel de Tarte au citron";
+  readonly SAVOIR_PLUS: string = "En savoir plus";
+  readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
@@ -557,8 +563,12 @@ export class WordingFr implements Wording {
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";
   readonly PROPRIÉTÉ_INTELLECTUELLE: string = "Propriété intellectuelle";
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
+  readonly SCALINGO: string = "scalingo.com";
+  readonly CATAMANIA: string = "catamania.com";
 
   readonly EN_CONSTRUCTION: string = "Demander à Daisy ce que l’on doit écrire.";
+
+  readonly RGESN: string = "RGESN";
 
   // Comparaison
   readonly COMPARAISON: string = "Comparaison";
@@ -573,15 +583,15 @@ export class WordingFr implements Wording {
   readonly COMPARER: string = "Comparer";
   readonly SUPPRIMER_DE_LA_LISTE: string = "Supprimer de ma liste";
   readonly EXPORTER: string = "Exporter";
-  readonly DANS_FAVORIS: string = "Dans les favoris";
+  readonly DANS_FAVORIS: string = "Etablissement ajouté à une ou plusieurs de mes listes";
   readonly NON_FAVORIS: string = "Pas dans les favoris";
   readonly IMPORTER_UNE_LISTE: string = "Importer une liste";
   readonly IMPORTER_DES_ETABLISSEMENTS: string = "Importer une liste";
 
 
   // Etoile des Favoris
-  readonly ETOILE_ETAB_DANS_LISTE: string = "Gèrer les listes de l'établissement";
-  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Ajouter cet établissement à mes listes";
+  readonly ETOILE_ETAB_DANS_LISTE: string = "Etablissement ajouté à une ou plusieurs de mes listes - Cliquer pour modifier";
+  readonly ETOILE_ETAB_PAS_DANS_LISTE: string = "Etablissement non ajouté à mes listes - Cliquer pour ajouter";
   readonly ETOILE_MES_LISTES: string = "Mes listes";
   readonly ETOILE_NOUVELLE_LISTE_LABEL: string = "Nouvelle liste";
   readonly ETOILE_NOUVELLE_LISTE_BOUTON: string = "+ Nouvelle liste";
@@ -646,6 +656,7 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_TITRE: string = "Paramétrage";
   readonly PARAMETRAGE_AUTORISATIONS_TITRE: string = "Paramétrage des autorisations";
   readonly PARAMETRAGE_AIDE_TITRE: string = "Paramétrage de l'aide";
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_TITRE: string = "Paramétrage du message d'accueil";
   readonly PARAMETRAGE_EJ_TAB: string = "Entité juridique";
   readonly PARAMETRAGE_ET_MS_TAB: string = "Établissement médico-social";
   readonly PARAMETRAGE_ET_SAN_TAB: string = "Établissement sanitaire";
@@ -779,7 +790,6 @@ export class WordingFr implements Wording {
   readonly EFFECTIFS_PAR_FILIERES_CATEGORIES: string = "Evolution des effectifs par filière et catégorie professionnelle";
   readonly EFFECTIF_TOTAL: string = "Effectif total";
 
-  readonly NOUVELLES_FONCTIONNALITÉS_DATE_FIN: string = "2026-05-19";
   readonly DEPARTS_PREMATURES_CDI_DONNEES_PARTIELLES: (annee: number, transcriptionMois: string | undefined) => string = (annee: number, transcriptionMois: string | undefined) => `* Données partielles sur ${annee}: ${transcriptionMois}.`;
 
   readonly PARAMETRAGE_AIDE_DESCRIPTION: string =
@@ -842,6 +852,12 @@ export class WordingFr implements Wording {
   readonly PARAMETRAGE_AIDE_BOUTON_DESCENDRE_RESSOURCE: string = "Descendre la ressource";
   readonly PARAMETRAGE_AIDE_BOUTON_MODIFIER_RESSOURCE: string = "Modifier";
   readonly PARAMETRAGE_AIDE_BOUTON_SUPPRIMER_RESSOURCE: string = "Supprimer";
+
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_NAV_SECTIONS: string = "Sections du message d'accueil";
+  readonly PARAMETRAGE_DEFINIR_MESSAGE_ACCUEIL: string = "Définir un message";
+  readonly PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE: string = "Historique";
+  readonly PERIODE_AFFICHAGE: string = "Période d'affichage";
+  readonly MESSAGE: string = "Message";
 
   readonly AIDE_TITRE_PAGE: string = "Aide";
   readonly AIDE_MESSAGE_SECTIONS_VIDES: string = "Aucun contenu d’aide n’est disponible pour le moment.";

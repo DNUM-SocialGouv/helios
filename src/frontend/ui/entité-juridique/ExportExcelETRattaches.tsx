@@ -3,6 +3,8 @@ import { Workbook } from "exceljs";
 import { EntiteJuridiqueViewModel } from "./EntitéJuridiqueViewModel";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 
 export function getCurrentDate() {
   const today = new Date();
@@ -16,21 +18,23 @@ export function getCurrentDate() {
 export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiqueViewModel, etablissementsTerritoriauxRattachesViewModels: EtablissementsTerritoriauxRattachésViewModel) {
   function formatEtSanForExport(): string[][] {
     return etablissementsTerritoriauxRattachesViewModels.établissementSanitaires.map((rattache) => {
-      return ["Sanitaire", rattache.numéroFiness, rattache.raisonSocialeCourte]
+      return ["Sanitaire", `${rattache.categorieEtablissementCode}-${rattache.libelleCourtCategorieEtablissement}`, rattache.numéroFiness, rattache.raisonSocialeCourte, rattache.principalLabel]
     });
   }
 
   function formatEtMedSocForExport(): string[][] {
     return etablissementsTerritoriauxRattachesViewModels.établissementMedicauxSociaux.map((rattache) => {
-      return ["Médico-Social", rattache.numéroFiness, rattache.raisonSocialeCourte]
+      return ["Médico-Social", `${rattache.categorieEtablissementCode}-${rattache.libelleCourtCategorieEtablissement}`, rattache.numéroFiness, rattache.raisonSocialeCourte, rattache.principalLabel]
     });
   }
 
   const exportEtRattache = () => {
+    sendEvent(EXPORT(SourceMatomo.FICHE_ETABLISSEMENT));
+
     const header = [entiteJuridiqueViewModel.numéroFiness, entiteJuridiqueViewModel.nomDeLEntitéJuridique];
     const etabSan = formatEtSanForExport();
     const etabMedSoc = formatEtMedSocForExport();
-    const etabHeader = [["Type d’établissement", "FINESS", "Raison sociale"]]
+    const etabHeader = [["Type d'établissement", "Cat. FINESS", "FINESS", "Raison sociale", "Etb principal/secondaire"]]
 
     const workbook = new Workbook();
     const sheet = workbook.addWorksheet("Etablissements rattachés");
@@ -45,3 +49,4 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
 
   return { exportEtRattache }
 }
+  

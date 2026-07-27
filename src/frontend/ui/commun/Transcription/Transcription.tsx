@@ -38,7 +38,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
   }, []);
   if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 
-  const identifiant = identifiantUnique !== "" ? identifiantUnique : identifiants[0].replaceAll(/\s/g, "");
+  const identifiant = (identifiantUnique !== "" ? identifiantUnique : identifiants[0]).replaceAll(/\s/g, "");
 
   const exportTab = () => {
     exportExcelTranscription(nomGraph, etabFiness, etabTitle, [entêteLibellé, ...identifiants], libellés, valeurs);

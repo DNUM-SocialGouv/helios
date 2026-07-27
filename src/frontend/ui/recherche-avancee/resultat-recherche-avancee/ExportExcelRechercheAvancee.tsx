@@ -5,6 +5,8 @@ import { useContext } from "react";
 
 import { Résultat, RésultatDeRecherche } from "../../../../backend/métier/entities/RésultatDeRecherche";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../../utils/excelUtils";
+import { sendEvent,EXPORT } from "../../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../../utils/SourceMatomo";
 import { RechercheAvanceeContext, RechercheAvanceeContextValue } from "../../commun/contexts/RechercheAvanceeContext";
 import { UserContext } from "../../commun/contexts/userContext";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
@@ -211,6 +213,8 @@ function generateCriteriaData(context: RechercheAvanceeContextValue, categoriesF
 }
 
 async function generateAndExportExcel(context: RechercheAvanceeContextValue | undefined, favoris: UserListViewModel[] | undefined, categories: CategoriesFinessViewModel[]) {
+  sendEvent(EXPORT(SourceMatomo.RECHERCHE_AVANCEE));
+
   if (context) {
     const fileName: string = `${getCurrentDate()}_Helios_rechercheavancee.xlsx`;
     const data = await getData(context);

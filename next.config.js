@@ -1,3 +1,22 @@
+const { withSentryConfig } = require("@sentry/nextjs");
+
+const isDev = process.env.NODE_ENV === 'development'
+const matomoUrl = process.env.NEXT_PUBLIC_MATOMO_URL;
+const sentryUrl = process.env.SENTRY_URL;
+const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} ${matomoUrl};
+    connect-src 'self' ${matomoUrl} ${sentryUrl} https://geo.api.gouv.fr;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: ${matomoUrl};
+    font-src 'self';
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    frame-src 'self' https://carto.atlasante.fr/;
+    upgrade-insecure-requests;
+`;
 const securityHeaders = [
   /**
    * Strict-Transport-Security, see: https://scotthelme.co.uk/hsts-the-missing-link-in-tls/
@@ -13,7 +32,7 @@ const securityHeaders = [
    **/
   {
     key: "Content-Security-Policy",
-    value: "default-src https: 'unsafe-inline'; script-src https: 'unsafe-eval'; img-src https: data:; font-src 'self' data:;",
+    value: cspHeader.replaceAll('\n', ''),
   },
   /**
    * Permissions-Policy, see: https://scotthelme.co.uk/goodbye-feature-policy-and-hello-permissions-policy/
@@ -57,6 +76,16 @@ const securityHeaders = [
     key: "X-Frame-Options",
     value: "SAMEORIGIN",
   },
+  /**
+   * X-XSS-Protection, see: https://scotthelme.co.uk/hardening-your-http-response-headers/
+   * This header enables the Cross-site scripting (XSS) filter built into most recent web browsers.
+   *
+   * CHOICE: The value "0" disables the XSS filter. This is because modern browsers have better built-in XSS protection and this header can sometimes cause issues with legitimate content.
+   **/
+  {
+    key: "X-XSS-Protection",
+    value: "0",
+  },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -69,22 +98,29 @@ const nextConfig = withBundleAnalyzer({
   devIndicators: { position: "bottom-left" },
   output: 'standalone',
   async headers() {
-    return process.env["NODE_ENV"] !== "development"
-      ? [
-        {
-          headers: securityHeaders,
-          source: "/:path*",
-        },
-        {
-          headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
-          source: "/(smarttag.js|favicon.ico|logo.svg)",
-        },
-      ]
-      : [];
+    return [
+      {
+        headers: securityHeaders,
+        source: "/:path*",
+      },
+      {
+        headers: [{ key: "Cache-Control", value: "max-age=31536000" }],
+        source: "/(favicon.ico|logo.svg)",
+      },
+    ];
   },
   poweredByHeader: false,
   reactStrictMode: true,
   reactCompiler: true,
 });
 
-module.exports = nextConfig;
+const nextWithSentryConfig = withSentryConfig(nextConfig, {
+  telemetry: false,
+  webpack: {
+    treeshake: {
+      removeDebugLogging: true
+    }
+  }
+});
+
+module.exports = nextWithSentryConfig;

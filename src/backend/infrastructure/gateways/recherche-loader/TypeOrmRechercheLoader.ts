@@ -66,7 +66,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .from(RechercheModel, "recherche")
       .where("recherche.termes @@ to_tsquery('unaccent_helios', :termeFuzzy)", { termeFuzzy })
 
-    const nombreDeRésultats = displayTable ? (await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
+    const nombreDeRésultats = displayTable ? Number((await requêteDeLaRecherche.clone().select("COUNT(DISTINCT recherche.numero_finess)", "count").getRawOne()).count) : await this.compteLeNombreDeRésultats(requêteDeLaRecherche);
 
     if (displayTable) {
       requêteDeLaRecherche
@@ -291,7 +291,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
 
     if (capaciteSMS.length === 0 && activiteSAN.length === 0) {
       finalQuery = standardQuery;
-      nombreDeRésultats = nombreDeRésultatsStandard.count;
+      nombreDeRésultats = Number(nombreDeRésultatsStandard.count);
     } else {
       const hasCapacite = capaciteSMS.length !== 0;
       const hasActivite = activiteSAN.length !== 0;
@@ -355,7 +355,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
         nombreDeRésultats = Number(nombreDeRésultatsActivite.count) + Number(nombreDeRésultatsCapacite.count);
       } else {
         finalQuery = hasCapacite ? capaciteQuery : activiteQuery;
-        nombreDeRésultats = hasCapacite ? nombreDeRésultatsCapacite.count : nombreDeRésultatsActivite.count;
+        nombreDeRésultats = hasCapacite ? Number(nombreDeRésultatsCapacite.count) : Number(nombreDeRésultatsActivite.count);
 
       }
     }
@@ -459,8 +459,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .groupBy("ams.numero_finess_etablissement_territorial");
 
     query.innerJoin(`(${subQuery.getQuery()})`, "capacite_sms", "recherche.numero_finess = capacite_sms.numero_finess_etablissement_territorial")
-      .innerJoin(ÉtablissementTerritorialIdentitéModel, "etablissementMS", "capacite_sms.numero_finess_etablissement_territorial = etablissementMS.numéroFinessÉtablissementTerritorial")
-      .where("etablissementMS.domaine = 'Médico-social' ");
+      .innerJoin(ÉtablissementTerritorialIdentitéModel, "etablissementMS", "capacite_sms.numero_finess_etablissement_territorial = etablissementMS.numéroFinessÉtablissementTerritorial");
 
     const caps = capaciteSMS.map(c => {
       const logique = this.construireLaLogiqueCapaciteEtablissements(c);
@@ -469,6 +468,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     });
 
     conditions.push(caps.length === 1 ? caps[0] : `(${caps.join(" OR ")})`);
+    conditions.push("etablissementMS.domaine = 'Médico-social'");
     if (conditions.length > 0) query.where(conditions.join(" AND "), parameters);
     return query;
   }
@@ -498,6 +498,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
       .innerJoin(ÉtablissementTerritorialIdentitéModel, "etablissement", "activite_san.numero_finess_etablissement_territorial = etablissement.numéroFinessÉtablissementTerritorial");
     const { activitesSanConditions } = this.construisLesConditionsActiviteSan(activiteSAN, parameters)
     conditions.push(activitesSanConditions);
+    conditions.push("etablissement.domaine = 'Sanitaire'");
     if (conditions.length > 0) query.where(conditions.join(" AND "), parameters);
     return query;
   }
@@ -571,7 +572,7 @@ export class TypeOrmRechercheLoader implements RechercheLoader {
     });
     if (ranges.length === 1) activiteSanConditions = conditions[0] + nullCondition;
     else {
-      activiteSanConditions = "(" + conditions.join(" OR ") + nullCondition + ")";
+      activiteSanConditions = "((" + conditions.join(" OR ") + ")" + nullCondition + ")";
     }
     return { conditions: activiteSanConditions, parameters };
   }

@@ -1,14 +1,17 @@
 import { screen, within } from "@testing-library/react";
+import { SessionProvider } from "next-auth/react";
 
 import { PageDeConnexion } from "./PageDeConnexion";
 import { fakeFrontDependencies, renderFakeComponent } from "../../test-helpers/testHelper";
 
 const { wording } = fakeFrontDependencies;
+const mockSession = null;
 
 describe("La page de d’accueil", () => {
   it("n'affiche pas un bandeau d’information mentionnant le développement du site", () => {
     // WHEN
-    renderFakeComponent(<PageDeConnexion />);
+    renderFakeComponent(<SessionProvider session={mockSession}><PageDeConnexion /></SessionProvider>
+    );
 
     // THEN
     expect(screen.queryByText(wording.SITE_EN_CONSTRUCTION)).not.toBeInTheDocument();
@@ -16,8 +19,7 @@ describe("La page de d’accueil", () => {
 
   it("affiche le formulaire de connexion", () => {
     // WHEN
-    renderFakeComponent(<PageDeConnexion />);
-
+    renderFakeComponent(<SessionProvider session={mockSession}><PageDeConnexion /></SessionProvider>);
     // THEN
     const formulaire = screen.getByTestId("login-form");
     const labelId = within(formulaire).getByLabelText(wording.CONNEXION_IDENTIFIANT);

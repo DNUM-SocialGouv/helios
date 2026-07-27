@@ -3,6 +3,7 @@ import { Bar } from "react-chartjs-2";
 
 
 import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
+import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
@@ -14,7 +15,6 @@ import {
 } from "../../../../commun/Graphique/couleursGraphique";
 import { MiseEnExergue } from "../../../../commun/MiseEnExergue/MiseEnExergue";
 import { Transcription } from "../../../../commun/Transcription/Transcription";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -279,12 +279,17 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     ? [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesDepartsRef.map(v => Math.round(Math.abs(v as number))), donneesEmbauches, donneesEmbauchesRef]
     : [donneesDeparts.map(v => Math.round(Math.abs(v as number))), donneesEmbauches];
 
+  const idDeLaTranscription = transcriptionIdentifiants[0]?.replaceAll(/\s/g, "");
+
   return (
     <div className="max-w-3xl mx-auto p-4 bg-white rounded-2xl shadow">
       <Bar
+        aria-describedby={idDeLaTranscription}
         data={dataSet}
         options={options as ChartOptions<"bar">}
-        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} />
+        plugins={showRefValues ? [valeursNegativesRefPlugin, valeursPositivesRefPlugin] : []} 
+        title={`Graphique ${wording.DEPARTS_EMBAUCHES}`}
+        />
       {libellesValeursManquantes.length > 0 && (
         <MiseEnExergue>
           {`${wording.AUCUNE_DONNEE_RENSEIGNEE_GENERIQUE} ${libellesValeursManquantes.join(", ")}`}

@@ -8,6 +8,7 @@ import { FiltreZoneGeographique } from "./FiltreZoneGeographique";
 import { AttribuesDefaults, typeStructureTranscodage } from "./model/Attribues";
 import { CategoriesFinessViewModel } from "./model/CategoriesFinessViewModel";
 import styles from "./RechercheAvanceeFormulaire.module.css";
+import { sendEvent, RECHERCHE_REINITIALISER } from "../../utils/nomenclature-matomo";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
@@ -129,6 +130,9 @@ export const RechercheAvanceeFormulaire = ({
   }
 
   const eraseAll = () => {
+    if(!isComparaison){
+    sendEvent(RECHERCHE_REINITIALISER);
+    }
     rechercheAvanceeContext?.setCapaciteAgees([]);
     rechercheAvanceeContext?.setCapaciteHandicap([]);
     rechercheAvanceeContext?.setCapaciteMedicoSociaux([]);
@@ -240,7 +244,7 @@ export const RechercheAvanceeFormulaire = ({
           isComparaison={isComparaison}
           setIsChanged={setIsChangedZG}
           setZoneGeoType={setZoneGeoType}
-          setZoneGeoValue={setZoneGeoValue}
+          setZoneGeoValue={setZoneGeoValue}   
           zoneGeoType={zoneGeoType}
           zoneGeoValue={zoneGeoValue}
         />

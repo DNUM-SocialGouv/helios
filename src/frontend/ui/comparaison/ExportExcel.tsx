@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { useComparaison } from "./useComparaison";
 import { DatesMisAjourSources, ResultatDeComparaison, ResultatEJ, ResultatSAN, ResultatSMS } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ecrireLignesDansSheet, getIntervalCellulesNonVideDansColonne, telechargerWorkbook } from "../../utils/excelUtils";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 import { UserContext } from "../commun/contexts/userContext";
 import StringFormater from "../commun/StringFormater";
 import { UserListViewModel } from "../user-list/UserListViewModel";
@@ -33,9 +35,11 @@ async function getComparaisonData(annee: string, type: string, order = "", order
   } catch (e) {
     alert("Error :" + e);
   }
+  const csrfRes = await fetch("/api/csrf");
+  const { csrfToken } = await csrfRes.json();
   return fetch("/api/comparaison/compare", {
     body: JSON.stringify({ type, numerosFiness: parsedFiness, annee, order, orderBy, forExport: true, codeRegion, codeProfiles, enveloppe1, enveloppe2, enveloppe3 }),
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
     method: "POST",
   })
     .then((response) => response.json())
@@ -208,7 +212,7 @@ function remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi: ExcelJS.Workshe
 async function generateAndExportExcel(
   year: string, structure: string, order: string, orderBy: string, favoris: UserListViewModel[] | undefined, datesMisAjour: DatesMisAjourSources, codeRegion: string, codeProfiles: string[], getTopEnveloppes: any, enabledIndicators: string[]
 ) {
-
+  sendEvent(EXPORT(SourceMatomo.COMPARAISON));
 
   const fileName: string = `${getCurrentDate()}_Helios_comparaison${year}.xlsx`;
   const enveloppes = await getTopEnveloppes(year, structure);

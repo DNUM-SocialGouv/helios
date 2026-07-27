@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { useState, FormEvent, useContext } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useState, FormEvent, useContext, useEffect } from "react";
 
 import styles from "./Connexion.module.css";
 import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
+import { sendEvent, push, CONNEXION } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
@@ -11,12 +12,39 @@ import isEmail from "../commun/validation";
 export const FormulaireDeConnexion = () => {
   const { wording } = useDependencies();
   const userContext = useContext(UserContext);
+  const { data: session, status } = useSession();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.role) {
+      // ne pas tracker la connexion si l'utilisateur n'a pas le rôle admin natinal
+      if(session.user.role === 1 ) {
+        window.location.href = "/";
+      }else {
+        switch (session.user.role) {
+        case 2:
+          push(["setCustomDimension", 1, 'regional']);
+          break;
+        case 3:
+          push(["setCustomDimension", 1, 'ars']);
+          break;
+        case 4:
+          push(["setCustomDimension", 1, 'central']);
+          break;
+        default:
+          break;
+      }
+      sendEvent(CONNEXION);
+      push(['trackPageView']);
+      window.location.href = "/";
+      }
+    }
+  }, [status, session]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,10 +58,13 @@ export const FormulaireDeConnexion = () => {
         redirect: false,
       });
 
+
       if (res?.error) {
+        const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
         const loginErrorRes = await fetch("/api/utilisateurs/loginError", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken, },
           body: JSON.stringify({ email, password }),
         })
         const loginErrorMessage = await loginErrorRes.json();
@@ -45,9 +76,11 @@ export const FormulaireDeConnexion = () => {
 
         setLoading(false);
       } else {
+        const csrfRes = await fetch("/api/csrf");
+      const { csrfToken } = await csrfRes.json();
         await fetch("/api/utilisateurs/checkUserIsNotAdminAndInactif", {
           body: JSON.stringify({ email: email }),
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken, },
           method: "POST",
         }).then(async (rep) => {
           if (rep.status === 401) {
@@ -56,12 +89,16 @@ export const FormulaireDeConnexion = () => {
             setLoading(false);
           } else {
             setError(null);
+            const csrfRes = await fetch("/api/csrf");
+            const { csrfToken } = await csrfRes.json();
             await fetch("/api/utilisateurs/updateLastConnectionDate", {
               body: JSON.stringify({ email: email }),
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
               method: "POST",
             }).then(async (rep) => {
-              if (rep.status === 200) window.location.href = "/";
+              if (rep.status === 200){ 
+                setLoading(false);
+              }
             });
           }
         });

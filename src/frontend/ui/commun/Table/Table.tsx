@@ -9,6 +9,7 @@ import { LogoEntiteJuridiqueSvg } from "../../entité-juridique/bloc-activité/L
 import { MoyenneResultatComparaison } from "../../home/ComparaisonViewModel";
 import { LogoEtablissementTerritorialMedicoSociauxSvg } from "../../établissement-territorial-médico-social/logo-établissement-territorial-médico-social";
 import { LogoEtablissementTerritorialSanitaireSvg } from "../../établissement-territorial-sanitaire/logo-établissement-territorial-sanitaire";
+import { useDependencies } from "../contexts/useDependencies";
 import { StarButtonList } from "../StarButtonList/StarButtonList";
 
 interface Header {
@@ -78,7 +79,7 @@ interface TriProps {
   headerKey: string;
 }
 
-const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
+export const Tri = ({ order, orderBy, headerKey, setOrderBy, setOrder }: TriProps) => {
   if (order === "ASC" && headerKey === orderBy) {
     return (
       <button
@@ -165,6 +166,7 @@ const TableHeader = ({ headers, order, orderBy, setOrderBy, setOrder, onClickInf
 
 const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelectRow, isShowAvrage, isCenter, onClickDelete, handleInfoBullMoyenne, isSimpleSearchTable }: TableBodyProps) => {
   const [searchItem, setSearchItem] = useState("");
+  const { wording } = useDependencies();
   useEffect(() => {
     async function updateSearchItem() {
       setSearchItem(localStorage.getItem('searchItem') ?? "")
@@ -218,6 +220,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
                   href={construisLeLien(row["type"], row["numéroFiness"], isSimpleSearchTable, searchItem)}
                   rel="noreferrer"
                   target="_blank"
+                  title={`${row.socialReason} - ${wording.NOUVELLE_FENÊTRE}`}
                 >
                   {row[header.key]}
                 </a>

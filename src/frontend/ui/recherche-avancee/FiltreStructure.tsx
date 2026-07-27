@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Dispatch, KeyboardEvent, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
+import { sendEvent, FILTRE_STATUT_JURIDIQUE_PL, FILTRE_STATUT_JURIDIQUE_PNL, FILTRE_STATUT_JURIDIQUE_PUBLIC, FILTRE_STRUCTURE_EJ, FILTRE_STRUCTURE_MS, FILTRE_STRUCTURE_SAN, RECHERCHE_AVANCEE, RECHERCHE_AVANCEE_FILTRE_STRUCTURE } from "../../utils/nomenclature-matomo";
 import { Badge } from "../commun/Badge/Badge";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { RechercheAvanceeContext } from "../commun/contexts/RechercheAvanceeContext";
@@ -123,6 +124,28 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
   };
 
   const appliquerButton = () => {
+    if(!isComparaison){
+    sendEvent(RECHERCHE_AVANCEE);
+    sendEvent(RECHERCHE_AVANCEE_FILTRE_STRUCTURE);
+    }
+    if(typeSelected.includes(AttribuesDefaults.entiteJuridque) ){
+      sendEvent(FILTRE_STRUCTURE_EJ);
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPublic) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PUBLIC);
+      }
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPriveLucratif) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PL);
+      }
+      if(statutJuridiqueSelected.includes(AttribuesDefaults.statutPriveNonLucratif) ){
+        sendEvent(FILTRE_STATUT_JURIDIQUE_PNL);
+      }
+    }
+    if(typeSelected.includes(AttribuesDefaults.etablissementSanitaire) ){
+      sendEvent(FILTRE_STRUCTURE_SAN);
+    }
+    if(typeSelected.includes(AttribuesDefaults.etablissementMedicoSocial) ){
+      sendEvent(FILTRE_STRUCTURE_MS);
+    }
     if (!typeSelected.includes(AttribuesDefaults.entiteJuridque)) {
       emptyStatutJuridiqueCheckboxs();
     }
@@ -176,7 +199,13 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.entiteJuridque}
                       />
                       <label className="fr-label" htmlFor="checkboxe-ej">
-                        <Image alt="" height="22" src={LogoEntitéJuridiqueNoir} width="22" />
+                        <Image 
+                          alt="Logo Entité Juridique" 
+                          height={22} 
+                          src={LogoEntitéJuridiqueNoir} 
+                          title="Logo Entité Juridique" 
+                          width={22} 
+                        />
                         <span style={{ marginLeft: "8px" }}>{wording.ENTITES_JURIDIQUES}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-ej"></div>
@@ -193,7 +222,13 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.etablissementSanitaire}
                       />
                       <label className="fr-label" htmlFor="checkboxe-es">
-                        <Image alt="" height="22" src={LogoÉtablissementTerritorialSanitaire} width="22" />
+                        <Image 
+                          alt="Logo Établissement Sanitaire" 
+                          height={22} 
+                          src={LogoÉtablissementTerritorialSanitaire} 
+                          title="Logo Établissement Sanitaire" 
+                          width={22} 
+                        />
                         <span style={{ marginLeft: "8px" }}>{wording.ETABLISSEMENTS_SANITAIRES}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-es"></div>
@@ -210,7 +245,13 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
                         value={AttribuesDefaults.etablissementMedicoSocial}
                       />
                       <label className="fr-label" htmlFor="checkboxe-esms">
-                        <Image alt="" height="22" src={LogoÉtablissementTerritorialMédicoSocial} width="22" />
+                        <Image 
+                          alt="Logo Établissement Médico-Social" 
+                          height={22} 
+                          src={LogoÉtablissementTerritorialMédicoSocial} 
+                          title="Logo Établissement Médico-Social" 
+                          width={22} 
+                        />
                         <span style={{ marginLeft: "8px" }}>{wording.ETABLISSEMENTS_SOCIAUX_MEDICO_SOCIAUX}</span>
                       </label>
                       <div aria-live="assertive" className="fr-messages-group" id="checkboxe-message-esms"></div>

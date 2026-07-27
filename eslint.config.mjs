@@ -46,7 +46,7 @@ const config = [
   {
     plugins: {
       react,
-      "@typescript-eslint": typescriptEslint,
+      typescriptEslint,
       jest
     },
 

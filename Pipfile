@@ -10,22 +10,22 @@ sentry-sdk = "2.53.0"
 python-dotenv = "0.20.0"
 pandas = "==3.0.1"
 pyarrow = "23.0.1"
-lxml = "4.9.1"
+lxml = "6.1.0"
 numpy = "2.4.2"
 paramiko = "4.0.0"
-requests = ">=2.31,<3"
-types-requests = ">=2.31,<3"
+requests = ">=2.33,<3"
+types-requests = ">=2.33,<3"
+ftputil = ">=5.1.0,<6"
 
 [dev-packages]
 pylint = "==2.16.2"
 mypy = "1.19.1"
-pytest = "==7.1.2"
-pytest-mock = "==3.7.0"
+pytest = "==9.0.3"
+pytest-mock = "==3.15.1"
 freezegun = "1.2.1"
-matplotlib = "3.5.2"
-pytest-cov = "4.0.0"
-pytest-watcher = "==0.2.1"
-black = "==23.1.0"
+pytest-cov = "7.1.0"
+pytest-watcher = "==0.6.3"
+black = "==26.3.1"
 pandas-stubs = "==2.3.3.260113"
 types-paramiko = ">4.0.0"
 sqlalchemy-stubs = "==0.4"
@@ -53,7 +53,8 @@ populate_capacites_sanitaire_entites_juridiques = 'python -m datacrawler.agréga
 populate_app_users = 'python -m datacrawler.import_utilisateurs'
 populate_reclamations = 'python -m datacrawler.import_reclamations'
 populate_evenements_indesirables = 'python -m datacrawler.import_evenements_indesirables'
-populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressource_hapi'
+populate_allocation_ressource = 'python -m datacrawler.import_allocation_ressource_starsfir'
+populate_allocation_ressource_hapi = 'python -m datacrawler.import_allocation_ressource_hapi'
 check_downloaded_sivss_file = 'python -m datacrawler.check_downloaded_sivss_file'
 check_downloaded_siicea_file = 'python -m datacrawler.check_downloaded_siicea_file'
 check_downloaded_sirec_file = 'python -m datacrawler.check_downloaded_sirec_file'
@@ -83,7 +84,12 @@ retrieveSivss = 'python -m datacrawler.download_sivss_data'
 retrieveVigierh = 'python -m datacrawler.download_vigierh_data'
 retrieveFiness = 'python -m datacrawler.download_finess_data'
 retrieveDiamant = 'python -m datacrawler.download_diamant_data'
+retrieveStarsFIR = "python -m datacrawler.download_starsfir_data"
+retrieveHapi = "python -m datacrawler.download_hapi_data"
+detect_duplicate_accounts = 'python -m datacrawler.detecte_doublons_comptes'
 test = 'pytest --tb=short'
 test_coverage = 'pytest --tb=short --cov=datacrawler --cov-report=xml'
 test_watch = 'ptw'
 typecheck = 'mypy --config pyproject.toml datacrawler'
+fetch_inactive_users = 'python -m datacrawler.fetch_inactive_users'
+fetch_active_users = 'python -m datacrawler.fetch_active_users'

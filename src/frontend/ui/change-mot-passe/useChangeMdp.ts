@@ -74,11 +74,13 @@ export function useChangeMdp() {
         }
     }
 
-    const changePasswordService = () => {
+    const changePasswordService = async () => {
         setIsLoading(true)
+        const csrfRes = await fetch("/api/csrf");
+        const { csrfToken } = await csrfRes.json();
         fetch("/api/update-password", {
             body: JSON.stringify({ email: data?.user?.email, password: passwordValue, oldPassword: oldPasswordValue }),
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
             method: "POST",
         })
             .then(async (response) => {
@@ -110,9 +112,11 @@ export function useChangeMdp() {
     }
 
     const checkTokenService = async (token: string) => {
+        const csrfRes = await fetch("/api/csrf");
+        const { csrfToken } = await csrfRes.json();
         fetch("/api/check-token", {
             body: JSON.stringify({ token }),
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
             method: "POST",
         })
             .then((response) => response.json())

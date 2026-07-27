@@ -4,6 +4,7 @@ import { comparaisonEndpoint } from "../../../backend/infrastructure/controllers
 import { getAnneesComparaisonEndpoint } from "../../../backend/infrastructure/controllers/getAnneesComparaisonEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { ParametresDeComparaison } from "../../../backend/métier/entities/ParametresDeComparaison";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 const emptyResponse = {
   nombreDeResultats: 0,
@@ -14,6 +15,10 @@ const emptyResponse = {
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
     response.status(405).send("Method not allowed");
+  }
+
+   if (!requireCsrf(request, response)) {
+    return;
   }
 
   const { type, numerosFiness, annee, page, order, orderBy, forExport, codeRegion, codeProfiles, enveloppe1, enveloppe2, enveloppe3 } = request.body;

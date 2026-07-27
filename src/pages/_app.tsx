@@ -1,9 +1,9 @@
+import { trackPagesRouter } from "@socialgouv/matomo-next";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-arrows/icons-arrows.min.css";
@@ -44,28 +44,25 @@ import { DependenciesProvider } from "../frontend/ui/commun/contexts/useDependen
 import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextProvider";
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
+import { ANALYTICS_CONSENT_CHANGED_EVENT, hasAnalyticsConsent } from "../frontend/utils/analyticsConsent";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  const router = useRouter();
+  const [analyticsConsent, setAnalyticsConsent] = useState(false);
+  const matomoInitialise = useRef(false);
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== "development") {
-      // @ts-expect-error The name is found
-      const atPiano = new ATInternet.Tracker.Tag({
-        cookieSecure: true,
-        sameSiteStrict: true,
-        secure: true,
-        site: process.env["NEXT_PUBLIC_AT_PIANO_SITE_ID"],
-      });
+    const synchroniserApresChangement = () => {
+      setAnalyticsConsent(hasAnalyticsConsent());
+    };
 
-      if (router.pathname.includes("[numeroFiness]")) {
-        atPiano.page.send({ name: router.pathname });
-      } else {
-        atPiano.page.send({ name: router.asPath });
-      }
-    }
-  });
+    synchroniserApresChangement();
+    window.addEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, synchroniserApresChangement);
+
+    return () => {
+      window.removeEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, synchroniserApresChangement);
+    };
+  }, []);
 
   useEffect(resizeChartOnPrint, []);
   useEffect(() => {
@@ -80,9 +77,23 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.addEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
+  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
+
+  useEffect(() => {
+    const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
+    if (!analyticsConsent || !MATOMO_URL || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled ) {
+      return;
+    }
+
+    trackPagesRouter({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+    matomoInitialise.current = true;
+  }, [MATOMO_SITE_ID, MATOMO_URL, analyticsConsent]);
+
   return (
     <SessionProvider session={session}>
       <UserContextProvider>
@@ -93,15 +104,12 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
                 <Head>
                   <meta charSet="utf-8" />
                   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
-                  {/*<script src="/tarteaucitron.min.js"></script>
-              <script src="/tarteaucitron.init.js"></script>*/}
                 </Head>
                 <Header />
                 <Component {...pageProps} />
                 <Footer />
                 <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
                 <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
-                {process.env.NODE_ENV !== "development" && <Script src="/smarttag.js" strategy="beforeInteractive" />}
               </DependenciesProvider>
             </ComparaisonContextProvider>
           </RechecheAvanceeContextProvider>

@@ -1,9 +1,11 @@
-import * as fs from 'fs';
 import nextJest from "next/jest";
+import * as fs from 'node:fs';
+
+import type { Config } from "jest";
 
 const createJestConfig = nextJest({ dir: "./" });
 
-const customJestConfig = {
+const customJestConfig: Config = {
   clearMocks: true,
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",

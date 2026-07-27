@@ -1,12 +1,109 @@
 # Changelog d'Helios
 
-## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (TODO)
+## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (TO-DO)
 
 ### Bug Fixes
 
+### Features
+
+
+## [1.8.13.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.13.1) (2026-07-27)
+
+- hel-1090: [Bloc Budget et finances] Masquer les données de STARS FIR
+
+
+## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (2026-07-21)
+
+### Bug Fixes
+- hel-1035: [HAPI FIR] Incohérence des montants affichés sur l'enveloppe FIR en prod
+- hel-1086: [PROD] [PPROD] Recherche avancée étb sanitaire - résultat avec etb MS
+
+### Features
+- hel-1071: [Footer] Gestion des cookies -mise à jour
+- hel-1081: [Qualité du code] Reliability
+- hel-1078: [Securité] Elements bloqués en raison de la politique CSP renforcée
+
+
+## [1.8.12](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.11...release/1.8.12) (2026-07-06)
+
+### Bug Fixes
+- hel-1084: [Technique] Fichier FINESS vide - Ajustement des batch
+- hel-1082: [Technique] Fichier FINESS vide - Ajustement des batch
+- hel-1041: fix retours matomo 
 
 ### Features
 
+## [1.8.11](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.10...release/1.8.11) (2026-06-30)
+
+### Bug Fixes
+- hel-1074: Ajout des directives CSP nécessaires pour Matomo et Atlasanté
+- hel-1070: [Connexion] Call-to-action sur boutons et hyperlien KO en préprod
+
+### Features
+- hel-1050: Ajout d’event Matomo lors de l’export
+- hel-1057: Ajout d'event Matomo lors de la consultation de la console admin
+- hel-1054: Ajout d'event Matomo lors de la consultation de la cartographie
+- hel-1053: Ajout d'event Matomo lors de la recherche simple
+- hel-1055: Ajout d'event Matomo lors de la consultation de l'historique
+- hel-1047: Ajout d'event Matomo lors de la connexion 
+- hel-1052: [Matomo] Indicateur Nb d'utilisateurs actifs/inactifs
+- hel-1051: Ajout d'event Matomo lors de la recherche avancée
+- hel-1056: Ajout d'event Matomo lors de la consultation de la page aide
+- hel-1048: Ajout d'event Matomo lors de la création d'une liste
+
+## [1.8.10](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.9...release/1.8.10) (2026-06-15)
+
+### Bug Fixes
+
+- hel-1066: [Paramétrage] Message affiché en dehors de l'encadré
+
+### Features
+
+- hel-1067: [Paramétrage] Insérer un lien hypertexte dans le message
+- hel-1061: [RGAA] suite de la mise en conformité script 7.1
+- hel-1063: [RGAA] Mise en conformité Présentation information 10.9
+- hel-1064: [RGAA] Mise en conformité Image 1.6
+
+## [1.8.9](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.8...release/1.8.9) (2026-06-01)
+
+### Bug Fixes
+
+### Features
+
+- hel-1059: [Compte doublon] Mise en place d'un cron pour vérifier la création
+- hel-1023: [Paramétrage]Historique des messages
+- hel-1022: [Paramétrage] Mise à jour du message d'accueil
+- hel-1026: [Paramétrage]Affichage du message
+- hel-1033: Retrait du message d’erreur en cas de compte existant dans le formulaire de création de compte
+- hel-1044: Ajouter la donnée etablissement principale/secondaire dans l’export des EJ
+- hel-1036: [RGPD] exercer les droits en matière de données personnelles
+- hel-1039: Ajout de Matomo
+
+## [1.8.8](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.7...release/1.8.8) (2026-05-20)
+
+### Bug Fixes
+
+- hel-1045: Erreur consultation vignette
+- hel-1024: Retrait des informations non nécessaire du retour back des informations utilisateur
+- hel-1014: Ajout des validation manquantes pour la validation des modifications des utilisateurs
+- hel-1038: [Comparaison] Tag Année absence de 2026
+- hel-1042: Renommage de l’indicateur «Certification HAS» en «Evaluation HAS»
+
+### Features
+
+- hel-1028: [Fiche] Erreur de message
+- Hel-1018: [RGAA] Mise en conformité script 7.1
+- hel-1027: [Sécurité] Renforcer la politique Content-Security-Policy (CSP)
+- hel-1015: Export Fiche EJ - ajouter la cat FINESS das ET rattachés
+- hel-1016: Mise en conformité liens explicite
+- hel-1025: [Sécurité] Ajouter l'entête X-Xss-Protection
+- hel-980: Ajout d’un batch de téléchargement des fichiers starsfir
+- hel-1010: Modification du batch HAPI pour traiter le nouveau fichier starFIR
+- hel-1009: Traitement des retours dependabot
+- hel-1020: [RGAA] Mise en conformité Image 1.1
+- hel-1021: [RGAA] Mise en conformité Navigation 12.9
+- hel-1031: [Sécurité] Restreindre l'accès à la page d'accueil au RIE
+- hel-1030: [Sécurité] Ajouter une vérification des jetons anti-CSRF dans des requêtes
 
 ## [1.8.7](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.6...release/1.8.7) (2026-04-16)
 
@@ -33,6 +130,10 @@
 - hel-1014: Ajout dans le back de toutes les vérifications pour éviter une escalade de privilèges lors de la mise à jour d’un utilisateur
 - hel-1012: Ajout des informations sur les nouveaux indicateurs de budget dans le fichier d'export de comparaison
 - vr-169: Affichage des étiquettes d'année dans les vues trimestrielles incomplètes
+<<<<<<< HEAD
+- hel-995: Etablissement fermé non affiché dans liste et historique
+=======
+>>>>>>> master
 
 ### Features
 

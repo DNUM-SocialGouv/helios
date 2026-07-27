@@ -105,6 +105,7 @@ import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773
 import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
+import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -112,6 +113,7 @@ import { AjoutBudgetEtFinanceAProfilETSanitaire1797688226682 } from "./migration
 import { AjoutAllocationDeRessourcesToBudgetEtFinance1798688226682 } from "./migrations/1798688226682-AjoutAllocationDeRessourcesToBudgetEtFinance";
 import { AjoutDesOccupationsDansLesProfils1799478704013 } from "./migrations/1799478704013-AjoutDesOccupationsDansLesProfils";
 import { AjoutLesJourneesUsldDansLesProfils1799501916707 } from "./migrations/1799501916707-AjoutLesJourneesUsldDansLesProfils";
+import { AjoutLienHypertexteMessageAccueil1806000000000 } from "./migrations/1806000000000-AjoutLienHypertexteMessageAccueil";
 import { AjoutVigieRhContrat1738320902145 } from "./migrations/vigie_rh/1738320902145-AjoutVigieRhContrat";
 import { AjoutVigieRhProfessionFiliere1738328763147 } from "./migrations/vigie_rh/1738328763147-AjoutVigieRhProfessionFiliere";
 import { AjoutVigieRhProfessionGroupe1738328796095 } from "./migrations/vigie_rh/1738328796095-AjoutVigieRhProfessionGroupe";
@@ -161,6 +163,7 @@ import { EvenementIndesirableETModel } from "./models/EvenementIndesirableModel"
 import { FavorisModel } from "./models/FavorisModel";
 import { InspectionsControlesETModel } from "./models/InspectionsModel";
 import { InstitutionModel } from "./models/InstitutionModel";
+import { MessageAccueilModel } from "./models/MessageAccueilModel";
 import { ParametrageJsonModel } from "./models/ParametrageJsonModel";
 import { ProfilModel } from "./models/ProfilModel";
 import { QualiteQualiscopeHASModel } from "./models/QualiteQualiscopeHasModel";
@@ -266,7 +269,8 @@ const datasource = new DataSource({
     VigieRhNatureContratsAnnuelModel,
     VigieRhNatureContratsTrimestrielModel,
     QualiteQualiscopeHASModel,
-    QualiteQualiscopeHasMsModel
+    QualiteQualiscopeHasMsModel,
+    MessageAccueilModel
   ],
   logger: "debug",
   logging: [environmentVariables.ORM_DEBUG] as LoggerOptions,
@@ -407,7 +411,9 @@ const datasource = new DataSource({
     AjoutProfilBesoinFondDeRoulement1773152515839,
     AjoutProfilTresorerie1773223041788,
     AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368,
-    SuppressionNomenclatureAMM1774521749651
+    SuppressionNomenclatureAMM1774521749651,
+    AjoutTableMessageAccueil1779354621997,
+    AjoutLienHypertexteMessageAccueil1806000000000,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

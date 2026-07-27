@@ -1,7 +1,7 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
-import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
+import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../entities/ResultatRechercheUtilisateur";
 import { Institution } from "../entities/Utilisateur/Institution";
-import { RésultatLogin, PasswordStatus } from "../entities/Utilisateur/RésultatLogin";
+import { PasswordStatus, RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 
 export interface UtilisateurLoader {
   login(email: string, password: string): Promise<RésultatLogin>;
@@ -23,8 +23,8 @@ export interface UtilisateurLoader {
     itemsPerPage: number,
     orderBy: string,
     sortDir: string
-  ): Promise<void>;
-  getUserByCode(code: string): Promise<UtilisateurModel | null>;
+  ): Promise<ResultatRechercheUtilisateur>;
+  getUserByCode(code: string): Promise<RechercheUtilisateur | null>;
   updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[], firstname: string, lastname: string): Promise<void>;
   deleteUser(userCode: string): Promise<string | void>;
   reactivateUser(userCode: string): Promise<string | void>;

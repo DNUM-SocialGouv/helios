@@ -39,8 +39,7 @@ export function formatNumbuerWithSpaces(number: number) {
   // Convertir le nombre en une chaîne de caractères
   const numberString = numberV2.toString();
   // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
-  // La regex (?=(?:\d{3})+(?!\d)) est utilisée pour placer les espaces
-  const formattedString = numberString.replaceAll(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const formattedString = numberString.replaceAll(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1 ');
   return formattedString;
 }
 
@@ -262,9 +261,11 @@ export class AllocationRessourcesViewModel {
 
   public lesAnnéesEffectivesDuAllocationRessources(): number[] {
     if (this.allocationRessourcesData && this.allocationRessourcesData.data) {
+      const currentYear = new Date().getFullYear();
+      const minYear = currentYear - (this.NOMBRE_ANNEES - 1); // On garde cette année et les 4dernières
       return this.allocationRessourcesData.data
-        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources))
-        .map((allocationRessources) => allocationRessources.année);
+        .filter((allocationRessources) => !this.allocationRessourcesVide(allocationRessources) && allocationRessources.année <= currentYear && allocationRessources.année >= minYear)
+        .map((allocationRessources) => allocationRessources.année)
     }
     return [];
   }
@@ -335,6 +336,7 @@ export class AllocationRessourcesViewModel {
               couleursDuDoughnut={couleursDuDoughnut}
               couleursLibelle={couleursDesLibelles}
               idDeLaLégende={this.IDENTIFIANT_DE_LA_LÉGENDE_DES_ALLOCATION_RESSOURCES}
+              idDeLaTranscription={this.wording.REPARTITION_DES_ENVELOPPES.replaceAll(/\s/g, "")}
               libellés={motifsDesAllocationDeRessourceWithPourcentage}
               title={this.wording.REPARTITION_DES_ENVELOPPES}
               total={1}

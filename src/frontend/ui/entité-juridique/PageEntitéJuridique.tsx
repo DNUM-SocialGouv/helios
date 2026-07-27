@@ -20,6 +20,8 @@ import { useExportExcelETRattache } from "./ExportExcelETRattaches";
 import { BlocIdentité } from "./fiche-d-identité/BlocIdentité";
 import { EtablissementsTerritoriauxRattachésViewModel } from "./liste-des-établissements/EtablissementsTerritoriauxRattachésViewModel";
 import { ListeDesÉtablissementsTerritoriauxRattachés } from "./liste-des-établissements/ListeDesÉtablissementsTerritoriauxRattachés";
+import { sendEvent , EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
 type EntitéJuridiqueProps = Readonly<{
@@ -44,6 +46,12 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
     documentTitle: entitéJuridiqueViewModel.titre,
   });
 
+  const downloadPDF = () => {
+    sendEvent(EXPORT(SourceMatomo.FICHE_ETABLISSEMENT));
+    handlePrint();
+  };
+
+
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue } = useToggelMultipleBlocs(false, 4, 0);
 
   const { exportEtRattache } = useExportExcelETRattache(entitéJuridiqueViewModel, établissementsTerritoriauxRattachésViewModels);
@@ -54,7 +62,7 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
       </Head>
       <div className="print-content" ref={componentRef}>
         <Catégorisation catégorisationViewModel={entitéJuridiqueViewModel.catégorisationViewModel} />
-        <Titre downloadPDF={handlePrint} exportET={exportEtRattache} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
+        <Titre downloadPDF={downloadPDF} exportET={exportEtRattache} logo={LogoEntitéJuridique} rechercheViewModel={rechercheViewModel}>
           {entitéJuridiqueViewModel.titre}
         </Titre>
         <BlocIdentité entitéJuridiqueViewModel={entitéJuridiqueViewModel} />

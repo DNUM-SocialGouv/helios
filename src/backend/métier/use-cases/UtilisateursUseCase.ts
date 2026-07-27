@@ -1,4 +1,4 @@
-import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
+import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../entities/ResultatRechercheUtilisateur";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class UtilisateursUseCase {
@@ -14,11 +14,11 @@ export class UtilisateursUseCase {
     itemsPerPage: number,
     orderBy: string,
     sortDir: string
-  ): Promise<void> {
+  ): Promise<ResultatRechercheUtilisateur> {
     return await this.utilisateurLoader.getUsersListPaginated(key, pdescrtion, institutionId, roleId, profilId, etatId, itemsPerPage, orderBy, sortDir);
   }
 
-  async getUserByCode(code: string): Promise<UtilisateurModel | null> {
+  async getUserByCode(code: string): Promise<RechercheUtilisateur | null> {
     return await this.utilisateurLoader.getUserByCode(code);
   }
 

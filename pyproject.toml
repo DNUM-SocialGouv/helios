@@ -13,6 +13,10 @@ plugins = ["sqlmypy"]
 disallow_untyped_defs = true
 exclude = ["spikes"]
 
+[[tool.mypy.overrides]]
+module = ["ftputil", "ftputil.*"]
+ignore_missing_imports = true
+
 [tool.pylint."messages control"]
 confidence = []
 disable = [

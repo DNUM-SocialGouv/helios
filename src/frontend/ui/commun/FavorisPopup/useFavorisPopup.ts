@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 
+import { sendEvent, CREATION_LISTE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { UserListViewModel } from "../../user-list/UserListViewModel";
 import { useDependencies } from "../contexts/useDependencies";
@@ -36,6 +37,7 @@ export function useFavorisPopup(
   }
 
   const handleListCreation = async () => {
+    sendEvent(CREATION_LISTE);
     setNewListError(false);
     setAddToListError(false);
 

@@ -17,7 +17,7 @@ export const GraphiqueCertificationQualiscope = ({ hasFichePath }: GraphiqueCert
         nomDeLIndicateur={wording.CERTIFICATION_QUALISCOPE}
         source={wording.HAS}
       >
-        <a className="fr-link fr-link--sm" href={hasFichePath} rel="noopener external noreferrer" target="_blank" title="Lien vers HAS">
+        <a className="fr-link fr-link--sm" href={hasFichePath} rel="noopener external noreferrer" target="_blank" title={`fiche HAS - ${wording.NOUVELLE_FENÊTRE}`}>
           {hasFichePath}
         </a>
       </IndicateurGraphique>

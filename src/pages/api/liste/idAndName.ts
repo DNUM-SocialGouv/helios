@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { getAllIdAndName } from "../../../backend/infrastructure/controllers/userListEndpoint";
 import { authOptions } from "../auth/[...nextauth]";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   const userSession = await getServerSession(request, response, authOptions);
@@ -24,6 +25,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
 async function doGetIdAndName(request: NextApiRequest, response: NextApiResponse) {
   const userSession = await getServerSession(request, response, authOptions);
+  if (!requireCsrf(request, response)) {
+      return;
+  }
   const idUser = userSession?.user?.idUser;
   if (idUser) {
     const listsIdAndNames = await getAllIdAndName(idUser);

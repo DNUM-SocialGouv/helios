@@ -1,10 +1,9 @@
-
-
-
 import { Workbook } from "exceljs";
 
 import { Paths } from "../../configuration/Paths";
 import { ecrireLignesDansSheet, telechargerWorkbook } from "../../utils/excelUtils";
+import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
+import { SourceMatomo } from "../../utils/SourceMatomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { RechercheViewModel } from "../home/RechercheViewModel";
 
@@ -62,6 +61,8 @@ function ExportToExcel(headers: string[], data: (string | number)[][], fileName:
 async function generateAndExportExcel(
   listId: number, listName: string, order: string, orderBy: string, paths: Paths,
 ) {
+  sendEvent(EXPORT(SourceMatomo.GESTION_LISTE));
+
   const fileName: string = `${getCurrentDate()}_Helios_${listName}.xlsx`;
   const data = await getListEtsData(listId, paths, order, orderBy)
   const dataTransormed = transformData(data);

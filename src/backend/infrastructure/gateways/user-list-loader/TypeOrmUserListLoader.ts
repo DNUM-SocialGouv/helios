@@ -22,10 +22,40 @@ export class TypeOrmUserListLoader implements UserListLoader {
     return { ...userListModel, ...insertResult.generatedMaps[0] };
   }
   async getAll(idUser: string): Promise<UserListModel[]> {
-    return await (await this.orm).getRepository(UserListModel).findBy({ userId: idUser });
+    const requete = await (await this.orm)
+      .getRepository(UserListModel)
+      .createQueryBuilder("list")
+      .leftJoinAndSelect(
+        "list.userListEtablissements",
+        "ule",
+        `EXISTS (
+        SELECT 1
+        FROM recherche r
+        WHERE r.numero_finess = ule.numero_finess
+      )`
+      )
+      .where("list.userId = :idUser", { idUser });
+
+    return requete.getMany();
   }
   async getById(idUser: string, idList: number): Promise<UserListModel | null> {
-    return await (await this.orm).getRepository(UserListModel).findOneBy({ id: idList, userId: idUser });
+
+    const requete = await (await this.orm)
+      .getRepository(UserListModel)
+      .createQueryBuilder("list")
+      .leftJoinAndSelect(
+        "list.userListEtablissements",
+        "ule",
+        `EXISTS (
+        SELECT 1
+        FROM recherche r
+        WHERE r.numero_finess = ule.numero_finess
+      )`
+      )
+      .where("list.id = :idList", { idList })
+      .andWhere("list.userId = :idUser", { idUser })
+
+    return requete.getOne();
   }
   async getAllIdAndName(idUser: string): Promise<InformationSurListe[]> {
     const requêteDeLaRecherche = (await this.orm)

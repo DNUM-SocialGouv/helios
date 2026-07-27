@@ -32,7 +32,7 @@ export const TuileEtablissement = ({
         <div className="fr-tile__body fr-enlarge-link">
           <div className={"fr-tile__content " + styles["content"]}>
             <h2 className="fr-tile__title">
-              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien(isSimpleSearch)} rel="noreferrer">
+              <a className={styles["texte-noir"]} href={rechercheViewModel.construisLeLien(isSimpleSearch)} rel="noreferrer" title={rechercheViewModel.socialReason}>
                 {rechercheViewModel.titre}
               </a>
             </h2>
@@ -40,10 +40,19 @@ export const TuileEtablissement = ({
           </div>
         </div>
         <div>
-          <Image alt="" className={styles["logo"]} height="40" src={rechercheViewModel.afficheLeLogo()} width="40" />
+          <Image 
+            alt={`Logo d'un établissement ${rechercheViewModel.type}`} 
+            className={styles["logo"]} 
+            height="40" 
+            src={rechercheViewModel.afficheLeLogo()} 
+            title={`Logo d'un établissement ${rechercheViewModel.type}`}
+            width="40" 
+          />
         </div>
       </div>
-      <div className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}>
+      <div 
+      className={(isInFavoris() ? "fr-icon-star-fill .fr-icon--lg " + styles["starInEstablishment"] : "fr-icon-star-line .fr-icon--lg " + styles["hidden-star"])}
+      title={isInFavoris() ? wording.DANS_FAVORIS : ''}>
         <span className="fr-sr-only">
           {isInFavoris() ? wording.DANS_FAVORIS : wording.NON_FAVORIS}
         </span>

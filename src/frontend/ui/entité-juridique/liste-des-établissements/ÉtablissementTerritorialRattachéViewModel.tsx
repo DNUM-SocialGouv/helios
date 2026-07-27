@@ -20,6 +20,21 @@ export class EtablissementTerritorialRattacheViewModel {
     return this.etablissementTerritorialRattache.libelléCatégorieÉtablissement;
   }
 
+  public get libelleCourtCategorieEtablissement(): string {
+    return this.etablissementTerritorialRattache.libelleCourtCategorieEtablissement;
+  }
+
+  public get categorieEtablissementCode(): string {
+    return this.etablissementTerritorialRattache.categorieEtablissementCode;
+  }
+
+  public get principalLabel(): string {
+    return this.etablissementTerritorialRattache.typeÉtablissement === "P"
+      ? this.wording.PRINCIPAL
+      : `${this.wording.SECONDAIRE} (${this.wording.PRINCIPAL}: ${this.etablissementTerritorialRattache.numeroFinessEtablissementPrincipal})`;
+
+  }
+
   public get identifiant(): ReactElement {
     return (
       <>

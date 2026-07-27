@@ -3,11 +3,17 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { loginErrorEndpoint } from "../../../backend/infrastructure/controllers/loginErrorEndpoint";
 import { dependencies } from "../../../backend/infrastructure/dependencies";
 import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
+import { requireCsrf } from "../../../lib/require-csrf";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method !== "POST") {
     return response.status(405).send("Method not allowed");
   }
+
+  if (!requireCsrf(request, response)) {
+    return;
+  }
+  
   try {
     const { email } = request.body;
     const resp = await loginErrorEndpoint(dependencies, email);

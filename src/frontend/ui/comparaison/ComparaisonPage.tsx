@@ -9,7 +9,7 @@ import { useModalSelectionIndicateur } from "./useModalSelectionIndicateur";
 import { DatesMisAjourSources } from "../../../backend/métier/entities/ResultatDeComparaison";
 import { ComparaisonContext } from "../commun/contexts/ComparaisonContext";
 import { useDependencies } from "../commun/contexts/useDependencies";
-import { InfoBulle } from "../commun/InfoBulle/InfoBulle";
+import { InfoBulleComparaison } from "../commun/InfoBulle/InfoBulleComparaison";
 import { SuccessAlert } from "../commun/SuccessAlert/SuccessAlert";
 import { Table } from "../commun/Table/Table";
 import { TableData } from "../commun/Table/TableData";
@@ -323,9 +323,9 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
         {/* Affichage conditionnel pendant le chargement */}
         {results()}
       </div>
-      <InfoBulle estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
+      <InfoBulleComparaison estCeOuvert={estCeOuvert} identifiant="info-bull-comparaison-table" setEstCeOuvert={setEstCeOuvert} titre={titre}>
         <>{contenu}</>
-      </InfoBulle>
+      </InfoBulleComparaison>
       {generateModal()}
     </main>
   );

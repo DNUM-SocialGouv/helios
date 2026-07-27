@@ -21,7 +21,7 @@ export const Footer = () => {
               className="fr-footer__brand-link"
               href={paths.ACCUEIL}
               title={wording.ACCUEIL}>
-              <Image alt="" height="100" src="/logo.svg" width="100" />
+              <Image alt={wording.ACCUEIL} height="100" src="/logo.svg" width="100" />
             </Link>
           </div>
           <div className="fr-footer__content">
@@ -96,9 +96,11 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <Link
+              <button
+                aria-controls="fr-modal-privacyPolicy"
+                aria-expanded={openModal}
+                aria-haspopup="dialog"
                 className="fr-footer__bottom-link"
-                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   setOpenModal(true);
@@ -106,7 +108,7 @@ export const Footer = () => {
                 }}
               >
                 {wording.COOKIES}
-              </Link>
+              </button>
             </li>
             <li className="fr-footer__bottom-item">
               <Link
@@ -121,7 +123,7 @@ export const Footer = () => {
               </a>
             </li>
             <li className="fr-footer__bottom-item">
-              <span className="fr-footer__bottom-link"> v1.8.7.1</span>
+              <span className="fr-footer__bottom-link"> v1.8.13.1</span>
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">

@@ -24,6 +24,7 @@ export function DonutNoCenterText(props: {
   couleursLibelle: string[];
   total: number;
   idDeLaLégende: string;
+  idDeLaTranscription: string;
 }): JSX.Element {
   const data = {
     datasets: [
@@ -45,9 +46,11 @@ export function DonutNoCenterText(props: {
       <div className={styles["donut-wrapper"]}>
         <div>
           <Doughnut
+            aria-describedby={props.idDeLaTranscription}
             data={data}
             options={optionsDiagrammeDoughnut(props.idDeLaLégende, props.libellés)}
             plugins={[construisLePluginDeLaLegendeDonut()]}
+            title={`Graphique ${props.title || ""}`}
           />
         </div>
         <menu className={styles["légende-donut"]} id={props.idDeLaLégende} />

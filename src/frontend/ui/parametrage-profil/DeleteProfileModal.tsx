@@ -15,9 +15,12 @@ const DeleteProfileModal = (
   const router = useRouter();
 
   const deleteProfile = async (profileId: number) => {
+    const csrfRes = await fetch("/api/csrf");
+    const { csrfToken } = await csrfRes.json();
+    
     await fetch("/api/profile/delete", {
       body: JSON.stringify({ profileId: profileId }),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "DELETE",
     }).then(async () => {
       router.push(paths.PROFILES_LIST);

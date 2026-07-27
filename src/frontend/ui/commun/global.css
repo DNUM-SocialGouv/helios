@@ -127,3 +127,18 @@ iframe {
     display: grid;
   }
 }
+/* Fix pour l'utilisation de <dialog> natif avec le DSFR (InfoBulle) */
+dialog.fr-modal:modal {
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+dialog.fr-modal:modal::backdrop {
+  background-color: hsla(0, 0%, 9%, 0.64);
+}

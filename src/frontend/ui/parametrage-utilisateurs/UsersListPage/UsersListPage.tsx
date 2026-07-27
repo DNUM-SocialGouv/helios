@@ -1,17 +1,15 @@
-"use client";
-
-import "@gouvfr/dsfr/dist/component/table/table.min.css";
-import "@gouvfr/dsfr/dist/component/select/select.min.css";
 import "@gouvfr/dsfr/dist/component/alert/alert.min.css";
+import "@gouvfr/dsfr/dist/component/select/select.min.css";
+import "@gouvfr/dsfr/dist/component/table/table.min.css";
 
-import { useQueryState, parseAsInteger, parseAsString } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useCallback, useEffect, useState } from "react";
 
 import ExportExcel from "./Pagination/ExportExcel/ExportExcel";
 import { InstitutionModel } from "../../../../../database/models/InstitutionModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RoleModel } from "../../../../../database/models/RoleModel";
-import { UtilisateurModel } from "../../../../../database/models/UtilisateurModel";
+import { ResultatRechercheUtilisateur, RechercheUtilisateur } from "../../../../backend/métier/entities/ResultatRechercheUtilisateur";
 import { formatDateAndHours } from "../../../utils/dateUtils";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import AdvancedFilter from "./Pagination/Filter/AdvancedFilter/AdvancedFilter";
@@ -55,7 +53,7 @@ export interface iPaginationData {
   setProfileId: (profileId: string) => Promise<URLSearchParams>;
   setRoleId: (roleId: number) => Promise<URLSearchParams>;
   setTotal: (total: number) => void;
-  setUserData: (userData: UtilisateurModel[]) => void;
+  setUserData: (userData: RechercheUtilisateur[]) => void;
   setItemsPerPage: (itemsPerPage: number) => Promise<URLSearchParams>;
   setEtatId: (etatId: string) => Promise<URLSearchParams>;
   getUsersAndRefresh: (params: any, setUserData: any, setPage: any, setLastPage: any, setTotal: any) => Promise<void>;
@@ -76,13 +74,7 @@ export interface IQueryParams {
 }
 
 type UsersListPageProps = Readonly<{
-  users: {
-    data: UtilisateurModel[];
-    total: number;
-    currentPage: number;
-    keyWord: string;
-    lastPage: number;
-  };
+  users: ResultatRechercheUtilisateur;
   keyWord: string;
   institutions: InstitutionModel[];
   profiles: ProfilModel[];
@@ -117,7 +109,7 @@ const UsersListPage = ({
   sortDirPage,
   institutionSessionCode,
 }: UsersListPageProps) => {
-  const [userData, setUserData] = useState<UtilisateurModel[]>(users.data);
+  const [userData, setUserData] = useState<RechercheUtilisateur[]>(users.data);
   const [total, setTotal] = useState(users.total);
   const [lastPage, setLastPage] = useState(users.lastPage);
 
@@ -310,23 +302,23 @@ const UsersListPage = ({
                   <TheadTable paginationData={paginationData} />
                   <tbody>
                     {userData &&
-                      userData.map((user: UtilisateurModel) => {
+                      userData.map((user: RechercheUtilisateur) => {
                         const roleClass = roleClasses[user.role.id] || "info";
 
                         return (
                           <tr key={user.id}>
                             <td className={styles["widthTD-small"]} key={`${user.id}-nom`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.nom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]} key={`${user.id}-prenom`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.prenom}
                               </a>
                             </td>
                             <td className={styles["widthTD-small"]} key={`${user.id}-email`}>
-                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`}>
+                              <a className="fr-raw-link" href={`/settings/users/${user.code}?${queryParams}`} title={`page utilisateur : ${user.prenom} ${user.nom}`}>
                                 {user.email}
                               </a>
                             </td>

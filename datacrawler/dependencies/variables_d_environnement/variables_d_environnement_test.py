@@ -52,10 +52,10 @@ class TestVariablesDEnvironnement:
             "DNUM_SFTP_USERNAME": "test",
             "DNUM_SFTP_PRIVATE_KEY": "test",
             "SIREC_DATA_PATH": "test",
-            "HAPI_SFTP_PASSWORD": "test",
-            "HAPI_SFTP_USERNAME": "test",
-            "HAPI_SFTP_PORT": "test",
-            "HAPI_SFTP_HOST": "test",
+            "HAPI_FTPS_PASSWORD": "test",
+            "HAPI_FTPS_USERNAME": "test",
+            "HAPI_FTPS_PORT": "test",
+            "HAPI_FTPS_HOST": "test",
             "SFTP_HOST": "test",
             "SFTP_PORT": "test",
             "SFTP_USERNAME": "test",
@@ -64,7 +64,11 @@ class TestVariablesDEnvironnement:
             "TIPIMAIL_SENDER_ADDRESS": "test",
             "TIPIMAIL_APIUSER": "test",
             "TIPIMAIL_APIKEY": "test",
-            "TIPIMAIL_TO_ADDRESSES": "test"
+            "TIPIMAIL_TO_ADDRESSES": "test",
+            "SUPPORT_EMAIL": "test",
+            "MATOMO_API_TOKEN": "test",
+            "NEXT_PUBLIC_MATOMO_SITE_ID": "test",
+            "NEXT_PUBLIC_MATOMO_URL": "test"
         }
 
         # WHEN

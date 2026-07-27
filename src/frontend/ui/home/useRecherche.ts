@@ -3,6 +3,7 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 
 import { RechercheViewModel } from "./RechercheViewModel";
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
+import { sendEvent, RECHERCHE_SIMPLE } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useFavoris } from "../favoris/useFavoris";
 
@@ -52,6 +53,7 @@ export function useRecherche() {
   });
 
   const lancerLaRecherche = (event: MouseEvent | ChangeEvent<HTMLInputElement>, displayTable: boolean) => {
+    sendEvent(RECHERCHE_SIMPLE);
     getFavorisLists();
     if (event) event.preventDefault();
     setState({
@@ -75,7 +77,7 @@ export function useRecherche() {
     });
   };
 
-  const rechercher = (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
+  const rechercher = async (terme: string, page: number, order?: string, orderBy?: string, displayTable?: boolean) => {
     fetch("/api/recherche", {
       body: JSON.stringify({ page, terme, order, orderBy, displayTable }),
       headers: { "Content-Type": "application/json" },
