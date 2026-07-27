@@ -49,3 +49,4 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
 
   return { exportEtRattache }
 }
+  

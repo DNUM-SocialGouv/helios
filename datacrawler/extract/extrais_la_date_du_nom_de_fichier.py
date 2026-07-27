@@ -40,7 +40,6 @@ def extrais_la_date_du_nom_de_fichier_vigie_rh(chemin_du_ficher: str) -> str:
 
     raise ValueError("Le nom du fichier ne contient pas de date valide.")
 
-
 def extrais_la_date_du_nom_de_fichier_engagements_starsfir(chemin_du_fichier: str) -> str:
     # Pattern: "2026_engagements_exporter_20260318.csv" → "20260318"
     nom = Path(chemin_du_fichier).stem  # "2026_engagements_exporter_20260318"

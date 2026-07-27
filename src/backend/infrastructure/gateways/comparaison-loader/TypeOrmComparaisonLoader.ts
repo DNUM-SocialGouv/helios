@@ -116,10 +116,13 @@ export class TypeOrmComparaisonLoader implements ComparaisonLoader {
 FROM (
 					SELECT max(annee) maxannee FROM (
 					Select annee from budget_et_finances_entite_juridique bg where bg.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+<<<<<<< HEAD
           UNION
           Select annee from activite_sanitaire_entite_juridique acs where acs.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
           UNION
           Select annee from ressources_humaines_entite_juridique rh where rh.numero_finess_entite_juridique in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+=======
+>>>>>>> master
 			) anc ) ang`;
       const generateAnneesResult = await (await this.orm).query(generateAnnees);
       return generateAnneesResult.map((item: any) => item.annee);
@@ -137,10 +140,13 @@ FROM (
        			FROM (
 					SELECT max(annee) maxannee FROM (
 					Select annee from budget_et_finances_medico_social budget where budget.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+<<<<<<< HEAD
           UNION
           Select annee from ressources_humaines_medico_social rh where rh.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
           UNION
           Select annee from activite_medico_social ac where ac.numero_finess_etablissement_territorial in  (${numerosFiness.map((finess) => "'" + finess + "'")})
+=======
+>>>>>>> master
 					  ) anc ) ang
 				`;
       const generateAnneesResult = await (await this.orm).query(generateAnnees);

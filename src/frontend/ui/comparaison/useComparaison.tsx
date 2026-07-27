@@ -145,7 +145,6 @@ export function useComparaison() {
 
     if (savedEnveloppesEjString === null || savedEnveloppesSanString === null || savedEnveloppesDateString !== today) {
       try {
-
         const response = await fetch("/api/comparaison/getTopEnveloppes", {
           headers: { "Content-Type": "application/json" },
           method: "GET",
