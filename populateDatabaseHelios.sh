@@ -35,6 +35,4 @@ python -m datacrawler.download_finess_data &&
 	python -m datacrawler.import_les_ms_pas_qualite_has &&
 	python -m datacrawler.download_hapi_data &&
 	python -m datacrawler.import_allocation_ressource_hapi &&
-	python -m datacrawler.download_starsfir_data &&
-	python -m datacrawler.import_allocation_ressource_starsfir &&
 	python -m datacrawler.ajoute_les_autorisations_des_établissements_sanitaires

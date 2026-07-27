@@ -6,6 +6,12 @@
 
 ### Features
 
+
+## [1.8.13.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.13.1) (2026-07-27)
+
+- hel-1090: [Bloc Budget et finances] Masquer les données de STARS FIR
+
+
 ## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (2026-07-21)
 
 ### Bug Fixes
