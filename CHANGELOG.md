@@ -1,8 +1,16 @@
 # Changelog d'Helios
 
-## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (TO-DO)
+## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (TO-DO)
 
 ### Bug Fixes
+
+### Features
+
+## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
+
+### Bug Fixes
+
+- hel-1094: [PROD] Comparaison non fonctionnel avec ET MS
 
 ### Features
 
