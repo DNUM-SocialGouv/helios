@@ -1,4 +1,6 @@
 from typing import Tuple
+import unicodedata
+import re
 import pandas as pd
 
 from datacrawler.transform.équivalences_finess_helios import (
@@ -16,6 +18,21 @@ CATEGORISATION = {
     "3000": "personne_morale_droit_etranger",
     "UNKNOWN": ""
 }
+
+def normalize_and_uppercase(value: str) -> str:
+    """Normaliser et mettre en majuscules selon les règles: NFD, suppression accents, tirets/apostrophes remplacés par espaces"""
+    if pd.isna(value) or not isinstance(value, str):
+        return value
+    if not value.strip():
+        return value
+    # Normalize to NFD (decomposed form)
+    normalized = unicodedata.normalize('NFD', value)
+    # Remove diacritics
+    normalized = ''.join(c for c in normalized if unicodedata.category(c) != 'Mn')
+    # Replace hyphens and apostrophes with spaces
+    normalized = re.sub(r"[\-']", " ", normalized)
+    # Convert to uppercase
+    return normalized.upper()
 
 def conserve_les_entites_juridiques_ouvertes(
     entites_juridiques_flux_finess: pd.DataFrame
@@ -78,6 +95,9 @@ def transform_les_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.Dat
         entites_juridiques['rslongue'].notna() & (entites_juridiques['rslongue'] != ''), entites_juridiques['rs'])
     entites_juridiques_filtrees = entites_juridiques.drop(
         columns=['statutjuridique','statutJuridiqueNiv2', 'statutJuridiqueNiv1', 'departement', 'datefermeture'])
+    # Normaliser et mettre en majuscules les colonnes commune et département
+    entites_juridiques_filtrees['libcommune'] = entites_juridiques_filtrees['libcommune'].apply(normalize_and_uppercase)
+    entites_juridiques_filtrees['libdepartement'] = entites_juridiques_filtrees['libdepartement'].apply(normalize_and_uppercase)
     return (
         entites_juridiques_filtrees
         .rename(columns=equivalences_finess_cs1400101_helios)

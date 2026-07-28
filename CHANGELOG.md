@@ -6,6 +6,8 @@
 
 ### Features
 
+- hel-1093: Zone géographique - Absence de résultat - normalize et uppercase les données géo de finess
+
 ## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (2026-07-21)
 
 ### Bug Fixes
