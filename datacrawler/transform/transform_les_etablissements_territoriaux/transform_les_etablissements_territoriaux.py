@@ -1,4 +1,6 @@
 from typing import Tuple
+import unicodedata
+import re
 
 import pandas as pd
 
@@ -17,6 +19,21 @@ def categoriser(categorie: str) -> str:
     if categorie == "SAN":
         return "Sanitaire"
     return "Médico-social"
+
+def normalize_and_uppercase(value: str) -> str:
+    """Normaliser et mettre en majuscules selon les règles: NFD, suppression accents, tirets/apostrophes remplacés par espaces"""
+    if pd.isna(value) or not isinstance(value, str):
+        return value
+    if not value.strip():
+        return value
+    # Normalize to NFD (decomposed form)
+    normalized = unicodedata.normalize('NFD', value)
+    # Remove diacritics
+    normalized = ''.join(c for c in normalized if unicodedata.category(c) != 'Mn')
+    # Replace hyphens and apostrophes with spaces
+    normalized = re.sub(r"[\-']", " ", normalized)
+    # Convert to uppercase
+    return normalized.upper()
 
 def classifier(value: str) -> str:
     if value in ['189', '190', '198', '461', '249', '448', '188', '246', '437', '195', '194', '192', '183', '186', '255', '182', '445', '464']:
@@ -58,6 +75,9 @@ def transform_les_etablissements_territoriaux(etablissements_territoriaux: pd.Da
     referentiel = referentiel.rename(columns={'ref_code_dep': 'departement'})
     etablissements_territoriaux_avec_code_region = pd.merge(etablissements_territoriaux, referentiel, on='departement', how='left')
     etablissements_territoriaux_filtres = etablissements_territoriaux_avec_code_region[colonnes_a_garder_finess_cs1400102]
+    # Normaliser et mettre en majuscules les colonnes commune et département
+    etablissements_territoriaux_filtres['libcommune'] = etablissements_territoriaux_filtres['libcommune'].apply(normalize_and_uppercase)
+    etablissements_territoriaux_filtres['libdepartement'] = etablissements_territoriaux_filtres['libdepartement'].apply(normalize_and_uppercase)
     return (
         etablissements_territoriaux_filtres
         .rename(columns=equivalences_finess_cs1400102_helios)
