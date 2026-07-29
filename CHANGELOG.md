@@ -1,16 +1,20 @@
 # Changelog d'Helios
 
-## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (TO-DO)
+## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (TO-DO)
 
 ### Bug Fixes
 
 ### Features
 
+## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
 
-## [1.8.13.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.13.1) (2026-07-27)
+### Bug Fixes
 
-- hel-1090: [Bloc Budget et finances] Masquer les données de STARS FIR
+- hel-1094: [PROD] Comparaison non fonctionnel avec ET MS
 
+### Features
+
+- hel-1093: Zone géographique - Absence de résultat - normalize et uppercase les données géo de finess
 
 ## [1.8.13](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.12...release/1.8.13) (2026-07-21)
 
