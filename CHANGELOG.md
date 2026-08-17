@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+- hel-1096: Traitement fichier Hapi Diamant à enlever du cron
+
 ### Features
 
 ## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
