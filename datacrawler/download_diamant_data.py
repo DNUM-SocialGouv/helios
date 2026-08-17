@@ -23,7 +23,6 @@ FILE_PREFIXES = [
     "MEN_PMSI_ANNUEL",
     "MEN_PMSI_MENCUMU",
     "QUO_SAN_FINANCE",
-    "MEN_HAPI",
 ]
 
 
