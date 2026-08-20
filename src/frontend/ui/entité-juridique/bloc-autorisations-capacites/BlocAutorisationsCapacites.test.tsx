@@ -48,6 +48,70 @@ describe("Bloc Autorisation et activités", () => {
     expect(titre).toBeInTheDocument();
   });
 
+  it("affiche le Graphique Autorisations médico-sociales", () => {
+    // GIVEN
+    viewModel.autorisationsMédicoSocial = mock<AutorisationsActivités>({
+      autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
+      dateMiseÀJourSource: '11/11/2025'
+    });
+
+    // WHEN
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} />);
+
+    // THEN
+    const titre = screen.getByText(wording.AUTORISATIONS_MS, { selector: "h3" });
+    expect(titre).toBeInTheDocument();
+  });
+
+  it("affiche les dates et capacités des autorisations médico-sociales pour chaque ET concerné", () => {
+    // GIVEN
+    const viewModel = new EntitéJuridiqueAutorisationsCapacitesViewModel(
+      [mock<CapacitéSanitaireEntitéJuridique>({ année: annéeEnCours - 1 })],
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<AutorisationActivitesAmm>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<AutresActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<ReconnaissanceContractuelleActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      mock<EquipementsMateriauxLourdsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
+      wording,
+      {
+        autorisations: [{
+          code: "657",
+          libelle: "Accueil temporaire pour Personnes Âgées",
+          modalites: [{
+            code: "11",
+            libelle: "Hébergement Complet Internat",
+            formes: [{
+              code: "702",
+              libelle: "PH vieillissantes",
+              autorisationEtablissements: [{
+                numeroFiness: "010000040",
+                nomEtablissement: "CH NANTUA",
+                autorisations: [
+                  { nom: wording.DATE_D_AUTORISATION, valeur: "01/01/2020" },
+                  { nom: wording.MISE_À_JOUR_AUTORISATION, valeur: "05/04/2020" },
+                  { nom: wording.DERNIÈRE_INSTALLATION, valeur: "03/02/2021" },
+                  { nom: wording.CAPACITÉ_AUTORISÉE, valeur: "10" },
+                  { nom: wording.CAPACITÉ_INSTALLÉE, valeur: "0" },
+                ],
+              }],
+            }],
+          }],
+        }],
+        dateMiseÀJourSource: '11/11/2025'
+      }
+    );
+
+    // WHEN
+    renderFakeComponent(<BlocAutorisationsCapacites entitéJuridiqueAutorisationsCapacitesViewModel={viewModel} etabFiness={etabFiness} etabNom={etabNom} etabTitle={etabTitle} />);
+
+    // THEN
+    expect(screen.getByText(`${wording.DATE_D_AUTORISATION} : 01/01/2020`)).toBeInTheDocument();
+    expect(screen.getByText(`${wording.MISE_À_JOUR_AUTORISATION} : 05/04/2020`)).toBeInTheDocument();
+    expect(screen.getByText(`${wording.DERNIÈRE_INSTALLATION} : 03/02/2021`)).toBeInTheDocument();
+    expect(screen.getByText(`${wording.CAPACITÉ_AUTORISÉE} : 10`)).toBeInTheDocument();
+    expect(screen.getByText(`${wording.CAPACITÉ_INSTALLÉE} : 0`)).toBeInTheDocument();
+  });
+
   it("affiche le Graphique Autres Activite", () => {
     // GIVEN
     viewModel.autresActivités = mock<AutresActivités>({

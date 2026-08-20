@@ -1,6 +1,7 @@
 import styles from './BlocAutorisationsCapacites.module.css';
 import { EntitéJuridiqueAutorisationsCapacitesViewModel } from "./EntitéJuridiqueAutorisationsCapacitesViewModel";
 import { useExportExcelAutorisation } from "./ExportExcelAutorisation"
+import { GraphiqueAutorisationsMédicoSociales } from "./GraphiqueAutorisationsMédicoSociales";
 import { Bloc } from "../../commun/Bloc/Bloc";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 import { BlocIndicateurVide } from "../../commun/IndicateurGraphique/BlocIndicateurVide";
@@ -28,6 +29,7 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
   if (
     entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsCapacitesNeSontPasRenseignées &&
     entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées() &&
+    entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées() &&
     entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées() &&
     entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées() &&
     entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()
@@ -66,6 +68,9 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
             entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsActivités}
             entiteJuridiqueAutorisationsAmm={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsAmmActivites}
           />
+        )}
+        {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées && (
+          <GraphiqueAutorisationsMédicoSociales entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsMédicoSocial} />
         )}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées && (
           <GraphiqueAutresActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autresActivités} />

@@ -4,6 +4,7 @@ import { TypeOrmEntiteJuridiqueLoader } from "./TypeOrmEntitéJuridiqueLoader";
 import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
+import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
@@ -35,6 +36,7 @@ describe("Entité juridique loader", () => {
   let capacitéSanitaireRepository: Repository<CapacitesSanitaireEntiteJuridiqueModel>;
   let etablissementTerritorialRepository: Repository<ÉtablissementTerritorialIdentitéModel>;
   let autorisationsActivitesRepository: Repository<AutorisationSanitaireModel>;
+  let autorisationsMédicoSocialRepository: Repository<AutorisationMédicoSocialModel>;
   let autresActivitesRepository: Repository<AutreActivitéSanitaireModel>;
   let reconnaissanceContractuelleRepository: Repository<ReconnaissanceContractuelleSanitaireModel>;
   let equipementMaterielLourdRepository: Repository<ÉquipementMatérielLourdSanitaireModel>;
@@ -49,6 +51,7 @@ describe("Entité juridique loader", () => {
     capacitéSanitaireRepository = (await orm).getRepository(CapacitesSanitaireEntiteJuridiqueModel);
     etablissementTerritorialRepository = (await orm).getRepository(ÉtablissementTerritorialIdentitéModel);
     autorisationsActivitesRepository = (await orm).getRepository(AutorisationSanitaireModel);
+    autorisationsMédicoSocialRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
     autresActivitesRepository = (await orm).getRepository(AutreActivitéSanitaireModel);
     reconnaissanceContractuelleRepository = (await orm).getRepository(ReconnaissanceContractuelleSanitaireModel);
     equipementMaterielLourdRepository = (await orm).getRepository(ÉquipementMatérielLourdSanitaireModel);
@@ -483,6 +486,64 @@ describe("Entité juridique loader", () => {
         expect(autorisationsSanitaire.autorisations[0].numéroAutorisationArhgos).toBe("1");
         expect(autorisationsSanitaire.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("HP VILLENEUVE DASCQ");
         expect(autorisationsSanitaire.autorisations[1].numéroAutorisationArhgos).toBe("2");
+      });
+
+      it("recupere la liste des autorisations des établissements médico-sociaux rattachés", async () => {
+        // GIVEN
+        await dateMiseÀJourFichierSourceRepository.insert([
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_CS1400103,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-15",
+            fichier: FichierSource.FINESS_CS1400105,
+          }),
+          DateMiseÀJourFichierSourceModelTestBuilder.crée({
+            dernièreMiseÀJour: "2022-05-14",
+            fichier: FichierSource.FINESS_AMM_ARHGOS,
+          }),
+        ]);
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique }), ["numéroFinessEntitéJuridique"]);
+        await entitéJuridiqueRepository.upsert(EntitéJuridiqueModelTestBuilder.crée({ numéroFinessEntitéJuridique: "autreEJ" }), [
+          "numéroFinessEntitéJuridique",
+        ]);
+        await etablissementTerritorialRepository.insert([
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+            numéroFinessEntitéJuridique,
+            numéroFinessÉtablissementTerritorial,
+          }),
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+            numéroFinessEntitéJuridique,
+            numéroFinessÉtablissementTerritorial: "et_num_2",
+          }),
+          ÉtablissementTerritorialIdentitéModelTestBuilder.créeMédicoSocial({
+            numéroFinessEntitéJuridique: "autreEJ",
+            numéroFinessÉtablissementTerritorial: "et_num_3",
+          }),
+        ]);
+        await autorisationsMédicoSocialRepository.insert([
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+            numéroFinessÉtablissementTerritorial,
+          }),
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+            numéroFinessÉtablissementTerritorial: "et_num_2",
+          }),
+          ÉtablissementTerritorialAutorisationModelTestBuilder.créeMédicoSocial({
+            numéroFinessÉtablissementTerritorial: "et_num_3",
+          }),
+        ]);
+
+        // WHEN
+        const entiteJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
+        const { autorisationsMédicoSocial } = await entiteJuridiqueLoader.chargeAutorisationsEtCapacités(numéroFinessEntitéJuridique);
+
+        // THEN
+        expect(autorisationsMédicoSocial.dateMiseÀJourSource).toBe("2022-05-15");
+        expect(autorisationsMédicoSocial.autorisations).toHaveLength(2);
+        expect(autorisationsMédicoSocial.autorisations[0].numéroFinessÉtablissementTerritorial).toBe(numéroFinessÉtablissementTerritorial);
+        expect(autorisationsMédicoSocial.autorisations[0].établissementTerritorial.raisonSocialeCourte).toBe("CH NANTUA");
+        expect(autorisationsMédicoSocial.autorisations[1].numéroFinessÉtablissementTerritorial).toBe("et_num_2");
       });
     });
 
