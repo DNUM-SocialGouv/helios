@@ -69,9 +69,6 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
             entiteJuridiqueAutorisationsAmm={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsAmmActivites}
           />
         )}
-        {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées && (
-          <GraphiqueAutorisationsMédicoSociales entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsMédicoSocial} />
-        )}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées && (
           <GraphiqueAutresActivites entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autresActivités} />
         )}
@@ -80,6 +77,9 @@ export const BlocAutorisationsCapacites = ({ etabTitle, etabFiness, etabNom, ent
         )}
         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées && (
           <GraphiqueEquipementMateriauxLourds entiteJuridiqueEquipementLourds={entitéJuridiqueAutorisationsCapacitesViewModel.equipementsLourds} />
+        )}
+         {(!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées && (
+          <GraphiqueAutorisationsMédicoSociales entiteJuridiqueAutorisations={entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsMédicoSocial} />
         )}
         <li>
           <div className={styles["voir_plus"] + " fr-grid-row fr-grid-row--center"}>
