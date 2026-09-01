@@ -53,7 +53,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesAgesNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
+    return this.autorisations.donneesVigieRh?.pyramideDesAges === 'ok' && this.etablissementTerritorialVRMedicoSocial.pyramideAges.length === 0;
   }
   private get effectifsDisponibles(): boolean {
     const data = this.lesDonneesEffectifs.data ?? [];
@@ -64,41 +64,41 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsNeSontIlsPasRenseignees(): boolean {
-    const autorise = this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok';
+    const autorise = this.autorisations.donneesVigieRh?.evolutionDesEffectifs === 'ok';
     const aucuneFiliere = (this.etablissementTerritorialVRMedicoSocial.professionFiliere?.data?.length ?? 0) === 0;
     return autorise && (aucuneFiliere || !this.effectifsDisponibles);
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.departsEmbauches.length === 0
+    return this.autorisations.donneesVigieRh?.entreeSortie === 'ok' && this.etablissementTerritorialVRMedicoSocial.departsEmbauches.length === 0
   }
 
   public get lesRotationsNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.tauxRotation.length === 0
+    return this.autorisations.donneesVigieRh?.tauxRenouvellementEffectifs === 'ok' && this.etablissementTerritorialVRMedicoSocial.tauxRotation.length === 0
   }
 
   public get lesDureesCDDNeSontEllesPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.dureesCdd.length === 0;
+    return this.autorisations.donneesVigieRh?.dureeEffectiveDesCDDTermines === 'ok' && this.etablissementTerritorialVRMedicoSocial.dureesCdd.length === 0;
   }
 
   public get lesMotifsNeSontIlsPasRenseignes(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
+    return this.autorisations.donneesVigieRh?.motifsRuptureContrats === 'ok' && this.etablissementTerritorialVRMedicoSocial.motifsRuptureContrat.length === 0;
   }
 
   public get lesNaturesContratsNeSontPasReseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.length === 0;
+    return this.autorisations.donneesVigieRh?.natureNouveauxContrats === 'ok' && this.etablissementTerritorialVRMedicoSocial.natureContratsAnnuel.length === 0;
   }
 
   public get lesDepartsPrematuresCdiPasRenseignes(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.departsPrematuresCdiDisponibles;
+    return this.autorisations.donneesVigieRh?.departsPrematureDesCDI === 'ok' && !this.departsPrematuresCdiDisponibles;
   }
 
   public get lesAgesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
+    return this.autorisations.donneesVigieRh?.pyramideDesAges === 'no'
   }
 
   public get lesEffectifsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
+    return this.autorisations.donneesVigieRh?.evolutionDesEffectifs === 'no'
   }
 
   private get effectifsGroupesDisponibles(): boolean {
@@ -106,35 +106,35 @@ export class BlocVigieRHViewModel {
   }
 
   public get lesEffectifsGroupesNeSontIlsPasRenseignees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' && !this.effectifsGroupesDisponibles && this.lesEffectifsNeSontIlsPasRenseignees;
+    return this.autorisations.donneesVigieRh?.evolutionDesEffectifs === 'ok' && !this.effectifsGroupesDisponibles && this.lesEffectifsNeSontIlsPasRenseignees;
   }
 
   public get lesEffectifsGroupesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
+    return this.autorisations.donneesVigieRh?.evolutionDesEffectifs === 'no';
   }
 
   public get lesDepartsEmbauchesNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
+    return this.autorisations.donneesVigieRh?.entreeSortie === 'no'
   }
 
   public get lesRotationsNeSontIlsPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
+    return this.autorisations.donneesVigieRh?.tauxRenouvellementEffectifs === 'no'
   }
 
   public get lesDureesCDDNeSontEllesPasAutorisee(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no'
+    return this.autorisations.donneesVigieRh?.dureeEffectiveDesCDDTermines === 'no'
   }
 
   public get lesMotifsNeSontIlsPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
+    return this.autorisations.donneesVigieRh?.motifsRuptureContrats === 'no';
   }
 
   public get lesNaturesContratsNeSontPasAutorisees(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
+    return this.autorisations.donneesVigieRh?.natureNouveauxContrats === 'no';
   }
 
   public get lesDepartsPrematuresCdiPasAutorises(): boolean {
-    return this.autorisations.ressourcesHumaines?.nombreDeCddDeRemplacement === 'no';
+    return this.autorisations.donneesVigieRh?.departsPrematureDesCDI === 'no';
   }
 
   public get graphiqueMotifsAffichable(): boolean {
@@ -169,7 +169,7 @@ export class BlocVigieRHViewModel {
   }
 
   public get graphiqueDepartsPrematuresCdiAffichable(): boolean {
-    return !this.lesDepartsEmbauchesNeSontIlsPasAutorisee && this.departsPrematuresCdiDisponibles;
+    return !this.lesDepartsPrematuresCdiPasAutorises && this.departsPrematuresCdiDisponibles;
   }
 
   public get lesDonneesVgRHPasRenseignees(): string[] {
@@ -248,6 +248,20 @@ export class BlocVigieRHViewModel {
       this.lesDepartsPrematuresCdiPasRenseignes &&
       this.lesNaturesContratsNeSontPasReseignees &&
       this.lesRotationsNeSontIlsPasRenseignees 
+    );
+  }
+
+  public get lesDonneesVigieRHNeSontPasAutorisees(): boolean {
+    return (
+      this.lesAgesNeSontIlsPasAutorisee&&
+      this.lesEffectifsNeSontIlsPasAutorisee &&
+      this.lesEffectifsGroupesNeSontIlsPasAutorisee &&
+      this.lesDepartsEmbauchesNeSontIlsPasAutorisee &&
+      this.lesDureesCDDNeSontEllesPasAutorisee &&
+      this.lesMotifsNeSontIlsPasAutorises &&
+      this.lesDepartsPrematuresCdiPasAutorises &&
+      this.lesNaturesContratsNeSontPasAutorisees &&
+      this.lesRotationsNeSontIlsPasAutorisee 
     );
   }
 

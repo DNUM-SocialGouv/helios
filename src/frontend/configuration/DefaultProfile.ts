@@ -138,7 +138,6 @@ export const DefaultProfile = {
       "donneesVigieRh": {
         "pyramideDesAges": "no",
         "evolutionDesEffectifs": "no",
-        "repartitionEffectifsParFilliere": "no",
         "natureNouveauxContrats": "no",
         "dureeEffectiveDesCDDTermines": "no",
         "TauxRenouvellementEffectifs": "no",
@@ -291,7 +290,6 @@ export const DefaultProfile = {
        "donneesVigieRh": {
         "pyramideDesAges": "no",
         "evolutionDesEffectifs": "no",
-        "repartitionEffectifsParFilliere": "no",
         "natureNouveauxContrats": "no",
         "dureeEffectiveDesCDDTermines": "no",
         "tauxRenouvellementEffectifs": "no",

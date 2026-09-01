@@ -12,7 +12,6 @@ export class AjoutLesDonneesVigieRhDansLesProfils1788170804920 implements Migrat
             COALESCE(profil_value->'autreRegion'->'profilMédicoSocial'->'donneesVigieRh', '{}'::jsonb) || jsonb_build_object(
                 'pyramideDesAges', 'no',
                 'evolutionDesEffectifs', 'no',
-                'repartitionEffectifsParFilliere', 'no',
                 'natureNouveauxContrats', 'no',
                 'dureeEffectiveDesCDDTermines', 'no',
                 'tauxRenouvellementEffectifs', 'no',
@@ -30,7 +29,6 @@ export class AjoutLesDonneesVigieRhDansLesProfils1788170804920 implements Migrat
             COALESCE(profil_value->'institution'->'profilMédicoSocial'->'donneesVigieRh', '{}'::jsonb) || jsonb_build_object(
                  'pyramideDesAges', 'no',
                 'evolutionDesEffectifs', 'no',
-                'repartitionEffectifsParFilliere', 'no',
                 'natureNouveauxContrats', 'no',
                 'dureeEffectiveDesCDDTermines', 'no',
                 'tauxRenouvellementEffectifs', 'no',

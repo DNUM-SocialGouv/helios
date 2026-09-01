@@ -12,12 +12,7 @@ export const filterEtablissementMedicoSocial = (result: any, profil: any): Étab
   const budgetEtFinances = filterBudgetFinanceMedicoSocial(result.budgetEtFinances, profil.budgetEtFinances);
   const ressourcesHumaines = filterressourcesHumainesMedicoSocial(result.ressourcesHumaines, profil.ressourcesHumaines);
   const qualite = filterQualiteMS(result.qualite, profil.Qualité);
-  /* les autorisations pour le bloc Vigie RH sont les mêmes que celles du bloc ressources humaines helios.
-      Vu que c'est tout ou rien pour les indicateurs ressources humaines , 
-      on peut se baser sur le statut de l'un des indicateurs : nombreDeCddDeRemplacement.
-  */
-
-  const vigieRh = profil.ressourcesHumaines?.nombreDeCddDeRemplacement === 'ok' ? result.vigieRh : {};
+  const vigieRh = filterDonneesVigieRH(result.vigieRh, profil.donneesVigieRh);
 
   return {
     identité: identité,
@@ -422,6 +417,22 @@ const filterressourcesHumainesMedicoSocial = (ressourcesHumaines: any, profil: a
       profil.tauxDeRotationDuPersonnel === "ok" ? ressource.tauxDeRotationDuPersonnel : { dateMiseÀJourSource: "", valeur: "" };
   }
   return ressourcesHumaines;
+};
+
+const filterDonneesVigieRH = (donneesVigieRH: any, profil: any) => {
+  const filtredDonneesVigieRH = {
+    ...donneesVigieRH,
+    pyramideAges: profil.pyramideDesAges === "ok" ? donneesVigieRH.pyramideAges : [],
+    departsEmbauches: profil.entreeSortie === "ok" ? donneesVigieRH.departsEmbauches : [],
+    professionFiliere: profil.evolutionDesEffectifs === "ok" ? donneesVigieRH.professionFiliere : { dateDeMiseAJour: "", data: [] },
+    tauxRotation: profil.tauxRenouvellementEffectifs === "ok" ? donneesVigieRH.tauxRotation : [],
+    tauxRotationTrimestriel: profil.tauxRenouvellementEffectifs === "ok" ? donneesVigieRH.tauxRotationTrimestriel : [],
+    dureesCdd: profil.dureeEffectiveDesCDDTermines === "ok" ? donneesVigieRH.dureesCdd : [],
+    motifsRuptureContrat: profil.motifsRuptureContrats === "ok" ? donneesVigieRH.motifsRuptureContrat : [],
+    natureContratsAnnuel: profil.natureNouveauxContrats === "ok" ? donneesVigieRH.natureContratsAnnuel : [],
+    natureContratsTrimestriel: profil.natureNouveauxContrats === "ok" ? donneesVigieRH.natureContratsTrimestriel : [],
+  };
+  return filtredDonneesVigieRH;
 };
 
 const filterActiviteEJ = (activites: any, profil: any) => {
