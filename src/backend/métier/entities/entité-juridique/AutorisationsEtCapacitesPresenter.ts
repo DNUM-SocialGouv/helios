@@ -16,6 +16,7 @@ import {
   Modalite,
 } from "./EntitéJuridiqueAutorisationEtCapacité";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
+import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
 import { ÉquipementMatérielLourdSanitaireModel } from "../../../../../database/models/ÉquipementMatérielLourdSanitaireModel";
@@ -30,6 +31,19 @@ class AutorisationsFactory {
       const forme = this.findOrAddForme(modalite, autorisationSanitaire);
       const etablissement = this.findOrAddEtablissement(forme, autorisationSanitaire);
       const autorisation = this.addAutorisation(autorisationSanitaire);
+
+      etablissement.autorisations.push(...autorisation);
+      return autorisationsActivites;
+    }, []);
+  }
+
+  static createFromAutorisationsMédicoSocial(autorisationsMédicoSocial: AutorisationMédicoSocialModel[]): AutorisationActivites[] {
+    return autorisationsMédicoSocial.reduce((autorisationsActivites: AutorisationActivites[], autorisationMédicoSocial) => {
+      const activite = this.findOrAddActivitéMédicoSociale(autorisationsActivites, autorisationMédicoSocial);
+      const modalite = this.findOrAddModalitéMédicoSociale(activite, autorisationMédicoSocial);
+      const forme = this.findOrAddFormeMédicoSociale(modalite, autorisationMédicoSocial);
+      const etablissement = this.findOrAddEtablissement(forme, autorisationMédicoSocial);
+      const autorisation = this.addAutorisationMédicoSociale(autorisationMédicoSocial);
 
       etablissement.autorisations.push(...autorisation);
       return autorisationsActivites;
@@ -121,6 +135,54 @@ class AutorisationsFactory {
         autorisationEtablissements: [],
         code: autorisationSanitaire.codeForme,
         libelle: autorisationSanitaire.libelléForme,
+      };
+      modalite.formes.push(forme);
+    }
+
+    return forme;
+  }
+
+  private static findOrAddActivitéMédicoSociale(
+    autorisationActivites: AutorisationActivites[],
+    autorisationMédicoSocial: AutorisationMédicoSocialModel
+  ): AutorisationActivites {
+    let activite = autorisationActivites.find((a) => a.code === autorisationMédicoSocial.disciplineDÉquipement);
+
+    if (!activite) {
+      activite = {
+        modalites: [],
+        libelle: autorisationMédicoSocial.libelléDisciplineDÉquipement,
+        code: autorisationMédicoSocial.disciplineDÉquipement,
+      };
+      autorisationActivites.push(activite);
+    }
+
+    return activite;
+  }
+
+  private static findOrAddModalitéMédicoSociale(activite: AutorisationActivites, autorisationMédicoSocial: AutorisationMédicoSocialModel): Modalite {
+    let modalite = activite.modalites.find((m) => m.code === autorisationMédicoSocial.activité);
+
+    if (!modalite) {
+      modalite = {
+        formes: [],
+        code: autorisationMédicoSocial.activité,
+        libelle: autorisationMédicoSocial.libelléActivité,
+      };
+      activite.modalites.push(modalite);
+    }
+
+    return modalite;
+  }
+
+  private static findOrAddFormeMédicoSociale(modalite: Modalite, autorisationMédicoSocial: AutorisationMédicoSocialModel): Forme {
+    let forme = modalite.formes.find((f) => f.code === autorisationMédicoSocial.clientèle);
+
+    if (!forme) {
+      forme = {
+        autorisationEtablissements: [],
+        code: autorisationMédicoSocial.clientèle,
+        libelle: autorisationMédicoSocial.libelléClientèle,
       };
       modalite.formes.push(forme);
     }
@@ -256,6 +318,31 @@ class AutorisationsFactory {
     ];
   }
 
+  private static addAutorisationMédicoSociale(autorisationMédicoSocial: AutorisationMédicoSocialModel): Autorisation[] {
+    return [
+      {
+        nom: "Date d’autorisation",
+        valeur: autorisationMédicoSocial.dateDAutorisation ? StringFormater.formatDate(autorisationMédicoSocial.dateDAutorisation) : "N/A",
+      },
+      {
+        nom: "Mise à jour d’autorisation",
+        valeur: autorisationMédicoSocial.dateDeMiseÀJourDAutorisation ? StringFormater.formatDate(autorisationMédicoSocial.dateDeMiseÀJourDAutorisation) : "N/A",
+      },
+      {
+        nom: "Dernière installation",
+        valeur: autorisationMédicoSocial.dateDeDernièreInstallation ? StringFormater.formatDate(autorisationMédicoSocial.dateDeDernièreInstallation) : "N/A",
+      },
+      {
+        nom: "Capacité autorisée",
+        valeur: autorisationMédicoSocial.capacitéAutoriséeTotale?.toString() ?? "N/A",
+      },
+      {
+        nom: "Capacité installée",
+        valeur: autorisationMédicoSocial.capacitéInstalléeTotale?.toString() ?? "N/A",
+      },
+    ];
+  }
+
   private static addAutorisationAmm(autorisationAmmSanitaire: {
     date_autorisation: string | null;
     date_mise_en_oeuvre: string | null;
@@ -358,6 +445,7 @@ class AutorisationsFactory {
 export class AutorisationsEtCapacitesPresenter {
   static present(autorisationsEtCapacites: EntitéJuridiqueAutorisationEtCapacitéLoader): EntitéJuridique["autorisationsEtCapacites"] {
     const autorisationsActivites = AutorisationsFactory.createFromAutorisationsSanitaire(autorisationsEtCapacites.autorisationsSanitaire.autorisations);
+    const autorisationsMédicoSocial = AutorisationsFactory.createFromAutorisationsMédicoSocial(autorisationsEtCapacites.autorisationsMédicoSocial.autorisations);
     const autorisationsAmmActivites = AutorisationsFactory.createFromAutorisationsAmmSanitaire(autorisationsEtCapacites.autorisationsAmmSanitaire.autorisations);
     const autresActivites = AutorisationsFactory.createFromAutresActivitesSanitaire(autorisationsEtCapacites.autresActivitesSanitaire.autorisations);
     const reconnaissanceContractuellesActivites = AutorisationsFactory.createFromReconnaissanceContractuellesSanitaire(
@@ -373,6 +461,10 @@ export class AutorisationsEtCapacitesPresenter {
       autorisationsActivités: {
         autorisations: this.sortAutorisationActivites(autorisationsActivites),
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.autorisationsSanitaire.dateMiseÀJourSource),
+      },
+      autorisationsMédicoSocial: {
+        autorisations: this.sortAutorisationActivites(autorisationsMédicoSocial),
+        dateMiseÀJourSource: this.formatDateMiseÀJour(autorisationsEtCapacites.autorisationsMédicoSocial.dateMiseÀJourSource),
       },
       autorisationsAmmSanitaire: {
         autorisations: this.sortAutorisationAmmActivites(autorisationsAmmActivites),
@@ -391,6 +483,10 @@ export class AutorisationsEtCapacitesPresenter {
         dateMiseÀJourSource: StringFormater.formatDate(autorisationsEtCapacites.equipementMaterielLourdSanitaire.dateMiseÀJourSource),
       },
     };
+  }
+
+  private static formatDateMiseÀJour(dateMiseÀJourSource?: string): string {
+    return dateMiseÀJourSource ? StringFormater.formatDate(dateMiseÀJourSource) : "";
   }
 
   private static sortAutorisationActivites(data: AutorisationActivites[]): AutorisationActivites[] {
