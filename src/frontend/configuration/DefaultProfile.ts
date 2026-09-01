@@ -135,6 +135,17 @@ export const DefaultProfile = {
         "tauxDePrestationsExternes": "no",
         "tauxDeRotationDuPersonnel": "no"
       },
+      "donneesVigieRh": {
+        "pyramideDesAges": "no",
+        "evolutionDesEffectifs": "no",
+        "repartitionEffectifsParFilliere": "no",
+        "natureNouveauxContrats": "no",
+        "dureeEffectiveDesCDDTermines": "no",
+        "TauxRenouvellementEffectifs": "no",
+        "EntreeSortie": "no",
+        "departsPrematureDesCDI": "no",
+        "motifsRuptureContrats": "no"
+      },
       "autorisationsEtCapacités": {
         "capacités": "ok",
         "autorisations": "ok"
@@ -276,6 +287,17 @@ export const DefaultProfile = {
         "nombreDeCddDeRemplacement": "ok",
         "tauxDePrestationsExternes": "ok",
         "tauxDeRotationDuPersonnel": "ok"
+      },
+       "donneesVigieRh": {
+        "pyramideDesAges": "no",
+        "evolutionDesEffectifs": "no",
+        "repartitionEffectifsParFilliere": "no",
+        "natureNouveauxContrats": "no",
+        "dureeEffectiveDesCDDTermines": "no",
+        "tauxRenouvellementEffectifs": "no",
+        "entreeSortie": "no",
+        "departsPrematureDesCDI": "no",
+        "motifsRuptureContrats": "no"
       },
       "autorisationsEtCapacités": {
         "capacités": "ok",
