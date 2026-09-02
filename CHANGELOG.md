@@ -6,6 +6,7 @@
 
 ### Features
 - hel-1076: [Bloc Capacité et Autorisations] EJ - Afficher les autorisations des ET MS
+- hel-1098: [Export] Inclure les autorisations MS
 
 ## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
 
