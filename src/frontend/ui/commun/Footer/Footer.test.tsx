@@ -101,7 +101,7 @@ describe("Le pied de page", () => {
 
     // THEN
     const nousContacter = screen.getByRole("link", { name: wording.NOUS_CONTACTER });
-    expect(nousContacter).toHaveAttribute("href", "mailto:dnum.scn-helios-support@sg.social.gouv.fr");
+    expect(nousContacter).toHaveAttribute("href", "mailto:dnum.helios-support@sg.social.gouv.fr");
     expect(nousContacter).toHaveAttribute("target", "_blank");
     expect(nousContacter).toHaveAttribute("rel", "external noopener noreferrer");
   });
