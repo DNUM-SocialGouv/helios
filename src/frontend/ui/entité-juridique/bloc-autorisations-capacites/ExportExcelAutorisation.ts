@@ -16,7 +16,13 @@ export function getCurrentDate() {
   return currentDate;
 }
 
-export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) {
+export function useExportExcelAutorisation(
+  numeroFinessEntiteJuridique: string,
+  raisonSocialeEntiteJuridique: string,
+  entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel,
+  hasSanitaireEt: boolean,
+  hasMedicoSocialEt: boolean
+) {
   const { wording } = useDependencies();
 
   const autorisationFields = [wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
@@ -29,22 +35,21 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
     const workbook = new Workbook();
     const etabLine = `${numeroFinessEntiteJuridique} - ${raisonSocialeEntiteJuridique}`;
 
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées) {
       exportExcelAutorisationDeSoin(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées) {
       exportExcelAutresAutorisations(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasAutoriséess) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasAutoriséess) {
       exportExcelReconnaissanceContractuelles(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées) {
       exportExcelEquipementsLourds(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
- if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées) {
+    if (hasMedicoSocialEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées) {
       exportExcelAutorisationsMS(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    
 
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
     telechargerWorkbook(workbook, fileName);
