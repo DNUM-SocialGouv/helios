@@ -1,6 +1,7 @@
 import { mock } from "jest-mock-extended";
 
 import { RécupèreLEntitéJuridiqueUseCase } from "./RécupèreLEntitéJuridiqueUseCase";
+import { AutorisationMédicoSocialModel } from "../../../../database/models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
@@ -23,6 +24,7 @@ describe("La récupération d’une entité juridique", () => {
         numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
         autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -190,6 +192,7 @@ describe("La récupération d’une entité juridique", () => {
       numéroFinessEntitéJuridique: "",
       capacités: mockCapacités,
       autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+      autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
       autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
       autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
       reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -212,6 +215,7 @@ describe("La récupération d’une entité juridique", () => {
         numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+        autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
         autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
@@ -242,6 +246,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -259,6 +264,79 @@ describe("La récupération d’une entité juridique", () => {
       expect(autorisations).toHaveLength(1);
       expect(autorisations[0].code).toBe("1");
       expect(autorisations[0].libelle).toBe("Nom activité");
+    });
+
+    it("recuperer la liste des autorisations des établissements médico-sociaux rattachés", async () => {
+      // GIVEN
+      const autorisationsMédicoSocial: AutorisationMédicoSocialModel[] = [
+        mock<AutorisationMédicoSocialModel>({
+          disciplineDÉquipement: "657",
+          libelléDisciplineDÉquipement: "Accueil temporaire pour Personnes Âgées",
+          activité: "11",
+          libelléActivité: "Hébergement Complet Internat",
+          clientèle: "702",
+          libelléClientèle: "PH vieillissantes",
+          numéroFinessÉtablissementTerritorial: "010000040",
+          établissementTerritorial: { raisonSocialeCourte: "CH NANTUA" },
+          dateDAutorisation: "2020-01-01",
+          dateDeMiseÀJourDAutorisation: "2020-04-05",
+          dateDeDernièreInstallation: "2021-02-03",
+          capacitéAutoriséeTotale: 10,
+          capacitéInstalléeTotale: 0,
+        }),
+      ];
+
+      const entitéJuridiqueLoader: EntitéJuridiqueLoader = mock<EntitéJuridiqueLoader>({
+        chargeAutorisationsEtCapacités: jest.fn().mockResolvedValue({
+          numéroFinessEntitéJuridique: "",
+          capacités: [],
+          autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: autorisationsMédicoSocial, dateMiseÀJourSource: "2022-05-14" },
+          autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
+          autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          equipementMaterielLourdSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+        } as EntitéJuridiqueAutorisationEtCapacitéLoader),
+      });
+
+      const récupèreLEntitéJuridiqueUseCase = new RécupèreLEntitéJuridiqueUseCase(entitéJuridiqueLoader);
+
+      // WHEN
+      const entitéJuridique = await récupèreLEntitéJuridiqueUseCase.exécute(numéroFinessEntitéJuridique);
+
+      // THEN
+      const autorisations = entitéJuridique.autorisationsEtCapacites.autorisationsMédicoSocial;
+      expect(autorisations.dateMiseÀJourSource).toBe("14/05/2022");
+      expect(autorisations.autorisations).toHaveLength(1);
+      expect(autorisations.autorisations[0]).toMatchObject({
+        code: "657",
+        libelle: "Accueil temporaire pour Personnes Âgées",
+        modalites: [
+          {
+            code: "11",
+            libelle: "Hébergement Complet Internat",
+            formes: [
+              {
+                code: "702",
+                libelle: "PH vieillissantes",
+                autorisationEtablissements: [
+                  {
+                    numeroFiness: "010000040",
+                    nomEtablissement: "CH NANTUA",
+                    autorisations: [
+                      { nom: "Date d’autorisation", valeur: "01/01/2020" },
+                      { nom: "Mise à jour d’autorisation", valeur: "05/04/2020" },
+                      { nom: "Dernière installation", valeur: "03/02/2021" },
+                      { nom: "Capacité autorisée", valeur: "10" },
+                      { nom: "Capacité installée", valeur: "0" },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
     });
 
     it("recuperer la liste triée des autorisations d'activités pour une entité juridique avec deux activites differentes", async () => {
@@ -280,6 +358,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -318,6 +397,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -357,6 +437,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -407,6 +488,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -452,6 +534,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -492,6 +575,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -525,6 +609,7 @@ describe("La récupération d’une entité juridique", () => {
         numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+        autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
         autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
@@ -554,6 +639,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -592,6 +678,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -630,6 +717,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -669,6 +757,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -719,6 +808,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -764,6 +854,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -803,6 +894,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: autresActivites, dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
@@ -834,6 +926,7 @@ describe("La récupération d’une entité juridique", () => {
         numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+        autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
         autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
@@ -864,6 +957,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -902,6 +996,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -940,6 +1035,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -975,6 +1071,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -1024,6 +1121,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -1069,6 +1167,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -1111,6 +1210,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
           reconnaissanceContractuellesSanitaire: { autorisations: reconnaissanceContractuelle, dateMiseÀJourSource: "" },
@@ -1148,6 +1248,7 @@ describe("La récupération d’une entité juridique", () => {
         numéroFinessEntitéJuridique: "",
         capacités: [],
         autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+        autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
         autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
         autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-05-21" },
         reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-07-21" },
@@ -1177,6 +1278,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
@@ -1215,6 +1317,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
@@ -1257,6 +1360,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
@@ -1296,6 +1400,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
@@ -1334,6 +1439,7 @@ describe("La récupération d’une entité juridique", () => {
           numéroFinessEntitéJuridique: "",
           capacités: [],
           autorisationsSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
+          autorisationsMédicoSocial: { autorisations: [], dateMiseÀJourSource: "" },
           autorisationsAmmSanitaire: { autorisations: [], dateMiseAJourSource: "" },
           autresActivitesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },
           reconnaissanceContractuellesSanitaire: { autorisations: [], dateMiseÀJourSource: "2023-10-21" },

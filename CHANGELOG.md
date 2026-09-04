@@ -5,6 +5,9 @@
 ### Bug Fixes
 
 ### Features
+- hel-1076: [Bloc Capacité et Autorisations] EJ - Afficher les autorisations des ET MS
+- hel-1098: [Export] Inclure les autorisations MS
+- hel-1099: [Autorisations] EJ Affichage les autorisations des ET rattachés
 
 - hel-1097: [Paramétrage des autorisations] Vigie RH V1
 

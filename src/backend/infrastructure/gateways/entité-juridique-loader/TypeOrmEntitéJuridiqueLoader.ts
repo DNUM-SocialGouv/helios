@@ -4,6 +4,7 @@ import { construisActiviteMensuel } from "./ConstrutitActivitesMensuel";
 import { ActiviteSanitaireMensuelEntiteJuridiqueModel } from "../../../../../database/models/ActiviteSanitaireMensuelEntiteJuridiqueModel";
 import { ActivitéSanitaireEntitéJuridiqueModel } from "../../../../../database/models/ActivitéSanitaireEntitéJuridiqueModel";
 import { AllocationRessourceModel } from "../../../../../database/models/AllocationRessourceModel";
+import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
@@ -353,8 +354,10 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     const capacitésDeLÉtablissementModel = await this.chargeLesCapacitésModel(numéroFinessEntitéJuridique);
     const dateDeMiseÀJourDiamantAnnSaeModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_SAE)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseÀJourFinessCs1400103Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400103)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourFinessCs1400105Model = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400105)) as DateMiseÀJourFichierSourceModel;
     const dateDeMiseAJourFinessAMMArhgosModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_AMM_ARHGOS)) as DateMiseÀJourFichierSourceModel;
     const autorisationsSanitaire = await this.chargeLesAutorisationsSanitaires(numéroFinessEntitéJuridique);
+    const autorisationsMédicoSocial = await this.chargeLesAutorisationsMédicoSociales(numéroFinessEntitéJuridique);
     const autorisationsAmmSanitaire = await this.chargeLesAutorisationsAmm(numéroFinessEntitéJuridique);
     const autresActivitesSanitaire = await this.chargeLesAutresActivitesSanitaires(numéroFinessEntitéJuridique);
     const reconnaissanceContractuellesSanitaire = await this.chargeLesReconnaissanceContractuellesSanitaires(numéroFinessEntitéJuridique);
@@ -363,6 +366,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
     return {
       capacités: this.construisLesCapacités(capacitésDeLÉtablissementModel, dateDeMiseÀJourDiamantAnnSaeModel),
       autorisationsSanitaire: { autorisations: autorisationsSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
+      autorisationsMédicoSocial: { autorisations: autorisationsMédicoSocial, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400105Model ? dateDeMiseÀJourFinessCs1400105Model.dernièreMiseÀJour : "" },
       autorisationsAmmSanitaire: { autorisations: autorisationsAmmSanitaire, dateMiseAJourSource: dateDeMiseAJourFinessAMMArhgosModel ? dateDeMiseAJourFinessAMMArhgosModel.dernièreMiseÀJour : "" },
       autresActivitesSanitaire: { autorisations: autresActivitesSanitaire, dateMiseÀJourSource: dateDeMiseÀJourFinessCs1400103Model.dernièreMiseÀJour },
       reconnaissanceContractuellesSanitaire: {
@@ -382,6 +386,15 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       .getRepository(AutorisationSanitaireModel)
       .createQueryBuilder("autorisation_sanitaire")
       .leftJoinAndSelect("autorisation_sanitaire.établissementTerritorial", "établissementTerritorial")
+      .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
+      .getMany();
+  }
+
+  private async chargeLesAutorisationsMédicoSociales(numéroFinessEntitéJuridique: string): Promise<AutorisationMédicoSocialModel[]> {
+    return (await this.orm)
+      .getRepository(AutorisationMédicoSocialModel)
+      .createQueryBuilder("autorisation_medico_social")
+      .leftJoinAndSelect("autorisation_medico_social.établissementTerritorial", "établissementTerritorial")
       .where("établissementTerritorial.numero_finess_entite_juridique = :finess", { finess: numéroFinessEntitéJuridique })
       .getMany();
   }
