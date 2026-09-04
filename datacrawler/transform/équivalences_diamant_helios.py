@@ -266,7 +266,7 @@ colonnes_a_lire_bloc_ressources_humaines: List[str] = list(equivalences_diamant_
 index_du_bloc_ressources_humaines_ej: List[str] = ["numero_finess_entite_juridique", "annee"]
 index_du_bloc_ressources_humaines_etsan: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
-équivalences_diamant_men_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
+équivalences_hapi_allocation_ressource_helios: ÉquivalencesDiamantHelios = {
     "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_entite_juridique", type=str),
     "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
     "CAMPAGNE": ColonneHelios(nom="annee", type=str),
@@ -276,7 +276,7 @@ index_du_bloc_ressources_humaines_etsan: List[str] = ["numero_finess_etablisseme
     "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float),
 }
 
-équivalences_diamant_men_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
+équivalences_hapi_allocation_ressource_et_helios: ÉquivalencesDiamantHelios = {
     "ID_BENEFICIAIRE": ColonneHelios(nom="numero_finess_etablissement_territorial", type=str),
     "TYPE_BENEFICIAIRE": ColonneHelios(nom="type_beneficiaire", type=str),
     "CAMPAGNE": ColonneHelios(nom="annee", type=str),
@@ -286,7 +286,7 @@ index_du_bloc_ressources_humaines_etsan: List[str] = ["numero_finess_etablisseme
     "MONTANT_NOTIFIE": ColonneHelios(nom="montant", type=float),
 }
 
-colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_helios.keys())
+colonnes_a_lire_allocation_ressource: List[str] = list(équivalences_hapi_allocation_ressource_helios.keys())
 index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "annee"]
 
 équivalences_diamant_men_pmsi_mensumu_helios: ÉquivalencesDiamantHelios = {
@@ -311,7 +311,7 @@ index_allocation_ressource: List[str] = ["numero_finess_entite_juridique", "anne
 colonnes_a_lire_activites_mensuel: List[str] = list(équivalences_diamant_men_pmsi_mensumu_helios.keys())
 index__activites_mensuel: List[str] = ["numero_finess_etablissement_territorial", "annee", "mois"]
 
-colonnes_a_lire_allocation_ressource_et: List[str] = list(équivalences_diamant_men_hapi_allocation_ressource_et_helios.keys())
+colonnes_a_lire_allocation_ressource_et: List[str] = list(équivalences_hapi_allocation_ressource_et_helios.keys())
 index_allocation_ressource_et: List[str] = ["numero_finess_etablissement_territorial", "annee"]
 
 COLONNE_SOURCE_MODE_DELEGATION_ENGAGEMENTS = "Mode de délégation délégué"

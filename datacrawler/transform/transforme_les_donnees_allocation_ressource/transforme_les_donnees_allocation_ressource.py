@@ -10,8 +10,8 @@ from datacrawler.transform.équivalences_diamant_helios import (
     index_allocation_ressource_et,
     index_allocation_ressource_engagements_ej,
     index_allocation_ressource_engagements_et,
-    équivalences_diamant_men_hapi_allocation_ressource_helios,
-    équivalences_diamant_men_hapi_allocation_ressource_et_helios,
+    équivalences_hapi_allocation_ressource_helios,
+    équivalences_hapi_allocation_ressource_et_helios,
     équivalences_engagements_starsfir_allocation_ressource_ej_helios,
     équivalences_engagements_starsfir_allocation_ressource_et_helios,
 )
@@ -35,7 +35,7 @@ def transforme_les_donnees_allocation_ressource_ej(
 
     return (
         donnees_allocation_ressource_filtrees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios))
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_hapi_allocation_ressource_helios))
         .set_index(index_allocation_ressource)
     )
 
@@ -52,7 +52,7 @@ def transforme_les_donnees_allocation_ressource_et(
 
     return (
         donnees_allocation_ressource_filtrees[est_dans_finess]
-        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_et_helios))
+        .rename(columns=extrais_l_equivalence_des_noms_des_colonnes(équivalences_hapi_allocation_ressource_et_helios))
         .set_index(index_allocation_ressource_et)
     )
 

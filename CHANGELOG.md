@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+- hel-1096: Traitement fichier Hapi Diamant à enlever du cron
+
 ### Features
 - hel-1076: [Bloc Capacité et Autorisations] EJ - Afficher les autorisations des ET MS
 - hel-1098: [Export] Inclure les autorisations MS
