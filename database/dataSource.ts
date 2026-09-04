@@ -106,6 +106,7 @@ import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-A
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
+import { AjoutLesDonneesVigieRhDansLesProfils1788170804920 } from "./migrations/1788170804920-AjoutLesDonneesVigieRhDansLesProfils";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -414,6 +415,7 @@ const datasource = new DataSource({
     SuppressionNomenclatureAMM1774521749651,
     AjoutTableMessageAccueil1779354621997,
     AjoutLienHypertexteMessageAccueil1806000000000,
+    AjoutLesDonneesVigieRhDansLesProfils1788170804920,
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

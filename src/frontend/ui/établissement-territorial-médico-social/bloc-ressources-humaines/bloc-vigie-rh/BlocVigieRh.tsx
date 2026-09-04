@@ -197,7 +197,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
 
   return (
     <>
-      <InfoMessage />
+      {!blocVigieRHViewModel.lesDonneesVigieRHNeSontPasAutorisees && <InfoMessage />}
       <ListeIndicateursNonAutorisesOuNonRenseignes blocVigieRHViewModel={blocVigieRHViewModel} etabFiness={etabFiness} etabTitle={etabTitle} />
       { ((blocVigieRHViewModel.graphiqueEffectifsAffichable && indicateurEffectif )|| blocVigieRHViewModel.graphiqueDureeCddAffichable || blocVigieRHViewModel.graphiqueRotationsAffichable) && (<section className={styles["vigie-rh-header"]}>
         <div className={styles["vigie-rh-title-block"]}>

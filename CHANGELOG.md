@@ -6,6 +6,8 @@
 
 ### Features
 
+- hel-1097: [Paramétrage des autorisations] Vigie RH V1
+
 ## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
 
 ### Bug Fixes

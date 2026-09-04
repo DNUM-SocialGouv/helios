@@ -46,7 +46,18 @@ describe("La page établissement territorial - bloc vigie rh", () => {
       echelleTemporelle: {}
     },
     wording,
-    { ressourcesHumaines: { nombreDeCddDeRemplacement: 'ok' } }
+    {
+      donneesVigieRh: {
+      pyramideDesAges: "ok",
+      evolutionDesEffectifs: "ok",
+      natureNouveauxContrats: "ok",
+      dureeEffectiveDesCDDTermines: "ok",
+      tauxRenouvellementEffectifs: "ok",
+      entreeSortie: "ok",
+      departsPrematureDesCDI: "ok",
+      motifsRuptureContrats: "ok"
+      },
+    },
   );
 
   const blocVigieRhViewModel = new BlocVigieRHViewModel(

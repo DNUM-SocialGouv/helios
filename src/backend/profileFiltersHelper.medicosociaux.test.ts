@@ -232,6 +232,19 @@ function getQualiteProfile() {
   }
 }
 
+function getVigieRHProfile() {
+  return {
+    pyramideDesAges: "no",
+    evolutionDesEffectifs: "no",
+    natureNouveauxContrats: "no",
+    dureeEffectiveDesCDDTermines: "no",
+    tauxRenouvellementEffectifs: "no",
+    entreeSortie: "no",
+    departsPrematureDesCDI: "no",
+    motifsRuptureContrats: "no"
+  }
+}
+
 function getFullProfile() {
   return {
     identité: getIdentityProfile(),
@@ -240,6 +253,7 @@ function getFullProfile() {
     budgetEtFinances: getBudgetFinanceProfile(),
     ressourcesHumaines: getRessourcesHumainesProfile(),
     Qualité: getQualiteProfile(),
+    donneesVigieRh: getVigieRHProfile(),
   }
 }
 
