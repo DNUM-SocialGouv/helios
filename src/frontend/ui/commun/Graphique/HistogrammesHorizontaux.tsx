@@ -337,6 +337,7 @@ export const HistogrammesHorizontaux = ({
                     },
                   })),
                 } as ChartData<"bar">}
+                key={`${histogramme.nom}-${couleursDuTheme.texte}`}
                 options={{
                   ...histogramme.optionsHistogramme,
                   aspectRatio,
@@ -358,7 +359,6 @@ export const HistogrammesHorizontaux = ({
                     },
                   },
                 }}
-                key={`${histogramme.nom}-${couleursDuTheme.texte}`}
                 redraw
                 title={`Graphique ${nomGraph}`}
                 />
