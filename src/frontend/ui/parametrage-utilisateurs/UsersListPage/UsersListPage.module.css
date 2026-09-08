@@ -1,11 +1,11 @@
 .title {
   text-align: center;
   margin-top: 2rem;
-  color: #000091;
+  color: var(--text-title-blue-france);
 }
 
 .tab-title {
-  color: #000091;
+  color: var(--text-title-blue-france);
   font-weight: 900;
   display: flex;
   justify-content: center;
@@ -79,8 +79,6 @@
   margin-left: 15px;
 }
 
-.pagination-container {
-}
 .paginationBtn-container {
   width: 75%;
   display: inline-block;

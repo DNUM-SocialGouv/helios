@@ -9,10 +9,8 @@
     width: 100%;
     height: 40vh;
     border-radius: 15px;
-    background-color: var(--background-contrast-grey);
     text-align: center;
     padding-top: 2rem;
-    color: #161616A3;
     margin-top: 1rem;
 }
 
@@ -40,7 +38,6 @@
 .autocompleteList {
     max-height: 200px;
     overflow-y: auto;
-    background-color: #fff;
     margin-top: 5px;
     list-style-type: none;
 }

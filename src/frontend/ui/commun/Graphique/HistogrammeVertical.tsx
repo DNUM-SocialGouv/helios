@@ -1,11 +1,11 @@
 import { ChartData, ChartOptions, ScriptableScaleContext } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
-import { couleurDelAbscisse, couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
+import { couleurDuFondDeLaLigne, CouleurHistogramme, TaillePoliceTick } from "./couleursGraphique";
 import { annéesManquantes, annéesManquantesVigieRh } from "../../../utils/dateUtils";
 import { useDependencies } from "../contexts/useDependencies";
 import { MiseEnExergue } from "../MiseEnExergue/MiseEnExergue";
@@ -27,6 +27,53 @@ export function HistogrammeVertical(props: Readonly<{
   isVigieRh: boolean;
 }>): ReactElement {
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#161616",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const resoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurResolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitees = new Set<string>();
+
+      while (valeurResolue.startsWith("var(")) {
+        const correspondance = valeurResolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitees.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitees.add(correspondance[1]);
+        valeurResolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurResolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: resoutVariableCss(stylesDuTheme, "--text-title-grey", "#161616"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const data: ChartData = {
     datasets: [
@@ -76,7 +123,7 @@ export function HistogrammeVertical(props: Readonly<{
         <Bar
           aria-describedby={idDeLaTranscription}
           data={data as ChartData<"bar">}
-          options={optionsHistogrammeVertical(props.taillePoliceTicks)}
+          options={optionsHistogrammeVertical(props.taillePoliceTicks, couleursDuTheme.texte)}
           title={`Graphique ${props.nomGraph}`}
         />
       )}
@@ -95,7 +142,7 @@ export function HistogrammeVertical(props: Readonly<{
   );
 }
 
-function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): ChartOptions<"bar"> {
+function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[], couleurDesLibellesAxeX: string): ChartOptions<"bar"> {
   const borneMaximale = 105;
   const borneMinimale = -1;
 
@@ -126,7 +173,7 @@ function optionsHistogrammeVertical(grosseursDePoliceDesLibellés: string[]): Ch
         },
         stacked: true,
         ticks: {
-          color: couleurDelAbscisse,
+          color: couleurDesLibellesAxeX,
           font: {
             weight: (context: ScriptableScaleContext) => {
               const index = context && (context as any).tick && typeof (context as any).tick.index === "number" ? (context as any).tick.index : 0;

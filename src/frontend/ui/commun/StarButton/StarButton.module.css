@@ -1,5 +1,5 @@
 .star, .star-tab {
-    color: #000091;
+    color: var(--text-title-blue-france);
     min-width: 3rem !important;
     background-color: transparent !important;
     position: relative;
@@ -10,7 +10,7 @@
 }
 
 .starInEstablishment {
-    color: #000091;
+    color: var(--text-title-blue-france);
     background-color: transparent !important;
     position: relative;
     bottom: 97%;
@@ -20,14 +20,14 @@
 @media (max-width: 55em) {
     .star {
         min-width: 3rem !important;
-        color: #000091;
+        color: var(--text-title-blue-france);
         background-color: transparent !important;
         position: relative;
         top: -8px;
     }
 
     .starInEstablishment {
-        color: #000091;
+        color: var(--text-title-blue-france);
         background-color: transparent !important;
         position: relative;
         bottom: 97%;
@@ -37,7 +37,7 @@
 
 @media (max-width: 40em) {
     .starInEstablishment {
-        color: #000091;
+        color: var(--text-title-blue-france);
         background-color: transparent !important;
         position: relative;
         bottom: 97%;

@@ -7,7 +7,7 @@
 }
 
 .starInEstablishment {
-  color: #000091;
+  color:var(--text-title-blue-france);
   background-color: transparent !important;
   position: relative;
   bottom: 97%;
@@ -21,7 +21,7 @@
 
 @media (max-width: 55em) {
   .starInEstablishment {
-    color: #000091;
+    color: var(--text-title-blue-france);
     background-color: transparent !important;
     position: relative;
     bottom: 97%;
@@ -31,7 +31,7 @@
 
 @media (max-width: 40em) {
   .starInEstablishment {
-    color: #000091;
+    color:var(--text-title-blue-france);
     background-color: transparent !important;
     position: relative;
     bottom: 97%;
@@ -48,5 +48,11 @@
 }
 
 .texte-noir {
-  color: #000 !important;
+  color: var(--text-title-grey) !important;
+}
+
+.texte-noir:hover,
+.texte-noir:active,
+.texte-noir:visited {
+  color: var(--text-title-grey) !important;
 }

@@ -106,8 +106,7 @@ export class HistogrammeData {
       datasets: this.visibleStacks.map((stack) => {
         return {
           ...stack,
-          borderWidth: { top: 0, bottom: 0, left: 0, right: 2 },
-          borderColor: "white",
+          borderWidth: 0,
           backgroundColor: this.stackBackgroundColor(stack),
           data: stack.data.map(Math.abs),
           maxBarThickness: 35,
@@ -240,8 +239,55 @@ export const HistogrammesHorizontaux = ({
   cacheLesValeursBasse
 }: HistogrammeHorizontalNewProps): ReactElement => {
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#161616",
+  });
   const { histogrammes, toggleStackVisibility } = useChartData(valeursDesHistogrammes, wording, cacheLesValeursBasse);
   let hasSomeValuesToHide = false;
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const resoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurResolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitees = new Set<string>();
+
+      while (valeurResolue.startsWith("var(")) {
+        const correspondance = valeurResolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitees.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitees.add(correspondance[1]);
+        valeurResolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurResolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: resoutVariableCss(stylesDuTheme, "--text-title-grey", "#161616"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   function transcriptionTitles(): string[] {
     return histogrammes.map((histogramme) => histogramme.transcriptionTitles).flat();
@@ -273,8 +319,47 @@ export const HistogrammesHorizontaux = ({
             <div className={styles["barContainerWidth"]} key={histogramme.nom}>
               <Bar
                 aria-describedby={idDeLaTranscription}
-                data={histogramme.chartData as ChartData<"bar">}
-                options={{ ...histogramme.optionsHistogramme, aspectRatio }}
+                data={{
+                  ...histogramme.chartData,
+                  datasets: histogramme.chartData.datasets.map((dataset) => ({
+                    ...dataset,
+                    datalabels: {
+                      ...dataset.datalabels,
+                      labels: {
+                        ...dataset.datalabels?.labels,
+                        title: {
+                          ...dataset.datalabels?.labels?.title,
+                          color: Array.isArray(dataset.datalabels?.labels?.title?.color)
+                            ? dataset.datalabels.labels.title.color.map((color) => color === couleurIdentifiant ? couleursDuTheme.texte : color)
+                            : dataset.datalabels?.labels?.title?.color,
+                        },
+                      },
+                    },
+                  })),
+                } as ChartData<"bar">}
+                options={{
+                  ...histogramme.optionsHistogramme,
+                  aspectRatio,
+                  scales: {
+                    ...histogramme.optionsHistogramme.scales,
+                    x: {
+                      ...histogramme.optionsHistogramme.scales?.x,
+                      title: {
+                        ...histogramme.optionsHistogramme.scales?.x?.title,
+                        color: couleursDuTheme.texte,
+                      },
+                    },
+                    y: {
+                      ...histogramme.optionsHistogramme.scales?.y,
+                      ticks: {
+                        ...histogramme.optionsHistogramme.scales?.y?.ticks,
+                        color: couleursDuTheme.texte,
+                      },
+                    },
+                  },
+                }}
+                key={`${histogramme.nom}-${couleursDuTheme.texte}`}
+                redraw
                 title={`Graphique ${nomGraph}`}
                 />
             </div>
