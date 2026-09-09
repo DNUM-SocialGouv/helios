@@ -1,6 +1,5 @@
 import "@gouvfr/dsfr/dist/scheme/scheme.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
-import "@gouvfr/dsfr/dist/component/component.min.css";
 import darkSvg from "@gouvfr/dsfr/dist/artwork/pictograms/environment/moon.svg";
 import lightSvg from "@gouvfr/dsfr/dist/artwork/pictograms/environment/sun.svg";
 import systemSvg from "@gouvfr/dsfr/dist/artwork/pictograms/system/system.svg";
