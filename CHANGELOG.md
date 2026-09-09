@@ -5,6 +5,8 @@
 ### Bug Fixes
 
 ### Features
+- hel-645: [Footer] Ajouter la fonctionnalité Paramètres d'affichage
+- hel-862: [Footer] Paramétrage d'affichage - éléments spécifique/charte
 
 ## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (2026-09-04)
 

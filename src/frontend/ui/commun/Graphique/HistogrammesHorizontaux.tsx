@@ -328,10 +328,10 @@ export const HistogrammesHorizontaux = ({
                       labels: {
                         ...dataset.datalabels?.labels,
                         title: {
-                          ...dataset.datalabels?.labels?.title,
-                          color: Array.isArray(dataset.datalabels?.labels?.title?.color)
-                            ? dataset.datalabels.labels.title.color.map((color) => color === couleurIdentifiant ? couleursDuTheme.texte : color)
-                            : dataset.datalabels?.labels?.title?.color,
+                          ...dataset.datalabels?.labels?.["title"],
+                          color: Array.isArray(dataset.datalabels?.labels?.["title"]?.color)
+                            ? dataset.datalabels?.labels?.["title"]?.color.map((color) => color === couleurIdentifiant ? couleursDuTheme.texte : color)
+                            : dataset.datalabels?.labels?.["title"]?.color,
                         },
                       },
                     },
@@ -344,16 +344,16 @@ export const HistogrammesHorizontaux = ({
                   scales: {
                     ...histogramme.optionsHistogramme.scales,
                     x: {
-                      ...histogramme.optionsHistogramme.scales?.x,
+                      ...histogramme.optionsHistogramme.scales?.["x"],
                       title: {
-                        ...histogramme.optionsHistogramme.scales?.x?.title,
+                        ...histogramme.optionsHistogramme.scales?.["x"]?.title,
                         color: couleursDuTheme.texte,
                       },
                     },
                     y: {
-                      ...histogramme.optionsHistogramme.scales?.y,
+                      ...histogramme.optionsHistogramme.scales?.["y"],
                       ticks: {
-                        ...histogramme.optionsHistogramme.scales?.y?.ticks,
+                        ...histogramme.optionsHistogramme.scales?.["y"]?.ticks,
                         color: couleursDuTheme.texte,
                       },
                     },
