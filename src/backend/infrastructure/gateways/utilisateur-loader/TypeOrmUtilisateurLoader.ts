@@ -214,7 +214,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
                 <a href="${APP_URL}/creation-mot-passe?loginToken=${token}">ici</a> et définir votre mot de passe</p>
                 <p><b>Attention, la page est accessible une seule fois, et pendant 24h à compter de son ouverture. </b></p>
                 <p>Si le lien ne fonctionne plus, merci de passer par <a href="${APP_URL}/mot-passe-oublie"> Mot de passe oublié ?</a> présent sur la page de connexion. </p>
-                <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.scn-helios-support@sg.social.gouv.fr</p>
+                <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.helios-support@sg.social.gouv.fr</p>
                 <p> Cordialement, </p>
                 <p>L'équipe Helios</p>`;
           sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);

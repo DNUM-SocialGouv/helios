@@ -58,10 +58,10 @@ export const PageAccessibilite = () => {
           un courriel à{" "}
           <a
             className="fr-link"
-            href="mailto:dnum.scn-helios-support@sg.social.gouv.fr"
-            title="Envoyer un email à dnum.scn-helios-support@sg.social.gouv.fr - ouvre un nouvelle fenêtre"
+            href="mailto:dnum.helios-support@sg.social.gouv.fr"
+            title="Envoyer un email à dnum.helios-support@sg.social.gouv.fr - ouvre un nouvelle fenêtre"
           >
-            dnum.scn-helios-support@sg.social.gouv.fr
+            dnum.helios-support@sg.social.gouv.fr
           </a>
         </p>
       </div>
