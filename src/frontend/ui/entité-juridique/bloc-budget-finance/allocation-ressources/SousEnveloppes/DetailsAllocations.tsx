@@ -99,7 +99,10 @@ export function DetailsAllocations({ data, ListeCouleursSousEnveloppes }: Detail
                   <span className={styles["subEnvTitle"]}>
                     Sous enveloppe {sousEnveloppe.sousEnveloppe}{" "}
                     <span className={styles["totalSousEnveloppe"]}>
-                      {formatNumbuerWithSpaces(sousEnveloppe.total)} € ({convertFloatToComma(sousEnveloppe.pourcentage)}%)
+                      <span className={styles["montantSousEnveloppe"]}>
+                        {formatNumbuerWithSpaces(sousEnveloppe.total)}{"\u00A0"}€
+                      </span>{" "}
+                      ({convertFloatToComma(sousEnveloppe.pourcentage)}%)
                     </span>
                   </span>
                 </>

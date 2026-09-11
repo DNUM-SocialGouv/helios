@@ -18,13 +18,13 @@ export const HistogrammeHorizontalRowMultiple = ({ data, realPercentage, ListeCo
         {data.map((item, index) => {
           return (
             <li key={item.key}>
-              <div
+              {Math.floor(item.value) > 5 && <div
                 className={styles["barHistogramme"]}
                 data-testid={`bar-${item.key}`}
                 style={{ width: `${Math.floor(item.value)}%`, backgroundColor: ListeCouleursSousEnveloppes[index] }}
               >
                 i
-              </div>
+              </div>}
             </li>
           );
         })}

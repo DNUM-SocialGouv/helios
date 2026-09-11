@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+- hel-1089: [Bloc Budget et Finances] Allocation de ressources affichage chevrons aléatoires
+
 ### Features
 
 ## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (2026-09-04)
