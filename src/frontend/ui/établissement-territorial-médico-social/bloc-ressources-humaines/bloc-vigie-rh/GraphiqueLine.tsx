@@ -141,7 +141,6 @@ const LineChart = ({
           autoSkip: false, // Désactive le saut automatique des labels
           maxRotation: 0,  // Empêche l'inclinaison des labels
           minRotation: 0,  // Force l'affichage horizontal des labels
-          color: "#000",
 
           callback: (_value: any, index: number): string | number => {
             const entry = dataEffectifs?.dataMoisAnnee?.[index];

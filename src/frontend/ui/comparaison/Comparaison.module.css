@@ -93,7 +93,7 @@
 }
 
 .selected-container {
-  color: #000091;
+  color: var(--text-title-blue-france);
 }
 
 .ajout-etab-body {
@@ -129,7 +129,7 @@
   background-color: var(--background-contrast-grey);
   text-align: center;
   padding-top: 2rem;
-  color: #161616A3;
+  color: var(--text-title-grey);
   margin-top: 1rem;
 }
 

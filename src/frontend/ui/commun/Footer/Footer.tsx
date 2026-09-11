@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
+import { DisplaySettings } from "./DisplaySettings";
 import { Cookies } from "../../cookies/Cookies";
 import { useDependencies } from "../contexts/useDependencies";
 
@@ -109,6 +110,9 @@ export const Footer = () => {
               >
                 {wording.COOKIES}
               </button>
+            </li>
+            <li className="fr-footer__bottom-item">
+              <DisplaySettings />
             </li>
             <li className="fr-footer__bottom-item">
               <Link

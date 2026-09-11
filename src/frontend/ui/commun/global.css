@@ -25,13 +25,6 @@ iframe {
   text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #fff !important;
-    color: #000 !important;
-  }
-}
-
 @media (max-width: 64em) {
   .fr-col-3 {
     flex: 0 0 33%;

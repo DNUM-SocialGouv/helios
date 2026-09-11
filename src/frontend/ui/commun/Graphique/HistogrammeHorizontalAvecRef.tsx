@@ -1,8 +1,9 @@
 import { BarElement, Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { couleurDesTraitsRefHistogramme, CouleurHistogramme, couleurIdentifiant } from "./couleursGraphique";
+import { couleurDesTraitsRefHistogramme, CouleurHistogramme } from "./couleursGraphique";
 import styles from "./HistogrammeHorizontaux.module.css";
 import { ColorLabel } from "../ColorLabel/ColorLabel";
 import { useDependencies } from "../contexts/useDependencies";
@@ -43,6 +44,37 @@ const HistogrammeHorizontalAvecRef = ({
   valeursAdditionnelles
 }: HistogrammeHorizontalAvecRefProps) => {
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#000",
+    texteSecondaire: "#666666",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: stylesDuTheme.getPropertyValue("--text-title-grey").trim() || "#000",
+        texteSecondaire: stylesDuTheme.getPropertyValue("--text-mention-grey").trim() || "#666666",
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const ASPECT_RATIO = epaisseur === "EPAIS" ? 11 : 15;
   const aspectRatio = ASPECT_RATIO / valeursDesHistogrammes.length;
@@ -52,7 +84,7 @@ const HistogrammeHorizontalAvecRef = ({
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
         data: valeursDesHistogrammes,
-        datalabels: { labels: { title: { color: valeursDesHistogrammes.map(() => "#000") } } },
+        datalabels: { labels: { title: { color: valeursDesHistogrammes.map(() => couleursDuTheme.texte) } } },
         maxBarThickness: 60,
         type: "bar",
         xAxisID: "x",
@@ -83,7 +115,7 @@ const HistogrammeHorizontalAvecRef = ({
         border: {
           display: false
         },
-        ticks: { color: couleurIdentifiant },
+        ticks: { color: couleursDuTheme.texte },
         grid: { drawOnChartArea: false, drawTicks: false },
       },
     },
@@ -100,7 +132,7 @@ const HistogrammeHorizontalAvecRef = ({
     },
     plugins: {
       datalabels: {
-        color: "#000",
+        color: couleursDuTheme.texte,
         anchor: "end",
         font: {
           family: "Marianne",
@@ -132,7 +164,7 @@ const HistogrammeHorizontalAvecRef = ({
           pourcentage: {
             align: "end",
             anchor: "end",
-            color: "#666",
+            color: couleursDuTheme.texteSecondaire,
             offset: (context: any) => {
               const donnees = Array.isArray(context.dataset.data) ? context.dataset.data : [];
               const valeurBrute = donnees[context.dataIndex];

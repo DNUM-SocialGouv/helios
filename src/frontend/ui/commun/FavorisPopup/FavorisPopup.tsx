@@ -66,7 +66,7 @@ export const FavorisPopup = ({
   };
 
   return (
-    <div className={"fr-text--regular " + styles["menu"]} ref={componentRef} style={(positionX > 0 && positionY > 0) ? { top: positionY, left: positionX } : {}}>
+    <div className={"fr-text--regular fr-modal__body " + styles["menu"]} ref={componentRef} style={(positionX > 0 && positionY > 0) ? { top: positionY, left: positionX } : {}}>
       <div className={displayNewListInput ? "fr-hidden" : ""}>
         <legend className="fr-fieldset__legend--regular fr-fieldset__legend fr-text--lead fr-my-1w fr-ml-1v fr-p-0 fr-text--bold" id="checkboxes-legend">
           {wording.ETOILE_MES_LISTES}
