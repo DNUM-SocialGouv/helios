@@ -62,7 +62,6 @@ TABLE_VIGIE_RH_REF_NATURE_CONTRATS = "vigierh_referentiel_nature_contrat"
 TABLE_VIGIE_RH_NATURE_CONTRATS = "vigierh_nature_contrats_annuel"
 TABLE_VIGIE_RH_NATURE_CONTRATS_TRIMESTRIEL = "vigierh_nature_contrats_trimestriel"
 
-
 class FichierSource(Enum):
     DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et"
     DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et"
