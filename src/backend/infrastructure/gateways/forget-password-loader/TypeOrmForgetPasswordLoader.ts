@@ -34,7 +34,7 @@ export class TypeOrmForgetPasswordLoader implements ForgetPasswordLoader {
       
           <p>A bientôt sur Helios,</p>
       
-          <p>En cas de difficulté dans votre demande de réinitialisation, merci de contacter l’équipe Support Helios : dnum.scn-helios-support@sg.social.gouv.fr</p>
+          <p>En cas de difficulté dans votre demande de réinitialisation, merci de contacter l’équipe Support Helios : dnum.helios-support@sg.social.gouv.fr</p>
           `
       const body = {
         to: [

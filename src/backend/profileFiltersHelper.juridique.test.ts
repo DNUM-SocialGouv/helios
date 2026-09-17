@@ -77,6 +77,7 @@ function getAutorisationCapaciteJuridique(): EntitéJuridiqueAutorisationEtCapac
       année: 2025, dateMiseÀJourSource: "dateMajCap", nombreDeLitsEnChirurgie: 1, nombreDeLitsEnMédecine: 2, nombreDeLitsEnObstétrique: 3, nombreDeLitsEnSsr: 4, nombreDeLitsEnUsld: 5, nombreDeLitsOuPlacesEnPsyHospitalisationComplète: 6, nombreDePlacesEnChirurgie: 7, nombreDePlacesEnMédecine: 8, nombreDePlacesEnObstétrique: 9, nombreDePlacesEnPsyHospitalisationPartielle: 10, nombreDePlacesEnSsr: 11
     }],
     autorisationsActivités: { dateMiseÀJourSource: "dateMajAutorisation", autorisations: [{ modalites: [], libelle: "libAutoriAct", code: "codeAutoriAct" }] },
+    autorisationsMédicoSocial: { dateMiseÀJourSource: "dateMajAutorisationMs", autorisations: [{ modalites: [], libelle: "libAutoriMs", code: "codeAutoriMs" }] },
     autorisationsAmmSanitaire: { autorisations: [], dateMiseÀJourSource: "" },
     autresActivités: { dateMiseÀJourSource: "dateMajAutreActivite", autorisations: [{ modalites: [], libelle: "libAutreAct", code: "codeAutreAct" }] },
     reconnaissanceContractuelleActivités: { dateMiseÀJourSource: "dateMajReco", autorisations: [{ modalites: [], libelle: "libRecoContr", code: "codeRecoContr" }] },
@@ -490,6 +491,7 @@ describe("Filtre des informations d’autorisation des etablissement juridique p
     const expectedAutorisationCapacity = {
       ...rawAutorisationCapacity,
       autorisationsActivités: { dateMiseÀJourSource: "", autorisations: [] },
+      autorisationsMédicoSocial: { dateMiseÀJourSource: "", autorisations: [] },
     }
 
     let entiteJuridiqueResult = getFullEntiteJuridique();

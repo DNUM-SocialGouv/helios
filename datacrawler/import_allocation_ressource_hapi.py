@@ -21,12 +21,12 @@ from datacrawler.transform.transforme_les_donnees_allocation_ressource.transform
 from datacrawler.transform.équivalences_diamant_helios import (
     colonnes_a_lire_allocation_ressource,
     extrais_l_equivalence_des_types_des_colonnes,
-    équivalences_diamant_men_hapi_allocation_ressource_helios,
+    équivalences_hapi_allocation_ressource_helios,
 )
 
 
 def import_allocation_ressource(fichiers_param: List[str], men_hapi_data_path_param: str, base_de_données: Engine, logger: Logger) -> None:
-    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_diamant_men_hapi_allocation_ressource_helios)
+    types_des_colonnes = extrais_l_equivalence_des_types_des_colonnes(équivalences_hapi_allocation_ressource_helios)
     dataframes = []
     for fichier in fichiers_param:
         chemin_local_du_fichier_men_hapi = os.path.join(men_hapi_data_path_param, fichier)

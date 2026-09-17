@@ -1,5 +1,6 @@
 import { Chart as ChartJS, ChartData, ChartOptions } from "chart.js";
 import { Context } from "chartjs-plugin-datalabels";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { CouleurHistogramme, couleurDesTraitsRefHistogramme } from "./couleursGraphique";
@@ -38,6 +39,53 @@ const HistogrammeVerticalAvecRef = ({
   showRefValues,
 }: HistogrammeVerticalAvecRefProps) => {
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#161616",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const resoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurResolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitees = new Set<string>();
+
+      while (valeurResolue.startsWith("var(")) {
+        const correspondance = valeurResolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitees.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitees.add(correspondance[1]);
+        valeurResolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurResolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: resoutVariableCss(stylesDuTheme, "--text-title-grey", "#161616"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const transcriptionValeurs = valeurs.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
   const transcriptionValeursRef = valeursRef.map((value) => (Number.isFinite(value as number) ? `${(value as number).toLocaleString("fr")} %` : null));
@@ -83,7 +131,7 @@ const HistogrammeVerticalAvecRef = ({
       {
         backgroundColor: couleursDeLHistogramme.map((couleur) => couleur.premierPlan),
         data: valeurs,
-        datalabels: { labels: { title: { color: valeurs.map(() => "#000") } } },
+        datalabels: { labels: { title: { color: valeurs.map(() => couleursDuTheme.texte) } } },
         maxBarThickness: 60,
         type: "bar",
         xAxisID: "x",
@@ -164,7 +212,7 @@ const HistogrammeVerticalAvecRef = ({
         },
         stacked: true,
         ticks: {
-          color: "#000",
+          color: couleursDuTheme.texte,
           callback: (_tickValue: any, index: number) => libellesPrincipaux[index] ?? "",
           font: (context: any) => {
             if (context.index === libelles.length - 1 && String(libelles[context.index]).includes(anneeEnCours)) {
@@ -183,7 +231,7 @@ const HistogrammeVerticalAvecRef = ({
         display: presenceLibellesSecondaires,
         grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
-          color: "#000",
+          color: couleursDuTheme.texte,
           callback: (_tickValue: any, index: number) => libellesSecondaires[index] ?? "",
           font: (context: any) => {
             const tickLabel = typeof context.tick?.label === "string" ? context.tick.label : "";

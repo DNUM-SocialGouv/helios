@@ -1,7 +1,12 @@
 .title {
     text-align: center;
     margin-top: 2rem;
-    color: #000091;
+    color: var(--text-title-blue-france);
+}
+
+.actionButton {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .actionButton {

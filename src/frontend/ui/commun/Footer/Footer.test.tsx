@@ -95,13 +95,30 @@ describe("Le pied de page", () => {
     expect(faq).toHaveAttribute("href", `${paths.AIDE}?path=foire-aux-questions`);
   });
 
+  it("affiche les paramètres d’affichage dans le footer", () => {
+    renderFakeComponent(<Footer />);
+
+    const displaySettings = screen.getByRole("button", { name: wording.PARAMÈTRES_D_AFFICHAGE });
+
+    expect(displaySettings).toBeInTheDocument();
+  });
+
+  it("permet de choisir le thème sombre", () => {
+    renderFakeComponent(<Footer />);
+
+    const darkThemeRadio = screen.getByLabelText(wording.PARAMÈTRES_D_AFFICHAGE_SOMBRE);
+
+    expect(darkThemeRadio).toHaveAttribute("name", "fr-radios-theme");
+    expect(darkThemeRadio).toHaveAttribute("value", "dark");
+  });
+
   it("affiche un lien pour nous contacter", () => {
     // WHEN
     renderFakeComponent(<Footer />);
 
     // THEN
     const nousContacter = screen.getByRole("link", { name: wording.NOUS_CONTACTER });
-    expect(nousContacter).toHaveAttribute("href", "mailto:dnum.scn-helios-support@sg.social.gouv.fr");
+    expect(nousContacter).toHaveAttribute("href", "mailto:dnum.helios-support@sg.social.gouv.fr");
     expect(nousContacter).toHaveAttribute("target", "_blank");
     expect(nousContacter).toHaveAttribute("rel", "external noopener noreferrer");
   });

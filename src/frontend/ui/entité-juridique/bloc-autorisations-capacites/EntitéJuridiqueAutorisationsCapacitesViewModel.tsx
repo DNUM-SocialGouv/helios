@@ -13,6 +13,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
   public graphiqueCapacitesParActivitesViewModel: GraphiqueCapacitésParActivitéViewModel;
   public autorisationsActivités: AutorisationsActivités;
   public autorisationsAmmActivites: AutorisationActivitesAmm;
+  public autorisationsMédicoSocial: AutorisationsActivités;
   public autresActivités: AutresActivités;
   public reconnaissanceActivités: ReconnaissanceContractuelleActivités;
   public equipementsLourds: EquipementsMateriauxLourdsActivités;
@@ -26,11 +27,13 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     autresActivitesSanitaire: AutresActivités,
     reconnaissancesContractuellesSanitaire: ReconnaissanceContractuelleActivités,
     equipementsLourdsSanitaire: EquipementsMateriauxLourdsActivités,
-    wording: Wording
+    wording: Wording,
+    autorisationsMédicoSocial: AutorisationsActivités = { autorisations: [], dateMiseÀJourSource: "" }
   ) {
     this.graphiqueCapacitesParActivitesViewModel = new GraphiqueCapacitésParActivitéViewModel(capacites, wording);
     this.autorisationsActivités = autorisationsSanitaire;
     this.autorisationsAmmActivites = autorisationsAmmActivites;
+    this.autorisationsMédicoSocial = autorisationsMédicoSocial;
     this.autresActivités = autresActivitesSanitaire;
     this.reconnaissanceActivités = reconnaissancesContractuellesSanitaire;
     this.wording = wording;
@@ -42,6 +45,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     const nonRenseignees = [];
     if (this.lesAutorisationsCapacitesNeSontPasRenseignées) nonRenseignees.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (this.lesAutorisationsActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTORISATIONS_ACTIVITES);
+    if (this.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTORISATIONS_MS);
     if (this.lesAutresActivitesNeSontPasRenseignées()) nonRenseignees.push(this.wording.AUTRES_ACTIVITÉS);
     if (this.lesReconnaissanceContractuellesNeSontPasRenseignées()) nonRenseignees.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
     if (this.lesEquipementsLourdsNeSontPasRenseignées()) nonRenseignees.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
@@ -52,6 +56,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     const nonAutorisés = [];
     if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE);
     if (!this.lesAutorisationsActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_ACTIVITES);
+    if (!this.lesAutorisationsMédicoSocialesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTORISATIONS_MS);
     if (!this.lesAutresActivitesNeSontPasAutorisées) nonAutorisés.push(this.wording.AUTRES_ACTIVITÉS);
     if (!this.lesReconnaissanceContractuellesNeSontPasAutoriséess) nonAutorisés.push(this.wording.RECONNAISSANCES_CONTRACTUELLES);
     if (!this.lesEquipementsLourdsNeSontPasAutorisées) nonAutorisés.push(this.wording.ÉQUIPEMENTS_MATÉRIELS_LOURDS);
@@ -81,6 +86,12 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
 
   public lesAutorisationsActivitesNeSontPasRenseignées(): boolean {
     return !((this.autorisationsActivités.autorisations && this.autorisationsActivités.autorisations.length > 0) || (this.autorisationsAmmActivites.autorisations && this.autorisationsAmmActivites.autorisations.length > 0));
+  }
+  public lesAutorisationsMédicoSocialesNeSontPasRenseignées(): boolean {
+    return !(this.autorisationsMédicoSocial.autorisations && this.autorisationsMédicoSocial.autorisations.length > 0);
+  }
+  public get lesAutorisationsMédicoSocialesNeSontPasAutorisées(): boolean {
+    return this.autorisationsMédicoSocial.dateMiseÀJourSource !== '';
   }
   public lesAutresActivitesNeSontPasRenseignées(): boolean {
     return !(this.autresActivités.autorisations && this.autresActivités.autorisations.length > 0);

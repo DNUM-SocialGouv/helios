@@ -16,29 +16,39 @@ export function getCurrentDate() {
   return currentDate;
 }
 
-export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, raisonSocialeEntiteJuridique: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) {
+export function useExportExcelAutorisation(
+  numeroFinessEntiteJuridique: string,
+  raisonSocialeEntiteJuridique: string,
+  entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel,
+  hasSanitaireEt: boolean,
+  hasMedicoSocialEt: boolean
+) {
   const { wording } = useDependencies();
 
   const autorisationFields = [wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
   const autresAutorisationFields = [wording.DATE_D_AUTORISATION_KEY, wording.DATE_DE_MISE_EN_OEUVRE, wording.DATE_DE_FIN];
   const reconnaissanceFields = ["Capacité autorisée", "Date d'effet de l'ASR", wording.NUMÉRO_AUTORISATION, "Date d'effet du CPOM", "Date de fin du CPOM", "Numéro de CPOM"];
   const equipementLourdFields = [wording.NUMÉRO_AUTORISATION, wording.DATE_D_AUTORISATION_KEY, "Date de mis en oeuvre", wording.DATE_DE_FIN];
+  const autorisationMSFields = [wording.DATE_D_AUTORISATION, wording.MISE_À_JOUR_AUTORISATION, wording.DERNIÈRE_INSTALLATION, wording.CAPACITÉ_AUTORISÉE, wording.CAPACITÉ_INSTALLÉE];
 
   function exportExcelAutorisation() {
     const workbook = new Workbook();
     const etabLine = `${numeroFinessEntiteJuridique} - ${raisonSocialeEntiteJuridique}`;
 
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsActivitesNeSontPasAutorisées) {
       exportExcelAutorisationDeSoin(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutresActivitesNeSontPasAutorisées) {
       exportExcelAutresAutorisations(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasAutoriséess) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesReconnaissanceContractuellesNeSontPasAutoriséess) {
       exportExcelReconnaissanceContractuelles(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
-    if ((!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées) {
+    if (hasSanitaireEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesEquipementsLourdsNeSontPasAutorisées) {
       exportExcelEquipementsLourds(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
+    }
+    if (hasMedicoSocialEt && (!entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasRenseignées()) && entitéJuridiqueAutorisationsCapacitesViewModel.lesAutorisationsMédicoSocialesNeSontPasAutorisées) {
+      exportExcelAutorisationsMS(workbook, etabLine, entitéJuridiqueAutorisationsCapacitesViewModel);
     }
 
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
@@ -95,6 +105,23 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
           const formeColumn = `${forme.libelle} [${forme.code}]`;
           result.push(
             ...getEtablissementRows(forme.autorisationEtablissements, [activiteColumn, modaliteColumn, "", "", formeColumn], autorisationFields)
+          );
+        }
+      }
+    }
+    return result;
+  }
+
+   function getAutorisationMSRows(entiteJuridiqueAutorisations: AutorisationsActivités): string[][] {
+    const result: string[][] = [];
+    for (const activite of entiteJuridiqueAutorisations.autorisations) {
+      const activiteColumn = `${activite.libelle} [${activite.code}]`;
+      for (const modalite of activite.modalites) {
+        const modaliteColumn = `${modalite.libelle} [${modalite.code}]`;
+        for (const forme of modalite.formes) {
+          const formeColumn = `${forme.libelle} [${forme.code}]`;
+          result.push(
+            ...getEtablissementRows(forme.autorisationEtablissements, [activiteColumn, modaliteColumn,  formeColumn], autorisationMSFields)
           );
         }
       }
@@ -215,6 +242,19 @@ export function useExportExcelAutorisation(numeroFinessEntiteJuridique: string, 
     const fieldValues = fields.map(field => autorisationsMap[field] || '');
     return fieldValues;
   };
+
+   const exportExcelAutorisationsMS = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {
+    const columns = ["Discipline", wording.ACTIVITÉ, "Clientèle", "Autorisations Établissements", wording.DATE_D_AUTORISATION, wording.MISE_À_JOUR_AUTORISATION, wording.DERNIÈRE_INSTALLATION, wording.CAPACITÉ_AUTORISÉE, wording.CAPACITÉ_INSTALLÉE];
+    const etablissementMSAutorisations = entitéJuridiqueAutorisationsCapacitesViewModel.autorisationsMédicoSocial;
+
+    const rows: string[][] = [];
+
+    const autorisationRows = getAutorisationMSRows(etablissementMSAutorisations);
+    rows.push(...autorisationRows);
+
+    const sheet = workbook.addWorksheet("Autorisations sociales et médico-sociales");
+    ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
+  }
 
 
   return { exportExcelAutorisation };

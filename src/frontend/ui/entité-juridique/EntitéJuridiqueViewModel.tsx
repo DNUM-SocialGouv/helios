@@ -35,7 +35,8 @@ export class EntiteJuridiqueViewModel {
       entitéJuridique.autorisationsEtCapacites.autresActivités,
       entitéJuridique.autorisationsEtCapacites.reconnaissanceContractuelleActivités,
       entitéJuridique.autorisationsEtCapacites.equipementMaterielLourdsActivités,
-      wording
+      wording,
+      entitéJuridique.autorisationsEtCapacites.autorisationsMédicoSocial
     );
     this.entiteJuridiqueRessourcesHumainesViewModel = new EntiteJuridiqueRessourcesHumainesViewModel(entitéJuridique.ressourcesHumaines, wording);
   }

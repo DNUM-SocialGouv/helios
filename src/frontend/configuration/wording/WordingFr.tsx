@@ -547,6 +547,13 @@ export class WordingFr implements Wording {
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
   readonly COOKIES: string = "Gestion des Cookies";
+  readonly PARAMÈTRES_D_AFFICHAGE: string = "Paramètres d’affichage";
+  readonly PARAMÈTRES_D_AFFICHAGE_DESCRIPTION: string = "Choisissez un thème pour personnaliser l’apparence du site.";
+  readonly PARAMÈTRES_D_AFFICHAGE_LÉGENDE: string = "Choisissez un thème pour personnaliser l’apparence du site.";
+  readonly PARAMÈTRES_D_AFFICHAGE_SYSTÈME: string = "Système";
+  readonly PARAMÈTRES_D_AFFICHAGE_SYSTÈME_HINT: string = "Utilise les paramètres système";
+  readonly PARAMÈTRES_D_AFFICHAGE_CLAIR: string = "Thème clair";
+  readonly PARAMÈTRES_D_AFFICHAGE_SOMBRE: string = "Thème sombre";
   readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
   readonly TARTE_CITRON: string = "Site officiel de Tarte au citron";
   readonly SAVOIR_PLUS: string = "En savoir plus";

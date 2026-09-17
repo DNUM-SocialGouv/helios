@@ -20,6 +20,7 @@ const MENTION_LIB_LONGUEUR_MAX = 75;
 
 export type TagMultiNiveauxProps = {
   activites: AutorisationActivites[];
+  cheminÉtablissement?: string;
   type: string;
 };
 
@@ -27,7 +28,7 @@ export type TagMultiNiveauxAmmProps = {
   activites: AutorisationDActivitesAmm[];
 };
 
-export const AutorisationsTagMultiNiveaux = ({ activites, type }: TagMultiNiveauxProps): ReactElement => {
+export const AutorisationsTagMultiNiveaux = ({ activites, cheminÉtablissement, type }: TagMultiNiveauxProps): ReactElement => {
   return (
     <ul>
       {activites.map((activité) => {
@@ -37,7 +38,7 @@ export const AutorisationsTagMultiNiveaux = ({ activites, type }: TagMultiNiveau
             <TagCliquable for={id} titre={`${activité.libelle} [${activité.code}]`} />
             <ul className={"fr-collapse niveau1 " + style["tag-niveau1"]} id={id}>
               {activité.modalites.map((modalités) => (
-                <Modalite codeActivite={activité.code} key={`modalité-${modalités.code}`} modalité={modalités} type={type} />
+                <Modalite cheminÉtablissement={cheminÉtablissement} codeActivite={activité.code} key={`modalité-${modalités.code}`} modalité={modalités} type={type} />
               ))}
             </ul>
           </li>
@@ -85,14 +86,14 @@ const AfficherLesEt = ({ for: identifiant }: AfficherLesEtProps) => {
   );
 };
 
-const Modalite = ({ modalité, codeActivite, type }: { codeActivite: string; modalité: ModaliteType, type: string }): ReactElement => {
+const Modalite = ({ modalité, cheminÉtablissement, codeActivite, type }: { cheminÉtablissement?: string; codeActivite: string; modalité: ModaliteType, type: string }): ReactElement => {
   const id = `${type}-accordion-${codeActivite}-${modalité.code}`;
   return (
     <li>
       <TagCliquable for={id} texteGras={false} titre={`${modalité.libelle} [${modalité.code}]`} />
       <ul className={"fr-collapse niveau2 " + style["modalites"]} id={id}>
         {modalité.formes.map((forme) => (
-          <Forme codeActivite={codeActivite} codeModalite={modalité.code} forme={forme} key={`forme-${forme.code}`} type={type} />
+          <Forme cheminÉtablissement={cheminÉtablissement} codeActivite={codeActivite} codeModalite={modalité.code} forme={forme} key={`forme-${forme.code}`} type={type} />
         ))}
       </ul>
     </li>
@@ -155,7 +156,7 @@ const PratiqueDeclarationAmm = ({ codeModalite, codeMention, declaration, pratiq
 };
 
 
-const Forme = ({ codeModalite, forme, codeActivite, type }: { codeModalite: string; forme: FormeType; codeActivite: string, type: string }): ReactElement => {
+const Forme = ({ cheminÉtablissement, codeModalite, forme, codeActivite, type }: { cheminÉtablissement?: string; codeModalite: string; forme: FormeType; codeActivite: string, type: string }): ReactElement => {
   const id = `${type}-accordion-${codeActivite}-${codeModalite}-${forme.code}`;
   return (
     <li>
@@ -165,6 +166,7 @@ const Forme = ({ codeModalite, forme, codeActivite, type }: { codeModalite: stri
         {forme.autorisationEtablissements.map((autorisationEtablissement) => (
           <AutorisationEtablissement
             autorisations={autorisationEtablissement.autorisations}
+            cheminÉtablissement={cheminÉtablissement}
             key={`details-${autorisationEtablissement.numeroFiness}`}
             nomEtablissement={autorisationEtablissement.nomEtablissement}
             numeroFiness={autorisationEtablissement.numeroFiness}
@@ -175,11 +177,12 @@ const Forme = ({ codeModalite, forme, codeActivite, type }: { codeModalite: stri
   );
 };
 
-const AutorisationEtablissement = ({ numeroFiness, nomEtablissement, autorisations }: AutorisationEtablissementType): ReactElement => {
+const AutorisationEtablissement = ({ cheminÉtablissement, numeroFiness, nomEtablissement, autorisations }: AutorisationEtablissementType & { cheminÉtablissement?: string }): ReactElement => {
   const { paths } = useDependencies();
+  const chemin = cheminÉtablissement ?? paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE;
   return (
     <li className={style["etablissement"]}>
-      <Link href={paths.ÉTABLISSEMENT_TERRITORIAL_SANITAIRE + "/" + numeroFiness}>{numeroFiness + " - " + nomEtablissement}</Link>
+      <Link href={chemin + "/" + numeroFiness}>{numeroFiness + " - " + nomEtablissement}</Link>
       <TagGroup label="autorisations">
         {autorisations.map((autorisation) => {
           return <Tag key={autorisation.nom} label={`${autorisation.nom} : ${autorisation.nom ? autorisation.valeur : "N/A"}`} size={TAG_SIZE.SM} />;

@@ -1,3 +1,4 @@
+import { AutorisationMédicoSocialModel } from "../../../../../database/models/AutorisationMédicoSocialModel";
 import { AutorisationSanitaireModel } from "../../../../../database/models/AutorisationSanitaireModel";
 import { AutreActivitéSanitaireModel } from "../../../../../database/models/AutreActivitéSanitaireModel";
 import { ReconnaissanceContractuelleSanitaireModel } from "../../../../../database/models/ReconnaissanceContractuelleSanitaireModel";
@@ -16,6 +17,7 @@ export type EntitéJuridiqueAutorisationEtCapacité = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsActivités: AutorisationsActivités;
+  autorisationsMédicoSocial: AutorisationsActivités;
   autorisationsAmmSanitaire: AutorisationActivitesAmm;
   autresActivités: AutresActivités;
   reconnaissanceContractuelleActivités: ReconnaissanceContractuelleActivités;
@@ -26,6 +28,7 @@ export type EntitéJuridiqueAutorisationEtCapacitéLoader = Readonly<{
   numéroFinessEntitéJuridique: string;
   capacités: CapacitéSanitaireEntitéJuridique[];
   autorisationsSanitaire: { autorisations: AutorisationSanitaireModel[]; dateMiseÀJourSource: string };
+  autorisationsMédicoSocial: { autorisations: AutorisationMédicoSocialModel[]; dateMiseÀJourSource: string };
   autorisationsAmmSanitaire: { autorisations: AutorisationsAMMMEJQueryResult[]; dateMiseAJourSource: string };
   autresActivitesSanitaire: { autorisations: AutreActivitéSanitaireModel[]; dateMiseÀJourSource: string };
   reconnaissanceContractuellesSanitaire: { autorisations: ReconnaissanceContractuelleSanitaireModel[]; dateMiseÀJourSource: string };

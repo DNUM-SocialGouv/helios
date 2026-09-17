@@ -103,6 +103,10 @@
   margin: 0 5px;
 }
 
+.montantSousEnveloppe {
+  white-space: nowrap;
+}
+
 .carreSousEnveloppe {
   min-width: 18px;
   min-height: 18px;
@@ -112,9 +116,4 @@
   margin-right: 5px;
   margin-top: 2px;
   border-radius: 30%;
-}
-
-.envContent {
-  min-width: 470px;
-  max-width: 470px;
 }

@@ -1,5 +1,5 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, ChartData, ChartOptions } from "chart.js";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { annéesManquantesVigieRh } from "../../../../utils/dateUtils";
@@ -28,6 +28,53 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
   const refColor = "#929292";
 
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#000000",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const résoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurRésolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitées = new Set<string>();
+
+      while (valeurRésolue.startsWith("var(")) {
+        const correspondance = valeurRésolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitées.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitées.add(correspondance[1]);
+        valeurRésolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurRésolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: résoutVariableCss(stylesDuTheme, "--text-title-grey", "#000000"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const {
     hommesExtension,
@@ -185,7 +232,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
           display: false
         },
         ticks: {
-          color: '#000',
+          color: couleursDuTheme.texte,
           autoSkip: false
         },
         grid: { drawOnChartArea: false, drawTicks: false },
@@ -240,7 +287,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
           // Afficher les labels uniquement pour les datasets principaux
           return context.dataset.label === "Men" || context.dataset.label === "Women";
         },
-        color: "#000",
+        color: couleursDuTheme.texte,
         font: {
           family: "Marianne",
           size: 12,
@@ -262,7 +309,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = "12px Marianne";
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = couleursDuTheme.texte;
 
       datasetMeta.data.forEach((bar: any, index: number) => {
         const label = labels[index];
@@ -326,6 +373,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
           <Bar
             aria-describedby={idDeLaTranscription}
             data={middleData}
+            key={couleursDuTheme.texte}
             options={{
               ...options,
               plugins: {
@@ -343,6 +391,7 @@ const PyramidChart = ({ etabFiness, etabTitle, labels, effectifFemme, effectifFe
               events: [],
             }}
             plugins={[labelPlugin]}
+            redraw
             title={`Graphique ${wording.PYRAMIDE_DES_AGES}`}
           />
         </div>

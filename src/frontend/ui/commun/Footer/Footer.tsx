@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/footer/footer.min.css";
+import { DisplaySettings } from "./DisplaySettings";
 import { Cookies } from "../../cookies/Cookies";
 import { useDependencies } from "../contexts/useDependencies";
 
@@ -111,6 +112,9 @@ export const Footer = () => {
               </button>
             </li>
             <li className="fr-footer__bottom-item">
+              <DisplaySettings />
+            </li>
+            <li className="fr-footer__bottom-item">
               <Link
                 className="fr-footer__bottom-link"
                 href={`${paths.AIDE}?path=foire-aux-questions`}>
@@ -118,12 +122,12 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
-              <a className="fr-footer__bottom-link" href="mailto:dnum.scn-helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
+              <a className="fr-footer__bottom-link" href="mailto:dnum.helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">
                 {wording.NOUS_CONTACTER}
               </a>
             </li>
             <li className="fr-footer__bottom-item">
-              <span className="fr-footer__bottom-link"> v1.8.14</span>
+              <span className="fr-footer__bottom-link"> v1.8.16</span>
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">

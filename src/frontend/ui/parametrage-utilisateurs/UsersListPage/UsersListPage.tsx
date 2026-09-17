@@ -374,7 +374,7 @@ const UsersListPage = ({
                   </tbody>
                 </table>
 
-                <div className={`${styles["pagination-container"]}`}>
+                <div>
                   <div className={`${styles["paginationBtn-container"]}`}>
                     <PaginationBtn paginationData={paginationData} />
                   </div>

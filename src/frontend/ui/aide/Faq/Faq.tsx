@@ -356,7 +356,7 @@ const FAQ_SECTIONS: FaqCategory[] = [
             <p className="fr-mb-1w">Vous pouvez trouver la documentation depuis :</p>
             <p className="fr-mb-1w">- l’application Helios en vous rendant dans le menu Aide puis Guide utilisateurs ou Vidéos tutoriels</p>
             <p className="fr-mb-0">
-              - l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : <a href="mailto:dnum.scn-helios-support@sg.social.gouv.fr">dnum.scn-helios-support@sg.social.gouv.fr</a>.
+              - l’espace Teams Utilisateur dans le dossier « Guide », en adressant une demande auprès du support au mail suivant : <a href="mailto:dnum.helios-support@sg.social.gouv.fr">dnum.helios-support@sg.social.gouv.fr</a>.
             </p>
           </>
         ),

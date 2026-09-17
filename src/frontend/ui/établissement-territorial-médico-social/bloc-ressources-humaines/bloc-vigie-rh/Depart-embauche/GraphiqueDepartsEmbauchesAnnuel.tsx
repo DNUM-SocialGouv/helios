@@ -1,4 +1,5 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Title, Legend, ChartOptions } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 
@@ -28,6 +29,53 @@ type GraphiqueDepartEmbauchesAnnuelProps = Readonly<{
 const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsEmbauches, showRefValues }: GraphiqueDepartEmbauchesAnnuelProps) => {
 
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    texte: "#161616",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const resoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurResolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitees = new Set<string>();
+
+      while (valeurResolue.startsWith("var(")) {
+        const correspondance = valeurResolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitees.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitees.add(correspondance[1]);
+        valeurResolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurResolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        texte: resoutVariableCss(stylesDuTheme, "--text-title-grey", "#161616"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const libelles = donneesDepartsEmbauches.map((donnee) => donnee.annee.toString());
 
@@ -193,7 +241,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         offset: (context: any) => {
           return context.dataset.label === wording.DEPARTS ? -1 : -4;
         },
-        color: "#000",
+        color: couleursDuTheme.texte,
         font: {
           family: "Marianne",
           size: 12,
@@ -241,7 +289,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
         stacked: true,
         grid: { drawOnChartArea: false, drawTicks: false },
         ticks: {
-          color: '#000',
+          color: couleursDuTheme.texte,
           font: function (context: any) {
             if (context.tick.label === new Date().getFullYear()) {
               return { weight: 'bold' };

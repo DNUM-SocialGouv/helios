@@ -459,6 +459,13 @@ export interface Wording {
   readonly NOUVELLE_FENÊTRE: string;
   readonly ECO_CONCEPTION: string;
   readonly COOKIES: string;
+  readonly PARAMÈTRES_D_AFFICHAGE: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_DESCRIPTION: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_LÉGENDE: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_SYSTÈME: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_SYSTÈME_HINT: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_CLAIR: string;
+  readonly PARAMÈTRES_D_AFFICHAGE_SOMBRE: string;
   readonly POLITIQUE_CONFIDENTIALITE: string;
   readonly TARTE_CITRON: string;
   readonly SAVOIR_PLUS: string;

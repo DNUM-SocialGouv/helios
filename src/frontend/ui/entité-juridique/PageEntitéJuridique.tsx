@@ -75,6 +75,8 @@ export const PageEntitéJuridique = ({ entitéJuridiqueViewModel, entitéJuridiq
           etabFiness={entitéJuridiqueViewModel.numéroFiness}
           etabNom={entitéJuridiqueViewModel.nomDeLEntitéJuridique}
           etabTitle={entitéJuridiqueViewModel.titre}
+          hasMedicoSocialEt={établissementsTerritoriauxRattachésViewModels.établissementMedicauxSociaux.length > 0}
+          hasSanitaireEt={établissementsTerritoriauxRattachésViewModels.établissementSanitaires.length > 0}
           opnedBloc={statusBlocs[0]}
           toggelBlocs={() => toggelBlocs(0)}
         />

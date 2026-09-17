@@ -1,5 +1,5 @@
 .star {
-    color: #000091;
+    color: var(--text-title-blue-france);
 }
 
 .logo-container {

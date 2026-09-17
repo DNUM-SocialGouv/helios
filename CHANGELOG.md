@@ -1,10 +1,33 @@
 # Changelog d'Helios
 
-## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (TO-DO)
+## [1.8.17](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.17) (TO-DO)
 
 ### Bug Fixes
 
 ### Features
+
+## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
+
+### Bug Fixes
+
+- hel-1089: [Bloc Budget et Finances] Allocation de ressources affichage chevrons aléatoires
+
+### Features
+- hel-645: [Footer] Ajouter la fonctionnalité Paramètres d'affichage
+- hel-862: [Footer] Paramétrage d'affichage - éléments spécifique/charte
+- hel-1069: [Support] modification de BàL support
+
+## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (2026-09-04)
+
+### Bug Fixes
+
+- hel-1096: Traitement fichier Hapi Diamant à enlever du cron
+
+### Features
+- hel-1076: [Bloc Capacité et Autorisations] EJ - Afficher les autorisations des ET MS
+- hel-1098: [Export] Inclure les autorisations MS
+- hel-1099: [Autorisations] EJ Affichage les autorisations des ET rattachés
+- hel-1097: [Paramétrage des autorisations] Vigie RH V1
 
 ## [1.8.14](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.13...release/1.8.14) (2026-07-28)
 

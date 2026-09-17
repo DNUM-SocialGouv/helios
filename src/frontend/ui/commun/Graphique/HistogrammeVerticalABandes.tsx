@@ -2,7 +2,6 @@ import { ChartOptions } from "chart.js";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
-import { couleurDelAbscisse } from "./couleursGraphique";
 import { Wording } from "../../../configuration/wording/Wording";
 import { annéesManquantes } from "../../../utils/dateUtils";
 import stylesBlocActivité from "../../établissement-territorial-sanitaire/bloc-activité/BlocActivitéSanitaire.module.css";
@@ -14,7 +13,13 @@ import "@gouvfr/dsfr/dist/component/checkbox/checkbox.min.css";
 
 const MIN_VALUE = 5;
 
-function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, créeLeLibelléDuTooltip?: (wording: Wording) => (ctx: any) => string | string[], cacheLesValeursBasse?: boolean): ChartOptions<"bar"> {
+function optionsHistogrammeÀBandes(
+  idDeLaLégende: string,
+  wording: Wording,
+  couleurDesAxes: string,
+  créeLeLibelléDuTooltip?: (wording: Wording) => (ctx: any) => string | string[],
+  cacheLesValeursBasse?: boolean
+): ChartOptions<"bar"> {
   let tooltip;
   if (créeLeLibelléDuTooltip) {
     tooltip = { callbacks: { label: créeLeLibelléDuTooltip(wording) } }
@@ -57,18 +62,22 @@ function optionsHistogrammeÀBandes(idDeLaLégende: string, wording: Wording, cr
     responsive: true,
     scales: {
       x: {
-        grid: { drawOnChartArea: false },
-        ticks: { color: "var(--text-default-grey)" },
+        border: { color: couleurDesAxes },
+        grid: {
+          color: couleurDesAxes,
+          drawOnChartArea: false,
+        },
+        ticks: { color: couleurDesAxes },
       },
       y: {
         border: {
           display: false
         },
         grid: {
-          color: couleurDelAbscisse,
+          color: couleurDesAxes,
         },
         stacked: true,
-        ticks: { color: "var(--text-default-grey)" },
+        ticks: { color: couleurDesAxes },
       },
     },
   };
@@ -94,6 +103,53 @@ export function HistogrammeVerticalABandes(props: Readonly<{
   legendeCentreeUneLigne?: boolean;
 }>) {
   const { wording } = useDependencies();
+  const [couleursDuTheme, setCouleursDuTheme] = useState({
+    axe: "#161616",
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const resoutVariableCss = (stylesDuTheme: CSSStyleDeclaration, nomDeVariable: string, couleurParDefaut: string): string => {
+      let valeurResolue = stylesDuTheme.getPropertyValue(nomDeVariable).trim();
+      const variablesVisitees = new Set<string>();
+
+      while (valeurResolue.startsWith("var(")) {
+        const correspondance = valeurResolue.match(/var\((--[^),\s]+)/);
+
+        if (!correspondance || variablesVisitees.has(correspondance[1])) {
+          break;
+        }
+
+        variablesVisitees.add(correspondance[1]);
+        valeurResolue = stylesDuTheme.getPropertyValue(correspondance[1]).trim();
+      }
+
+      return valeurResolue || couleurParDefaut;
+    };
+
+    const metAJourLesCouleurs = () => {
+      const stylesDuTheme = getComputedStyle(root);
+
+      setCouleursDuTheme({
+        axe: resoutVariableCss(stylesDuTheme, "--text-title-grey", "#161616"),
+      });
+    };
+
+    metAJourLesCouleurs();
+
+    const observer = new MutationObserver((mutations) => {
+      const themeChange = mutations.some((mutation) => mutation.attributeName === "data-fr-theme" || mutation.attributeName === "data-fr-scheme");
+
+      if (themeChange) {
+        metAJourLesCouleurs();
+      }
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["data-fr-theme", "data-fr-scheme"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   const listeAnnéesManquantes = annéesManquantes(props.libellés, props.annéesTotales);
   const aucuneDonnee = listeAnnéesManquantes.length >= props.annéesTotales;
@@ -140,7 +196,7 @@ export function HistogrammeVerticalABandes(props: Readonly<{
           <Bar 
           aria-describedby={idDeLaTranscription}
           data={props.data}
-          options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
+          options={optionsHistogrammeÀBandes(props.idDeLaLégende, wording, couleursDuTheme.axe, props.créeLeLibelléDuTooltip, props.cacheLesValeursBasse)}
           title={`Graphique ${props.nomGraph}`}
           />
           <menu className={"fr-checkbox-group " + stylesBlocActivité["graphique-sanitaire-légende"]} id={props.id} style={legendStyle} />
