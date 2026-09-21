@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+- hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
+
+
 ### Features
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
