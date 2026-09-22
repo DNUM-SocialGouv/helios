@@ -12,6 +12,22 @@ import { Transcription } from "../Transcription/Transcription";
 
 type Stack = { label?: string; data: number[]; backgroundColor: string[]; isError?: boolean[] };
 const MIN_VALUE = 5;
+const NOMBRE_MAX_DE_CARACTÈRES_PAR_LIGNE = 28;
+
+function découpeLibelléEnLignes(libellé: string): string[] {
+  return libellé.split(" ").reduce((lignes, mot) => {
+    const dernièreLigne = lignes[lignes.length - 1];
+    const ligneAvecMot = dernièreLigne ? `${dernièreLigne} ${mot}` : mot;
+
+    if (ligneAvecMot.length <= NOMBRE_MAX_DE_CARACTÈRES_PAR_LIGNE) {
+      lignes[lignes.length - 1] = ligneAvecMot;
+      return lignes;
+    }
+
+    lignes.push(mot);
+    return lignes;
+  }, [""] as string[]).filter(Boolean);
+}
 
 class LowValueHandler {
   constructor(private readonly formatter: (value: number, _context: Context) => string, private readonly wording: Wording, private readonly cacheLesValeursBasse?: boolean) {
@@ -188,7 +204,14 @@ export class HistogrammeData {
             display: false
           },
           grid: { drawOnChartArea: false, drawTicks: false },
-          ticks: { color: couleurDelAbscisse, font: { weight: 400 }, padding: 8 },
+          ticks: {
+            callback: function (value) {
+              return découpeLibelléEnLignes(this.getLabelForValue(value as number));
+            },
+            color: couleurDelAbscisse,
+            font: { weight: 400 },
+            padding: 8,
+          },
         },
       },
       plugins: {
