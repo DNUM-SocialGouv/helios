@@ -54,7 +54,7 @@ export function useExportExcelAutorisationSanitaire(numeroFinessEntiteJuridique:
     const autorisationRows = getAutorisationRows(etablissementSanitaireAutorisations.activités);
     rows.push(...autorisationRows);
 
-    const sheet = workbook.addWorksheet("Autorisations");
+    const sheet = workbook.addWorksheet("Autorisations d'activité de soins");
     ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
   }
 
