@@ -540,6 +540,7 @@ export class WordingFr implements Wording {
   readonly ACCESSIBILITÉ: string = "Accessibilité";
   readonly NON_CONFORME: string = "non conforme";
   readonly MENTIONS_LÉGALES: string = "Mentions légales";
+  readonly PREFERENCES_SERVICES: string = "Préférences pour tous les services. ";
   readonly DONNÉES_PERSONNELLES: string = "Données personnelles";
   readonly NOUS_CONTACTER: string = "Nous contacter";
   readonly MENTION_LICENCE: string = "Sauf mention contraire, tous les contenus de ce site sont sous ";
@@ -555,7 +556,6 @@ export class WordingFr implements Wording {
   readonly PARAMÈTRES_D_AFFICHAGE_CLAIR: string = "Thème clair";
   readonly PARAMÈTRES_D_AFFICHAGE_SOMBRE: string = "Thème sombre";
   readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
-  readonly TARTE_CITRON: string = "Site officiel de Tarte au citron";
   readonly SAVOIR_PLUS: string = "En savoir plus";
   readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
 
