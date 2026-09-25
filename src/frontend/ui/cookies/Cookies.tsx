@@ -171,7 +171,9 @@ export const Cookies = ({
                   <div className="fr-consent-manager">
                     <div className="fr-consent-service fr-consent-manager__header">
                       <fieldset className="fr-fieldset">
-                        <legend className="fr-consent-service__title" id="finality-legend"> {wording.PREFERENCES_SERVICES}{" "}
+                        <legend className="fr-consent-service__title" id="finality-legend">
+                          En autorisant ces services tiers, vous acceptez le dépôt et la lecture de cookie et l’utilisation de technologies de suivi nécessaires à leur bon fonctionnement. <br />
+                           {wording.PREFERENCES_SERVICES}{" "}
                           <a className="fr-link" href="#" onClick={handleMentionsLegalesClick} title={wording.MENTIONS_LÉGALES}>
                             {wording.MENTIONS_LÉGALES}
                           </a>
