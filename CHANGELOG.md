@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+- hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
+
+
 ### Features
 
 - hel-1085: [Footer] Ajout d'un chapitre "Cookies" dans les mentions légales
