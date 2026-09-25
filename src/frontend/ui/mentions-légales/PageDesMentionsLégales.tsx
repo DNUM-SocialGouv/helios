@@ -85,6 +85,36 @@ export const PageDesMentionsLégales = () => {
           <b>Helios - Fiche de synthèse</b> a été conçu pour fonctionner sur les navigateurs suivants :Microsoft Edge, Google Chrome, Mozilla Firefox.
         </p>
       </section>
+      <section aria-label={wording.COOKIES}>
+        <h2> Cookies</h2>
+        <p>Un cookie est un fichier texte déposé sur votre ordinateur lors de la visite d’un site ou de la consultation d’une publicité.
+           Il permet de conserver des données utilisateur afin de faciliter la navigation et de permettre certaines fonctionnalités. 
+           Les cookies sont gérés par votre navigateur internet.</p>
+           <p>
+          Lors de la consultation de notre site Helios,
+           des cookies sont déposés sur votre ordinateur, votre mobile ou votre tablette. 
+           Les cookies utilisés par Helios ne collectent pas de données personnelles et sont strictement nécessaires 
+           au bon fonctionnement du site. Le site web ne pouvant fonctionner correctement sans eux, 
+           ils ne peuvent être désactivés.
+           </p>
+           <p>
+            Vous pouvez à tout moment vous informer et paramétrer vos cookies pour les accepter ou les refuser en vous rendant sur la page Gestion des cookies. 
+            Vous pourrez indiquer votre préférence soit globalement pour le site, soit service par service.
+           </p>
+           <p>
+            3 cookies nécessaires, toujours activés et déposés par Helios, sont indispensables au bon fonctionnement du site et à la navigation entre ses différentes pages.
+            Ils ne contiennent aucune donnée personnelle. <br/>
+            <b>__Host-next-auth.csrf-token</b> : jeton permettant d’éviter des attaques « cross site request forgery »<br/>
+            <b>__Secure-next-auth.callback-url</b> : cookie mémorisant l’URL de redirection après authentification<br/>
+            <b>__Secure-next-auth.session-token</b> : jeton permettant de maintenir la session d’authentification
+           </p>
+           <p>
+            4 cookies Matomos, à des fins de mesure d’audience et d’analyse de l’utilisation de l’application, sont déposés sur Helios <br/>
+            <b>_pk_id</b> : Identifiant unique du visiteur anonynimisé généré par matomo
+            <br/>
+            <b>_pk_ses</b> : Identifiant de session anonymisée généré par matomo
+           </p>
+      </section>
     </>
   );
 };

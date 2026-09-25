@@ -108,7 +108,7 @@ export const Footer = () => {
                   setCurrentModal(2);
                 }}
               >
-                {wording.COOKIES}
+                {wording.GESTION_DES_COOKIES}
               </button>
             </li>
             <li className="fr-footer__bottom-item">
