@@ -452,13 +452,14 @@ export interface Wording {
   readonly ACCESSIBILITÉ: string;
   readonly NON_CONFORME: string;
   readonly MENTIONS_LÉGALES: string;
+  readonly PREFERENCES_SERVICES: string;
   readonly DONNÉES_PERSONNELLES: string;
   readonly NOUS_CONTACTER: string;
   readonly MENTION_LICENCE: string;
   readonly LICENCE_ETALAB: string;
   readonly NOUVELLE_FENÊTRE: string;
   readonly ECO_CONCEPTION: string;
-  readonly COOKIES: string;
+  readonly GESTION_DES_COOKIES: string;
   readonly PARAMÈTRES_D_AFFICHAGE: string;
   readonly PARAMÈTRES_D_AFFICHAGE_DESCRIPTION: string;
   readonly PARAMÈTRES_D_AFFICHAGE_LÉGENDE: string;
@@ -467,7 +468,6 @@ export interface Wording {
   readonly PARAMÈTRES_D_AFFICHAGE_CLAIR: string;
   readonly PARAMÈTRES_D_AFFICHAGE_SOMBRE: string;
   readonly POLITIQUE_CONFIDENTIALITE: string;
-  readonly TARTE_CITRON: string;
   readonly SAVOIR_PLUS: string;
   readonly VOIR_SITE_OFFICIEL: string;
 
@@ -484,6 +484,7 @@ export interface Wording {
   readonly LIMITES_DE_RESPONSABILITÉ: string;
   readonly SCALINGO: string;
   readonly CATAMANIA: string;
+  readonly COOKIES: string;
 
   readonly EN_CONSTRUCTION: string;
 
