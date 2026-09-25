@@ -39,7 +39,7 @@ export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string
     const autorisationRows = getAutorisationRows(etablissementMSAutorisations.disciplines);
     rows.push(...autorisationRows);
 
-    const sheet = workbook.addWorksheet("Autorisations");
+    const sheet = workbook.addWorksheet("Autorisations sociales et médico-sociales");
     ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
   }
 

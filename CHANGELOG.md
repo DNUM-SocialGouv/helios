@@ -9,10 +9,10 @@
 
 ### Features
 
+- hel-1102: [Export] Renommage de l'onglet autorisation SAN et MS
 - hel-1085: [Footer] Ajout d'un chapitre "Cookies" dans les mentions légales
 - hel-1087: [Footer] Gestion des cookies -mise à jour Matomo
 - hel-1116: [Matomo] envoi des flux à Matomo
-
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
 
