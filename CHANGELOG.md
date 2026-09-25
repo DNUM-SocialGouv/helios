@@ -4,6 +4,10 @@
 
 ### Bug Fixes
 
+- hel-1113: Anomalie d'affichage des graphiques capacité MS
+
+
+
 ### Features
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
