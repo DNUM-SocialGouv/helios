@@ -82,17 +82,18 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   }, []);
 
   const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
-  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
+  const MATOMO_PROXY_PATH = process.env["NEXT_PUBLIC_MATOMO_PROXY_PATH"] || "";
+  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_PROXY_SITE_ID"] || process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
 
   useEffect(() => {
     const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
-    if (!analyticsConsent || !MATOMO_URL || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled ) {
+    if (!analyticsConsent || (!MATOMO_PROXY_PATH && !MATOMO_URL) || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled ) {
       return;
     }
 
-    trackPagesRouter({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+    trackPagesRouter({ ...(MATOMO_PROXY_PATH ? {} : { url: MATOMO_URL }), siteId: MATOMO_SITE_ID });
     matomoInitialise.current = true;
-  }, [MATOMO_SITE_ID, MATOMO_URL, analyticsConsent]);
+  }, [MATOMO_PROXY_PATH, MATOMO_SITE_ID, MATOMO_URL, analyticsConsent]);
 
   return (
     <SessionProvider session={session}>
