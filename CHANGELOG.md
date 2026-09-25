@@ -4,8 +4,8 @@
 
 ### Bug Fixes
 
+- hel-1113: Anomalie d'affichage des graphiques capacité MS
 - hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
-
 
 ### Features
 
