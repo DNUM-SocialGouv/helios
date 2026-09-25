@@ -109,10 +109,13 @@ export const PageDesMentionsLégales = () => {
             <b>__Secure-next-auth.session-token</b> : jeton permettant de maintenir la session d’authentification
            </p>
            <p>
-            4 cookies Matomos, à des fins de mesure d’audience et d’analyse de l’utilisation de l’application, sont déposés sur Helios <br/>
+            3 cookies Matomos, à des fins de mesure d’audience et d’analyse de l’utilisation de l’application, sont déposés sur Helios <br/>
             <b>_pk_id</b> : Identifiant unique du visiteur anonynimisé généré par matomo
             <br/>
             <b>_pk_ses</b> : Identifiant de session anonymisée généré par matomo
+            <br/>
+            <b>_pk_ref</b> : Identifiant de référence anonymisée généré par matomo
+            <br/>
            </p>
       </section>
     </>
