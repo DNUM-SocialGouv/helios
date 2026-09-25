@@ -5,10 +5,14 @@
 ### Bug Fixes
 
 - hel-1113: Anomalie d'affichage des graphiques capacité MS
-
-
+- hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
 
 ### Features
+
+- hel-1085: [Footer] Ajout d'un chapitre "Cookies" dans les mentions légales
+- hel-1087: [Footer] Gestion des cookies -mise à jour Matomo
+- hel-1116: [Matomo] envoi des flux à Matomo
+
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
 

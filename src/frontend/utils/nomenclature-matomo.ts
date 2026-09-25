@@ -1,9 +1,11 @@
 import { sendEvent as matomoSendEvent, push as matomoPush } from "@socialgouv/matomo-next";
 
-const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
+import { hasAnalyticsConsent } from "./analyticsConsent";
+
+const isAnalyticsEnabled = () => process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true' && hasAnalyticsConsent();
 
 export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
-  if (!isAnalyticsEnabled) {
+  if (!isAnalyticsEnabled()) {
     return;
   }
 
@@ -11,7 +13,7 @@ export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
 }
 
 export function push(...args: Parameters<typeof matomoPush>) {
-  if (!isAnalyticsEnabled) return;
+  if (!isAnalyticsEnabled()) return;
 
   matomoPush(...args);
 }

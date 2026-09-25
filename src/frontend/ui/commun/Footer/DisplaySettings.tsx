@@ -55,9 +55,9 @@ export const DisplaySettings = () => {
                         </label>
                         <div className="fr-radio-rich__pictogram">
                           <svg aria-hidden="true" className="fr-artwork" height="80" viewBox="0 0 80 80" width="80">
-                            <use className="fr-artwork-decorative" href={`${lightSvg}#artwork-decorative`}></use>
-                            <use className="fr-artwork-minor" href={`${lightSvg}#artwork-minor`}></use>
-                            <use className="fr-artwork-major" href={`${lightSvg}#artwork-major`}></use>
+                            <use className="fr-artwork-decorative" href={`${lightSvg.src}#artwork-decorative`}></use>
+                            <use className="fr-artwork-minor" href={`${lightSvg.src}#artwork-minor`}></use>
+                            <use className="fr-artwork-major" href={`${lightSvg.src}#artwork-major`}></use>
                           </svg>
                         </div>
                       </div>
@@ -70,9 +70,9 @@ export const DisplaySettings = () => {
                         </label>
                         <div className="fr-radio-rich__pictogram">
                           <svg aria-hidden="true" className="fr-artwork" height="80" viewBox="0 0 80 80" width="80">
-                            <use className="fr-artwork-decorative" href={`${darkSvg}#artwork-decorative`}></use>
-                            <use className="fr-artwork-minor" href={`${darkSvg}#artwork-minor`}></use>
-                            <use className="fr-artwork-major" href={`${darkSvg}#artwork-major`}></use>
+                            <use className="fr-artwork-decorative" href={`${darkSvg.src}#artwork-decorative`}></use>
+                            <use className="fr-artwork-minor" href={`${darkSvg.src}#artwork-minor`}></use>
+                            <use className="fr-artwork-major" href={`${darkSvg.src}#artwork-major`}></use>
                           </svg>
                         </div>
                       </div>
@@ -86,9 +86,9 @@ export const DisplaySettings = () => {
                         </label>
                         <div className="fr-radio-rich__pictogram">
                           <svg aria-hidden="true" className="fr-artwork" height="80" viewBox="0 0 80 80" width="80">
-                            <use className="fr-artwork-decorative" href={`${systemSvg}#artwork-decorative`}></use>
-                            <use className="fr-artwork-minor" href={`${systemSvg}#artwork-minor`}></use>
-                            <use className="fr-artwork-major" href={`${systemSvg}#artwork-major`}></use>
+                            <use className="fr-artwork-decorative" href={`${systemSvg.src}#artwork-decorative`}></use>
+                            <use className="fr-artwork-minor" href={`${systemSvg.src}#artwork-minor`}></use>
+                            <use className="fr-artwork-major" href={`${systemSvg.src}#artwork-major`}></use>
                           </svg>
                         </div>
                       </div>
