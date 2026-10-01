@@ -107,6 +107,8 @@
         "updateInspections:local": "pipenv run populate_inspections",
         "updateReferentielCategories": "python -m datacrawler.import_ref_categories",
         "updateReferentielCategories:local": "pipenv run populate_ref_categories",
+        "updateReferentielDepartementRegion": "python -m datacrawler.import_ref_departement_region",
+        "updateReferentielDepartementRegion:local": "pipenv run populate_ref_departement_region",
         "retreieveAndCheckAndUpdateInspections": "yarn retrieveSiicea && yarn checkInspections && yarn updateInspections",
         "retreieveAndCheckAndUpdateInspections:local": "yarn retrieveSiicea:local && yarn checkInspections:local && yarn updateInspections:local",
         "updateActivitesSanitairesMensuel": "python -m datacrawler.import_activites_mensuel",

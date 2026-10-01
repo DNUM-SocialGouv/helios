@@ -1,5 +1,20 @@
 from typing import List
 
+colonnes_cog_communes = ["COM", "DEP", "REG", "LIBELLE"]
+équivalences_cog_communes_helios = {
+    "COM": "ref_code_cog",
+    "LIBELLE": "ref_libelle_commune",
+    "DEP": "ref_code_dep",
+    "REG": "ref_code_region",
+}
+
+colonnes_cog_departements = ["DEP", "REG", "LIBELLE"]
+équivalences_cog_departements_helios = {
+    "DEP": "ref_code_dep",
+    "REG": "ref_code_region",
+    "LIBELLE": "ref_libelle_dep",
+}
+
 XML_TAG_FINESS_CS1400105 = "equipementsocial"
 équivalences_finess_cs1400105_helios = {
     "ta": "activite",

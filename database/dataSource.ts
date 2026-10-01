@@ -1,6 +1,7 @@
 import { DataSource, LoggerOptions } from "typeorm";
 
 
+import { EvolutionReferentielDepartementRegion1790841193934 } from "../1790841193934-EvolutionReferentielDepartementRegion";
 import { EntitéJuridique1652626977208 } from "./migrations/1652626977208-EntitéJuridique";
 import { ÉtablissementTerritorial1652627040870 } from "./migrations/1652627040870-ÉtablissementTerritorial";
 import { DateMiseÀJourSource1652627053530 } from "./migrations/1652627053530-DateMiseÀJourSource";
@@ -417,7 +418,8 @@ const datasource = new DataSource({
     AjoutTableMessageAccueil1779354621997,
     AjoutLienHypertexteMessageAccueil1806000000000,
     AjoutLesDonneesVigieRhDansLesProfils1788170804920,
-    ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980
+    ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980,
+    EvolutionReferentielDepartementRegion1790841193934
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,
