@@ -19,6 +19,10 @@
     {
       "command": "0 7 1 * * /app/sendMatomoDBEvent.sh",
       "size": "M"
+    },
+    {
+      "command": "0 3 10 3,4 * /app/populateReferentielDepartementRegion.sh",
+      "size": "M"
     }
   ]
 }
