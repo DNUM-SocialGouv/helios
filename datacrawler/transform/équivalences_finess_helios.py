@@ -338,3 +338,17 @@ equivalences_finess_cs1500106_helios = {
 index_des_categories: List[str] = ["code"]
 
 colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())
+
+equivalences_json_finess_helios = {
+    "ligneacheminement": "adresse_acheminement",
+    "numvoie": "adresse_numero_voie",
+    "typvoie": "adresse_type_voie",
+    "voie": "adresse_voie",
+    "nofiness": "numero_finess_entite_juridique",
+    "denominationLonguePmSmsse": "raison_sociale",
+    "denominationPm": "raison_sociale_courte",
+    "siren": "siren",
+    "telephone": "telephone",
+    "dateCreation": "date_ouverture",
+    "statutJuridique": "libelle_statut_juridique"
+}

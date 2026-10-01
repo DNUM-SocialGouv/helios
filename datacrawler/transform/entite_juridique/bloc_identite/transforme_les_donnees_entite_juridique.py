@@ -7,7 +7,8 @@ from datacrawler.transform.équivalences_finess_helios import (
     colonnes_a_garder_finess_cs1400101,
     colonnes_a_garder_finess_cs1500107,
     equivalences_finess_cs1400101_helios,
-    index_des_entitees_juridiques
+    index_des_entitees_juridiques,
+    equivalences_json_finess_helios,
 )
 
 
@@ -101,6 +102,18 @@ def transform_les_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.Dat
     return (
         entites_juridiques_filtrees
         .rename(columns=equivalences_finess_cs1400101_helios)
+        .dropna(subset=index_des_entitees_juridiques)
+        .drop_duplicates(subset=index_des_entitees_juridiques)
+        .set_index(index_des_entitees_juridiques)
+    )
+
+def transforme_le_json_des_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.DataFrame:
+    entites_juridiques['denominationLonguePmSmsse'] = entites_juridiques['denominationLonguePmSmsse'].where(
+        entites_juridiques['denominationLonguePmSmsse'].notna() & (entites_juridiques['denominationLonguePmSmsse'] != ''), entites_juridiques['denominationPm'])
+    return (
+        entites_juridiques
+        .rename(columns=equivalences_json_finess_helios)
+        .drop(columns=['datefermeture'], errors='ignore')
         .dropna(subset=index_des_entitees_juridiques)
         .drop_duplicates(subset=index_des_entitees_juridiques)
         .set_index(index_des_entitees_juridiques)

@@ -9,7 +9,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: "adresse_acheminement" })
   public adresseAcheminement!: string;
 
-  @Column({ length: 5, name: "adresse_numero_voie" })
+  @Column({ length: 20, name: "adresse_numero_voie" })
   public adresseNuméroVoie!: string;
 
   @Column({ length: 4, name: "adresse_type_voie" })
@@ -81,7 +81,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 14, name: "siret" })
   public siret!: string;
 
-  @Column({ length: 10, name: "telephone" })
+  @Column({ length: 20, name: "telephone" })
   public téléphone!: string;
 
   @Column({ length: 1, name: "type_etablissement" })
