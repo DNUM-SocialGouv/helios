@@ -69,6 +69,7 @@ class TestVariablesDEnvironnement:
             "MATOMO_API_TOKEN": "test",
             "NEXT_PUBLIC_MATOMO_SITE_ID": "test",
             "NEXT_PUBLIC_MATOMO_URL": "test",
+            "STRUCTURES_FINESS_DATA_PATH": "test",
             "DATA_GOUV_COG_API_URL": "test",
             "RESSOURCE_COMMUNES_TITRE": "test",
             "RESSOURCE_DEPARTEMENTS_TITRE": "test"

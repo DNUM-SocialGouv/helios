@@ -41,6 +41,7 @@ class VariablesDEnvironnement(TypedDict):
     MATOMO_API_TOKEN: str
     NEXT_PUBLIC_MATOMO_SITE_ID: str
     NEXT_PUBLIC_MATOMO_URL: str
+    STRUCTURES_FINESS_DATA_PATH: str
     DATA_GOUV_COG_API_URL: str
     RESSOURCE_COMMUNES_TITRE: str
     RESSOURCE_DEPARTEMENTS_TITRE: str
@@ -100,6 +101,7 @@ def récupère_les_variables_d_environnement(
         MATOMO_API_TOKEN=signale_si_la_variable_n_est_pas_présente("MATOMO_API_TOKEN"),
         NEXT_PUBLIC_MATOMO_SITE_ID=signale_si_la_variable_n_est_pas_présente("NEXT_PUBLIC_MATOMO_SITE_ID"),
         NEXT_PUBLIC_MATOMO_URL=signale_si_la_variable_n_est_pas_présente("NEXT_PUBLIC_MATOMO_URL"),
+        STRUCTURES_FINESS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("STRUCTURES_FINESS_DATA_PATH"),
         DATA_GOUV_COG_API_URL=signale_si_la_variable_n_est_pas_présente("DATA_GOUV_COG_API_URL"),
         RESSOURCE_COMMUNES_TITRE=signale_si_la_variable_n_est_pas_présente("RESSOURCE_COMMUNES_TITRE"),
         RESSOURCE_DEPARTEMENTS_TITRE=signale_si_la_variable_n_est_pas_présente("RESSOURCE_DEPARTEMENTS_TITRE")

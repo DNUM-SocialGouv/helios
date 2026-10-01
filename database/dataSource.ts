@@ -108,6 +108,7 @@ import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./mi
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
 import { AjoutLesDonneesVigieRhDansLesProfils1788170804920 } from "./migrations/1788170804920-AjoutLesDonneesVigieRhDansLesProfils";
+import { ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980 } from "./migrations/1790759482980-ModifierLongueurAdresseNumeroVoieEtTelephone";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -417,6 +418,7 @@ const datasource = new DataSource({
     AjoutTableMessageAccueil1779354621997,
     AjoutLienHypertexteMessageAccueil1806000000000,
     AjoutLesDonneesVigieRhDansLesProfils1788170804920,
+    ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980,
     EvolutionReferentielDepartementRegion1790841193934
   ],
   type: "postgres",
