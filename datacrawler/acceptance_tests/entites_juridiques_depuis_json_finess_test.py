@@ -43,10 +43,11 @@ class TestSauvegardeLesEntitesJuridiquesDepuisJsonFiness:
 
         entites_juridiques_attendues = pd.DataFrame([helios_entite_juridique_builder({
             "adresse_acheminement": "DIVONNE LES BAINS",
-            "categorisation": None,
-            "code_region": None,
-            "departement": None,
-            "libelle_statut_juridique": None,
+            "categorisation": float("nan"),
+            "code_region": "",
+            "commune": "",
+            "departement": "",
+            "libelle_statut_juridique": "14",
         })])
         entites_juridiques_sauvegardees = pd.read_sql(TABLE_ENTITES_JURIDIQUES, base_de_données_test)
         entites_juridiques_sauvegardees = entites_juridiques_sauvegardees.drop("termes_de_recherche", axis=1)
