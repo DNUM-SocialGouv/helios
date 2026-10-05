@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -39,15 +40,25 @@ class TestSauvegardeLesEntitesJuridiquesDepuisJsonFiness:
                 "ege": [],
             }],
         }), encoding="utf-8")
-        import_entites_juridiques_depuis_json_finess(str(ej_json), base_de_données_test, mocked_logger)
+        with patch(
+            "datacrawler.import_les_entites_juridiques_depuis_json_finess._récupère_les_statuts_juridiques",
+            return_value={"14": {"libelle": "Etb.Social Communal", "categorisation": "public"}},
+        ), patch(
+            "datacrawler.import_les_entites_juridiques_depuis_json_finess.recupere_le_referentiel_departement_region_de_la_base",
+            return_value=pd.DataFrame([
+                {
+                    "ref_code_cog": "01283",
+                    "ref_libelle_commune": "Divonne-les-Bains",
+                    "ref_code_dep": "01",
+                    "ref_libelle_dep": "Ain",
+                    "ref_code_region": "84",
+                }
+            ]),
+        ):
+            import_entites_juridiques_depuis_json_finess(str(ej_json), base_de_données_test, "test", mocked_logger)
 
         entites_juridiques_attendues = pd.DataFrame([helios_entite_juridique_builder({
             "adresse_acheminement": "DIVONNE LES BAINS",
-            "categorisation": float("nan"),
-            "code_region": "",
-            "commune": "",
-            "departement": "",
-            "libelle_statut_juridique": "14",
         })])
         entites_juridiques_sauvegardees = pd.read_sql(TABLE_ENTITES_JURIDIQUES, base_de_données_test)
         entites_juridiques_sauvegardees = entites_juridiques_sauvegardees.drop("termes_de_recherche", axis=1)

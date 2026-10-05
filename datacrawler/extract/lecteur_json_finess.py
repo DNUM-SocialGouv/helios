@@ -53,6 +53,7 @@ def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
     contact = _premier_contact(pmej.get("contact", []))
 
     return {
+        "cogCommune": adresse.get("cogCommune"),
         "dateCreation": informations_generales.get("dateCreation"),
         "datefermeture": informations_generales.get("dateFermeture"),
         "ligneacheminement": adresse.get("ligneAcheminement"),

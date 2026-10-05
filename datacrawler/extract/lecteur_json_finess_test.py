@@ -28,6 +28,10 @@ def test_lis_les_entites_juridiques_json_finess(tmp_path: Path) -> None:
         entites_juridiques["telephone"],
         pd.Series(["02.51.54.30.38", "00565443110", "04935353000"], name="telephone"),
     )
+    pd.testing.assert_series_equal(
+        entites_juridiques["cogCommune"],
+        pd.Series(["01283", "01283", "01283"], name="cogCommune"),
+    )
 
 
 def _pmej(numero_finess: str, telephone: str) -> dict:
