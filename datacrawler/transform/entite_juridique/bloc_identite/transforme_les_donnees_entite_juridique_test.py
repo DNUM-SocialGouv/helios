@@ -2,6 +2,7 @@ import pandas as pd
 from numpy import nan
 
 from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees_entite_juridique import(
+    associe_les_informations_du_statut_juridique,
     extrais_les_entites_juridiques_recemment_fermees,
     conserve_les_entites_juridiques_ouvertes,
     associe_la_categorisation
@@ -93,3 +94,27 @@ class TestTransformeLesDonneesEntiteJuridique:
                                       entites_juridiques_categorisees_attendues,
                                       check_index_type=False,
                                       check_dtype=False)
+
+    def test_associe_les_informations_du_statut_juridique(self) -> None:
+        entites_juridiques = pd.DataFrame([
+            {"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE, "statutJuridique": "14"},
+            {"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2, "statutJuridique": "99"},
+            {"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_3, "statutJuridique": "3000"},
+        ])
+
+        entites_juridiques_avec_libelles = associe_les_informations_du_statut_juridique(
+            entites_juridiques,
+            {
+                "14": {"libelle": "Etb.Social Communal", "categorisation": "public"},
+                "3000": {"libelle": "Personne morale de droit étranger", "categorisation": "personne_morale_droit_etranger"},
+            },
+        )
+
+        pd.testing.assert_series_equal(
+            entites_juridiques_avec_libelles["statutJuridique"],
+            pd.Series(["Etb.Social Communal", "99", "Personne morale de droit étranger"], name="statutJuridique"),
+        )
+        pd.testing.assert_series_equal(
+            entites_juridiques_avec_libelles["categorisation"],
+            pd.Series(["public", "", "personne_morale_droit_etranger"], name="categorisation"),
+        )

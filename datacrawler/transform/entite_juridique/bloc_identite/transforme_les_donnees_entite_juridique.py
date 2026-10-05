@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Mapping, Tuple
 import unicodedata
 import re
 import pandas as pd
@@ -91,6 +91,26 @@ def associe_le_code_region(entites_juridiques: pd.DataFrame, referentiel: pd.Dat
     fusion = pd.merge(entites_juridiques, referentiel, on='departement', how='left')
     return fusion
 
+
+def associe_le_territoire_des_entites_juridiques_json(entites_juridiques: pd.DataFrame, referentiel: pd.DataFrame) -> pd.DataFrame:
+    referentiel_par_commune = referentiel.rename(
+        columns={
+            'ref_code_cog': 'cogCommune',
+            'ref_libelle_commune': 'commune',
+            'ref_libelle_dep': 'departement',
+            'ref_code_region': 'code_region',
+        }
+    )
+    fusion = pd.merge(
+        entites_juridiques,
+        referentiel_par_commune[['cogCommune', 'commune', 'departement', 'code_region']],
+        on='cogCommune',
+        how='left',
+    )
+    fusion['commune'] = fusion['commune'].apply(normalize_and_uppercase)
+    fusion['departement'] = fusion['departement'].apply(normalize_and_uppercase)
+    return fusion
+
 def transform_les_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.DataFrame:
     entites_juridiques['rslongue'] = entites_juridiques['rslongue'].where(
         entites_juridiques['rslongue'].notna() & (entites_juridiques['rslongue'] != ''), entites_juridiques['rs'])
@@ -107,13 +127,34 @@ def transform_les_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.Dat
         .set_index(index_des_entitees_juridiques)
     )
 
-def transforme_le_json_des_entites_juridiques(entites_juridiques: pd.DataFrame) -> pd.DataFrame:
+
+def associe_les_informations_du_statut_juridique(
+    entites_juridiques: pd.DataFrame,
+    statuts_juridiques: Mapping[str, Mapping[str, str]],
+) -> pd.DataFrame:
+    entites_juridiques = entites_juridiques.copy()
+    entites_juridiques["categorisation"] = entites_juridiques["statutJuridique"].map(
+        lambda code: statuts_juridiques.get(code, {}).get("categorisation", "")
+    )
+    entites_juridiques["statutJuridique"] = entites_juridiques["statutJuridique"].map(
+        lambda code: statuts_juridiques.get(code, {}).get("libelle", code)
+    )
+    return entites_juridiques
+
+
+def transforme_le_json_des_entites_juridiques(
+    entites_juridiques: pd.DataFrame,
+    statuts_juridiques: Mapping[str, Mapping[str, str]],
+    referentiel: pd.DataFrame,
+) -> pd.DataFrame:
+    entites_juridiques = associe_les_informations_du_statut_juridique(entites_juridiques, statuts_juridiques)
+    entites_juridiques = associe_le_territoire_des_entites_juridiques_json(entites_juridiques, referentiel)
     entites_juridiques['denominationLonguePmSmsse'] = entites_juridiques['denominationLonguePmSmsse'].where(
         entites_juridiques['denominationLonguePmSmsse'].notna() & (entites_juridiques['denominationLonguePmSmsse'] != ''), entites_juridiques['denominationPm'])
     return (
         entites_juridiques
         .rename(columns=equivalences_json_finess_helios)
-        .drop(columns=['datefermeture'], errors='ignore')
+        .drop(columns=['datefermeture', 'cogCommune'], errors='ignore')
         .dropna(subset=index_des_entitees_juridiques)
         .drop_duplicates(subset=index_des_entitees_juridiques)
         .set_index(index_des_entitees_juridiques)

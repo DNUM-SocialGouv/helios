@@ -1,6 +1,8 @@
 import os
 from logging import Logger
+from typing import Any
 
+import requests
 from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -9,6 +11,7 @@ from datacrawler.extract.lecteur_json_finess import (
     lis_les_entites_juridiques_json_finess,
 )
 from datacrawler.extract.lecteur_sql import (
+    recupere_le_referentiel_departement_region_de_la_base,
     recupere_les_numeros_finess_des_entites_juridiques_de_la_base,
 )
 from datacrawler.extract.trouve_le_nom_du_fichier import trouve_le_nom_du_fichier
@@ -22,10 +25,66 @@ from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees
 
 REPERTOIRE_JSON_FINESS = "json"
 PREFIXE_FICHIER_STRUCTURES_FINESS = "finess-structures-journalier"
+CODES_DE_CATEGORISATION_DES_STATUTS_JURIDIQUES = {
+    "1000": "public",
+    "2100": "prive_non_lucratif",
+    "2200": "prive_lucratif",
+    "3000": "personne_morale_droit_etranger",
+}
+
+
+def _récupère_les_statuts_juridiques(finess_statuts_juridiques_codesystem_url: str) -> dict[str, dict[str, str]]:
+    response = requests.get(
+        finess_statuts_juridiques_codesystem_url,
+        headers={"Accept": "application/fhir+json"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    codesystem = response.json()
+    concepts = [concept for concept in codesystem.get("concept", []) if _est_un_statut_juridique_valide(concept)]
+    concepts_par_code = {str(concept["code"]): concept for concept in concepts}
+    return {
+        str(concept.get("code")): {
+            "libelle": str(concept.get("display")),
+            "categorisation": _détermine_la_categorisation_du_statut_juridique(str(concept.get("code")), concepts_par_code),
+        }
+        for concept in concepts
+    }
+
+
+def _est_un_statut_juridique_valide(concept: Any) -> bool:
+    return isinstance(concept, dict) and concept.get("code") is not None and concept.get("display") is not None
+
+
+def _détermine_la_categorisation_du_statut_juridique(code: str, concepts_par_code: dict[str, dict[str, Any]]) -> str:
+    code_parent: str | None = code
+    codes_vus: set[str] = set()
+
+    while code_parent and code_parent not in codes_vus:
+        categorisation = CODES_DE_CATEGORISATION_DES_STATUTS_JURIDIQUES.get(code_parent)
+        if categorisation is not None:
+            return categorisation
+
+        codes_vus.add(code_parent)
+        code_parent = _extrais_le_code_parent_du_statut_juridique(concepts_par_code.get(code_parent))
+
+    return ""
+
+
+def _extrais_le_code_parent_du_statut_juridique(concept: dict[str, Any] | None) -> str | None:
+    if concept is None:
+        return None
+
+    for propriete in concept.get("property", []):
+        if isinstance(propriete, dict) and propriete.get("code") == "parent" and propriete.get("valueCode") is not None:
+            return str(propriete.get("valueCode"))
+
+    return None
 
 def import_entites_juridiques_depuis_json_finess(
     chemin_local_du_fichier_structures: str,
     base_de_donnees: Engine,
+    finess_statuts_juridiques_codesystem_url: str,
     logger: Logger,
 ) -> None:
     entites_juridiques_flux_finess = lis_les_entites_juridiques_json_finess(logger, chemin_local_du_fichier_structures)
@@ -38,7 +97,14 @@ def import_entites_juridiques_depuis_json_finess(
         entite_juridiques_sauvegardees,
     )
     logger.info(f"[FINESS] {len(entites_juridiques_a_supprimer)} entités juridiques sont fermées.")
-    entites_juridique_transformees = transforme_le_json_des_entites_juridiques(entites_juridiques_ouvertes)
+    statuts_juridiques = _récupère_les_statuts_juridiques(finess_statuts_juridiques_codesystem_url)
+    logger.info(f"[FINESS] {len(statuts_juridiques)} statuts juridiques récupérés depuis FINESS.")
+    referentiel_departement_region = recupere_le_referentiel_departement_region_de_la_base(base_de_donnees)
+    entites_juridique_transformees = transforme_le_json_des_entites_juridiques(
+        entites_juridiques_ouvertes,
+        statuts_juridiques,
+        referentiel_departement_region,
+    )
     date_du_fichier = extrais_la_date_du_nom_de_fichier_finess_json(chemin_local_du_fichier_structures)
     logger.info(f"[FINESS] Date de mise à jour du fichier FINESS structures : {date_du_fichier}")
     with base_de_donnees.begin() as connection:
@@ -64,5 +130,6 @@ if __name__ == "__main__":
     import_entites_juridiques_depuis_json_finess(
         chemin_structures_finess,
         base_de_donnees_helios,
+        variables_d_environnement["FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL"],
         logger_helios,
     )
