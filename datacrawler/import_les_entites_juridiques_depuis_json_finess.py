@@ -57,7 +57,7 @@ def _est_un_statut_juridique_valide(concept: Any) -> bool:
 
 
 def _détermine_la_categorisation_du_statut_juridique(code: str, concepts_par_code: dict[str, dict[str, Any]]) -> str:
-    code_parent = code
+    code_parent: str | None = code
     codes_vus: set[str] = set()
 
     while code_parent and code_parent not in codes_vus:
