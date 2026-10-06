@@ -81,7 +81,7 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 14, name: "siret" })
   public siret!: string;
 
-  @Column({ length: 20, name: "telephone" })
+  @Column({ length: 255, name: "telephone" })
   public téléphone!: string;
 
   @Column({ length: 1, name: "type_etablissement" })

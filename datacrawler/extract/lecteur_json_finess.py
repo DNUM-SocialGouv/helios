@@ -19,6 +19,19 @@ def lis_les_entites_juridiques_json_finess(logger: Logger, chemin_du_fichier: st
     logger.info(f"[JSON] Fin de lecture du fichier en {time.perf_counter() - start}s")
     return pd.DataFrame(entites_juridiques)
 
+
+def lis_les_etablissements_territoriaux_json_finess(logger: Logger, chemin_du_fichier: str) -> pd.DataFrame:
+    logger.info(f"[JSON] Lecture du fichier [{chemin_du_fichier}]")
+    start = time.perf_counter()
+    donnees = _charge_le_flux_json(chemin_du_fichier)
+    etablissements_territoriaux = [
+        _transforme_un_etablissement_territorial(pmej, ege)
+        for pmej in donnees.get("pmej", [])
+        for ege in pmej.get("ege", [])
+    ]
+    logger.info(f"[JSON] Fin de lecture du fichier en {time.perf_counter() - start}s")
+    return pd.DataFrame(etablissements_territoriaux)
+
 def extrais_la_date_du_nom_de_fichier_finess_json(chemin_du_ficher: str) -> str:
     nom_du_fichier = Path(chemin_du_ficher).name
     date_extraite = re.search(r"(\d{8})(?:\.json)?(?:\.gz)?$", nom_du_fichier)
@@ -64,6 +77,35 @@ def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
         "siren": informations_generales.get("siren"),
         "statutJuridique": informations_generales.get("statutJuridique"),
         "telephone": contact.get("telephone"),
+        "typvoie": adresse.get("typeVoie"),
+        "voie": adresse.get("libelleVoie"),
+    }
+
+
+def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str, Any]) -> Dict[str, Any]:
+    informations_generales_pmej = pmej.get("informationsGeneralesPMEJ", {})
+    informations_generales_ege = ege.get("informationsGeneralesEGE", {})
+    adresse = _premiere_adresse(ege.get("adresse", []))
+    contact = _premier_contact(ege.get("contact", []))
+
+    return {
+        "categetab": ege.get("categorieentiteGeographiqueExercice"),
+        "cogCommune": adresse.get("cogCommune"),
+        "codemft": ege.get("modefixationtarifaire"),
+        "courriel": contact.get("courriel"),
+        "datefermeture": informations_generales_ege.get("dateFermeture"),
+        "dateouv": informations_generales_ege.get("dateOuverture"),
+        "etatObjet": ege.get("etatObjet"),
+        "ligneacheminement": adresse.get("ligneAcheminement"),
+        "nofinessej": informations_generales_pmej.get("numFinessPm"),
+        "nofinesset": informations_generales_ege.get("numFinessEge"),
+        "nofinessppal": "",
+        "numvoie": adresse.get("numeroVoie"),
+        "rs": informations_generales_ege.get("nomEgeCourt"),
+        "rslongue": informations_generales_ege.get("nomEgeLong"),
+        "siret": informations_generales_ege.get("siret"),
+        "telephone": contact.get("telephone"),
+        "typeet": "",
         "typvoie": adresse.get("typeVoie"),
         "voie": adresse.get("libelleVoie"),
     }
