@@ -5,17 +5,30 @@ from datacrawler.transform.équivalences_finess_helios import (
     index_des_etablissements_territorriaux,
 )
 from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import (
+    categoriser,
     classifier,
     normalize_and_uppercase,
 )
 
 
+def associe_le_domaine_depuis_la_categorie_parent(categorie: str, categories_entite_geographique_exercice: dict[str, str]) -> str:
+    if pd.isna(categorie):
+        return categoriser("")
+
+    code_categorie = str(categorie).strip()
+    return categoriser(categories_entite_geographique_exercice.get(code_categorie, ""))
+
+
 def transforme_le_json_des_etablissements_territoriaux(
     etablissements_territoriaux: pd.DataFrame,
+    categories_entite_geographique_exercice: dict[str, str],
     referentiel_departement_region: pd.DataFrame,
 ) -> pd.DataFrame:
     etablissements_territoriaux = etablissements_territoriaux.copy()
     etablissements_territoriaux["classification"] = etablissements_territoriaux["categetab"].apply(classifier)
+    etablissements_territoriaux["domaine"] = etablissements_territoriaux["categetab"].apply(
+        lambda categorie: associe_le_domaine_depuis_la_categorie_parent(categorie, categories_entite_geographique_exercice)
+    )
     etablissements_territoriaux["rslongue"] = etablissements_territoriaux["rslongue"].where(
         etablissements_territoriaux["rslongue"].notna() & (etablissements_territoriaux["rslongue"] != ""),
         etablissements_territoriaux["rs"],

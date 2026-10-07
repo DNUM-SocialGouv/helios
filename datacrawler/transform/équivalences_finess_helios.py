@@ -385,6 +385,7 @@ equivalences_json_finess_et_helios = {
     "nofinessppal": "numero_finess_etablissement_principal",
     "rslongue": "raison_sociale",
     "typeet": "type_etablissement",
+    "domaine": "domaine",
     "telephone": "telephone",
     "rs": "raison_sociale_courte",
     "libcommune": "commune",

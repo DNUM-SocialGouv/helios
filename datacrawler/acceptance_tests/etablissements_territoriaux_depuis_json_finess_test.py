@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pandas as pd
 
@@ -45,6 +45,26 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                     "etatObjet": "A",
                 }, {
                     "informationsGeneralesEGE": {
+                        "dateFermeture": None,
+                        "dateOuverture": "1956-11-16",
+                        "nomEgeCourt": "ECOLE TEST",
+                        "nomEgeLong": "ECOLE TEST LONG",
+                        "numFinessEge": "010780196",
+                        "siret": "77220148900024",
+                    },
+                    "categorieentiteGeographiqueExercice": "601",
+                    "modefixationtarifaire": "07",
+                    "adresse": [{
+                        "numeroVoie": "63",
+                        "typeVoie": "AV",
+                        "libelleVoie": "DE JASSERON",
+                        "cogCommune": "01053",
+                        "ligneAcheminement": "BOURG EN BRESSE",
+                    }],
+                    "contact": [{"telecom": {"telephone": "0428631235", "courriel": "ecole@test.fr"}}],
+                    "etatObjet": "A",
+                }, {
+                    "informationsGeneralesEGE": {
                         "dateFermeture": "2026-01-01",
                         "dateOuverture": "1956-11-16",
                         "nomEgeCourt": "ET FERME",
@@ -62,7 +82,19 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         entite_juridique = pd.DataFrame([helios_entite_juridique_builder()])
         with base_de_données_test.begin() as connection:
             entite_juridique.to_sql(TABLE_ENTITES_JURIDIQUES, connection, if_exists="append", index=False)
+        reponse_codesystem = MagicMock()
+        reponse_codesystem.json.return_value = {
+            "concept": [
+                {"code": "365", "property": [{"code": "parent", "valueCode": "3000"}]},
+                {"code": "601", "property": [{"code": "parent", "valueCode": "6000"}]},
+                {"code": "3000"},
+                {"code": "6000"},
+            ]
+        }
         with patch(
+            "datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.requests.get",
+            return_value=reponse_codesystem,
+        ) as recupere_la_nomenclature, patch(
             "datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.recupere_le_referentiel_departement_region_de_la_base",
             return_value=pd.DataFrame([
                 {
@@ -74,7 +106,13 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 }
             ]),
         ):
-            import_etablissements_territoriaux_depuis_json_finess(str(et_json), base_de_données_test, mocked_logger)
+            import_etablissements_territoriaux_depuis_json_finess(str(et_json), base_de_données_test, "https://example.test/tre-r397", mocked_logger)
+
+        recupere_la_nomenclature.assert_called_once_with(
+            "https://example.test/tre-r397",
+            headers={"Accept": "application/fhir+json"},
+            timeout=30,
+        )
 
         etablissements_territoriaux_attendus = pd.DataFrame([
             helios_etablissement_territorial_builder({
@@ -87,7 +125,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "commune": "BOURG EN BRESSE",
                 "courriel": "contact@test.fr",
                 "departement": "AIN",
-                "domaine": "Médico-social",
+                "domaine": "Sanitaire",
                 "libelle_categorie_etablissement": "",
                 "libelle_court_categorie_etablissement": "",
                 "libelle_du_mode_tarification": "",
@@ -96,6 +134,28 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "raison_sociale_courte": "CLINIQUE CONVERT",
                 "siret": "77220148900022",
                 "telephone": "0428631234",
+                "date_ouverture": "1956-11-16",
+                "type_etablissement": "",
+            }),
+            helios_etablissement_territorial_builder({
+                "adresse_acheminement": "BOURG EN BRESSE",
+                "adresse_numero_voie": "63",
+                "adresse_type_voie": "AV",
+                "adresse_voie": "DE JASSERON",
+                "cat_etablissement": "601",
+                "code_mode_tarification": "07",
+                "commune": "BOURG EN BRESSE",
+                "courriel": "ecole@test.fr",
+                "departement": "AIN",
+                "domaine": "Médico-social",
+                "libelle_categorie_etablissement": "",
+                "libelle_court_categorie_etablissement": "",
+                "libelle_du_mode_tarification": "",
+                "numero_finess_etablissement_territorial": "010780196",
+                "raison_sociale": "ECOLE TEST LONG",
+                "raison_sociale_courte": "ECOLE TEST",
+                "siret": "77220148900024",
+                "telephone": "0428631235",
                 "date_ouverture": "1956-11-16",
                 "type_etablissement": "",
             })

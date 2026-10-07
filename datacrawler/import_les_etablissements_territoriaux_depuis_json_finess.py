@@ -1,7 +1,9 @@
 import os
 from logging import Logger
+from typing import Any
 
 import pandas as pd
+import requests
 from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
@@ -30,6 +32,14 @@ from datacrawler.transform.transform_les_etablissements_territoriaux.transforme_
 
 REPERTOIRE_JSON_FINESS = "json"
 PREFIXE_FICHIER_STRUCTURES_FINESS = "finess-structures-journalier"
+CODES_DOMAINES_DES_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE = {
+    "1000": "SAN",
+    "2000": "SAN",
+    "3000": "SAN",
+    "4000": "SOC",
+    "5000": "SOC",
+    "6000": "ENS",
+}
 
 
 def conserve_les_etablissements_territoriaux_ouverts_depuis_json(
@@ -42,9 +52,58 @@ def conserve_les_etablissements_territoriaux_ouverts_depuis_json(
     ]
 
 
+def _récupère_les_categories_entite_geographique_exercice(
+    finess_categories_entite_geographique_exercice_codesystem_url: str,
+) -> dict[str, str]:
+    response = requests.get(
+        finess_categories_entite_geographique_exercice_codesystem_url,
+        headers={"Accept": "application/fhir+json"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    codesystem = response.json()
+    concepts = [concept for concept in codesystem.get("concept", []) if _est_une_categorie_entite_geographique_exercice_valide(concept)]
+    concepts_par_code = {str(concept["code"]): concept for concept in concepts}
+    return {
+        str(concept.get("code")): _détermine_le_domaine_de_la_categorie_entite_geographique_exercice(str(concept.get("code")), concepts_par_code)
+        for concept in concepts
+    }
+
+
+def _est_une_categorie_entite_geographique_exercice_valide(concept: Any) -> bool:
+    return isinstance(concept, dict) and concept.get("code") is not None
+
+
+def _détermine_le_domaine_de_la_categorie_entite_geographique_exercice(code: str, concepts_par_code: dict[str, dict[str, Any]]) -> str:
+    code_parent: str | None = code
+    codes_vus: set[str] = set()
+
+    while code_parent and code_parent not in codes_vus:
+        domaine = CODES_DOMAINES_DES_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE.get(code_parent)
+        if domaine is not None:
+            return domaine
+
+        codes_vus.add(code_parent)
+        code_parent = _extrais_le_code_parent_de_la_categorie_entite_geographique_exercice(concepts_par_code.get(code_parent))
+
+    return ""
+
+
+def _extrais_le_code_parent_de_la_categorie_entite_geographique_exercice(concept: dict[str, Any] | None) -> str | None:
+    if concept is None:
+        return None
+
+    for propriete in concept.get("property", []):
+        if isinstance(propriete, dict) and propriete.get("code") == "parent" and propriete.get("valueCode") is not None:
+            return str(propriete.get("valueCode"))
+
+    return None
+
+
 def import_etablissements_territoriaux_depuis_json_finess(
     chemin_local_du_fichier_structures: str,
     base_de_donnees: Engine,
+    finess_categories_entite_geographique_exercice_codesystem_url: str,
     logger: Logger,
 ) -> None:
     etablissements_territoriaux_flux_finess = lis_les_etablissements_territoriaux_json_finess(logger, chemin_local_du_fichier_structures)
@@ -60,9 +119,14 @@ def import_etablissements_territoriaux_depuis_json_finess(
         recupere_les_numeros_finess_des_etablissements_de_la_base(base_de_donnees),
     )
     logger.info(f"[FINESS] {len(etablissements_territoriaux_a_supprimer)} établissements territoriaux sont fermés.")
+    categories_entite_geographique_exercice = _récupère_les_categories_entite_geographique_exercice(
+        finess_categories_entite_geographique_exercice_codesystem_url,
+    )
+    logger.info(f"[FINESS] {len(categories_entite_geographique_exercice)} catégories d'entité géographique d'exercice récupérées depuis FINESS.")
     referentiel_departement_region = recupere_le_referentiel_departement_region_de_la_base(base_de_donnees)
     etablissements_territoriaux_transformes = transforme_le_json_des_etablissements_territoriaux(
         etablissements_territoriaux_ouverts,
+        categories_entite_geographique_exercice,
         referentiel_departement_region,
     )
     date_du_fichier = extrais_la_date_du_nom_de_fichier_finess_json(chemin_local_du_fichier_structures)
@@ -88,4 +152,9 @@ if __name__ == "__main__":
         repertoire_des_fichiers,
         trouve_le_nom_du_fichier(fichiers, PREFIXE_FICHIER_STRUCTURES_FINESS, logger_helios),
     )
-    import_etablissements_territoriaux_depuis_json_finess(chemin_structures_finess, base_de_donnees_helios, logger_helios)
+    import_etablissements_territoriaux_depuis_json_finess(
+        chemin_structures_finess,
+        base_de_donnees_helios,
+        variables_d_environnement["FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL"],
+        logger_helios,
+    )

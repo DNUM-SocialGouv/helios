@@ -43,6 +43,7 @@ class VariablesDEnvironnement(TypedDict):
     NEXT_PUBLIC_MATOMO_URL: str
     STRUCTURES_FINESS_DATA_PATH: str
     FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL: str
+    FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL: str
     DATA_GOUV_COG_API_URL: str
     RESSOURCE_COMMUNES_TITRE: str
     RESSOURCE_DEPARTEMENTS_TITRE: str
@@ -104,6 +105,9 @@ def récupère_les_variables_d_environnement(
         NEXT_PUBLIC_MATOMO_URL=signale_si_la_variable_n_est_pas_présente("NEXT_PUBLIC_MATOMO_URL"),
         STRUCTURES_FINESS_DATA_PATH=signale_si_la_variable_n_est_pas_présente("STRUCTURES_FINESS_DATA_PATH"),
         FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL=signale_si_la_variable_n_est_pas_présente("FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL"),
+        FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL=signale_si_la_variable_n_est_pas_présente(
+            "FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL"
+        ),
         DATA_GOUV_COG_API_URL=signale_si_la_variable_n_est_pas_présente("DATA_GOUV_COG_API_URL"),
         RESSOURCE_COMMUNES_TITRE=signale_si_la_variable_n_est_pas_présente("RESSOURCE_COMMUNES_TITRE"),
         RESSOURCE_DEPARTEMENTS_TITRE=signale_si_la_variable_n_est_pas_présente("RESSOURCE_DEPARTEMENTS_TITRE")
