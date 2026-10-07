@@ -23,6 +23,7 @@ def transforme_le_json_des_etablissements_territoriaux(
     etablissements_territoriaux: pd.DataFrame,
     categories_entite_geographique_exercice: dict[str, str],
     referentiel_departement_region: pd.DataFrame,
+    modes_fixation_tarifaire: dict[str, str],
 ) -> pd.DataFrame:
     etablissements_territoriaux = etablissements_territoriaux.copy()
     etablissements_territoriaux["classification"] = etablissements_territoriaux["categetab"].apply(classifier)
@@ -46,7 +47,7 @@ def transforme_le_json_des_etablissements_territoriaux(
     etablissements_territoriaux["libdepartement"] = etablissements_territoriaux["libdepartement"].apply(normalize_and_uppercase)
     etablissements_territoriaux["libcategetab"] = ""
     etablissements_territoriaux["libcourtcategetab"] = ""
-    etablissements_territoriaux["libmft"] = ""
+    etablissements_territoriaux["libmft"] = etablissements_territoriaux["codemft"].map(modes_fixation_tarifaire).fillna("")
 
     return (
         etablissements_territoriaux

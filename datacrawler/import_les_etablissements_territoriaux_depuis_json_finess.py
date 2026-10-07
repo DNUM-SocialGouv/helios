@@ -32,6 +32,10 @@ from datacrawler.transform.transform_les_etablissements_territoriaux.transforme_
 
 REPERTOIRE_JSON_FINESS = "json"
 PREFIXE_FICHIER_STRUCTURES_FINESS = "finess-structures-journalier"
+FINESS_MODES_FIXATION_TARIFAIRE_CODESYSTEM_URL = (
+    "https://mos.esante.gouv.fr/NOS/TRE_R74-ModeFixationTarifaire/FHIR/TRE-R74-ModeFixationTarifaire/"
+    "TRE_R74-ModeFixationTarifaire-FHIR.json"
+)
 CODES_DOMAINES_DES_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE = {
     "1000": "SAN",
     "2000": "SAN",
@@ -100,6 +104,22 @@ def _extrais_le_code_parent_de_la_categorie_entite_geographique_exercice(concept
     return None
 
 
+def _récupère_les_modes_fixation_tarifaire(
+    finess_modes_fixation_tarifaire_codesystem_url: str,
+) -> dict[str, str]:
+    response = requests.get(
+        finess_modes_fixation_tarifaire_codesystem_url,
+        headers={"Accept": "application/fhir+json"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    codesystem = response.json()
+    return {
+        str(concept.get("code")): str(concept.get("display"))
+        for concept in codesystem.get("concept", [])
+    }
+
+
 def import_etablissements_territoriaux_depuis_json_finess(
     chemin_local_du_fichier_structures: str,
     base_de_donnees: Engine,
@@ -123,11 +143,14 @@ def import_etablissements_territoriaux_depuis_json_finess(
         finess_categories_entite_geographique_exercice_codesystem_url,
     )
     logger.info(f"[FINESS] {len(categories_entite_geographique_exercice)} catégories d'entité géographique d'exercice récupérées depuis FINESS.")
+    modes_fixation_tarifaire = _récupère_les_modes_fixation_tarifaire(FINESS_MODES_FIXATION_TARIFAIRE_CODESYSTEM_URL)
+    logger.info(f"[FINESS] {len(modes_fixation_tarifaire)} modes de fixation tarifaire récupérés depuis FINESS.")
     referentiel_departement_region = recupere_le_referentiel_departement_region_de_la_base(base_de_donnees)
     etablissements_territoriaux_transformes = transforme_le_json_des_etablissements_territoriaux(
         etablissements_territoriaux_ouverts,
         categories_entite_geographique_exercice,
         referentiel_departement_region,
+        modes_fixation_tarifaire,
     )
     date_du_fichier = extrais_la_date_du_nom_de_fichier_finess_json(chemin_local_du_fichier_structures)
     logger.info(f"[FINESS] Date de mise à jour du fichier FINESS structures : {date_du_fichier}")

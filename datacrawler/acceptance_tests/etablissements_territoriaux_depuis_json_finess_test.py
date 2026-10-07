@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 import pandas as pd
 
@@ -91,9 +91,15 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 {"code": "6000"},
             ]
         }
+        reponse_modes_fixation_tarifaire = MagicMock()
+        reponse_modes_fixation_tarifaire.json.return_value = {
+            "concept": [
+                {"code": "07", "display": "ARS établissements de santé non financés dotation globale"},
+            ]
+        }
         with patch(
             "datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.requests.get",
-            return_value=reponse_codesystem,
+            side_effect=[reponse_codesystem, reponse_modes_fixation_tarifaire],
         ) as recupere_la_nomenclature, patch(
             "datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.recupere_le_referentiel_departement_region_de_la_base",
             return_value=pd.DataFrame([
@@ -108,11 +114,18 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         ):
             import_etablissements_territoriaux_depuis_json_finess(str(et_json), base_de_données_test, "https://example.test/tre-r397", mocked_logger)
 
-        recupere_la_nomenclature.assert_called_once_with(
-            "https://example.test/tre-r397",
-            headers={"Accept": "application/fhir+json"},
-            timeout=30,
-        )
+        recupere_la_nomenclature.assert_has_calls([
+            call(
+                "https://example.test/tre-r397",
+                headers={"Accept": "application/fhir+json"},
+                timeout=30,
+            ),
+            call(
+                "https://mos.esante.gouv.fr/NOS/TRE_R74-ModeFixationTarifaire/FHIR/TRE-R74-ModeFixationTarifaire/TRE_R74-ModeFixationTarifaire-FHIR.json",
+                headers={"Accept": "application/fhir+json"},
+                timeout=30,
+            ),
+        ])
 
         etablissements_territoriaux_attendus = pd.DataFrame([
             helios_etablissement_territorial_builder({
@@ -128,7 +141,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "domaine": "Sanitaire",
                 "libelle_categorie_etablissement": "",
                 "libelle_court_categorie_etablissement": "",
-                "libelle_du_mode_tarification": "",
+                "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_territorial": "010780195",
                 "raison_sociale": "CLINIQUE DOCTEUR CONVERT",
                 "raison_sociale_courte": "CLINIQUE CONVERT",
@@ -150,7 +163,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "domaine": "Médico-social",
                 "libelle_categorie_etablissement": "",
                 "libelle_court_categorie_etablissement": "",
-                "libelle_du_mode_tarification": "",
+                "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_territorial": "010780196",
                 "raison_sociale": "ECOLE TEST LONG",
                 "raison_sociale_courte": "ECOLE TEST",
