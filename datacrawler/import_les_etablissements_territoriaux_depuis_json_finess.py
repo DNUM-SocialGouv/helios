@@ -58,7 +58,7 @@ def conserve_les_etablissements_territoriaux_ouverts_depuis_json(
 
 def _récupère_les_categories_entite_geographique_exercice(
     finess_categories_entite_geographique_exercice_codesystem_url: str,
-) -> dict[str, str]:
+) -> dict[str, dict[str, str]]:
     response = requests.get(
         finess_categories_entite_geographique_exercice_codesystem_url,
         headers={"Accept": "application/fhir+json"},
@@ -69,7 +69,10 @@ def _récupère_les_categories_entite_geographique_exercice(
     concepts = [concept for concept in codesystem.get("concept", []) if _est_une_categorie_entite_geographique_exercice_valide(concept)]
     concepts_par_code = {str(concept["code"]): concept for concept in concepts}
     return {
-        str(concept.get("code")): _détermine_le_domaine_de_la_categorie_entite_geographique_exercice(str(concept.get("code")), concepts_par_code)
+        str(concept.get("code")): {
+            "libelle": str(concept.get("display")),
+            "domaine": _détermine_le_domaine_de_la_categorie_entite_geographique_exercice(str(concept.get("code")), concepts_par_code),
+        }
         for concept in concepts
     }
 

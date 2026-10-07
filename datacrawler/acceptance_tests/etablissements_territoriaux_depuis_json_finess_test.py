@@ -85,8 +85,8 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         reponse_codesystem = MagicMock()
         reponse_codesystem.json.return_value = {
             "concept": [
-                {"code": "365", "property": [{"code": "parent", "valueCode": "3000"}]},
-                {"code": "601", "property": [{"code": "parent", "valueCode": "6000"}]},
+                {"code": "365", "display": "Clinique", "property": [{"code": "parent", "valueCode": "3000"}]},
+                {"code": "601", "display": "Ecole de formation", "property": [{"code": "parent", "valueCode": "6000"}]},
                 {"code": "3000"},
                 {"code": "6000"},
             ]
@@ -139,7 +139,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "courriel": "contact@test.fr",
                 "departement": "AIN",
                 "domaine": "Sanitaire",
-                "libelle_categorie_etablissement": "",
+                "libelle_categorie_etablissement": "Clinique",
                 "libelle_court_categorie_etablissement": "",
                 "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_territorial": "010780195",
@@ -161,7 +161,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "courriel": "ecole@test.fr",
                 "departement": "AIN",
                 "domaine": "Médico-social",
-                "libelle_categorie_etablissement": "",
+                "libelle_categorie_etablissement": "Ecole de formation",
                 "libelle_court_categorie_etablissement": "",
                 "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_territorial": "010780196",
