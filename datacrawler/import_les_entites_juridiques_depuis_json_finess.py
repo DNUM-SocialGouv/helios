@@ -5,6 +5,12 @@ from typing import Any
 import requests
 from sqlalchemy.engine import Engine, create_engine
 
+from datacrawler.constantes import (
+    CODES_DE_CATEGORISATION_DES_STATUTS_JURIDIQUES,
+    FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL,
+    PREFIXE_FICHIER_STRUCTURES_FINESS,
+    REPERTOIRE_JSON_FINESS,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_json_finess import (
     extrais_la_date_du_nom_de_fichier_finess_json,
@@ -22,15 +28,6 @@ from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees
     extrais_les_entites_juridiques_recemment_fermees,
     transforme_le_json_des_entites_juridiques,
 )
-
-REPERTOIRE_JSON_FINESS = "json"
-PREFIXE_FICHIER_STRUCTURES_FINESS = "finess-structures-journalier"
-CODES_DE_CATEGORISATION_DES_STATUTS_JURIDIQUES = {
-    "1000": "public",
-    "2100": "prive_non_lucratif",
-    "2200": "prive_lucratif",
-    "3000": "personne_morale_droit_etranger",
-}
 
 
 def _récupère_les_statuts_juridiques(finess_statuts_juridiques_codesystem_url: str) -> dict[str, dict[str, str]]:
@@ -130,6 +127,6 @@ if __name__ == "__main__":
     import_entites_juridiques_depuis_json_finess(
         chemin_structures_finess,
         base_de_donnees_helios,
-        variables_d_environnement["FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL"],
+        FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL,
         logger_helios,
     )

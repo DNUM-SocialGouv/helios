@@ -5,10 +5,11 @@ echo "$DIAMANT_PRIVATE_KEY" | base64 --decode | gpg --import
 echo "$SFTP_DNUM_KEY" | base64 --decode >$DNUM_SFTP_PRIVATE_KEY
 
 python -m datacrawler.download_finess_data &&
+	python -m datacrawler.download_json_finess &&
 	python -m datacrawler.download_diamant_data &&
 	python -m datacrawler.déchiffre_diamant &&
-	python -m datacrawler.import_les_entites_juridiques &&
-	python -m datacrawler.import_les_etablissements_territoriaux &&
+	python -m datacrawler.import_les_entites_juridiques_depuis_json_finess &&
+	python -m datacrawler.import_les_etablissements_territoriaux_depuis_json_finess &&
 	python -m datacrawler.import_ref_categories &&
 	python -m datacrawler.ajoute_les_activités_des_établissements_médico_sociaux &&
 	python -m datacrawler.ajoute_les_activités_des_établissements_sanitaires &&

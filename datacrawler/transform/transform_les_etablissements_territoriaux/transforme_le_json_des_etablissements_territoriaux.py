@@ -1,14 +1,49 @@
+from typing import Tuple
+import re
+import unicodedata
+
 import pandas as pd
 
 from datacrawler.transform.équivalences_finess_helios import (
     equivalences_json_finess_et_helios,
     index_des_etablissements_territorriaux,
 )
-from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import (
-    categoriser,
-    classifier,
-    normalize_and_uppercase,
-)
+
+
+def categoriser(categorie: str) -> str:
+    if categorie == "SAN":
+        return "Sanitaire"
+    return "Médico-social"
+
+
+def normalize_and_uppercase(value: str) -> str:
+    if pd.isna(value) or not isinstance(value, str):
+        return value
+    if not value.strip():
+        return value
+
+    normalized = unicodedata.normalize("NFD", value)
+    normalized = "".join(c for c in normalized if unicodedata.category(c) != "Mn")
+    normalized = re.sub(r"[\-']", " ", normalized)
+    return normalized.upper()
+
+
+def classifier(value: str) -> str:
+    if value in ["189", "190", "198", "461", "249", "448", "188", "246", "437", "195", "194", "192", "183", "186", "255", "182", "445", "464"]:
+        return "publics_en_situation_de_handicap"
+    if value in ["500", "209", "354"]:
+        return "personnes_agees"
+    return "non_classifie"
+
+
+def extrais_les_etablissements_territoriaux_recemment_fermes(
+    etablissements_territoriaux_ouverts: pd.DataFrame,
+    etablissements_territoriaux_sauvegardes: pd.DataFrame,
+) -> Tuple[str, ...]:
+    nouveaux = etablissements_territoriaux_ouverts["nofinesset"]
+    sauvegardes = etablissements_territoriaux_sauvegardes["numero_finess_etablissement_territorial"]
+    objets_a_supprimer = etablissements_territoriaux_sauvegardes[~sauvegardes.isin(nouveaux)]
+    return tuple(objets_a_supprimer["numero_finess_etablissement_territorial"])
 
 
 def associe_le_domaine_depuis_la_categorie_parent(categorie: str, categories_entite_geographique_exercice: dict[str, dict[str, str]]) -> str:

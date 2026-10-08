@@ -6,6 +6,13 @@ import pandas as pd
 import requests
 from sqlalchemy.engine import Engine, create_engine
 
+from datacrawler.constantes import (
+    CODES_DOMAINES_DES_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE,
+    FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL,
+    FINESS_MODES_FIXATION_TARIFAIRE_CODESYSTEM_URL,
+    PREFIXE_FICHIER_STRUCTURES_FINESS,
+    REPERTOIRE_JSON_FINESS,
+)
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.extract.lecteur_json_finess import (
     extrais_la_date_du_nom_de_fichier_finess_json,
@@ -23,27 +30,10 @@ from datacrawler.load.nom_des_tables import (
     TABLE_ETABLISSEMENTS_TERRITORIAUX,
 )
 from datacrawler.load.sauvegarde import mets_a_jour, mets_a_jour_la_date_de_mise_a_jour_du_fichier_source, supprime
-from datacrawler.transform.transform_les_etablissements_territoriaux.transform_les_etablissements_territoriaux import (
-    extrais_les_etablissements_territoriaux_recemment_fermes,
-)
 from datacrawler.transform.transform_les_etablissements_territoriaux.transforme_le_json_des_etablissements_territoriaux import (
+    extrais_les_etablissements_territoriaux_recemment_fermes,
     transforme_le_json_des_etablissements_territoriaux,
 )
-
-REPERTOIRE_JSON_FINESS = "json"
-PREFIXE_FICHIER_STRUCTURES_FINESS = "finess-structures-journalier"
-FINESS_MODES_FIXATION_TARIFAIRE_CODESYSTEM_URL = (
-    "https://mos.esante.gouv.fr/NOS/TRE_R74-ModeFixationTarifaire/FHIR/TRE-R74-ModeFixationTarifaire/"
-    "TRE_R74-ModeFixationTarifaire-FHIR.json"
-)
-CODES_DOMAINES_DES_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE = {
-    "1000": "SAN",
-    "2000": "SAN",
-    "3000": "SAN",
-    "4000": "SOC",
-    "5000": "SOC",
-    "6000": "ENS",
-}
 
 
 def conserve_les_etablissements_territoriaux_ouverts_depuis_json(
@@ -190,6 +180,6 @@ if __name__ == "__main__":
     import_etablissements_territoriaux_depuis_json_finess(
         chemin_structures_finess,
         base_de_donnees_helios,
-        variables_d_environnement["FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL"],
+        FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL,
         logger_helios,
     )

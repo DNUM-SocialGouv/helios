@@ -70,11 +70,6 @@ class TestVariablesDEnvironnement:
             "NEXT_PUBLIC_MATOMO_SITE_ID": "test",
             "NEXT_PUBLIC_MATOMO_URL": "test",
             "STRUCTURES_FINESS_DATA_PATH": "test",
-            "FINESS_STATUTS_JURIDIQUES_CODESYSTEM_URL": "test",
-            "FINESS_CATEGORIES_ENTITE_GEOGRAPHIQUE_EXERCICE_CODESYSTEM_URL": "test",
-            "DATA_GOUV_COG_API_URL": "test",
-            "RESSOURCE_COMMUNES_TITRE": "test",
-            "RESSOURCE_DEPARTEMENTS_TITRE": "test"
         }
 
         # WHEN

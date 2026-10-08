@@ -7,6 +7,7 @@ import requests
 from sqlalchemy.engine import Engine, create_engine
 
 from datacrawler import écrase_et_sauvegarde_les_données_avec_leur_date_de_mise_à_jour
+from datacrawler.constantes import DATA_GOUV_COG_API_URL, RESSOURCE_COMMUNES_TITRE, RESSOURCE_DEPARTEMENTS_TITRE
 from datacrawler.dependencies.dépendances import initialise_les_dépendances
 from datacrawler.load.nom_des_tables import TABLE_REF_DEPARTEMENT_REGION
 from datacrawler.transform.équivalences_finess_helios import (
@@ -102,7 +103,7 @@ if __name__ == "__main__":
             base_de_données_helios,
             logger_helios,
             requests_session,
-            variables_d_environnement["DATA_GOUV_COG_API_URL"],
-            variables_d_environnement["RESSOURCE_COMMUNES_TITRE"],
-            variables_d_environnement["RESSOURCE_DEPARTEMENTS_TITRE"],
+            DATA_GOUV_COG_API_URL,
+            RESSOURCE_COMMUNES_TITRE,
+            RESSOURCE_DEPARTEMENTS_TITRE,
         )
