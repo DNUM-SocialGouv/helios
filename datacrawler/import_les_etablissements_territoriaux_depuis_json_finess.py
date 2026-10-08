@@ -161,7 +161,7 @@ def import_etablissements_territoriaux_depuis_json_finess(
         logger.info(f"Supprime {len(etablissements_territoriaux_a_supprimer)} établissements territoriaux.")
         mets_a_jour(connection, TABLE_ETABLISSEMENTS_TERRITORIAUX, CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX, etablissements_territoriaux_transformes)
         logger.info(f"Sauvegarde {etablissements_territoriaux_transformes.shape[0]} établissements territoriaux.")
-        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_du_fichier, FichierSource.FINESS_CS1400101)
+        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_du_fichier, FichierSource.FINESS_STRUCTURE)
 
 
 if __name__ == "__main__":

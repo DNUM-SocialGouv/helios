@@ -109,7 +109,7 @@ def import_entites_juridiques_depuis_json_finess(
         logger.info(f"Supprime {len(entites_juridiques_a_supprimer)} entités juridiques.")
         mets_a_jour(connection, TABLE_ENTITES_JURIDIQUES, CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES, entites_juridique_transformees)
         logger.info(f"Sauvegarde {entites_juridique_transformees.shape[0]} entités juridiques.")
-        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_du_fichier, FichierSource.FINESS_CS1400101)
+        mets_a_jour_la_date_de_mise_a_jour_du_fichier_source(connection, date_du_fichier, FichierSource.FINESS_STRUCTURE)
 
 if __name__ == "__main__":
     logger_helios, variables_d_environnement = initialise_les_dépendances()
