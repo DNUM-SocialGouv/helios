@@ -71,6 +71,7 @@ def _récupère_les_categories_entite_geographique_exercice(
     return {
         str(concept.get("code")): {
             "libelle": str(concept.get("display")),
+            "libelle_court": _extrais_le_libelle_court_de_la_categorie_entite_geographique_exercice(concept),
             "domaine": _détermine_le_domaine_de_la_categorie_entite_geographique_exercice(str(concept.get("code")), concepts_par_code),
         }
         for concept in concepts
@@ -105,6 +106,14 @@ def _extrais_le_code_parent_de_la_categorie_entite_geographique_exercice(concept
             return str(propriete.get("valueCode"))
 
     return None
+
+
+def _extrais_le_libelle_court_de_la_categorie_entite_geographique_exercice(concept: dict[str, Any]) -> str:
+    for designation in concept.get("designation", []):
+        if isinstance(designation, dict) and designation.get("value") is not None:
+            return str(designation.get("value"))
+
+    return ""
 
 
 def _récupère_les_modes_fixation_tarifaire(

@@ -27,6 +27,14 @@ def associe_le_libelle_depuis_la_categorie(categorie: str, categories_entite_geo
     return categories_entite_geographique_exercice.get(code_categorie, {}).get("libelle", "")
 
 
+def associe_le_libelle_court_depuis_la_categorie(categorie: str, categories_entite_geographique_exercice: dict[str, dict[str, str]]) -> str:
+    if pd.isna(categorie):
+        return ""
+
+    code_categorie = str(categorie).strip()
+    return categories_entite_geographique_exercice.get(code_categorie, {}).get("libelle_court", "")
+
+
 def transforme_le_json_des_etablissements_territoriaux(
     etablissements_territoriaux: pd.DataFrame,
     categories_entite_geographique_exercice: dict[str, dict[str, str]],
@@ -56,7 +64,9 @@ def transforme_le_json_des_etablissements_territoriaux(
     etablissements_territoriaux["libcategetab"] = etablissements_territoriaux["categetab"].apply(
         lambda categorie: associe_le_libelle_depuis_la_categorie(categorie, categories_entite_geographique_exercice)
     )
-    etablissements_territoriaux["libcourtcategetab"] = ""
+    etablissements_territoriaux["libcourtcategetab"] = etablissements_territoriaux["categetab"].apply(
+        lambda categorie: associe_le_libelle_court_depuis_la_categorie(categorie, categories_entite_geographique_exercice)
+    )
     etablissements_territoriaux["libmft"] = etablissements_territoriaux["codemft"].map(modes_fixation_tarifaire).fillna("")
 
     return (

@@ -87,8 +87,8 @@ def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str
     informations_generales_ege = ege.get("informationsGeneralesEGE", {})
     adresse = _premiere_adresse(ege.get("adresse", []))
     contact = _premier_contact(ege.get("contact", []))
-    id_ege = informations_generales_ege.get("egeId")
-    roles_ege = ege.get("roleEge", [])
+    id_ege = ege.get("idEge") or informations_generales_ege.get("egeId")
+    roles_ege = pmej.get("roleEge", []) or ege.get("roleEge", [])
 
     return {
         "categetab": ege.get("categorieentiteGeographiqueExercice"),
@@ -143,7 +143,11 @@ def _détermine_le_numero_finess_etablissement_principal(
         return ""
 
     ege_porteuse = next(
-        (ege for ege in etablissements_geographiques_exercice if ege.get("informationsGeneralesEGE", {}).get("egeId") == id_ege_porteuse),
+        (
+            ege
+            for ege in etablissements_geographiques_exercice
+            if (ege.get("idEge") or ege.get("informationsGeneralesEGE", {}).get("egeId")) == id_ege_porteuse
+        ),
         {},
     )
     return ege_porteuse.get("informationsGeneralesEGE", {}).get("numFinessEge", "") or ""

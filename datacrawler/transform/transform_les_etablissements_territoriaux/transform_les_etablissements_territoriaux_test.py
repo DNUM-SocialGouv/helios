@@ -5,6 +5,9 @@ from datacrawler.transform.transform_les_etablissements_territoriaux.transform_l
     extrais_les_etablissements_territoriaux_recemment_fermes,
     associe_le_domaine
 )
+from datacrawler.transform.transform_les_etablissements_territoriaux.transforme_le_json_des_etablissements_territoriaux import (
+    associe_le_libelle_court_depuis_la_categorie,
+)
 
 from datacrawler.test_helpers import (
     NUMÉRO_FINESS_ÉTABLISSEMENT,
@@ -89,3 +92,16 @@ class TestTransformeLesDonneesEtablissementTerritorial:
                                       etablissements_territoriaux_attendus,
                                       check_index_type=False,
                                       check_dtype=False)
+
+    def test_associe_le_libelle_court_depuis_la_categorie(self) -> None:
+        categories_entite_geographique_exercice = {
+            "377": {
+                "libelle": "Etablissement Expérimental pour Enfance Handicapée",
+                "libelle_court": "Etab.Expér.Enf.Hand.",
+                "domaine": "SOC",
+            }
+        }
+
+        libelle_court = associe_le_libelle_court_depuis_la_categorie("377", categories_entite_geographique_exercice)
+
+        assert libelle_court == "Etab.Expér.Enf.Hand."

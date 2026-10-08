@@ -4,7 +4,10 @@ from unittest.mock import MagicMock, call, patch
 
 import pandas as pd
 
-from datacrawler.import_les_etablissements_territoriaux_depuis_json_finess import import_etablissements_territoriaux_depuis_json_finess
+from datacrawler.import_les_etablissements_territoriaux_depuis_json_finess import (
+    _récupère_les_categories_entite_geographique_exercice,
+    import_etablissements_territoriaux_depuis_json_finess,
+)
 from datacrawler.load.nom_des_tables import TABLE_ETABLISSEMENTS_TERRITORIAUX, TABLE_ENTITES_JURIDIQUES
 from datacrawler.test_helpers import base_de_données_test, mocked_logger, supprime_les_données_des_tables
 from datacrawler.test_helpers.helios_builder import helios_entite_juridique_builder, helios_etablissement_territorial_builder
@@ -13,6 +16,29 @@ from datacrawler.test_helpers.helios_builder import helios_entite_juridique_buil
 class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
     def setup_method(self) -> None:
         supprime_les_données_des_tables(base_de_données_test)
+
+    def test_récupère_le_libelle_court_des_categories_depuis_la_designation(self) -> None:
+        reponse_codesystem = MagicMock()
+        reponse_codesystem.json.return_value = {
+            "concept": [
+                {
+                    "code": "377",
+                    "display": "Etablissement Expérimental pour Enfance Handicapée",
+                    "designation": [{"value": "Etab.Expér.Enf.Hand."}],
+                    "property": [{"code": "parent", "valueCode": "4000"}],
+                },
+                {"code": "4000"},
+            ]
+        }
+
+        with patch("datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.requests.get", return_value=reponse_codesystem):
+            categories = _récupère_les_categories_entite_geographique_exercice("https://example.test/tre-r397")
+
+        assert categories["377"] == {
+            "libelle": "Etablissement Expérimental pour Enfance Handicapée",
+            "libelle_court": "Etab.Expér.Enf.Hand.",
+            "domaine": "SOC",
+        }
 
     def test_import_etablissements_territoriaux_depuis_json_finess(self, tmp_path: Path) -> None:
         et_json = tmp_path / "finess-structures-journalier-20260929.json"
@@ -90,8 +116,8 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         reponse_codesystem = MagicMock()
         reponse_codesystem.json.return_value = {
             "concept": [
-                {"code": "365", "display": "Clinique", "property": [{"code": "parent", "valueCode": "3000"}]},
-                {"code": "601", "display": "Ecole de formation", "property": [{"code": "parent", "valueCode": "6000"}]},
+                {"code": "365", "display": "Clinique", "designation": [{"value": "Cli."}], "property": [{"code": "parent", "valueCode": "3000"}]},
+                {"code": "601", "display": "Ecole de formation", "designation": [{"value": "Ecole form."}], "property": [{"code": "parent", "valueCode": "6000"}]},
                 {"code": "3000"},
                 {"code": "6000"},
             ]
@@ -145,7 +171,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "departement": "AIN",
                 "domaine": "Sanitaire",
                 "libelle_categorie_etablissement": "Clinique",
-                "libelle_court_categorie_etablissement": "",
+                "libelle_court_categorie_etablissement": "Cli.",
                 "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_territorial": "010780195",
                 "raison_sociale": "CLINIQUE DOCTEUR CONVERT",
@@ -167,7 +193,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "departement": "AIN",
                 "domaine": "Médico-social",
                 "libelle_categorie_etablissement": "Ecole de formation",
-                "libelle_court_categorie_etablissement": "",
+                "libelle_court_categorie_etablissement": "Ecole form.",
                 "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
                 "numero_finess_etablissement_principal": "010780195",
                 "numero_finess_etablissement_territorial": "010780196",
