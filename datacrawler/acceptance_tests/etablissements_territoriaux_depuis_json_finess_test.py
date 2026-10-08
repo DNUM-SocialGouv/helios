@@ -116,8 +116,16 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         reponse_codesystem = MagicMock()
         reponse_codesystem.json.return_value = {
             "concept": [
-                {"code": "365", "display": "Clinique", "designation": [{"value": "Cli."}], "property": [{"code": "parent", "valueCode": "3000"}]},
-                {"code": "601", "display": "Ecole de formation", "designation": [{"value": "Ecole form."}], "property": [{"code": "parent", "valueCode": "6000"}]},
+                {"code": "365",
+                  "display": "Clinique", 
+                  "designation": [{"value": "Cli."}], 
+                  "property": [{"code": "parent", "valueCode": "3000"}]
+                },
+                {"code": "601",
+                 "display": "Ecole de formation", 
+                 "designation": [{"value": "Ecole form."}], 
+                 "property": [{"code": "parent", "valueCode": "6000"}]
+                },
                 {"code": "3000"},
                 {"code": "6000"},
             ]

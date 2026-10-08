@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from datacrawler.extract.lecteur_json_finess import lis_les_entites_juridiques_json_finess, lis_les_etablissements_territoriaux_json_finess
+from datacrawler.extract.lecteur_json_finess import _adresse_prioritaire, lis_les_entites_juridiques_json_finess, lis_les_etablissements_territoriaux_json_finess
 from datacrawler.test_helpers import mocked_logger
 
 
@@ -183,6 +183,20 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
             }
         ]),
     )
+
+
+def test_recupere_l_adresse_selon_l_ordre_des_codes() -> None:
+    adresse_code_05 = {"codeTypeAdresse": "05", "ligneAcheminement": "ADRESSE CODE 05"}
+    adresse_code_03 = {"codeTypeAdresse": "03", "ligneAcheminement": "ADRESSE CODE 03"}
+    adresse_code_01 = {"codeTypeAdresse": "01", "ligneAcheminement": "ADRESSE CODE 01"}
+
+    assert _adresse_prioritaire([adresse_code_05, adresse_code_03, adresse_code_01]) == adresse_code_03
+
+
+def test_recupere_l_adresse_unique() -> None:
+    adresse = {"codeTypeAdresse": "05", "ligneAcheminement": "ADRESSE UNIQUE"}
+
+    assert _adresse_prioritaire([adresse]) == adresse
 
 
 def _pmej(numero_finess: str, telephone: str) -> dict:

@@ -7,6 +7,8 @@ from typing import Any, Dict, List
 
 import pandas as pd
 
+ORDRE_CODES_ADRESSE = ["03", "01", "02", "06", "04", "05"]
+
 
 def lis_les_entites_juridiques_json_finess(logger: Logger, chemin_du_fichier: str) -> pd.DataFrame:
     logger.info(f"[JSON] Lecture du fichier [{chemin_du_fichier}]")
@@ -62,7 +64,7 @@ def _charge_le_flux_json(chemin_du_fichier: str) -> Dict[str, Any]:
 
 def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
     informations_generales = pmej.get("informationsGeneralesPMEJ", {})
-    adresse = _premiere_adresse(pmej.get("adresse", []))
+    adresse = _adresse_prioritaire(pmej.get("adresse", []))
     contact = _premier_contact(pmej.get("contact", []))
 
     return {
@@ -85,7 +87,7 @@ def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
 def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str, Any]) -> Dict[str, Any]:
     informations_generales_pmej = pmej.get("informationsGeneralesPMEJ", {})
     informations_generales_ege = ege.get("informationsGeneralesEGE", {})
-    adresse = _premiere_adresse(ege.get("adresse", []))
+    adresse = _adresse_prioritaire(ege.get("adresse", []))
     contact = _premier_contact(ege.get("contact", []))
     id_ege = ege.get("idEge") or informations_generales_ege.get("egeId")
     roles_ege = pmej.get("roleEge", []) or ege.get("roleEge", [])
@@ -152,8 +154,19 @@ def _détermine_le_numero_finess_etablissement_principal(
     )
     return ege_porteuse.get("informationsGeneralesEGE", {}).get("numFinessEge", "") or ""
 
-def _premiere_adresse(adresses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    return next(iter(adresses), {})
+def _adresse_prioritaire(adresses: List[Dict[str, Any]]) -> Dict[str, Any]:
+    if len(adresses) <= 1:
+        return next(iter(adresses), {})
+
+    return min(adresses, key=_rang_du_code_adresse)
+
+
+def _rang_du_code_adresse(adresse: Dict[str, Any]) -> int:
+    code_adresse = adresse.get("codeTypeAdresse") or adresse.get("codeAdresse") or adresse.get("typeAdresse")
+    if code_adresse in ORDRE_CODES_ADRESSE:
+        return ORDRE_CODES_ADRESSE.index(code_adresse)
+
+    return len(ORDRE_CODES_ADRESSE)
 
 
 def _premier_contact(contacts: List[Dict[str, Any]]) -> Dict[str, Any]:
