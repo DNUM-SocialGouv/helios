@@ -62,7 +62,7 @@ def transforme_le_json_des_etablissements_territoriaux(
     return (
         etablissements_territoriaux
         .rename(columns=equivalences_json_finess_et_helios)
-        .drop(columns=["cogCommune", "datefermeture", "etatObjet", "ref_code_dep"], errors="ignore")
+        .drop(columns=["cogCommune", "datefermeture", "etatObjet", "idEge", "ref_code_dep"], errors="ignore")
         .dropna(subset=index_des_etablissements_territorriaux)
         .drop_duplicates(subset=index_des_etablissements_territorriaux)
         .set_index(index_des_etablissements_territorriaux)

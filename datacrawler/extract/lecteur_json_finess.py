@@ -87,6 +87,8 @@ def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str
     informations_generales_ege = ege.get("informationsGeneralesEGE", {})
     adresse = _premiere_adresse(ege.get("adresse", []))
     contact = _premier_contact(ege.get("contact", []))
+    id_ege = informations_generales_ege.get("egeId")
+    roles_ege = ege.get("roleEge", [])
 
     return {
         "categetab": ege.get("categorieentiteGeographiqueExercice"),
@@ -96,19 +98,55 @@ def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str
         "datefermeture": informations_generales_ege.get("dateFermeture"),
         "dateouv": informations_generales_ege.get("dateOuverture"),
         "etatObjet": ege.get("etatObjet"),
+        "idEge": id_ege,
         "ligneacheminement": adresse.get("ligneAcheminement"),
         "nofinessej": informations_generales_pmej.get("numFinessPm"),
         "nofinesset": informations_generales_ege.get("numFinessEge"),
-        "nofinessppal": "",
+        "nofinessppal": _détermine_le_numero_finess_etablissement_principal(id_ege, roles_ege, pmej.get("ege", [])),
         "numvoie": adresse.get("numeroVoie"),
         "rs": informations_generales_ege.get("nomEgeCourt"),
         "rslongue": informations_generales_ege.get("nomEgeLong"),
         "siret": informations_generales_ege.get("siret"),
         "telephone": contact.get("telephone"),
-        "typeet": "",
+        "typeet": _détermine_le_type_etablissement(id_ege, roles_ege),
         "typvoie": adresse.get("typeVoie"),
         "voie": adresse.get("libelleVoie"),
     }
+
+
+def _détermine_le_type_etablissement(id_ege: str | None, roles_ege: List[Dict[str, Any]]) -> str:
+    if id_ege is None:
+        return ""
+
+    if any(role.get("idEgePorteuse") == id_ege for role in roles_ege):
+        return "P"
+
+    if any(role.get("idEgeNonPorteuse") == id_ege for role in roles_ege):
+        return "S"
+
+    return ""
+
+
+def _détermine_le_numero_finess_etablissement_principal(
+    id_ege: str | None,
+    roles_ege: List[Dict[str, Any]],
+    etablissements_geographiques_exercice: List[Dict[str, Any]],
+) -> str:
+    if id_ege is None:
+        return ""
+
+    id_ege_porteuse = next(
+        (role.get("idEgePorteuse") for role in roles_ege if role.get("idEgeNonPorteuse") == id_ege),
+        None,
+    )
+    if id_ege_porteuse is None:
+        return ""
+
+    ege_porteuse = next(
+        (ege for ege in etablissements_geographiques_exercice if ege.get("informationsGeneralesEGE", {}).get("egeId") == id_ege_porteuse),
+        {},
+    )
+    return ege_porteuse.get("informationsGeneralesEGE", {}).get("numFinessEge", "") or ""
 
 def _premiere_adresse(adresses: List[Dict[str, Any]]) -> Dict[str, Any]:
     return next(iter(adresses), {})

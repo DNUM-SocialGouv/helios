@@ -23,7 +23,11 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "informationsGeneralesPMEJ": {
                     "numFinessPm": "010008407",
                 },
+                "roleEge": [
+                    {"idEgePorteuse": "ege-porteuse", "idEgeNonPorteuse": "ege-non-porteuse"},
+                ],
                 "ege": [{
+                    "idEge": "ege-porteuse",
                     "informationsGeneralesEGE": {
                         "dateFermeture": None,
                         "dateOuverture": "1956-11-16",
@@ -44,6 +48,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                     "contact": [{"telecom": {"telephone": "0428631234", "courriel": "contact@test.fr"}}],
                     "etatObjet": "A",
                 }, {
+                    "idEge": "ege-non-porteuse",
                     "informationsGeneralesEGE": {
                         "dateFermeture": None,
                         "dateOuverture": "1956-11-16",
@@ -148,7 +153,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "siret": "77220148900022",
                 "telephone": "0428631234",
                 "date_ouverture": "1956-11-16",
-                "type_etablissement": "",
+                "type_etablissement": "P",
             }),
             helios_etablissement_territorial_builder({
                 "adresse_acheminement": "BOURG EN BRESSE",
@@ -164,13 +169,14 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                 "libelle_categorie_etablissement": "Ecole de formation",
                 "libelle_court_categorie_etablissement": "",
                 "libelle_du_mode_tarification": "ARS établissements de santé non financés dotation globale",
+                "numero_finess_etablissement_principal": "010780195",
                 "numero_finess_etablissement_territorial": "010780196",
                 "raison_sociale": "ECOLE TEST LONG",
                 "raison_sociale_courte": "ECOLE TEST",
                 "siret": "77220148900024",
                 "telephone": "0428631235",
                 "date_ouverture": "1956-11-16",
-                "type_etablissement": "",
+                "type_etablissement": "S",
             })
         ])
         etablissements_territoriaux_sauvegardes = pd.read_sql(TABLE_ETABLISSEMENTS_TERRITORIAUX, base_de_données_test)
