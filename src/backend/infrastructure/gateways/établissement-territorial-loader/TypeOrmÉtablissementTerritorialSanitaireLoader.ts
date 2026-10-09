@@ -110,7 +110,7 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
       return new ÉtablissementTerritorialSanitaireNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102)) as DateMiseÀJourFichierSourceModel;
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_STRUCTURE)) as DateMiseÀJourFichierSourceModel;
     const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 
     return this.construisIdentité(établissementTerritorialIdentitéModel, dateDeMiseÀJourIdentitéModel, domaineÉtablissementPrincipal);

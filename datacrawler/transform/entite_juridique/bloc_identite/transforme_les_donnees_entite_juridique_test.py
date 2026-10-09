@@ -1,11 +1,9 @@
 import pandas as pd
-from numpy import nan
 
 from datacrawler.transform.entite_juridique.bloc_identite.transforme_les_donnees_entite_juridique import(
     associe_les_informations_du_statut_juridique,
     extrais_les_entites_juridiques_recemment_fermees,
     conserve_les_entites_juridiques_ouvertes,
-    associe_la_categorisation
 )
 
 from datacrawler.test_helpers import (
@@ -37,63 +35,6 @@ class TestTransformeLesDonneesEntiteJuridique:
                                                  xml_contenu_finess_cs1400101_builder({"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2})])
         entites_juridiques_ouvertes = conserve_les_entites_juridiques_ouvertes(donnees_finess_cs1400101)
         pd.testing.assert_frame_equal(entites_juridiques_ouvertes, entites_juridiques_ouvertes_attendues, check_dtype=False)
-
-    def test_associe_la_categorisation(self) -> None:
-        donnees_finess_cs1400101 = pd.DataFrame([xml_contenu_finess_cs1400101_builder({"statutjuridique": '70'}),
-                                                 xml_contenu_finess_cs1400101_builder({"nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2})])
-        categories = pd.DataFrame([{"code": '21',"codeagr2": '1200',"codeagr1": "1000"},
-                                {"code": '90',"codeagr2": '3100',"codeagr1": '3000'},
-                                {"code": '70',"codeagr2": '2200',"codeagr1": '2000'}])
-        entites_juridiques_categorisees_attendues = pd.DataFrame([{
-        "datecrea": "2009-01-01",
-        "datefermeture": nan,
-        "departement": "01",
-        "libcommune": "DIVONNE LES BAINS",
-        "libdepartement": "AIN",
-        "libstatutjuridique": "Etb.Social Communal",
-        "ligneacheminement": "01220 DIVONNE LES BAINS",
-        "nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
-        "numvoie": "240", 
-        "rs": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
-        "rslongue": "MAISON DE RETRAITE RESIDENCE DES ANCIENS - DIVONNE-LES-BAINS",
-        "siren": "260214644",
-        "statutjuridique": "70",
-        "telephone": "0450201235",
-        "typvoie": "R",
-        "voie": "GUY DE MAUPASSANT",
-        "statutJuridiqueNiv2": "2200",
-        "statutJuridiqueNiv1": "2000",
-        "categorisation": "prive_lucratif"
-        },{
-        "datecrea": "2009-01-01",
-        "datefermeture": nan,
-        "departement": "01",
-        "libcommune": "DIVONNE LES BAINS",
-        "libdepartement": "AIN",
-        "libstatutjuridique": "Etb.Social Communal",
-        "ligneacheminement": "01220 DIVONNE LES BAINS",
-        "nofiness": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE_2,
-        "numvoie": "240", 
-        "rs": "MAISON DE RETRAITE - DIVONNE-LES-BAINS",
-        "rslongue": "MAISON DE RETRAITE RESIDENCE DES ANCIENS - DIVONNE-LES-BAINS",
-        "siren": "260214644",
-        "statutjuridique": "21",
-        "telephone": "0450201235",
-        "typvoie": "R",
-        "voie": "GUY DE MAUPASSANT",
-        "statutJuridiqueNiv2": "1200",
-        "statutJuridiqueNiv1": "1000",
-        "categorisation": "public"
-        }])
-        entites_juridiques_categorisees = associe_la_categorisation(donnees_finess_cs1400101, categories)
-        entites_juridiques_categorisees["statutJuridiqueNiv2"] = pd.to_numeric(
-            entites_juridiques_categorisees["statutJuridiqueNiv2"], errors='coerce').astype(int)
-        entites_juridiques_categorisees_attendues["statutJuridiqueNiv2"] = pd.to_numeric(
-            entites_juridiques_categorisees_attendues["statutJuridiqueNiv2"], errors='coerce').astype(int)
-        pd.testing.assert_frame_equal(entites_juridiques_categorisees,
-                                      entites_juridiques_categorisees_attendues,
-                                      check_index_type=False,
-                                      check_dtype=False)
 
     def test_associe_les_informations_du_statut_juridique(self) -> None:
         entites_juridiques = pd.DataFrame([

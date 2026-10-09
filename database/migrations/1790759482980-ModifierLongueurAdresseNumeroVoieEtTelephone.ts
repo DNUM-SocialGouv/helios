@@ -6,13 +6,13 @@ export class ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980 implement
         await queryRunner.query(`
             ALTER TABLE entite_juridique
             ALTER COLUMN adresse_numero_voie TYPE varchar(20),
-            ALTER COLUMN telephone TYPE varchar(20);
+            ALTER COLUMN telephone TYPE varchar(255);
         `);
 
         await queryRunner.query(`
             ALTER TABLE etablissement_territorial
             ALTER COLUMN adresse_numero_voie TYPE varchar(20),
-            ALTER COLUMN telephone TYPE varchar(20);
+            ALTER COLUMN telephone TYPE varchar(255);
         `);
     }
 

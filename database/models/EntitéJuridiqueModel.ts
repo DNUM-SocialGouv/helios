@@ -76,7 +76,7 @@ export class EntitéJuridiqueModel {
   public siren!: string;
 
   @Column({
-    length: 20,
+    length: 255,
     name: "telephone",
   })
   public téléphone!: string;

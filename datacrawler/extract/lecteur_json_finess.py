@@ -7,6 +7,8 @@ from typing import Any, Dict, List
 
 import pandas as pd
 
+ORDRE_CODES_ADRESSE = ["03", "01", "02", "06", "04", "05"]
+
 
 def lis_les_entites_juridiques_json_finess(logger: Logger, chemin_du_fichier: str) -> pd.DataFrame:
     logger.info(f"[JSON] Lecture du fichier [{chemin_du_fichier}]")
@@ -18,6 +20,19 @@ def lis_les_entites_juridiques_json_finess(logger: Logger, chemin_du_fichier: st
     ]
     logger.info(f"[JSON] Fin de lecture du fichier en {time.perf_counter() - start}s")
     return pd.DataFrame(entites_juridiques)
+
+
+def lis_les_etablissements_territoriaux_json_finess(logger: Logger, chemin_du_fichier: str) -> pd.DataFrame:
+    logger.info(f"[JSON] Lecture du fichier [{chemin_du_fichier}]")
+    start = time.perf_counter()
+    donnees = _charge_le_flux_json(chemin_du_fichier)
+    etablissements_territoriaux = [
+        _transforme_un_etablissement_territorial(pmej, ege)
+        for pmej in donnees.get("pmej", [])
+        for ege in pmej.get("ege", [])
+    ]
+    logger.info(f"[JSON] Fin de lecture du fichier en {time.perf_counter() - start}s")
+    return pd.DataFrame(etablissements_territoriaux)
 
 def extrais_la_date_du_nom_de_fichier_finess_json(chemin_du_ficher: str) -> str:
     nom_du_fichier = Path(chemin_du_ficher).name
@@ -49,7 +64,7 @@ def _charge_le_flux_json(chemin_du_fichier: str) -> Dict[str, Any]:
 
 def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
     informations_generales = pmej.get("informationsGeneralesPMEJ", {})
-    adresse = _premiere_adresse(pmej.get("adresse", []))
+    adresse = _adresse_prioritaire(pmej.get("adresse", []))
     contact = _premier_contact(pmej.get("contact", []))
 
     return {
@@ -68,8 +83,90 @@ def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
         "voie": adresse.get("libelleVoie"),
     }
 
-def _premiere_adresse(adresses: List[Dict[str, Any]]) -> Dict[str, Any]:
-    return next(iter(adresses), {})
+
+def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str, Any]) -> Dict[str, Any]:
+    informations_generales_pmej = pmej.get("informationsGeneralesPMEJ", {})
+    informations_generales_ege = ege.get("informationsGeneralesEGE", {})
+    adresse = _adresse_prioritaire(ege.get("adresse", []))
+    contact = _premier_contact(ege.get("contact", []))
+    id_ege = ege.get("idEge") or informations_generales_ege.get("egeId")
+    roles_ege = pmej.get("roleEge", []) or ege.get("roleEge", [])
+
+    return {
+        "categetab": ege.get("categorieentiteGeographiqueExercice"),
+        "cogCommune": adresse.get("cogCommune"),
+        "codemft": ege.get("modefixationtarifaire"),
+        "courriel": contact.get("courriel"),
+        "datefermeture": informations_generales_ege.get("dateFermeture"),
+        "dateouv": informations_generales_ege.get("dateOuverture"),
+        "etatObjet": ege.get("etatObjet"),
+        "idEge": id_ege,
+        "ligneacheminement": adresse.get("ligneAcheminement"),
+        "nofinessej": informations_generales_pmej.get("numFinessPm"),
+        "nofinesset": informations_generales_ege.get("numFinessEge"),
+        "nofinessppal": _détermine_le_numero_finess_etablissement_principal(id_ege, roles_ege, pmej.get("ege", [])),
+        "numvoie": adresse.get("numeroVoie"),
+        "rs": informations_generales_ege.get("nomEgeCourt"),
+        "rslongue": informations_generales_ege.get("nomEgeLong"),
+        "siret": informations_generales_ege.get("siret"),
+        "telephone": contact.get("telephone"),
+        "typeet": _détermine_le_type_etablissement(id_ege, roles_ege),
+        "typvoie": adresse.get("typeVoie"),
+        "voie": adresse.get("libelleVoie"),
+    }
+
+
+def _détermine_le_type_etablissement(id_ege: str | None, roles_ege: List[Dict[str, Any]]) -> str:
+    if id_ege is None:
+        return ""
+
+    if any(role.get("idEgePorteuse") == id_ege for role in roles_ege):
+        return "P"
+
+    if any(role.get("idEgeNonPorteuse") == id_ege for role in roles_ege):
+        return "S"
+
+    return ""
+
+
+def _détermine_le_numero_finess_etablissement_principal(
+    id_ege: str | None,
+    roles_ege: List[Dict[str, Any]],
+    etablissements_geographiques_exercice: List[Dict[str, Any]],
+) -> str:
+    if id_ege is None:
+        return ""
+
+    id_ege_porteuse = next(
+        (role.get("idEgePorteuse") for role in roles_ege if role.get("idEgeNonPorteuse") == id_ege),
+        None,
+    )
+    if id_ege_porteuse is None:
+        return ""
+
+    ege_porteuse = next(
+        (
+            ege
+            for ege in etablissements_geographiques_exercice
+            if (ege.get("idEge") or ege.get("informationsGeneralesEGE", {}).get("egeId")) == id_ege_porteuse
+        ),
+        {},
+    )
+    return ege_porteuse.get("informationsGeneralesEGE", {}).get("numFinessEge", "") or ""
+
+def _adresse_prioritaire(adresses: List[Dict[str, Any]]) -> Dict[str, Any]:
+    if len(adresses) <= 1:
+        return next(iter(adresses), {})
+
+    return min(adresses, key=_rang_du_code_adresse)
+
+
+def _rang_du_code_adresse(adresse: Dict[str, Any]) -> int:
+    code_adresse = adresse.get("codeTypeAdresse") or adresse.get("codeAdresse") or adresse.get("typeAdresse")
+    if code_adresse in ORDRE_CODES_ADRESSE:
+        return ORDRE_CODES_ADRESSE.index(code_adresse)
+
+    return len(ORDRE_CODES_ADRESSE)
 
 
 def _premier_contact(contacts: List[Dict[str, Any]]) -> Dict[str, Any]:

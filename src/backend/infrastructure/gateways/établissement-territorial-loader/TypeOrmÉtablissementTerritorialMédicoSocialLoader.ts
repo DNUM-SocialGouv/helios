@@ -107,7 +107,7 @@ export class TypeOrmÉtablissementTerritorialMédicoSocialLoader implements Éta
       return new ÉtablissementTerritorialMédicoSocialNonTrouvée(numéroFinessÉtablissementTerritorial);
     }
 
-    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_CS1400102));
+    const dateDeMiseÀJourIdentitéModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.FINESS_STRUCTURE));
     const dateDeMiseÀJourAnnMsTdpEtModel = (await this.chargeLaDateDeMiseÀJourModel(FichierSource.DIAMANT_ANN_MS_TDP_ET));
     const domaineÉtablissementPrincipal = await this.chargePrincipaDomaine(établissementTerritorialIdentitéModel.numéroFinessÉtablissementPrincipal);
 

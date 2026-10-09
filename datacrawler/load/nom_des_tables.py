@@ -81,6 +81,8 @@ class FichierSource(Enum):
     FINESS_CS1600101 = "finess_cs1600101"
     FINESS_CS1600102 = "finess_cs1600102"
     FINESS_AMM_ARGHOS = "amm_arhgos"
+    FINESS_STRUCTURE = "finess_structure"
+    FINESS_ACTIVITE = "finess_activite"
     SIREC = "sirec"
     SIVSS = "sivss"
     SIICEA = "siicea"
