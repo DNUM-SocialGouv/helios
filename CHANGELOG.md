@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+- hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
+
+
 ### Features
 
 

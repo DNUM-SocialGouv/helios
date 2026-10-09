@@ -20,7 +20,7 @@ const defaultCriteria: PasswordCriteria = {
     specialChar: false,
 };
 
-export function useReinitialisationMdp() {
+export function useReinitialisationMdp(loginToken: string) {
     const router = useRouter();
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
@@ -30,8 +30,6 @@ export function useReinitialisationMdp() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [criteriaNewPassword, setCriteriaNewPassword] = useState(defaultCriteria);
-
-    const { loginToken } = router.query;
 
     const criteria = (password: string) => {
         return {

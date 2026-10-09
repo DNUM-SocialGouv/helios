@@ -1,9 +1,9 @@
-import { trackPagesRouter } from "@socialgouv/matomo-next";
+import { push as matomoPush, trackPagesRouter } from "@socialgouv/matomo-next";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import Script from "next/script";
-import { SessionProvider } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { SessionProvider, useSession } from "next-auth/react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 
 import "@gouvfr/dsfr/dist/core/core.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-arrows/icons-arrows.min.css";
@@ -45,11 +45,54 @@ import { UserContextProvider } from "../frontend/ui/commun/contexts/userContextP
 import { Footer } from "../frontend/ui/commun/Footer/Footer";
 import { Header } from "../frontend/ui/commun/Header/Header";
 import { ANALYTICS_CONSENT_CHANGED_EVENT, hasAnalyticsConsent } from "../frontend/utils/analyticsConsent";
+import { matomoUserRole } from "../frontend/utils/nomenclature-matomo";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
+
+const EXCLUDED_MATOMO_URL_PATTERNS = [/^\/creation-mot-passe/, /^\/reinitialisation-mot-passe/];
+
+function MatomoTracker({ analyticsConsent, children }: PropsWithChildren<{ analyticsConsent: boolean }>) {
+  const { data: session, status } = useSession();
+  const matomoInitialise = useRef(false);
+
+  const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
+  const MATOMO_PROXY_PATH = process.env["NEXT_PUBLIC_MATOMO_PROXY_PATH"] || "";
+  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_PROXY_SITE_ID"] || process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
+  const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
+
+  useEffect(() => {
+    if (!matomoInitialise.current || !isAnalyticsEnabled || !analyticsConsent || status === "loading") {
+      return;
+    }
+
+    const role = matomoUserRole(session?.user?.role);
+    if (role) {
+      matomoPush(["setCustomDimension", 1, role]);
+    } else {
+      matomoPush(["deleteCustomDimension", 1]);
+    }
+  }, [analyticsConsent, isAnalyticsEnabled, session?.user?.role, status]);
+
+  useEffect(() => {
+    if (!analyticsConsent || (!MATOMO_PROXY_PATH && !MATOMO_URL) || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled || status === "loading" ) {
+      return;
+    }
+
+    const role = matomoUserRole(session?.user?.role);
+    if (role) {
+      matomoPush(["setCustomDimension", 1, role]);
+    } else {
+      matomoPush(["deleteCustomDimension", 1]);
+    }
+
+    trackPagesRouter({ ...(MATOMO_PROXY_PATH ? {} : { url: MATOMO_URL }), excludeUrlsPatterns: EXCLUDED_MATOMO_URL_PATTERNS, siteId: MATOMO_SITE_ID });
+    matomoInitialise.current = true;
+  }, [MATOMO_PROXY_PATH, MATOMO_SITE_ID, MATOMO_URL, analyticsConsent, isAnalyticsEnabled, session?.user?.role, status]);
+
+  return <>{children}</>;
+}
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [analyticsConsent, setAnalyticsConsent] = useState(false);
-  const matomoInitialise = useRef(false);
 
   useEffect(() => {
     const synchroniserApresChangement = () => {
@@ -81,41 +124,29 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
     };
   }, []);
 
-  const MATOMO_URL = process.env["NEXT_PUBLIC_MATOMO_URL"] || "";
-  const MATOMO_PROXY_PATH = process.env["NEXT_PUBLIC_MATOMO_PROXY_PATH"] || "";
-  const MATOMO_SITE_ID = process.env["NEXT_PUBLIC_MATOMO_PROXY_SITE_ID"] || process.env["NEXT_PUBLIC_MATOMO_SITE_ID"] || "";
-
-  useEffect(() => {
-    const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
-    if (!analyticsConsent || (!MATOMO_PROXY_PATH && !MATOMO_URL) || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled ) {
-      return;
-    }
-
-    trackPagesRouter({ ...(MATOMO_PROXY_PATH ? {} : { url: MATOMO_URL }), siteId: MATOMO_SITE_ID });
-    matomoInitialise.current = true;
-  }, [MATOMO_PROXY_PATH, MATOMO_SITE_ID, MATOMO_URL, analyticsConsent]);
-
   return (
     <SessionProvider session={session}>
-      <UserContextProvider>
-        <ProfileContextProvider>
-          <RechecheAvanceeContextProvider>
-            <ComparaisonContextProvider>
-              <DependenciesProvider>
-                <Head>
-                  <meta charSet="utf-8" />
-                  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
-                </Head>
-                <Header />
-                <Component {...pageProps} />
-                <Footer />
-                <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
-                <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
-              </DependenciesProvider>
-            </ComparaisonContextProvider>
-          </RechecheAvanceeContextProvider>
-        </ProfileContextProvider>
-      </UserContextProvider>
+      <MatomoTracker analyticsConsent={analyticsConsent}>
+        <UserContextProvider>
+          <ProfileContextProvider>
+            <RechecheAvanceeContextProvider>
+              <ComparaisonContextProvider>
+                <DependenciesProvider>
+                  <Head>
+                    <meta charSet="utf-8" />
+                    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+                  </Head>
+                  <Header />
+                  <Component {...pageProps} />
+                  <Footer />
+                  <Script src="/dsfr.module.min.js" strategy="lazyOnload" type="module"></Script>
+                  <Script noModule src="/dsfr.nomodule.min.js" strategy="lazyOnload" type="text/javascript"></Script>
+                </DependenciesProvider>
+              </ComparaisonContextProvider>
+            </RechecheAvanceeContextProvider>
+          </ProfileContextProvider>
+        </UserContextProvider>
+      </MatomoTracker>
     </SessionProvider>
   );
 }

@@ -21,11 +21,14 @@ export default function CreerMotPasse() {
     async function setTokenWhenReady() {
       if (router.isReady) {
         const { loginToken } = router.query;
-        setToken(loginToken as string);
+        if (typeof loginToken === 'string') {
+          setToken(loginToken);
+          await router.replace(router.pathname, undefined, { shallow: true });
+        }
       }
     };
     setTokenWhenReady();
-  }, [router.isReady]);
+  }, [router.isReady, router.pathname, router.query["loginToken"]]);
 
   if (token) {
 
@@ -33,7 +36,7 @@ export default function CreerMotPasse() {
     return (
       <>
         {isChecking ? <Spinner /> : validToken ? (
-          <PageCreatePwd />
+          <PageCreatePwd loginToken={token} />
         ) : (
           <Page404 />
         )}

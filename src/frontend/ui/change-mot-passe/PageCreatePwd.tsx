@@ -1,7 +1,7 @@
 import { FormulaireCreatePwd } from "./FormulaireCreatePwd";
 import { useReinitialisationMdp } from "./useReinitialisationMdp";
 
-export const PageCreatePwd = () => {
+export const PageCreatePwd = ({ loginToken }: { loginToken: string }) => {
 
   const {
     passwordValue,
@@ -13,7 +13,7 @@ export const PageCreatePwd = () => {
     errorMessage,
     isLoading,
     criteriaNewPassword,
-  } = useReinitialisationMdp();
+  } = useReinitialisationMdp(loginToken);
 
   return (
     <main className="fr-container" id="content">

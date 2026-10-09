@@ -10,7 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
-import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
+import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, push, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -37,6 +37,7 @@ export const Header = () => {
   };
 
   const logOut = () => {
+    push(["deleteCustomDimension", 1]);
     signOut({ callbackUrl: paths.CONNEXION });
     setDisplayMenu(false);
   };
