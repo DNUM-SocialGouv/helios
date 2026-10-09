@@ -177,7 +177,7 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
                 "rslongue": "EGE SANS ROLE",
                 "siret": "77220148900024",
                 "telephone": None,
-                "typeet": "",
+                "typeet": "P",
                 "typvoie": None,
                 "voie": None,
             }
