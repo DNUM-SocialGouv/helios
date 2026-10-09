@@ -1,11 +1,16 @@
 # Changelog d'Helios
 
-## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (TO-DO)
+## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
 
 ### Bug Fixes
 
 - hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
-
 
 ### Features
 
