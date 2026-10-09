@@ -120,13 +120,16 @@ def _détermine_le_type_etablissement(id_ege: str | None, roles_ege: List[Dict[s
     if id_ege is None:
         return ""
 
+    if not roles_ege:
+        return "P"
+
     if any(role.get("idEgePorteuse") == id_ege for role in roles_ege):
         return "P"
 
     if any(role.get("idEgeNonPorteuse") == id_ege for role in roles_ege):
         return "S"
 
-    return ""
+    return "P"
 
 
 def _détermine_le_numero_finess_etablissement_principal(
