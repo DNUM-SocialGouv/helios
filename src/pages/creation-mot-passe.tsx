@@ -36,7 +36,7 @@ export default function CreerMotPasse() {
     return (
       <>
         {isChecking ? <Spinner /> : validToken ? (
-          <PageCreatePwd />
+          <PageCreatePwd loginToken={token} />
         ) : (
           <Page404 />
         )}

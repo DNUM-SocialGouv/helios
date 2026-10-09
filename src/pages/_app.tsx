@@ -48,7 +48,7 @@ import { ANALYTICS_CONSENT_CHANGED_EVENT, hasAnalyticsConsent } from "../fronten
 import { matomoUserRole } from "../frontend/utils/nomenclature-matomo";
 import { resizeChartOnPrint } from "../plugins/resizeChartAtPrint";
 
-const EXCLUDED_MATOMO_URL_PATTERNS = [/^\/creation-mot-passe/];
+const EXCLUDED_MATOMO_URL_PATTERNS = [/^\/creation-mot-passe/, /^\/reinitialisation-mot-passe/];
 
 function MatomoTracker({ analyticsConsent, children }: PropsWithChildren<{ analyticsConsent: boolean }>) {
   const { data: session, status } = useSession();
