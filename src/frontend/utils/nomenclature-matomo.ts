@@ -1,6 +1,7 @@
 import { sendEvent as matomoSendEvent, push as matomoPush } from "@socialgouv/matomo-next";
 
 import { hasAnalyticsConsent } from "./analyticsConsent";
+import { Role } from "../../commons/Role";
 
 const isAnalyticsEnabled = () => process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true' && hasAnalyticsConsent();
 
@@ -16,6 +17,19 @@ export function push(...args: Parameters<typeof matomoPush>) {
   if (!isAnalyticsEnabled()) return;
 
   matomoPush(...args);
+}
+
+export function matomoUserRole(role?: number) {
+  switch (role) {
+  case Role.ADMIN_REG:
+    return 'regional';
+  case Role.USER:
+    return 'ars';
+  case Role.ADMIN_CENTR:
+    return 'central';
+  default:
+    return null;
+  }
 }
 
 

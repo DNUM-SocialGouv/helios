@@ -4,7 +4,7 @@ import { useState, FormEvent, useContext, useEffect } from "react";
 
 import styles from "./Connexion.module.css";
 import { LoginStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
-import { sendEvent, push, CONNEXION } from "../../utils/nomenclature-matomo";
+import { sendEvent, CONNEXION, matomoUserRole, push } from "../../utils/nomenclature-matomo";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { UserContext } from "../commun/contexts/userContext";
 import isEmail from "../commun/validation";
@@ -25,23 +25,13 @@ export const FormulaireDeConnexion = () => {
       // ne pas tracker la connexion si l'utilisateur n'a pas le rôle admin natinal
       if(session.user.role === 1 ) {
         window.location.href = "/";
-      }else {
-        switch (session.user.role) {
-        case 2:
-          push(["setCustomDimension", 1, 'regional']);
-          break;
-        case 3:
-          push(["setCustomDimension", 1, 'ars']);
-          break;
-        case 4:
-          push(["setCustomDimension", 1, 'central']);
-          break;
-        default:
-          break;
-      }
-      sendEvent(CONNEXION);
-      push(['trackPageView']);
-      window.location.href = "/";
+      } else {
+        const role = matomoUserRole(session.user.role);
+        if (role) {
+          push(["setCustomDimension", 1, role]);
+        }
+        sendEvent(CONNEXION);
+        window.location.href = "/";
       }
     }
   }, [status, session]);
