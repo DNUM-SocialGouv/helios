@@ -1,5 +1,20 @@
 from typing import List
 
+colonnes_cog_communes = ["COM", "DEP", "REG", "LIBELLE"]
+équivalences_cog_communes_helios = {
+    "COM": "ref_code_cog",
+    "LIBELLE": "ref_libelle_commune",
+    "DEP": "ref_code_dep",
+    "REG": "ref_code_region",
+}
+
+colonnes_cog_departements = ["DEP", "REG", "LIBELLE"]
+équivalences_cog_departements_helios = {
+    "DEP": "ref_code_dep",
+    "REG": "ref_code_region",
+    "LIBELLE": "ref_libelle_dep",
+}
+
 XML_TAG_FINESS_CS1400105 = "equipementsocial"
 équivalences_finess_cs1400105_helios = {
     "ta": "activite",
@@ -338,3 +353,48 @@ equivalences_finess_cs1500106_helios = {
 index_des_categories: List[str] = ["code"]
 
 colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())
+
+equivalences_json_finess_helios = {
+    "ligneacheminement": "adresse_acheminement",
+    "numvoie": "adresse_numero_voie",
+    "typvoie": "adresse_type_voie",
+    "voie": "adresse_voie",
+    "nofiness": "numero_finess_entite_juridique",
+    "denominationLonguePmSmsse": "raison_sociale",
+    "denominationPm": "raison_sociale_courte",
+    "siren": "siren",
+    "telephone": "telephone",
+    "dateCreation": "date_ouverture",
+    "statutJuridique": "libelle_statut_juridique",
+    "commune": "commune",
+    "departement": "departement",
+    "code_region": "code_region",
+    "categorisation": "categorisation",
+}
+
+equivalences_json_finess_et_helios = {
+    "ligneacheminement": "adresse_acheminement",
+    "numvoie": "adresse_numero_voie",
+    "typvoie": "adresse_type_voie",
+    "voie": "adresse_voie",
+    "categetab": "cat_etablissement",
+    "courriel": "courriel",
+    "libcategetab": "libelle_categorie_etablissement",
+    "nofinessej": "numero_finess_entite_juridique",
+    "nofinesset": "numero_finess_etablissement_territorial",
+    "nofinessppal": "numero_finess_etablissement_principal",
+    "rslongue": "raison_sociale",
+    "typeet": "type_etablissement",
+    "domaine": "domaine",
+    "telephone": "telephone",
+    "rs": "raison_sociale_courte",
+    "libcommune": "commune",
+    "libdepartement": "departement",
+    "libcourtcategetab": "libelle_court_categorie_etablissement",
+    "codemft": "code_mode_tarification",
+    "siret": "siret",
+    "libmft": "libelle_du_mode_tarification",
+    "ref_code_region": "code_region",
+    "dateouv": "date_ouverture",
+    "classification": "classification",
+}

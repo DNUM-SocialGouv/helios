@@ -9,6 +9,12 @@
 
 ### Features
 
+- hel-1119: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche EJ
+- hel-1120: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche ET
+- hel-1107: [FINESS+] Migration JSON FINESS+ - fiche d'identité EJ
+- hel-1108: [FINESS+] Migration JSON FINESS+ - fiche d'identité ET SAN et MS
+- hel-1111: [FINESS+] Implémenter les codes et libellés géographiques à partir du fichier INSEE
+
 
 ## [1.8.17](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.17) (2026-09-25)
 

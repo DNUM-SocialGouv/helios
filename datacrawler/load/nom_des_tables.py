@@ -52,6 +52,7 @@ TABLE_ETABLISSEMENTS_TERRITORIAUX = "etablissement_territorial"
 CLE_PRIMAIRE_TABLE_ENTITES_JURIDIQUES = "numero_finess_entite_juridique"
 CLE_PRIMAIRE_TABLE_ETABLISSEMENTS_TERRITORIAUX = "numero_finess_etablissement_territorial"
 TABLE_REF_CATEGORIES = "referentiel_categories"
+TABLE_REF_DEPARTEMENT_REGION = "referentiel_departement_region"
 
 # motifs de ruptures de contrats
 TABLE_VIGIE_RH_REF_MOTIFS_RUPTURES = "vigierh_ref_motifs_ruptures"
@@ -80,6 +81,8 @@ class FichierSource(Enum):
     FINESS_CS1600101 = "finess_cs1600101"
     FINESS_CS1600102 = "finess_cs1600102"
     FINESS_AMM_ARGHOS = "amm_arhgos"
+    FINESS_STRUCTURE = "finess_structure"
+    FINESS_ACTIVITE = "finess_activite"
     SIREC = "sirec"
     SIVSS = "sivss"
     SIICEA = "siicea"
