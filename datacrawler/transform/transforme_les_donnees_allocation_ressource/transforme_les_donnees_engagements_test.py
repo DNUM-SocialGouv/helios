@@ -36,18 +36,18 @@ def _make_finess_et() -> pd.DataFrame:
 
 
 class TestTransformeLesDocumentsEngagementsEj:
-    def test_filtre_uniquement_etablissement_sanitaire(self) -> None:
+    def test_conserve_tous_les_types_de_beneficiaire(self) -> None:
         # GIVEN
         donnees = _make_donnees()
-        finess_ej = _make_finess_ej()
+        finess_ej = pd.DataFrame({"numero_finess_entite_juridique": ["123456789", "111111111"]})
         logger = MagicMock()
 
         # WHEN
         result = transforme_les_donnees_engagements_ej(donnees, finess_ej, logger)
 
-        # THEN — only "Etablissement sanitaire" rows that are also in finess_ej
-        assert result.shape[0] == 1
-        assert "123456789" in result.index.get_level_values("numero_finess_entite_juridique")
+        # THEN
+        assert result.shape[0] == 2
+        assert {"123456789", "111111111"} == set(result.index.get_level_values("numero_finess_entite_juridique"))
 
     def test_mode_delegation_force_a_test_wip(self) -> None:
         # GIVEN
@@ -100,18 +100,18 @@ class TestTransformeLesDocumentsEngagementsEj:
 
 
 class TestTransformeLesDocumentsEngagementsEt:
-    def test_filtre_uniquement_etablissement_sanitaire(self) -> None:
+    def test_conserve_tous_les_types_de_beneficiaire(self) -> None:
         # GIVEN
         donnees = _make_donnees()
-        finess_et = _make_finess_et()
+        finess_et = pd.DataFrame({"numero_finess_etablissement_territorial": ["987654321", "111111111"]})
         logger = MagicMock()
 
         # WHEN
         result = transforme_les_donnees_engagements_et(donnees, finess_et, logger)
 
-        # THEN — only "Etablissement sanitaire" rows that are also in finess_et
-        assert result.shape[0] == 1
-        assert "987654321" in result.index.get_level_values("numero_finess_etablissement_territorial")
+        # THEN
+        assert result.shape[0] == 2
+        assert {"987654321", "111111111"} == set(result.index.get_level_values("numero_finess_etablissement_territorial"))
 
     def test_mode_delegation_force_a_test_wip(self) -> None:
         # GIVEN
