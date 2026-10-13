@@ -110,6 +110,7 @@ import { AjoutLesDonneesVigieRhDansLesProfils1788170804920 } from "./migrations/
 import { ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980 } from "./migrations/1790759482980-ModifierLongueurAdresseNumeroVoieEtTelephone";
 import { EvolutionReferentielDepartementRegion1790841193934 } from "./migrations/1790841193934-EvolutionReferentielDepartementRegion";
 import { AjoutEnumFichierDateMiseAjourJsonFiness1791466926414 } from "./migrations/1791466926414-AjoutEnumFichierDateMiseAjourJsonFiness";
+import { AjoutCodePostalDansLesEtablissements1791893026128 } from "./migrations/1791893026128-AjoutCodePostalDansLesEtablissements";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -421,7 +422,8 @@ const datasource = new DataSource({
     AjoutLesDonneesVigieRhDansLesProfils1788170804920,
     ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980,
     EvolutionReferentielDepartementRegion1790841193934,
-    AjoutEnumFichierDateMiseAjourJsonFiness1791466926414
+    AjoutEnumFichierDateMiseAjourJsonFiness1791466926414,
+    AjoutCodePostalDansLesEtablissements1791893026128
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

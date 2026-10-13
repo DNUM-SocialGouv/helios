@@ -9,6 +9,9 @@ export class ÉtablissementTerritorialIdentitéModel {
   @Column({ length: 255, name: "adresse_acheminement" })
   public adresseAcheminement!: string;
 
+  @Column({ length: 5, name: "code_postal", default: "" })
+  public codePostal!: string;
+
   @Column({ length: 20, name: "adresse_numero_voie" })
   public adresseNuméroVoie!: string;
 
