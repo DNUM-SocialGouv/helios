@@ -450,6 +450,10 @@ export class TypeOrmEtablissementTerritorialSanitaireLoader implements Établiss
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.adresseAcheminement,
       },
+      codePostal: {
+        dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
+        value: établissementTerritorialIdentitéModel.codePostal,
+      },
       adresseNuméroVoie: {
         dateMiseÀJourSource: dateDeMiseÀJourIdentitéModel.dernièreMiseÀJour,
         value: établissementTerritorialIdentitéModel.adresseNuméroVoie,

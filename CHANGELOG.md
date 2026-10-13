@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 ### Features
+- hel-1131: [FINESS+] Ajouter le code postale dans l'adresse de la fiche EJ ET
 
 ## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
 
