@@ -69,6 +69,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                         "typeVoie": "AV",
                         "libelleVoie": "DE JASSERON",
                         "cogCommune": "01053",
+                        "codePostal": "01000",
                         "ligneAcheminement": "BOURG EN BRESSE",
                     }],
                     "contact": [{"telecom": {"telephone": "0428631234", "courriel": "contact@test.fr"}}],
@@ -90,6 +91,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
                         "typeVoie": "AV",
                         "libelleVoie": "DE JASSERON",
                         "cogCommune": "01053",
+                        "codePostal": "01000",
                         "ligneAcheminement": "BOURG EN BRESSE",
                     }],
                     "contact": [{"telecom": {"telephone": "0428631235", "courriel": "ecole@test.fr"}}],
@@ -169,6 +171,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
         etablissements_territoriaux_attendus = pd.DataFrame([
             helios_etablissement_territorial_builder({
                 "adresse_acheminement": "BOURG EN BRESSE",
+                "code_postal": "01000",
                 "adresse_numero_voie": "62",
                 "adresse_type_voie": "AV",
                 "adresse_voie": "DE JASSERON",
@@ -191,6 +194,7 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
             }),
             helios_etablissement_territorial_builder({
                 "adresse_acheminement": "BOURG EN BRESSE",
+                "code_postal": "01000",
                 "adresse_numero_voie": "63",
                 "adresse_type_voie": "AV",
                 "adresse_voie": "DE JASSERON",

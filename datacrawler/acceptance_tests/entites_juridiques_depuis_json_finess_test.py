@@ -34,6 +34,7 @@ class TestSauvegardeLesEntitesJuridiquesDepuisJsonFiness:
                     "typeVoie": "R",
                     "libelleVoie": "GUY DE MAUPASSANT",
                     "cogCommune": "01283",
+                    "codePostal": "01220",
                     "ligneAcheminement": "DIVONNE LES BAINS",
                 }],
                 "contact": [{"telecom": {"telephone": "0450201235"}}],

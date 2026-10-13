@@ -32,6 +32,10 @@ def test_lis_les_entites_juridiques_json_finess(tmp_path: Path) -> None:
         entites_juridiques["cogCommune"],
         pd.Series(["01283", "01283", "01283"], name="cogCommune"),
     )
+    pd.testing.assert_series_equal(
+        entites_juridiques["codepostal"],
+        pd.Series(["01220", "01220", "01220"], name="codepostal"),
+    )
 
 
 def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None:
@@ -64,6 +68,7 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
                                         "typeVoie": "AV",
                                         "libelleVoie": "DE JASSERON",
                                         "cogCommune": "01053",
+                                        "codePostal": "01000",
                                         "ligneAcheminement": "BOURG EN BRESSE",
                                     }
                                 ],
@@ -119,6 +124,7 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
                 "categetab": "365",
                 "cogCommune": "01053",
                 "codemft": "07",
+                "codepostal": "01000",
                 "courriel": "contact@test.fr",
                 "datefermeture": None,
                 "dateouv": "1956-11-16",
@@ -141,6 +147,7 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
                 "categetab": "365",
                 "cogCommune": None,
                 "codemft": "07",
+                "codepostal": None,
                 "courriel": None,
                 "datefermeture": None,
                 "dateouv": "1956-11-16",
@@ -163,6 +170,7 @@ def test_lis_les_etablissements_territoriaux_json_finess(tmp_path: Path) -> None
                 "categetab": "365",
                 "cogCommune": None,
                 "codemft": "07",
+                "codepostal": None,
                 "courriel": None,
                 "datefermeture": None,
                 "dateouv": "1956-11-16",
@@ -216,6 +224,7 @@ def _pmej(numero_finess: str, telephone: str) -> dict:
                 "typeVoie": "R",
                 "libelleVoie": "GUY DE MAUPASSANT",
                 "cogCommune": "01283",
+                "codePostal": "01220",
                 "ligneAcheminement": "DIVONNE LES BAINS",
             }
         ],

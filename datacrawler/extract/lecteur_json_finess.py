@@ -69,6 +69,7 @@ def _transforme_une_entite_juridique(pmej: Dict[str, Any]) -> Dict[str, Any]:
 
     return {
         "cogCommune": adresse.get("cogCommune"),
+        "codepostal": adresse.get("codePostal"),
         "dateCreation": informations_generales.get("dateCreation"),
         "datefermeture": informations_generales.get("dateFermeture"),
         "ligneacheminement": adresse.get("ligneAcheminement"),
@@ -96,6 +97,7 @@ def _transforme_un_etablissement_territorial(pmej: Dict[str, Any], ege: Dict[str
         "categetab": ege.get("categorieentiteGeographiqueExercice"),
         "cogCommune": adresse.get("cogCommune"),
         "codemft": ege.get("modefixationtarifaire"),
+        "codepostal": adresse.get("codePostal"),
         "courriel": contact.get("courriel"),
         "datefermeture": informations_generales_ege.get("dateFermeture"),
         "dateouv": informations_generales_ege.get("dateOuverture"),
