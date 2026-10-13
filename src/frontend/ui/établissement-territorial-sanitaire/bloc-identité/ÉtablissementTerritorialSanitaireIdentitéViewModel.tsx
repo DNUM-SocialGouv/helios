@@ -58,7 +58,7 @@ export class EtablissementTerritorialSanitaireIdentiteViewModel {
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorialSanitaireIdentité.adresseNuméroVoie.value} ${this.établissementTerritorialSanitaireIdentité.adresseTypeVoie.value} ${this.établissementTerritorialSanitaireIdentité.adresseVoie.value} ${this.établissementTerritorialSanitaireIdentité.adresseAcheminement.value}`;
+    return `${this.établissementTerritorialSanitaireIdentité.adresseNuméroVoie.value} ${this.établissementTerritorialSanitaireIdentité.adresseTypeVoie.value} ${this.établissementTerritorialSanitaireIdentité.adresseVoie.value} ${this.établissementTerritorialSanitaireIdentité.codePostal.value} ${this.établissementTerritorialSanitaireIdentité.adresseAcheminement.value}`;
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {

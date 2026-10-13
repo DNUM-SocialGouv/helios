@@ -58,7 +58,7 @@ export class EtablissementTerritorialMedicoSocialIdentiteViewModel {
   }
 
   public get adresse(): string {
-    return `${this.établissementTerritorialIdentité.adresseNuméroVoie.value} ${this.établissementTerritorialIdentité.adresseTypeVoie.value} ${this.établissementTerritorialIdentité.adresseVoie.value} ${this.établissementTerritorialIdentité.adresseAcheminement.value}`;
+    return `${this.établissementTerritorialIdentité.adresseNuméroVoie.value} ${this.établissementTerritorialIdentité.adresseTypeVoie.value} ${this.établissementTerritorialIdentité.adresseVoie.value} ${this.établissementTerritorialIdentité.codePostal.value} ${this.établissementTerritorialIdentité.adresseAcheminement.value}`;
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {
