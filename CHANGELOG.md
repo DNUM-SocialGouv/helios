@@ -6,6 +6,8 @@
 
 ### Features
 
+- hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
+
 ## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
 
 ### Bug Fixes
