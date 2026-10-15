@@ -103,6 +103,9 @@ def _extrais_le_libelle_court_de_la_categorie_entite_geographique_exercice(conce
         if isinstance(designation, dict) and designation.get("value") is not None:
             return str(designation.get("value"))
 
+    if concept.get("display") is not None:
+        return str(concept.get("display"))
+
     return ""
 
 
