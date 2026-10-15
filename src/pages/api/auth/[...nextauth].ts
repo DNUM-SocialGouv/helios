@@ -1,11 +1,47 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { dependencies } from "../../../backend/infrastructure/dependencies";
+
+const { utilisateurLoader } = dependencies;
+
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/connexion",
   },
   providers: [
+    {
+      id: "proconnect",
+      name: "ProConnect",
+      clientId: process.env['PROCONNECT_CLIENTID'],
+      clientSecret: process.env['PROCONNECT_CLIENT_SECRET'],
+      type: "oauth",
+      //wellKnown: "http://localhost:8080/realms/Helios/.well-known/openid-configuration",
+      wellKnown: process.env['PROCONNECT_WELLKNOWN'],
+      authorization: { params: { scope: "openid email profile" } },
+      checks: ["pkce", "state"],
+      idToken: true,
+      async profile(profile) {
+        // Check if the user exists
+        let utilisateur = await utilisateurLoader.getUserByEmail(profile.email);
+
+        //Create the user if it doesn't exist
+        if (!utilisateur) {
+          // TODO: Ajouter une institution par défaut si l’utilisateur n’a pas l’information sur son ARS retourné.
+          utilisateur = await utilisateurLoader.createUser(profile.given_name, profile.family_name, profile.email, profile.organizational_unit || "ARS_04");
+        }
+        if (!utilisateur) {
+          throw new Error("User creation failed");
+        }
+
+        return {
+          ...utilisateur,
+          id: String(utilisateur?.id),
+          codeRegion: utilisateur.institution.codeGeo,
+          codeProfiles: utilisateur.profils,
+        }
+      },
+    },
     CredentialsProvider({
       id: "credentials",
       name: "Helios",

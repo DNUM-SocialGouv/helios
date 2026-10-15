@@ -21,6 +21,16 @@ import { sendEmail } from "../../../sendEmail";
 
 export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   constructor(private readonly orm: Promise<DataSource>) { }
+
+  async getUserByEmail(email: string): Promise<RechercheUtilisateur | null> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email }, relations: ["institution"] });
+    if (!user) return null;
+    // Le retrait des champs via destructuring est plus «propre» que le «delete»
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, failedAttemps, lockUntil, lastPwdChangeDate, ...safeUser } = user;
+    return safeUser as RechercheUtilisateur;
+  }
+
   async getUserByCode(code: string): Promise<RechercheUtilisateur | null> {
     const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: code }, relations: ["institution"] });
     if (!user) return null;
@@ -152,6 +162,62 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   async getInstitutions(): Promise<Institution[]> {
     const institutions = await (await this.orm).getRepository(InstitutionModel).find();
     return institutions;
+  }
+
+  async createUser(firstName: string, lastName: string, email: string, institution: string): Promise<UtilisateurModel | null> {
+    try {
+      const account = new UtilisateurModel();
+      let roleToSave;
+      let profileToSave;
+      const profileUser = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 }) as ProfilModel;
+      const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
+
+      if (institution === 'ADMIN_CENTR') {
+        const profileAdminCentral = await (await this.orm).getRepository(ProfilModel).findOneBy({ label: ILike("%central%") });
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "ADMIN_CENTR" });
+        profileToSave = profileAdminCentral ?? profileUser;
+      } else {
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "USER" });
+        profileToSave = profileUser;
+      }
+
+      if (institutionToSave && roleToSave && profileToSave) {
+        account.nom = lastName;
+        account.prenom = firstName;
+        account.email = email;
+        account.institution = institutionToSave;
+        account.role = roleToSave;
+        account.profils = [profileToSave.code];
+        account.actif = true;
+        account.dateCreation = new Date();
+        account.lastPwdChangeDate = new Date().toISOString().split('T')[0];
+      }
+
+      await (await this.orm)
+        .getRepository(UtilisateurModel)
+        .save(account)
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+        });
+
+      const user = await (await this.orm)
+        .getRepository(UtilisateurModel)
+        .findOne({ where: { email: account.email }, relations: ["institution"] });
+
+      const userListModel = new UserListModel();
+      userListModel.nom = 'Favoris';
+      userListModel.userId = user?.code || '';
+      userListModel.isFavoris = true;
+      if (user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+
+      return user;
+
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log("error", error);
+      return null;
+    }
   }
 
   async createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void> {

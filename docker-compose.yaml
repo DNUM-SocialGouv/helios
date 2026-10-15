@@ -98,5 +98,21 @@ services:
       POSTGRES_PASSWORD: h3li0s
     command: ["postgres", "-c", "log_statement=all", "-c", "max_connections=10"]
 
+  keycloak:
+    image: keycloak/keycloak:26.5.3
+    container_name: helios-keycloak
+    ports:
+      - target: 8080
+        published: 8080
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    volumes:
+      - type: volume
+        source: keycloak-data
+        target: /opt/keycloak/data
+    command: ["start-dev"]
+
 volumes:
   postgres_data:
+  keycloak-data:

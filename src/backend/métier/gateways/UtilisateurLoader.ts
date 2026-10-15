@@ -1,4 +1,5 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
+import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../entities/ResultatRechercheUtilisateur";
 import { Institution } from "../entities/Utilisateur/Institution";
 import { PasswordStatus, RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
@@ -8,6 +9,7 @@ export interface UtilisateurLoader {
   getLoginError(email: string): Promise<string>;
   checkIfEmailExists(email: string): Promise<boolean>;
   getInstitutions(): Promise<Institution[]>;
+  createUser(firstName: string, lastName: string, email: string, institution: string): Promise<UtilisateurModel | null>;
   createAccount(firstName: string, lastName: string, email: string, institution: string): Promise<void>;
   getUserProfiles(codes: string[]): Promise<ProfilModel[] | null>;
   checkUserIsNotAdminAndInactif(email: string): Promise<boolean>;
@@ -24,6 +26,7 @@ export interface UtilisateurLoader {
     orderBy: string,
     sortDir: string
   ): Promise<ResultatRechercheUtilisateur>;
+  getUserByEmail(email: string): Promise<RechercheUtilisateur | null>;
   getUserByCode(code: string): Promise<RechercheUtilisateur | null>;
   updateUser(userCode: string, roleCode: string, institutionCode: string, profilsCode: string[], firstname: string, lastname: string): Promise<void>;
   deleteUser(userCode: string): Promise<string | void>;
