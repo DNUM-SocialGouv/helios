@@ -40,6 +40,69 @@ class TestSauvegardeLesEtablissementsTerritoriauxDepuisJsonFiness:
             "domaine": "SOC",
         }
 
+    def test_utilise_le_libelle_long_quand_la_designation_est_absente(self) -> None:
+        reponse_codesystem = MagicMock()
+        reponse_codesystem.json.return_value = {
+            "concept": [
+                {
+                    "code": "365",
+                    "display": "Clinique",
+                    "property": [{"code": "parent", "valueCode": "3000"}],
+                },
+                {"code": "3000"},
+            ]
+        }
+
+        with patch("datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.requests.get", return_value=reponse_codesystem):
+            categories = _récupère_les_categories_entite_geographique_exercice("https://example.test/tre-r397")
+
+        assert categories["365"] == {
+            "libelle": "Clinique",
+            "libelle_court": "Clinique",
+            "domaine": "SAN",
+        }
+
+    def test_conserve_les_categories_depreciees(self) -> None:
+        reponse_codesystem = MagicMock()
+        reponse_codesystem.json.return_value = {
+            "concept": [
+                {
+                    "code": "365",
+                    "display": "Clinique",
+                    "designation": [{"value": "Cli."}],
+                    "property": [
+                        {"code": "parent", "valueCode": "3000"},
+                        {"code": "status", "valueCode": "active"},
+                    ],
+                },
+                {
+                    "code": "420",
+                    "display": "Classe d'Enseignement Spécial",
+                    "designation": [{"value": "Classe Ens. Spéc."}],
+                    "property": [
+                        {"code": "parent", "valueCode": "4000"},
+                        {"code": "status", "valueCode": "deprecated"},
+                    ],
+                },
+                {"code": "3000"},
+                {"code": "4000"},
+            ]
+        }
+
+        with patch("datacrawler.import_les_etablissements_territoriaux_depuis_json_finess.requests.get", return_value=reponse_codesystem):
+            categories = _récupère_les_categories_entite_geographique_exercice("https://example.test/tre-r397")
+
+        assert categories["365"] == {
+            "libelle": "Clinique",
+            "libelle_court": "Cli.",
+            "domaine": "SAN",
+        }
+        assert categories["420"] == {
+            "libelle": "Classe d'Enseignement Spécial",
+            "libelle_court": "Classe Ens. Spéc.",
+            "domaine": "SOC",
+        }
+
     def test_import_etablissements_territoriaux_depuis_json_finess(self, tmp_path: Path) -> None:
         et_json = tmp_path / "finess-structures-journalier-20260929.json"
         et_json.write_text(json.dumps({

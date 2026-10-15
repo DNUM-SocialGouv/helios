@@ -241,109 +241,9 @@ equivalences_finess_cs1400101_helios = {
 }
 
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
-
-XML_TAG_FINESS_CS1500107 = "nomenclstatutavecagr"
-type_des_colonnes_finess_cs1500107 = {
-    "code": "string",
-    "codeagr2": "string",
-    "codeagr1": "string",
-}
-colonnes_a_garder_finess_cs1500107 = list(type_des_colonnes_finess_cs1500107.keys())
-
-XML_TAG_FINESS_CS1400102 = "structureet"
-colonnes_finess_cs1400102 = [
-    "nofinesset",
-    "nofinessej",
-    "rs",
-    "rslongue",
-    "numvoie",
-    "typvoie",
-    "voie",
-    "libcommune",
-    "departement",
-    "libdepartement",
-    "ligneacheminement",
-    "telephone",
-    "courriel",
-    "categetab",
-    "libcategetab",
-    "libcourtcategetab",
-    "typeet",
-    "nofinessppal",
-    "siret",
-    "codemft",
-    "libmft",
-    "dateouv",
-    "datefermeture",
-    "indcaduc",
-]
-type_des_colonnes_finess_cs1400102 = {
-    "nofinesset": "string",
-    "nofinessej": "string",
-    "rs": "string",
-    "rslongue": "string",
-    "numvoie": "string",
-    "typvoie": "string",
-    "voie": "string",
-    "libcommune": "string",
-    "departement": "string",
-    "libdepartement": "string",
-    "dateouv": "string",
-    "datefermeture": "string",
-    "ligneacheminement": "string",
-    "categetab": "string",
-    "codemft": "string",
-    "courriel": "string",
-    "libcategetab": "string",
-    "libcourtcategetab": "string",
-    "libmft": "string",
-    "nofinessppal": "string",
-    "siret": "string",
-    "typeet": "string",
-    "telephone": "string",
-}
-equivalences_finess_cs1400102_helios = {
-    "ligneacheminement": "adresse_acheminement",
-    "numvoie": "adresse_numero_voie",
-    "typvoie": "adresse_type_voie",
-    "voie": "adresse_voie",
-    "categetab": "cat_etablissement",
-    "courriel": "courriel",
-    "libcategetab": "libelle_categorie_etablissement",
-    "nofinessej": "numero_finess_entite_juridique",
-    "nofinesset": "numero_finess_etablissement_territorial",
-    "nofinessppal": "numero_finess_etablissement_principal",
-    "rslongue": "raison_sociale",
-    "typeet": "type_etablissement",
-    "telephone": "telephone",
-    "domaine": "domaine",
-    "rs": "raison_sociale_courte",
-    "libcommune": "commune",
-    "libdepartement": "departement",
-    "libcourtcategetab": "libelle_court_categorie_etablissement",
-    "codemft": "code_mode_tarification",
-    "siret": "siret",
-    "libmft": "libelle_du_mode_tarification",
-    "ref_code_region": "code_region",
-    "dateouv": "date_ouverture",
-    "classification": "classification",
-}
-
-colonnes_a_garder_finess_cs1400102 = list(equivalences_finess_cs1400102_helios.keys())
-
-
 index_des_etablissements_territorriaux: List[str] = ["numero_finess_etablissement_territorial"]
 
-XML_TAG_FINESS_CS1500106 = "nomenclcategorieETavecagr"
-type_des_colonnes_finess_cs1500106 = {"code": "string", "domaine": "string"}
-colonnes_a_garder_finess_cs1500106 = list(type_des_colonnes_finess_cs1500106.keys())
-type_des_colonnes_categories_finess = {
-    "code": "string",
-    "libelle": "string",
-    "libellecourt": "string",
-    "domaine": "string",
-}
-equivalences_finess_cs1500106_helios = {
+equivalences_finess_categories_helios = {
     "code": "code",
     "libelle": "libelle",
     "libellecourt": "libelle_court",
@@ -352,7 +252,7 @@ equivalences_finess_cs1500106_helios = {
 
 index_des_categories: List[str] = ["code"]
 
-colonnes_a_garder_categories_finess = list(type_des_colonnes_categories_finess.keys())
+colonnes_a_garder_categories_finess = list(equivalences_finess_categories_helios.keys())
 
 equivalences_json_finess_helios = {
     "ligneacheminement": "adresse_acheminement",
