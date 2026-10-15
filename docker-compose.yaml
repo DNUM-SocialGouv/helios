@@ -111,7 +111,11 @@ services:
       - type: volume
         source: keycloak-data
         target: /opt/keycloak/data
-    command: ["start-dev"]
+      - type: bind
+        source: ./deploy/Helios-realm.json
+        target: /opt/keycloak/data/import/Helios-realm.json
+        read_only: true
+    command: ["start-dev", "--import-realm"]
 
 volumes:
   postgres_data:
