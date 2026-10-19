@@ -12,6 +12,41 @@ import { UserListViewModel } from "../user-list/UserListViewModel";
 
 const DEFAULT_INDICATORS = ["etsLogo", "favori", "socialReason", "categorie", "numéroFiness"];
 
+type IndicateurLisezMoi = Readonly<{
+  key: string;
+  libelle: string;
+  libelleDansTemplate: string;
+  placeholderDate: keyof DatesMisAjourSources;
+}>;
+
+const DETAIL_CAPACITE_SANITAIRE = `Source : SAE
+
+Permet de caractériser les capacités d’accueil de l’établissement et les alternatives à l’hospitalisation conventionnelle avec nuitée dont il dispose.
+
+Fréquence : Annuelle
+
+Mode de calcul :
+Nombre de lits MCO : Le nombre de lits installés correspond aux lits intégrés au sein de services d’hospitalisation complète, y compris l’hospitalisation de semaine.
+
+Nombre de places MCO : Le nombre de places installées au 31 décembre de l’année est égal au nombre de patients pouvant être accueillis en même temps.
+
+Nombre de lits SSR : Le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades.
+
+Nombre de places SSR : Le nombre de places installées au 31 décembre de l’année en hospitalisation à temps partiel de jour ou de nuit est égal au nombre de patients pouvant être accueillis en même temps.
+
+Nombre de lits PSY (capacité en HC) : le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades et du nombre de patients pouvant être pris en charge simultanément en hospitalisation à domicile (HAD).
+
+Nombre de places PSY : Le nombre de places installées au 31 décembre de l’année en hospitalisation à temps partiel de jour ou de nuit est égal au nombre de patients pouvant être accueillis en même temps, hors prise en charge ambulatoire.
+
+Nombre de lits USLD : Le nombre de lits installés au 31 décembre de l’année est égal à la somme du nombre de lits en état d’accueillir des malades.
+
+Source(s) :
+Statistique annuelle des établissements de santé (SAE) - Direction de la Recherche, des Études, de l’Évaluation et des Statistiques (DREES).
+
+La Statistique annuelle des établissements de santé (SAE) est une enquête administrative exhaustive obligatoire, réalisée chaque année par la DREES auprès de tous les établissements de santé de France, pour recueillir des informations sur leur activité, leurs capacités, leurs équipements, et leurs personnel médicaux et non-médicaux.
+
+Hélios collecte ces données depuis le SI mutualisé des ARS DIAMANT « Décisionnel Inter-ARS pour la Maîtrise et l’Anticipation. », outil décisionnel de pilotage centré sur la régulation de l’offre de soins, abordée sous les aspects des moyens humains, financiers, et productivité.`;
+
 export function getCurrentDate() {
   const today = new Date();
   const year = today.getFullYear();
@@ -177,7 +212,8 @@ export async function ExportToExcel(
   data: (string | number)[][],
   fileName: string,
   datesMaj: DatesMisAjourSources,
-  nomFichierTemplate: string
+  nomFichierTemplate: string,
+  indicateursLisezMoi?: IndicateurLisezMoi[]
 ) {
   const response = await fetch(`/templates/${nomFichierTemplate}`);
   const arrayBuffer = await response.arrayBuffer();
@@ -197,9 +233,56 @@ export async function ExportToExcel(
       ...data,
     ];
     ecrireLignesDansSheet(lignes, sheetComparaison);
+    if (indicateursLisezMoi) {
+      ecrireIndicateursDansLisezMoi(sheetLisezMoi, indicateursLisezMoi);
+    }
     remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
     telechargerWorkbook(workbook, fileName);
   }
+}
+
+function ecrireIndicateursDansLisezMoi(sheetLisezMoi: ExcelJS.Worksheet, indicateursLisezMoi: IndicateurLisezMoi[]) {
+  const lignesDuTemplate = new Map<string, ExcelJS.Row>();
+  sheetLisezMoi.eachRow((row, rowNumber) => {
+    if (rowNumber > 1) {
+      const libelle = row.getCell(1).text.trim();
+      if (libelle) {
+        lignesDuTemplate.set(libelle, row);
+      }
+    }
+  });
+
+  const styleLigneIndicateur = lignesDuTemplate.values().next().value;
+  if (sheetLisezMoi.rowCount > 1) {
+    sheetLisezMoi.spliceRows(2, sheetLisezMoi.rowCount - 1);
+  }
+
+  indicateursLisezMoi.forEach((indicateur) => {
+    const ligneTemplate = lignesDuTemplate.get(indicateur.libelleDansTemplate);
+    const ligne = sheetLisezMoi.addRow([
+      indicateur.libelle,
+      indicateur.placeholderDate,
+      ligneTemplate?.getCell(3).value ?? getDetailIndicateurLisezMoi(indicateur),
+    ]);
+    recopierStyleLigne(styleLigneIndicateur, ligne);
+  });
+}
+
+function getDetailIndicateurLisezMoi(indicateur: IndicateurLisezMoi) {
+  if (indicateur.libelleDansTemplate === "Capacité installée par activités sanitaire") {
+    return DETAIL_CAPACITE_SANITAIRE;
+  }
+  return "";
+}
+
+function recopierStyleLigne(ligneSource: ExcelJS.Row | undefined, ligneCible: ExcelJS.Row) {
+  if (!ligneSource) return;
+
+  ligneSource.eachCell({ includeEmpty: true }, (celluleSource, colonne) => {
+    const celluleCible = ligneCible.getCell(colonne);
+    celluleCible.style = { ...celluleSource.style };
+    celluleCible.alignment = celluleSource.alignment ? { ...celluleSource.alignment } : undefined;
+  });
 }
 
 
@@ -235,6 +318,7 @@ async function generateAndExportExcel(
 
   let headers: string[];
   let nomFichierTemplate: string;
+  let indicateursLisezMoi: IndicateurLisezMoi[] | undefined;
   switch (type) {
     case 'Entité juridique':
       headers = getEJHeaders(indicators, enveloppes);
@@ -247,6 +331,7 @@ async function generateAndExportExcel(
     case 'Sanitaire':
       headers = getSanHeaders(indicators, enveloppes);
       nomFichierTemplate = "template_comparaison_SAN.xlsx"
+      indicateursLisezMoi = getSanIndicateursLisezMoi(enabledIndicators, enveloppes);
       break;
     default:
       throw new Error("Illegal state: type d'établissement non identifié");
@@ -258,7 +343,8 @@ async function generateAndExportExcel(
     dataTransormed,
     fileName,
     datesMisAjour,
-    nomFichierTemplate
+    nomFichierTemplate,
+    indicateursLisezMoi
   );
 }
 
@@ -303,12 +389,12 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     ["socialReason", "Raison Sociale"],
     ["categorie", "Cat. FINESS"],
     ["numéroFiness", "FINESS"],
-    ["nombreDeLitsMedecine", "Nombre de lits Médecine"],
-    ["nombreDeLitsChirurgie", "Nombre de lits Chirurgie"],
-    ["nombreDeLitsObstetrique", "Nombre de lits Obstétrique"],
-    ["nombreDeLitsUsld", "Nombre de lits USLD"],
-    ["nombreDeLitsSsr", "Nombre de lits SSR"],
-    ["nombreDeLitsPsy", "Nombre de lits PSY (Hospitalisation complète)"],
+    ["nombreDeLitsMedecine", "Nb lits Médecine"],
+    ["nombreDeLitsChirurgie", "Nb lits Chirurgie"],
+    ["nombreDeLitsObstetrique", "Nb lits Obstétrique"],
+    ["nombreDeLitsUsld", "Nb lits USLD"],
+    ["nombreDeLitsSsr", "Nb lits SSR"],
+    ["nombreDeLitsPsy", "Nb lits PSY (HC)"],
     ["totalHosptMedecine", "Nb de séjours Médecine - Total Hospt"],
     ["totalHosptChirurgie", "Nb de séjours Chirurgie - Total Hospt"],
     ["totalHosptObstetrique", "Nb séjours Obstétrique - Total Hospt"],
@@ -332,6 +418,136 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
   return Array.from(headersSan.entries())
     .filter(([key,]) => enabledIndicators.includes(key))
     .map(([, value]) => value);
+}
+
+const getSanIndicateursLisezMoi = (enabledIndicators: string[], enveloppes: string[]): IndicateurLisezMoi[] => {
+  const indicateursSan = new Map<string, Omit<IndicateurLisezMoi, "key">>([
+    ["nombreDeLitsMedecine", {
+      libelle: "Nb lits Médecine",
+      libelleDansTemplate: "Nombre de lits Médecine",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreDeLitsChirurgie", {
+      libelle: "Nb lits Chirurgie",
+      libelleDansTemplate: "Nombre de lits Chirurgie",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreDeLitsObstetrique", {
+      libelle: "Nb lits Obstétrique",
+      libelleDansTemplate: "Nombre de lits Obstétrique",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreDeLitsUsld", {
+      libelle: "Nb lits USLD",
+      libelleDansTemplate: "Nombre de lits USLD",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreDeLitsSsr", {
+      libelle: "Nb lits SSR",
+      libelleDansTemplate: "Nombre de lits SSR",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreDeLitsPsy", {
+      libelle: "Nb lits PSY (HC)",
+      libelleDansTemplate: "Nombre de lits PSY (Hospitalisation complète)",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["totalHosptMedecine", {
+      libelle: "Nb de séjours Médecine - Total Hospt",
+      libelleDansTemplate: "Nb de séjours Médecine -Total Hospt",
+      placeholderDate: "date_mis_a_jour_pmsi"
+    }],
+    ["totalHosptChirurgie", {
+      libelle: "Nb de séjours Chirurgie - Total Hospt",
+      libelleDansTemplate: "Nb de séjours Médecine -Total Hospt",
+      placeholderDate: "date_mis_a_jour_pmsi"
+    }],
+    ["totalHosptObstetrique", {
+      libelle: "Nb séjours Obstétrique - Total Hospt",
+      libelleDansTemplate: "Nb de séjours Médecine -Total Hospt",
+      placeholderDate: "date_mis_a_jour_pmsi"
+    }],
+    ["totalHosptPsy", {
+      libelle: "Nb journées Psychiatrie - Total Hospt",
+      libelleDansTemplate: "Nb journées Psychiatrie - Total Hospt",
+      placeholderDate: "date_mis_a_jour_pmsi"
+    }],
+    ["totalHosptSsr", {
+      libelle: "Nb journées SSR - Total Hospt",
+      libelleDansTemplate: "Nb journées Psychiatrie - Total Hospt",
+      placeholderDate: "date_mis_a_jour_pmsi"
+    }],
+    ["passagesUrgences", {
+      libelle: "Nb de passages aux urgences",
+      libelleDansTemplate: "Nb de passage aux urgences",
+      placeholderDate: "date_mis_a_jour_rpu"
+    }],
+    ["journeesUsld", {
+      libelle: "Nb journées USLD",
+      libelleDansTemplate: "Nb journées USLD",
+      placeholderDate: "date_mis_a_jour_sae"
+    }],
+    ["nombreEtpPm", {
+      libelle: "Nb ETP PM",
+      libelleDansTemplate: "Nb ETP PM",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["nombreEtpPnm", {
+      libelle: "Nb ETP PNM",
+      libelleDansTemplate: "Nb ETP PNM",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["depensesInterimPm", {
+      libelle: "Dépenses intérim PM",
+      libelleDansTemplate: "Dépenses intérim PM",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["joursAbsenteismePm", {
+      libelle: "Jours d’absentéisme PM",
+      libelleDansTemplate: "Jours d’absentéisme PM",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["joursAbsenteismePnm", {
+      libelle: "Jours d’absentéisme PNM",
+      libelleDansTemplate: "Jours d’absentéisme PNM",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["enveloppe1", {
+      libelle: `Allocation de ressources: ${enveloppes[0] ? enveloppes[0] : 'Non renseigné'}`,
+      libelleDansTemplate: "Allocation de ressources",
+      placeholderDate: "date_mis_a_jour_hapi"
+    }],
+    ["enveloppe2", {
+      libelle: `Allocation de ressources: ${enveloppes[1] ? enveloppes[1] : 'Non renseigné'}`,
+      libelleDansTemplate: "Allocation de ressources",
+      placeholderDate: "date_mis_a_jour_hapi"
+    }],
+    ["enveloppe3", {
+      libelle: `Allocation de ressources: ${enveloppes[2] ? enveloppes[2] : 'Non renseigné'}`,
+      libelleDansTemplate: "Allocation de ressources",
+      placeholderDate: "date_mis_a_jour_hapi"
+    }],
+    ["fondsDeRoulement", {
+      libelle: "Fonds de roulement",
+      libelleDansTemplate: "Fonds de roulement",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["besoinFondsDeRoulement", {
+      libelle: "Besoin en fonds de roulement",
+      libelleDansTemplate: "Besoin en fonds de roulement",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+    ["tresorerie", {
+      libelle: "Trésorerie",
+      libelleDansTemplate: "Tresorerie",
+      placeholderDate: "date_mis_a_jour_ancre"
+    }],
+  ]);
+
+  return enabledIndicators.flatMap((key) => {
+    const indicateur = indicateursSan.get(key);
+    return indicateur ? [{ key, ...indicateur }] : [];
+  });
 }
 
 const getEJHeaders = (enabledIndicators: string[], enveloppes: string[]): string[] => {
