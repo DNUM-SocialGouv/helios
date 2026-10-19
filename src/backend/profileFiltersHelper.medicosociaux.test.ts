@@ -12,6 +12,7 @@ import { filterEtablissementMedicoSocial } from "./profileFiltersHelper";
 function getIdentiteMedicoSocial(): ÉtablissementTerritorialIdentité & MonoÉtablissement & EntiteJuridiqueDeRattachement {
   return {
     adresseAcheminement: { 'dateMiseÀJourSource': 'dateMajAddressAcheminement', value: 'addresseAcheminement' },
+    codePostal: { 'dateMiseÀJourSource': 'dateMajCodePostal', value: 'codePostal' },
     adresseNuméroVoie: { 'dateMiseÀJourSource': 'dateMajNumVoi', value: 'addresseNumVoie' },
     adresseTypeVoie: { 'dateMiseÀJourSource': 'dateMajTypeVoie', value: 'addresseTypeVoie' },
     adresseVoie: { 'dateMiseÀJourSource': 'dateMajAddrVoie', value: 'addressVoie' },
@@ -277,6 +278,7 @@ describe("Filtre des informations d’identité des etablissement medico-sociaux
     const expectedIdentity = {
       ...rawIdentity,
       adresseAcheminement: { 'dateMiseÀJourSource': '', value: '' },
+      codePostal: { 'dateMiseÀJourSource': '', value: '' },
       adresseNuméroVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseTypeVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseVoie: { 'dateMiseÀJourSource': '', value: '' },
