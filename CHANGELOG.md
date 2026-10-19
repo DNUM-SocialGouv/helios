@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 ### Features
+- hel-1132: [RGAA] footer - déclaration accessibilité - non conforme
 
 ## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
 

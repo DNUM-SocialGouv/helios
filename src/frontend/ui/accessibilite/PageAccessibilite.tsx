@@ -6,87 +6,80 @@ export const PageAccessibilite = () => {
     <>
       <h1>Accessibilité</h1>
       <p>
-        <i> Dernière mise à jour : 04 décembre 2023</i>
+        <b> Dernière mise à jour : 19 octobre 2026</b>
       </p>
       <div className="fr-mb-5w">
-        <h2 className="fr-h6">Qu’est-ce que l’accessibilité numérique ?</h2>
         <p>
-          Un site web accessible est un site qui permet aux personnes en situation de handicap d’accéder à ses contenus et ses fonctionnalités sans difficulté.
+          <b>Les ministères sociaux </b>s’engagent à rendre leurs sites internet, intranet,   
+            extranet et ses progiciels accessibles (et ses applications mobiles et mobilier   
+            urbain numérique) conformément à l’article 47 de la loi n°2005-102 du 11 février   
+            2005.  
         </p>
-        <p>Un site accessible permet par exemple de :</p>
-        <ul>
-          <li>naviguer avec une synthèse vocale et/ou une plage braille (notamment utilisées par les personnes aveugles et malvoyantes).</li>
-          <li>personnaliser l’affichage du site selon ses besoins (grossissement des caractères, modification des couleurs, etc.).</li>
-          <li>naviguer sans utiliser la souris (avec le clavier uniquement, via un écran tactile, à la voix ou tout autre périphérique adapté).</li>
-        </ul>
-      </div>
-      <div className="fr-mb-5w">
-        <h3 className="fr-h6">Déclaration d’accessibilité</h3>
-        <p>Helios s’engage à rendre son site internet accessible conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.</p>
-        <p>À cette fin, elle rédige la stratégie et le plan d’action à mettre en œuvre.</p>
         <p>
-          Cette déclaration d’accessibilité s’applique à{" "}
-          <a className="fr-link" 
+          À cette fin, ils mettent en œuvre la stratégie et les actions du <a className="fr-link"  href="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028"  rel="noreferrer" target="_blank" title="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028 - nouvelle Fenêtre">chéma pluriannuel  
+          d’accessibilité numérique 2025-2028 et plan d’actions</a>.
+        </p>
+        <p>Plan d ‘actions 2027 - 2029 pour le site Helios - fiche de synthèse des données   
+          des entités juridiques, et des établissements sanitaires et médico-sociaux :  
+        </p>
+        <ul>
+          <li>Audit initial de conformité du site  </li>
+          <li>Prise en compte des corrections à la suite de l’audit initial pour améliorer l’accessibilité du site  </li>
+          <li>Contre-audit du site </li>
+          <li>Amélioration continue tout au long du cycle de vie du site </li>
+        </ul>
+        <p>
+         Cette déclaration d’accessibilité s’applique au site Helios : <a className="fr-link" 
           href="https://www.helios.ars.sante.fr/" 
           rel="external noopener noreferrer"
           target="_blank" 
           title={`${wording.HELIOS_URL} - ${wording.NOUVELLE_FENÊTRE}`}
           >
             {wording.HELIOS_URL}
-          </a>
+          </a>  
         </p>
       </div>
       <div className="fr-mb-5w">
-        <h3 className="fr-h6">État de conformité</h3>
+        <h2>État de conformité  </h2>
+        <p> <b>Le site Helios</b> est <b>non conforme</b> avec le référentiel général d’amélioration de l’accessibilité (RGAA). Le site n’a pas encore été audité.  </p>
+      </div>
+      <div className="fr-mb-5w">
+        <h2>Établissement de cette déclaration d’accessibilité  </h2>
+        <p>Cette déclaration a été établie <b>le 12 octobre 2026</b>.  </p>
+      </div>
+      <div className="fr-mb-5w">
+        <h2>Retour d’information et contact </h2>
         <p>
-          Le site{" "}
-          <a className="fr-link" 
-          href="https://www.helios.ars.sante.fr/" 
-          rel="external noopener noreferrer" 
-          target="_blank" 
-          title={`${wording.HELIOS_URL} - ${wording.NOUVELLE_FENÊTRE}`}
-           >
-            {wording.HELIOS_URL}
-          </a>{" "}
-          est non conforme avec le référentiel général d’amélioration de l’accessibilité (RGAA) car l’audit n’a pas encore été effectué.
+          Si vous n’arrivez pas à accéder à un contenu ou à un service, vous pouvez   
+          contacter le responsable éditorial pour être orienté vers une alternative   
+          accessible ou obtenir le contenu sous une autre forme en envoyant un courriel à <a href="mailto:dnum.helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">dnum.helios-support@sg.social.gouv.fr</a>  
         </p>
       </div>
       <div className="fr-mb-5w">
-        <h3 className="fr-h6">Retours d’informations et contact</h3>
+        <h2>Voies de recours  </h2>
         <p>
-          Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous
-          un courriel à{" "}
-          <a
-            className="fr-link"
-            href="mailto:dnum.helios-support@sg.social.gouv.fr"
-            title="Envoyer un email à dnum.helios-support@sg.social.gouv.fr - ouvre un nouvelle fenêtre"
-          >
-            dnum.helios-support@sg.social.gouv.fr
-          </a>
+          Si vous constatez un défaut d’accessibilité vous empêchant d’accéder à un   
+          contenu ou une fonctionnalité du site, que vous nous le signalez et que vous ne   
+          parvenez pas à obtenir une réponse de notre part, vous êtes en droit de faire   
+          parvenir vos doléances ou une demande de saisine au Défenseur des droits.
         </p>
-      </div>
-      <div className="fr-mb-5w">
-        <h3 className="fr-h6">Voies de recours</h3>
-        <p>
-          Si vous avez signalé au responsable du site internet un défaut d’accessibilité qui vous empêche d’accéder à un contenu ou à un des services du portail
-          et que vous n’avez pas obtenu de réponse satisfaisante, vous pouvez :
-        </p>
+        <p> Plusieurs moyens sont à votre disposition :   </p>
         <ul>
-          <li>
-            Écrire un message au Défenseur des droits (<a className="fr-link" href="https://formulaire.defenseurdesdroits.fr/" title="https://formulaire.defenseurdesdroits.fr/">https://formulaire.defenseurdesdroits.fr/</a>)
+          <li><a 
+          className="fr-link"
+          href="https://formulaire.defenseurdesdroits.fr/formulaire_saisine/" 
+          rel="external noopener noreferrer" 
+          target="_blank"
+          title={`Écrire un message au Défenseur des droits- ${wording.NOUVELLE_FENÊTRE}`}
+          >
+            Écrire un message au Défenseur des droits
+          </a>
           </li>
-          <li>
-            Contacter le délégué du Défenseur des droits dans votre région (<a className="fr-link" href="https://www.defenseurdesdroits.fr/saisir/delegues" title="https://www.defenseurdesdroits.fr/saisir/delegues">https://www.defenseurdesdroits.fr/saisir/delegues</a>)
-          </li>
-          <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à :
-
-            <address>
-              Défenseur des droits
-              <br />
-              Libre réponse 71120
-              <br />
-              75342 Paris CEDEX 07
-            </address>
+          <li>Par courriel : <a className="fr-link" href="mailto:contact@defenseurdesdroits.fr">contact@defenseurdesdroits.fr</a></li>
+          <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à : <br/> 
+            Défenseur des droits  <br/> 
+            Libre réponse 71120  <br/>
+            75342 Paris CEDEX 07
           </li>
         </ul>
       </div>
