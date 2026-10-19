@@ -76,6 +76,18 @@ export function getInitialIndicatorsState(): IndicatorsState {
   // ################################## Sanitaire indicators ##################################
   const sanitaireIndicators = new Map<IndicatorCategory, IndicatorStateItem[]>([]);
 
+  // Bloc Capacité et Autorisation
+  const capaciteSanCategory: IndicatorCategory = { name: "Bloc Capacité et Autorisation", position: IndicatorPosition.LEFT };
+  const sanitaireIndicatorsCapaciteAutorisation: IndicatorStateItem[] = [
+    { displayName: "Nombre de lits Médecine", columnName: "nombreDeLitsMedecine", enabled: true },
+    { displayName: "Nombre de lits Chirurgie", columnName: "nombreDeLitsChirurgie", enabled: true },
+    { displayName: "Nombre de lits Obstétrique", columnName: "nombreDeLitsObstetrique", enabled: true },
+    { displayName: "Nombre de lits USLD", columnName: "nombreDeLitsUsld", enabled: true },
+    { displayName: "Nombre de lits SSR", columnName: "nombreDeLitsSsr", enabled: true },
+    { displayName: "Nombre de lits PSY (Hospitalisation complète)", columnName: "nombreDeLitsPsy", enabled: true },
+  ];
+  sanitaireIndicators.set(capaciteSanCategory, sanitaireIndicatorsCapaciteAutorisation);
+
   // Bloc Activité
   const activiteSanCategory: IndicatorCategory = { name: "Bloc Activité", position: IndicatorPosition.LEFT };
   const sanitaireIndicatorsActivite: IndicatorStateItem[] = [
