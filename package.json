@@ -182,7 +182,7 @@
         "dompurify": "^3.4.2",
         "dotenv-defaults": "^5.0.2",
         "exceljs": "^4.4.0",
-        "joi": "^18.0.2",
+        "joi": "^18.2.6",
         "json-diff-ts": "^4.8.2",
         "jsonwebtoken": "^9.0.3",
         "katex": "^0.16.27",

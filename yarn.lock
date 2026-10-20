@@ -3057,7 +3057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@standard-schema/spec@npm:^1.0.0":
+"@standard-schema/spec@npm:^1.0.0, @standard-schema/spec@npm:^1.1.0":
   version: 1.1.0
   resolution: "@standard-schema/spec@npm:1.1.0"
   checksum: 10/a209615c9e8b2ea535d7db0a5f6aa0f962fd4ab73ee86a46c100fb78116964af1f55a27c1794d4801e534a196794223daa25ff5135021e03c7828aa3d95e1763
@@ -6820,7 +6820,7 @@ __metadata:
     jest: "npm:^30.3.0"
     jest-environment-jsdom: "npm:^30.3.0"
     jest-mock-extended: "npm:^4.0.1"
-    joi: "npm:^18.0.2"
+    joi: "npm:^18.2.6"
     json-diff-ts: "npm:^4.8.2"
     jsonwebtoken: "npm:^9.0.3"
     katex: "npm:^0.16.27"
@@ -7945,7 +7945,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:*, joi@npm:^18.0.2":
+"joi@npm:*":
   version: 18.0.2
   resolution: "joi@npm:18.0.2"
   dependencies:
@@ -7957,6 +7957,21 @@ __metadata:
     "@hapi/topo": "npm:^6.0.2"
     "@standard-schema/spec": "npm:^1.0.0"
   checksum: 10/0cf4980cafff311696cfb80618e1725c317153e927947ecb06e452142b89981979b50fca432d4d5e9f321b28ffc8bcbed96872a3a62aa704323055d8295c9b5a
+  languageName: node
+  linkType: hard
+
+"joi@npm:^18.2.6":
+  version: 18.3.0
+  resolution: "joi@npm:18.3.0"
+  dependencies:
+    "@hapi/address": "npm:^5.1.1"
+    "@hapi/formula": "npm:^3.0.2"
+    "@hapi/hoek": "npm:^11.0.7"
+    "@hapi/pinpoint": "npm:^2.0.1"
+    "@hapi/tlds": "npm:^1.1.1"
+    "@hapi/topo": "npm:^6.0.2"
+    "@standard-schema/spec": "npm:^1.1.0"
+  checksum: 10/b6cb61b45513415131ffa9617405713d54cc50392f2c3872c9841c6509b575bbb53145edd1fd7464075aa1f8a3eb0092171f36eb65dbb9aff06afaebc88ea46b
   languageName: node
   linkType: hard
 
