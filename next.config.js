@@ -1,4 +1,4 @@
-const { withSentryConfig } = require("@sentry/nextjs/config");
+const { withSentryConfig } = require("@sentry/nextjs");
 const { withMatomoProxy } = require("@socialgouv/matomo-next");
 
 const isDev = process.env.NODE_ENV === 'development'
