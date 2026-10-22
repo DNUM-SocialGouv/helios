@@ -244,7 +244,8 @@
         "@types/react-dom": "19.2.3",
         "tar": "7.5.21",
         "postcss": "8.5.23",
-        "undici": "6.28.1"
+        "undici": "6.28.1",
+        "tmp": "0.2.6"
     },
     "engines": {
         "node": "22.14"
