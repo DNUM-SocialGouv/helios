@@ -203,18 +203,6 @@ index_des_reconnaissances_contractuelles: List[str] = [
 ]
 
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
-<<<<<<< HEAD
-=======
-
-XML_TAG_FINESS_CS1500107 = "nomenclstatutavecagr"
-type_des_colonnes_finess_cs1500107 = {
-    "code": "string",
-    "codeagr2": "string",
-    "codeagr1": "string",
-}
-colonnes_a_garder_finess_cs1500107 = list(type_des_colonnes_finess_cs1500107.keys())
-
->>>>>>> 8b239dd4 ((hel-1131) sauvegarder en bd le code postal recupere du flux finess json)
 index_des_etablissements_territorriaux: List[str] = ["numero_finess_etablissement_territorial"]
 
 equivalences_finess_categories_helios = {
