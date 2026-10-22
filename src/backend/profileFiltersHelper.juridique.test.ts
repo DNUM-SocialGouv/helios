@@ -10,6 +10,7 @@ import { filterEntiteJuridique } from "./profileFiltersHelper";
 function getIdentiteJuridique(): EntitéJuridiqueIdentité {
   return {
     adresseAcheminement: { dateMiseÀJourSource: "dateMajAddressAch", value: "adresseAcheminement" },
+    codePostal: { dateMiseÀJourSource: "dateMajCodePostal", value: "codePostal" },
     adresseNuméroVoie: { dateMiseÀJourSource: "dateMajAdressNumVoie", value: "AdressNumVoie" },
     adresseTypeVoie: { dateMiseÀJourSource: "dateMajAdressTypeVoie", value: "adresseTypeVoie" },
     adresseVoie: { dateMiseÀJourSource: "dateMajAddressVoie", value: "adresseVoie" },
@@ -254,6 +255,7 @@ describe("Filtre des informations d’identité des etablissement juridique par 
     const expectedIdentity = {
       ...rawEntity,
       adresseAcheminement: { 'dateMiseÀJourSource': '', value: '' },
+      codePostal: { 'dateMiseÀJourSource': '', value: '' },
       adresseNuméroVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseTypeVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseVoie: { 'dateMiseÀJourSource': '', value: '' },
@@ -877,4 +879,3 @@ describe("Filtre des informations de ressources humaines des entités juridique 
   });
 
 })
-

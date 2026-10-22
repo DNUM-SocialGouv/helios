@@ -202,44 +202,6 @@ index_des_reconnaissances_contractuelles: List[str] = [
     "code_forme",
 ]
 
-XML_TAG_FINESS_CS1400101 = "structureej"
-type_des_colonnes_finess_cs1400101 = {
-    "datecrea": "string",
-    "datefermeture": "string",
-    "departement": "string",
-    "libcommune": "string",
-    "libdepartement": "string",
-    "libstatutjuridique": "string",
-    "ligneacheminement": "string",
-    "nofiness": "string",
-    "numvoie": "string",
-    "rs": "string",
-    "rslongue": "string",
-    "siren": "string",
-    "statutjuridique": "string",
-    "telephone": "string",
-    "typvoie": "string",
-    "voie": "string",
-}
-colonnes_a_garder_finess_cs1400101 = list(type_des_colonnes_finess_cs1400101.keys())
-equivalences_finess_cs1400101_helios = {
-    "ligneacheminement": "adresse_acheminement",
-    "numvoie": "adresse_numero_voie",
-    "typvoie": "adresse_type_voie",
-    "voie": "adresse_voie",
-    "libcommune": "commune",
-    "libdepartement": "departement",
-    "libstatutjuridique": "libelle_statut_juridique",
-    "nofiness": "numero_finess_entite_juridique",
-    "rslongue": "raison_sociale",
-    "rs": "raison_sociale_courte",
-    "siren": "siren",
-    "telephone": "telephone",
-    "datecrea": "date_ouverture",
-    "ref_code_region": "code_region",
-    "categorisation": "categorisation",
-}
-
 index_des_entitees_juridiques: List[str] = ["numero_finess_entite_juridique"]
 index_des_etablissements_territorriaux: List[str] = ["numero_finess_etablissement_territorial"]
 
@@ -256,6 +218,7 @@ colonnes_a_garder_categories_finess = list(equivalences_finess_categories_helios
 
 equivalences_json_finess_helios = {
     "ligneacheminement": "adresse_acheminement",
+    "codepostal": "code_postal",
     "numvoie": "adresse_numero_voie",
     "typvoie": "adresse_type_voie",
     "voie": "adresse_voie",
@@ -277,6 +240,7 @@ equivalences_json_finess_et_helios = {
     "numvoie": "adresse_numero_voie",
     "typvoie": "adresse_type_voie",
     "voie": "adresse_voie",
+    "codepostal": "code_postal",
     "categetab": "cat_etablissement",
     "courriel": "courriel",
     "libcategetab": "libelle_categorie_etablissement",

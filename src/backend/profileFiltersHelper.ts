@@ -36,6 +36,7 @@ export const filterEntiteJuridique = (result: EntitéJuridique, profil: any): En
 
   return {
     adresseAcheminement: profil.identité.adresse === 'ok' ? result.adresseAcheminement : { 'dateMiseÀJourSource': '', value: '' },
+    codePostal: profil.identité.adresse === 'ok' ? result.codePostal : { 'dateMiseÀJourSource': '', value: '' },
     adresseNuméroVoie: profil.identité.adresse === 'ok' ? result.adresseNuméroVoie : { 'dateMiseÀJourSource': '', value: '' },
     adresseTypeVoie: profil.identité.adresse === 'ok' ? result.adresseTypeVoie : { 'dateMiseÀJourSource': '', value: '' },
     adresseVoie: profil.identité.adresse === 'ok' ? result.adresseVoie : { 'dateMiseÀJourSource': '', value: '' },
@@ -85,6 +86,7 @@ export const filterEtablissementSanitaire = (result: any, profil: any): Établis
 const filterIdentiteSanitaire = (identite: any, profil: any) => {
   if (profil.adresse !== 'ok') {
     identite.adresseAcheminement = { 'dateMiseÀJourSource': '', value: '' };
+    identite.codePostal = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseNuméroVoie = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseTypeVoie = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseVoie = { 'dateMiseÀJourSource': '', value: '' };
@@ -241,6 +243,7 @@ const filterQualiteSanitaire = (qualite: any, profil: any) => {
 const filterIdentiteMedicoSocial = (identite: any, profil: any) => {
   if (profil.adresse !== 'ok') {
     identite.adresseAcheminement = { 'dateMiseÀJourSource': '', value: '' };
+    identite.codePostal = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseNuméroVoie = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseTypeVoie = { 'dateMiseÀJourSource': '', value: '' };
     identite.adresseVoie = { 'dateMiseÀJourSource': '', value: '' };

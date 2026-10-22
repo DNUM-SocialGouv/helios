@@ -25,7 +25,11 @@ export class EntitéJuridiqueViewModelTestBuilder {
   static entitéJuridique: EntitéJuridique = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
-      value: "22023 ST BRIEUC CEDEX 1",
+      value: "ST BRIEUC CEDEX 1",
+    },
+    codePostal: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: "22023",
     },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2021-07-07",

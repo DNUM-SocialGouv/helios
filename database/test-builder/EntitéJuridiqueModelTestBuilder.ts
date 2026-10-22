@@ -11,6 +11,7 @@ export class EntitéJuridiqueModelTestBuilder {
     entitéJuridique.adresseTypeVoie = champsSurchargés?.adresseTypeVoie || "RTE";
     entitéJuridique.adresseVoie = champsSurchargés?.adresseVoie || "DE VEYZIAT";
     entitéJuridique.commune = champsSurchargés?.commune || "OYONNAX";
+    entitéJuridique.codePostal = champsSurchargés?.codePostal || "01117";
     entitéJuridique.département = champsSurchargés?.département || "AIN";
     entitéJuridique.libelléStatutJuridique = champsSurchargés?.libelléStatutJuridique || "Etablissement Public Intercommunal dHospitalisation";
     entitéJuridique.numéroFinessEntitéJuridique = champsSurchargés?.numéroFinessEntitéJuridique || "010018407";
