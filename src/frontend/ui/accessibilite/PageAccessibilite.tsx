@@ -6,7 +6,7 @@ export const PageAccessibilite = () => {
     <>
       <h1>Accessibilité</h1>
       <p>
-        <b> Dernière mise à jour : 19 octobre 2026</b>
+        <b> Dernière mise à jour : 23 novembre 2026</b>
       </p>
       <div className="fr-mb-5w">
         <p>
