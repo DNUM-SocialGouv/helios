@@ -16,8 +16,6 @@ from datacrawler.transform.équivalences_diamant_helios import (
     équivalences_engagements_starsfir_allocation_ressource_et_helios,
 )
 
-TYPE_BENEFICIAIRE_STARFIR = "Etablissement sanitaire"
-
 
 def filter_type_beneficiaire(type_beneficiaire: str) -> bool:
     return type_beneficiaire == "ES"
@@ -62,7 +60,7 @@ def transforme_les_donnees_engagements_ej(
     numéros_finess_des_entites_juridiques_connues: pd.DataFrame,
     logger: Logger,
 ) -> pd.DataFrame:
-    filtrees = donnees[donnees["Type de Bénéficiaire"] == TYPE_BENEFICIAIRE_STARFIR].copy()
+    filtrees = donnees.copy()
     filtrees[COLONNE_SOURCE_MODE_DELEGATION_ENGAGEMENTS] = VALEUR_FORCEE_MODE_DELEGATION
     est_dans_finess = filtrees["ID Bénéficiaire (Finess ou Code interne)"].isin(numéros_finess_des_entites_juridiques_connues["numero_finess_entite_juridique"])
     logger.info(f"[HAPI ENGAGEMENTS] {est_dans_finess.sum()} allocations de ressource sont liées à une EJ trouvé en base dans les fichiers hapi")
@@ -79,7 +77,7 @@ def transforme_les_donnees_engagements_et(
     numéros_finess_des_établissements_connus: pd.DataFrame,
     logger: Logger,
 ) -> pd.DataFrame:
-    filtrees = donnees[donnees["Type de Bénéficiaire"] == TYPE_BENEFICIAIRE_STARFIR].copy()
+    filtrees = donnees.copy()
     filtrees[COLONNE_SOURCE_MODE_DELEGATION_ENGAGEMENTS] = VALEUR_FORCEE_MODE_DELEGATION
     est_dans_finess = filtrees["ID Bénéficiaire (Finess ou Code interne)"].isin(
         numéros_finess_des_établissements_connus["numero_finess_etablissement_territorial"]
