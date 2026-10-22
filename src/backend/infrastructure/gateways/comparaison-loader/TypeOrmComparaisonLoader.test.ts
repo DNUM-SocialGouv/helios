@@ -9,6 +9,7 @@ import { AutorisationMédicoSocialModel } from "../../../../../database/models/A
 import { BudgetEtFinancesEntiteJuridiqueModel } from "../../../../../database/models/BudgetEtFinancesEntiteJuridiqueModel";
 import { BudgetEtFinancesMédicoSocialModel } from "../../../../../database/models/BudgetEtFinancesMédicoSocialModel";
 import { BudgetEtFinancesSanitaireModel } from "../../../../../database/models/BudgetEtFinancesSanitaireModel";
+import { CapacitéAutorisationSanitaireModel } from "../../../../../database/models/CapacitéAutorisationSanitaireModel";
 import { EntitéJuridiqueModel } from "../../../../../database/models/EntitéJuridiqueModel";
 import { ProfilModel } from "../../../../../database/models/ProfilModel";
 import { RessourcesHumainesEntiteJuridiqueModel } from "../../../../../database/models/RessourcesHumainesEntiteJuridiqueModel";
@@ -34,6 +35,7 @@ describe("La comparaison des établissements", () => {
   let ressourcesHumainesETSANModelRepository: Repository<RessourcesHumainesEtablissementSanitaireModel>;
   let budgetEtFinancesMedicoSocialModelRepository: Repository<BudgetEtFinancesMédicoSocialModel>;
   let budgetEtFinancesSanitaireModelRepository: Repository<BudgetEtFinancesSanitaireModel>;
+  let capaciteAutorisationSanitaireRepository: Repository<CapacitéAutorisationSanitaireModel>;
   let activiteeMedicoSocialModelRepository: Repository<ActivitéMédicoSocialModel>;
   let autorisationMedicoSocialModelRepository: Repository<AutorisationMédicoSocialModel>;
   let activiteSanitaireRepository: Repository<ActivitéSanitaireModel>;
@@ -89,6 +91,7 @@ describe("La comparaison des établissements", () => {
     ressourcesHumainesETSANModelRepository = (await orm).getRepository(RessourcesHumainesEtablissementSanitaireModel);
     budgetEtFinancesMedicoSocialModelRepository = (await orm).getRepository(BudgetEtFinancesMédicoSocialModel);
     budgetEtFinancesSanitaireModelRepository = (await orm).getRepository(BudgetEtFinancesSanitaireModel);
+    capaciteAutorisationSanitaireRepository = (await orm).getRepository(CapacitéAutorisationSanitaireModel);
     activiteeMedicoSocialModelRepository = (await orm).getRepository(ActivitéMédicoSocialModel);
     autorisationMedicoSocialModelRepository = (await orm).getRepository(AutorisationMédicoSocialModel);
     activiteSanitaireRepository = (await orm).getRepository(ActivitéSanitaireModel);
@@ -249,6 +252,15 @@ describe("La comparaison des établissements", () => {
       ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial: "200000001" }),
       ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2022, numéroFinessÉtablissementTerritorial: "200000001" }),
       ÉtablissementTerritorialActivitéModelTestBuilder.créeSanitaire({ année: 2023, numéroFinessÉtablissementTerritorial: "200000001" }),
+    ]);
+
+    await capaciteAutorisationSanitaireRepository.insert([
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2022, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2023, numéroFinessÉtablissementTerritorial: "200000000" }),
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2021, numéroFinessÉtablissementTerritorial: "200000001" }),
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2022, numéroFinessÉtablissementTerritorial: "200000001" }),
+      ÉtablissementTerritorialAutorisationModelTestBuilder.créeCapacitéSanitaire({ année: 2023, numéroFinessÉtablissementTerritorial: "200000001" }),
     ]);
 
     await allocationRessourceETRepository.insert([
@@ -532,6 +544,12 @@ describe("La comparaison des établissements", () => {
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
+        nombreDeLitsMedecine: 35,
+        nombreDeLitsChirurgie: 20,
+        nombreDeLitsObstetrique: 12,
+        nombreDeLitsUsld: 15,
+        nombreDeLitsSsr: 3,
+        nombreDeLitsPsy: 5,
         totalHosptMedecine: 120,
         totalHosptObstetrique: 120,
         totalHosptChirurgie: 120,
@@ -558,6 +576,12 @@ describe("La comparaison des établissements", () => {
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
+        nombreDeLitsMedecine: 35,
+        nombreDeLitsChirurgie: 20,
+        nombreDeLitsObstetrique: 12,
+        nombreDeLitsUsld: 15,
+        nombreDeLitsSsr: 3,
+        nombreDeLitsPsy: 5,
         totalHosptMedecine: 120,
         totalHosptObstetrique: 120,
         totalHosptChirurgie: 120,
@@ -584,6 +608,12 @@ describe("La comparaison des établissements", () => {
         type: "Sanitaire",
         commune: "VILLENEUVE D ASCQ",
         departement: "NORD",
+        nombreDeLitsMedecine: null,
+        nombreDeLitsChirurgie: null,
+        nombreDeLitsObstetrique: null,
+        nombreDeLitsUsld: null,
+        nombreDeLitsSsr: null,
+        nombreDeLitsPsy: null,
         totalHosptMedecine: null,
         totalHosptObstetrique: null,
         totalHosptChirurgie: null,
@@ -610,6 +640,12 @@ describe("La comparaison des établissements", () => {
         type: "Entité juridique",
         commune: "OYONNAX",
         departement: "AIN",
+        nombreDeLitsMedecine: '',
+        nombreDeLitsChirurgie: '',
+        nombreDeLitsObstetrique: '',
+        nombreDeLitsUsld: '',
+        nombreDeLitsSsr: '',
+        nombreDeLitsPsy: '',
         totalHosptMedecine: '',
         totalHosptObstetrique: '',
         totalHosptChirurgie: '',

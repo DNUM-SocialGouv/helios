@@ -5,8 +5,8 @@
 ### Bug Fixes
 
 ### Features
+- hel-1133: [Comparaison] Ajout de capacité - nbr de lits pour les ES SAN
 - hel-1132: [RGAA] footer - déclaration accessibilité - non conforme
-
 - hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
 
 ## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)

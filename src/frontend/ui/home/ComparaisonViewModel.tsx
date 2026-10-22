@@ -68,6 +68,12 @@ export type ResultatComparaisonSAN = Readonly<{
   commune: string;
   departement: string;
   type: string;
+  nombreDeLitsMedecine: number | null | string;
+  nombreDeLitsChirurgie: number | null | string;
+  nombreDeLitsObstetrique: number | null | string;
+  nombreDeLitsUsld: number | null | string;
+  nombreDeLitsSsr: number | null | string;
+  nombreDeLitsPsy: number | null | string;
   totalHosptMedecine: number | null | string;
   totalHosptObstetrique: number | null | string;
   totalHosptChirurgie: number | null | string;
@@ -271,6 +277,36 @@ export class ComparaisonSANViewModel {
 
   public get departement(): string {
     return this.comparaison.departement;
+  }
+
+  public get nombreDeLitsMedecine(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsMedecine === '') return ''
+    return this.comparaison.nombreDeLitsMedecine;
+  }
+
+  public get nombreDeLitsChirurgie(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsChirurgie === '') return ''
+    return this.comparaison.nombreDeLitsChirurgie;
+  }
+
+  public get nombreDeLitsObstetrique(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsObstetrique === '') return ''
+    return this.comparaison.nombreDeLitsObstetrique;
+  }
+
+  public get nombreDeLitsUsld(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsUsld === '') return ''
+    return this.comparaison.nombreDeLitsUsld;
+  }
+
+  public get nombreDeLitsSsr(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsSsr === '') return ''
+    return this.comparaison.nombreDeLitsSsr;
+  }
+
+  public get nombreDeLitsPsy(): ValueOrNA {
+    if (this.comparaison.nombreDeLitsPsy === '') return ''
+    return this.comparaison.nombreDeLitsPsy;
   }
 
   public get totalHosptMedecine(): ValueOrNA {
