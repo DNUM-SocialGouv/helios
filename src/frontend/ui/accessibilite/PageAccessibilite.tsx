@@ -52,7 +52,7 @@ export const PageAccessibilite = () => {
         <p>
           Si vous n’arrivez pas à accéder à un contenu ou à un service, vous pouvez   
           contacter le responsable éditorial pour être orienté vers une alternative   
-          accessible ou obtenir le contenu sous une autre forme en envoyant un courriel à <a href="mailto:dnum.helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">dnum.helios-support@sg.social.gouv.fr</a>  
+          accessible ou obtenir le contenu sous une autre forme en envoyant un courriel à <a className="fr-link" href="mailto:dnum.helios-support@sg.social.gouv.fr" rel="external noopener noreferrer" target="_blank">dnum.helios-support@sg.social.gouv.fr</a>  
         </p>
       </div>
       <div className="fr-mb-5w">
@@ -75,7 +75,15 @@ export const PageAccessibilite = () => {
             Écrire un message au Défenseur des droits
           </a>
           </li>
-          <li>Par courriel : <a className="fr-link" href="mailto:contact@defenseurdesdroits.fr">contact@defenseurdesdroits.fr</a></li>
+          <li>Par courriel : <a 
+          className="fr-link" 
+          href="mailto:contact@defenseurdesdroits.fr" 
+          rel="external noopener noreferrer" 
+          target="_blank"
+          title={`Envoyer un courriel au Défenseur des droits - ${wording.NOUVELLE_FENÊTRE}`}
+          >contact@defenseurdesdroits.fr
+          </a>
+          </li>
           <li>Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) à : <br/> 
             Défenseur des droits  <br/> 
             Libre réponse 71120  <br/>
