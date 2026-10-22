@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 ### Features
+- hel-1132: [RGAA] footer - déclaration accessibilité - non conforme
 
 - hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
 
