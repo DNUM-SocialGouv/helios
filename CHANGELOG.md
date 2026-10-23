@@ -17,6 +17,7 @@
 ### Bug Fixes
 
 - hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
+- hel-1123: [Technique] renouveler "dépendance check" & traitements des risques à haut impact
 
 ### Features
 

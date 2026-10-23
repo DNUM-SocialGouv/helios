@@ -182,12 +182,12 @@
         "dompurify": "^3.4.2",
         "dotenv-defaults": "^5.0.2",
         "exceljs": "^4.4.0",
-        "joi": "^18.0.2",
+        "joi": "^18.2.6",
         "json-diff-ts": "^4.8.2",
         "jsonwebtoken": "^9.0.3",
         "katex": "^0.16.27",
-        "next": "16.2.4",
-        "next-auth": "^4.24.14",
+        "next": "16.3.6",
+        "next-auth": "^4.24.15",
         "nuqs": "^1.20.0",
         "papaparse": "^5.5.2",
         "pg": "^8.7.3",
@@ -241,7 +241,11 @@
     "resolutions": {
         "got": "^11.8.5",
         "@types/react": "19.2.8",
-        "@types/react-dom": "19.2.3"
+        "@types/react-dom": "19.2.3",
+        "tar": "7.5.21",
+        "postcss": "8.5.23",
+        "undici": "6.28.1",
+        "tmp": "0.2.6"
     },
     "engines": {
         "node": "22.14"
