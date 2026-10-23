@@ -52,7 +52,7 @@ export function useExportExcelAutorisation(
     }
 
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 
   const exportExcelAutorisationDeSoin = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {

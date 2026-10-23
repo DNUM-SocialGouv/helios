@@ -61,7 +61,7 @@ export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheP
     }
 
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
-      loadDisplayKind();
+      void loadDisplayKind();
     }
   }, [])
 

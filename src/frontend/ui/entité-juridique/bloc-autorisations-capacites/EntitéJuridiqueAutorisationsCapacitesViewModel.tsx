@@ -28,7 +28,7 @@ export class EntitéJuridiqueAutorisationsCapacitesViewModel {
     reconnaissancesContractuellesSanitaire: ReconnaissanceContractuelleActivités,
     equipementsLourdsSanitaire: EquipementsMateriauxLourdsActivités,
     wording: Wording,
-    autorisationsMédicoSocial: AutorisationsActivités = { autorisations: [], dateMiseÀJourSource: "" }
+    autorisationsMédicoSocial: AutorisationsActivités
   ) {
     this.graphiqueCapacitesParActivitesViewModel = new GraphiqueCapacitésParActivitéViewModel(capacites, wording);
     this.autorisationsActivités = autorisationsSanitaire;

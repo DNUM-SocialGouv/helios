@@ -21,7 +21,7 @@ export const InfoBulle = ({ children, estCeOuvert, identifiant, setEstCeOuvert, 
     async function changeContent() {
       setContainer(document.body);
     }
-    changeContent();
+    void changeContent();
   }, []);
 
   let className = "fr-modal";

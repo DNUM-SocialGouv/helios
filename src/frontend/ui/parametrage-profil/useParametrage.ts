@@ -27,7 +27,10 @@ export function useParametrage() {
     }).then((response) => {
       if (response.status === 200)
         router.push(paths.PROFILES_LIST)
-    })
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to update profile:", error);
+    });
   }
 
   const saveProfile = async (userId: string, label: string, profile: ProfileValue) => {
@@ -54,7 +57,10 @@ export function useParametrage() {
       } else {
         return ErrorKind.UNKNOWN_ERROR;
       }
-    })
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to save profile:", error);
+    });
   };
 
   const getAllProfiles = (userId: string) => {
@@ -66,6 +72,10 @@ export function useParametrage() {
       .then((response) => response.json())
       .then((data) => {
         profileContext?.setProfiles(data.response);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch profiles:", error);
       });
   };
 

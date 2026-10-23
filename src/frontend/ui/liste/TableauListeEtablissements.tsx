@@ -70,7 +70,7 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
           setLoading(false);
         });
     }
-    updateTable();
+    void updateTable();
   }, [list, page, order, orderBy])
 
   const onOrderChange = (newOrder: string) => {

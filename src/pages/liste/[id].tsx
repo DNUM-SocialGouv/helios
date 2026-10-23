@@ -54,7 +54,7 @@ export default function Router({ listServer }: RouterProps) {
           setChargement(false);
         });
     };
-    reloadFav();
+    void reloadFav();
   }, [userContext?.favorisLists])
 
 

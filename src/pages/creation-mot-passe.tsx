@@ -27,7 +27,7 @@ export default function CreerMotPasse() {
         }
       }
     };
-    setTokenWhenReady();
+    void setTokenWhenReady();
   }, [router.isReady, router.pathname, router.query["loginToken"]]);
 
   if (token) {

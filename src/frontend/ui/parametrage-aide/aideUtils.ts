@@ -67,7 +67,8 @@ const nettoyerSlug = (valeur: string) =>
     .replaceAll(/\s+/g, "-")
     .replaceAll(/[^a-z0-9-]/g, "")
     .replaceAll(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 
 export const creerSlug = (valeur: string) => {
   const base = valeur.trim();

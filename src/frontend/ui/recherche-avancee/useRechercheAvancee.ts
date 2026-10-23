@@ -63,7 +63,7 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
         });
       }
     }
-    handleRecherche();
+    void handleRecherche();
   }, [data]);
 
   const lancerLaRecherche = (): void => {

@@ -171,7 +171,7 @@ export function GestionAide({ contenuInitial, envelopperDansMain = true }: Gesti
         setSlugSelectionne(definitionsSections[0].slug);
       }
     }
-    handleSlugChange();
+    void handleSlugChange();
   }, [definitionsSections, contenu, slugSelectionne]);
 
   const sectionActive: SectionNormalisee | undefined = slugSelectionne

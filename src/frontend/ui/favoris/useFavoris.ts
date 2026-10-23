@@ -62,6 +62,9 @@ export function useFavoris() {
       .then((updatedList) => {
         const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
         userContext?.setFavorisLists([...newList, updatedList])
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to update list name:", error);
       });
   };
 
@@ -76,6 +79,9 @@ export function useFavoris() {
       .then(() => {
         const newList = userContext?.favorisLists.filter(({ id }) => id !== listId) || [];
         userContext?.setFavorisLists(newList)
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to delete list:", error);
       });
   };
 
@@ -99,6 +105,9 @@ export function useFavoris() {
           }
         }
         return data;
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to remove from list:", error);
       });
   };
 

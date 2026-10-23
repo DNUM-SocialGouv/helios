@@ -25,7 +25,7 @@ export const PageRégion = ({ région }: { région: string }) => {
       const filtredList = outreMerRegionsList.filter((region) => region.label !== labelDeLaRégion);
       setArsRegions(filtredList);
     }
-    filterRegion();
+    void filterRegion();
   }, [labelDeLaRégion])
 
   return (

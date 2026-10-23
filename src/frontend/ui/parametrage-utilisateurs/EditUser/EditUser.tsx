@@ -127,6 +127,9 @@ export const EditUser = ({ user, institutions, profiles, roles }: UsersListPageP
       method: "POST",
     }).then(() => {
       redirectPage("/settings/users?status=edit_successfully");
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to update user:", error);
     });
   }
 

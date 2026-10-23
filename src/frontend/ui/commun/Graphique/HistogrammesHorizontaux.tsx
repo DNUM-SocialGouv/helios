@@ -48,7 +48,7 @@ function useChartData(charts: HistogrammeData[], wording: Wording, cacheLesValeu
     async function changeChartData() {
       setChartsData(charts)
     }
-    changeChartData();
+    void changeChartData();
   },
     charts);
 

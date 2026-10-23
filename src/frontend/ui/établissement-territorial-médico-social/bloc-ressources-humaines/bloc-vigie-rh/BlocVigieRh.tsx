@@ -131,7 +131,7 @@ export const BlocVigieRH = ({ etabFiness, etabTitle, blocVigieRHViewModel }: Blo
     async function updateAnneeEnCours() {
       setDonneesAnneeEnCours(donneesPyramides.filter((donneeAnnuel) => donneeAnnuel.annee === anneeEnCours)[0]);
     }
-    updateAnneeEnCours();
+    void updateAnneeEnCours();
   }, [anneeEnCours]);
   const items = donneesEffectifs.data ?? [];
       

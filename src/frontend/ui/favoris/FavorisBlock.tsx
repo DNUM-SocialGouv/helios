@@ -32,7 +32,7 @@ export const FavorisBlock = ({
       setestCeEnAttente(false);
     }
     if (list.length === 0) {
-      resetOnEmptyList();
+      void resetOnEmptyList();
     }
     else
       fetch("/api/recherche-par-finess", {

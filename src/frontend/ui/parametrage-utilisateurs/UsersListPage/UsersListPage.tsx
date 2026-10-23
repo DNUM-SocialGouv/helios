@@ -247,7 +247,7 @@ const UsersListPage = ({
       setFilterParams(params);
       getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
     }
-    updateFilterAndRefreshUsers();
+    void updateFilterAndRefreshUsers();
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   const roleClasses: any = {

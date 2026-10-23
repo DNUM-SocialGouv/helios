@@ -40,7 +40,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
         setUserId(data.user.idUser);
       }
     }
-    updateUserId();
+    void updateUserId();
   }, [data]);
 
 

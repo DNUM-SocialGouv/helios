@@ -27,7 +27,7 @@ export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string
       exportExcelAutorisationSMS(workbook, etabLine, etablissementMSAutorisationsViewModel);
     }
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 
   const exportExcelAutorisationSMS = (workbook: Workbook, etabLine: string, etablissementMSAutorisationsViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel) => {

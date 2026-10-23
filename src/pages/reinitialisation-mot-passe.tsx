@@ -27,7 +27,7 @@ export default function MotPasseOublie() {
         }
       }
     };
-    setTokenWhenReady();
+    void setTokenWhenReady();
   }, [router.isReady, router.pathname, router.query["loginToken"]]);
 
   if (token) {

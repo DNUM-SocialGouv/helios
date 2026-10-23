@@ -120,7 +120,7 @@ export function useRecherche() {
 
     }
     if (router.query["terme"]) {
-      launchSearch();
+      void launchSearch();
     }
   }, []);
 

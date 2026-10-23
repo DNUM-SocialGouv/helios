@@ -9,7 +9,7 @@ const MATOMO_COOKIE_PREFIXES = ["_pk_id", "_pk_ref", "_pk_ses", "_pk_cvar", "_pk
 export type AnalyticsConsentValue = "true" | "false";
 
 const deleteBrowserCookie = (cookieName: string): void => {
-  deleteCookie(cookieName);
+  void deleteCookie(cookieName);
 
   if (typeof window === "undefined") {
     return;
@@ -63,7 +63,7 @@ export const hasAnalyticsConsent = (): boolean => {
 export const setAnalyticsConsent = (value: AnalyticsConsentValue): void => {
   const previousConsent = getAnalyticsConsent();
 
-  setCookie(ANALYTICS_CONSENT_COOKIE, value);
+  void setCookie(ANALYTICS_CONSENT_COOKIE, value);
   applyMatomoConsent(value);
 
   if (typeof window !== "undefined") {

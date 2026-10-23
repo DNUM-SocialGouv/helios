@@ -102,9 +102,9 @@ export function DefinirMsgForm() {
     }
   };
 
-  const handleChoisirNouveauMessage = () => {
+  const handleChoisirNouveauMessage = async () => {
     const idsADesactiver = chevauchements.map((c) => c.id);
-    handleSubmit(true, idsADesactiver);
+    await handleSubmit(true, idsADesactiver);
   };
 
   const handleAnnulerChevauchement = () => {
