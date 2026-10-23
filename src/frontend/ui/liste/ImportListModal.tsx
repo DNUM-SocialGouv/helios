@@ -101,14 +101,14 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
     return label;
   }
 
-  const handleOkButton = () => {
+  const handleOkButton = async () => {
     setTextChanged(false);
     if (isImportForm() && displayNewListInput) {
-      handleListCreation()
+      await handleListCreation()
     } else if (isImportForm() && !displayNewListInput) {
-      addToList(selectedList)
+      await addToList(selectedList)
     } else {
-      importEts()
+      await importEts()
     }
   }
 
@@ -132,9 +132,9 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
     }
   }
 
-  const handleKeyDown = (event: KeyboardEventReact) => {
+  const handleKeyDown = async (event: KeyboardEventReact) => {
     if (event.key === 'Enter' && displayNewListInput) {
-      handleListCreation();
+      await handleListCreation();
     }
   };
 
@@ -160,6 +160,9 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
           if (response) {
             listId = response.id;
           }
+        }).catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to create list:", error);
         });
 
       if (status === 201) {

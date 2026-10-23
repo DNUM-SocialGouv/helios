@@ -57,12 +57,12 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
       await removeFromFavorisList(listFinessNumbers, listId);
       setSelectedRows(new Map());
       setDisplayActions(false);
-      router.replace(router.asPath);
+      void router.replace(router.asPath);
     }
   }
 
   const handleDisplayFavorisPopup = () => {
-    getFavorisLists();
+    void getFavorisLists();
     // On recupere la position du bouton action pour calculer la position de la popup
     if (buttonRef.current) {
       const popupTop = buttonRef.current.getBoundingClientRect().bottom + document.documentElement.scrollTop;

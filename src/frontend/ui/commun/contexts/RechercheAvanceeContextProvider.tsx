@@ -101,9 +101,9 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
       setActivitePsy: (value) => updateSearchParams({ activitePsy: value, page: initialPage }),
       setActiviteSsr: (value) => updateSearchParams({ activiteSsr: value, page: initialPage }),
       setActiviteUsld: (value) => updateSearchParams({ activiteUsld: value, page: initialPage }),
-      setTerme: (value) => { setSearchParams((prevParams) => ({ ...prevParams, terme: value })) },
+      setTerme: (value) => { void setSearchParams((prevParams) => ({ ...prevParams, terme: value })) },
       setTermeFixe,
-      setPage: (value, shallow) => { setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }) },
+      setPage: (value, shallow) => { void setSearchParams({ ...searchParams, page: value }, { shallow: !!shallow }) },
       setOrder: (value) => updateSearchParams({ order: value }),
       setOrderBy: (value) => updateSearchParams({ orderBy: value })
     }}>

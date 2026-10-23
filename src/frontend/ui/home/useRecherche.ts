@@ -64,9 +64,9 @@ export function useRecherche() {
     localStorage.setItem('searchItem', state.terme);
     localStorage.setItem('displayTable', displayTable ? 'true' : 'false');
     if (!displayTable) {
-      rechercher(state.terme, pageInitiale);
+      void rechercher(state.terme, pageInitiale);
     } else {
-      rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
+      void rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
     }
   };
 
@@ -116,7 +116,7 @@ export function useRecherche() {
         estCeQueLesRésultatsSontReçus: false,
         terme: router.query["terme"] as string,
       });
-      rechercher(router.query["terme"] as string, pageInitiale);
+      void rechercher(router.query["terme"] as string, pageInitiale);
 
     }
     if (router.query["terme"]) {

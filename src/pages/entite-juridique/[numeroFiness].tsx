@@ -65,7 +65,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext): Pr
 
       // The page is behind next-auth, the session is guaranteed to be present
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      saveSearchHistoryEndpoint(dependencies, entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value, session?.user.idUser!,
+      void saveSearchHistoryEndpoint(dependencies, entitéJuridiqueEndpoint.entitéJuridique?.raisonSocialeCourte.value, session?.user.idUser!,
         entitéJuridiqueEndpoint.entitéJuridique.numéroFinessEntitéJuridique.value, ETB_ENTITE_JURIDIQUE);
 
       return {

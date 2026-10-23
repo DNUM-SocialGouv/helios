@@ -70,7 +70,7 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
     rechercheAvanceeContext?.setTermeFixe(rechercheAvanceeContext?.terme);
     rechercheAvanceeContext?.setTypeStructure(rechercheAvanceeContext.typeStructure);
     // On retire l'ancre présente dans l'url et qui pose soucis avec le rechargement de la page
-    router.replace(router.asPath.split("#")[0]);
+    void router.replace(router.asPath.split("#")[0]);
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {

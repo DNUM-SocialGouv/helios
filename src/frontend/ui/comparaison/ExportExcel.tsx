@@ -198,7 +198,7 @@ export async function ExportToExcel(
     ];
     ecrireLignesDansSheet(lignes, sheetComparaison);
     remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 }
 
@@ -252,7 +252,7 @@ async function generateAndExportExcel(
       throw new Error("Illegal state: type d'établissement non identifié");
   }
 
-  ExportToExcel(headerYear,
+  void ExportToExcel(headerYear,
     headerType,
     headers,
     dataTransormed,

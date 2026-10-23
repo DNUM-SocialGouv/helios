@@ -58,7 +58,7 @@ export function useRechercheAvanceeComparaison() {
         estCeQueLesRésultatsSontReçus: false,
         estCeQueLaRechercheEstLancee: true,
       });
-      rechercher(
+      void rechercher(
         comparaisonContext?.terme,
         comparaisonContext?.zoneGeo,
         comparaisonContext?.zoneGeoD,

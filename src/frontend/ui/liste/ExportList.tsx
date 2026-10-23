@@ -55,7 +55,7 @@ function ExportToExcel(headers: string[], data: (string | number)[][], fileName:
   const workbook = new Workbook();
   const sheet = workbook.addWorksheet("List");
   ecrireLignesDansSheet([headers, ...data], sheet);
-  telechargerWorkbook(workbook, fileName);
+  void telechargerWorkbook(workbook, fileName);
 }
 
 async function generateAndExportExcel(

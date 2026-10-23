@@ -232,7 +232,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       userListModel.nom = 'Favoris';
       userListModel.userId = user?.code || '';
       userListModel.isFavoris = true;
-      if (user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+      if (user) await (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
 
     } catch (error) {
       // eslint-disable-next-line no-console
