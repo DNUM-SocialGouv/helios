@@ -11,13 +11,13 @@
 - hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
 - hel-1129: [FINESS+] Adapter la table référentielle de libellés courts pour les ET
 - hel-1131: [FINESS+] Ajouter le code postale dans l'adresse de la fiche EJ ET
+- hel-1123: [Technique] renouveler "dépendance check" & traitements des risques à haut impact
 
 ## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
 
 ### Bug Fixes
 
 - hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
-- hel-1123: [Technique] renouveler "dépendance check" & traitements des risques à haut impact
 
 ### Features
 
