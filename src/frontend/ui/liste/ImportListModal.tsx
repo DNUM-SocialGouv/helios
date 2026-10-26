@@ -166,11 +166,11 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
         });
 
       if (status === 201) {
-        addToList(listId);
+        void addToList(listId);
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
-        getFavorisLists();
+        void getFavorisLists();
       } else {
         setNewListError(true);
         setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
@@ -181,7 +181,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   const onSuccessImport = () => {
     onSuccess();
     resetAndClose();
-    getFavorisLists();
+    void getFavorisLists();
   }
 
   const resetAndClose = () => {

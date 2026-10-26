@@ -39,7 +39,14 @@ export function formatNumbuerWithSpaces(number: number) {
   // Convertir le nombre en une chaîne de caractères
   const numberString = numberV2.toString();
   // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
-  return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const parts = [];
+  let str = numberString;
+  while (str.length > 3) {
+    parts.unshift(str.slice(-3));
+    str = str.slice(0, -3);
+  }
+  if (str) parts.unshift(str);
+  return parts.join(' ');
 }
 
 export class AllocationRessourcesViewModel {

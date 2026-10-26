@@ -217,7 +217,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
                 <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.helios-support@sg.social.gouv.fr</p>
                 <p> Cordialement, </p>
                 <p>L'équipe Helios</p>`;
-          sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
+          await sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
         })
         .catch((error) => {
           // eslint-disable-next-line no-console

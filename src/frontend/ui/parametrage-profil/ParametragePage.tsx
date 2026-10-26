@@ -56,7 +56,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
                           aria-label="Copier le code du profil"
                           className="fr-icon-clipboard-line"
                           onClick={() => {
-                            navigator.clipboard.writeText(profile.code);
+                            void navigator.clipboard.writeText(profile.code);
                           }}
                         />
                       </td>

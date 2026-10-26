@@ -61,14 +61,22 @@ export const reindexerRessources = (ressources: RessourceAide[]): RessourceAide[
     const { ...autresChamps } = ressource;
     return { ...autresChamps, ordre: index + 1 };
   });
-const nettoyerSlug = (valeur: string) =>
-  valeur
+
+const nettoyerSlug = (valeur: string) => {
+  const slug = valeur
     .toLowerCase()
     .replaceAll(/\s+/g, "-")
     .replaceAll(/[^a-z0-9-]/g, "")
-    .replaceAll(/-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+    .replaceAll(/-+/g, "-");
+  
+  // Remove leading and trailing hyphens
+  let start = 0;
+  while (start < slug.length && slug[start] === "-") start++;
+  let end = slug.length;
+  while (end > 0 && slug[end - 1] === "-") end--;
+  
+  return slug.slice(start, end);
+};
 
 export const creerSlug = (valeur: string) => {
   const base = valeur.trim();
