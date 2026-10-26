@@ -69,7 +69,7 @@ export function useMdpOublie() {
   const envoyerEmail = (event: FormEvent) => {
     event.preventDefault();
     if (isEmail(state.emailValue)) {
-      envoyerEmailService(state.emailValue)
+      void envoyerEmailService(state.emailValue)
     } else {
       setState({ ...state, errorMessage: 'Email invalide' })
     }
@@ -82,7 +82,7 @@ export function useMdpOublie() {
 
   const retourAccueil = (event: MouseEvent) => {
     event.preventDefault();
-    router.push("/");
+    void router.push("/");
   };
 
   return {

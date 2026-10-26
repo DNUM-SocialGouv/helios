@@ -137,7 +137,7 @@ export function useRecherche() {
       ...state,
       estCeEnAttente: true,
     });
-    rechercher(state.terme, pageSuivante());
+    void rechercher(state.terme, pageSuivante());
   };
 
   const construisLesRésultatsDeLaRecherche = (data: RésultatDeRecherche): RechercheViewModel[] => {

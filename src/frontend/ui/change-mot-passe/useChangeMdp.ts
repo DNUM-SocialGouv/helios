@@ -48,7 +48,7 @@ export function useChangeMdp() {
 
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
-        router.push("/");
+        void router.push("/");
     };
 
     const oldPasswordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ export function useChangeMdp() {
             setErrorMessage("Les mots de passe ne correspondent pas.");
         }
         else {
-            changePasswordService();
+            void changePasswordService();
         }
     }
 

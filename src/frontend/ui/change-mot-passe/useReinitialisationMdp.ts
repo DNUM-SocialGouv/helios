@@ -43,7 +43,7 @@ export function useReinitialisationMdp(loginToken: string) {
     
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
-        router.push("/connexion");
+        void router.push("/connexion");
     };
 
     const passwordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +61,7 @@ export function useReinitialisationMdp(loginToken: string) {
             setErrorMessage("Les mots de passe ne correspondent pas.");
         }
         else {
-            changePasswordService();
+            void changePasswordService();
         }
     }
 
@@ -81,7 +81,7 @@ export function useReinitialisationMdp(loginToken: string) {
                 if (response.status === 200) {
                     setErrorMessage("");
                     userContext?.setPasswordCreated(true);
-                    router.push("/connexion")
+                    void router.push("/connexion")
                 }
                 if (response.status === 400) {
                     if (data.err === "The password must be different from the current password") {

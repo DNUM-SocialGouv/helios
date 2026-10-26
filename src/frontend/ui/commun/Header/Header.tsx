@@ -38,7 +38,7 @@ export const Header = () => {
 
   const logOut = () => {
     push(["deleteCustomDimension", 1]);
-    signOut({ callbackUrl: paths.CONNEXION });
+    void signOut({ callbackUrl: paths.CONNEXION });
     setDisplayMenu(false);
   };
 
