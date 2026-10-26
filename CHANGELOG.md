@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (TO-DO)
+## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.20) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (2026-10-26)
 
 ### Bug Fixes
 - hel-1134: [FINESS+] correctif de l'affichage des libellés courts - fiche d'identité ET SAN et MS
