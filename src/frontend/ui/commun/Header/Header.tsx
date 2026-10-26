@@ -44,7 +44,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      getFavorisLists();
+      void getFavorisLists();
     }
   }, [status]);
 

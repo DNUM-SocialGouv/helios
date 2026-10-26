@@ -32,7 +32,7 @@ export default function CreerMotPasse() {
 
   if (token) {
 
-    checkTokenService(token);
+    void checkTokenService(token);
     return (
       <>
         {isChecking ? <Spinner /> : validToken ? (

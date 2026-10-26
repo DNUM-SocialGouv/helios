@@ -32,7 +32,7 @@ export default function MotPasseOublie() {
 
   if (token) {
 
-    checkTokenService(token);
+    void checkTokenService(token);
     return (
       <>
         {isChecking ? <Spinner /> : validToken ? (

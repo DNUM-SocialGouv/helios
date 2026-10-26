@@ -44,7 +44,7 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
   useEffect(() => {
     async function handleRecherche() {
       if (data.laRechercheEtendueEstLancee) {
-        getFavorisLists();
+        void getFavorisLists();
         setState({
           ...state,
           estCeQueLesRésultatsSontReçus: true,

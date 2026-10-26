@@ -26,7 +26,7 @@ export function useParametrage() {
       method: "POST",
     }).then((response) => {
       if (response.status === 200)
-        router.push(paths.PROFILES_LIST)
+        void router.push(paths.PROFILES_LIST)
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.error("Failed to update profile:", error);
@@ -46,7 +46,7 @@ export function useParametrage() {
       return response.text();
     }).then((message) => {
       if (statusCode === 200) {
-        router.push(paths.PROFILES_LIST)
+        void router.push(paths.PROFILES_LIST)
         return ErrorKind.OK;
       } else if (statusCode === 400) {
         if (message === "Bad request: label is required") {

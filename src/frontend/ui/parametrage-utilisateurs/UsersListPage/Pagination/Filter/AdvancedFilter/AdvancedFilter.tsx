@@ -44,37 +44,37 @@ const AdvancedFilter = ({
 
   const handleChangeInstitution = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setInstitutionId(e.target.value as unknown as number);
-    setPage(1);
+    void setInstitutionId(e.target.value as unknown as number);
+    void setPage(1);
   };
 
   const handleChangeRole = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setRoleId(e.target.value as unknown as number);
-    setPage(1);
+    void setRoleId(e.target.value as unknown as number);
+    void setPage(1);
   };
 
   const handleChangeProfil = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setProfileId(e.target.value);
-    setPage(1);
+    void setProfileId(e.target.value);
+    void setPage(1);
   };
 
   const handleChangeEtat = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setEtatId(e.target.value);
-    setPage(1);
+    void setEtatId(e.target.value);
+    void setPage(1);
   };
 
   const handleResetFilter = async () => {
-    setKey("");
-    setInstitutionId(0);
-    setProfileId("");
-    setEtatId("");
-    setRoleId(0);
-    setPage(1);
-    setOrderBy("nom");
-    setSortDir("ASC");
+    void setKey("");
+    void setInstitutionId(0);
+    void setProfileId("");
+    void setEtatId("");
+    void setRoleId(0);
+    void setPage(1);
+    void setOrderBy("nom");
+    void setSortDir("ASC");
 
     const params = {
       page: 1,

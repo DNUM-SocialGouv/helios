@@ -54,7 +54,7 @@ export function useRecherche() {
 
   const lancerLaRecherche = (event: MouseEvent | ChangeEvent<HTMLInputElement>, displayTable: boolean) => {
     sendEvent(RECHERCHE_SIMPLE);
-    getFavorisLists();
+    void getFavorisLists();
     if (event) event.preventDefault();
     setState({
       ...state,

@@ -46,6 +46,9 @@ export function useFavoris() {
       .then((response) => response.json())
       .then((data) => {
         userContext?.setFavorisLists(data);
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch favoris lists:", error);
       });
   };
 

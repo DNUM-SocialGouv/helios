@@ -68,6 +68,10 @@ export const TableauListeEtablissements = ({ list, selectedRows, setSelectedRows
         .then((data) => {
           setDataOnPage(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
           setLoading(false);
+        }).catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to fetch data:", error);
+          setLoading(false);
         });
     }
     void updateTable();

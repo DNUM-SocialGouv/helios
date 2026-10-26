@@ -83,7 +83,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
         }
       }
     } else {
-      updateProfile(userId, codeValue, {
+      await updateProfile(userId, codeValue, {
         institution: {
           profilEJ: editableInstitutionEJValues,
           profilMédicoSocial: editableInstitutionETMSValues,
@@ -100,7 +100,7 @@ export const ProfileTable = ({ codeValue, profileValue, creating, name, profileI
   };
 
   const cancelButtonClick = () => {
-    router.push(paths.PROFILES_LIST);
+    void router.push(paths.PROFILES_LIST);
   }
 
   return (

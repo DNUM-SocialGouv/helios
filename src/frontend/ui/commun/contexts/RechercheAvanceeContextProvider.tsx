@@ -74,7 +74,7 @@ export const RechecheAvanceeContextProvider = ({ children }: RechercheAvanceePro
   const [categoriesLibellesCourt, setCategoriesLibellesCourt] = useState<string[]>([]);
 
   const updateSearchParams = (newParams: Partial<SearchParams>) => {
-    setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
+    void setSearchParams((prevParams) => ({ ...prevParams, ...newParams }), { shallow: false })
   };
 
 

@@ -49,7 +49,7 @@ export const ListActionsButton = ({ selectedRows, setSelectedRows, listId, onAdd
         break;
     }
     sessionStorage.setItem("listFinessNumbers", JSON.stringify(listFinessNumbers));
-    router.push("/comparaison");
+    void router.push("/comparaison");
   }
 
   const onClickDelete = async () => {
