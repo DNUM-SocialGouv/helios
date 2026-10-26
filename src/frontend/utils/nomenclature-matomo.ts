@@ -74,3 +74,8 @@ export const FILTRE_STATUT_JURIDIQUE_PNL = {category: 'filtre', action: 'valeur_
 
 // création de liste
 export const CREATION_LISTE = {category: 'liste', action: 'creer'};
+
+// bloc vigie rh
+export const RESSOURCES_HUMAINES = {category: 'vigie_rh', action: 'ouvrir', name: 'ressources_humaines'};
+export const RESSOURCES_HUMAINES_TDP = {category: 'vigie_rh', action: 'ouvrir', name: 'tdb_performance'};
+export const RESSOURCES_HUMAINES_DSN = {category: 'vigie_rh', action: 'ouvrir', name: 'dsn'};
