@@ -73,16 +73,15 @@ function MatomoTracker({ analyticsConsent, children }: PropsWithChildren<{ analy
   }, [analyticsConsent, isAnalyticsEnabled, session?.user?.role, status]);
 
   useEffect(() => {
-    if (!analyticsConsent || (!MATOMO_PROXY_PATH && !MATOMO_URL) || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled || status === "loading" ) {
+    const role = matomoUserRole(session?.user?.role);
+    if (!analyticsConsent || !role || (!MATOMO_PROXY_PATH && !MATOMO_URL) || !MATOMO_SITE_ID || matomoInitialise.current || !isAnalyticsEnabled || status === "loading" ) {
       return;
     }
 
-    const role = matomoUserRole(session?.user?.role);
+    
     if (role) {
       matomoPush(["setCustomDimension", 1, role]);
-    } else {
-      matomoPush(["deleteCustomDimension", 1]);
-    }
+    } 
 
     trackPagesRouter({ ...(MATOMO_PROXY_PATH ? {} : { url: MATOMO_URL }), excludeUrlsPatterns: EXCLUDED_MATOMO_URL_PATTERNS, siteId: MATOMO_SITE_ID });
     matomoInitialise.current = true;
