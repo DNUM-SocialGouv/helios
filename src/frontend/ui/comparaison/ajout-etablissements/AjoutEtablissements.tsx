@@ -55,7 +55,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
       }
       setSortedFavorisList(list);
     }
-    updateSortedFavorisList();
+    void updateSortedFavorisList();
   }, [userContext?.favorisLists])
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
         setCurrentPageData(resultats);
       }
     }
-    updatePageDataOnScroll();
+    void updatePageDataOnScroll();
   }, [resultats, isAtBottom]);
 
   // check if lits are equals or not
@@ -93,7 +93,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
         setListData(collectData);
       }
     }
-    addNewDataOnPageChange();
+    void addNewDataOnPageChange();
   }, [currentPageData]);
 
   // lancer la recherche quand la page change
@@ -102,7 +102,7 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
       lancerLaRecherche();
       setReload(false);
     }
-    launchSearchOnPageChange();
+    void launchSearchOnPageChange();
   }, [prevPage, reload]);
 
   // detect filtre(s) changes to update results
@@ -121,14 +121,14 @@ export const AjoutEtablissements = ({ setIsShowAjoutEtab, setComparedTypes, hand
         }
       }
     }
-    updateResultsOnFilterChange();
+    void updateResultsOnFilterChange();
   }, [isChangedZG, isChangedCapacite, isChangedCategories, isChangedStructure, isChangedActivite, comparaisonContext?.terme]);
 
   useEffect(() => {
     async function updateEtablissementsList() {
       setNewEtablissements([...new Set([...newEtablissementsList, ...newEtablissementsRecherche])])
     }
-    updateEtablissementsList();
+    void updateEtablissementsList();
   }, [newEtablissementsList, newEtablissementsRecherche])
 
   // fonction de la fermeture du composent

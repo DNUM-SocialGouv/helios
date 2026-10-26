@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useState, useRef } from "react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
@@ -15,15 +15,7 @@ type InfoBulleProps = Readonly<{
 
 export const InfoBulleComparaison = ({ children, estCeOuvert, identifiant, setEstCeOuvert, titre }: InfoBulleProps) => {
   const { wording } = useDependencies();
-  const [container, setContainer] = useState<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    async function changeContent() {
-      setContainer(document.body);
-    }
-    changeContent();
-  }, []);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -81,10 +73,6 @@ export const InfoBulleComparaison = ({ children, estCeOuvert, identifiant, setEs
       </div>
     </dialog>
   );
-
-  if (!container) {
-    return null;
-  }
 
   return createPortal(InfoBulleContent, document.body);
 };

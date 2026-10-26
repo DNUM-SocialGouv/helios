@@ -20,7 +20,7 @@ export const ActionsButton = ({ finess, downloadPDF, exportET }: ActionsButtonPr
   const lancerComparaison = () => {
     sendEvent(COMPARAISON_LANCER_FICHE_ETABLISSEMENT);
     sessionStorage.setItem("listFinessNumbers", JSON.stringify([finess]));
-    router.push("/comparaison");
+    void router.push("/comparaison");
   }
 
   return (

@@ -41,7 +41,7 @@ export const FiltreCategoriesFiness = ({ isComparaison, setIsChanged, categories
     async function filtreCategoriesAuChangementDeTerme() {
       filtrerLesCategories();
     }
-    filtreCategoriesAuChangementDeTerme();
+    void filtreCategoriesAuChangementDeTerme();
   }, [terme])
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {

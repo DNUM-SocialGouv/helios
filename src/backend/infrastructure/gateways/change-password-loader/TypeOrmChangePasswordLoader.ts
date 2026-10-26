@@ -19,7 +19,7 @@ export class TypeOrmChangePasswordLoader implements ChangePasswordLoader {
       user.lastConnectionDate = new Date();
     }
 
-    (await this.orm).getRepository(UtilisateurModel).save(user);
+    await (await this.orm).getRepository(UtilisateurModel).save(user);
 
     return "user updated";
   };

@@ -25,8 +25,8 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
     setDisplayMenu(false);
   }
   const onClickDeleteList = () => {
-    deleteList(id);
-    router.push(paths.MES_LISTES)
+    void deleteList(id);
+    void router.push(paths.MES_LISTES)
   }
 
   const onClickConfirmUpdate = () => {
@@ -41,7 +41,7 @@ const ListNameButton = ({ id, name }: { id: number, name: string }) => {
         path: "",
       },
     ])
-    updateName(id, newName);
+    void updateName(id, newName);
     setListName(newName);
   }
 

@@ -78,7 +78,7 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
       setEIGSTotal(events.evenementsEncours.filter((event) => event.est_EIGS).length + events.evenementsClotures.filter((event) => event.est_EIGS).length);
       setNonEIGSTotal(events.evenementsEncours.filter((event) => !event.est_EIGS).length + events.evenementsClotures.filter((event) => !event.est_EIGS).length);
     }
-    updateEvents();
+    void updateEvents();
   }, [events]);
 
   const valeursDesHistogrammes: HistogrammeWithToggleData[] = useMemo(() => {
@@ -145,7 +145,7 @@ const EventTag = ({ events }: EventTagProps): ReactElement => {
         clearTimeout(id);
       };
     }
-    hideHistogrammeTransition();
+    void hideHistogrammeTransition();
   }, [valeursDesHistogrammes]);
 
   return (

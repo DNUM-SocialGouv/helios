@@ -26,8 +26,11 @@ export function useParametrage() {
       method: "POST",
     }).then((response) => {
       if (response.status === 200)
-        router.push(paths.PROFILES_LIST)
-    })
+        void router.push(paths.PROFILES_LIST)
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to update profile:", error);
+    });
   }
 
   const saveProfile = async (userId: string, label: string, profile: ProfileValue) => {
@@ -43,7 +46,7 @@ export function useParametrage() {
       return response.text();
     }).then((message) => {
       if (statusCode === 200) {
-        router.push(paths.PROFILES_LIST)
+        void router.push(paths.PROFILES_LIST)
         return ErrorKind.OK;
       } else if (statusCode === 400) {
         if (message === "Bad request: label is required") {
@@ -54,7 +57,10 @@ export function useParametrage() {
       } else {
         return ErrorKind.UNKNOWN_ERROR;
       }
-    })
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to save profile:", error);
+    });
   };
 
   const getAllProfiles = (userId: string) => {
@@ -66,6 +72,10 @@ export function useParametrage() {
       .then((response) => response.json())
       .then((data) => {
         profileContext?.setProfiles(data.response);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch profiles:", error);
       });
   };
 

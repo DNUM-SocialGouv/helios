@@ -26,7 +26,7 @@ export const FavorisPage = () => {
 
       setSortedFavorisList(list);
     }
-    sortList();
+    void sortList();
   }, [userContext?.favorisLists])
 
   const onSucess = () => {

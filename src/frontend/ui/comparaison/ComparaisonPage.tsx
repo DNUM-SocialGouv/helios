@@ -83,7 +83,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
         });
         setTriggerCompare(Date.now());
       };
-      resetParams();
+      void resetParams();
     }
   }, [structureChoice, comparedTypes]);
 
@@ -92,7 +92,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       structureChoice !== "" &&
       params.annéeEnCours
     ) {
-      lancerLaComparaison(
+      void lancerLaComparaison(
         params.comparedFiness,
         structureChoice,
         params.annéeEnCours.toString(),
@@ -150,7 +150,7 @@ export const ComparaisonPage = ({ datesMisAjour, codeProfiles, codeRegion, categ
       const typesSelected = await getcomparedTypes(listFinessNumbers ? JSON.parse(listFinessNumbers) : [])
       setComparedTypes(typesSelected)
     }
-    getSelectedTypesForCompare();
+    void getSelectedTypesForCompare();
   }, [])
 
   useEffect(() => {

@@ -29,7 +29,7 @@ export const NombreDeSejourMCOHistogrammes = ({ etabTitle, etabFiness, nomGraph,
     async function updateAnnee() {
       setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
     }
-    updateAnnee();
+    void updateAnnee();
   }, [selectedFrequency])
 
   const activitesMCO = [wording.MÉDECINE, wording.CHIRURGIE, wording.OBSTÉTRIQUE];

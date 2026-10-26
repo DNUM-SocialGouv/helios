@@ -16,7 +16,7 @@ def filtrer_les_autorisations(autorisations: pd.DataFrame) -> pd.DataFrame:
 def détermine_l_installation_de_l_autorisation(autorisations: pd.DataFrame) -> pd.DataFrame:
     autorisations_avec_installation = autorisations.copy()
     autorisations_avec_installation["est_installee"] = (autorisations["est_installee"] == "N") | autorisations["est_installee"].isna()
-    autorisations_avec_installation.drop(columns=["est_autorisee"], inplace=True)
+    autorisations_avec_installation =autorisations_avec_installation.drop(columns=["est_autorisee"])
     return autorisations_avec_installation
 
 

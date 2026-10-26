@@ -43,6 +43,9 @@ export const GrilleListEtablissements = ({
             .then((response) => response.json())
             .then((data) => {
                 setDataOnPage(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+            }).catch((error) => {
+                // eslint-disable-next-line no-console
+                console.error("Failed to fetch data:", error);
             });
     }, [list, favorisList, limit])
 

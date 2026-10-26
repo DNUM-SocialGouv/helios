@@ -224,7 +224,7 @@ export function useModalSelectionIndicateur(structure: string) {
     async function updateEnabledIndicatorOnIndicatorsChange() {
       setEnabledIndicators(getEnabledIndicators());
     }
-    updateEnabledIndicatorOnIndicatorsChange();
+   void updateEnabledIndicatorOnIndicatorsChange();
   }, [indicators, structure]);
 
   const toggleIndicator = (category: IndicatorCategory, columnName: string) => {

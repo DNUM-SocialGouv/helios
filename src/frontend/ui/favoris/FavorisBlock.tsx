@@ -32,7 +32,7 @@ export const FavorisBlock = ({
       setestCeEnAttente(false);
     }
     if (list.length === 0) {
-      resetOnEmptyList();
+      void resetOnEmptyList();
     }
     else
       fetch("/api/recherche-par-finess", {
@@ -45,6 +45,10 @@ export const FavorisBlock = ({
         .then((data) => {
           setestCeEnAttente(false);
           setlistEtablissements(data.map((résultat: any) => new RechercheViewModel(résultat, paths)));
+        }).catch((error) => {
+          setestCeEnAttente(false);
+          // eslint-disable-next-line no-console
+          console.error(error);
         });
   }, [favorisList])
 

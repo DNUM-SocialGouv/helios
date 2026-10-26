@@ -171,7 +171,7 @@ const TableBody = ({ headers, data, forMoyenne, total, selectedRows, handleSelec
     async function updateSearchItem() {
       setSearchItem(localStorage.getItem('searchItem') ?? "")
     }
-    updateSearchItem();
+    void updateSearchItem();
   }, []);
 
   const couleurLogo = "#000000"; // Logos en noir

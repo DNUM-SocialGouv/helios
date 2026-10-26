@@ -17,7 +17,10 @@ export function ParametrageMsgAccueil() {
     if (slugSelectionne === wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE) {
       fetch("/api/messages-accueil")
         .then((res) => res.ok ? res.json() : [])
-        .then((data) => setMessages(data));
+        .then((data) => setMessages(data))
+        .catch(() => {
+        setMessages([]);
+      });
     }
   }, [slugSelectionne, wording.PARAMETRAGE_MESSAGE_ACCUEIL_HISTORIQUE]);
   

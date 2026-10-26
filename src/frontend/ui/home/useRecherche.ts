@@ -54,7 +54,7 @@ export function useRecherche() {
 
   const lancerLaRecherche = (event: MouseEvent | ChangeEvent<HTMLInputElement>, displayTable: boolean) => {
     sendEvent(RECHERCHE_SIMPLE);
-    getFavorisLists();
+    void getFavorisLists();
     if (event) event.preventDefault();
     setState({
       ...state,
@@ -64,9 +64,9 @@ export function useRecherche() {
     localStorage.setItem('searchItem', state.terme);
     localStorage.setItem('displayTable', displayTable ? 'true' : 'false');
     if (!displayTable) {
-      rechercher(state.terme, pageInitiale);
+      void rechercher(state.terme, pageInitiale);
     } else {
-      rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
+      void rechercher(state.terme, pageInitiale, defaultOrder, defaultOrderBy, true)
     }
   };
 
@@ -116,11 +116,11 @@ export function useRecherche() {
         estCeQueLesRésultatsSontReçus: false,
         terme: router.query["terme"] as string,
       });
-      rechercher(router.query["terme"] as string, pageInitiale);
+      void rechercher(router.query["terme"] as string, pageInitiale);
 
     }
     if (router.query["terme"]) {
-      launchSearch();
+      void launchSearch();
     }
   }, []);
 

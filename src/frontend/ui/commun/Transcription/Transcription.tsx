@@ -34,7 +34,7 @@ export const Transcription = ({ disabled = false, entêteLibellé, identifiants,
     async function changeContent() {
       setContainer(document.body);
     }
-    changeContent();
+    void changeContent();
   }, []);
   if (identifiantUnique === "" && identifiants[0] === undefined) return null;
 

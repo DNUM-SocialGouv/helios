@@ -137,7 +137,7 @@ export const FiltreZoneGeographique = ({ isComparaison, setIsChanged, zoneGeoVal
 
   const debouncedFetchSuggestions = debounce((searchQuery: string) => {
     const requestId = ++requestCounterRef.current; // Increment the request counter
-    fetchSuggestions(searchQuery, requestId);
+    void fetchSuggestions(searchQuery, requestId);
   }, 300);
 
   useEffect(() => {

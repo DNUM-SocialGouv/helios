@@ -55,7 +55,7 @@ export default function SettingsParametragePage({ profiles, aideData, initialTab
       query[TAB_QUERY_KEY] = tab;
     }
 
-    router.replace({ pathname: router.pathname, query }, undefined, { shallow: true });
+    void router.replace({ pathname: router.pathname, query }, undefined, { shallow: true });
   };
 
   return (

@@ -54,14 +54,14 @@ export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheP
       const terme = localStorage.getItem('searchItem') ?? '';
 
       if (!displayTable) {
-        rechercher(terme, pageInitiale);
+        void rechercher(terme, pageInitiale);
       } else {
-        rechercher(terme, pageInitiale, defaultOrder, defaultOrderBy, storedDisplayTable)
+        void rechercher(terme, pageInitiale, defaultOrder, defaultOrderBy, storedDisplayTable)
       }
     }
 
     if (localStorage.getItem('searchItem') && localStorage.getItem('FromBackToSearch') === 'true') {
-      loadDisplayKind();
+      void loadDisplayKind();
     }
   }, [])
 

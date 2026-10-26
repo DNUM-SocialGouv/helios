@@ -107,7 +107,7 @@ export const FiltreActiviteSanitaire = ({ isComparaison, setIsChanged }: Filtres
       rechercheAvanceeContext?.activiteSsr.length === 0 &&
       rechercheAvanceeContext?.activiteUsld.length === 0
     ) {
-      resetFilter();
+      void resetFilter();
     }
   }, [rechercheAvanceeContext?.activiteMco, rechercheAvanceeContext?.activitePsy, rechercheAvanceeContext?.activiteSsr, rechercheAvanceeContext?.activiteUsld]);
 

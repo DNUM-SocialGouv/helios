@@ -23,7 +23,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {
-              router.push(paths.ADD_PROFILE);
+              void router.push(paths.ADD_PROFILE);
             }}
           >
             Ajouter une autorisation
