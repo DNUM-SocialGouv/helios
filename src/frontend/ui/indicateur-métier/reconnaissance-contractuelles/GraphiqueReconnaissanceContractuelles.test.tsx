@@ -30,7 +30,8 @@ describe("GraphiqueReconnaissanceContractuelles", () => {
         autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }],
       }),
       mock<EquipementsMateriauxLourdsActivités>(),
-      wording
+      wording,
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
     );
   });
 
