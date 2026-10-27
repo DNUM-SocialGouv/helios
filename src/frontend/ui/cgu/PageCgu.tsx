@@ -3,26 +3,88 @@ export const PageCgu = () => {
     <>
       <h1>Conditions Générales d’Utilisation</h1>
       <p>
-        <i> Dernière mise à jour : 20 Mars 2026</i>
+        <b> Dernière mise à jour : 23 novembre 2026</b>
+      </p>
+      <div className="fr-mb-5w">
+      <p>
+        <h2>Définitions  </h2>
+        <ul>
+          <li>Application : plateforme accessible via web </li>
+          <li>Compte : espace personnel de l’utilisateur  </li>
+          <li>Utilisateur : toute personne utilisant l’application  </li>
+          <li>Administrateur régional : utilisateur ayant un accès à l’administration des comptes utilisateurs appartenant à son institution </li>
+          <li>Administrateur national : utilisateur ayant un accès à l’administration de l’ensemble des comptes utilisateurs. </li>
+          <li>Institution : structure d’appartenance de l’utilisateur </li>
+        </ul>     
+     </p>
+     </div>
+     <div className="fr-mb-5w">
+      <h2>Objet et acceptation des CGU  </h2>
+      <p>
+        Les présentes Conditions Générales d’Utilisation (CGU) encadrent les conditions d’accès et d’utilisation de l’application « Helios » par les utilisateurs.  
       </p>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ornare neque, eu finibus elit. Curabitur vitae sem euismod, consequat turpis eget, ultricies mi. Phasellus suscipit luctus orci ut rutrum. Duis nec dignissim odio. Morbi condimentum ut odio ut porta. Donec eu blandit justo, sollicitudin lobortis nibh. Cras ultrices ex luctus tortor congue, et varius massa dignissim. Phasellus euismod, lacus eu maximus volutpat, nunc nibh aliquam leo, id fringilla risus dui ut urna. Sed consectetur enim eu finibus lacinia. Proin porttitor varius magna accumsan auctor. In nec iaculis lectus. Pellentesque viverra diam vel arcu ullamcorper fringilla.
+        L’application centralise des données provenant de diverses sources et les affiche sous forme d’indicateurs. Ceux-ci sont ensuite présentés dans des fiches dédiées  
+        aux entités juridiques, aux établissements sanitaires, sociaux et médico-sociaux, offrant ainsi aux utilisateurs une vision globale, consolidée.  
       </p>
       <p>
-        Suspendisse mattis placerat nisi, in mollis ex. Aenean in commodo nisi. Sed vitae lacinia nisl, a gravida nisl. Pellentesque ac commodo justo. Morbi fermentum mauris sed turpis rutrum, a scelerisque sem molestie. Phasellus vitae facilisis lacus. Ut blandit lacus quis fermentum maximus. In non ligula porttitor, aliquam mi quis, lobortis diam. Curabitur eu massa sit amet sem pulvinar maximus sit amet sit amet nunc. Nulla facilisi. Curabitur ipsum urna, condimentum vel fringilla in, feugiat non mi.
+        L’utilisation de Helios implique l’acceptation expresse et sans réserve des présentes CGU. Les CGU sont accessibles à tout moment dans l’application.   
+      </p>
+     </div>
+     <div className="fr-mb-5w">
+      <h2>Accès au service et création de compte  </h2>
+      <p>
+        L’accès est restreint aux agents des Agences Régionales de Santé (ARS) et des Directions Administrative Centrale (DAC) des ministères sociaux.  
       </p>
       <p>
-        Mauris non velit a risus rutrum dignissim. Sed hendrerit est nec magna mollis, quis ornare arcu efficitur. Ut congue tellus a ante pretium, et congue nulla luctus. Vestibulum sem nisi, semper in egestas sed, tristique a turpis. In id maximus purus. Fusce ac pulvinar mauris. Cras pellentesque quam sit amet sodales ultricies. Curabitur lacinia, massa ut dictum lobortis, enim neque luctus diam, sed egestas felis velit vel sapien. In a ex tellus. Vestibulum consectetur malesuada diam, eget blandit neque vulputate id. Vivamus id congue mauris. Suspendisse quis sodales dui.
+        L’utilisateur est autonome dans la création de son compte. A la saisie de son adresse électronique professionnelle et de son institution d’appartenance,  
+        l’utilisateur reçoit un mail pour créer son mot de passe.  
       </p>
-      <h2 className="fr-h6">Lorem ipsum :</h2>
-      <ol>
-        <li className="fr-mb-2w">
-          Ut id magna eget ante luctus venenatis vel a nisi. In hac habitasse platea dictumst. Aenean placerat tincidunt aliquet. Morbi posuere leo in malesuada venenatis. Donec eu odio purus. Pellentesque dictum massa at mattis tincidunt. Curabitur eget augue commodo, congue turpis ac, fermentum leo. Donec ornare massa sollicitudin est mollis ultricies. Ut mollis ac augue id posuere. Integer lobortis turpis in lorem pretium pretium.
-        </li>
-        <li className="fr-mb-2w">
-          Cras posuere ornare viverra. Nullam justo diam, euismod ac interdum sed, mollis eu sapien. Nulla ut ultrices purus. In eu volutpat dui. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam posuere posuere nisi at volutpat. Maecenas dapibus sagittis massa imperdiet blandit.
-        </li>
-      </ol>
+      <p>
+        Les droits minimums sont attribués lors de la création du compte. Seul un administrateur régional ou un administrateur national peut modifier les droits  
+        d’un utilisateur.  
+      </p>
+      <p>
+        Les administrateurs régionaux ne visualisent et accèdent qu’aux comptes des utilisateurs de leur institution.  
+      </p>
+      <p>
+        Un compte est inactivé au bout de 6 mois d’inactivité. 
+      </p>
+     </div>
+     <div className="fr-mb-5w">
+      <h2>Responsabilité de l’utilisateur  </h2>
+      <p>
+        Chaque utilisateur devra s’authentifier à chacun de ses accès à Helios au moyen d’un identifiant et d’un mot de passe dont l’usage lui est strictement réservé.  
+      </p>
+      <p>
+        Chaque utilisateur s’engage à :  
+        <ul>
+          <li>Ne jamais communiquer son mot de passe et/ou son identifiant à un tiers. </li>
+          <li>Utiliser un courriel professionnel lors de la création de son compte utilisateur. </li>
+          <li>Ne pas conserver, au-delà du strict besoin, les données téléchargées ou imprimées.  </li>
+          <li>Ne pas enregistrer les documents téléchargés sur des espaces « grand public » (Google drive, OneDrive, GitHub, Dropbox…).</li>
+          <li>Verrouiller ou fermer les sessions ouvertes en quittant un poste de travail, afin de ne pas laisser des ressources ou des services disponibles sans identification. </li>
+          <li>Ne pas se livrer à des actions mettant sciemment en péril la sécurité ou le bon fonctionnement de Helios. </li>
+          <li>Uniquement transmettre de manière sécurisée, et si nécessité, les données en provenance de Helios à des destinataires légitimes au sein d’un   
+              environnement professionnel (messagerie ou espace collaboratif professionnel). </li>
+          <li>Ne pas transmettre d’informations permettant une identification directe ou indirecte (notamment en cas de petits effectifs).  </li>
+        </ul>
+      </p>
+      <p>
+        Chaque utilisateur avec les droits d’administrateur régional ou d’administrateur national s’engage à :
+        <ul>
+          <li>Vérifier que l’utilisateur appartient à son institution.</li>
+          <li>Attribuer les rôles adéquats à l’utilisateur.</li>
+          <li>Désactiver systématiquement les comptes des utilisateurs lors de leurs départs de l’institution.</li>
+        </ul>
+      </p>
+     </div>
+    <div className="fr-mb-5w">
+      <h2>Modification des CGU </h2>
+      <p>
+       Le terme des présentes conditions d’utilisation se réserve le droit de modifier les présentes CGU à tout moment.
+      </p>  
+    </div>
     </>
   );
 };
