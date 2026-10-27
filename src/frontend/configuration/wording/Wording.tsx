@@ -39,6 +39,7 @@ export interface Wording {
   readonly TITRE_PAGE_DONNÉES_PERSONNELLES: string;
   readonly TITRE_PAGE_INACCESSIBLE: string;
   readonly TITRE_PAGE_ECO_CONCEPTION: string;
+  readonly TITRE_PAGE_CGU: string;
   readonly TITRE_PAGE_GESTION_COOKIES: string;
 
   // Breadcrumb
@@ -470,6 +471,7 @@ export interface Wording {
   readonly POLITIQUE_CONFIDENTIALITE: string;
   readonly SAVOIR_PLUS: string;
   readonly VOIR_SITE_OFFICIEL: string;
+  readonly CGU: string;
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string;

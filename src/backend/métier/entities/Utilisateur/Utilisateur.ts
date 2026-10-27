@@ -15,4 +15,5 @@ export type Utilisateur = {
     dateModification: Date;
     creePar: number;
     modifiePar: number;
+    cgu: boolean;
 };
