@@ -3,6 +3,7 @@
 ## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.20) (TO-DO)
 
 ### Bug Fixes
+- hel-1139: [RGAA] Correctif du texte de la déclaration non-conformité
 
 ### Features
 
