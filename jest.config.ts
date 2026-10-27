@@ -1,4 +1,4 @@
-import nextJest from "next/jest";
+import nextJest from "next/jest.js";
 import * as fs from 'node:fs';
 
 import type { Config } from "jest";
@@ -38,4 +38,4 @@ async function jestConfig() {
   return nextJestConfig;
 }
 
-module.exports = jestConfig;
+export default jestConfig;
