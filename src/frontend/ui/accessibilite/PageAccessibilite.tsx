@@ -16,7 +16,7 @@ export const PageAccessibilite = () => {
             2005.  
         </p>
         <p>
-          À cette fin, ils mettent en œuvre la stratégie et les actions du <a className="fr-link"  href="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028"  rel="noreferrer" target="_blank" title="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028 - nouvelle Fenêtre">chéma pluriannuel  
+          À cette fin, ils mettent en œuvre la stratégie et les actions du <a className="fr-link"  href="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028"  rel="noreferrer" target="_blank" title="https://travail-emploi.gouv.fr/schema-pluriannuel-daccessibilite-numerique-2025-2028 - nouvelle Fenêtre">schéma pluriannuel  
           d’accessibilité numérique 2025-2028 et plan d’actions</a>.
         </p>
         <p>Plan d ‘actions 2027 - 2029 pour le site Helios - fiche de synthèse des données   
