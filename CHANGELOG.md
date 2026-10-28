@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.20) (TO-DO)
+## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.19.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.19.1) (2026-10-28)
 
 ### Bug Fixes
 
