@@ -1,10 +1,11 @@
 # Changelog d'Helios
 
-## [1.8.17](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.17) (TO-DO)
+## [1.8.16.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.16.1) (2026-10-29)
 
 ### Bug Fixes
 
 ### Features
+- hel-1135: [Sécurité] Correctif CVE critique - Node.js
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
 
