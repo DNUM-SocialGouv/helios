@@ -6,6 +6,7 @@
 
 ### Features
 - hel-1138: [Bloc Budget et finances] STARS FIR - Correctif de l'affichage des montants
+- hel-1136: envoyer l'evenement matomo vigie rh que à l'ouverture des blocs
 
 ## [1.8.19.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.19.1) (2026-10-28)
 
