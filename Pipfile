@@ -31,7 +31,7 @@ types-paramiko = ">4.0.0"
 sqlalchemy-stubs = "==0.4"
 
 [requires]
-python_full_version = "3.11.14" # Conserver la même version que celle dans helios-ci.yml
+python_version = "3.11" # Allow any Python 3.11.x version (3.11.13+)
 
 [scripts]
 encrypt_diamant = 'python -m datacrawler.test_helpers.chiffre_diamant'
