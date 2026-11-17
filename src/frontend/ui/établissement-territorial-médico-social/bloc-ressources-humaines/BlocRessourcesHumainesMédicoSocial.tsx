@@ -41,6 +41,7 @@ export const BlocRessourcesHumainesMédicoSocial = ({
           etablissementTerritorialMedicoSocialRessourcesHumainesViewModel={établissementTerritorialMédicoSocialRessourcesHumainesViewModel}
           setStatusSousBlocs={setStatusSousBlocs}
           statusSousBlocs={statusSousBlocs}
+          parentBlocIsOpen={opnedBloc ?? false}
         />
         : <ContenuBlocRHMedicoSocialHelios
           etabFiness={etabFiness}

@@ -53,11 +53,13 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     };
 
   const openBlocRH = () => {
-    toggelBlocs(2);
-    if(établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement === "500 - Etablissement d'hébergement pour personnes âgées dépendantes"){
+    const isCurrentlyOpen = statusBlocs[2];
+    const willBeOpen = !isCurrentlyOpen;
+    if(willBeOpen && établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement === "500 - Etablissement d'hébergement pour personnes âgées dépendantes"){
+      console.log("Opening RH bloc");
       sendEvent(RESSOURCES_HUMAINES);
     }
-    
+    toggelBlocs(2);
   };
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
