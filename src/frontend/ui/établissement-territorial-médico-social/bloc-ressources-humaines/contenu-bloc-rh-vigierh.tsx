@@ -13,7 +13,6 @@ type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
   statusSousBlocs: boolean[];
   setStatusSousBlocs: React.Dispatch<React.SetStateAction<boolean[]>>;
   blocVigieRhViewModel: BlocVigieRHViewModel;
-  parentBlocIsOpen: boolean;
 }>;
 
 export const ContenuBlocRHMedicoSocialVigieRH = ({
@@ -22,8 +21,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
   etablissementTerritorialMedicoSocialRessourcesHumainesViewModel,
   setStatusSousBlocs,
   statusSousBlocs,
-  blocVigieRhViewModel,
-  parentBlocIsOpen
+  blocVigieRhViewModel
 }: ContenuBlocRHMedicoSocialVigieRHProps) => {
   const { wording } = useDependencies();
 
@@ -34,20 +32,14 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
   };
 
   const openBlocDSN = () => {
-    // Send event only if currently closed AND parent is open
-    const isClosed = !statusSousBlocs[1];
-    if (isClosed && parentBlocIsOpen) {
-      console.log("Opening RH bloc dsn");
+    if (!statusSousBlocs[1]) {
       sendEvent(RESSOURCES_HUMAINES_DSN);
     }
     toggelBlocs(1);
   };
 
   const openBlocTDP = () => {
-    // Send event only if currently closed AND parent is open
-    const isClosed = !statusSousBlocs[0];
-    if (isClosed && parentBlocIsOpen) {
-      console.log("Opening RH bloc tdp");
+    if (!statusSousBlocs[0]) {
       sendEvent(RESSOURCES_HUMAINES_TDP);
     }
     toggelBlocs(0);

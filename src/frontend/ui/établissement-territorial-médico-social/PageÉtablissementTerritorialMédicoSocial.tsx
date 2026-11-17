@@ -56,8 +56,11 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
     const isCurrentlyOpen = statusBlocs[2];
     const willBeOpen = !isCurrentlyOpen;
     if(willBeOpen && établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement === "500 - Etablissement d'hébergement pour personnes âgées dépendantes"){
-      console.log("Opening RH bloc");
       sendEvent(RESSOURCES_HUMAINES);
+    }
+    if (isCurrentlyOpen) {
+      // Le DSFR replie les collapses enfants à la fermeture du parent : on aligne l'état React
+      setStatusSousBlocs(statusSousBlocs.map(() => false));
     }
     toggelBlocs(2);
   };
