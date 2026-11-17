@@ -19,6 +19,10 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 
 export function convertFloatToComma(number: number) {
 
+  if (isNaN(number) || number === null || number === undefined) {
+    return '';
+  }
+
   // Convert the number to a string
   let numberString = number.toString();
 

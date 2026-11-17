@@ -115,7 +115,7 @@ export function DetailsAllocations({ data, ListeCouleursSousEnveloppes }: Detail
               <div className={styles["modesDeDelegationContainer"]}>
                 {sousEnveloppe.modesDeDélégation.map((mode) => (
                   <div className={styles["modesDeDelegationItem"]} key={mode.modeDeDélégation}>
-                    {mode.modeDeDélégation} : {formatNumbuerWithSpaces(mode.montantNotifié)} € {convertFloatToComma(mode.pourcentage) !== '' ? <span>({convertFloatToComma(mode.pourcentage)}%)</span> : null}
+                    {mode.modeDeDélégation} : <span style={{ whiteSpace: 'nowrap' }}>{formatNumbuerWithSpaces(mode.montantNotifié)}{"\u00A0"}€</span> {" "} {convertFloatToComma(mode.pourcentage) !== '' ? <span>({convertFloatToComma(mode.pourcentage)}%)</span> : null}
                   </div>
                 ))}
 
