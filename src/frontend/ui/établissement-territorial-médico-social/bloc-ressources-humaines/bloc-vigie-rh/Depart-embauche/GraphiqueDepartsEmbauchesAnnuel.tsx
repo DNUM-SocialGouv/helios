@@ -4,7 +4,7 @@ import { Bar } from "react-chartjs-2";
 
 
 import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
+import {  anneesManquantesVigieRhAnnuel } from "../../../../../utils/dateUtils";
 import { ColorLabel } from "../../../../commun/ColorLabel/ColorLabel";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import {
@@ -109,7 +109,7 @@ const GraphiqueDepartEmbauchesAnnuel = ({ etabFiness, etabTitle, donneesDepartsE
     return null;
   });
 
-  const libellesValeursManquantes = annéesManquantesVigieRh(libelles, 3);
+  const libellesValeursManquantes = anneesManquantesVigieRhAnnuel(libelles);
 
   const donneesDepartsExtension = donneesDepartsRef.map((valeurRef, idx) => {
     const valeur = donneesDeparts[idx];

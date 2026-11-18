@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { TauxRotation } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
+import { anneesManquantesVigieRhAnnuel } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
@@ -21,7 +21,7 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
     const libelles = donneesTauxRotation.map((donnee) => donnee.annee);
-    const valeursManquantes = annéesManquantesVigieRh(libelles, 3);
+    const valeursManquantes = anneesManquantesVigieRhAnnuel(libelles);
     const valeursRefManquantes: (number | string)[] = [];
     const valeurs = donneesTauxRotation.map((donnee) => {
       const valeur = donnee.rotation;

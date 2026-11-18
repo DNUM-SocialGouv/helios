@@ -7,7 +7,7 @@ import {
   NatureContratsTrimestriel
 } from "../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
 import type { Wording } from "../../../../configuration/wording/Wording";
-import { annéesManquantesVigieRh, trimestresManquantsVigieRh } from "../../../../utils/dateUtils";
+import { anneesManquantesVigieRhAnnuel, trimestresManquantsVigieRh } from "../../../../utils/dateUtils";
 import { useDependencies } from "../../../commun/contexts/useDependencies";
 import type { CouleurHistogramme } from "../../../commun/Graphique/couleursGraphique";
 import HistogrammeComparaisonVerticalAvecRef, {
@@ -151,7 +151,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
   const { libelles, series } = preparerSeries(donnees, palette, false, showRefValues);
 
   const libellesValeursManquantes = useMemo(() => {
-    return annéesManquantesVigieRh(libelles, 3);
+    return anneesManquantesVigieRhAnnuel(libelles);
   }, [libelles, series]);
 
   const transcriptionIdentifiants = showRefValues
@@ -182,7 +182,7 @@ const GraphiqueNatureContratsAnnuel = ({ etabFiness, etabTitle, nomGraph, donnee
 const GraphiqueNatureContratsTrimestriel = ({ etabFiness, etabTitle, nomGraph, donnees, palette, wording, showRefValues }: GraphiqueNatureContratsTrimestrielProps) => {
   const { libelles, series } = preparerSeries(donnees, palette, true, showRefValues);
 
-  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles, 3)
+  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles)
 
   const transcriptionIdentifiants = showRefValues
     ? [wording.NOMBRE_CDI, wording.CDI_REF, wording.NOMBRE_CDD, wording.CDD_REF]
