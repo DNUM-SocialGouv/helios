@@ -8,6 +8,9 @@
 ### Features
 - hel-1138: [Bloc Budget et finances] STARS FIR - Correctif de l'affichage des montants
 - hel-1136: envoyer l'evenement matomo vigie rh que à l'ouverture des blocs
+- hel-1153: [Vigie RH] modification des RG d'affichage
+- hel-1004: [Bas de page] Ajouter lien vers les CGU
+- hel-1005: [Connexion] Accepter les CGU après la MEP VigieRH
 
 ## [1.8.19.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.19.1) (2026-10-28)
 
@@ -15,9 +18,6 @@
 
 ### Features
 - hel-1135: [Sécurité] Correctif CVE critique - Node.js
-
-- hel-1004: [Bas de page] Ajouter lien vers les CGU
-- hel-1005: [Connexion] Accepter les CGU après la MEP VigieRH
 
 ## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (2026-10-26)
 
