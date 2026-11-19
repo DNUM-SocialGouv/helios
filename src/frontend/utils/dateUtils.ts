@@ -32,9 +32,9 @@ function genererLesTrimestres(anneeDebut: number, anneeFin: number) {
   return quarters;
 }
 
-export function trimestresManquantsVigieRh(trimestres: (number | string)[], annéesTotales: number = 3): string[] {
+export function trimestresManquantsVigieRh(trimestres: (number | string)[]): string[] {
   const annéeEnCours = new Date().getFullYear();
-  const expected = genererLesTrimestres(annéeEnCours - annéesTotales, annéeEnCours - 1);
+  const expected = genererLesTrimestres(annéeEnCours - 2, annéeEnCours - 1);
   const trimestresManquants = expected.filter(q => !trimestres.includes(q));
   return trimestresManquants;
 }
@@ -47,6 +47,17 @@ export function annéesManquantesQualite(années: (number | string)[], annéesTo
     .map((annéeÀAvoir, index) => annéeÀAvoir - index - 1)
     .reverse()
     .filter((année) => !années.map(Number).includes(année));
+}
+
+export function anneesManquantesVigieRhAnnuel(années: (number | string)[]): number[] {
+  const anneeEnCours = new Date().getFullYear();
+  const anneesNormalisées = années.map(Number);
+
+  // Plage attendue : [N-2, N-1] (2 dernières années complètes)
+  const anneesAttendues = [anneeEnCours - 2, anneeEnCours - 1];
+
+  // Retourne uniquement les années manquantes qui tombent dans la plage attendue
+  return anneesAttendues.filter((annee) => !anneesNormalisées.includes(annee));
 }
 
 // format DD/MM/AAAA - HHhMM

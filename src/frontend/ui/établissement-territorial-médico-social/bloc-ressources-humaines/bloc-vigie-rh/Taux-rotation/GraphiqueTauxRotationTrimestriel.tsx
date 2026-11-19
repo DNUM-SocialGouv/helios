@@ -21,7 +21,7 @@ const GraphiqueTauxRotationTrimestriel = ({ etabFiness, etabTitle, nomGraph, don
 
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
     const libelles = donneesTauxRotationTrimestriels.map((donnee) => `${donnee.annee}-T${donnee.trimestre}`);
-    const valeursManquantes = trimestresManquantsVigieRh(libelles, 3)
+    const valeursManquantes = trimestresManquantsVigieRh(libelles)
     const valeursRefManquantes: string[] = [];
     const valeurs = donneesTauxRotationTrimestriels.map((donnee) => {
       const valeur = donnee.rotation;
