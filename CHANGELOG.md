@@ -1,6 +1,12 @@
 # Changelog d'Helios
 
-## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (TO-DO)
+## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20...release/1.8.21) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (2026-11-19)
 
 ### Bug Fixes
 - hel-1139: [RGAA] Correctif du texte de la déclaration non-conformité
