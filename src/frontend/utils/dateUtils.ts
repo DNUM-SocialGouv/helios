@@ -51,13 +51,13 @@ export function annéesManquantesQualite(années: (number | string)[], annéesTo
 
 export function anneesManquantesVigieRhAnnuel(années: (number | string)[]): number[] {
   const anneeEnCours = new Date().getFullYear();
-  const anneesNormalisées = années.map(Number);
+  const anneesNormalisees = années.map(Number);
 
   // Plage attendue : [N-2, N-1] (2 dernières années complètes)
   const anneesAttendues = [anneeEnCours - 2, anneeEnCours - 1];
 
   // Retourne uniquement les années manquantes qui tombent dans la plage attendue
-  return anneesAttendues.filter((annee) => !anneesNormalisées.includes(annee));
+  return anneesAttendues.filter((annee) => !anneesNormalisees.includes(annee));
 }
 
 // format DD/MM/AAAA - HHhMM

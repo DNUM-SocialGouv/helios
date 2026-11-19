@@ -19,7 +19,7 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 
 export function convertFloatToComma(number: number) {
 
-  if (isNaN(number) || number === null || number === undefined) {
+  if (Number.isNaN(number) || number === null || number === undefined) {
     return '';
   }
 

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useCallback } from "react";
+import { useState, ChangeEvent, useCallback, useMemo } from "react";
 
 
 import { DepartEmbauche } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
@@ -26,6 +26,12 @@ const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauch
     setSelectedFrequency(event.target.value);
   }, []);
 
+  const donneesDepartsEmbauchesFiltrees = useMemo(() => {
+    const anneeEnCours = new Date().getFullYear();
+    const anneesAttendues = new Set([anneeEnCours - 2, anneeEnCours - 1]);
+    return donneesDepartsEmbauches.filter((donnee) => anneesAttendues.has(Number(donnee.annee)));
+  }, [donneesDepartsEmbauches]);
+
   return (
     <div >
       <FrequencyFilter
@@ -36,7 +42,7 @@ const GraphiqueDepartEmbauches = ({ etabFiness, etabTitle, donneesDepartsEmbauch
       />
       {selectedFrequency === wording.ANNUEL ?
         <GraphiqueDepartEmbauchesAnnuel
-          donneesDepartsEmbauches={donneesDepartsEmbauches}
+          donneesDepartsEmbauches={donneesDepartsEmbauchesFiltrees}
           etabFiness={etabFiness}
           etabTitle={etabTitle}
           showRefValues={showRefValues}
