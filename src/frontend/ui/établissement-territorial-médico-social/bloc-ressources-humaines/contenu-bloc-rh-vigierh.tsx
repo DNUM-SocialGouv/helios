@@ -32,13 +32,17 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
   };
 
   const openBlocDSN = () => {
+    if (!statusSousBlocs[1]) {
+      sendEvent(RESSOURCES_HUMAINES_DSN);
+    }
     toggelBlocs(1);
-    sendEvent(RESSOURCES_HUMAINES_DSN);
   };
 
   const openBlocTDP = () => {
+    if (!statusSousBlocs[0]) {
+      sendEvent(RESSOURCES_HUMAINES_TDP);
+    }
     toggelBlocs(0);
-    sendEvent(RESSOURCES_HUMAINES_TDP);
   };
 
   const showNewBadge = new Date() <= new Date('2026-09-30');
