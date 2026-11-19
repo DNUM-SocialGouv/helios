@@ -31,7 +31,7 @@ def filtrer_les_donnees_mouvements_rh(donnees: pd.DataFrame, base_de_donnees: En
         (donnees["numero_finess_etablissement_territorial"].astype(str).isin(numeros_finess_liste))
     ]
     donnees_mouvements_rh_filtrees_sur_les_3_dernieres_annees = donnees_filtrees[donnees_filtrees["annee"]
-                                                                                                .between(annee_max_disponible - 1, annee_max_disponible)]
+                                                                                                .between(annee_max_disponible - 2, annee_max_disponible)]
     return donnees_mouvements_rh_filtrees_sur_les_3_dernieres_annees.set_index(index_des_mouvements_rh_annuel)
 
 
