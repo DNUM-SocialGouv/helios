@@ -11,6 +11,7 @@ declare module "next-auth" {
     institutionId: number;
     codeRegion: string;
     codeProfiles: string[];
+    cgu: boolean;
   }
 
   interface Session {
@@ -22,6 +23,7 @@ declare module "next-auth" {
       codeProfiles: string[];
       institution;
       institutionId: number;
+      cgu: boolean;
     } & DefaultSession["user"];
   }
 }

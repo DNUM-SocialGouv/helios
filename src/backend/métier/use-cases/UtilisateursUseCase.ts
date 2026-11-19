@@ -33,6 +33,10 @@ export class UtilisateursUseCase {
     return this.utilisateurLoader.updateUser(userCode, roleCode, institutionCode, profilsCode, firstname, lastname);
   }
 
+  async updateCgu(userCode: string, cguAccepted: boolean): Promise<void> {
+    return this.utilisateurLoader.updateCgu(userCode, cguAccepted);
+  }
+
   async deleteUser(userCode: string): Promise<string | void> {
     return this.utilisateurLoader.deleteUser(userCode);
   }
