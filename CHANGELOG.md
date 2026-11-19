@@ -1,10 +1,17 @@
 # Changelog d'Helios
 
-## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20...release/1.8.21) (TO-DO)
+## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.1...release/1.8.21) (TO-DO)
 
 ### Bug Fixes
 
 ### Features
+
+## [1.8.20.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20...release/1.8.20.1) (2026-11-19)
+
+### Bug Fixes
+
+### Features
+- hel-1153: [Vigie RH] modification des RG d'affichage
 
 ## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (2026-11-19)
 
