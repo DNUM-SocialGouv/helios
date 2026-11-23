@@ -1,4 +1,5 @@
 const { withSentryConfig } = require("@sentry/nextjs");
+const { withMatomoProxy } = require("@socialgouv/matomo-next");
 
 const isDev = process.env.NODE_ENV === 'development'
 const matomoUrl = process.env.NEXT_PUBLIC_MATOMO_URL;
@@ -114,7 +115,14 @@ const nextConfig = withBundleAnalyzer({
   reactCompiler: true,
 });
 
-const nextWithSentryConfig = withSentryConfig(nextConfig, {
+const nextWithMatomoProxy = matomoUrl
+  ? withMatomoProxy({
+    matomoUrl,
+    siteId: process.env.NEXT_PUBLIC_MATOMO_SITE_ID,
+  })(nextConfig)
+  : nextConfig;
+
+const nextWithSentryConfig = withSentryConfig(nextWithMatomoProxy, {
   telemetry: false,
   webpack: {
     treeshake: {

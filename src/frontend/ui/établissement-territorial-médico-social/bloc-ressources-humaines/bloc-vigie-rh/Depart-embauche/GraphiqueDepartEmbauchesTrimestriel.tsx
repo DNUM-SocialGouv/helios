@@ -109,7 +109,7 @@ const GraphiqueDepartEmbauchesTrimestriel = ({ etabFiness, etabTitle, donneesDep
 
   const expressionReguliereTrimestre = /^(\d{4})-T([1-4])$/;
 
-  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles, 3)
+  const libellesValeursManquantes = trimestresManquantsVigieRh(libelles)
 
   const decomposerLibelle = (label: number | string): { principal: string; secondaire: string } => {
     if (typeof label === "number") {

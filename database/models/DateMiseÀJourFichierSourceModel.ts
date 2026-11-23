@@ -9,6 +9,8 @@ export enum FichierSource {
   FINESS_CS1600101 = "finess_cs1600101",
   FINESS_CS1600102 = "finess_cs1600102",
   FINESS_AMM_ARHGOS = "amm_arhgos",
+  FINESS_STRUCTURE = "finess_structure",
+  FINESS_ACTIVITE = "finess_activite",
   DIAMANT_ANN_ERRD_EJ_ET = "ann_errd_ej_et",
   DIAMANT_ANN_MS_TDP_ET = "ann_ms_tdp_et",
   DIAMANT_MEN_PMSI_ANNUEL = "men_pmsi_annuel",

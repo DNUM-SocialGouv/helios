@@ -15,7 +15,7 @@ export const GroupeBoutonRegions = () => {
   const handleOnChangeOutreMerRegions = (e: ChangeEvent<HTMLSelectElement>) => {
     sendEvent(CARTOGRAPHIE)
     const sanitizedValue = DOMPurify.sanitize(e.target.value);
-    router.push(sanitizedValue);
+     void router.push(sanitizedValue);
   }
 
   return (

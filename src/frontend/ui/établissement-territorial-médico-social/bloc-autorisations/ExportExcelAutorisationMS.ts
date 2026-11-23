@@ -27,7 +27,7 @@ export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string
       exportExcelAutorisationSMS(workbook, etabLine, etablissementMSAutorisationsViewModel);
     }
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 
   const exportExcelAutorisationSMS = (workbook: Workbook, etabLine: string, etablissementMSAutorisationsViewModel: ÉtablissementTerritorialMédicoSocialAutorisationsViewModel) => {
@@ -39,7 +39,7 @@ export function useExportExcelAutorisationMS(numeroFinessEntiteJuridique: string
     const autorisationRows = getAutorisationRows(etablissementMSAutorisations.disciplines);
     rows.push(...autorisationRows);
 
-    const sheet = workbook.addWorksheet("Autorisations");
+    const sheet = workbook.addWorksheet("Autorisations sociales et médico-sociales");
     ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
   }
 

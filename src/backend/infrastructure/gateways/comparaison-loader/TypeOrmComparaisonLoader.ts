@@ -77,6 +77,12 @@ type ComparaisonSANTypeOrm = Readonly<{
   type: string;
   commune: string;
   departement: string;
+  nombre_lits_medecine: number;
+  nombre_lits_chirurgie: number;
+  nombre_lits_obstetrique: number;
+  nombre_lits_usld: number;
+  nombre_lits_ssr: number;
+  nombre_lits_psy: number;
   total_hospt_medecine: number;
   total_hospt_obstetrique: number;
   total_hospt_chirurgie: number;
@@ -588,9 +594,20 @@ FROM (
         where annee = ${annee} and enveloppe = '${enveloppe3}'
         GROUP BY allocation_ressource_et.numero_finess_etablissement_territorial) ar3`;
 
+    const compareCapacites = `(select numero_finess_etablissement_territorial,
+      nombre_lits_médecine as nombre_lits_medecine,
+      nombre_lits_chirurgie,
+      nombre_lits_obstétrique as nombre_lits_obstetrique,
+      nombre_lits_usld,
+      nombre_lits_ssr,
+      nombre_lits_ou_places_psy_complet as nombre_lits_psy
+      FROM capacite_autorisation_sanitaire
+      where annee = ${annee}) cas`;
+
     const compareEtSanQueryBody = ` from recherche et
     LEFT JOIN activite_sanitaire acs
     on et.numero_finess = acs.numero_finess_etablissement_territorial and acs.annee = ${annee}
+    LEFT JOIN ${compareCapacites} on et.numero_finess = cas.numero_finess_etablissement_territorial
     LEFT JOIN budget_et_finances_sanitaire bg
     on et.numero_finess = bg.numero_finess_etablissement_territorial and bg.annee = ${annee}
     LEFT JOIN ${compareEnveloppe1} on et.numero_finess  = ar1.numero_finess_etablissement_territorial
@@ -608,6 +625,12 @@ FROM (
     et.departement,
     et.code_region,
     et.type,
+    cas.nombre_lits_medecine,
+    cas.nombre_lits_chirurgie,
+    cas.nombre_lits_obstetrique,
+    cas.nombre_lits_usld,
+    cas.nombre_lits_ssr,
+    cas.nombre_lits_psy,
     CASE
         WHEN acs.nombre_sejours_partiels_medecine IS NULL AND acs.nombre_sejours_complets_medecine IS NULL THEN NULL
         ELSE COALESCE(acs.nombre_sejours_partiels_medecine , 0)  + COALESCE(acs.nombre_sejours_complets_medecine , 0)
@@ -771,6 +794,12 @@ FROM (
         type: resultat.type,
         commune: resultat.commune,
         departement: resultat.departement,
+        nombreDeLitsMedecine: resultat.type === "Sanitaire" ? resultat.nombre_lits_medecine : '',
+        nombreDeLitsChirurgie: resultat.type === "Sanitaire" ? resultat.nombre_lits_chirurgie : '',
+        nombreDeLitsObstetrique: resultat.type === "Sanitaire" ? resultat.nombre_lits_obstetrique : '',
+        nombreDeLitsUsld: resultat.type === "Sanitaire" ? resultat.nombre_lits_usld : '',
+        nombreDeLitsSsr: resultat.type === "Sanitaire" ? resultat.nombre_lits_ssr : '',
+        nombreDeLitsPsy: resultat.type === "Sanitaire" ? resultat.nombre_lits_psy : '',
         totalHosptMedecine: resultat.type === "Sanitaire" ? resultat.total_hospt_medecine : '',
         totalHosptObstetrique: resultat.type === "Sanitaire" ? resultat.total_hospt_obstetrique : '',
         totalHosptChirurgie: resultat.type === "Sanitaire" ? resultat.total_hospt_chirurgie : '',

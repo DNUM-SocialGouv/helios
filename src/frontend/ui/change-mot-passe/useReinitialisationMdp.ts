@@ -20,7 +20,7 @@ const defaultCriteria: PasswordCriteria = {
     specialChar: false,
 };
 
-export function useReinitialisationMdp() {
+export function useReinitialisationMdp(loginToken: string) {
     const router = useRouter();
     const { wording } = useDependencies();
     const userContext = useContext(UserContext);
@@ -30,8 +30,6 @@ export function useReinitialisationMdp() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [criteriaNewPassword, setCriteriaNewPassword] = useState(defaultCriteria);
-
-    const { loginToken } = router.query;
 
     const criteria = (password: string) => {
         return {
@@ -45,7 +43,7 @@ export function useReinitialisationMdp() {
     
     const annuler = (event: MouseEvent) => {
         event.preventDefault();
-        router.push("/connexion");
+        void router.push("/connexion");
     };
 
     const passwordValueOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +61,7 @@ export function useReinitialisationMdp() {
             setErrorMessage("Les mots de passe ne correspondent pas.");
         }
         else {
-            changePasswordService();
+            void changePasswordService();
         }
     }
 
@@ -83,7 +81,7 @@ export function useReinitialisationMdp() {
                 if (response.status === 200) {
                     setErrorMessage("");
                     userContext?.setPasswordCreated(true);
-                    router.push("/connexion")
+                    void router.push("/connexion")
                 }
                 if (response.status === 400) {
                     if (data.err === "The password must be different from the current password") {

@@ -1,11 +1,171 @@
 # Changelog d'Helios
 
-## [1.8.16.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.16.1) (2026-10-29)
+## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.1...release/1.8.21) (TO-DO)
+
+### Bug Fixes
+
+### Features
+
+## [1.8.20.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20...release/1.8.20.1) (2026-11-19)
+
+### Bug Fixes
+
+### Features
+- hel-1153: [Vigie RH] modification des RG d'affichage
+
+## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (2026-11-19)
+
+### Bug Fixes
+- hel-1139: [RGAA] Correctif du texte de la déclaration non-conformité
+
+### Features
+- hel-1138: [Bloc Budget et finances] STARS FIR - Correctif de l'affichage des montants
+- hel-1136: envoyer l'evenement matomo vigie rh que à l'ouverture des blocs
+- hel-1153: [Vigie RH] modification des RG d'affichage
+- hel-1004: [Bas de page] Ajouter lien vers les CGU
+- hel-1005: [Connexion] Accepter les CGU après la MEP VigieRH
+
+## [1.8.19.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.19.1) (2026-10-28)
 
 ### Bug Fixes
 
 ### Features
 - hel-1135: [Sécurité] Correctif CVE critique - Node.js
+
+## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (2026-10-26)
+
+### Bug Fixes
+- hel-1134: [FINESS+] correctif de l'affichage des libellés courts - fiche d'identité ET SAN et MS
+
+### Features
+- hel-1133: [Comparaison] Ajout de capacité - nbr de lits pour les ES SAN
+- hel-1132: [RGAA] footer - déclaration accessibilité - non conforme
+- hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
+- hel-1129: [FINESS+] Adapter la table référentielle de libellés courts pour les ET
+- hel-1131: [FINESS+] Ajouter le code postale dans l'adresse de la fiche EJ ET
+- hel-1123: [Technique] renouveler "dépendance check" & traitements des risques à haut impact
+- hel-1126:[Matomo] indicateurs nbr de clics Vigie RH
+
+## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
+
+### Bug Fixes
+
+- hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
+
+### Features
+
+- hel-1119: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche EJ
+- hel-1120: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche ET
+- hel-1107: [FINESS+] Migration JSON FINESS+ - fiche d'identité EJ
+- hel-1108: [FINESS+] Migration JSON FINESS+ - fiche d'identité ET SAN et MS
+- hel-1111: [FINESS+] Implémenter les codes et libellés géographiques à partir du fichier INSEE
+
+
+## [1.8.17](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.17) (2026-09-25)
+
+### Bug Fixes
+
+- hel-1113: Anomalie d'affichage des graphiques capacité MS
+- hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
+
+### Features
+
+- hel-1102: [Export] Renommage de l'onglet autorisation SAN et MS
+- hel-1085: [Footer] Ajout d'un chapitre "Cookies" dans les mentions légales
+- hel-1087: [Footer] Gestion des cookies -mise à jour Matomo
+- hel-1116: [Matomo] envoi des flux à Matomo
+
+## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
+
+### Bug Fixes
+
+- hel-1089: [Bloc Budget et Finances] Allocation de ressources affichage chevrons aléatoires
+
+### Features
+- hel-645: [Footer] Ajouter la fonctionnalité Paramètres d'affichage
+- hel-862: [Footer] Paramétrage d'affichage - éléments spécifique/charte
+- hel-1069: [Support] modification de BàL support
+
+## [1.8.15](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.14...release/1.8.15) (2026-09-04)
+
+### Bug Fixes
+
+- hel-1096: Traitement fichier Hapi Diamant à enlever du cron
+
+### Features
+- hel-1076: [Bloc Capacité et Autorisations] EJ - Afficher les autorisations des ET MS
+- hel-1098: [Export] Inclure les autorisations MS
+- hel-1099: [Autorisations] EJ Affichage les autorisations des ET rattachés
+- hel-1097: [Paramétrage des autorisations] Vigie RH V1
+
+## [1.8.20.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20...release/1.8.20.1) (2026-11-19)
+
+### Bug Fixes
+
+### Features
+- hel-1153: [Vigie RH] modification des RG d'affichage
+
+## [1.8.20](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19.1...release/1.8.20) (2026-11-19)
+
+### Bug Fixes
+- hel-1139: [RGAA] Correctif du texte de la déclaration non-conformité
+
+### Features
+- hel-1138: [Bloc Budget et finances] STARS FIR - Correctif de l'affichage des montants
+- hel-1136: envoyer l'evenement matomo vigie rh que à l'ouverture des blocs
+- hel-1153: [Vigie RH] modification des RG d'affichage
+- hel-1004: [Bas de page] Ajouter lien vers les CGU
+- hel-1005: [Connexion] Accepter les CGU après la MEP VigieRH
+
+## [1.8.19.1](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.19...release/1.8.19.1) (2026-10-28)
+
+### Bug Fixes
+
+### Features
+- hel-1135: [Sécurité] Correctif CVE critique - Node.js
+
+## [1.8.19](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.18...release/1.8.19) (2026-10-26)
+
+### Bug Fixes
+- hel-1134: [FINESS+] correctif de l'affichage des libellés courts - fiche d'identité ET SAN et MS
+
+### Features
+- hel-1133: [Comparaison] Ajout de capacité - nbr de lits pour les ES SAN
+- hel-1132: [RGAA] footer - déclaration accessibilité - non conforme
+- hel-1121: [Bloc Budget et finances] STARS FIR - enlever la restriction Type_Bénéficiaire
+- hel-1129: [FINESS+] Adapter la table référentielle de libellés courts pour les ET
+- hel-1131: [FINESS+] Ajouter le code postale dans l'adresse de la fiche EJ ET
+- hel-1123: [Technique] renouveler "dépendance check" & traitements des risques à haut impact
+- hel-1126:[Matomo] indicateurs nbr de clics Vigie RH
+
+## [1.8.18](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.17...release/1.8.18) (2026-10-09)
+
+### Bug Fixes
+
+- hel-1122: [Matomo] corrections sur role &  logintoken des utilisateurs
+
+### Features
+
+- hel-1119: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche EJ
+- hel-1120: Attribuer les libellés SMT aux codes récupérés du Finess + - Fiche ET
+- hel-1107: [FINESS+] Migration JSON FINESS+ - fiche d'identité EJ
+- hel-1108: [FINESS+] Migration JSON FINESS+ - fiche d'identité ET SAN et MS
+- hel-1111: [FINESS+] Implémenter les codes et libellés géographiques à partir du fichier INSEE
+
+
+## [1.8.17](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.16...release/1.8.17) (2026-09-25)
+
+### Bug Fixes
+
+- hel-1113: Anomalie d'affichage des graphiques capacité MS
+- hel-1112: [Sentry] erreurs EJ ET suite à la MEP v1.8.16
+
+### Features
+
+- hel-1102: [Export] Renommage de l'onglet autorisation SAN et MS
+- hel-1085: [Footer] Ajout d'un chapitre "Cookies" dans les mentions légales
+- hel-1087: [Footer] Gestion des cookies -mise à jour Matomo
+- hel-1116: [Matomo] envoi des flux à Matomo
 
 ## [1.8.16](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.15...release/1.8.16) (2026-09-11)
 

@@ -6,6 +6,10 @@ export class EntitéJuridiqueTestBuilder {
       dateMiseÀJourSource: "2022-05-14",
       value: "01117 OYONNAX CEDEX",
     },
+    codePostal: {
+      dateMiseÀJourSource: "2022-05-14",
+      value: "01117",
+    },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2022-05-14",
       value: "1",

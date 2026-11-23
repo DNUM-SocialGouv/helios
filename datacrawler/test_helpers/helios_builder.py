@@ -343,6 +343,7 @@ def helios_entite_juridique_builder(champs_surcharges: Optional[Dict] = None) ->
     entite_juridique = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
         "adresse_acheminement": "01220 DIVONNE LES BAINS",
+        "code_postal": "01220",
         "adresse_numero_voie": "240",
         "adresse_type_voie": "R",
         "adresse_voie": "GUY DE MAUPASSANT",
@@ -366,6 +367,7 @@ def helios_etablissement_territorial_builder(champs_surcharges: Optional[Dict] =
     etablissement_territorial = {
         "numero_finess_entite_juridique": NUMÉRO_FINESS_ENTITÉ_JURIDIQUE,
         "adresse_acheminement": "01220 DIVONNE LES BAINS",
+        "code_postal": "01220",
         "adresse_numero_voie": "240",
         "adresse_type_voie": "R",
         "adresse_voie": "GUY DE MAUPASSANT",

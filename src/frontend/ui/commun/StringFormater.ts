@@ -1,6 +1,9 @@
 const StringFormater = {
   formatPhoneNumber(phoneNumber: string): string {
-    return StringFormater.addSpaceForNCharacters(phoneNumber, 2);
+    if(phoneNumber.length === 10) {
+      return StringFormater.addSpaceForNCharacters(phoneNumber, 2);
+    }
+    return phoneNumber;
   },
 
   // format DD/MM/AAAA

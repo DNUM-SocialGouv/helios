@@ -26,7 +26,7 @@ const PaginationBtn = ({
     if (disable === true) {
       return null;
     }
-    setPage(page);
+    void setPage(page);
 
     return true;
   };

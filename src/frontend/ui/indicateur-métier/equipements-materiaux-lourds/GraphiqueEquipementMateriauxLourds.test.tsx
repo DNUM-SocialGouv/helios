@@ -30,7 +30,8 @@ describe("GraphiqueEquipementMaterielLourd", () => {
       mock<EquipementsMateriauxLourdsActivités>({
         autorisations: [{ equipementEtablissements: [{ equipements: [{ autorisations: [{ nom: "test", valeur: "test value" }] }] }] }],
       }),
-      wording
+      wording,
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
     );
   });
 

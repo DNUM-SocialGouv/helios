@@ -107,7 +107,7 @@ export const FiltreCapacite = ({ isComparaison, setIsChanged }: FiltresForCompar
       rechercheAvanceeContext?.capaciteHandicap.length === 0 &&
       rechercheAvanceeContext?.capaciteMedicoSociaux.length === 0
     ) {
-      resetFilter();
+      void resetFilter();
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 

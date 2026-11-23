@@ -203,6 +203,9 @@ const UsersListPage = ({
           setPage(users.currentPage);
           setLastPage(users.lastPage);
           setTotal(users.total);
+        }).catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to fetch users:", error);
         });
     },
     [institutionId, roleId, profileId, etatId, itemsPerPage, keyWord, page, sortDir, orderBy]
@@ -245,9 +248,9 @@ const UsersListPage = ({
     async function updateFilterAndRefreshUsers() {
       const params = getQueryParams();
       setFilterParams(params);
-      getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
+      void getUsersAndRefresh(params, setUserData, setPage, setLastPage, setTotal);
     }
-    updateFilterAndRefreshUsers();
+    void updateFilterAndRefreshUsers();
   }, [institutionId, roleId, profileId, etatId, itemsPerPage, key, page, sortDir, orderBy]);
 
   const roleClasses: any = {

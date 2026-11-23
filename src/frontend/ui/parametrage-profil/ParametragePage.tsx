@@ -23,7 +23,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
           <button
             className="fr-mt-2v fr-btn"
             onClick={() => {
-              router.push(paths.ADD_PROFILE);
+              void router.push(paths.ADD_PROFILE);
             }}
           >
             Ajouter une autorisation
@@ -56,7 +56,7 @@ export const ParametragePage = ({ profiles, wrapInMain = true }: ParametragePage
                           aria-label="Copier le code du profil"
                           className="fr-icon-clipboard-line"
                           onClick={() => {
-                            navigator.clipboard.writeText(profile.code);
+                            void navigator.clipboard.writeText(profile.code);
                           }}
                         />
                       </td>

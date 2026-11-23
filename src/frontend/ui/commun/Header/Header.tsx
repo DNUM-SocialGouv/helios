@@ -10,7 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
-import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
+import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, push, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
 import { BtnRetourRecherche } from "../BtnRetourRecherche/BtnRetourRecherche";
@@ -37,13 +37,14 @@ export const Header = () => {
   };
 
   const logOut = () => {
-    signOut({ callbackUrl: paths.CONNEXION });
+    push(["deleteCustomDimension", 1]);
+    void signOut({ callbackUrl: paths.CONNEXION });
     setDisplayMenu(false);
   };
 
   useEffect(() => {
     if (status === "authenticated") {
-      getFavorisLists();
+      void getFavorisLists();
     }
   }, [status]);
 
@@ -184,7 +185,7 @@ export const Header = () => {
                             sendEvent(RECHERCHE_SIMPLE);
                             event.preventDefault();
                             localStorage.setItem("searchItem", encodeURIComponent(terme));
-                            router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
+                            void router.push(paths.ACCUEIL + "?terme=" + encodeURIComponent(terme), paths.ACCUEIL);
                           }}
                           title="Rechercher"
                           type="submit"

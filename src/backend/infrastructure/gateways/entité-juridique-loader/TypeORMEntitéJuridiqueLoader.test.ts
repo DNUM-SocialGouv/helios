@@ -73,7 +73,7 @@ describe("Entité juridique loader", () => {
       await dateMiseÀJourFichierSourceRepository.insert([
         DateMiseÀJourFichierSourceModelTestBuilder.crée({
           dernièreMiseÀJour: "2022-05-14",
-          fichier: FichierSource.FINESS_CS1400101,
+          fichier: FichierSource.FINESS_STRUCTURE,
         }),
       ]);
       const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);
@@ -117,7 +117,7 @@ describe("Entité juridique loader", () => {
     await dateMiseÀJourFichierSourceRepository.insert([
       DateMiseÀJourFichierSourceModelTestBuilder.crée({
         dernièreMiseÀJour: "2022-05-14",
-        fichier: FichierSource.FINESS_CS1400101,
+        fichier: FichierSource.FINESS_STRUCTURE,
       }),
     ]);
     const typeOrmEntitéJuridiqueLoader = new TypeOrmEntiteJuridiqueLoader(orm);

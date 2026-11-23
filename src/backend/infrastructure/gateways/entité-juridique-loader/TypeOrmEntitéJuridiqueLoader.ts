@@ -56,7 +56,7 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
   }
 
   private async chargeLaDateDeMiseÀJourFinessCs1400101Model(): Promise<DateMiseÀJourFichierSourceModel | null> {
-    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: FichierSource.FINESS_CS1400101 });
+    return await (await this.orm).getRepository(DateMiseÀJourFichierSourceModel).findOneBy({ fichier: FichierSource.FINESS_STRUCTURE });
   }
 
   private async chargeLIdentitéModel(numéroFinessEntitéJuridique: string): Promise<EntitéJuridiqueModel | null> {
@@ -212,6 +212,10 @@ export class TypeOrmEntiteJuridiqueLoader implements EntitéJuridiqueLoader {
       adresseAcheminement: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
         value: entitéJuridiqueModel.adresseAcheminement,
+      },
+      codePostal: {
+        dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,
+        value: entitéJuridiqueModel.codePostal,
       },
       adresseNuméroVoie: {
         dateMiseÀJourSource: dateDeMiseAJourFichierSourceModel.dernièreMiseÀJour,

@@ -29,7 +29,7 @@ def filtrer_les_donnees_cdi_cdd(donnees: pd.DataFrame, code_list_ref:  np.ndarra
         (donnees["numero_finess_etablissement_territorial"].astype(str).str.len() == 9) &
         (donnees["numero_finess_etablissement_territorial"].astype(str).isin(numeros_finess_liste)) &
         (donnees["annee"].astype(str).str.match(year_regex)) &
-        (donnees["annee"].astype(int).between(annee_max_disponible - 2, annee_max_disponible)) &
+        (donnees["annee"].astype(int).between(annee_max_disponible - 1, annee_max_disponible)) &
         (donnees["nature_contrat_code"].isin(code_list_ref))
     ]
 

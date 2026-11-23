@@ -42,7 +42,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
       rechercheAvanceeContext?.setTypeStructure([...typeSelected, AttribuesDefaults.etablissementMedicoSocial]);
     }
     if (changedCapacite && !rechercheAvanceeContext.typeStructure.includes(AttribuesDefaults.etablissementMedicoSocial)) {
-      changeTypeSelected();
+      void changeTypeSelected();
     }
   }, [rechercheAvanceeContext?.capaciteAgees, rechercheAvanceeContext?.capaciteHandicap, rechercheAvanceeContext?.capaciteMedicoSociaux]);
 
@@ -61,7 +61,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
         }
       });
     }
-    updateUiIfEJSelected();
+    void updateUiIfEJSelected();
   }, [rechercheAvanceeContext?.typeStructure]);
 
   function emptyStatutJuridiqueCheckboxs() {
@@ -79,7 +79,7 @@ export const FiltreStructure = ({ isComparaison, setIsChanged }: FiltresForCompa
         emptyStatutJuridiqueCheckboxs();
       }
     }
-    emptyStatusCheckboxIfNeeded();
+    void emptyStatusCheckboxIfNeeded();
   }, [typeSelected])
 
   function onChangeType(value: any): void {

@@ -46,12 +46,12 @@ export const RegistrationForm = () => {
         setClickBtnSend(false);
       })
       .catch(() => {
-        router.push("/connexion");
+        void router.push("/connexion");
       });
   };
 
   const cancel = () => {
-    router.push("/connexion");
+    void router.push("/connexion");
   };
 
   const handleInstitutionChange = (event: ChangeEvent<HTMLSelectElement>) => {

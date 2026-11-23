@@ -64,6 +64,10 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
           const finessKo = finessList.filter((finess) => !findedFiness.includes(finess));
           setFinessEnErreur(finessKo);
           setFinessAImporter(finessKo.join("\n"))
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to import establishments:", error);
         });
     } else {
       setFinessEnErreur([]);
@@ -97,14 +101,14 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
     return label;
   }
 
-  const handleOkButton = () => {
+  const handleOkButton = async () => {
     setTextChanged(false);
     if (isImportForm() && displayNewListInput) {
-      handleListCreation()
+      await handleListCreation()
     } else if (isImportForm() && !displayNewListInput) {
-      addToList(selectedList)
+      await addToList(selectedList)
     } else {
-      importEts()
+      await importEts()
     }
   }
 
@@ -128,9 +132,9 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
     }
   }
 
-  const handleKeyDown = (event: KeyboardEventReact) => {
+  const handleKeyDown = async (event: KeyboardEventReact) => {
     if (event.key === 'Enter' && displayNewListInput) {
-      handleListCreation();
+      await handleListCreation();
     }
   };
 
@@ -156,14 +160,17 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
           if (response) {
             listId = response.id;
           }
+        }).catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to create list:", error);
         });
 
       if (status === 201) {
-        addToList(listId);
+        void addToList(listId);
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
-        getFavorisLists();
+        void getFavorisLists();
       } else {
         setNewListError(true);
         setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
@@ -174,7 +181,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
   const onSuccessImport = () => {
     onSuccess();
     resetAndClose();
-    getFavorisLists();
+    void getFavorisLists();
   }
 
   const resetAndClose = () => {
@@ -203,7 +210,7 @@ export const ImportListModal = ({ onSuccess, listId }: ImportListModalProps) => 
       {displayNewListInput
         ? <div className={"fr-input-group " + (newListError ? "fr-input-group--error " : " ") + styles['new-list-button-group']} >
           <label className="fr-label fr-text--lead fr-text--bold fr-my-1w fr-p-0" htmlFor="new-list-form">Nouvelle liste</label>
-          <input aria-describedby={newListError ? "new-list-error-message" : undefined} autoFocus className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
+          <input aria-describedby={newListError ? "new-list-error-message" : undefined} className={"fr-input " + (newListError ? "fr-input--error" : "")} id="newListForm" name="new-list-input" onChange={(e) => setNewListName(e.target.value)} onKeyDown={handleKeyDown} type="text" value={newListName} />
           <div className="fr-messages-group">
             {newListError && <p className={"fr-message fr-message--error " + styles['error-message']} id="new-list-error-message">{newListErrorMessage}</p>}
             {newListName?.trim().length > 0 && userContext?.favorisLists?.some(list => list.nom.trim().toLowerCase() === newListName.trim().toLowerCase()) &&

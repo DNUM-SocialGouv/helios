@@ -19,6 +19,10 @@ import { Transcription } from "../../commun/Transcription/Transcription";
 
 export function convertFloatToComma(number: number) {
 
+  if (Number.isNaN(number) || number === null || number === undefined) {
+    return '';
+  }
+
   // Convert the number to a string
   let numberString = number.toString();
 
@@ -39,8 +43,14 @@ export function formatNumbuerWithSpaces(number: number) {
   // Convertir le nombre en une chaîne de caractères
   const numberString = numberV2.toString();
   // Utiliser une expression régulière pour ajouter des espaces tous les trois chiffres
-  const formattedString = numberString.replaceAll(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1 ');
-  return formattedString;
+  const parts = [];
+  let str = numberString;
+  while (str.length > 3) {
+    parts.unshift(str.slice(-3));
+    str = str.slice(0, -3);
+  }
+  if (str) parts.unshift(str);
+  return parts.join(' ');
 }
 
 export class AllocationRessourcesViewModel {

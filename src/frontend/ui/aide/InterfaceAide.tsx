@@ -49,7 +49,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
         setSlugActif(null);
       }
     }
-    updateSlugWhenReady();
+    void updateSlugWhenReady();
   }, [router.isReady, router.query["path"], sectionsDisponibles]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function InterfaceAide({ contenu, role, surChangementSection }: Interface
         setSlugActif(null);
       }
     }
-    removeUnknownSlug();
+    void removeUnknownSlug();
   }, [slugActif, sectionsDisponibles]);
 
   useEffect(() => {

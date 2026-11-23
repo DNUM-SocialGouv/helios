@@ -12,6 +12,7 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.catégorieÉtablissement = champsSurchargés?.catégorieÉtablissement || "159";
     établissementTerritorialModel.codeModeTarification = champsSurchargés?.codeModeTarification || "03";
     établissementTerritorialModel.commune = champsSurchargés?.commune || "NANTUA";
+    établissementTerritorialModel.codePostal = champsSurchargés?.codePostal || "01130";
     établissementTerritorialModel.courriel = champsSurchargés?.courriel || "a@example.com";
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.MÉDICO_SOCIAL;
     établissementTerritorialModel.département = champsSurchargés?.département || "AIN";
@@ -40,6 +41,8 @@ export class ÉtablissementTerritorialIdentitéModelTestBuilder {
     établissementTerritorialModel.adresseVoie = champsSurchargés?.adresseVoie || "DE LA RECONNAISSANCE";
     établissementTerritorialModel.catégorieÉtablissement = champsSurchargés?.catégorieÉtablissement || "365";
     établissementTerritorialModel.codeModeTarification = champsSurchargés?.codeModeTarification || "07";
+    établissementTerritorialModel.commune = champsSurchargés?.commune || "VILLENEUVE D ASCQ";
+    établissementTerritorialModel.codePostal = champsSurchargés?.codePostal || "59650";
     établissementTerritorialModel.commune = champsSurchargés?.commune || "VILLENEUVE D ASCQ";
     établissementTerritorialModel.courriel = champsSurchargés?.courriel || "b@example.com";
     établissementTerritorialModel.domaine = champsSurchargés?.domaine || DomaineÉtablissementTerritorial.SANITAIRE;

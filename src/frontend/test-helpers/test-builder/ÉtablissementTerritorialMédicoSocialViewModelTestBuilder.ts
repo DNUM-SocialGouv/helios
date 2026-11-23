@@ -36,7 +36,11 @@ export class ÉtablissementTerritorialMédicoSocialViewModelTestBuilder {
   public static readonly identité: ÉtablissementTerritorialMédicoSocial["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
-      value: "01117 OYONNAX CEDEX",
+      value: "OYONNAX CEDEX",
+    },
+    codePostal: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: "01117",
     },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2021-07-07",

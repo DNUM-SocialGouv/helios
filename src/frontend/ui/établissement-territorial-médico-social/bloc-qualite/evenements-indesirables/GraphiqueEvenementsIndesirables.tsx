@@ -33,7 +33,7 @@ export const GraphiqueEvenementsIndesirables = ({ data, dateMiseAJour, annees, a
         data[annéeEnCours][1].evenementsEncours.length
       );
     }
-    updateTotal();
+    void updateTotal();
   }, [annéeEnCours]);
 
   return (

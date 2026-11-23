@@ -44,7 +44,7 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
   useEffect(() => {
     async function handleRecherche() {
       if (data.laRechercheEtendueEstLancee) {
-        getFavorisLists();
+        void getFavorisLists();
         setState({
           ...state,
           estCeQueLesRésultatsSontReçus: true,
@@ -63,14 +63,14 @@ export function useRechercheAvancee(data: ExtendedResultatDeRecherche) {
         });
       }
     }
-    handleRecherche();
+    void handleRecherche();
   }, [data]);
 
   const lancerLaRecherche = (): void => {
     rechercheAvanceeContext?.setTermeFixe(rechercheAvanceeContext?.terme);
     rechercheAvanceeContext?.setTypeStructure(rechercheAvanceeContext.typeStructure);
     // On retire l'ancre présente dans l'url et qui pose soucis avec le rechargement de la page
-    router.replace(router.asPath.split("#")[0]);
+    void router.replace(router.asPath.split("#")[0]);
   };
 
   const rechercheOnChange = (event: ChangeEvent<HTMLInputElement>) => {

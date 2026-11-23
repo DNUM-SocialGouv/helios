@@ -4,6 +4,8 @@ import { ChangeEvent, useState, useEffect, useRef } from "react";
 import styles from "./Cookies.module.css";
 import { AnalyticsConsentValue, getAnalyticsConsent, setAnalyticsConsent } from "../../utils/analyticsConsent";
 import { useDependencies } from "../commun/contexts/useDependencies";
+import "@gouvfr/dsfr/dist/component/consent/consent.min.css";
+
 
 export const Cookies = ({
   currentModal,
@@ -163,57 +165,53 @@ export const Cookies = ({
                   />
                 </div>
                 <div className="fr-modal__content">
-                  <h2 className="fr-modal__title">Panneau de gestion des cookies</h2>
-                  <p className="fr-text--lead">
-                    En autorisant ces services tiers, vous acceptez le dépôt et la lecture de cookies et l&apos;utilisation de technologies de suivi nécessaires à leur bon fonctionnement.
-                  </p>
-                  <a className="fr-text--xs" href="#" onClick={handleMentionsLegalesClick} title={wording.MENTIONS_LÉGALES}>
-                    {wording.MENTIONS_LÉGALES}
-                  </a>
-                </div>
-                <div className={`fr-modal__content ${styles["preferences_row"]}`}>
-                  <span className={styles["label_input"]}>Préférences pour tous les services</span>
-                  <fieldset aria-labelledby="radio-inline-legend radio-inline-messages" className={styles["fr-fieldset"]}>
-                    <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
-                      <div className={styles["fr-radio-group"]}>
-                        <input
-                          checked={allowCookies === "true"}
-                          className={`${styles["fr-radio-groupInputRadio"]} }`}
-                          id="cookies-all-allow"
-                          name="cookies-all"
-                          onChange={onOptionChange}
-                          type="radio"
-                          value="true"
-                        />
-                        <label
-                          className={`${styles["fr-radio-groupInputRadioLabel"]} ${allowCookies === "true" ? styles["InputRadioChecked"] : ""}`}
-                          htmlFor="cookies-all-allow"
-                        >
-                          Tout accepter
-                        </label>
+                  <h1 className="fr-modal__title" id="fr-consent-modal-title">
+                            Panneau de gestion des cookies
+                  </h1>
+                  <div className="fr-consent-manager">
+                    <div className="fr-consent-service fr-consent-manager__header">
+                      <fieldset className="fr-fieldset">
+                        <legend className="fr-consent-service__title" id="finality-legend">
+                          En autorisant ces services tiers, vous acceptez le dépôt et la lecture de cookie et l’utilisation de technologies de suivi nécessaires à leur bon fonctionnement. <br />
+                           {wording.PREFERENCES_SERVICES}{" "}
+                          <a className="fr-link" href="#" onClick={handleMentionsLegalesClick} title={wording.MENTIONS_LÉGALES}>
+                            {wording.MENTIONS_LÉGALES}
+                          </a>
+                        </legend>
+                          <div className="fr-consent-service__radios">
+                            <div className="fr-radio-group">
+                              <input checked={allowCookies === "true"} id="consent-all-accept" name="consent-all" onChange={onAllowCookies} type="radio"/>
+                              <label className="fr-label" htmlFor="consent-all-accept"> Tout accepter</label>
+                            </div>
+                            <div className="fr-radio-group">
+                              <input checked={allowCookies === "false"} id="consent-all-refuse" name="consent-all" onChange={onDenyCookies} type="radio"/>
+                              <label className="fr-label" htmlFor="consent-all-refuse"> Tout refuser</label>
+                            </div>
+                          </div>
+                      </fieldset>
+                    </div>
+                    <div className="fr-consent-service">
+                        <legend className="fr-consent-service__title fr-h4 fr-pb-0" id="finality-0-legend">Mesure d’audience</legend>
+                    
+                      <div className="fr-consent-service">
+                        <fieldset aria-labelledby="finality-1-legend finality-1-desc" className="fr-fieldset fr-fieldset--inline" role="group">
+                          <legend className="fr-consent-service__title fr-pb-1v" id="finality-1-legend">Matomo</legend>
+                          <div className="fr-consent-service__radios">
+                            <div className="fr-radio-group">
+                              <input checked={allowCookies === "true"} id="consent-finality-1-accept" name="consent-finality-1" onChange={onOptionChange} type="radio" value="true"/>
+                              <label className="fr-label" htmlFor="consent-finality-1-accept"> Autoriser </label>
+                            </div>
+                            <div className="fr-radio-group">
+                              <input checked={allowCookies === "false"} id="consent-finality-1-refuse" name="consent-finality-1" onChange={onOptionChange} type="radio" value="false"/>
+                              <label className="fr-label" htmlFor="consent-finality-1-refuse"> Interdire </label>
+                            </div>
+                          </div>
+                            <p className="fr-mb-1v" id="finality-1-desc">Ce service utilise 3 cookies.</p>
+                        </fieldset>
                       </div>
                     </div>
-                    <div className={`${styles["fr-fieldset__element"]} ${styles["fr-fieldset__element--inline"]}`}>
-                      <div className={styles["fr-radio-group"]}>
-                        <input
-                          checked={allowCookies === "false"}
-                          className={styles["fr-radio-groupInputRadio"]}
-                          id="cookies-all-deny"
-                          name="cookies-all"
-                          onChange={onOptionChange}
-                          type="radio"
-                          value="false"
-                        />
-                        <label
-                          className={`${styles["fr-radio-groupInputRadioLabel"]}  ${allowCookies === "false" ? styles["InputRadioChecked"] : ""}`}
-                          htmlFor="cookies-all-deny"
-                        >
-                          Tout refuser
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
+                  </div>
+              </div>
               </div>
             </div>
           </div>

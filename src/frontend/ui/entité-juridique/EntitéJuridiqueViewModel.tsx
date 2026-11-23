@@ -100,7 +100,7 @@ export class EntiteJuridiqueViewModel {
   }
 
   public get adresse(): string {
-    return `${this.entitéJuridique.adresseNuméroVoie.value} ${this.entitéJuridique.adresseTypeVoie.value} ${this.entitéJuridique.adresseVoie.value} ${this.entitéJuridique.adresseAcheminement.value}`;
+    return `${this.entitéJuridique.adresseNuméroVoie.value} ${this.entitéJuridique.adresseTypeVoie.value} ${this.entitéJuridique.adresseVoie.value} ${this.entitéJuridique.codePostal.value} ${this.entitéJuridique.adresseAcheminement.value}`;
   }
 
   public get dateDeMiseÀJourDeLAdresse(): string {

@@ -23,7 +23,10 @@ const DeleteProfileModal = (
       headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       method: "DELETE",
     }).then(async () => {
-      router.push(paths.PROFILES_LIST);
+      void router.push(paths.PROFILES_LIST);
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error("Failed to delete profile:", error);
     });
   };
 

@@ -17,7 +17,7 @@ import BlocQualite from "./bloc-qualite/BlocQualite";
 import { BlocRessourcesHumainesMédicoSocial } from "./bloc-ressources-humaines/BlocRessourcesHumainesMédicoSocial";
 import { LogoÉtablissementTerritorial } from "./logo-établissement-territorial-médico-social";
 import { EtablissementTerritorialMedicoSocialViewModel } from "./ÉtablissementTerritorialMédicoSocialViewModel";
-import { sendEvent, EXPORT } from "../../utils/nomenclature-matomo";
+import { sendEvent, EXPORT, RESSOURCES_HUMAINES } from "../../utils/nomenclature-matomo";
 import { SourceMatomo } from "../../utils/SourceMatomo";
 import { BoutonRetourHaut } from "../commun/ScrollToTopButton/BoutonRetourHaut";
 
@@ -51,6 +51,19 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
       sendEvent(EXPORT(SourceMatomo.FICHE_ETABLISSEMENT));
       handlePrint();
     };
+
+  const openBlocRH = () => {
+    const isCurrentlyOpen = statusBlocs[2];
+    const willBeOpen = !isCurrentlyOpen;
+    if(willBeOpen && établissementTerritorialViewModel.identitéViewModel.catégorieDeLÉtablissement === "500 - Etablissement d'hébergement pour personnes âgées dépendantes"){
+      sendEvent(RESSOURCES_HUMAINES);
+    }
+    if (isCurrentlyOpen) {
+      // Le DSFR replie les collapses enfants à la fermeture du parent : on aligne l'état React
+      setStatusSousBlocs(statusSousBlocs.map(() => false));
+    }
+    toggelBlocs(2);
+  };
 
   const { statusBlocs, allTrue, allFalse, toggelBlocs, setAllValue, statusSousBlocs, setStatusSousBlocs } = useToggelMultipleBlocs(false, 5, 2);
 
@@ -94,7 +107,7 @@ export const PageÉtablissementTerritorialMédicoSocial = ({ rechercheViewModel,
           opnedBloc={statusBlocs[2]}
           setStatusSousBlocs={setStatusSousBlocs}
           statusSousBlocs={statusSousBlocs}
-          toggelBlocs={() => toggelBlocs(2)}
+          toggelBlocs={openBlocRH}
           établissementTerritorialMédicoSocialRessourcesHumainesViewModel={établissementTerritorialViewModel.ressourcesHumainesViewModel}
         />
         <SeparatorHorizontal></SeparatorHorizontal>

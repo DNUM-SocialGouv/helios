@@ -34,6 +34,7 @@ import { ContenuTauxDeVétustéConstruction } from "../établissement-territoria
 import { ContenuDuTauxOccupationESMS } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxOccupationESMS";
 import { ContenuTauxOccupationGlobal } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxOccupationGlobal";
 import { ContenuTauxRéalisationActivité } from "../établissement-territorial-médico-social/InfoBulle/ContenuTauxRéalisationActivité";
+import { ContenuCapacitéParActivités } from "../établissement-territorial-sanitaire/InfoBulle/ContenuCapacitéParActivités";
 import { ContenuNombreDeJournéesPSYetSSR } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeJournéesPSYetSSR";
 import { ContenuNombreDeSéjourMCO } from "../établissement-territorial-sanitaire/InfoBulle/ContenuNombreDeSéjourMCO";
 
@@ -347,6 +348,16 @@ export function useComparaison() {
           contenu: <ContenuNombreDePassagesAuxUrgences dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_rpu)} source={wording.RPU} />,
           titre: wording.NOMBRE_DE_PASSAGES_AUX_URGENCES,
         };
+      case "nombreDeLitsMedecine":
+      case "nombreDeLitsChirurgie":
+      case "nombreDeLitsObstetrique":
+      case "nombreDeLitsUsld":
+      case "nombreDeLitsSsr":
+      case "nombreDeLitsPsy":
+        return {
+          contenu: <ContenuCapacitéParActivités dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_sae)} source={wording.SAE} />,
+          titre: wording.CAPACITÉ_INSTALLÉE_PAR_ACTIVITÉS_SANITAIRE,
+        };
       case "sejoursHad":
         return {
           contenu: <ContenuNombreHAD dateDeMiseÀJour={StringFormater.formatDate(dates.date_mis_a_jour_pmsi)} source={wording.PMSI} />,
@@ -461,6 +472,12 @@ export function useComparaison() {
         { label: "Raison sociale", nomComplet: "Raison sociale", key: "socialReason", sort: true, orderBy: "raison_sociale_courte" },
         { label: "Cat. FINESS", nomComplet: "Cat. FINESS", key: "categorie", sort: true, orderBy: "libelle_categorie" },
         { label: "N° FINESS", nomComplet: "N° FINESS", key: "numéroFiness", sort: true, orderBy: "numero_finess" },
+        { label: "Nb lits Médecine", nomComplet: "Nombre de lits Médecine", key: "nombreDeLitsMedecine", info: true, sort: true, orderBy: "nombre_lits_medecine" },
+        { label: "Nb lits Chirurgie", nomComplet: "Nombre de lits Chirurgie", key: "nombreDeLitsChirurgie", info: true, sort: true, orderBy: "nombre_lits_chirurgie" },
+        { label: "Nb lits Obstétrique", nomComplet: "Nombre de lits Obstétrique", key: "nombreDeLitsObstetrique", info: true, sort: true, orderBy: "nombre_lits_obstetrique" },
+        { label: "Nb lits USLD", nomComplet: "Nombre de lits USLD", key: "nombreDeLitsUsld", info: true, sort: true, orderBy: "nombre_lits_usld" },
+        { label: "Nb lits SSR", nomComplet: "Nombre de lits SSR", key: "nombreDeLitsSsr", info: true, sort: true, orderBy: "nombre_lits_ssr" },
+        { label: "Nb lits PSY (HC)", nomComplet: "Nombre de lits PSY (Hospitalisation complète)", key: "nombreDeLitsPsy", info: true, sort: true, orderBy: "nombre_lits_psy" },
         { label: "Nb séjours Médecine - Total Hospt", nomComplet: "Nb de séjours Médecine - Total Hospt", key: "totalHosptMedecine", info: true, sort: true, orderBy: "total_hospt_medecine" },
         { label: "Nb séjours Chirurgie - Total Hospt", nomComplet: "Nb de séjours Chirurgie - Total Hospt", key: "totalHosptChirurgie", info: true, sort: true, orderBy: "total_hospt_chirurgie" },
         { label: "Nb séjours Obstétrique - Total Hospt", nomComplet: "Nb de séjours Obstétrique - Total Hospt", key: "totalHosptObstetrique", info: true, sort: true, orderBy: "total_hospt_obstetrique" },

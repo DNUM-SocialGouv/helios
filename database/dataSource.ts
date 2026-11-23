@@ -103,10 +103,15 @@ import { AjoutFondsRoulementEtTresorerieDansBudgetFinance1772702784578 } from ".
 import { AjoutProfilFondDeRoulement1773072615839 } from "./migrations/1773072615839-AjoutProfilFondDeRoulement";
 import { AjoutProfilBesoinFondDeRoulement1773152515839 } from "./migrations/1773152515839-AjoutProfilBesoinFondDeRoulement";
 import { AjoutProfilTresorerie1773223041788 } from "./migrations/1773223041788-AjoutProfilTresorerie";
+import { AjoutCguDansUtilisateur1774024704472 } from "./migrations/1774024704472-AjoutCguDansUtilisateur";
 import { AjoutColonnesAutorisationsAmmStatutEtLibelles1774365753368 } from "./migrations/1774365753368-AjoutColonnesAutorisationsAmmStatutEtLibelles";
 import { SuppressionNomenclatureAMM1774521749651 } from "./migrations/1774521749651-SuppressionNomenclatureAMM";
 import { AjoutTableMessageAccueil1779354621997 } from "./migrations/1779354621997-AjoutTableMessageAccueil";
 import { AjoutLesDonneesVigieRhDansLesProfils1788170804920 } from "./migrations/1788170804920-AjoutLesDonneesVigieRhDansLesProfils";
+import { ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980 } from "./migrations/1790759482980-ModifierLongueurAdresseNumeroVoieEtTelephone";
+import { EvolutionReferentielDepartementRegion1790841193934 } from "./migrations/1790841193934-EvolutionReferentielDepartementRegion";
+import { AjoutEnumFichierDateMiseAjourJsonFiness1791466926414 } from "./migrations/1791466926414-AjoutEnumFichierDateMiseAjourJsonFiness";
+import { AjoutCodePostalDansLesEtablissements1791893026128 } from "./migrations/1791893026128-AjoutCodePostalDansLesEtablissements";
 import { updateProfileTable1796422585498 } from "./migrations/1796422585498-updateProfileTable";
 import { AddCreatedByToProfileTable1796792910177 } from "./migrations/1796792910177-AddCreatedByToProfileTable";
 import { ModificationValeurProfil1797341938070 } from "./migrations/1797341938070-modificationValeurProfil";
@@ -369,6 +374,7 @@ const datasource = new DataSource({
     ClefEtrangereListEts1743596937227,
     AjoutNombreJourneeUSLDActivitesSanitaires1745321952709,
     AjoutLesJourneesUsldDansLesProfils1799501916707,
+    AjoutCguDansUtilisateur1774024704472,
     ReferentielCategoriesFiness1747831401347,
     AjoutCategorieRecherche1748009262073,
     AjoutLaColonneDomaineAuReferentielCategories1748332500947,
@@ -416,6 +422,10 @@ const datasource = new DataSource({
     AjoutTableMessageAccueil1779354621997,
     AjoutLienHypertexteMessageAccueil1806000000000,
     AjoutLesDonneesVigieRhDansLesProfils1788170804920,
+    ModifierLongueurAdresseNumeroVoieEtTelephone1790759482980,
+    EvolutionReferentielDepartementRegion1790841193934,
+    AjoutEnumFichierDateMiseAjourJsonFiness1791466926414,
+    AjoutCodePostalDansLesEtablissements1791893026128
   ],
   type: "postgres",
   url: environmentVariables.DATABASE_URL,

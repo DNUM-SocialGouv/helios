@@ -14,6 +14,7 @@ import { filterEtablissementSanitaire } from "./profileFiltersHelper";
 function getIdentiteSanitaire(): ÉtablissementTerritorialIdentité & EntiteJuridiqueDeRattachement {
   return {
     adresseAcheminement: { 'dateMiseÀJourSource': 'dateMajAddressAcheminement', value: 'addresseAcheminement' },
+    codePostal: { 'dateMiseÀJourSource': 'dateMajCodePostal', value: 'codePostal' },
     adresseNuméroVoie: { 'dateMiseÀJourSource': 'dateMajNumVoi', value: 'addresseNumVoie' },
     adresseTypeVoie: { 'dateMiseÀJourSource': 'dateMajTypeVoie', value: 'addresseTypeVoie' },
     adresseVoie: { 'dateMiseÀJourSource': 'dateMajAddrVoie', value: 'addressVoie' },
@@ -300,6 +301,7 @@ describe("Filtre des informations d’identité des etablissements sanitaires pa
     const expectedIdentity = {
       ...rawIdentity,
       adresseAcheminement: { 'dateMiseÀJourSource': '', value: '' },
+      codePostal: { 'dateMiseÀJourSource': '', value: '' },
       adresseNuméroVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseTypeVoie: { 'dateMiseÀJourSource': '', value: '' },
       adresseVoie: { 'dateMiseÀJourSource': '', value: '' },

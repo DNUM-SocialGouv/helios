@@ -44,7 +44,8 @@ describe("Bloc Autorisation et activités", () => {
       mock<AutresActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
       mock<ReconnaissanceContractuelleActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
       mock<EquipementsMateriauxLourdsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
-      wording
+      wording,
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
     );
   });
 
@@ -182,7 +183,8 @@ describe("Bloc Autorisation et activités", () => {
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
-      wording
+      wording,
+      { autorisations: [], dateMiseÀJourSource: "" },
     );
 
     // WHEN
@@ -206,7 +208,8 @@ describe("Bloc Autorisation et activités", () => {
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
       { autorisations: [], dateMiseÀJourSource: "" },
-      wording
+      wording,
+      { autorisations: [], dateMiseÀJourSource: "" },
     );
 
     // WHEN

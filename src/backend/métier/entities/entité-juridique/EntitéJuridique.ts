@@ -10,6 +10,10 @@ export type EntitéJuridiqueIdentité = {
     dateMiseÀJourSource: string;
     value: string;
   }>;
+  codePostal: Readonly<{
+    dateMiseÀJourSource: string;
+    value: string;
+  }>;
   adresseNuméroVoie: Readonly<{
     dateMiseÀJourSource: string;
     value: string;

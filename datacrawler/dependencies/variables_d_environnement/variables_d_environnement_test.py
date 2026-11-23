@@ -68,7 +68,8 @@ class TestVariablesDEnvironnement:
             "SUPPORT_EMAIL": "test",
             "MATOMO_API_TOKEN": "test",
             "NEXT_PUBLIC_MATOMO_SITE_ID": "test",
-            "NEXT_PUBLIC_MATOMO_URL": "test"
+            "NEXT_PUBLIC_MATOMO_URL": "test",
+            "STRUCTURES_FINESS_DATA_PATH": "test",
         }
 
         # WHEN

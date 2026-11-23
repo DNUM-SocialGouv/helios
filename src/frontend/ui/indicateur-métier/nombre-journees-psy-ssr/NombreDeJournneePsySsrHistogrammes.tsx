@@ -29,7 +29,7 @@ export const NombreDeJournneesPsySsrHistogrammes = ({ etabTitle, etabFiness, nom
     async function updateAnnee() {
       setAnnéeEnCours(activitéMensuelleViewModel.annees[activitéMensuelleViewModel.annees.length - 1]);
     }
-    updateAnnee();
+    void updateAnnee();
   }, [selectedFrequency])
 
   const activitesPsySsr = [wording.SSR, wording.PSYCHIATRIE];

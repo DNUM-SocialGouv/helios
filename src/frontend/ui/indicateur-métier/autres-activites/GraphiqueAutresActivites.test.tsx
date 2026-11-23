@@ -28,7 +28,8 @@ describe("GraphiqueAutresActivites", () => {
       mock<AutresActivités>({ autorisations: [{ modalites: [{ formes: [{ autorisationEtablissements: [{ autorisations: [{ nom: "test" }] }] }] }] }] }),
       mock<ReconnaissanceContractuelleActivités>(),
       mock<EquipementsMateriauxLourdsActivités>(),
-      wording
+      wording,
+      mock<AutorisationsActivités>({ autorisations: [], dateMiseÀJourSource: '11/11/2025' }),
     );
   });
 

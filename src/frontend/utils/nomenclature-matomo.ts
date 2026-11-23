@@ -1,9 +1,12 @@
 import { sendEvent as matomoSendEvent, push as matomoPush } from "@socialgouv/matomo-next";
 
-const isAnalyticsEnabled = process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true';
+import { hasAnalyticsConsent } from "./analyticsConsent";
+import { Role } from "../../commons/Role";
+
+const isAnalyticsEnabled = () => process.env["NEXT_PUBLIC_MATOMO_ENABLED"] === 'true' && hasAnalyticsConsent();
 
 export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
-  if (!isAnalyticsEnabled) {
+  if (!isAnalyticsEnabled()) {
     return;
   }
 
@@ -11,9 +14,22 @@ export function sendEvent(...args: Parameters<typeof matomoSendEvent>) {
 }
 
 export function push(...args: Parameters<typeof matomoPush>) {
-  if (!isAnalyticsEnabled) return;
+  if (!isAnalyticsEnabled()) return;
 
   matomoPush(...args);
+}
+
+export function matomoUserRole(role?: number) {
+  switch (role) {
+  case Role.ADMIN_REG:
+    return 'regional';
+  case Role.USER:
+    return 'ars';
+  case Role.ADMIN_CENTR:
+    return 'central';
+  default:
+    return null;
+  }
 }
 
 
@@ -58,3 +74,8 @@ export const FILTRE_STATUT_JURIDIQUE_PNL = {category: 'filtre', action: 'valeur_
 
 // création de liste
 export const CREATION_LISTE = {category: 'liste', action: 'creer'};
+
+// bloc vigie rh
+export const RESSOURCES_HUMAINES = {category: 'vigie_rh', action: 'ouvrir', name: 'ressources_humaines'};
+export const RESSOURCES_HUMAINES_TDP = {category: 'vigie_rh', action: 'ouvrir', name: 'tdb_performance'};
+export const RESSOURCES_HUMAINES_DSN = {category: 'vigie_rh', action: 'ouvrir', name: 'dsn'};

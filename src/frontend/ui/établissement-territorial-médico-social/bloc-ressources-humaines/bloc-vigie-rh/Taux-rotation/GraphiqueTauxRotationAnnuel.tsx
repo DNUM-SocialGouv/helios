@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { TauxRotation } from "../../../../../../backend/métier/entities/établissement-territorial-médico-social/EtablissementTerritorialMedicoSocialVigieRH";
-import { annéesManquantesVigieRh } from "../../../../../utils/dateUtils";
+import { anneesManquantesVigieRhAnnuel } from "../../../../../utils/dateUtils";
 import { useDependencies } from "../../../../commun/contexts/useDependencies";
 import HistogrammeVerticalAvecRef from "../../../../commun/Graphique/HistogrammeVerticalAvecRef";
 import StringFormater from "../../../../commun/StringFormater";
@@ -19,15 +19,21 @@ type GraphiqueTauxRotationAnnuelProps = Readonly<{
 const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesTauxRotation, blocVigieRHViewModel, showRefValues }: GraphiqueTauxRotationAnnuelProps) => {
   const { wording } = useDependencies();
 
+  const donneesTauxRotationFiltrees = useMemo(() => {
+    const anneeEnCours = new Date().getFullYear();
+    const anneesAttendues = new Set([anneeEnCours - 2, anneeEnCours - 1]);
+    return donneesTauxRotation.filter((donnee) => anneesAttendues.has(Number(donnee.annee)));
+  }, [donneesTauxRotation]);
+
   const { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes } = useMemo(() => {
-    const libelles = donneesTauxRotation.map((donnee) => donnee.annee);
-    const valeursManquantes = annéesManquantesVigieRh(libelles, 3);
+    const libelles = donneesTauxRotationFiltrees.map((donnee) => donnee.annee);
+    const valeursManquantes = anneesManquantesVigieRhAnnuel(libelles);
     const valeursRefManquantes: (number | string)[] = [];
-    const valeurs = donneesTauxRotation.map((donnee) => {
+    const valeurs = donneesTauxRotationFiltrees.map((donnee) => {
       const valeur = donnee.rotation;
       return StringFormater.transformInRoundedRate(valeur);
     });
-    const valeursRef = donneesTauxRotation.map((donnee) => {
+    const valeursRef = donneesTauxRotationFiltrees.map((donnee) => {
       const valeurRef = donnee.rotationRef;
       if (!Number.isFinite(valeurRef)) {
         valeursRefManquantes.push(donnee.annee);
@@ -37,11 +43,11 @@ const GraphiqueTauxRotationAnnuel = ({ etabFiness, etabTitle, nomGraph, donneesT
     });
 
     return { libelles, valeurs, valeursRef, valeursManquantes, valeursRefManquantes };
-  }, [donneesTauxRotation]);
+  }, [donneesTauxRotationFiltrees]);
 
   return (
     <HistogrammeVerticalAvecRef
-      couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotation)}
+      couleursDeLHistogramme={blocVigieRHViewModel.couleursDeLHistogramme(donneesTauxRotationFiltrees)}
       etabFiness={etabFiness}
       etabTitle={etabTitle}
       identifiants={showRefValues ? [wording.TAUX_ROTATION, wording.TAUX_ROTATION_REFERENCE] : [wording.TAUX_ROTATION]}

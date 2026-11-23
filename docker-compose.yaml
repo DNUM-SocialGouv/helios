@@ -35,8 +35,8 @@ services:
         target: /home/finess/.ssh/keys/sftp_local.pub
         read_only: true
       - type: bind
-        source: ${PWD}/data_set
-        target: /home/finess/
+        source: ${PWD}/data_set/flux_finess/
+        target: /home/finess/flux_finess/
       - type: bind
         source: ${PWD}/sshd_config/sshd_config
         target: /etc/ssh/sshd_config

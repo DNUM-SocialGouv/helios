@@ -44,7 +44,7 @@ export function useExportExcelETRattache(entiteJuridiqueViewModel: EntiteJuridiq
       ecrireLignesDansSheet([header, [""], ...etabHeader, ...etabMedSoc, ...etabSan], sheet);
     }
     const fileName: string = `${getCurrentDate()}_Helios_${entiteJuridiqueViewModel.numéroFiness}.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 
   return { exportEtRattache }

@@ -85,7 +85,7 @@ function ExportToExcel(
   const workbook = new Workbook();
   const sheet = workbook.addWorksheet("Comparaison");
   ecrireLignesDansSheet(data, sheet);
-  telechargerWorkbook(workbook, fileName);
+  void telechargerWorkbook(workbook, fileName);
 }
 
 function TransformeCapacitiesetActivites(

@@ -72,7 +72,7 @@ export function useFavorisPopup(
             });
         }
         if (isOnError) setAddToListError(true);
-        getFavorisLists();
+        void getFavorisLists();
 
         setDisplayNewListInput(false);
         setNewListName("");
@@ -86,7 +86,7 @@ export function useFavorisPopup(
       } else if (status === 403) {
         setNewListError(true);
         setNewListErrorMessage(wording.ETOILE_MAX_LISTE_ATTEINT);
-        getFavorisLists();
+        void getFavorisLists();
       } else {
         setNewListError(true);
         setNewListErrorMessage(wording.SOMETHING_WENT_WRONG);
@@ -180,7 +180,7 @@ export function useFavorisPopup(
       closePopup();
       onClickOkSuccess(getCheckedListName());
     }
-    getFavorisLists();
+    void getFavorisLists();
   }
 
   async function diffAndSaveFavorisState(list: UserListViewModel): Promise<boolean> {
@@ -188,10 +188,10 @@ export function useFavorisPopup(
     for (const finessNumber of favorite) {
       if (isInFavorisList(list, finessNumber) && typeof checkedLists.get(list.id) === "boolean" && !checkedLists.get(list.id)) { // Etablissement en favoris actuellement mais décoché -> On retire
         const response = await removeFromFavorisList(favorite, list.id);
-        if (response.status !== 204) isOnError = true;
+        if (response?.status !== 204) isOnError = true;
       } else if (!isInFavorisList(list, finessNumber) && typeof checkedLists.get(list.id) === "boolean" && checkedLists.get(list.id)) { // Etablissement pas en favoris mais coché -> On ajoute
         const response = await addToFavorisList(finessNumber, list.id);
-        if (response.status !== 200) isOnError = true;
+        if (response?.status !== 200) isOnError = true;
       }
     }
     return isOnError;

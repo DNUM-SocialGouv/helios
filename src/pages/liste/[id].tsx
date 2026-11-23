@@ -52,9 +52,13 @@ export default function Router({ listServer }: RouterProps) {
         .then((data) => {
           setList(data);
           setChargement(false);
+        }).catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Failed to reload favorites:", error);
+          setChargement(false);
         });
     };
-    reloadFav();
+    void reloadFav();
   }, [userContext?.favorisLists])
 
 
@@ -75,11 +79,11 @@ export default function Router({ listServer }: RouterProps) {
   // Actions dans d’autres onglets et synchro le nombre d’elements dans le message avec le nombre de resultat dans la vue
   const activeAffichageTableau: ChangeEventHandler<HTMLInputElement> = (_event) => {
     setDisplayTable(true);
-    getFavorisLists();
+    void getFavorisLists();
   };
   const activeAffichageTuile: ChangeEventHandler<HTMLInputElement> = (_event) => {
     setDisplayTable(false);
-    getFavorisLists()
+    void getFavorisLists();
   };
 
   const tableMessage = `${selectedRows.size} ${selectedRows.size > 1 ? 'établissements sélectionnés' : 'établissement sélectionné'}`;

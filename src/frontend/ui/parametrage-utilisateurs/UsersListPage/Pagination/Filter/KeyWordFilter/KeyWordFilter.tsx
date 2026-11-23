@@ -12,8 +12,8 @@ const KeyWordFilter = ({
 }: KeyWordFilterProps) => {
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setKey(e.target.value);
-    setPage(1);
+    void setKey(e.target.value);
+    void setPage(1);
   };
 
   return (

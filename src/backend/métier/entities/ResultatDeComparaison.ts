@@ -63,6 +63,12 @@ export type ResultatSAN = Readonly<{
   commune: string;
   departement: string;
   type: string;
+  nombreDeLitsMedecine: number | null | string;
+  nombreDeLitsChirurgie: number | null | string;
+  nombreDeLitsObstetrique: number | null | string;
+  nombreDeLitsUsld: number | null | string;
+  nombreDeLitsSsr: number | null | string;
+  nombreDeLitsPsy: number | null | string;
   totalHosptMedecine: number | null | string;
   totalHosptObstetrique: number | null | string;
   totalHosptChirurgie: number | null | string;

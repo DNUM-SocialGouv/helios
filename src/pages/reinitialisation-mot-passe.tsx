@@ -21,19 +21,22 @@ export default function MotPasseOublie() {
     async function setTokenWhenReady() {
       if (router.isReady) {
         const { loginToken } = router.query;
-        setToken(loginToken as string);
+        if (typeof loginToken === 'string') {
+          setToken(loginToken);
+          await router.replace(router.pathname, undefined, { shallow: true });
+        }
       }
     };
-    setTokenWhenReady();
-  }, [router.isReady]);
+    void setTokenWhenReady();
+  }, [router.isReady, router.pathname, router.query["loginToken"]]);
 
   if (token) {
 
-    checkTokenService(token);
+    void checkTokenService(token);
     return (
       <>
         {isChecking ? <Spinner /> : validToken ? (
-          <PageChangeMotPasse />
+          <PageChangeMotPasse loginToken={token} />
         ) : (
           <Page404 />
         )}

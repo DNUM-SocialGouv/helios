@@ -48,6 +48,7 @@ export class WordingFr implements Wording {
   readonly TITRE_PAGE_GESTION_COOKIES: string = "Gestion des cookies - Helios";
   readonly TITRE_PAGE_INACCESSIBLE: string = "Accès refusé - Helios";
   readonly TITRE_PAGE_ECO_CONCEPTION: string = "Eco-Conception - Helios";
+  readonly TITRE_PAGE_CGU: string = "Conditions Générales d’Utilisation - Helios";
 
   // Breadcrumb
   readonly VOUS_ÊTES_ICI: string = "Vous êtes ici :";
@@ -540,13 +541,14 @@ export class WordingFr implements Wording {
   readonly ACCESSIBILITÉ: string = "Accessibilité";
   readonly NON_CONFORME: string = "non conforme";
   readonly MENTIONS_LÉGALES: string = "Mentions légales";
+  readonly PREFERENCES_SERVICES: string = "Préférences pour tous les services. ";
   readonly DONNÉES_PERSONNELLES: string = "Données personnelles";
   readonly NOUS_CONTACTER: string = "Nous contacter";
   readonly MENTION_LICENCE: string = "Sauf mention contraire, tous les contenus de ce site sont sous ";
   readonly LICENCE_ETALAB: string = "licence etalab-2.0";
   readonly NOUVELLE_FENÊTRE: string = "nouvelle Fenêtre";
   readonly ECO_CONCEPTION: string = "Eco-Conception";
-  readonly COOKIES: string = "Gestion des Cookies";
+  readonly GESTION_DES_COOKIES: string = "Gestion des Cookies";
   readonly PARAMÈTRES_D_AFFICHAGE: string = "Paramètres d’affichage";
   readonly PARAMÈTRES_D_AFFICHAGE_DESCRIPTION: string = "Choisissez un thème pour personnaliser l’apparence du site.";
   readonly PARAMÈTRES_D_AFFICHAGE_LÉGENDE: string = "Choisissez un thème pour personnaliser l’apparence du site.";
@@ -555,9 +557,9 @@ export class WordingFr implements Wording {
   readonly PARAMÈTRES_D_AFFICHAGE_CLAIR: string = "Thème clair";
   readonly PARAMÈTRES_D_AFFICHAGE_SOMBRE: string = "Thème sombre";
   readonly POLITIQUE_CONFIDENTIALITE: string = "Politique de confidentialité";
-  readonly TARTE_CITRON: string = "Site officiel de Tarte au citron";
   readonly SAVOIR_PLUS: string = "En savoir plus";
   readonly VOIR_SITE_OFFICIEL: string = "Voir le site officiel";
+  readonly CGU: string = "CGU";
 
   // Accessibilité
   readonly AUDIT_EN_COURS: string = "Audit en cours de réalisation.";
@@ -570,6 +572,7 @@ export class WordingFr implements Wording {
   readonly ÉDITEUR_DU_SITE: string = "Éditeur du site";
   readonly PROPRIÉTÉ_INTELLECTUELLE: string = "Propriété intellectuelle";
   readonly LIMITES_DE_RESPONSABILITÉ: string = "Limites de responsabilité";
+  readonly COOKIES: string = "Cookies";
   readonly SCALINGO: string = "scalingo.com";
   readonly CATAMANIA: string = "catamania.com";
 

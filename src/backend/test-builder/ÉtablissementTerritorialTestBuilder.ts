@@ -16,6 +16,10 @@ export class ÉtablissementTerritorialTestBuilder {
       dateMiseÀJourSource: "2022-02-02",
       value: "01130 NANTUA",
     },
+    codePostal: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "01130",
+    },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2022-02-02",
       value: "50",
@@ -96,6 +100,10 @@ export class ÉtablissementTerritorialTestBuilder {
     adresseAcheminement: {
       dateMiseÀJourSource: "2022-02-02",
       value: "59650 VILLENEUVE D ASCQ",
+    },
+    codePostal: {
+      dateMiseÀJourSource: "2022-02-02",
+      value: "59650",
     },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2022-02-02",

@@ -32,7 +32,7 @@ export function useExportExcelTranscription() {
     const sheet = workbook.addWorksheet("Transcription");
     ecrireLignesDansSheet([[etabInfo], [""], [wording.TITRE_TRANSCRIPTION], headers, ...lines], sheet);
     const fileName: string = `${getCurrentDate()}_Helios_${etabFiness}_${graphName}.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
   return { exportExcelTranscription };
 }

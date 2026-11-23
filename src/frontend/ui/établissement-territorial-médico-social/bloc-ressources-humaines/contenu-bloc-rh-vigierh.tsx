@@ -3,6 +3,7 @@ import { BlocVigieRHViewModel } from "./bloc-vigie-rh/BlocVigieRHViewModel";
 import styles from "./BlocRessourcesHumainesMédicoSocial.module.css"
 import { ContenuBlocRHMedicoSocialHelios } from "./contenu-bloc-rh-helios";
 import { ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel } from "./ÉtablissementTerritorialRessourcesHumainesMédicoSocialViewModel";
+import { sendEvent, RESSOURCES_HUMAINES_DSN , RESSOURCES_HUMAINES_TDP } from "../../../utils/nomenclature-matomo";
 import { useDependencies } from "../../commun/contexts/useDependencies";
 
 type ContenuBlocRHMedicoSocialVigieRHProps = Readonly<{
@@ -30,6 +31,20 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
     setStatusSousBlocs(newBoolArray);
   };
 
+  const openBlocDSN = () => {
+    if (!statusSousBlocs[1]) {
+      sendEvent(RESSOURCES_HUMAINES_DSN);
+    }
+    toggelBlocs(1);
+  };
+
+  const openBlocTDP = () => {
+    if (!statusSousBlocs[0]) {
+      sendEvent(RESSOURCES_HUMAINES_TDP);
+    }
+    toggelBlocs(0);
+  };
+
   const showNewBadge = new Date() <= new Date('2026-09-30');
 
   return (
@@ -40,7 +55,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
             aria-controls="accordion-indicateurs-rh-helios"
             aria-expanded={statusSousBlocs[0]}
             className="fr-accordion__btn"
-            onClick={() => toggelBlocs(0)}
+            onClick={openBlocTDP}
           >
             {wording.INDICATEURS_HELIOS_BLOC_TITLE}
           </button>
@@ -59,7 +74,7 @@ export const ContenuBlocRHMedicoSocialVigieRH = ({
             aria-controls="accordion-indicateurs-rh-vigierh"
             aria-expanded={statusSousBlocs[1]}
             className="fr-accordion__btn"
-            onClick={() => toggelBlocs(1)}
+            onClick={openBlocDSN}
           >
             {wording.INDICATEURS_VIGIERH_BLOC_TITLE} {showNewBadge && <p className={styles["badge-nouveau"] + " fr-badge fr-badge--new fr-badge--no-icon"}>{wording.NOUVEAU}</p>}
           </button>

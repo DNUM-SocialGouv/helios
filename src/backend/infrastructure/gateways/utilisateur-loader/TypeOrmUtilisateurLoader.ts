@@ -50,7 +50,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
 
         user.failedAttemps = 0;
         user.lockUntil = null;
-        (await this.orm).getRepository(UtilisateurModel).save(user);
+       await (await this.orm).getRepository(UtilisateurModel).save(user);
 
         return { utilisateur: user }
 
@@ -60,7 +60,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
         if (user.failedAttemps >= MAX_ATTEMPTS) {
           user.lockUntil = new Date(Date.now() + LOCK_TIME_MIN * 60 * 1000);
         }
-        (await this.orm).getRepository(UtilisateurModel).save(user);
+        await (await this.orm).getRepository(UtilisateurModel).save(user);
 
         return LoginStatusEnum.WRONG_CREDENTIALS;
       }
@@ -217,7 +217,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
                 <p>L'équipe Helios reste disponible à l'adresse mail suivante : dnum.helios-support@sg.social.gouv.fr</p>
                 <p> Cordialement, </p>
                 <p>L'équipe Helios</p>`;
-          sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
+          await sendEmail(email, "[Helios]-Création de votre compte Helios", body, images);
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
@@ -232,7 +232,7 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       userListModel.nom = 'Favoris';
       userListModel.userId = user?.code || '';
       userListModel.isFavoris = true;
-      if (user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+      if (user) await (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
 
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -400,6 +400,16 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       // eslint-disable-next-line no-console
       console.log("error", error);
     }
+  }
+
+  async updateCgu(userCode: string, cguAccepted: boolean): Promise<void> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { code: userCode } });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.cgu = cguAccepted;
+    await (await this.orm).getRepository(UtilisateurModel).save(user);
   }
 
   async deleteUser(userCode: string): Promise<string | void> {

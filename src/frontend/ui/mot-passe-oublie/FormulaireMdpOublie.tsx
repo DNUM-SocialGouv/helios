@@ -33,7 +33,7 @@ export const FormulaireMdpOublie = ({ annuler, emailSent, emailValue, emailValue
               <div className="fr-grid-row fr-grid-row--center fr-mt-8w fr-mb-6w">
                 <ul className="fr-btns-group fr-btns-group--inline-sm">
                   <li>
-                    <button className="fr-btn fr-btn--secondary" onClick={retourAccueil}>
+                    <button className="fr-btn fr-btn--secondary" onClick={retourAccueil} type="button">
                       {wording.BACK_TO_CONNEXION}
                     </button>
                   </li>

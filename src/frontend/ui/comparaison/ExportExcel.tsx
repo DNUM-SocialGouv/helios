@@ -99,6 +99,12 @@ function transformData(data: any, favoris: UserListViewModel[] | undefined, type
       socialReason: (etab) => etab.socialReason ?? "-",
       categorie: (etab) => etab.categorie ?? "-",
       numéroFiness: (etab) => etab.numéroFiness ?? "-",
+      nombreDeLitsMedecine: (etab) => etab.nombreDeLitsMedecine ?? "-",
+      nombreDeLitsChirurgie: (etab) => etab.nombreDeLitsChirurgie ?? "-",
+      nombreDeLitsObstetrique: (etab) => etab.nombreDeLitsObstetrique ?? "-",
+      nombreDeLitsUsld: (etab) => etab.nombreDeLitsUsld ?? "-",
+      nombreDeLitsPsy: (etab) => etab.nombreDeLitsPsy ?? "-",
+      nombreDeLitsSsr: (etab) => etab.nombreDeLitsSsr ?? "-",
       totalHosptMedecine: (etab) => etab.totalHosptMedecine ?? "-",
       totalHosptChirurgie: (etab) => etab.totalHosptChirurgie ?? "-",
       totalHosptObstetrique: (etab) => etab.totalHosptObstetrique ?? "-",
@@ -192,7 +198,7 @@ export async function ExportToExcel(
     ];
     ecrireLignesDansSheet(lignes, sheetComparaison);
     remplacerPlaceholdersParDatesDansColonne(sheetLisezMoi, datesMaj, 2);//La date de maj est dans la 2ème colonne
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 }
 
@@ -246,7 +252,7 @@ async function generateAndExportExcel(
       throw new Error("Illegal state: type d'établissement non identifié");
   }
 
-  ExportToExcel(headerYear,
+  void ExportToExcel(headerYear,
     headerType,
     headers,
     dataTransormed,
@@ -297,6 +303,12 @@ const getSanHeaders = (enabledIndicators: string[], enveloppes: string[]): strin
     ["socialReason", "Raison Sociale"],
     ["categorie", "Cat. FINESS"],
     ["numéroFiness", "FINESS"],
+    ["nombreDeLitsMedecine", "Nb lits Médecine"],
+    ["nombreDeLitsChirurgie", "Nb lits Chirurgie"],
+    ["nombreDeLitsObstetrique", "Nb lits Obstétrique"],
+    ["nombreDeLitsUsld", "Nb lits USLD"],
+    ["nombreDeLitsSsr", "Nb lits SSR"],
+    ["nombreDeLitsPsy", "Nb lits PSY (HC)"],
     ["totalHosptMedecine", "Nb de séjours Médecine - Total Hospt"],
     ["totalHosptChirurgie", "Nb de séjours Chirurgie - Total Hospt"],
     ["totalHosptObstetrique", "Nb séjours Obstétrique - Total Hospt"],

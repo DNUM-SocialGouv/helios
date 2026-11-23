@@ -28,7 +28,7 @@ export const StarButtonList = ({ numeroFiness, parent }: StarButtonProps) => {
   }
 
   const handleDisplayPopup = () => {
-    getFavorisLists();
+    void getFavorisLists();
     // On recupere la position du bouton etoile pour calculer la position de la popup
     if (buttonRef.current) {
       const popupTop = buttonRef.current.getBoundingClientRect().bottom + document.documentElement.scrollTop;

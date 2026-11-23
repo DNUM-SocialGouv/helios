@@ -10,6 +10,13 @@ export class EntitéJuridiqueModel {
 
   @Column({
     length: 5,
+    name: "code_postal",
+    default: "",
+  })
+  public codePostal!: string;
+
+  @Column({
+    length: 20,
     name: "adresse_numero_voie",
   })
   public adresseNuméroVoie!: string;
@@ -76,7 +83,7 @@ export class EntitéJuridiqueModel {
   public siren!: string;
 
   @Column({
-    length: 10,
+    length: 255,
     name: "telephone",
   })
   public téléphone!: string;

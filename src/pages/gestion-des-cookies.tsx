@@ -9,7 +9,7 @@ export default function GestionDesCookies() {
 
   useBreadcrumb([
     {
-      label: wording.COOKIES,
+      label: wording.GESTION_DES_COOKIES,
       path: "",
     },
   ]);

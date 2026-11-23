@@ -52,7 +52,7 @@ export function useExportExcelAutorisation(
     }
 
     const fileName: string = `${getCurrentDate()}_Helios_${numeroFinessEntiteJuridique}_Autorisations.xlsx`;
-    telechargerWorkbook(workbook, fileName);
+    void telechargerWorkbook(workbook, fileName);
   }
 
   const exportExcelAutorisationDeSoin = (workbook: Workbook, etabLine: string, entitéJuridiqueAutorisationsCapacitesViewModel: EntitéJuridiqueAutorisationsCapacitesViewModel) => {
@@ -68,7 +68,7 @@ export function useExportExcelAutorisation(
     const autorisationRows = getAutorisationRows(entiteJuridiqueAutorisations);
     rows.push(...autorisationRows);
 
-    const sheet = workbook.addWorksheet("Autorisations");
+    const sheet = workbook.addWorksheet("Autorisations d'activité de soinsns");
     ecrireLignesDansSheet([[etabLine], [], columns, ...rows], sheet);
   }
 

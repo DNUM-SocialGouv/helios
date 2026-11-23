@@ -34,7 +34,11 @@ export class EtablissementTerritorialSanitaireViewModelTestBuilder {
   public static readonly identité: ÉtablissementTerritorialSanitaire["identité"] = {
     adresseAcheminement: {
       dateMiseÀJourSource: "2021-07-07",
-      value: "01130 NANTUA",
+      value: "NANTUA",
+    },
+    codePostal: {
+      dateMiseÀJourSource: "2021-07-07",
+      value: "01130",
     },
     adresseNuméroVoie: {
       dateMiseÀJourSource: "2021-07-07",

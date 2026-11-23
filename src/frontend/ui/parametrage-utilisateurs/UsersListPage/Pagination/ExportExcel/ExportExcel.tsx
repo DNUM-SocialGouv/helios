@@ -146,7 +146,7 @@ async function generateAndExportExcel(
     "Date de dernière connexion",
     `Statut${getSelectedStaus(filterParams.etatId || "")}`,
   ];
-  ExportToExcel(headerRecherche, headers, dataTransormed, `${getCurrentDate()}_Helios_liste_utilisateurs.xlsx`);
+  await ExportToExcel(headerRecherche, headers, dataTransormed, `${getCurrentDate()}_Helios_liste_utilisateurs.xlsx`);
 }
 
 interface IExportExcel {

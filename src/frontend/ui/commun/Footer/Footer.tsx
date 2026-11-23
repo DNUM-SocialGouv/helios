@@ -87,6 +87,11 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="fr-footer__bottom-item">
+              <Link className="fr-footer__bottom-link" href={paths.CGU}>
+                {wording.CGU}
+              </Link>
+            </li>
+            <li className="fr-footer__bottom-item">
               <Link className="fr-footer__bottom-link" href={paths.MENTIONS_LÉGALES}>
                 {wording.MENTIONS_LÉGALES}
               </Link>
@@ -108,7 +113,7 @@ export const Footer = () => {
                   setCurrentModal(2);
                 }}
               >
-                {wording.COOKIES}
+                {wording.GESTION_DES_COOKIES}
               </button>
             </li>
             <li className="fr-footer__bottom-item">
@@ -127,7 +132,7 @@ export const Footer = () => {
               </a>
             </li>
             <li className="fr-footer__bottom-item">
-              <span className="fr-footer__bottom-link"> v1.8.16.1</span>
+              <span className="fr-footer__bottom-link"> v1.8.20.1</span>
             </li>
           </ul>
           <div className="fr-footer__bottom-copy">
