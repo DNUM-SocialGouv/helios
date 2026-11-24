@@ -6,7 +6,7 @@ export const PageCgu = () => {
         <b> Dernière mise à jour : 23 novembre 2026</b>
       </p>
       <div className="fr-mb-5w">
-      <p>
+      <div>
         <h2>Définitions  </h2>
         <ul>
           <li>Application : plateforme accessible via web </li>
@@ -16,7 +16,7 @@ export const PageCgu = () => {
           <li>Administrateur national : utilisateur ayant un accès à l’administration de l’ensemble des comptes utilisateurs. </li>
           <li>Institution : structure d’appartenance de l’utilisateur </li>
         </ul>     
-     </p>
+     </div>
      </div>
      <div className="fr-mb-5w">
       <h2>Objet et acceptation des CGU  </h2>

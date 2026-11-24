@@ -1,4 +1,5 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
+import { UtilisateurModel } from "../../../../database/models/UtilisateurModel";
 import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../entities/ResultatRechercheUtilisateur";
 import { Institution } from "../entities/Utilisateur/Institution";
 import { PasswordStatus, RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
@@ -29,4 +30,6 @@ export interface UtilisateurLoader {
   updateCgu(userCode: string, cguAccepted: boolean): Promise<void>;
   deleteUser(userCode: string): Promise<string | void>;
   reactivateUser(userCode: string): Promise<string | void>;
+  createUser(firstName: string, lastName: string, email: string, institution: string): Promise<UtilisateurModel | null>;
+  getUserByEmail(email: string): Promise<RechercheUtilisateur | null>;
 }
