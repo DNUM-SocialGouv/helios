@@ -63,19 +63,9 @@ export class WordingFr implements Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string = "Établissements Territoriaux";
   readonly SITE_EN_CONSTRUCTION: string = "Le site est dans sa phase pilote : il est toujours en construction et va évoluer régulièrement.";
 
-  // Inscription
-  readonly REGISTRATION_PAGE_TITLE: string = "Demande d'accès à Helios";
-  readonly SEND: string = "Envoyer";
-  readonly REGISTRARTION_SUCCESS_MESSAGE: string = "Un courriel a été envoyé à l'adresse mail indiquée, si elle n'est pas encore associée à un compte existant.";
-  readonly NOT_AUTORIZED_EMAIL: string = "L'adresse mail saisie ne peut pas être utilisée avec cette institution";
   // Connexion
-  readonly CONNEXION_IDENTIFIANT: string = "Identifiant *";
-  readonly CONNEXION_MOT_DE_PASSE: string = "Mot de passe *";
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? ";
-  readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?";
   readonly CONNEXION_LIBELLE: string = "Connexion";
   readonly DESCRIPTION_CONNEXION: string = "Connectez-vous pour accéder à Helios.";
-  readonly FORGET_PASSEWORD_MESSAGE: string = "Merci de saisir votre adresse mail afin de définir un nouveau mot de passe";
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement = (
@@ -636,33 +626,10 @@ export class WordingFr implements Wording {
   readonly IMPORT_LIST_OK_VERIFY_LABEL: string = "Vérifier";
   readonly IMPORT_LIST_OK_IMPORT_LABEL: string = "Importer";
 
-
-  // Mot de passe oublié
-  readonly MOT_PASSE_OUBLIE_TITRE: string = "Vous avez oublié votre mot de passe ?";
-  readonly MOT_PASSE_OUBLIE_LABEL: string = "Courriel";
-  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string = "Si votre identifiant est correct, un lien de réinitialisation de votre mot de passe vient de vous être transmis sur l'adresse mail que vous nous avez communiquée.";
-
-  // Changement de mot de passe
-  readonly CHANGEMENT_MOT_PASSE_TITRE: string = "Mot de passe";
-  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string = "Pour modifier votre mot de passe actuel, merci de renseigner les champs suivants";
-  readonly OLD_MOT_DE_PASSE: string = "Ancien mot de passe";
-  readonly OLD_MOT_DE_PASSE_REINITIALISATION: string = "Mot de passe précédemment utilisé. Merci de renseigner un nouveau mot de passe unique.";
-  readonly MOT_DE_PASSE: string = "Nouveau mot de passe";
-  readonly CONFIRMER_MOT_DE_PASSE: string = "Confirmation mot de passe";
-  readonly CONFIRM_CHANGE_PASSWORD: string = "Confirmer la demande de réinitialisation";
-  readonly CONFIRM_CREATE_PASSWORD: string = "Confirmer la demande de création";
-  readonly INVALID_PASSWORD_MESSAGE: string = "Mot de passe invalide. Le mot de passe doit être composé d'au moins 12 caractères dont: 1 lettre minuscule, 1 lettre majuscule, 1 chiffre et 1 caractère spécial parmi !@#$%^&* .";
-
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string = "Historique des derniers établissements consultés";
   readonly ETABLISSEMENT_CONSULTE: string = "Etablissements consultés";
   readonly DATE: string = "Date";
-  readonly CONFIRM_UPDATE_PASSWORD: string = "Confirmer la modification du mot de passe";
-  readonly REINITIALISATION_MOT_PASSE_TITRE: string = "Réinitialisation de votre mot de passe";
-  readonly CREATION_MOT_PASSE_TITRE: string = "Création de votre mot de passe";
-  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string = "Merci de renseigner votre nouveau mot de passe";
-  readonly DIFFERENT_MOT_PASSE: string = "Le mot de passe doit être différent du mot de passe actuel";
-  readonly WRONG_OLD_MOT_DE_PASSE: string = "Ancien mot de passe erroné";
 
   readonly PARAMETRAGE_TITRE: string = "Paramétrage";
   readonly PARAMETRAGE_AUTORISATIONS_TITRE: string = "Paramétrage des autorisations";

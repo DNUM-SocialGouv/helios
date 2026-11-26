@@ -4,7 +4,6 @@ import mockRouter from "next-router-mock";
 
 import { PageRecherche } from "./PageRecherche";
 import { Résultat, RésultatDeRecherche } from "../../../backend/métier/entities/RésultatDeRecherche";
-import { PasswordStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { RésultatDeRechercheTestBuilder } from "../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import { fakeFrontDependencies, htmlNodeAndReactElementMatcher, renderFakeComponent } from "../../test-helpers/testHelper";
 import { régions } from "../région/régions";
@@ -17,7 +16,7 @@ const mockSession = {
     idUser: "1",
     firstname: "Doe",
     role: 1,
-    institution: {},
+    institution: "",
     institutionId: 1,
     codeRegion: 84,
     codeProfiles: [""],
@@ -31,7 +30,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
 
@@ -43,7 +42,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
 
@@ -63,7 +62,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
 
@@ -120,7 +119,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -174,7 +173,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -213,7 +212,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -285,7 +284,7 @@ describe("La page de d’accueil", () => {
       });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -372,7 +371,7 @@ describe("La page de d’accueil", () => {
       });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const termeDeLaPremièreRecherche = "hospitalier";
@@ -414,7 +413,7 @@ describe("La page de d’accueil", () => {
     });
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -446,7 +445,7 @@ describe("La page de d’accueil", () => {
 
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
     const terme = "hospitalier";
@@ -515,7 +514,7 @@ describe("La page de d’accueil", () => {
     // WHEN
     renderFakeComponent(
       <SessionProvider session={mockSession}>
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </SessionProvider>
     );
 

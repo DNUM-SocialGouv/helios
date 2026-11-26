@@ -1,26 +1,14 @@
 import { ProfilModel } from "../../../../database/models/ProfilModel";
 import { Institution } from "../entities/Utilisateur/Institution";
-import { PasswordStatus, RésultatLogin } from "../entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../gateways/UtilisateurLoader";
 
 export class LoginUseCase {
   constructor(private readonly utilisateurLoader: UtilisateurLoader) { }
 
-  async exécute(email: string, password: string): Promise<RésultatLogin> {
-    return await this.utilisateurLoader.login(email, password);
-  }
-
-  async getLoginError(email: string): Promise<string> {
-    return await this.utilisateurLoader.getLoginError(email);
-  }
-
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
     return await this.utilisateurLoader.checkUserIsNotAdminAndInactif(email);
   }
 
-  async checkPasswordStatus(email: string): Promise<PasswordStatus> {
-    return await this.utilisateurLoader.checkPasswordStatus(email);
-  }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {
     return await this.utilisateurLoader.updateLastConnectionDate(email);

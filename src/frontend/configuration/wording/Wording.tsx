@@ -55,20 +55,9 @@ export interface Wording {
   readonly ÉTABLISSEMENT_TERRITORIAUX: string;
   readonly SITE_EN_CONSTRUCTION: string;
 
-  // Inscription
-  readonly REGISTRATION_PAGE_TITLE: string;
-  readonly SEND: string;
-  readonly REGISTRARTION_SUCCESS_MESSAGE: string;
-  readonly NOT_AUTORIZED_EMAIL: string;
-
   // Connexion
   readonly CONNEXION_LIBELLE: string;
   readonly DESCRIPTION_CONNEXION: string;
-  readonly CONNEXION_IDENTIFIANT: string;
-  readonly CONNEXION_MOT_DE_PASSE: string;
-  readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string;
-  readonly FORGET_PASSEWORD: string;
-  readonly FORGET_PASSEWORD_MESSAGE: string;
 
   // Recherche
   readonly RECHERCHE_DESCRIPTION: ReactElement;
@@ -547,33 +536,10 @@ export interface Wording {
   readonly IMPORT_LIST_OK_VERIFY_LABEL: string;
   readonly IMPORT_LIST_OK_IMPORT_LABEL: string;
 
-
-  // Mot de passe oublié
-  readonly MOT_PASSE_OUBLIE_TITRE: string;
-  readonly MOT_PASSE_OUBLIE_LABEL: string;
-  readonly MOT_PASSE_OUBLIE_SUCCESS_MESSAGE: string;
-
-  // Changement de mot de passe
-  readonly CHANGEMENT_MOT_PASSE_TITRE: string;
-  readonly CHANGEMENT_MOT_PASSE_DESCRIPTION: string;
-  readonly OLD_MOT_DE_PASSE_REINITIALISATION: string;
-  readonly OLD_MOT_DE_PASSE: string;
-  readonly MOT_DE_PASSE: string;
-  readonly CONFIRMER_MOT_DE_PASSE: string;
-  readonly CONFIRM_CHANGE_PASSWORD: string;
-  readonly CONFIRM_CREATE_PASSWORD: string;
-  readonly INVALID_PASSWORD_MESSAGE: string;
-
   // Historique de recherche
   readonly HISTORIQUE_DE_RECHERECHE_TITRE: string;
   readonly ETABLISSEMENT_CONSULTE: string;
   readonly DATE: string;
-  readonly CONFIRM_UPDATE_PASSWORD: string;
-  readonly REINITIALISATION_MOT_PASSE_TITRE: string;
-  readonly CREATION_MOT_PASSE_TITRE: string;
-  readonly REINITIALISATION_MOT_PASSE_DESCRIPTION: string;
-  readonly DIFFERENT_MOT_PASSE: string;
-  readonly WRONG_OLD_MOT_DE_PASSE: string;
 
   // Parametrage
   readonly PARAMETRAGE_TITRE: string;

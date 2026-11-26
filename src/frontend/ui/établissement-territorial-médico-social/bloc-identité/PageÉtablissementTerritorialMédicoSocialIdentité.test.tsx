@@ -17,7 +17,7 @@ const mockSession = {
     idUser: "1",
     firstname: "Doe",
     role: 1,
-    institution: {},
+    institution: "",
     institutionId: 1,
     codeRegion: 84,
     codeProfiles: [""],
