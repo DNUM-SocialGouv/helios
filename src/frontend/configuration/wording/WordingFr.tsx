@@ -74,6 +74,7 @@ export class WordingFr implements Wording {
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string = "Vous n'avez pas de compte ? ";
   readonly FORGET_PASSEWORD: string = "Mot de passe oublié ?";
   readonly CONNEXION_LIBELLE: string = "Connexion";
+  readonly DESCRIPTION_CONNEXION: string = "Connectez-vous pour accéder à Helios.";
   readonly FORGET_PASSEWORD_MESSAGE: string = "Merci de saisir votre adresse mail afin de définir un nouveau mot de passe";
 
   // Recherche

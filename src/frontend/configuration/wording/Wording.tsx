@@ -63,6 +63,7 @@ export interface Wording {
 
   // Connexion
   readonly CONNEXION_LIBELLE: string;
+  readonly DESCRIPTION_CONNEXION: string;
   readonly CONNEXION_IDENTIFIANT: string;
   readonly CONNEXION_MOT_DE_PASSE: string;
   readonly CONNEXION_MOT_DE_PASSE_OUBLIE: string;
