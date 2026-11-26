@@ -1,10 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { PageCgu } from "../frontend/ui/cgu/PageCgu";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
+import { seDeconnecter } from "../frontend/utils/deconnexion";
 
 export default function ValiderCgu() {
   const { wording } = useDependencies();
@@ -43,7 +44,7 @@ export default function ValiderCgu() {
         <button
           className="fr-btn fr-btn--secondary"
           onClick={async () => {
-            await signOut({ callbackUrl: "/" });
+            await seDeconnecter("/");
           }}
           type="button"
         >

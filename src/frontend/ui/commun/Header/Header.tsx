@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import "@gouvfr/dsfr/dist/component/header/header.min.css";
@@ -10,6 +10,7 @@ import "@gouvfr/dsfr/dist/component/link/link.min.css";
 import "@gouvfr/dsfr/dist/component/modal/modal.min.css";
 import styles from "./Header.module.css";
 import { Role } from "../../../../commons/Role";
+import { seDeconnecter } from "../../../utils/deconnexion";
 import { sendEvent, CONSOLE_ADMIN, HISTORIQUE, AIDE, push, RECHERCHE_SIMPLE } from "../../../utils/nomenclature-matomo";
 import { useFavoris } from "../../favoris/useFavoris";
 import { Breadcrumb } from "../Breadcrumb/Breadcrumb";
@@ -38,7 +39,7 @@ export const Header = () => {
 
   const logOut = () => {
     push(["deleteCustomDimension", 1]);
-    void signOut({ callbackUrl: paths.CONNEXION });
+    void seDeconnecter(paths.CONNEXION);
     setDisplayMenu(false);
   };
 

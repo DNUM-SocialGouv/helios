@@ -56,7 +56,7 @@ export const PageCgu = () => {
       <p>
         Chaque utilisateur devra s’authentifier à chacun de ses accès à Helios au moyen d’un identifiant et d’un mot de passe dont l’usage lui est strictement réservé.  
       </p>
-      <p>
+      <div>
         Chaque utilisateur s’engage à :  
         <ul>
           <li>Ne jamais communiquer son mot de passe et/ou son identifiant à un tiers. </li>
@@ -69,7 +69,7 @@ export const PageCgu = () => {
               environnement professionnel (messagerie ou espace collaboratif professionnel). </li>
           <li>Ne pas transmettre d’informations permettant une identification directe ou indirecte (notamment en cas de petits effectifs).  </li>
         </ul>
-      </p>
+      </div>
       <p>
         Chaque utilisateur avec les droits d’administrateur régional ou d’administrateur national s’engage à :
         <ul>

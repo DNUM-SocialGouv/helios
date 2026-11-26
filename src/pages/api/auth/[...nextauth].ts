@@ -5,7 +5,7 @@ import { dependencies } from "../../../backend/infrastructure/dependencies";
 const { utilisateurLoader } = dependencies;
 
 const proConnectIssuer = process.env["PROCONNECT_ISSUER"];
-const proConnectWellKnown = process.env["PROCONNECT_WELLKNOWN"] ?? (proConnectIssuer ? `${proConnectIssuer.replace(/\/$/, "")}/.well-known/openid-configuration` : undefined);
+export const proConnectWellKnown = process.env["PROCONNECT_WELLKNOWN"] ?? (proConnectIssuer ? `${proConnectIssuer.replace(/\/$/, "")}/.well-known/openid-configuration` : undefined);
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env["PROCONNECT_CLIENT_SECRET"],
       type: "oauth",
       wellKnown: proConnectWellKnown,
-      authorization: { params: { scope: "openid email given_name usual_name uid organization_label" } },
+      authorization: { params: { scope: "openid email given_name usual_name uid organization_label organizational_unit" } },
       checks: ["pkce", "state", "nonce"],
       idToken: true,
       // ProConnect returns user claims only from the userinfo endpoint, as a signed JWT
@@ -75,6 +75,8 @@ export const authOptions: NextAuthOptions = {
           codeRegion: user.codeRegion,
           codeProfiles: user.codeProfiles,
           cgu: user.cgu,
+          provider: account.provider,
+          idToken: account.id_token,
         };
       }
       if (trigger === "update" && typeof session?.cgu === "boolean") {
