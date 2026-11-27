@@ -1,14 +1,13 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 
 import { PageCgu } from "../frontend/ui/cgu/PageCgu";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
+import { redirigerVers } from "../frontend/ui/commun/redirection";
 
 export default function ValiderCgu() {
   const { wording } = useDependencies();
-  const router = useRouter();
   const { update } = useSession();
 
   useBreadcrumb([
@@ -28,13 +27,14 @@ export default function ValiderCgu() {
         <button
           className="fr-btn"
           onClick={async () => {
-            await fetch("/api/utilisateurs/cgu", {
+            const response = await fetch("/api/utilisateurs/cgu", {
               body: JSON.stringify({ accepted: true }),
               headers: { "Content-Type": "application/json" },
               method: "POST",
             });
+            if (!response.ok) return;
             await update({ cgu: true });
-            await router.replace("/");
+            redirigerVers("/");
           }}
           type="button"
         >

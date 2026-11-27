@@ -3,6 +3,7 @@
 ## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.1...release/1.8.21) (TO-DO)
 
 ### Bug Fixes
+- hel-1160: [Connexion] bug sur l'acceptation CGU
 
 ### Features
 

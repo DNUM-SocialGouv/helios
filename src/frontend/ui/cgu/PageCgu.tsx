@@ -6,7 +6,7 @@ export const PageCgu = () => {
         <b> Dernière mise à jour : 23 novembre 2026</b>
       </p>
       <div className="fr-mb-5w">
-      <p>
+      <div>
         <h2>Définitions  </h2>
         <ul>
           <li>Application : plateforme accessible via web </li>
@@ -16,7 +16,7 @@ export const PageCgu = () => {
           <li>Administrateur national : utilisateur ayant un accès à l’administration de l’ensemble des comptes utilisateurs. </li>
           <li>Institution : structure d’appartenance de l’utilisateur </li>
         </ul>     
-     </p>
+     </div>
      </div>
      <div className="fr-mb-5w">
       <h2>Objet et acceptation des CGU  </h2>
@@ -56,7 +56,7 @@ export const PageCgu = () => {
       <p>
         Chaque utilisateur devra s’authentifier à chacun de ses accès à Helios au moyen d’un identifiant et d’un mot de passe dont l’usage lui est strictement réservé.  
       </p>
-      <p>
+      <div>
         Chaque utilisateur s’engage à :  
         <ul>
           <li>Ne jamais communiquer son mot de passe et/ou son identifiant à un tiers. </li>
@@ -69,15 +69,15 @@ export const PageCgu = () => {
               environnement professionnel (messagerie ou espace collaboratif professionnel). </li>
           <li>Ne pas transmettre d’informations permettant une identification directe ou indirecte (notamment en cas de petits effectifs).  </li>
         </ul>
-      </p>
-      <p>
+      </div>
+      <div>
         Chaque utilisateur avec les droits d’administrateur régional ou d’administrateur national s’engage à :
         <ul>
           <li>Vérifier que l’utilisateur appartient à son institution.</li>
           <li>Attribuer les rôles adéquats à l’utilisateur.</li>
           <li>Désactiver systématiquement les comptes des utilisateurs lors de leurs départs de l’institution.</li>
         </ul>
-      </p>
+      </div>
      </div>
     <div className="fr-mb-5w">
       <h2>Modification des CGU </h2>
