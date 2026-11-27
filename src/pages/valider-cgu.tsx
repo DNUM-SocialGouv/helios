@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import { PageCgu } from "../frontend/ui/cgu/PageCgu";
 import { useDependencies } from "../frontend/ui/commun/contexts/useDependencies";
 import { useBreadcrumb } from "../frontend/ui/commun/hooks/useBreadcrumb";
+import { redirigerVers } from "../frontend/ui/commun/redirection";
 
 export default function ValiderCgu() {
   const { wording } = useDependencies();
@@ -33,7 +34,7 @@ export default function ValiderCgu() {
             });
             if (!response.ok) return;
             await update({ cgu: true });
-            window.location.replace("/");
+            redirigerVers("/");
           }}
           type="button"
         >
