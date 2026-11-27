@@ -12,7 +12,7 @@ jest.mock("next-auth/react", (): typeof import("next-auth/react") => ({
   useSession: jest.fn(),
 }));
 
-jest.mock("./commun/redirection", () => ({ redirigerVers: jest.fn() }));
+jest.mock("./commun/redirection", (): typeof import("./commun/redirection") => ({ redirigerVers: jest.fn() }));
 
 describe("Page CGU", () => {
   let updateSessionMock: jest.Mock;
