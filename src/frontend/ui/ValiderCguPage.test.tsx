@@ -4,12 +4,15 @@ import mockRouter from "next-router-mock";
 
 import ValiderCguPage from "../../pages/valider-cgu";
 import { renderFakeComponent } from "../test-helpers/testHelper";
+import { redirigerVers } from "./commun/redirection";
 
 jest.mock("next-auth/react", (): typeof import("next-auth/react") => ({
   ...jest.requireActual("next-auth/react"),
   signOut: jest.fn(),
   useSession: jest.fn(),
 }));
+
+jest.mock("./commun/redirection", (): typeof import("./commun/redirection") => ({ redirigerVers: jest.fn() }));
 
 describe("Page CGU", () => {
   let updateSessionMock: jest.Mock;
@@ -41,7 +44,7 @@ describe("Page CGU", () => {
       expect(updateSessionMock).toHaveBeenCalledWith({ cgu: true });
     });
     await waitFor(() => {
-      expect(mockRouter.pathname).toBe("/");
+      expect(redirigerVers).toHaveBeenCalledWith("/");
     });
   });
 

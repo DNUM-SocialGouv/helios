@@ -1,8 +1,15 @@
 # Changelog d'Helios
 
-## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.1...release/1.8.21) (TO-DO)
+## [1.8.21](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.2...release/1.8.21) (TO-DO)
 
 ### Bug Fixes
+
+### Features
+
+## [1.8.20.2](https://github.com/DNUM-SocialGouv/helios/compare/release/1.8.20.1...release/1.8.20.2) (2026-11-27)
+
+### Bug Fixes
+- hel-1160: [Connexion] bug sur l'acceptation CGU
 
 ### Features
 
