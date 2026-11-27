@@ -4,7 +4,6 @@ import { SessionProvider } from "next-auth/react";
 
 import { Breadcrumb } from "./Breadcrumb";
 import { ActivitesSanitaireMensuel } from "../../../../backend/métier/entities/ActivitesSanitaireMensuel";
-import { PasswordStatusEnum } from "../../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { RésultatDeRechercheTestBuilder } from "../../../../backend/test-builder/RésultatDeRechercheTestBuilder";
 import Accessibilité from "../../../../pages/accessibilite";
 import DonnéesPersonnelles from "../../../../pages/donnees-personnelles";
@@ -31,7 +30,7 @@ const mockSession = {
     idUser: '1',
     firstname: 'Doe',
     role: 1,
-    institution: {},
+    institution: "",
     institutionId: 1,
     codeRegion: 84,
     codeProfiles: [""],
@@ -71,7 +70,7 @@ describe("Le fil d’Ariane (breadcrumb)", () => {
     renderFakeComponent(
       <>
         <Breadcrumb />
-        <PageRecherche messageAccueil={null} passwordStatus={{ 'status': PasswordStatusEnum.OK }} />
+        <PageRecherche messageAccueil={null} />
       </>
     );
 

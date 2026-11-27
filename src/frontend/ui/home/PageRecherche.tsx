@@ -7,19 +7,16 @@ import { RechercheCassée } from "./RechercheCassée";
 import { RechercheEnAttente } from "./RechercheEnAttente";
 import { RésultatsDeRecherche } from "./RésultatsDeRecherche";
 import { useRecherche } from "./useRecherche";
-import { PasswordStatus, PasswordStatusEnum } from "../../../backend/métier/entities/Utilisateur/RésultatLogin";
 import { MessageAccueil } from "../../../backend/métier/gateways/MessageAccueilLoader";
 import { useDependencies } from "../commun/contexts/useDependencies";
 import { useBreadcrumb } from "../commun/hooks/useBreadcrumb";
 import { NewFeaturesNotice } from "../commun/NewFeaturesNotice/NewFeaturesNotice";
-import { PasswordWarnningNotice } from "../commun/PasswordWarningNotice/PasswordWarningNotice";
 
 type PageRechercheProps = {
-  passwordStatus: PasswordStatus;
   messageAccueil: MessageAccueil | null;
 };
 
-export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheProps) => {
+export const PageRecherche = ({ messageAccueil }: PageRechercheProps) => {
   const { wording } = useDependencies();
   const [displayTable, setDisplayTable] = useState(false);
 
@@ -44,7 +41,6 @@ export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheP
   } = useRecherche();
 
   const showNotice = messageAccueil && new Date() >= new Date(messageAccueil.dateDebut) && new Date() <= new Date(messageAccueil.dateFin);
-  const showPasswordWarning = passwordStatus.status === PasswordStatusEnum.WARNING;
 
   useEffect(() => {
     async function loadDisplayKind() {
@@ -71,7 +67,6 @@ export const PageRecherche = ({ passwordStatus, messageAccueil }: PageRechercheP
         <title>{wording.TITRE_PAGE_ACCUEIL}</title>
       </Head>
       <div className="fr-container">
-        {showPasswordWarning ? <PasswordWarnningNotice daysLeft={passwordStatus.daysLeft} /> : null}
         {showNotice ? <NewFeaturesNotice messageAccueil={messageAccueil} /> : null}
 
         <FormulaireDeRecherche isLoading={estCeEnAttente} lancerLaRecherche={(e) => lancerLaRecherche(e, displayTable)} rechercheOnChange={rechercheOnChange} terme={terme} />

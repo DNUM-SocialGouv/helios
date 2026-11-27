@@ -1,4 +1,3 @@
-import { ChangePasswordLoader } from "../métier/gateways/ChangePasswordLoader";
 import { ComparaisonLoader } from "../métier/gateways/ComparaisonLoader";
 import { EntitéJuridiqueLoader } from "../métier/gateways/EntitéJuridiqueLoader";
 import { EnvironmentVariables } from "../métier/gateways/EnvironmentVariables";
@@ -10,13 +9,11 @@ import { UtilisateurLoader } from "../métier/gateways/UtilisateurLoader";
 import { ÉtablissementTerritorialMédicoSocialLoader } from "../métier/gateways/ÉtablissementTerritorialMédicoSocialLoader";
 import { ÉtablissementTerritorialRattachéLoader } from "../métier/gateways/ÉtablissementTerritorialRattachéLoader";
 import { ÉtablissementTerritorialSanitaireLoader } from "../métier/gateways/ÉtablissementTerritorialSanitaireLoader";
-import { TypeOrmChangePasswordLoader } from "./gateways/change-password-loader/TypeOrmChangePasswordLoader";
 import { TypeOrmComparaisonLoader } from "./gateways/comparaison-loader/TypeOrmComparaisonLoader";
 import { dotEnvConfig } from "./gateways/dot-env/dotEnvConfig";
 import { TypeOrmEntiteJuridiqueLoader } from "./gateways/entité-juridique-loader/TypeOrmEntitéJuridiqueLoader";
 import { NodeEnvironmentVariables } from "./gateways/environnement-variables/NodeEnvironmentVariables";
 import { TypeOrmFavorisLoader } from "./gateways/favoris-loader/TypeOrmFavorisLoader";
-import { TypeOrmForgetPasswordLoader } from "./gateways/forget-password-loader/TypeOrmForgetPasswordLoader";
 import { TypeOrmInstitutionLoader } from "./gateways/institution-loader/TypeOrmInstitutionLoader";
 import { ConsoleLogger } from "./gateways/logger/ConsoleLogger";
 import { typeOrmOrm } from "./gateways/orm/typeOrmOrm";
@@ -47,8 +44,6 @@ export type Dependencies = Readonly<{
   établissementTerritorialRattachéLoader: ÉtablissementTerritorialRattachéLoader;
   établissementTerritorialSanitaireLoader: ÉtablissementTerritorialSanitaireLoader;
   favorisLoader: FavorisLoader;
-  changePasswordLoader: ChangePasswordLoader;
-  forgetPasswordLoader: TypeOrmForgetPasswordLoader;
   searchHistoryLoader: SearchHistoryLoader;
   profileLoader: TypeOrmProfileLoader;
   roleLoader: TypeOrmRoleLoader;
@@ -77,8 +72,6 @@ const createDependencies = (): Dependencies => {
     établissementTerritorialRattachéLoader: new TypeOrmÉtablissementTerritorialRattachéLoader(orm),
     établissementTerritorialSanitaireLoader: new TypeOrmEtablissementTerritorialSanitaireLoader(orm),
     favorisLoader: new TypeOrmFavorisLoader(orm),
-    changePasswordLoader: new TypeOrmChangePasswordLoader(orm),
-    forgetPasswordLoader: new TypeOrmForgetPasswordLoader(orm),
     searchHistoryLoader: new TypeOrmSearchHistoryLoader(orm),
     profileLoader: new TypeOrmProfileLoader(orm),
     roleLoader: new TypeOrmRoleLoader(orm),

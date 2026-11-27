@@ -1,31 +1,54 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+
+import { dependencies } from "../../../backend/infrastructure/dependencies";
+
+const { utilisateurLoader } = dependencies;
+
+const proConnectIssuer = process.env["PROCONNECT_ISSUER"];
+export const proConnectWellKnown = process.env["PROCONNECT_WELLKNOWN"] ?? (proConnectIssuer ? `${proConnectIssuer.replace(/\/$/, "")}/.well-known/openid-configuration` : undefined);
 
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/connexion",
   },
   providers: [
-    CredentialsProvider({
-      id: "credentials",
-      name: "Helios",
-      credentials: {},
-      async authorize(credentials) {
-        try {
-          const authResponse = await fetch(`${process.env.NEXTAUTH_URL}/api/utilisateurs/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(credentials),
-          });
+     {
+      id: "proconnect",
+      name: "ProConnect",
+      clientId: process.env["PROCONNECT_CLIENT_ID"] ?? process.env["PROCONNECT_CLIENTID"],
+      clientSecret: process.env["PROCONNECT_CLIENT_SECRET"],
+      type: "oauth",
+      wellKnown: proConnectWellKnown,
+      authorization: { params: { scope: "openid email given_name usual_name uid organization_label organizational_unit" } },
+      checks: ["pkce", "state", "nonce"],
+      idToken: true,
+      // ProConnect returns user claims only from the userinfo endpoint, as a signed JWT
+      client: {
+        id_token_signed_response_alg: "RS256",
+        userinfo_signed_response_alg: "RS256",
+      },
+      userinfo: {
+        async request({ tokens, client }) {
+          return await client.userinfo(tokens.access_token as string);
+        },
+      },
+      async profile(profile) {
+        if (!profile.email) {
+          throw new Error("ProConnect profile has no email");
+        }
+        // Check if the user exists
+        let utilisateur = await utilisateurLoader.getUserByEmail(profile.email);
 
-          if (!authResponse.ok) {
-            throw new Error("Invalid credentials");
-          }
+        //Create the user if it doesn't exist
+        if (!utilisateur) {
+          // TODO: Ajouter une institution par défaut si l’utilisateur n’a pas l’information sur son ARS retourné.
+          utilisateur = await utilisateurLoader.createUser(profile.given_name, profile.usual_name, profile.email, profile.organizational_unit || "ARS_04");
+        }
+        if (!utilisateur) {
+          throw new Error("User creation failed");
+        }
 
-          const { utilisateur } = await authResponse.json();
-          return {
+        return {
             ...utilisateur,
             id: utilisateur.code,
             institution: utilisateur.institution.libelle,
@@ -33,12 +56,9 @@ export const authOptions: NextAuthOptions = {
             codeRegion: utilisateur.institution.codeGeo,
             codeProfiles: utilisateur.profils,
             cgu: utilisateur.cgu,
-          };
-        } catch {
-          return null;
         }
       },
-    }),
+    },
   ],
   secret: process.env["NEXTAUTH_SECRET"],
   callbacks: {
@@ -55,6 +75,8 @@ export const authOptions: NextAuthOptions = {
           codeRegion: user.codeRegion,
           codeProfiles: user.codeProfiles,
           cgu: user.cgu,
+          provider: account.provider,
+          idToken: account.id_token,
         };
       }
       if (trigger === "update" && typeof session?.cgu === "boolean") {

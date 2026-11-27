@@ -1,5 +1,4 @@
-import { compare, genSalt, hash } from "bcrypt";
-import { createHash } from "crypto";
+import { genSalt, hash } from "bcrypt";
 import { format } from "date-fns";
 import fs from "fs";
 import path from "path";
@@ -15,7 +14,6 @@ import { UtilisateurModel } from "../../../../../database/models/UtilisateurMode
 import { generateToken } from "../../../jwtHelper";
 import { RechercheUtilisateur, ResultatRechercheUtilisateur } from "../../../métier/entities/ResultatRechercheUtilisateur";
 import { Institution } from "../../../métier/entities/Utilisateur/Institution";
-import { LoginStatusEnum, PasswordStatus, PasswordStatusEnum, RésultatLogin } from "../../../métier/entities/Utilisateur/RésultatLogin";
 import { UtilisateurLoader } from "../../../métier/gateways/UtilisateurLoader";
 import { sendEmail } from "../../../sendEmail";
 
@@ -30,51 +28,69 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
     return safeUser as RechercheUtilisateur;
   }
 
-  async login(email: string, password: string): Promise<RésultatLogin> {
-    const MAX_ATTEMPTS = 3;
-    const LOCK_TIME_MIN = 5;
-
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
-
-    if (user) {
-
-      if (user?.lockUntil && user.lockUntil > new Date()) {
-        return LoginStatusEnum.BLOCKED;
-      }
-
-      const hashing = createHash("sha256");
-      hashing.update(password);
-      const hashedPassword = hashing.digest("hex");
-
-      if (await compare(password, user.password) || hashedPassword === user.password) {
-
-        user.failedAttemps = 0;
-        user.lockUntil = null;
-       await (await this.orm).getRepository(UtilisateurModel).save(user);
-
-        return { utilisateur: user }
-
-      } else {
-
-        user.failedAttemps += 1;
-        if (user.failedAttemps >= MAX_ATTEMPTS) {
-          user.lockUntil = new Date(Date.now() + LOCK_TIME_MIN * 60 * 1000);
-        }
-        await (await this.orm).getRepository(UtilisateurModel).save(user);
-
-        return LoginStatusEnum.WRONG_CREDENTIALS;
-      }
-    } else {
-      return LoginStatusEnum.WRONG_CREDENTIALS;
-    }
+  async getUserByEmail(email: string): Promise<RechercheUtilisateur | null> {
+    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email }, relations: ["institution"] });
+    if (!user) return null;
+    // Le retrait des champs via destructuring est plus «propre» que le «delete»
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, failedAttemps, lockUntil, lastPwdChangeDate, ...safeUser } = user;
+    return safeUser as RechercheUtilisateur;
   }
 
-  async getLoginError(email: string): Promise<LoginStatusEnum> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOne({ where: { email: email.trim().toLowerCase() }, relations: ["institution"] });
-    if (user?.lockUntil && user.lockUntil > new Date()) {
-      return LoginStatusEnum.BLOCKED;
+  async createUser(firstName: string, lastName: string, email: string, institution: string): Promise<UtilisateurModel | null> {
+    try {
+      const account = new UtilisateurModel();
+      let roleToSave;
+      let profileToSave;
+      const profileUser = await (await this.orm).getRepository(ProfilModel).findOneBy({ id: 1 }) as ProfilModel;
+      const institutionToSave = await (await this.orm).getRepository(InstitutionModel).findOneBy({ code: institution });
+
+      if (institution === 'ADMIN_CENTR') {
+        const profileAdminCentral = await (await this.orm).getRepository(ProfilModel).findOneBy({ label: ILike("%central%") });
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "ADMIN_CENTR" });
+        profileToSave = profileAdminCentral ?? profileUser;
+      } else {
+        roleToSave = await (await this.orm).getRepository(RoleModel).findOneBy({ code: "USER" });
+        profileToSave = profileUser;
+      }
+
+      if (institutionToSave && roleToSave && profileToSave) {
+        account.nom = lastName;
+        account.prenom = firstName;
+        account.email = email;
+        account.institution = institutionToSave;
+        account.role = roleToSave;
+        account.profils = [profileToSave.code];
+        account.actif = true;
+        account.dateCreation = new Date();
+        account.lastPwdChangeDate = new Date().toISOString().split('T')[0];
+      }
+
+      await (await this.orm)
+        .getRepository(UtilisateurModel)
+        .save(account)
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log("error", error);
+        });
+
+      const user = await (await this.orm)
+        .getRepository(UtilisateurModel)
+        .findOne({ where: { email: account.email }, relations: ["institution"] });
+
+      const userListModel = new UserListModel();
+      userListModel.nom = 'Favoris';
+      userListModel.userId = user?.code || '';
+      userListModel.isFavoris = true;
+      if (user) (await this.orm).getRepository(UserListModel).createQueryBuilder().insert().values(userListModel).execute();
+
+      return user;
+
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log("error", error);
+      return null;
     }
-    return LoginStatusEnum.WRONG_CREDENTIALS;
   }
 
   async updateLastConnectionDate(email: string): Promise<boolean> {
@@ -97,10 +113,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
   }
 
   async checkUserIsNotAdminAndInactif(email: string): Promise<boolean> {
-    // if password is expired, then the user is inactif
-    const passwordStatus = await this.checkPasswordStatus(email);
-    if (passwordStatus.status === 'expired') return false;
-
     const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
 
     // if user is not addmin
@@ -114,32 +126,6 @@ export class TypeOrmUtilisateurLoader implements UtilisateurLoader {
       }
     }
     return true;
-  }
-
-  async checkPasswordStatus(email: string): Promise<PasswordStatus> {
-    const user = await (await this.orm).getRepository(UtilisateurModel).findOneBy({ email: email.trim().toLowerCase() });
-    const changedAt = new Date(user?.lastPwdChangeDate || "");
-    const today = new Date();
-    const EXPIRATION_MONTHS = process.env["APP_PASSWORD_EXPIRATION_MONTHS"] ? Number.parseInt(process.env["APP_PASSWORD_EXPIRATION_MONTHS"]) : 9;
-
-
-    const expirationDate = new Date(changedAt);
-    expirationDate.setMonth(expirationDate.getMonth() + EXPIRATION_MONTHS);
-    const warningDate = new Date(expirationDate);
-    warningDate.setDate(warningDate.getDate() - 30);
-
-    if (today >= expirationDate) {
-      return { status: PasswordStatusEnum.EXPIRED };
-    }
-
-    if (today >= warningDate) {
-      const diffTime = expirationDate.getTime() - today.getTime();
-      const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      return { status: PasswordStatusEnum.WARNING, daysLeft };
-    }
-
-    return { status: PasswordStatusEnum.OK };
   }
 
   async checkIfEmailExists(email: string): Promise<boolean> {

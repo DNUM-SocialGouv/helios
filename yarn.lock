@@ -875,10 +875,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gouvfr/dsfr@npm:^1.14.2":
-  version: 1.14.2
-  resolution: "@gouvfr/dsfr@npm:1.14.2"
-  checksum: 10/797d6d7794ab2511228c1322754fce41c2846e436d53e681854cb54e39c5e74cdcae2cf1a22bac399fa615f8e2b2669c5ca40febd879ac0e0062b73b3c8e2d8e
+"@gouvfr/dsfr@npm:^1.15.0":
+  version: 1.15.4
+  resolution: "@gouvfr/dsfr@npm:1.15.4"
+  checksum: 10/0c1af5601a0a72dbaa8049a5b88d2c45fec6f51c1f536cae028ef138019e11c36cd70139416ed6d10ba3f7402371b39a560b7c7dabc9215a9ccadc6a1effee21
   languageName: node
   linkType: hard
 
@@ -6865,7 +6865,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "helios@workspace:."
   dependencies:
-    "@gouvfr/dsfr": "npm:^1.14.2"
+    "@gouvfr/dsfr": "npm:^1.15.0"
     "@next/bundle-analyzer": "npm:16.2.4"
     "@opentelemetry/api": "npm:1.9.1"
     "@opentelemetry/core": "npm:2.7.1"

@@ -7,7 +7,7 @@ declare module "next-auth" {
     code: string;
     prenom: string;
     roleId: string;
-    institution: object;
+    institution: string;
     institutionId: number;
     codeRegion: string;
     codeProfiles: string[];
@@ -21,7 +21,7 @@ declare module "next-auth" {
       role: number;
       codeRegion: number;
       codeProfiles: string[];
-      institution;
+      institution: string;
       institutionId: number;
       cgu: boolean;
     } & DefaultSession["user"];

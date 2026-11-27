@@ -3,7 +3,6 @@ import "@gouvfr/dsfr/dist/component/tab/tab.min.css";
 import { useState } from "react";
 
 import { UserInfoTab } from "./UserInfoTab";
-import { ChangePwdPage } from "../change-mot-passe/ChangePwdPage";
 import { TabContent } from "../commun/Tabs/tabContent";
 import { Tabs } from "../commun/Tabs/tabs";
 
@@ -19,7 +18,7 @@ export const ProfilePage = () => {
 
   return (
     <Tabs
-      labels={[{ text: "Mes informations", tabId: "1" }, { text: "Mot de passe", tabId: "2" }]}
+      labels={[{ text: "Mes informations", tabId: "1" }]}
       onTabChange={(id) => {
         setSelectedIndex(id);
         window.history.replaceState(null, "", `#${id}`);
@@ -28,9 +27,6 @@ export const ProfilePage = () => {
     >
       <TabContent index="1" selectedIndex={selectedIndex}>
         <UserInfoTab />
-      </TabContent>
-      <TabContent index="2" selectedIndex={selectedIndex}>
-        <ChangePwdPage />
       </TabContent>
     </Tabs>
   );
